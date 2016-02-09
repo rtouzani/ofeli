@@ -1,0 +1,14 @@
+
+all:	beam
+
+beam:	main.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o beam main.o `ofeli-config --libs`
+
+clean:
+	/bin/rm -f main.o beam`ofeli-config --exe_ext`
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

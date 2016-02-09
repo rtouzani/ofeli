@@ -1,0 +1,13 @@
+Lesson 2
+--------
+
+This example illustrates a test of OFELI. It solves a
+2-D Laplace equation using triangle P1-finite element.
+The linear system is solved using LDLt (Crout) factorization.
+
+To execute the example type
+
+          lesson2  test.m
+
+
+

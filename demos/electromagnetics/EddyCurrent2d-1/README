@@ -1,0 +1,8 @@
+Program EC2D1
+-------------
+A finite element code using OFELI to solve eddy current equations for
+2-D geometries where the magnetic field has only one nonvanishing component
+
+The (simple) example has two mesh files (inductor and the other conductor)
+
+Execute the program with data file proj.dat.

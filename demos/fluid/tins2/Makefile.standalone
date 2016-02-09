@@ -1,0 +1,15 @@
+#
+# Makefile for tins2
+#
+
+tins2:	main.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o tins2 main.o `ofeli-config --libs`
+
+clean:
+	/bin/rm -f main.o tins2
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

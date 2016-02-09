@@ -1,0 +1,626 @@
+<!-- XHTML 1.0 Strict -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<meta name="author" content="Rachid Touzani" />
+<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
+<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
+<link href="css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+<head>
+
+<title>An Overview of the OFELI Library</title>
+<link rel="stylesheet" type="text/css" href="doxygen.css" />
+<link rel="stylesheet" type="text/css" href="tabs.css" />
+</head>
+
+<body>
+<p align="center"><a href="index.html"><img src="im/ofeli.gif" width="150" border="0"></a></p><br><br>
+
+<center>
+  <div id="cse" style="width: 60%;">Loading</div>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript"> 
+     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
+     google.setOnLoadCallback(function() {
+        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
+        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
+        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+        customSearchControl.draw('cse');
+     }, true);
+   </script>
+   <style type="text/css">
+     .gsc-control-cse {
+     font-family: Verdana, sans-serif;
+     border-color: #DAE0E5;
+     background-color: #DAE0E5;
+   }
+   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
+   input.gsc-input { border-color: #B6BEC5; }
+   input.gsc-search-button {
+     border-color: #B6BEC5;
+     background-color: #D0D1D4;
+   }
+   .gsc-tabHeader.gsc-tabhInactive {
+     border-color: #999999;
+     background-color: #EEEEEE;
+   }
+   .gsc-tabHeader.gsc-tabhActive {
+     border-color: #999999;
+     background-color: #999999;
+   }
+   .gsc-tabsArea { border-color: #999999; }
+   .gsc-webResult.gsc-result,
+   .gsc-results .gsc-imageResult {
+     border-color: #FFFFFF;
+     background-color: #FFFFFF;
+   }
+   .gsc-webResult.gsc-result:hover,
+   .gsc-imageResult:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gs-webResult.gs-result a.gs-title:link,
+   .gs-webResult.gs-result a.gs-title:link b,
+   .gs-imageResult a.gs-title:link,
+   .gs-imageResult a.gs-title:link b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:visited,
+   .gs-webResult.gs-result a.gs-title:visited b,
+   .gs-imageResult a.gs-title:visited,
+   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:hover,
+   .gs-webResult.gs-result a.gs-title:hover b,
+   .gs-imageResult a.gs-title:hover,
+   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:active,
+   .gs-webResult.gs-result a.gs-title:active b,
+   .gs-imageResult a.gs-title:active,
+   .gs-imageResult a.gs-title:active b { color: #0568CD; }
+   .gsc-cursor-page { color: #0568CD; }
+   a.gsc-trailing-more-results:link { color: #0568CD; }
+   .gs-webResult .gs-snippet,
+   .gs-imageResult .gs-snippet,
+   .gs-fileFormatType { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl,
+   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { display: none; }
+   .gs-webResult div.gs-visibleUrl-long { display: block; }
+   .gs-promotion div.gs-visibleUrl-short { display: none; }
+   .gs-promotion div.gs-visibleUrl-long { display: block; }
+   .gsc-cursor-box { border-color: #FFFFFF; }
+   .gsc-results .gsc-cursor-box .gsc-cursor-page {
+      border-color: #999999;
+      background-color: #FFFFFF;
+      color: #0568CD;
+   }
+   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+      border-color: #999999;
+      background-color: #999999;
+      color: #0568CD;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion {
+      border-color: #D2D6DC;
+      background-color: #D0D1D4;
+   }
+   .gsc-completion-title { color: #0568CD; }
+   .gsc-completion-snippet { color: #5F6A73; }
+   .gs-promotion a.gs-title:link,
+   .gs-promotion a.gs-title:link *,
+   .gs-promotion .gs-snippet a:link { color: #0066CC; }
+   .gs-promotion a.gs-title:visited,
+   .gs-promotion a.gs-title:visited *,
+   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
+   .gs-promotion a.gs-title:hover,
+   .gs-promotion a.gs-title:hover *,
+   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
+   .gs-promotion a.gs-title:active,
+   .gs-promotion a.gs-title:active *,
+   .gs-promotion .gs-snippet a:active { color: #0066CC; }
+   .gs-promotion .gs-snippet,
+   .gs-promotion .gs-title .gs-promotion-title-right,
+   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
+   .gs-promotion .gs-visibleUrl,
+   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
+   </style>
+</center>
+</p>
+&nbsp;
+
+<div id="mainmenu">
+<div class="text">
+
+<div class="tabs">
+   <ul class="tablist">
+     <li><a href="index.html"><span>Home</span></a>
+     <li class="current"><a href="overview.html"><span>Overview</span></a>
+     <li><a href="html/index.html"><span>Class Documentation</span><a>
+     <li><a href="fformats.html"><span>File Formats</span></a>
+     <li><a href="tutorial.html"><span>Tutorial</span></a>
+     <li><a href="demos.html"><span>Demo Codes</span></a>
+   </ul>
+ </div>
+
+ </div>
+ </div>
+
+&nbsp;
+<p><font color="#203F5B" size="4" face="verdana,Helvetica">
+<b>An Overview</b></font></p>
+
+<hr size="4">
+
+<p><SPAN CLASS=TEXT><SPAN CLASS=LOGO>OFELI</SPAN> is an object oriented library of C++ classes
+for development of finite element codes. The main feature of this library (called <SPAN CLASS=LOGO>
+OFELI</SPAN> as <SPAN CLASS=VAR><b>Object Finite Element LIbrary</b></SPAN>) is that it is not intended
+as a finite element code itself but as a toolkit of utility classes and functions. In
+particular, mesh classes enable to modify and manipulate finite
+element meshes. The numerical solution of the linear system of
+equations can be performed either using direct methods or more
+sophisticated preconditioned iteration techniques.<br>
+The package contains a set of examples of finite element codes
+that can be used as prototypes for more elaborated applications.</SPAN></p>
+
+<hr size="4">
+
+<table border="0">
+    <tr>
+        <td><img src="im/plus.gif" width="9" height="9"></td>
+        <td><a href="#Introduction"><SPAN CLASS=TEXT>Introduction</SPAN></a></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td><img src="im/plus.gif" width="9" height="9"></td>
+        <td><a href="#Package"><SPAN CLASS=TEXT>The <b>OFELI</b> package</SPAN></a></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td><img src="im/plus.gif" width="9" height="9"></td>
+        <td><a href="#Programming"><SPAN CLASS=TEXT>Programming Considerations</SPAN></a></td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#Namespace"><SPAN CLASS=TEXT>Namespace</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        </TR>
+        <TR>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#VariableNames"><SPAN CLASS=TEXT>Variable Names</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        </TR>
+        <TR>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#DataControl"><SPAN CLASS=TEXT>Data Control</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#Inheritance"><SPAN CLASS=TEXT>Inheritance</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#Overloading"><SPAN CLASS=TEXT>Overloading</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#Types"><SPAN CLASS=TEXT>Argument Types</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#Template"><SPAN CLASS=TEXT>Template classes</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="overview.html#PrePost"><SPAN CLASS=TEXT>Pre and Post processing</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td><img src="im/plus.gif" width="9" height="9"></td>
+        <td><a href="#Classes"><SPAN CLASS=TEXT>Classes in <b>OFELI</b></SPAN></a></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#MeshData"><SPAN CLASS=TEXT>Mesh Data</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#VectorData"><SPAN CLASS=TEXT>Vector Data</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#Matrices"><SPAN CLASS=TEXT>Matrices</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#BC"><SPAN CLASS=TEXT>Boundary Conditions, Forces, ...</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#MaterialData"><SPAN CLASS=TEXT>Material Data</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#FEEquations"><SPAN CLASS=TEXT>Finite Element Equations</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td><table border="0">
+            <tr>
+                <td><img src="im/plus.gif" width="9" height="9"></td>
+                <td><a href="#FEShapes"><SPAN CLASS=TEXT>Finite Element Shapes</SPAN></a></td>
+            </tr>
+        </table>
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td><img src="im/plus.gif" width="9" height="9"></td>
+        <td><a href="#Installation"><SPAN CLASS=TEXT>Installation</SPAN></a></td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+
+<hr size="4">
+
+<a name="Introduction"></a>
+<p CLASS=TITLE>Introduction</p>
+
+<p><SPAN CLASS=TEXT><SPAN CLASS=LOGO>OFELI</SPAN> (as <b>O</b>bject <b>F</b>inite <b>E</b>lement
+<b>LI</b>brary) is an object oriented library of classes for finite element
+solution of boundary and initial value problems. It provides a
+finite element developer tools to write concise and user friendly
+codes either for simple finite element programs or for large
+scale applications using sophisticated solution techniques like
+preconditioned iteration algorithms. <br>
+<SPAN CLASS=LOGO>OFELI</SPAN> is written in ANSI C++ and runs already on most actual computers. <br>
+As in any C++ code, <SPAN CLASS=LOGO>OFELI</SPAN> is programmed in such a way that a
+finite element code developer manipulates objects rather than
+data. Hence, a collection of classes is defined. Each class
+corresponds to a particular type of information in a Finite
+Element analysis.</SPAN></p>
+
+<hr size="4">
+
+<a name="Package"></a>
+<p CLASS=TITLE>The OFELI package</p>
+
+<p><SPAN CLASS=TEXT>The <SPAN CLASS=LOGO>OFELI</SPAN> package is not only a library
+of classes for Finite Element developments. The library
+constitutes the kernel of the package. This package may be used
+at different levels. The highest level is that of a finite
+element code as a black box presented as a user friendly
+application. The lowest level consists in developing new
+functions and classes in the kernel. </SPAN></p>
+
+<p><SPAN CLASS=TEXT>The current version of the package contains:</SPAN>
+<SPAN CLASS=TEXT>
+<ul type="square">
+  <li><SPAN CLASS=TEXT>The kernel library: Mesh treatment, Linear
+      system solvers, finite element equations,
+      Shape functions, Optimization solvers</SPAN>
+  <li><SPAN CLASS=TEXT>Classes for heat transfer problems</SPAN>
+  <li><SPAN CLASS=TEXT>Classes for solid mechanics problems</SPAN>
+  <li><SPAN CLASS=TEXT>Classes for fluid dynamics problems</SPAN>
+  <li><SPAN CLASS=TEXT>Classes for electromagnetic problems</SPAN>
+  <li><SPAN CLASS=TEXT>A tutorial to initiate new users</SPAN>
+  <li><SPAN CLASS=TEXT>More elaborated finite element demo codes</SPAN>
+  <li><SPAN CLASS=TEXT>Utility programs for mesh and other file conversions</SPAN>
+</ul>
+</span>
+
+<hr size="4">
+
+<a name="Programming"></a>
+<P CLASS=TITLE>Programming Considerations</p>
+
+<a name="Namespace"></a>
+<span CLASS=SUBTITLE>Namespace</span><BR>
+<SPAN CLASS=TEXT>The whole library is contained in a namespace called <SPAN class=VAR>
+OFELI</SPAN>. Therefore any class of the library must be invoked inside this namespace.
+The reader is referred to the <A href="tutorial.htm">Tutorial</a> section
+to see how it works.
+</SPAN><BR><BR>
+
+<a name="VariableNames"></a>
+<span CLASS=SUBTITLE>Variable Names</span><BR>
+<SPAN CLASS=TEXT>To clarify the programmation all classes have names that start with a capital
+letter like <SPAN class=VAR>Node</SPAN> or <SPAN class=VAR>Mesh</SPAN>. Moreover, all
+public members and attributes share this property, private or protected members having no
+capital letters and starting with an "underscore" sign <SPAN class=VAR>_</SPAN>.</SPAN><BR><BR>
+
+<a name="DataControl"></a>
+<span CLASS=SUBTITLE>Data Control</span><BR>
+<SPAN CLASS=TEXT>Data validity is controlled as frequently as it is reasonably
+possible. This control obviously deteriorates program performance
+but we think it necessary especially for a user who is not
+familiarized with the <SPAN CLASS=LOGO>OFELI</SPAN> library. If an error in data
+is encountered, a message error is displayed. The execution stops
+only is the error is classified as fatal.</SPAN><BR><BR>
+
+<a name="Inheritance"></a>
+<span CLASS=SUBTITLE>Inheritance</span><BR>
+<SPAN CLASS=TEXT>
+In order to keep things as simple and clear as possible, we did
+not make an extensive use of inheritance between classes. The
+only inheritances are from abstract classes and are therefore
+transparent for a developer. Of course inheritance advantages can
+be exploited by a developer to complete the <SPAN CLASS=LOGO>OFELI</SPAN> classes.</SPAN><BR><BR>
+
+<ul>
+    <li><SPAN CLASS=TEXT>All matrix classes derive from a template abstract matrix class
+        called <SPAN CLASS=VAR>Matrix&lt;&gt;</SPAN>. This was useful for implementing some
+        general purpose manipulation of matrices that do not depend on the storage</SPAN></li>
+    <li><SPAN CLASS=TEXT>All finite element equation classes derive from the template
+        abstract class <span class="var">Equation&lt;&gt;</span></SPAN>.</li>
+    <li><SPAN CLASS=TEXT>Some classes related to solution methods inherit from an abstract
+        class that collect common information.</SPAN></li>
+</ul>
+
+<a name="Overloading"></a>
+<span CLASS="SUBTITLE">Overloading</span><BR>
+<SPAN CLASS=TEXT>
+Overloading capabilities of the C++ programming language is
+widely used in <SPAN CLASS=LOGO>OFELI</SPAN>. In particular, the output operator <SPAN CLASS=VAR>&lt;&lt;</SPAN>
+is overloaded for practically each class to print out its contents. </SPAN><BR><BR>
+
+<a name="Types"></a>
+<span CLASS=SUBTITLE>Argument Types</span><BR>
+<SPAN CLASS=TEXT>We have used as frequently as possible referenced variables as
+arguments of the functions of <SPAN CLASS=LOGO>OFELI</SPAN>. Some situations do not work
+efficiently with such argument types and pointer to variables are used.
+This situation can also be encountered for simple historical reasons where the developers
+were not familiar with referenced variables. It is then highly recommended to read
+carefully the description of each function before using it. </SPAN><BR><BR>
+
+<a name="Template"></a>
+<span class=SUBTITLE>Template classes</span><BR>
+<SPAN CLASS=TEXT>
+We have made use of template classes in vector and matrix classes as well as in finite element equation
+abstract class. This feature enables implementing for instance complex valued problems.</SPAN><BR><BR>
+
+<a name="PrePost"></a>
+<span class=SUBTITLE>Pre and Post Processing</span><BR>
+<SPAN class=TEXT>
+At its present stage of development the <SPAN CLASS=LOGO>OFELI</SPAN> library contains no
+possibility of mesh generation or graphics post processing. However, the mesh input procedure
+is programmed in such a way that a developer can imitate it to read a preprocessor output
+file.</SPAN><BR><BR>
+
+<hr size="4">
+
+<a name="Classes"></a>
+<P><span CLASS=TITLE>Classes in OFELI</SPAN></P>
+
+<SPAN class=TEXT>
+To each type of data corresponds a C++ class. For the sake of clarity, we shall
+outline hereafter these classes through the steps of execution of a finite element code.
+The reader can consult the details of each class and its members in the reference manual.</SPAN><BR><BR>
+
+<a name="MeshData"></a>
+<span class=SUBTITLE>Mesh Data</span><BR>
+<SPAN class=TEXT>
+Mesh data are introduced by a class called <a href="html/classOFELI_1_1Mesh.html">Mesh</a>. This class allows to
+read, manipulate and store mesh data. Moreover, to each type of mesh data corresponds a class.
+Hence, an object of the class <a href="html/classOFELI_1_1Node.html">Mesh</a> is a collection of objects of classes
+<a href="html/classOFELI_1_1Node.html">Node</a>, <a href="html/classOFELI_1_1Element.html">Element</a>, <a href="html/classOFELI_1_1Side.html">Side</a>.<br>
+A finite element mesh is defined by a list of nodes given by their coordinates and a list of
+elements given by their node numbers. Moreover, to each node is associated its number of
+degrees of freedom and a code to each degree of freedom. This code is useful to prescribe node
+boundary conditions data Dirichlet). In addition, to take account for Neumann-like
+boundary conditions, a mesh can contain a collection of sides. In practice these ones must be
+sides on the boundary of the domain but any side can be defined with the help of mesh nodes.
+To simplify loops over nodes, elements or sides classes called
+Nodes, Elements and Sides are available. Their manipulation will be explained later. </SPAN><BR><BR>
+
+<a name="VectorData"></a>
+<SPAN class=SUBTITLE>Vector Data</SPAN><BR>
+
+<SPAN class=TEXT>These classes were developed to facilitate basic operations on
+vectors. An overloading of operators <SPAN class=VAR>( )</SPAN>, <SPAN class=VAR>[ ]</SPAN>
+and <SPAN class=VAR>=</SPAN> is implemented to simplify this access.</SPAN><BR><BR>
+
+<a name="Matrices"></a>
+<SPAN class=SUBTITLE>Matrices</SPAN><BR>
+<SPAN CLASS=TEXT>
+In order to consider several types of storage for finite element matrices, the library <SPAN class=LOGO>OFELI</SPAN>
+contains a class for each storage type. Moreover, to handle operations that are independent of these
+storage types we have an abstract class called <SPAN class=VAR>Matrix</SPAN>. The implemented storage
+schemes are tridiagonal, skyline and sparse.</SPAN><BR><BR>
+
+<a name="BC"></a>
+<SPAN class="SUBTITLE">Boundary conditions, Forces, ...</SPAN><BR>
+<SPAN class="TEXT">
+A finite element simulation needs several types of data. We have
+chosen for a simplified and flexible implementation of finite element codes to supply these
+data through user defined functions. Actually, these are not classes but just C functions
+that a developer can replace by a more sophisticated implementation. </SPAN><BR><BR>
+
+<a name="MaterialData"></a>
+<SPAN class="SUBTITLE">Material Data</SPAN><BR>
+<SPAN class="TEXT">
+Material properties can be acquired through material data files. To each material
+corresponds a file using the <a href="fileformats/MAFFormat.htm">MAF</a> format.
+The library contains number of material files and a user can define his own
+material files using the <a href="fileformats/MAFFormat.htm">MAF</a> format.
+Note that a default material called <span class="var">GenericMaterial</span> is defined.</SPAN><br><BR>
+
+<a name="FEEquations"></a>
+<span class="SUBTITLE">Finite Element Equations</SPAN><BR>
+<SPAN class="text">A crucial step in the implementation of the finite element method
+consists in building up finite element equations for each element
+and then assembling them into a global linear system of
+equations. Of course, a nonlinear problem is solved by an
+iteration algorithm where each iteration consists in solving a
+linear problem. Here at the element level, finite element
+equations are to be declared as instances of a class of finite
+element equations. Clearly, the finite element equation depends
+on the problem one has to solve. For this, some classes of
+typical problems (Diffusion, Elasticity, ...) are already
+developed and can serve as prototypes for developing classes for
+new problems.</SPAN><BR><BR>
+
+<p><a name="FEShapes"></a>
+<SPAN class="SUBTITLE">Finite Element Shapes</SPAN><BR>
+<SPAN class="TEXT">
+The above classes need information about finite element
+interpolation (choice of element geometry, shape functions, ...).
+Here, we have an abstract class called <span class="var">FEShape</span> and classes for
+several types for finite element shapes. For instance, class <a href="html/classOFELI_1_1Triang3.html">Triang3</a>
+corresponds to P<sub>1</sub> (or three-node) triangle.</span><BR><BR>
+
+<hr>
+
+<a name="Installation"></a>
+<P class="TITLE">Installation</P>
+
+<SPAN class="TEXT">The <SPAN class="LOGO">OFELI</SPAN> library can be installed on
+any computer provided with an ANSI C++ compiler. The package is available via the web at the
+site<BR><BR>
+<CENTER> <a href="http://www.ofeli.org">ofeli.org</a></CENTER><br><br>
+Two loadable files are located in this directory: <SPAN class="VAR"><B>ofelixx.tar.gz</B></SPAN>
+and <SPAN class="VAR"><B>ofelixx.exe</B></SPAN> (where <SPAN class=var>xx</SPAN>
+stands for for the version and release identification). The first one is for <SPAN class="VAR">Unix</SPAN>
+systems and the second is for <SPAN class="VAR">Windows</SPAN> system.<br><br>
+
+<SPAN class="SUBTITLE">Installation Procedure on UNIX systems</SPAN><BR><BR>
+
+<SPAN class="TEXT">
+Expanding the file <SPAN class="VAR"><B>ofeli-xx.tar.gz</B></SPAN> creates directories:
+<SPAN class="VAR">tutorial</SPAN>, <SPAN class="VAR">demos</SPAN>, <SPAN class="VAR">doc</SPAN>,
+<SPAN class="VAR">include</SPAN>, <SPAN class="VAR">src</SPAN>
+
+<ul>
+    <li><SPAN class="TEXT">The directory <SPAN class="VAR">doc</SPAN> contains documentation
+        files in PDF format. Moreover, a subdirectory of this one is called <SPAN class="VAR">html</SPAN>
+        and contains the same documentation in html format</SPAN>
+    <li><SPAN class="TEXT">The directory <SPAN class="VAR">src</SPAN> contains source files
+        of the library. In addition, subdirectories corresponding to problem dependent classes
+        are present in this directory</SPAN>
+    <li><SPAN class="TEXT">The directory <SPAN class="VAR">include</SPAN> contains header files
+        of the library. It has also  subdirectories with the same name (and same function) as
+        directory <SPAN class="VAR">src</SPAN></SPAN>
+    <li><SPAN class="TEXT">The directory <SPAN class="VAR">tests</SPAN> contains
+        sub-directories <SPAN class="VAR">examples</SPAN> that contain simple examples
+        and <SPAN class="VAR">demos</SPAN> that contains
+        subdirectories classifying applications that use the present library</SPAN>
+    <li><SPAN class="TEXT">The main directory contains a script file called <SPAN class="VAR">configure</SPAN>.
+        If you are not used with this type of script, type <span class="var">configure --help</span>
+        to display all the options.
+        Once this script os executed properly, type <span class="var">make</span>, then
+        <span class="var">make install</span>.</SPAN>
+</ul>
+
+<SPAN class="SUBTITLE">Installation Procedure on WINDOWS<SUP>(TM)</SUP> systems</SPAN><BR><BR>
+
+<SPAN class="TEXT">
+The application <SPAN class="VAR"><B>ofeli-xx.exe</B></SPAN> is a classical windows
+installator that will lead you through questions to properly install the library.</SPAN>
+
+</div> <!-- main -->
+
+
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div id="foot_bar">
+  Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+</div>
+
+</body>
+</html>

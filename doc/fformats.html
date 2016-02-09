@@ -1,0 +1,1021 @@
+<html>
+<!-- XHTML 1.0 Strict -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<meta name="author" content="Rachid Touzani" />
+<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
+<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
+<link href="css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+
+<head>
+<title>OFELI File Formats</title>
+<link rel="stylesheet" type="text/css" href="doxygen.css" />
+<link rel="stylesheet" type="text/css" href="tabs.css" />
+</head>
+
+<body>
+<p align="center">
+<a href="index.html"><img src="im/ofeli.gif" width="150" border="0"></a>
+</p>
+
+<center>
+  <div id="cse" style="width: 60%;">Loading</div>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript"> 
+     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
+     google.setOnLoadCallback(function() {
+        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
+        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
+        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+        customSearchControl.draw('cse');
+     }, true);
+   </script>
+   <style type="text/css">
+     .gsc-control-cse {
+     font-family: Verdana, sans-serif;
+     border-color: #DAE0E5;
+     background-color: #DAE0E5;
+   }
+   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
+   input.gsc-input { border-color: #B6BEC5; }
+   input.gsc-search-button {
+     border-color: #B6BEC5;
+     background-color: #D0D1D4;
+   }
+   .gsc-tabHeader.gsc-tabhInactive {
+     border-color: #999999;
+     background-color: #EEEEEE;
+   }
+   .gsc-tabHeader.gsc-tabhActive {
+     border-color: #999999;
+     background-color: #999999;
+   }
+   .gsc-tabsArea { border-color: #999999; }
+   .gsc-webResult.gsc-result,
+   .gsc-results .gsc-imageResult {
+     border-color: #FFFFFF;
+     background-color: #FFFFFF;
+   }
+   .gsc-webResult.gsc-result:hover,
+   .gsc-imageResult:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gs-webResult.gs-result a.gs-title:link,
+   .gs-webResult.gs-result a.gs-title:link b,
+   .gs-imageResult a.gs-title:link,
+   .gs-imageResult a.gs-title:link b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:visited,
+   .gs-webResult.gs-result a.gs-title:visited b,
+   .gs-imageResult a.gs-title:visited,
+   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:hover,
+   .gs-webResult.gs-result a.gs-title:hover b,
+   .gs-imageResult a.gs-title:hover,
+   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:active,
+   .gs-webResult.gs-result a.gs-title:active b,
+   .gs-imageResult a.gs-title:active,
+   .gs-imageResult a.gs-title:active b { color: #0568CD; }
+   .gsc-cursor-page { color: #0568CD; }
+   a.gsc-trailing-more-results:link { color: #0568CD; }
+   .gs-webResult .gs-snippet,
+   .gs-imageResult .gs-snippet,
+   .gs-fileFormatType { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl,
+   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { display: none; }
+   .gs-webResult div.gs-visibleUrl-long { display: block; }
+   .gs-promotion div.gs-visibleUrl-short { display: none; }
+   .gs-promotion div.gs-visibleUrl-long { display: block; }
+   .gsc-cursor-box { border-color: #FFFFFF; }
+   .gsc-results .gsc-cursor-box .gsc-cursor-page {
+      border-color: #999999;
+      background-color: #FFFFFF;
+      color: #0568CD;
+   }
+   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+      border-color: #999999;
+      background-color: #999999;
+      color: #0568CD;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion {
+      border-color: #D2D6DC;
+      background-color: #D0D1D4;
+   }
+   .gsc-completion-title { color: #0568CD; }
+   .gsc-completion-snippet { color: #5F6A73; }
+   .gs-promotion a.gs-title:link,
+   .gs-promotion a.gs-title:link *,
+   .gs-promotion .gs-snippet a:link { color: #0066CC; }
+   .gs-promotion a.gs-title:visited,
+   .gs-promotion a.gs-title:visited *,
+   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
+   .gs-promotion a.gs-title:hover,
+   .gs-promotion a.gs-title:hover *,
+   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
+   .gs-promotion a.gs-title:active,
+   .gs-promotion a.gs-title:active *,
+   .gs-promotion .gs-snippet a:active { color: #0066CC; }
+   .gs-promotion .gs-snippet,
+   .gs-promotion .gs-title .gs-promotion-title-right,
+   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
+   .gs-promotion .gs-visibleUrl,
+   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
+   </style>
+</center>
+</p>
+&nbsp;
+
+<div id="mainmenu">
+<div class="text">
+
+ <div class="tabs">
+   <ul class="tablist">
+   <li><a href="index.html"><span>Home</span></a>
+   <li><a href="overview.html"><span>Overview</span></a>
+   <li><a href="html/index.html"><span>Class Documentation</span></a>
+   <li class="current"><a href="fformats.html"><span>File Formats</span></a>
+   <li><a href="tutorial.html"><span>Tutorial</span></a>
+   <li><a href="demos.html"><span>Demo Codes</span></a>
+   </ul>
+ </div>
+
+</div>
+</div>
+
+&nbsp;
+<p><font color="#203F5B" size="4" face="verdana,Helvetica">
+<b>File Formats</b></font></p>
+
+<hr size="4">
+
+
+<P><span class=TEXT>
+<SPAN class=VAR><B>OFELI</B></SPAN> data files use the
+XML syntax. They are valid XML documents.
+Input files can be given separately or gathered in one or more files.
+<br><br>
+
+A typical set of header lines of <SPAN class=VAR><B>OFELI</B></SPAN> XML files is the
+following lines:
+
+<pre>     <span class=TT>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+     &lt;OFELI_File&gt;
+     &lt;info&gt;
+        &lt;title&gt;&lt;/title&gt;
+        &lt;date>&lt;/date&gt;
+        &lt;author&gt;&lt;/author&gt;
+     &lt;/info&gt;
+     ...
+     ...
+     &lt;/OFELI_File&gt;
+</span></pre>
+
+<span class=text>
+Tags <span class=TT>title</span>, <span class=TT>date</span> and <span class=TT>author</span>
+can be filled in order to keep useful information for a user.<br>
+
+After the preamble given by the element <SPAN CLASS=TT>&lt;info&gt;</SPAN>,
+the XML file can contain any of the following elements in any order:<br><br>
+
+<table border="2" cellspacing="5" cellpadding="20%" rules="all" bgcolor="#e0f8f7" width="600">
+  <tr>
+     <td valign="top" width="25%"><P class=TT><a href="#Project">Project</a></P></td>
+     <td valign="top"><SPAN class=TEXT>To describe project data: parameters, input and output files, ...
+     This information enables constructing the class <a href="html/classOFELI_1_1IPF.html">IPF</a>.</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT><a href="#Domain">Domain</a></P></td>
+     <td valign="top"><SPAN class=TEXT>To describe domain geometry</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT><a href="#Mesh">Mesh</a></P></td>
+     <td valign="top"><SPAN class=TEXT>To describe mesh data</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT><a href="#Prescription">Prescription</a></P></td>
+     <td valign="top"><SPAN class=TEXT>To describe prescription of boundary conditions, body and boundary forces, ...</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT><a href="#Material">Material</a></P></td>
+     <td valign="top"><SPAN class=TEXT>To describe material data</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT><a href="#Field">Field</a></P></td>
+     <td valign="top"><SPAN class=TEXT>To describe input and output field data</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT><a href="#Function">Function</a></P></td>
+     <td valign="top"><SPAN class=TEXT>To describe a tabulated function</SPAN></td>
+   </tr>
+</table>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a name="Project"></a>
+<h3>Element: <font color="#990000">Project</font></h3>
+
+<p><span class=text>
+The element <SPAN class=TT>Project</SPAN> enables giving various parameters to control program execution
+as well as various file names. All acquired data are used to construct the class <a href="html/classOFELI_1_1IPF.html">IPF</a>.
+When invoking this element, one must supply the attribute that gives the projects name as follows:</span>
+<pre>     <span class=TT>
+     &lt;Project name="<font color=#00000>project_name</font>"&gt;
+        ...
+        ...
+     &lt;/Project&gt;
+</span></pre>
+
+<p><span class=text>
+The element <SPAN class=TT>Project</SPAN> has a large choice of subelements. Each subelement is a parameter
+that can be retrieved by calling a member function of class <a href="html/classOFELI_1_1IPF.html">IPF</a>.
+These parameters either have a predefined name, <i>e.g.</i> <span class=TT>max_time</span> that clearly
+chooses the maximal time for computations and whose is retrieved in the class <a href="html/classOFELI_1_1IPF.html">IPF</a>
+by the member function <span class=TT>getMaxTime</span>, or by a generic parameter for which a user can define a
+<i>label</i>. For instance, in the line</span>
+<pre>     <span class=TT>&lt;parameter label="deltat" value="0.1"&/&gt;</span></pre>
+<span class=text>the read parameter is retrieved by the code line</span>
+<pre>     <span class=TT>dt = ipf.getDouble("deltat");</span></pre>
+<span class=text>or equivalently</span>
+<pre>     <span class=TT>ipf.get("deltat",dt);</span></pre>
+<span class=text>where <span class=TT>ipf</span> is an instance of class
+<a href="html/classOFELI_1_1IPF.html">IPF</a>.<br><br>
+
+The following table describes the list of parameters in the <span class=TT>Prescription</span> file:
+</span>
+<br><br>
+<p>
+<table border="2" cellpadding="5" rules="all" bgcolor="#e0f8f7" width="800">
+    <tr>
+        <td valign="top"><P CLASS=TT>verbose</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Level for information output.
+        Typically, the integer number must be between <span class="var">1</span> and
+        <span class="var">10</span>. Its default value is
+        <span class="var">1</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>output</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Level for solution output. Its default
+        value is <span class="var">0</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>save</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Level for solution saving in file.
+        Its default value is <span class="var">0</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>plot</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>An integer that defines a level for solution saving in plot file.
+        Its default value is <span class="var">0</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>bc</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Flag for boundary condition (Dirichlet) handling.</SPAN><br>
+          <SPAN CLASS=VAR><b>1:</b></SPAN> <SPAN CLASS=TEXT>Boundary condition vector is described in a <a href="#Prescription">prescription file</a> (Default value)<br>
+          <SPAN CLASS=VAR><b>2:</b></SPAN> <SPAN CLASS=TEXT>Boundary condition vector is in a <a href="#Field">field file</a></SPAN><br>
+       </td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>bf</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Flag for body force handling.</SPAN><br>
+          <SPAN CLASS=VAR><b>1:</b></SPAN> <SPAN CLASS=TEXT>Body force is described in a <a href="#Prescription">prescription file</a> (Default value)</SPAN><br>
+           <SPAN CLASS=VAR><b>2:</b></SPAN> <SPAN CLASS=TEXT>Body force vector is in a <a href="#Field">field file</a></SPAN><br>
+       </td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>sf</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Flag for surface force (Neumann boundary condition) handling.</SPAN><br>
+          <SPAN CLASS=VAR><b>1:</b></SPAN> <SPAN CLASS=TEXT>Surface force vector in a <a href="#Prescription">prescription file</a> (Default value)</SPAN><br>
+          <SPAN CLASS=VAR><b>2:</b></SPAN> <SPAN CLASS=TEXT>Read surface force vector in a <a href="#Field">field file</a></SPAN><br>
+       </td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>init</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Flag for initial condition handling.</span><br>
+          <SPAN CLASS=VAR><b>1:</b></SPAN> <SPAN CLASS=TEXT>Initial solution in a <a href="#Prescription">prescription file</a> (Default value)</SPAN><br>
+          <SPAN CLASS=VAR><b>2:</b></SPAN> <SPAN CLASS=TEXT>Read initial solution in a <a href="#Field">field file</a> </SPAN>
+       </td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>max_time</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>A real number that defines maximal time for a time dependent calculation. Its default value is <span class="var">1.0</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>time_step</p></td><td valign="top"><SPAN CLASS=TEXT>Time step for a time dependent calculation. Its default value is <span class="var">0.1</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>nb_steps</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Number of time steps for a time dependent calculation. Its default value is <span class="var">10</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>nb_iter</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Maximum number of iterations for an iterative scheme. Its default value is <span class="var">100</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>tolerance</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Tolerance for convergence for an iterative scheme.
+        Its default value is <span class="var">1.e-6</span></SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>integer</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>An integer parameter that can be retrieved by the member function <span class="var">getIntPar(i)</span>
+        where <span class="var">i</span> is the rank of appearance of this keyword. Up to <span class="var">10</span>
+        integer parameters can be contained in the file. This maximal number is defined by the constant <span class="var">MAX_NB_PAR</span>
+        in the <span class="logo">OFELI</span> constants</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>double</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>A double precision parameter that can be retrieved by the member
+        function <span class="var">getDoublePar(i)</span>
+        where <span class="var">i</span> is the rank of appearance of this keyword. Up to <span class="var">10</span>
+        double precision parameters can be contained in the file. This maximal number is defined by the constant <span class="var">MAX_NB_PAR</span>
+        in the <span class="logo">OFELI</span> constants</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>complex</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>A complex parameter that can be retrieved by the member function
+        <span class="var">getComplexPar(i)</span>
+        where <span class="var">i</span> is the rank of appearance of this keyword. Up to <span class="var">10</span>
+        complex parameters can be contained in the file. This maximal number is defined by the constant <span class="var">MAX_NB_PAR</span>
+        in the <span class="logo">OFELI</span> constants</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>mesh_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains mesh data.
+        The default mesh file name has as extension <span class="var">project_name.m</span>
+        </SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>init_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains initial data</td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>restart_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains restarting field file.
+        This file is useful when an iteration process (or time stepping procedure) is used and the programs stops to restart later</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>bc_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains (Dirichlet) boundary condition data</td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>bf_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains body force initial data</td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>sf_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains surface force data</td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>save_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that fields to save</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>plot_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains fields to plot</td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>data_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains various data</td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>aux_file</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>Name of file that contains any other data in any format. Any occurrence of this
+        keyword will define a new file name that can be retrieved through the member function <span class="var">getAuxFile(i)</span> where <span class="var">i</span>
+        is the rank of the appearance of this keyword. Up to 10 occurrences can be contained in the file. This maximal
+        number is defined by the constant <span class="var">MAX_NB_PAR</span> in the <span class="logo">OFELI</span> constants</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>parameter</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>As explained in the example above, this subelement must contain an option
+		called <span class=tt>label</span> that identifies the parameters and then optionally the option <span class=tt>value</span>
+		to specify a value. If this option is not present, a value must be given before closing the subelement</td>
+    </tr>
+</table>
+
+<p><span class=text>
+Note that the argument of each subelement can be given either through the attribute <SPAN CLASS=TT>value</SPAN>
+or through a value that given between the opening and the closing of the subelement.</span>
+
+<p><span class=text>
+Let us give a simple example of XML file using the <SPAN CLASS=TT>Project</SPAN> element,
+where we have used both possibilities of defining subelements.</span>
+
+<pre>     <span class=TT>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+     &lt;OFELI_File&gt;
+     &lt;info&gt;
+        &lt;title&gt;Project file&lt;/title&gt;
+        &lt;date&gt;August 18, 2008&lt;/date&gt;
+        &lt;author&gt;R. Touzani&lt;/author&gt;
+     &lt;/info&gt;
+     &lt;Project name="beam">
+        &lt;mesh_file&gt;beam.m&lt;/mesh_file&gt;
+        &lt;data_file&gt;beam.pr&lt;/data_file&gt;
+        &lt;parameter label="d-file"&gt;beam.d&lt;/parameter&gt;
+        &lt;parameter label="density" value="1.2"/&gt;
+        &lt;nb_iter&gt;100&lt;/nb_iter&gt;
+        &lt;tolerance value="1.e-5"&gt;&lt;/tolerance&gt;
+        &lt;verbose&gt;1&lt;/verbose&gt;
+        &lt;output&gt;1&lt;/output&gt;
+        &lt;save value="1"/&gt;
+     &lt;/Project&gt;
+     &lt;/OFELI_File&gt;
+</span></pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a name="Domain"></a>
+<h3>Element: <font color="#990000">Domain</font></h3>
+
+<span class=text>
+The element <span class=TT>Domain</span> enables defining a domain geometry.
+At the current stage of development of <span class=LOGO>OFELI</span>, a domain
+definition is necessary to generate meshes in the 2-D configurations. This
+element has 2 attributes:
+<ul>
+   <li>The attribute <SPAN class=TT>dim</SPAN> defines the space dimension. Typically,
+       <span class=var>1</span>, <span class=var>2</span> or <span class=var>3</span>. Its default
+       value is <span class=var>2</span>.
+   <li>The attribute <SPAN class=TT>nb_dof</SPAN> defines the number of degrees of freedom on any
+       unknown support. For instance, if unknowns are supported by nodes, one can specify that each
+       node supports 2 degrees of freedom for a planar elasticity problem. The default value
+       of this parameter is <span class=var>1</span>.
+</ul>
+An example of use of this element is:</span>
+
+<pre>     <SPAN class=TT>&lt;Domain dim="2"&gt;
+        &lt;vertex&gt;  0.   0.   1    0.1&lt;/vertex&gt;
+        &lt;vertex&gt;  1.   0.   1    0.1&lt;/vertex&gt;
+        &lt;vertex&gt;  1.   1.   1    0.1&lt;/vertex&gt;
+        &lt;vertex&gt;  0.   1.   1    0.1&lt;/vertex&gt;
+        &lt;vertex&gt;  0.5  0.5  2    0.1&lt;/vertex&gt;
+        &lt;vertex&gt;  0.6  0.5  2    0.1&lt;/vertex&gt;
+        &lt;line&gt;   1   2   0   2&lt;/line&gt;
+        &lt;line&gt;   2   3   0   2&lt;/line&gt;
+        &lt;line&gt;   3   4   0   2&lt;/line&gt;
+        &lt;line&gt;   4   1   0   2&lt;/line&gt;
+        &lt;circle&gt; 6   6   5   1   1&lt;/circle&gt;
+        &lt;subdomain&gt;   1   1  10&lt;/subdomain&gt;
+     &lt;/Domain&gt;
+</SPAN></pre>
+Let us describe the subelements of element <span class=TT>Domain</span>:</span><br><br>
+<p>
+<table border="2" cellpadding="5" rules="all" bgcolor="#e0f8f7" width="800">
+    <tr>
+        <td valign="top"><P CLASS=TT>vertex</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe a vertex in the domain</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>line</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe a straight line that joins 2 vertices</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>circle</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe a circular arc</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>subdomain</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe a subdomain with a specific code</SPAN></td>
+    </tr>
+</table>
+</p>
+
+<ul type="square">
+  <li><span class=text>
+      The subelement <span class=TT>vertex</span> describes a vertex by the following data:
+<pre>   <span class=TT>x   y   c   h</span></pre>
+     where <span class=TT>x</span> and <span class=TT>y</span> are the vertex coordinates, <span class=TT>h</span>
+     is the mesh size around the vertex and <span class=TT>c</span> is the code to assign to the vertex. This code
+     will be transferred to the vertex once a mesh is generated</span>
+  <li><span class=text>
+      The subelement <span class=TT>line</span> describes a straight line by the following data:
+<pre>   <span class=TT>n1  n2  dc  nc</span></pre>
+     where the line goes from vertex <span class=TT>n1</span> to vertex <span class=TT>n2</span> and <span class=TT>dc</span>
+     and <span class=TT>nc</span> are the codes to assign to the nodes generated on the line (Dirichlet) and the
+     to the sides generated on the line (Neumann). Note that line is actually oriented from <span class=TT>n1</span>
+     to <span class=TT>n2</span></span>
+  <li><span class=text>The subelement <span class=TT>circle</span> describes a circular arc by the following data:
+<pre>   <span class=TT>n1  n2  n3  dc  nc</span></pre>
+     where the arc goes from vertex <span class=TT>n1</span> to vertex
+  <span class=TT>n2</span>.
+     Note that we can have <span class=TT>n1=n2</span> which in this case generates an entire circle.
+     The center of the circle is located at vertex <span class=TT>n3</span>.
+     The integers <span class=TT>dc</span> and <span class=TT>nc</span> stand respectively for
+     the codes to assign to nodes generated on the line (Dirichlet) and the
+     to sides generated on the line (Neumann)
+  <li><span class=text>The subelement <span class=TT>subdomain</span> describes a circular arc by the following data:
+<pre>   <span class=TT>n  i  c</span></pre>
+     where <span class=TT>n</span> is a line (or arc) that belongs to
+     the boundary of the subdomain, <span class=TT>i</span> is the arc
+      orientation. It must be equal to <span class=TT>1</span> (anti-clockwise) or <span class=TT>-1</span>, and
+     <span class=TT>c</span> is a code (integer number) to associate to the subdomain
+<!--  <li>The subelement <span class=TT>rectangle</span> describes a circular arc by the following data:
+<pre>   <span class=TT>xmin  ymin  xmax  ymax  type  nex  ney  ratio
+   c1  c2  c3  c4  cs1  cs2  cs3  cs4</span></pre>
+   where
+   <ul type="circle">
+      <li><span class=TT>xmin</span> and <span class=TT>ymin</span> are the coordinates of the bottom left corner
+          of the rectangle
+      <li><span class=TT>xmax</span> and <span class=TT>ymax</span> are the coordinates of the top right corner
+          of the rectangle
+      <li><span class=TT>type</span> is an option to say if the rectangles will be divided into rectangles or triangles
+      <li><span class=TT>nex</span> and <span class=TT>ney</span>
+      <li><span class=TT>ratio</span>
+      <li><span class=TT>c1</span>, <span class=TT>c2</span>, <span class=TT>c3</span> and <span class=TT>c4</span>-->
+</ul></span>
+
+<span class=text>
+&nbsp;&nbsp;&nbsp;
+<a name="Mesh"></a>
+<h3>Element: <font color="#990000">Mesh</font></h3>
+
+The element <SPAN class=TT>Mesh</SPAN> enables providing data that describe a finite element mesh.
+It has 2 optional attributes:
+<ul>
+   <li>The attribute <SPAN class=TT>dim</SPAN> defines the space dimension. Typically,
+       <span class=var>1</span>, <span class=var>2</span> or <span class=var>3</span>. Its default
+       value is <span class=var>2</span>.
+   <li>The attribute <SPAN class=TT>nb_dof</SPAN> defines the number of degrees of freedom on any
+       unknown support. For instance, if unknowns are supported by nodes, one can specify that each
+       node supports 2 degrees of freedom for a planar elasticity problem. The default value
+       of this parameter is <span class=var>1</span>.
+</ul>
+
+An example of use of this element is:
+
+<pre>     <span class=TT>&lt;Mesh dim="3" nb_dof="2"&gt;
+        ...
+        ...
+     &lt;/Mesh&gt;
+</span></pre>
+
+This element has the following subelements:<br><br>
+
+<p>
+<table border="2" cellpadding="5" rules="all" bgcolor="#e0f8f7" width="800">
+    <tr>
+        <td valign="top"><P CLASS=TT>Nodes</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe nodes</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>Elements</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe elements</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>Sides</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe sides</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>Material</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe materials for elements</SPAN></td>
+    </tr>
+</table>
+
+<p>
+<ul type=square>
+   <li>The subelement <SPAN CLASS=TT>Nodes</SPAN> enables defining each node data. Typically,
+   it can be used as follows:
+<pre>     <span class=TT>&lt;Nodes&gt;
+       x1   y1   z1   c1   x2   y2   z2   c2   x3   y3   z3   c3
+       x4   y4   z4   c4        ...
+       ...
+       ...      ...        xn   yn   zn   cn
+     &lt;/Nodes&gt;
+</span></pre>
+     More precisely, each node is given by its coordinates. In this example, a 3-D problem requires
+     three coordinates. For a 2-D problem only x and y-coordinates are required. The coordinates are
+     followed by an integer number that describes a code to associate to the node. This code is used
+     to prescribe boundary conditions. It is important to mention that any nonzero code enforces a
+     boundary condition of a given DOF (Degree Of Freedom). By convention, this code is chosen such
+     that it has as many digits as the number of DOF for the node. For instance if the number of DOF
+     of a node is 3, then the code number <SPAN CLASS=VAR>231</SPAN> yields a code <SPAN CLASS=VAR>2</SPAN>     for the first DOF, <SPAN CLASS=VAR>3</SPAN> for the second DOF and <SPAN CLASS=VAR>1</SPAN> for
+     the third one.<br>
+     Another important thing to note is that the nodes are given in a free format one after the
+     other. Moreover, the number of nodes doesn't have to be specified. The parser deduces it from
+     the list size.
+<p>
+   <li>The subelement <SPAN CLASS=TT>Elements</SPAN> enables defining the finite elements.
+     It has the following attributes:
+     <ul>
+        <li>The attribute <SPAN CLASS=TT>shape</SPAN> specifies the shape of the finite element. It
+        must take one of the following values: <SPAN CLASS=TT>line</SPAN>,
+        <SPAN CLASS=TT>triangle</SPAN> or <SPAN CLASS=TT>tria</SPAN>,
+        <SPAN CLASS=TT>quadrilateral</SPAN> or <SPAN CLASS=TT>quad</SPAN>,
+        <SPAN CLASS=TT>tetrahedron</SPAN> or <SPAN CLASS=TT>tetra</SPAN>,
+        and <SPAN CLASS=TT>hexahedron</SPAN> or <SPAN CLASS=TT>hexa</SPAN>. The default value is
+        <SPAN CLASS=TT>line</SPAN> for 1-D, <SPAN CLASS=TT>triangle</SPAN> for 2-D and
+        <SPAN CLASS=TT>tetrahedron</SPAN> for 3-D.
+        <li>The attribute <SPAN CLASS=TT>nodes</SPAN> is the number of element nodes. Its
+        default value is <SPAN CLASS=TT>2</SPAN> for 1-D, <SPAN CLASS=TT>3</SPAN> for 2-D,
+        and <SPAN CLASS=TT>4</SPAN> for 3-D.
+     </ul>
+     A typical example of subelement <SPAN CLASS=TT>Elements</SPAN> is the following:
+<pre>     <span class=TT>&lt;Elements shape="triangle" nodes="3"&gt;
+      1   2   5   1     2   3   5   1
+      3   4   5   1     4   1   5   1
+     &lt;/Elements&gt;
+     &lt;Elements shape="quadrilateral" nodes="4"&gt;
+      2   6   7   3   2
+     &lt;/Elements&gt;
+</span></pre>
+     Note that the elements are grouped shape by shape.<br>
+     More precisely, for each element are given:
+     <ul>
+       <li>The list of its nodes. Their number is given by the attribute <SPAN CLASS=TT>nodes</SPAN>
+       or  by its default value.
+       <li>An integer number that stands for its code. This code is helpful to specify the material
+       in which lies the element. It can also be used for any other purpose to select lists of
+       elements.
+     </ul>
+     Note that the number of elements doesn't have to be specified. The parser deduces it from the
+     list size.
+<p>
+   <li>The subelement <SPAN CLASS=TT>Sides</SPAN> enables defining sides (edges in 2-D, faces in 3-D) in a finite element mesh.
+     It has the following attributes:
+     <ul>
+        <li>The attribute <SPAN CLASS=TT>shape</SPAN> specifies the shape of the side. It
+        must take one of the following values: <SPAN CLASS=TT>line</SPAN>,
+        <SPAN CLASS=TT>triangle</SPAN> or <SPAN CLASS=TT>tria</SPAN>,
+        <SPAN CLASS=TT>quadrilateral</SPAN> or <SPAN CLASS=TT>quad</SPAN>. The default value is
+        <SPAN CLASS=TT>line</SPAN> for 2-D and <SPAN CLASS=TT>triangle</SPAN> for 3-D.
+        <li>The attribute <SPAN CLASS=TT>nodes</SPAN> is the number of side nodes. Its
+        default value is <SPAN CLASS=TT>2</SPAN> for 2-D and <SPAN CLASS=TT>3</SPAN> for 3-D.
+     </ul>
+     A typical example of subelement <SPAN CLASS=TT>Sides</SPAN> is the following:
+<pre>     <span class=TT>&lt;Sides shape="line" nodes="2"&gt;
+      1   2   1     2   3   1
+     &lt;/Sides&gt;
+</span></pre>
+     Note that the sides are grouped shape by shape.<br>
+     More precisely, for each side are given:
+     <ul>
+       <li>The list of its nodes. Their number is given by the attribute <SPAN CLASS=TT>nodes</SPAN>
+       or  by its default value.
+       <li>An integer number that stands for its code. This code plays the same role as for nodes.
+     </ul>
+     Note that the number of sides doesn't need be specified. The parser deduces it from the
+     list size.
+<p>
+   <li>The subelement <SPAN CLASS=TT>Material</SPAN> enables attributing a material to each element code. Element codes are given as integers in the <SPAN CLASS=TT>Elements</SPAN> section. If no material
+   is associated to a code, the library assigns a so-called <SPAN CLASS=TT>Generic</SPAN> material with default physical properties. This is to be used for testing purposes. For a realistic use of the
+   library, each material is defined through its properties by an XML file. For instance, the
+   material <i>Iron</i> is defined in the file <SPAN CLASS=TT>Iron.md</SPAN>. Depending on the
+   stage of development of the library, number of material files are already present. The
+   element <SPAN CLASS=TT>&lt;Material&gt;</SPAN> enables defining a user's material.<br>
+   A typical example of subelement <SPAN CLASS=TT>Material</SPAN> is the following:
+<pre>     <span class=TT>&lt;Material&gt;
+       1   Rubber
+       5   Copper
+     &lt;/Material&gt;
+</span></pre>
+   More precisely, each material is given by an integer that is the code and a string that is the
+   material name. Either the material file exists in the given list of <SPAN CLASS=LOGO>OFELI</SPAN>
+   materials (here files <SPAN CLASS=TT><font color="#00000">Rubber.md</font></SPAN> and
+   <SPAN CLASS=TT><font color="#00000">Copper.md</font></SPAN>), or the user provides in his
+   own directory the required material file.
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a name="Prescription"></a>
+<h3>Element: <font color="#990000">Prescription</font></h3>
+
+This element encloses information on conditions to prescribe for the numerical solution
+by the <SPAN CLASS=LOGO>OFELI</SPAN> library. We mean here by prescription, enforcement
+of boundary conditions (Dirichlet), Boundary forces (Neumann boundary conditions, Body forces
+(right-hand side of equations, initial condition, ... To each type of prescription corresponds
+a subelement. Moreover, prescription of variable (time and/or space dependent) conditions
+are allowable through algebraic equations.<br>
+The element <SPAN CLASS=TT>Prescription</SPAN> doesn't have any attribute. It has the following
+subelements:<br><br>
+<p>
+<table border="2" cellpadding="5" rules="all" bgcolor="#e0f8f7" width="600">
+   <tr>
+     <td valign="top" width="25%"><P class=TT>BoundaryCondition</P></td>
+     <td valign="top"><SPAN class=TEXT>To prescribe (essential or Dirichlet) boundary conditions</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT>BodyForce</P></td>
+     <td valign="top"><SPAN class=TEXT>To prescribe body forces or sources, ...</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT>Source</P></td>
+     <td valign="top"><SPAN class=TEXT>Identical to <SPAN CLASS=TT>BodyForce</SPAN></SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT>BoundaryForce</P></td>
+     <td valign="top"><SPAN class=TEXT>To prescribe boundary forces (Neumann boundary conditions),
+like tractions, fluxes, ...</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT>Traction</P></td>
+     <td valign="top"><SPAN class=TEXT>Identical to <SPAN CLASS=TT>BoundaryForce</SPAN></SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT>Flux</P></td>
+     <td valign="top"><SPAN class=TEXT>Identical to <SPAN CLASS=TT>BoundaryForce</SPAN></SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top"><P class=TT>Initial</P></td>
+     <td valign="top"><SPAN class=TEXT>To prescribe an initial condition</SPAN></td>
+   </tr>
+</table>
+
+<ul type=square>
+<p>
+   <li>The subelement <SPAN CLASS=TT>BoundaryCondition</SPAN> enables prescribing a Dirichlet
+   boundary condition. A typical example of its use is:
+<pre>     <span class=TT>&lt;BoundaryCondition code="1" dof="2">x*exp(t)&lt;/BoundaryCondition&gt;
+</span></pre>
+   More precisely, this subelement has the following attributes:
+   <ul>
+      <li>The attribute <SPAN CLASS=TT>code</SPAN> specifies the code for which the
+      boundary condition is assigned. For example, if the degrees of freedom are supported
+      by nodes, this code is the one associated to nodes.
+      <li>The attribute <SPAN CLASS=TT>dof</SPAN> specifies the degree of freedom index
+      to which the boundary condition is assigned. If this attribute is not present,
+      the condition is enforced to all dofs'.
+   </ul>
+<p>
+   <li>The subelement <SPAN CLASS=TT>BodyForce</SPAN> enables prescribing the volume right-hand side
+   of the partial differential equation (Domain integral in the variational formulation).
+   Depending on the problem origin, this one can be
+   called <i>Body Force</i>, <i>Load</i>, <i>Source</i>, ...
+   A typical example of its use is:
+<pre>     <span class=TT>&lt;BodyForce dof="2"&gt;1.0&lt;/BodyForce&gt;
+</span></pre>
+As it can be remarked, this subelement works like <SPAN CLASS=TT>BoundaryCondition</SPAN>
+except the attribute <SPAN CLASS=TT>code</SPAN> which has no meaning in this context
+<p>
+   <li>The subelement <SPAN CLASS=TT>Source</SPAN> is exactly identical to
+   <SPAN CLASS=TT>BodyForce</SPAN>
+<p>
+   <li>The subelement <SPAN CLASS=TT>BoundaryForce</SPAN> enables prescribing the surface right-hand side
+   of the partial differential equation (Boundary integral in the variational formulation or
+   Neumann condition). Depending on the problem origin, this one can be
+   called <i>Boundary Force</i>, <i>Traction</i>, <i>Flux</i>, ...
+A typical example of its use is:
+<pre>     <span class=TT>&lt;BoundaryForce code ="5" dof="2"&gt;x-y&lt;/BoundaryForce&gt;
+</span></pre>
+   As it can be remarked, this subelement works like <SPAN CLASS=TT>BoundaryCondition</SPAN>,
+   The difference being that this condition is generally applied to sides (edges or faces)
+   whereas the Dirichlet boundary condition applies generally to nodes.
+<p>
+   <li>The subelement <SPAN CLASS=TT>Traction</SPAN> is exactly identical to
+   <SPAN CLASS=TT>BoundaryForce</SPAN>
+<p>
+   <li>The subelement <SPAN CLASS=TT>Flux</SPAN> is exactly identical to
+   <SPAN CLASS=TT>BoundaryForce</SPAN>
+<p>
+   <li>The subelement <SPAN CLASS=TT>Initial</SPAN> enables prescribing an initial condition
+   for a time-dependent problem or an initial solution for an iterative process.<br>
+   A typical example of its use is:
+<pre>     <font color="#CC0000" size=3>&lt;Initial dof="1"&gt;(1.0+sin(x))*exp(-t)&lt;/Initial&gt;
+</font></pre>
+   As it can be remarked, this subelement works like <SPAN CLASS=TT>BodyForce</SPAN>
+   for instance.
+</ul>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a name="Material"></a>
+<h3>Element: <font color="#990000">Material</font></h3>
+
+Material data are stored in specific XML files. Each file corresponds to a given material.
+The <SPAN CLASS=LOGO>OFELI</SPAN> library contains a collection of material files that will
+be enriched in the forthcoming releases.<br>
+In <SPAN CLASS=LOGO>OFELI</SPAN>, the material named <SPAN CLASS=TT>Mat</SPAN> is described
+in the XML file: <SPAN CLASS=TT>Mat.md</SPAN>
+<p>
+Let us give as example the material file for the material <i>Copper</i>. Here is the
+listing of the file <SPAN CLASS=TT>Copper.md</SPAN>
+the
+<pre>     <span class=TT>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+     &lt;OFELI_File&gt;
+     &lt;info&gt;
+        &lt;title&gt;Material data for Copper&lt;/title&gt;
+        &lt;date&gt;&lt;/date&gt;
+        &lt;author&gt;&lt;/author&gt;
+     &lt;/info&gt;
+     &lt;Material name="Copper"&gt;
+        &lt;Density&gt;1.&lt;/Density&gt;
+        &lt;SpecificHeat&gt;8920.&lt;/SpecificHeat&gt;
+        &lt;ThermalConductivity&gt;401.&lt;/ThermalConductivity&gt;
+        &lt;ElectricConductivity&gt;5.9302e07&lt;/ElectricConductivity&gt;
+        &lt;ElectricResistivity&gt;1.6863e-8&lt;/ElectricResistivity&gt;
+        &lt;MagneticPermeability&gt;12.566371e-7&lt;/MagneticPermeability&gt;
+        &lt;PoissonRatio&gt;0.34&lt;/PoissonRatio&gt;
+        &lt;YoungModulus&gt;15.e10&lt;/YoungModulus&gt;
+     &lt;/Material&gt;
+     &lt;/OFELI_File&gt;
+</span></pre>
+<br>
+
+The structure of this file doesn't need any additional explanation. We shall however give
+hereafter the list of properties that can be stored in the XML file:<br><br>
+<p>
+<table border="2" cellpadding="5" rules="all" bgcolor="#e0f8f7" width="600">
+   <tr>
+     <td valign="top" width="25%"><P class=TT>Density</P></td>
+     <td valign="top"><SPAN class=TEXT>Density of material (Heat and Mass Transfer)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>SpecificHeat</P></td>
+     <td valign="top"><SPAN class=TEXT>Specific Heat (Heat Transfer)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>ThermalConductivity</P></td>
+     <td valign="top"><SPAN class=TEXT>Thermal Conductivity (Heat Transfer)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>MeltingTemperature</P></td>
+     <td valign="top"><SPAN class=TEXT>Melting Temperature (Heat Transfer)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>EvaporationTemperature</P></td>
+     <td valign="top"><SPAN class=TEXT>Evaporation Temperature (Heat Transfer)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>ThermalExpansion</P></td>
+     <td valign="top"><SPAN class=TEXT>Thermal Expansion (Heat and Mass Transfer)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>LatentHeatMelting</P></td>
+     <td valign="top"><SPAN class=TEXT>Latent Heat for Melting (Heat Transfer)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>LatentHeatEvaporation</P></td>
+     <td valign="top"><SPAN class=TEXT>Latent Heat for Evaporation (Heat Transfer)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>DielectricConstant</P></td>
+     <td valign="top"><SPAN class=TEXT>Dielectric Constant (Electromagnetism)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>ElectricConductivity</P></td>
+     <td valign="top"><SPAN class=TEXT>Electric Conductivity (Electromagnetism)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>ElectricResistivity</P></td>
+     <td valign="top"><SPAN class=TEXT>Electric Resistivity: Inverse of Conductivity
+     (Electromagnetism)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>MagneticPermeability</P></td>
+     <td valign="top"><SPAN class=TEXT>Magnetic Permeability (Electromagnetism)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>Viscosity</P></td>
+     <td valign="top"><SPAN class=TEXT>Kinematic Viscosity (Fuid Dynamics)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>YoungModulus</P></td>
+     <td valign="top"><SPAN class=TEXT>Young Modulus (Solid Mechanics)</SPAN></td>
+   </tr>
+   <tr>
+     <td valign="top" width="25%"><P class=TT>PoissonRatio</P></td>
+     <td valign="top"><SPAN class=TEXT>Poisson Ratio (Solid Mechanics)</SPAN></td>
+   </tr>
+</table>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a name="Field"></a>
+<h3>Element: <font color="#990000">Field</font></h3>
+
+The element <SPAN CLASS=TT>Field</SPAN> is useful to store vectors, such as input vectors,
+results. We have grouped all
+these vectors under the term <i>Field</i>. The field file that contains these vectors
+can be transformed via conversion programs to various file formats for well known free and
+commercial graphical postprocessors.
+<p>
+Fields can be divided into 3 types depending on the degree of freedom support: Fields can
+be given by nodes, elements or sides. In addition, in view of handling time-dependent
+problems, the file can contain as many vectors as necessary, each one corresponding
+to a given time step.
+<p>
+A typical file containing fields looks like this
+<pre>     <span class=TT>
+     &lt;OFELI_File&gt;
+        ... ...
+     &lt;Field name="Temperature" type="Node" nb_dof="1"&gt;
+        &lt;Step time="0.1"&gt;
+          ... ...
+          ... ...
+        &lt;/Step&gt;
+        &lt;Step time="0.2"&gt;
+          ... ...
+          ... ...
+        &lt;/Step&gt;
+     &lt;/Field&gt;
+     &lt;Field name="Displacement" type="Element" nb_dof="2"&gt;
+        &lt;Step time="0.1"&gt;
+           &lt;constant dof="1"&gt;1.0&lt;/constant&gt;
+           &lt;expression dof="2"&gt;x*exp(t)&lt;/expression&gt;
+        &lt;/Step&gt;
+     &lt;/Field&gt;
+     &lt;/OFELI_File&gt;
+</span></pre>
+<br>
+
+More precisely, the element <SPAN CLASS=TT>Field</SPAN> has the attributes:
+<ul type=square>
+   <li>The attribute <SPAN CLASS=TT>name</SPAN> specifies the name to give to the field. This
+       attribute is optional.
+   <li>The attribute <SPAN CLASS=TT>type</SPAN> specifies the type of the field. It must take one
+       of the values: <SPAN CLASS=TT>Node</SPAN>, <SPAN CLASS=TT>Element</SPAN> or
+       <SPAN CLASS=TT>Side</SPAN>. The default value is <SPAN CLASS=TT>Node</SPAN>.
+   <li>The attribute <SPAN CLASS=TT>nb_dof</SPAN> gives the number of degrees of freedom for one
+       support, <i>e.g.</i> if the type is <SPAN CLASS=TT>Node</SPAN>, there are
+       <SPAN CLASS=TT>nb_dof</SPAN> values per node. The default value of this attribute is
+       <SPAN CLASS=TT>"1"</SPAN>
+</ul>
+<ul type=circle>
+   <li>The element <SPAN CLASS=TT>Field</SPAN> has only one subelement:
+       <SPAN CLASS=TT>Step</SPAN>
+   <li>The subelement <SPAN CLASS=TT>Step</SPAN> gives the vector entries for the
+       specified value of the attribute <SPAN CLASS=TT>time</SPAN>. It owns two
+       subelements:
+       <ul type="-">
+          <li>The element <SPAN CLASS=TT>constant</SPAN> enables assigning a constant
+              value to all vector entries for one given dof or all dofs. It has the
+              attribute <SPAN CLASS=TT>dof</SPAN> that can specify the dof to be assigned.
+              By default, all dofs are assigned this constant value
+          <li>The element <SPAN CLASS=TT>expression</SPAN> enables assigning an algebraic
+              expression that may involve the coordinates <SPAN CLASS=TT>x</SPAN>, <SPAN CLASS=TT>y</SPAN>,
+              <SPAN CLASS=TT>z</SPAN> and the time <SPAN CLASS=TT>t</SPAN>, to
+              all vector components for one given dof or all dofs. It has the
+              attribute <SPAN CLASS=TT>dof</SPAN> that can specify the dof to be assigned.
+              By default, all dofs are assigned this expression
+       </ul>
+</ul>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a name="Function"></a>
+<h3>Element: <font color="#990000">Function</font></h3>
+
+The element <span class=TT>Function</span> defines a tabulated function of one, two or three variables.
+In order to minimize computational cost, each variable is defined by a uniform partitioning given by
+its minimal value, its maximal values and the number of grid points.<br>
+
+This element has as unique attribute the name of the function.<br>
+
+A typical usage of this element is:
+
+<pre>     <SPAN class=TT>&lt;Function name="Density"&gt;
+        &lt;Variable label="x" nb_pts="5" min="0" max="1"/&gt;
+        &lt;Variable label="y" nb_pts="4" min="10" max="12"/&gt;
+        &lt;Data&gt;
+           1.0   2.0   5.0   7.0
+           2.0   3.0   5.0   8.0
+           7.0   2.0   5.0   9.0
+           0.0   2.0   8.0  10.0
+          11.0  20.0  25.0  30.0
+        &lt;/Data&gt;
+     &lt;/Function&gt;
+</SPAN></pre>
+Let us describe the subelements of element <span class=TT>Function</span>:<br><br>
+<p>
+<table border="2" cellpadding="5" rules="all" bgcolor="#e0f8f7" width="800">
+    <tr>
+        <td valign="top"><P CLASS=TT>Variable</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To describe a variable</SPAN></td>
+    </tr>
+    <tr>
+        <td valign="top"><P CLASS=TT>Data</p></td>
+        <td valign="top"><SPAN CLASS=TEXT>To give list of function values</SPAN></td>
+    </tr>
+</table>
+
+<ul type="square">
+  <li>The subelement <span class=TT>Variable</span> describes a variable. Its attributes are:
+      <ul type="-">
+          <li>The attribute <SPAN CLASS=TT>label</SPAN> gives a name to the variable. This name
+          has no particular usage. Only the order of the variables is important for a function evaluation.
+          <li>The attribute <SPAN CLASS=TT>nb_pts</SPAN> gives the number of grid points for this
+		      variable, <i>i.e.</i> This is the number of grid intervals plus one
+          <li>The attribute <SPAN CLASS=TT>min</SPAN> gives the minimal value of the variable
+          <li>The attribute <SPAN CLASS=TT>max</SPAN> gives the maximal value of the variable
+       </ul>
+  <li>The subelement <span class=TT>Data</span> gives the function values ordered as follows (This is an 
+  example of a function of 2 variables):
+ <p>
+     <pre><span class=TT>   val(1,1)   val(1,2)   ...  val(1,n2)
+   val(2,1)   val(2,2)   ...  val(2,n2)
+   ...
+   val(n1,1)  val(n1,2)  ...  val(n1,n2)
+	 </span></pre>
+   where <span class=TT>n1</span> and <span class=TT>n2</span> are the number of points for the first and
+   second variable respectively
+</ul>
+</span>
+
+&nbsp;
+<div id="foot_bar">
+   Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+</div>
+
+</body>
+</html>

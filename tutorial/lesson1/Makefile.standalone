@@ -1,0 +1,15 @@
+
+all:	lesson1
+
+lesson1:	main.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o lesson1 main.o `ofeli-config --libs`
+
+clean:
+	/bin/rm -f main.o lesson1`ofeli-config --exe_ext`
+
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

@@ -1,0 +1,21 @@
+
+bin_PROGRAMS = std3
+AUTOMAKE_OPTIONS = no-dependencies
+
+std3_SOURCES = main.cpp
+
+std3_LDADD  = $(top_builddir)/src/libofeli.a
+
+std3dir   =	$(datadir)/ofeli/demos/thermal/std3
+std3_DATA =	main.cpp \
+		beam.dat \
+		beam.m \
+		Makefile.standalone \
+		std3.cbp \
+		README
+dist_std3_DATA =	main.cpp \
+			beam.dat \
+			beam.m \
+			Makefile.standalone \
+			std3.cbp \
+			README

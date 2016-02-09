@@ -1,0 +1,16 @@
+Lesson 4
+--------
+
+This example illustrates a test of OFELI. It solves a
+2-D transient heat equation using :
+
+   - Triangle P1-finite element for space discretization
+   - Implicit Euler scheme for time discretization
+   - Mixed Dirichlet and Neumann Boundary Conditions
+
+To execute the example type
+
+          lesson4  test.dat
+
+The program will then ask you for final time and time step.
+

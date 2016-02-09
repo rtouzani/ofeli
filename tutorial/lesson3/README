@@ -1,0 +1,11 @@
+Lesson 3
+--------
+
+This example illustrates a test of OFELI. It solves a
+2-D Stationary Diffusion equation using triangle P1-finite element.
+The linear system is solved using the Conjugate gradient method.
+
+To execute the example type
+
+          lesson3  test.m
+

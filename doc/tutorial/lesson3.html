@@ -1,0 +1,316 @@
+<!-- XHTML 1.0 Strict -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<meta name="author" content="Rachid Touzani" />
+<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
+<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
+<link href="../css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Lesson 3</title>
+<link rel="stylesheet" type="text/css" href="../doxygen.css" />
+<link rel="stylesheet" type="text/css" href="../tabs.css"  />
+</head>
+
+<body bgcolor="#FFFFFF" link="#FF0000" vlink="#FF00FF" alink="#FF00FF">
+<p align="center"><a href="../index.html"><img src="../im/ofeli.gif" width="150" border="0"></a></p>
+
+<center>
+  <div id="cse" style="width: 60%;">Loading</div>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript"> 
+     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
+     google.setOnLoadCallback(function() {
+        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
+        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
+        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+        customSearchControl.draw('cse');
+     }, true);
+   </script>
+   <style type="text/css">
+     .gsc-control-cse {
+     font-family: Verdana, sans-serif;
+     border-color: #DAE0E5;
+     background-color: #DAE0E5;
+   }
+   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
+   input.gsc-input { border-color: #B6BEC5; }
+   input.gsc-search-button {
+     border-color: #B6BEC5;
+     background-color: #D0D1D4;
+   }
+   .gsc-tabHeader.gsc-tabhInactive {
+     border-color: #999999;
+     background-color: #EEEEEE;
+   }
+   .gsc-tabHeader.gsc-tabhActive {
+     border-color: #999999;
+     background-color: #999999;
+   }
+   .gsc-tabsArea { border-color: #999999; }
+   .gsc-webResult.gsc-result,
+   .gsc-results .gsc-imageResult {
+     border-color: #FFFFFF;
+     background-color: #FFFFFF;
+   }
+   .gsc-webResult.gsc-result:hover,
+   .gsc-imageResult:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gs-webResult.gs-result a.gs-title:link,
+   .gs-webResult.gs-result a.gs-title:link b,
+   .gs-imageResult a.gs-title:link,
+   .gs-imageResult a.gs-title:link b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:visited,
+   .gs-webResult.gs-result a.gs-title:visited b,
+   .gs-imageResult a.gs-title:visited,
+   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:hover,
+   .gs-webResult.gs-result a.gs-title:hover b,
+   .gs-imageResult a.gs-title:hover,
+   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:active,
+   .gs-webResult.gs-result a.gs-title:active b,
+   .gs-imageResult a.gs-title:active,
+   .gs-imageResult a.gs-title:active b { color: #0568CD; }
+   .gsc-cursor-page { color: #0568CD; }
+   a.gsc-trailing-more-results:link { color: #0568CD; }
+   .gs-webResult .gs-snippet,
+   .gs-imageResult .gs-snippet,
+   .gs-fileFormatType { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl,
+   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { display: none; }
+   .gs-webResult div.gs-visibleUrl-long { display: block; }
+   .gs-promotion div.gs-visibleUrl-short { display: none; }
+   .gs-promotion div.gs-visibleUrl-long { display: block; }
+   .gsc-cursor-box { border-color: #FFFFFF; }
+   .gsc-results .gsc-cursor-box .gsc-cursor-page {
+      border-color: #999999;
+      background-color: #FFFFFF;
+      color: #0568CD;
+   }
+   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+      border-color: #999999;
+      background-color: #999999;
+      color: #0568CD;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion {
+      border-color: #D2D6DC;
+      background-color: #D0D1D4;
+   }
+   .gsc-completion-title { color: #0568CD; }
+   .gsc-completion-snippet { color: #5F6A73; }
+   .gs-promotion a.gs-title:link,
+   .gs-promotion a.gs-title:link *,
+   .gs-promotion .gs-snippet a:link { color: #0066CC; }
+   .gs-promotion a.gs-title:visited,
+   .gs-promotion a.gs-title:visited *,
+   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
+   .gs-promotion a.gs-title:hover,
+   .gs-promotion a.gs-title:hover *,
+   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
+   .gs-promotion a.gs-title:active,
+   .gs-promotion a.gs-title:active *,
+   .gs-promotion .gs-snippet a:active { color: #0066CC; }
+   .gs-promotion .gs-snippet,
+   .gs-promotion .gs-title .gs-promotion-title-right,
+   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
+   .gs-promotion .gs-visibleUrl,
+   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
+   </style>
+</center>
+</p>
+
+<div id="mainmenu">
+<div class="text">
+
+ <div class="tabs">
+   <ul class="tablist">
+   <li><a href="../index.html"><span>Home</span></a>
+   <li><a href="../overview.htm"><span>Overview</span></a>
+   <li><a href="../html/index.html"><span>Class Documentation</span></a>
+   <li><a href="../fformats.html"><span>File Formats</span></a>
+   <li class="current"><a href="../tutorial.html"><span>Tutorial</span></a>
+   <li><a href="../demos.html"><span>Demo Codes</span></a>
+   </ul>
+ </div>
+
+</div>
+</div>
+
+&nbsp;
+<p>
+<h2>Lesson 3: Using an iterative solver</h2>
+
+<p><table border="2" cellpadding="2" cellspacing="0" >
+<tr>
+<td align="center" width="35"><a href="lesson2.html"><img src="../im/backward.gif" border="0"></a></td>
+<td align="center" width="35"><a href="../tutorial.html"><img src="../im/top.gif" border="0"></a></td>
+<td align="center" width="35"><a href="lesson4.html"><img src="../im/forward.gif" border="0"></a></td>
+</tr>
+</table>
+</p>
+
+<p>
+<span class=TEXT>We consider the same example as in <a href="lesson2.html">Lesson 2</a> with the following modifications:</span>
+<ul type="square">
+<li><span class=TEXT>We solve the linear system using the Conjugate Gradient method.</span>
+<li><span class=TEXT>In view of an iterative method we prefer to use, to handle boundary conditions, a classical substitution method rather than the penalty
+formulation.</span>
+<li><span class=TEXT>We use a defined material by giving its name in the mesh file.</span>
+</ul></p>
+
+<p class=EL>The Finite Element Code</p>
+
+<h4><span class=text><font color="red">The main program</font></span></h4>
+
+<SPAN class=TEXT>Here is a description of the source code. The source file can be found in Example 3 in the <span class=VAR>examples</span> directory</span>.
+
+<ul type="square">
+<li><SPAN class=TEXT>We start like in <a href="lesson2.html">Lesson 2</a>.</span>
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>#include "OFELI.h"
+#include "Therm.h"
+using namespace OFELI;
+
+int main(int argc, char *argv[])
+{</font></pre>
+</td></tr></table></p>
+<li><span class=TEXT>We expand the argument of the program:
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   if (argc &lt;= 1) {
+     cout &lt;&lt; " Usage: lesson3 &lt;mesh_file&gt;" &lt;&lt; endl;
+     exit(1);
+   }</font></pre>
+</td></tr></table></p>
+<li><span class=TEXT>We read mesh data using an option that removes imposed degrees of
+freedom for the list of unknowns. This is in contrast with the penalty technique used in
+<a href="lesson2.html">Lesson 2</a>.</span>
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   Mesh ms(argv[1],true);</font></pre>
+</td></tr></table></p>
+<li><span class=TEXT>We store the matrix in a sparse format, thus using class <a href="../html/classOFELI_1_1SpMatrix.html">SpMatrix&lt;double&gt;</a>
+</span>
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   SpMatrix&lt;double&gt; A(ms);</font></pre>
+</td></tr></table></p>
+<li><span class=TEXT>Vectors <span class=TT>b</span> and <span class=TT>x</span> will store
+respectively the right-hand side and the solution. Note that, since imposed degrees of freedom
+are eliminated from the equations, the vectors have as sizes the actual number of equations.
+The vector <span class=TT>bc</span> will store imposed (Dirichlet) boundary conditions,
+and <span class=TT>u</span> is the final vector containing the
+solution. Note that the vectors </span> <span class=TT>bc</span> and <span class=TT>u</span>
+are constructed using the mesh instance. This means that their size is
+the total number of degrees of freedom, while the other vectors have
+as size <span class=TT>ms.getNbEq()</span> which the number of equations,
+<i>i.e.</i> the number of degrees of freedom minus the number of
+prescribed boundary conditions.
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   Vect&lt;double&gt; b(ms.getNbEq()), x(ms.getNbEq()), bc(ms), u(ms);</font></pre>
+</td></tr></table></p>
+<li><span class=TEXT>Let us present a simple method to implement boundary conditions: We use for this
+the member function <span class=TT>setNodeBC</span> of class <a href="../html/classOFELI_1_1Vect.html">Vect&lt;double&gt;</a>.
+This function enables imposing by means of an 
+algebraic expression. Here, we impose on all nodes with code <span class=TT>1</span> the
+value <span class=TT>y</span>, which is the y-coordinate of the node.</span>
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   bc.setNodeBC(1,"y");</font></pre>
+</td></tr></table></p>
+<li><span class=TEXT>We construct the linear system of equations just as in <a href="lesson2.html">Lesson 2</a>. The difference
+here is that element right-hand sides need to be updated to take into account imposed boundary conditions at element
+level. This is necessary when using an elimination technique for boundary conditions. The member function <span class=TT>
+updateBC</span> is then used before assembly. Note that we have used a different member function for assembly than the
+one in <a href="lesson2.html">Lesson 2</a>: Here this one is a member function of the equation class. Its use is simpler
+since it uses as a unique argument either the matrix (for matrix assembly) or the right-hand side.
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   MeshElements(ms) {
+      DC2DT3 eq(theElement);
+      eq.Diffusion();
+      eq.updateBC(bc);
+      eq.ElementAssembly(A);
+      eq.ElementAssembly(b);
+   }</font></pre>
+</td></tr></table></p><br>
+<li><span class=TEXT>In order to use an iterative method to solve the linear system
+use the class  <a href="../html/classOFELI_1_1LinearSolver.html">LinearSolver</a> that
+drives iterative solvers. Here we use the constructor with the maximal
+number of iterations <span class=VAR>1000</span>, the tolerance for convergence criterium
+<span class=VAR>1.e-8</span> and a verbosity parameter. We solve the
+linear system using the conjugate gradient method preconditioned with the
+diagonal ILU preconditioner.
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   LinearSolver&lt;double&gt; ls(1000,1.e-8,1);
+   int nb_it = ls.solve(A,b,x,CG_SOLVER,DILU_PREC);</font></pre>
+</td></tr></table></p>
+<p>Note that the member function <span class=TT>solve</span> returns
+the number of performed iterations.</span></p>
+<li><span class=TEXT>We print out this number of iterations</span>
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   cout &lt;&lt; "Nb. of iterations: " &lt;&lt; nb_it &lt;&lt; endl;</font></pre>
+</td></tr></table></p>
+<li><span class=TEXT>We incorporate boundary conditions into the solution vector:</span></p>
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   u.insertBC(ms,x,bc);</font></pre>
+</td></tr></table></p>
+<li><span class=TEXT>We finally output the solution vector and end the program</span>
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   cout &lt;&lt; "\nSolution:\n" &lt;&lt; u;
+   return 0;
+}</font></pre>
+</td></tr></table>
+</ul></p>
+
+<h4><span class=text><font color="red">How to declare a material ?</font></span></h4><br>
+
+<span class=TEXT>This is very simple: in the mesh data file, all elements have, in the present example,
+the code <span class=TT>1</span>. If we say nothing, then a generic material (precisely called
+<span class=TT>GenericMaterial</span> with default properties is used. Otherwise, we can
+assign, in the mesh file a material, here <span class=TT>Aluminium</span> to this code, by
+the line</p>
+<pre><font color="blue" size=3>   Material  1  Aluminium</font></pre></p>
+This line must be given after all elements lines. Note that the file <span class=VAR>Aluminium.md</span>
+must be present in the material's directory.
+
+We are now ready to test the package.</span><br><br>
+
+<p class=EL>A test</p>
+
+<p><SPAN class=TEXT>We use here a finer mesh than in <a href="lesson2.html">Lesson 2</a>
+except the line defining the material. We obtain the same solution
+as <a href="lesson2.html">Lesson 2</a> after 15 iterations.</span>
+
+<p><table align="center" border="2" cellpadding="2" cellspacing="0" >
+<tr>
+<td align="center" width="35"><a href="lesson2.html"><img src="../im/backward.gif" border="0"></a></td>
+<td align="center" width="35"><a href="../tutorial.html"><img src="../im/top.gif" border="0"></a></td>
+<td align="center" width="35"><a href="lesson4.html"><img src="../im/forward.gif" border="0"></a></td>
+</tr>
+</table>
+
+&nbsp;
+<div id="foot_bar">
+   Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+</div>
+
+</body>
+</html>

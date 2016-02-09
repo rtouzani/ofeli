@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date></date>
+   <author></author>
+</info>
+<Prescription>
+   <BoundaryCondition code="1">0.0</BoundaryCondition>
+   <Traction code="1" dof="2">-1000.0</Traction>
+</Prescription>
+</OFELI_File>

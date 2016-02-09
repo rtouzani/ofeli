@@ -1,0 +1,429 @@
+/*==============================================================================
+
+                                    O  F  E  L  I
+
+                            Object  Finite  Element  Library
+
+  ==============================================================================
+
+   Copyright (C) 1998 - 2016 Rachid Touzani
+
+    This file is part of OFELI.
+
+    OFELI is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    OFELI is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with OFELI. If not, see <http://www.gnu.org/licenses/>.
+
+ ==============================================================================
+
+                         Implementation of class 'Side'
+
+ ==============================================================================*/
+
+#include "mesh/Side.h"
+#include "mesh/Mesh.h"
+#include "io/fparser/fparser.h"
+#include "shape_functions/Triang3.h"
+#include "shape_functions/Quad4.h"
+#include "shape_functions/Tetra4.h"
+#include "shape_functions/Hexa8.h"
+#include "util/util.h"
+
+extern FunctionParser theParser;
+
+namespace OFELI {
+
+Side::Side()
+{
+   _nb_nodes = _nb_eq = 0;
+   _label = 0;
+   _nb_nodes = _nb_edges = 0;
+   _neig_el = 0;
+   _el[0] = _el[1] = NULL;
+   _on_boundary = -1;
+   _code.resize(MAX_NBDOF_SIDE);
+   Clear(_code);
+   _dof.resize(MAX_NBDOF_SIDE);
+   _nb_dof = 1;
+   _nb_childs = 0;
+   _parent = NULL;
+   _level = 0;
+   _active = true;
+}
+
+
+Side::Side(      size_t  label,
+           const string& shape)
+{
+   try {
+      if (label<1)
+         THROW_RT("Side(size_t,string): Illegal side label "+itos(label));
+   }
+   CATCH("Side");
+   shape_index(shape);
+   _label = label;
+   _nb_nodes = _nb_edges = _nb_eq = 0;
+   _neig_el = 0;
+   _el[0] = _el[1] = NULL;
+   _on_boundary = 0;
+   _code.resize(MAX_NBDOF_SIDE);
+   Clear(_code);
+   _dof.resize(MAX_NBDOF_SIDE);
+   _nb_childs = 0;
+   _level = 0;
+   _parent = NULL;
+   _active = true;
+}
+
+
+Side::Side(size_t label,
+           int    shape)
+{
+   try {
+      if (label<1)
+         THROW_RT("Side(size_t,int): Illegal side label "+itos(label));
+   }
+   CATCH("Side");
+   _shape = shape;
+   _label = label;
+   _nb_nodes = _nb_edges = _nb_eq = 0;
+   _neig_el = 0;
+   _el[0] = _el[1] = NULL;
+   _on_boundary = 0;
+   _code.resize(MAX_NBDOF_SIDE);
+   Clear(_code);
+   _dof.resize(MAX_NBDOF_SIDE);
+   _nb_childs = 0;
+   _parent = NULL;
+   _level = 0;
+   _active = true;
+}
+
+
+Side::Side(const Side& sd)
+{
+   _shape = sd._shape;
+   _nb_nodes = sd._nb_nodes;
+   _nb_edges = sd._nb_edges;
+   _label = sd._label;
+   _nb_eq = 0;
+   _neig_el = sd._neig_el;
+   for (size_t i=0; i<_nb_nodes; i++)
+      _node[i] = sd._node[i];
+   _on_boundary = sd._on_boundary;
+   _nb_dof = sd._nb_dof;
+   _code.resize(_nb_dof);
+   _dof.resize(_nb_dof);
+   for (size_t j=0; j<_nb_dof; j++) {
+      _code[j] = sd._code[j];
+      _dof[j] = sd._dof[j];
+   }
+   _el[0] = sd._el[0];
+   _el[1] = sd._el[1];
+   for (size_t i=0; i<_nb_edges; i++)
+      _ed[i] = sd._ed[i];
+   _nb_childs = sd._nb_childs;
+   _level = sd._level;
+   _active = sd._active;
+   _parent = sd._parent;
+}
+
+
+void Side::setNode(size_t i,
+                   Node*  node)
+{
+   _node[i-1] = node;
+}
+
+
+void Side::setCode(const string& exp,
+                         int     code,
+                         size_t  dof)
+{
+   PARSE(exp.c_str(),"x,y,z,t");
+   real_t d[3];
+   for (size_t i=0; i<_nb_nodes; i++) {
+      d[0] = _node[i]->getCoord(1);
+      d[1] = _node[i]->getCoord(2);
+      d[2] = _node[i]->getCoord(3);
+      if (!EVAL(d))
+         return;
+   }
+   _code[dof-1] = code;
+}
+
+
+void Side::Add(Node* node)
+{
+   try {
+      if (!node)
+         THROW_RT("Add(Node *): Trying to add an undefined node");
+   }
+   CATCH("Side");
+   _node[_nb_nodes++] = node;
+   _nb_eq += node->getNbDOF();
+}
+   
+   
+void Side::Add(Edge* edge)
+{
+   try {
+      if (edge==NULL)
+         THROW_RT("Add(Edge): Trying to add an undefined edge");
+   }
+   CATCH("Side");
+   _ed[_nb_edges++] = edge;
+}
+   
+
+void Side::Replace(size_t label,
+                   Node*  node)
+{
+   try {
+     if (!node)
+        THROW_RT("Replace(size_t,Node *): Trying to replace an undefined node to size "+itos(label));
+   }
+   CATCH("Side");
+   _node[label-1] = node;
+}
+
+
+void Side::setOnBoundary()
+{
+   _on_boundary = 1;
+}
+
+
+void Side::setChild(Side* sd)
+{
+   _child[_nb_childs++] = sd;
+   sd->_level = _level + 1;
+   sd->_parent = this;
+   sd->_nb_dof = _nb_dof;
+   for (size_t j=0; j<_nb_dof; j++) {
+      sd->_code[j] = _code[j];
+      sd->_dof[j] = _dof[j];
+   }
+   _active = false;
+}
+
+
+Side *Side::getChild(size_t i) const
+{
+   try {
+      if (i > _nb_childs)
+         THROW_RT("getChild(size_t): Number of children is "+itos(i));
+   }
+   CATCH("Side");
+   return _child[i-1];
+}
+
+
+int Side::isOnBoundary() const
+{
+   _on_boundary = -1;
+   if ((_el[0] && !_el[1]) || (!_el[0] && _el[1]))
+      _on_boundary = 1;
+   if (_el[0] && _el[1])
+      _on_boundary = 0;
+   return _on_boundary;
+}
+
+
+size_t Side::getNbVertices() const
+{
+   size_t n=0;
+   switch (_shape) {
+      case LINE:          n = 2; break;
+      case TRIANGLE:      n = 3; break;
+      case QUADRILATERAL: n = 4; break;
+      case TETRAHEDRON:   n = 4; break;
+      case PENTAHEDRON:   n = 6; break;
+      case HEXAHEDRON:    n = 8; break;
+   }
+   return n;
+}
+
+
+real_t Side::getMeasure() const
+{
+   Point<real_t> x[4];
+   real_t m=0;
+
+   if (_shape==LINE) {
+      x[0] = _node[0]->getCoord();
+      x[1] = _node[1]->getCoord();
+      m = sqrt((x[1].x-x[0].x)*(x[1].x-x[0].x) + (x[1].y-x[0].y)*(x[1].y-x[0].y));
+      try {
+         if (m==0)
+            THROW_RT("getMeasure(): Length of line "+itos(_label)+" is null.");
+      }
+      CATCH("Side");
+   }
+
+   else if (_shape==TRIANGLE) {
+      x[0] = _node[0]->getCoord();
+      x[1] = _node[1]->getCoord();
+      x[2] = _node[2]->getCoord();
+      real_t a = x[0].y*(x[1].z-x[2].z) - x[1].y*(x[0].z-x[2].z) + x[2].y*(x[0].z-x[1].z);
+      real_t b = x[0].z*(x[1].x-x[2].x) - x[1].z*(x[0].x-x[2].x) + x[2].z*(x[0].x-x[1].x);
+      real_t c = x[0].x*(x[1].y-x[2].y) - x[1].x*(x[0].y-x[2].y) + x[2].x*(x[0].y-x[1].y);
+      m = 0.5*sqrt(a*a + b*b + c*c);
+      try {
+         if (m==0)
+            THROW_RT("getMeasure(): Area of triangle "+itos(_label)+" is null.");
+      }
+      CATCH("Side");
+      try {
+         if (m<0)
+            THROW_RT("getMeasure(): Area of triangle " + itos(_label) + "is negative.");
+      }
+      CATCH("Side");
+   }
+
+   else if (_shape==QUADRILATERAL) {
+      x[0] = _node[0]->getCoord();
+      x[1] = _node[1]->getCoord();
+      x[2] = _node[2]->getCoord();
+      x[3] = _node[3]->getCoord();
+      Point<real_t> dshl[4];
+      dshl[0].x = dshl[3].x = dshl[0].y = dshl[1].y = -0.25; 
+      dshl[1].x = dshl[2].x = dshl[3].y = dshl[2].y =  0.25;
+      real_t dxds=0., dxdt=0., dyds=0., dydt=0.;
+      for (size_t i=0; i<4; i++) {
+         dxds += dshl[i].x*x[i].x;
+         dxdt += dshl[i].y*x[i].x;
+         dyds += dshl[i].x*x[i].y;
+         dydt += dshl[i].y*x[i].y;
+      }
+      m = dxds*dydt - dxdt*dyds;
+      try {
+         if (m==0)
+            THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + " is null.");
+      }
+      CATCH("Side");
+      try {
+         if (m<0)
+            THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + "is negative.");
+      }
+      CATCH("Side");
+   }
+
+   return m;
+}
+
+
+void Side::setDOF(size_t& first_dof,
+                  size_t  nb_dof)
+{
+   _nb_dof = nb_dof;
+   _first_dof = first_dof;
+   for (size_t i=0; i<_nb_dof; i++)
+      _dof[i] = first_dof++;
+}
+
+
+Point<real_t> Side::getNormal() const
+{
+   Point<real_t> N, T, c;
+   the_element = getNeighborElement(1);
+   try {
+      if (The_element.getShape()==TRIANGLE) {
+         T = _node[0]->getCoord() - _node[1]->getCoord();
+         N.x = -T.y; N.y = T.x;
+         c = Triang3(the_element).getCenter();
+         if (N*(_node[0]->getCoord()-c) < 0)
+            N = -N;
+      }
+      else if (The_element.getShape()==QUADRILATERAL) {
+         T = _node[0]->getCoord() - _node[1]->getCoord();
+         N.x = -T.y; N.y = T.x;
+         c = Quad4(the_element).getCenter();
+         if (N*(_node[0]->getCoord()-c) < 0)
+            N = -N;
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Point<real_t> AB = _node[1]->getCoord() - _node[0]->getCoord();
+         Point<real_t> AC = _node[2]->getCoord() - _node[0]->getCoord();
+         N = CrossProduct(AB,AC);
+         c = Tetra4(the_element).getCenter();
+         if (N*(_node[0]->getCoord()-c) < 0)
+            N = -N;
+      }
+      else if (The_element.getShape()==HEXAHEDRON) {
+         Point<real_t> AB = _node[1]->getCoord() - _node[0]->getCoord();
+         Point<real_t> AC = _node[2]->getCoord() - _node[0]->getCoord();
+         N = CrossProduct(AB,AC);
+         c = Hexa8(the_element).getCenter();
+         if (N*(_node[0]->getCoord()-c) < 0)
+            N = -N;
+      }
+      else
+         THROW_RT("getNormal(): Computation of normal to side is not implemented for this element.");
+   }
+   CATCH("Side");
+   return N;
+}
+
+
+Point<real_t> Side::getUnitNormal() const
+{
+   return getNormal()/getMeasure();
+}
+
+
+Element *Side::getOtherNeighborElement(Element* el) const
+{
+   if (_el[0]==el)
+      return _el[1];
+   if (_el[1]==el)
+      return _el[0];
+   return NULL; 
+}
+
+
+void Side::shape_index(const string& shape)
+{
+   if (shape=="line")
+      _shape = LINE;
+   else if (shape=="tria" || shape=="triangle")
+      _shape = TRIANGLE;
+   else if (shape=="quad" || shape=="quadrilateral")
+      _shape = QUADRILATERAL;
+}
+
+
+size_t Side::Contains(const Node* nd) const
+{
+   for (size_t i=0; i<_nb_nodes; i++) {
+     if (_node[i]==nd)
+        return i+1;
+   }
+   return 0;
+}
+
+
+ostream& operator<<(      ostream& s,
+                    const Side&    sd)
+{
+   s << "\n Side: " << setw(5) << sd.n();
+   s << " **  " << sd.getNbDOF() << " d.o.f.  ** Codes ";
+   for (size_t i=1; i<=sd.getNbDOF(); i++)
+      s << setw(5) << sd.getCode(i);
+   s << "  ** Nodes: ";
+   for (size_t j=1; j<=sd.getNbNodes(); j++)
+      s << sd.getNodeLabel(j) << "  ";
+   s << endl;
+   return s;
+}
+
+} /* namespace OFELI */

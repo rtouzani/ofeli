@@ -1,0 +1,34 @@
+#
+# Makefile for ode demos
+#
+
+all:	ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2
+
+ode_demo1:	ode_demo1.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o ode_demo1 ode_demo1.o `ofeli-config --libs`
+
+ode_demo2:	ode_demo2.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o ode_demo2 ode_demo2.o `ofeli-config --libs`
+
+ode_demo3:	ode_demo3.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o ode_demo3 ode_demo3.o `ofeli-config --libs`
+
+ode_demo4:	ode_demo4.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o ode_demo4 ode_demo4.o `ofeli-config --libs`
+
+ts_demo1:	ts_demo1.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o ts_demo1 ts_demo1.o `ofeli-config --libs`
+
+ts_demo2:	ts_demo2.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o ts_demo2 ts_demo2.o `ofeli-config --libs`
+
+
+
+clean:
+	/bin/rm -f *.o ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

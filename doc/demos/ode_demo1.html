@@ -1,0 +1,254 @@
+<!-- XHTML 1.0 Strict -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<meta name="author" content="Rachid Touzani" />
+<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
+<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
+<link href="../css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="../css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Demonstration of class ODESolver usage</title>
+<link rel="stylesheet" type="text/css" href="../doxygen.css" />
+<link rel="stylesheet" type="text/css" href="../tabs.css"  />
+</head>
+
+<body bgcolor="#FFFFFF" link="#FF0000" vlink="#FF00FF" alink="#FF00FF">
+<p align="center"><a href="../index.html"><img src="../im/ofeli.gif" width="150" border="0"></a></p>
+
+<center>
+  <div id="cse" style="width: 60%;">Loading</div>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript"> 
+     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
+     google.setOnLoadCallback(function() {
+        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
+        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
+        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+        customSearchControl.draw('cse');
+     }, true);
+   </script>
+   <style type="text/css">
+     .gsc-control-cse {
+     font-family: Verdana, sans-serif;
+     border-color: #DAE0E5;
+     background-color: #DAE0E5;
+   }
+   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
+   input.gsc-input { border-color: #B6BEC5; }
+   input.gsc-search-button {
+     border-color: #B6BEC5;
+     background-color: #D0D1D4;
+   }
+   .gsc-tabHeader.gsc-tabhInactive {
+     border-color: #999999;
+     background-color: #EEEEEE;
+   }
+   .gsc-tabHeader.gsc-tabhActive {
+     border-color: #999999;
+     background-color: #999999;
+   }
+   .gsc-tabsArea { border-color: #999999; }
+   .gsc-webResult.gsc-result,
+   .gsc-results .gsc-imageResult {
+     border-color: #FFFFFF;
+     background-color: #FFFFFF;
+   }
+   .gsc-webResult.gsc-result:hover,
+   .gsc-imageResult:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gs-webResult.gs-result a.gs-title:link,
+   .gs-webResult.gs-result a.gs-title:link b,
+   .gs-imageResult a.gs-title:link,
+   .gs-imageResult a.gs-title:link b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:visited,
+   .gs-webResult.gs-result a.gs-title:visited b,
+   .gs-imageResult a.gs-title:visited,
+   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:hover,
+   .gs-webResult.gs-result a.gs-title:hover b,
+   .gs-imageResult a.gs-title:hover,
+   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:active,
+   .gs-webResult.gs-result a.gs-title:active b,
+   .gs-imageResult a.gs-title:active,
+   .gs-imageResult a.gs-title:active b { color: #0568CD; }
+   .gsc-cursor-page { color: #0568CD; }
+   a.gsc-trailing-more-results:link { color: #0568CD; }
+   .gs-webResult .gs-snippet,
+   .gs-imageResult .gs-snippet,
+   .gs-fileFormatType { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl,
+   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { display: none; }
+   .gs-webResult div.gs-visibleUrl-long { display: block; }
+   .gs-promotion div.gs-visibleUrl-short { display: none; }
+   .gs-promotion div.gs-visibleUrl-long { display: block; }
+   .gsc-cursor-box { border-color: #FFFFFF; }
+   .gsc-results .gsc-cursor-box .gsc-cursor-page {
+      border-color: #999999;
+      background-color: #FFFFFF;
+      color: #0568CD;
+   }
+   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+      border-color: #999999;
+      background-color: #999999;
+      color: #0568CD;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion {
+      border-color: #D2D6DC;
+      background-color: #D0D1D4;
+   }
+   .gsc-completion-title { color: #0568CD; }
+   .gsc-completion-snippet { color: #5F6A73; }
+   .gs-promotion a.gs-title:link,
+   .gs-promotion a.gs-title:link *,
+   .gs-promotion .gs-snippet a:link { color: #0066CC; }
+   .gs-promotion a.gs-title:visited,
+   .gs-promotion a.gs-title:visited *,
+   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
+   .gs-promotion a.gs-title:hover,
+   .gs-promotion a.gs-title:hover *,
+   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
+   .gs-promotion a.gs-title:active,
+   .gs-promotion a.gs-title:active *,
+   .gs-promotion .gs-snippet a:active { color: #0066CC; }
+   .gs-promotion .gs-snippet,
+   .gs-promotion .gs-title .gs-promotion-title-right,
+   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
+   .gs-promotion .gs-visibleUrl,
+   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
+   </style>
+</center>
+</p>
+&nbsp;
+
+<div id="mainmenu">
+<div class="text">
+
+ <div class="tabs">
+   <ul class="tablist">
+   <li><a href="../index.html"><span>Home</span></a>
+   <li><a href="../overview.html"><span>Overview</span></a>
+   <li><a href="../html/index.html"><span>Class Documentation</span></a>
+   <li><a href="../fformats.html"><span>File Formats</span></a>
+   <li><a href="../tutorial.html"><span>Tutorial</span></a>
+   <li class="current"><a href="../demos.html"><span>Demo Codes</span></a>
+ </div>
+
+ </div>
+ </div>
+
+&nbsp;
+<p>
+<h2>Demonstration of class ODESolver usage: A nonlinear ODE given by
+ regular expression</h2>
+
+<p><table border="2" cellpadding="2" cellspacing="0" >
+<tr>
+<td align="center" width="35"><a href="ls_demo2.html"><img src="../im/backward.gif" border="0"></a></td>
+<td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
+<td align="center" width="35"><a href="ode_demo2.html"><img src="../im/forward.gif" border="0"></a></td>
+</tr>
+</table></p>
+
+<p>
+<SPAN class=TEXT>
+We present a program to solve a nonlinear differential equation by the
+Runge-Kutta method (RK4). The differential equation is defined by a
+regular expression.
+</SPAN>
+
+<ul type=square>
+<li><SPAN class=TEXT>As any code using <span class=LOGO>OFELI</span>
+we start by including the main header file of the library. The main
+program starts by defining the final time and reading as argument
+the time step. Note that these variables are stored in the global
+variables <span class=VAR>theFinalTime</span> and <span class=VAR>theTimeStep</span> respectively.
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>#include "OFELI.h"
+using namespace OFELI;
+
+int main(int argc, char *argv[])
+{
+   theFinalTime = 1.;
+   theTimeStep = atof(argv[1]);
+</font></pre>
+</td></tr></table>
+</SPAN></p>
+
+<li><SPAN class=TEXT>
+  The ODE is defined by declaring an instance of class 
+  <a href="../html/classOFELI_1_1ODESolver.html">ODESolver</a></span>.
+  The constructor defined the numerical scheme to solve the
+  equation. Note that we use the enum variable TimeScheme that
+  contains all implemented schemes. Other possiblities are <span class=VAR>FORWARD_EULER</span>,
+<span class=VAR>FORWARD_EULER</span>, <span class=VAR>HEUN</span> and
+<span class=VAR>AB2</span>. Note that only explicit methods are
+  used. Implicit methods lead to a nonlinear equation at each time
+  step, which we avoid here.
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   ODESolver ode(RK4);
+</font></pre>
+</td></tr></table>
+</SPAN></p>
+
+<li><SPAN class=TEXT>
+Once the instance created, we set the initial solution, and define
+then the ODE by the member function <span class=VAR>setF</span>.
+We note that the used variables are <span class=VAR>t</span> and <span class=VAR>y</span>
+since we attempt to solve the equation
+<pre><font color="blue" size=3>         y'(t) = F(t,y(t))</font></pre>
+It is important that the initial solution is to be given before
+defining the equation. We eventually run the time marching procedure.
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   ode.setInitial(0.);
+   ode.setF("2*exp(t)-1-y");
+   ode.run();
+</font></pre>
+</td></tr></table>
+</SPAN></p>
+
+<li><SPAN class=TEXT>
+We can now display the ode data and the solution. We also dispolay the
+error for this case where the exact solution is <span class=VAR>
+y(t) = exp(t)-1</span>
+</span>.
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>
+   cout &lt;&lt; ode &lt;&lt; endl;
+   cout &lt;&lt; "Solution:  " &lt;&lt; ode.get() &lt;&lt; endl;
+   cout &lt;&lt; "Error:     " &lt;&lt; fabs(exp(theFinalTime)-1-ode.get()) &lt; endl;
+   return 0;
+}
+</font></pre>
+</td></tr></table>
+</SPAN></p>
+
+<p><table align="center" border="2" cellpadding="2" cellspacing="0" >
+<tr>
+<td align="center" width="35"><a href="ls_demo2.html"><img src="../im/backward.gif" border="0"></a></td>
+<td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
+<td align="center" width="35"><a href="ode_demo2.html"><img src="../im/forward.gif" border="0"></a></td>
+</tr>
+</table>
+
+&nbsp;
+<div id="foot_bar">
+        Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+</div>
+
+</body>
+</html>

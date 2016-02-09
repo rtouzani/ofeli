@@ -1,0 +1,1118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Headers\equations">
+      <UniqueIdentifier>{380a22ee-6993-4571-8905-1aa4623afb34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\equations\cl">
+      <UniqueIdentifier>{c1c3af52-8c1c-41a8-a96d-9d3e01e5ba61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\equations\electromagnetics">
+      <UniqueIdentifier>{51ffc70e-c65f-4f05-bbf4-05f347a3be93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\equations\fluid">
+      <UniqueIdentifier>{19e35dfb-7228-444f-87d2-153ebc723057}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\equations\interface">
+      <UniqueIdentifier>{66937d14-9de0-44ad-a25b-48cf71ee8264}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\equations\laplace">
+      <UniqueIdentifier>{1c8cb4ba-6a5b-43c5-9448-66530981e498}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\equations\solid">
+      <UniqueIdentifier>{24d52372-3be1-41b5-a627-4715140bb05d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\equations\therm">
+      <UniqueIdentifier>{d31d326e-d9b4-40c0-8527-f44d47f1bdc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\io">
+      <UniqueIdentifier>{b736de69-e4be-4285-872f-85c4b6040423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\io\fparser">
+      <UniqueIdentifier>{e5ddee3b-1d71-4bc9-90f0-691d5fdeda54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\io\tclap">
+      <UniqueIdentifier>{27407ce6-ef4e-4289-a110-20e488f1a292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\io\xmlsp">
+      <UniqueIdentifier>{5005dddb-b7fb-43ce-abc1-17c99375fa88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\linear_algebra">
+      <UniqueIdentifier>{838ba5f2-5d2b-4ced-9c7d-ad210b59ce60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\linear_algebra\petsc">
+      <UniqueIdentifier>{8a470c2c-5f78-4ae1-9684-296b9aecca12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\mesh">
+      <UniqueIdentifier>{ab80f010-e620-4fea-929c-6611bf00a2b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\mesh\bamg">
+      <UniqueIdentifier>{88c75332-e227-45a9-bf42-d17c27d619bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\mesh\metis">
+      <UniqueIdentifier>{c8c7a3c7-266d-47e3-a746-da06054f1cc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\post">
+      <UniqueIdentifier>{624a1be7-48bf-4985-8dd5-ee104cd391ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\shape_functrions">
+      <UniqueIdentifier>{7135250c-5842-4aee-a5e4-b23047ea26e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\solvers">
+      <UniqueIdentifier>{dd91c61e-e62f-4b57-bfa7-cc618871d673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\util">
+      <UniqueIdentifier>{9e007d33-11aa-48f8-a664-37c1559ad9b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\equations">
+      <UniqueIdentifier>{127e13f8-0b6c-4384-a5c0-57205998fee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\equations\cl">
+      <UniqueIdentifier>{d0e51925-5a58-4a13-a1ad-2ab29bf6ecee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\equations\therm">
+      <UniqueIdentifier>{ebd39fad-e40e-49e5-9b91-8106334ec9da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\equations\solid">
+      <UniqueIdentifier>{09ab4004-8581-4516-a82c-87a5545ac112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\equations\fluid">
+      <UniqueIdentifier>{0c148739-49aa-4ddc-be01-71783c6e6273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\equations\electromagnetics">
+      <UniqueIdentifier>{2a8b20e0-7038-4def-b1f5-f73eb846a2e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\equations\interface">
+      <UniqueIdentifier>{3494f4aa-67f9-4db7-8b1c-3b2baa8218eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\equations\laplace">
+      <UniqueIdentifier>{212b08e1-1af7-44e3-b17b-3ed36a58deb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io">
+      <UniqueIdentifier>{ef5a3a5c-2d6f-47f3-9047-882a7ee2bf3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io\fparser">
+      <UniqueIdentifier>{029d6840-c930-4f14-91c0-39096cb5194b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io\xmlsp">
+      <UniqueIdentifier>{9635318b-9983-47af-9111-a3b19cc21ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\linear_algebra">
+      <UniqueIdentifier>{debd0c75-8c45-49b2-bf17-bd49b76b10f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mesh">
+      <UniqueIdentifier>{d634965e-6f41-43a6-8bac-55a74eb96532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mesh\bamg">
+      <UniqueIdentifier>{f5a25924-379c-4e97-a522-c6832c44166c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mesh\metis">
+      <UniqueIdentifier>{09c89144-6fbe-4ca2-be5c-9a5f36ec3a15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\post">
+      <UniqueIdentifier>{f767b2fa-8199-4ed9-8003-239376151195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shape_functions">
+      <UniqueIdentifier>{be3897a7-15d7-4eab-b348-65de32e015c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\solvers">
+      <UniqueIdentifier>{a6899399-8eec-4044-b650-6b83bc2b88b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{240b79ac-f5c7-443f-8e0e-d4242bf42982}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\CL.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\datadir.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Electromagnetics.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Fluid.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Laplace.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\OFELI.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\OFELI_Config.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Solid.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Therm.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\AbsEqua.h">
+      <Filter>Headers\equations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\Equation.h">
+      <Filter>Headers\equations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\EquaUtil.h">
+      <Filter>Headers\equations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\FFI.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\Funct.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\IOField.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\IPF.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\output.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\Prescription.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\saveField.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\Tabulation.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\UserData.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\XMLParser.h">
+      <Filter>Headers\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\fparser\fparser.h">
+      <Filter>Headers\io\fparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\fparser\fpconfig.h">
+      <Filter>Headers\io\fparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\fparser\fptypes.h">
+      <Filter>Headers\io\fparser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\xmlsp\xmlsp.h">
+      <Filter>Headers\io\xmlsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\Arg.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\ArgException.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\CmdLine.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\CmdLineInterface.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\CmdLineOutput.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\Constraint.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\DocBookOutput.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\HelpVisitor.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\IgnoreRestVisitor.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\MultiArg.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\MultiSwitchArg.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\OptionalUnlabeledTracker.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\StdOutput.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\SwitchArg.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\UnlabeledMultiArg.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\UnlabeledValueArg.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\ValueArg.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\ValuesConstraint.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\VersionVisitor.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\Visitor.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\io\tclap\XorHandler.h">
+      <Filter>Headers\io\tclap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\Assembly.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\BMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\DMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\DSMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\GraphOfMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\LocalMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\LocalVect.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\Matrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\Point.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\Point2D.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\SkMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\SkSMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\SpMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\TrMatrix.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\Vect.h">
+      <Filter>Headers\linear_algebra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\petsc\PETScMatrix.h">
+      <Filter>Headers\linear_algebra\petsc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\petsc\PETScVect.h">
+      <Filter>Headers\linear_algebra\petsc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linear_algebra\petsc\PETScWrapper.h">
+      <Filter>Headers\linear_algebra\petsc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Domain.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Edge.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Element.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Figure.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\getMesh.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Grid.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Material.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Mesh.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\MeshAdapt.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\MeshExtract.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\MeshUtil.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Node.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Partition.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\saveMesh.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\Side.h">
+      <Filter>Headers\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\metis\defs.h">
+      <Filter>Headers\mesh\metis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\metis\metis.h">
+      <Filter>Headers\mesh\metis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\metis\metis_macros.h">
+      <Filter>Headers\mesh\metis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\metis\proto.h">
+      <Filter>Headers\mesh\metis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\metis\rename.h">
+      <Filter>Headers\mesh\metis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\metis\struct.h">
+      <Filter>Headers\mesh\metis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\bamg\Mesh2.h">
+      <Filter>Headers\mesh\bamg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\bamg\Meshio.h">
+      <Filter>Headers\mesh\bamg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\bamg\meshtype.h">
+      <Filter>Headers\mesh\bamg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\bamg\Metric.h">
+      <Filter>Headers\mesh\bamg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\bamg\QuadTree.h">
+      <Filter>Headers\mesh\bamg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\bamg\R2.h">
+      <Filter>Headers\mesh\bamg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\mesh\bamg\SetOfE4.h">
+      <Filter>Headers\mesh\bamg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\util\banner.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\util\constants.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\util\Gauss.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\util\macros.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\util\qksort.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\util\Timer.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\util\util.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\BiCG.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\BiCGStab.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\BSpline.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\CG.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\CGS.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\GMRes.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\GS.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\Iter.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\Jacobi.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\LinearSolver.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\ODESolver.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\OptimAux.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\OptimSA.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\OptimTN.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\Prec.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\Richardson.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\Schur.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\SSOR.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\TimeStepping.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\FEShape.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Hexa8.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Line2.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Line2H.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Line3.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Penta6.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Quad4.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Tetra4.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Triang3.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\shape_functions\Triang6S.h">
+      <Filter>Headers\shape_functrions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\post\Estimator.h">
+      <Filter>Headers\post</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\post\Reconstruction.h">
+      <Filter>Headers\post</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\ICPG1D.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\ICPG2DT.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\ICPG3DT.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\LCL1D.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\LCL2DT.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\LCL3DT.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\Muscl.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\Muscl1D.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\Muscl2DT.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\cl\Muscl3DT.h">
+      <Filter>Headers\equations\cl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\electromagnetics\BiotSavart.h">
+      <Filter>Headers\equations\electromagnetics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\electromagnetics\EC2D1T3.h">
+      <Filter>Headers\equations\electromagnetics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\electromagnetics\EC2D2T3.h">
+      <Filter>Headers\equations\electromagnetics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\electromagnetics\EC2DB2T3.h">
+      <Filter>Headers\equations\electromagnetics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\electromagnetics\Equa_Electromagnetics.h">
+      <Filter>Headers\equations\electromagnetics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\electromagnetics\HelmholtzBT3.h">
+      <Filter>Headers\equations\electromagnetics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\fluid\Equa_Fluid.h">
+      <Filter>Headers\equations\fluid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\fluid\NS2DT3BT3.h">
+      <Filter>Headers\equations\fluid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\fluid\NSP2DQ41.h">
+      <Filter>Headers\equations\fluid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\fluid\TINS2DT3B.h">
+      <Filter>Headers\equations\fluid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\interface\FastMarching2D.h">
+      <Filter>Headers\equations\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\interface\FMM.h">
+      <Filter>Headers\equations\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\interface\FMM2D.h">
+      <Filter>Headers\equations\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\interface\FMM3D.h">
+      <Filter>Headers\equations\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\interface\FMMSolver.h">
+      <Filter>Headers\equations\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\interface\Heap.h">
+      <Filter>Headers\equations\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\interface\IPoint.h">
+      <Filter>Headers\equations\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\laplace\Equa_Laplace.h">
+      <Filter>Headers\equations\laplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\laplace\Laplace1DL2.h">
+      <Filter>Headers\equations\laplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\laplace\Laplace1DL3.h">
+      <Filter>Headers\equations\laplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\laplace\Laplace2DFVT.h">
+      <Filter>Headers\equations\laplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\laplace\Laplace2DMHRT0.h">
+      <Filter>Headers\equations\laplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\laplace\Laplace2DT3.h">
+      <Filter>Headers\equations\laplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\laplace\SteklovPoincare2DBE.h">
+      <Filter>Headers\equations\laplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\therm\DC1DL2.h">
+      <Filter>Headers\equations\therm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\therm\DC2DT3.h">
+      <Filter>Headers\equations\therm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\therm\DC2DT6.h">
+      <Filter>Headers\equations\therm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\therm\DC3DAT3.h">
+      <Filter>Headers\equations\therm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\therm\DC3DT4.h">
+      <Filter>Headers\equations\therm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\therm\Equa_Therm.h">
+      <Filter>Headers\equations\therm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\therm\PhaseChange.h">
+      <Filter>Headers\equations\therm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\solid\Bar2DL2.h">
+      <Filter>Headers\equations\solid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\solid\Beam3DL2.h">
+      <Filter>Headers\equations\solid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\solid\Elas2DQ4.h">
+      <Filter>Headers\equations\solid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\solid\Elas2DT3.h">
+      <Filter>Headers\equations\solid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\solid\Elas3DH8.h">
+      <Filter>Headers\equations\solid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\solid\Elas3DT4.h">
+      <Filter>Headers\equations\solid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\solid\Equa_Solid.h">
+      <Filter>Headers\equations\solid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\EigenProblemSolver.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\util\Gauss.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\FFI.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\IOField.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\IPF.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\Prescription.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\saveField.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\Tabulation.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\XMLParser.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\fparser\fparser.cpp">
+      <Filter>Source Files\io\fparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\fparser\fpoptimizer.cpp">
+      <Filter>Source Files\io\fparser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\io\xmlsp\xmlsp.cpp">
+      <Filter>Source Files\io\xmlsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\linear_algebra\GraphOfMatrix.cpp">
+      <Filter>Source Files\linear_algebra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Domain.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Edge.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Element.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\getMesh.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Grid.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Material.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Mesh.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\MeshAdapt.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\MeshExtract.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\MeshUtil.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Node.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Partition.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\saveMesh.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\balance.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\bucketsort.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\ccgraph.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\coarsen.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\compress.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\debug.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\estmem.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\fm.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\fortran.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\frename.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\graph.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\initpart.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\kmetis.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\kvmetis.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\kwayfm.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\kwayrefine.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\kwayvolfm.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\kwayvolrefine.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\match.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mbalance.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mbalance2.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mcoarsen.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\memory.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mesh_metis.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\meshpart.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mfm.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mfm2.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mincover.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\minitpart.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\minitpart2.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mkmetis.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mkwayfmh.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mkwayrefine.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mmatch.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mmd.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mpmetis.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mrefine.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mrefine2.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\mutil.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\myqsort.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\ometis.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\parmetis.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\pmetis.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\pqueue.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\refine.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\separator.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\sfm.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\srefine.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\stat.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\subdomains.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\timing.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\metis\util.c">
+      <Filter>Source Files\mesh\metis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\bamg.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\Mesh2.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\MeshGeom.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\Meshio.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\MeshQuad.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\MeshRead.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\MeshWrite.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\Metric.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\QuadTree.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\bamg\SetOfE4.cpp">
+      <Filter>Source Files\mesh\bamg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\BSpline.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\ODESolver.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\Solver.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\TimeStepping.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Hexa8.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Line2.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Line2H.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Line3.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Penta6.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Quad4.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Tetra4.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Triang3.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape_functions\Triang6S.cpp">
+      <Filter>Source Files\shape_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\post\Estimator.cpp">
+      <Filter>Source Files\post</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\post\Reconstruction.cpp">
+      <Filter>Source Files\post</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\ICPG1D.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\ICPG2DT.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\ICPG3DT.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\LCL1D.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\LCL2DT.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\LCL3DT.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\Muscl.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\Muscl1D.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\Muscl2DT.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\cl\Muscl3DT.cpp">
+      <Filter>Source Files\equations\cl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\fluid\NS2DT3BT3.cpp">
+      <Filter>Source Files\equations\fluid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\fluid\NSP2DQ41.cpp">
+      <Filter>Source Files\equations\fluid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\fluid\TINS2DT3B.cpp">
+      <Filter>Source Files\equations\fluid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\electromagnetics\BiotSavart.cpp">
+      <Filter>Source Files\equations\electromagnetics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\electromagnetics\EC2D1T3.cpp">
+      <Filter>Source Files\equations\electromagnetics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\electromagnetics\EC2D2T3.cpp">
+      <Filter>Source Files\equations\electromagnetics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\electromagnetics\EC2DB2T3.cpp">
+      <Filter>Source Files\equations\electromagnetics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\electromagnetics\HelmholtzBT3.cpp">
+      <Filter>Source Files\equations\electromagnetics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\interface\FastMarching2D.cpp">
+      <Filter>Source Files\equations\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\interface\FMM.cpp">
+      <Filter>Source Files\equations\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\interface\FMM2D.cpp">
+      <Filter>Source Files\equations\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\interface\FMM3D.cpp">
+      <Filter>Source Files\equations\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\interface\FMMSolver.cpp">
+      <Filter>Source Files\equations\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\interface\Heap.cpp">
+      <Filter>Source Files\equations\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\interface\IPoint.cpp">
+      <Filter>Source Files\equations\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\laplace\Laplace1DL2.cpp">
+      <Filter>Source Files\equations\laplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\laplace\Laplace1DL3.cpp">
+      <Filter>Source Files\equations\laplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\laplace\Laplace2DFVT.cpp">
+      <Filter>Source Files\equations\laplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\laplace\Laplace2DMHRT0.cpp">
+      <Filter>Source Files\equations\laplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\laplace\Laplace2DT3.cpp">
+      <Filter>Source Files\equations\laplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\laplace\SteklovPoincare2DBE.cpp">
+      <Filter>Source Files\equations\laplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\solid\Bar2DL2.cpp">
+      <Filter>Source Files\equations\solid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\solid\Beam3DL2.cpp">
+      <Filter>Source Files\equations\solid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\solid\Elas2DQ4.cpp">
+      <Filter>Source Files\equations\solid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\solid\Elas2DT3.cpp">
+      <Filter>Source Files\equations\solid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\solid\Elas3DH8.cpp">
+      <Filter>Source Files\equations\solid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\solid\Elas3DT4.cpp">
+      <Filter>Source Files\equations\solid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\therm\DC1DL2.cpp">
+      <Filter>Source Files\equations\therm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\therm\DC2DT3.cpp">
+      <Filter>Source Files\equations\therm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\therm\DC2DT6.cpp">
+      <Filter>Source Files\equations\therm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\therm\DC3DAT3.cpp">
+      <Filter>Source Files\equations\therm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\therm\DC3DT4.cpp">
+      <Filter>Source Files\equations\therm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\therm\PhaseChange.cpp">
+      <Filter>Source Files\equations\therm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\Side.cpp">
+      <Filter>Source Files\mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\EigenProblemSolver.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

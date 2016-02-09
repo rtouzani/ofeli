@@ -1,0 +1,570 @@
+###################################################################################################
+#                        Visual C++ makefile of OFELI package
+###################################################################################################
+#
+#
+# Project directories
+#
+#
+# ROOT		= ofeli root directory
+#
+# VCPP_DIR	= location of VC++ 32-bit development tools.
+#
+# INSTALLDIR	= where the install- targets should copy the binaries and support files
+#
+
+ROOT		= ..\..
+INSTALLDIR	= C:\Program Files\ofeli
+VCPP		= C:\Program Files\Microsoft Visual Studio 11.0\VC
+
+cxx		= "$(VCPP)\bin\cl.exe"
+link		= "$(VCPP)\bin\link.exe"
+libpath		= "$(VCPP)\lib"
+lib		= "$(VCPP)\bin\lib.exe"
+include		= -I"$(VCPP)\include"
+
+# Set NODEBUG to 0 to compile with symbols
+NODEBUG = 1
+
+# The following defines can be used to control the amount of debugging
+# code that is added to the compilation.
+#
+#	-D_BOUNDS_DEBUG	Enables bounds checking for arrays and vectors.
+#	-D_OFELI_DEBUG	Enables reportins class constructions and destructions
+#	-D_MEM_DDEBUG	Enables reporting memory allocations and releases
+#	-DUSE_MEMTRACK	Enables checking memory leaks
+#
+
+###################################################################################################
+#                               Do not modify below this line
+###################################################################################################
+
+VERSION = 1.7.0
+
+BINROOT		= ..\..\..
+SRC_DIR		= $(ROOT)\src
+INCLUDE_DIR	= $(ROOT)\include
+UTIL_DIR	= $(ROOT)\util
+GENMESH_DIR	= $(UTIL_DIR)\genmesh\src
+TUTORIAL_DIR	= $(ROOT)\tutorial
+DEMO_DIR	= $(ROOT)\demos
+DOC_DIR		= $(ROOT)\doc
+BIN_DIR		= $(ROOT)\bin
+LIB_DIR		= $(ROOT)\lib
+
+INCLUDES	= -I"$(INCLUDE_DIR)" $(include) 
+!IF "$(NODEBUG)" == "1"
+TMPDIRNAME	= Release
+DD		=
+DBGX		=
+!ELSE
+TMPDIRNAME	= Debug
+DD		= -debug
+DBGX		= d
+!ENDIF
+TMPDIR		= $(TMPDIRNAME)
+OUTDIRNAME	= $(TMPDIRNAME)
+OUTDIR		= $(TMPDIR)
+LIB		= $(LIB_DIR)\ofeli$(DD).lib
+CFG		= \$(TMPDIRNAME)
+
+RMDIR		= .\rmd.bat
+MKDIR		= .\mkd.bat
+RM		= del
+
+LIB_INSTALL_DIR		= $(INSTALLDIR)\lib
+BIN_INSTALL_DIR		= $(INSTALLDIR)\bin
+INCLUDE_INSTALL_DIR	= $(INSTALLDIR)\include
+DOC_INSTALL_DIR		= $(INSTALLDIR)\doc
+DEMO_INSTALL_DIR	= $(INSTALLDIR)\tests\demos
+TUTORIAL_INSTALL_DIR	= $(INSTALLDIR)\tests\tutorial
+
+
+OBJS = \
+	$(TMPDIR)\BSpline.obj \
+	$(TMPDIR)\Domain.obj \
+	$(TMPDIR)\Edge.obj \
+	$(TMPDIR)\Element.obj \
+	$(TMPDIR)\Estimator.obj \
+	$(TMPDIR)\Fastmarching2D.obj \
+	$(TMPDIR)\FFI.obj \
+	$(TMPDIR)\Gauss.obj \
+	$(TMPDIR)\getMesh.obj \
+	$(TMPDIR)\GraphOfMatrix.obj \
+	$(TMPDIR)\Grid.obj \
+	$(TMPDIR)\Hexa8.obj \
+	$(TMPDIR)\IOField.obj \
+	$(TMPDIR)\IPF.obj \
+	$(TMPDIR)\Line2.obj \
+	$(TMPDIR)\Line2H.obj \
+	$(TMPDIR)\Line3.obj \
+	$(TMPDIR)\Material.obj \
+	$(TMPDIR)\Mesh.obj \
+	$(TMPDIR)\MeshExtract.obj \
+	$(TMPDIR)\MeshUtil.obj \
+	$(TMPDIR)\Node.obj \
+	$(TMPDIR)\Partition.obj \
+	$(TMPDIR)\Prescription.obj \
+	$(TMPDIR)\Quad4.obj \
+	$(TMPDIR)\Reconstruction.obj \
+	$(TMPDIR)\saveField.obj \
+	$(TMPDIR)\saveMesh.obj \
+	$(TMPDIR)\Side.obj \
+	$(TMPDIR)\Tabulation.obj \
+	$(TMPDIR)\Tetra4.obj \
+	$(TMPDIR)\Triangle.obj \
+	$(TMPDIR)\Triang3.obj \
+	$(TMPDIR)\Triang6S.obj \
+	$(TMPDIR)\Laplace1DL2.obj \
+	$(TMPDIR)\Laplace1DL3.obj \
+	$(TMPDIR)\Laplace2DFVT.obj \
+	$(TMPDIR)\Laplace2DMHRT0.obj \
+	$(TMPDIR)\Laplace2DT3.obj \
+	$(TMPDIR)\SteklovPoincare2DBE.obj \
+	$(TMPDIR)\DC1DL2.obj \
+	$(TMPDIR)\DC2DT3.obj \
+	$(TMPDIR)\DC2DT6.obj \
+	$(TMPDIR)\DC3DAT3.obj \
+	$(TMPDIR)\DC3DT4.obj \
+	$(TMPDIR)\PhaseChange.obj \
+	$(TMPDIR)\NSP2DQ41.obj \
+	$(TMPDIR)\TINS2DT3B.obj \
+	$(TMPDIR)\NS2DT3BT3.obj \
+	$(TMPDIR)\Bar2DL2.obj \
+	$(TMPDIR)\Beam3DL2.obj \
+	$(TMPDIR)\Elas2DQ4.obj \
+	$(TMPDIR)\Elas2DT3.obj \
+	$(TMPDIR)\Elas3DH8.obj \
+	$(TMPDIR)\Elas3DT4.obj \
+	$(TMPDIR)\EC2D1T3.obj \
+	$(TMPDIR)\EC2D2T3.obj \
+	$(TMPDIR)\EC2DB2T3.obj \
+	$(TMPDIR)\HelmholtzBT3.obj \
+	$(TMPDIR)\ICPG1D.obj \
+	$(TMPDIR)\ICPG2DT.obj \
+	$(TMPDIR)\ICPG3DT.obj \
+	$(TMPDIR)\LCL1D.obj \
+	$(TMPDIR)\LCL2DT.obj \
+	$(TMPDIR)\LCL3DT.obj \
+	$(TMPDIR)\Muscl.obj \
+	$(TMPDIR)\Muscl1D.obj \
+	$(TMPDIR)\Muscl2DT.obj \
+	$(TMPDIR)\Muscl3DT.obj \
+	$(TMPDIR)\coarsen.obj \
+	$(TMPDIR)\fm.obj \
+	$(TMPDIR)\initpart.obj \
+	$(TMPDIR)\match.obj \
+	$(TMPDIR)\ccgraph.obj \
+	$(TMPDIR)\memory.obj \
+	$(TMPDIR)\pmetis.obj \
+	$(TMPDIR)\pqueue.obj \
+	$(TMPDIR)\refine.obj \
+	$(TMPDIR)\util.obj \
+	$(TMPDIR)\timing.obj \
+	$(TMPDIR)\debug.obj \
+	$(TMPDIR)\bucketsort.obj \
+	$(TMPDIR)\graph.obj \
+	$(TMPDIR)\stat.obj \
+	$(TMPDIR)\kmetis.obj \
+	$(TMPDIR)\kwayrefine.obj \
+	$(TMPDIR)\kwayfm.obj \
+	$(TMPDIR)\balance.obj \
+	$(TMPDIR)\ometis.obj \
+	$(TMPDIR)\srefine.obj \
+	$(TMPDIR)\sfm.obj \
+	$(TMPDIR)\separator.obj \
+	$(TMPDIR)\mincover.obj \
+	$(TMPDIR)\mmd.obj \
+	$(TMPDIR)\mesh_metis.obj \
+	$(TMPDIR)\meshpart.obj \
+	$(TMPDIR)\frename.obj \
+	$(TMPDIR)\fortran.obj \
+	$(TMPDIR)\myqsort.obj \
+	$(TMPDIR)\compress.obj \
+	$(TMPDIR)\parmetis.obj \
+	$(TMPDIR)\estmem.obj \
+	$(TMPDIR)\mpmetis.obj \
+	$(TMPDIR)\mcoarsen.obj \
+	$(TMPDIR)\mmatch.obj \
+	$(TMPDIR)\minitpart.obj \
+	$(TMPDIR)\mbalance.obj \
+	$(TMPDIR)\mrefine.obj \
+	$(TMPDIR)\mutil.obj \
+	$(TMPDIR)\mfm.obj \
+	$(TMPDIR)\mkmetis.obj \
+	$(TMPDIR)\mkwayrefine.obj \
+	$(TMPDIR)\mkwayfmh.obj \
+	$(TMPDIR)\mrefine2.obj \
+	$(TMPDIR)\minitpart2.obj \
+	$(TMPDIR)\mbalance2.obj \
+	$(TMPDIR)\mfm2.obj \
+	$(TMPDIR)\kvmetis.obj \
+	$(TMPDIR)\kwayvolrefine.obj \
+	$(TMPDIR)\kwayvolfm.obj \
+	$(TMPDIR)\subdomains.obj \
+	$(TMPDIR)\bamg.obj \
+	$(TMPDIR)\fparser.obj \
+	$(TMPDIR)\fpoptimizer.obj \
+	$(TMPDIR)\io.obj \
+	$(TMPDIR)\MemTrack.obj \
+	$(TMPDIR)\Mesh2.obj \
+	$(TMPDIR)\Metric.obj \
+	$(TMPDIR)\QuadTree.obj \
+	$(TMPDIR)\XMLParser.obj \
+	$(TMPDIR)\xmlsp.obj
+
+GENMESH_OBJS = \
+	genmesh$(CFG)\main.obj \
+
+PNS2_OBJ = \
+	pns2$(CFG)\main.obj \
+
+
+# Compile flags
+# -------------
+
+!IF "$(NODEBUG)" == "1"
+cflags	= /c /nologo /ML /w /W0 /GX /FD /Zm200 /D "WIN32" /D "NDEBUG" /D "_MBCS" -Fp$(TMPDIR)\ 
+ldflags	= 
+!ELSE
+cflags	= /c /nologo /MLd /w /W0 /Gm /GX /FD /GZ /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" -Fp$(TMPDIR)\ 
+!ENDIF
+
+CFLAGS	= $(cflags) $(INCLUDES) $(DEFINES)
+
+# Link flags
+# ----------
+
+!IF "$(NODEBUG)" == "1"
+ldflags	=
+!ELSE
+ldflags	= /debug
+!ENDIF
+
+# declarations common to all linker options
+ldflags	= /NOLOGO
+
+LDFLAGS	= $(ldflags) /incremental:yes
+
+# Project specific targets
+# ------------------------
+
+all:		setup $(LIB) util tutorial demos
+install:	install-binaries install-library install-tutorial install-demos install-doc
+
+setup:
+	@echo -----------------------------------------------------------------------------
+	@echo Compiling kernel library ...
+	@$(MKDIR) $(TMPDIR)
+	@$(MKDIR) $(OUTDIR)
+	@$(MKDIR) lesson1$(CFG)
+	@$(MKDIR) lesson2$(CFG)
+	@$(MKDIR) lesson3$(CFG)
+	@$(MKDIR) lesson4$(CFG)
+	@$(MKDIR) lesson5$(CFG)
+	@$(MKDIR) fdf2xml$(CFG)
+	@$(MKDIR) cmesh$(CFG)
+	@$(MKDIR) cfield$(CFG)
+	@$(MKDIR) genmesh$(CFG)
+	@$(MKDIR) stdc2$(CFG)
+	@$(MKDIR) ttd2$(CFG)
+	@$(MKDIR) std3$(CFG)
+	@$(MKDIR) truss$(CFG)
+	@$(MKDIR) beam$(CFG)
+	@$(MKDIR) lelas2d$(CFG)
+	@$(MKDIR) lelas3d$(CFG)
+	@$(MKDIR) contact$(CFG)
+	@$(MKDIR) tiff2$(CFG)
+	@$(MKDIR) pns2$(CFG)
+	@$(MKDIR) helmholtz$(CFG)
+	@$(MKDIR) ec2d1$(CFG)
+	@$(MKDIR) lh2d$(CFG)
+	@$(MKDIR) euler_2d$(CFG)
+
+$(LIB):	$(OBJS)
+	$(lib) -out:$@  @<<
+$(OBJS)
+<<
+
+util:	conv genmesh
+
+conv:
+	@echo -----------------------------------------------------------------------------
+	@echo making conversion utility programs ...
+	$(cxx) $(CFLAGS) -Fo"cmesh$(CFG)\cmesh.obj" $(UTIL_DIR)\conv\src\cmesh.cpp /link
+	$(link) $(LDFLAGS) cmesh$(CFG)\cmesh.obj /out:"$(OUTDIR)\cmesh.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+	$(cxx) $(CFLAGS) -Fo"cfield$(CFG)\cfield.obj" $(UTIL_DIR)\conv\src\cfield.cpp /link
+	$(link) $(LDFLAGS) cfield$(CFG)\cfield.obj /out:"$(OUTDIR)\cfield.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+	$(cxx) $(CFLAGS) -Fo"fdf2xml$(CFG)\fdf2xml.obj" $(UTIL_DIR)\conv\src\fdf2xml.cpp /link
+	$(link) $(LDFLAGS) fdf2xml$(CFG)\fdf2xml.obj /out:"$(OUTDIR)\fdf2xml.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+genmesh:
+	@echo -----------------------------------------------------------------------------
+	@echo making 2-D mesh generator ...
+	$(link) $(LDFLAGS) $(GENMESH_OBJS) /out:"$(OUTDIR)\GenMesh.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+tutorial:
+	@echo -----------------------------------------------------------------------------
+	@echo making tutorial ...
+	$(cxx) $(CFLAGS) -Fo"lesson1$(CFG)\main.obj" $(TUTORIAL_DIR)\lesson1\main.cpp /link
+	$(link) $(LDFLAGS) lesson1$(CFG)\main.obj /out:"$(OUTDIR)\lesson1.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+	$(cxx) $(CFLAGS) -Fo"lesson2$(CFG)\main.obj" $(TUTORIAL_DIR)\lesson2\main.cpp /link
+	$(link) $(LDFLAGS) lesson2$(CFG)\main.obj /out:"$(OUTDIR)\lesson2.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+	$(cxx) $(CFLAGS) -Fo"lesson3$(CFG)\main.obj" $(TUTORIAL_DIR)\lesson3\main.cpp /link
+	$(link) $(LDFLAGS) lesson3$(CFG)\main.obj /out:"$(OUTDIR)\lesson3.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+	$(cxx) $(CFLAGS) -Fo"lesson4$(CFG)\main.obj" $(TUTORIAL_DIR)\lesson4\main.cpp /link
+	$(link) $(LDFLAGS) lesson4$(CFG)\main.obj /out:"$(OUTDIR)\lesson4.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+	$(cxx) $(CFLAGS) -Fo"lesson5$(CFG)\main.obj" $(TUTORIAL_DIR)\ex5\main.cpp /link
+	$(link) $(LDFLAGS) lesson5$(CFG)\main.obj /out:"$(OUTDIR)\lesson5.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+demos:
+	@echo -----------------------------------------------------------------------------
+	@echo making demos ...
+	@echo *** making stdc2 (Steady State Diffusion-Convection in 2-D) ***
+	$(cxx) $(CFLAGS) -Fo"stdc2$(CFG)\main.obj" $(DEMO_DIR)\thermal\stdc2\main.cpp /link
+	$(link) $(LDFLAGS) stdc2$(CFG)\main.obj /out:"$(OUTDIR)\stdc2.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making ttd2 (Transient Diffusion in 2-D) ***
+	$(cxx) $(CFLAGS) -Fo"ttd2$(CFG)\main.obj" $(DEMO_DIR)\thermal\ttd2\main.cpp /link
+	$(cxx) $(CFLAGS) -Fo"ttd2$(CFG)\error.obj" $(DEMO_DIR)\thermal\ttd2\error.cpp /link
+	$(link) $(LDFLAGS) ttd2$(CFG)\main.obj ttd2$(CFG)\error.obj /out:"$(OUTDIR)\ttd2.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making std3 (Steady State Diffusion in 3-D) ***
+	$(cxx) $(CFLAGS) -Fo"std3$(CFG)\main.obj" $(DEMO_DIR)\thermal\std3\main.cpp /link
+	$(link) $(LDFLAGS) std3$(CFG)\main.obj /out:"$(OUTDIR)\std3.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making eigen (Eigen problem in thermics) ***
+	$(cxx) $(CFLAGS) -Fo"eigen$(CFG)\main.obj" $(DEMO_DIR)\thermal\eigen\main.cpp /link
+	$(link) $(LDFLAGS) eigen$(CFG)\main.obj /out:"$(OUTDIR)\eigen.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making tiff2 (Transient incompressible fluid flow in 2-D, using penalty method) ***
+	$(cxx) $(CFLAGS) -Fo"tiff2$(CFG)\main.obj" $(DEMO_DIR)\fluid\tiff2\main.cpp /link
+	$(link) $(LDFLAGS) tiff2$(CFG)\main.obj /out:"$(OUTDIR)\tiff2.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making pns2 (Transient incompressible fluid flow in 2-D, using projection method) ***
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\main.obj" $(DEMO_DIR)\fluid\pns2\main.cpp /link
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\CalPres.obj" $(DEMO_DIR)\fluid\pns2\CalPres.cpp /link
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\InitialV.obj" $(DEMO_DIR)\fluid\pns2\InitialV.cpp /link
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\Momentum.obj" $(DEMO_DIR)\fluid\pns2\Momentum.cpp /link
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\PMatrix.obj" $(DEMO_DIR)\fluid\pns2\PMatrix.cpp /link
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\StreamF.obj" $(DEMO_DIR)\fluid\pns2\StreamF.cpp /link
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\UpdateV.obj" $(DEMO_DIR)\fluid\pns2\UpdateV.cpp /link
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\VMatrix.obj" $(DEMO_DIR)\fluid\pns2\VMatrix.cpp /link
+	$(cxx) $(CFLAGS) -Fo"pns2$(CFG)\Vorticity.obj" $(DEMO_DIR)\fluid\pns2\Vorticity.cpp /link
+	$(link) $(LDFLAGS) /out:"$(OUTDIR)\pns2.exe" /libpath:$(libpath) $(LIB) $(PNS2_OBJ) /incremental:yes
+
+	@echo *** making truss (2-D trusses in Structural Mechanics) ***
+	$(cxx) $(CFLAGS) -Fo"truss$(CFG)\main.obj" $(DEMO_DIR)\solid\Truss\main.cpp /link
+	$(link) $(LDFLAGS) truss$(CFG)\main.obj /out:"$(OUTDIR)\truss.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making beam (3-D beams in Structural Mechanics) ***
+	$(cxx) $(CFLAGS) -Fo"beam$(CFG)\main.obj" $(DEMO_DIR)\solid\Beam\main.cpp /link
+	$(link) $(LDFLAGS) beam$(CFG)\main.obj /out:"$(OUTDIR)\beam.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making contact (Signorini contact in 2-D elasticity) ***
+	$(cxx) $(CFLAGS) -Fo"contact$(CFG)\main.obj" $(DEMO_DIR)\solid\contact\main.cpp /link
+	$(link) $(LDFLAGS) contact$(CFG)\main.obj /out:"$(OUTDIR)\contact.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making lelas2d (Linearized elasticity in 2-D) ***
+	$(cxx) $(CFLAGS) -Fo"lelas2d$(CFG)\main.obj" $(DEMO_DIR)\solid\lelas2d\main.cpp /link
+	$(link) $(LDFLAGS) lelas2d$(CFG)\main.obj /out:"$(OUTDIR)\lelas2d.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making lelas3d (Linearized elasticity in 3-D) ***
+	$(cxx) $(CFLAGS) -Fo"lelas3d$(CFG)\main.obj" $(DEMO_DIR)\solid\lelas3d\main.cpp /link
+	$(link) $(LDFLAGS) lelas3d$(CFG)\main.obj /out:"$(OUTDIR)\lelas3d.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making ec2d1 (Eddy currents in 2D bounded domains) ***
+	$(cxx) $(CFLAGS) -Fo"ec2d1$(CFG)\main.obj" $(DEMO_DIR)\electromagnetics\EddyCurrent2d-1\main.cpp /link
+	$(cxx) $(CFLAGS) -Fo"ec2d1$(CFG)\User.obj" $(DEMO_DIR)\electromagnetics\EddyCurrent2d-1\User.cpp /link
+	$(cxx) $(CFLAGS) -Fo"ec2d1$(CFG)\ScaledMF.obj" $(DEMO_DIR)\electromagnetics\EddyCurrent2d-1\ScaledMF.cpp /link
+	$(cxx) $(CFLAGS) -Fo"ec2d1$(CFG)\UpdateMF.obj" $(DEMO_DIR)\electromagnetics\EddyCurrent2d-1\UpdateMF.cpp /link
+	$(link) $(LDFLAGS) ec2d1$(CFG)\main.obj ec2d1$(CFG)\User.obj ec2d1$(CFG)\ScaledMF.obj ec2d1$(CFG)\UpdateMF.obj /out:"$(OUTDIR)\ec2d1.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+	@echo *** making helmholtz (Helmholtz equation in 2D bounded domains) ***
+	$(cxx) $(CFLAGS) -Fo"helmholtz$(CFG)\main.obj" $(DEMO_DIR)\electromagnetics\helmholtz\main.cpp /link
+	$(cxx) $(CFLAGS) -Fo"helmholtz$(CFG)\User.obj" $(DEMO_DIR)\electromagnetics\helmholtz\User.cpp /link
+	$(cxx) $(CFLAGS) -Fo"helmholtz$(CFG)\error.obj" $(DEMO_DIR)\electromagnetics\helmholtz\error.cpp /link
+	$(link) $(LDFLAGS) helmholtz$(CFG)\main.obj helmholtz$(CFG)\User.obj helmholtz$(CFG)\error.obj /out:"$(OUTDIR)\helmholtz.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+
+install-library:
+	@echo Installing library ...
+	-@$(MKDIR) "$(LIB_INSTALL_DIR)"
+	-@$(MKDIR) "$(INCLUDE_INSTALL_DIR)"
+	@echo installing library files
+	-@copy "$(INCLUDE_DIR)\*.h" "$(INCLUDE_INSTALL_DIR)"
+	-@copy "$(LIB)" "$(LIB_INSTALL_DIR)"
+
+install-binaries:
+	@echo Installing binaries ...
+	$(MKDIR) "$(BIN_INSTALL_DIR)"
+	-@copy "$(OUTDIR)\*.exe" "$(BIN_INSTALL_DIR)"
+
+install-doc:
+	@echo Installing doc files ...
+	$(MKDIR) "$(DOC_INSTALL_DIR)"
+	$(MKDIR) "$(DOC_INSTALL_DIR)\html"
+	$(MKDIR) "$(DOC_INSTALL_DIR)\html\tutorial"
+	$(MKDIR) "$(DOC_INSTALL_DIR)\html\utilities"
+	$(MKDIR) "$(DOC_INSTALL_DIR)\html\im"
+	$(MKDIR) "$(DOC_INSTALL_DIR)\html\therm"
+	$(MKDIR) "$(DOC_INSTALL_DIR)\html\solid"
+	$(MKDIR) "$(DOC_INSTALL_DIR)\html\fluid"
+	$(MKDIR) "$(DOC_INSTALL_DIR)\html\electromagnetics"
+	-@copy "$(DOC_DIR)\*.pdf" "$(DOC_INSTALL_DIR)"
+	-@copy "$(DOC_DIR)\html\*.html" "$(DOC_INSTALL_DIR)\html"
+	-@copy "$(DOC_DIR)\html\*.htm" "$(DOC_INSTALL_DIR)\html"
+	-@copy "$(DOC_DIR)\html\*.css" "$(DOC_INSTALL_DIR)\html"
+	-@copy "$(DOC_DIR)\html\tutorial\*.*" "$(DOC_INSTALL_DIR)\html\tutorial"
+	-@copy "$(DOC_DIR)\html\im\*.*" "$(DOC_INSTALL_DIR)\html\im"
+	-@copy "$(DOC_DIR)\html\utilities\*.*" "$(DOC_INSTALL_DIR)\html\utilities"
+	-@copy "$(DOC_DIR)\html\solid\*.*" "$(DOC_INSTALL_DIR)\html\solid"
+	-@copy "$(DOC_DIR)\html\fluid\*.*" "$(DOC_INSTALL_DIR)\html\fluid"
+	-@copy "$(DOC_DIR)\html\therm\*.*" "$(DOC_INSTALL_DIR)\html\therm"
+	-@copy "$(DOC_DIR)\html\electromagnetics\*.*" "$(DOC_INSTALL_DIR)\html\electromagnetics"
+
+install-demos:
+	@echo Copying demo programs ...
+	$(MKDIR) "$(DEMO_INSTALL_DIR)"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\thermal"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\thermal\stdc2"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\thermal\ttd2"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\thermal\std3"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\fluid"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\fluid\tiff2"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\fluid\pns2"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\cl"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\cl\lh2d"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\cl\euler-2d"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\solid"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\solid\contact"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\solid\lelas2d"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\solid\lelas3d"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\electromagnetics"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\electromagnetics\helmholtz"
+	$(MKDIR) "$(DEMO_INSTALL_DIR)\electromagnetics\EddyCurrent-2d"
+	-@copy "$(DEMO_DIR)\thermal\stdc2\*.*" "$(DEMO_INSTALL_DIR)\thermal\stdc2"
+	-@copy "$(DEMO_DIR)\thermal\ttd2\*.*" "$(DEMO_INSTALL_DIR)\thermal\ttd2"
+	-@copy "$(DEMO_DIR)\thermal\std3\*.*" "$(DEMO_INSTALL_DIR)\thermal\std3"
+	-@copy "$(DEMO_DIR)\thermal\eigen\*.*" "$(DEMO_INSTALL_DIR)\thermal\eigen"
+	-@copy "$(DEMO_DIR)\fluid\tiff2\*.*" "$(DEMO_INSTALL_DIR)\fluid\tiff2"
+	-@copy "$(DEMO_DIR)\fluid\pns2\*.*" "$(DEMO_INSTALL_DIR)\fluid\pns2"
+	-@copy "$(DEMO_DIR)\solid\contact\*.*" "$(DEMO_INSTALL_DIR)\solid\contact"
+	-@copy "$(DEMO_DIR)\solid\lelas2d\*.*" "$(DEMO_INSTALL_DIR)\solid\lelas2d"
+	-@copy "$(DEMO_DIR)\solid\lelas3d\*.*" "$(DEMO_INSTALL_DIR)\solid\lelas3d"
+	-@copy "$(DEMO_DIR)\solid\lelas3d\*.*" "$(DEMO_INSTALL_DIR)\cl\lh2d"
+	-@copy "$(DEMO_DIR)\solid\lelas3d\*.*" "$(DEMO_INSTALL_DIR)\cl\euler-2d"
+	-@copy "$(DEMO_DIR)\electromagnetics\helmholtz\*.*" "$(DEMO_INSTALL_DIR)\electromagnetics\helmholtz"
+	-@copy "$(DEMO_DIR)\electromagnetics\EddyCurrent-2d1\*.*" "$(DEMO_INSTALL_DIR)\electromagnetics\EddyCurrent-2d1"
+
+install-tutorial:
+	@echo Copying tutorial programs ...
+	$(MKDIR) "$(TUTORIAL_INSTALL_DIR)"
+	$(MKDIR) "$(TUTORIAL_INSTALL_DIR)\lesson1"
+	$(MKDIR) "$(TUTORIAL_INSTALL_DIR)\lesson2"
+	$(MKDIR) "$(TUTORIAL_INSTALL_DIR)\lesson3"
+	$(MKDIR) "$(TUTORIAL_INSTALL_DIR)\lesson4"
+	$(MKDIR) "$(TUTORIAL_INSTALL_DIR)\lesson5"
+	-@copy "$(TUTORIAL_DIR)\lesson1\*.*" "$(TUTORIAL_INSTALL_DIR)\lesson1"
+	-@copy "$(TUTORIAL_DIR)\lesson2\*.*" "$(TUTORIAL_INSTALL_DIR)\lesson2"
+	-@copy "$(TUTORIAL_DIR)\lesson3\*.*" "$(TUTORIAL_INSTALL_DIR)\lesson3"
+	-@copy "$(TUTORIAL_DIR)\lesson4\*.*" "$(TUTORIAL_INSTALL_DIR)\lesson4"
+	-@copy "$(TUTORIAL_DIR)\lesson5\*.*" "$(TUTORIAL_INSTALL_DIR)\lesson5"
+
+#
+# Implicit rules
+#
+
+{$(SRC_DIR)}.cpp{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(SRC_DIR)\misc}.cpp{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(SRC_DIR)\Laplace}.cpp{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(SRC_DIR)\therm}.cpp{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(SRC_DIR)\solid}.cpp{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(SRC_DIR)\fluid}.cpp{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(SRC_DIR)\electromagnetics}.cpp{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(SRC_DIR)\metis}.c{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -I"$(TMPDIR)" -Fo$(TMPDIR)\ $<
+
+{$(GENMESH_DIR)}.cpp{$(TMPDIR)}.obj:
+    $(cxx) $(CFLAGS) -I"$(GENMESH_DIR)" -Fo$(TMPDIR)\ $<
+
+clean:
+	@echo Erasing object and intermediate files ...
+	-@$(RM) $(OUTDIR)\*.exp 
+	-@$(RM) $(LIB)
+	-@$(RM) vc60.idb
+	-@$(RMDIR) $(OUTDIR)
+	-@$(RMDIR) $(TMPDIR)
+	-@$(RMDIR) ofeli$(CFG)
+	-@$(RMDIR) lesson1$(CFG)
+	-@$(RMDIR) lesson2$(CFG)
+	-@$(RMDIR) lesson3$(CFG)
+	-@$(RMDIR) lesson4$(CFG)
+	-@$(RMDIR) lesson5$(CFG)
+	-@$(RMDIR) cmesh$(CFG)
+	-@$(RMDIR) cfield$(CFG)
+	-@$(RMDIR) genmesh$(CFG)
+	-@$(RMDIR) stdc2$(CFG)
+	-@$(RMDIR) ttd2$(CFG)
+	-@$(RMDIR) std3$(CFG)
+	-@$(RMDIR) eigen$(CFG)
+	-@$(RMDIR) beam$(CFG)
+	-@$(RMDIR) truss$(CFG)
+	-@$(RMDIR) lelas2d$(CFG)
+	-@$(RMDIR) lelas3d$(CFG)
+	-@$(RMDIR) contact$(CFG)
+	-@$(RMDIR) tiff2$(CFG)
+	-@$(RMDIR) pns2$(CFG)
+	-@$(RMDIR) helmholtz$(CFG)
+	-@$(RMDIR) ec2d1$(CFG)
+	-@$(RMDIR) lh2d$(CFG)
+	-@$(RMDIR) euler_2d$(CFG)
+	-@$(RMDIR) $(OUTDIR)
+	-@$(RMDIR) $(TMPDIR)
+
+wipe:
+	@echo Wiping installation ...
+	-@$(RM) $(OUTDIR)\*.exp
+	-@$(RM) $(LIB)
+	-@$(RM) vc60.idb
+	-@$(RMDIR) $(OUTDIR)
+	-@$(RMDIR) $(TMPDIR)
+	-@$(RMDIR) lesson1$(CFG)
+	-@$(RMDIR) lesson2$(CFG)
+	-@$(RMDIR) lesson3$(CFG)
+	-@$(RMDIR) lesson4$(CFG)
+	-@$(RMDIR) lesson5$(CFG)
+	-@$(RMDIR) cmesh$(CFG)
+	-@$(RMDIR) cfield$(CFG)
+	-@$(RMDIR) fdf2xml$(CFG)
+	-@$(RMDIR) genmesh$(CFG)
+	-@$(RMDIR) stdc2$(CFG)
+	-@$(RMDIR) ttd2$(CFG)
+	-@$(RMDIR) std3$(CFG)
+	-@$(RMDIR) eigen$(CFG)
+	-@$(RMDIR) lelas2d$(CFG)
+	-@$(RMDIR) lelas3d$(CFG)
+	-@$(RMDIR) truss$(CFG)
+	-@$(RMDIR) beam$(CFG)
+	-@$(RMDIR) contact$(CFG)
+	-@$(RMDIR) tiff2$(CFG)
+	-@$(RMDIR) pns2$(CFG)
+	-@$(RMDIR) helmholtz$(CFG)
+	-@$(RMDIR) ec2d1$(CFG)
+	-@$(RMDIR) lh2d$(CFG)
+	-@$(RMDIR) euler_2d$(CFG)
+	-@$(RMDIR) $(INSTALLDIR)
+

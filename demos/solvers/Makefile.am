@@ -1,0 +1,4 @@
+
+SUBDIRS = LS ODE EIGEN
+
+

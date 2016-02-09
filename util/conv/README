@@ -1,0 +1,22 @@
+cmesh : Program to convert mesh files
+-------------------------------------
+
+Directory 'examples' contains demo mesh files to be converted.
+
+1. The command :
+      cmesh test -gmsh -mdf
+   creates the MDF file test.m from file test.msh in the format of the mesh generator Gmsh.
+
+2. The command :
+      cmesh l -bamg -mdf
+   creates the MDF file l.m from file l.bamg in the format of the mesh generator Bamg.
+
+2. The command :
+      cmesh l -mdf -tec
+   creates the Tecplot file l.dat from file l.m in the MDF (once this one created from the preceding command).
+
+cfield : Program to convert field data files
+--------------------------------------------
+
+Directory 'examples' contains demo data files to be converted.
+

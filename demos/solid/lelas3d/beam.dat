@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date></date>
+   <author></author>
+</info>
+<Project name="beam">
+   <verbose>1</verbose>
+   <output>0</output>
+   <save>1</save>
+   <plot>1</plot>
+   <init>1</init>
+   <mesh_file>beam.m</mesh_file>
+   <plot_file>beam.d</plot_file>
+</Project>
+<Prescription>
+   <BodyForce dof="3">-1.0</BodyForce>
+   <Traction code="7" dof="1">1000000</Traction>
+</Prescription>
+</OFELI_File>

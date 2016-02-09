@@ -1,0 +1,13 @@
+Program helmholtz
+-----------------
+A finite element code using OFELI to solve Helmholtz equation in a
+bounded 2-D domain
+
+The program is tested with an exact solution given in the class User.
+Mesh files proj-10.m, proj-20.m, proj-40.m and proj-80.m produce
+various discretization errors.
+
+Modify file proj.dat to run the program with these mesh files.
+See documentation for a description of the test.
+
+

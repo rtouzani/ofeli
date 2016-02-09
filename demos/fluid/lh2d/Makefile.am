@@ -1,0 +1,25 @@
+
+bin_PROGRAMS = lh2d
+AUTOMAKE_OPTIONS = no-dependencies
+
+lh2d_SOURCES = main.cpp
+lh2d_HEADERS = 
+
+lh2d_LDADD  = $(top_builddir)/src/libofeli.a
+
+lh2ddir   =	$(datadir)/ofeli/demos/cl/lh2d
+lh2d_DATA =	main.cpp \
+		proj.dat \
+		rectangle.m \
+		rectangle.v \
+		Makefile.standalone \
+		lh2d.cbp \
+		README
+dist_lh2d_DATA =	main.cpp \
+			proj.dat \
+			rectangle.m \
+			rectangle.v \
+			Makefile.standalone \
+			lh2d.cbp \
+			README
+

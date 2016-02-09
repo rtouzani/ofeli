@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_project_file>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="1"/>
+	<Project>
+		<Option title="g2m"/>
+		<Option makefile="Makefile_g2m"/>
+		<Option makefile_is_custom="0"/>
+		<Option compiler="0"/>
+		<Build>
+			<Target title="default">
+				<Option output="../../util/g2m/src/g2m" prefix_auto="0" extension_auto="1" />
+				<Option working_dir="../../util/g2m/examples"/>
+				<Option object_output=".objs"/>
+				<Option deps_output=".deps"/>
+				<Option type="1"/>
+				<Option compiler="0"/>
+				<Option parameters="test.dom"/>
+				<Option projectResourceIncludeDirsRelation="1"/>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="../../include"/>
+		</Compiler>
+		<Linker>
+			<Add library="libofeli.a"/>
+			<Add directory="../../src"/>
+		</Linker>
+		<Unit filename="../../util/g2m/src/main.cpp">
+			<Option compilerVar="CPP"/>
+			<Option target="default"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

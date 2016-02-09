@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date></date>
+   <author></author>
+</info>
+<Project name="cavity-30">
+   <time_step value="0.01"/>
+   <max_time value="1."/>
+   <verbose value="2"/>
+   <plot value="10"/>
+   <mesh_file value="cavity-30.m"/>
+   <parameter label="Reynolds" value="1"/>
+   <parameter label="v_file" value="cavity.v"/>
+   <parameter label="p_file" value="cavity.p"/>
+</Project>
+<Prescription>
+   <BoundaryCondition code="2" dof="1">1</BoundaryCondition>
+</Prescription>
+</OFELI_File>

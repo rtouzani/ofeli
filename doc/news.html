@@ -1,0 +1,429 @@
+<!-- XHTML 1.0 Strict -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<meta name="author" content="Rachid Touzani" />
+<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
+<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
+<link href="css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>OFELI Downloads</title>
+<link rel="stylesheet" type="text/css" href="doxygen.css" />
+<link rel="stylesheet" type="text/css" href="head.css"  />
+</head>
+
+<body bgcolor="#FFFFFF" link="#FF0000" vlink="#FF00FF" alink="#FF00FF">
+<p><center><a href="index.html"><img src="im/ofeli.gif" width="150" border="0"></a></center></p>
+
+<center>
+  <div id="cse" style="width: 60%;">Loading</div>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script type="text/javascript"> 
+     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
+     google.setOnLoadCallback(function() {
+        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
+        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
+        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+        customSearchControl.draw('cse');
+     }, true);
+   </script>
+   <style type="text/css">
+     .gsc-control-cse {
+     font-family: Verdana, sans-serif;
+     border-color: #DAE0E5;
+     background-color: #DAE0E5;
+   }
+   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
+   input.gsc-input { border-color: #B6BEC5; }
+   input.gsc-search-button {
+     border-color: #B6BEC5;
+     background-color: #D0D1D4;
+   }
+   .gsc-tabHeader.gsc-tabhInactive {
+     border-color: #999999;
+     background-color: #EEEEEE;
+   }
+   .gsc-tabHeader.gsc-tabhActive {
+     border-color: #999999;
+     background-color: #999999;
+   }
+   .gsc-tabsArea { border-color: #999999; }
+   .gsc-webResult.gsc-result,
+   .gsc-results .gsc-imageResult {
+     border-color: #FFFFFF;
+     background-color: #FFFFFF;
+   }
+   .gsc-webResult.gsc-result:hover,
+   .gsc-imageResult:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion:hover {
+     border-color: #D2D6DC;
+     background-color: #EDEDED;
+   }
+   .gs-webResult.gs-result a.gs-title:link,
+   .gs-webResult.gs-result a.gs-title:link b,
+   .gs-imageResult a.gs-title:link,
+   .gs-imageResult a.gs-title:link b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:visited,
+   .gs-webResult.gs-result a.gs-title:visited b,
+   .gs-imageResult a.gs-title:visited,
+   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:hover,
+   .gs-webResult.gs-result a.gs-title:hover b,
+   .gs-imageResult a.gs-title:hover,
+   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
+   .gs-webResult.gs-result a.gs-title:active,
+   .gs-webResult.gs-result a.gs-title:active b,
+   .gs-imageResult a.gs-title:active,
+   .gs-imageResult a.gs-title:active b { color: #0568CD; }
+   .gsc-cursor-page { color: #0568CD; }
+   a.gsc-trailing-more-results:link { color: #0568CD; }
+   .gs-webResult .gs-snippet,
+   .gs-imageResult .gs-snippet,
+   .gs-fileFormatType { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl,
+   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
+   .gs-webResult div.gs-visibleUrl-short { display: none; }
+   .gs-webResult div.gs-visibleUrl-long { display: block; }
+   .gs-promotion div.gs-visibleUrl-short { display: none; }
+   .gs-promotion div.gs-visibleUrl-long { display: block; }
+   .gsc-cursor-box { border-color: #FFFFFF; }
+   .gsc-results .gsc-cursor-box .gsc-cursor-page {
+      border-color: #999999;
+      background-color: #FFFFFF;
+      color: #0568CD;
+   }
+   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+      border-color: #999999;
+      background-color: #999999;
+      color: #0568CD;
+   }
+   .gsc-webResult.gsc-result.gsc-promotion {
+      border-color: #D2D6DC;
+      background-color: #D0D1D4;
+   }
+   .gsc-completion-title { color: #0568CD; }
+   .gsc-completion-snippet { color: #5F6A73; }
+   .gs-promotion a.gs-title:link,
+   .gs-promotion a.gs-title:link *,
+   .gs-promotion .gs-snippet a:link { color: #0066CC; }
+   .gs-promotion a.gs-title:visited,
+   .gs-promotion a.gs-title:visited *,
+   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
+   .gs-promotion a.gs-title:hover,
+   .gs-promotion a.gs-title:hover *,
+   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
+   .gs-promotion a.gs-title:active,
+   .gs-promotion a.gs-title:active *,
+   .gs-promotion .gs-snippet a:active { color: #0066CC; }
+   .gs-promotion .gs-snippet,
+   .gs-promotion .gs-title .gs-promotion-title-right,
+   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
+   .gs-promotion .gs-visibleUrl,
+   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
+   </style>
+</center>
+</p>
+&nbsp;
+
+<div class="text">
+
+<div>
+<div id="button">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="html/index.html">Online Documentation</a></li>
+      <li><a href="presentations.html">Presentations</a></li>
+      <li><a href="copyright.html">License</a></li>
+      <li><a href="demos.html">Demo Programs</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="mailto:Rachid.Touzani@univ-bpclermont.fr">Contact</a></li>
+    </ul>
+  </div>
+
+  <div id="cc">
+  <p><font color="#203F5B" size="4" face="verdana,Helvetica">
+  <b>News - History of user visible changes</b></font></p>
+
+
+<p>
+<span class="member"><b>December 4, 2015 - Release OFELI 3.0.2</b></span>
+<ul type="square">
+   <li>Added: operator= in class Vect to assign strings as regular expressions
+   <li>Starting of implementation of ODE solver classes: More stable version in 3.1.0
+  <li>Update of project files for Microsoft Visual Studio 2015
+</ul>
+</p><br>
+
+<p>
+<span class="member"><b>September 20, 2015 - Release OFELI 3.0.1</b></span>
+<ul type="square">
+   <li>Some parameters to read by class IPF have now default values (See corresponding member functions).
+   <li>Petsc wrapping is now available. Not tested enough.
+   <li>Eigen library interface implemented. Tested and will be documented soon.
+</p><br>
+
+<p>
+<span class="member"><b>February 15, 2014 - Release OFELI 3.0.0</b></span>
+<ul type="square">
+   <li>All source and include subdirectories are changed. You have to
+       modify your source codes accordingly.
+   <li>Fixed: An error in class Point2D
+   <li>Added: In class Node, a member function SetCoord(Point<double>)
+   <li>Fixed: An error in class Timer
+   <li>Added: Class for shape functions for the 3-D pentahedral element
+   <li>Added: A member function Rescale for classes Domain and Mesh: It enable
+  rescaling node coordinates</ul>
+</p><br>
+
+<p>
+<span class="member"><b>July 25, 2013 - Release OFELI 2.3.0</b></span>
+<ul type="square">
+   <li>Added: Shape functions for edge elements for tetrahedra
+   <li>Improved: Documentation
+   <li>Added: Some preliminary member functions to prepare for DG implementation
+   <li>Added: Member functions for class Mesh to read mesh files in various external formats
+   <li>Modified: Demo lelas3d: The mesh file has been modified to boundary conditions
+   <li>Fixed: A bug in class <span class=VAR>Point<></span>
+   <li>Fixed: A bug in getMesh.cpp in the function getEasyMesh
+   <li>NEW: The ofeli package doesn't contain the devcpp project manager anymore, this one being obsolete.
+       Microsoft Visual Studio and CodeBlocks projects have been rearranged  
+   <li>NEW: The XCode workspace for the library is now added. It is located in ofeli/tools.
+   <li>Modified: The Domain file format has been modified.
+   <li>Modified: The utility application GenMesh has been removed and
+  replaced by <span class=VAR>g2m</span> which has
+  modified arguments. Once the package installed, type <span class=VAR>g2m --help</span>
+   <li>Real numbers typed double are now <span class=VAR>real_t</span>
+   <li>In class IOField, enumerated values for type are now member of class IOField
+</ul>
+</p><br>
+
+<p>
+<span class="member"><b>September 1, 2012 - Release OFELI 2.2.3</b></span>
+<ul type="square">
+  <li>A bug in class Triang3: Shape of sides was not right
+  <li>In demo lelas3d (3-D elasticity): boundary tractions are added in the demo
+</ul>
+</p><br>
+
+<p>
+<span class="member"><b>June 1, 2012 - Release OFELI 2.2.2</b></span>
+<ul type="square">
+  <li>A warning in class <span class=VAR>Vect</span> is removed
+  <li>Fixed: A bug in application <span class=VAR>cmesh</span>
+  <li>Fixed: The new google search engine is now valid
+  <li>Updated: Use of algebraic expressions in vector assignment in lesson1
+  <li>The SSOR preconditioner is added to class <span class=VAR>Prec</span>
+</ul>
+</p><br>
+
+
+<p>
+<span class="member"><b>February 1, 2012 - Release OFELI 2.2.1</b></span>
+<ul type="square">
+  <li>Fixed: An error in a file name (capitalization): File
+  <span class=VAR>demos/electromagnetics/Helmholtz/Helmholtz.dev</span>
+  <li>Fixed: A bug in function <span class=VAR>MeshToMesh</span>
+  <li>Added: Member function <span class=VAR>setN</span> in class
+  <span class=VAR>Grid</span> replaces <span class=VAR>setNx</span>,
+  <span class=VAR>setNy</span> and <span class=VAR>setNz</span>
+  <li>Added: A constructor to class <span class=VAR>Vect</span>. Some components of an existing vector
+         can be selected to construct a new vector
+  <li>Fixed: An error in class <span class=VAR>IOField</span>
+  <li>Fixed: An error in file <span class=VAR>README</span> for <span class=VAR>lesson4</span>
+  <li>Fixed: An error in script <span class=VAR>make dist</span>
+</ul>
+</p>
+
+<p>
+<span class="member"><b>October 10, 2011 - Release OFELI 2.2.0</b></span>
+
+<font color="red">WARNING:</font> If you use <span
+    class=VAR>NodeVect</span>, <span class=VAR>ElementVect</span>,
+    ... read this news before installing this release
+
+<ul type="square">
+  <li>Fixed: A bug found in member function <span class=VAR>Equation::ElementVector</span>.
+  <li>Added: Member functions <span class=VAR>Equation::ElementNodeCoordinates</span> and
+  <span class=VAR>Equation::SideNodeCoordinates</span>
+  to localize coordinates of element and side nodes
+  <li>Main update: Vector classes <span class=VAR>NodeVect</span>, <span class=VAR>ElementVect</span>,
+      <span class=VAR>SideVect</span> and <span class=VAR>EdgeVect</span> are no more used.
+  There are even removed from the package. Class Vect replaces them, it can contain now mesh information. This implies modification
+  of your codes if you install <span class=VAR>ofeli-2.2.0</span>
+  <li>Documentation file <span class=VAR>Demos.pdf</span> has been removed from the package: Too difficult to maintain the pdf
+  and html versions
+  <li>Error messages are now replaced by C++ exceptions
+  <li>In mesh and field conversion utilities, <span class=VAR>FDF</span> handling is discarded.
+  <li>The utility function <span class=VAR>fdf2xml</span> is removed from the library.
+  <li>Added: <span class=VAR>BMatrix</span>, A template class for banded matrices
+</ul>
+</p>
+
+<p>
+<span class="member"><b>March 28, 2011 - Release OFELI 2.1.1</b></span>
+<ul type="square">
+  <li>Fixed: Missing files in documentation were added
+</ul>
+</p>
+
+<p>
+<span class="member"><b>February 20, 2011 - Release OFELI 2.1.0</b></span>
+<ul type="square">
+  <li>Added: Macros for element, side and node loops and other
+  utilities
+  <li>Added: Class BioSavart for implementation of the Biot-Savart law
+  for electromagnetics
+  <li>The library documentation is improved. In particular, pdf manuals are back.
+</ul>
+</p>
+
+<p>
+<span class="member"><b>March 1, 2010 - Release OFELI 2.0.2</b></span>
+<ul type="square">
+  <li>Added: Class <span class=var>interface</span> classes for Level Sets ande Fast Marching
+  <li>Added: <span class=var>Figure</span> classes for defining geometric figures and computing signed distances
+</ul>
+</p>
+
+<p>
+<span class="member"><b>January 2, 2010 - Release OFELI 2.0.1</b></span>
+<ul type="square">
+  <li>Added: Class <span class=var>Funct</span> for function Parsing
+  <li>Added: Class <span class=var>Tabulation</span> for function tabulation and new tags in XML files for tabulated functions
+</ul>
+</p>
+
+<p>
+<span class="member"><b>September 10, 2009 - Release OFELI 2.0.0</b></span>
+
+New version with fundamental changes:
+
+<ul type="square">
+  <li><b><span class=logo>OFELI</span> has now changed to LGPL license: It can now be used in proprietary codes and libraries</b>
+  <li>A bug in <span class=var>cfield</span>: Conversions of fields now work
+  <li>Calculation of gradient, curl and divergence in vector classes
+  <li>A bug in <span class=var>DSMatrix</span> is fixed
+  <li>A new class (<span class=var>Eigen</span>) for computing eigenvalues and eigenvectors is added
+  <li>A new demo code for computing eigenvalues and eigenvectors is added
+  <li>And many other modifications ...
+</ul>
+</p>
+
+<p>
+<span class="member"><b>March 22, 2009 - Release OFELI 1.7.0</b></span>
+This is a major release containing number of changes. 
+
+<ul type="square">
+  <li>Complete portability to gcc 4.3 is now guaranteed
+  <li>Old format files are now deprecated and no more documented. Only XML files are to be used
+  <li>A bug in <span class=var>cmesh</span>: Conversion from gmsh file format is fixed (node codes were not correctly transmitted) (Thanks to S. Clain).
+  <li>A bug in class <span class=var>DC3DT4</span> is fixed (Thanks to O. Corral).
+  <li>A bug in <span class=var>Mesh</span> constructor using <span class=var>Grid</span> instance is fixed.
+  <li>Class <span class=var>VDF</span> is removed from the library.
+  <li>Consistent capacity contribution in class DC3DT4 is implemented (contributor: Octavio Corral).
+  <li>A bug in cfield: The case of vector fields os now fixed
+  <li>Added: Macros for loops on elements, nodes or sides ... See tutorial lessons for instance.<br>
+      Be careful: Some of these macros use new global variales (theNode, theCNode, theElement, theCElement, 
+      theSide, theCSide) which are pointers to Node, Element, Side in nonconstant and constant versions respectively
+  <li>Added: class <span class=var>Laplace2DFVT</span> for the Laplace equation in 2-D using triangular finite volumes
+</ul>
+</p>
+
+<p>
+<span class="member"><b>October 20, 2008 - Release OFELI 1.6.0</b></span>
+
+This is a major release containing number of changes. 
+
+<ul type="square">
+  <li> The directory <span class=var>tests</span> previously containing simple examples
+       and demo programs is now split into 2 directories:
+       <ul>
+         <li>A directory <span class=var>tutorial</span> contains the old <i>examples</i>,
+             called now <i>lessons</i>
+         <li>A directory demos</span> contains the old demos subdirectory
+       </ul>
+  <li> The directory <span class=var>Win32</span> is replaced by a directory called
+       <span class=var>tools</span> with two subdirectories:
+       <ul>
+         <li> The subdirectory <span class=var>Win32</span> remains the same
+         <li> The subdirectory <span class=var>Codeblocks</span> provides material for 
+              developing projects in <span class=var>CodeBlocks</span>. This one is 
+              is a multiplatform application and is available at 
+              <a href="http://www.codeblocks.org/">http://www.codeblocks.org</a>
+       </ul>
+  <li> All predefined file formats for input and output are replaced by an XML file format.
+       Old file format will be kept for some time and then abandoned
+  <li> Old <span class=var>MDF</span> and <span class=var>FDF</span> files can be converted
+       into <span class=var>XML</span> file by using the added utility programs
+       <span class=var>mdf2xml</span> and <span class=var>fdf2xml</span> respectively
+  <li> Class <span class=var>VDF</span> is now called <span class=var>Prescription</span>. This
+       one deals however with XML files only
+  <li> A new class <span class=var>IOField</span> replaces old <span class=var>FDF</span>
+       class and enables handling new XML field files
+  <li> Functions to store and read mesh and field files in XML file formats are
+       called <span class=var>getMesh</span>, <span class=var>saveMesh</span> and
+       <span class=var>saveField</span>
+</ul>
+</p>
+
+<p>
+<span class="member"><b>December 20, 2007 - Release OFELI 1.5.2</b></span>
+<ul type="square">
+  <li> Fixed: A bug in ofeli installation: doc file demos.pdf was replaced by Demos.pdf
+  <li> Fixed: A bug in member function Tetra4::getRefCoord
+  <li> Fixed: A bug in building dev-cpp projects
+  <li> More newer classes are now documented
+</ul>
+</p>
+
+<p>
+<span class="member"><b>August 25, 2007 - Release OFELI 1.5.1</b></span>
+<ul type="square">
+  <li> Added: in Documentation, PDF files containing presentations and examples of the library
+  <li> Modified: In class Mesh: Node, Element, Side and Edge lists are now instances of valarray
+  rather than vector : Faster. Sorting is implemented in OFELI by qksort.
+  <li> Added: In file MeshExtract.h: New classes to construct lists of nodes, elements or sides
+  with specific properties (e.g. common code)
+  <li> Fixed: A bug in class Mesh: Some useless member functions were declared but not implemented
+  <li> Fixed: A bug in class Point (== and != operators)
+  <li> Added: A constructor in class Mesh to extract the mesh of a rectangular subdomain
+</ul>
+</p>
+
+<p>
+<span class="member"><b>June 1, 2007 - Release OFELI 1.5.0</b></span>
+<ul type="square">
+  <li> A bug in member function FDF::Get(NodeVect<double> &) was fixed.
+  <li> A bug in member function FDF::Get(Vect<double> &,...) was fixed.
+  <li> Added: Loop on boundary sides in Mesh: Now use topBoundarySide and getBoundarySide: Faster
+  <li> Added: Loop on markes boundary nodes in Mesh: Now use topMarkedNode and getMarkedNode : Faster
+  <li> Added: Utility functions 'print' for matrix classes to print part of matrix
+  <li> Added: Utility functions 'print' for Vect class to print part of vector
+  <li> Added: TCLAP library for argument parsing
+  <li> Added: setPrintView methods
+  <li> Added: A new class Laplace2DMHRT0 to solve the Laplace equation by the
+  Mixed Hybrid RT0 method.
+  <li> Added: Operators +=, -=, *= and /= for constants in class Vect<>
+  <li> No control of element jacobian and number of nodes is now checked in shape function classes
+  => More efficiency.
+  <li> Conversion utility functions cmesh and cfield have now a different list of arguments.
+Please refer to documentation.
+</ul>
+
+</div>
+
+<br>
+<br><br><br><br><br><br>
+<div id="foot_bar">
+        Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+</div>
+</div>
+</body>
+</html>

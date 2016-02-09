@@ -1,0 +1,17 @@
+
+OBJ = main.o
+
+all:	lelas2d
+
+lelas2d:	$(OBJ)
+	`ofeli-config --cxx` `ofeli-config --cflags` -o lelas2d $(OBJ) `ofeli-config --libs`
+
+clean:
+	/bin/rm -f $(OBJ) lelas2d`ofeli-config --exe_ext`
+
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

@@ -1,0 +1,11 @@
+Lesson 1
+--------
+
+This first lesson shows a simple test of OFELI. It solves a
+1-D equation using P1-finite element.
+
+To execute the example type
+
+          lesson1
+
+

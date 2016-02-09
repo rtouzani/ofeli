@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title>Lesson4: OFELI's Tutorial</title>
+   <date>January 1, 2008</date>
+   <author>R. Touzani</author>
+</info>
+<Project name="lesson4">
+   <mesh_file>test.m</mesh_file>
+   <max_time value="1."/>
+   <time_step value="0.2"/>
+</Project>
+</OFELI_File>

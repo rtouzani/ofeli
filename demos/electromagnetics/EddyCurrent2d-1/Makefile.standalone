@@ -1,0 +1,17 @@
+
+OBJ = main.o ScaledMF.o UpdateMF.o User.o
+
+all:	EC2D1
+
+EC2D1:	$(OBJ)
+	`ofeli-config --cxx` `ofeli-config --cflags` -o EC2D1`ofeli-config --exe_ext` $(OBJ) `ofeli-config --libs`
+
+clean:
+	/bin/rm -f $(OBJ) EC2D1`ofeli-config --exe_ext`
+
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

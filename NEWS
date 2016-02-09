@@ -1,0 +1,67 @@
+ofeli NEWS - History of user visible changes.
+Copyright (C) 2016 Rachid Touzani
+
+ 
+New in 2.3.0, 2013-7-25; Rachid Touzani:
+
+* Added: Shape functions for edge elements for tetrahedra
+* Improved: Documentation
+* Added: Some preliminary member functions to prepare for DG implementation
+* Added: Member functions for class Mesh to read mesh files in various external formats
+* Modified: Demo lelas3d: The mesh file has been modified to boundary conditions
+* Fixed: A bug in class Point<>
+* Fixed: A bug in getMesh.cpp in the function getEasyMesh
+* NEW: The ofeli package doesn't contain the devcpp project manager anymore, this one being obsolete.
+       Microsoft Visual Studio and CodeBlocks projects have been rearranged  
+* NEW: The XCode workspace for the library is now added. It is located in ofeli/tools.
+* Modified: The Domain file format has been modified.
+* Modified: The utility application GenMesh has been removed and replaced by g2m which has
+  modified arguments. Once the package installed, type g2m --help
+* Real numbers typed double are now real_t
+* In class IOField, enumerated values for type are now member of class IOField
+
+New in 2.3.1, 2013-10-30; Rachid Touzani:
+
+* Fixed: An error in class Point2D
+* Added: In class Node, a member function setCoord(Point<double>) 
+* Fixed: An error in class Timer
+* Added: Class for shape functions for the 3-D pentahedral element
+* Added: A member function Rescale for class Mesh: It enables rescaling node coordinates
+-----------------------------------------------------------------------------------------------------
+
+New in 3.0.0, 2014-2-15; Rachid Touzani:
+
+* All source and include subdirectories are changed. You have to
+  modify your source codes accordingly.
+* The library is no more stored in the svn repository. It is now stored in a Github repository
+* Fixed: An error in class Point2D
+* Added: In class Node, a member function SetCoord(Point<double>)
+* Fixed: An error in class Timer
+* Added: Class for shape functions for the 3-D pentahedral element
+* Added: A member function Rescale for classes Domain and Mesh: It enable
+  rescaling node coordinates
+
+New in 3.0.1, 2015-9-20; Rachid Touzani:
+
+* Some parameters to read by class IPF have now default values (See corresponding member functions) 
+* Petsc wrapping is now available. Not tested enough
+* Eigen library interface implemented. Tested and will be documented soon
+
+New in 3.0.2, 2015-12-4; Rachid Touzani:
+
+* Added: operator= in class Vect to assign strings as regular expressions
+* Starting of implementation of ODE solver classes: More stable version in 3.1.0
+* Update of project files for Microsoft Visual Studio 2015
+
+-----------------------------------------------------------------------------------------------------
+
+New in 3.1.0, 2016-2-15; Rachid Touzani:
+
+* Added: Solver for symmetric eigenvalue problems as well as demo programs to test it
+* Removed: Old solver Eigen
+* Added: In class DMatrix, QR decomposition and solution of the linear system.
+* Modified: In classes DMatrix and DSMatrix. Function Factor is renamed solveLU in DMatrix and
+  solveLDLt in DSMatrix. The function Solve is replaced by a function solveLU (resp. solveLDLt)
+  which factorizes the matrix as well if this was not done. In future releases, old functions will be
+  removed.
+* Fixed: Workspace and projects for Visual Studio work now.
