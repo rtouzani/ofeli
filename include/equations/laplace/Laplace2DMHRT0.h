@@ -90,10 +90,10 @@ class Laplace2DMHRT0 : virtual public Equa_Laplace<real_t,3,3,2,2> {
 
 /** \brief Perform post calculations
  *  @param [in] lambda Solution (Lagrange multiplier) calculated at edges
- *  @param [in] f Vector containing the right-hand side of the Laplace equation
- *  @param [in] v Vector containing solution at mesh nodes
- *  @param [in] p Vector containing gradient at elements
- *  @param [in] u Vector containing solution at elements
+ *  @param [in] f Vect instance containing the right-hand side of the Laplace equation
+ *  @param [in] v Vect instance containing solution at mesh nodes
+ *  @param [in] p Vect instance containing gradient at elements
+ *  @param [in] u Vect instance containing solution at elements
  */
     void Post(const Vect<real_t>&         lambda,
               const Vect<real_t>&         f,
