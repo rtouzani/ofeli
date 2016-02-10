@@ -94,7 +94,7 @@ while test $# -gt 0; do
         ;;
 
     --libs)
-       	echo -lofeli  -lpetsc  -lmpi  -L${exec_prefix}/lib     -lm -L${exec_prefix}/lib 
+       	echo -lofeli  -lm -L${exec_prefix}/lib 
        	;;
     *)
 	usage

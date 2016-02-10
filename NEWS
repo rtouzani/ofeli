@@ -57,6 +57,7 @@ New in 3.0.2, 2015-12-4; Rachid Touzani:
 
 New in 3.1.0, 2016-2-15; Rachid Touzani:
 
+* The repository is now hosted by git at: github.com/rtouzani/ofeli
 * Added: Solver for symmetric eigenvalue problems as well as demo programs to test it
 * Removed: Old solver Eigen
 * Added: In class DMatrix, QR decomposition and solution of the linear system.

@@ -49,6 +49,7 @@ using std::string;
 #include "OFELI_Config.h"
 #include "linear_algebra/Assembly.h"
 #include "linear_algebra/Vect.h"
+#include "linear_algebra/DSMatrix.h"
 
 namespace OFELI {
 

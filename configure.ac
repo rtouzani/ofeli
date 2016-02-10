@@ -382,7 +382,9 @@ AC_SUBST(OFELI_FLAGS)
 # Now restore our (possibly augmented) CFLAGS, LIBS and CPPFLAGS.
 CFLAGS="$save_cflags"
 OFELI_CFLAGS="$OFELI_CFLAGS $CPPFLAGS"
+if test "x$with_petsc" = "xyes" ; then
 OFELI_LIBS="$OFELI_LIBS $PETSC_LIBS $MPI_LIBS $OFELI_LDFLAGS $PETSC_LDFLAGS $MPI_LDFLAGS"
+fi
 
 AC_OUTPUT(
    Makefile
