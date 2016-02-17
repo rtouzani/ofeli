@@ -177,23 +177,23 @@ class DMatrix : public Matrix<T_>
  *  @param [in] j column index of matrix
  *  @param [in] val Value to assign to <tt>a(i,j)</tt>.
  */
-    void set(      size_t  i,
-                   size_t  j,
-             const T_&     val)
+    void set(size_t    i,
+             size_t    j,
+             const T_& val)
     { _a[_nb_cols*(i-1)+j-1] = val; }
 
 /** \brief Copy a given vector to a prescribed row in the matrix.
  *  @param [in] i row index to be assigned
  *  @param [in] v Vect instance to copy
  */
-    void setRow(      size_t    i,
+    void setRow(size_t          i,
                 const Vect<T_>& v);
 
 /** \brief Copy a given vector to a prescribed column in the matrix.
  *  @param [in] i column index to be assigned
  *  @param [in] v Vect instance to copy
  */
-    void setColumn(      size_t    i,
+    void setColumn(size_t          i,
                    const Vect<T_>& v);
 
 /** \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>.
@@ -201,55 +201,55 @@ class DMatrix : public Matrix<T_>
  *  @param [in] x Vector to multiply by <tt>a</tt>
  *  @param [in,out] y on input, vector to add to. On output, result.
  */
-    void MultAdd(      T_        a,
+    void MultAdd(T_              a,
                  const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /** \brief Multiply matrix by vector <tt>x</tt> and add result to <tt>y</tt>.
  *  @param [in] x Vector to add to <tt>y</tt>
  *  @param [in,out] y on input, vector to add to. On output, result.
  */
     void MultAdd(const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /** \brief Multiply matrix by vector <tt>x</tt> and save result in <tt>y</tt>.
  *  @param [in] x Vector to add to <tt>y</tt>
  *  @param [out] y Result.
  */
     void Mult(const Vect<T_>& x,
-                    Vect<T_>& y) const;
+              Vect<T_>&       y) const;
 
 /** \brief Multiply transpose of matrix by vector <tt>x</tt> and add result in <tt>y</tt>.
  *  @param [in] x Vector to add to <tt>y</tt>
  *  @param [in,out] y on input, vector to add to. On output, result.
  */
     void TMult(const Vect<T_>& x,
-                     Vect<T_>& y) const;
+               Vect<T_>&       y) const;
 
 /** \brief Add constant <tt>val</tt> to entry <tt>(i,j)</tt> of the matrix.
  *  @param [in] i row index
  *  @param [in] j column index
  *  @param [in] val Constant to add
  */
-    void add(      size_t  i,
-                   size_t  j,
-             const T_&     val);
+    void add(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_           a,
+    void Axpy(T_                 a,
               const DMatrix<T_>& m);
-   
+
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(       T_          a,
-              const  Matrix<T_>* m);
+    void Axpy(T_                a,
+              const Matrix<T_>* m);
 
 /** \brief Construct a QR factorization of the matrix
  *  \details This function constructs the QR decomposition using the Householder method.
@@ -283,7 +283,7 @@ class DMatrix : public Matrix<T_>
  *  @return The same value as returned by the function QR
  */
     int solveQR(const Vect<T_>& b,
-                      Vect<T_>& x);
+                Vect<T_>&       x);
 
 /** \brief Solve a transpose linear system by QR decomposition
  *  \details This function constructs the QR decomposition, if this was not already done
@@ -293,7 +293,7 @@ class DMatrix : public Matrix<T_>
  *  @return The same value as returned by the function QR
  */
     int solveTransQR(const Vect<T_>& b,
-                           Vect<T_>& x);
+                     Vect<T_>&       x);
 
 /** \brief Operator () (Constant version).
  *  Return <tt>a(i,j)</tt>
@@ -394,7 +394,7 @@ class DMatrix : public Matrix<T_>
  *  </ul>
  */
     int solve(const Vect<T_>& b,
-                    Vect<T_>& x);
+              Vect<T_>&       x);
 
 /** \brief Solve the transpose linear system.
  *  \details The linear system having the current instance as a transpose matrix is solved by using the LU decomposition.
@@ -413,7 +413,7 @@ class DMatrix : public Matrix<T_>
  *  </ul>
  */
     int solveTrans(const Vect<T_>& b,
-                         Vect<T_>& x);
+                   Vect<T_>&       x);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     int Solve(Vect<T_>& b) { return solve(b); }
@@ -422,10 +422,10 @@ class DMatrix : public Matrix<T_>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     int solveLU(const Vect<T_>& b,
-                      Vect<T_>& x);
+                Vect<T_>&       x);
     int solveLU(Vect<T_>& b);
     int solveTransLU(const Vect<T_>& b,
-                           Vect<T_>& x);
+                     Vect<T_>&       x);
     int solveTransLU(Vect<T_>& b);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

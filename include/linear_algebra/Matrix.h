@@ -961,7 +961,7 @@ int Matrix<T_>::FactorAndSolve(Vect<T_>& b)
 
 template<class T_>
 int Matrix<T_>::FactorAndSolve(const Vect<T_>& b,
-                                     Vect<T_>& x)
+                               Vect<T_>&       x)
 {
    int ret = Factor();
    solve(b,x);

@@ -121,6 +121,50 @@ class DSMatrix : public Matrix<T_>
                  Mesh&  mesh);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/** \brief Get <tt>j</tt>-th column vector
+ *  @param [in] j Index of column to extract
+ *  @param [out] v Reference to Vect instance where the column is stored
+ *  @remark Vector v does not need to be sized before. It is resized in the function
+ */
+    void getColumn(size_t    j,
+                   Vect<T_>& v) const;
+
+/** \brief Get <tt>j</tt>-th column vector
+ *  @param [in] j Index of column to extract
+ *  @return Vect instance where the column is stored
+ *  @remark Vector v does not need to be sized before. It is resized in the function
+ */
+    Vect<T_> getColumn(size_t j) const;
+
+/** \brief Get <tt>i</tt>-th row vector
+ *  @param [in] i Index of row to extract
+ *  @param [out] v Reference to Vect instance where the row is stored
+ *  @remark Vector v does not need to be sized before. It is resized in the function
+ */
+    void getRow(size_t    i,
+                Vect<T_>& v) const;
+
+/** \brief Get <tt>i</tt>-th row vector
+ *  @param [in] i Index of row to extract
+ *  @return Vect instance where the row is stored
+ *  @remark Vector v does not need to be sized before. It is resized in the function
+ */
+    Vect<T_> getRow(size_t i) const;
+
+/** \brief Copy a given vector to a prescribed row in the matrix.
+ *  @param [in] i row index to be assigned
+ *  @param [in] v Vect instance to copy
+ */
+    void setRow(      size_t    i,
+                const Vect<T_>& v);
+
+/** \brief Copy a given vector to a prescribed column in the matrix.
+ *  @param [in] i column index to be assigned
+ *  @param [in] v Vect instance to copy
+ */
+    void setColumn(      size_t    i,
+                   const Vect<T_>& v);
+
 /// \brief Set matrix as diagonal and assign its diagonal entries as a constant
 /// @param [in] a Value to assign to all diagonal entries
     void setDiag(const T_& a);
@@ -440,6 +484,76 @@ int DSMatrix<T_>::setLDLt()
    }
    _fact = true;
    return err;
+}
+
+
+template<class T_>
+void DSMatrix<T_>::getColumn(size_t    j,
+                             Vect<T_>& v) const
+{
+   v.setSize(_size);
+   for (size_t i=0; i<j-1; i++)
+      v[i] = _a[_size*(j-1)/2+i];
+   for (size_t i=j-1; i<_size; i++)
+      v[i] = _a[_size*i/2+j-1];
+}
+
+
+template<class T_>
+Vect<T_> DSMatrix<T_>::getColumn(size_t j) const
+{
+   Vect<T_> v(_size);
+   for (size_t i=0; i<j-1; i++)
+      v[i] = _a[_size*(j-1)/2+i];
+   for (size_t i=j-1; i<_size; i++)
+      v[i] = _a[_size*i/2+j-1];
+   return v;
+}
+
+
+template<class T_>
+void DSMatrix<T_>::setColumn(size_t          j,
+                             const Vect<T_>& v)
+{
+   for (size_t i=0; i<j-1; i++)
+      _a[_size*(j-1)/2+i] = v[i];
+   for (size_t i=j-1; i<_size; i++)
+      _a[_size*i/2+j-1] = v[i];
+}
+
+
+template<class T_>
+void DSMatrix<T_>::getRow(size_t    i,
+                          Vect<T_>& v) const
+{
+   v.resize(_size);
+   for (size_t j=0; j<i; j++)
+      v[j] = _a[_size*(i-1)/2+j];
+   for (size_t j=i; j<_nb_cols; j++)
+      v[j] = _a[_size*j/2+i-1];
+}
+
+
+template<class T_>
+Vect<T_> DSMatrix<T_>::getRow(size_t i) const
+{
+   Vect<T_> v(_size);
+   for (size_t j=0; j<i; j++)
+      v[j] = _a[_size*(i-1)/2+j];
+   for (size_t j=i; j<_size; j++)
+      v[j] = _a[_size*j/2+i-1];
+   return v;
+}
+
+
+template<class T_>
+void DSMatrix<T_>::setRow(size_t          i,
+                          const Vect<T_>& v)
+{
+   for (size_t j=0; j<i; j++)
+      _a[_size*(i-1)/2+j] = v[j];
+   for (size_t j=i; j<_size; j++)
+      _a[_size*j/2+i-1] = v[j];
 }
 
 
