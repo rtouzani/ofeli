@@ -98,7 +98,7 @@ class SkMatrix : public Matrix<T_>
  *  @param [in] is_diagonal Boolean to select if the matrix is diagonal or not [Default: false]
  */
     SkMatrix(size_t size,
-	     int    is_diagonal=false);
+             int    is_diagonal=false);
 
 /** \brief Constructor using mesh to initialize skyline structure of matrix.
  *  @param [in] mesh Mesh instance for which matrix graph is determined.
@@ -109,8 +109,8 @@ class SkMatrix : public Matrix<T_>
  *  @param [in] is_diagonal Boolean argument to say is the matrix is actually a diagonal matrix or not.
  */
     SkMatrix(Mesh&  mesh,
-	     size_t dof=0,
-	     int    is_diagonal=false);
+             size_t dof=0,
+             int    is_diagonal=false);
 
 /** \brief Constructor that initializes skyline structure of matrix using vector of column heights.
  *  @param [in] ColHt Vect instance that contains rows lengths of matrix.
@@ -166,14 +166,14 @@ class SkMatrix : public Matrix<T_>
  *  @param [in] j Column index (starting at <tt>i=1</tt>)
  *  @param [in] val Value to assign to entry <tt>a(i,j)</tt>
  */
-    void set(      size_t i,
-                   size_t j,
-             const T_&    val);
+    void set(size_t    i,
+             size_t    j,
+             const T_& val);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void SSet(      size_t  i,
-                    size_t  j,
-              const T_&     val);
+    void SSet(size_t    i,
+              size_t    j,
+              const T_& val);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Add to matrix the product of a matrix by a scalar
@@ -212,30 +212,30 @@ class SkMatrix : public Matrix<T_>
  */
     void MultAdd(T_              a,
                  const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /** \brief Multiply matrix by vector <tt>x</tt> and save in <tt>y</tt>.
  *  @param [in] x Vector to multiply by matrix
  *  @param [out] y Vector that contains on output the result.
  */
     void Mult(const Vect<T_>& x,
-                    Vect<T_>& y) const;
+              Vect<T_>&       y) const;
 
 /** \brief Multiply transpose of matrix by vector <tt>x</tt> and save in <tt>y</tt>.
  *  @param [in] x Vector to multiply by matrix
  *  @param [out] y Vector that contains on output the result.
  */
     void TMult(const Vect<T_>& x,
-                     Vect<T_>& y) const;
+               Vect<T_>&       y) const;
 
 /** \brief Add a constant value to an entry ofthe matrix.
  *  @param [in] i Row index
  *  @param [in] j Column index
  *  @param [in] val Constant value to add to <tt>a(i,j)</tt>
  */
-    void add(      size_t  i,
-                   size_t  j,
-             const T_&     val);
+    void add(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /// \brief Return column height.
 /// \details Column height at entry <tt>i</tt> is returned.
@@ -267,10 +267,10 @@ class SkMatrix : public Matrix<T_>
  *  be modified (<tt>dof>0</tt>)\n
  *  or both matrix and right-hand side (<tt>dof=0</tt>, default value).
  */
-    void DiagPrescribe(      Mesh&     mesh,
-                             Vect<T_>& b,
+    void DiagPrescribe(Mesh&           mesh,
+                       Vect<T_>&       b,
                        const Vect<T_>& u,
-                             int       flag=0);
+                       int             flag=0);
 
 /** \brief Impose an essential boundary condition using the Mesh instance provided by the constructor.
  *  \details This member function modifies diagonal terms in matrix and terms
@@ -363,11 +363,11 @@ class SkMatrix : public Matrix<T_>
  *  </ul>
  */
     int solve(const Vect<T_>& b,
-                    Vect<T_>& x);
+              Vect<T_>&       x);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     int solveLU(const Vect<T_>& b,
-                      Vect<T_>& x);
+                Vect<T_>&       x);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Return C-Array.
@@ -533,7 +533,7 @@ void SkMatrix<T_>::setMesh(size_t dof,
 
 
 template<class T_>
-void SkMatrix<T_>::setSkyline(class Mesh& mesh)
+void SkMatrix<T_>::setSkyline(Mesh& mesh)
 {
    _zero = 0;
    int set_sides = mesh.SidesAreDOF();
@@ -574,9 +574,9 @@ void SkMatrix<T_>::setDiag()
 
 
 template<class T_>
-void SkMatrix<T_>::set(      size_t  i,
-                             size_t  j,
-                       const T_&     val)
+void SkMatrix<T_>::set(size_t    i,
+                       size_t    j,
+                       const T_& val)
 {
    try {
       int k=0, l=0;
@@ -597,9 +597,9 @@ void SkMatrix<T_>::set(      size_t  i,
 
 
 template<class T_>
-void SkMatrix<T_>::SSet(      size_t  i,
-                              size_t  j,
-                        const T_&     val)
+void SkMatrix<T_>::SSet(size_t    i,
+                        size_t    j,
+                        const T_& val)
 {
    int k=0, l=0;
    if (i>1)
@@ -615,7 +615,7 @@ void SkMatrix<T_>::SSet(      size_t  i,
 
 template<class T_>
 void SkMatrix<T_>::MultAdd(const Vect<T_>& x,
-                                 Vect<T_>& y) const
+                           Vect<T_>&       y) const
 {
    for (size_t i=0; i<_size; i++)
       for (size_t j=0; j<_size; j++)
@@ -625,7 +625,7 @@ void SkMatrix<T_>::MultAdd(const Vect<T_>& x,
 
 template<class T_>
 void SkMatrix<T_>::TMultAdd(const Vect<T_>& x,
-                                  Vect<T_>& y) const
+                            Vect<T_>&       y) const
 {
    cerr << "TMultAdd is not implemented for class SkMatrix" << endl;
 }
@@ -634,7 +634,7 @@ void SkMatrix<T_>::TMultAdd(const Vect<T_>& x,
 template<class T_>
 void SkMatrix<T_>::MultAdd(T_              a,
                            const Vect<T_>& x,
-                                 Vect<T_>& y) const
+                           Vect<T_>&       y) const
 {
    for (size_t i=0; i<_size; i++)
       for (size_t j=0; j<_size; j++)
@@ -644,7 +644,7 @@ void SkMatrix<T_>::MultAdd(T_              a,
 
 template<class T_>
 void SkMatrix<T_>::Mult(const Vect<T_>& x,
-                              Vect<T_>& y) const
+                        Vect<T_>&       y) const
 {
    y = static_cast<T_>(0);
    MultAdd(x,y);
@@ -653,7 +653,7 @@ void SkMatrix<T_>::Mult(const Vect<T_>& x,
 
 template<class T_>
 void SkMatrix<T_>::TMult(const Vect<T_>& x,
-                               Vect<T_>& y) const
+                         Vect<T_>&       y) const
 {
    y = static_cast<T_>(0);
    TMultAdd(x,y);
@@ -661,9 +661,9 @@ void SkMatrix<T_>::TMult(const Vect<T_>& x,
 
 
 template<class T_>
-void SkMatrix<T_>::add(      size_t  i,
-                             size_t  j,
-                       const T_&     val)
+void SkMatrix<T_>::add(size_t    i,
+                       size_t    j,
+                       const T_& val)
 {
    if (i>j)
       _a[_ch[i-1]+j-i] += val;
@@ -724,10 +724,10 @@ T_ & SkMatrix<T_>::operator()(size_t i,
 
 
 template<class T_>
-void SkMatrix<T_>::DiagPrescribe(      Mesh&     mesh,
-                                       Vect<T_>& b,
+void SkMatrix<T_>::DiagPrescribe(Mesh&           mesh,
+                                 Vect<T_>&       b,
                                  const Vect<T_>& u,
-                                       int       flag)
+                                 int             flag)
 {
    real_t p=0;
    for (size_t l=0; l<_size; l++)
@@ -748,9 +748,9 @@ void SkMatrix<T_>::DiagPrescribe(      Mesh&     mesh,
 
 
 template<class T_>
-void SkMatrix<T_>::DiagPrescribe(      Vect<T_>& b,
+void SkMatrix<T_>::DiagPrescribe(Vect<T_>&       b,
                                  const Vect<T_>& u,
-                                       int       flag)
+                                 int             flag)
 {
    real_t p=0;
    for (size_t l=0; l<_size; l++)
@@ -903,7 +903,7 @@ int SkMatrix<T_>::solve(Vect<T_>& b)
 
 template<class T_>
 int SkMatrix<T_>::solve(const Vect<T_>& b,
-                              Vect<T_>& x)
+                        Vect<T_>&       x)
 {
    x = b;
    return solve(x);
@@ -912,7 +912,7 @@ int SkMatrix<T_>::solve(const Vect<T_>& b,
 
 template<class T_>
 int SkMatrix<T_>::solveLU(const Vect<T_>& b,
-                                Vect<T_>& x)
+                          Vect<T_>&       x)
 {
    int ret = 0;
    if (!_fact)
@@ -982,6 +982,22 @@ void SkMatrix<T_>::Axpy(T_                a,
 ///////////////////////////////////////////////////////////////////////////////
 //                           ASSOCIATED  FUNCTIONS                           //
 ///////////////////////////////////////////////////////////////////////////////
+
+
+/** \fn Vect<T_> operator*(const SkMatrix<T_> &A, const Vect<T_> &b)
+ *  \brief Operator * (Multiply vector by matrix and return resulting vector
+ *  \ingroup VectMat
+ *  @param [in] A SkMatrix instance to multiply by vector
+ *  @param [in] b Vect instance 
+ *  \return Vect instance containing <tt>A*b</tt>
+ */
+template<class T_>
+Vect<T_> operator*(const SkMatrix<T_>& A,
+                   const Vect<T_>&     b)
+{
+   Vect<T_> v(b.size());
+   A.Mult(b,v);
+}
 
 
 /** \fn ostream & operator<<(ostream &s, const SkMatrix<T_> &a)

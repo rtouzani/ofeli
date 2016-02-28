@@ -348,25 +348,25 @@ class EdgeList {
 /// \fn ostream & operator<<(ostream& s, const NodeList& nl)
 /// \brief Output NodeList instance
 /// \ingroup Mesh
-    ostream& operator<<(      ostream&  s,
+    ostream& operator<<(ostream&        s,
                         const NodeList& nl);
 
 /// \fn ostream & operator<<(ostream& s, const ElementList &el)
 /// \brief Output ElementList instance
 /// \ingroup Mesh
-    ostream& operator<<(      ostream&     s,
+    ostream& operator<<(ostream&           s,
                         const ElementList& el);
 
 /// \fn ostream & operator<<(ostream& s, const SideList& sl)
 /// \brief Output SideList instance
 /// \ingroup Mesh
-    ostream& operator<<(      ostream&  s,
+    ostream& operator<<(ostream&        s,
                         const SideList& sl);
    
 /// \fn ostream & operator<<(ostream& s, const EdgeList& el)
 /// \brief Output EdgeList instance
 /// \ingroup Mesh
-    ostream& operator<<(      ostream&  s,
+    ostream& operator<<(ostream&        s,
                         const EdgeList& el);
 
 } /* namespace OFELI */

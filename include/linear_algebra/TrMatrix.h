@@ -584,6 +584,30 @@ T_ TrMatrix<T_>::get(size_t i,
 //                           ASSOCIATED  FUNCTIONS                           //
 ///////////////////////////////////////////////////////////////////////////////
 
+/** \fn Vect<T_> operator*(const TrMatrix<T_> &A, const Vect<T_> &b)
+ *  \brief Operator * (Multiply vector by matrix and return resulting vector
+ *  \ingroup VectMat
+ *  @param [in] A TrMatrix instance to multiply by vector
+ *  @param [in] b Vect instance 
+ *  \return Vect instance containing <tt>A*b</tt>
+ */
+template<class T_>
+Vect<T_> operator*(const TrMatrix<T_>& A,
+                   const Vect<T_>&     b)
+{
+#if defined (USE_EIGEN)
+   return Vect<T_>(Matrix<T_,Eigen::Dynamic,1>(x)*b);
+#else
+   size_t n = A.getSize();
+   Vect<T_> v(n);
+   v(1) = A(1,1)*b(1) + A(1,2)*b(2);
+   for (size_t i=2; i<n; ++i)
+      v(i) = A(i,i-1)*b(i-1) + A(i,i)*b(i) + A(i,i+1)*b(i+1);
+   v(n) = A(n,n-1)*b(n-1) + A(n,n)*b(n);
+   return v;
+#endif
+}
+
 
 /** \fn TrMatrix<T_> operator*(T_ a, const TrMatrix<T_> &A)
  *  \brief Operator * (Premultiplication of matrix by constant)

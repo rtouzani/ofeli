@@ -678,9 +678,9 @@ void DMatrix<T_>::setRow(      size_t    i,
 
 
 template<class T_>
-void DMatrix<T_>::MultAdd(      T_        a,
+void DMatrix<T_>::MultAdd(T_              a,
                           const Vect<T_>& x,
-                                Vect<T_>& y) const
+                          Vect<T_>&       y) const
 {
   for (size_t i=0; i<_nb_rows; i++)
      for (size_t j=0; j<_nb_cols; j++)
@@ -690,7 +690,7 @@ void DMatrix<T_>::MultAdd(      T_        a,
 
 template<class T_>
 void DMatrix<T_>::MultAdd(const Vect<T_>& x,
-                                Vect<T_>& y) const
+                          Vect<T_>&       y) const
 {
    T_ s;
    for (size_t i=0; i<_nb_rows; i++) {
@@ -704,7 +704,7 @@ void DMatrix<T_>::MultAdd(const Vect<T_>& x,
 
 template<class T_>
 void DMatrix<T_>::Mult(const Vect<T_>& x,
-                             Vect<T_>& y) const
+                       Vect<T_>&       y) const
 {
    y = T_(0);
    MultAdd(x,y);
@@ -1116,7 +1116,7 @@ inline int DMatrix<real_t>::setTransQR()
 
 template<class T_>
 int DMatrix<T_>::solveQR(const Vect<T_>& b,
-                               Vect<T_>& x)
+                         Vect<T_>&       x)
 {
    return -1;
 }
@@ -1124,7 +1124,7 @@ int DMatrix<T_>::solveQR(const Vect<T_>& b,
 
 template<class T_>
 int DMatrix<T_>::solveTransQR(const Vect<T_>& b,
-                                    Vect<T_>& x)
+                              Vect<T_>&      x)
 {
    return -1;
 }
@@ -1132,7 +1132,7 @@ int DMatrix<T_>::solveTransQR(const Vect<T_>& b,
 
 template<>
 inline int DMatrix<real_t>::solveQR(const Vect<real_t>& b,
-                                          Vect<real_t>& x)
+                                    Vect<real_t>&       x)
 {
    int ret = 0;
    Vect<real_t> c(b);
@@ -1161,7 +1161,7 @@ inline int DMatrix<real_t>::solveQR(const Vect<real_t>& b,
 
 template<>
 inline int DMatrix<real_t>::solveTransQR(const Vect<real_t>& b,
-                                               Vect<real_t>& x)
+                                         Vect<real_t>&       x)
 {
    int ret = 0;
    Vect<real_t> c(b);
@@ -1193,6 +1193,22 @@ inline int DMatrix<real_t>::solveTransQR(const Vect<real_t>& b,
 //                           ASSOCIATED  FUNCTIONS                           //
 ///////////////////////////////////////////////////////////////////////////////
 
+
+/** \fn Vect<T_> operator*(const DMatrix<T_> &A, const Vect<T_> &b)
+ *  \brief Operator * (Multiply vector by matrix and return resulting vector
+ *  \ingroup VectMat
+ *  @param [in] A DMatrix instance to multiply by vector
+ *  @param [in] b Vect instance 
+ *  \return Vect instance containing <tt>A*b</tt>
+ */
+template<class T_>
+Vect<T_> operator*(const DMatrix<T_>& A,
+                   const Vect<T_>&    b)
+{
+   Vect<T_> v(A.getNbRows());
+   A.Mult(b,v);
+   return v;
+}
 
 /// \fn ostream& operator<<(ostream& s, const DMatrix<T_>& a)
 /// \ingroup VectMat

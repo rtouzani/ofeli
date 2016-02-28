@@ -49,6 +49,8 @@ using std::setprecision;
 
 #include "OFELI_Config.h"
 #include "linear_algebra/Vect.h"
+#include "linear_algebra/DMatrix.h"
+#include "linear_algebra/DSMatrix.h"
 #include "io/XMLParser.h"
 
 #ifdef USE_PETSC
@@ -102,9 +104,9 @@ class IOField : public XMLParser
  *  </ul>
  *  @param [in] compact Flag to choose a compact storage or not [Default: <tt>true</tt>]
  */
-    IOField(const string&    file,
-                  AccessType access,
-                  bool       compact=true);
+    IOField(const string& file,
+            AccessType    access,
+            bool          compact=true);
 
 /** \brief Constructor using file name, mesh file and mesh.
  *  @param [in] mesh_file File containing mesh
@@ -117,11 +119,11 @@ class IOField : public XMLParser
  *  </ul>
  *  @param [in] compact Flag to choose a compact storage or not [Default: <tt>true</tt>]
  */
-    IOField(const string&    mesh_file,
-            const string&    file,
-                  Mesh&      ms,
-                  AccessType access,
-                  bool       compact=true);
+    IOField(const string& mesh_file,
+            const string& file,
+            Mesh&         ms,
+            AccessType    access,
+            bool          compact=true);
 
 /** \brief Constructor using file name and mesh.
  *  @param [in] file File that contains field stored or to store
@@ -133,10 +135,23 @@ class IOField : public XMLParser
  *  </ul>
  *  @param [in] compact Flag to choose a compact storage or not [Default: <tt>true</tt>]
  */
-    IOField(const string&    file,
-                  Mesh&      ms,
-                  AccessType access,
-                  bool       compact=true);
+    IOField(const string& file,
+                  Mesh&   ms,
+             AccessType   access,
+                  bool    compact=true);
+
+/** \brief Constructor using file name and field name.
+ *  @param [in] file File that contains field stored or to store
+ *  @param [in] access Access code. This number is to be chosen among two enumerated values:
+ *  <ul>
+ *    <li> <tt>IOField::IN</tt> to read the file
+ *    <li> <tt>IOField::OUT</tt> to write on it
+ *  </ul>
+ *  @param [in] name Seek a specific field with given \a name
+ */
+    IOField(const string& file,
+            AccessType    access,
+            const string& name);
 
 /// \brief Destructor
     ~IOField();
@@ -157,8 +172,8 @@ class IOField : public XMLParser
  *    <li> <tt>IOField::OUT</tt> to write on it
  *  </ul>
  */
-    void open(const string&    file,
-                    AccessType access);
+    void open(const string& file,
+              AccessType    access);
 
 /// \brief Close file.
     void close();
@@ -179,6 +194,30 @@ class IOField : public XMLParser
 /// \brief Get Vect <tt>v</tt> instance from file.
 /// \details First time step is read from the <tt>XML</tt> file.
     real_t get(Vect<real_t>& v);
+
+/** \brief Get Vect <tt>v</tt> instance from file if the field has the given name.
+ *  \details First time step is read from the <tt>XML</tt> file.
+ *  @param [in,out] v Vect instance
+ *  @param [in] name Name to seek in the XML file
+ */
+    int get(Vect<real_t>& v,
+            const string& name);
+
+/** \brief Get DMatrix <tt>A</tt> instance from file if the field has the given name.
+ *  \details First time step is read from the <tt>XML</tt> file.
+ *  @param [in,out] A DMatrix instance
+ *  @param [in] name Name to seek in the XML file
+ */
+    int get(DMatrix<real_t>& A,
+            const string&    name);
+
+/** \brief Get DSMatrix <tt>A</tt> instance from file if the field has the given name.
+ *  \details First time step is read from the <tt>XML</tt> file.
+ *  @param [in,out] A DSMatrix instance
+ *  @param [in] name Name to seek in the XML file
+ */
+    int get(DSMatrix<real_t>& A,
+            const string&     name);
 
 /** \brief Get Vect <tt>v</tt> instance from file corresponding to a specific time value.
  *  \details The sought vector corresponding to the time value is read from the <tt>XML</tt> file.

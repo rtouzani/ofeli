@@ -423,7 +423,7 @@ class Mesh
  *  @param [in] code Element code for which material is assigned
  *  @param [in] mname Name of material
  */
-    void setMaterial(      int     code,
+    void setMaterial(int           code,
                      const string& mname);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

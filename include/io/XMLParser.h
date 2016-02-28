@@ -60,56 +60,85 @@ class XMLParser : public Parser
  public:
 
  enum {
-    DOMAIN_      =  0,
-    MESH         =  1,
-    FIELD        =  2,
-    PROJECT      =  3,
-    INPUT        =  4,
-    MATERIAL     =  5,
-    PRESCRIBE    =  6,
-    FUNCTION     =  7
+    DOMAIN_   =  0,
+    MESH      =  1,
+    FIELD     =  2,
+    PROJECT   =  3,
+    INPUT     =  4,
+    MATERIAL  =  5,
+    PRESCRIBE =  6,
+    FUNCTION  =  7
  };
 
  enum {
-    ASCII         = 0,
-    BINARY        = 1
+    ASCII     =  0,
+    BINARY    =  1
  };
 
    XMLParser();
-   XMLParser(string file, int type=MESH);
-   XMLParser(string file, Mesh &ms, int type=MESH, int format=ASCII);
+
+   XMLParser(string file,
+	     int    type=MESH);
+
+   XMLParser(string file,
+	     Mesh&  ms,
+	     int    type=MESH,
+	     int    format=ASCII);
+
    XMLParser(const XMLParser &p);
+
    ~XMLParser();
 
    void setMaterialNumber(int m);
+
    int scan(size_t ind=1);
-   int scan(vector<real_t> &t, int type, size_t ind=1);
+
+   int scan(vector<real_t>& t,
+	    int             type,
+	    size_t          ind=1);
+
    void setFile(string file);
+
    void setVerbose(int verb);
+
    void set(Mesh& ms,
             int   format=ASCII);
+
    int get(int                      type,
            vector<PrescriptionPar>& p);
+
    int get(Mesh& ms,
            int   format=ASCII);
+
    int get(Mesh&    ms,
            real_t** v);
+
    int get(Mesh&         ms,
            Vect<real_t>& v,
            real_t        time=-1,
            string        name="ANYTHING",
            int           format=ASCII);
+
    int get(Vect<real_t>& v,
            real_t        time=-1,
            string        name="ANYTHING",
            int           format=ASCII);
+
+   int get(Vect<real_t>& v,
+           const string& name);
+
    int get(IPF& ipf);
+
    int get(Domain& dm);
+
    int get(Tabulation& t);
+
    int getMaterial();
+
    int get(int           type,
            Vect<real_t>& v,
            real_t        time=0);
+
    size_t getNbDOF() const { return _nb_dof; }
 
  protected:

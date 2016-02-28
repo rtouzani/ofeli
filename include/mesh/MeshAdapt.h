@@ -245,7 +245,7 @@ class MeshAdapt
  *  @param [in] file File name where the metric is stored
  *  @param [in] u Solution vector to store
  */
-    void saveMbb(      string        file,
+    void saveMbb(string              file,
                  const Vect<real_t>& u);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -263,7 +263,7 @@ class MeshAdapt
                           size_t        ny=100);*/
 
    void Interpolate(const Vect<real_t>& u,
-                          Vect<real_t>& v);
+                    Vect<real_t>&       v);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
    
 /// \brief Run adaption process
@@ -299,7 +299,7 @@ class MeshAdapt
 /// \fn ostream & operator<<(ostream& s, const MeshAdapt &a)
 /// \brief Output MeshAdapt class data
 /// \ingroup Mesh
-    ostream & operator<<(      ostream&   s,
+    ostream & operator<<(ostream&         s,
                          const MeshAdapt& a);
 
 } /* namespace OFELI */

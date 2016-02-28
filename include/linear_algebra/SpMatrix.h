@@ -654,8 +654,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 template<class T_>
-SpMatrix<T_>::SpMatrix()
-             : _is_dense(0), _extended(0)
+SpMatrix<T_>::SpMatrix() : _is_dense(0), _extended(0)
 {
    _solver = CG_SOLVER;
    _prec = DIAG_PREC;
@@ -667,8 +666,7 @@ SpMatrix<T_>::SpMatrix()
 
 template<class T_>
 SpMatrix<T_>::SpMatrix(size_t nr,
-                       size_t nc)
-             : _is_dense(0), _extended(0)
+                       size_t nc) : _is_dense(0), _extended(0)
 {
    _is_diagonal = 0;
    _nb_rows = nr;
@@ -700,8 +698,7 @@ SpMatrix<T_>::SpMatrix(size_t nr,
 
 template<class T_>
 SpMatrix<T_>::SpMatrix(size_t size,
-                       int    is_diagonal)
-             : _is_dense(0), _extended(0)
+                       int    is_diagonal) : _is_dense(0), _extended(0)
 {
    _is_diagonal = is_diagonal;
    _size = _nb_rows = _nb_cols = size;
@@ -730,8 +727,7 @@ SpMatrix<T_>::SpMatrix(size_t size,
 template<class T_>
 SpMatrix<T_>::SpMatrix(Mesh&  mesh,
                        size_t dof,
-                       int    is_diagonal)
-             : _is_dense(0), _extended(0)
+                       int    is_diagonal) : _is_dense(0), _extended(0)
 {
    _is_diagonal = is_diagonal;
    setMesh(mesh,dof);
@@ -745,8 +741,7 @@ SpMatrix<T_>::SpMatrix(Mesh&  mesh,
 template<class T_>
 SpMatrix<T_>::SpMatrix(size_t dof,
                        Mesh&  mesh,
-                       int    code)
-             : _is_dense(0), _extended(0)
+                       int    code) : _is_dense(0), _extended(0)
 {
    _is_diagonal = false;
    setMesh(dof,mesh,mesh.getDOFSupport());
@@ -761,8 +756,7 @@ SpMatrix<T_>::SpMatrix(size_t dof,
 template<class T_>
 SpMatrix<T_>::SpMatrix(size_t dof,
                        size_t nb_eq,
-                       Mesh&  mesh)
-             : _is_dense(0), _extended(0)
+                       Mesh&  mesh) : _is_dense(0), _extended(0)
 {
    _is_diagonal = false;
    setMesh(dof,nb_eq,mesh);
@@ -777,8 +771,7 @@ SpMatrix<T_>::SpMatrix(size_t dof,
 #ifndef USE_EIGEN
 template<class T_>
 SpMatrix<T_>::SpMatrix(const vector<RC>& I,
-                             int         opt)
-             : _is_dense(0), _extended(0)
+                       int               opt) : _is_dense(0), _extended(0)
 {
    _is_diagonal = false;
    setGraph(I,opt);
@@ -794,8 +787,7 @@ SpMatrix<T_>::SpMatrix(const vector<RC>& I,
 template<class T_>
 SpMatrix<T_>::SpMatrix(const vector<RC>& I,
                        const vector<T_>& a,
-                             int         opt)
-             : _is_dense(0), _extended(0)
+                       int               opt) : _is_dense(0), _extended(0)
 {
    _is_diagonal = false;
    size_t n=I.size();
@@ -829,8 +821,8 @@ SpMatrix<T_>::SpMatrix(const vector<RC>& I,
 
 #ifndef USE_EIGEN
 template<class T_>
-SpMatrix<T_>::SpMatrix(      size_t          nr,
-                             size_t          nc,
+SpMatrix<T_>::SpMatrix(size_t                nr,
+                       size_t                nc,
                        const vector<size_t>& row_ptr, 
                        const vector<size_t>& col_ind)
              : _type(0), _dof(0), _is_dense(0), _extended(0)
@@ -856,8 +848,8 @@ SpMatrix<T_>::SpMatrix(      size_t          nr,
 
 #ifndef USE_EIGEN
 template<class T_>
-SpMatrix<T_>::SpMatrix(      size_t          nr,
-                             size_t          nc,
+SpMatrix<T_>::SpMatrix(size_t                nr,
+                       size_t                nc,
                        const vector<size_t>& row_ptr,
                        const vector<size_t>& col_ind,
                        const vector<T_>&     a)
@@ -1051,8 +1043,8 @@ void SpMatrix<T_>::setMesh(Mesh&  mesh,
 
 template<class T_>
 void SpMatrix<T_>::setMesh(Mesh&  mesh,
-			   size_t dof,
-			   size_t type)
+                           size_t dof,
+                           size_t type)
 {
    _dof_type = mesh.getDOFSupport();
    Matrix<T_>::init_set_mesh(mesh,dof);
@@ -1084,8 +1076,8 @@ void SpMatrix<T_>::setMesh(Mesh&  mesh,
 
 template<class T_>
 void SpMatrix<T_>::setMesh(size_t dof,
-			   Mesh&  mesh,
-			   int    code)
+                           Mesh&  mesh,
+                           int    code)
 {
    _size = _nb_rows = _nb_cols = mesh.getNbEq();
    if (dof)
@@ -1134,7 +1126,7 @@ void SpMatrix<T_>::setExtendedGraph()
 
 template<class T_>
 void SpMatrix<T_>::setGraph(const vector<RC>& I,
-                                  int         opt)
+                            int               opt)
 {
    size_t i;
    _length = I.size();
@@ -1399,8 +1391,8 @@ Vect<T_> SpMatrix<T_>::getColumn(size_t j) const
 
 
 template<class T_>
-void SpMatrix<T_>::DiagPrescribe(      Mesh&     mesh,
-                                       Vect<T_>& b,
+void SpMatrix<T_>::DiagPrescribe(Mesh&           mesh,
+                                 Vect<T_>&       b,
                                  const Vect<T_>& u)
 {
    real_t p = 0;
@@ -1426,7 +1418,7 @@ void SpMatrix<T_>::DiagPrescribe(      Mesh&     mesh,
 
 
 template<class T_>
-void SpMatrix<T_>::DiagPrescribe(      Vect<T_>& b,
+void SpMatrix<T_>::DiagPrescribe(Vect<T_>&       b,
                                  const Vect<T_>& u)
 {
 #ifdef USE_EIGEN
@@ -1580,7 +1572,7 @@ void SpMatrix<T_>::getMesh(Mesh& mesh)
 
 template<class T_>
 void SpMatrix<T_>::Mult(const Vect<T_>& x,
-                              Vect<T_>& y) const
+                        Vect<T_>&       y) const
 {
 #ifdef USE_EIGEN
    for (size_t i=0; i<_length; i++)
@@ -1594,7 +1586,7 @@ void SpMatrix<T_>::Mult(const Vect<T_>& x,
 
 template<class T_>
 void SpMatrix<T_>::MultAdd(const Vect<T_>& x,
-                                 Vect<T_>& y) const
+                           Vect<T_>&       y) const
 {
 #ifdef USE_EIGEN
    for (size_t i=0; i<_length; i++)
@@ -1609,9 +1601,9 @@ void SpMatrix<T_>::MultAdd(const Vect<T_>& x,
 
 
 template<class T_>
-void SpMatrix<T_>::MultAdd(      T_        a,
-			   const Vect<T_>& x,
-			         Vect<T_>& y) const
+void SpMatrix<T_>::MultAdd(T_              a,
+                           const Vect<T_>& x,
+                           Vect<T_>&       y) const
 {
 #ifdef USE_EIGEN
    for (size_t i=0; i<_length; i++)
@@ -1627,7 +1619,7 @@ void SpMatrix<T_>::MultAdd(      T_        a,
 
 template<class T_>
 void SpMatrix<T_>::TMult(const Vect<T_>& x,
-                               Vect<T_>& y) const
+                         Vect<T_>&       y) const
 {
 #ifdef USE_EIGEN
    for (size_t i=0; i<_length; i++)
@@ -1641,9 +1633,9 @@ void SpMatrix<T_>::TMult(const Vect<T_>& x,
 
 
 template<class T_>
-void SpMatrix<T_>::set(      size_t i,
-                             size_t j,
-                       const T_&    val)
+void SpMatrix<T_>::set(size_t    i,
+                       size_t    j,
+                       const T_& val)
 {
 #ifdef USE_EIGEN
    _A.coeffRef(i-1,j-1) = val;
@@ -1662,9 +1654,9 @@ void SpMatrix<T_>::set(      size_t i,
 
 
 template<class T_>
-void SpMatrix<T_>::add(      size_t i,
-                             size_t j,
-                       const T_&    val)
+void SpMatrix<T_>::add(size_t    i,
+                       size_t    j,
+                       const T_& val)
 {
 #ifdef USE_EIGEN
    _A.coeffRef(i-1,j-1) += val;
@@ -1825,7 +1817,7 @@ template<class T_>
 void SpMatrix<T_>::DILUSolve(const vector<size_t>& id,
                              const vector<T_>&     pivot,
                              const Vect<T_>&       b,
-                                   Vect<T_>&       x) const
+                             Vect<T_>&             x) const
 {
    vector<T_> z(_size);
    for (size_t i=0; i<_size; i++) {
@@ -1847,7 +1839,7 @@ void SpMatrix<T_>::DILUSolve(const vector<size_t>& id,
 #ifndef USE_EIGEN
 template<class T_>
 void SpMatrix<T_>::ILUSolve(const Vect<T_>& b,
-                                  Vect<T_>& x) const
+                            Vect<T_>&       x) const
 {
    for (size_t i=0; i<_size; i++) {
       T_ s=0;
@@ -1868,7 +1860,7 @@ void SpMatrix<T_>::ILUSolve(const Vect<T_>& b,
 #ifndef USE_EIGEN
 template<class T_>
 void SpMatrix<T_>::SSORSolve(const Vect<T_>& b,
-                                   Vect<T_>& x) const
+                             Vect<T_>&       x) const
 {
    size_t k=0;
    vector<size_t> id(_size);
@@ -2060,12 +2052,28 @@ T_ SpMatrix<T_>::get(size_t i,
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 
+/** \fn Vect<T_> operator*(const SpMatrix<T_> &A, const Vect<T_> &b)
+ *  \brief Operator * (Multiply vector by matrix and return resulting vector
+ *  \ingroup VectMat
+ *  @param [in] A SpMatrix instance to multiply by vector
+ *  @param [in] b Vect instance 
+ *  \return Vect instance containing <tt>A*b</tt>
+ */
+template<class T_>
+Vect<T_> operator*(const SpMatrix<T_>& A,
+                   const Vect<T_>&     b)
+{
+   Vect<T_> v(b.size());
+   A.Mult(b,v);
+}
+
+
 /** \fn ostream & operator<<(ostream& s, const SpMatrix<T_> &A)
  *  \ingroup VectMat
  *  Output matrix in output stream
  */
 template<class T_>
-ostream& operator<<(      ostream&      s,
+ostream& operator<<(ostream&            s,
                     const SpMatrix<T_>& A)
 {
 #ifdef USE_EIGEN
@@ -2073,7 +2081,7 @@ ostream& operator<<(      ostream&      s,
 #else
    s.setf(ios::right|ios::scientific);
    s << endl;
-   size_t k=0;
+   size_t k = 0;
    for (size_t i=0; i<A._nb_rows; ++i) {
       for (size_t j=A._row_ptr[i]; j<A._row_ptr[i+1]; ++j)
          s << "(" << setw(6) << i+1 << "," << setw(6) << A._col_ind[j] << "): "

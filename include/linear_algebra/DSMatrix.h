@@ -559,7 +559,7 @@ void DSMatrix<T_>::setRow(size_t          i,
 
 template<class T_>
 void DSMatrix<T_>::MultAdd(const Vect<T_>& x,
-                                 Vect<T_>& y) const
+                           Vect<T_>&       y) const
 {
    for (size_t i=1; i<=_nb_rows; i++) {
       for (size_t j=1; j<=i; j++)
@@ -571,9 +571,9 @@ void DSMatrix<T_>::MultAdd(const Vect<T_>& x,
 
 
 template<class T_>
-void DSMatrix<T_>::MultAdd(      T_        a,
+void DSMatrix<T_>::MultAdd(T_              a,
                            const Vect<T_>& x,
-                                 Vect<T_>& y) const
+                           Vect<T_>&       y) const
 {
    for (size_t i=1; i<=_nb_rows; i++) {
       for (size_t j=1; j<=i; j++)
@@ -586,7 +586,7 @@ void DSMatrix<T_>::MultAdd(      T_        a,
 
 template<class T_>
 void DSMatrix<T_>::Mult(const Vect<T_>& x,
-                              Vect<T_>& y) const
+                        Vect<T_>&       y) const
 {
    y = 0;
    MultAdd(x,y);
@@ -595,7 +595,7 @@ void DSMatrix<T_>::Mult(const Vect<T_>& x,
 
 template<class T_>
 void DSMatrix<T_>::TMult(const Vect<T_>& x,
-                               Vect<T_>& y) const
+                         Vect<T_>&       y) const
 {
    for (size_t i=1; i<=_nb_rows; i++)
       for (size_t j=1; j<=_nb_cols; j++)
@@ -656,7 +656,7 @@ int DSMatrix<T_>::solve(Vect<T_>& b)
 
 template<class T_>
 int DSMatrix<T_>::solve(const Vect<T_>& b,
-                              Vect<T_>& x)
+                        Vect<T_>&       x)
 {
    x = b;
    return solve(x);
@@ -675,7 +675,7 @@ T_ DSMatrix<T_>::get(size_t i,
    
    
 template<class T_>
-void DSMatrix<T_>::Axpy(      T_            a,
+void DSMatrix<T_>::Axpy(T_                  a,
                         const DSMatrix<T_>& m)
 {
    _a += a * m._a;
@@ -683,7 +683,7 @@ void DSMatrix<T_>::Axpy(      T_            a,
    
    
 template<class T_>
-void DSMatrix<T_>::Axpy(      T_          a,
+void DSMatrix<T_>::Axpy(T_                a,
                         const Matrix<T_>* m)
 {
    for (size_t i=0; i<_length; i++)
@@ -695,12 +695,27 @@ void DSMatrix<T_>::Axpy(      T_          a,
 //                 A S S O C I A T E D   F U N C T I O N S                   //
 ///////////////////////////////////////////////////////////////////////////////
 
+/** \fn Vect<T_> operator*(const DSMatrix<T_> &A, const Vect<T_> &b)
+ *  \brief Operator * (Multiply vector by matrix and return resulting vector
+ *  \ingroup VectMat
+ *  @param [in] A DSMatrix instance to multiply by vector
+ *  @param [in] b Vect instance 
+ *  \return Vect instance containing <tt>A*b</tt>
+ */
+template<class T_>
+Vect<T_> operator*(const DSMatrix<T_>& A,
+                   const Vect<T_>&     b)
+{
+   Vect<T_> v(A.getNbRows());
+   A.Mult(b,v);
+   return v;
+}
 
 /// \fn ostream& operator<<(ostream& s, const DSMatrix<T_> &a)
 /// \ingroup VectMat
 /// \brief Output matrix in output stream
 template<class T_>
-ostream& operator<<(      ostream&      s,
+ostream& operator<<(ostream&            s,
                     const DSMatrix<T_>& a)
 {
    s.setf(ios::right|ios::scientific);

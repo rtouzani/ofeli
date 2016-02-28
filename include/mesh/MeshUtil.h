@@ -179,9 +179,9 @@ bool operator==(const Side& sd1,
  *  @param [in] a Amplification factor [Default: <tt>1</tt>].
  *  The displacement is multiplied by <tt>a</tt> before to be added to node coordinates
  */
-void DeformMesh(      Mesh&         mesh,
+void DeformMesh(Mesh&               mesh,
                 const Vect<real_t>& u,
-                      real_t        a=1);
+                real_t              a=1);
 
 #ifdef USE_PETSC
 /** \fn void DeformMesh(Mesh& mesh, const PETScVect<real_t>& u, real_t a=1)
@@ -193,9 +193,9 @@ void DeformMesh(      Mesh&         mesh,
  *  @param [in] a Amplification factor [Default: <tt>1</tt>].
  *  The displacement is multiplied by <tt>a</tt> before to be added to node coordinates
  */
-void DeformMesh(      Mesh&              mesh,
+void DeformMesh(Mesh&                    mesh,
                 const PETScVect<real_t>& u,
-                      real_t             a=1);
+                real_t                   a=1);
 #endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -299,14 +299,14 @@ void GridToMesh(Grid &g, Mesh &m, const Vect<real_t> &ug, Vect<real_t> &u, size_
  * size must be equal (or greater than) the total number of nodes of mesh <tt>m1</tt>.
  * The size of vector <tt>u2</tt> is deduced from the mesh <tt>m2</tt>
  */
-void MeshToMesh(      Mesh&         m1,
-                      Mesh&         m2,
+void MeshToMesh(Mesh&               m1,
+                Mesh&               m2,
                 const Vect<real_t>& u1,
-                      Vect<real_t>& u2,
-                      size_t        nx,
-                      size_t        ny=0,
-                      size_t        nz=0,
-                      size_t        dof=1);
+                Vect<real_t>&       u2,
+                size_t              nx,
+                size_t              ny=0,
+                size_t              nz=0,
+                size_t              dof=1);
 
 /** \fn void MeshToMesh(Mesh &m1, Mesh &m2, const Vect<real_t> &u1, Vect<real_t> &u2, 
  *                      const Point<real_t> &xmin, const Point<real_t> &xmax, size_t nx, 
@@ -339,16 +339,16 @@ void MeshToMesh(      Mesh&         m1,
  * size must be equal (or greater than) the total number of nodes of mesh <tt>m1</tt>.
  * The size of vector <tt>u2</tt> is deduced from the mesh <tt>m2</tt>
  */
-void MeshToMesh(      Mesh&          m1,
-                      Mesh&          m2,
+void MeshToMesh(Mesh&                m1,
+                Mesh&                m2,
                 const Vect<real_t>&  u1,
-                      Vect<real_t>&  u2,
+                Vect<real_t>&        u2,
                 const Point<real_t>& xmin,
                 const Point<real_t>& xmax,
-                      size_t         nx,
-                      size_t         ny,
-                      size_t         nz,
-                      size_t         dof=1);
+                size_t               nx,
+                size_t               ny,
+                size_t               nz,
+                size_t               dof=1);
 
 /** \fn real_t getMaxSize(const Mesh &m)
  * \ingroup Mesh
@@ -419,10 +419,10 @@ real_t getMeanSideMeasure(const Mesh &m);
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
  */
-void setNodeCodes(      Mesh&   m,
+void setNodeCodes(Mesh&         m,
                   const string& exp,
-                        int     code,
-                        size_t  dof=1);
+                  int           code,
+                  size_t        dof=1);
 
 /** \fn void setBoundaryNodeCodes(Mesh& m, const string& exp, int code, size_t dof=1)
  * \ingroup Mesh
@@ -434,10 +434,10 @@ void setNodeCodes(      Mesh&   m,
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
  */
-void setBoundaryNodeCodes(      Mesh&   m,
+void setBoundaryNodeCodes(Mesh&         m,
                           const string& exp,
-                                int     code,
-                                size_t  dof=1);
+                          int           code,
+                          size_t        dof=1);
 
 /** \fn void setSideCodes(Mesh& m, const string& exp, int code, size_t dof=1)
  * \ingroup Mesh
@@ -449,10 +449,10 @@ void setBoundaryNodeCodes(      Mesh&   m,
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
  */
-void setSideCodes(      Mesh&   m,
+void setSideCodes(Mesh&         m,
                   const string& exp,
-                        int     code,
-                        size_t  dof=1);
+                  int           code,
+                  size_t        dof=1);
 
 /** \fn void setBoundarySideCodes(Mesh& m, const string& exp, int code, size_t dof=1)
  * \ingroup Mesh
@@ -464,10 +464,10 @@ void setSideCodes(      Mesh&   m,
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
  */
-void setBoundarySideCodes(      Mesh&   m,
+void setBoundarySideCodes(Mesh&         m,
                           const string& exp,
-                                int     code,
-                                size_t  dof=1);
+                          int           code,
+                          size_t        dof=1);
 
 /** \fn void setElementCodes(Mesh &m, const string &exp, int code)
  * \ingroup Mesh
@@ -478,9 +478,9 @@ void setBoundarySideCodes(      Mesh&   m,
  * coordinates of element nodes, according to <tt>fparser</tt> parser
  * @param [in] code Code to assign
  */
-void setElementCodes(      Mesh&   m,
+void setElementCodes(Mesh&         m,
                      const string& exp,
-                           int     code);
+                     int           code);
 
 /** \fn int NodeInElement(const Node *nd, const Element *el)
  * \ingroup Mesh

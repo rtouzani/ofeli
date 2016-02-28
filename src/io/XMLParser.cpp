@@ -4,7 +4,7 @@
 
                            Object  Finite  Element  Library
 
-  ======================================================================:========
+  ==============================================================================
 
    Copyright (C) 1998 - 2016 Rachid Touzani
 
@@ -51,44 +51,22 @@ extern Material theMaterial;
 
 
 XMLParser::XMLParser()
-{
-   _set_mesh = _set_field = _set_file = _set_domain = false;
-   _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
-   _nb_dof = 1;
-   _verb = 0;
-   _theMesh = NULL;
-   _v = NULL;
-   _dof_support = NODE_FIELD;
-   _parser = NULL;
-   _ipf = NULL;
-   _is_opened = false;
-   _scan = 0;
-   _nb_mat = 0;
-   _dim = 2;
-   _prescription_opened = false;
-}
+          : _is_opened(false), _set_mesh(false), _set_field(false),
+            _set_file(false), _set_prescription(false), _set_domain(false),
+            _prescription_opened(false), _verb(0), _nb_dof(1), _dim(2), _nb_nodes(0),
+            _nb_elements(0), _nb_sides(0), _nb_edges(0), _scan(0), _dof_support(NODE_FIELD),
+            _nb_mat(0), _theMesh(NULL), _v(NULL), _parser(NULL), _ipf(NULL)
+{ }
 
 
 XMLParser::XMLParser(string file,
                      int    type)
+          : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
+            _set_domain(false), _prescription_opened(false), _type(type), _verb(0),
+            _file(file), _nb_dof(1), _dim(2), _nb_nodes(0), _nb_elements(0), _nb_sides(0),
+            _nb_edges(0), _scan(0), _dof_support(NODE_FIELD), _nb_mat(0), _theMesh(NULL),
+            _v(NULL), _parser(NULL), _ipf(NULL)
 {
-   _is_opened = false;
-   _type = type;
-   _theMesh = NULL;
-   _ipf = NULL;
-   _set_mesh = _set_file = true;
-   _set_field = _set_domain = false;
-   _scan = 0;
-   _nb_dof = 1;
-   _dof_support = NODE_FIELD;
-   _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
-   _v = NULL;
-   _file = file;
-   _parser = NULL;
-   _verb = 0;
-   _nb_mat = 0;
-   _prescription_opened = false;
-   _dim = 2;
    open();
 }
 
@@ -97,73 +75,33 @@ XMLParser::XMLParser(string file,
                      Mesh&  ms,
                      int    type,
                      int    format)
+          : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
+            _set_domain(false), _prescription_opened(false), _type(type), _verb(0),
+	    _format(format), _file(file), _nb_dof(1), _scan(0), _dof_support(NODE_FIELD),
+            _nb_mat(0), _theMesh(&ms), _v(NULL), _parser(NULL), _ipf(NULL)
 {
-   _is_opened = false;
-   _ipf = NULL;
-   _type = type;
-   _theMesh = &ms;
-   _set_field = _set_domain = _set_mesh = false;
-   _set_file = true;
    _nb_nodes = _theMesh->getNbNodes();
    _nb_elements = _theMesh->getNbElements();
    _nb_sides = _theMesh->getNbSides();
    _nb_edges = _theMesh->getNbEdges();
-   _nb_dof = 1;
-   _dof_support = NODE_FIELD;
-   _v = NULL;
-   _file = file;
-   _parser = NULL;
-   _set_mesh = true;
-   _format = format;
-   _scan = 0;
-   _nb_mat = 0;
-   _verb = 0;
-   _dim = 2;
+   _dim = _theMesh->getDim();
    open();
-   _prescription_opened = false;
    if (type==MESH)
       get(ms);
 }
 
 
 XMLParser::XMLParser(const XMLParser& p)
-{
-   _theMesh = p._theMesh;
-   _type = p._type;
-   _v = p._v;
-   _scan = p._scan;
-   _set_domain = p._set_domain;
-   _set_mesh = p._set_mesh;
-   _set_field = p._set_field;
-   _set_file = p._set_file;
-   _time = p._time;
-   _sought_time = p._sought_time;
-   _verb = p._verb;
-   _cm = p._cm;
-   _file = p._file;
-   _el_shape = p._el_shape;
-   _sd_shape = p._sd_shape;
-   _name = p._name;
-   _sought_name = p._sought_name;
-   _tag_name = p._tag_name;
-   _xml = p._xml;
-   _nb_dof = p._nb_dof;
-   _dim = p._dim;
-   _nb_nodes = p._nb_nodes;
-   _nb_elements = p._nb_elements;
-   _nb_sides = p._nb_sides;
-   _nb_edges = p._nb_edges;
-   _nb_el_nodes = p._nb_el_nodes;
-   _nb_sd_nodes = p._nb_sd_nodes;
-   _dof_support = p._dof_support;
-   _ipf = p._ipf;
-   _mat = p._mat;
-   _nb_mat = p._nb_mat;
-   _format = p._format;
-   _is_opened = p._is_opened;
-   _dim = p._dim;
-   _prescription_opened = p._prescription_opened;
-}
+          : _is_opened(p._is_opened), _is_closed(p._is_closed), _set_mesh(p._set_mesh),
+	    _set_field(p._set_field), _set_file(p._set_file), _set_domain(p._set_domain),
+	    _time(p._time), _sought_time(p._sought_time), _type(p._type), _verb(p._verb),
+	    _format(p._format), _file(p._file), _mesh_file(p._mesh_file),
+	    _sought_name(p._sought_name), _tag_name(p._tag_name), _xml(p._xml), _mat(p._mat),
+            _nb_dof(p._nb_dof), _dim(p._dim), _nb_nodes(p._nb_nodes), _nb_elements(p._nb_elements),
+	    _nb_sides(p._nb_sides), _nb_edges(p._nb_edges), _scan(p._scan), _nb_el_nodes(p._nb_el_nodes),
+            _nb_sd_nodes(p._nb_sd_nodes), _dof_support(p._dof_support),_theMesh(p._theMesh),
+            _v(p._v), _parser(p._parser), _ipf(p._ipf)
+{ }
 
 
 XMLParser::~XMLParser() { }
@@ -417,6 +355,38 @@ int XMLParser::get(Mesh& ms,
 
 
 int XMLParser::get(Vect<real_t>& v,
+                   const string& name)
+{
+   _set_mesh = false;
+   _set_field = true;
+   _sought_name = name;
+   _sought_time = -1.0;
+   _scan = 0;
+   _compact = true;
+   _v = &v;
+   _all_steps = 0;
+   _name = _sought_name;
+   _theMesh = NULL;
+   if (_v->WithMesh())
+      _theMesh = &(_v->getMesh());
+   _nb_dof = 1;
+   _v->setName(_name);
+   _nx = v.getNx(), _ny = v.getNy(), _nz = v.getNz();
+   try {
+      if (parse(_xml)) {
+         if (_verb>0)
+            cout << "Parse done" << endl;
+         return 0;
+      }
+      else
+         THROW_RT("get(Vect<real_t>,string): Failed to parse XML file.");
+   }
+   CATCH("XMLParser");
+   return 0;
+}
+
+
+int XMLParser::get(Vect<real_t>& v,
                    real_t        time,
                    string        name,
                    int           format)
@@ -433,7 +403,6 @@ int XMLParser::get(Vect<real_t>& v,
    _dof_support = v.getDOFType();
    _format = format;
    _nb_dof = v.getNbDOF();
-   _name = v.getName();
    _v->setName(_name);
    _compact = true;
    _all_steps = 0;
@@ -1264,22 +1233,14 @@ void XMLParser::read_prescription(const StringMap::iterator& i)
       _par.code = BoundaryConditionCode(bccs,bcc,i->second);
    else if (i->first=="dof")
       _par.dof = atoi((i->second).c_str());
-   else if (i->first=="x") {
-      _par.x = atof((i->second).c_str());
-      _par.bx = true;
-   }
-   else if (i->first=="y") {
-      _par.y = atof((i->second).c_str());
-      _par.by = true;
-   }
-   else if (i->first=="z") {
-      _par.z = atof((i->second).c_str());
-      _par.bz = true;
-   }
-   else if (i->first=="time") {
-      _par.t = atof((i->second).c_str());
-      _par.bt = true;
-   }
+   else if (i->first=="x")
+      _par.x = atof((i->second).c_str()), _par.bx = true;
+   else if (i->first=="y")
+      _par.y = atof((i->second).c_str()), _par.by = true;
+   else if (i->first=="z")
+      _par.z = atof((i->second).c_str()), _par.bz = true;
+   else if (i->first=="time")
+      _par.t = atof((i->second).c_str()), _par.bt = true;
    else if (i->first=="value") {
    }
    else
@@ -1348,6 +1309,7 @@ bool XMLParser::on_cdata(string cdata)
          tokens.push_back(buf);
    }
    vector<string>::iterator it=tokens.begin();
+
    if (_type==PROJECT)
       read_project_data(tokens,it);
 
@@ -1391,8 +1353,8 @@ bool XMLParser::on_cdata(string cdata)
 }
 
 
-void XMLParser::read_prescribe_data(const vector<string>&           tokens,
-                                          vector<string>::iterator& it)
+void XMLParser::read_prescribe_data(const vector<string>&     tokens,
+                                    vector<string>::iterator& it)
 {
    if (it!=tokens.end() && _scan==0) {
       _par.fct = *it++;
@@ -1401,8 +1363,8 @@ void XMLParser::read_prescribe_data(const vector<string>&           tokens,
 }
 
 
-void XMLParser::read_field_data(const vector<string>&           tokens,
-                                      vector<string>::iterator& it)
+void XMLParser::read_field_data(const vector<string>&     tokens,
+                                vector<string>::iterator& it)
 {
    size_t nb = 0;
    if (_theMesh) {
@@ -1414,6 +1376,8 @@ void XMLParser::read_field_data(const vector<string>&           tokens,
          nb = _nb_sides*_nb_dof;
       else if (_dof_support==EDGE_FIELD)
          nb = _nb_edges*_nb_dof;
+      else
+         nb = _nx*_ny*_nz;
    }
 
    if (_scan) {
@@ -1459,7 +1423,8 @@ void XMLParser::read_field_data(const vector<string>&           tokens,
                if (_nx > 0) {
                   _v->setSize(_nx,_ny,_nz);
                   while (it!=tokens.end()) {
-                     _time = atof((*it++).c_str());
+                     if (_sought_time >= 0)
+                        _time = atof((*it++).c_str());
                      for (size_t i=1; i<=_nx; i++) {
                         for (size_t j=1; j<=_ny; j++) {
                            for (size_t k=1; k<=_nz; k++)
@@ -1514,8 +1479,8 @@ void XMLParser::read_field_data(const vector<string>&           tokens,
 }
 
 
-void XMLParser::read_const_field_data(const vector<string>&           tokens,
-                                            vector<string>::iterator& it)
+void XMLParser::read_const_field_data(const vector<string>&     tokens,
+                                      vector<string>::iterator& it)
 {
    if (_scan) {
       _ft->push_back(_time);
@@ -1594,8 +1559,8 @@ void XMLParser::read_const_field_data()
 }
 
 
-void XMLParser::read_exp_field_data(const vector<string>&           tokens,
-                                          vector<string>::iterator& it)
+void XMLParser::read_exp_field_data(const vector<string>&     tokens,
+                                    vector<string>::iterator& it)
 {
    if (_scan) {
       _ft->push_back(_time);
@@ -1633,8 +1598,8 @@ void XMLParser::read_exp_field_data(const vector<string>&           tokens,
 }
 
 
-void XMLParser::read_tab_data(const vector<string>&           tokens,
-                                    vector<string>::iterator& it)
+void XMLParser::read_tab_data(const vector<string>&     tokens,
+                              vector<string>::iterator& it)
 {
    _theTabulation->setSizes();
    size_t i=1;
@@ -1678,8 +1643,8 @@ void XMLParser::parse_exp(size_t n,
 }
 
 
-void XMLParser::read_mat_data(const vector<string>&           tokens,
-                                    vector<string>::iterator& it)
+void XMLParser::read_mat_data(const vector<string>&     tokens,
+                              vector<string>::iterator& it)
 {
    if (_tag_name=="Density") {
       if (_scan)
@@ -1836,8 +1801,8 @@ void XMLParser::read_mat_data(const vector<string>&           tokens,
 }
 
 
-void XMLParser::read_project_data(const vector<string>&           tokens,
-                                        vector<string>::iterator& it)
+void XMLParser::read_project_data(const vector<string>&     tokens,
+                                  vector<string>::iterator& it)
 {
    if (_tag_name=="verbose") {
       if (it!=tokens.end())
@@ -2012,8 +1977,8 @@ void XMLParser::read_project_data(const vector<string>&           tokens,
 }
 
 
-void XMLParser::read_domain_data(const vector<string>&           tokens,
-                                       vector<string>::iterator& it)
+void XMLParser::read_domain_data(const vector<string>&     tokens,
+                                 vector<string>::iterator& it)
 {
    vector<size_t> c;
    if (_tag_name=="vertex" && _set_domain) {
@@ -2098,8 +2063,8 @@ void XMLParser::read_domain_data(const vector<string>&           tokens,
 }
 
 
-void XMLParser::read_mesh_data(const vector<string>&           tokens,
-                                     vector<string>::iterator& it)
+void XMLParser::read_mesh_data(const vector<string>&     tokens,
+                               vector<string>::iterator& it)
 {
    int code[MAX_NBDOF_NODE];
    size_t first_dof = 1;

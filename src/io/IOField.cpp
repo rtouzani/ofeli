@@ -54,9 +54,10 @@ IOField::IOField(const string &file, int access, bool compact)
 
 
 
-IOField::IOField(const string&    file,
-                       AccessType access,
-                       bool       compact)
+IOField::IOField(const string& file,
+                 AccessType    access,
+                 bool          compact)
+        : _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(NULL)
 {
    _is_opened = false;
    _ipf = NULL;
@@ -72,21 +73,43 @@ IOField::IOField(const string&    file,
    _parser = NULL;
    _verb = 0;
    _is_closed = false;
-   _compact = compact;
    open(file,access);
-   _no_mesh_file = true;
-   _field_opened = false;
    XMLParser::open();
 }
 
 
-IOField::IOField(const string&    mesh_file,
-                 const string&    file,
-                       Mesh&      ms,
-                       AccessType access,
-                       bool       compact)
+IOField::IOField(const string& file,
+                 AccessType    access,
+                 const string& name)
+        : _field_name(name), _field_opened(false), _compact(true),
+          _no_mesh_file(true), _theMesh(NULL)
 {
-   _theMesh = &ms;
+   _is_opened = false;
+   _ipf = NULL;
+   _set_mesh = false;
+   _set_field = true;
+   _set_file = true;
+   _scan = false;
+   _nb_dof = 1;
+   _dof_support = 0;
+   _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
+   _v = NULL;
+   _file = file;
+   _parser = NULL;
+   _verb = 0;
+   _is_closed = false;
+   open(file,access);
+   XMLParser::open();
+}
+
+
+IOField::IOField(const string& mesh_file,
+                 const string& file,
+                 Mesh&         ms,
+                 AccessType    access,
+                 bool          compact)
+        : _field_opened(false), _compact(compact), _no_mesh_file(false), _theMesh(&ms)
+{
    _is_opened = false;
    _ipf = NULL;
    _set_mesh = true;
@@ -104,12 +127,9 @@ IOField::IOField(const string&    mesh_file,
    _parser = NULL;
    _verb = 0;
    _is_closed = false;
-   _compact = compact;
    open(file,access);
    setMeshFile(mesh_file);
-   _no_mesh_file = false;
    set(ms);
-   _field_opened = false;
    XMLParser::open();
 }
 
@@ -118,8 +138,8 @@ IOField::IOField(const string&    file,
                        Mesh&      ms,
                        AccessType access,
                        bool       compact)
+        : _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(&ms)
 {
-   _theMesh = &ms;
    _is_opened = false;
    _ipf = NULL;
    _set_mesh = true;
@@ -137,10 +157,7 @@ IOField::IOField(const string&    file,
    _parser = NULL;
    _verb = 0;
    _is_closed = false;
-   _compact = compact;
    open(file,access);
-   _no_mesh_file = true;
-   _field_opened = false;
    set(ms);
    XMLParser::open();
 }
@@ -429,9 +446,8 @@ real_t IOField::get(Vect<real_t>& v)
    if (_no_mesh_file) {
       return XMLParser::get(v);
    }
-   else {
+   else
       return XMLParser::get(*_theMesh,v);
-   }
 }
 
 
@@ -441,6 +457,37 @@ int IOField::get(Vect<real_t>& v,
   //   if (_access != IN)
   //     _e.Message(__FILE__,__LINE__,61);
    return XMLParser::get(*_theMesh,v,t);
+}
+
+
+int IOField::get(Vect<real_t>& v,
+                 const string& name)
+{
+   return XMLParser::get(v,name);
+}
+
+
+int IOField::get(DMatrix<real_t>& A,
+                 const string&    name)
+{
+   Vect<real_t> v(A.getNbRows(),A.getNbColumns());
+   int ret = XMLParser::get(v,name);
+   for (size_t i=1; i<=A.getNbRows(); i++)
+      for (size_t j=1; j<=A.getNbColumns(); j++)
+         A(i,j) = v(i,j);
+   return ret;
+}
+
+
+int IOField::get(DSMatrix<real_t>& A,
+                 const string&     name)
+{
+   Vect<real_t> v(A.getNbRows(),A.getNbRows());
+   int ret = XMLParser::get(v,name);
+   for (size_t i=1; i<=A.getNbRows(); i++)
+      for (size_t j=1; j<=i; j++)
+         A(i,j) = v(i,j);
+   return ret;
 }
 
 } /* namespace OFELI */

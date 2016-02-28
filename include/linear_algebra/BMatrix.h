@@ -115,24 +115,24 @@ class BMatrix : public Matrix<T_>
                        Vect<T_>& y) const;
 
 /// \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>
-    void MultAdd(      T_        a, 
-                 const Vect<T_>& x, 
-                       Vect<T_>& y) const;
+    void MultAdd(T_              a,
+                 const Vect<T_>& x,
+                 Vect<T_>&       y) const;
 
 /// \brief Multiply matrix by vector <tt>x</tt> and save result in <tt>y</tt>
     void Mult(const Vect<T_>& x,
-                    Vect<T_>& y) const;
+              Vect<T_>&       y) const;
 
 /// \brief Multiply transpose of matrix by vector <tt>x</tt> and save result in <tt>y</tt>
     void TMult(const Vect<T_>& x,
-                     Vect<T_>& y) const;
+               Vect<T_>&       y) const;
    
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] x %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_           a,
+    void Axpy(T_                 a,
               const BMatrix<T_>& x);
    
 /** \brief Add to matrix the product of a matrix by a scalar
@@ -140,18 +140,18 @@ class BMatrix : public Matrix<T_>
  *  @param [in] x %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_          a,
+    void Axpy(T_                a,
               const Matrix<T_>* x);
 
 /// \brief Add constant <tt>val</tt> to an entry <tt>(i,j)</tt> of the matrix.
-    void set(      size_t  i,
-                   size_t  j,
-             const T_&     val);
+    void set(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /// \brief Add constant <tt>val</tt> value to an entry <tt>(i,j)</tt> of the matrix.
-    void add(      size_t  i,
-                   size_t  j,
-             const T_&     val);
+    void add(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /** \brief Operator () (Constant version).
  *  @param [in] i Row index
@@ -569,6 +569,22 @@ T_ BMatrix<T_>::get(size_t i,
 ///////////////////////////////////////////////////////////////////////////////
 //                           ASSOCIATED  FUNCTIONS                           //
 ///////////////////////////////////////////////////////////////////////////////
+ 
+
+/** \fn Vect<T_> operator*(const BMatrix<T_> &A, const Vect<T_> &b)
+ *  \brief Operator * (Multiply vector by matrix and return resulting vector
+ *  \ingroup VectMat
+ *  @param [in] A BMatrix instance to multiply by vector
+ *  @param [in] b Vect instance 
+ *  \return Vect instance containing <tt>A*b</tt>
+ */
+template<class T_>
+Vect<T_> operator*(const BMatrix<T_>& A,
+                   const Vect<T_>&    b)
+{
+   Vect<T_> v(b.size());
+   A.Mult(b,v);
+}
 
 
 /** \fn BMatrix<T_> operator*(T_ a, const BMatrix<T_> &A)
