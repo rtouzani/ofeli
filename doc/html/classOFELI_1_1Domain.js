@@ -20,7 +20,7 @@ var classOFELI_1_1Domain =
     [ "genMesh", "classOFELI_1_1Domain.html#ad96253e6fb9c53182d96cba4739b20fb", null ],
     [ "genMesh", "classOFELI_1_1Domain.html#a6506ab0b46eef60344704e069f6ac5ed", null ],
     [ "genMesh", "classOFELI_1_1Domain.html#a1957949b0aac281cf45762201aa35b67", null ],
-    [ "generateMesh", "classOFELI_1_1Domain.html#aa5478b5a25868e19c0851acd8c3e37e5", null ],
+    [ "generateMesh", "classOFELI_1_1Domain.html#a621dafed5f8db79ac8d9c7c3f76bcc51", null ],
     [ "operator*=", "classOFELI_1_1Domain.html#a2397056d8cc0fb55e9b5548e0b3b15ad", null ],
     [ "insertVertex", "classOFELI_1_1Domain.html#aacbcb52c47b1aa3d879f2ed2dc70c63e", null ],
     [ "insertLine", "classOFELI_1_1Domain.html#ae9644b860a18780bd26554ca92aed2db", null ],
@@ -31,5 +31,6 @@ var classOFELI_1_1Domain =
     [ "insertSubDomain", "classOFELI_1_1Domain.html#aaada95c40da9d4eefc85ad9b4060185c", null ],
     [ "getMinCoord", "classOFELI_1_1Domain.html#a2b2b2bf2aa2b15f69988d1cfbabd2cf2", null ],
     [ "getMaxCoord", "classOFELI_1_1Domain.html#aa68de6f78c66ffc5d7b59b41e79d7bfc", null ],
-    [ "getMinh", "classOFELI_1_1Domain.html#ae2b06416b254a11b6036f4b00beaa852", null ]
+    [ "getMinh", "classOFELI_1_1Domain.html#ae2b06416b254a11b6036f4b00beaa852", null ],
+    [ "setOutputFile", "classOFELI_1_1Domain.html#aa08dd8bce7fffd6dcb0031ab96bd6063", null ]
 ];

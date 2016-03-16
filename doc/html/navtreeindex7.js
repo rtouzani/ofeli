@@ -1,5 +1,12 @@
 var NAVTREEINDEX7 =
 {
+"classOFELI_1_1Equa__Solid.html#a6da803c5057caa8189b527c08fcf661f":[0,13,6,35],
+"classOFELI_1_1Equa__Solid.html#a6dc27973861d74788718e8967afe1afb":[0,13,6,47],
+"classOFELI_1_1Equa__Solid.html#a70aed9ca4f8d4fcca37357cf3a57518c":[0,13,6,37],
+"classOFELI_1_1Equa__Solid.html#a77c1b06813b364b23e485536ff560ac1":[0,13,6,76],
+"classOFELI_1_1Equa__Solid.html#a7a8d76cf8ad9364f262fd058903d41c1":[0,13,6,72],
+"classOFELI_1_1Equa__Solid.html#a7ea9396da22551ebe8ba2460c520ff4e":[0,13,6,0],
+"classOFELI_1_1Equa__Solid.html#a7f9bb6b7d8a642fa4b339c9d8676a759":[0,13,6,60],
 "classOFELI_1_1Equa__Solid.html#a81b1bdca0b76ccdd8fca378143dfe96c":[0,13,6,6],
 "classOFELI_1_1Equa__Solid.html#a821dcadf0f64295c1d4793dcaf31dec6":[0,13,6,13],
 "classOFELI_1_1Equa__Solid.html#a82708ffcc31d4d630863187f3f137ee3":[0,13,6,67],
@@ -242,12 +249,5 @@ var NAVTREEINDEX7 =
 "classOFELI_1_1Funct.html#aa8a8ca8b11521dc887dbf5d2c518a139":[0,15,0,7],
 "classOFELI_1_1Funct.html#abe03ac0da5bff295fa386268e7c797cb":[0,15,0,0],
 "classOFELI_1_1Funct.html#abf0e81997b2ceb0133e6fb1ea852e00d":[0,15,0,6],
-"classOFELI_1_1Funct.html#ac4453a426c6c40242c09961a8dd7bc62":[0,15,0,10],
-"classOFELI_1_1Funct.html#acea0fa65a813312f3274af0da5b18cf2":[0,15,0,4],
-"classOFELI_1_1Funct.html#adf6d56e8c561d144b79300e6620505de":[0,15,0,1],
-"classOFELI_1_1Funct.html#ae114b99f60acdc0896646e0827c1a4f6":[0,15,0,3],
-"classOFELI_1_1Funct.html#aedd04f72c3fba91b1a2f5265d6884c09":[0,15,0,2],
-"classOFELI_1_1Gauss.html":[0,15,5],
-"classOFELI_1_1Gauss.html#a186ff0a045ae2f0e2f4a81c905b47441":[0,15,5,3],
-"classOFELI_1_1Gauss.html#a554924d779d783548a139da9d76fa44e":[0,15,5,5]
+"classOFELI_1_1Funct.html#ac4453a426c6c40242c09961a8dd7bc62":[0,15,0,10]
 };

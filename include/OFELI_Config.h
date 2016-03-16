@@ -59,14 +59,14 @@
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of the current release
  */
-#define OFELI_RELEASE_DATE            "3-2016"
+#define OFELI_RELEASE_DATE            "4-2016"
 
 
 /*! \typedef lsize_t
  *  \ingroup Util
  * \brief This type stands for type \p unsigned \p long
  */
-typedef  unsigned long          lsize_t;
+typedef  unsigned long         lsize_t;
 
 /*! \typedef real_t
  *  \ingroup Util
@@ -82,7 +82,7 @@ typedef  std::complex<double>  complex_t;
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#define XGRAPH_                            0
+#define XGRAPH_                0
 #undef  INIT_PETSC
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -91,7 +91,7 @@ typedef  std::complex<double>  complex_t;
  * \brief Memory necessary to store matrix graph.
  * \details This value is necessary only if nodes are to be renumbered.
  */
-#define GRAPH_MEMORY                 1000000
+#define GRAPH_MEMORY           1000000
 
 /*! \def MAX_NB_EQUATIONS
  *  \ingroup Solver
@@ -198,47 +198,6 @@ typedef  std::complex<double>  complex_t;
  */
 #define MAX_NB_INT_PTS                    20
 
-/*! \def MAX_NB_VERTICES
- *  \ingroup Mesh
- *  \brief Maximum number of vertices
- */
-#define MAX_NB_VERTICES                 2000
-
-/*! \def MAX_NB_HOLES
- *  \ingroup Mesh
- *  \brief Maximum number of holes
- *  \details Used only if class Domain is invoked
- */
-#define MAX_NB_HOLES                      10
-
-/*! \def MAX_NB_LINES
- *  \ingroup Mesh
- *  \brief Maximum number of lines
- *  \details Used only if class Domain is invoked
- */
-#define MAX_NB_LINES                     200
-
-/*! \def MAX_NB_LINE_NODES
- *  \ingroup Mesh
- *  \brief Maximum number of nodes on each line
- *  \details Used only if class Domain is invoked
- */
-#define MAX_NB_LINE_NODES               1000
-
-/*! \def MAX_NB_CONT_LINES
- *  \ingroup Mesh
- *  \brief Maximum number of lines on each contour
- *  \details Used only if class Domain is invoked
- */
-#define MAX_NB_CONT_LINES                 50
-
-/*! \def MAX_NB_SUB_DOMAINS
- *  \ingroup Mesh
- *  \brief Maximum number of subdomains
- *  \details Used only if class Domain is invoked
- */
-#define MAX_NB_SUB_DOMAINS                 5
-
 /*! \def MAX_NB_MATERIALS
  *  \ingroup Mesh
  *  \brief Maximum number of materials
@@ -262,7 +221,7 @@ typedef  std::complex<double>  complex_t;
 /*! \def MAX_INPUT_STRING_LENGTH
  *  \ingroup IO
  *  \brief Maximum string length
- *  \details  Used in class IPF
+ *  \details Used in class IPF
  */
 #define MAX_INPUT_STRING_LENGTH          100
 

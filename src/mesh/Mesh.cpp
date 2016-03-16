@@ -93,8 +93,8 @@ Mesh::Mesh()
 
 
 Mesh::Mesh(const string& file,
-                 bool    bc,
-                 int     opt)
+           bool          bc,
+           int           opt)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(2), _nb_dof(0),
        _nb_vertices(0), _first_dof(1), _nb_mat(0), _verb(0), _no_imposed_dof(false),
        _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
@@ -108,7 +108,7 @@ Mesh::Mesh(const string& file,
    setDOFSupport(opt);
    if (bc)
       removeImposedDOF();
-   string mat=theMaterial.getName(1);
+   string mat = theMaterial.getName(1);
 }
 
 
@@ -168,7 +168,7 @@ Mesh::Mesh(real_t L,
 
 
 Mesh::Mesh(const Grid& g,
-                 int   opt)
+           int         opt)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(3), _nb_dof(0),
        _nb_vertices(0), _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
@@ -360,8 +360,8 @@ Mesh::Mesh(const Grid& g,
 
 
 Mesh::Mesh(const Grid& g,
-                 int   shape,
-                 int   opt)
+           int         shape,
+           int         opt)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(3), _nb_dof(0),
        _nb_vertices(0), _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
@@ -710,10 +710,10 @@ Mesh::Mesh(const Mesh&          m,
 
 
 Mesh::Mesh(const Mesh&  mesh,
-                 int    opt,
-                 size_t dof1,
-                 size_t dof2,
-                 bool   bc)
+           int          opt,
+           size_t       dof1,
+           size_t       dof2,
+           bool         bc)
      : _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
        _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
 {
@@ -837,7 +837,7 @@ void Mesh::RenumberNode(size_t n1,
       else
          THROW_RT("RenumberNode(size_t,size_t): Node with label " + itos(n1) + " does not exist.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
 }
 
 
@@ -879,7 +879,7 @@ void Mesh::RenumberEdge(size_t n1,
       else
          THROW_RT("RenumberEdge(size_t,size_t): Edge with label " + itos(n1) + " does not exist.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
 }
 
 
@@ -987,7 +987,7 @@ void Mesh::inFine(Mesh& ms,
          if (the_element->getShape() != TRIANGLE)
             THROW_RT("inFine(Mesh,bool): This function is valid for triangles only.");
       }
-      CATCH("Mesh");
+      CATCH_EXIT("Mesh");
       for (i=0; i<3; i++) {
          x[i] = The_element(i+1)->getCoord(1);
          y[i] = The_element(i+1)->getCoord(2);
@@ -1024,7 +1024,7 @@ void Mesh::Delete(Node* nd)
       if (!nd)
          THROW_RT("Delete(Node *): Node does not exist.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
 }
 
 
@@ -1036,7 +1036,7 @@ void Mesh::Delete(Element* el)
       if (!el)
          THROW_RT("Delete(Element *): Element does not exist.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
 }
 
 
@@ -1048,7 +1048,7 @@ void Mesh::Delete(Side* sd)
       if (!sd)
          THROW_RT("Delete(Side *): Side does not exist.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
 }
 
 
@@ -1548,7 +1548,7 @@ int Mesh::getAllSides(int opt)
          if (_dim==3 && the_element->getShape()!=TETRAHEDRON)
             THROW_RT("getAllSides(): Member function is not valid for this element type.");
       }
-      CATCH("Mesh");
+      CATCH_EXIT("Mesh");
       ns = init_side_node_numbering(The_element.getShape(),nsd,sh);
       for (i=0; i<The_element.getNbSides(); i++) {
          size_t i1 = The_element(nsd[i][0])->n(),
@@ -2497,9 +2497,8 @@ void Mesh::get(const string &mesh_file)
 
 // Fill list of marked nodes
    _nb_marked_nodes = 0;
-   bool mark;
    mesh_nodes(*this) {
-      mark = false;
+      bool mark = false;
       for (i=1; i<=the_node->getNbDOF(); i++) {
          if (the_node->getCode(i)>0)
             mark = true;

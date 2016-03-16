@@ -252,8 +252,8 @@ class Vect
  *  the second DOF of each node is copied in the vector
  */
     Vect(const Vect<T_>& v,
-               size_t    nb_dof,
-               size_t    first_dof);
+         size_t          nb_dof,
+         size_t          first_dof);
 
 /// \brief Copy constructor
     Vect(const Vect<T_>& v);
@@ -263,7 +263,7 @@ class Vect
  *  @param [in] n Component to extract (must be > 1 and < 4 or).
  */
     Vect(const Vect<T_>& v,
-               size_t    n);
+         size_t          n);
 
 /** \brief Constructor that extracts some degrees of freedom (components) from given instance of Vect.
  *  \details This constructor enables constructing a subvector of a given
@@ -282,7 +282,7 @@ class Vect
  *  \warning Don't give zeros as first digits for the argument <tt>d</tt>. The number is
  *  in this case interpreted as octal !!
 */
-    Vect(      size_t    d,
+    Vect(size_t          d,
          const Vect<T_>& v,
          const string&   name=" ");
 
@@ -304,8 +304,8 @@ class Vect
  *  @param [in] v c-array (pointer) to initialize Vect
  *  @param [in] n size of array
  */
-    void set(const T_*    v,
-                   size_t n);
+    void set(const T_* v,
+             size_t    n);
 
 /** \brief Initialize vector with another Vect instance
  *  @param [in] v Vect instance to extract from
@@ -316,8 +316,8 @@ class Vect
  *  the second DOF of each node is copied in the vector
  */
     void select(const Vect<T_>& v,
-                      size_t    nb_dof=0,
-                      size_t    first_dof=1);
+                size_t          nb_dof=0,
+                size_t          first_dof=1);
 
 /** \brief Initialize vector with an algebraic expression
  *  \details This function is to be used is a Mesh instance is associated to the vector
@@ -329,8 +329,8 @@ class Vect
  *  the appropriate constructor or by the member function setTime.
  */
     void set(const string& exp,
-                   size_t  dof=1);
-   
+             size_t        dof=1);
+
 /** \brief Initialize vector with an algebraic expression
  *  \details This function can be used for instance in 1-D
  *  @param [in] exp Regular algebraic expression that defines a function of <tt>x</tt>
@@ -346,9 +346,9 @@ class Vect
  *  which are coordinates of nodes.
  *  @param [in] dof Degree of freedom to which the value is assigned [Default: 1]
  */
-    void set(const Mesh&   ms,
+    void set(Mesh&         ms,
              const string& exp,
-                   size_t  dof=1);
+             size_t        dof=1);
 
 /** \brief Initialize vector with an algebraic expression 
  *  @param [in] x Vect instance that contains coordinates of points
@@ -509,10 +509,10 @@ class Vect
  *  @param [in] exp  Regular algebraic expression to prescribe
  *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
  */
-    void setNodeBC(      Mesh&   m,
-                         int     code,
+    void setNodeBC(Mesh&         m,
+                   int           code,
                    const string& exp,
-                         size_t  dof=1);
+                   size_t        dof=1);
 
 /** \brief Assign a given value to components of vector with given code
  *  \details Vector components are assumed nodewise
@@ -531,9 +531,9 @@ class Vect
  *  @param [in] exp  Regular algebraic expression to prescribe
  *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
  */
-    void setNodeBC(      int     code,
+    void setNodeBC(int           code,
                    const string& exp,
-                         size_t  dof=1);
+                   size_t        dof=1);
 
 /** \brief Remove boundary conditions.
  *  \details This member function copies to current vector a vector
@@ -546,7 +546,7 @@ class Vect
  */
     void removeBC(const Mesh&     ms,
                   const Vect<T_>& v,
-                        int       dof=0);
+                  int             dof=0);
 
 /** \brief Remove boundary conditions.
  *  \details This member function copies to current vector a vector
@@ -558,7 +558,7 @@ class Vect
  *  @remark This function is to be used only when the Vect instance was constructed by using the Mesh instance
  */
     void removeBC(const Vect<T_>& v,
-                        int       dof=0);
+                  int             dof=0);
 
 /** \brief Transfer boundary conditions to the vector
  *  @param [in] bc Vect instance from which imposed degrees of freedom are copied to current instance
@@ -567,7 +567,7 @@ class Vect
  *  degree of freedom.
  */
     void transferBC(const Vect<T_>& bc,
-                          int       dof=0);
+                    int             dof=0);
 
 /** \brief Insert boundary conditions.
  *  @param [in] m Mesh instance.
@@ -577,25 +577,25 @@ class Vect
  *  if only one degree of freedom (<tt>dof</tt>) is inserted into vector <tt>v</tt> which has only 
  *  one degree of freedom by node or side
  */
-    void insertBC(      Mesh&     m, 
+    void insertBC(Mesh&           m,
                   const Vect<T_>& v,
                   const Vect<T_>& bc,
-                        int       dof=0);
+                  int             dof=0);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if defined(USE_PETSC)
-    void insertBC(      Mesh&          m, 
+    void insertBC(Mesh&                m, 
                   const PETScVect<T_>& v,
                   const Vect<T_>&      bc,
-                        int            dof=0);
-    void insertBC(      Mesh&          m,
+                  int                  dof=0);
+    void insertBC(Mesh&                m,
                   const PETScVect<T_>& v,
-                        int            dof=0);
+                  int                  dof=0);
     void insertBC(const PETScVect<T_>& v,
                   const Vect<T_>&      bc,
-                        int            dof=0);
+                  int                  dof=0);
     void insertBC(const PETScVect<T_>& v, 
-                        int            dof=0);
+                  int                  dof=0);
 #endif
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -607,9 +607,9 @@ class Vect
  *  if only one degree of freedom (<tt>dof</tt>) is inserted into vector <tt>v</tt> which has only 
  *  one degree of freedom by node or side
  */
-    void insertBC(      Mesh&     m,
+    void insertBC(Mesh&           m,
                   const Vect<T_>& v,
-                        int       dof=0);
+                  int             dof=0);
 
 /** \brief Insert boundary conditions.
  *  @param [in] v Vect instance from which free degrees of freedom are copied to current instance.
@@ -620,7 +620,7 @@ class Vect
  */
     void insertBC(const Vect<T_>& v,
                   const Vect<T_>& bc,
-                        int       dof=0);
+                  int             dof=0);
 
 /** \brief Insert boundary conditions.
  *  \details DOF with imposed boundary conditions are set to zero.
@@ -630,10 +630,10 @@ class Vect
  *  one degree of freedom by node or side
  */
     void insertBC(const Vect<T_>& v, 
-                        int       dof=0);
+                  int             dof=0);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void insertBC1(      Mesh& m, 
+    void insertBC1(Mesh&           m, 
                    const Vect<T_>& v,
                    const Vect<T_>& bc);
     void insertBC1(const Vect<T_>& v,
@@ -666,7 +666,7 @@ class Vect
  *  @param [in] b Local vector to assemble (C-Array)
  */
     void Assembly(const Side& sd,
-                        T_*   b);
+                  T_*         b);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void DGAssembly(const Element&                          el,
@@ -1428,9 +1428,9 @@ void Vect<T_>::set(const string& exp,
 
 
 template <class T_>
-void Vect<T_>::set(const Mesh&   ms,
-                   const string& exp,
-                         size_t  dof)
+void Vect<T_>::set(Mesh&  ms,
+                   const  string& exp,
+                   size_t dof)
 {
    setMesh(ms);
    try {

@@ -201,6 +201,8 @@ void IOField::open()
    else
       ;
    _state = 0;
+   _of->setf(ios::right);
+   *_of << setprecision(16) << scientific;
    XMLParser::open();
 }
 
@@ -225,6 +227,8 @@ void IOField::open(const string&    file,
    else if (_access==BIN_OUT) {
       _of = new ofstream(_file.c_str(),ios::binary|ios::out);
       _field_opened = false;
+      _of->setf(ios::right);
+      *_of << setprecision(16) << scientific;
    }
    else
       _is_closed = false;
@@ -254,9 +258,8 @@ void IOField::put(Mesh& ms)
       size_t k = 0;
       *_of << "   <Nodes>" << endl;
       mesh_nodes(*_theMesh) {
-         _of->setf(ios::right|ios::scientific);
          for (size_t i=1; i<=_theMesh->getDim(); i++)
-            *_of << "  " << setprecision(8) << setw(18) << The_node.getCoord(i);
+            *_of << "  " << The_node.getCoord(i);
          size_t m = 0;
          for (size_t j=1; j<=n; j++)
             m += The_node.getCode(j)*size_t(pow(10.,real_t(n-j)));

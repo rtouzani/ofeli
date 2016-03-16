@@ -21,7 +21,7 @@ var group__Mesh =
       [ "genMesh", "classOFELI_1_1Domain.html#ad96253e6fb9c53182d96cba4739b20fb", null ],
       [ "genMesh", "classOFELI_1_1Domain.html#a6506ab0b46eef60344704e069f6ac5ed", null ],
       [ "genMesh", "classOFELI_1_1Domain.html#a1957949b0aac281cf45762201aa35b67", null ],
-      [ "generateMesh", "classOFELI_1_1Domain.html#aa5478b5a25868e19c0851acd8c3e37e5", null ],
+      [ "generateMesh", "classOFELI_1_1Domain.html#a621dafed5f8db79ac8d9c7c3f76bcc51", null ],
       [ "operator*=", "classOFELI_1_1Domain.html#a2397056d8cc0fb55e9b5548e0b3b15ad", null ],
       [ "insertVertex", "classOFELI_1_1Domain.html#aacbcb52c47b1aa3d879f2ed2dc70c63e", null ],
       [ "insertLine", "classOFELI_1_1Domain.html#ae9644b860a18780bd26554ca92aed2db", null ],
@@ -32,7 +32,8 @@ var group__Mesh =
       [ "insertSubDomain", "classOFELI_1_1Domain.html#aaada95c40da9d4eefc85ad9b4060185c", null ],
       [ "getMinCoord", "classOFELI_1_1Domain.html#a2b2b2bf2aa2b15f69988d1cfbabd2cf2", null ],
       [ "getMaxCoord", "classOFELI_1_1Domain.html#aa68de6f78c66ffc5d7b59b41e79d7bfc", null ],
-      [ "getMinh", "classOFELI_1_1Domain.html#ae2b06416b254a11b6036f4b00beaa852", null ]
+      [ "getMinh", "classOFELI_1_1Domain.html#ae2b06416b254a11b6036f4b00beaa852", null ],
+      [ "setOutputFile", "classOFELI_1_1Domain.html#aa08dd8bce7fffd6dcb0031ab96bd6063", null ]
     ] ],
     [ "Edge", "classOFELI_1_1Edge.html", [
       [ "Edge", "classOFELI_1_1Edge.html#a91715a2ea8b8478224859ee6ee42ed87", null ],
@@ -616,12 +617,6 @@ var group__Mesh =
     [ "MAX_NB_ELEMENT_DOF", "group__Mesh.html#ga8e76338d30108fa44f065ac2b205fcfd", null ],
     [ "MAX_NB_SIDE_DOF", "group__Mesh.html#ga71976112e8b2fe1b4c1611ae6b6ab4d7", null ],
     [ "MAX_NB_INT_PTS", "group__Mesh.html#gaee5c1bb64023150a9a8aa923c49b00b0", null ],
-    [ "MAX_NB_VERTICES", "group__Mesh.html#ga51ae85d69331822211f5e3d425bb2c87", null ],
-    [ "MAX_NB_HOLES", "group__Mesh.html#ga390f4011e46752c9845ac981296549c4", null ],
-    [ "MAX_NB_LINES", "group__Mesh.html#ga6ec03e714f6389ddd573e8610b6f7e74", null ],
-    [ "MAX_NB_LINE_NODES", "group__Mesh.html#gac9d4acbd5135a02f608a4d09974ea3ec", null ],
-    [ "MAX_NB_CONT_LINES", "group__Mesh.html#ga48cf67d183dcf82ab4fd2476375dfd94", null ],
-    [ "MAX_NB_SUB_DOMAINS", "group__Mesh.html#gaf67d6a543d75737bfe84615fbee998cc", null ],
     [ "MAX_NB_MATERIALS", "group__Mesh.html#gaa562119043fe912bfb74fd3db35f066a", null ],
     [ "TheNode", "group__Mesh.html#gab9113f712aa27b17dd20d78f55803f64", null ],
     [ "TheElement", "group__Mesh.html#gaa69c6ccad068735a8bf740b6e76d616f", null ],

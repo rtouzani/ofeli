@@ -55,7 +55,7 @@ New in 3.0.2, 2015-12-4; Rachid Touzani:
 
 -----------------------------------------------------------------------------------------------------
 
-New in 3.1.0, 2016-2-15; Rachid Touzani:
+New in 3.1.0, 2016-4-15; Rachid Touzani:
 
 * The repository is now hosted by git at: github.com/rtouzani/ofeli
 * Added: Solver for symmetric eigenvalue problems as well as demo programs to test it
@@ -66,3 +66,4 @@ New in 3.1.0, 2016-2-15; Rachid Touzani:
   which factorizes the matrix as well if this was not done. In future releases, old functions will be
   removed.
 * Fixed: Workspace and projects for Visual Studio work now.
+* g2m program produces now the gmsh mesh file as well.

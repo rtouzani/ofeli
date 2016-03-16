@@ -155,9 +155,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a1957949b0aac281cf45762201aa35b67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Domain.html#a1957949b0aac281cf45762201aa35b67">genMesh</a> (string geo_file, string bamg_file, string mesh_file)</td></tr>
 <tr class="memdesc:a1957949b0aac281cf45762201aa35b67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate 2-D mesh and save geo, bamg and mesh file (<a class="el" href="namespaceOFELI.html" title="A namespace to group all library classes, functions, ... ">OFELI</a> format)  <a href="#a1957949b0aac281cf45762201aa35b67">More...</a><br /></td></tr>
 <tr class="separator:a1957949b0aac281cf45762201aa35b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5478b5a25868e19c0851acd8c3e37e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Domain.html#aa5478b5a25868e19c0851acd8c3e37e5">generateMesh</a> (const string &amp;file)</td></tr>
-<tr class="memdesc:aa5478b5a25868e19c0851acd8c3e37e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate 2-D mesh using the BAMG mesh generator.  <a href="#aa5478b5a25868e19c0851acd8c3e37e5">More...</a><br /></td></tr>
-<tr class="separator:aa5478b5a25868e19c0851acd8c3e37e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a621dafed5f8db79ac8d9c7c3f76bcc51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a621dafed5f8db79ac8d9c7c3f76bcc51"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Domain.html#a621dafed5f8db79ac8d9c7c3f76bcc51">generateMesh</a> ()</td></tr>
+<tr class="memdesc:a621dafed5f8db79ac8d9c7c3f76bcc51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate 2-D mesh using the BAMG mesh generator. <br /></td></tr>
+<tr class="separator:a621dafed5f8db79ac8d9c7c3f76bcc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2397056d8cc0fb55e9b5548e0b3b15ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Domain.html#a2397056d8cc0fb55e9b5548e0b3b15ad">operator*=</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a)</td></tr>
 <tr class="memdesc:a2397056d8cc0fb55e9b5548e0b3b15ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator <code>*=</code>  <a href="#a2397056d8cc0fb55e9b5548e0b3b15ad">More...</a><br /></td></tr>
 <tr class="separator:a2397056d8cc0fb55e9b5548e0b3b15ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,6 +195,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Domain.html#ae2b06416b254a11b6036f4b00beaa852">getMinh</a> () const </td></tr>
 <tr class="memdesc:ae2b06416b254a11b6036f4b00beaa852"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimal value of mesh size. <br /></td></tr>
 <tr class="separator:ae2b06416b254a11b6036f4b00beaa852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa08dd8bce7fffd6dcb0031ab96bd6063"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Domain.html#aa08dd8bce7fffd6dcb0031ab96bd6063">setOutputFile</a> (string file)</td></tr>
+<tr class="memdesc:aa08dd8bce7fffd6dcb0031ab96bd6063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define output mesh file.  <a href="#aa08dd8bce7fffd6dcb0031ab96bd6063">More...</a><br /></td></tr>
+<tr class="separator:aa08dd8bce7fffd6dcb0031ab96bd6063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>To store and treat finite element geometric information. </p>
@@ -326,30 +330,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
     <tr><td class="paramdir">[in]</td><td class="paramname">geo_file</td><td>Geo file </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bamg_file</td><td>Bamg file </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">mesh_file</td><td>File where the generated mesh is saved </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="aa5478b5a25868e19c0851acd8c3e37e5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void generateMesh </td>
-          <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
-          <td class="paramname"><em>file</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generate 2-D mesh using the BAMG mesh generator. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>that contains output mesh after execution </td></tr>
   </table>
   </dd>
 </dl>
@@ -653,6 +633,30 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
     <tr><td class="paramdir">[in]</td><td class="paramname">ln</td><td>Line label </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">orient</td><td>Orientation (1 or -1) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>Subdomain code or reference </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa08dd8bce7fffd6dcb0031ab96bd6063"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setOutputFile </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define output mesh file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>String defining output mesh file </td></tr>
   </table>
   </dd>
 </dl>

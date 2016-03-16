@@ -56,16 +56,21 @@ int main(int argc, char *argv[])
    cout << "along with this program. If not, see <http://www.gnu.org/licenses/>.\n";
    cout << "---------------------------------------------------------------------------\n" << endl;
 
-   void parse(int argc, char **argv, bool &inter, string &dom_file, string &geo_file, 
-              string &output_file, string &w);
-   string *file, dom_file=" ", geo_file=" ", output_file, w;
+   bool parse(int argc, char **argv, string &dom_file, string &geo_file, 
+              string &output_file, bool& vtk_opt);
+   string *file, dom_file=" ", geo_file=" ", output_file="out.m";
+   bool vtk_opt=false;
    Domain *d = NULL;
-   bool inter = false;
-   parse(argc,argv,inter,dom_file,geo_file,output_file,w);
+   bool inter = parse(argc,argv,dom_file,geo_file,output_file,vtk_opt);
    if (inter) {
       Domain d;
-      if (d.get())
-         d.generateMesh(output_file);
+      int ret = d.get();
+      if (ret) {
+         d.setOutputFile(output_file);
+         if (ret>0)
+            d.generateMesh();
+         d.getMesh().put(output_file);
+      }
    }
    else {
       if (geo_file==" ") {
@@ -80,11 +85,9 @@ int main(int argc, char *argv[])
          string bamg_file = *file + ".bamg";
          remove(bamg_file.c_str());
          cout << "File " << bamg_file << " deleted." << endl;
-         if (w=="gmsh") {
-            saveGmsh(*file+".msh",d->getMesh());
-            cout << "Mesh stored in gmsh file " << *file+".msh" << endl;
-         }
-         if (w=="vtk") {
+         saveGmsh(*file+".msh",d->getMesh());
+         cout << "Mesh stored in gmsh file " << *file+".msh" << endl;
+         if (vtk_opt) {
             saveVTK(*file+".vtk",d->getMesh());
             cout << "Mesh stored in vtk file " << *file+".vtk" << endl;
          }
@@ -101,11 +104,9 @@ int main(int argc, char *argv[])
          cout << "Mesh generated and stored in file: " << ofeli_file << endl;
          remove(bamg_file.c_str());
          cout << "File " << bamg_file << " deleted." << endl;
-         if (w=="gmsh") {
-            saveGmsh(*file+".msh",ms);
-            cout << "Mesh stored in gmsh file " << *file+".msh" << endl;
-         }
-         if (w=="vtk") {
+         saveGmsh(*file+".msh",ms);
+         cout << "Mesh stored in gmsh file " << *file+".msh" << endl;
+         if (vtk_opt) {
             saveVTK(*file+".vtk",ms);
             cout << "Mesh stored in vtk file " << *file+".vtk" << endl;
          }
@@ -120,41 +121,38 @@ int main(int argc, char *argv[])
 }
 
 
-void parse(int     argc,
+bool parse(int     argc,
            char**  argv,
-           bool&   inter,
            string& dom_file,
            string& geo_file,
            string& output_file,
-           string& w)
+           bool&   vtk_opt)
 {
-   const char help_w[]="\nAvailable output formats:"
-                       "\n   gmsh  Gmsh file (*.msh)"
-                       "\n   vtk   vtk file (*.vtk)";
-
+   bool inter = true;
    try {
-      CmdLine cmd(" ",' ',"1.0");
-      vector<string> allowed_with;
-      allowed_with.push_back("gmsh");
-      allowed_with.push_back("vtk");
-      allowed_with.push_back("none");
-      ValuesConstraint<string> allowedWith(allowed_with);
-      ValueArg<string> with("w","with",help_w,false,"none",&allowedWith);
+      CmdLine cmd(" ",' ',"2.0");
+      SwitchArg vtk("v","vtk","Save mesh in vtk file");
       ValueArg<string> output("o","output","Mesh Output File",false,"out.m","string");
+      ValueArg<string> dom("d","domain","Domain Input File",false,"","string");
+      ValueArg<string> geo("g","geo","Geometry Input File (bamg format)",false,"","string");
 
-      SwitchArg interactive("i","interactive","Interactive mode",true);
-      ValueArg<string> dom("d","domain","Domain Input File",true,"","string");
-      ValueArg<string> geo("g","geo","Geometry Input File (bamg format)",true,"","string");
-      vector<TCLAP::Arg*> xorlist;
-      xorlist.push_back(&interactive);
-      xorlist.push_back(&dom);
-      xorlist.push_back(&geo);
-      cmd.xorAdd(xorlist);
-
-      cmd.add(with);
+      cmd.add(vtk);
+      cmd.add(dom);
+      cmd.add(geo);
       cmd.add(output);
       cmd.parse(argc,argv);
-      w = with.getValue();
+      vtk_opt = vtk.getValue();
+
+      try {
+         if (dom.isSet() && geo.isSet()) {
+            THROW_RT("You cannot give domain and geometry input files.");
+         }
+      }
+      CATCH_EXIT("g2m");
+
+      if (dom.isSet() || geo.isSet())
+         inter = false;
+
       string project;
       if (dom.isSet()) {
          dom_file = dom.getValue();
@@ -164,14 +162,14 @@ void parse(int     argc,
          geo_file = geo.getValue();
          project = geo_file.substr(0,geo_file.rfind("."));
       }
-      else if (interactive.isSet())
-         inter = true;
+      else
+         ;
 
+      output_file = project + ".m";
       if (output.isSet())
          output_file = output.getValue();
-      else
-         output_file = project + ".m";
 
    } catch (ArgException &e)
    { cout << "ERROR: " << e.error() << " " << e.argId() << endl; }
+   return inter;
 }

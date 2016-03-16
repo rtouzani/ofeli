@@ -81,7 +81,7 @@ struct Vertex : public Point<real_t> {
 };
 
 struct Ln {
-   Ln() { s.resize(MAX_NB_LINE_NODES); node.resize(MAX_NB_LINE_NODES); }
+   Ln() { }
    size_t nb, n1, n2;
    int Dcode, Ncode;
    vector<real_t> s;
@@ -90,8 +90,8 @@ struct Ln {
 
 typedef struct {
    size_t nb, first_line;
-   int orientation[MAX_NB_CONT_LINES];
-   size_t line[MAX_NB_CONT_LINES];
+   vector<int> orientation;
+   vector<size_t> line;
 } Cont;
 
 typedef struct { int code, contour, line, type, orient; } Sd;
@@ -176,8 +176,7 @@ typedef struct { size_t n1, n2, n3, n4; int code; } El;
                  string mesh_file);
 
 /// \brief Generate 2-D mesh using the BAMG mesh generator
-/// @param [in] file that contains output mesh after execution
-    void generateMesh(const string &file);
+    void generateMesh();
 
 /// \brief Operator <tt>*=</tt>
 /// \details Rescale domain coordinates by myltiplying by a factor
@@ -264,27 +263,31 @@ typedef struct { size_t n1, n2, n3, n4; int code; } El;
 /// \brief Return minimal value of mesh size
     real_t getMinh() const;
 
+/// \brief Define output mesh file
+/// @param [in] file String defining output mesh file
+    void setOutputFile(string file) { _output_file = file; }
+
     friend class XMLParser;
 
 private:
 
    FFI *_ff;
-   string _domain_file, _geo_file, _bamg_file, _ofeli_file;
+   Mesh *_theMesh;
+   string _domain_file, _geo_file, _bamg_file, _ofeli_file, _output_file;
    ofstream *_jf;
    vector<string> _kw;
-   vector<Vertex> _v, _V, _nd, _bnd;
+   vector<Vertex> _v, _nd, _bnd;
    vector<El> _el;
    vector<Ln> _l;
    vector<Cont> _h;
    vector<Sd> _sd;
    vector<Cont> _c;
    vector<LP> _ln;
-   size_t _v_label[MAX_NB_VERTICES], _l_label[MAX_NB_LINES], _h_label[MAX_NB_HOLES];
-   size_t _required_vertex[MAX_NB_VERTICES], _required_edge[MAX_NB_EDGES];
+   vector<size_t> _v_label, _l_label, _h_label;
+   vector<size_t> _required_vertex, _required_edge;
    size_t _dim, _nb_vertices, _nb_lines, _nb_contours, _nb_holes, _sub_domain;
    size_t _nb_dof, _nb_required_vertices, _nb_required_edges, _nb_sub_domains;
    size_t _ret_cont, _ret_line, _ret_save, _ret_sd;
-   Mesh *_theMesh;
 
    void getVertex();
    int getLine();
@@ -304,15 +307,15 @@ private:
    int Position(real_t  s,
                 real_t* data);
    void gm();
-   void gm1(const string& file);
-   void gm2(const string& file);
-   void gm3(const string& file);
-   int insert(size_t  item,
-              size_t& length,
-              size_t* set);
-   int remove(size_t  item,
-              size_t& length,
-              size_t* set);
+   void gm1();
+   void gm2();
+   void gm3();
+   int insert(size_t          item,
+              size_t&         length,
+              vector<size_t>& set);
+   int remove(size_t          item,
+              size_t&         length,
+              vector<size_t>& set);
    void dof_code(int          mark,
                  vector<int>& code);
    void dof_code(int  mark,

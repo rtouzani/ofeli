@@ -99,6 +99,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6fe62f18d2c6de28b1ae3e619681ef08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1IOField.html#a6fe62f18d2c6de28b1ae3e619681ef08">IOField</a> (const string &amp;file, <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;ms, <a class="el" href="classOFELI_1_1IOField.html#ad8aff9e545a5f496a179a16667431478">AccessType</a> access, bool compact=true)</td></tr>
 <tr class="memdesc:a6fe62f18d2c6de28b1ae3e619681ef08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using file name and mesh.  <a href="#a6fe62f18d2c6de28b1ae3e619681ef08">More...</a><br /></td></tr>
 <tr class="separator:a6fe62f18d2c6de28b1ae3e619681ef08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bfca0c089dcb12f26119d6ea1ceff4b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1IOField.html#a9bfca0c089dcb12f26119d6ea1ceff4b">IOField</a> (const string &amp;file, <a class="el" href="classOFELI_1_1IOField.html#ad8aff9e545a5f496a179a16667431478">AccessType</a> access, const string &amp;name)</td></tr>
+<tr class="memdesc:a9bfca0c089dcb12f26119d6ea1ceff4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using file name and field name.  <a href="#a9bfca0c089dcb12f26119d6ea1ceff4b">More...</a><br /></td></tr>
+<tr class="separator:a9bfca0c089dcb12f26119d6ea1ceff4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe6440e2e3aae4e393dfdabf7c69de84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe6440e2e3aae4e393dfdabf7c69de84"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1IOField.html#abe6440e2e3aae4e393dfdabf7c69de84">~IOField</a> ()</td></tr>
 <tr class="memdesc:abe6440e2e3aae4e393dfdabf7c69de84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -129,6 +132,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ac7bfa1abadcecdecec5db7fe9180e879"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1IOField.html#ac7bfa1abadcecdecec5db7fe9180e879">get</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v)</td></tr>
 <tr class="memdesc:ac7bfa1abadcecdecec5db7fe9180e879"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> <code>v</code> instance from file.  <a href="#ac7bfa1abadcecdecec5db7fe9180e879">More...</a><br /></td></tr>
 <tr class="separator:ac7bfa1abadcecdecec5db7fe9180e879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04a05aa14f4be9c79cef16ed8cc78128"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1IOField.html#a04a05aa14f4be9c79cef16ed8cc78128">get</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v, const string &amp;name)</td></tr>
+<tr class="memdesc:a04a05aa14f4be9c79cef16ed8cc78128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> <code>v</code> instance from file if the field has the given name.  <a href="#a04a05aa14f4be9c79cef16ed8cc78128">More...</a><br /></td></tr>
+<tr class="separator:a04a05aa14f4be9c79cef16ed8cc78128"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab656dc837ae98925a46f5fbb9f2555d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1IOField.html#ab656dc837ae98925a46f5fbb9f2555d7">get</a> (<a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="namespaceOFELI.html#a8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const string &amp;name)</td></tr>
+<tr class="memdesc:ab656dc837ae98925a46f5fbb9f2555d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classOFELI_1_1DMatrix.html" title="To handle dense matrices. ">DMatrix</a> <code>A</code> instance from file if the field has the given name.  <a href="#ab656dc837ae98925a46f5fbb9f2555d7">More...</a><br /></td></tr>
+<tr class="separator:ab656dc837ae98925a46f5fbb9f2555d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaece78efd238f51bef73d8c6e989bc8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1IOField.html#adaece78efd238f51bef73d8c6e989bc8">get</a> (<a class="el" href="classOFELI_1_1DSMatrix.html">DSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="namespaceOFELI.html#a8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const string &amp;name)</td></tr>
+<tr class="memdesc:adaece78efd238f51bef73d8c6e989bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classOFELI_1_1DSMatrix.html" title="To handle symmetric dense matrices. ">DSMatrix</a> <code>A</code> instance from file if the field has the given name.  <a href="#adaece78efd238f51bef73d8c6e989bc8">More...</a><br /></td></tr>
+<tr class="separator:adaece78efd238f51bef73d8c6e989bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac122ddec3ea162cf681ed9494fadf5de"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1IOField.html#ac122ddec3ea162cf681ed9494fadf5de">get</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> t)</td></tr>
 <tr class="memdesc:ac122ddec3ea162cf681ed9494fadf5de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> <code>v</code> instance from file corresponding to a specific time value.  <a href="#ac122ddec3ea162cf681ed9494fadf5de">More...</a><br /></td></tr>
 <tr class="separator:ac122ddec3ea162cf681ed9494fadf5de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -305,6 +317,54 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a9bfca0c089dcb12f26119d6ea1ceff4b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1IOField.html">IOField</a> </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1IOField.html#ad8aff9e545a5f496a179a16667431478">AccessType</a>&#160;</td>
+          <td class="paramname"><em>access</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor using file name and field name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>File that contains field stored or to store </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">access</td><td>Access code. This number is to be chosen among two enumerated values: <ul>
+<li>
+<code>IOField::IN</code> to read the file </li>
+<li>
+<code>IOField::OUT</code> to write on it </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Seek a specific field with given <em>name</em> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ab2b9819f0e12bada7d7378d5272e35a6"></a>
 <div class="memitem">
@@ -453,6 +513,111 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Get <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> <code>v</code> instance from file. </p>
 <p>First time step is read from the <code>XML</code> file. </p>
+
+</div>
+</div>
+<a class="anchor" id="a04a05aa14f4be9c79cef16ed8cc78128"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> <code>v</code> instance from file if the field has the given name. </p>
+<p>First time step is read from the <code>XML</code> file. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">v</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name to seek in the XML file </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab656dc837ae98925a46f5fbb9f2555d7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get <a class="el" href="classOFELI_1_1DMatrix.html" title="To handle dense matrices. ">DMatrix</a> <code>A</code> instance from file if the field has the given name. </p>
+<p>First time step is read from the <code>XML</code> file. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">A</td><td><a class="el" href="classOFELI_1_1DMatrix.html" title="To handle dense matrices. ">DMatrix</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name to seek in the XML file </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="adaece78efd238f51bef73d8c6e989bc8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1DSMatrix.html">DSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get <a class="el" href="classOFELI_1_1DSMatrix.html" title="To handle symmetric dense matrices. ">DSMatrix</a> <code>A</code> instance from file if the field has the given name. </p>
+<p>First time step is read from the <code>XML</code> file. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">A</td><td><a class="el" href="classOFELI_1_1DSMatrix.html" title="To handle symmetric dense matrices. ">DSMatrix</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name to seek in the XML file </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

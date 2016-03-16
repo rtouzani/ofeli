@@ -83,15 +83,14 @@ void saveField(PETScVect<real_t>& v,
       scalar = false;
    ofstream fp(output_file.c_str());
    fp.setf(ios::right|ios::scientific);
+   fp << setprecision(16);
 
    switch (opt) {
 
       case GNUPLOT:
          if (dim==1) {
-            mesh_nodes(*mesh) {
-               fp << setprecision(4) << setw(18) << The_node.getX() << " "
-                  << setprecision(4) << setw(18) << v(node_label) << endl;
-            }
+            mesh_nodes(*mesh)
+              fp << The_node.getX() << " " << v(node_label) << endl;
             break;
          }
          mesh_elements(*mesh) {
@@ -103,14 +102,10 @@ void saveField(PETScVect<real_t>& v,
             }
             for (n=1; n<=m; n++) {
                Node *nd = The_element(n);
-               fp << setprecision(4) << setw(18) << nd->getX() << " "
-                  << setprecision(4) << setw(18) << nd->getY()
-                  << setprecision(4) << setw(18) << v(nd->n()) << endl;
+               fp << nd->getX() << " " << nd->getY() << " " << v(nd->n()) << endl;
             }
             Node *nd = The_element(1);
-            fp << setprecision(4) << setw(18) << nd->getX() << " "
-               << setprecision(4) << setw(18) << nd->getY()
-               << setprecision(4) << setw(18) << v(nd->n()) << endl << endl;
+            fp << nd->getX() << " " << nd->getY() << " " << v(nd->n()) << endl << endl;
          }
          break;
 
@@ -130,10 +125,8 @@ void saveField(PETScVect<real_t>& v,
          }
          fp << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
          fp << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh->getNbNodes() << " double" << endl;
-         mesh_nodes(*mesh) {
-            fp << The_node.getX() << "  " << The_node.getY() << "  "
-               << The_node.getZ() << endl;
-         }
+         mesh_nodes(*mesh)
+            fp << The_node.getX() << "  " << The_node.getY() << " " << The_node.getZ() << endl;
          fp << "\nCELLS " << mesh->getNbElements() << " " << size << endl;
          mesh_elements(*mesh) {
             switch (The_element.getShape()) {
@@ -146,7 +139,7 @@ void saveField(PETScVect<real_t>& v,
             }
             fp << setw(9) << m;
             for (i=0; i<m; i++)
-               fp << setw(9) << The_element(i+1)->n()-1;
+               fp << The_element(i+1)->n()-1;
             fp << endl;
          }
          fp << "\nCELL_TYPES  " << mesh->getNbElements() << endl;
@@ -355,6 +348,7 @@ void saveField(      PETScVect<real_t>& v,
       scalar = false;
    ofstream fp(output_file.c_str());
    fp.setf(ios::right|ios::scientific);
+   fp << setprecision(16);
 
    switch (opt) {
 
@@ -418,7 +412,7 @@ void saveField(      PETScVect<real_t>& v,
             }
             fp << setw(9) << m;
             for (i=0; i<m; i++)
-               fp << setw(9) << The_element(i+1)->n()-1;
+               fp << The_element(i+1)->n()-1;
             fp << endl;
          }
          fp << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
@@ -1142,7 +1136,7 @@ void saveVTK(string input_file,
       else if (s==PENTAHEDRON)
          m = 6;
       else ;
-      size += m+1;
+      size += m + 1;
    }
    for (size_t n=0; n<nb_time; n++) {
       string tt = "Time=" + dtos(tm[n]);
@@ -1152,6 +1146,7 @@ void saveVTK(string input_file,
          of = proj + "-" + zeros(n) + ".vtk";
       cout << "   Storing time step " << n+1 << " in file " << of << endl;
       pf = new ofstream(of.c_str());
+      *pf << setprecision(16) << scientific;
       *pf << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
       *pf << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
       mesh_nodes(mesh)
@@ -1172,7 +1167,7 @@ void saveVTK(string input_file,
          else;
          *pf << setw(9) << m;
          for (size_t i=0; i<m; i++)
-            *pf << setw(9) << The_element(i+1)->n()-1;
+            *pf << The_element(i+1)->n()-1;
          *pf << endl;
       }
       *pf << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
@@ -1226,6 +1221,7 @@ void saveGmsh(string input_file,
    size_t i, k, nb_dof=0, nb_en;
    size_t nb_nodes = mesh.getNbNodes();
    ofstream pf(output_file.c_str());
+   pf << setprecision(16);
 
    cout << "Converting file: " << input_file << " to Gmsh format." << endl;
    vector<real_t> tm;

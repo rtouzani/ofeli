@@ -38,41 +38,21 @@
 namespace OFELI {
 
 Domain::Domain()
+       : _ff(NULL), _theMesh(NULL), _output_file("out.m"), _nb_vertices(0), _nb_lines(0),
+         _nb_contours(0), _nb_holes(0), _sub_domain(0), _nb_required_vertices(0),
+         _nb_required_edges(0), _nb_sub_domains(0), _ret_cont(1), _ret_save(1), _ret_sd(1)
 {
-   _nb_vertices = _nb_lines = _nb_holes = _nb_contours = 0;
-   _nb_sub_domains = 0;
-   _sub_domain = 0;
-   _nb_required_vertices = _nb_required_edges = 0;
-   _ret_cont = _ret_save = _ret_sd = 1;
-   _v.resize(MAX_NB_VERTICES);
-   _V.resize(MAX_NB_VERTICES);
-   _l.resize(MAX_NB_LINES);
-   _c.resize(MAX_NB_SUB_DOMAINS);
-   _h.resize(MAX_NB_HOLES);
-   _sd.resize(MAX_NB_SUB_DOMAINS);
-   _ln.resize(MAX_NB_LINE_NODES*MAX_NB_LINES);
    init_kw();
-   _ff = NULL;
 }
 
 
 Domain::Domain(const string& file)
+       : _ff(NULL), _theMesh(NULL), _domain_file(file), _output_file("out.m"),
+         _nb_vertices(0), _nb_lines(0), _nb_contours(0), _nb_holes(0), _sub_domain(0),
+         _nb_required_vertices(0), _nb_required_edges(0), _nb_sub_domains(0), _ret_cont(1),
+         _ret_save(1), _ret_sd(1)
 {
-   _nb_vertices = _nb_lines = _nb_holes = _nb_contours = 0;
-   _nb_sub_domains = 0;
-   _sub_domain = 0;
-   _nb_required_vertices = _nb_required_edges = 0;
-   _ret_cont = _ret_save = _ret_sd = 1;
-   _v.resize(MAX_NB_VERTICES);
-   _V.resize(MAX_NB_VERTICES);
-   _l.resize(MAX_NB_LINES);
-   _c.resize(MAX_NB_SUB_DOMAINS);
-   _h.resize(MAX_NB_HOLES);
-   _sd.resize(MAX_NB_SUB_DOMAINS);
-   _ln.resize(MAX_NB_LINE_NODES*MAX_NB_LINES);
    init_kw();
-   _domain_file = file;
-   _ff = NULL;
    get(file);
 }
 
@@ -81,31 +61,32 @@ Domain::~Domain()
 {
    if (_ff)
       delete _ff;
+   if (_theMesh)
+      delete _theMesh;
 }
 
 
 void Domain::init_kw()
 {
-   _kw.resize(19);
-   _kw[ 0] = "q$uit";
-   _kw[ 1] = "he$lp";
-   _kw[ 2] = "v$ertex";
-   _kw[ 3] = "line$";
-   _kw[ 4] = "circ$le";
-   _kw[ 5] = "sub$domain";
-   _kw[ 6] = "rectangle$";
-   _kw[ 7] = "disk$";
-   _kw[ 8] = "dv$";
-   _kw[ 9] = "dl$";
-   _kw[10] = "lis$t";
-   _kw[11] = "save$";
-   _kw[12] = "mesh$";
-   _kw[13] = "dof$";
-   _kw[14] = "dim$";
-   _kw[15] = "curve$";
-   _kw[16] = "con$tour";
-   _kw[17] = "h$ole";
-   _kw[18] = "EOF$";
+   _kw.push_back("q$uit");
+   _kw.push_back("he$lp");
+   _kw.push_back("v$ertex");
+   _kw.push_back("line$");
+   _kw.push_back("circ$le");
+   _kw.push_back("sub$domain");
+   _kw.push_back("rectangle$");
+   _kw.push_back("disk$");
+   _kw.push_back("dv$");
+   _kw.push_back("dl$");
+   _kw.push_back("lis$t");
+   _kw.push_back("save$");
+   _kw.push_back("mesh$");
+   _kw.push_back("dof$");
+   _kw.push_back("dim$");
+   _kw.push_back("curve$");
+   _kw.push_back("con$tour");
+   _kw.push_back("h$ole");
+   _kw.push_back("EOF$");
 }
 
 
@@ -116,7 +97,7 @@ Point<real_t> Domain::getMinCoord() const
       a.x = std::min(a.x,_v[i].x);
       a.y = std::min(a.y,_v[i].y);
    }
-   return a;   
+   return a;
 }
 
 
@@ -142,13 +123,15 @@ real_t Domain::getMinh() const
 
 void Domain::insertRequiredVertex(size_t v)
 {
-   _required_vertex[_nb_required_vertices++] = v;
+   _required_vertex.push_back(v);
+   _nb_required_vertices++;
 }
 
 
 void Domain::insertRequiredEdge(size_t e)
 {
-   _required_edge[_nb_required_edges++] = e;
+   _required_edge.push_back(e);
+   _nb_required_edges++;
 }
 
 
@@ -157,10 +140,11 @@ void Domain::insertVertex(real_t x,
                           real_t h,
                           int    code)
 {
-   _v[_nb_vertices].x = x;
-   _v[_nb_vertices].y = y;
-   _v[_nb_vertices].h = h;
-   _v[_nb_vertices++].code = code;
+   Vertex v;
+   v.x = x; v.y = y; v.h = h;
+   v.code = code;
+   _v.push_back(v);
+   _nb_vertices++;
 }
 
 
@@ -173,9 +157,8 @@ void Domain::getVertex()
    }
    CATCH("Domain");
    try {
-      if (k > MAX_NB_VERTICES)
-         THROW_RT("getVertex(): Number of vertices " + itos(k) +
-                  " exceeds its maximal value " + itos(MAX_NB_VERTICES));
+      if (k<=0)
+         THROW_RT("getVertex(): Illegal vertex label " + itos(k));
    }
    CATCH("Domain");
    int l = insert(k,_nb_vertices,_v_label);
@@ -185,10 +168,15 @@ void Domain::getVertex()
    }
    CATCH("Domain");
 
-   _v[k-1].x = _ff->getD("x-coordinate: ");
-   _v[k-1].y = _ff->getD("y-coordinate: ");
-   _v[k-1].h = _ff->getD("Spacing: ");
-   _v[k-1].code = _ff->getI("Code: ");
+   Vertex v;
+   v.x = _ff->getD("x-coordinate: ");
+   v.y = _ff->getD("y-coordinate: ");
+   v.h = _ff->getD("Spacing: ");
+   v.code = _ff->getI("Code: ");
+   if (k<=_nb_vertices)
+      _v[k-1] = v;
+   else
+      _v.push_back(v);
    cout << "VERTEX ENTERED.\n";
    _nb_vertices = std::max(k,_nb_vertices);
 }
@@ -196,7 +184,6 @@ void Domain::getVertex()
 
 int Domain::getCurve()
 {
-   vector<real_t> s(MAX_NB_LINE_NODES);
    size_t i=0;
 
 // Label of curve
@@ -206,22 +193,17 @@ int Domain::getCurve()
          THROW_RT("getCurve(): Illegal label of curve " + itos(label));
    }
    CATCH("Domain");
-   try {
-      if (label > MAX_NB_LINES)
-         THROW_RT("getCurve(): Number of curves " + itos(label) + 
-                  " exceeds its maximal value " + itos(MAX_NB_LINES));
-   }
-   CATCH("Domain");
    int k = insert(label,_nb_lines,_l_label);
    try {
       if (k!=-1)
-         THROW_RT("getCurve(): Curve " + itos(label) + " is redefined");
+         THROW_RT("getCurve(): Curve"+itos(label)+" is redefined");
    }
    CATCH("Domain");
 
 // First end point
    size_t n1 = _ff->getI("First End Point: ");
-   _l[label-1].n1 = n1;
+   Ln ll;
+   ll.n1 = n1;
    k = insert(n1,_nb_vertices,_v_label);
    try {
       if (k==-1)
@@ -231,7 +213,7 @@ int Domain::getCurve()
 
 // Second end point
    size_t n2 = _ff->getI("Second End Point: ");
-   _l[label-1].n2 = n2;
+   ll.n2 = n2;
    k = insert(n2,_nb_vertices,_v_label);
    if (k==-1)
       cout << "WARNING: A new vertex is entered.\n";
@@ -241,10 +223,11 @@ int Domain::getCurve()
 
 // Case of a straight line
    if (type == 0) {
-      _l[label-1].nb = 3;
-      _l[label-1].node[0] = _v[n1-1];
-      _l[label-1].node[1] = 0.5*(_v[n1-1] + _v[n2-1]);
-      _l[label-1].node[2] = _v[n2-1];
+      ll.nb = 3;
+      ll.node.resize(3);
+      ll.node[0] = _v[n1-1];
+      ll.node[1] = 0.5*(_v[n1-1] + _v[n2-1]);
+      ll.node[2] = _v[n2-1];
    }
 
 // Case of a curve given by equation
@@ -255,7 +238,8 @@ int Domain::getCurve()
       size_t nb = _ff->getI("nb. of discretization points: ");
       if (nb<3)
          nb = 3;
-      _l[label-1].nb = nb;
+      ll.nb = nb;
+      ll.node.resize(nb+1);
       data[0] = _v[n1-1].x; data[1] = _v[n1-1].y; data[2] = _v[n1-1].z;
       real_t vv = theParser.Eval(data);
       try {
@@ -269,28 +253,34 @@ int Domain::getCurve()
          if (fabs(vv) > 1.e-8)
             THROW_RT("getCurve(): ");
       }
-     CATCH("Domain");
-     _l[label-1].node[0] = _v[n1-1];
-     _l[label-1].node[1] = _v[n2-1];
-     data[0] = 0.9*_l[label-1].node[0].x + 0.1*_l[label-1].node[1].x;
-     data[1] = 0.9*_l[label-1].node[0].y + 0.1*_l[label-1].node[1].y;
-//    data[2] = 0.1*_l[label-1].node[1].z;
-     for (i=1; i<nb-1; i++) {
-        Position(i/real_t(nb-1),data);
-        _l[label-1].node[i].x = data[0];
-        _l[label-1].node[i].y = data[1];
-//      _l[label-1].node[i].z = data[2];
-     }
+      CATCH("Domain");
+      ll.node[0] = _v[n1-1];
+      ll.node[1] = _v[n2-1];
+      data[0] = 0.9*ll.node[0].x + 0.1*ll.node[1].x;
+      data[1] = 0.9*ll.node[0].y + 0.1*ll.node[1].y;
+//    data[2] = 0.1*ll.node[1].z;
+      for (i=1; i<nb-1; i++) {
+         Position(i/real_t(nb-1),data);
+         ll.node[i].x = data[0];
+         ll.node[i].y = data[1];
+//      ll.node[i].z = data[2];
+      }
    }
 
 // Case of a predefined curve
-   else if (type == 1)
+   else if (type==1)
       string shape = _ff->getS("Curve's shape: ");
 
 // Dirichlet and Neumann codes
-   _l[label-1].Dcode = _ff->getI("Dirichlet Code: ");
-   _l[label-1].Ncode = _ff->getI("Neumann Code: ");
+   ll.Dcode = _ff->getI("Dirichlet Code: ");
+   ll.Ncode = _ff->getI("Neumann Code: ");
+   ll.Dcode = _ff->getI("Dirichlet Code: ");
+   ll.Ncode = _ff->getI("Neumann Code: ");
    cout << "CURVE ENTERED." << endl;
+   if (label>_nb_lines)
+     _l.push_back(ll);
+   else
+     _l[label-1] = ll;
    _nb_lines = std::max(label,_nb_lines);
    return 0;
 }
@@ -336,20 +326,23 @@ void Domain::insertLine(size_t n1,
                         int    dc,
                         int    nc)
 {
-   _l[_nb_lines].n1 = n1;
-   _l[_nb_lines].n2 = n2;
-   _l[_nb_lines].Dcode = dc;
-   _l[_nb_lines].Ncode = nc;
-   _l[_nb_lines].nb = 2;
-   _l[_nb_lines].node[0] = _v[n1-1];
-   _l[_nb_lines].node[1] = 0.5*(_v[n1-1] + _v[n2-1]);
-   _l[_nb_lines++].node[2] = _v[n2-1];
+   Ln ll;
+   ll.node.resize(3);
+   ll.n1 = n1;
+   ll.n2 = n2;
+   ll.Dcode = dc;
+   ll.Ncode = nc;
+   ll.nb = 2;
+   ll.node[0] = _v[n1-1];
+   ll.node[1] = 0.5*(_v[n1-1] + _v[n2-1]);
+   ll.node[2] = _v[n2-1];
+   _l.push_back(ll);
+   _nb_lines++;
 }
 
 
 int Domain::getLine()
 {
-   vector<real_t> s(MAX_NB_LINE_NODES);
    size_t label = _ff->getI("Label of line: ");
    try {
       if (label < 1)
@@ -357,9 +350,8 @@ int Domain::getLine()
    }
    CATCH("Domain");
    try {
-      if (label > MAX_NB_VERTICES)
-         THROW_RT("getLine(): Number of lines " + itos(label) +
-                  " exceeds its maximal value " + itos(MAX_NB_LINES));
+      if (label<=0)
+         THROW_RT("getLine(): Illegal label "+itos(label));
    }
    CATCH("Domain");
 
@@ -385,12 +377,18 @@ int Domain::getLine()
    if (k==-1)
       cout << "WARNING: A new vertex is entered.\n";
 
-   _l[label-1].Dcode = _ff->getI("Dirichlet Code: ");
-   _l[label-1].Ncode = _ff->getI("Neumann Code: ");
-   _l[label-1].nb = 2;
-   _l[label-1].node[0] = _v[n1-1];
-   _l[label-1].node[1] = 0.5*(_v[n1-1] + _v[n2-1]);
-   _l[label-1].node[2] = _v[n2-1];
+   Ln ll;
+   ll.Dcode = _ff->getI("Dirichlet Code: ");
+   ll.Ncode = _ff->getI("Neumann Code: ");
+   ll.nb = 2;
+   ll.node.resize(3);
+   ll.node[0] = _v[n1-1];
+   ll.node[1] = 0.5*(_v[n1-1] + _v[n2-1]);
+   ll.node[2] = _v[n2-1];
+   if (label<=_nb_vertices)
+      _l[label-1] = ll;
+   else
+      _l.push_back(ll);
    cout << "LINE ENTERED." << endl;
    _nb_lines = std::max(label,_nb_lines);
    return 0;
@@ -404,15 +402,12 @@ void Domain::insertCircle(size_t n1,
                           int    nc)
 {
    size_t nb = 36;
-   _l[_nb_lines].n1 = n1;
-   _l[_nb_lines].n2 = n2;
-   _l[_nb_lines].nb = nb;
-   _l[_nb_lines].node[0] = _v[n1-1];
-   _l[_nb_lines].node[1] = _v[n2-1];
-   _l[_nb_lines].Dcode = dc;
-   _l[_nb_lines].Ncode = nc;
-   real_t h = _v[n1-1].h;
-   real_t cx = _v[n3-1].x, cy = _v[n3-1].y;
+   Ln ll;
+   ll.node.resize(nb+1);
+   ll.n1 = n1; ll.n2 = n2; ll.nb = nb;
+   ll.node[0] = _v[n1-1]; ll.node[1] = _v[n2-1];
+   ll.Dcode = dc; ll.Ncode = nc;
+   real_t h = _v[n1-1].h, cx = _v[n3-1].x, cy = _v[n3-1].y;
    real_t a1 = _v[n1-1].x - cx, a2 = _v[n2-1].x - cx;
    real_t b1 = _v[n1-1].y - cy, b2 = _v[n2-1].y - cy;
    real_t r = sqrt(a1*a1 + b1*b1);
@@ -421,21 +416,21 @@ void Domain::insertCircle(size_t n1,
    if (theta1 >= theta2)
       theta2 += 2*OFELI_PI;
    for (size_t i=0; i<nb; i++) {
-      _l[_nb_lines].n1 = n1;
-      _l[_nb_lines].n2 = n2;
-      _l[_nb_lines].nb = nb;
-      _l[_nb_lines].Dcode = dc;
-      _l[_nb_lines].Ncode = nc;
+      Vertex v;
+      ll.n1 = n1; ll.n2 = n2; ll.nb = nb;
+      ll.Dcode = dc; ll.Ncode = nc;
       theta += (theta2-theta1)/nb;
       if (i<nb-1) {
-         _l[_nb_lines].n2 = _nb_vertices + 1;
-         _v[_nb_vertices].x = cx + r*cos(theta);
-         _v[_nb_vertices].y = cy + r*sin(theta);
-         _v[_nb_vertices].h = h;
-         _v[_nb_vertices].code = dc;
+         ll.n2 = _nb_vertices + 1;
+         v.x = cx + r*cos(theta);
+         v.y = cy + r*sin(theta);
+         v.h = h;
+         v.code = dc;
       }
       if (i>0)
-         _l[_nb_lines].n1 = _nb_vertices;
+         ll.n1 = _nb_vertices;
+      _l.push_back(ll);
+      _v.push_back(v);
       _nb_vertices++;
       _nb_lines++;
    }
@@ -447,27 +442,30 @@ void Domain::getCircle()
 {
    size_t nb=36;
    size_t n1 = _ff->getI("First end vertex: ");
-   _l[_nb_lines].n1 = n1;
+   Ln ln;
+   Vertex v;
+   ln.n1 = n1;
+   ln.node.resize(2);
    int k = insert(n1,_nb_vertices,_v_label);
-   _l[_nb_lines].node[0] = _v[n1-1];
+   ln.node[0] = _v[n1-1];
    if (k==-1)
       cout << "WARNING: A new point is entered." << endl;
 
    size_t n2 = _ff->getI("Second end vertex: ");
-   _l[_nb_lines].n2 = n2;
+   ln.n2 = n2;
    k = insert(n2,_nb_vertices,_v_label);
-   _l[_nb_lines].node[1] = _v[n2-1];
+   ln.node[1] = _v[n2-1];
    if (k==-1)
       cout << "WARNING: A new point is entered." << endl;
 
    size_t n3 = _ff->getI("Center vertex: ");
    k = insert(n3,_nb_vertices,_v_label);
-   _l[_nb_lines].nb = nb;
+   ln.nb = nb;
    if (k==-1)
       cout << "WARNING: A new point is entered." << endl;
 
-   int dc = _l[_nb_lines].Dcode = _ff->getI("Dirichlet Code: ");
-   _l[_nb_lines].Ncode = _ff->getI("Neumann Code: ");
+   int dc = ln.Dcode = _ff->getI("Dirichlet Code: ");
+   ln.Ncode = _ff->getI("Neumann Code: ");
 
    real_t h = _v[n1-1].h;
    real_t cx = _v[n3-1].x, cy = _v[n3-1].y;
@@ -481,18 +479,19 @@ void Domain::getCircle()
    for (size_t i=0; i<nb; i++) {
       theta += (theta2-theta1)/nb;
       if (i<nb-1) {
-         _l[_nb_lines].n2 = _nb_vertices + 1;
-         _v[_nb_vertices].x = cx + r*cos(theta);
-         _v[_nb_vertices].y = cy + r*sin(theta);
-         _v[_nb_vertices].h = h;
-         _v[_nb_vertices].code = dc;
+         ln.n2 = _nb_vertices + 1;
+         v.x = cx + r*cos(theta);
+         v.y = cy + r*sin(theta);
+         v.h = h;
+         v.code = dc;
+         _v.push_back(v);
       }
       if (i>0)
-         _l[_nb_lines].n1 = _nb_vertices;
-      _nb_vertices++;
-      _nb_lines++;
+         ln.n1 = _nb_vertices;
    }
-   _nb_vertices--;
+   _l.push_back(ln);
+   _nb_vertices = _v.size();
+   _nb_lines = _l.size();
    cout << "CIRCLE ENTERED.\n";
 }
 
@@ -505,20 +504,21 @@ void Domain::insertContour(const vector<size_t>& c)
       if (nb>_nb_lines)
          THROW_RT("insertContour(vector<size_t>): Number of lines is larger than number of defined lines.");
    }
-   CATCH("Domain");
-   _c[_nb_contours].nb = nb;
+   CATCH_EXIT("Domain");
+   Cont cc;
+   cc.nb = nb;
+   cc.line.resize(nb);
+   cc.orientation.resize(nb);
    for (i=0; i<nb; i++)
-      _c[_nb_contours].line[i] = c[i];
+      cc.line[i] = c[i];
    for (i=0; i<nb-1; i++) {
-      n1 = _c[_nb_contours].line[i];
-      n2 = _c[_nb_contours].line[i+1];
-      i1 = _l[n1-1].n2;
-      i2 = _l[n2-1].n1;
-      _c[_nb_contours].orientation[i] = 1;
+      n1 = cc.line[i]; n2 = cc.line[i+1];
+      i1 = _l[n1-1].n2; i2 = _l[n2-1].n1;
+      cc.orientation[i] = 1;
       if (i1 != i2) {
          i1 = _l[n1-1].n1;
          i2 = _l[n2-1].n1;
-         _c[_nb_contours].orientation[i] = -1;
+         cc.orientation[i] = -1;
          try {
             if (i1 != i2)
                THROW_RT("insertContour(vector<size_t>): Lines " + itos(n1) + " and " + itos(n2) +
@@ -527,13 +527,13 @@ void Domain::insertContour(const vector<size_t>& c)
          CATCH("Domain");
       }
    }
-   n1 = _c[_nb_contours].line[0];
-   n2 = _c[_nb_contours].line[nb-1];
+   n1 = cc.line[0]; n2 = cc.line[nb-1];
    try {
       if (_l[n1-1].n1 != _l[n2-1].n2)
          THROW_RT("insertContour(vector<size_t>): Contour is not closed.");
    }
    CATCH("Domain");
+   _c.push_back(cc);
    _nb_sub_domains++;
    _nb_contours++;
 }
@@ -541,30 +541,25 @@ void Domain::insertContour(const vector<size_t>& c)
 
 int Domain::getContour()
 {
-   try {
-      if (_nb_contours+1 > MAX_NB_SUB_DOMAINS)
-         THROW_RT("getContour(): Number of sub-domains " + itos(_nb_contours) +
-                  " exceeds its maximum value " + itos(MAX_NB_HOLES+1));
-   }
-   CATCH("Domain");
    size_t nb = _ff->getI("Nb. of lines: ");
    try {
       if (nb > _nb_lines)
          THROW_RT("getContour(): Label of line is larger than number of defined lines.");
    }
    CATCH("Domain");
-   _c[_nb_contours].nb = nb;
+   Cont cc;
+   cc.nb = nb;
    cout << "Please give list of lines in direct order.\n";
    for (size_t i=0; i<nb; i++)
-      _c[_nb_contours].line[i] = _ff->getI("Line Label: ");
+      cc.line[i] = _ff->getI("Line Label: ");
 
    for (size_t i=0; i<nb-1; i++) {
       size_t n1 = _c[_nb_contours].line[i], n2 = _c[_nb_contours].line[i+1];
       size_t i1 = _l[n1-1].n2, i2 = _l[n2-1].n1;
-      _c[_nb_contours].orientation[i] = 1;
+      cc.orientation[i] = 1;
       if (i1 != i2) {
          i1 = _l[n1-1].n1; i2 = _l[n2-1].n1;
-         _c[_nb_contours].orientation[i] = -1;
+         cc.orientation[i] = -1;
          try {
             if (i1 != i2)
                THROW_RT("getContour(): Lines " + itos(n1) + " and " + itos(n2) + 
@@ -574,14 +569,15 @@ int Domain::getContour()
       }
    }
 
-   size_t n1 = _c[_nb_contours].line[0], n2 = _c[_nb_contours].line[nb-1];
+   size_t n1 = cc.line[0], n2 = cc.line[nb-1];
    try {
       if (_l[n1-1].n1 != _l[n2-1].n2)
          THROW_RT("getContour(): Contour is not closed.");
    }
-   CATCH("Domain");
+   CATCH_EXIT("Domain");
    _nb_sub_domains++;
    cout << "CONTOUR ENTERED." << endl;
+   _c.push_back(cc);
    _nb_contours++;
    return 0;
 }
@@ -590,11 +586,12 @@ int Domain::getContour()
 void Domain::insertHole(const vector<size_t>& h)
 {
    size_t nb=h.size();
-   _h[_nb_holes].nb = nb;
+   Cont hh;
+   hh.nb = nb;
    for (size_t i=0; i<nb; i++)
-      _h[_nb_holes].line[i] = h[i];
+      hh.line[i] = h[i];
    for (size_t i=0; i<nb-1; i++) {
-      size_t n1 = _h[_nb_holes].line[i], n2 = _h[_nb_holes].line[i+1];
+      size_t n1 = hh.line[i], n2 = hh.line[i+1];
       size_t i1 = _l[n1-1].n2, i2 = _l[n2-1].n1;
       try {
          if (i1 != i2)
@@ -603,6 +600,7 @@ void Domain::insertHole(const vector<size_t>& h)
       }
       CATCH("Domain");
    }
+   _h.push_back(hh);
    _nb_holes++;
 }
 
@@ -610,13 +608,6 @@ void Domain::insertHole(const vector<size_t>& h)
 int Domain::getHole()
 {
    size_t label = _ff->getI("Label of hole: ");
-   while ((label<1) || (label>MAX_NB_HOLES)) {
-      try {
-         THROW_RT("getHole(): Label exceeds max. nb. of allowed holes (" + itos(MAX_NB_HOLES) + ")");
-      }
-      CATCH("Domain");
-     label = _ff->getI("Label of hole: ");
-   }
    int k = insert(label,_nb_holes,_h_label);
    try {
       if (k!=-1)
@@ -625,6 +616,7 @@ int Domain::getHole()
    CATCH("Domain");
    size_t nb = _ff->getI("Nb. of lines: ");
    _h[label-1].nb = nb;
+   _h[label-1].line.resize(nb);
    cout << "Please give list of lines in direct order.\n";
    for (size_t i=0; i<size_t(nb); i++)
       _h[label-1].line[i] = _ff->getI("Line Label: ");
@@ -636,7 +628,7 @@ int Domain::getHole()
          if (i1 != i2)
             THROW_RT("getHole(): Lines " + itos(n1) + " and " + itos(n2) + " are not correctly connected.");
       }
-      CATCH("Domain");
+      CATCH_EXIT("Domain");
    }
    return 0;
 }
@@ -650,15 +642,17 @@ void Domain::insertSubDomain(size_t ln,
       if (ln==0 || ln>_nb_lines)
          THROW_RT("insertSubDomain(size_t,int,int): Illegal line label");
    }
-   CATCH("Domain");
+   CATCH_EXIT("Domain");
    try {
       if (orient!=1 && orient!=-1)
          THROW_RT("insertSubDomain(size_t,int,int): Orientation must be equal to 1 or -1");
    }
-   CATCH("Domain");
-   _sd[_nb_sub_domains].line = int(ln);
-   _sd[_nb_sub_domains].orient = orient;
-   _sd[_nb_sub_domains].code = code;
+   CATCH_EXIT("Domain");
+   Sd sd;
+   sd.line = int(ln);
+   sd.orient = orient;
+   sd.code = code;
+   _sd.push_back(sd);
    _nb_sub_domains++;
 }
 
@@ -680,21 +674,26 @@ void Domain::insertSubDomain(size_t n,
       if (_sub_domain+1 > _nb_sub_domains)
          THROW_RT("insertSubDomain(size_t,int): Number of read subdomains is larger than number of contours");
    }
-   CATCH("Domain");
-   _sd[_sub_domain].contour = int(n);
-   _sd[_sub_domain].code = code;
+   CATCH_EXIT("Domain");
+   Sd sd;
+   sd.contour = int(n);
+   sd.code = code;
+   _sd.push_back(sd);
    _sub_domain++;
 }
 
 
 int Domain::getSubDomain()
 {
+   Sd sd;
    if (_sub_domain+1 > _nb_sub_domains)
       cerr << "Nb of read subdomains is larger than number of contours" << endl;
-   _sd[_sub_domain].contour = _ff->getI("Contour label: ");
+   sd.contour = _ff->getI("Contour label: ");
 
    int code = _ff->getI("Material code for subdomain: ");
-   _sd[_sub_domain++].code = code;
+   sd.code = code;
+   _sd.push_back(sd);
+   _sub_domain++;
    cout << "SUBDOMAIN ENTERED." << endl;
    return 0;
 }
@@ -710,7 +709,7 @@ int Domain::Rectangle()
    real_t bx = _ff->getD("x max: ");
    real_t by = _ff->getD("y max: ");
    real_t lx = bx - ax, ly = by - ay;
-   int type = _ff->getI("Mesh Type (0: rectangles, 1: triangles): ");
+   int type = 1;
    size_t ne1 = _ff->getI("Nb. of sub-intervals in the x-direction: ");
    size_t ne2 = _ff->getI("Nb. of sub-intervals in the y-direction: ");
 
@@ -746,10 +745,9 @@ int Domain::Rectangle()
       c4 = _ff->getI("Node code for x=xmin: ");
       cs4 = _ff->getI("Side code for x=xmin: ");
    }
-   string file = _ff->getS("Output mesh file name: ");
 
-   Mesh mesh;
-   mesh.setDim(2);
+   _theMesh = new Mesh;
+   _theMesh->setDim(2);
    _nb_dof = 1;
 
 // Nodes
@@ -778,7 +776,7 @@ int Domain::Rectangle()
          dof_code(c,cd);
          The_node.setCode(cd);
          The_node.setDOF(first_dof,_nb_dof);
-         mesh.Add(the_node);
+         _theMesh->Add(the_node);
          x += hx;
       }
       y += hy;
@@ -792,11 +790,11 @@ int Domain::Rectangle()
          for (size_t j=0; j<ne1; j++) {
             n1 = ++k; n2 = n1 + 1; n3 = n2 + ne1 + 1; n4 = n3 - 1;
             the_element = new Element(el+1,QUADRILATERAL,1);
-            The_element.Add(mesh[n1]);
-            The_element.Add(mesh[n2]);
-            The_element.Add(mesh[n3]);
-            The_element.Add(mesh[n4]);
-            mesh.Add(the_element);
+            The_element.Add((*_theMesh)[n1]);
+            The_element.Add((*_theMesh)[n2]);
+            The_element.Add((*_theMesh)[n3]);
+            The_element.Add((*_theMesh)[n4]);
+            _theMesh->Add(the_element);
             el++;
          }
          k++;
@@ -807,16 +805,16 @@ int Domain::Rectangle()
          for (size_t j=0; j<ne1; j++) {
             n1 = ++k; n2 = n1 + 1; n3 = n2 + ne1 + 1;
             the_element = new Element(el+1,TRIANGLE,1);
-            The_element.Add(mesh[n1]);
-            The_element.Add(mesh[n2]);
-            The_element.Add(mesh[n3]);
-            mesh.Add(the_element);
+            The_element.Add((*_theMesh)[n1]);
+            The_element.Add((*_theMesh)[n2]);
+            The_element.Add((*_theMesh)[n3]);
+            _theMesh->Add(the_element);
             el++; m1 = n3; m2 = n3 - 1; m3 = n1;
             the_element = new Element(el+1,TRIANGLE,1);
-            The_element.Add(mesh[m1]);
-            The_element.Add(mesh[m2]);
-            The_element.Add(mesh[m3]);
-            mesh.Add(the_element);
+            The_element.Add((*_theMesh)[m1]);
+            The_element.Add((*_theMesh)[m2]);
+            The_element.Add((*_theMesh)[m3]);
+            _theMesh->Add(the_element);
             el++;
          }
          k++;
@@ -829,13 +827,13 @@ int Domain::Rectangle()
       m2 = m1 + 1;
       if (cs1!=0) {
          the_side = new Side(++k,LINE);
-         The_side.Add(mesh[m1]);
-         The_side.Add(mesh[m2]);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
          dof_code(cs1,cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
-         mesh.Add(the_side);
+         _theMesh->Add(the_side);
       }
       m1 = m2;
    }
@@ -843,13 +841,13 @@ int Domain::Rectangle()
       m2 = m1 + ne1 + 1;
       if (cs2!=0) {
          the_side = new Side(++k,LINE);
-         The_side.Add(mesh[m1]);
-         The_side.Add(mesh[m2]);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
          dof_code(cs2,cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
-         mesh.Add(the_side);
+         _theMesh->Add(the_side);
       }
       m1 = m2;
    }
@@ -857,13 +855,13 @@ int Domain::Rectangle()
       m2 = m1 - 1;
       if (cs3!=0) {
          the_side = new Side(++k,LINE);
-         The_side.Add(mesh[m1]);
-         The_side.Add(mesh[m2]);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
          dof_code(cs3,cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
-         mesh.Add(the_side);
+         _theMesh->Add(the_side);
       }
       m1 = m2;
    }
@@ -871,17 +869,17 @@ int Domain::Rectangle()
       m2 = m1 - ne1 - 1;
       if (cs4!=0) {
          the_side = new Side(++k,LINE);
-         The_side.Add(mesh[m1]);
-         The_side.Add(mesh[m2]);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
          dof_code(cs4,cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
-         mesh.Add(the_side);
+         _theMesh->Add(the_side);
       }
       m1 = m2;
    }
-   mesh.put(file);
+   //   _theMesh->put(_output_file);
    return 0;
 }
 
@@ -905,13 +903,13 @@ int Domain::Rectangle(real_t* x,
    int cc1=c1, cc2=c2, cc3=c3, cc4=c4;
 
 // Nodes
-   Mesh mesh;
-   mesh.setDim(2);
+   _theMesh = new Mesh;
+   _theMesh->setDim(2);
    size_t k = 0;
    real_t lx=x[2]-x[0], ly=x[3]-x[1];
    real_t hx, hy=ly/real_t(n2);
    int c;
-   if (r != 1 && r > 0)
+   if (r!=1 && r>0)
       hy = ly*(r-1.)/(pow(r,real_t(n2))-1.);
    real_t yy=x[1], cs=1.75;
    size_t first_dof = 1;
@@ -941,7 +939,7 @@ int Domain::Rectangle(real_t* x,
          dof_code(c,cd);
          The_node.setCode(cd);
          The_node.setDOF(first_dof,_nb_dof);
-         mesh.Add(the_node);
+         _theMesh->Add(the_node);
          xx += hx; hx *= r;
       }
       yy += hy; hy *= r;
@@ -954,16 +952,16 @@ int Domain::Rectangle(real_t* x,
       for (size_t j=0; j<n1; j++) {
          nn1 = ++k; nn2 = nn1 + 1; nn3 = nn2 + n1 + 1;
          the_element = new Element(el+1,TRIANGLE,1);
-         The_element.Add(mesh[nn1]);
-         The_element.Add(mesh[nn2]);
-         The_element.Add(mesh[nn3]);
-         mesh.Add(the_element);
+         The_element.Add((*_theMesh)[nn1]);
+         The_element.Add((*_theMesh)[nn2]);
+         The_element.Add((*_theMesh)[nn3]);
+         _theMesh->Add(the_element);
          el++; m1 = nn3; m2 = nn3 - 1; m3 = nn1;
          the_element = new Element(el+1,TRIANGLE,1);
-         The_element.Add(mesh[m1]);
-         The_element.Add(mesh[m2]);
-         The_element.Add(mesh[m3]);
-         mesh.Add(the_element);
+         The_element.Add((*_theMesh)[m1]);
+         The_element.Add((*_theMesh)[m2]);
+         The_element.Add((*_theMesh)[m3]);
+         _theMesh->Add(the_element);
          el++;
       }
       k++;
@@ -976,13 +974,13 @@ int Domain::Rectangle(real_t* x,
       m2 = m1 + 1;
       if (cs1!=0) {
          the_side = new Side(++k,LINE);
-         The_side.Add(mesh[m1]);
-         The_side.Add(mesh[m2]);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
          dof_code(cs1,cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
-         mesh.Add(the_side);
+         _theMesh->Add(the_side);
       }
       m1 = m2;
    }
@@ -990,13 +988,13 @@ int Domain::Rectangle(real_t* x,
       m2 = m1 + n1 + 1;
       if (cs2!=0) {
          the_side = new Side(++k,LINE);
-         The_side.Add(mesh[m1]);
-         The_side.Add(mesh[m2]);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
          dof_code(cs2,cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
-         mesh.Add(the_side);
+         _theMesh->Add(the_side);
       }
       m1 = m2;
    }
@@ -1004,13 +1002,13 @@ int Domain::Rectangle(real_t* x,
       m2 = m1 - 1;
       if (cs3!=0) {
          the_side = new Side(++k,LINE);
-         The_side.Add(mesh[m1]);
-         The_side.Add(mesh[m2]);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
          dof_code(cs3,cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
-         mesh.Add(the_side);
+         _theMesh->Add(the_side);
       }
       m1 = m2;
    }
@@ -1018,17 +1016,17 @@ int Domain::Rectangle(real_t* x,
       m2 = m1 - n1 - 1;
       if (cs4!=0) {
          the_side = new Side(++k,LINE);
-         The_side.Add(mesh[m1]);
-         The_side.Add(mesh[m2]);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
          dof_code(cs4,cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
-         mesh.Add(the_side);
+        _theMesh->Add(the_side);
       }
       m1 = m2;
    }
-   mesh.put(file);
+   _theMesh->put(file);
    return 0;
 }
 
@@ -1124,9 +1122,11 @@ int Domain::Disk()
            m++;
          }
       }
-      _l[s].n1 = _el[m-2].n1;
-      _l[s].n2 = _el[m-2].n2;
-      _l[s].Ncode = nc; s++;
+      Ln ln;
+      ln.n1 = _el[m-2].n1;
+      ln.n2 = _el[m-2].n2;
+      ln.Ncode = nc; s++;
+      _l.push_back(ln);
    }
 
    int k=0;
@@ -1311,6 +1311,7 @@ int Domain::saveAsEasymesh()
 
 // Output Points of the external contour
    mf <<  "# Points on External Contour #" << endl;
+   _ln.resize(_c[0].nb+_nb_holes);
    kl = 0;
    for (i=0; i<_c[0].nb; i++) {
       n = _c[0].line[i];
@@ -1720,70 +1721,64 @@ void Domain::genMesh(const string& file)
 }
 
 
-void Domain::generateMesh(const string& file)
+void Domain::generateMesh()
 {
    if (_dim==1)
-      gm1(file);
+      gm1();
    else if (_dim==2)
-      gm2(file);
+      gm2();
    else if (_dim==3)
-      gm3(file);
+      gm3();
 }
 
 
-void Domain::gm1(const string& file)
+void Domain::gm1()
 {
 }
 
 
-void Domain::gm2(const string& file)
+void Domain::gm2()
 {
-   size_t is, i, j, n, i1, nb, nbb, kl, k, kl0=0, label;
-   int c, dc, nc;
-   real_t h;
-
    try {
       if (_c[0].nb == 0)
-         THROW_RT("gm2(string): No Contour is defined.");
+         THROW_RT("gm2(): No Contour is defined.");
    }
    CATCH("Domain");
-   string prefix = file.substr(0,file.rfind("."));
+   string prefix = _output_file.substr(0,_output_file.rfind("."));
    string geo_file=prefix+".geo", bamg_file=prefix+".bamg";
    ofstream mf(geo_file.c_str());
 
 // Count nb. of points
-   mf << "MeshVersionFormatted 0" << endl;
-   mf << "Dimension  2" << endl;
-   nbb = 0;
-   for (is=0; is<_nb_contours; is++) {
-      for (i=0; i<_c[is].nb; i++)
+   mf << "MeshVersionFormatted 0\nDimension  2" << endl;
+   size_t nbb = 0;
+   for (size_t is=0; is<_nb_contours; is++) {
+      for (size_t i=0; i<_c[is].nb; i++)
          nbb += _l[_c[is].line[i]-1].nb;
    }
-   for (n=0; n<_nb_holes; n++)
-      for (i=0; i<_h[n].nb; i++)
+   for (size_t n=0; n<_nb_holes; n++)
+      for (size_t i=0; i<_h[n].nb; i++)
          nbb += _l[_h[n].line[i]-1].nb;
    _nb_lines += nbb;
-   label = _nb_vertices;
+   size_t label = _nb_vertices;
    _nb_vertices = nbb;
    mf << "\nVertices  " << setw(5) << _nb_vertices << endl;
 
 // Output Points of the external contour
-   kl = 0;
-   for (is=0; is<_nb_contours; is++) {
-      for (i=0; i<_c[is].nb; i++) {
-         n = _c[is].line[i];
-         i1 = _l[n-1].n1;
-         c = _v[i1-1].code;
-         nb = _l[n-1].nb;
-         dc = _l[n-1].Dcode;
-         nc = _l[n-1].Ncode;
+   size_t kl=0, kl0=0;
+   for (size_t is=0; is<_nb_contours; is++) {
+      for (size_t i=0; i<_c[is].nb; i++) {
+         size_t n = _c[is].line[i];
+         size_t i1 = _l[n-1].n1;
+         real_t c = _v[i1-1].code;
+         size_t nb = _l[n-1].nb;
+         real_t dc = _l[n-1].Dcode, nc = _l[n-1].Ncode;
          _ln[kl].i = kl+1;
          if (i==0)
             kl0 = kl + 1;
          _ln[kl].dc = dc;
          _ln[kl].nc = nc;
          mf << "  " << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << "  " << c << endl;
-         for (j=1; j<nb; j++) {
+         for (size_t j=1; j<nb; j++) {
             label++;
             mf << "  " << _l[n-1].node[j].x << "  " << _l[n-1].node[j].y << "  " << dc << endl;
             _ln[kl+1].i = _ln[kl].j = kl + 2;
@@ -1798,27 +1793,23 @@ void Domain::gm2(const string& file)
    }
 
 // Output Points of holes
-   for (k=0; k<_nb_holes; k++) {
-      for (i=0; i<_h[k].nb; i++) {
-         n = _h[k].line[i];
-         i1 = _l[n-1].n1;
-         c = _v[i1-1].code;
-         h = _v[i1-1].h;
-         nb = _l[n-1].nb;
-         dc = _l[n-1].Dcode;
-         nc = _l[n-1].Ncode;
+   for (size_t k=0; k<_nb_holes; k++) {
+      for (size_t i=0; i<_h[k].nb; i++) {
+         size_t n = _h[k].line[i];
+         size_t i1 = _l[n-1].n1;
+         real_t c = _v[i1-1].code;
+         size_t nb = _l[n-1].nb;
+         real_t dc = _l[n-1].Dcode, nc = _l[n-1].Ncode;
          if (i==0)
             kl0 = kl + 1;
          _ln[kl].i = kl + 1;
-         _ln[kl].dc = dc;
-         _ln[kl].nc = nc;
+         _ln[kl].dc = dc; _ln[kl].nc = nc;
          mf << "  " << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << "  " << dc << endl;
-         for (j=1; j<nb; j++) {
+         for (size_t j=1; j<nb; j++) {
             label++;
             mf << "  " << _l[n-1].node[j].x << "  " << _l[n-1].node[j].y << "  " << c << endl;
             _ln[kl+1].i = _ln[kl].j = kl + 2;
-            _ln[kl+1].dc = dc;
-            _ln[kl+1].nc = nc;
+            _ln[kl+1].dc = dc; _ln[kl+1].nc = nc;
             kl++;
          }
          _ln[kl].j = kl + 2;
@@ -1829,53 +1820,51 @@ void Domain::gm2(const string& file)
 
 // Output Lines
    mf << "\nEdges  " << setw(5) << kl << endl;
-   for (i=0; i<kl; i++)
+   for (size_t i=0; i<kl; i++)
       mf << setw(6) << _ln[i].i << setw(6) << _ln[i].j
          << setw(6) << _ln[i].dc << setw(6) << _ln[i].nc << endl;
 
 // Output mesh sizes
    mf << "\nhVertices\n";
    kl = 0;
-   for (k=0; k<_nb_contours; k++) {
-      for (i=0; i<_c[k].nb; i++) {
-         n = _c[k].line[i];
-         i1 = _l[n-1].n1;
-         h = _v[i1-1].h;
-         nb = _l[n-1].nb;
+   for (size_t k=0; k<_nb_contours; k++) {
+      for (size_t i=0; i<_c[k].nb; i++) {
+         size_t n = _c[k].line[i];
+         size_t i1 = _l[n-1].n1;
+         real_t h = _v[i1-1].h;
+         real_t nb = _l[n-1].nb;
          mf << setprecision(6) << setw(10) << h;
-         for (j=1; j<nb; j++)
+         for (size_t j=1; j<nb; j++)
             mf << setprecision(6) << setw(10) << h;
          mf << endl;
       }
    }
-   for (k=0; k<_nb_holes; k++) {
-      for (i=0; i<_h[k].nb; i++) {
-         n = _h[k].line[i];
-         i1 = _l[n-1].n1;
-         c = _v[i1-1].code;
-         h = _v[i1-1].h;
-         nb = _l[n-1].nb;
+   for (size_t k=0; k<_nb_holes; k++) {
+      for (size_t i=0; i<_h[k].nb; i++) {
+         size_t n = _h[k].line[i];
+         size_t i1 = _l[n-1].n1;
+         real_t h = _v[i1-1].h;
+         real_t nb = _l[n-1].nb;
          mf << setprecision(6) << setw(10) << h;
-         for (j=1; j<nb; j++)
+         for (size_t j=1; j<nb; j++)
             mf << setprecision(6) << setw(10) << h;
       }
       mf << endl;
    }
 
    mf << "\nSubDomain " << setw(6) << _nb_sub_domains << endl;
-   for (k=0; k<_nb_sub_domains; k++)
+   for (size_t k=0; k<_nb_sub_domains; k++)
       mf << setw(6) << 2 << setw(6) << _c[k].first_line << setw(6) << 1 << setw(6)
          << _sd[k].code << endl;
    mf << "\nEnd" << endl;
 
    main_bamg(geo_file,bamg_file);
-   Mesh mesh;
-   getBamg(bamg_file,mesh,_nb_dof);
-   mesh.put(file);
+   _theMesh = new Mesh;
+   getBamg(bamg_file,*_theMesh,_nb_dof);
 }
 
 
-void Domain::gm3(const string &file)
+void Domain::gm3()
 {
 }
 
@@ -1897,7 +1886,7 @@ void Domain::gm()
    ofstream mf(emfile.c_str());
 
 // Count nb. of points
-
+cout<<"#1"<<endl;
    mf << "MeshVersionFormatted 0" << endl;
    mf << "Dimension  2" << endl;
    nbb = 0;
@@ -1913,6 +1902,8 @@ void Domain::gm()
    mf << "\nVertices  " << setw(5) << _nb_vertices << endl;
 
 // Output Points of the external contour
+cout<<"#2"<<endl;
+   _ln.resize(_nb_contours+_nb_holes);
    kl = 0;
    for (is=0; is<_nb_contours; is++) {
       _c[is].first_line = kl + 1;
@@ -1948,6 +1939,7 @@ void Domain::gm()
    }
 
 // Output Points of the holes
+cout<<"#3"<<endl;
    for (k=0; k<_nb_holes; k++) {
       for (i=0; i<_h[k].nb; i++) {
          n = _h[k].line[i];
@@ -1980,12 +1972,14 @@ void Domain::gm()
    }
 
 // Output Lines
+cout<<"#4"<<endl;
    mf << "\nEdges  " << setw(5) << kl << endl;
    for (i=0; i<kl; i++)
       mf << setw(6) << _ln[i].i << setw(6) << _ln[i].j
          << setw(6) << _ln[i].dc << setw(6) << _ln[i].nc << endl;
 
 // Output mesh sizes
+cout<<"#5"<<endl;
    mf << "\nhVertices\n";
    kl = 0;
    for (size_t nct=0; nct<_nb_contours; nct++) {
@@ -2015,6 +2009,7 @@ void Domain::gm()
    }
 
 // Output subdomains
+cout<<"#6"<<endl;
    if (_nb_sub_domains > 0) {
      mf << "\nSubDomain " << setw(6) << _nb_sub_domains << endl;
      for (k=0; k<_nb_sub_domains; k++) {
@@ -2029,16 +2024,15 @@ void Domain::gm()
    cout << "************************************************************************" << endl;
    main_bamg(emfile,outfile);
    cout << "************************************************************************" << endl;
-   Mesh mesh;
+   _theMesh = new Mesh;
    cout << "Converting output file to ofeli format ..." << endl;
-   getBamg(outfile,mesh,_nb_dof);
-   mesh.put(ofeli_file.c_str());
+   getBamg(outfile,*_theMesh,_nb_dof);
 }
 
 
 int Domain::get()
 {
-   int    key;
+   int key;
    string mg;
    _ff = new FFI();
    _nb_dof = 1;
@@ -2052,29 +2046,28 @@ int Domain::get()
             break;
 
          case 0:
-            return ret;
+            return -1;
 
          case 1:
             cout << "\n";
-            cout << "help:       display this help\n";
-            cout << "dim:        Enter space dimension\n";
-            cout << "dof:        Enter (const) nb. of degrees of freedom per node\n";
-            cout << "vertex:     Enter a vertex\n";
-            cout << "line:       Enter a line\n";
+            cout << "help:      display this help\n";
+            cout << "dim:       Enter space dimension\n";
+            cout << "dof:       Enter (const) nb. of degrees of freedom per node\n";
+            cout << "vertex:    Enter a vertex\n";
+            cout << "line:      Enter a line\n";
             //            cout << "curve     : Enter a curve\n";
-            cout << "circle:     Enter a circular arc\n";
+            cout << "circle:    Enter a circular arc\n";
             //            cout << "contour   : Enter a (external) contour\n";
             //           cout << "hole      : Enter a hole\n";
             //           cout << "subdomain : Enter a subdomain\n";
-            cout << "dof:        Nb. of degrees of freedom per node\n";
-            cout << "rectangle:  Mesh generation in a rectangle\n";
+            cout << "dof:       Nb. of degrees of freedom per node\n";
+            cout << "rectangle: Mesh generation in a rectangle\n";
             //            cout << "disk      : Mesh generation in a disk\n";
-            cout << "dv:         Remove a vertex\n";
-            cout << "dl:         Remove a line\n";
-            cout << "list:       List an item\n";
-            cout << "save:       Save data in file for a mesh generator\n";
-            cout << "mesh:       Generate mesh\n";
-            cout << "quit:       end the session\n";
+            cout << "dv:        Remove a vertex\n";
+            cout << "dl:        Remove a line\n";
+            cout << "list:      List an item\n";
+            cout << "mesh:      Generate mesh\n";
+            cout << "quit:      end the session\n";
             break;
 
          case 2:
@@ -2107,8 +2100,7 @@ int Domain::get()
 
          case 6:
             Rectangle();
-            ret = 0;
-            break;
+            return -1;
 
          case 7:
             Disk();
@@ -2139,8 +2131,6 @@ int Domain::get()
             break;
 
          case 12:
-            cout << "This keyword will be deactivated in future versions\n";
-            cout << "Use rather the member function GenerateMesh." << endl;
             gm();
             break;
 
@@ -2174,25 +2164,24 @@ int Domain::zero_code(const vector<int>& code)
 }
 
 
-int Domain::insert(size_t  item,
-                   size_t& length,
-                   size_t* set)
+int Domain::insert(size_t          item,
+                   size_t&         length,
+                   vector<size_t>& set)
 {
    int k = -1;
    for (size_t i=0; i<length; i++)
-      if (item == set[i])
+      if (item==set[i])
          k = int(i);
-   if (k==-1) {
-      set[length] = item;
-      length++;
-   }
+   if (k==-1)
+      set.push_back(item);
+   length = set.size();
    return k;
 }
 
 
-int Domain::remove(size_t  item,
-                   size_t& length,
-                   size_t* set)
+int Domain::remove(size_t          item,
+                   size_t&         length,
+                   vector<size_t>& set)
 {
    size_t i;
    int k = -1;
@@ -2200,7 +2189,7 @@ int Domain::remove(size_t  item,
       if (item == set[i])
          k = int(i);
    if (k!=-1) {
-      for (i=k;i<length;i++)
+      for (i=k; i<length; i++)
          set[i] = set[i+1];
       length--;
    }

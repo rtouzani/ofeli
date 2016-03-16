@@ -33,7 +33,6 @@
 
 #include "OFELI.h"
 #include "Therm.h"
-#include "mesh/Partition.h"
 using namespace OFELI;
 
 int main(int argc, char *argv[])
