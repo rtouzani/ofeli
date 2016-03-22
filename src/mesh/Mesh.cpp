@@ -85,8 +85,8 @@ Mesh::Mesh()
        _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
-       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
-       _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
+       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
+       _ed_view1(0), _ed_view2(0)
 {
    setNodesForDOF();
 }
@@ -100,8 +100,8 @@ Mesh::Mesh(const string& file,
        _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
-       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
-       _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
+       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
+       _ed_view1(0), _ed_view2(0)
 {
    setNodesForDOF();
    get(file);
@@ -117,18 +117,18 @@ Mesh::Mesh(real_t L,
            size_t p,
            size_t nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(1), _nb_dof(0),
-       _nb_vertices(0), _first_dof(1), _nb_mat(0), _verb(0), _no_imposed_dof(false),
+       _nb_vertices(0), _first_dof(1), _nb_mat(0), _nb_boundary_nodes(2), _verb(0), _no_imposed_dof(false),
        _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
-       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
-       _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
+       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
+       _ed_view1(0), _ed_view2(0)
 {
    size_t NbN = nb_el*p + 1;
 
 // Insert nodes
    real_t xx=0., h=L/real_t(nb_el);
-   size_t nn = 1;
+   size_t nn=1;
    for (size_t nnd=1; nnd<=NbN; nnd++) {
       Point<real_t> x(xx);
       Node *nd = new Node(nn++,x);
@@ -153,17 +153,9 @@ Mesh::Mesh(real_t L,
       el->getMeasure();
       Add(el);
    }
-   _nb_mat = 0;
    setNodesForDOF();
-   _no_imposed_dof = false;
-   _all_sides_created = _boundary_sides_created = false;
-   _all_edges_created = _boundary_edges_created = false;
-   _is_structured = true;
-   _boundary_nodes_created = true;
-   _nb_boundary_nodes = 2;
-   _boundary_nodes.resize(2);
-   _boundary_nodes[0] = _nodes[0];
-   _boundary_nodes[1] = _nodes[_nb_nodes-1];
+   _boundary_nodes.push_back(_nodes[0]);
+   _boundary_nodes.push_back(_nodes[_nb_nodes-1]);
 }
 
 
@@ -174,13 +166,9 @@ Mesh::Mesh(const Grid& g,
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
-       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
-       _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
+       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
+       _ed_view1(0), _ed_view2(0)
 {
-   _nb_dof = _nb_sides = _nb_elements = _nb_nodes = _nb_vertices = _nb_edges = 0;
-   _all_sides_created = _boundary_sides_created = _all_edges_created = false;
-   _boundary_edges_created = _no_imposed_dof = false;
-   _boundary_nodes_created = _node_neighbor_elements_created = _element_neighbor_elements_created = false;
    Node *nd;
    Element *el;
    size_t i, j, k;
@@ -550,13 +538,13 @@ Mesh::Mesh(real_t Lx,
          nd = new Node(n,x);
          nd->setNbDOF(1);
          _code[0] = 0;
-         if (j==0)
+         if (j==0  && c1>0)
             _code[0] = c1;
-         if (j==ny)
+         if (j==ny && c3>0)
             _code[0] = c3;
-         if (i==0)
+         if (i==0  && c4>0)
             _code[0] = c4;
-         if (i==nx)
+         if (i==nx && c2>0)
             _code[0] = c2;
          nd->setDOF(_first_dof,1);
          nd->setCode(_code);
@@ -589,13 +577,68 @@ Mesh::Mesh(real_t Lx,
                }
                else
                   THROW_RT("Mesh(real_t,real_t,size_t,size_t,int,int,int,int,int): Illegal option "+itos(opt));
-	    }
-            CATCH("Mesh");
+            }
+            CATCH_EXIT("Mesh");
          }
       }
       x.x += hx;
       _is_structured = true;
    }
+
+   if (c1<0 || c2<0 || c3<0 || c4<0) {
+      size_t is=1, n=1;
+      for (size_t j=1; j<=ny; j++) {
+         Side *sd = new Side(is++,LINE);
+         sd->Add(getPtrNode(n));
+         sd->Add(getPtrNode(n+1));
+         n++;
+         sd->setNbDOF(1);
+         if (c4<0) {
+            sd->setCode(1,-c4);
+            Add(sd);
+	 }
+      }
+      n = nx*(ny+1) + 1;
+      for (size_t j=1; j<=ny; j++) {
+         Side *sd = new Side(is++,LINE);
+         sd->Add(getPtrNode(n));
+         sd->Add(getPtrNode(n+1));
+         n++;
+         sd->setNbDOF(1);
+         if (c2<0) {
+            sd->setCode(1,-c2);
+            Add(sd);
+	 }
+      }
+      n = 1;
+      for (size_t i=1; i<=nx; i++) {
+         Side *sd = new Side(is++,LINE);
+         sd->Add(getPtrNode(n));
+         sd->Add(getPtrNode(n+ny+1));
+         n += ny + 1;
+         sd->setNbDOF(1);
+         if (c1<0) {
+            sd->setCode(1,-c1);
+            Add(sd);
+	 }
+      }
+      n = ny + 1;
+      for (size_t i=1; i<=nx; i++) {
+         Side *sd = new Side(is++,LINE);
+         sd->Add(getPtrNode(n));
+         sd->Add(getPtrNode(n+ny+1));
+         n += ny + 1;
+         sd->setNbDOF(1);
+         if (c3<0) {
+            sd->setCode(1,-c3);
+            Add(sd);
+	 }
+      }
+   }
+
+   NumberEquations();
+   mesh_elements(*this)
+      theMaterial.check(the_element->getCode());
 }
 
 
@@ -630,14 +673,12 @@ Mesh::Mesh(const Mesh& ms)
       Add(new Side(side_label,The_side.getShape()));
    
    if (ms._node_in_coarse_element.size()>0) {
-      _node_in_coarse_element.resize(_nb_nodes);
       for (size_t i=0; i<_nb_nodes; i++)
-         _node_in_coarse_element[i] = ms._node_in_coarse_element[i];
+         _node_in_coarse_element.push_back(ms._node_in_coarse_element[i]);
    }
    if (ms._node_in_fine_element.size()>0) {
-      _node_in_fine_element.resize(_nb_nodes);
       for (size_t i=0; i<_nb_nodes; i++)
-         _node_in_fine_element[i] = ms._node_in_fine_element[i];
+         _node_in_fine_element.push_back(ms._node_in_fine_element[i]);
    }
 
    _nb_mat = ms._nb_mat;
@@ -668,7 +709,7 @@ Mesh::Mesh(const Mesh&          m,
          THROW_RT("Mesh(Mesh,Point<real_t>,Point<real_t>)\n"
                   "This constructor is valid for 2-D meshes only.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
    _max_nb_nodes = m.getNbNodes();
    _max_nb_elements = m.getNbElements();
    _max_nb_sides = m.getNbSides();
@@ -691,13 +732,13 @@ Mesh::Mesh(const Mesh&          m,
    _element_old_label.resize(m.getNbElements());
    label = 1;
    mesh_elements(m) {
-      size_t in = 0;
+      size_t in=0;
       for (size_t i=1; i<=the_element->getNbNodes(); i++) {
          Point<real_t> a = (*the_element)(i)->getCoord();
          if (a.x>=x_bl.x && a.y>=x_bl.y && a.x<=x_tr.x && a.y <= x_tr.y)
             in++;
       }
-      if (in == the_element->getNbNodes()) {
+      if (in==the_element->getNbNodes()) {
          Element *el = new Element(*the_element);
          el->setLabel(label++);
          _element_old_label[el->n()-1] = element_label;
@@ -851,7 +892,7 @@ void Mesh::RenumberElement(size_t n1,
       else
          THROW_RT("RenumberElement(size_t,size_t): Element with label " + itos(n1) + " does not exist.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
 }
 
 
@@ -865,7 +906,7 @@ void Mesh::RenumberSide(size_t n1,
       else
          THROW_RT("RenumberSide(size_t,size_t): Side with label " + itos(n1) + " does not exist.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
 }
 
 
@@ -934,16 +975,15 @@ void Mesh::inCoarse(Mesh& ms,
    size_t i;
    real_t x[3], y[3];
 
-   _node_in_coarse_element.resize(_nb_nodes);
    for (i=0; i<_nb_nodes; i++)
-      _node_in_coarse_element[i] = NULL;
+      _node_in_coarse_element.push_back(NULL);
 
    mesh_elements(ms) {
       try {
          if (The_element.getShape() != TRIANGLE)
             THROW_RT("inCoarse(Mesh,bool): Element " + itos(element_label) + " is not a triangle.");
       }
-      CATCH("Mesh");
+      CATCH_EXIT("Mesh");
       for (i=0; i<3; i++) {
          x[i] = (The_element)(i+1)->getCoord(1);
          y[i] = (The_element)(i+1)->getCoord(2);
@@ -978,9 +1018,8 @@ void Mesh::inFine(Mesh& ms,
    size_t i;
    real_t x[3], y[3];
 
-   _node_in_fine_element.resize(_nb_nodes);
    for (i=0; i<_nb_nodes; i++)
-      _node_in_fine_element[i] = NULL;
+      _node_in_fine_element.push_back(NULL);
 
    mesh_elements(ms) {
       try {
@@ -1528,13 +1567,11 @@ int Mesh::getAllSides(int opt)
       return 0;
    }
    size_t k, ns=0, i;
-   vector<size_t> nsd[MAX_NB_ELEMENT_SIDES];
+   vector<vector<size_t> > nsd;
    int sh;
    if (_verb > 1)
       cout << "Creating all mesh sides ..." << endl;
    size_t nb_all_sides = 0;
-   for (i=0; i<MAX_NB_ELEMENT_SIDES; i++)
-      nsd[i].resize(MAX_NB_SIDE_NODES);
 
 // Store already defined sides in (*sides)
    vector<ND> sides;
@@ -1710,10 +1747,10 @@ int Mesh::getAllEdges()
    size_t nbss = _nb_edges;
 
 // Add all mesh edges
-   size_t nsd[3][2];
-   nsd[0][0] = nsd[2][1] = 1;
-   nsd[0][1] = nsd[1][0] = 2;
-   nsd[1][1] = nsd[2][0] = 3;
+   vector<vector<size_t> > nsd(3);
+   nsd[0].push_back(1); nsd[0].push_back(2);
+   nsd[1].push_back(2); nsd[1].push_back(3);
+   nsd[2].push_back(3); nsd[2].push_back(1);
    ND eed;
    nb_all_edges = 0;
    mesh_sides(*this) {
@@ -1833,13 +1870,11 @@ int Mesh::getBoundarySides()
    }
    CATCH("Mesh");
    size_t k, ns=0, i;
-   vector<size_t> nsd[MAX_NB_ELEMENT_SIDES];
+   vector<vector<size_t> > nsd;
    int sh;
    if (_verb > 1)
       cout << "Creating all mesh sides ..." << endl;
    size_t nb_all_sides = 0;
-   for (i=0; i<MAX_NB_ELEMENT_SIDES; i++)
-      nsd[i].resize(MAX_NB_SIDE_NODES);
 
 // Store already defined sides in (*sides)
    vector<ND> sides;
@@ -1874,7 +1909,7 @@ int Mesh::getBoundarySides()
       ns = init_side_node_numbering(the_element->getShape(), nsd, sh);
       for (i=0; i<the_element->getNbSides(); i++) {
          i3 = i4 = 0;
-         if (ns > 2)
+         if (ns>2)
             i3 = The_element(nsd[i][2])->n();
          if (ns > 3)
             i4 = The_element(nsd[i][3])->n();
@@ -2063,7 +2098,8 @@ int Mesh::getDOFSupport() const
 }
 
 
-void Mesh::setDOFSupport(int opt, int nb_nodes)
+void Mesh::setDOFSupport(int opt,
+                         int nb_nodes)
 {
    _set_nodes = _set_sides = _set_edges = _set_elements = false;
    if (opt==NODE_DOF) {
@@ -2094,7 +2130,7 @@ void Mesh::AddMidNodes(int g)
 {
    Point<real_t> x;
    size_t mid_label = _nb_nodes + 1;
-   int code[MAX_NBDOF_NODE];
+   vector<int> code;
    getAllSides();
 
    mesh_sides(*this) {
@@ -2105,13 +2141,14 @@ void Mesh::AddMidNodes(int g)
       nd->setNbDOF(nb_dof);
 
       for (size_t i=0; i<The_side(1)->getNbDOF(); i++)
-         code[i] = std::min(The_side(1)->getCode(i+1),The_side(2)->getCode(i+1));
+         code.push_back(std::min(The_side(1)->getCode(i+1),The_side(2)->getCode(i+1)));
       nd->setCode(code);
       nd->setDOF(_first_dof,nb_dof);
       Add(nd);
       the_side->Add(nd);
    }
 
+   code.clear();
    mesh_elements(*this) {
       if (g) {
          x = 0;
@@ -2121,7 +2158,7 @@ void Mesh::AddMidNodes(int g)
          Node *nd = new Node(mid_label++,x);
          nd->setNbDOF(The_element(1)->getNbDOF());
          for (size_t i=0; i<The_element(1)->getNbDOF(); i++)
-            code[i] = The_element(1)->getCode(i+1);
+            code.push_back(The_element(1)->getCode(i+1));
          nd->setCode(code);
          nd->setDOF(_first_dof,The_element(1)->getNbDOF());
          Add(nd);
@@ -2134,7 +2171,7 @@ void Mesh::AddMidNodes(int g)
             size_t n1=sd->getNodeLabel(1), n2=sd->getNodeLabel(2);
             if ((n1==m1 && n2==m2) || (n1==m2 && n2==m1))
                the_element->Add(the_element->getPtrSide(j)->getPtrNode(3),4);
-            else if ( (n1==m2 && n2==m3) || (n1==m3 && n2==m2))
+            else if ((n1==m2 && n2==m3) || (n1==m3 && n2==m2))
                the_element->Add(the_element->getPtrSide(j)->getPtrNode(3),5);
             else if ( (n1==m3 && n2==m1) || (n1==m1 && n2==m3))
                the_element->Add(the_element->getPtrSide(j)->getPtrNode(3),6);
@@ -2164,7 +2201,7 @@ void Mesh::set(Element* el)
       if (n>_nb_elements)
          THROW_RT("set(Element *): The element label is beyond the total number of elements.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
    _elements[n-1] = el;
 }
 
@@ -2176,7 +2213,7 @@ void Mesh::set(Side* sd)
       if (n>_nb_sides)
          THROW_RT("set(Side *): The side label is beyond the total number of sides.");
    }
-   CATCH("Mesh");
+   CATCH_EXIT("Mesh");
    _sides[n-1] = sd;
 }
 
@@ -2210,7 +2247,9 @@ void Mesh::Add(Edge* ed)
 }
 
 
-void Mesh::Rescale(real_t sx, real_t sy, real_t sz)
+void Mesh::Rescale(real_t sx,
+                   real_t sy,
+                   real_t sz)
 {
    if (sz==0.)
       sz = sx;
@@ -2280,7 +2319,7 @@ void Mesh::checkNodeLabels()
             THROW_RT("checkNodeLabels(): The node label: " + itos(_nodes[i]->n()) + 
                      " exceeds the total number of nodes.");
       }
-      CATCH("Mesh");
+      CATCH_EXIT("Mesh");
    }
    if (_nb_nodes>0)
       qksort(_nodes,0,_nb_nodes-1,_node_compare);
@@ -2328,7 +2367,7 @@ void Mesh::AddNodes(int p)
    }
    getAllSides();
 
-   int code[MAX_NBDOF_NODE];
+   vector<int> code;
    size_t nb_dof, i;
    size_t mid_label = _nb_nodes + 1;
    Point<real_t> x;
@@ -2340,7 +2379,7 @@ void Mesh::AddNodes(int p)
           Node *nd = new Node(mid_label++,x);
           nd->setNbDOF(nb_dof);
           for (i=0; i<The_side(1)->getNbDOF(); i++)
-             code[i] = std::min(The_side(1)->getCode(i+1),The_side(2)->getCode(i+1));
+             code.push_back(std::min(The_side(1)->getCode(i+1),The_side(2)->getCode(i+1)));
           nd->setCode(code);
           nd->setDOF(_first_dof,nb_dof);
           Add(nd);
@@ -2348,6 +2387,7 @@ void Mesh::AddNodes(int p)
        }
    }
 
+   code.clear();
    mesh_elements(*this) {
       x = 0;
       for (size_t j=1; j<=the_element->getNbNodes(); j++)
@@ -2356,7 +2396,7 @@ void Mesh::AddNodes(int p)
       Node *nd = new Node(mid_label++,x);
       nd->setNbDOF(The_element(1)->getNbDOF());
       for (i=0; i<The_element(1)->getNbDOF(); i++)
-         code[i] = The_element(1)->getCode(i+1);
+         code.push_back(The_element(1)->getCode(i+1));
       nd->setCode(code);
       nd->setDOF(_first_dof,The_element(1)->getNbDOF());
       Add(nd);
@@ -2655,35 +2695,6 @@ void Mesh::put(const string& file) const
    fp.close();
 }
 
-/*
-void Mesh::writeBinary(const string &file)
-{
-   ofstream os(file.c_str(),ios::binary);
-   Element *el;
-   for (topElement(); (el=getElement());)
-      os.write(reinterpret_cast<char *>(el),sizeof(Element));
-   Node *nd;
-   for (topNode(); (nd=getNode());)
-      os.write(reinterpret_cast<char *>(nd),sizeof(Node));
-   Side *sd;
-   for (topSide(); (sd=getSide());)
-      os.write(reinterpret_cast<char *>(sd),sizeof(Side));
-   os.write(reinterpret_cast<char *>(this),sizeof(Mesh));
-}
-
-
-void Mesh::readBinary(const string &file)
-{
-   ifstream is(file.c_str(),ios::binary);
-   Element *el;
-   for (topElement(); (el=getElement());)
-      is.read(reinterpret_cast<char *>(el),sizeof(Element));
-   Node *nd;
-   for (topNode(); (nd=getNode());)
-      is.read(reinterpret_cast<char *>(nd),sizeof(Node));
-   is.read(reinterpret_cast<char *>(this),sizeof(Mesh));
-   }*/
-
 
 //=============================================================================
 //                   MEMBER FUNCTIONS FOR INTERNAL USE
@@ -2738,7 +2749,7 @@ L5:
                    if (memory > _available_memory && _available_memory > 0)
                       THROW_RT("FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
                 }
-                CATCH("Mesh");
+                CATCH_EXIT("Mesh");
                 ++xadj[ii];
                 for (is=m; is<=memory; ++is) {
                    isn = m + memory - is;
@@ -2752,7 +2763,7 @@ L7:
                    if (memory > _available_memory && _available_memory > 0)
                       THROW_RT("FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
                 }
-                CATCH("Mesh");
+                CATCH_EXIT("Mesh");
                 ++xadj[ii];
                 for (is=l; is<=memory; ++is) {
                    isn = memory + l - is;
@@ -2845,14 +2856,12 @@ Mesh & Mesh::operator=(Mesh& ms)
       Add(new Side(side_label,the_side->getShape()));
 
    if (ms._node_in_coarse_element.size()>0) {
-      _node_in_coarse_element.resize(_nb_nodes);
       for (size_t i=0; i<_nb_nodes; i++)
-         _node_in_coarse_element[i] = ms._node_in_coarse_element[i];
+         _node_in_coarse_element.push_back(ms._node_in_coarse_element[i]);
    }
    if (ms._node_in_fine_element.size()>0) {
-      _node_in_fine_element.resize(_nb_nodes);
       for (size_t i=0; i<_nb_nodes; i++)
-         _node_in_fine_element[i] = ms._node_in_fine_element[i];
+         _node_in_fine_element.push_back(ms._node_in_fine_element[i]);
    }
 
    _nb_mat = ms._nb_mat;

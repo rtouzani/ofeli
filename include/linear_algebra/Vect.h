@@ -1013,8 +1013,8 @@ Vect<T_>::Vect() :
 #if !defined (USE_EIGEN)
           vector<T_>(),
 #endif
-          _size(0), _nx(0), _ny(1), _nz(1), _dof_type(NONE),
-          _nb_dof(1), _dg_degree(-1), _grid(true), _with_mesh(false),
+          _size(0), _nx(0), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
+          _dg_degree(-1), _grid(true), _with_mesh(false),
           _theMesh(NULL), _name("#"), _time(0)
 { }
 

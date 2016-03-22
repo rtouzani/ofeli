@@ -310,9 +310,6 @@ private:
    void gm1();
    void gm2();
    void gm3();
-   int insert(size_t          item,
-              size_t&         length,
-              vector<size_t>& set);
    int remove(size_t          item,
               size_t&         length,
               vector<size_t>& set);

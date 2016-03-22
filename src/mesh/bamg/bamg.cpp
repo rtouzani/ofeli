@@ -50,27 +50,20 @@ int main_bamg(string input_file,
 //   or adaptation
    MeshIstreamErrorHandler = MeshErrorIO;
    long i;
-   hinterpole=1;
+   hinterpole = 1;
    int fileout=0, nbvx=NBVMAX, iso=0, AbsError=0, nbjacoby=1, allquad=0;
-   int NoMeshReconstruction=0;
-   int Rescaling=1;
-   double costheta=2;
-   double cutoffradian=-1;
-   double anisomax = 1e6;
+   int NoMeshReconstruction=0, Rescaling=1;
+   double costheta=2, cutoffradian=-1, anisomax = 1e6;
    double err=0.01, errg=0.1, coef=1, hmin=1.e-100, hmax=1.e17, ratio=0, CutOff=1e-5;
    int KeepBackVertices=1;
    double hminaniso=1e-100; 
    const double boundmaxsubdiv=10;
-   double maxsubdiv=boundmaxsubdiv;
-   double omega=1.8;
+   double maxsubdiv=boundmaxsubdiv, omega=1.8, power=1.0;
    int NbSmooth=3;
    double *solMbb=0, *solMBB=0;
    int *typesolsBB=0;
    long nbsolbb=0, lsolbb=0, nbsolBB=0, lsolBB=0;
-   int SplitEdgeWith2Boundary=0;
-   int rbbeqMbb=0, rBBeqMBB=0;
-   int ChoiseHessien=0;
-   double power=1;
+   int SplitEdgeWith2Boundary=0, rbbeqMbb=0, rBBeqMBB=0, ChoiseHessien=0;
    Triangles *Thr=0, *Thb=0;
 
    char *fgeom=0, *fmeshback=0, *fmeshout=0, *fmeshr=0, *fmetrix=0, *fmsh=0;
@@ -188,7 +181,7 @@ int main_bamg(string input_file,
          omega =  atof(argv[i]);
       else {
          cout << " Usage:" << endl;
-         cout << "  Mesh INPUT: The 2 arguments are exclusives" << endl;
+         cout << "  Mesh INPUT: The 2 arguments are exclusive" << endl;
          cout << "" << endl;
          cout << "     -g  filename    Set geometry for mesh generation. " << endl;
          cout << "                     DB mesh file." << endl;
@@ -552,7 +545,7 @@ int main_bamg(string input_file,
    }
 
    for (i=1; i<datargc; i++)
-      delete [] datargv[i] ;
+      delete [] datargv[i];
    cout << flush;
    return 0;
 }

@@ -246,7 +246,7 @@ void HexahedraToTetrahedra(Mesh &m1, Mesh &m2);
 void QuadrilateralsToTriangles(Mesh &m1, Mesh &m2);
 void Refine(Mesh &in_mesh, Mesh &out_mesh);
 int BoundaryConditionCode(vector<string> &str, int *code, string s);
-size_t init_side_node_numbering(int shape, vector<size_t> *nsd, int &sh);
+size_t init_side_node_numbering(int shape, vector<vector<size_t> >& nsd, int &sh);
 int equal_sides(const class Side *sd1, const class Side *sd2);
 int equal_sides(const class Side *sd, vector<size_t> &s);
 void order_side_nodes(size_t ns, ND &s);

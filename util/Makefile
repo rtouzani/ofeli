@@ -296,7 +296,7 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-SUBDIRS = g2m conv
+SUBDIRS = g2m vmesh conv
 all: all-recursive
 
 .SUFFIXES:

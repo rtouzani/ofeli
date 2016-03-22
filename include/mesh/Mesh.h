@@ -75,7 +75,7 @@ namespace OFELI {
 /// \brief A pointer to Edge.
 /// \details Useful for loops on edges
     extern Edge *theEdge;
-   
+
 /*! \class Mesh
  *  \ingroup Mesh
  * \brief To store and manipulate finite element meshes.
@@ -908,13 +908,7 @@ class Mesh
 /// \brief Determine shape of elements
 /// Return Shape index (see enum ElementShape) if all elements have the same shape, 0 if not.
     int getShape() const;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-   void readBinary(const string& file);
-   void writeBinary(const string& file);
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-
+ 
 //---------------------------------  OPERATORS  --------------------------------
 
 /// \brief Operator () : Return pointer to i-th element

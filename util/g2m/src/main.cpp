@@ -24,7 +24,7 @@
    along with OFELI. If not, see <http://www.gnu.org/licenses/>.
 
   ==============================================================================
-                                       g 2 m
+                                      g 2 m
 
             Program to generate 2-D meshes and store in OFELI mesh file
   ==============================================================================*/
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
    bool parse(int argc, char **argv, string &dom_file, string &geo_file, 
               string &output_file, bool& vtk_opt);
-   string *file, dom_file=" ", geo_file=" ", output_file="out.m";
+   string *file, dom_file=" ", geo_file=" ", output_file;
    bool vtk_opt=false;
    Domain *d = NULL;
    bool inter = parse(argc,argv,dom_file,geo_file,output_file,vtk_opt);
@@ -85,8 +85,6 @@ int main(int argc, char *argv[])
          string bamg_file = *file + ".bamg";
          remove(bamg_file.c_str());
          cout << "File " << bamg_file << " deleted." << endl;
-         saveGmsh(*file+".msh",d->getMesh());
-         cout << "Mesh stored in gmsh file " << *file+".msh" << endl;
          if (vtk_opt) {
             saveVTK(*file+".vtk",d->getMesh());
             cout << "Mesh stored in vtk file " << *file+".vtk" << endl;
@@ -111,8 +109,6 @@ int main(int argc, char *argv[])
             cout << "Mesh stored in vtk file " << *file+".vtk" << endl;
          }
       }
-      cout << "===========================================================================\n";
-
       if (d)
          delete d;
       delete file;
@@ -168,6 +164,8 @@ bool parse(int     argc,
       output_file = project + ".m";
       if (output.isSet())
          output_file = output.getValue();
+      else
+         output_file = "out.m";
 
    } catch (ArgException &e)
    { cout << "ERROR: " << e.error() << " " << e.argId() << endl; }

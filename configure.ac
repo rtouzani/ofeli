@@ -439,6 +439,7 @@ AC_OUTPUT(
    util/conv/src/Makefile
    util/conv/examples/Makefile
    util/conv/matlab/Makefile
+   util/vmesh/Makefile
    tutorial/Makefile
    tutorial/lesson1/Makefile
    tutorial/lesson2/Makefile

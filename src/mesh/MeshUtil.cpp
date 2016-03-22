@@ -327,30 +327,33 @@ void Refine(Mesh& in_mesh,
 }
 
 
-size_t init_side_node_numbering(int             shape,
-                                vector<size_t>* nsd,
-                                int&            sh)
+size_t init_side_node_numbering(int                      shape,
+                                vector<vector<size_t> >& nsd,
+                                int&                     sh)
 {
    size_t ns=2;
    sh = LINE;
    if (shape == TRIANGLE) {
-      nsd[0][0] = 1; nsd[0][1] = 2;
-      nsd[1][0] = 2; nsd[1][1] = 3;
-      nsd[2][0] = 3; nsd[2][1] = 1;
+      nsd.resize(3);
+      nsd[0].push_back(1); nsd[0].push_back(2);
+      nsd[1].push_back(2); nsd[1].push_back(3);
+      nsd[2].push_back(3); nsd[2].push_back(1);
    }
    else if (shape == QUADRILATERAL) {
-      nsd[0][0] = 1; nsd[0][1] = 2;
-      nsd[1][0] = 2; nsd[1][1] = 3;
-      nsd[2][0] = 3; nsd[2][1] = 4;
-      nsd[3][0] = 4; nsd[3][1] = 1;
+      nsd.resize(4);
+      nsd[0].push_back(1); nsd[0].push_back(2);
+      nsd[1].push_back(2); nsd[1].push_back(3);
+      nsd[2].push_back(3); nsd[2].push_back(4);
+      nsd[3].push_back(4); nsd[3].push_back(1);
    }
    if (shape == TETRAHEDRON) {
-     ns = 3;
-     sh = TRIANGLE;
-     nsd[0][0] = 1; nsd[0][1] = 2; nsd[0][2] = 3;
-     nsd[1][0] = 2; nsd[1][1] = 4; nsd[1][2] = 3;
-     nsd[2][0] = 4; nsd[2][1] = 1; nsd[2][2] = 3;
-     nsd[3][0] = 1; nsd[3][1] = 4; nsd[3][2] = 2;
+      ns = 3;
+      sh = TRIANGLE;
+      nsd.resize(4);
+      nsd[0].push_back(1); nsd[0].push_back(2); nsd[0].push_back(3);
+      nsd[1].push_back(2); nsd[1].push_back(4); nsd[1].push_back(3);
+      nsd[2].push_back(4); nsd[2].push_back(1); nsd[2].push_back(3);
+      nsd[3].push_back(1); nsd[3].push_back(4); nsd[3].push_back(2);
    }
    return ns;
 }

@@ -1,2 +1,2 @@
 
-SUBDIRS = g2m conv
+SUBDIRS = g2m vmesh conv
