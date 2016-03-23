@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
    w.solve(x);
    int nb_it = w.getIterationNumber();
 #else
-   LinearSolver<double> ls(1000,1.e-8,1);
+   LinearSolver<double> ls(1000,1.e-8,0);
    int nb_it = ls.solve(A,b,x,CG_SOLVER,DILU_PREC);
 #endif
    cout << "Number of iterations: " << nb_it << endl;

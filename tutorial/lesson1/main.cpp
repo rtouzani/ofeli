@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-              An example of a Finite Element Code using OFELI
+                 An example of a Finite Element Code using OFELI
 
             Solution of a 1-D Elliptic problem using P1 Finite elements
 

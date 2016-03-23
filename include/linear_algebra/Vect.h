@@ -501,6 +501,18 @@ class Vect
                    T_     val,
                    size_t dof=1);
 
+/** \brief Assign a given value to components of vector corresponding to sides with given code
+ *  \details Vector components are assumed nodewise
+ *  @param [in] m Instance of mesh
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] val Value to prescribe
+ *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ */
+    void setSideBC(Mesh&  m,
+                   int    code,
+                   T_     val,
+                   size_t dof=1);
+
 /** \brief Assign a given function (given by an interpretable algebraic expression) to 
  *  components of vector with given code.
  *  \details Vector components are assumed nodewise
@@ -514,6 +526,19 @@ class Vect
                    const string& exp,
                    size_t        dof=1);
 
+/** \brief Assign a given function (given by an interpretable algebraic expression) to 
+ *  components of vector corresponding to sides with given code.
+ *  \details Vector components are assumed nodewise
+ *  @param [in] m    Instance of mesh
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] exp  Regular algebraic expression to prescribe
+ *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ */
+    void setSideBC(Mesh&         m,
+                   int           code,
+                   const string& exp,
+                   size_t        dof=1);
+
 /** \brief Assign a given value to components of vector with given code
  *  \details Vector components are assumed nodewise
  *  @param [in] code Code for which nodes will be assigned prescribed value
@@ -522,7 +547,7 @@ class Vect
  */
     void setNodeBC(int    code,
                    T_     val,
-                   size_t dof=1);
+                   size_t dof=1) { setNodeBC(*_theMesh,code,val,dof); }
 
 /** \brief Assign a given function (given by an interpretable algebraic expression) to 
  *  components of vector with given code
@@ -530,10 +555,37 @@ class Vect
  *  @param [in] code Code for which nodes will be assigned prescribed value
  *  @param [in] exp  Regular algebraic expression to prescribe
  *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ *  @warning This member function is to be used in the case where a constructor with a Mesh 
+ *  has been used
  */
     void setNodeBC(int           code,
                    const string& exp,
-                   size_t        dof=1);
+                   size_t        dof=1) { setNodeBC(*_theMesh,code,exp,dof); }
+
+/** \brief Assign a given function (given by an interpretable algebraic expression) to 
+ *  components of vector with given code
+ *  \details Vector components are assumed nodewise
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] exp  Regular algebraic expression to prescribe
+ *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ *  @warning This member function is to be used in the case where a constructor with a Mesh 
+ *  has been used
+ */
+    void setSideBC(int           code,
+                   const string& exp,
+                   size_t        dof=1) { setSideBC(*_theMesh,code,exp,dof); }
+
+/** \brief Assign a given value to components of vector with given code
+ *  \details Vector components are assumed nodewise
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] val  Value to prescribe
+ *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ *  @warning This member function is to be used in the case where a constructor with a Mesh 
+ *  has been used
+ */
+    void setSideBC(int     code,
+                   T_      val,
+                   size_t  dof=1) { setSideBC(*_theMesh,code,val,dof); }
 
 /** \brief Remove boundary conditions.
  *  \details This member function copies to current vector a vector
@@ -555,7 +607,8 @@ class Vect
  *  @param [in] dof Parameter to say if all degrees of freedom are concerned [Default: <tt>0</tt>] or
  *  if only one degree of freedom (<tt>dof</tt>) is inserted into vector <tt>v</tt> which has only one
  *  degree of freedom.
- *  @remark This function is to be used only when the Vect instance was constructed by using the Mesh instance
+ *  @warning This member function is to be used in the case where a constructor with a Mesh 
+ *  has been used
  */
     void removeBC(const Vect<T_>& v,
                   int             dof=0);
@@ -628,6 +681,8 @@ class Vect
  *  @param [in] dof Parameter to say if all degrees of freedom are concerned (=0, Default) or
  *  if only one degree of freedom (<tt>dof</tt>) is inserted into vector <tt>v</tt> which has only 
  *  one degree of freedom by node or side
+ *  @warning This member function is to be used in the case where a constructor with a Mesh 
+ *  has been used
  */
     void insertBC(const Vect<T_>& v, 
                   int             dof=0);
@@ -1218,7 +1273,7 @@ Vect<T_>::Vect(const Vect<T_>& v)
 
 template<class T_>
 Vect<T_>::Vect(const Vect<T_>& v,
-                     size_t    n)
+               size_t          n)
          : _nb_dof(v._nb_dof), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
@@ -1241,7 +1296,7 @@ Vect<T_>::Vect(const Vect<T_>& v,
 
 
 template <class T_>
-Vect<T_>::Vect(      size_t    d,
+Vect<T_>::Vect(size_t          d,
                const Vect<T_>& v,
                const string&   name)
          : _nb(v._nb), _dof_type(v._dof_type), _with_mesh(v._with_mesh),
@@ -1310,8 +1365,8 @@ void Vect<T_>::setMesh(Mesh&  m,
 
 
 template<class T_>
-void Vect<T_>::set(const T_*    v,
-                         size_t n)
+void Vect<T_>::set(const T_* v,
+                   size_t    n)
 {
    setSize(n);
    for (size_t i=1; i<=n; ++i)
@@ -1357,8 +1412,8 @@ void Vect<T_>::setDG(int degree)
 
 template<class T_>
 void Vect<T_>::select(const Vect<T_>& v,
-                            size_t    nb_dof,
-                            size_t    first_dof)
+                      size_t          nb_dof,
+                      size_t          first_dof)
 {
    _size = nb_dof*v._nb;
    setSize(_size);
@@ -1393,7 +1448,7 @@ void Vect<T_>::set(const string&       exp,
 
 template <class T_>
 void Vect<T_>::set(const string& exp,
-                         size_t  dof)
+                   size_t        dof)
 {
    try {
       if (_theMesh==NULL)
@@ -1684,7 +1739,7 @@ void Vect<T_>::removeBC(const Mesh&     ms,
 
 template<class T_>
 void Vect<T_>::removeBC(const Vect<T_>& v,
-                              int       dof)
+                        int             dof)
 {
    if (dof==0) {
       size_t n = 1;
@@ -1707,7 +1762,7 @@ void Vect<T_>::removeBC(const Vect<T_>& v,
 
 template<class T_>
 void Vect<T_>::transferBC(const Vect<T_>& bc,
-                                int       dof)
+                          int             dof)
 {
    size_t i=1, k=1;
    if (dof==0) {
@@ -1755,10 +1810,10 @@ void Vect<T_>::transferBC(const Vect<T_>& bc,
 
 
 template<class T_>
-void Vect<T_>::insertBC(      Mesh&     m,
+void Vect<T_>::insertBC(Mesh&           m,
                         const Vect<T_>& v,
                         const Vect<T_>& bc,
-                              int       dof)
+                        int             dof)
 {
    size_t i=1;
    if (dof==0) {
@@ -1815,16 +1870,16 @@ void Vect<T_>::insertBC(      Mesh&     m,
 
 
 template<class T_>
-void Vect<T_>::insertBC(      Mesh&     m,
+void Vect<T_>::insertBC(Mesh&           m,
                         const Vect<T_>& v,
-                              int       dof)
+                        int             dof)
 {
    size_t i=1;
    if (dof==0) {
       if (m.NodesAreDOF()) {
          mesh_nodes(m) {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
-	       set(i,0);
+               set(i,0);
                if (The_node.getCode(k)==0)
                   set(i,v(The_node.getDOF(k)));
                i++;
@@ -1869,10 +1924,10 @@ void Vect<T_>::insertBC(      Mesh&     m,
 
 #if defined(USE_PETSC)
 template<class T_>
-void Vect<T_>::insertBC(      Mesh&          m,
+void Vect<T_>::insertBC(Mesh&                m,
                         const PETScVect<T_>& v,
                         const Vect<T_>&      bc,
-                              int            dof)
+                        int                  dof)
 {
    size_t i=1;
    if (dof==0) {
@@ -1929,9 +1984,9 @@ void Vect<T_>::insertBC(      Mesh&          m,
 
 
 template<class T_>
-void Vect<T_>::insertBC(      Mesh&          m,
+void Vect<T_>::insertBC(Mesh&                m,
                         const PETScVect<T_>& v,
-                              int            dof)
+                        int                  dof)
 {
    size_t i=1;
    if (dof==0) {
@@ -1984,7 +2039,7 @@ void Vect<T_>::insertBC(      Mesh&          m,
 template<class T_>
 void Vect<T_>::insertBC(const PETScVect<T_>& v,
                         const Vect<T_>&      bc,
-                              int            dof)
+                        int                  dof)
 {
    size_t i = 1;
    if (dof==0) {
@@ -2042,7 +2097,7 @@ void Vect<T_>::insertBC(const PETScVect<T_>& v,
 
 
 template<class T_>
-void Vect<T_>::insertBC1(      Mesh&     m,
+void Vect<T_>::insertBC1(Mesh&           m,
                          const Vect<T_>& v,
                          const Vect<T_>& bc)
 {
@@ -2061,7 +2116,7 @@ void Vect<T_>::insertBC1(      Mesh&     m,
 template<class T_>
 void Vect<T_>::insertBC(const Vect<T_>& v,
                         const Vect<T_>& bc,
-                              int       dof)
+                        int             dof)
 {
    size_t i = 1;
    if (dof==0) {
@@ -2098,7 +2153,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
                set(i,v(The_node.getDOF(dof)));
             else
                set(i,bc(k));
-	    i++, k += The_node.getNbDOF();
+            i++, k += The_node.getNbDOF();
          }
       }
       else if (_theMesh->SidesAreDOF()) {
@@ -2118,20 +2173,19 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
 
 
 template<class T_>
-void Vect<T_>::setNodeBC(      Mesh&   m,
-                               int     code,
+void Vect<T_>::setNodeBC(Mesh&         m,
+                         int           code,
                          const string& exp,
-                               size_t  dof)
+                         size_t        dof)
 {
    int err;
    real_t d[4];
    theParser.Parse(exp.c_str(),"x,y,z,t");
+   d[3] = _time;
    mesh_nodes(m) {
       d[0] = The_node.getCoord(1);
       d[1] = The_node.getCoord(2);
       d[2] = The_node.getCoord(3);
-      d[3] = _time;
-      set(node_label,dof,0);
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          if (The_node.getCode(dof)==code) {
             set(node_label,dof,theParser.Eval(d));
@@ -2147,6 +2201,62 @@ void Vect<T_>::setNodeBC(      Mesh&   m,
 
 
 template<class T_>
+void Vect<T_>::setSideBC(Mesh&   m,
+                         int     code,
+                         T_      val,
+                         size_t  dof)
+{
+   int err;
+   mesh_sides(m) {
+     if (The_side.getCode(dof)==code) {
+         for (size_t n=1; n<=The_side.getNbNodes(); n++) {
+            the_node = The_side(n);
+            for (size_t i=1; i<=The_side.getNbDOF(); i++) {
+               set(node_label,dof,val);
+               try {
+                  if ((err=theParser.EvalError()))
+                     THROW_RT("setSideBC(Mesh,int,T_,size_t): Illegal regular expression. Error code: " + itos(err));
+               }
+               CATCH("Vect");
+            }
+         }
+      }
+   }
+}
+
+
+template<class T_>
+void Vect<T_>::setSideBC(Mesh&         m,
+                         int           code,
+                         const string& exp,
+                         size_t        dof)
+{
+   int err;
+   real_t d[4];
+   theParser.Parse(exp.c_str(),"x,y,z,t");
+   d[3] = _time;
+   mesh_sides(m) {
+     if (The_side.getCode(dof)==code) {
+         for (size_t n=1; n<=The_side.getNbNodes(); n++) {
+            the_node = The_side(n);
+            d[0] = The_node.getCoord(1);
+            d[1] = The_node.getCoord(2);
+            d[2] = The_node.getCoord(3);
+            for (size_t i=1; i<=The_side.getNbDOF(); i++) {
+               set(node_label,dof,theParser.Eval(d));
+               try {
+                  if ((err=theParser.EvalError()))
+                     THROW_RT("setSideBC(Mesh,int,string,size_t): Illegal regular expression. Error code: " + itos(err));
+               }
+               CATCH("Vect");
+            }
+         }
+      }
+   }
+}
+
+
+template<class T_>
 void Vect<T_>::setNodeBC(Mesh&  m,
                          int    code,
                          T_     val,
@@ -2154,7 +2264,6 @@ void Vect<T_>::setNodeBC(Mesh&  m,
 {
    if (m.getDOFSupport()==NODE_FIELD) {
       mesh_nodes(m) {
-         set(node_label,dof,0);
          for (size_t i=1; i<=the_node->getNbDOF(); i++) {
             if (The_node.getCode(dof)==code)
                set(node_label,dof,val);
@@ -2163,7 +2272,6 @@ void Vect<T_>::setNodeBC(Mesh&  m,
    }
    if (m.getDOFSupport()==SIDE_FIELD) {
       MeshBoundarySides(m) {
-         set(side_label,dof,0);
          for (size_t i=1; i<=theSide->getNbDOF(); i++) {
             if (theSide->getCode(dof)==code)
                set(side_label,dof,val);
@@ -2174,62 +2282,8 @@ void Vect<T_>::setNodeBC(Mesh&  m,
 
 
 template<class T_>
-void Vect<T_>::setNodeBC(      int     code,
-                         const string& exp,
-                               size_t  dof)
-{
-   int err;
-   real_t d[4];
-   theParser.Parse(exp.c_str(),"x,y,z,t");
-   mesh_nodes(*_theMesh) {
-      set(node_label,dof,0);
-      d[0] = The_node.getCoord(1);
-      d[1] = The_node.getCoord(2);
-      d[2] = The_node.getCoord(3);
-      d[3] = _time;
-      for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-         if (The_node.getCode(dof)==code) {
-            set(node_label,dof,theParser.Eval(d));
-            try {
-               if ((err=theParser.EvalError()))
-                  THROW_RT("code,string,size_t): Illegal regular expression. Error code: " + itos(err));
-	    }
-            CATCH("Vect");
-         }
-      }
-   }
-}
-
-
-template<class T_>
-void Vect<T_>::setNodeBC(int    code,
-                         T_     val,
-                         size_t dof)
-{
-   if (_theMesh->getDOFSupport()==NODE_FIELD) {
-      mesh_nodes(*_theMesh) {
-         set(node_label,dof,0);
-         for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-            if (The_node.getCode(dof)==code)
-               set(node_label,dof,val);
-         }
-      }
-   }
-   if (_theMesh->getDOFSupport()==SIDE_FIELD) {
-      MeshBoundarySides(*_theMesh) {
-         set(side_label,dof,0);
-         for (size_t i=1; i<=TheSide.getNbDOF(); i++) {
-            if (TheSide.getCode(dof)==code)
-               set(side_label,dof,val);
-         }
-      }
-   }
-}
-
-
-template<class T_>
 void Vect<T_>::insertBC(const Vect<T_>& v,
-                              int       dof)
+                        int             dof)
 {
    size_t i=1;
    if (dof==0) {
@@ -2638,7 +2692,7 @@ void Vect<T_>::getDivergence(Vect<T_>& v)
 
 template<class T_>
 real_t Vect<T_>::getAverage(const Element& el,
-                                  int      type) const
+                            int            type) const
 {
    switch (type) {
 
@@ -2703,7 +2757,7 @@ Vect<T_> &Vect<T_>::MultAdd(const Vect<T_>& x,
 
 
 template<class T_>
-void Vect<T_>::Axpy(      T_        a,
+void Vect<T_>::Axpy(T_              a,
                     const Vect<T_>& x)
 {
    for (size_t i=1; i<=size(); i++)
@@ -3252,10 +3306,10 @@ T_ Dot(const Vect<T_>& x,
  *  @param [in] type Discrepancy type (0: Absolute, 1: Relative [Default])
  *  @return Computed discrepancy value
  */
-inline real_t Discrepancy(      Vect<real_t>& x,
+inline real_t Discrepancy(Vect<real_t>&       x,
                           const Vect<real_t>& y,
-                                int           n,
-                                int           type=1)
+                          int                 n,
+                          int                 type=1)
 {
    size_t s=x.size();
    real_t old=0., d=0.;
@@ -3301,10 +3355,10 @@ inline real_t Discrepancy(      Vect<real_t>& x,
  *  @param [in] type Discrepancy type (0: Absolute, 1: Relative [Default])
  *  @return Computed discrepancy value
  */
-inline real_t Discrepancy(      Vect<complex_t>& x,
+inline real_t Discrepancy(Vect<complex_t>&       x,
                           const Vect<complex_t>& y,
-                                int              n,
-                                int              type=1)
+                          int                    n,
+                          int                    type=1)
 {
    size_t s=x.size();
    real_t old=0., d=0.;
@@ -3344,7 +3398,7 @@ inline real_t Discrepancy(      Vect<complex_t>& x,
  *  \ingroup VectMat
  */
 inline void Modulus(const Vect<complex_t>& x,
-                          Vect<real_t>&    y)
+                    Vect<real_t>&          y)
 {
    y.setSize(x.size());
    for (size_t i=1; i<=x.size(); ++i) {
@@ -3361,7 +3415,7 @@ inline void Modulus(const Vect<complex_t>& x,
  *  \ingroup VectMat
  */
 inline void Real(const Vect<complex_t>& x,
-                       Vect<real_t>&    y)
+                 Vect<real_t>&          y)
 {
    y.setSize(x.size());
    for (size_t i=1; i<=x.size(); ++i)
@@ -3376,7 +3430,7 @@ inline void Real(const Vect<complex_t>& x,
  *  \ingroup VectMat
  */
 inline void Imag(const Vect<complex_t>& x,
-                       Vect<real_t>&    y)
+                 Vect<real_t>&          y)
 {
    y.setSize(x.size());
    for (size_t i=1; i<=x.size(); ++i)
@@ -3406,7 +3460,7 @@ istream& operator>>(istream&  s,
  *  \ingroup VectMat
  */
 template<class T_>
-ostream &operator<<(      ostream&  s,
+ostream &operator<<(ostream&        s,
                     const Vect<T_>& v)
 {
    s.setf(ios::scientific);

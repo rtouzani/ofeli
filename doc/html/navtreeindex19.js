@@ -1,5 +1,9 @@
 var NAVTREEINDEX19 =
 {
+"group__Solver.html#ga126b9467c758bedaec136ce49587b92f":[0,14,13],
+"group__Solver.html#ga1b441664ad13ed9ed2fde21271ae0ca5":[0,14,17],
+"group__Solver.html#ga2174acbbdde7226a6b31ecf14abcfe4e":[0,14,28],
+"group__Solver.html#ga36cba080442b5783391502f98696ec18":[0,14,15],
 "group__Solver.html#ga547b16cb61ca40e320cbfa84962c8b01":[0,14,10],
 "group__Solver.html#ga5903af9c6d4f9161ca40ec7c179d611e":[0,14,14],
 "group__Solver.html#ga5ab21c45e14e75380265991cdea49f0d":[0,14,29],
@@ -199,8 +203,8 @@ var NAVTREEINDEX19 =
 "index.html":[],
 "modules.html":[0],
 "namespaceOFELI.html":[2,0,0],
-"namespacemembers.html":[1,0,0],
 "namespacemembers.html":[1,0],
+"namespacemembers.html":[1,0,0],
 "namespacemembers_b.html":[1,0,1],
 "namespacemembers_c.html":[1,0,2],
 "namespacemembers_d.html":[1,0,3],
@@ -208,8 +212,8 @@ var NAVTREEINDEX19 =
 "namespacemembers_enum.html":[1,3],
 "namespacemembers_eval.html":[1,4],
 "namespacemembers_f.html":[1,0,5],
-"namespacemembers_func.html":[1,1],
 "namespacemembers_func.html":[1,1,0],
+"namespacemembers_func.html":[1,1],
 "namespacemembers_func_b.html":[1,1,1],
 "namespacemembers_func_c.html":[1,1,2],
 "namespacemembers_func_d.html":[1,1,3],
@@ -245,9 +249,5 @@ var NAVTREEINDEX19 =
 "namespacemembers_vars.html":[1,2],
 "namespacemembers_x.html":[1,0,21],
 "pages.html":[],
-"structOFELI_1_1Point.html":[0,15,3],
-"structOFELI_1_1Point.html#a08f079774549a44b91b3d8cc6333d510":[0,15,3,7],
-"structOFELI_1_1Point.html#a0a111944170c34f6c9322b0f8a3a3fa5":[0,15,3,1],
-"structOFELI_1_1Point.html#a28ebcfb48d1adbaee6863174eaeeec7f":[0,15,3,24],
-"structOFELI_1_1Point.html#a4333b1040efe8cd32f7c76bfc2269e0d":[0,15,3,22]
+"structOFELI_1_1Point.html":[0,15,3]
 };

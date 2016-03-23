@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
       A.Prescribe(b,bc,theStep-1);
       if (theStep==1)
          A.Factor();
-      A.Solve(b);
+      A.solve(b);
       u = b;
 
 //    Output solution

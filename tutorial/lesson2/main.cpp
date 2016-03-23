@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
       eq.Diffusion();
 
 //    Assemble element matrix and RHS
+//    For this example, assembling the RHS is useless
       eq.ElementAssembly(A);
       eq.ElementAssembly(b);
    }

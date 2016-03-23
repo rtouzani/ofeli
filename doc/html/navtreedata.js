@@ -46,9 +46,9 @@ var NAVTREEINDEX =
 "classOFELI_1_1PETScVect.html#aff8ebf2e373d6311f1bba710375fc8ed",
 "classOFELI_1_1SkMatrix.html#ad20265f18b86fdc36c0c694d34bb01db",
 "classOFELI_1_1Tabulation.html#ae734047b29c2e05ea6d75d595aedd31b",
-"classOFELI_1_1Vect.html#aa1dd275b488f2327773b736953ce4ac2",
-"group__Solver.html#ga547b16cb61ca40e320cbfa84962c8b01",
-"structOFELI_1_1Point.html#a45c9461a79a79f8d1b8048153bcb1690"
+"classOFELI_1_1Vect.html#a9bf7ea7535068b65248cb913bf4a9639",
+"group__Solver.html#ga126b9467c758bedaec136ce49587b92f",
+"structOFELI_1_1Point.html#a08f079774549a44b91b3d8cc6333d510"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
