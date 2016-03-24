@@ -363,7 +363,7 @@ void BMatrix<T_>::setSize(size_t size,
 
 template<class T_>
 void BMatrix<T_>::MultAdd(const Vect<T_>& x,
-                                Vect<T_>& y) const
+                          Vect<T_>&       y) const
 {
   for (int i=0; i<int(_size); ++i)
      for (int j=std::max(i-_ld,0); j<std::min(i+_ud+_ld,int(_size)); ++j)
@@ -372,9 +372,9 @@ void BMatrix<T_>::MultAdd(const Vect<T_>& x,
 
 
 template<class T_>
-void BMatrix<T_>::MultAdd(      T_        a,
+void BMatrix<T_>::MultAdd(T_              a,
                           const Vect<T_>& x,
-                                Vect<T_>& y) const
+                          Vect<T_>&       y) const
 {
   for (int i=0; i<int(_size); ++i)
      for (int j=std::max(i-_ld,0); j<std::min(i+_ud+_ld,int(_size)); ++j)
@@ -384,7 +384,7 @@ void BMatrix<T_>::MultAdd(      T_        a,
 
 template<class T_>
 void BMatrix<T_>::Mult(const Vect<T_>& x,
-                             Vect<T_>& y) const
+                       Vect<T_>&       y) const
 {
    y = static_cast<T_>(0);
    MultAdd(x,y);
@@ -393,29 +393,29 @@ void BMatrix<T_>::Mult(const Vect<T_>& x,
 
 template<class T_>
 void BMatrix<T_>::TMult(const Vect<T_>& x,
-                              Vect<T_>& y) const
+                        Vect<T_>&       y) const
 {
 }
 
 
 template<class T_>
-void BMatrix<T_>::Axpy(      T_           a,
+void BMatrix<T_>::Axpy(T_                 a,
                        const BMatrix<T_>& x)
 {
 }
 
 
 template<class T_>
-void BMatrix<T_>::Axpy(      T_          a,
+void BMatrix<T_>::Axpy(T_                a,
                        const Matrix<T_>* x)
 {
 }
 
 
 template<class T_>
-void BMatrix<T_>::set(      size_t  i,
-                            size_t  j,
-                      const T_&     val)
+void BMatrix<T_>::set(size_t    i,
+                      size_t    j,
+                      const T_& val)
 {
    if (_ld+int(j)-int(i)>=0 && _ld+int(j-i)<=_ud+_ld)
       _a[i-1][_ld+j-i] = val;
@@ -423,9 +423,9 @@ void BMatrix<T_>::set(      size_t  i,
 
 
 template<class T_>
-void BMatrix<T_>::add(      size_t  i,
-                            size_t  j,
-                      const T_&     val)
+void BMatrix<T_>::add(size_t    i,
+                      size_t    j,
+                      const T_& val)
 {
    if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
       _a[i-1][_ld+j-i] += val;
@@ -549,7 +549,7 @@ int BMatrix<T_>::solve(Vect<T_>& b)
 
 template<class T_>
 int BMatrix<T_>::solve(const Vect<T_>& b,
-                             Vect<T_>& x)
+                       Vect<T_>&       x)
 {
    x = b;
    return solve(x);
@@ -593,7 +593,7 @@ Vect<T_> operator*(const BMatrix<T_>& A,
  *  @return a*A
  */
 template<class T_>
-BMatrix<T_> operator*(      T_           a,
+BMatrix<T_> operator*(T_                 a,
                       const BMatrix<T_>& A)
 {
    BMatrix<T_> v(A);
@@ -608,7 +608,7 @@ BMatrix<T_> operator*(      T_           a,
  *  \brief Output matrix in output stream
  */
 template<class T_>
-ostream& operator<<(      ostream&     s,
+ostream& operator<<(ostream&           s,
                     const BMatrix<T_>& a)
 {
    s.setf(ios::right|ios::scientific);

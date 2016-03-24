@@ -55,9 +55,6 @@ MeshAdapt::MeshAdapt(Mesh& ms)
 }
 
 
-MeshAdapt::~MeshAdapt() { }
-
-
 void MeshAdapt::setDefault()
 {
    _nb_Jacobi = 3;
@@ -96,7 +93,7 @@ void MeshAdapt::setDefault()
 
 void MeshAdapt::set(Domain& dom)
 {
-    setDefault();
+   setDefault();
    _domain = &dom;
    setGeoFile("mesh.geo");
    dom.genGeo(_geo_file);
@@ -116,7 +113,7 @@ void MeshAdapt::set(Mesh& ms)
 }
 
 
-void MeshAdapt::saveMbb(      string        file,
+void MeshAdapt::saveMbb(string              file,
                         const Vect<real_t>& u)
 {
    const size_t nb_sol=1;
@@ -128,7 +125,7 @@ void MeshAdapt::saveMbb(      string        file,
    }
 }
 
-   
+
 void MeshAdapt::setSolution(const Vect<real_t>& u)
 {
    _u = &u;
@@ -409,7 +406,7 @@ void MeshAdapt::getSolution(Vect<real_t>& u,
    int k, l, n, d;
    wbbf >> k >> l >> n >> d;
    real_t uu;
-   u.setSize(n);
+   u.setMesh(getMesh());
    for (int i=0; i<n; i++) {
       for (int s=1; s<=l; s++) {
          wbbf >> uu;
@@ -421,7 +418,7 @@ void MeshAdapt::getSolution(Vect<real_t>& u,
     
 
 void MeshAdapt::Interpolate(const Vect<real_t>& u,
-                                  Vect<real_t>& v)
+                            Vect<real_t>&       v)
 {
    Triangles BTh(_background_mesh_file.c_str()),
              Th(_output_mesh_file.c_str());
@@ -456,7 +453,7 @@ void MeshAdapt::Interpolate(const Vect<real_t>& u,
 }
   
 
-ostream& operator<<(      ostream&   s,
+ostream& operator<<(ostream&         s,
                     const MeshAdapt& a)
 {
    cout << "\nSUMMARY OF ADAPTION PROCESS:" << endl;

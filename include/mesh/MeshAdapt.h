@@ -99,7 +99,7 @@ class MeshAdapt
     MeshAdapt(Domain &dom);
 
 /// \brief Destructor
-    ~MeshAdapt();
+    ~MeshAdapt() { }
    
 /// \brief Get reference to Domain instance
     Domain &getDomain() const { return *_domain; }
@@ -118,7 +118,7 @@ class MeshAdapt
 
 /// \brief Set number of Jacobi iterations for smoothing
     void setJacobi(int n) { _nb_Jacobi = n; }
-   
+
 /// \brief Set number of smoothing iterations
     void setSmooth(int n) { _nb_smooth = n; }
 
@@ -127,16 +127,16 @@ class MeshAdapt
 
 /// \brief Metric is constructed with absolute error
     void AbsoluteError() { _abs_error = true; }
-   
+
 /// \brief Metric is constructed with relative error
     void RelativeError() { _abs_error = false; }
 
 /// \brief Set error threshold for adaption
     void setError(real_t err) { _err = err; }
-   
+
 /// \brief Set minimal mesh size
     void setHMin(real_t h) { _hmin = h; }
-   
+
 /// \brief Set maximal mesh size
     void setHMax(real_t h) { _hmax = h; }
     
@@ -226,7 +226,8 @@ class MeshAdapt
  *                 vector is resized before being initialized
  *  @param [in] is [Default: <tt>1</tt>]
  */
-    void getSolution(Vect<real_t> &u, int is=1);
+    void getSolution(Vect<real_t>& u,
+                     int           is=1);
 
 /// \brief Write the file of interpolation of the solutions in <tt>bb</tt> file
     void getInterpolatedSolutionbb() { _wbb_file = "adapt.wbb"; _set_wbb = true; }

@@ -133,24 +133,24 @@ class TrMatrix : public Matrix<T_>
     void MultAdd(const Vect<T_>& x, Vect<T_>& y) const;
 
 /// \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>.
-    void MultAdd(      T_        a,
+    void MultAdd(T_              a,
                  const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /// \brief Multiply matrix by vector <tt>x</tt> and save result in <tt>y</tt>.
     void Mult(const Vect<T_>& x,
-                    Vect<T_>& y) const;
+              Vect<T_>&       y) const;
 
 /// \brief Multiply transpose of matrix by vector <tt>x</tt> and save result in <tt>y</tt>.
     void TMult(const Vect<T_>& x,
-                     Vect<T_>& y) const;
+               Vect<T_>&       y) const;
    
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_            a,
+    void Axpy(T_                  a,
               const TrMatrix<T_>& m);
    
 /** \brief Add to matrix the product of a matrix by a scalar
@@ -158,18 +158,18 @@ class TrMatrix : public Matrix<T_>
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_          a,
+    void Axpy(T_                a,
               const Matrix<T_>* m);
 
 /// \brief Assign constant <tt>val</tt> to an entry <tt>(i,j)</tt> of the matrix.
-    void set(      size_t i,
-                   size_t j,
-             const T_&    val);
+    void set(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /// \brief Add constant <tt>val</tt> value to an entry <tt>(i,j)</tt> of the matrix.
-    void add(      size_t i,
-                   size_t j,
-             const T_&    val);
+    void add(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /** \brief Operator () (Constant version).
  *  @param [in] i Row index
@@ -365,7 +365,7 @@ void TrMatrix<T_>::setSize(size_t size)
 
 template<class T_>
 void TrMatrix<T_>::MultAdd(const Vect<T_>& x,
-                                 Vect<T_>& y) const
+                           Vect<T_>&       y) const
 {
    y(1) += _a[1]*x(1) + _a[2]*x(2);
    for (size_t i=2; i<_size; ++i)
@@ -375,9 +375,9 @@ void TrMatrix<T_>::MultAdd(const Vect<T_>& x,
 
 
 template<class T_>
-void TrMatrix<T_>::MultAdd(      T_        a,
+void TrMatrix<T_>::MultAdd(T_              a,
                            const Vect<T_>& x,
-                                 Vect<T_>& y) const
+                           Vect<T_>&       y) const
 {
    y(1) += a*(_a[1]*x(1) + _a[2]*x(2));
    for (size_t i=2; i<_size; ++i)
@@ -388,7 +388,7 @@ void TrMatrix<T_>::MultAdd(      T_        a,
 
 template<class T_>
 void TrMatrix<T_>::Mult(const Vect<T_>& x,
-                              Vect<T_>& y) const
+                        Vect<T_>&       y) const
 {
    y = static_cast<T_>(0);
    MultAdd(x,y);
@@ -397,7 +397,7 @@ void TrMatrix<T_>::Mult(const Vect<T_>& x,
 
 template<class T_>
 void TrMatrix<T_>::TMult(const Vect<T_>& x,
-                               Vect<T_>& y) const
+                         Vect<T_>&       y) const
 {
    y(1) = _a[1]*x(1) + _a[3]*x(2);
    for (size_t i=2; i<_size; ++i)
@@ -407,7 +407,7 @@ void TrMatrix<T_>::TMult(const Vect<T_>& x,
 
 
 template<class T_>
-void TrMatrix<T_>::Axpy(      T_            a,
+void TrMatrix<T_>::Axpy(T_                  a,
                         const TrMatrix<T_>& m)
 {
   //  Axpy(a,m._a,_a);
@@ -416,7 +416,7 @@ void TrMatrix<T_>::Axpy(      T_            a,
 
 
 template<class T_>
-void TrMatrix<T_>::Axpy(      T_          a,
+void TrMatrix<T_>::Axpy(T_                a,
                         const Matrix<T_>* m)
 {
    for (size_t i=0; i<_length; i++)
@@ -425,9 +425,9 @@ void TrMatrix<T_>::Axpy(      T_          a,
 
 
 template<class T_>
-void TrMatrix<T_>::set(      size_t i,
-                             size_t j,
-                       const T_&    val)
+void TrMatrix<T_>::set(size_t    i,
+                       size_t    j,
+                       const T_& val)
 {
    if (i==j)
       _a[3*i-2] = val;
@@ -439,9 +439,9 @@ void TrMatrix<T_>::set(      size_t i,
 
 
 template<class T_>
-void TrMatrix<T_>::add(      size_t i,
-                             size_t j,
-                       const T_&    val)
+void TrMatrix<T_>::add(size_t    i,
+                       size_t    j,
+                       const T_& val)
 {
    if (i==j)
       _a[3*i-2] += val;
@@ -615,7 +615,7 @@ Vect<T_> operator*(const TrMatrix<T_>& A,
  *  @return a*A
  */
 template<class T_>
-TrMatrix<T_> operator*(      T_            a,
+TrMatrix<T_> operator*(T_                  a,
                        const TrMatrix<T_>& A)
 {
    TrMatrix<T_> v(A);
@@ -629,15 +629,15 @@ TrMatrix<T_> operator*(      T_            a,
  *  \brief Output matrix in output stream
  */
 template<class T_>
-ostream& operator<<(      ostream&      s,
-                    const TrMatrix<T_>& a)
+ostream& operator<<(ostream&            s,
+                    const TrMatrix<T_>& A)
 {
    s.setf(ios::right|ios::scientific);
    s << endl;
-   for (size_t i=1; i<=a.getNbRows(); i++) {
+   for (size_t i=1; i<=A.getNbRows(); i++) {
       s << "\nRow  " << setw(6) << i << endl;
-      for (size_t j=1; j<=a.getNbRows(); j++)
-         s << "  " << setprecision(8) << std::setfill(' ') << setw(18) << a(i,j);
+      for (size_t j=1; j<=A.getNbRows(); j++)
+         s << "  " << setprecision(8) << std::setfill(' ') << setw(18) << A(i,j);
       s << endl;
    }
    return s;

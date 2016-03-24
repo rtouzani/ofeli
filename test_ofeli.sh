@@ -269,10 +269,10 @@ cd ../../g2m/examples
 echo "Test mesh generation utility (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
-   ../src/g2m -d test.dom
+   ../src/g2m -d test.dom -o test.m
    /bin/rm test.m
 fi
 
 cd ../..
-echo "================================================================="
+echo "==========================================================================="
 echo "OFELI Testing completed"

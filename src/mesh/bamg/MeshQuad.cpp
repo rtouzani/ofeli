@@ -672,7 +672,7 @@ int Triangles::SplitElement(int choice)
    nbt = nbtold;
    NbOutT = NbOutTold;
 
-   delete newedges;
+   delete [] newedges;
    if (ksplitarray)
       delete [] ksplitarray;
    if (kedge)
