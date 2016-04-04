@@ -39,8 +39,8 @@ using namespace TCLAP;
 
 using namespace OFELI;
 
-void parse(int    argc,
-           char** argv,
+void parse(int     argc,
+           char**  argv,
            string& mesh_file,
            string& input,
            string& output,
@@ -109,8 +109,12 @@ int main(int argc, char **argv)
 }
 
 
-void parse(int argc, char **argv, string &mesh_file, string &input_file, 
-           string &output_file, string &output_format)
+void parse(int     argc,
+	   char**  argv,
+	   string& mesh_file,
+	   string& input_file, 
+           string& output_file,
+	   string& output_format)
 {
    const char help[]=
         "Available output formats:"

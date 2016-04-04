@@ -91,7 +91,7 @@ Mesh::Mesh()
    setNodesForDOF();
 }
 
-
+  /*
 Mesh::Mesh(const string& file,
            bool          bc,
            int           opt)
@@ -105,6 +105,35 @@ Mesh::Mesh(const string& file,
 {
    setNodesForDOF();
    get(file);
+   setDOFSupport(opt);
+   if (bc)
+      removeImposedDOF();
+   string mat = theMaterial.getName(1);
+}*/
+
+
+Mesh::Mesh(const string& file,
+           bool          bc,
+           int           opt,
+	   int           nb_dof)
+     : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(2), _nb_dof(0),
+       _nb_vertices(0), _first_dof(1), _nb_mat(0), _verb(0), _no_imposed_dof(false),
+       _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
+       _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
+       _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
+       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
+       _ed_view1(0), _ed_view2(0)
+{
+   setNodesForDOF();
+   string fs = file.substr(file.rfind(".")+1);
+   int ff = 0;
+   if (fs=="msh")
+      ff = GMSH;
+   else if (fs=="gpl")
+      ff = GNUPLOT;
+   else
+      ff = OFELI_FF;
+   get(file,ff,nb_dof);
    setDOFSupport(opt);
    if (bc)
       removeImposedDOF();
@@ -498,8 +527,57 @@ Mesh::Mesh(const Grid& g,
 }
 
 
-Mesh::Mesh(real_t Lx,
-           real_t Ly,
+Mesh::Mesh(real_t xmin,
+           real_t xmax,
+           size_t ne,
+           int    c1,
+           int    c2,
+           int    opt)
+     : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(1), _nb_dof(0), _nb_vertices(0),
+       _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
+       _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
+       _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
+       _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
+       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
+       _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
+{
+   theMaterial.set(1,"Generic");
+   setNodesForDOF();
+   real_t x=xmin, h=(xmax-xmin)/ne;
+
+   for (size_t i=0; i<=ne; i++) {
+      the_node = new Node(i+1,Point<real_t>(x));
+      the_node->setNbDOF(1);
+      _code[0] = 0;
+      if (i==0  && c1>0)
+         _code[0] = c1;
+      if (i==ne && c2>0)
+         _code[0] = c2;
+      the_node->setDOF(_first_dof,1);
+      the_node->setCode(_code);
+      Add(the_node);
+      x += h;
+   }
+
+   if (opt) {
+      for (size_t i=1; i<=ne; i++) {
+         the_element = new Element(i,LINE);
+         the_element->Add(getPtrNode(i));
+         the_element->Add(getPtrNode(i+1));
+         Add(the_element);
+      }
+   }
+
+   NumberEquations();
+   mesh_elements(*this)
+      theMaterial.check(the_element->getCode());
+}
+
+
+Mesh::Mesh(real_t xmin,
+           real_t ymin,
+           real_t xmax,
+           real_t ymax,
            size_t nx,
            size_t ny,
            int    c1,
@@ -509,34 +587,24 @@ Mesh::Mesh(real_t Lx,
            int    opt)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(2), _nb_dof(0), _nb_vertices(0),
        _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
-       _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
+       _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
        _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
        _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
 {
-   Node *nd;
-   Element *el;
    theMaterial.set(1,"Generic");
    setNodesForDOF();
-   real_t hx, hy;
    size_t n=0, ne=0;
-   Point<real_t> x;
-   if (ny==0)
-      _dim = 1;
-   x.x = 0.;
-   hx = Lx/nx;
-   if (ny==0)
-      hy = 0;
-   else
-      hy = Ly/ny;
+   Point<real_t> x(xmin,ymin);
+   real_t hx=(xmax-xmin)/nx, hy=(ymax-ymin)/ny;
 
    for (size_t i=0; i<=nx; i++) {
-      x.y = 0.;
+      x.y = ymin;
       for (size_t j=0; j<=ny; j++) {
          n++;
-         nd = new Node(n,x);
-         nd->setNbDOF(1);
+         the_node = new Node(n,x);
+         the_node->setNbDOF(1);
          _code[0] = 0;
          if (j==0  && c1>0)
             _code[0] = c1;
@@ -546,93 +614,92 @@ Mesh::Mesh(real_t Lx,
             _code[0] = c4;
          if (i==nx && c2>0)
             _code[0] = c2;
-         nd->setDOF(_first_dof,1);
-         nd->setCode(_code);
-         Add(nd);
+         the_node->setDOF(_first_dof,1);
+         the_node->setCode(_code);
+         Add(the_node);
          x.y += hy;
          if (i>0 && j>0 && opt) {
             try {
                if (opt==QUADRILATERAL) {
                   ne++;
-                  el = new Element(ne,QUADRILATERAL,1);
-                  el->Add(_nodes[n-ny-3]);
-                  el->Add(_nodes[n-2]);
-                  el->Add(_nodes[n-1]);
-                  el->Add(_nodes[n-ny-2]);
-                  Add(el);
+                  the_element = new Element(ne,QUADRILATERAL,1);
+                  the_element->Add(_nodes[n-ny-3]);
+                  the_element->Add(_nodes[n-2]);
+                  the_element->Add(_nodes[n-1]);
+                  the_element->Add(_nodes[n-ny-2]);
+                  Add(the_element);
                }
                else if (opt==TRIANGLE) {
                   ne++;
-                  el = new Element(ne,TRIANGLE,1);
-                  el->Add(_nodes[n-ny-3]);
-                  el->Add(_nodes[n-2]);
-                  el->Add(_nodes[n-1]);
-                  Add(el);
+                  the_element = new Element(ne,TRIANGLE,1);
+                  the_element->Add(_nodes[n-ny-3]);
+                  the_element->Add(_nodes[n-2]);
+                  the_element->Add(_nodes[n-1]);
+                  Add(the_element);
                   ne++;
-                  el = new Element(ne,TRIANGLE,1);
-                  el->Add(_nodes[n-1]);
-                  el->Add(_nodes[n-ny-2]);
-                  el->Add(_nodes[n-ny-3]);
-                  Add(el);
+                  the_element = new Element(ne,TRIANGLE,1);
+                  the_element->Add(_nodes[n-1]);
+                  the_element->Add(_nodes[n-ny-2]);
+                  the_element->Add(_nodes[n-ny-3]);
+                  Add(the_element);
                }
                else
-                  THROW_RT("Mesh(real_t,real_t,size_t,size_t,int,int,int,int,int): Illegal option "+itos(opt));
+                  THROW_RT("Mesh(real_t,real_t,real_t,real_t,size_t,size_t,int,int,int,int,int): Illegal option "+itos(opt));
             }
             CATCH_EXIT("Mesh");
          }
       }
       x.x += hx;
-      _is_structured = true;
    }
 
    if (c1<0 || c2<0 || c3<0 || c4<0) {
       size_t is=1, n=1;
       for (size_t j=1; j<=ny; j++) {
-         Side *sd = new Side(is++,LINE);
-         sd->Add(getPtrNode(n));
-         sd->Add(getPtrNode(n+1));
+         the_side = new Side(is++,LINE);
+         the_side->Add(getPtrNode(n));
+         the_side->Add(getPtrNode(n+1));
          n++;
-         sd->setNbDOF(1);
+         the_side->setNbDOF(1);
          if (c4<0) {
-            sd->setCode(1,-c4);
-            Add(sd);
-	 }
+            the_side->setCode(1,-c4);
+            Add(the_side);
+         }
       }
       n = nx*(ny+1) + 1;
       for (size_t j=1; j<=ny; j++) {
-         Side *sd = new Side(is++,LINE);
-         sd->Add(getPtrNode(n));
-         sd->Add(getPtrNode(n+1));
+         the_side = new Side(is++,LINE);
+         the_side->Add(getPtrNode(n));
+         the_side->Add(getPtrNode(n+1));
          n++;
-         sd->setNbDOF(1);
+         the_side->setNbDOF(1);
          if (c2<0) {
-            sd->setCode(1,-c2);
-            Add(sd);
-	 }
+            the_side->setCode(1,-c2);
+            Add(the_side);
+         }
       }
       n = 1;
       for (size_t i=1; i<=nx; i++) {
-         Side *sd = new Side(is++,LINE);
-         sd->Add(getPtrNode(n));
-         sd->Add(getPtrNode(n+ny+1));
+         the_side = new Side(is++,LINE);
+         the_side->Add(getPtrNode(n));
+         the_side->Add(getPtrNode(n+ny+1));
          n += ny + 1;
-         sd->setNbDOF(1);
+         the_side->setNbDOF(1);
          if (c1<0) {
-            sd->setCode(1,-c1);
-            Add(sd);
-	 }
+            the_side->setCode(1,-c1);
+            Add(the_side);
+         }
       }
       n = ny + 1;
       for (size_t i=1; i<=nx; i++) {
-         Side *sd = new Side(is++,LINE);
-         sd->Add(getPtrNode(n));
-         sd->Add(getPtrNode(n+ny+1));
+         the_side = new Side(is++,LINE);
+         the_side->Add(getPtrNode(n));
+         the_side->Add(getPtrNode(n+ny+1));
          n += ny + 1;
-         sd->setNbDOF(1);
+         the_side->setNbDOF(1);
          if (c3<0) {
-            sd->setCode(1,-c3);
-            Add(sd);
-	 }
+            the_side->setCode(1,-c3);
+            Add(the_side);
+         }
       }
    }
 
@@ -2552,8 +2619,8 @@ void Mesh::get(const string &mesh_file)
 
 
 void Mesh::get(const string& mesh_file,
-                     int     ff, 
-                     int     nb_dof)
+               int           ff, 
+               int           nb_dof)
 {
    try {
       if (ff==OFELI_FF)

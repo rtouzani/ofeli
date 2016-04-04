@@ -5572,146 +5572,6 @@ if test "$ac_cv_decl_exit_success_and_failure" = yes ; then
 
 fi ;
 
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for IEEE arithmetic interface type" >&5
-$as_echo_n "checking for IEEE arithmetic interface type... " >&6; }
-case "$host" in
-    sparc-*-linux*)
-	$as_echo "#define HAVE_SPARCLINUX_IEEE_INTERFACE 1" >>confdefs.h
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: sparclinux" >&5
-$as_echo "sparclinux" >&6; }
-        ;;
-    m68k-*-linux*)
-	$as_echo "#define HAVE_M68KLINUX_IEEE_INTERFACE 1" >>confdefs.h
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: m68klinux" >&5
-$as_echo "m68klinux" >&6; }
-        ;;
-    powerpc-*-linux*)
-	$as_echo "#define HAVE_PPCLINUX_IEEE_INTERFACE 1" >>confdefs.h
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ppclinux" >&5
-$as_echo "ppclinux" >&6; }
-        ;;
-    *86-*-linux*)
-	$as_echo "#define HAVE_X86LINUX_IEEE_INTERFACE 1" >>confdefs.h
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: x86linux" >&5
-$as_echo "x86linux" >&6; }
-        ;;
-    *-*-sunos4*)
-        $as_echo "#define HAVE_SUNOS4_IEEE_INTERFACE 1" >>confdefs.h
-
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: sunos4" >&5
-$as_echo "sunos4" >&6; }
-        ;;
-    *-*-solaris*)
-        $as_echo "#define HAVE_SOLARIS_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: solaris" >&5
-$as_echo "solaris" >&6; }
-        ;;
-    *-*-hpux11*)
-        $as_echo "#define HAVE_HPUX11_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: hpux11" >&5
-$as_echo "hpux11" >&6; }
-        ;;
-    *-*-hpux*)
-        $as_echo "#define HAVE_HPUX_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: hpux" >&5
-$as_echo "hpux" >&6; }
-        ;;
-    *-*-osf*)
-        $as_echo "#define HAVE_TRU64_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: osf/tru64" >&5
-$as_echo "osf/tru64" >&6; }
-	need_fp_rnd_rn=yes
-        ;;
-    *-*-aix*)
-        $as_echo "#define HAVE_AIX_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: aix" >&5
-$as_echo "aix" >&6; }
-        ;;
-    *-*-irix*)
-        $as_echo "#define HAVE_IRIX_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: irix" >&5
-$as_echo "irix" >&6; }
-        ;;
-    *-*-*darwin*)
-        $as_echo "#define HAVE_DARWIN_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: darwin" >&5
-$as_echo "darwin" >&6; }
-        ;;
-    *-*-*netbsd*)
-        $as_echo "#define HAVE_NETBSD_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: netbsd" >&5
-$as_echo "netbsd" >&6; }
-        ;;
-    *-*-*openbsd*)
-        $as_echo "#define HAVE_OPENBSD_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: openbsd" >&5
-$as_echo "openbsd" >&6; }
-        ;;
-    *-*-*bsd*)
-        $as_echo "#define HAVE_FREEBSD_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: freebsd" >&5
-$as_echo "freebsd" >&6; }
-        ;;
-    *-*-os2*)
-        $as_echo "#define HAVE_OS2EMX_IEEE_INTERFACE 1" >>confdefs.h
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: os2emx" >&5
-$as_echo "os2emx" >&6; }
-        ;;
-    *)
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: unknown" >&5
-$as_echo "unknown" >&6; }
-        ;;
-esac
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for cpu with extended floating point registers" >&5
-$as_echo_n "checking for cpu with extended floating point registers... " >&6; }
-case "$host" in
-    *sparc*-*-*)
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: sparc, no" >&5
-$as_echo "sparc, no" >&6; }
-        ;;
-    *powerpc*-*-*)
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: powerpc, no" >&5
-$as_echo "powerpc, no" >&6; }
-        ;;
-    *hppa*-*-*)
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: hppa, no" >&5
-$as_echo "hppa, no" >&6; }
-        ;;
-    *alpha*-*-*)
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: alpha, no" >&5
-$as_echo "alpha, no" >&6; }
-        ;;
-    *68k*-*-*)
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: 68k, yes" >&5
-$as_echo "68k, yes" >&6; }
-        ;;
-    *86*-*-*)
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: x86, yes" >&5
-$as_echo "x86, yes" >&6; }
-        ;;
-    *)
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: unknown, assuming yes" >&5
-$as_echo "unknown, assuming yes" >&6; }
-        ;;
-esac
-
 if test "${GXX}" = "yes" ; then
 CPPFLAGS="${CPPFLAGS} "
 fi
@@ -5876,6 +5736,12 @@ OFELI_CFLAGS="$OFELI_CFLAGS $CPPFLAGS"
 if test "x$with_petsc" = "xyes" ; then
 OFELI_LIBS="$OFELI_LIBS $PETSC_LIBS $MPI_LIBS $OFELI_LDFLAGS $PETSC_LDFLAGS $MPI_LDFLAGS"
 fi
+
+# List of executables
+util_exes="g2m cmesh cfield vmesh "
+tutorial_exes="lesson1 lesson2 lesson3 lesson4 lesson5 "
+demo_exes="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz ec2d1 ls_demo1 ls_demo2 "
+demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2"
 
 ac_config_files="$ac_config_files Makefile include/Makefile include/equations/Makefile include/equations/cl/Makefile include/equations/electromagnetics/Makefile include/equations/fluid/Makefile include/equations/interface/Makefile include/equations/laplace/Makefile include/equations/solid/Makefile include/equations/therm/Makefile include/io/Makefile include/io/fparser/Makefile include/io/tclap/Makefile include/io/xmlsp/Makefile include/linear_algebra/Makefile include/linear_algebra/petsc/Makefile include/mesh/Makefile include/mesh/bamg/Makefile include/mesh/metis/Makefile include/post/Makefile include/shape_functions/Makefile include/solvers/Makefile include/util/Makefile src/Makefile src/equations/Makefile src/equations/cl/Makefile src/equations/electromagnetics/Makefile src/equations/fluid/Makefile src/equations/interface/Makefile src/equations/laplace/Makefile src/equations/solid/Makefile src/equations/therm/Makefile src/io/Makefile src/io/fparser/Makefile src/io/xmlsp/Makefile src/linear_algebra/Makefile src/mesh/Makefile src/mesh/bamg/Makefile src/mesh/metis/Makefile src/post/Makefile src/shape_functions/Makefile src/solvers/Makefile src/util/Makefile material/Makefile util/Makefile util/g2m/Makefile util/g2m/src/Makefile util/g2m/examples/Makefile util/conv/Makefile util/conv/src/Makefile util/conv/examples/Makefile util/conv/matlab/Makefile util/vmesh/Makefile tutorial/Makefile tutorial/lesson1/Makefile tutorial/lesson2/Makefile tutorial/lesson3/Makefile tutorial/lesson4/Makefile tutorial/lesson5/Makefile demos/Makefile demos/thermal/Makefile demos/thermal/std3/Makefile demos/thermal/stdc2/Makefile demos/thermal/ttd2/Makefile demos/solid/Makefile demos/solid/beam/Makefile demos/solid/truss/Makefile demos/solid/contact/Makefile demos/solid/lelas2d/Makefile demos/solid/lelas3d/Makefile demos/fluid/Makefile demos/fluid/tiff2/Makefile demos/fluid/tins2/Makefile demos/fluid/lh2d/Makefile demos/fluid/euler-2d/Makefile demos/electromagnetics/Makefile demos/electromagnetics/Helmholtz/Makefile demos/electromagnetics/EddyCurrent2d-1/Makefile demos/solvers/Makefile demos/solvers/LS/Makefile demos/solvers/ODE/Makefile demos/solvers/EIGEN/Makefile doc/Makefile doc/html/Makefile doc/demos/Makefile doc/im/Makefile doc/css/Makefile doc/tutorial/Makefile doc/presentations/Makefile tools/Makefile tools/CodeBlocks/Makefile tools/msvcpp/Makefile tools/msvcpp/beam/Makefile tools/msvcpp/cfield/Makefile tools/msvcpp/cmesh/Makefile tools/msvcpp/contact/Makefile tools/msvcpp/ec2d1/Makefile tools/msvcpp/eigen_demo1/Makefile tools/msvcpp/eigen_demo2/Makefile tools/msvcpp/euler_2d/Makefile tools/msvcpp/g2m/Makefile tools/msvcpp/helmholtz/Makefile tools/msvcpp/lelas2d/Makefile tools/msvcpp/lelas3d/Makefile tools/msvcpp/lesson1/Makefile tools/msvcpp/lesson2/Makefile tools/msvcpp/lesson3/Makefile tools/msvcpp/lesson4/Makefile tools/msvcpp/lesson5/Makefile tools/msvcpp/lh2d/Makefile tools/msvcpp/ofeli/Makefile tools/msvcpp/std3/Makefile tools/msvcpp/stdc2/Makefile tools/msvcpp/tiff2/Makefile tools/msvcpp/tins2/Makefile tools/msvcpp/ttd2/Makefile tools/msvcpp/truss/Makefile tools/msvcpp/ls_demo1/Makefile tools/msvcpp/ls_demo2/Makefile tools/msvcpp/ode_demo1/Makefile tools/msvcpp/ode_demo2/Makefile tools/msvcpp/ode_demo3/Makefile tools/msvcpp/ode_demo4/Makefile tools/msvcpp/ts_demo1/Makefile tools/msvcpp/ts_demo2/Makefile ofeli-config test_ofeli.sh"
 
@@ -7383,6 +7249,16 @@ $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
 
 
+echo "********************************************************************"
+echo "OFELI is configured for"
+echo "  - OS                  : ${UNAME} on ${HOSTNAME}"
+echo "  - C++ compiler        : ${CXX}"
+echo "  - Exe linker          : ${CXX}"
+echo "  - C++ flags           : ${CPPFLAGS}"
+echo "  - Utility executables : ${util_exes}"
+echo "  - Tutorial executables: ${tutorial_exes}"
+echo "  - Demo executables    : ${demo_exes}"
+echo "********************************************************************"
 echo ""
 echo "Configure finished!"
 echo "            Type: 'make' to compile OFELI, utilities and examples."

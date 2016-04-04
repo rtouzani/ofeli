@@ -1,5 +1,24 @@
+dnl ------------------------------------------------------------------------------
+dnl OFELI - Copyright (C) 2008-2016 Rachid Touzani
+
+dnl This file is part of OFELI.
+
+dnl OFELI is free software: you can redistribute it and/or modify
+dnl it under the terms of the GNU Lesser General Public License as published by
+dnl the Free Software Foundation, either version 3 of the License, or
+dnl (at your option) any later version.
+
+dnl OFELI is distributed in the hope that it will be useful,
+dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl GNU Lesser General Public License for more details.
+
+dnl You should have received a copy of the GNU Lesser General Public License
+dnl along with OFELI. If not, see <http://www.gnu.org/licenses/>.
+dnl ------------------------------------------------------------------------------
 dnl Configure script for the OFELI Library
 dnl Process this file with autoconf to produce a configure script.
+dnl ------------------------------------------------------------------------------
 
 dnl Disable caching.
 define([AC_CACHE_LOAD], )dnl
@@ -75,6 +94,11 @@ AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_CXX
 AC_PROG_INSTALL
+
+dnl Get the operating system and machine names
+UNAME=`uname`
+HOSTNAME=`hostname`
+
 
 # AC_PROG_LN_S
 AC_CHECK_TOOL(RANLIB, ranlib, :)
@@ -184,104 +208,6 @@ if test "$ac_cv_decl_exit_success_and_failure" = yes ; then
   AC_DEFINE(HAVE_EXIT_SUCCESS_AND_FAILURE)
 fi ;
 
-
-AC_MSG_CHECKING(for IEEE arithmetic interface type)
-case "$host" in
-    sparc-*-linux*)
-	AC_DEFINE(HAVE_SPARCLINUX_IEEE_INTERFACE)
-	AC_MSG_RESULT([sparclinux])
-        ;;
-    m68k-*-linux*)
-	AC_DEFINE(HAVE_M68KLINUX_IEEE_INTERFACE)
-	AC_MSG_RESULT([m68klinux])
-        ;;
-    powerpc-*-linux*)
-	AC_DEFINE(HAVE_PPCLINUX_IEEE_INTERFACE)
-	AC_MSG_RESULT([ppclinux])
-        ;;
-    *86-*-linux*)
-	AC_DEFINE(HAVE_X86LINUX_IEEE_INTERFACE)
-	AC_MSG_RESULT([x86linux])
-        ;;
-    *-*-sunos4*)
-        AC_DEFINE(HAVE_SUNOS4_IEEE_INTERFACE)
-	AC_MSG_RESULT([sunos4])
-        ;;
-    *-*-solaris*)
-        AC_DEFINE(HAVE_SOLARIS_IEEE_INTERFACE)
-        AC_MSG_RESULT([solaris])
-        ;;
-    *-*-hpux11*)
-        AC_DEFINE(HAVE_HPUX11_IEEE_INTERFACE)
-        AC_MSG_RESULT([hpux11])
-        ;;
-    *-*-hpux*)
-        AC_DEFINE(HAVE_HPUX_IEEE_INTERFACE)
-        AC_MSG_RESULT([hpux])
-        ;;
-    *-*-osf*)
-        AC_DEFINE(HAVE_TRU64_IEEE_INTERFACE)
-        AC_MSG_RESULT([osf/tru64])
-	need_fp_rnd_rn=yes
-        ;;
-    *-*-aix*)
-        AC_DEFINE(HAVE_AIX_IEEE_INTERFACE)
-        AC_MSG_RESULT([aix])
-        ;;
-    *-*-irix*)
-        AC_DEFINE(HAVE_IRIX_IEEE_INTERFACE)
-        AC_MSG_RESULT([irix])
-        ;;
-    *-*-*darwin*)
-        AC_DEFINE(HAVE_DARWIN_IEEE_INTERFACE)
-        AC_MSG_RESULT([darwin])
-        ;;
-    *-*-*netbsd*)
-        AC_DEFINE(HAVE_NETBSD_IEEE_INTERFACE)
-        AC_MSG_RESULT([netbsd])
-        ;;
-    *-*-*openbsd*)
-        AC_DEFINE(HAVE_OPENBSD_IEEE_INTERFACE)
-        AC_MSG_RESULT([openbsd])
-        ;;
-    *-*-*bsd*)
-        AC_DEFINE(HAVE_FREEBSD_IEEE_INTERFACE)
-        AC_MSG_RESULT([freebsd])
-        ;;
-    *-*-os2*)
-        AC_DEFINE(HAVE_OS2EMX_IEEE_INTERFACE)
-        AC_MSG_RESULT([os2emx])
-        ;;
-    *)
-        AC_MSG_RESULT([unknown])
-        ;;
-esac
-
-AC_MSG_CHECKING(for cpu with extended floating point registers)
-case "$host" in
-    *sparc*-*-*)
-	AC_MSG_RESULT([sparc, no])
-        ;;
-    *powerpc*-*-*)
-	AC_MSG_RESULT([powerpc, no])
-        ;;
-    *hppa*-*-*)
-	AC_MSG_RESULT([hppa, no])
-        ;;
-    *alpha*-*-*)
-	AC_MSG_RESULT([alpha, no])
-        ;;
-    *68k*-*-*)
-	AC_MSG_RESULT([68k, yes])
-        ;;
-    *86*-*-*)
-	AC_MSG_RESULT([x86, yes])
-        ;;
-    *)
-	AC_MSG_RESULT([unknown, assuming yes])
-        ;;
-esac
-
 dnl Add copious amounts of debugging with gcc, egcs, etc
 if test "${GXX}" = "yes" ; then
 CPPFLAGS="${CPPFLAGS} "
@@ -385,6 +311,12 @@ OFELI_CFLAGS="$OFELI_CFLAGS $CPPFLAGS"
 if test "x$with_petsc" = "xyes" ; then
 OFELI_LIBS="$OFELI_LIBS $PETSC_LIBS $MPI_LIBS $OFELI_LDFLAGS $PETSC_LDFLAGS $MPI_LDFLAGS"
 fi
+
+# List of executables
+util_exes="g2m cmesh cfield vmesh "
+tutorial_exes="lesson1 lesson2 lesson3 lesson4 lesson5 "
+demo_exes="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz ec2d1 ls_demo1 ls_demo2 "
+demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2"
 
 AC_OUTPUT(
    Makefile
@@ -516,6 +448,16 @@ AC_OUTPUT(
    test_ofeli.sh
 )
 
+echo "********************************************************************"
+echo "OFELI is configured for"
+echo "  - OS                  : ${UNAME} on ${HOSTNAME}"
+echo "  - C++ compiler        : ${CXX}"
+echo "  - Exe linker          : ${CXX}"
+echo "  - C++ flags           : ${CPPFLAGS}"
+echo "  - Utility executables : ${util_exes}"
+echo "  - Tutorial executables: ${tutorial_exes}"
+echo "  - Demo executables    : ${demo_exes}"
+echo "********************************************************************"
 echo ""
 echo "Configure finished!"
 echo "            Type: 'make' to compile OFELI, utilities and examples."

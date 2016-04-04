@@ -118,14 +118,18 @@ class Mesh
     Mesh();
 
 /** \brief Constructor using a mesh file
- *  @param [in] file File containing mesh data
+ *  @param [in] file File containing mesh data. The extension of the file yields the file format:
+ *              The extension .m implies OFELI file format and .msh implies GMSH msh file.
  *  @param [in] bc Flag to remove (true) or not (false) imposed Degrees of Freedom [default: false]
  *  @param [in] opt Type of DOF support: To choose among enumerated values <tt>NODE_DOF</tt>, <tt>SIDE_DOF</tt> or <tt>ELEMENT_DOF</tt>.\n
  *  Say if degrees of freedom (unknowns) are supported by nodes, sides or elements.
+ *  @param [in] nb_dof Number of degrees of freedom per node [Default: <tt>1</tt>]. This value is meaningful only
+ *  if other format than OFELI's one is used. Otherwise, the information is contained in the OFELI file format.
  */
     Mesh(const string& file,
-               bool    bc=false,
-               int     opt=NODE_DOF);
+         bool          bc=false,
+	 int           opt=NODE_DOF,
+	 int           nb_dof=1);
 
 /** \brief Constructor for a 1-D mesh.
  *  The domain is the interval [0,L]
@@ -163,10 +167,29 @@ class Mesh
                int   shape,
                int   opt);
 
-/** \brief Constructor for a uniform finite difference grid.
- *  \details The domain is the rectangle (0,Lx)x(0,Ly)
- *  @param [in] xL Length in the x-direction
- *  @param [in] yL Length in the y-direction
+/** \brief Constructor for a uniform 1-D finite element mesh.
+ *  \details The domain is the line (xmin,xmax)
+ *  @param [in] xmin Minimal coordinate
+ *  @param [in] xmax Maximal coordinate
+ *  @param [in] ne Number of elements
+ *  @param [in] c1 Code for the first node (x=xmin)
+ *  @param [in] c2 Code for the last node (x=xmax)
+ *  @param [in] opt Flag to generate elements as well (if not zero) [Default: 0].
+ *  @remark The option opt can be set to 0 if the user intends to use finite differences.
+ */
+    Mesh(real_t xmin,
+         real_t xmax,
+         size_t ne,
+         int    c1,
+         int    c2,
+         int    opt=0);
+
+/** \brief Constructor for a uniform 2-D structured finite element mesh.
+ *  \details The domain is the rectangle (xmin,xmax)x(ymin,ymax)
+ *  @param [in] xmin Minimal x-coordinate
+ *  @param [in] xmax Maximal x-coordinate
+ *  @param [in] ymin Minimal y-coordinate
+ *  @param [in] ymax Maximal y-coordinate
  *  @param [in] nx Number of subintervals on the x-axis
  *  @param [in] ny Number of subintervals on the y-axis
  *  @param [in] c1 Code for nodes generated on the line y=0
@@ -176,9 +199,12 @@ class Mesh
  *  @param [in] opt Flag to generate elements as well (if not zero) [Default: 0]. 
  *  If the flag is not 0, it can take one of the enumerated values: TRIANGLE or QUADRILATERAL, 
  *  with obvious meaning.
+ *  @remark The option opt can be set to 0 if the user intends to use finite differences.
  */
-    Mesh(real_t xL,
-         real_t yL,
+    Mesh(real_t xmin,
+         real_t xmax,
+         real_t ymin,
+         real_t ymax,
          size_t nx,
          size_t ny,
          int    c1,

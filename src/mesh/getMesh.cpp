@@ -83,7 +83,6 @@ void getMesh(string             file,
 
       case EASYMESH:    getEasymesh(file,mesh,nb_dof);
                         break;
-
       case GAMBIT:      getGambit(file,mesh,nb_dof);
                         break;
 
@@ -308,7 +307,7 @@ void getEasymesh(string file,
    nf >> nb_nodes;
    for (i=0; i<nb_nodes; i++) {
       nf >> cc >> xx >> yy >> mark;
-      x.x = xx; x.y = yy; x.z = 0;
+      x = Point<real_t>(xx,yy);
       if (mark == 999)
          mark = 0;
       nd = new Node(i+1,x);
@@ -354,13 +353,11 @@ void getGambit(string file,
                Mesh&  mesh,
                size_t nb_dof)
 {
-   size_t      i, nb_nodes, nb_elements;
-   int         mark;
-   size_t      n1, n2, n3, n4, n5, dim, first_dof, nb_el_gr;
-   real_t      xx;
-   Point<real_t> x;
-   char        line[100], str[20];
-   int         code[MAX_NBDOF_NODE];
+   int mark;
+   size_t first_dof;
+   real_t xx;
+   string line;
+   int code[MAX_NBDOF_NODE];
    string sh[10];
    sh[LINE] = "line";
    sh[TRIANGLE] = "tria";
@@ -369,92 +366,81 @@ void getGambit(string file,
    sh[HEXAHEDRON] = "hexa";
    sh[PENTAHEDRON] = "penta";
 
-   ifstream mf;
-   mf.open(file.c_str());
+   ifstream mf(file.c_str());
    try {
       if (mf.fail())
          THROW_RT(" File " + file + " not found.");
    }
-   CATCH("getGambit(...):");
+   CATCH_EXIT("getGambit(...):");
 
-   mf.getline(line,99);
-   mf.getline(line,99);
-   mf.getline(line,99);
-   mf.getline(line,99);
-   mf.getline(line,99);
-   mf.getline(line,99);
-   mf.getline(line,99);
-   istringstream sl(line);
-   sl >> nb_nodes >> nb_elements >> nb_el_gr >> n2 >> dim >> n3;
+   for (size_t i=0; i<6; i++)
+      std::getline(mf,line);
+   int nb_nodes, nb_elements, nb_el_gr, dim, n1, n2, n3, n4, n5;
+   std::getline(mf,line);
+   istringstream s(line);
+   s >> nb_nodes >> nb_elements >> nb_el_gr >> n2 >> dim >> n3;
    mesh.setDim(dim);
-   Node *nd;
-   mf.getline(line,99);
-   mf.getline(line,99);
+   std::getline(mf,line);
+   std::getline(mf,line);
 
 // Nodes
-   for (i=0; i<nb_nodes; i++) {
-      mf.getline(line,99);
-      istringstream ss(line);
-      x.x = x.y = 0;
-      ss >> n1 >> xx;
-      x[0] = xx;
+   for (size_t i=0; i<nb_nodes; i++) {
+      Point<real_t> x;
+      std::getline(mf,line);
+      istringstream s(line);
+      s >> n1 >> xx;
+      x.x = xx;
       if (n3>1) {
-         ss >> xx;
-         x.x = xx;
-      }
-      if (n3>2) {
-         ss >> xx;
+         s >> xx;
          x.y = xx;
       }
-      nd = new Node(n1,x);
-      nd->setNbDOF(nb_dof);
-      mesh.Add(nd);
+      if (n3>2) {
+         s >> xx;
+         x.z = xx;
+      }
+      theNode = new Node(n1,x);
+      TheNode.setNbDOF(nb_dof);
+      mesh.Add(theNode);
    }
-   mf.getline(line,99);
+   std::getline(mf,line);
    cout << "Number of nodes: " << mesh.getNbNodes() << endl;
    cout << "Number of dof per node: " << nb_dof << endl;
 
 // Elements
-   mf.getline(line,99);
+   std::getline(mf,line);
    int shape=0;
-   Element *el;
-   for (i=0; i<nb_elements; i++) {
-      mf.getline(line,99);
-      istringstream ss(line);
-      ss >> n1 >> n2 >> n3;
-      if (dim==1 && n2==2 && n3==2)
+   for (size_t i=0; i<nb_elements; i++) {
+      mf >> n1 >> n2 >> n3;
+      if (n2==1)
          shape = LINE;
-      if (dim==2 && n2==3 && n3==3)
-         shape = TRIANGLE;
-      else if (dim==2 && n2==2 && n3==4)
+      else if (n2==2)
          shape = QUADRILATERAL;
-      else if (dim==3 && n2==6 && n3==4)
-         shape = TETRAHEDRON;
-      else if (dim==3 && n2==8 && n3==6)
+      else if (n2==3)
+         shape = TRIANGLE;
+      else if (n2==4)
          shape = HEXAHEDRON;
-      el = new Element(n1,shape);
+      else if (n2==5)
+         shape = PENTAHEDRON;
+      else if (n2==6)
+         shape = TETRAHEDRON;
+      theElement = new Element(n1,shape);
       for (size_t j=1; j<=n3; j++) {
-         ss >> n4;
-         el->Add(mesh[n4]);
+         mf >> n4;
+         TheElement.Add(mesh[n4]);
       }
-      mesh.Add(el);
+      mesh.Add(theElement);
    }
-   mf.getline(line,99);
+   std::getline(mf,line);
    cout << "Number of elements: " << mesh.getNbElements() << endl;
 
 // Material properties
+   string str;
    size_t mc = 0;
-   for (i=0; i<nb_el_gr; i++) {
-      mf.getline(line,99);
-      mf.getline(line,99);
-      istringstream ss(line);
-      ss >> str >> n1;
-      ss >> str >> n2;
-      ss >> str >> n3;
-      ss >> str >> n4;
-      mf.getline(line,99);
-      istringstream sl(line);
-      sl >> str;
+   for (size_t i=0; i<nb_el_gr; i++) {
+      std::getline(mf,line);
+      s >> str >> n1; s >> str >> n2;
+      mf >> str >> n3; mf >> str >> n4;
+      mf >> str;
       ++mc;
       mf >> n4;
       for (size_t j=1; j<=n2; j++) {
@@ -462,40 +448,35 @@ void getGambit(string file,
          mesh(n1)->setCode(mc);
       }
       cout << "Material '" << str << "' is assigned the material code " << mc << endl;
-      mf.getline(line,99);
-      mf.getline(line,99);
+      std::getline(mf,line);
+      std::getline(mf,line);
    }
    cout << "Number of materials: " << mc << endl;
 
 // Boundary conditions
    size_t nn1=0, nn2=0, nn3=0, nn4=0;
    size_t sd_label = 0;
-   Side *sd=NULL;
-   while (mf.getline(line,99)) {
-     mf.getline(line,99);
-     istringstream ss(line);
-     ss >> mark >> n1 >> n2 >> n3 >> n4;
+   while (std::getline(mf,line)) {
+     mf >> mark >> n1 >> n2 >> n3 >> n4;
      DOFCode(mark,nb_dof,code);
      first_dof = 1;
-     for (i=1; i<=n2; i++) {
-        mf.getline(line,99);
-        istringstream sl(line);
-        sl >> n5;
+     for (size_t i=1; i<=n2; i++) {
+        mf >> n5;
         if (n1 == 1) {
-           sl >> n3 >> n4;
-           el = mesh(n5);
+           mf >> n3 >> n4;
+           theElement = mesh(n5);
            try {
-              if (el->getShape()==TRIANGLE && el->getNbNodes()==3) {
-                 sd = new Side(++sd_label,LINE);
-                 sd->Add(mesh[(*el)(n4    )->n()]);
-                 sd->Add(mesh[(*el)(n4%3+1)->n()]);
+              if (TheElement.getShape()==TRIANGLE && TheElement.getNbNodes()==3) {
+                 theSide = new Side(++sd_label,LINE);
+                 TheSide.Add(mesh[TheElement(n4    )->n()]);
+                 TheSide.Add(mesh[TheElement(n4%3+1)->n()]);
               }
-              else if (el->getShape()==QUADRILATERAL && el->getNbNodes()==4) {
-                 sd = new Side(++sd_label,LINE);
-                 sd->Add(mesh[(*el)(n4    )->n()]);
-                 sd->Add(mesh[(*el)(n4%4+1)->n()]);
+              else if (TheElement.getShape()==QUADRILATERAL && TheElement.getNbNodes()==4) {
+                 theSide = new Side(++sd_label,LINE);
+                 theSide->Add(mesh[TheElement(n4    )->n()]);
+                 theSide->Add(mesh[TheElement(n4%4+1)->n()]);
               }
-              else if (el->getShape()==TETRAHEDRON && el->getNbNodes()==4) {
+              else if (TheElement.getShape()==TETRAHEDRON && TheElement.getNbNodes()==4) {
                  if (n4==1)
                     nn1 = 2, nn2 = 1, nn3 = 3;
                  else if (n4==2)
@@ -504,12 +485,12 @@ void getGambit(string file,
                     nn1 = 2, nn2 = 3, nn3 = 4;
                  else if (n4==4)
                     nn1 = 3, nn2 = 1, nn3 = 4;
-                 sd = new Side(++sd_label,TRIANGLE);
-                 sd->Add(mesh[(*el)(nn1)->n()]);
-                 sd->Add(mesh[(*el)(nn2)->n()]);
-                 sd->Add(mesh[(*el)(nn3)->n()]);
+                 theSide = new Side(++sd_label,TRIANGLE);
+                 TheSide.Add(mesh[TheElement(nn1)->n()]);
+                 TheSide.Add(mesh[TheElement(nn2)->n()]);
+                 TheSide.Add(mesh[TheElement(nn3)->n()]);
               }
-              else if (el->getShape()==HEXAHEDRON && el->getNbNodes()==8) {
+              else if (TheElement.getShape()==HEXAHEDRON && TheElement.getNbNodes()==8) {
                  if (n4==1)
                     nn1=1, nn2=2, nn3=6, nn4=5;
                  else if (n4==2)
@@ -522,29 +503,29 @@ void getGambit(string file,
                     nn1=2, nn2=1, nn3=3, nn4=4;
                  else if (n4==6)
                     nn1=5, nn2=6, nn3=8, nn4=7;
-                 sd = new Side(++sd_label,QUADRILATERAL);
-                 sd->Add(mesh[(*el)(nn1)->n()]);
-                 sd->Add(mesh[(*el)(nn2)->n()]);
-                 sd->Add(mesh[(*el)(nn3)->n()]);
-                 sd->Add(mesh[(*el)(nn4)->n()]);
+                 theSide = new Side(++sd_label,QUADRILATERAL);
+                 TheSide.Add(mesh[TheElement(nn1)->n()]);
+                 TheSide.Add(mesh[TheElement(nn2)->n()]);
+                 TheSide.Add(mesh[TheElement(nn3)->n()]);
+                 TheSide.Add(mesh[TheElement(nn4)->n()]);
               }
               else
-                 THROW_RT(" Element shape " + sh[el->getShape()] +
-                          "incompatible with " + itos(el->getNbNodes()) + "nodes.");
+                 THROW_RT(" Element shape " + sh[TheElement.getShape()] +
+                          "incompatible with " + itos(TheElement.getNbNodes()) + "nodes.");
            }
-           CATCH("getGambit(...):");
-           sd->setNbDOF(nb_dof);
+           CATCH_EXIT("getGambit(...):");
+           TheSide.setNbDOF(nb_dof);
            for (size_t j=1; j<=nb_dof; j++)
-              sd->setCode(j,code[j-1]);
-           mesh.Add(sd);
+              TheSide.setCode(j,code[j-1]);
+           mesh.Add(theSide);
         }
         else {
-           nd = mesh[n5];
-           nd->setDOF(first_dof,nb_dof);
-           nd->setCode(code);
+           theNode = mesh[n5];
+           TheNode.setDOF(first_dof,nb_dof);
+           TheNode.setCode(code);
         }
      }
-     mf.getline(line,99);
+     std::getline(mf,line);
    }
    cout << "Number of marked sides: " << mesh.getNbSides() << endl;
    mf.close();
@@ -910,7 +891,7 @@ void getGmsh(string file,
       if (pf.fail())
          THROW_RT("Can't open file "+file);
    }
-   CATCH("getGmsh(...):");
+   CATCH_EXIT("getGmsh(...):");
    pf >> kw;
    ln++;
    if (kw=="$MeshFormat") {
@@ -925,15 +906,13 @@ void getGmsh(string file,
       CATCH("getGmsh(...):");
       format = 2;
    }
-   if (format ==2) {
-      pf >> kw;
-      ln++;
-   }
+   if (format ==2)
+      pf >> kw, ln++;
    try {
       if ( (kw!="$NOD") && (kw!="$Nodes") )
          THROW_RT("Illegal file format in line "+itos(ln));
    }
-   CATCH("getGmsh(...):");
+   CATCH_EXIT("getGmsh(...):");
    pf >> nb_nodes;
    vector<Nd> nod(nb_nodes);
    vector<size_t> num(2*nb_nodes);
@@ -961,7 +940,7 @@ void getGmsh(string file,
       if ( (kw!="$ENDNOD") && (kw!="$EndNodes") )
          THROW_RT("Illegal file format in line "+itos(ln));
    }
-   CATCH("getGmsh(...):");
+   CATCH_EXIT("getGmsh(...):");
 
    pf >> kw;
    ln++;
@@ -990,7 +969,7 @@ void getGmsh(string file,
          if (kw!="$ENDELM")
             THROW_RT("Illegal file format in line "+itos(ln));
       }
-      CATCH("getGmsh(...):");
+      CATCH_EXIT("getGmsh(...):");
    }
    else if (format==2) {
       try {
@@ -1051,7 +1030,7 @@ void getGmsh(string file,
          if (kw!="$EndElements")
             THROW_RT("Illegal file format in line "+itos(ln));
       }
-      CATCH("getGmsh(...):");
+      CATCH_EXIT("getGmsh(...):");
    }
    if (format==2) {
       pf >> kw;
@@ -1061,7 +1040,7 @@ void getGmsh(string file,
             if (kw!="$PhysicalNames")
             THROW_RT("Illegal file format in line "+itos(ln));
          }
-         CATCH("getGmsh(...):");
+         CATCH_EXIT("getGmsh(...):");
          pf >> n1;
          vector<int> pnn(n1);
          vector<string> pn(n1);
@@ -1283,31 +1262,28 @@ void getMatlab(string file,
 
    mesh.setDim(2);
    size_t first_dof = 1;
-   Node *nd;
    for (i=0; i<nb_nodes; i++) {
-      nd = new Node(i+1,x[i]);
-      nd->setDOF(first_dof,nb_dof);
+      theNode = new Node(i+1,x[i]);
+      TheNode.setDOF(first_dof,nb_dof);
       DOFCode(c[i],nb_dof,code);
-      nd->setCode(code);
-      mesh.Add(nd);
+      TheNode.setCode(code);
+      mesh.Add(theNode);
    }
-   Element *el;
    for (i=1; i<=nb_elements; i++) {
-      el = new Element(i,TRIANGLE,t(4,i));
+      theElement = new Element(i,TRIANGLE,t(4,i));
       for (j=1; j<=3; j++)
-         el->Add(mesh[t(j,i)]);
-         mesh.Add(el);
+         TheElement.Add(mesh[t(j,i)]);
+         mesh.Add(theElement);
    }
-   Side *sd;
    for (i=1; i<=nb_sides; i++) {
-      sd = new Side(i,"line");
-      sd->Add(mesh[size_t(e(1,i))]);
-      sd->Add(mesh[size_t(e(2,i))]);
+      theSide = new Side(i,"line");
+      TheSide.Add(mesh[size_t(e(1,i))]);
+      TheSide.Add(mesh[size_t(e(2,i))]);
       DOFCode(cs[i-1],nb_dof,code);
-      sd->setNbDOF(nb_dof);
+      TheSide.setNbDOF(nb_dof);
       for (size_t j=0; j<nb_dof; j++)
-         sd->setCode(j+1,code[j]);
-      mesh.Add(sd);
+         TheSide.setCode(j+1,code[j]);
+      mesh.Add(theSide);
    }
 }
 
@@ -1316,7 +1292,6 @@ void getNetgen(string file,
                Mesh&  mesh,
                size_t nb_dof)
 {
-   char        ch[81];
    size_t      nb_nodes, nb_se, nb_edges, nb_elements, nb_sides;
    size_t      jj, i, k, l, m, n, dim, a, nn[10];
    int         j;
@@ -1331,14 +1306,14 @@ void getNetgen(string file,
       if (nf.fail())
          THROW_RT(" File " + file + ".vol not found.");
    }
-   CATCH("getNetgen(...):");
+   CATCH_EXIT("getNetgen(...):");
 
-   nf.getline(ch,80);
-   nf.getline(ch,80);
+   string ch, cc;
+   std::getline(nf,ch);
+   std::getline(nf,ch);
    nf >> dim;
-   string cc;
    do {
-     nf.getline(ch,80);
+     std::getline(nf,ch);
      cc = string(ch,15);
    }
    while (cc!="surfaceelements");
@@ -1365,7 +1340,7 @@ void getNetgen(string file,
    }
 
    do {
-      nf.getline(ch,80);
+      std::getline(nf,ch);
       cc = string(ch,14);
    }
    while (cc!="volumeelements");
@@ -1385,7 +1360,7 @@ void getNetgen(string file,
    }
 
    do {
-      nf.getline(ch,80);
+      std::getline(nf,ch);
       cc = string(ch,12);
    }
    while (cc!="edgesegments");
@@ -1396,7 +1371,7 @@ void getNetgen(string file,
    }
 
    do {
-      nf.getline(ch,80);
+      std::getline(nf,ch);
       cc = string(ch,MAX_NBDOF_NODE);
    }
    while (cc!="points");
@@ -1430,107 +1405,107 @@ void getNetgen(string file,
       }
 
       if (dim==2) {
-        if (elem[jj].type==1) {
-          sd = new Side(ks,LINE);
-          for (i=0; i<2; i++)
-             sd->Add(mesh[elem[jj].node[i]]);
-          if (cd%2 == 1) {
-            for (i=0; i<sd->getNbNodes(); i++) {
-	      nd = (*sd)(i+1);
+         if (elem[jj].type==1) {
+            sd = new Side(ks,LINE);
+            for (i=0; i<2; i++)
+               sd->Add(mesh[elem[jj].node[i]]);
+            if (cd%2 == 1) {
+               for (i=0; i<sd->getNbNodes(); i++) {
+	          nd = (*sd)(i+1);
+                  DOFCode(cd,nb_dof,code);
+                  for (k=0; k<nb_dof; k++)
+                     nd->setCode(k+1,code[k]);
+               }
+               delete sd;
+            }
+            else {
+               ks++;
+               sd->setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
                for (k=0; k<nb_dof; k++)
-                  nd->setCode(k+1,code[k]);
+                  sd->setCode(k+1,code[k]);
+               mesh.Add(sd);
             }
-            delete sd;
-          }
-          else {
-            ks++;
-            sd->setNbDOF(nb_dof);
-            DOFCode(cd,nb_dof,code);
-            for (k=0; k<nb_dof; k++)
-               sd->setCode(k+1,code[k]);
-            mesh.Add(sd);
-          }
-        }
-        else if (elem[jj].type==2) {
-          el = new Element(ke++,TRIANGLE,cd);
-          for (i=0; i<3; i++)
-             el->Add(mesh[elem[jj].node[i]]);
-          mesh.Add(el);
-        }
-        else if (elem[jj].type==3) {
-          el = new Element(ke++,QUADRILATERAL,cd);
-          for (i=0; i<4; i++)
-             el->Add(mesh[elem[jj].node[i]]);
-          mesh.Add(el);
-        }
+         }
+         else if (elem[jj].type==2) {
+            el = new Element(ke++,TRIANGLE,cd);
+            for (i=0; i<3; i++)
+               el->Add(mesh[elem[jj].node[i]]);
+            mesh.Add(el);
+         }
+         else if (elem[jj].type==3) {
+            el = new Element(ke++,QUADRILATERAL,cd);
+            for (i=0; i<4; i++)
+               el->Add(mesh[elem[jj].node[i]]);
+            mesh.Add(el);
+         }
       }
 
       else if (dim==3) {
-        if (elem[jj].type==2) {
-          sd = new Side(ks++,TRIANGLE);
-          for (i=0; i<3; i++)
-             sd->Add(mesh[elem[jj].node[i]]);
-          if (cd%2 == 1) {
-            for (i=0; i<sd->getNbNodes(); i++) {
-               nd = (*sd)(i+1);
+         if (elem[jj].type==2) {
+            sd = new Side(ks++,TRIANGLE);
+            for (i=0; i<3; i++)
+               sd->Add(mesh[elem[jj].node[i]]);
+            if (cd%2 == 1) {
+               for (i=0; i<sd->getNbNodes(); i++) {
+                  nd = (*sd)(i+1);
+                  DOFCode(cd,nb_dof,code);
+                  for (k=0; k<nb_dof; k++)
+                     nd->setCode(k+1,code[k]);
+               }
+            }
+            else {
+               sd->setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
                for (k=0; k<nb_dof; k++)
-                  nd->setCode(k+1,code[k]);
+                  sd->setCode(k+1,code[k]);
+               mesh.Add(sd);
             }
-          }
-          else {
-            sd->setNbDOF(nb_dof);
-            DOFCode(cd,nb_dof,code);
-            for (k=0; k<nb_dof; k++)
-               sd->setCode(k+1,code[k]);
-            mesh.Add(sd);
-          }
-        }
-        if (elem[jj].type==3) {
-          sd = new Side(ks++,QUADRILATERAL);
-          for (i=0; i<4; i++)
-             sd->Add(mesh[elem[jj].node[i]]);
-          if (cd%2 == 1) {
-            for (i=0; i<sd->getNbNodes(); i++) {
-               nd = (*sd)(i+1);
+         }
+         if (elem[jj].type==3) {
+            sd = new Side(ks++,QUADRILATERAL);
+            for (i=0; i<4; i++)
+               sd->Add(mesh[elem[jj].node[i]]);
+            if (cd%2 == 1) {
+               for (i=0; i<sd->getNbNodes(); i++) {
+                  nd = (*sd)(i+1);
+                  DOFCode(cd,nb_dof,code);
+                  for (k=0; k<nb_dof; k++)
+                     nd->setCode(k+1,code[k]);
+               }
+            }
+            else {
+               sd->setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
                for (k=0; k<nb_dof; k++)
-                  nd->setCode(k+1,code[k]);
+                  sd->setCode(k+1,code[k]);
+               mesh.Add(sd);
             }
-          }
-          else {
-            sd->setNbDOF(nb_dof);
-            DOFCode(cd,nb_dof,code);
-            for (k=0; k<nb_dof; k++)
-               sd->setCode(k+1,code[k]);
-            mesh.Add(sd);
-          }
-        }
-        else if (elem[jj].type==4) {
-          el = new Element(ke++,TETRAHEDRON,cd);
-          for (i=0; i<4; i++)
-             el->Add(mesh[elem[jj].node[i]]);
-          mesh.Add(el);
-        }
-        else if (elem[jj].type==5) {
-          el = new Element(ke++,HEXAHEDRON,cd);
-          for (i=0; i<8; i++)
-             el->Add(mesh[elem[jj].node[i]]);
-          mesh.Add(el);
-        }
-        else if (elem[jj].type==6) {
-          el = new Element(ke++,PENTAHEDRON,cd);
-          for (i=0; i<6; i++)
-             el->Add(mesh[elem[jj].node[i]]);
-          mesh.Add(el);
-        }
-        else if (elem[jj].type==7) {
-           el = new Element(ke++,PENTAHEDRON,cd);
-           for (i=0; i<5; i++)
-              el->Add(mesh[elem[jj].node[i]]);
-           mesh.Add(el);
-        }
+         }
+         else if (elem[jj].type==4) {
+            el = new Element(ke++,TETRAHEDRON,cd);
+            for (i=0; i<4; i++)
+               el->Add(mesh[elem[jj].node[i]]);
+            mesh.Add(el);
+         }
+         else if (elem[jj].type==5) {
+            el = new Element(ke++,HEXAHEDRON,cd);
+            for (i=0; i<8; i++)
+               el->Add(mesh[elem[jj].node[i]]);
+            mesh.Add(el);
+         }
+         else if (elem[jj].type==6) {
+            el = new Element(ke++,PENTAHEDRON,cd);
+            for (i=0; i<6; i++)
+               el->Add(mesh[elem[jj].node[i]]);
+            mesh.Add(el);
+         }
+         else if (elem[jj].type==7) {
+            el = new Element(ke++,PENTAHEDRON,cd);
+            for (i=0; i<5; i++)
+               el->Add(mesh[elem[jj].node[i]]);
+            mesh.Add(el);
+         }
       }
    }
 
@@ -1550,13 +1525,9 @@ void getTetgen(string file,
 {
    size_t      nb_nodes, nb_elements, n1, n2, n3, n4, k, i, j, dim;
    real_t      x1, x2, x3;
-   Node        *nd;
-   Element     *el;
-   Side        *sd;
    int         code[MAX_NBDOF_NODE];
 
 // Read node file
-
    ifstream nf((file+".node").c_str());
    try {
       if (nf.fail())
@@ -1584,7 +1555,7 @@ void getTetgen(string file,
       if (ef.fail())
          THROW_RT(" File " + file + ".ele not found.");
    }
-   CATCH("getTetgen(...):");
+   CATCH_EXIT("getTetgen(...):");
    ef >> nb_elements >> k >> i;
    vector<El> elem(nb_elements);
    for (j=0; j<nb_elements; j++) {
@@ -1600,12 +1571,12 @@ void getTetgen(string file,
    mesh.setDim(dim);
    size_t first_dof = 1;
    for (j=0; j<nb_nodes; j++) {
-      nd = new Node(num[nod[j].label-1],nod[j].x);
+      theNode = new Node(num[nod[j].label-1],nod[j].x);
       for (k=0; k<nb_dof; k++)
          code[k] = nod[j].code[k];
-      nd->setDOF(first_dof,nb_dof);
-      nd->setCode(code);
-      mesh.Add(nd);
+      TheNode.setDOF(first_dof,nb_dof);
+      TheNode.setCode(code);
+      mesh.Add(theNode);
    }
 
    size_t ks=1, ke=1;
@@ -1613,113 +1584,113 @@ void getTetgen(string file,
       int cd = elem[j].region;
 
       if (elem[j].type==15) {
-         nd = mesh[num[elem[j].label-1]];
+         theNode = mesh[num[elem[j].label-1]];
          DOFCode(cd,nb_dof,code);
          for (k=0; k<nb_dof; k++)
-            nd->setCode(k+1,code[k]);
+            TheNode.setCode(k+1,code[k]);
       }
 
       if (dim==2) {
          if (elem[j].type==1) {
-            sd = new Side(ks,LINE);
+            theSide = new Side(ks,LINE);
             for (i=0; i<2; i++)
-               sd->Add(mesh[num[elem[j].node[i]-1]]);
+               TheSide.Add(mesh[num[elem[j].node[i]-1]]);
             if (cd%2 == 1) {
-               for (i=0; i<sd->getNbNodes(); i++) {
-		  nd = (*sd)(i+1);
+               for (i=0; i<TheSide.getNbNodes(); i++) {
+		  theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
                   for (k=0; k<nb_dof; k++)
-                     nd->setCode(k+1,code[k]);
+                     TheNode.setCode(k+1,code[k]);
                }
-               delete sd;
+               delete theSide;
             }
             else {
                ks++;
-               sd->setNbDOF(nb_dof);
+               TheSide.setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
                for (k=0; k<nb_dof; k++)
-                  sd->setCode(k+1,code[k]);
-               mesh.Add(sd);
+                  TheSide.setCode(k+1,code[k]);
+               mesh.Add(theSide);
             }
          }
          else if (elem[j].type==2) {
-            el = new Element(ke++,TRIANGLE,cd);
+            theElement = new Element(ke++,TRIANGLE,cd);
             for (i=0; i<3; i++)
-               el->Add(mesh[num[elem[j].node[i]-1]]);
-            mesh.Add(el);
+               TheElement.Add(mesh[num[elem[j].node[i]-1]]);
+            mesh.Add(theElement);
          }
          else if (elem[j].type==3) {
-            el = new Element(ke++,QUADRILATERAL,cd);
+            theElement = new Element(ke++,QUADRILATERAL,cd);
             for (i=0; i<4; i++)
-               el->Add(mesh[num[elem[j].node[i]-1]]);
-            mesh.Add(el);
+               TheElement.Add(mesh[num[elem[j].node[i]-1]]);
+            mesh.Add(theElement);
          }
       }
 
       else if (dim==3) {
          if (elem[j].type==2) {
-            sd = new Side(ks++,TRIANGLE);
+            theSide = new Side(ks++,TRIANGLE);
             for (i=0; i<3; i++)
-               sd->Add(mesh[num[elem[j].node[i]-1]]);
+               TheSide.Add(mesh[num[elem[j].node[i]-1]]);
             if (cd%2 == 1) {
-               for (i=0; i<sd->getNbNodes(); i++) {
-		  nd = (*sd)(i+1);
+               for (i=0; i<TheSide.getNbNodes(); i++) {
+		  theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
                   for (k=0; k<nb_dof; k++)
-                     nd->setCode(k+1,code[k]);
+                     TheNode.setCode(k+1,code[k]);
                }
             }
             else {
-               sd->setNbDOF(nb_dof);
+               TheSide.setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
                for (k=0; k<nb_dof; k++)
-                  sd->setCode(k+1,code[k]);
-               mesh.Add(sd);
+                  TheSide.setCode(k+1,code[k]);
+               mesh.Add(theSide);
             }
          }
          if (elem[j].type==3) {
-            sd = new Side(ks++,QUADRILATERAL);
+            theSide = new Side(ks++,QUADRILATERAL);
             for (i=0; i<4; i++)
-               sd->Add(mesh[num[elem[j].node[i]-1]]);
+               TheSide.Add(mesh[num[elem[j].node[i]-1]]);
             if (cd%2 == 1) {
-               for (i=0; i<sd->getNbNodes(); i++) {
-		  nd = (*sd)(i+1);
+               for (i=0; i<TheSide.getNbNodes(); i++) {
+		  theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
                   for (k=0; k<nb_dof; k++)
-                     nd->setCode(k+1,code[k]);
+                     TheNode.setCode(k+1,code[k]);
                }
             }
             else {
-               sd->setNbDOF(nb_dof);
+               TheSide.setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
                for (k=0; k<nb_dof; k++)
-                  sd->setCode(k+1,code[k]);
-               mesh.Add(sd);
+                  TheSide.setCode(k+1,code[k]);
+               mesh.Add(theSide);
             }
          }
          else if (elem[j].type==4) {
-            el = new Element(ke++,TETRAHEDRON,cd);
+            theElement = new Element(ke++,TETRAHEDRON,cd);
             for (i=0; i<4; i++)
-               el->Add(mesh[num[elem[j].node[i]-1]]);
-            mesh.Add(el);
+               TheElement.Add(mesh[num[elem[j].node[i]-1]]);
+            mesh.Add(theElement);
          }
          else if (elem[j].type==5) {
-            el = new Element(ke++,HEXAHEDRON,cd);
+            theElement = new Element(ke++,HEXAHEDRON,cd);
             for (i=0; i<8; i++)
-               el->Add(mesh[num[elem[j].node[i]-1]]);
-            mesh.Add(el);
+               TheElement.Add(mesh[num[elem[j].node[i]-1]]);
+            mesh.Add(theElement);
          }
          else if (elem[j].type==6) {
-            el = new Element(ke++,PENTAHEDRON,cd);
+            theElement = new Element(ke++,PENTAHEDRON,cd);
             for (i=0; i<6; i++)
-               el->Add(mesh[num[elem[j].node[i]-1]]);
-            mesh.Add(el);
+               TheElement.Add(mesh[num[elem[j].node[i]-1]]);
+            mesh.Add(theElement);
          }
          else if (elem[j].type==7) {
-            el = new Element(ke++,PENTAHEDRON,cd);
+            theElement = new Element(ke++,PENTAHEDRON,cd);
             for (i=0; i<5; i++)
-               el->Add(mesh[num[elem[j].node[i]-1]]);
-            mesh.Add(el);
+               TheElement.Add(mesh[num[elem[j].node[i]-1]]);
+            mesh.Add(theElement);
          }
       }
    }
@@ -1731,16 +1702,9 @@ void getTriangle(string file,
                  Mesh&  mesh,
                  size_t nb_dof)
 {
-   size_t      i, j, n, na, nm,nbn, nb_nodes, nb_elements, nb_sides;
-   int         mark;
-   size_t      first_dof, ne[10];
-   real_t      xx, yy, attr=0;
-   Point<real_t> x;
-   int         code[MAX_NBDOF_NODE];
-   Node        *nd;
-   Element     *el;
-   Side        *sd;
-   ifstream    nf, ef, sf;
+   size_t ne[10];
+   int code[MAX_NBDOF_NODE];
+   ifstream nf, ef, sf;
 
    nf.open((file+".node").c_str());
    try {
@@ -1753,78 +1717,81 @@ void getTriangle(string file,
       if (ef.fail())
          THROW_RT(" File " + file + ".ele not found.");
    }
-   CATCH("getTriangle(...):");
+   CATCH_EXIT("getTriangle(...):");
 
    mesh.setDim(2);
-   first_dof = 1;
-   size_t nz=0;
+   size_t first_dof = 1;
+   size_t nz=0, nb_nodes, n, na, nm;
    nf >> nb_nodes >> n >> na >> nm;
-   for (i=0; i<nb_nodes; i++) {
+   for (size_t i=0; i<nb_nodes; i++) {
       nf >> n;
       if (i==0 && n==0)
          nz = 1;
+      real_t xx, yy;
       nf >> xx >> yy;
-      for (j=0; j<na; j++)
+      real_t attr;
+      for (size_t j=0; j<na; j++)
          nf >> attr;
-      mark = 0;
+      int mark = 0;
       if (nm>0)
          nf >> mark;
-      x.x = xx; x.y = yy; x.z = 0;
       if (nz==1)
          n++;
-      nd = new Node(n,x);
-      nd->setNbDOF(nb_dof);
-      DOFCode(mark, nb_dof, code);
-      nd->setDOF(first_dof,nb_dof);
-      nd->setCode(code);
-      mesh.Add(nd);
+      theNode = new Node(n,Point<real_t>(xx,yy));
+      TheNode.setNbDOF(nb_dof);
+      DOFCode(mark,nb_dof,code);
+      TheNode.setDOF(first_dof,nb_dof);
+      TheNode.setCode(code);
+      mesh.Add(theNode);
    }
-
+   size_t nb_elements, nbn;
    ef >> nb_elements >> nbn >> na;
    nz = 0;
-   for (i=0; i<nb_elements; i++) {
+   for (size_t i=0; i<nb_elements; i++) {
       ef >> n;
       if (i==0 && n==0)
          nz = 1;
-      for (j=0; j<nbn; j++) {
+      int mark = 0;
+      for (size_t j=0; j<nbn; j++) {
          ef >> mark;
          ne[j] = mark;
       }
-      for (j=0; j<na; j++)
+      real_t attr;
+      for (size_t j=0; j<na; j++)
          ef >> attr;
       mark = int(attr);
       if (nz>0)
          n++;
-      el = new Element(n,TRIANGLE,mark);
-      for (j=0; j<nbn; j++)
-         el->Add(mesh[ne[j]]);
-      mesh.Add(el);
+      theElement = new Element(n,TRIANGLE,mark);
+      for (size_t j=0; j<nbn; j++)
+         TheElement.Add(mesh[ne[j]]);
+      mesh.Add(theElement);
    }
 
    sf.open((file+".edge").c_str());
    if (!sf.fail()) {
-      nz = 0;
+      size_t nz=0, nb_sides;
       sf >> nb_sides >> nm;
-      for (i=0; i<nb_sides; i++) {
+      for (size_t i=0; i<nb_sides; i++) {
          sf >> n >> ne[0] >> ne[1];
          if (i==0 && n==0)
             nz = 1;
          if (nz>0)
             n++;
-         for (j=0; j<nm; j++)
+         real_t attr;
+         for (size_t j=0; j<nm; j++)
             sf >> attr;
-         mark = int(attr);
+         int mark = int(attr);
          DOFCode(mark, nb_dof, code);
-         sd = new Side(n,LINE);
-         sd->Add(mesh[ne[0]]);
-         sd->Add(mesh[ne[1]]);
-         sd->setNbDOF(nb_dof);
-         for (j=0; j<nb_dof; j++)
-            sd->setCode(j+1,code[j]);
-         mesh.Add(sd);
+         theSide = new Side(n,LINE);
+         TheSide.Add(mesh[ne[0]]);
+         TheSide.Add(mesh[ne[1]]);
+         TheSide.setNbDOF(nb_dof);
+         for (size_t j=0; j<nb_dof; j++)
+            TheSide.setCode(j+1,code[j]);
+         mesh.Add(theSide);
       }
    }
-
    nf.close();
    ef.close();
    if (!sf.fail())

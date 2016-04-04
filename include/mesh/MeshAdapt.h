@@ -173,9 +173,8 @@ class MeshAdapt
  */
     void setRatio(real_t r) { _ratio = r; }
 
-/** \brief Do not scale solution before metric computation
- *  \details By default, solution is scaled (between 0 and 1)
- */
+/// \brief Do not scale solution before metric computation
+/// \details By default, solution is scaled (between 0 and 1)
     void setNoScaling() { _scaling = false; }
    
 /// \brief Do not keep old vertices
@@ -199,7 +198,7 @@ class MeshAdapt
 
 /// \brief Split edges with two vertices on boundary
     void SplitBoundaryEdges() { _splitbedge = true; }
-    
+
 /// \brief Create a metric file
     void CreateMetricFile(string mf) { _ometric_file = mf; _set_ometric = true; }
 
