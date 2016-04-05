@@ -52,6 +52,10 @@ using std::string;
 #include "linear_algebra/DSMatrix.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 
 /*! \file EigenProblemSolver.h
@@ -67,7 +71,7 @@ template <class T_> class AbsEqua;
 /*! \class EigenProblemSolver
  *  \ingroup Solver
  *  \brief Class to find eigenvalues and corresponding eigenvectors of a given
- *  matrixin a generalized eigenproblem, <i>i.e.</i> Find scalars l and 
+ *  matrix in a generalized eigenproblem, <i>i.e.</i> Find scalars l and 
  *  non-null vectors v such that
  *       [K]{v} = l[M]{v}
  *  where [K] and [M] are symmetric matrices.
@@ -290,6 +294,7 @@ class EigenProblemSolver
     ostream & operator<<(      ostream&            s,
                          const EigenProblemSolver& es);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

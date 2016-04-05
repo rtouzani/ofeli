@@ -46,6 +46,10 @@ using std::setw;
 #include "io/output.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Jacobi.h
  *  \brief Function to solve a linear system of equations using the Jacobi method.
@@ -125,6 +129,7 @@ int Jacobi(const SpMatrix<T_>& A,
    return -it;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

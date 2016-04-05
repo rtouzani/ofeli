@@ -39,6 +39,10 @@
 #include "linear_algebra/Point.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Line3.h
  *  \brief Definition file for class Line3.
@@ -90,6 +94,7 @@ class Line3 : public FEShape
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

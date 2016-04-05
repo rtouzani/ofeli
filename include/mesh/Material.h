@@ -47,6 +47,10 @@ using std::string;
 extern FunctionParser theParser;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \defgroup Physics Physical properties of media
  *  \brief A module that contains classes for physical properties of materials and media
@@ -290,6 +294,7 @@ class Material
     ostream& operator<<(      ostream&  s,
                         const Material& m);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

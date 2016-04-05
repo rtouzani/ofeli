@@ -44,6 +44,10 @@ using std::endl;
  */
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /** \fn void banner(const string &prog=" ")
  * \ingroup Util
@@ -87,6 +91,7 @@ inline void banner(const string &prog=" ")
    cout << "====================================================================" << endl << endl;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

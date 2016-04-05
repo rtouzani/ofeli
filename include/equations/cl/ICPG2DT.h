@@ -40,6 +40,10 @@
 #include "equations/cl/Muscl2DT.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file ICPG2DT.h
  *  \brief Definition file for class ICPG2DT.
@@ -260,6 +264,7 @@ class ICPG2DT : public Muscl2DT {
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

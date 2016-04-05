@@ -43,6 +43,10 @@
 #include "mesh/Element.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Laplace1DL2.h
  *  \brief Definition file for class Laplace1DL2.
@@ -120,6 +124,7 @@ public :
     void set(const Element* el);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

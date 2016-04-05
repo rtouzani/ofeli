@@ -37,6 +37,10 @@
 #include "shape_functions/FEShape.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Line2H.h
  *  \brief Definition file for class Line2H.
@@ -119,6 +123,7 @@ class Line2H : public FEShape
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

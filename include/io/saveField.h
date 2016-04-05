@@ -41,7 +41,11 @@
 #endif
 
 namespace OFELI {
-   
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
+
 /*! \file saveField.h
  *  \brief Prototypes for functions to save mesh in various file formats.
  */
@@ -81,8 +85,8 @@ namespace OFELI {
  */
    void saveField(const Vect<real_t>& v,
                   const Mesh&         mesh,
-                        string        output_file,
-                        int           opt);
+                  string              output_file,
+                  int                 opt);
 
 #ifdef USE_PETSC
 
@@ -111,10 +115,10 @@ namespace OFELI {
  *  among enumerated values: <tt>GMSH</tt>, <tt>GNUPLOT</tt>, <tt>MATLAB</tt>,
  *  <tt>TECPLOT</tt>, <tt>VTK</tt>
  */
-   void saveField(      PETScVect<real_t>& v,
-                  const Mesh&              mesh,
-                        string             output_file,
-                        int                opt);
+   void saveField(PETScVect<real_t>& v,
+                  const Mesh&        mesh,
+                  string             output_file,
+                  int                opt);
 #endif
 
 /** \fn void saveField(Vect<real_t> &v, const Grid &g, string output_file, int opt=VTK)
@@ -127,10 +131,10 @@ namespace OFELI {
  *  @param [in] opt Option to choose file format to save. This is to be chosen
  *  among enumerated values: <tt>VTK</tt>
  */
-    void saveField(      Vect<real_t>& v,
-                   const Grid&         g,
-                         string        output_file,
-                         int           opt);
+    void saveField(Vect<real_t>& v,
+                   const Grid&   g,
+                   string        output_file,
+                   int           opt);
 
 /** \fn void saveGnuplot(string input_file, string output_file, string mesh_file)
  *  \ingroup Util
@@ -192,6 +196,7 @@ namespace OFELI {
                   string output_file,
                   string mesh_file);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

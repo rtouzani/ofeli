@@ -52,6 +52,10 @@ using std::string;
 #include "linear_algebra/Point.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Node.h
  *  \brief Definition file for class Node.
@@ -264,9 +268,10 @@ class Node
 /// \fn ostream & operator<<(ostream& s, const Node &nd)
 /// \brief Output node data.
 /// \ingroup Mesh
-    ostream & operator<<(      ostream& s,
-                         const Node&    nd);
+    ostream & operator<<(ostream&    s,
+                         const Node& nd);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

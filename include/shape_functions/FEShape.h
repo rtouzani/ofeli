@@ -47,6 +47,10 @@ using std::vector;
 
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file FEShape.h
  *  \brief Definition file for class FEShape.
@@ -262,6 +266,7 @@ class triangle : public FEShape
    Point<real_t>   _c;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

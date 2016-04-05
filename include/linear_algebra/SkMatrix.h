@@ -36,6 +36,10 @@
 #include "linear_algebra/Matrix.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file SkMatrix.h
  *  \brief Definition file for class SkMatrix.
@@ -1019,6 +1023,7 @@ ostream& operator<<(ostream&            s,
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

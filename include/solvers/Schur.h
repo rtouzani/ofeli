@@ -33,6 +33,10 @@
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 
 /** \fn void Schur(SkMatrix<T_>& A, SpMatrix<T_>& U, SpMatrix<T_>& L, SpMatrix<T_>& D, Vect<T_>& b, Vect<T_>& c)
@@ -156,6 +160,7 @@ void Schur(PETScMatrix<T_>& A,
 }
 #endif
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

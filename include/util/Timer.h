@@ -43,6 +43,10 @@
 #include "OFELI_Config.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Timer.h
  *  \brief Definition file for class Timer.
@@ -131,6 +135,7 @@ class Timer
     bool    _st0, _st1;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

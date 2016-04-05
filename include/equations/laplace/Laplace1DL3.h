@@ -44,6 +44,10 @@
 #include "linear_algebra/BMatrix.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Laplace1DL3.h
  *  \brief Definition file for class Laplace1DL3.
@@ -113,6 +117,7 @@ private:
    void set(Element *el);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

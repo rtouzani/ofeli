@@ -43,6 +43,10 @@ using std::vector;
 #include "mesh/Edge.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Mesh.h
  *  \brief Definition file for class Mesh.
@@ -1016,6 +1020,7 @@ inline bool _side_compare(Side* const &a, Side* const &b) { return (a->n() < b->
     ostream& operator<<(      ostream& s,
                         const Mesh&    ms);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

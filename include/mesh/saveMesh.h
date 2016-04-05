@@ -58,6 +58,10 @@ using std::setprecision;
 
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file saveMesh.h
  *  \brief Prototypes for functions to save mesh in various file formats.
@@ -182,6 +186,7 @@ void saveVTK(const string& file,
 void saveBamg(const string& file,
                     Mesh&   mesh);
               
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

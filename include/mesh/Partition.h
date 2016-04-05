@@ -42,6 +42,10 @@ extern "C" {
 }
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \class Partition
  *  \ingroup Mesh
@@ -221,6 +225,7 @@ class Partition
    void NodeNeighborList();
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

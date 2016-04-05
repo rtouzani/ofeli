@@ -42,6 +42,10 @@
 using std::pair;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file MeshUtil.h
  *  \brief Definitions of utility functions for meshes.
@@ -512,6 +516,7 @@ int NodeInSide(const Node* nd,
 int SideInElement(const Side*    sd,
                   const Element* el);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

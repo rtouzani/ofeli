@@ -37,6 +37,10 @@
 #include "shape_functions/FEShape.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Hexa8.h
  *  \brief Definition file for class Hexa8.
@@ -105,6 +109,7 @@ class Hexa8 : public FEShape
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

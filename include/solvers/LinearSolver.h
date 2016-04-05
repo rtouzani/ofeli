@@ -65,6 +65,10 @@ using namespace Eigen;
 #endif
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 template<class T_> class Matrix;
 template<class T_> class SpMatrix;
@@ -74,6 +78,16 @@ template<class T_> class TrMatrix;
 template<class T_> class BMatrix;
 template<class T_> class DMatrix;
 template<class T_> class DSMatrix;
+
+
+//-----------------------------------------------------------------------------
+// Class LinearSolver
+//-----------------------------------------------------------------------------
+
+/*! \class LinearSolver
+ *  \ingroup Solver
+ *  \brief Class to solve systems of linear equations by iterative methods
+ */
 
 template<class T_> class LinearSolver
 {
@@ -93,7 +107,7 @@ template<class T_> class LinearSolver
 
 /** \brief Constructor with iteration parameters
  *  @param [in] max_it Maximal number of iterations
- *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm) in input,
+ *  @param [in] tolerance Tolerance for convergence (measured in relative weighted 2-Norm) in input,
  *  effective discrepancy in output.
  *  @param [in] verbose Information output parameter
  *  <ul>
@@ -114,11 +128,11 @@ template<class T_> class LinearSolver
  *  @param [in] b Vect instance that contains the right-hand side
  *  @param [in,out] x Vect instance that contains initial guess on input and solution on output
  */
-    LinearSolver(      SpMatrix<T_>& A,
-                 const Vect<T_>&     b,
-                       Vect<T_>&     x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                          _s(CG_SOLVER), _p(DIAG_PREC),
-                                          _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
+    LinearSolver(SpMatrix<T_>&   A,
+                 const Vect<T_>& b,
+                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                                      _s(CG_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
+                                      _x(&x), _b(&b), _A(&A)
     {  }
 
 /** \brief Constructor using skyline-stored matrix, right-hand side and solution vector
@@ -126,11 +140,11 @@ template<class T_> class LinearSolver
  *  @param [in] b Vect instance that contains the right-hand side
  *  @param [in,out] x Vect instance that contains initial guess on input and solution on output
  */
-    LinearSolver(      SkMatrix<T_>& A,
-                 const Vect<T_>&     b,
-                       Vect<T_>&     x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                          _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                          _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
+    LinearSolver(SkMatrix<T_>&   A,
+                 const Vect<T_>& b,
+                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
+                                      _x(&x), _b(&b), _A(&A)
     {  }
 
 /** \brief Constructor using a tridiagonal matrix, right-hand side and solution vector
@@ -138,11 +152,11 @@ template<class T_> class LinearSolver
  *  @param [in] b Vect instance that contains the right-hand side
  *  @param [in,out] x Vect instance that contains initial guess on input and solution on output
  */
-    LinearSolver(      TrMatrix<T_>& A,
-                 const Vect<T_>&     b,
-                       Vect<T_>&     x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                          _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                          _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
+    LinearSolver(TrMatrix<T_>&   A,
+                 const Vect<T_>& b,
+                  Vect<T_>&      x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
+                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
     {  }
 
 /** \brief Constructor using a banded matrix, right-hand side and solution vector
@@ -150,11 +164,11 @@ template<class T_> class LinearSolver
  *  @param [in] b Vect instance that contains the right-hand side
  *  @param [in,out] x Vect instance that contains initial guess on input and solution on output
  */
-    LinearSolver(      BMatrix<T_>& A,
-                 const Vect<T_>&    b,
-                       Vect<T_>&    x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                         _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                         _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
+    LinearSolver(BMatrix<T_>&    A,
+                 const Vect<T_>& b,
+                       Vect<T_>& x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
+                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
     {  }
 
 /** \brief Constructor using a dense matrix, right-hand side and solution vector
@@ -162,11 +176,11 @@ template<class T_> class LinearSolver
  *  @param [in] b Vect instance that contains the right-hand side
  *  @param [in,out] x Vect instance that contains initial guess on input and solution on output
  */
-    LinearSolver(      DMatrix<T_>& A,
-                 const Vect<T_>&    b,
-                       Vect<T_>&    x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                         _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                         _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
+    LinearSolver(DMatrix<T_>&    A,
+                 const Vect<T_>& b,
+                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
+                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
     {  }
 
 /** \brief Constructor using a dense symmetric matrix, right-hand side and solution vector
@@ -174,11 +188,11 @@ template<class T_> class LinearSolver
  *  @param [in] b Vect instance that contains the right-hand side
  *  @param [in,out] x Vect instance that contains initial guess on input and solution on output
  */
-    LinearSolver(      DSMatrix<T_>& A,
-                 const Vect<T_>&     b,
-                       Vect<T_>&     x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                          _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                          _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
+    LinearSolver(DSMatrix<T_>&   A,
+                 const Vect<T_>& b,
+                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
+                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
     {  }
 
 /** \brief Constructor using skyline-stored symmetric matrix, right-hand side and solution vector
@@ -186,17 +200,17 @@ template<class T_> class LinearSolver
  *  @param [in] b Vect instance that contains the right-hand side
  *  @param [in,out] x Vect instance that contains initial guess on input and solution on output
  */
-    LinearSolver(      SkSMatrix<T_>& A,
-                 const Vect<T_>&      b,
-                       Vect<T_>&      x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                          _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                          _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
+    LinearSolver(SkSMatrix<T_>&  A,
+                 const Vect<T_>& b,
+                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
+                                      _x(&x), _b(&b), _A(&A)
     {  }
 
 /** \brief Constructor using matrix, right-hand side
  *  @param [in] A SkMatrix instance that contains matrix
- *  @param [in,out] b Vect instance that contains the right-hand side on input and solution on output.
- *  The initial guess is the 0-vector
+ *  @param [in] b Vect instance that contains the right-hand side
+ *  @param [in,out] x Vect instance that contains the initial guess on input and solution on output
  */
     LinearSolver(SkMatrix<T_>& A,
                  Vect<T_>&     b,
@@ -262,9 +276,9 @@ template<class T_> class LinearSolver
  *  @param [in] b Vector containing right-hand side
  *  @param [in,out] x Vector containing initial guess on input and solution on output
  */
-    void set(      SpMatrix<T_>& A,
-             const Vect<T_>&     b,
-                   Vect<T_>&     x)
+    void set(SpMatrix<T_>&   A,
+             const Vect<T_>& b,
+             Vect<T_>&       x)
     {
        _A = &A;
        _matrix_set = 1;
@@ -276,7 +290,7 @@ template<class T_> class LinearSolver
 /** \brief Set solver and preconditioner
  *  @param [in] s Solver identification parameter.
  *  To be chosen in the enumeration variable Iteration:\n 
- *  <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>, <tt>CGS_SOLVER<tt>, <tt>BICG_SOLVER</tt>,
+ *  <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>, <tt>CGS_SOLVER</tt>, <tt>BICG_SOLVER</tt>,
  *  <tt>BICG_STAB_SOLVER</tt>, <tt>GMRES_SOLVER</tt>, <tt>QMR_SOLVER</tt>
  *  @param [in] p Preconditioner identification parameter. By default, the diagonal
  *  preconditioner is used.
@@ -298,36 +312,36 @@ template<class T_> class LinearSolver
  *  @param [in,out] x Vector containing initial guess on input and solution on output
  *  @param [in] s Solver identification parameter
  *  To be chosen in the enumeration variable Iteration:\n 
- *  <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>, <tt>CGS_SOLVER<tt>, <tt>BICG_SOLVER</tt>,
- *  <tt>BICG_STAB_SOLVER</tt>, <tt>GMRES_SOLVER</tt>, <tt>QMR_SOLVER</tt> [Default: <tt>CGS_SOLVER<tt>]
+ *  <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>, <tt>CGS_SOLVER</tt>, <tt>BICG_SOLVER</tt>,
+ *  <tt>BICG_STAB_SOLVER</tt>, <tt>GMRES_SOLVER</tt>, <tt>QMR_SOLVER</tt> [Default: <tt>CGS_SOLVER</tt>]
  *  @param [in] p Preconditioner identification parameter.
  *  To be chosen in the enumeration variable Preconditioner:\n
  *  <tt>IDENT_PREC</tt>, <tt>DIAG_PREC</tt>, <tt>SSOR_PREC</tt>, <tt>ILU_PREC</tt>,
- *  <tt>DILU_PREC</tt> [Default: <tt>DIAG_PREC<tt>]
+ *  <tt>DILU_PREC</tt> [Default: <tt>DIAG_PREC</tt>]
  *  @remark The argument <tt>p</tt> has no effect if the solver is <tt>DIRECT_SOLVER</tt>
- *  @warning If the library <it>eigen</it> is used, only the preconditioners
+ *  @warning If the library <tt>eigen</tt> is used, only the preconditioners
  *  <tt>IDENT_PREC</tt>, <tt>DIAG_PREC</tt> and <tt>ILU_PREC</tt> are available.
  */
-    int solve(      SpMatrix<T_>&  A,
-              const Vect<T_>&      b,
-                    Vect<T_>&      x,
-                    Iteration      s,
-                    Preconditioner p=DIAG_PREC)
+    int solve(SpMatrix<T_>&   A,
+              const Vect<T_>& b,
+              Vect<T_>&       x,
+              Iteration       s,
+              Preconditioner  p=DIAG_PREC)
     {
        set(A,b,x);
        int ret = solve(s,p);
        return ret;
     }
 
-/** Solve equations using prescribed solver and preconditioner
+/** \brief Solve equations using prescribed solver and preconditioner
  *  @param [in] s Solver identification parameter
  *  To be chosen in the enumeration variable Iteration:\n 
- *  <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>, <tt>CGS_SOLVER<tt>, <tt>BICG_SOLVER</tt>,
- *  <tt>BICG_STAB_SOLVER</tt>, <tt>GMRES_SOLVER</tt>, <tt>QMR_SOLVER</tt> [Default: <tt>CGS_SOLVER<tt>]
+ *  <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>, <tt>CGS_SOLVER</tt>, <tt>BICG_SOLVER</tt>,
+ *  <tt>BICG_STAB_SOLVER</tt>, <tt>GMRES_SOLVER</tt>, <tt>QMR_SOLVER</tt> [Default: <tt>CGS_SOLVER</tt>]
  *  @param [in] p Preconditioner identification parameter.
  *  To be chosen in the enumeration variable Preconditioner:\n
  *  <tt>IDENT_PREC</tt>, <tt>DIAG_PREC</tt>, <tt>SSOR_PREC</tt>, <tt>DILU_PREC</tt>,
- *  <tt>ILU_PREC</tt> [Default: <tt>DIAG_PREC<tt>]
+ *  <tt>ILU_PREC</tt> [Default: <tt>DIAG_PREC</tt>]
  *  @note The argument <tt>p</tt> has no effect if the solver is <tt>DIRECT_SOLVER</tt>
  */
     int solve(Iteration      s,
@@ -476,6 +490,7 @@ int LinearSolver<T_>::solve(Iteration      s,
    return ret;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

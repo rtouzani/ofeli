@@ -36,6 +36,10 @@
 #include "linear_algebra/Matrix.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 template<class T_> class DSMatrix;
 class Mesh;
@@ -730,6 +734,7 @@ ostream& operator<<(ostream&            s,
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

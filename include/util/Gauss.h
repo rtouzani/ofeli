@@ -37,6 +37,10 @@
 #include "linear_algebra/LocalVect.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Gauss.h
  *  \brief Definition file for struct Gauss.
@@ -85,6 +89,7 @@ class Gauss
     bool _triang;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

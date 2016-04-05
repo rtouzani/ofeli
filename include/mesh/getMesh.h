@@ -41,6 +41,10 @@ using std::string;
 #include "linear_algebra/Point.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file getMesh.h
  *  \brief Definition file for mesh conversion functions.
@@ -231,6 +235,7 @@ void getTriangle(string file,
                  Mesh&  mesh,
                  size_t nb_dof=1);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

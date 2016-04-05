@@ -1,11 +1,12 @@
 var classOFELI_1_1Mesh =
 [
     [ "Mesh", "classOFELI_1_1Mesh.html#a2a23c7c0c4e0da252b7bc0e13b6f81d8", null ],
-    [ "Mesh", "classOFELI_1_1Mesh.html#a7d439e295e75603a60f1bb6ee593ca14", null ],
+    [ "Mesh", "classOFELI_1_1Mesh.html#a0eb36f72caebac10b2dc4fa4b3cfa348", null ],
     [ "Mesh", "classOFELI_1_1Mesh.html#ad565a2bfeecdc7a79103e05e60594b89", null ],
     [ "Mesh", "classOFELI_1_1Mesh.html#a511af0188a793ce22e001565e5a0ce9b", null ],
     [ "Mesh", "classOFELI_1_1Mesh.html#a30bba05320d35fffb075fd54648ab696", null ],
-    [ "Mesh", "classOFELI_1_1Mesh.html#a003b08c3bcd12a52d6249945b25dfbd2", null ],
+    [ "Mesh", "classOFELI_1_1Mesh.html#a268117aab5b996a391325da5a779d59e", null ],
+    [ "Mesh", "classOFELI_1_1Mesh.html#a55d10778a0b39c1bd927394db9523daa", null ],
     [ "Mesh", "classOFELI_1_1Mesh.html#a60db3ca388f9d538650a3f6967a1b98e", null ],
     [ "Mesh", "classOFELI_1_1Mesh.html#a5e9a62f6c0378c37ee1d162cdd03b728", null ],
     [ "Mesh", "classOFELI_1_1Mesh.html#a1845285156a077d03c74852052b35326", null ],

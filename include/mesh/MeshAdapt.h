@@ -63,7 +63,12 @@ void MeshErrorIO(ios&);
 
 using namespace bamg;
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file MeshAdapt.h
  *  \brief Definition file for class MeshAdapt
@@ -302,6 +307,10 @@ class MeshAdapt
     ostream & operator<<(ostream&         s,
                          const MeshAdapt& a);
 
+
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #endif

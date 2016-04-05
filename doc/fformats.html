@@ -140,8 +140,10 @@
    <ul class="tablist">
    <li><a href="index.html"><span>Home</span></a>
    <li><a href="overview.html"><span>Overview</span></a>
+   <li><a href="citing.html"><span>Citing OFELI</span></a>
    <li><a href="html/index.html"><span>Class Documentation</span></a>
    <li class="current"><a href="fformats.html"><span>File Formats</span></a>
+   <li><a href="extlib.html"><span>External Libraries</span></a>
    <li><a href="tutorial.html"><span>Tutorial</span></a>
    <li><a href="demos.html"><span>Demo Codes</span></a>
    </ul>
@@ -456,11 +458,11 @@ An example of use of this element is:</span>
         &lt;vertex&gt;  0.   1.   1    0.1&lt;/vertex&gt;
         &lt;vertex&gt;  0.5  0.5  2    0.1&lt;/vertex&gt;
         &lt;vertex&gt;  0.6  0.5  2    0.1&lt;/vertex&gt;
-        &lt;line&gt;   1   2   0   2&lt;/line&gt;
-        &lt;line&gt;   2   3   0   2&lt;/line&gt;
-        &lt;line&gt;   3   4   0   2&lt;/line&gt;
-        &lt;line&gt;   4   1   0   2&lt;/line&gt;
-        &lt;circle&gt; 6   6   5   1   1&lt;/circle&gt;
+        &lt;line&gt;   1   2   1&lt;/line&gt;
+        &lt;line&gt;   2   3   1&lt;/line&gt;
+        &lt;line&gt;   3   4  -2&lt;/line&gt;
+        &lt;line&gt;   4   1  -2&lt;/line&gt;
+        &lt;circle&gt; 6   6   5   1&lt;/circle&gt;
         &lt;subdomain&gt;   1   1  10&lt;/subdomain&gt;
      &lt;/Domain&gt;
 </SPAN></pre>
@@ -495,21 +497,25 @@ Let us describe the subelements of element <span class=TT>Domain</span>:</span><
      will be transferred to the vertex once a mesh is generated</span>
   <li><span class=text>
       The subelement <span class=TT>line</span> describes a straight line by the following data:
-<pre>   <span class=TT>n1  n2  dc  nc</span></pre>
-     where the line goes from vertex <span class=TT>n1</span> to vertex <span class=TT>n2</span> and <span class=TT>dc</span>
-     and <span class=TT>nc</span> are the codes to assign to the nodes generated on the line (Dirichlet) and the
-     to the sides generated on the line (Neumann). Note that line is actually oriented from <span class=TT>n1</span>
+<pre>   <span class=TT>n1  n2  c</span></pre>
+     where the line goes from vertex <span class=TT>n1</span> to vertex <span class=TT>n2</span> and <span class=TT>c</span>
+     is the boundary condition code. This one is assigned to the nodes
+  generated on the line (Dirichlet) if it is positive and its opposite
+  value is assigned 
+     to the sides generated on the line (Neumann) if it is negative. Note that line is actually oriented from <span class=TT>n1</span>
      to <span class=TT>n2</span></span>
   <li><span class=text>The subelement <span class=TT>circle</span> describes a circular arc by the following data:
-<pre>   <span class=TT>n1  n2  n3  dc  nc</span></pre>
+<pre>   <span class=TT>n1  n2  n3  c</span></pre>
      where the arc goes from vertex <span class=TT>n1</span> to vertex
   <span class=TT>n2</span>.
      Note that we can have <span class=TT>n1=n2</span> which in this case generates an entire circle.
      The center of the circle is located at vertex <span class=TT>n3</span>.
-     The integers <span class=TT>dc</span> and <span class=TT>nc</span> stand respectively for
-     the codes to assign to nodes generated on the line (Dirichlet) and the
-     to sides generated on the line (Neumann)
-  <li><span class=text>The subelement <span class=TT>subdomain</span> describes a circular arc by the following data:
+     The integer <span class=TT>c</span> stands for the code to assign
+  to nodes generated on the line (Dirichlet) if the code is positive
+  and its opposite value is assigned to the
+     to sides generated on the line (Neumann) if it is negative.
+  <li><span class=text>The subelement <span class=TT>subdomain</span>
+  describes a subdomain by the following data:
 <pre>   <span class=TT>n  i  c</span></pre>
      where <span class=TT>n</span> is a line (or arc) that belongs to
      the boundary of the subdomain, <span class=TT>i</span> is the arc

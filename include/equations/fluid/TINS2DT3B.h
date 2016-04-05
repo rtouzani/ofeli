@@ -42,6 +42,10 @@
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file TINS2DT3B.h
  *  \brief Definition file for class TINS2DT3B.
@@ -130,6 +134,7 @@ private:
    void setBuyoancy();
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

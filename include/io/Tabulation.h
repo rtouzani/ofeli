@@ -46,6 +46,10 @@ using std::string;
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Tabulation.h
  *  \brief Definition file for class Tabulation.

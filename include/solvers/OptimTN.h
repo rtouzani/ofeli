@@ -45,6 +45,10 @@ using std::setprecision;
 using std::abs;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /* ************************************************************************* */
 /*                                                                           */
@@ -1809,6 +1813,7 @@ inline void objective(OPT_&   theOpt,
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

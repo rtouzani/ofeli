@@ -71,11 +71,11 @@ $(document).ready(function(){initNavTree('classOFELI_1_1EigenProblemSolver.html'
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classOFELI_1_1EigenProblemSolver-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">EigenProblemSolver Class Reference<div class="ingroups"><a class="el" href="group__Solver.html">Solver</a></div></div>  </div>
+<div class="title">EigenProblemSolver Class Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a><a class="el" href="group__OFELI.html">OFELI</a> &raquo;  &#124; <a class="el" href="group__Solver.html">Solver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class to find eigenvalues and corresponding eigenvectors of a given matrixin a generalized eigenproblem, <em>i.e.</em> Find scalars l and non-null vectors v such that [K]{v} = l[M]{v} where [K] and [M] are symmetric matrices. The eigenproblem can be originated from a PDE. For this, we will refer to the matrices K and M as <em>Stiffness</em> and <em>Mass</em> matrices respectively.  
+<p>Class to find eigenvalues and corresponding eigenvectors of a given matrix in a generalized eigenproblem, <em>i.e.</em> Find scalars l and non-null vectors v such that [K]{v} = l[M]{v} where [K] and [M] are symmetric matrices. The eigenproblem can be originated from a PDE. For this, we will refer to the matrices K and M as <em>Stiffness</em> and <em>Mass</em> matrices respectively.  
  <a href="classOFELI_1_1EigenProblemSolver.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -93,7 +93,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a747fde51fa6461c5491e2d477dace469"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1EigenProblemSolver.html#a747fde51fa6461c5491e2d477dace469">EigenProblemSolver</a> (<a class="el" href="classOFELI_1_1SkSMatrix.html">SkSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;K, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;M, int n=0)</td></tr>
 <tr class="memdesc:a747fde51fa6461c5491e2d477dace469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for Symmetric Skyline Matrices.  <a href="#a747fde51fa6461c5491e2d477dace469">More...</a><br /></td></tr>
 <tr class="separator:a747fde51fa6461c5491e2d477dace469"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca9a7e31a62e24a0dbb402cc1f79d909"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1EigenProblemSolver.html#aca9a7e31a62e24a0dbb402cc1f79d909">EigenProblemSolver</a> (<a class="el" href="classOFELI_1_1DSMatrix.html">DSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="namespaceOFELI.html#a8d83ae0344b0fbb3265762cd97e1b1db">A</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;ev, int n=0)</td></tr>
+<tr class="memitem:aca9a7e31a62e24a0dbb402cc1f79d909"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1EigenProblemSolver.html#aca9a7e31a62e24a0dbb402cc1f79d909">EigenProblemSolver</a> (<a class="el" href="classOFELI_1_1DSMatrix.html">DSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;ev, int n=0)</td></tr>
 <tr class="memdesc:aca9a7e31a62e24a0dbb402cc1f79d909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a dense matrix that compute the eigenvalues.  <a href="#aca9a7e31a62e24a0dbb402cc1f79d909">More...</a><br /></td></tr>
 <tr class="separator:aca9a7e31a62e24a0dbb402cc1f79d909"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe5c7e45922f3b89e1402258e0c9d695"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1EigenProblemSolver.html#abe5c7e45922f3b89e1402258e0c9d695">EigenProblemSolver</a> (<a class="el" href="classOFELI_1_1AbsEqua.html">AbsEqua</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;eq, bool lumped=true)</td></tr>
@@ -153,7 +153,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr class="separator:a08a1c049d906271288770e5846c60de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class to find eigenvalues and corresponding eigenvectors of a given matrixin a generalized eigenproblem, <em>i.e.</em> Find scalars l and non-null vectors v such that [K]{v} = l[M]{v} where [K] and [M] are symmetric matrices. The eigenproblem can be originated from a PDE. For this, we will refer to the matrices K and M as <em>Stiffness</em> and <em>Mass</em> matrices respectively. </p>
+<div class="textblock"><p>Class to find eigenvalues and corresponding eigenvectors of a given matrix in a generalized eigenproblem, <em>i.e.</em> Find scalars l and non-null vectors v such that [K]{v} = l[M]{v} where [K] and [M] are symmetric matrices. The eigenproblem can be originated from a PDE. For this, we will refer to the matrices K and M as <em>Stiffness</em> and <em>Mass</em> matrices respectively. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aaad2bcba948bb965950a6c89302c12dc"></a>
 <div class="memitem">

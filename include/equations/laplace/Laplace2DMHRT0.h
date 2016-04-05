@@ -42,6 +42,10 @@
 #include "shape_functions/Line2.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Laplace2DMHRT0.h
  *  \brief Definition file for class Laplace2DMHRT0.
@@ -136,6 +140,7 @@ class Laplace2DMHRT0 : virtual public Equa_Laplace<real_t,3,3,2,2> {
                       const Point<real_t>&           a);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

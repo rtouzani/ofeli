@@ -39,6 +39,10 @@
 #include "io/UserData.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Bar2DL2.h
  *  \brief Definition file for class Bar2DL2.
@@ -173,6 +177,7 @@ class Bar2DL2 : public Equa_Solid<real_t,2,4,1,2>
    SkSMatrix<real_t> _A;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

@@ -76,13 +76,13 @@ extern FunctionParser theParser;
  *  \brief Definition file for class Vect.
  */
 
+
+//! A namespace to group all library classes, functions, ...
+namespace OFELI {
 /*!
  *  \addtogroup OFELI
  *  @{
  */
-
-//! A namespace to group all library classes, functions, ...
-namespace OFELI {
 
 /*! 
  *  \class Vect
@@ -3495,6 +3495,7 @@ ostream &operator<<(ostream&        s,
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 /*! @} */

@@ -44,6 +44,10 @@
 using std::complex;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file HelmholtzBT3.h
  *  \brief Definition file for class HelmholtzBT3.
@@ -93,6 +97,7 @@ class HelmholtzBT3 : virtual public Equa_Electromagnetics<complex_t,3,3,2,2>
    Point<real_t> _x[3];
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

@@ -38,6 +38,10 @@
 #include "equations/therm/Equa_Therm.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file DC1DL2.h
  *  \brief Definition file for class DC1DL2.
@@ -258,6 +262,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
     void set(const Element* el);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

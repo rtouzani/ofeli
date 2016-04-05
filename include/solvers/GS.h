@@ -47,6 +47,10 @@ using std::setw;
 #include "io/output.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file GS.h
  *  \brief Function to solve a linear system of equations
@@ -136,6 +140,7 @@ int GS(const SpMatrix<T_>& A,
    return -it;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

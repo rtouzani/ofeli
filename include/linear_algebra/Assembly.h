@@ -50,6 +50,10 @@
 
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /** \addtogroup VectMat
  *  @{
@@ -66,7 +70,7 @@ namespace OFELI {
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&               e,
                       const LocalVect<T_,N_>& be,
-                            Vect<T_>&         b)
+                      Vect<T_>&               b)
 {
    size_t i=1;
    for (size_t n=1; n<=e.getNbNodes(); n++) {
@@ -87,7 +91,7 @@ void element_assembly(const E_&               e,
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&                    e,
                       const LocalMatrix<T_,N_,N_>& ae,
-                            Vect<T_>&              b)
+                      Vect<T_>&                    b)
 {
    size_t i=0;
    for (size_t n=1; n<=e.getNbNodes(); n++) {
@@ -111,7 +115,7 @@ void element_assembly(const E_&                    e,
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&                    e,
                       const LocalMatrix<T_,N_,N_>& ae,
-                            Matrix<T_>*            A)
+                      Matrix<T_>*                  A)
 {
    size_t i=1;
    for (size_t in=1; in<=e.getNbNodes(); in++) {
@@ -142,7 +146,7 @@ void element_assembly(const E_&                    e,
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&                    e,
                       const LocalMatrix<T_,N_,N_>& ae,
-                            SkMatrix<T_>&          A)
+                      SkMatrix<T_>&                A)
 {
    size_t i = 1;
    for (size_t in=1; in<=e.getNbNodes(); in++) {
@@ -255,7 +259,7 @@ void side_assembly(const E_&               e,
 template<class T_,size_t N_,class E_>
 void side_assembly(const E_&                    e,
                    const LocalMatrix<T_,N_,N_>& ae,
-                         Vect<T_>&              b)
+                   Vect<T_>&                    b)
 {
    for (size_t n=1; n<=N_; n++)
       b.add(e.getNodeLabel(n),ae(n,n));
@@ -272,7 +276,7 @@ void side_assembly(const E_&                    e,
 template<class T_,size_t N_,class E_>
 void side_assembly(const E_&                    e,
                    const LocalMatrix<T_,N_,N_>& ae,
-                         SkSMatrix<T_>&         A)
+                   SkSMatrix<T_>&               A)
 {
    size_t i = 1;
    for (size_t in=1; in<=N_; in++) {
@@ -299,7 +303,7 @@ void side_assembly(const E_&                    e,
 template<class T_,size_t N_>
 void side_assembly(const Element&               e,
                    const LocalMatrix<T_,N_,N_>& ae,
-                         SpMatrix<T_>&          A)
+                   SpMatrix<T_>&                A)
 {
    size_t i = 1;
    for (size_t n=1; n<=e.getNbSides(); n++) {
@@ -326,7 +330,7 @@ void side_assembly(const Element&               e,
 template<class T_,size_t N_>
 void side_assembly(const Element&               e,
                    const LocalMatrix<T_,N_,N_>& ae,
-                         Matrix<T_>*            A)
+                   Matrix<T_>*                  A)
 {
    size_t i = 1;
    for (size_t n=1; n<=e.getNbSides(); n++) {
@@ -352,7 +356,7 @@ void side_assembly(const Element&               e,
 template<class T_, size_t N_>
 void Assembly(const Element&                   el,
               const LocalMatrix<real_t,N_,N_>& Ae,
-                    SpMatrix<T_>&              A)
+              SpMatrix<T_>&                    A)
 {
    for (size_t i=1; i<=el.getNbNodes(); ++i) {
       Node *nd1 = el(i);
@@ -374,7 +378,7 @@ void Assembly(const Element&                   el,
 template<class T_, size_t N_>
 void Assembly(const Element&              el,
               const LocalVect<real_t,N_>& be,
-                    Vect<T_>&             b)
+              Vect<T_>&                   b)
 {
    for (size_t i=1; i<=el.getNbNodes(); ++i) {
       Node *nd = el(i);
@@ -399,7 +403,7 @@ void Assembly(const Element&              el,
 template<class T_,size_t N_>
 void side_assembly(const Element&               e,
                    const LocalMatrix<T_,N_,N_>& ae,
-                         SkSMatrix<T_>&         A)
+                   SkSMatrix<T_>&               A)
 {
    size_t i=1, j, ii, jj;
    for (size_t n=1; n<=e.getNbSides(); n++) {
@@ -432,7 +436,7 @@ void side_assembly(const Element&               e,
 template<class T_,size_t N_>
 void side_assembly(const Element&               e,
                    const LocalMatrix<T_,N_,N_>& ae,
-                         SkMatrix<T_>&          A)
+                   SkMatrix<T_>&                A)
 {
    size_t i = 1;
    for (size_t n=1; n<=e.getNbSides(); n++) {
@@ -467,7 +471,7 @@ void side_assembly(const Element&               e,
 template<class T_,size_t N_>
 void side_assembly(const Element&          e,
                    const LocalVect<T_,N_>& be,
-                         Vect<T_>&         b)
+                   Vect<T_>&               b)
 {
    size_t i = 1;
    for (size_t n=1; n<=e.getNbSides(); n++) {
@@ -482,11 +486,11 @@ void side_assembly(const Element&          e,
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<class E_,class T_>
-void element_assembly(const E_&       e,
-                      const T_*       ae,
-                      const T_*       be,
-                            Vect<T_>& A,
-                            Vect<T_>& b)
+void element_assembly(const E_& e,
+                      const T_* ae,
+                      const T_* be,
+                      Vect<T_>& A,
+                      Vect<T_>& b)
 {
    size_t i=0, j=0, nee=e.getNbNodes()*e.getNbDOF();
    for (size_t in=1; in<=e.getNbNodes(); in++) {
@@ -503,9 +507,9 @@ void element_assembly(const E_&       e,
 
 
 template<class E_>
-void Element_Assembly(const E_&           e,
-                      const real_t*       be,
-                            Vect<real_t>& b)
+void Element_Assembly(const E_&     e,
+                      const real_t* be,
+                      Vect<real_t>& b)
 {
    size_t i=0;
    for (size_t in=1; in<=e.getNbNodes(); in++) {
@@ -517,9 +521,9 @@ void Element_Assembly(const E_&           e,
 
 
 template<class E_,class T_>
-void element_assembly(const E_&       e,
-                      const T_*       be,
-                            Vect<T_>& b)
+void element_assembly(const E_& e,
+                      const T_* be,
+                      Vect<T_>& b)
 {
    size_t i=0;
    for (size_t in=1; in<=e.getNbNodes(); in++) {
@@ -533,11 +537,11 @@ void element_assembly(const E_&       e,
 
 
 template<class E_,class T_>
-void element_assembly(const E_&         e,
-                      const T_*         ae,
-                      const T_*         be,
-                            Matrix<T_>* A,
-                            Vect<T_>&   b)
+void element_assembly(const E_&   e,
+                      const T_*   ae,
+                      const T_*   be,
+                      Matrix<T_>* A,
+                      Vect<T_>&   b)
 {
    size_t i=0, j=0, ii=0, jj=0;
    size_t nen=e.getNbNodes(), nb_dof=e.getNbDOF();
@@ -559,9 +563,9 @@ void element_assembly(const E_&         e,
 
 
 template<class E_,class T_>
-void element_assembly(const E_&         e,
-                      const T_*         ae,
-                            Matrix<T_>* A)
+void element_assembly(const E_&   e,
+                      const T_*   ae,
+                      Matrix<T_>* A)
 {
    size_t i=0, j=0, jj=0;
    size_t nen=e.getNbNodes(), nb_dof=e.getNbDOF();
@@ -582,9 +586,9 @@ void element_assembly(const E_&         e,
 
 
 template<class E_,class T_>
-void element_assembly(const E_&       e,
-                      const T_*       ae,
-                            Vect<T_>* A)
+void element_assembly(const E_& e,
+                      const T_* ae,
+                      Vect<T_>* A)
 {
    size_t i=0, j=0;
    size_t nen=e.getNbNodes(), nb_dof=e.getNbDOF();
@@ -607,7 +611,7 @@ template<class T_>
 void update_bc(const Element&  el,
                const Vect<T_>& bc,
                const T_*       eA,
-                     T_*       eb)
+               T_*             eb)
 {
    size_t nen=el.getNbNodes(), nb_dof=el.getNbDOF(), in=0, ij=0;
    for (size_t i=1; i<=nen; i++) {
@@ -628,7 +632,7 @@ template<class T_>
 void update_bc(const Side&     sd,
                const Vect<T_>& bc,
                const T_*       sA,
-                     T_*       sb)
+               T_*             sb)
 {
   if (sb==NULL)
      return;
@@ -651,7 +655,7 @@ template<class T_>
 void update_bc_diag(const Element&  el,
                     const Vect<T_>& bc,
                     const T_*       eA,
-                          T_*       eb)
+                    T_*             eb)
 {
    size_t nen=el.getNbNodes(), nb_dof=el.getNbDOF(), in=0, ij=0;
    for (size_t i=1; i<=nen; i++) {
@@ -667,7 +671,7 @@ template<class T_>
 void update_bc_diag(const Side&     sd,
                     const Vect<T_>& bc,
                     const T_*       sA,
-                          T_*       sb)
+                    T_*             sb)
 {
   if (sA==NULL)
      return;
@@ -683,6 +687,7 @@ void update_bc_diag(const Side&     sd,
 
 /*  @}  */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

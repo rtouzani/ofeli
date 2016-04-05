@@ -42,7 +42,13 @@
 
 using namespace std;
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 class Mesh;
 class IPF;
@@ -51,8 +57,6 @@ class Tabulation;
 
 template <class T_> class Vect;
 
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 class XMLParser : public Parser
 {
@@ -195,8 +199,9 @@ class XMLParser : public Parser
    int _rtype;
 };
 
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #endif

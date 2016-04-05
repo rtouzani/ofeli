@@ -50,6 +50,10 @@ using std::valarray;
  */
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 struct Pt
@@ -183,6 +187,7 @@ class FastMarching2D
     void setGrayWithObstacle(size_t i, size_t j);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

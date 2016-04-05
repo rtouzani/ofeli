@@ -43,6 +43,10 @@
 #include "linear_algebra/Point.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file UserData.h
  *  \brief Definition file for abstract class UserData.
@@ -224,6 +228,7 @@ template <class T_> class UserData
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

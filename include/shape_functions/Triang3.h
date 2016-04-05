@@ -37,6 +37,10 @@
 #include "shape_functions/FEShape.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Triang3.h
  *  \brief Definition file for class Triang3.
@@ -129,6 +133,7 @@ public:
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

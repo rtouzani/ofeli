@@ -36,6 +36,10 @@
 #include "shape_functions/FEShape.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Tetra4.h
  *  \brief Definition file for class Tetra4.
@@ -121,6 +125,7 @@ public :
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

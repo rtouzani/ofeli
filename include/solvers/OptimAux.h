@@ -36,6 +36,10 @@
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file OptimAux.h
  *  \ingroup Solver

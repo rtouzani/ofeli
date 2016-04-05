@@ -53,6 +53,10 @@ using std::string;
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 
 /*! \file Muscl2DT.h
@@ -179,6 +183,7 @@ protected:
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

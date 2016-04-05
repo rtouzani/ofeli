@@ -40,6 +40,10 @@
 #include "equations/cl/Muscl1D.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file ICPG1D.h
  *  \brief Definition file for class ICPG1D.
@@ -265,6 +269,7 @@ class ICPG1D : public Muscl1D {
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

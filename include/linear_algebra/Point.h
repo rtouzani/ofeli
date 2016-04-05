@@ -44,6 +44,10 @@ using std::ios;
 #include <math.h>
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Point.h
  *  \brief Definition file and implementation for class Point.
@@ -409,6 +413,7 @@ std::ostream & operator<<(      std::ostream& s,
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

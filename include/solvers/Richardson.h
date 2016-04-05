@@ -45,6 +45,10 @@ using std::setw;
 #include "io/output.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Richardson.h
  *  \brief Function to solve a linear system of equations using the Richardson method.
@@ -109,6 +113,7 @@ int Richardson(const M_&       A,
    return -it;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

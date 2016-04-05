@@ -41,6 +41,10 @@
 #include "shape_functions/Line2.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Elas2DQ4.h
  *  \brief Definition file for class Elas2DQ4.
@@ -215,6 +219,7 @@ class Elas2DQ4 : virtual public Equa_Solid<real_t,4,8,2,4>
    void set(const Side *sd);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

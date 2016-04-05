@@ -40,6 +40,10 @@
 #include "equations/cl/Muscl2DT.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 
 /*! \file LCL2DT.h
@@ -145,6 +149,7 @@ protected:
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

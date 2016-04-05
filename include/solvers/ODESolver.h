@@ -52,6 +52,10 @@ using std::string;
 #include "equations/AbsEqua.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file ODESolver.h
  *  \brief Definition file for class ODESolver.
@@ -392,6 +396,7 @@ class ODESolver
     ostream & operator<<(      ostream&   s,
                          const ODESolver& de);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

@@ -35,11 +35,16 @@
 #include <vector>
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file qksort.h
  *  \brief File that contains template quick sorting function.
  */
- 
+
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<class T_>
 bool _less(const T_ &x, const T_ &y);
@@ -183,6 +188,7 @@ inline void _swap(T_& a,
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

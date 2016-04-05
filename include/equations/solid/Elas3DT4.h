@@ -39,6 +39,10 @@
 #include "equations/solid/Equa_Solid.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Elas3DT4.h
  *  \brief Definition file for class Elas3DT4.
@@ -144,6 +148,7 @@ class Elas3DT4 : virtual public Equa_Solid<real_t,4,12,3,9>
    void set(const Side *sd);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

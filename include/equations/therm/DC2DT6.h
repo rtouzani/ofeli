@@ -41,6 +41,10 @@
 #include "shape_functions/Line3.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file DC2DT6.h
  *  \brief Definition file for class DC2DT6.
@@ -257,6 +261,7 @@ class DC2DT6 : virtual public Equa_Therm<real_t,6,6,3,3>
    Line3          *_ln;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

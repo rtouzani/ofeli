@@ -41,6 +41,10 @@
 #include "equations/interface/FMM.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*!
  * \class FMM2D
@@ -101,6 +105,7 @@ class FMM2D : public FMM
                    Vect<real_t>& F);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

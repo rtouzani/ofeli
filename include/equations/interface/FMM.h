@@ -43,6 +43,10 @@
 #include <limits>
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -130,6 +134,7 @@ int MaxQuadratic(real_t  a,
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

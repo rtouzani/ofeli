@@ -53,7 +53,10 @@ using std::string;
 #include "mesh/MeshUtil.h"
 
 namespace OFELI {
-
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Muscl3DT.h
  *  \brief Definition file for class Muscl3DT
@@ -221,6 +224,7 @@ class Muscl3DT : public Muscl {
 /// \ingroup Solver
     ostream & operator<<(ostream& s, const Muscl3DT &m);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

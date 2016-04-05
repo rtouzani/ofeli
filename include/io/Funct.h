@@ -43,6 +43,10 @@ using std::string;
 extern FunctionParser theParser;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Funct.h
  *  \brief Definition file for class Funct.
@@ -145,6 +149,7 @@ class Funct
    string _vn;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

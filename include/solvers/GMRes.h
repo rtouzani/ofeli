@@ -52,6 +52,10 @@ using std::setprecision;
 #include "io/output.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file GMRes.h
  *  \brief Function to solve a linear system of equations
@@ -252,6 +256,7 @@ int GMRes(const SpMatrix<T_>& A,
    return GMRes(A,Prec<T_>(A,prec),b,x,m,max_it,toler,verbose);
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

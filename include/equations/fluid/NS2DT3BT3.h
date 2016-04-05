@@ -38,6 +38,10 @@
 #include "io/UserData.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -143,6 +147,7 @@ private :
 };
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

@@ -35,6 +35,10 @@
 #include "mesh/Domain.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Figure.h
  *  \brief Definition file for figure classes.
@@ -803,6 +807,7 @@ class Polygon : public Figure
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

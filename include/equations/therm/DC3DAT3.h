@@ -40,6 +40,10 @@
 #include "linear_algebra/LocalMatrix.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file DC3DAT3.h
  *  \brief Definition file for class DC3DAT3.
@@ -229,6 +233,7 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
     Point<real_t> _grad;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

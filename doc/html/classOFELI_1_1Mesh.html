@@ -72,7 +72,7 @@ $(document).ready(function(){initNavTree('classOFELI_1_1Mesh.html','');});
 <a href="#friends">Friends</a> &#124;
 <a href="classOFELI_1_1Mesh-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Mesh Class Reference<div class="ingroups"><a class="el" href="group__Mesh.html">Finite Element Mesh</a></div></div>  </div>
+<div class="title">Mesh Class Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a><a class="el" href="group__OFELI.html">OFELI</a> &raquo;  &#124; <a class="el" href="group__Mesh.html">Finite Element Mesh</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -85,9 +85,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a2a23c7c0c4e0da252b7bc0e13b6f81d8">Mesh</a> ()</td></tr>
 <tr class="memdesc:a2a23c7c0c4e0da252b7bc0e13b6f81d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor (Empty mesh) <br /></td></tr>
 <tr class="separator:a2a23c7c0c4e0da252b7bc0e13b6f81d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d439e295e75603a60f1bb6ee593ca14"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a7d439e295e75603a60f1bb6ee593ca14">Mesh</a> (const string &amp;file, bool bc=false, int opt=NODE_DOF)</td></tr>
-<tr class="memdesc:a7d439e295e75603a60f1bb6ee593ca14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a mesh file.  <a href="#a7d439e295e75603a60f1bb6ee593ca14">More...</a><br /></td></tr>
-<tr class="separator:a7d439e295e75603a60f1bb6ee593ca14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb36f72caebac10b2dc4fa4b3cfa348"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a0eb36f72caebac10b2dc4fa4b3cfa348">Mesh</a> (const string &amp;file, bool bc=false, int opt=NODE_DOF, int nb_dof=1)</td></tr>
+<tr class="memdesc:a0eb36f72caebac10b2dc4fa4b3cfa348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a mesh file.  <a href="#a0eb36f72caebac10b2dc4fa4b3cfa348">More...</a><br /></td></tr>
+<tr class="separator:a0eb36f72caebac10b2dc4fa4b3cfa348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad565a2bfeecdc7a79103e05e60594b89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#ad565a2bfeecdc7a79103e05e60594b89">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> L, size_t nb_el, size_t p=1, size_t nb_dof=1)</td></tr>
 <tr class="memdesc:ad565a2bfeecdc7a79103e05e60594b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a 1-D mesh. The domain is the interval [0,L].  <a href="#ad565a2bfeecdc7a79103e05e60594b89">More...</a><br /></td></tr>
 <tr class="separator:ad565a2bfeecdc7a79103e05e60594b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,9 +97,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a30bba05320d35fffb075fd54648ab696"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a30bba05320d35fffb075fd54648ab696">Mesh</a> (const <a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;g, int shape, int opt)</td></tr>
 <tr class="memdesc:a30bba05320d35fffb075fd54648ab696"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of dual mesh for a uniform finite difference grid given by and instance of class <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a>.  <a href="#a30bba05320d35fffb075fd54648ab696">More...</a><br /></td></tr>
 <tr class="separator:a30bba05320d35fffb075fd54648ab696"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a003b08c3bcd12a52d6249945b25dfbd2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a003b08c3bcd12a52d6249945b25dfbd2">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xL, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> yL, size_t nx, size_t ny, int c1, int c2, int c3, int c4, int opt=0)</td></tr>
-<tr class="memdesc:a003b08c3bcd12a52d6249945b25dfbd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a uniform finite difference grid.  <a href="#a003b08c3bcd12a52d6249945b25dfbd2">More...</a><br /></td></tr>
-<tr class="separator:a003b08c3bcd12a52d6249945b25dfbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a268117aab5b996a391325da5a779d59e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a268117aab5b996a391325da5a779d59e">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, size_t ne, int c1, int c2, int opt=0)</td></tr>
+<tr class="memdesc:a268117aab5b996a391325da5a779d59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a uniform 1-D finite element mesh.  <a href="#a268117aab5b996a391325da5a779d59e">More...</a><br /></td></tr>
+<tr class="separator:a268117aab5b996a391325da5a779d59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55d10778a0b39c1bd927394db9523daa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a55d10778a0b39c1bd927394db9523daa">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymin, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymax, size_t nx, size_t ny, int c1, int c2, int c3, int c4, int opt=0)</td></tr>
+<tr class="memdesc:a55d10778a0b39c1bd927394db9523daa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a uniform 2-D structured finite element mesh.  <a href="#a55d10778a0b39c1bd927394db9523daa">More...</a><br /></td></tr>
+<tr class="separator:a55d10778a0b39c1bd927394db9523daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60db3ca388f9d538650a3f6967a1b98e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a60db3ca388f9d538650a3f6967a1b98e">Mesh</a> (const <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x_bl, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x_tr)</td></tr>
 <tr class="memdesc:a60db3ca388f9d538650a3f6967a1b98e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that extracts the mesh of a rectangular region from an initial mesh.  <a href="#a60db3ca388f9d538650a3f6967a1b98e">More...</a><br /></td></tr>
 <tr class="separator:a60db3ca388f9d538650a3f6967a1b98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -528,7 +531,7 @@ Friends</h2></td></tr>
 <p>Class <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> enables defining as an object a finite element mesh. A finite element mesh is characterized by its nodes, elements and sides. Each of these types of data constitutes a class in the <a class="el" href="namespaceOFELI.html" title="A namespace to group all library classes, functions, ... ">OFELI</a> library.</p>
 <p>The standard procedure to introduce the finite element mesh is to provide an input file containing its data. For this, we have defined our own mesh data file (following the XML syntax). Of course, a developer can write his own function to read his finite element mesh file using the methods in <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a7d439e295e75603a60f1bb6ee593ca14"></a>
+<a class="anchor" id="a0eb36f72caebac10b2dc4fa4b3cfa348"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -548,7 +551,13 @@ Friends</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>opt</em> = <code>NODE_DOF</code>&#160;</td>
+          <td class="paramname"><em>opt</em> = <code>NODE_DOF</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nb_dof</em> = <code>1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -561,10 +570,11 @@ Friends</h2></td></tr>
 <p>Constructor using a mesh file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>File containing mesh data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>File containing mesh data. The extension of the file yields the file format: The extension .m implies <a class="el" href="namespaceOFELI.html" title="A namespace to group all library classes, functions, ... ">OFELI</a> file format and .msh implies GMSH msh file. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bc</td><td>Flag to remove (true) or not (false) imposed Degrees of Freedom [default: false] </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Type of DOF support: To choose among enumerated values <code>NODE_DOF</code>, <code>SIDE_DOF</code> or <code>ELEMENT_DOF</code>.<br />
 Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb_dof</td><td>Number of degrees of freedom per node [Default: <code>1</code>]. This value is meaningful only if other format than <a class="el" href="namespaceOFELI.html" title="A namespace to group all library classes, functions, ... ">OFELI</a>'s one is used. Otherwise, the information is contained in the <a class="el" href="namespaceOFELI.html" title="A namespace to group all library classes, functions, ... ">OFELI</a> file format. </td></tr>
   </table>
   </dd>
 </dl>
@@ -706,7 +716,7 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
 
 </div>
 </div>
-<a class="anchor" id="a003b08c3bcd12a52d6249945b25dfbd2"></a>
+<a class="anchor" id="a268117aab5b996a391325da5a779d59e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -714,13 +724,89 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
           <td class="memname"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>xL</em>, </td>
+          <td class="paramname"><em>xmin</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>yL</em>, </td>
+          <td class="paramname"><em>xmax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>ne</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>c1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>c2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>opt</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for a uniform 1-D finite element mesh. </p>
+<p>The domain is the line (xmin,xmax) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xmin</td><td>Minimal coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">xmax</td><td>Maximal coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ne</td><td>Number of elements </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">c1</td><td>Code for the first node (x=xmin) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">c2</td><td>Code for the last node (x=xmax) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Flag to generate elements as well (if not zero) [Default: 0]. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>The option opt can be set to 0 if the user intends to use finite differences. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a55d10778a0b39c1bd927394db9523daa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>xmin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>xmax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>ymin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>ymax</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -772,11 +858,13 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
       </table>
 </div><div class="memdoc">
 
-<p>Constructor for a uniform finite difference grid. </p>
-<p>The domain is the rectangle (0,Lx)x(0,Ly) </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor for a uniform 2-D structured finite element mesh. </p>
+<p>The domain is the rectangle (xmin,xmax)x(ymin,ymax) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">xL</td><td>Length in the x-direction </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">yL</td><td>Length in the y-direction </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">xmin</td><td>Minimal x-coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">xmax</td><td>Maximal x-coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ymin</td><td>Minimal y-coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ymax</td><td>Maximal y-coordinate </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nx</td><td>Number of subintervals on the x-axis </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ny</td><td>Number of subintervals on the y-axis </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">c1</td><td>Code for nodes generated on the line y=0 </td></tr>
@@ -787,6 +875,7 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
   </table>
   </dd>
 </dl>
+<dl class="section remark"><dt>Remarks</dt><dd>The option opt can be set to 0 if the user intends to use finite differences. </dd></dl>
 
 </div>
 </div>

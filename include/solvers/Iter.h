@@ -37,6 +37,10 @@
 #include "OFELI_Config.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \class Iter
  *  \ingroup Solver
@@ -173,6 +177,7 @@ bool Iter<T_>::check(      Vect<T_>& u,
       return false;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

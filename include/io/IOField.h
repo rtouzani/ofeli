@@ -59,6 +59,10 @@ using std::setprecision;
 
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file IOField.h
  *  \brief Definition file for class IOField.

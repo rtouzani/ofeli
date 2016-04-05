@@ -46,6 +46,10 @@
 #include "petsctao.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! 
  *  \class PETScWrapper
@@ -427,6 +431,7 @@ ostream &operator<<(      ostream&          s,
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 /*! @} */

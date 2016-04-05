@@ -38,6 +38,10 @@
 using std::string;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file util.h
  *  \brief File that contains various utility functions.
@@ -686,6 +690,7 @@ inline std::string zeros(size_t m,
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

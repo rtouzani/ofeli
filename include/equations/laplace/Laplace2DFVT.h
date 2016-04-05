@@ -41,6 +41,10 @@
 #include "equations/laplace/Equa_Laplace.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Laplace2DFVT.h
  *  \brief Definition file for class Laplace.
@@ -114,6 +118,7 @@ class Laplace2DFVT : virtual public Equa_Laplace<real_t,3,3,2,2>
    Vect<real_t>        *_b, *_u;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

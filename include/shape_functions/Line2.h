@@ -36,6 +36,10 @@
 #include "shape_functions/FEShape.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /** \defgroup Shape Shape Function
  *  \brief Gathers shape function classes
@@ -128,6 +132,7 @@ class Line2 : public FEShape
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

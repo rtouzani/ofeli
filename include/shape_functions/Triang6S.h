@@ -37,6 +37,10 @@
 #include "shape_functions/FEShape.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Triang6S.h
  *  \brief Definition file for class Triang6S.
@@ -109,6 +113,7 @@ class Triang6S : public triangle
    Point<real_t> _x21, _x31, _x32;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

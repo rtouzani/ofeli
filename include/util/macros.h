@@ -36,6 +36,12 @@
 using std::exception;
 using std::endl;
 
+namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define THROW_RT(s)   throw std::runtime_error(s)
 
@@ -312,5 +318,8 @@ using std::endl;
 #define IterationLoop \
           while (++theIteration<MaxNbIterations && Converged==false)
 
+
+/*! @} End of Doxygen Groups */
+} /* namespace OFELI */
 
 #endif

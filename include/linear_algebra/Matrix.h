@@ -44,6 +44,10 @@ using std::ostream;
 #include "util/util.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 template<class T_> class DMatrix;
 
@@ -1076,6 +1080,7 @@ T_ Matrix<T_>::operator[](size_t k) const
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

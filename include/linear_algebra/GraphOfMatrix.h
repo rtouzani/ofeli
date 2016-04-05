@@ -46,6 +46,10 @@ using std::vector;
 using std::pair;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 typedef std::pair<size_t,size_t> RC;
@@ -185,9 +189,9 @@ using std::unique;
     size_t DGGraph(const Mesh&       m,
     	                 vector<RC>& I);
 
-    void StoreGraph(const vector<RC>&     IJ,
-                          vector<size_t>& row_ptr,
-                          vector<size_t>& col_ind);
+    void StoreGraph(const vector<RC>& IJ,
+                    vector<size_t>&   row_ptr,
+                    vector<size_t>&   col_ind);
 
     size_t getMatrixLength(const vector<size_t>& ch);
 
@@ -197,6 +201,7 @@ using std::unique;
                          vector<size_t>& nbc);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

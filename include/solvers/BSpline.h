@@ -42,6 +42,10 @@
 
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 void compute_intervals(Vect<size_t>& u,
                        size_t        n,
@@ -84,6 +88,7 @@ void BSpline(size_t                n,
              Vect<Point<real_t> >& output,
              size_t                num_output);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

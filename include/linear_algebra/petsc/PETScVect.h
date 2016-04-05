@@ -54,6 +54,10 @@ extern FunctionParser theParser;
  */
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! 
  *  \class PETScVect
@@ -2862,6 +2866,7 @@ ostream &operator<<(ostream&       s,
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

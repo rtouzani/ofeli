@@ -50,6 +50,10 @@ using std::cerr;
 #include "linear_algebra/Point.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file BiotSavart.h
  *  \brief Definition file for class BiotSavart.
@@ -228,6 +232,7 @@ class BiotSavart
    void setLine();
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

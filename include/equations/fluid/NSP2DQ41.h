@@ -42,6 +42,10 @@
 #include "io/UserData.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file NSP2DQ41.h
  *  \brief Definition file for class NSP2DQ41.
@@ -162,6 +166,7 @@ class NSP2DQ41 : virtual public Equa_Fluid<real_t,4,8,2,4>
    real_t              _cgx, _cgy;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

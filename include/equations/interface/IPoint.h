@@ -39,6 +39,10 @@
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 class IPoint
 {
@@ -104,6 +108,7 @@ IPoint operator*(const int&    i,
 void GenerateDisplacement(LocalVect<IPoint,6>& NXi,
                           bool                 three_D=false);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

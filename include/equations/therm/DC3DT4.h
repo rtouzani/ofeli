@@ -38,6 +38,10 @@
 #include "equations/therm/Equa_Therm.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file DC3DT4.h
  *  \brief Definition file for class DC3DT4.
@@ -282,6 +286,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
    Point<real_t> _grad;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

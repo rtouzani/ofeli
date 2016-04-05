@@ -53,6 +53,10 @@ using std::string;
 #include "solvers/LinearSolver.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 
 /*! \file TimeStepping.h
@@ -428,6 +432,7 @@ e)
     ostream & operator<<(      ostream&      s,
                          const TimeStepping& ts);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

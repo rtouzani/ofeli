@@ -34,6 +34,12 @@
 
 #include <float.h>
 
+namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
+
 /*! \file constants.h
  *  \ingroup Util
  *  \brief File that contains some widely used constants.
@@ -131,5 +137,8 @@
  * = Unit imaginary number (\c i)
  */
 #define OFELI_IMAG std::complex<double>(0.,1.);
+
+/*! @} End of Doxygen Groups */
+} /* namespace OFELI */
 
 #endif

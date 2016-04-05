@@ -36,6 +36,10 @@
 #include "shape_functions/FEShape.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Quad4.h
  *  \brief Definition file for class Quad4.
@@ -116,6 +120,7 @@ class Quad4 : public FEShape
     bool _localized;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

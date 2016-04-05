@@ -49,6 +49,10 @@
 #include "Material.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 void getMatrix(const SpMatrix<T_>& A)
@@ -279,6 +283,7 @@ void DiagBC(int dof_type,
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

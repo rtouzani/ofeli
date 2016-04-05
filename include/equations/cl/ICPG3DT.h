@@ -40,6 +40,10 @@
 #include "equations/cl/Muscl3DT.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file ICPG3DT.h
  *  \brief Definition file for class ICPG3DT.
@@ -238,6 +242,7 @@ public:
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

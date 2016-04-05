@@ -58,6 +58,10 @@ int main_bamg(string emfile, string outfile);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Domain.h
  *  \brief Definition file for class Domain.
@@ -323,7 +327,6 @@ private:
                size_t ne2,
                size_t i,
                size_t j,
-               size_t nb_dof,
                int    c1,
                int    c2,
                int    c3,
@@ -336,13 +339,10 @@ private:
                  int     c2,
                  int     c3,
                  int     c4,
-                 int     cs1,
-                 int     cs2, 
-                 int     cs3,
-                 int     cs4,
                  string  file);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

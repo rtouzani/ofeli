@@ -38,6 +38,10 @@
 #include "solvers/TimeStepping.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \defgroup Solid Solid Mechanics
  *  \brief Gathers Solid Mechanics finite element equations related classes
@@ -348,8 +352,9 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    real_t  _E, _nu, _lambda, _G, _rho, _coef;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
-    };
+};
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

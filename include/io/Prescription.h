@@ -56,6 +56,10 @@ using std::string;
 extern FunctionParser theParser;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Prescription.h
  *  \brief Definition file for class Prescription.
@@ -142,6 +146,7 @@ class Prescription
    void get_initial(Vect<real_t> &v, size_t k);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

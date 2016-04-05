@@ -38,6 +38,10 @@
 #include "solvers/TimeStepping.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \defgroup Therm Heat Transfer
  *  \brief Gathers Heat Transfer equation classes
@@ -384,6 +388,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

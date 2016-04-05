@@ -43,6 +43,10 @@
 #define GAUSS2 0.577350269189625764509148780501957
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 
 class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
@@ -107,6 +111,7 @@ class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
    void set(const Side *sd);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

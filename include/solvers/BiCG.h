@@ -50,6 +50,10 @@ using std::setprecision;
 #include "io/output.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \defgroup Solver Solver
  *  \brief Gathers Solver functions
@@ -181,6 +185,7 @@ int BiCG(const SpMatrix<T_>& A,
    return BiCG(A,Prec<T_>(A,prec),b,x,max_it,toler,verbose);
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

@@ -44,6 +44,10 @@ using std::setw;
 #include "io/output.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file SSOR.h
  *  \brief Function to solve a linear system of equations
@@ -127,6 +131,7 @@ int SSOR(const M_&       A,
    return -it;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

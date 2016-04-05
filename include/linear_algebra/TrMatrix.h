@@ -36,6 +36,10 @@
 #include "linear_algebra/Matrix.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file TrMatrix.h
  *  \brief Definition file for class TrMatrix.
@@ -643,6 +647,7 @@ ostream& operator<<(ostream&            s,
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

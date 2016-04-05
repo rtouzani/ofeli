@@ -61,9 +61,14 @@ using std::vector;
 #include "util/util.h"
 #include "io/fparser/fparser.h"
 
-namespace OFELI {
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
+
 
 /*! \file FFI.h
  *  \brief Definition file for class FFI.
@@ -183,8 +188,9 @@ class FFI
 
    int get_token();
 };
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #endif

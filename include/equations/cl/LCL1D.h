@@ -40,6 +40,10 @@
 #include "equations/cl/Muscl1D.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 
 /*! \file LCL1D.h
@@ -152,6 +156,7 @@ public:
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

@@ -52,6 +52,10 @@ using std::setprecision;
 #include "io/output.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file CG.h
  *  \brief Functions to solve a symmetric positive definite linear system of equations
@@ -173,6 +177,7 @@ int CG(const SpMatrix<T_>& A,
    return CG(A,Prec<T_>(A,prec),b,x,max_it,toler,verbose);
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

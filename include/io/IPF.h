@@ -41,6 +41,10 @@ using std::string;
 using std::complex;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file IPF.h
  *  \brief Definition file for class IPF.
@@ -405,6 +409,7 @@ private:
    void init();
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

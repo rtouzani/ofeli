@@ -39,6 +39,10 @@ using std::complex;
 using std::abs;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \defgroup Electromagnetics Electromagnetics
  *  \brief Gathers electromagnetic equation classes
@@ -151,6 +155,7 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

@@ -39,6 +39,10 @@
 #include "equations/electromagnetics/Equa_Electromagnetics.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file EC2D1T3.h
  *  \brief Definition file for class EC2D1T3.
@@ -141,6 +145,7 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

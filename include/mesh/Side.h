@@ -45,6 +45,10 @@ using std::string;
 #include "mesh/Edge.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Side.h
  *  \brief Definition file for class Side.
@@ -346,6 +350,7 @@ private:
     ostream& operator<<(      ostream& s,
                         const Side&    sd);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

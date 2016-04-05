@@ -40,6 +40,10 @@ extern FunctionParser theParser;
 
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Equation.h
  *  \brief Definition file for class Equation.
@@ -980,6 +984,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::Init(const Side* sd)
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

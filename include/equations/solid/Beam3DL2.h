@@ -40,6 +40,10 @@
 #include "io/UserData.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Beam3DL2.h
  *  \brief Definition file for class Beam3DL2.
@@ -192,6 +196,7 @@ private:
    void set(const Element *el);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

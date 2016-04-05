@@ -36,6 +36,10 @@
 #include "shape_functions/FEShape.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Penta6.h
  *  \brief Definition file for class Penta6.
@@ -103,6 +107,7 @@ class Penta6 : public FEShape
     real_t getMinEdgeLength() const;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

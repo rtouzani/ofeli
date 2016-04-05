@@ -39,6 +39,10 @@
 using std::string;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file PhaseChange.h
  *  \brief Definition file for class PhaseChange and its parent abstract class.
@@ -112,6 +116,7 @@ void setPhaseChangeLaw(C_&     c,
                        real_t& T,
                        real_t& gamma);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

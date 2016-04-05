@@ -51,6 +51,10 @@ using std::setprecision;
 #include "io/output.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file CGS.h
  *  \brief Solves an unsymmetric linear system of equations using the Conjugate Gradient Squared method.
@@ -187,6 +191,7 @@ int CGS(const SpMatrix<T_>& A,
    return CGS(A,Prec<T_>(A,prec),b,x,max_it,toler,verbose);
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

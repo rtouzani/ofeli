@@ -41,6 +41,10 @@
 #include "shape_functions/Quad4.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Elas3DH8.h
  *  \brief Definition file for class Elas3DH8.
@@ -145,6 +149,7 @@ private :
    void set(const Side *sd);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

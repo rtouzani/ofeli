@@ -45,6 +45,10 @@ using std::setw;
 #include "linear_algebra/Matrix.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Prec.h
  *  \brief Definition file for preconditioning classes.
@@ -365,6 +369,7 @@ template<class T_> class Prec
    }
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

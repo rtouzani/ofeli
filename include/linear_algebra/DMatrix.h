@@ -38,6 +38,10 @@
 
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file DMatrix.h
  *  \brief Definition file for class DMatrix.
@@ -1229,6 +1233,7 @@ ostream& operator<<(      ostream&     s,
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

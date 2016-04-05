@@ -39,6 +39,10 @@
 #include "equations/cl/Muscl.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Muscl1D.h
  *  \brief Definition file for class Muscl1D.
@@ -120,6 +124,7 @@ class Muscl1D : public Muscl {
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

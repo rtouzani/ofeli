@@ -700,7 +700,7 @@ int Domain::Rectangle()
       for (size_t j=0; j<=ne1; j++) {
          the_node = new Node(++k,Point<real_t>(x,y,0));
          The_node.setNbDOF(_nb_dof);
-         c = setCode(ne1,ne2,i,j,_nb_dof,c1,c2,c3,c4);
+         c = setCode(ne1,ne2,i,j,c1,c2,c3,c4);
          dof_code(c,cd);
          The_node.setCode(&cd[0]);
          The_node.setDOF(first_dof,_nb_dof);
@@ -819,15 +819,19 @@ int Domain::Rectangle(real_t* x,
                       int     c2,
                       int     c3,
                       int     c4,
-                      int     cs1,
-                      int     cs2,
-                      int     cs3,
-                      int     cs4,
                       string  file)
 {
    size_t m1, m2, m3, nn1, nn2, nn3;
    vector<int> cd;
-   int cc1=c1, cc2=c2, cc3=c3, cc4=c4;
+   int cs1=0, cs2=0, cs3=0, cs4=0;
+   if (c1<0)
+      cs1 = -c1, c1 = 0;
+   if (c2<0)
+      cs2 = -c2, c2 = 0;
+   if (c3<0)
+      cs3 = -c3, c3 = 0;
+   if (c4<0)
+      cs4 = -c4, c4 = 0;
 
 // Nodes
    _theMesh = new Mesh;
@@ -835,7 +839,6 @@ int Domain::Rectangle(real_t* x,
    size_t k = 0;
    real_t lx=x[2]-x[0], ly=x[3]-x[1];
    real_t hx, hy=ly/real_t(n2);
-   int c;
    if (r!=1 && r>0)
       hy = ly*(r-1.)/(pow(r,real_t(n2))-1.);
    real_t yy=x[1], cs=1.75;
@@ -849,21 +852,11 @@ int Domain::Rectangle(real_t* x,
          yy = x[1] + 0.5*ly*(1.+tanh(cs*((2.*i)/n1-1.0))/tanh(cs));
 
       for (size_t j=0; j<=n1; j++) {
-         if (r < 0)
+         if (r<0)
             xx = x[0] + 0.5*lx*(1.+tanh(cs*((2.*j)/n2-1.0))/tanh(cs));
          the_node = new Node(++k,Point<real_t>(xx,yy,0));
          The_node.setNbDOF(_nb_dof);
-         if (i==0 && j==0)
-            c = cc1;
-         else if (i==n2 && j==0)
-            c = cc4;
-         else if (i==n2 && j==n1)
-            c = cc3;
-         else if (i==0 && j==n1)
-            c = cc2;
-         else
-            c = setCode(n1,n2,i,j,_nb_dof,c1,c2,c3,c4);
-         dof_code(c,cd);
+         dof_code(setCode(n1,n2,i,j,c1,c2,c3,c4),cd);
          The_node.setCode(&cd[0]);
          The_node.setDOF(first_dof,_nb_dof);
          _theMesh->Add(the_node);
@@ -961,7 +954,6 @@ int Domain::setCode(size_t ne1,
                     size_t ne2,
                     size_t i,
                     size_t j,
-                    size_t nb_dof,
                     int    c1,
                     int    c2,
                     int    c3,

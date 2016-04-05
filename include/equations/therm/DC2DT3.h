@@ -37,6 +37,10 @@
 #include "equations/therm/Equa_Therm.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file DC2DT3.h
  *  \brief Definition file for class DC2DT3.
@@ -394,6 +398,7 @@ class DC2DT3 : public Equa_Therm<real_t,3,3,2,2>
     real_t _h;
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

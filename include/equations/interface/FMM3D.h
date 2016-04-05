@@ -43,6 +43,10 @@
 #include "equations/interface/FMM.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*!
  * \class FMM3D
@@ -109,6 +113,7 @@ class FMM3D : public FMM
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

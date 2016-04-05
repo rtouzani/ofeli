@@ -36,6 +36,10 @@
 #include "Point.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Point2D.h
  *  \brief Definition file for class Point2D.
@@ -365,6 +369,7 @@ std::ostream & operator<<(      std::ostream& s,
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

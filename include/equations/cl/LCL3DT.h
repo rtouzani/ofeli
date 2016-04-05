@@ -40,6 +40,10 @@
 #include "equations/cl/Muscl3DT.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file LCL3DT.h
  *  \brief Definition file for class LCL3DT.
@@ -148,6 +152,7 @@ protected:
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

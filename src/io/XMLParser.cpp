@@ -1995,9 +1995,11 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
       while (it!=tokens.end()) {
          size_t v1 = atoi((*it++).c_str());
          size_t v2 = atoi((*it++).c_str());
-         int c1 = atoi((*it++).c_str());
-         int c2 = atoi((*it++).c_str());
-         _theDomain->insertLine(v1,v2,c1,c2);
+         int dc = atoi((*it++).c_str());
+	 int nc = 0;
+	 if (dc < 0)
+            nc = -dc, dc = 0;
+         _theDomain->insertLine(v1,v2,dc,nc);
       }
    }
    else if (_tag_name=="circle" && _set_domain) {
@@ -2006,7 +2008,9 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
          size_t n2 = atoi((*it++).c_str());
          size_t n3 = atoi((*it++).c_str());
          int dc = atoi((*it++).c_str());
-         int nc = atoi((*it++).c_str());
+	 int nc = 0;
+	 if (dc < 0)
+            nc = -dc, dc = 0;
          _theDomain->insertCircle(n1,n2,n3,dc,nc);
       }
    }
@@ -2052,12 +2056,8 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
          int c2 = atoi((*it++).c_str());
          int c3 = atoi((*it++).c_str());
          int c4 = atoi((*it++).c_str());
-         int cs1 = atoi((*it++).c_str());
-         int cs2 = atoi((*it++).c_str());
-         int cs3 = atoi((*it++).c_str());
-         int cs4 = atoi((*it++).c_str());
          string file = *it++;
-         _theDomain->Rectangle(x,n1,n2,r,c1,c2,c3,c4,cs1,cs2,cs3,cs4,file);
+         _theDomain->Rectangle(x,n1,n2,r,c1,c2,c3,c4,file);
       }
    }
 }

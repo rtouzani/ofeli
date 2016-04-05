@@ -55,6 +55,10 @@ using std::string;
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Grid.h
  *  \brief Definition file for class Grid.

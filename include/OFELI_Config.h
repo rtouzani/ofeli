@@ -364,6 +364,10 @@ enum ElementType {
  */
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /**
  *  \ingroup Global
@@ -459,6 +463,7 @@ namespace OFELI {
  */
     extern bool InitPetsc;
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

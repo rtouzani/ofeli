@@ -43,6 +43,10 @@
 #include "shape_functions/Triang3.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file SteklovPoincare2DBE.h
  *  \brief Definition file for class SteklovPoincare2DBE.
@@ -181,6 +185,7 @@ class SteklovPoincare2DBE {
    void _util();
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

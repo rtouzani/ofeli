@@ -130,6 +130,7 @@ var hierarchy =
     [ "IOField", "classOFELI_1_1IOField.html", null ],
     [ "IPF", "classOFELI_1_1IPF.html", null ],
     [ "Iter< T_ >", "classOFELI_1_1Iter.html", null ],
+    [ "LinearSolver< T_ >", "classOFELI_1_1LinearSolver.html", null ],
     [ "LocalMatrix< T_, NR_, NC_ >", "classOFELI_1_1LocalMatrix.html", null ],
     [ "LocalVect< T_, N_ >", "classOFELI_1_1LocalVect.html", null ],
     [ "Material", "classOFELI_1_1Material.html", null ],
@@ -143,7 +144,6 @@ var hierarchy =
       [ "TrMatrix< T_ >", "classOFELI_1_1TrMatrix.html", null ]
     ] ],
     [ "Mesh", "classOFELI_1_1Mesh.html", null ],
-    [ "MeshAdapt", "classOFELI_1_1MeshAdapt.html", null ],
     [ "Muscl", "classOFELI_1_1Muscl.html", [
       [ "Muscl1D", "classOFELI_1_1Muscl1D.html", [
         [ "ICPG1D", "classOFELI_1_1ICPG1D.html", null ],

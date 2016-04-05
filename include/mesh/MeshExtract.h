@@ -36,6 +36,10 @@
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file MeshExtract.h
  *  \brief Definition file for classes for extracting submeshes.
@@ -369,6 +373,7 @@ class EdgeList {
     ostream& operator<<(ostream&        s,
                         const EdgeList& el);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

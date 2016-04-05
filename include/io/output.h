@@ -43,6 +43,10 @@ using std::setw;
 using std::vector;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file output.h
  *  \brief File that contains some output utility functions.
@@ -52,7 +56,7 @@ namespace OFELI {
 /// \fn ostream & operator<<(ostream& s, const std::complex<double> &x)
 /// \brief Output a complex number.
 /// \ingroup Util
-inline ostream& operator<<(      ostream&   s,
+inline ostream& operator<<(ostream&         s,
                            const complex_t& x)
 {
    if (x.imag()<0)
@@ -66,7 +70,7 @@ inline ostream& operator<<(      ostream&   s,
 /// \fn ostream & operator<<(ostream& s, const std::string &c)
 /// \brief Output a string.
 /// \ingroup Util
-inline ostream& operator<<(      ostream&     s,
+inline ostream& operator<<(ostream&           s,
                            const std::string& c)
 {
     for (size_t i=0; i<c.length(); i++)
@@ -79,7 +83,7 @@ inline ostream& operator<<(      ostream&     s,
 /// \brief Output a vector instance.
 /// \ingroup Util
 template<class T_>
-ostream&operator<<(      ostream&    s,
+ostream&operator<<(ostream&          s,
                    const vector<T_>& v)
 {
    for (size_t i=0; i<v.size(); i++)
@@ -92,13 +96,14 @@ ostream&operator<<(      ostream&    s,
 /// \brief Output a pair instance.
 /// \ingroup Util
 template<class T_>
-inline ostream& operator<<(      ostream&          s,
+inline ostream& operator<<(ostream&                s,
                            const std::pair<T_,T_>& a)
 {
    s << "(" << a.first << "," << a.second << ") ";
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

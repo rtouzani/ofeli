@@ -69,6 +69,10 @@
 #include "solvers/EigenProblemSolver.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \defgroup Equation General Purpose Equations
  *  \brief Gathers equation related classes
@@ -498,6 +502,7 @@ public:
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

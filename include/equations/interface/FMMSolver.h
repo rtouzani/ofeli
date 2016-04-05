@@ -44,6 +44,10 @@
  */
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /** \defgroup Interface Interface Problems
  *  \brief Gathers classes and functions for general interface problems, including image processing
@@ -112,6 +116,7 @@ class FMMSolver
     real_t check_error() { return this->_theFM->check_error(); }
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

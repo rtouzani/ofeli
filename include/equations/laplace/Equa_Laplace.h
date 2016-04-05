@@ -36,6 +36,10 @@
 #include "equations/Equation.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \defgroup Laplace Laplace equation
  *  \brief Gathers equation classes for the Laplace equation
@@ -122,6 +126,7 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
     void set(const Element *el) { }
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

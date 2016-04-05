@@ -37,6 +37,10 @@
 #include "equations/Equation.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \defgroup Fluid Fluid Dynamics
  *  \brief Gathers Fluid Dynamics equation classes
@@ -162,6 +166,7 @@ protected:
 
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

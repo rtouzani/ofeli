@@ -43,6 +43,10 @@
 using std::string;
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file Edge.h
  *  \brief Definition file for class Edge.
@@ -187,9 +191,10 @@ private:
 /// \fn ostream & operator<<(ostream& s, const Edge &ed)
 /// \brief Output edge data.
 /// \ingroup Mesh
-    ostream& operator<<(      ostream& s,
-                        const Edge&    ed);
+    ostream& operator<<(ostream&    s,
+                        const Edge& ed);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 

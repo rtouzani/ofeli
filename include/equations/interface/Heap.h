@@ -44,6 +44,10 @@
 #include "equations/interface/IPoint.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*!
  * \class Heap
@@ -142,6 +146,7 @@ class Heap
                                  const Heap&    H);
 };
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

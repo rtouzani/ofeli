@@ -47,6 +47,10 @@ using namespace Eigen;
 #endif
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
 /*! \file SpMatrix.h
  *  \brief Definition file for class SpMatrix.
@@ -2091,6 +2095,7 @@ ostream& operator<<(ostream&            s,
    return s;
 }
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

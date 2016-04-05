@@ -44,7 +44,12 @@ using std::map;
 #include "OFELI_Config.h"
 
 namespace OFELI {
+/*!
+ *  \addtogroup OFELI
+ *  @{
+ */
 
+  
 /*! \file Element.h
  *  \brief Definition file for class Element.
  */
@@ -393,6 +398,7 @@ class Element
     ostream& operator<<(      ostream& s,
                         const Element& el);
 
+/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif
