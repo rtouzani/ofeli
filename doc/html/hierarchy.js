@@ -35,6 +35,7 @@ var hierarchy =
           [ "Laplace2DMHRT0", "classOFELI_1_1Laplace2DMHRT0.html", null ],
           [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html", null ]
         ] ],
+        [ "Equa_Laplace< real_t, 4, 4, 3, 3 >", "classOFELI_1_1Equa__Laplace.html", null ],
         [ "Equa_Solid< real_t, 2, 12, 1, 1 >", "classOFELI_1_1Equa__Solid.html", [
           [ "Beam3DL2", "classOFELI_1_1Beam3DL2.html", null ]
         ] ],

@@ -4610,6 +4610,10 @@ fi
 
 
 
+UNAME=`uname`
+HOSTNAME=`hostname`
+
+
 # AC_PROG_LN_S
 if test -n "$ac_tool_prefix"; then
   # Extract the first word of "${ac_tool_prefix}ranlib", so it can be a program name with args.

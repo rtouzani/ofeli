@@ -71,3 +71,4 @@ New in 3.1.0, 2016-4-15; Rachid Touzani:
 * Warning: the Domain file format has changed: See documentation.
 * Fixed: A bug in mesh conversion utilities
 * Added: operator * for matrix/vector products
+* Class Laplace3DT4 for the laplace equation in 3-D using P1 element

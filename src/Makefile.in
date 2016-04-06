@@ -391,6 +391,7 @@ INTERFACE_OBJS = equations/interface/FastMarching2D.o \
 LAPLACE_OBJS = equations/laplace/Laplace1DL2.o \
 			equations/laplace/Laplace1DL3.o \
 			equations/laplace/Laplace2DT3.o \
+			equations/laplace/Laplace3DT4.o \
 			equations/laplace/Laplace2DMHRT0.o \
 			equations/laplace/Laplace2DFVT.o \
 			equations/laplace/SteklovPoincare2DBE.o

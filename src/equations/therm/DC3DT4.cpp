@@ -154,10 +154,8 @@ void DC3DT4::build()
 void DC3DT4::LCapacityToLHS(real_t coef)
 {
    real_t c = coef*0.25*_volume*_rhocp;
-   eMat(1,1) += c;
-   eMat(2,2) += c;
-   eMat(3,3) += c;
-   eMat(4,4) += c;
+   for (size_t i=1; i<=4; i++)
+      eMat(i,i) += c;
 }
 
 
@@ -320,10 +318,12 @@ void DC3DT4::BodyRHS(const Vect<real_t>& bf,
 void DC3DT4::BoundaryRHS(UserData<real_t>& ud,
                          real_t            coef)
 {
-   real_t c = OFELI_THIRD*coef*_area*ud.SurfaceForce(_center,_theSide->getCode(1),_time);
-   sRHS(1) += c;
-   sRHS(2) += c;
-   sRHS(3) += c;
+   if (_theSide->getCode(1)>0) {
+      real_t c = OFELI_THIRD*coef*_area*ud.SurfaceForce(_center,_theSide->getCode(1),_time);
+      sRHS(1) += c;
+      sRHS(2) += c;
+      sRHS(3) += c;
+   }
 }
 
 

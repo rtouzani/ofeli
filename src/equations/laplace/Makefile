@@ -107,8 +107,9 @@ am__v_AR_1 =
 liblaplace_a_AR = $(AR) $(ARFLAGS)
 liblaplace_a_LIBADD =
 am_liblaplace_a_OBJECTS = Laplace1DL2.$(OBJEXT) Laplace1DL3.$(OBJEXT) \
-	Laplace2DT3.$(OBJEXT) Laplace2DMHRT0.$(OBJEXT) \
-	Laplace2DFVT.$(OBJEXT) SteklovPoincare2DBE.$(OBJEXT)
+	Laplace2DT3.$(OBJEXT) Laplace3DT4.$(OBJEXT) \
+	Laplace2DMHRT0.$(OBJEXT) Laplace2DFVT.$(OBJEXT) \
+	SteklovPoincare2DBE.$(OBJEXT)
 liblaplace_a_OBJECTS = $(am_liblaplace_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -288,6 +289,7 @@ AUTOMAKE_OPTIONS = no-dependencies
 liblaplace_a_SOURCES = Laplace1DL2.cpp \
 			Laplace1DL3.cpp \
 			Laplace2DT3.cpp \
+			Laplace3DT4.cpp \
 			Laplace2DMHRT0.cpp \
 			Laplace2DFVT.cpp \
 			SteklovPoincare2DBE.cpp

@@ -25,20 +25,20 @@
 
   ==============================================================================
 
-                         Definition of class Laplace2DT3
-              for 2-D Laplace equation using 3-node triangular element
+                         Definition of class Laplace3DT4
+              for 3-D Laplace equation using 4-node tetrahedral element
 
   ==============================================================================*/
 
 
-#ifndef __LAPLACE_2DT3_H
-#define __LAPLACE_2DT3_H
+#ifndef __LAPLACE_3DT4_H
+#define __LAPLACE_3DT4_H
 
 #include "equations/laplace/Equa_Laplace.h"
 #include "linear_algebra/Assembly.h"
 #include "io/UserData.h"
+#include "shape_functions/Tetra4.h"
 #include "shape_functions/Triang3.h"
-#include "shape_functions/Line2.h"
 
 namespace OFELI {
 /*!
@@ -46,24 +46,24 @@ namespace OFELI {
  *  @{
  */
 
-/*! \file Laplace2DT3.h
- *  \brief Definition file for class Laplace2DT3.
+/*! \file Laplace3DT4.h
+ *  \brief Definition file for class Laplace3DT4.
  */
 
 /*! \class Laplace2DT3
  *  \ingroup Laplace
  *  \brief To build element equation for the Laplace equation
- *  using the 2-D triangle element (<tt>P<sub>1</sub></tt>).
+ *  using the 3-D tetrahedral element (<tt>P<sub>1</sub></tt>).
  */
 
-class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
+class Laplace3DT4 : virtual public Equa_Laplace<real_t,4,4,3,3> {
 
  public:
 
 /** \brief Constructor with mesh.
  *  @param [in] ms Mesh instance
  */
-    Laplace2DT3(Mesh& ms);
+    Laplace3DT4(Mesh& ms);
 
 /** \brief Constructor with problem data
  *  @param [in] ms Mesh instance
@@ -71,7 +71,7 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
  *  This matrix must be zeroed before calling the constructor
  *  @param [in] b Problem right-hand side
  */
-    Laplace2DT3(Mesh&             ms,
+    Laplace3DT4(Mesh&             ms,
                 SpMatrix<real_t>& A,
                 Vect<real_t>&     b);
 
@@ -79,17 +79,17 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
  *  @param [in] ms Mesh instance
  *  @param [in] b Problem right-hand side
  */
-    Laplace2DT3(Mesh&         ms,
+    Laplace3DT4(Mesh&         ms,
                 Vect<real_t>& b);
 
 /// \brief Constructor for an element
-    Laplace2DT3(Element* el);
+    Laplace3DT4(Element* el);
 
 /// \brief Constructor for a side
-    Laplace2DT3(Side* sd);
+    Laplace3DT4(Side* sd);
 
 /// \brief Destructor
-    ~Laplace2DT3() { }
+    ~Laplace3DT4() { }
 
 /// \brief Add finite element matrix to left-hand side
 /// @param [in] coef Value to multiply by the added matrix
