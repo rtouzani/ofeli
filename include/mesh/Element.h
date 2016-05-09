@@ -89,7 +89,7 @@ class Element
  *  @param [in] label Label to assign to element.
  *  @param [in] shape Shape of element (See class description).
  */
-    Element(      size_t  label,
+    Element(size_t        label,
             const string& shape);
 
 /** \brief Constructor initializing label, shape of element.
@@ -104,9 +104,9 @@ class Element
  *  @param [in] shape Shape of element (See class description).
  *  @param [in] c Code to assign to element (useful for media properties).
  */
-    Element(      size_t  label,
+    Element(size_t        label,
             const string& shape,
-                  int     c);
+            int           c);
 
 /** \brief Constructor initializing label, shape and code of element.
  *  @param [in] label Label to assign to element.
@@ -138,7 +138,7 @@ class Element
  *  @param [in] code Code to assign to node if the algebraic expression is true
  */
     void setCode(const string& exp,
-                       int     code);
+                 int           code);
 
 /// \brief Insert a node at end of list of nodes of element.
 /// @param [in] node Pointer to Node instance.
@@ -213,7 +213,7 @@ class Element
 
 /// \brief Return label of element
     size_t getLabel() const { return _label; }
-   
+
 /// \brief Return label of element
     size_t n() const { return _label; }
 
@@ -395,7 +395,7 @@ class Element
  *  \ingroup Mesh
  *  \brief Output element data
  */
-    ostream& operator<<(      ostream& s,
+    ostream& operator<<(ostream&       s,
                         const Element& el);
 
 /*! @} End of Doxygen Groups */

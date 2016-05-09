@@ -183,8 +183,8 @@ int EigenProblemSolver::run(int nb)
 
 
 void EigenProblemSolver::Assembly(const Element& el,
-                                        real_t*  eK,
-                                        real_t*  eM)
+                                  real_t*        eK,
+                                  real_t*        eM)
 {
    element_assembly(el,eK,_K);
    if (_diag)
@@ -194,8 +194,8 @@ void EigenProblemSolver::Assembly(const Element& el,
 }
 
 
-void EigenProblemSolver::SAssembly(const Side&   sd,
-                                         real_t* sK)
+void EigenProblemSolver::SAssembly(const Side& sd,
+                                   real_t*     sK)
 {
    element_assembly(sd,sK,_K);
 }
@@ -306,7 +306,7 @@ int EigenProblemSolver::runSubSpace(size_t nb_eigv,
 
 
 void EigenProblemSolver::Mxv(const Vect<real_t>& b,
-                                   Vect<real_t>& c)
+                             Vect<real_t>&       c)
 {
    if (_diag) {
       for (size_t i=1; i<=b.size(); i++)
@@ -587,7 +587,7 @@ void EigenProblemSolver::getEigenVector(int           n,
 }
 
 
-ostream& operator<<(      ostream&            s,
+ostream& operator<<(ostream&                  s,
                     const EigenProblemSolver& es)
 {
    s << "\nEIGEN PROBLEM SOLVER\n\n";

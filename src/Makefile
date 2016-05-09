@@ -250,7 +250,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall  
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -282,7 +282,7 @@ MPI_CFLAGS = -I${prefix}/include/mpi
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
 OBJEXT = o
-OFELI_CFLAGS = -I${prefix}/include/ofeli  -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+OFELI_CFLAGS = -I${prefix}/include/ofeli  -Wall  
 OFELI_FLAGS = -I$(top_srcdir)/include
 OFELI_LDFLAGS = -L${exec_prefix}/lib 
 OFELI_LIB = -lofeli
@@ -518,6 +518,11 @@ SHAPE_FUNCTIONS_OBJS = shape_functions/Hexa8.o \
 SOLVERS_OBJS = solvers/BSpline.o \
 			solvers/EigenProblemSolver.o \
 			solvers/ODESolver.o \
+			solvers/OptimNM.o \
+			solvers/OptimSA.o \
+			solvers/OptimTN.o \
+			solvers/OptimPG.o \
+			solvers/OptSolver.o \
 			solvers/Solver.o \
 			solvers/TimeStepping.o
 

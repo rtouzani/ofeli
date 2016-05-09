@@ -500,10 +500,10 @@ void TimeStepping::solveBDF2()
 
 
 void TimeStepping::AssembleForwardEuler(const Element& el,
-                                              real_t*  eb,
-                                              real_t*  eA0,
-                                              real_t*  eA1,
-                                              real_t*  eA2)
+                                        real_t*        eb,
+                                        real_t*        eA0,
+                                        real_t*        eA1,
+                                        real_t*        eA2)
 {
    Vect<real_t> eu(&el,_u);
    size_t k=0, n=el.getNbNodes()*el.getNbDOF();
@@ -520,9 +520,9 @@ void TimeStepping::AssembleForwardEuler(const Element& el,
 }
 
 
-void TimeStepping::SAssembleForwardEuler(const Side&   sd,
-                                               real_t* sb,
-                                               real_t* sA)
+void TimeStepping::SAssembleForwardEuler(const Side& sd,
+                                         real_t*     sb,
+                                         real_t*     sA)
 {
    Vect<real_t> su(&sd,_u);
    size_t k=0, n=sd.getNbNodes()*sd.getNbDOF();
@@ -535,10 +535,10 @@ void TimeStepping::SAssembleForwardEuler(const Side&   sd,
 
 
 void TimeStepping::AssembleBackwardEuler(const Element& el,
-                                               real_t*  eb,
-                                               real_t*  eA0,
-                                               real_t*  eA1,
-                                               real_t*  eA2)
+                                         real_t*        eb,
+                                         real_t*        eA0,
+                                         real_t*        eA1,
+                                         real_t*        eA2)
 {
    Vect<real_t> eu(&el,_u);
    size_t k=0, n=el.getNbNodes()*el.getNbDOF();
@@ -555,9 +555,9 @@ void TimeStepping::AssembleBackwardEuler(const Element& el,
 }
 
 
-void TimeStepping::SAssembleBackwardEuler(const Side&   sd,
-                                                real_t* sb,
-                                                real_t* sA)
+void TimeStepping::SAssembleBackwardEuler(const Side& sd,
+                                          real_t*     sb,
+                                          real_t*     sA)
 {
    Vect<real_t> su(&sd,_u);
    size_t k=0, n=sd.getNbNodes()*sd.getNbDOF();
@@ -571,10 +571,10 @@ void TimeStepping::SAssembleBackwardEuler(const Side&   sd,
 
 
 void TimeStepping::AssembleCrankNicolson(const Element& el,
-                                               real_t*  eb,
-                                               real_t*  eA0,
-                                               real_t*  eA1,
-                                               real_t*  eA2)
+                                         real_t*        eb,
+                                         real_t*        eA0,
+                                         real_t*        eA1,
+                                         real_t*        eA2)
 {
    Vect<real_t> eu(&el,_u);
    size_t k=0, n=el.getNbNodes()*el.getNbDOF();
@@ -592,9 +592,9 @@ void TimeStepping::AssembleCrankNicolson(const Element& el,
 }
 
 
-void TimeStepping::SAssembleCrankNicolson(const Side&   sd,
-                                                real_t* sb,
-                                                real_t* sA)
+void TimeStepping::SAssembleCrankNicolson(const Side& sd,
+                                          real_t*     sb,
+                                          real_t*     sA)
 {
    Vect<real_t> su(&sd,_u);
    size_t k=0, n=sd.getNbNodes()*sd.getNbDOF();
@@ -609,10 +609,10 @@ void TimeStepping::SAssembleCrankNicolson(const Side&   sd,
 
 
 void TimeStepping::AssembleHeun(const Element& el,
-                                      real_t*  eb,
-                                      real_t*  eA0,
-                                      real_t*  eA1,
-                                      real_t*  eA2)
+                                real_t*        eb,
+                                real_t*        eA0,
+                                real_t*        eA1,
+                                real_t*        eA2)
 {
    Vect<real_t> eu(&el,_u);
    size_t k=0, n=el.getNbNodes()*el.getNbDOF();
@@ -640,9 +640,9 @@ void TimeStepping::AssembleHeun(const Element& el,
 }
 
 
-void TimeStepping::SAssembleHeun(const Side&   sd,
-                                       real_t* sb,
-                                       real_t* sA)
+void TimeStepping::SAssembleHeun(const Side& sd,
+                                 real_t*     sb,
+                                 real_t*     sA)
 {
    Vect<real_t> su(&sd,_u);
    size_t k=0, n=sd.getNbNodes()*sd.getNbDOF();
@@ -664,10 +664,10 @@ void TimeStepping::SAssembleHeun(const Side&   sd,
 
 
 void TimeStepping::AssembleAB2(const Element& el,
-                                     real_t*  eb,
-                                     real_t*  eA0,
-                                     real_t*  eA1,
-                                     real_t*  eA2)
+                               real_t*        eb,
+                               real_t*        eA0,
+                               real_t*        eA1,
+                               real_t*        eA2)
 {
    Vect<real_t> eu(&el,_u);
    size_t k=0, n=el.getNbNodes()*el.getNbDOF();
@@ -695,9 +695,9 @@ void TimeStepping::AssembleAB2(const Element& el,
 }
 
 
-void TimeStepping::SAssembleAB2(const Side&   sd,
-                                      real_t* sb,
-                                      real_t* sA)
+void TimeStepping::SAssembleAB2(const Side& sd,
+                                real_t*     sb,
+                                real_t*     sA)
 {
    Vect<real_t> su(&sd,_u);
    size_t k=0, n=sd.getNbNodes()*sd.getNbDOF();
@@ -719,10 +719,10 @@ void TimeStepping::SAssembleAB2(const Side&   sd,
 
 
 void TimeStepping::AssembleLeapFrog(const Element& el,
-                                          real_t*  eb,
-                                          real_t*  eA0,
-                                          real_t*  eA1,
-                                          real_t*  eA2)
+                                    real_t*        eb,
+                                    real_t*        eA0,
+                                    real_t*        eA1,
+                                    real_t*        eA2)
 {
    Vect<real_t> eu(&el,_u);
    size_t k=0, n=el.getNbNodes()*el.getNbDOF();
@@ -750,9 +750,9 @@ void TimeStepping::AssembleLeapFrog(const Element& el,
 }
 
 
-void TimeStepping::SAssembleLeapFrog(const Side&   sd,
-                                           real_t* sb,
-                                           real_t* sA)
+void TimeStepping::SAssembleLeapFrog(const Side& sd,
+                                     real_t*     sb,
+                                     real_t*     sA)
 {
    Vect<real_t> su(&sd,_u);
    size_t k=0, n=sd.getNbNodes()*sd.getNbDOF();
@@ -774,10 +774,10 @@ void TimeStepping::SAssembleLeapFrog(const Side&   sd,
 
 
 void TimeStepping::AssembleRK4(const Element& el,
-                                     real_t*  eb,
-                                     real_t*  eA0,
-                                     real_t*  eA1,
-                                     real_t*  eA2)
+                               real_t*        eb,
+                               real_t*        eA0,
+                               real_t*        eA1,
+                               real_t*        eA2)
 {
    Vect<real_t> eu(&el,_u);
    size_t m=0, n=el.getNbNodes()*el.getNbDOF();
@@ -839,9 +839,9 @@ void TimeStepping::AssembleRK4(const Element& el,
 }
 
 
-void TimeStepping::SAssembleRK4(const Side&   sd,
-                                      real_t* sb,
-                                      real_t* sA)
+void TimeStepping::SAssembleRK4(const Side& sd,
+                                real_t*     sb,
+                                real_t*     sA)
 {
    Vect<real_t> su(&sd,_u);
    size_t m=0, n=sd.getNbNodes()*sd.getNbDOF();
@@ -894,10 +894,10 @@ void TimeStepping::SAssembleRK4(const Side&   sd,
 
 
 void TimeStepping::AssembleNewmark(const Element& el,
-                                         real_t*  eb,
-                                         real_t*  eA0,
-                                         real_t*  eA1,
-                                         real_t*  eA2)
+                                   real_t*        eb,
+                                   real_t*        eA0,
+                                   real_t*        eA1,
+                                   real_t*        eA2)
 {
    size_t n=el.getNbNodes()*el.getNbDOF();
    Vect<real_t> edu(&el,*_du);
@@ -928,9 +928,9 @@ void TimeStepping::AssembleNewmark(const Element& el,
 }
 
 
-void TimeStepping::SAssembleNewmark(const Side&   sd,
-                                          real_t* sb,
-                                          real_t* sA)
+void TimeStepping::SAssembleNewmark(const Side& sd,
+                                    real_t*     sb,
+                                    real_t*     sA)
 {
    size_t n=sd.getNbNodes()*sd.getNbDOF();
    Vect<real_t> sdu(&sd,*_du);
@@ -949,10 +949,10 @@ void TimeStepping::SAssembleNewmark(const Side&   sd,
 
 
 void TimeStepping::AssembleBDF2(const Element& el,
-                                      real_t*  eb,
-                                      real_t*  eA0,
-                                      real_t*  eA1,
-                                      real_t*  eA2)
+                                real_t*        eb,
+                                real_t*        eA0,
+                                real_t*        eA1,
+                                real_t*        eA2)
 {
    Vect<real_t> eu(&el,_u);
    size_t k=0, n=el.getNbNodes()*el.getNbDOF();
@@ -980,9 +980,9 @@ void TimeStepping::AssembleBDF2(const Element& el,
 }
 
 
-void TimeStepping::SAssembleBDF2(const Side&   sd,
-                                       real_t* sb,
-                                       real_t* sA)
+void TimeStepping::SAssembleBDF2(const Side& sd,
+                                 real_t*     sb,
+                                 real_t*     sA)
 {
    element_assembly(sd,sA,sb,_A,_b);
 }
@@ -1098,7 +1098,7 @@ void TimeStepping::PreSolve_BDF2() { }
 
 
 void TimeStepping::insertBC(const Vect<real_t>& b,
-                                  Vect<real_t>& v)
+                            Vect<real_t>&       v)
 {
    if (_bc)
       v.insertBC(*_theMesh,b,*_bc);
@@ -1108,13 +1108,13 @@ void TimeStepping::insertBC(const Vect<real_t>& b,
 
 
 void TimeStepping::insertBC0(const Vect<real_t>& b,
-                                   Vect<real_t>& v)
+                             Vect<real_t>&       v)
 {
    v.insertBC(*_theMesh,b);
 }
 
 
-ostream& operator<<(      ostream&      s,
+ostream& operator<<(ostream&            s,
                     const TimeStepping& ts)
 {
    s << "\nTIME STEPPING FOR A TIME DEPENDENT PROBLEM\n\n";
@@ -1149,4 +1149,3 @@ ostream& operator<<(      ostream&      s,
 }
 
 } /* namespace OFELI */
-

@@ -167,6 +167,11 @@ SHAPE_FUNCTIONS_OBJS =	shape_functions/Hexa8.o \
 SOLVERS_OBJS =		solvers/BSpline.o \
 			solvers/EigenProblemSolver.o \
 			solvers/ODESolver.o \
+			solvers/OptimNM.o \
+			solvers/OptimSA.o \
+			solvers/OptimTN.o \
+			solvers/OptimPG.o \
+			solvers/OptSolver.o \
 			solvers/Solver.o \
 			solvers/TimeStepping.o
 

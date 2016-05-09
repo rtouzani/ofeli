@@ -101,7 +101,7 @@ class Material
 /** \brief Associate to material code number <tt>n</tt> the material named <tt>name</tt>
  *  \return Number of materials
  */
-    int set(      int     m,
+    int set(int           m,
             const string& name);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -130,113 +130,113 @@ class Material
 
 /// \brief Return density at point <tt>x</tt> and time <tt>t</tt>
     real_t Density(const Point<real_t>& x,
-                         real_t         t);
+                   real_t               t);
 
 /// \brief Return constant specific heat.
     real_t SpecificHeat();
 
 /// \brief Return specific heat at point <tt>x</tt> and time <tt>t</tt>
     real_t SpecificHeat(const Point<real_t>& x,
-                              real_t         t);
+                        real_t               t);
 
 /// \brief Return constant thermal conductivity.
     real_t ThermalConductivity();
 
 /// \brief Return thermal conductivity at point <tt>x</tt> and time <tt>t</tt>
     real_t ThermalConductivity(const Point<real_t>& x,
-                                     real_t         t);
+                               real_t               t);
 
 /// \brief Return constant melting temperature.
     real_t MeltingTemperature();
 
 /// \brief Return melting temperature at point <tt>x</tt> and time <tt>t</tt>
     real_t MeltingTemperature(const Point<real_t>& x,
-                                    real_t         t);
+                              real_t               t);
 
 /// \brief Return constant evaporation temperature.
     real_t EvaporationTemperature();
 
 /// \brief Return evaporation temperature at point <tt>x</tt> and time <tt>t</tt>
     real_t EvaporationTemperature(const Point<real_t>& x,
-                                        real_t         t);
+                                  real_t               t);
 
 /// \brief Return constant thermal expansion coefficient.
     real_t ThermalExpansion();
 
 /// \brief Return thermal expansion coefficient at point <tt>x</tt> and time <tt>t</tt>
     real_t ThermalExpansion(const Point<real_t>& x,
-                                  real_t         t);
+                            real_t               t);
 
 /// \brief Return constant latent heat for melting.
     real_t LatentHeatForMelting();
 
 /// \brief Return latent heat for melting at point <tt>x</tt> and time <tt>t</tt>
     real_t LatentHeatForMelting(const Point<real_t>& x,
-                                      real_t         t);
+                                real_t               t);
 
 /// \brief Return constant latent heat for evaporation.
     real_t LatentHeatForEvaporation();
 
 /// \brief Return latent heat for evaporation at point <tt>x</tt> and time <tt>t</tt>
     real_t LatentHeatForEvaporation(const Point<real_t>& x,
-                                          real_t         t);
+                                    real_t               t);
 
 /// \brief Return constant dielectric constant.
     real_t DielectricConstant();
 
 /// \brief Return dielectric constant at point <tt>x</tt> and time <tt>t</tt>
     real_t DielectricConstant(const Point<real_t>& x,
-                                    real_t         t);
+                              real_t               t);
 
 /// \brief Return constant electric conductivity.
     real_t ElectricConductivity();
 
 /// \brief Return electric conductivity at point <tt>x</tt> and time <tt>t</tt>
     real_t ElectricConductivity(const Point<real_t>& x,
-                                      real_t         t);
+                                real_t               t);
 
 /// \brief Return constant electric resistivity.
     real_t ElectricResistivity();
 
 /// \brief Return electric resistivity at point <tt>x</tt> and time <tt>t</tt>
     real_t ElectricResistivity(const Point<real_t>& x,
-                                     real_t         t);
+                               real_t               t);
 
 /// \brief Return constant magnetic permeability
     real_t MagneticPermeability();
 
 /// \brief Return magnetic permeability at point <tt>x</tt> and time <tt>t</tt>
     real_t MagneticPermeability(const Point<real_t>& x,
-                                      real_t         t);
+                                real_t               t);
 
 /// \brief Return constant viscosity
     real_t Viscosity();
 
 /// \brief Return viscosity at point <tt>x</tt> and time <tt>t</tt>
     real_t Viscosity(const Point<real_t>& x,
-                           real_t         t);
+                     real_t               t);
 
 /// \brief Return constant Young modulus
     real_t YoungModulus();
 
 /// \brief Return Young modulus at point <tt>x</tt> and time <tt>t</tt>
     real_t YoungModulus(const Point<real_t>& x,
-                              real_t         t);
+                        real_t               t);
 
 /// \brief Return constant Poisson ratio
     real_t PoissonRatio();
 
 /// \brief Return Poisson ratio at point <tt>x</tt> and time <tt>t</tt>
     real_t PoissonRatio(const Point<real_t>& x,
-                              real_t         t);
+                        real_t               t);
 
 /// \brief Return constant <tt>i</tt>-th property
     real_t Property(int i);
 
 /// \brief Return <tt>i</tt>-th property at point <tt>x</tt> and time <tt>t</tt>
-    real_t Property(      int            i,
+    real_t Property(int                  i,
                     const Point<real_t>& x,
-                          real_t         t);
+                    real_t               t);
 
 /// \brief Operator =
     Material & operator=(const Material& m)

@@ -213,9 +213,9 @@ inline T_ Sqr(T_ x)
  *  \details <tt>x</tt> and <tt>y</tt> are instances of class vector<T_>
  */
 template<class T_>
-inline void Scale(      T_          a,
+inline void Scale(T_                a,
                   const vector<T_>& x,
-                        vector<T_>& y)
+                  vector<T_>&       y)
 {
    for (size_t i=0; i<x.size(); ++i)
       y[i] = a * x[i];
@@ -228,9 +228,9 @@ inline void Scale(      T_          a,
  *  \details <tt>x</tt> and <tt>y</tt> are instances of class Vect<T_>
  */
 template<class T_>
-inline void Scale(      T_          a,
+inline void Scale(T_              a,
                   const Vect<T_>& x,
-                        Vect<T_>& y)
+                  Vect<T_>&       y)
 {
    for (size_t i=0; i<x.size(); ++i)
       y[i] = a * x[i];
@@ -272,9 +272,10 @@ inline void Xpy(size_t n,
  */
 template<class T_>
 inline void Xpy(const vector<T_>& x,
-                      vector<T_>& y)
+                vector<T_>&       y)
 {
-   y += x;
+   for (size_t i=0; i<x.size(); i++)
+      y[i] += x[i];
 }
 
 
@@ -300,9 +301,9 @@ inline void Axpy(size_t n,
  *  \details <tt>x</tt> and <tt>y</tt> are instances of class vector<T_>
  */
 template<class T_>
-inline void Axpy(      T_          a,
-                 const vector<T_> &x,
-                       vector<T_> &y)
+inline void Axpy(T_                a,
+                 const vector<T_>& x,
+                 vector<T_>&       y)
 {
    for (size_t i=0; i<x.size(); i++)
       y[i] += a*x[i];
@@ -315,9 +316,9 @@ inline void Axpy(      T_          a,
  *  \details <tt>x</tt> and <tt>y</tt> are instances of class Vect<T_>
  */
 template<class T_>
-inline void Axpy(      T_          a,
-                 const Vect<T_> &x,
-                       Vect<T_> &y)
+inline void Axpy(T_              a,
+                 const Vect<T_>& x,
+                 Vect<T_>&       y)
 {
    for (size_t i=0; i<x.size(); i++)
       y[i] += a*x[i];
@@ -416,22 +417,6 @@ inline T_ Dot(size_t n,
 }
 
 
-/** \fn real_t operator*(const vector<real_t>& x, const vector<real_t>& y)
- *  \brief Operator * (Dot product of 2 vector instances)
- *  \ingroup VectMat
- *  \return <tt>x.y</tt>
- */
-inline real_t operator*(const vector<real_t>& x,
-                        const vector<real_t>& y)
-{
-   real_t d = 0;
-   vector<real_t>::const_iterator j = x.begin();
-   for (vector<real_t>::const_iterator i=y.begin(); i!=y.end();)
-      d += *(j++) * *(++i);
-   return d;
-}
-
-
 /** \fn double Dot(const vector<double>& x, const vector<double>& y)
  *  \ingroup Util
  *  \brief Return dot product of vectors <tt>x</tt> and <tt>y</tt>.
@@ -441,10 +426,21 @@ inline real_t Dot(const vector<real_t>& x,
                   const vector<real_t>& y)
 {
    real_t d = 0;
-   vector<real_t>::const_iterator j = x.begin();
-   for (vector<real_t>::const_iterator i=y.begin(); i!=y.end();)
-      d += *(j++) * *(++i);
+   for (size_t i=0; i<x.size(); i++)
+      d += x[i]*y[i];
    return d;
+}
+
+
+/** \fn real_t operator*(const vector<real_t>& x, const vector<real_t>& y)
+ *  \brief Operator * (Dot product of 2 vector instances)
+ *  \ingroup VectMat
+ *  \return <tt>x.y</tt>
+ */
+inline real_t operator*(const vector<real_t>& x,
+                        const vector<real_t>& y)
+{
+   return Dot(x,y);
 }
 
 
@@ -522,14 +518,19 @@ inline void Clear(Vect<T_>& v)
  */
 inline real_t Nrm2(size_t  n,
                    real_t* x)
-   { return sqrt(Dot(n,x,x)); }
+{
+   return sqrt(Dot(n,x,x));
+}
 
 
 /** \fn real_t Nrm2(const vector<real_t>& x)
  *  \ingroup Util
  *  \brief Return 2-norm of vector <tt>x</tt>
  */
-inline real_t Nrm2(const vector<real_t>& x) { return sqrt(Dot(x,x)); }
+inline real_t Nrm2(const vector<real_t>& x)
+{
+   return sqrt(Dot(x,x));
+}
 
 
 /** \fn real_t Nrm2(const Point<T_>& a)

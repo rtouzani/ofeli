@@ -377,7 +377,6 @@ AC_OUTPUT(
    tutorial/lesson2/Makefile
    tutorial/lesson3/Makefile
    tutorial/lesson4/Makefile
-   tutorial/lesson5/Makefile
    demos/Makefile
    demos/thermal/Makefile
    demos/thermal/std3/Makefile
@@ -401,6 +400,7 @@ AC_OUTPUT(
    demos/solvers/LS/Makefile
    demos/solvers/ODE/Makefile
    demos/solvers/EIGEN/Makefile
+   demos/solvers/OPTIM/Makefile
    doc/Makefile
    doc/html/Makefile
    doc/demos/Makefile

@@ -220,15 +220,15 @@ void FastMarching2D::Check()
       }
    }
    Vect<real_t> phi(ms,*_A);
-   ms.Put("phi.m");
+   ms.put("phi.m");
    errL2 /= (_nx-4)*(_ny-4);
    cout << endl << "Errors on distance: " << errL2 << "  " << errMax << endl;
 }
 
 
 void FastMarching2D::Add(real_t Uij,
-			 size_t a,
-			 size_t b)
+                         size_t a,
+                         size_t b)
 {
    _current++;
    _heap[0].val = Uij;      // Sentinel
@@ -250,8 +250,8 @@ void FastMarching2D::Add(real_t Uij,
 
 
 void FastMarching2D::Modify(real_t Uij,
-			    size_t a,
-			    size_t b)
+                            size_t a,
+                            size_t b)
 {
    _heap[0].val = Uij;
    size_t i=_pos(a,b), j=i/2;
@@ -300,7 +300,7 @@ Pt FastMarching2D::Delete()
 
 
 void FastMarching2D::setGray(size_t i,
-			     size_t j)
+                             size_t j)
 {
    size_t max_x, max_y;
    real_t a, b, c, ug=0;
@@ -646,7 +646,7 @@ void FastMarching2D::setGray(size_t i,
 
 
 void FastMarching2D::setGrayWithObstacle(size_t i,
-					 size_t j)
+                                         size_t j)
 {
    size_t max_x, max_y;
    real_t a, b, c, ug=0;
@@ -1114,10 +1114,10 @@ void FastMarching2D::ExtendLocalVelocity(Vect<real_t>& dis)
 
 
 void FastMarching2D::Int(size_t           k,
-			 size_t           l,
-			 Vect<real_t>&    a,
-			 Point2D<real_t>& x1,
-			 Point2D<real_t>& x2)
+                         size_t           l,
+                         Vect<real_t>&    a,
+                         Point2D<real_t>& x1,
+                         Point2D<real_t>& x2)
 {
    for (int bbi=-_bw; bbi<=_bw; bbi++) {
       for (int bbj=-_bw; bbj<=_bw; bbj++) {
@@ -1145,8 +1145,8 @@ void FastMarching2D::Int(size_t           k,
 
 
 real_t FastMarching2D::Dist(const Point2D<real_t>& x,
-			    const Point2D<real_t>& y,
-			    const Point2D<real_t>& z)
+                            const Point2D<real_t>& y,
+                            const Point2D<real_t>& z)
 {
    real_t dist;
    if (y==z)

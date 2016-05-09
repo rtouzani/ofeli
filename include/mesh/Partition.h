@@ -145,7 +145,7 @@ class Partition
 /** \brief Return index of submesh that contains the <tt>i</tt>-th side label in sub-mesh <tt>sm</tt>
  *  @param [in] sm Submesh index
  *  @param [in] i Side label
- *  @return 
+ *  @return Index of submesh
  */
     size_t getSubMesh(size_t sm,
                       size_t i) const
@@ -193,7 +193,7 @@ class Partition
  *  @param [in] file Name of file in which submesh is saved
  */
     void put(size_t n,
-             string file) const { _theSubMesh[n]->Put(file); }
+             string file) const { _theSubMesh[n]->put(file); }
 
 //-----------------------------   MODIFIERS  -----------------------------------
 
@@ -207,7 +207,7 @@ class Partition
 //------------------------   ASSOCIATED OPERATORS  -----------------------------
 
 /// \brief Output class information
-    friend ostream & operator<<(      ostream&   s,
+    friend ostream & operator<<(ostream&         s,
                                 const Partition& p);
 
  private:

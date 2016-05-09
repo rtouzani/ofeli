@@ -66,8 +66,8 @@ size_t FinalizeGraph(vector<size_t>& row_ptr,
 }
 
 
-size_t SimpleSkyline(const Mesh&           m,
-                           vector<size_t>& ch)
+size_t SimpleSkyline(const Mesh&     m,
+                     vector<size_t>& ch)
 {
    int l;
    size_t n, size=m.getNbNodes();
@@ -85,8 +85,8 @@ size_t SimpleSkyline(const Mesh&           m,
 }
 
 
-size_t NodeSkyline(const Mesh&           m,
-                         vector<size_t>& ch)
+size_t NodeSkyline(const Mesh&     m,
+                   vector<size_t>& ch)
 {
    int label_eq;
    size_t size=m.getNbEq();
@@ -111,10 +111,10 @@ size_t NodeSkyline(const Mesh&           m,
 }
 
 
-size_t NodeSkyline(const Mesh&           m,
-                         vector<size_t>& ch,
-                         size_t          dof1,
-                         size_t          dof2)
+size_t NodeSkyline(const Mesh&     m,
+                   vector<size_t>& ch,
+                   size_t          dof1,
+                   size_t          dof2)
 {
    int i;
    size_t size=m.getNbNodes()*(dof2-dof1+1);
@@ -139,9 +139,9 @@ size_t NodeSkyline(const Mesh&           m,
 }
 
 
-size_t NodeSkyline(const Mesh&           m,
-                         vector<size_t>& ch,
-                         size_t          dof)
+size_t NodeSkyline(const Mesh&     m,
+                   vector<size_t>& ch,
+                   size_t          dof)
 {
    int i;
    size_t size=m.getNbEq();
@@ -161,10 +161,10 @@ size_t NodeSkyline(const Mesh&           m,
 }
 
 
-size_t SideSkyline(const Mesh&           m,
-                         vector<size_t>& ch,
-                         size_t          dof1,
-                         size_t          dof2)
+size_t SideSkyline(const Mesh&     m,
+                   vector<size_t>& ch,
+                   size_t          dof1,
+                   size_t          dof2)
 {
    int label_eq;
    size_t size=m.getNbEq();
@@ -189,8 +189,8 @@ size_t SideSkyline(const Mesh&           m,
 }
 
 
-size_t SideSkyline(const Mesh&           m,
-                         vector<size_t>& ch)
+size_t SideSkyline(const Mesh&     m,
+                   vector<size_t>& ch)
 {
    int label_eq;
    size_t size=m.getNbEq();
@@ -238,8 +238,8 @@ size_t SideSkyline(const Mesh&           m,
 }
 
 
-size_t ElementSkyline(const Mesh&           m,
-                            vector<size_t>& ch)
+size_t ElementSkyline(const Mesh&     m,
+                      vector<size_t>& ch)
 {
    const Element *el1, *el2;
    size_t size=m.getNbElements();
@@ -260,9 +260,9 @@ size_t ElementSkyline(const Mesh&           m,
 }
 
 
-size_t ElementSkyline(const Mesh&           m,
-                            vector<size_t>& ch,
-                            size_t          dof)
+size_t ElementSkyline(const Mesh&     m,
+                      vector<size_t>& ch,
+                      size_t          dof)
 {
    dof = 0;
    const Element *el1, *el2;
@@ -284,9 +284,9 @@ size_t ElementSkyline(const Mesh&           m,
 }
 
 
-size_t SimpleGraph(const Mesh&           m,
-                         vector<long>&   xadj,
-                         vector<size_t>& adjncy)
+size_t SimpleGraph(const Mesh&     m,
+                   vector<long>&   xadj,
+                   vector<size_t>& adjncy)
 {
    size_t SimpleSkyline(const Mesh &m, vector<size_t> &ch);
    size_t k, l, length=0, size=m.getNbNodes();
@@ -330,11 +330,11 @@ size_t SimpleGraph(const Mesh&           m,
 }
 
 
-size_t NodeGraph(const Mesh&           mesh,
-                       vector<size_t>& row_ptr,
-                       vector<size_t>& col_ind,
-                       vector<RC>&     IJ,
-                       vector<size_t>& nbc)
+size_t NodeGraph(const Mesh&     mesh,
+                 vector<size_t>& row_ptr,
+                 vector<size_t>& col_ind,
+                 vector<RC>&     IJ,
+                 vector<size_t>& nbc)
 {
    mesh_elements(mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
@@ -359,13 +359,13 @@ size_t NodeGraph(const Mesh&           mesh,
 }
 
 
-size_t NodeGraph(const Mesh&           mesh,
-                       size_t          dof1,
-                       size_t          dof2,
-                       vector<size_t>& row_ptr,
-                       vector<size_t>& col_ind,
-                       vector<RC>&     IJ,
-                       vector<size_t>& nbc)
+size_t NodeGraph(const Mesh&     mesh,
+                 size_t          dof1,
+                 size_t          dof2,
+                 vector<size_t>& row_ptr,
+                 vector<size_t>& col_ind,
+                 vector<RC>&     IJ,
+                 vector<size_t>& nbc)
 {
    mesh_elements(mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
@@ -390,11 +390,11 @@ size_t NodeGraph(const Mesh&           mesh,
 }
 
 
-size_t SideGraph(const Mesh&           mesh,
-                       vector<size_t>& row_ptr,
-                       vector<size_t>& col_ind,
-                       vector<RC>&     IJ,
-                       vector<size_t>& nbc)
+size_t SideGraph(const Mesh&     mesh,
+                 vector<size_t>& row_ptr,
+                 vector<size_t>& col_ind,
+                 vector<RC>&     IJ,
+                 vector<size_t>& nbc)
 {
    mesh_elements(mesh) {
       for (size_t in=1; in<=The_element.getNbSides(); in++) {
@@ -419,13 +419,13 @@ size_t SideGraph(const Mesh&           mesh,
 }
 
 
-size_t SideGraph(const Mesh&           mesh,
-                       size_t          dof1,
-                       size_t          dof2,
-                       vector<size_t>& row_ptr,
-                       vector<size_t>& col_ind,
-                       vector<RC>&     IJ,
-                       vector<size_t>& nbc)
+size_t SideGraph(const Mesh&     mesh,
+                 size_t          dof1,
+                 size_t          dof2,
+                 vector<size_t>& row_ptr,
+                 vector<size_t>& col_ind,
+                 vector<RC>&     IJ,
+                 vector<size_t>& nbc)
 {
    mesh_elements(mesh) {
       for (size_t in=1; in<=The_element.getNbSides(); in++) {
@@ -450,11 +450,11 @@ size_t SideGraph(const Mesh&           mesh,
 }
 
 
-size_t ElementGraph(const Mesh&           mesh,
-                          vector<size_t>& row_ptr,
-                          vector<size_t>& col_ind,
-                          vector<RC>&     IJ,
-                          vector<size_t>& nbc)
+size_t ElementGraph(const Mesh&     mesh,
+                    vector<size_t>& row_ptr,
+                    vector<size_t>& col_ind,
+                    vector<RC>&     IJ,
+                    vector<size_t>& nbc)
 {
    Element *el1, *el2;
    mesh_sides(mesh) {
@@ -469,11 +469,11 @@ size_t ElementGraph(const Mesh&           mesh,
 }
 
 
-size_t SideNodeGraph(const Mesh&           mesh,
-                           vector<size_t>& row_ptr,
-                           vector<size_t>& col_ind,
-                           vector<RC>&     IJ,
-                           vector<size_t>& nbc)
+size_t SideNodeGraph(const Mesh&     mesh,
+                     vector<size_t>& row_ptr,
+                     vector<size_t>& col_ind,
+                     vector<RC>&     IJ,
+                     vector<size_t>& nbc)
 {
    mesh_sides(mesh) {
       for (size_t k=1; k<=The_side.getNbDOF(); k++) {
@@ -491,11 +491,11 @@ size_t SideNodeGraph(const Mesh&           mesh,
 }
 
 
-size_t NodeSideGraph(const Mesh&           mesh,
-                           vector<size_t>& row_ptr, 
-                           vector<size_t>& col_ind,
-                           vector<RC>&     IJ,
-                           vector<size_t>& nbc)
+size_t NodeSideGraph(const Mesh&     mesh,
+                     vector<size_t>& row_ptr, 
+                     vector<size_t>& col_ind,
+                     vector<RC>&     IJ,
+                     vector<size_t>& nbc)
 {
    mesh_sides(mesh) {
       for (size_t k=1; k<=The_side.getNbDOF(); k++) {
@@ -513,11 +513,11 @@ size_t NodeSideGraph(const Mesh&           mesh,
 }
 
 
-size_t NodeGraphScal(const Mesh&           mesh,
-                           vector<size_t>& row_ptr,
-                           vector<size_t>& col_ind,
-                           vector<RC>&     IJ,
-                           vector<size_t>& nbc)
+size_t NodeGraphScal(const Mesh&     mesh,
+                     vector<size_t>& row_ptr,
+                     vector<size_t>& col_ind,
+                     vector<RC>&     IJ,
+                     vector<size_t>& nbc)
 {
    mesh_elements(mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
@@ -532,13 +532,13 @@ size_t NodeGraphScal(const Mesh&           mesh,
 }
 
 
-size_t NodeGraphScal(const Mesh&           mesh,
-                           size_t          dof,
-                           size_t          nb_eq,
-                           vector<size_t>& row_ptr,
-                           vector<size_t>& col_ind,
-                           vector<RC>&     IJ,
-                           vector<size_t>& nbc)
+size_t NodeGraphScal(const Mesh&     mesh,
+                     size_t          dof,
+                     size_t          nb_eq,
+                     vector<size_t>& row_ptr,
+                     vector<size_t>& col_ind,
+                     vector<RC>&     IJ,
+                     vector<size_t>& nbc)
 {
    mesh_elements(mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
@@ -559,11 +559,11 @@ size_t NodeGraphScal(const Mesh&           mesh,
 }
 
 
-size_t XGraph(const Mesh&           mesh,
-                    vector<size_t>& row_ptr,
-                    vector<size_t>& col_ind,
-                    vector<RC>&     IJ,
-                    vector<size_t>& nbc)
+size_t XGraph(const Mesh&     mesh,
+              vector<size_t>& row_ptr,
+              vector<size_t>& col_ind,
+              vector<RC>&     IJ,
+              vector<size_t>& nbc)
 {
    mesh_elements(mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
@@ -600,9 +600,9 @@ size_t XGraph(const Mesh&           mesh,
 }
 
 
-void StoreGraph(const vector<RC>&     IJ,
-                      vector<size_t>& row_ptr,
-                      vector<size_t>& col_ind)
+void StoreGraph(const vector<RC>& IJ,
+                vector<size_t>&   row_ptr,
+                vector<size_t>&   col_ind)
 {
    size_t length=IJ.size();
    col_ind.clear();
@@ -618,9 +618,9 @@ void StoreGraph(const vector<RC>&     IJ,
 }
 
 
-size_t DG0Graph(const Mesh&           mesh,
-                      vector<RC>&     I,
-                      vector<size_t>& nbc)
+size_t DG0Graph(const Mesh&     mesh,
+                vector<RC>&     I,
+                vector<size_t>& nbc)
 {
    I.clear();
    Element *el1, *el2, *el;
@@ -646,9 +646,9 @@ size_t DG0Graph(const Mesh&           mesh,
 }
 
 
-size_t DGGraph(const Mesh&           mesh,
-                     vector<RC>&     I,
-                     vector<size_t>& nbc)
+size_t DGGraph(const Mesh&     mesh,
+               vector<RC>&     I,
+               vector<size_t>& nbc)
 {
    I.clear();
    size_t fd=1;

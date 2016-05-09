@@ -97,8 +97,7 @@
 #endif
 
 #include "solvers/ODESolver.h"
-#include "solvers/OptimTN.h"
-#include "solvers/OptimAux.h"
+#include "solvers/OptSolver.h"
 #include "solvers/EigenProblemSolver.h"
 #include "equations/interface/FastMarching2D.h"
 

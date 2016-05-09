@@ -91,26 +91,6 @@ Mesh::Mesh()
    setNodesForDOF();
 }
 
-  /*
-Mesh::Mesh(const string& file,
-           bool          bc,
-           int           opt)
-     : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(2), _nb_dof(0),
-       _nb_vertices(0), _first_dof(1), _nb_mat(0), _verb(0), _no_imposed_dof(false),
-       _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
-       _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
-       _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
-       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
-       _ed_view1(0), _ed_view2(0)
-{
-   setNodesForDOF();
-   get(file);
-   setDOFSupport(opt);
-   if (bc)
-      removeImposedDOF();
-   string mat = theMaterial.getName(1);
-}*/
-
 
 Mesh::Mesh(const string& file,
            bool          bc,
@@ -575,21 +555,21 @@ Mesh::Mesh(real_t xmin,
 
 
 Mesh::Mesh(real_t xmin,
-           real_t ymin,
            real_t xmax,
+           real_t ymin,
            real_t ymax,
            size_t nx,
            size_t ny,
-           int    c1,
-           int    c2,
-           int    c3,
-           int    c4,
+           int    cx0,
+           int    cxN,
+           int    cy0,
+           int    cyN,
            int    opt)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(2), _nb_dof(0), _nb_vertices(0),
-       _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
-       _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
-       _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
-       _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
+       _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false), _is_structured(true),
+       _all_sides_created(false), _boundary_sides_created(false), _all_edges_created(false),
+       _boundary_edges_created(false), _boundary_nodes_created(false), _node_neighbor_elements_created(false),
+       _element_neighbor_elements_created(false),
        _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
        _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
 {
@@ -606,14 +586,14 @@ Mesh::Mesh(real_t xmin,
          the_node = new Node(n,x);
          the_node->setNbDOF(1);
          _code[0] = 0;
-         if (j==0  && c1>0)
-            _code[0] = c1;
-         if (j==ny && c3>0)
-            _code[0] = c3;
-         if (i==0  && c4>0)
-            _code[0] = c4;
-         if (i==nx && c2>0)
-            _code[0] = c2;
+         if (j==0  && cy0>0)
+            _code[0] = cy0;
+         if (j==ny && cyN>0)
+            _code[0] = cyN;
+         if (i==0  && cx0>0)
+            _code[0] = cx0;
+         if (i==nx && cxN>0)
+            _code[0] = cxN;
          the_node->setDOF(_first_dof,1);
          the_node->setCode(_code);
          Add(the_node);
@@ -652,54 +632,213 @@ Mesh::Mesh(real_t xmin,
       x.x += hx;
    }
 
-   if (c1<0 || c2<0 || c3<0 || c4<0) {
-      size_t is=1, n=1;
+   size_t is=1;
+   n =  1;
+   if (cx0<0) {
       for (size_t j=1; j<=ny; j++) {
          the_side = new Side(is++,LINE);
          the_side->Add(getPtrNode(n));
          the_side->Add(getPtrNode(n+1));
          n++;
          the_side->setNbDOF(1);
-         if (c4<0) {
-            the_side->setCode(1,-c4);
-            Add(the_side);
-         }
+         the_side->setCode(1,-cx0);
+         Add(the_side);
       }
-      n = nx*(ny+1) + 1;
+   }
+   n = nx*(ny+1) + 1;
+   if (cxN<0) {
       for (size_t j=1; j<=ny; j++) {
          the_side = new Side(is++,LINE);
          the_side->Add(getPtrNode(n));
          the_side->Add(getPtrNode(n+1));
          n++;
          the_side->setNbDOF(1);
-         if (c2<0) {
-            the_side->setCode(1,-c2);
-            Add(the_side);
-         }
+         the_side->setCode(1,-cxN);
+         Add(the_side);
       }
-      n = 1;
+   }
+   n = 1;
+   if (cy0<0) {
       for (size_t i=1; i<=nx; i++) {
          the_side = new Side(is++,LINE);
          the_side->Add(getPtrNode(n));
          the_side->Add(getPtrNode(n+ny+1));
          n += ny + 1;
          the_side->setNbDOF(1);
-         if (c1<0) {
-            the_side->setCode(1,-c1);
-            Add(the_side);
-         }
+         the_side->setCode(1,-cy0);
+         Add(the_side);
       }
-      n = ny + 1;
+   }
+   n = ny + 1;
+   if (cyN<0) {
       for (size_t i=1; i<=nx; i++) {
          the_side = new Side(is++,LINE);
          the_side->Add(getPtrNode(n));
          the_side->Add(getPtrNode(n+ny+1));
          n += ny + 1;
          the_side->setNbDOF(1);
-         if (c3<0) {
-            the_side->setCode(1,-c3);
-            Add(the_side);
+         the_side->setCode(1,-cyN);
+         Add(the_side);
+      }
+   }
+   NumberEquations();
+   mesh_elements(*this)
+      theMaterial.check(the_element->getCode());
+}
+
+
+Mesh::Mesh(real_t xmin,
+           real_t xmax,
+           real_t ymin,
+           real_t ymax,
+           real_t zmin,
+           real_t zmax,
+           size_t nx,
+           size_t ny,
+           size_t nz,
+           int    cx0,
+           int    cxN,
+           int    cy0,
+           int    cyN,
+           int    cz0,
+           int    czN,
+           int    opt)
+     : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(3), _nb_dof(0), _nb_vertices(0),
+       _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
+       _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
+       _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
+       _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
+       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
+       _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
+{
+   theMaterial.set(1,"Generic");
+   setNodesForDOF();
+   Point<real_t> x(xmin,ymin,zmin);
+   real_t hx=(xmax-xmin)/nx, hy=(ymax-ymin)/ny, hz=(zmax-zmin)/nz;
+
+   size_t n=0;
+   for (size_t k=0; k<=nz; k++) {
+      x.y = ymin;
+      for (size_t j=0; j<=ny; j++) {
+         x.x = xmin;
+         for (size_t i=0; i<=nx; i++) {
+            the_node = new Node(++n,x);
+            the_node->setNbDOF(1);
+            _code[0] = 0;
+            if (j==0  && cy0>0) _code[0] = cy0;
+            if (j==ny && cyN>0) _code[0] = cyN;
+            if (i==0  && cx0>0) _code[0] = cx0;
+            if (i==nx && cxN>0) _code[0] = cxN;
+            if (k==0  && cz0>0) _code[0] = cz0;
+            if (k==nz && czN>0) _code[0] = czN;
+            The_node.setDOF(_first_dof,1);
+            The_node.setCode(_code);
+            Add(the_node);
+            x.x += hx;
          }
+         x.y += hy;
+      }
+      x.z += hz;
+   }
+
+   n = 0;
+   size_t ne=0, nn=(nx+1)*(ny+1);
+   for (size_t k=1; k<=nz; k++) {
+      for (size_t j=1; j<=ny; j++) {
+         for (size_t i=1; i<=nx; i++) {
+            Node *nd[8] = { _nodes[n], _nodes[n+1], _nodes[n+nx+2], _nodes[n+nx+1], _nodes[n+nn],
+                            _nodes[n+nn+1], _nodes[n+nn+nx+2], _nodes[n+nn+nx+1] };
+            try {
+               if (opt==HEXAHEDRON) {
+                  the_element = new Element(++ne,HEXAHEDRON,1);
+                  for (size_t i=0; i<8; i++)
+                     The_element.Add(nd[i]);
+		  n++;
+                  Add(the_element);
+               }
+               else if (opt==TETRAHEDRON) {
+                  the_element = new Element(++ne,TETRAHEDRON,1);
+                  The_element.Add(nd[0]); The_element.Add(nd[1]);
+                  The_element.Add(nd[3]); The_element.Add(nd[7]);
+                  Add(the_element);
+                  the_element = new Element(++ne,TETRAHEDRON,1);
+                  The_element.Add(nd[0]); The_element.Add(nd[1]);
+                  The_element.Add(nd[4]); The_element.Add(nd[7]);
+                  Add(the_element);
+                  the_element = new Element(++ne,TETRAHEDRON,1);
+                  The_element.Add(nd[1]); The_element.Add(nd[2]);
+                  The_element.Add(nd[3]); The_element.Add(nd[7]);
+                  Add(the_element);
+                  the_element = new Element(++ne,TETRAHEDRON,1);
+                  The_element.Add(nd[1]); The_element.Add(nd[2]);
+                  The_element.Add(nd[6]); The_element.Add(nd[7]);
+                  Add(the_element);
+                  the_element = new Element(++ne,TETRAHEDRON,1);
+                  The_element.Add(nd[0]); The_element.Add(nd[4]);
+                  The_element.Add(nd[5]); The_element.Add(nd[7]);
+                  Add(the_element);
+                  the_element = new Element(++ne,TETRAHEDRON,1);
+                  The_element.Add(nd[1]); The_element.Add(nd[5]);
+                  The_element.Add(nd[6]); The_element.Add(nd[7]);
+                  Add(the_element);
+               }
+               else
+                  THROW_RT("Mesh(real_t,real_t,real_t,real_t,size_t,size_t,int,int,int,int,int): Illegal option "+itos(opt));
+            }
+            CATCH_EXIT("Mesh");
+         }
+	 n++;
+      }
+      n += nx + 1;
+   }
+
+   size_t is=1;
+   n = 1;
+   for (size_t j=1; j<=ny; j++) {
+      the_side = new Side(is++,LINE);
+      the_side->Add(getPtrNode(n));
+      the_side->Add(getPtrNode(n+1));
+      n++;
+      the_side->setNbDOF(1);
+      if (cy0<0) {
+         the_side->setCode(1,-cy0);
+         Add(the_side);
+      }
+   }
+   n = nx*(ny+1) + 1;
+   for (size_t j=1; j<=ny; j++) {
+      the_side = new Side(is++,LINE);
+      the_side->Add(getPtrNode(n));
+      the_side->Add(getPtrNode(n+1));
+      n++;
+      the_side->setNbDOF(1);
+      if (cyN<0) {
+         the_side->setCode(1,-cyN);
+         Add(the_side);
+      }
+   }
+   n = 1;
+   for (size_t i=1; i<=nx; i++) {
+      the_side = new Side(is++,LINE);
+      the_side->Add(getPtrNode(n));
+      the_side->Add(getPtrNode(n+ny+1));
+      n += ny + 1;
+      the_side->setNbDOF(1);
+      if (cx0<0) {
+         the_side->setCode(1,-cx0);
+         Add(the_side);
+      }
+   }
+   n = ny + 1;
+   for (size_t i=1; i<=nx; i++) {
+      the_side = new Side(is++,LINE);
+      the_side->Add(getPtrNode(n));
+      the_side->Add(getPtrNode(n+ny+1));
+      n += ny + 1;
+      the_side->setNbDOF(1);
+      if (cxN<0) {
+         the_side->setCode(1,-cxN);
+         Add(the_side);
       }
    }
 
@@ -817,11 +956,11 @@ Mesh::Mesh(const Mesh&          m,
 }
 
 
-Mesh::Mesh(const Mesh&  mesh,
-           int          opt,
-           size_t       dof1,
-           size_t       dof2,
-           bool         bc)
+Mesh::Mesh(const Mesh& mesh,
+           int         opt,
+           size_t      dof1,
+           size_t      dof2,
+           bool        bc)
      : _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
        _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
 {
@@ -2288,7 +2427,7 @@ void Mesh::set(Side* sd)
 void Mesh::Add(Node* nd)
 {
    _nodes.push_back(nd);
-   _nb_nodes++; _nb_vertices++;
+   _nb_nodes++, _nb_vertices++;
    _nb_dof += nd->getNbDOF();
 }
 
@@ -2771,82 +2910,77 @@ void Mesh::put(const string& file) const
 unsigned long Mesh::FindGraph(vector<long>&   xadj,
                               vector<size_t>& adjncy)
 {
-    long unsigned l, k, is, isn, m, memory;
-    size_t i, j, ii, jj, in;
-    int jtest;
+   if (_verb > 1)
+      cout << "Getting mesh graph ..." << endl;
+   for (size_t i=1; i<=_nb_nodes; ++i)
+      xadj[i] = 0;
+   xadj[0] = 1;
+   for (size_t i=0; i<_available_memory; ++i)
+      adjncy[i] = 0;
+   size_t memory = 0;
 
-    if (_verb > 1)
-       cout << "Getting mesh graph ..." << endl;
-    for (i=1; i<=_nb_nodes; ++i)
-       xadj[i] = 0;
-    xadj[0] = 1;
-    for (i=0; i<_available_memory; ++i)
-       adjncy[i] = 0;
-    memory = 0;
-
-    mesh_elements(*this) {
-       for (i=1; i<=the_element->getNbNodes(); i++) {
-          ii = the_element->getNodeLabel(i);
-          for (j=1; j<=the_element->getNbNodes(); j++) {
-             jj = The_element(j)->n();
-             if (ii != jj) {
-                k = 0;
-                for (in=1; in<=ii; ++in)
-                   k += xadj[in-1];
-                m = k + xadj[ii];
-                if (adjncy[k-1] == 0) {
+   mesh_elements(*this) {
+      for (size_t i=1; i<=the_element->getNbNodes(); i++) {
+         size_t ii = the_element->getNodeLabel(i);
+         for (size_t j=1; j<=the_element->getNbNodes(); j++) {
+            size_t jj = The_element(j)->n();
+            if (ii != jj) {
+               size_t k = 0;
+               for (size_t in=1; in<=ii; ++in)
+                  k += xadj[in-1];
+               size_t m = k + xadj[ii];
+               if (adjncy[k-1] == 0) {
                   adjncy[k-1] = jj;
                   ++memory;
                   ++xadj[ii];
                   goto L9;
-                }
-                for (l=k; l<=m-1; ++l) {
-                   jtest = adjncy[l-1] - jj;
-                   if (jtest < 0)
-                      goto L5;
-                   else if (jtest == 0)
-                      goto L9;
-                   else
-                     goto L7;
+               }
+	       size_t l;
+               for (l=k; l<=m-1; ++l) {
+                  int jtest = adjncy[l-1] - jj;
+                  if (jtest < 0)
+                     goto L5;
+                  else if (jtest == 0)
+                     goto L9;
+                  else
+                    goto L7;
 L5:
                   ;
-                }
-                ++memory;
-                try {
-                   if (memory > _available_memory && _available_memory > 0)
-                      THROW_RT("FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
-                }
-                CATCH_EXIT("Mesh");
-                ++xadj[ii];
-                for (is=m; is<=memory; ++is) {
-                   isn = m + memory - is;
-                   adjncy[isn] = adjncy[isn-1];
-                }
-                adjncy[m-1] = jj;
-                goto L9;
+               }
+               ++memory;
+               try {
+                  if (memory > _available_memory && _available_memory > 0)
+                     THROW_RT("FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
+               }
+               CATCH_EXIT("Mesh");
+               ++xadj[ii];
+               for (size_t is=m; is<=memory; ++is)
+                  adjncy[m+memory-is] = adjncy[m+memory-is-1];
+               adjncy[m-1] = jj;
+               goto L9;
 L7:
-                ++memory;
-                try {
-                   if (memory > _available_memory && _available_memory > 0)
-                      THROW_RT("FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
-                }
-                CATCH_EXIT("Mesh");
-                ++xadj[ii];
-                for (is=l; is<=memory; ++is) {
-                   isn = memory + l - is;
-                   adjncy[isn] = adjncy[isn-1];
-                }
-                adjncy[l-1] = jj;
+               ++memory;
+               try {
+                  if (memory > _available_memory && _available_memory > 0)
+                     THROW_RT("FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
+               }
+               CATCH_EXIT("Mesh");
+               ++xadj[ii];
+               for (size_t is=l; is<=memory; ++is) {
+                  size_t isn = memory + l - is;
+                  adjncy[isn] = adjncy[isn-1];
+               }
+               adjncy[l-1] = jj;
 L9:
-                ;
-             }
-          }
-       }
-    }
+               ;
+            }
+         }
+      }
+   }
 
-    for (i=1; i<=_nb_nodes; ++i)
-       xadj[i] += xadj[i-1];
-    return memory;
+   for (size_t i=1; i<=_nb_nodes; ++i)
+      xadj[i] += xadj[i-1];
+   return memory;
 }
 
 
@@ -2867,16 +3001,16 @@ void Mesh::GenRCM(vector<long>&   xadj,
             (pages 66-75).
  ------------------------------------------------------------------------------*/
 {
-   size_t i, root, ccsize=0;
-   long nlvl;
-   for (i=0; i<_nb_nodes; ++i)
+   for (size_t i=0; i<_nb_nodes; ++i)
       mask[i] = 1;
    size_t num = 1;
-   for (i=0; i<_nb_nodes; ++i) {
+   for (size_t i=0; i<_nb_nodes; ++i) {
       if (mask[i] != 0) {
-         root = i+1;
-         FindRoot(root, xadj, adjncy, mask, nlvl, xls, perm+num-1);
-         RCM(root, xadj, adjncy, mask, perm+num-1, ccsize, xls);
+         size_t root=i+1;
+	 long nlvl;
+         FindRoot(root,xadj,adjncy,mask,nlvl,xls,perm+num-1);
+	 size_t ccsize = 0;
+         RCM(root,xadj,adjncy,mask,perm+num-1,ccsize,xls);
          num += ccsize;
          if (num > _nb_nodes)
             return;
@@ -2944,12 +3078,11 @@ Mesh & Mesh::operator=(Mesh& ms)
 }
 
 
-ostream& operator<<(      ostream& s,
-                    const Mesh&    ms)
+ostream& operator<<(ostream&    s,
+                    const Mesh& ms)
 {
    size_t n1=ms._n_view1, n2=ms._n_view2, e1=ms._e_view1, e2=ms._e_view2;
    size_t s1=ms._s_view1, s2=ms._s_view2, ed1=ms._ed_view1, ed2=ms._ed_view2;
-
    if (n1==0)
       n1 = 1;
    if (n2==0)
@@ -2976,17 +3109,16 @@ ostream& operator<<(      ostream& s,
    if (ms.getNbEdges()>0)
       s << "Number of edges        : " << setw(6) << ms.getNbEdges() << endl;
 
-   size_t i;
    if (ms.getVerbose() > 1) {
       s << "\n\nLIST OF ELEMENTS:\n";
-      for (i=e1; i<=e2; i++)
+      for (size_t i=e1; i<=e2; i++)
          s << *(ms.getPtrElement(i));
       s << endl;
    }
 
    if (ms.getVerbose() > 1) {
       s << "\n\nLIST OF NODES:\n";
-      for (i=n1; i<=n2; i++)
+      for (size_t i=n1; i<=n2; i++)
          s << *(ms.getPtrNode(i));
       s << endl;
    }
@@ -2994,7 +3126,7 @@ ostream& operator<<(      ostream& s,
    if (ms.getVerbose() > 2) {
       if (ms.getNbSides() > 0) {
          s << "\n\nLIST OF SIDES:\n";
-         for (i=s1; i<=s2; i++)
+         for (size_t i=s1; i<=s2; i++)
             s << *(ms.getPtrSide(i));
          s << endl;
       }
@@ -3004,7 +3136,7 @@ ostream& operator<<(      ostream& s,
    if (ms.getVerbose() > 3) {
       if (ms.getNbEdges() > 0) {
          s << "\n\nLIST OF EDGES:\n";
-         for (i=ed1; i<=ed2; i++)
+         for (size_t i=ed1; i<=ed2; i++)
             s << *(ms.getPtrEdge(i));
          s << endl;
       }

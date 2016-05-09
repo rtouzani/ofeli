@@ -920,7 +920,6 @@ void ODESolver::solveNewmark()
 
 void ODESolver::solveBDF2()
 {
-cout<<"*0"<<endl;
    try {
       if (_order==2)
          THROW_RT("solveBDF2(): BDF2 scheme is implemented for first order equations only.");
@@ -943,19 +942,13 @@ cout<<"*0"<<endl;
    _b = (*_f2);
    _ls.setMatrix(_A0);
    _ls.setRHS(_b);
-cout<<"*4"<<endl;
    _ls.setSolver(_s,_p);
-cout<<"*5"<<endl;
    if (_step==1) {
       _A1->MultAdd(1./_time_step,_u,_b);
-cout<<"*6"<<endl;
       _ls.setSolution(_v);
-cout<<"*7"<<endl;
       _A0->Axpy(1./_time_step,_A1);
       _ls.setFact();
-cout<<"*8"<<endl;
       _ls.solve();
-cout<<"*9"<<endl;
       *_w = _v;
    }
    else {
@@ -1060,7 +1053,7 @@ Vect<real_t>& ODESolver::setF_BDF2()
 }
 
 
-ostream& operator<<(      ostream&   s,
+ostream& operator<<(ostream&         s,
                     const ODESolver& ode)
 {
    s << "\nNUMERICAL SOLUTION OF A DIFFERENTIAL SYSTEM\n\n";

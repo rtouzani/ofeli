@@ -90,9 +90,9 @@ class Side
  * To select side type (boundary side or not).
  */
 enum SideType {
-  INTERNAL_SIDE     =  0,  /*!< Internal side */
-  EXTERNAL_BOUNDARY =  1,  /*!< Side on external boundary */
-  INTERNAL_BOUNDARY =  2   /*!< Side on internal boundary */
+   INTERNAL_SIDE     =  0,  /*!< Internal side */
+   EXTERNAL_BOUNDARY =  1,  /*!< Side on external boundary */
+   INTERNAL_BOUNDARY =  2   /*!< Side on internal boundary */
 };
 
 //----------------------------   BASIC OPERATIONS   -----------------------------
@@ -104,7 +104,7 @@ enum SideType {
  *  @param [in] label Label to assign to side.
  *  @param [in] shape Shape of side (See class description).
  */
-    Side(      size_t  label,
+    Side(size_t        label,
          const string& shape);
 
 /** \brief Constructor initializing side label and shape.
@@ -127,7 +127,7 @@ enum SideType {
 
 /// \brief Insert an edge at end of list of edges of side
     void Add(Edge* edge);
-   
+
 /// \brief Define label of side.
     void setLabel(size_t i) { _label = i; }
 
@@ -142,8 +142,7 @@ enum SideType {
  *  @param [in] dof Its label
  */
     void DOF(size_t i,
-             size_t dof)
-    { _dof[i-1] = dof; }
+             size_t dof) { _dof[i-1] = dof; }
 
 /** \brief Define number of DOF.
  *  @param [in,out] first_dof Label of the first DOF in input that is actualized
@@ -157,8 +156,7 @@ enum SideType {
  *  @param [in] code Code to assign
  */
     void setCode(size_t dof,
-                 int    code)
-    { _code[dof-1] = code; }
+                 int    code) { _code[dof-1] = code; }
 
 /** \brief Define code by a boolean algebraic expression invoking coordinates of side nodes
  *  @param [in] exp Boolean algebraic expression as required by <tt>fparser</tt>
@@ -166,8 +164,8 @@ enum SideType {
  *  @param [in] dof Degree of Freedom for which code is assigned [Default: 1]
  */
     void setCode(const string& exp,
-                       int     code,
-                       size_t  dof=1);
+                 int           code,
+                 size_t        dof=1);
 
 /// \brief Replace a node at a given local label
     void Replace(size_t label,
@@ -186,8 +184,7 @@ enum SideType {
  *  label of neighbor element is given
  */
     void set(Element* el,
-             size_t   i)
-    { _el[i-1] = el; }
+             size_t   i) { _el[i-1] = el; }
 
 /// \brief Assign a node given by its pointer as the <tt>i</tt>-th node of side
     void setNode(size_t i,
@@ -236,9 +233,8 @@ enum SideType {
 /// \brief Return global label of node with given local label
     size_t getNodeLabel(size_t i) const { return _node[i-1]->n(); }
 
-/** \brief Return pointer to i-th side neighboring element
- *  @param [in] i Local label of neighbor element (must be equal to <tt>1</tt> or <tt>2</tt>).
- */
+/// \brief Return pointer to i-th side neighboring element
+///  @param [in] i Local label of neighbor element (must be equal to <tt>1</tt> or <tt>2</tt>).
     Element* getNeighborElement(size_t i) const { return _el[i-1]; }
 
 /** \brief Return pointer to other neighboring element than given one
@@ -320,22 +316,22 @@ enum SideType {
 
     friend class Mesh;
     friend void Refine(Mesh &in_mesh, Mesh &out_mesh);
-    friend ostream& operator<<(      ostream& s,
-                               const Mesh&    ms);
+    friend ostream& operator<<(ostream&    s,
+                               const Mesh& ms);
 
 private:
 
-    bool             _active;
-    vector<int>      _code;
-    vector<size_t>   _dof;
-    mutable int      _on_boundary;
-    size_t           _nb_dof, _label, _nb_nodes, _nb_eq, _first_dof, _neig_el;
-    size_t           _nb_edges, _nb_childs;
-    int              _shape, _level;
-    Node             *_node[MAX_NB_SIDE_NODES], *_side_dof[MAX_NB_SIDE_NODES];
-    Edge             *_ed[4];
-    Element          *_el[2];
-    Side             *_child[4], *_parent;
+    bool           _active;
+    vector<int>    _code;
+    vector<size_t> _dof;
+    mutable int    _on_boundary;
+    size_t         _nb_dof, _label, _nb_nodes, _nb_eq, _first_dof, _neig_el;
+    size_t         _nb_edges, _nb_childs;
+    int            _shape, _level;
+    Node           *_node[MAX_NB_SIDE_NODES], *_side_dof[MAX_NB_SIDE_NODES];
+    Edge           *_ed[4];
+    Element        *_el[2];
+    Side           *_child[4], *_parent;
     void shape_index(const string &shape);
 };
 
@@ -347,8 +343,8 @@ private:
 /// \fn ostream & operator<<(ostream& s, const Side &sd)
 /// \brief Output side data
 /// \ingroup Mesh
-    ostream& operator<<(      ostream& s,
-                        const Side&    sd);
+    ostream& operator<<(ostream&    s,
+                        const Side& sd);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

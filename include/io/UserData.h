@@ -56,7 +56,7 @@ namespace OFELI {
  *  \ingroup Util
  *  \brief Abstract class to define by user various problem data.
  *
- * The user has to implement a class that derives from the present one where
+ * The user has to implement a class that inherits from the present one where
  * the virtual functions are implemented.
  *
  * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)

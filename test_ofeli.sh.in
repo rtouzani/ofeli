@@ -36,13 +36,6 @@ if test "$ans" = "y" ; then
    ./lesson4 test.dat
 fi
 
-cd ../lesson5
-echo "Test tutorial example 5 (y/n) ? \c"
-read ans
-if test "$ans" = "y" ; then
-   ./lesson5 test.dat
-fi
-
 cd ../../demos
 
 
@@ -243,6 +236,28 @@ read ans
 if test "$ans" = "y" ; then
     ./eigen_demo2 eigen_demo2.dat
     /bin/rm *.pos
+fi
+
+echo "-----------------------------------------------------------------"
+echo "Testing Optimization solver Demos ..."
+
+cd ../../solvers/OPTIM
+echo "Test demo for a one-variable optimization problem (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   ./opt_demo1
+fi
+
+echo "Test demo for a multi-variable optimization problem (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+    ./opt_demo2
+fi
+
+echo "Test demo for a pde based optimization problem (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+    ./opt_demo3 test.dat
 fi
 
 cd ../../../

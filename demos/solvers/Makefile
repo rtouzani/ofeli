@@ -191,7 +191,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall  
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -223,7 +223,7 @@ MPI_CFLAGS = -I${prefix}/include/mpi
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
 OBJEXT = o
-OFELI_CFLAGS = -I${prefix}/include/ofeli  -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+OFELI_CFLAGS = -I${prefix}/include/ofeli  -Wall  
 OFELI_FLAGS = -I$(top_srcdir)/include
 OFELI_LDFLAGS = -L${exec_prefix}/lib 
 OFELI_LIB = -lofeli
@@ -296,7 +296,7 @@ target_alias =
 top_build_prefix = ../../
 top_builddir = ../..
 top_srcdir = ../..
-SUBDIRS = LS ODE EIGEN
+SUBDIRS = LS ODE EIGEN OPTIM
 all: all-recursive
 
 .SUFFIXES:

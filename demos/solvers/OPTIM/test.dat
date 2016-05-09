@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title>Project file for an optimization problem</title>
+   <date>May 8, 2016</date>
+   <author>R. Touzani</author>
+</info>
+<Project name="opt_demo35">
+   <mesh_file>test.m</mesh_file>
+   <nb_iter value="1000"></nb_iter>
+   <tolerance>1.e-8</tolerance>
+</Project>
+</OFELI_File>
+

@@ -108,7 +108,9 @@ libsolvers_a_AR = $(AR) $(ARFLAGS)
 libsolvers_a_LIBADD =
 am_libsolvers_a_OBJECTS = BSpline.$(OBJEXT) \
 	EigenProblemSolver.$(OBJEXT) ODESolver.$(OBJEXT) \
-	Solver.$(OBJEXT) TimeStepping.$(OBJEXT)
+	OptimNM.$(OBJEXT) OptimSA.$(OBJEXT) OptimTN.$(OBJEXT) \
+	OptimPG.$(OBJEXT) OptSolver.$(OBJEXT) Solver.$(OBJEXT) \
+	TimeStepping.$(OBJEXT)
 libsolvers_a_OBJECTS = $(am_libsolvers_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -178,7 +180,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall  
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -210,7 +212,7 @@ MPI_CFLAGS = -I${prefix}/include/mpi
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
 OBJEXT = o
-OFELI_CFLAGS = -I${prefix}/include/ofeli  -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+OFELI_CFLAGS = -I${prefix}/include/ofeli  -Wall  
 OFELI_FLAGS = -I$(top_srcdir)/include
 OFELI_LDFLAGS = -L${exec_prefix}/lib 
 OFELI_LIB = -lofeli
@@ -289,6 +291,11 @@ libsolvers_a_SOURCES = \
 	BSpline.cpp \
 	EigenProblemSolver.cpp \
 	ODESolver.cpp \
+	OptimNM.cpp \
+	OptimSA.cpp \
+	OptimTN.cpp \
+	OptimPG.cpp \
+	OptSolver.cpp \
 	Solver.cpp \
 	TimeStepping.cpp
 

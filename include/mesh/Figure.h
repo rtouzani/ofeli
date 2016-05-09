@@ -125,8 +125,8 @@ class Figure
  *  to Figure
  *  @remark Vector <tt>d</tt> doesn't need to be sized before invoking this function
  */
-    void getSignedDistance(const Grid&         g,
-                                 Vect<real_t>& d) const
+    void getSignedDistance(const Grid&   g,
+                           Vect<real_t>& d) const
     {
        if (g.getDim()==2) {
           d.setSize(g.getNx()+1,g.getNy()+1);
@@ -268,7 +268,7 @@ class Rectangle : public Figure
  */
     Rectangle(const Point<real_t>& bbm,
               const Point<real_t>& bbM,
-                    int            code=1)
+              int                  code=1)
     {
        _nb_figs++;
        _v[0] = bbm;
@@ -670,7 +670,7 @@ class Triangle : public Figure
     Triangle(const Point<real_t>& v1,
              const Point<real_t>& v2,
              const Point<real_t>& v3,
-                   int            code=1)
+             int                  code=1)
     {
        _nb_figs++;
        _v[0] = v1;

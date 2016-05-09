@@ -22,7 +22,8 @@ namespace FPoptimizer_CodeTree { class CodeTree; }
 
 class FunctionParser
 {
-public:
+
+ public:
     enum ParseErrorType
     {
         SYNTAX_ERROR=0, MISM_PARENTH, MISSING_PARENTH, EMPTY_PARENTH,
@@ -32,11 +33,8 @@ public:
         FP_NO_ERROR
     };
 
-
-    int Parse(const char* Function, const std::string& Vars,
-              bool useDegrees = false);
-    int Parse(const std::string& Function, const std::string& Vars,
-              bool useDegrees = false);
+    int Parse(const char* Function, const std::string& Vars, bool useDegrees=false);
+    int Parse(const std::string& Function, const std::string& Vars, bool useDegrees=false);
 
     void setDelimiterChar(char);
 
@@ -50,6 +48,7 @@ public:
     double Eval(const double &x, const double &y, const double &z, const double &t);
     double Eval(const OFELI::Point<double> &x);
     double Eval(const OFELI::Point<double> &x, const double &t);
+    double Eval(const std::vector<double> &x);
 
     inline int EvalError() const { return evalErrorType; }
 
@@ -58,11 +57,9 @@ public:
 
     typedef double (*FunctionPtr)(const double*);
 
-    bool AddFunction(const std::string& name,
-                           FunctionPtr,
-                           unsigned     paramsAmount);
-    bool AddFunction(const std::string&   name,
-                           FunctionParser&);
+    bool AddFunction(const std::string& name, FunctionPtr, unsigned paramsAmount);
+
+    bool AddFunction(const std::string& name, FunctionParser&);
 
     bool RemoveIdentifier(const std::string& name);
 

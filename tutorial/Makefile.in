@@ -296,7 +296,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = lesson1 lesson2 lesson3 lesson4 lesson5 
+SUBDIRS = lesson1 lesson2 lesson3 lesson4 
 all: all-recursive
 
 .SUFFIXES:

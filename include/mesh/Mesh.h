@@ -196,10 +196,10 @@ class Mesh
  *  @param [in] ymax Maximal y-coordinate
  *  @param [in] nx Number of subintervals on the x-axis
  *  @param [in] ny Number of subintervals on the y-axis
- *  @param [in] c1 Code for nodes generated on the line y=0
- *  @param [in] c2 Code for nodes generated on the line x=Lx
- *  @param [in] c3 Code for nodes generated on the line y=Ly
- *  @param [in] c4 Code for nodes generated on the line x=0
+ *  @param [in] cx0 Code for nodes generated on the line x=x0 if >0, for sides on this line if <0
+ *  @param [in] cxN Code for nodes generated on the line x=xN if >0, for sides on this line if <0
+ *  @param [in] cy0 Code for nodes generated on the line y=y0 if >0, for sides on this line if <0
+ *  @param [in] cyN Code for nodes generated on the line y=yN if >0, for sides on this line if <0
  *  @param [in] opt Flag to generate elements as well (if not zero) [Default: 0]. 
  *  If the flag is not 0, it can take one of the enumerated values: TRIANGLE or QUADRILATERAL, 
  *  with obvious meaning.
@@ -211,11 +211,50 @@ class Mesh
          real_t ymax,
          size_t nx,
          size_t ny,
-         int    c1,
-         int    c2,
-         int    c3,
-         int    c4,
+         int    cx0,
+         int    cxN,
+         int    cy0,
+         int    cyN,
          int    opt=0);
+
+/** \brief Constructor for a uniform 3-D structured finite element mesh.
+ *  \details The domain is the parallepiped (xmin,xmax)x(ymin,ymax)x(zmin,zmax)
+ *  @param [in] xmin Minimal x-coordinate
+ *  @param [in] xmax Maximal x-coordinate
+ *  @param [in] ymin Minimal y-coordinate
+ *  @param [in] ymax Maximal y-coordinate
+ *  @param [in] zmin Minimal z-coordinate
+ *  @param [in] zmax Maximal z-coordinate
+ *  @param [in] nx Number of subintervals on the x-axis
+ *  @param [in] ny Number of subintervals on the y-axis
+ *  @param [in] nz Number of subintervals on the z-axis
+ *  @param [in] cx0 Code for nodes generated on the line x=xmin if >0, for sides on this line if <0
+ *  @param [in] cxN Code for nodes generated on the line x=xmax if >0, for sides on this line if <0
+ *  @param [in] cy0 Code for nodes generated on the line y=ymin if >0, for sides on this line if <0
+ *  @param [in] cyN Code for nodes generated on the line y=ymax if >0, for sides on this line if <0
+ *  @param [in] cz0 Code for nodes generated on the line z=zmin if >0, for sides on this line if <0
+ *  @param [in] czN Code for nodes generated on the line z=zmax if >0, for sides on this line if <0
+ *  @param [in] opt Flag to generate elements as well (if not zero) [Default: 0]. 
+ *  If the flag is not 0, it can take one of the enumerated values: HEXAHEDRON or TETRAHEDRON, 
+ *  with obvious meaning.
+ *  @remark The option opt can be set to 0 if the user intends to use finite differences.
+ */
+    Mesh(real_t xmin,
+         real_t xmax,
+         real_t ymin,
+         real_t ymax,
+         real_t zmin,
+         real_t zmax,
+         size_t nx,
+         size_t ny,
+         size_t nz,
+         int    cx0,
+         int    cxN,
+         int    cy0,
+         int    cyN,
+         int    cz0,
+         int    czN,
+         int    opt);
 
 /** \brief Constructor that extracts the mesh of a rectangular region from an initial mesh.
  *  \details This constructor is useful for zooming purposes for instance.
@@ -740,15 +779,6 @@ class Mesh
  */
     void save(const string& mesh_file) const;
 
-/// \brief Write mesh data on a binary file
-/// @param [in] mesh_file %Mesh file name
-    void Bput(const string &mesh_file) const;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void Put(const string& mesh_file) const { put(mesh_file); }
-    void BPut(const string &mesh_file) const { Bput(mesh_file); }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
 /// \brief Return true if imposed DOF count in equations, false if not
     bool withImposedDOF() const { return !_no_imposed_dof; }
 
@@ -1017,8 +1047,8 @@ inline bool _side_compare(Side* const &a, Side* const &b) { return (a->n() < b->
  *  \brief Output mesh data.
  *  \ingroup Mesh
  */
-    ostream& operator<<(      ostream& s,
-                        const Mesh&    ms);
+    ostream& operator<<(ostream&    s,
+                        const Mesh& ms);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

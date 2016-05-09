@@ -57,10 +57,10 @@ void BSpline(size_t                n,
 }
 
 
-real_t blend(      size_t        k,
-                   size_t        t,
+real_t blend(size_t              k,
+             size_t              t,
              const Vect<size_t>& u,
-                   real_t v)
+             real_t              v)
 // calculate the blending value
 {
    real_t value;
@@ -106,11 +106,11 @@ void compute_intervals(Vect<size_t>& u,
 
 
 void compute_point(const Vect<size_t>&         u,
-                         size_t                n,
-                         size_t                t,
-                         real_t                v,
+                   size_t                      n,
+                   size_t                      t,
+                   real_t                      v,
                    const Vect<Point<real_t> >& control,
-                         Point<real_t>&        output)
+                   Point<real_t>&              output)
 {
    real_t temp;
 // initialize the variables that will hold our outputted point

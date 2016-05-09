@@ -299,10 +299,10 @@ ss_HEADERS = BSpline.h \
 		Iter.h \
 		Jacobi.h \
 		LinearSolver.h \
+		MyOpt.h \
 		ODESolver.h \
-		OptimAux.h \
-		OptimSA.h \
-		OptimTN.h \
+		Optim.h \
+		OptSolver.h \
 		Prec.h \
 		Richardson.h \
 		Schur.h \

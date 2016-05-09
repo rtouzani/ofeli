@@ -1,0 +1,23 @@
+#
+# Makefile for opt demos
+#
+
+all:	opt_demo1 opt_demo2 opt_demo3
+
+opt_demo1:	opt_demo1.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o opt_demo1 opt_demo1.o `ofeli-config --libs`
+
+opt_demo2:	opt_demo2.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o opt_demo2 opt_demo2.o `ofeli-config --libs`
+
+opt_demo3:	opt_demo3.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o opt_demo3 opt_demo3.o `ofeli-config --libs`
+
+clean:
+	/bin/rm -f *.o opt_demo1 opt_demo2 opt_demo3
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

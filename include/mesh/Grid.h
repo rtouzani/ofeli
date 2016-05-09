@@ -230,10 +230,13 @@ class Grid
     Point<real_t> getCoord(size_t i) const;
     
 /// \brief Return coordinates a point with label <tt>(i,j)</tt> in a 2-D grid
-    Point<real_t> getCoord(size_t i, size_t j) const;
+    Point<real_t> getCoord(size_t i,
+			   size_t j) const;
 
 /// \brief Return coordinates a point with label <tt>(i,j,k)</tt> in a 3-D grid
-    Point<real_t> getCoord(size_t i, size_t j, size_t k) const;
+    Point<real_t> getCoord(size_t i,
+			   size_t j,
+			   size_t k) const;
 
 /// \brief Return x-coordinate of point with index <tt>i</tt>
     real_t getX(size_t i) const;
@@ -379,8 +382,8 @@ class Grid
  *  \brief Output grid data.
  *  \ingroup Grid
  */
-    ostream& operator<<(      ostream& s,
-                        const Grid&    g);
+    ostream& operator<<(ostream&    s,
+                        const Grid& g);
 
 } /* namespace OFELI */
 

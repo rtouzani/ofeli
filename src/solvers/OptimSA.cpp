@@ -24,50 +24,20 @@
    along with OFELI. If not, see <http://www.gnu.org/licenses/>.
 
   ==============================================================================
-    Definition of function 'OptimSA' for optimization by simulated annealing
+
+                       Implementation of class 'OptSolver'
+
   ==============================================================================*/
 
-#ifndef __OPTIM_SA_H
-#define __OPTIM_SA_H
+#include "solvers/OptSolver.h"
 
 #include <iostream>
-using std::ostream;
-using std::endl;
-
-#include <iomanip>
-using std::setw;
-using std::ios;
-using std::setprecision;
-
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-#include "linear_algebra/Vect.h"
+using std::cout;
 
 namespace OFELI {
-/*!
- *  \addtogroup OFELI
- *  @{
- */
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-real_t u_[97], c__, cd_, cm_;
-int  i1, i2;
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/*! \file OptimSA.h
- *  \ingroup Solver
- *  \brief Function to solve an optimization problem using the Simulated Annealing method.
- *
- */
-
-/** \fn int OptimSA(OPT_ &theOpt, Vect<real_t> &x, real_t &rt, real_t &eps, int &ns,
-                    int &nt, int &neps, int &maxevl, Vect<real_t> &lb, Vect<real_t> &ub,
-                    Vect<real_t> &c, int &msg_lvl, int &seed1, int &seed2, real_t &t,
-                    Vect<real_t> &vm, Vect<real_t> &xopt, real_t &fopt, int &nacc,
-                    int &nfcnev, int &nobds)
-   \ingroup Solver
-   \brief Simulated annealing optimization solver.
+/** \brief Simulated annealing optimization solver.
 
    \details Simulated annealing is a global optimization method that distinguishes
    between different local optima. Starting from an initial point, the
@@ -168,7 +138,7 @@ int  i1, i2;
     @param [in] rt The temperature reduction factor. The value suggested by
     Corana et al. is \a .85. See Goffe et al. for more advice.
 
-    @param [in] eps Error tolerance for termination. If the final function
+    @param [in] toler Error tolerance for termination. If the final function
     values from the last neps temperatures differ from the
     corresponding value at the current temperature by less than
     eps and the final function value at the current temperature
@@ -187,7 +157,7 @@ int  i1, i2;
     @param [in] neps Number of final function values used to decide upon termination.
     See \c eps. Suggested value is \a 4
 
-    @param maxevl [in] The maximum number of function evaluations. If it is
+    @param max_eval [in] The maximum number of function evaluations. If it is
     exceeded, the return \a code=1.
 
     @param [in] lb The lower bound for the allowable solution variables.
@@ -207,7 +177,7 @@ int  i1, i2;
 
     @param [in] msg_lvl controls printing inside \a OptimSA.
     <ul>
-	   <li>0 - Nothing printed.
+       <li>0 - Nothing printed.
        <li>1 - Function value for the starting value and
                summary results before each temperature
                reduction. This includes the optimal
@@ -217,15 +187,15 @@ int  i1, i2;
                number of out of bounds trials, the
                number of new optima found at this
                temperature, the current optimal x and
-                the step length \a vm. Note that there are
-                \a n*ns*nt function evalutations before each
-                temperature reduction. Finally, notice is
-                is also given upon achieveing the termination criteria.
+               the step length \a vm. Note that there are
+               \a n*ns*nt function evalutations before each
+               temperature reduction. Finally, notice is
+               is also given upon achieveing the termination criteria.
        <li>2 - Each new step length \a (vm), the current optimal
-                \a x (xopt) and the current trial \a x (x). This
-                gives the user some idea about how far \a x
-                strays from \a xopt as well as how \a vm is adapting
-                to the function.
+               \a x and the current trial \a x (x). This
+               gives the user some idea about how far \a x
+               strays from \a x as well as how \a vm is adapting
+               to the function.
        <li>3 - Each function evaluation, its acceptance or
                rejection and new optima. For many problems,
                this option will likely require a small tree
@@ -237,15 +207,6 @@ int  i1, i2;
     </ul>
     Note: For a given value of \a msg_lvl, the lower valued
           options (other than 0) are utilized.
-    @param [in] seed1 The first seed for the random number generator ranmar_.
-    0 <= seed1 <= 31328. (integer)
-
-    @param [in] seed2 The second seed for the random number generator ranmar_.
-    0 <= seed <= 30081. Different values for \a seed1
-    and \a seed2 will lead to an entirely different sequence
-    of trial points and decisions on downhill moves (when
-    maximizing). See Goffe et al. on how this can be used
-    to test the results of \a OptimSA.
 
     @param [in] t On input, the initial temperature. See Goffe et al. for advice.
     On output, the final temperature.
@@ -258,8 +219,6 @@ int  i1, i2;
     important (i.e. is the value is off, \a OptimSA adjusts \a vm to the
     correct value).
   
-    @param [out] xopt The variables that optimize the function.
-
     @param [out] fopt The optimal value of the function.
 
     @param [out] nacc The number of accepted function evaluations.
@@ -276,111 +235,103 @@ int  i1, i2;
     <ul>
 	   <li>0 - Normal return; termination criteria achieved.\n
         <li>1 - Number of function evaluations \a (nfcnev) is
-                greater than the maximum number \a (maxevl).\n
+                greater than the maximum number \a (max_eval).\n
         <li>2 - The starting value \a (x) is not inside the
                 bounds (\a lb and \a ub).\n
         <li>3 - The initial temperature is not positive.\n
                 99 - Should not be seen; only used internally.\n
      </ul>
 
-   \tparam <OPT_> Class that defined the objective function and its gradient
-
  */
-template<class OPT_>
-inline int OptimSA(OPT_&         theOpt,
-                   Vect<real_t>& x,
-                   real_t&       rt,
-                   real_t&       eps,
-                   int&          ns,
-                   int&          nt,
-                   int&          neps,
-                   int&          maxevl,
-                   Vect<real_t>& lb,
-                   Vect<real_t>& ub,
-                   Vect<real_t>& c,
-                   int&          msg_lvl,
-                   int&          seed1,
-                   int&          seed2,
-                   real_t&       t,
-                   Vect<real_t>& vm,
-                   Vect<real_t>& xopt,
-                   real_t&       fopt,
-                   int&          nacc,
-                   int&          nfcnev,
-                   int&          nobds)
+int OptimSA(OptSolver&          opt,
+            Vect<real_t>&       x,
+            real_t&             rt,
+            real_t&             toler,
+            int&                ns,
+            int&                nt,
+            int&                neps,
+            int&                max_eval,
+            const Vect<real_t>& lb,
+            const Vect<real_t>& ub,
+            const Vect<real_t>& c,
+            int&                verb,
+            real_t&             t,
+            Vect<real_t>&       vm,
+            real_t&             fopt,
+            int&                nacc,
+            int&                nb_obj_eval,
+            int&                nobds)
 {
-    int nrej, nnew, quit, ndown, lnobds, nup, totmov;
-    size_t i, j, k, m;
-    real_t f, p, ratio, fp, pp;
-    real_t ranmar_();
-    void rmarin_(int, int);
-    real_t exprep_(real);
-    int n = x.size();
-    Vect<real_t> fstar(neps), xp(n), nacp(n);
+   bool quit=false;
+   int nrej, nnew, nup, totmov;
+   real_t p, fp, pp;
+   size_t n=x.size();
+   Vect<real_t> fstar(neps), xp(n), nacp(n);
 
-//  rmarin_(seed1, seed2);
-    srand( (unsigned)time( NULL ) );
-    nacc = nobds = nfcnev = 0;
-    xopt = x;
-    nacp = 0;
-    fstar = 1.e20;
+   real_t exprep(real_t rdum);
+   void rmarin(int ij, int kl);
+   real_t ranmar(void);
+   
+   srand((unsigned)time(NULL));
+   nacc = nobds = nb_obj_eval = 0;
+   nacp = 0;
+   fstar = 1.e20;
 
-//  If the initial temperature is not positive, notify the user and
-//  return to the calling routine.
-    if (t <= 0.) {
+// If the initial temperature is not positive, notify the user and
+// return to the calling routine.
+   if (t <= 0.) {
       cout << "The initial temperature is not positive, reset the variable t.\n";
       return 3;
-    }
+   }
 
-//  If the initial value is out of bounds, notify the user and return to the calling routine.
-   for (i=1; i<=n; ++i)
-      if (x(i) > ub(i) || x(i) < lb(i)) {
+// If the initial value is out of bounds, notify the user and return to the calling routine.
+   for (size_t i=0; i<n; ++i) {
+      if (x[i]>ub[i] || x[i]<lb[i]) {
          cout << "The starting value (x) is outside the bounds (lb and ub)\n";
          cout << "Execution terminated without any optimization.\n";
          cout << "Respecify x, ub or lb so that lb(i) < x(i) < ub(i), i=1,n.\n";
          return 2;
       }
+   }
 
 // Evaluate the function with input x and return value as f.
-   f = theOpt.Objective(x);
+   real_t f = -opt.Objective(x);
 
 // If the function is to be minimized, switch the sign of the function.
 // Note that all intermediate and final output switches the sign back
 // to eliminate any possible confusion for the user.
-   f = -f;
-   ++nfcnev;
+   ++nb_obj_eval;
    fopt = f;
    fstar[0] = f;
-   if (msg_lvl >= 1) {
+   if (verb >= 1) {
       cout << endl;
       cout << "Initial x\n" << x;
-      cout << "Initial f : " << -f << endl;
+      cout << "Initial f: " << -f << endl;
    }
 
-//  Start the main loop. Note that it terminates if
-//        (i) the algorithm succesfully optimizes the function or
-//       (ii) there are too many function evaluations (more than MAXEVL).
+// Start the main loop. Note that it terminates if
+//       (i) the algorithm successfully optimizes the function or
+//      (ii) there are too many function evaluations (more than MAXEVL).
 
 L100:
-   nup = nrej = nnew = ndown = lnobds = 0;
-   for (m=1; m<=nt; ++m) {
-      for (j=0; j<ns; ++j) {
-         for (k=0; k<n; ++k) {
+   int lnobds=0, ndown=0;
+   nup = nrej = nnew = 0;
+   for (int m=1; m<=nt; ++m) {
+      for (int j=0; j<ns; ++j) {
+         for (size_t k=0; k<n; ++k) {
 
-// Generate xp, the trial value of x. Note use of vm to choose xp.
-            for (i=0; i<n; ++i) {
-               if (i == k)
-//                  xp[i] = x[i] + (2*ranmar_() - 1) * vm[i];
-                  xp[i] = x[i] + (2*rand() - 1) * vm[i];
-               else
-                  xp[i] = x[i];
+//          Generate xp, the trial value of x. Note use of vm to choose xp.
+            for (size_t i=0; i<n; ++i) {
+               if (i==k)
+//                  xp[i] = x[i] + (2*ranmar() - 1) * vm[i];
+                  xp[i] += (2*rand() - 1) * vm[i];
 
-// If xp is out of bounds, select a point in bounds for the trial.
-               if ((xp[i] < lb[i]) || (xp[i] > ub[i])) {
-//                xp[i] = lb[i] + (ub[i] - lb[i]) * ranmar_();
-                  xp[i] = lb[i] + (ub[i] - lb[i]) * rand();
-                  ++lnobds; ++nobds;
-                  if (msg_lvl >= 3) {
+//             If xp is out of bounds, select a point in bounds for the trial.
+               if (x[i]<lb[i] || x[i]>ub[i]) {
+//                x[i] = lb[i] + (ub[i] - lb[i]) * ranmar();
+                  x[i] = lb[i] + (ub[i] - lb[i]) * rand();
+                  ++lnobds, ++nobds;
+                  if (verb >= 3) {
                      cout << endl;
                      cout << "Current x\n" << x;
                      cout << "Current f : " << -f << endl;
@@ -390,10 +341,9 @@ L100:
             }
 
 //          Evaluate the function with the trial point xp and return as fp
-            fp = theOpt.Objective(xp);
-            fp = -fp;
-            ++nfcnev;
-            if (msg_lvl >= 3) {
+            fp = -opt.Objective(xp);
+            ++nb_obj_eval;
+            if (verb >= 3) {
                cout << endl << "Current x\n" << x;
                cout << "Current f : " << -f << endl;
                cout << "Trial x\n" << xp;
@@ -401,25 +351,25 @@ L100:
             }
 
 //          If too many function evaluations occur, terminate the algorithm
-            if (nfcnev >= maxevl) {
-               cout << "Too many function evaluations; Consider increasing maxevl or eps,\n";
+            if (nb_obj_eval >= max_eval) {
+               cout << "Too many function evaluations. Consider increasing max_eval or toler,\n";
                cout << "or decreasing nt or rt. These results are likely to be poor\n";
                return 1;
             }
 
 //          Accept the new point if the function value increases
             if (fp >= f) {
-               if (msg_lvl >= 3)
+               if (verb >= 3)
                   cout << "Point accepted\n";
                x = xp;
                f = fp;
-               ++nacc; ++nacp[k]; ++nup;
+               ++nacc, ++nacp[k], ++nup;
 
 //             If greater than any other point, record as new optimum
                if (fp > fopt) {
-                  if (msg_lvl >= 3)
+                  if (verb >= 3)
                      cout << "New Optimum\n";
-                  xopt = xp;
+                  x = xp;
                   fopt = fp;
                   ++nnew;
                }
@@ -427,18 +377,18 @@ L100:
 //          If the point is lower, use the Metropolis criteria to decide on
 //          acceptance or rejection.
             } else {
-               p = exprep_((fp - f) / t);
+               p = exprep((fp-f)/t);
 //             pp = ranmar_();
                pp = rand();
                if (pp < p) {
-                  if (msg_lvl >= 3)
+                  if (verb >= 3)
                      cout << "Though higher, point accepted\n";
                   x = xp;
                   f = fp;
-                  ++nacc; ++nacp[k]; ++ndown;
+                  ++nacc, ++nacp[k], ++ndown;
                } else {
                   ++nrej;
-                  if (msg_lvl >= 3)
+                  if (verb >= 3)
                      cout << "Higher point rejected\n";
                }
             }
@@ -446,27 +396,27 @@ L100:
       }
 
 //    Adjust vm so that approximately half of all evaluations are accepted.
-      for (i=0; i<n; ++i) {
-         ratio = (real)nacp[i] / (real)ns;
+      for (size_t i=0; i<n; ++i) {
+         real_t ratio = real_t(nacp[i]) / real_t(ns);
          if (ratio > 0.6)
             vm[i] *= c[i] * (ratio - 0.6) / 0.4 + 1.;
          else if (ratio < 0.4)
             vm[i] /= c[i] * ((0.4 - ratio) / 0.4) + 1.;
-         if (vm[i] > (ub[i] - lb[i]))
+         if (vm[i] > (ub[i]-lb[i]))
             vm[i] = ub[i] - lb[i];
       }
-      if (msg_lvl >= 2) {
+      if (verb >= 2) {
          cout << "Intermediate results after step length adjustment\n";
          cout << "New step length (vm)\n" << vm;
-         cout << "Current optimal x\n" << xopt;
+         cout << "Current optimal x\n" << x;
          cout << "Current x\n" << x;
       }
       nacp = 0;
    }
-   if (msg_lvl >= 1) {
+   if (verb >= 1) {
       totmov = nup + ndown + nrej;
       cout << "Intermediate results before next temperature reduction\n";
-      cout << "Current Temperature:              " << t << endl;
+      cout << "Current Temperature:            " << t << endl;
       cout << "Min function value so far:      " << -fopt << endl;
       cout << "Total moves:                    " << totmov << endl;
       cout << "  Downhill:                     " << nup << endl;
@@ -474,74 +424,70 @@ L100:
       cout << "  Rejected Uphill:              " << nrej << endl;
       cout << "  Trials out of bounds:         " << lnobds << endl;
       cout << "  New minima this temperature:  " << nnew << endl;
-      cout << "Current optimal x\n" << xopt;
+      cout << "Current optimal x\n" << x;
       cout << "Step length (vm)\n" << vm;
    }
 
 // Check termination criteria.
-   quit = 0;
+   quit = false;
    fstar[0] = f;
-   if ((fopt - fstar[0]) <= eps)
-      quit = 1;
-   for (i=0; i<neps; ++i)
-      if (fabs(f - fstar[i]) > eps)
-         quit = 0;
+   if ((fopt - fstar[0]) <= toler)
+      quit = true;
+   for (int i=0; i<neps; ++i)
+      if (fabs(f-fstar[i]) > toler)
+         quit = false;
 
 // Terminate SA if appropriate.
    if (quit) {
-      x = xopt;
       fopt = -fopt;
-      if (msg_lvl >= 1)
+      if (verb >= 1)
          cout << "SA Achieved termination criteria.\n";
       return 0;
    }
 
 // If termination criteria is not met, prepare for another loop.
    t *= rt;
-   for (i=neps-1; i>=1; --i)
+   for (int i=neps-1; i>=1; --i)
       fstar[i] = fstar[i-1];
    f = fopt;
-   x = xopt;
-
    goto L100;
 }
 
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-/*				
+/*			
     Required Functions (included):
-      exprep_ - Replaces the function \a exp to avoid under- and overflows.\n
-      rmarin_ - Initializes the random number generator ranmar_.\n
-      ranmar_ - The actual random number generator. Note that
-                rmarin_ must run first (OptimSA does this). It produces uniform
-                random numbers on [0,1]. These routines are from
-                Usenet's comp.lang.fortran. For a reference, see
-                "Toward a Universal Random Number Generator"
-                by George Marsaglia and Arif Zaman, Florida State
-                University Report: FSU-SCRI-87-50 (1987).
-                It was later modified by F. James and published in
-                "A Review of Pseudo-random Number Generators." For
-                further information, contact stuart@ads.com. These
-                routines are designed to be portable on any machine
-                with a 24-bit or more mantissa. I have found it produces
-                identical results on a IBM 3081 and a Cray Y-MP.\n
+      exprep - Replaces the function \a exp to avoid under- and overflows.\n
+      rmarin - Initializes the random number generator ranmar_.\n
+      ranmar - The actual random number generator. Note that
+               rmarin_ must run first (OptimSA does this). It produces uniform
+               random numbers on [0,1]. These routines are from
+               Usenet's comp.lang.fortran. For a reference, see
+               "Toward a Universal Random Number Generator"
+               by George Marsaglia and Arif Zaman, Florida State
+               University Report: FSU-SCRI-87-50 (1987).
+               It was later modified by F. James and published in
+               "A Review of Pseudo-random Number Generators." For
+               further information, contact stuart@ads.com. These
+               routines are designed to be portable on any machine
+               with a 24-bit or more mantissa. I have found it produces
+               identical results on a IBM 3081 and a Cray Y-MP.\n
 
     Machine Specific Features:
-      1. \a  exprep_ may have to be modified if used on non-IBM type main-
-         frames. Watch for under- and overflows in exprep_.
+      1. \a exprep may have to be modified if used on non-IBM type main-
+         frames. Watch for under- and overflows in exprep.
       2. Some format statements use G25.18; this may be excessive for
          some machines.
-      3. \a rmarin_ and ranmar_ are designed to be protable; they should not
+      3. \a rmarin and ranmar are designed to be protable; they should not
       cause any problems.
 */	  
-	  
-inline real_t exprep_(real_t rdum)
+
+
+real_t exprep(real_t rdum)
 /*-----------------------------------------------------------------------------
     This function replaces exp to avoid under- and overflows and is
     designed for IBM 370 type machines. It may be necessary to modify
     it for other machines. Note that the maximum and minimum values of
-    exprep_ are such that they has no effect on the algorithm.
+    exprep are such that they has no effect on the algorithm.
   -----------------------------------------------------------------------------*/
 {
    real_t ret;
@@ -555,8 +501,7 @@ inline real_t exprep_(real_t rdum)
 }
 
 
-inline void rmarin_(int ij,
-                    int kl)
+void rmarin(int ij, int kl, int i1, int i2)
 /*-----------------------------------------------------------------------------
     This function and the next function generate random numbers. See
     the comments for OptimSA for more information. The only changes from the
@@ -568,26 +513,20 @@ inline void rmarin_(int ij,
          exceptions, all following lines are original.
 
    This is the initialization routine for the random number generator ranmar_()
-   NOTE: The seed variables can have values between:    0 <= ij <= 31328
-                                                        0 <= kl <= 30081
   -----------------------------------------------------------------------------*/
 {
-   int i, j, k, l, m;
-   real_t s, t;
-
    if (ij < 0 || ij > 31328 || kl < 0 || kl > 30081) {
       cout << "The first random number seed must have a value between 0 and 31328\n";
       cout << "The second seed must have a value between 0 and 30081\n";
       exit(1);
    }
-   i = ij / 177 % 177 + 2;
-   j = ij % 177 + 2;
-   k = kl / 169 % 178 + 1;
-   l = kl % 169;
+   static real_t u_[97];
+   int i = ij / 177 % 177 + 2, j = ij % 177 + 2;
+   int k = kl / 169 % 178 + 1, l = kl % 169;
    for (size_t ii=1; ii<=97; ++ii) {
-      s = 0.; t = 0.5;
+      real_t s=0., t=0.5;
       for (size_t jj=1; jj<=24; ++jj) {
-         m = i * j % 179 * k % 179;
+         int m = i * j % 179 * k % 179;
          i = j; j = k; k = m;
          l = (l * 53 + 1) % 169;
          if (l * m % 64 >= 32)
@@ -596,16 +535,14 @@ inline void rmarin_(int ij,
       }
       u_[ii-1] = s;
    }
-   c__ = 0.021602869033813477;
-   cd_ = 0.45623308420181274;
-   cm_ = 0.9999998211860657;
-   i1 = 97;
-   i2 = 33;
+   i1 = 97, i2 = 33;
 }
 
 
-real_t ranmar_()
+real_t ranmar(int i1, int i2)
 {
+   static real_t c_=0.021602869033813477, cd_=0.45623308420181274, cm_=0.9999998211860657;
+   static real_t u_[97];
    real_t uni = u_[i1-1] - u_[i2-1];
    if (uni < 0.)
       uni += 1.;
@@ -616,17 +553,13 @@ real_t ranmar_()
    --i2;
    if (i2 == 0)
       i2 = 97;
-   c__ -= cd_;
-   if (c__ < 0.)
-      c__ += cm_;
-   uni -= c__;
+   c_ -= cd_;
+   if (c_ < 0.)
+      c_ += cm_;
+   uni -= c_;
    if (uni < 0.)
       uni += 1.;
    return uni;
 }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
-
-#endif

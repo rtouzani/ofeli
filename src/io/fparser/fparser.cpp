@@ -1706,13 +1706,13 @@ void FunctionParser::PrintByteCode(std::ostream& dest,
 #endif
 
 
-
 double FunctionParser::Eval(const double &x)
 {
     double vars[1];
     vars[0] = x;
     return Eval(vars);
 }
+
 
 double FunctionParser::Eval(const double &x, const double &y)
 {
@@ -1721,6 +1721,7 @@ double FunctionParser::Eval(const double &x, const double &y)
     vars[1] = y;
     return Eval(vars);
 }
+
 
 double FunctionParser::Eval(const double &x, const double &y, const double &z)
 {
@@ -1731,6 +1732,13 @@ double FunctionParser::Eval(const double &x, const double &y, const double &z)
     return Eval(vars);
 }
 
+
+double FunctionParser::Eval(const std::vector<double> &x)
+{
+   return Eval(&x[0]);
+}
+
+
 double FunctionParser::Eval(const double &x, const double &y, const double &z, const double &t)
 {
     double vars[4];
@@ -1740,6 +1748,7 @@ double FunctionParser::Eval(const double &x, const double &y, const double &z, c
     vars[3] = t;
     return Eval(vars);
 }
+
 
 double FunctionParser::Eval(const OFELI::Point<double> &x)
 {
