@@ -1,12 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/ts_demo2
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	ts_demo2.vcxproj \
-		ts_demo2.vcxproj.filters \
-		ts_demo2.vcxproj.user
-
-dist_ss_DATA =	ts_demo2.vcxproj \
-		ts_demo2.vcxproj.filters \
-		ts_demo2.vcxproj.user
+tsdemo2dir        =	$(datadir)/ofeli/tools/msvcpp/ts_demo2
+dist_tsdemo2_DATA = 	ts_demo2.vcxproj ts_demo2.vcxproj.filters ts_demo2.vcxproj.user
+tsdemo2_DATA      = 	ts_demo2.vcxproj ts_demo2.vcxproj.filters ts_demo2.vcxproj.user
 

@@ -1,12 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/lelas2d
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	lelas2d.vcxproj \
-		lelas2d.vcxproj.filters \
-		lelas2d.vcxproj.user
-
-dist_ss_DATA =	lelas2d.vcxproj \
-		lelas2d.vcxproj.filters \
-		lelas2d.vcxproj.user
-
+lelas2ddir    	  =	$(datadir)/ofeli/tools/msvcpp/lelas2d
+dist_lelas2d_DATA =	lelas2d.vcxproj lelas2d.vcxproj.filters lelas2d.vcxproj.user
+lelas2d_DATA	  =	lelas2d.vcxproj lelas2d.vcxproj.filters lelas2d.vcxproj.user

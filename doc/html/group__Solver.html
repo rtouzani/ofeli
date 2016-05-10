@@ -60,7 +60,6 @@ $(document).ready(function(){initNavTree('group__Solver.html','');});
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
@@ -72,18 +71,6 @@ $(document).ready(function(){initNavTree('group__Solver.html','');});
 <p>Gathers Solver functions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:OptimAux_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="OptimAux_8h.html">OptimAux.h</a></td></tr>
-<tr class="memdesc:OptimAux_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">File that contains auxiliary functions for optimization. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:OptimSA_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="OptimSA_8h.html">OptimSA.h</a></td></tr>
-<tr class="memdesc:OptimSA_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to solve an optimization problem using the Simulated Annealing method. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:OptimTN_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="OptimTN_8h.html">OptimTN.h</a></td></tr>
-<tr class="memdesc:OptimTN_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to solve an optimization problem using the Truncated Newton method. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Reconstruction.html">Reconstruction</a></td></tr>
@@ -98,8 +85,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver&lt; T_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve systems of linear equations by iterative methods.  <a href="classOFELI_1_1LinearSolver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1MyOpt.html">MyOpt</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class to define by user specified optimization function.  <a href="classOFELI_1_1MyOpt.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html">ODESolver</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To solve a system of ordinary differential equations.  <a href="classOFELI_1_1ODESolver.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1OptSolver.html">OptSolver</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To solve an optimization problem with bound constraints.  <a href="classOFELI_1_1OptSolver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Prec.html">Prec&lt; T_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To set a preconditioner.  <a href="classOFELI_1_1Prec.html#details">More...</a><br /></td></tr>
@@ -176,17 +169,10 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memitem:ga83b733ffbcdaae10616574956ac2bb24"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24">Jacobi</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> omega, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
 <tr class="memdesc:ga83b733ffbcdaae10616574956ac2bb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Jacobi solver function.  <a href="group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24">More...</a><br /></td></tr>
 <tr class="separator:ga83b733ffbcdaae10616574956ac2bb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6443657e1f1fc45e442d801447636fda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga6443657e1f1fc45e442d801447636fda">BCAsConstraint</a> (const Mesh &amp;m, const Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;bc, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;up, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;low)</td></tr>
-<tr class="memdesc:ga6443657e1f1fc45e442d801447636fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">To impose Dirichlet boundary conditions in an optimization problem. If such conditions are to present, this function has to be invoked by giving on input <code>bc(i)</code> as the value to impose for the <code>i</code>-th optimization variable.  <a href="group__Solver.html#ga6443657e1f1fc45e442d801447636fda">More...</a><br /></td></tr>
-<tr class="separator:ga6443657e1f1fc45e442d801447636fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad805ba0a88d8f6fbc0afcd591b6ad5a9"><td class="memTemplParams" colspan="2">template&lt;class OPT_ &gt; </td></tr>
-<tr class="memitem:gad805ba0a88d8f6fbc0afcd591b6ad5a9"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#gad805ba0a88d8f6fbc0afcd591b6ad5a9">OptimSA</a> (OPT_ &amp;theOpt, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;rt, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;eps, int &amp;ns, int &amp;nt, int &amp;neps, int &amp;maxevl, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;lb, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;ub, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;c, int &amp;msg_lvl, int &amp;seed1, int &amp;seed2, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;t, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;vm, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;xopt, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;fopt, int &amp;nacc, int &amp;nfcnev, int &amp;nobds)</td></tr>
-<tr class="memdesc:gad805ba0a88d8f6fbc0afcd591b6ad5a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulated annealing optimization solver.  <a href="group__Solver.html#gad805ba0a88d8f6fbc0afcd591b6ad5a9">More...</a><br /></td></tr>
-<tr class="separator:gad805ba0a88d8f6fbc0afcd591b6ad5a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafee086dc81bf793f8bbee98b901e1e38"><td class="memTemplParams" colspan="2">template&lt;class OPT_ &gt; </td></tr>
-<tr class="memitem:gafee086dc81bf793f8bbee98b901e1e38"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#gafee086dc81bf793f8bbee98b901e1e38">OptimTN</a> (OPT_ &amp;theOpt, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;low, Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;up, Vect&lt; int &gt; &amp;pivot, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int msg_lvl)                                                                                                                                                                                                                                </td></tr>
-<tr class="memdesc:gafee086dc81bf793f8bbee98b901e1e38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Truncated Newton optimization solver.  <a href="group__Solver.html#gafee086dc81bf793f8bbee98b901e1e38">More...</a><br /></td></tr>
-<tr class="separator:gafee086dc81bf793f8bbee98b901e1e38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f1c03ea316fa554006a28910fbe47c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3f1c03ea316fa554006a28910fbe47c0"></a>
+ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga3f1c03ea316fa554006a28910fbe47c0">operator&lt;&lt;</a> (ostream &amp;s, const OptSolver &amp;os)</td></tr>
+<tr class="memdesc:ga3f1c03ea316fa554006a28910fbe47c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output differential system information. <br /></td></tr>
+<tr class="separator:ga3f1c03ea316fa554006a28910fbe47c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac3e56edcd67f3f8eddb9717c36c4157f"><td class="memTemplParams" colspan="2">template&lt;class T_ , class M_ &gt; </td></tr>
 <tr class="memitem:gac3e56edcd67f3f8eddb9717c36c4157f"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#gac3e56edcd67f3f8eddb9717c36c4157f">Richardson</a> (const M_ &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> omega, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
 <tr class="memdesc:gac3e56edcd67f3f8eddb9717c36c4157f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Richardson solver function.  <a href="group__Solver.html#gac3e56edcd67f3f8eddb9717c36c4157f">More...</a><br /></td></tr>
@@ -1112,375 +1098,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6443657e1f1fc45e442d801447636fda"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int void BCAsConstraint </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>bc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>up</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>low</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>To impose Dirichlet boundary conditions in an optimization problem. If such conditions are to present, this function has to be invoked by giving on input <code>bc(i)</code> as the value to impose for the <code>i</code>-th optimization variable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">bc</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance where <code>bc(i)</code> is the value to impose for dof <code>i</code> </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">up</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance that contains on output upper bounds for DOFs </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">low</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance that contains on output lower bounds for DOFs </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad805ba0a88d8f6fbc0afcd591b6ad5a9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int OptimSA </td>
-          <td>(</td>
-          <td class="paramtype">OPT_ &amp;&#160;</td>
-          <td class="paramname"><em>theOpt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;&#160;</td>
-          <td class="paramname"><em>rt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;&#160;</td>
-          <td class="paramname"><em>eps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>ns</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>nt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>neps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>maxevl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>lb</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>ub</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>msg_lvl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>seed1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>seed2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;&#160;</td>
-          <td class="paramname"><em>t</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>vm</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>xopt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;&#160;</td>
-          <td class="paramname"><em>fopt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>nacc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>nfcnev</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int &amp;&#160;</td>
-          <td class="paramname"><em>nobds</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Simulated annealing optimization solver. </p>
-<p>Simulated annealing is a global optimization method that distinguishes between different local optima. Starting from an initial point, the algorithm takes a step and the function is evaluated. When minimizing a function, any downhill step is accepted and the process repeats from this new point. An uphill step may be accepted. Thus, it can escape from local optima. This uphill decision is made by the Metropolis criteria. As the optimization process proceeds, the length of the stx decline and the algorithm closes in on the global optimum. Since the algorithm makes very few assumptions regarding the function to be optimized, it is quite robust with respect to non-quadratic surfaces. The degree of robustness can be adjusted by the user. In fact, simulated annealing can be used as a local optimizer for difficult functions.</p>
-<p>This implementation of simulated annealing was used in "Global Optimization
-of Statistical Functions with Simulated Annealing," Goffe, Ferrier and Rogers, Journal of Econometrics, vol. 60, no. 1/2, Jan./Feb. 1994, pp. 65-100. Briefly, we found it competitive, if not superior, to multiple restarts of conventional optimization routines for difficult optimization problems.</p>
-<p>For more information on this routine, contact its author: Bill Goffe, <a href="#" onclick="location.href='mai'+'lto:'+'bgo'+'ff'+'e@w'+'ha'+'le.'+'st'+'.us'+'m.'+'edu'; return false;">bgoff<span style="display: none;">.nosp@m.</span>e@wh<span style="display: none;">.nosp@m.</span>ale.s<span style="display: none;">.nosp@m.</span>t.us<span style="display: none;">.nosp@m.</span>m.edu</a></p>
-<p><b>Synopsis:</b> This function implements the continuous simulated annealing global optimization algorithm described in Corana et al.'s article "Minimizing Multimodal Functions of Continuous Variables with the
- "Simulated Annealing" Algorithm" in the September 1987 (vol. 13, no. 3, pp. 262-280) issue of the ACM Transactions on Mathematical Software.</p>
-<p>A very quick (perhaps too quick) overview of OptimSA:<br />
- OptimSA tries to find the global optimum of an N dimensional function. It moves both up and downhill and as the optimization process proceeds, it focuses on the most promising area.<br />
- To start, it randomly chooses a trial point within the step length vm of the user selected starting point. The function is evaluated at this trial point and its value is compared to its value at the initial point.<br />
- In a maximization problem, all uphill moves are accepted and the algorithm continues from that trial point. Downhill moves may be accepted; the decision is made by the Metropolis criteria. It uses T (temperature) and the size of the downhill move in a probabilistic manner. The smaller <em>t</em> and the size of the downhill move are, the more likely that move will be accepted. If the trial is accepted, the algorithm moves on from that point. If it is rejected, another point is chosen instead for a trial evaluation.<br />
- Each element of <em>vm</em> periodically adjusted so that half of all function evaluations in that direction are accepted.</p>
-<p>A fall in <em>t</em> is imposed upon the system with the rt variable by <em>t</em>(i+1) = rt*t(i) where <em>i</em> is the <em>i-th</em> iteration. Thus, as <em>t</em> declines, downhill moves are less likely to be accepted and the percentage of rejections rise. Given the scheme for the selection for <em>vm</em>, <em>vm</em> falls. Thus, as <em>t</em> declines, <em>vm</em> falls and OptimSA focuses upon the most promising area for optimization.</p>
-<p><b>The</b> <b>importance</b> <b>of</b> <b>the</b> <b>parameter</b> <em>t:</em> </p>
-<p>The parameter <em>t</em> is crucial in using OptimSA successfully. It influences <em>vm</em>, the step length over which the algorithm searches for optima. For a small initial <em>t</em>, the step length may be too small; thus not enough of the function might be evaluated to find the global optima. The user should carefully examine vm in the intermediate output (set msg_lvl = 1) to make sure that vm is appropriate. The relationship between the initial temperature and the resulting step length is function dependent.<br />
- To determine the starting temperature that is consistent with optimizing a function, it is worthwhile to run a trial run first. Set rt = 1.5 and t = 1.0. With rt &gt; 1.0, the temperature increases and vm rises as well. Then select the <em>T</em> that produces a large enough vm.</p>
-<p>For modifications to the algorithm and many details on its use, (particularly for econometric applications) see Goffe, Ferrier and Rogers, "Global Optimization of Statistical Functions with
- Simulated Annealing," Journal of Econometrics, vol. 60, no. 1/2, Jan./Feb. 1994, pp. 65-100.<br />
- For more information, contact<br />
- Bill Goffe<br />
- Department of Economics and International Business<br />
- University of Southern Mississippi<br />
- Hattiesburg, MS 39506-5072<br />
- (601) 266-4484 (office)<br />
- (601) 266-4920 (fax)<br />
- <a href="#" onclick="location.href='mai'+'lto:'+'bgo'+'ff'+'e@w'+'ha'+'le.'+'st'+'.us'+'m.'+'edu'; return false;">bgoff<span style="display: none;">.nosp@m.</span>e@wh<span style="display: none;">.nosp@m.</span>ale.s<span style="display: none;">.nosp@m.</span>t.us<span style="display: none;">.nosp@m.</span>m.edu</a> (Internet)</p>
-<p>As far as possible, the parameters here have the same name as in the description of the algorithm on pp. 266-8 of Corana et al.</p>
-<p><b>Note:</b> The suggested values generally come from Corana et al. To drastically reduce runtime, see Goffe et al., pp. 90-1 for suggestions on choosing the appropriate <code>rt</code> and <code>nt</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">theOpt</td><td>Instance of class <em>OPT_</em> that is implemented by the user and that provides the objective function.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>The starting values for the variables of the function to be optimized.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rt</td><td>The temperature reduction factor. The value suggested by Corana et al. is <em></em>.85. See Goffe et al. for more advice.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">eps</td><td>Error tolerance for termination. If the final function values from the last neps temperatures differ from the corresponding value at the current temperature by less than eps and the final function value at the current temperature differs from the current optimal function value by less than eps, execution terminates and the value <em>0</em> is returned.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ns</td><td>Number of cycles. After <em>ns*n</em> function evaluations, each element of vm is adjusted so that approximately half of all function evaluations are accepted. The suggested value is 20.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">nt</td><td>Number of iterations before temperature reduction. After <em>nt*ns*n</em> function evaluations, temperature <em></em>(t) is changed by the factor <em>rt</em>. Value suggested by Corana et al. is <em>max(100,5*n)</em>. See Goffe et al. for further advice.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">neps</td><td>Number of final function values used to decide upon termination. See <code>eps</code>. Suggested value is <em>4</em> </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">maxevl</td><td>[in] The maximum number of function evaluations. If it is exceeded, the return <em>code=1</em>.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">lb</td><td>The lower bound for the allowable solution variables.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ub</td><td>The upper bound for the allowable solution variables. If the algorithm chooses <em>x(i)</em> <em>&lt;</em> <em>lb(i)</em> or <em>x(i)</em> <em>&gt;</em> <em>ub(i)</em> <em>i=1</em>,...,n, a point is from inside is randomly selected. This focuses the algorithm on the region inside <em>ub</em> and <em>lb</em>. Unless the user wishes to concentrate the search to a particular region, <em>ub</em> and <em>lb</em> should be set to very large positive and negative values, respectively. Note that the starting vector <em>x</em> should be inside this region. Also note that <em>lb</em> and <em>ub</em> are fixed in position, while <em>vm</em> is centered on the last accepted trial set of variables that optimizes the function. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">c</td><td>[in] Vector that controls the step length adjustment. The suggested value for all elements is 2.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg_lvl</td><td>controls printing inside <em>OptimSA</em>. <ul>
-<li>
-0 - Nothing printed. </li>
-<li>
-1 - Function value for the starting value and summary results before each temperature reduction. This includes the optimal function value found so far, the total number of moves (broken up into uphill, downhill, accepted and rejected), the number of out of bounds trials, the number of new optima found at this temperature, the current optimal x and the step length <em>vm</em>. Note that there are <em>n*ns*nt</em> function evalutations before each temperature reduction. Finally, notice is is also given upon achieveing the termination criteria. </li>
-<li>
-2 - Each new step length <em></em>(vm), the current optimal <em>x</em> (xopt) and the current trial <em>x</em> (x). This gives the user some idea about how far <em>x</em> strays from <em>xopt</em> as well as how <em>vm</em> is adapting to the function. </li>
-<li>
-3 - Each function evaluation, its acceptance or rejection and new optima. For many problems, this option will likely require a small tree if hard copy is used. This option is best used to learn about the algorithm. A small value for <em>MAXEVL</em> is thus recommended when using <em>msg_lvl=3</em>. Suggested value: 1 </li>
-</ul>
-Note: For a given value of <em>msg_lvl</em>, the lower valued options (other than 0) are utilized. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">seed1</td><td>The first seed for the random number generator ranmar_. 0 &lt;= seed1 &lt;= 31328. (integer)</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">seed2</td><td>The second seed for the random number generator ranmar_. 0 &lt;= seed &lt;= 30081. Different values for <em>seed1</em> and <em>seed2</em> will lead to an entirely different sequence of trial points and decisions on downhill moves (when maximizing). See Goffe et al. on how this can be used to test the results of <em>OptimSA</em>.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">t</td><td>On input, the initial temperature. See Goffe et al. for advice. On output, the final temperature.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>The step length vector. On input it should encompass the region of interest given the starting value <em>x</em>. For point x[i], the next trial point is selected is from <em>x</em>[i]-vm[i] to <em>x</em>[i]+vm[i]. Since <em>vm</em> is adjusted so that about half of all points are accepted, the input value is not very important (i.e. is the value is off, <em>OptimSA</em> adjusts <em>vm</em> to the correct value).</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">xopt</td><td>The variables that optimize the function.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">fopt</td><td>The optimal value of the function.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">nacc</td><td>The number of accepted function evaluations.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">nfcnev</td><td>The total number of function evaluations. In a minor point, note that the first evaluation is not used in the core of the algorithm; it simply initializes the algorithm.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">nobds</td><td>The total number of trial function evaluations that would have been out of bounds of <em>lb</em> and <em>ub</em>. Note that a trial point is randomly selected between <em>lb</em> and <em>ub</em>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li>
-0 - Normal return; termination criteria achieved.<br />
- </li>
-<li>
-1 - Number of function evaluations <em></em>(nfcnev) is greater than the maximum number <em></em>(maxevl).<br />
- </li>
-<li>
-2 - The starting value <em></em>(x) is not inside the bounds (<em>lb</em> and <em>ub</em>).<br />
- </li>
-<li>
-3 - The initial temperature is not positive.<br />
- 99 - Should not be seen; only used internally.<br />
- </li>
-</ul>
-</dd></dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">&lt;OPT_&gt;</td><td>Class that defined the objective function and its gradient </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafee086dc81bf793f8bbee98b901e1e38"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int OptimTN </td>
-          <td>(</td>
-          <td class="paramtype">OPT_ &amp;&#160;</td>
-          <td class="paramname"><em>theOpt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>low</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>up</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; int &gt; &amp;&#160;</td>
-          <td class="paramname"><em>pivot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>max_it</em> = <code>-1</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em> = <code>100*<a class="el" href="group__Util.html#ga7909ce3190d0028c9d0b1848f4eeeb5f">OFELI_EPSMCH</a></code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>msg_lvl</em> = <code>5</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Truncated Newton optimization solver. </p>
-<p>Solves a bounds-constrained optimization problem using the Nash's Truncated Newton Algorithm (See paper by S.G. Nash, Newton-type Minimization via the Lanczos method, SIAM J. Numer. Anal. 21 (1984) 770-778). All vector variables are instances of class <a class="el" href="classOFELI_1_1Vect.html">Vect&lt;real_t&gt;</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">theOpt</td><td>Instance of class <b>OPT_</b> that is implemented by the user and that provides the objective function. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>Vector that contains an initial guess of the solution and as output the final optimization variables if optimization has succeeded </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">low</td><td>Vector of the same size as <code>x</code> that contains for each variable the lower bound to impose. Note that Dirichlet boundary conditions are treated as equality conditions (i.e. lower and upper bounds) and that these ones can be imposed via an auxiliary optimization file (BCAsConstraint) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">up</td><td>Vector of the same size as <code>x</code> that contains for each variable the upper bound to impose. Note that Dirichlet boundary conditions are treated as equality conditions (i.e. lower and upper bounds) and that these ones can be imposed via an auxiliary optimization function BCAsConstraint) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pivot</td><td>Vector of the same size as <code>x</code> that contains on return for each variable an integer value that says if the corresponding constraint was reached (different from <code>0</code>) or not (<code>= 0</code>). Note that Dirichlet boundary conditions are treated as equality constraints </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations for convergence </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm of projected gradient) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg_lvl</td><td>Output message level. Must be between <code>0</code> and <code>10</code> </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Number of performed iterations</dd></dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">&lt;OPT_&gt;</td><td>Class that provides the objective function. This class is defined by the user.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The <b>OPT_</b> class:</p>
-<p>This class is defined by the user. It must have the member function :</p>
-<p><b>void</b> Objective(Vect&lt;real_t&gt; &amp;x, real_t &amp;f, Vect&lt;real_t&gt; &amp;g)</p>
-<p>Here above, <code>x</code> is the optimization variable vector, <code>f</code> is the value of the objective to calculate for the given <code>x</code> and <code>g</code> is the gradient vector for <code>x</code>.</p>
-<p>The function <b>BCAsConstraint:</b> </p>
-<p>This function is defined by the user:</p>
-<p><b>void</b> <a class="el" href="group__Solver.html#ga6443657e1f1fc45e442d801447636fda" title="To impose Dirichlet boundary conditions in an optimization problem. If such conditions are to present...">BCAsConstraint(const Mesh &amp;m, const Vect&lt;real_t&gt; &amp;bc, Vect&lt;real_t&gt; &amp;up, Vect&lt;real_t&gt; &amp;low)</a></p>
-<p>This function imposes Dirichlet boundary conditions in an optimization problem as optimization constraints. If such conditions are to be present, this function has to be invoked by giving on input <code>bc(i)</code> as the value to impose for the <code>i</code>-th optimization variable. </p>
 
 </div>
 </div>

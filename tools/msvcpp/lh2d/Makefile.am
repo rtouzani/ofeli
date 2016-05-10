@@ -1,12 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/lh2d
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	lh2d.vcxproj \
-		lh2d.vcxproj.filters \
-		lh2d.vcxproj.user
-
-dist_ss_DATA =	lh2d.vcxproj \
-		lh2d.vcxproj.filters \
-		lh2d.vcxproj.user
-
+lh2ddir    	  =	$(datadir)/ofeli/tools/msvcpp/lh2d
+dist_lh2d_DATA =	lh2d.vcxproj lh2d.vcxproj.filters lh2d.vcxproj.user
+lh2d_DATA	  =	lh2d.vcxproj lh2d.vcxproj.filters lh2d.vcxproj.user

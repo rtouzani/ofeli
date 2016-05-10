@@ -1,12 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/helmholtz
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	helmholtz.vcxproj \
-		helmholtz.vcxproj.filters \
-		helmholtz.vcxproj.user
-
-dist_ss_DATA =	helmholtz.vcxproj \
-		helmholtz.vcxproj.filters \
-		helmholtz.vcxproj.user
-
+helmholtzdir        =	$(datadir)/ofeli/tools/msvcpp/helmholtz
+dist_helmholtz_DATA =	helmholtz.vcxproj helmholtz.vcxproj.filters helmholtz.vcxproj.user
+helmholtz_DATA      =	helmholtz.vcxproj helmholtz.vcxproj.filters helmholtz.vcxproj.user

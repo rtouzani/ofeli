@@ -1,12 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/ofeli
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	ofeli.vcxproj \
-		ofeli.vcxproj.filters \
-		ofeli.vcxproj.user
-
-dist_ss_DATA =	ofeli.vcxproj \
-		ofeli.vcxproj.filters \
-		ofeli.vcxproj.user
-
+ofelidir    	  =	$(datadir)/ofeli/tools/msvcpp/ofeli
+dist_ofeli_DATA   =	ofeli.vcxproj ofeli.vcxproj.filters ofeli.vcxproj.user
+ofeli_DATA        =	ofeli.vcxproj ofeli.vcxproj.filters ofeli.vcxproj.user

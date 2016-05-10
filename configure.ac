@@ -314,9 +314,10 @@ fi
 
 # List of executables
 util_exes="g2m cmesh cfield vmesh "
-tutorial_exes="lesson1 lesson2 lesson3 lesson4 lesson5 "
+tutorial_exes="lesson1 lesson2 lesson3 lesson4 "
 demo_exes="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz ec2d1 ls_demo1 ls_demo2 "
-demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2"
+demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2 "
+demo_exes+="opt_demo1 opt_demo2"
 
 AC_OUTPUT(
    Makefile
@@ -427,7 +428,6 @@ AC_OUTPUT(
    tools/msvcpp/lesson2/Makefile
    tools/msvcpp/lesson3/Makefile
    tools/msvcpp/lesson4/Makefile
-   tools/msvcpp/lesson5/Makefile
    tools/msvcpp/lh2d/Makefile
    tools/msvcpp/ofeli/Makefile
    tools/msvcpp/std3/Makefile
@@ -442,6 +442,9 @@ AC_OUTPUT(
    tools/msvcpp/ode_demo2/Makefile
    tools/msvcpp/ode_demo3/Makefile
    tools/msvcpp/ode_demo4/Makefile
+   tools/msvcpp/opt_demo1/Makefile
+   tools/msvcpp/opt_demo2/Makefile
+   tools/msvcpp/opt_demo3/Makefile
    tools/msvcpp/ts_demo1/Makefile
    tools/msvcpp/ts_demo2/Makefile
    ofeli-config

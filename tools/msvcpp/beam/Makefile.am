@@ -1,12 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/beam
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	beam.vcxproj \
-		beam.vcxproj.filters \
-		beam.vcxproj.user
-
-dist_ss_DATA =	beam.vcxproj \
-		beam.vcxproj.filters \
-		beam.vcxproj.user
+beamdir        =	$(datadir)/ofeli/tools/msvcpp/beam
+dist_beam_DATA = 	beam.vcxproj beam.vcxproj.filters beam.vcxproj.user
+beam_DATA = 		beam.vcxproj beam.vcxproj.filters beam.vcxproj.user
 

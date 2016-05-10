@@ -1,12 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/g2m
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	g2m.vcxproj \
-		g2m.vcxproj.filters \
-		g2m.vcxproj.user
-
-dist_ss_DATA =	g2m.vcxproj \
-		g2m.vcxproj.filters \
-		g2m.vcxproj.user
-
+g2mdir        =	$(datadir)/ofeli/tools/msvcpp/g2m
+dist_g2m_DATA = g2m.vcxproj g2m.vcxproj.filters g2m.vcxproj.user
+g2m_DATA      = g2m.vcxproj g2m.vcxproj.filters g2m.vcxproj.user

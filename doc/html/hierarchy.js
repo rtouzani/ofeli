@@ -159,9 +159,11 @@ var hierarchy =
         [ "LCL3DT", "classOFELI_1_1LCL3DT.html", null ]
       ] ]
     ] ],
+    [ "MyOpt", "classOFELI_1_1MyOpt.html", null ],
     [ "Node", "classOFELI_1_1Node.html", null ],
     [ "NodeList", "classOFELI_1_1NodeList.html", null ],
     [ "ODESolver", "classOFELI_1_1ODESolver.html", null ],
+    [ "OptSolver", "classOFELI_1_1OptSolver.html", null ],
     [ "Partition", "classOFELI_1_1Partition.html", null ],
     [ "PETScMatrix< T_ >", "classOFELI_1_1PETScMatrix.html", null ],
     [ "PETScVect< T_ >", "classOFELI_1_1PETScVect.html", null ],

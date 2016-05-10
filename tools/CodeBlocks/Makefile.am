@@ -1,13 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/CodeBlocks
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	ofeli.cbp \
-		cfield.cbp \
-		cmesh.cbp \
-		g2m.cbp
-
-dist_ss_DATA =	ofeli.cbp \
-		cfield.cbp \
-		cmesh.cbp \
-		g2m.cbp
+codeblocksdir        =	$(datadir)/ofeli/tools/msvcpp/CodeBlocks
+dist_codeblocks_DATA =	ofeli.cbp cfield.cbp cmesh.cbp g2m.cbp vmesh.cbp
+codeblocks_DATA      =	ofeli.cbp cfield.cbp cmesh.cbp g2m.cbp vmesh.cbp

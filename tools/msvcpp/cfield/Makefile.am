@@ -1,12 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/cfield
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	cfield.vcxproj \
-		cfield.vcxproj.filters \
-		cfield.vcxproj.user
-
-dist_ss_DATA =	cfield.vcxproj \
-		cfield.vcxproj.filters \
-		cfield.vcxproj.user
+cfielddir        =	$(datadir)/ofeli/tools/msvcpp/cfield
+dist_cfield_DATA = 	cfield.vcxproj cfield.vcxproj.filters cfield.vcxproj.user
+cfield_DATA = 		cfield.vcxproj cfield.vcxproj.filters cfield.vcxproj.user
 

@@ -93,7 +93,8 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(dist_ss_DATA) $(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(dist_lelas3d_DATA) \
+	$(am__DIST_COMMON)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/include/config.h
 CONFIG_CLEAN_FILES =
@@ -110,6 +111,8 @@ AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
 am__v_at_1 = 
+depcomp =
+am__depfiles_maybe =
 SOURCES =
 DIST_SOURCES =
 am__can_run_installinfo = \
@@ -144,8 +147,8 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(ssdir)" "$(DESTDIR)$(ssdir)"
-DATA = $(dist_ss_DATA) $(ss_DATA)
+am__installdirs = "$(DESTDIR)$(lelas3ddir)" "$(DESTDIR)$(lelas3ddir)"
+DATA = $(dist_lelas3d_DATA) $(lelas3d_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/mkinstalldirs
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -266,15 +269,10 @@ target_alias =
 top_build_prefix = ../../../
 top_builddir = ../../..
 top_srcdir = ../../..
-ssdir = $(datadir)/ofeli/tools/msvcpp/lelas3d
-ss_DATA = lelas3d.vcxproj \
-		lelas3d.vcxproj.filters \
-		lelas3d.vcxproj.user
-
-dist_ss_DATA = lelas3d.vcxproj \
-		lelas3d.vcxproj.filters \
-		lelas3d.vcxproj.user
-
+AUTOMAKE_OPTIONS = no-dependencies
+lelas3ddir = $(datadir)/ofeli/tools/msvcpp/lelas3d
+dist_lelas3d_DATA = lelas3d.vcxproj lelas3d.vcxproj.filters lelas3d.vcxproj.user
+lelas3d_DATA = lelas3d.vcxproj lelas3d.vcxproj.filters lelas3d.vcxproj.user
 all: all-am
 
 .SUFFIXES:
@@ -307,48 +305,48 @@ $(top_srcdir)/configure: # $(am__configure_deps)
 $(ACLOCAL_M4): # $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-dist_ssDATA: $(dist_ss_DATA)
+install-dist_lelas3dDATA: $(dist_lelas3d_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(dist_ss_DATA)'; test -n "$(ssdir)" || list=; \
+	@list='$(dist_lelas3d_DATA)'; test -n "$(lelas3ddir)" || list=; \
 	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(ssdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(ssdir)" || exit 1; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(lelas3ddir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(lelas3ddir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(ssdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(ssdir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(lelas3ddir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(lelas3ddir)" || exit $$?; \
 	done
 
-uninstall-dist_ssDATA:
+uninstall-dist_lelas3dDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(dist_ss_DATA)'; test -n "$(ssdir)" || list=; \
+	@list='$(dist_lelas3d_DATA)'; test -n "$(lelas3ddir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(ssdir)'; $(am__uninstall_files_from_dir)
-install-ssDATA: $(ss_DATA)
+	dir='$(DESTDIR)$(lelas3ddir)'; $(am__uninstall_files_from_dir)
+install-lelas3dDATA: $(lelas3d_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(ss_DATA)'; test -n "$(ssdir)" || list=; \
+	@list='$(lelas3d_DATA)'; test -n "$(lelas3ddir)" || list=; \
 	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(ssdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(ssdir)" || exit 1; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(lelas3ddir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(lelas3ddir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(ssdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(ssdir)" || exit $$?; \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(lelas3ddir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(lelas3ddir)" || exit $$?; \
 	done
 
-uninstall-ssDATA:
+uninstall-lelas3dDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(ss_DATA)'; test -n "$(ssdir)" || list=; \
+	@list='$(lelas3d_DATA)'; test -n "$(lelas3ddir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(ssdir)'; $(am__uninstall_files_from_dir)
+	dir='$(DESTDIR)$(lelas3ddir)'; $(am__uninstall_files_from_dir)
 tags TAGS:
 
 ctags CTAGS:
@@ -390,7 +388,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(ssdir)" "$(DESTDIR)$(ssdir)"; do \
+	for dir in "$(DESTDIR)$(lelas3ddir)" "$(DESTDIR)$(lelas3ddir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -443,7 +441,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_ssDATA install-ssDATA
+install-data-am: install-dist_lelas3dDATA install-lelas3dDATA
 
 install-dvi: install-dvi-am
 
@@ -487,21 +485,22 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-dist_ssDATA uninstall-ssDATA
+uninstall-am: uninstall-dist_lelas3dDATA uninstall-lelas3dDATA
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic cscopelist-am \
 	ctags-am distclean distclean-generic distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
-	install-data-am install-dist_ssDATA install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-ssDATA \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic pdf pdf-am ps ps-am tags-am uninstall \
-	uninstall-am uninstall-dist_ssDATA uninstall-ssDATA
+	install-data-am install-dist_lelas3dDATA install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am \
+	install-lelas3dDATA install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
+	pdf-am ps ps-am tags-am uninstall uninstall-am \
+	uninstall-dist_lelas3dDATA uninstall-lelas3dDATA
 
 .PRECIOUS: Makefile
 

@@ -70,6 +70,13 @@ var group__Solver =
       [ "setFact", "classOFELI_1_1LinearSolver.html#ae221a5369220070666177b57daf4cff2", null ],
       [ "setNoFact", "classOFELI_1_1LinearSolver.html#a524aa7001c68e0d79027f735f20e34de", null ]
     ] ],
+    [ "MyOpt", "classOFELI_1_1MyOpt.html", [
+      [ "MyOpt", "classOFELI_1_1MyOpt.html#a186344ab4107f258dc7ea7a289f73413", null ],
+      [ "MyOpt", "classOFELI_1_1MyOpt.html#aeff7c69f0dff054a3632dcf75f9d861a", null ],
+      [ "~MyOpt", "classOFELI_1_1MyOpt.html#a0e859db312298add4306a4758791315a", null ],
+      [ "Objective", "classOFELI_1_1MyOpt.html#ae8a4aaff817c0d981f365ff3f072ae03", null ],
+      [ "Gradient", "classOFELI_1_1MyOpt.html#a4fa02a77adabe7c211403aadf574d4fa", null ]
+    ] ],
     [ "ODESolver", "classOFELI_1_1ODESolver.html", [
       [ "ODESolver", "classOFELI_1_1ODESolver.html#a2e716223fdfa1868a6a683386da026f6", null ],
       [ "ODESolver", "classOFELI_1_1ODESolver.html#a5e05bb6feba76958bec33ba5e4989d42", null ],
@@ -101,6 +108,42 @@ var group__Solver =
       [ "run", "classOFELI_1_1ODESolver.html#ab174fb4127d2dfb1b5e0d57b9e40b617", null ],
       [ "getLSolver", "classOFELI_1_1ODESolver.html#a799a12990da0e52bb134bf40ee4159e2", null ],
       [ "get", "classOFELI_1_1ODESolver.html#adb3d75689bdd8aad7c9e197d4d9bd87a", null ]
+    ] ],
+    [ "OptSolver", "classOFELI_1_1OptSolver.html", [
+      [ "OptMethod", "classOFELI_1_1OptSolver.html#aa9d702a65f9c6ee14aefeb7f317eaf7d", [
+        [ "GRADIENT", "classOFELI_1_1OptSolver.html#aa9d702a65f9c6ee14aefeb7f317eaf7daf12f85c0222e6f70a307308793fe473c", null ],
+        [ "TRUNCATED_NEWTON", "classOFELI_1_1OptSolver.html#aa9d702a65f9c6ee14aefeb7f317eaf7da9f980ec69f65fd361e3024d7711d043c", null ],
+        [ "SIMULATED_ANNEALING", "classOFELI_1_1OptSolver.html#aa9d702a65f9c6ee14aefeb7f317eaf7da1c698dbc8b5fbb938cd617b13135c0a3", null ],
+        [ "NELDER_MEAD", "classOFELI_1_1OptSolver.html#aa9d702a65f9c6ee14aefeb7f317eaf7da2734ef2227c183fc5dac349ceb97f492", null ]
+      ] ],
+      [ "OptSolver", "classOFELI_1_1OptSolver.html#aecc5ca639b715b9842cd644aa9d62c36", null ],
+      [ "OptSolver", "classOFELI_1_1OptSolver.html#a5ba4d4a809662f06111261797efd6841", null ],
+      [ "OptSolver", "classOFELI_1_1OptSolver.html#a6ad4d1a1f2748849511fc501e8ff2741", null ],
+      [ "~OptSolver", "classOFELI_1_1OptSolver.html#aa74706368207208eba17cee4bb748aa7", null ],
+      [ "getNbFctEval", "classOFELI_1_1OptSolver.html#a82ef36a8628114b7c3f00ea9dcfe4d6e", null ],
+      [ "setOptMethod", "classOFELI_1_1OptSolver.html#a4d4134b799ead9a585374e9bd448172e", null ],
+      [ "setBC", "classOFELI_1_1OptSolver.html#abfd0d4a353c29fa726bfd347d547aa9b", null ],
+      [ "setObjective", "classOFELI_1_1OptSolver.html#ab7d2388f7ecb1367bebdb6e9a9f5459e", null ],
+      [ "setGradient", "classOFELI_1_1OptSolver.html#a845e439cb7164f4be2418681b17b46bc", null ],
+      [ "setOptClass", "classOFELI_1_1OptSolver.html#a08a5712ed432e26992954354a34373fe", null ],
+      [ "setUpperBound", "classOFELI_1_1OptSolver.html#a20425ea14b2c5a425365a8803a5caaa3", null ],
+      [ "setUpperBounds", "classOFELI_1_1OptSolver.html#adeff0d9be23d9997a15678c1331ff997", null ],
+      [ "setLowerBound", "classOFELI_1_1OptSolver.html#a2fcd3aabf87c1b52076ff07417905358", null ],
+      [ "setVerbosity", "classOFELI_1_1OptSolver.html#a9b1861597bdad1a898f7b68beacc141c", null ],
+      [ "setLowerBounds", "classOFELI_1_1OptSolver.html#a12c4a6cc522f10b0e68d4dd64f7847ab", null ],
+      [ "setSAOpt", "classOFELI_1_1OptSolver.html#aa37719aaee7d07d34de7bc71bfe0b97d", null ],
+      [ "setTolerance", "classOFELI_1_1OptSolver.html#a4d0e665f8f92335ec10c4ccf9e9171b7", null ],
+      [ "setMaxIterations", "classOFELI_1_1OptSolver.html#a4a379c3d1904a0f0a3ce3b59809dc139", null ],
+      [ "getNbObjEval", "classOFELI_1_1OptSolver.html#a4f71faacaae27057ff0a7da31c61f4e6", null ],
+      [ "getTemperature", "classOFELI_1_1OptSolver.html#ac583d9616b8fe9eafe4cf6a4dd7e1d56", null ],
+      [ "getNbAcc", "classOFELI_1_1OptSolver.html#a5d6e4c9a32c39afe36721703ffc09509", null ],
+      [ "getNbOutOfBounds", "classOFELI_1_1OptSolver.html#a1c9901fdda2aa0264191b62c97d07023", null ],
+      [ "getOptObj", "classOFELI_1_1OptSolver.html#a1cea0c19ade4f25b8a1422887191234f", null ],
+      [ "run", "classOFELI_1_1OptSolver.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
+      [ "run", "classOFELI_1_1OptSolver.html#ad1a41c4112442e3a6e515afe4e53acad", null ],
+      [ "getSolution", "classOFELI_1_1OptSolver.html#aafd90aa9d1ea0131af706209461cdc4d", null ],
+      [ "getSolution", "classOFELI_1_1OptSolver.html#a784a5007538db91f405594a5b90d36a1", null ],
+      [ "operator<<", "classOFELI_1_1OptSolver.html#aa5056d4fbcfcd24b37892d2affde9674", null ]
     ] ],
     [ "Prec", "classOFELI_1_1Prec.html", [
       [ "Prec", "classOFELI_1_1Prec.html#a6e355a68c9ee021945bef0d7517c4139", null ],
@@ -157,9 +200,7 @@ var group__Solver =
     [ "GMRes", "group__Solver.html#ga09f27d5e80a346625e5ff7e54f1f45df", null ],
     [ "GS", "group__Solver.html#ga8dcd7991586a9eb1badcff25e0f291d2", null ],
     [ "Jacobi", "group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24", null ],
-    [ "BCAsConstraint", "group__Solver.html#ga6443657e1f1fc45e442d801447636fda", null ],
-    [ "OptimSA", "group__Solver.html#gad805ba0a88d8f6fbc0afcd591b6ad5a9", null ],
-    [ "OptimTN", "group__Solver.html#gafee086dc81bf793f8bbee98b901e1e38", null ],
+    [ "operator<<", "group__Solver.html#ga3f1c03ea316fa554006a28910fbe47c0", null ],
     [ "Richardson", "group__Solver.html#gac3e56edcd67f3f8eddb9717c36c4157f", null ],
     [ "Schur", "group__Solver.html#ga86daf449b352504b085c354af030b1c2", null ],
     [ "Schur", "group__Solver.html#ga2174acbbdde7226a6b31ecf14abcfe4e", null ],

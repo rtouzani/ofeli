@@ -86,7 +86,6 @@ var classOFELI_1_1Mesh =
     [ "getDOFSupport", "classOFELI_1_1Mesh.html#ae2523b254eb0c33e29032c0416ed96eb", null ],
     [ "put", "classOFELI_1_1Mesh.html#adaeb5533a5efc3594efb106602a4dc41", null ],
     [ "save", "classOFELI_1_1Mesh.html#ae1b38fd98bf1fb0980d1bb86ee216ba0", null ],
-    [ "Bput", "classOFELI_1_1Mesh.html#ad2070438088feff47d727aebbc4731a4", null ],
     [ "withImposedDOF", "classOFELI_1_1Mesh.html#ad1ca12b086310bbe9494da6da393efd7", null ],
     [ "isStructured", "classOFELI_1_1Mesh.html#a359edf5aa392ae1efb93b1b10fbeee79", null ],
     [ "getNodeNewLabel", "classOFELI_1_1Mesh.html#ac3011289ee6ea9893c50e8c90cbc7ced", null ],

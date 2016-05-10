@@ -1,12 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/cmesh
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	cmesh.vcxproj \
-		cmesh.vcxproj.filters \
-		cmesh.vcxproj.user
-
-dist_ss_DATA =	cmesh.vcxproj \
-		cmesh.vcxproj.filters \
-		cmesh.vcxproj.user
+cmeshdir        =	$(datadir)/ofeli/tools/msvcpp/cmesh
+dist_cmesh_DATA = 	cmesh.vcxproj cmesh.vcxproj.filters cmesh.vcxproj.user
+cmesh_DATA = 		cmesh.vcxproj cmesh.vcxproj.filters cmesh.vcxproj.user
 

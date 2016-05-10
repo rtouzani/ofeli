@@ -1,12 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/ec2d1
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	ec2d1.vcxproj \
-		ec2d1.vcxproj.filters \
-		ec2d1.vcxproj.user
-
-dist_ss_DATA =	ec2d1.vcxproj \
-		ec2d1.vcxproj.filters \
-		ec2d1.vcxproj.user
+ec2d1dir        =	$(datadir)/ofeli/tools/msvcpp/ec2d1
+dist_ec2d1_DATA = 	ec2d1.vcxproj ec2d1.vcxproj.filters ec2d1.vcxproj.user
+ec2d1_DATA = 		ec2d1.vcxproj ec2d1.vcxproj.filters ec2d1.vcxproj.user
 

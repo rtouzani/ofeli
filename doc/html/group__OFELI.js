@@ -4188,7 +4188,6 @@ var group__OFELI =
       [ "getDOFSupport", "classOFELI_1_1Mesh.html#ae2523b254eb0c33e29032c0416ed96eb", null ],
       [ "put", "classOFELI_1_1Mesh.html#adaeb5533a5efc3594efb106602a4dc41", null ],
       [ "save", "classOFELI_1_1Mesh.html#ae1b38fd98bf1fb0980d1bb86ee216ba0", null ],
-      [ "Bput", "classOFELI_1_1Mesh.html#ad2070438088feff47d727aebbc4731a4", null ],
       [ "withImposedDOF", "classOFELI_1_1Mesh.html#ad1ca12b086310bbe9494da6da393efd7", null ],
       [ "isStructured", "classOFELI_1_1Mesh.html#a359edf5aa392ae1efb93b1b10fbeee79", null ],
       [ "getNodeNewLabel", "classOFELI_1_1Mesh.html#ac3011289ee6ea9893c50e8c90cbc7ced", null ],
@@ -4667,6 +4666,13 @@ var group__OFELI =
       [ "solve", "classOFELI_1_1LinearSolver.html#a7ca154b901ce7bb4d4ee1e2cdf7f8a85", null ],
       [ "setFact", "classOFELI_1_1LinearSolver.html#ae221a5369220070666177b57daf4cff2", null ],
       [ "setNoFact", "classOFELI_1_1LinearSolver.html#a524aa7001c68e0d79027f735f20e34de", null ]
+    ] ],
+    [ "MyOpt", "classOFELI_1_1MyOpt.html", [
+      [ "MyOpt", "classOFELI_1_1MyOpt.html#a186344ab4107f258dc7ea7a289f73413", null ],
+      [ "MyOpt", "classOFELI_1_1MyOpt.html#aeff7c69f0dff054a3632dcf75f9d861a", null ],
+      [ "~MyOpt", "classOFELI_1_1MyOpt.html#a0e859db312298add4306a4758791315a", null ],
+      [ "Objective", "classOFELI_1_1MyOpt.html#ae8a4aaff817c0d981f365ff3f072ae03", null ],
+      [ "Gradient", "classOFELI_1_1MyOpt.html#a4fa02a77adabe7c211403aadf574d4fa", null ]
     ] ],
     [ "ODESolver", "classOFELI_1_1ODESolver.html", [
       [ "ODESolver", "classOFELI_1_1ODESolver.html#a2e716223fdfa1868a6a683386da026f6", null ],

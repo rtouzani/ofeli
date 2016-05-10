@@ -1,12 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/tiff2
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	tiff2.vcxproj \
-		tiff2.vcxproj.filters \
-		tiff2.vcxproj.user
-
-dist_ss_DATA =	tiff2.vcxproj \
-		tiff2.vcxproj.filters \
-		tiff2.vcxproj.user
-
+tiff2dir    	  =	$(datadir)/ofeli/tools/msvcpp/tiff2
+dist_tiff2_DATA   =	tiff2.vcxproj tiff2.vcxproj.filters tiff2.vcxproj.user
+tiff2_DATA        =	tiff2.vcxproj tiff2.vcxproj.filters tiff2.vcxproj.user

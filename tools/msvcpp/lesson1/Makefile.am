@@ -1,12 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/lesson1
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	lesson1.vcxproj \
-		lesson1.vcxproj.filters \
-		lesson1.vcxproj.user
-
-dist_ss_DATA =	lesson1.vcxproj \
-		lesson1.vcxproj.filters \
-		lesson1.vcxproj.user
-
+lesson1dir    	  =	$(datadir)/ofeli/tools/msvcpp/lesson1
+dist_lesson1_DATA =	lesson1.vcxproj lesson1.vcxproj.filters lesson1.vcxproj.user
+lesson1_DATA	  =	lesson1.vcxproj lesson1.vcxproj.filters lesson1.vcxproj.user

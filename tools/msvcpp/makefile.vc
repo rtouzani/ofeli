@@ -45,7 +45,7 @@ BINROOT		= ..\..\..
 SRC_DIR		= $(ROOT)\src
 INCLUDE_DIR	= $(ROOT)\include
 UTIL_DIR	= $(ROOT)\util
-GENMESH_DIR	= $(UTIL_DIR)\genmesh\src
+G2M_DIR		= $(UTIL_DIR)\g2m\src
 TUTORIAL_DIR	= $(ROOT)\tutorial
 DEMO_DIR	= $(ROOT)\demos
 DOC_DIR		= $(ROOT)\doc
@@ -213,8 +213,8 @@ OBJS = \
 	$(TMPDIR)\XMLParser.obj \
 	$(TMPDIR)\xmlsp.obj
 
-GENMESH_OBJS = \
-	genmesh$(CFG)\main.obj \
+G2M_OBJS = \
+	g2m$(CFG)\main.obj \
 
 PNS2_OBJ = \
 	pns2$(CFG)\main.obj \
@@ -261,7 +261,6 @@ setup:
 	@$(MKDIR) lesson2$(CFG)
 	@$(MKDIR) lesson3$(CFG)
 	@$(MKDIR) lesson4$(CFG)
-	@$(MKDIR) lesson5$(CFG)
 	@$(MKDIR) fdf2xml$(CFG)
 	@$(MKDIR) cmesh$(CFG)
 	@$(MKDIR) cfield$(CFG)
@@ -286,7 +285,7 @@ $(LIB):	$(OBJS)
 $(OBJS)
 <<
 
-util:	conv genmesh
+util:	conv g2m
 
 conv:
 	@echo -----------------------------------------------------------------------------
@@ -301,7 +300,7 @@ conv:
 genmesh:
 	@echo -----------------------------------------------------------------------------
 	@echo making 2-D mesh generator ...
-	$(link) $(LDFLAGS) $(GENMESH_OBJS) /out:"$(OUTDIR)\GenMesh.exe" /libpath:$(libpath) $(LIB) /incremental:yes
+	$(link) $(LDFLAGS) $(G2M_OBJS) /out:"$(OUTDIR)\GenMesh.exe" /libpath:$(libpath) $(LIB) /incremental:yes
 
 tutorial:
 	@echo -----------------------------------------------------------------------------

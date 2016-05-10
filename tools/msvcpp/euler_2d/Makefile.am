@@ -1,12 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-ssdir   =	$(datadir)/ofeli/tools/msvcpp/euler_2d
+AUTOMAKE_OPTIONS = no-dependencies
 
-ss_DATA =	euler_2d.vcxproj \
-		euler_2d.vcxproj.filters \
-		euler_2d.vcxproj.user
-
-dist_ss_DATA =	euler_2d.vcxproj \
-		euler_2d.vcxproj.filters \
-		euler_2d.vcxproj.user
+euler2ddir        =	$(datadir)/ofeli/tools/msvcpp/euler_2d
+dist_euler2d_DATA = 	euler_2d.vcxproj euler_2d.vcxproj.filters euler_2d.vcxproj.user
+euler2d_DATA      = 	euler_2d.vcxproj euler_2d.vcxproj.filters euler_2d.vcxproj.user
 

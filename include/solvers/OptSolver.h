@@ -120,7 +120,8 @@ class OptSolver
 
 /** \brief Choose optimization method
  *  @param [in] m Enumerated value to choose the optimization algorithm to use.
- *                Must be chosen among the enumerated values 
+ *                Must be chosen among the enumerated values:
+ *                <ul>
  *                <li>GRADIENT: Gradient steepest descent method with projection 
  *                              for bounded constrained problems
  *                <li>TRUNCATED_NEWTON: The Nash's Truncated Newton Algorithm, due to
@@ -136,6 +137,7 @@ class OptSolver
  *                    Computer Journal, Volume 7, 1965, pages 308-313). As implemented by
  *                    R. ONeill (Algorithm AS 47: Function Minimization Using a Simplex Procedure,
  *                    Applied Statistics, Volume 20, Number 3, 1971, pages 338-345).
+ *                 </ul>
  */
     void setOptMethod(OptMethod m);
 
@@ -152,12 +154,14 @@ class OptSolver
     void setBC(const Vect<real_t>& bc);
 
 /** \brief Define the objective function to minimize by an algebraic expression
- *  @param [in] Regular expression defining the objective function
+ *  @param [in] exp Regular expression defining the objective function
  */
     void setObjective(string exp);
 
-/** \brief Define the objective function to minimize by an algebraic expression
+/** \brief Define a component of the gradient of the objective function to minimize
+ *  by an algebraic expression
  *  @param [in] exp Regular expression defining the objective function
+ *  @param [in] i Component of gradient [Default: <tt>1</tt>]
  */
     void setGradient(string exp,
                      int    i=1);
@@ -180,7 +184,7 @@ class OptSolver
 
 /** \brief Define lower bound for optimization variable
  *  \details Case of a one-variable problem
- * @param [in] ub Lower value
+ *  @param [in] lb Lower value
  */
     void setLowerBound(real_t lb);
 
@@ -190,7 +194,7 @@ class OptSolver
     void setVerbosity(int verb) { _verb = verb; }
 
 /** \brief Define lower bounds for optimization variables
- * @param [in] ub Vector containing lower values for variables
+ * @param [in] lb Vector containing lower values for variables
  */
     void setLowerBounds(Vect<real_t>& lb);
 
@@ -207,6 +211,9 @@ class OptSolver
  *  \a nt*ns*n function evaluations, temperature \a (t) is changed
  *  by the factor \a rt. Value suggested by Corana et al. is
  *  \a max(100,5*nb_var). See Goffe et al. for further advice.
+ *  @param [in] neps Number of final function values used to decide upon termination.
+ *  See \c eps. Suggested value is \a 4
+ *  @param [in] maxevl
  *  @param [in] t The initial temperature. See Goffe et al. for advice.
  *  @param [in] vm The step length vector. On input it should encompass the
  *  region of interest given the starting value \a x. For point
@@ -215,8 +222,8 @@ class OptSolver
  *  of all points are accepted, the input value is not very
  *  important (i.e. is the value is off, \a OptimSA adjusts \a vm to the
  *  correct value).
- *  @param [in] neps Number of final function values used to decide upon termination.
- *  See \c eps. Suggested value is \a 4
+ *  @param [in] xopt
+ *  @param [in] fopt
  */
     void setSAOpt(real_t        rt,
                   int           ns,
@@ -229,12 +236,12 @@ class OptSolver
                   real_t&       fopt);
 
 /** \brief Set error tolerance
- *  @param [in] eps Error tolerance for termination. If the final function
+ *  @param [in] toler Error tolerance for termination. If the final function
  *  values from the last neps temperatures differ from the
  *  corresponding value at the current temperature by less than
  *  eps and the final function value at the current temperature
  *  differs from the current optimal function value by less than
- *  eps, execution terminates and the value \a 0 is returned.
+ *  toler, execution terminates and the value \a 0 is returned.
  */
     void setTolerance(real_t toler) { _toler = toler; }
 
