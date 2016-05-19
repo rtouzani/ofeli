@@ -412,6 +412,18 @@ size_t Side::Contains(const Node* nd) const
 }
 
 
+int Side::isReferenced()
+{
+   for (size_t i=0; i<_nb_dof; i++) {
+      if (_code[i] > 0)
+         return 1;
+      else if (_code[i] < 0)
+         return -1;
+   }
+   return 0;
+}
+
+
 ostream& operator<<(      ostream& s,
                     const Side&    sd)
 {

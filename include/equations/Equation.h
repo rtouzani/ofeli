@@ -132,7 +132,7 @@ class Equation : virtual public AbsEqua<T_>
  */
     Equation(const Element*  el,
              const Vect<T_>& u,
-                   real_t    time=0);
+             real_t          time=0);
 
 /** \brief Constructor using side data, solution at previous time step and time value.
  *  @param [in] sd Pointer to side
@@ -141,7 +141,7 @@ class Equation : virtual public AbsEqua<T_>
  */
     Equation(const Side*     sd,
              const Vect<T_>& u,
-                   real_t    time=0);
+             real_t          time=0);
 
 /// \brief Destructor
     virtual ~Equation() { }

@@ -182,12 +182,17 @@
 		<Unit filename="../../include/solvers/BiCGStab.h" />
 		<Unit filename="../../include/solvers/CG.h" />
 		<Unit filename="../../include/solvers/CGS.h" />
+		<Unit filename="../../include/solvers/EigenProblemSolver.h" />
 		<Unit filename="../../include/solvers/EigenSolver.h" />
 		<Unit filename="../../include/solvers/GMRes.h" />
 		<Unit filename="../../include/solvers/GS.h" />
 		<Unit filename="../../include/solvers/Iter.h" />
 		<Unit filename="../../include/solvers/Jacobi.h" />
 		<Unit filename="../../include/solvers/LinearSolver.h" />
+		<Unit filename="../../include/solvers/MyOpt.h" />
+		<Unit filename="../../include/solvers/ODESolver.h" />
+		<Unit filename="../../include/solvers/OptSolver.h" />
+		<Unit filename="../../include/solvers/Optim.h" />
 		<Unit filename="../../include/solvers/OptimAux.h" />
 		<Unit filename="../../include/solvers/OptimSA.h" />
 		<Unit filename="../../include/solvers/OptimTN.h" />
@@ -196,6 +201,7 @@
 		<Unit filename="../../include/solvers/Richardson.h" />
 		<Unit filename="../../include/solvers/SSOR.h" />
 		<Unit filename="../../include/solvers/Schur.h" />
+		<Unit filename="../../include/solvers/TimeStepping.h" />
 		<Unit filename="../../include/util/Gauss.h" />
 		<Unit filename="../../include/util/Timer.h" />
 		<Unit filename="../../include/util/banner.h" />
@@ -451,6 +457,11 @@
 		<Unit filename="../../src/solvers/BSpline.cpp" />
 		<Unit filename="../../src/solvers/EigenProblemSolver.cpp" />
 		<Unit filename="../../src/solvers/ODESolver.cpp" />
+		<Unit filename="../../src/solvers/OptSolver.cpp" />
+		<Unit filename="../../src/solvers/OptimNM.cpp" />
+		<Unit filename="../../src/solvers/OptimPG.cpp" />
+		<Unit filename="../../src/solvers/OptimSA.cpp" />
+		<Unit filename="../../src/solvers/OptimTN.cpp" />
 		<Unit filename="../../src/solvers/Solver.cpp" />
 		<Unit filename="../../src/solvers/TimeStepping.cpp" />
 		<Unit filename="../../src/util/Gauss.cpp" />

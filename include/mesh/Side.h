@@ -190,6 +190,9 @@ enum SideType {
     void setNode(size_t i,
                  Node*  node);
 
+/// \brief Say that the side is on the boundary
+    void setOnBoundary();
+
 //-----------------------------   INSPECTORS  ----------------------------------
 
 /// \brief Return side's shape
@@ -268,8 +271,8 @@ enum SideType {
  */
     int isOnBoundary() const;
 
-/// \brief Say that the side is on the boundary
-    void setOnBoundary();
+/// \brief Say if side has a nonzero code or not
+    int isReferenced();
 
 /** \brief Return measure of side.
  *  \details This member function returns length or area of side.

@@ -134,11 +134,11 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 libofeli_a_AR = $(AR) $(ARFLAGS)
 libofeli_a_DEPENDENCIES = $(CL_OBJS) $(ELECTROMAGNETICS_OBJS) \
-	$(FLUID_OBJS) $(INTERFACE_OBJS) $(LAPLACE_OBJS) $(SOLID_OBJS) \
-	$(THERM_OBJS) $(IO_OBJS) $(FPARSER_OBJS) $(XMLSP_OBJS) \
-	$(LINEAR_ALGEBRA_OBJS) $(MESH_OBJS) $(BAMG_OBJS) $(METIS_OBJS) \
-	$(POST_OBJS) $(SHAPE_FUNCTIONS_OBJS) $(SOLVERS_OBJS) \
-	$(UTIL_OBJS)
+	$(FLUID_OBJS) $(INTERFACE_OBJS) $(LAPLACE_OBJS) $(POROUS_OBJS) \
+	$(SOLID_OBJS) $(THERM_OBJS) $(IO_OBJS) $(FPARSER_OBJS) \
+	$(XMLSP_OBJS) $(LINEAR_ALGEBRA_OBJS) $(MESH_OBJS) $(BAMG_OBJS) \
+	$(METIS_OBJS) $(POST_OBJS) $(SHAPE_FUNCTIONS_OBJS) \
+	$(SOLVERS_OBJS) $(UTIL_OBJS)
 am_libofeli_a_OBJECTS =
 libofeli_a_OBJECTS = $(am_libofeli_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
@@ -396,6 +396,7 @@ LAPLACE_OBJS = equations/laplace/Laplace1DL2.o \
 			equations/laplace/Laplace2DFVT.o \
 			equations/laplace/SteklovPoincare2DBE.o
 
+POROUS_OBJS = equations/porous/WaterPorous2D.o
 SOLID_OBJS = equations/solid/Bar2DL2.o \
 			equations/solid/Beam3DL2.o \
 			equations/solid/Elas2DT3.o \
@@ -532,6 +533,7 @@ libofeli_a_LIBADD = $(CL_OBJS) \
 			$(FLUID_OBJS) \
 			$(INTERFACE_OBJS) \
 			$(LAPLACE_OBJS) \
+			$(POROUS_OBJS) \
 			$(SOLID_OBJS) \
 			$(THERM_OBJS) \
 			$(IO_OBJS) \

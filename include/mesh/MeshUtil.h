@@ -246,6 +246,7 @@ inline void DOFCode(int    mark,
    }
 }
 
+int isReferencedSide(const Side& sd);
 void HexahedraToTetrahedra(Mesh &m1, Mesh &m2);
 void QuadrilateralsToTriangles(Mesh &m1, Mesh &m2);
 void Refine(Mesh &in_mesh, Mesh &out_mesh);

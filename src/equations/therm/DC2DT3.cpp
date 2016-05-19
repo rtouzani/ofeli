@@ -66,7 +66,7 @@ DC2DT3::DC2DT3(const Side* sd)
 
 DC2DT3::DC2DT3(const Element*      el,
                const Vect<real_t>& u,
-                     real_t        time)
+               real_t              time)
        : Equation<real_t,3,3,2,2>(el,u,time)
 {
    set(el);
@@ -79,9 +79,9 @@ DC2DT3::DC2DT3(const Element*      el,
 
 DC2DT3::DC2DT3(const Element*      el,
                const Vect<real_t>& u,
-                     real_t        time,
-                     real_t        deltat,
-                     int           scheme)
+               real_t              time,
+               real_t              deltat,
+               int                 scheme)
        : Equation<real_t,3,3,2,2>(el,u,time)
 {
    set(el);
@@ -96,7 +96,7 @@ DC2DT3::DC2DT3(const Element*      el,
 
 DC2DT3::DC2DT3(const Side*         sd,
                const Vect<real_t>& u,
-                     real_t        time)
+               real_t              time)
        : Equation<real_t,3,3,2,2>(sd,u,time)
 {
    set(sd);
@@ -109,9 +109,9 @@ DC2DT3::DC2DT3(const Side*         sd,
 
 DC2DT3::DC2DT3(const Side*         sd,
                const Vect<real_t>& u,
-                     real_t        time,
-                     real_t        deltat,
-                     int           scheme)
+               real_t              time,
+               real_t              deltat,
+               int                 scheme)
        : Equation<real_t,3,3,2,2>(sd,u,time)
 {
    set(sd);
@@ -235,7 +235,7 @@ void DC2DT3::Diffusion(real_t coef)
 
 
 void DC2DT3::Diffusion(const LocalMatrix<real_t,2,2>& diff,
-                             real_t                   coef)
+                       real_t                         coef)
 {
    real_t c=_area*coef;
    for (size_t i=1; i<=3; i++)
@@ -259,7 +259,7 @@ void DC2DT3::DiffusionToRHS(real_t coef)
 
 
 void DC2DT3::Convection(const Point<real_t>& v,
-                              real_t         coef)
+                        real_t               coef)
 {
    LocalVect<real_t,3> dd;
    for (size_t i=1; i<=3; i++)
@@ -305,7 +305,7 @@ void DC2DT3::Convection(real_t coef)
 
 
 void DC2DT3::Convection(const Vect<real_t>& v,
-                              real_t        coef)
+                        real_t              coef)
 {
    size_t i;
    LocalMatrix<real_t,3,2> ve;
@@ -324,7 +324,7 @@ void DC2DT3::Convection(const Vect<real_t>& v,
 
 
 void DC2DT3::ConvectionToRHS(const Point<real_t>& v,
-                                   real_t         coef)
+                             real_t               coef)
 {
    Point<real_t> u;
    for (size_t i=1; i<=3; i++)
@@ -392,44 +392,48 @@ void DC2DT3::BodyRHS(real_t bf)
 
 
 void DC2DT3::BodyRHS(const Vect<real_t>& bf,
-                           int           opt)
+                     int                 opt)
 {
+   real_t c = OFELI_THIRD*_area;
    if (opt==LOCAL_ARRAY) {
       for (size_t i=1; i<=3; i++)
-         eRHS(i) += bf(i)*OFELI_THIRD*_area;
+         eRHS(i) += c*bf(i);
    }
    else
       for (size_t i=1; i<=3; i++)
-         eRHS(i) += bf((*_theElement)(i)->n())*OFELI_THIRD*_area;
+         eRHS(i) += c*bf((*_theElement)(i)->n());
 }
 
 
 void DC2DT3::BoundaryRHS(UserData<real_t>& ud,
                          real_t            coef)
 {
+   real_t c = 0.5*_length*coef;
    for (size_t i=1; i<=2; i++) {
       real_t f = ud.SurfaceForce((*_theSide)(i)->getCoord(),_theSide->getCode(1),_time);
-      sRHS(i) += 0.5*_length*f*coef;
+      sRHS(i) += c*f;
    }
 }
 
 
 void DC2DT3::BoundaryRHS(real_t flux)
 {
-    for (size_t i=1; i<=2; i++)
-       sRHS(i) += 0.5*flux*_length;
+   real_t c = 0.5*_length*flux;
+   for (size_t i=1; i<=2; i++)
+       sRHS(i) += c;
 }
 
 
 void DC2DT3::BoundaryRHS(const Vect<real_t>& sf,
                                int           opt)
 {
-  if (opt==LOCAL_ARRAY)
+   real_t c = 0.5*_length;
+   if (opt==LOCAL_ARRAY)
       for (size_t i=1; i<=2; i++)
-         sRHS(i) += sf(i)*0.5*_length;
+         sRHS(i) += c*sf(i);
    else
       for (size_t i=1; i<=2; i++)
-         sRHS(i) += sf((*_theSide)(i)->n())*0.5*_length;
+         sRHS(i) += c*sf((*_theSide)(i)->n());
 }
 
 
@@ -447,8 +451,8 @@ real_t DC2DT3::Energy(const Vect<real_t>& u)
 }
 
 
-real_t DC2DT3::Energy(const Vect<real_t>&     u,
-                            UserData<real_t>& ud)
+real_t DC2DT3::Energy(const Vect<real_t>& u,
+                      UserData<real_t>&   ud)
 {
    Point<real_t> du = u(1)*_dSh[0] + u(2)*_dSh[1] + u(3)*_dSh[2];
    real_t W = 0.5*_diff*_area*(du*du);
@@ -457,8 +461,8 @@ real_t DC2DT3::Energy(const Vect<real_t>&     u,
    return W;
 }
 
-void DC2DT3::EnerGrad(const Vect<real_t>&     u,
-                            UserData<real_t>& ud)
+void DC2DT3::EnerGrad(const Vect<real_t>& u,
+                      UserData<real_t>&   ud)
 {
    LocalMatrix<real_t,3,3> a;
    LocalVect<real_t,3> b;

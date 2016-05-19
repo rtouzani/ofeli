@@ -1562,7 +1562,7 @@ void Domain::genGeo(string file)
       mf << "\nEdges  " << setw(5) << _nb_lines << endl;
       for (size_t i=0; i<_nb_lines; i++)
          mf << setw(5) << _l[i].n1 << setw(5) << _l[i].n2
-            << setw(5) << _l[i].Dcode << setw(5) << endl;
+            << setw(5) << _l[i].Ncode << setw(5) << endl;
    }
    if (_nb_vertices > 0) {
       mf << "\nhVertices\n";

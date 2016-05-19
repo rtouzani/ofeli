@@ -176,9 +176,9 @@ void TimeStepping::set(TimeScheme s,
       _nb_ssteps = 4;
    _sc = int(s);
    try {
-      if (s<0 || s>9) {
+      if (s<0 || s>10) {
          _solve = NULL;
-         THROW_RT("set(...): Time integration scheme not available."+itos(s));
+         THROW_RT("set(...): Time integration scheme not available.");
       }
       else {
          _presolve = PS[int(s)];

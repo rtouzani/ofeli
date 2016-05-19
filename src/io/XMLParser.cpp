@@ -1996,8 +1996,8 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
          size_t v1 = atoi((*it++).c_str());
          size_t v2 = atoi((*it++).c_str());
          int dc = atoi((*it++).c_str());
-	 int nc = 0;
-	 if (dc < 0)
+         int nc = 0;
+         if (dc < 0)
             nc = -dc, dc = 0;
          _theDomain->insertLine(v1,v2,dc,nc);
       }
@@ -2008,8 +2008,8 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
          size_t n2 = atoi((*it++).c_str());
          size_t n3 = atoi((*it++).c_str());
          int dc = atoi((*it++).c_str());
-	 int nc = 0;
-	 if (dc < 0)
+         int nc = 0;
+         if (dc < 0)
             nc = -dc, dc = 0;
          _theDomain->insertCircle(n1,n2,n3,dc,nc);
       }

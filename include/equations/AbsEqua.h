@@ -92,27 +92,28 @@ class Prescription;
  * Enumerate variable that selects various terms in partial differential equations
  */
 enum PDE_Terms {
-   MASS                =  0,              /*!< Consistent mass term                    */
-   CONSISTENT_MASS     =  0,              /*!< Consistent mass term                    */
-   LUMPED_MASS         =  0x00001000,     /*!< Lumped mass term                        */
-   CAPACITY            =  0x00002000,     /*!< Consistent capacity term                */
-   CONSISTENT_CAPACITY =  0x00002000,     /*!< Consistent capacity term                */
-   LUMPED_CAPACITY     =  0x00004000,     /*!< Lumped capacity term                    */
-   VISCOSITY           =  0x00008000,     /*!< Viscosity term                          */
-   STIFFNESS           =  0x00010000,     /*!< Stiffness term                          */
-   DIFFUSION           =  0x00020000,     /*!< Diffusion term                          */
-   CONVECTION          =  0x00040000,     /*!< Convection term                         */
-   DEVIATORIC          =  0x00080000,     /*!< Deviatoric term                         */
-   DILATATION          =  0x00100000,     /*!< Dilatational term                       */
-   ELECTRIC            =  0x00200000,     /*!< Electric term                           */
-   MAGNETIC            =  0x00400000,     /*!< Magnetic term                           */
-   LOAD                =  0x00800000,     /*!< Body load term                          */
-   HEAT_SOURCE         =  0x01000000,     /*!< Body heat source term                   */
-   BOUNDARY_TRACTION   =  0x02000000,     /*!< Boundary traction (pressure) term       */
-   HEAT_FLUX           =  0x04000000,     /*!< Boundary heat flux term                 */
-   CONTACT             =  0x08000000,     /*!< Signorini contact                       */
-   BUOYANCY            =  0x10000000,     /*!< Buoyancy force term                     */
-   LORENTZ_FORCE       =  0x20000000      /*!< Lorentz force term                      */
+   CONSISTENT_MASS     =  0x00001000,     /*!< Consistent mass term                    */
+   LUMPED_MASS         =  0x00002000,     /*!< Lumped mass term                        */
+   MASS                =  0x00002000,     /*!< Consistent mass term                    */
+   CAPACITY            =  0x00004000,     /*!< Consistent capacity term                */
+   CONSISTENT_CAPACITY =  0x00004000,     /*!< Consistent capacity term                */
+   LUMPED_CAPACITY     =  0x00008000,     /*!< Lumped capacity term                    */
+   VISCOSITY           =  0x00010000,     /*!< Viscosity term                          */
+   STIFFNESS           =  0x00020000,     /*!< Stiffness term                          */
+   DIFFUSION           =  0x00040000,     /*!< Diffusion term                          */
+   MOBILITY            =  0x00040000,     /*!< Mobility term                           */
+   CONVECTION          =  0x00080000,     /*!< Convection term                         */
+   DEVIATORIC          =  0x00100000,     /*!< Deviatoric term                         */
+   DILATATION          =  0x00200000,     /*!< Dilatational term                       */
+   ELECTRIC            =  0x00400000,     /*!< Electric term                           */
+   MAGNETIC            =  0x00800000,     /*!< Magnetic term                           */
+   LOAD                =  0x01000000,     /*!< Body load term                          */
+   HEAT_SOURCE         =  0x02000000,     /*!< Body heat source term                   */
+   BOUNDARY_TRACTION   =  0x04000000,     /*!< Boundary traction (pressure) term       */
+   HEAT_FLUX           =  0x08000000,     /*!< Boundary heat flux term                 */
+   CONTACT             =  0x10000000,     /*!< Signorini contact                       */
+   BUOYANCY            =  0x20000000,     /*!< Buoyancy force term                     */
+   LORENTZ_FORCE       =  0x40000000      /*!< Lorentz force term                      */
 };
 
 

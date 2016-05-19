@@ -329,7 +329,7 @@ top_build_prefix = ../../
 top_builddir = ../..
 top_srcdir = ../..
 AUTOMAKE_OPTIONS = no-dependencies
-SUBDIRS = cl electromagnetics fluid interface laplace solid therm
+SUBDIRS = cl electromagnetics fluid interface laplace solid therm porous
 ssdir = $(pkgincludedir)/equations
 ss_HEADERS = AbsEqua.h \
 		Equation.h \

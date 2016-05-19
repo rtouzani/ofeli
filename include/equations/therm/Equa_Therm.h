@@ -199,7 +199,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
  */
     virtual void BodyRHS(const Vect<real_t>& bf,
-                               int           opt=GLOBAL_ARRAY) { }
+                         int                 opt=GLOBAL_ARRAY) { }
 
 /** \brief Add boundary right-hand side term to right-hand side.
  *  @param [in] sf Vector containing source at side nodes.
@@ -207,7 +207,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
  */
     virtual void BoundaryRHS(const Vect<real_t>& sf,
-                                   int           opt=GLOBAL_ARRAY) { }
+                             int                 opt=GLOBAL_ARRAY) { }
 
 /** \brief Build the linear system of equations
  *  \details Before using this function, one must have properly selected 

@@ -36,6 +36,9 @@ var hierarchy =
           [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html", null ]
         ] ],
         [ "Equa_Laplace< real_t, 4, 4, 3, 3 >", "classOFELI_1_1Equa__Laplace.html", null ],
+        [ "Equa_Porous< real_t, 3, 3, 2, 2 >", "classOFELI_1_1Equa__Porous.html", [
+          [ "WaterPorous2D", "classOFELI_1_1WaterPorous2D.html", null ]
+        ] ],
         [ "Equa_Solid< real_t, 2, 12, 1, 1 >", "classOFELI_1_1Equa__Solid.html", [
           [ "Beam3DL2", "classOFELI_1_1Beam3DL2.html", null ]
         ] ],
@@ -87,6 +90,7 @@ var hierarchy =
         [ "Equa_Electromagnetics< T_, NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equa__Electromagnetics.html", null ],
         [ "Equa_Fluid< T_, NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equa__Fluid.html", null ],
         [ "Equa_Laplace< T_, NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equa__Laplace.html", null ],
+        [ "Equa_Porous< T_, NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equa__Porous.html", null ],
         [ "Equa_Solid< T_, NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equa__Solid.html", null ],
         [ "Equa_Therm< T_, NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equa__Therm.html", null ]
       ] ]

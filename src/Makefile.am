@@ -43,6 +43,8 @@ LAPLACE_OBJS =		equations/laplace/Laplace1DL2.o \
 			equations/laplace/Laplace2DFVT.o \
 			equations/laplace/SteklovPoincare2DBE.o
 
+POROUS_OBJS =		equations/porous/WaterPorous2D.o
+
 SOLID_OBJS =		equations/solid/Bar2DL2.o \
 			equations/solid/Beam3DL2.o \
 			equations/solid/Elas2DT3.o \
@@ -182,6 +184,7 @@ libofeli_a_LIBADD =	$(CL_OBJS) \
 			$(FLUID_OBJS) \
 			$(INTERFACE_OBJS) \
 			$(LAPLACE_OBJS) \
+			$(POROUS_OBJS) \
 			$(SOLID_OBJS) \
 			$(THERM_OBJS) \
 			$(IO_OBJS) \

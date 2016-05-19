@@ -107,8 +107,8 @@ am__v_AR_1 =
 libequations_a_AR = $(AR) $(ARFLAGS)
 libequations_a_DEPENDENCIES = cl/libcl.a \
 	electromagnetics/libelectromagnetics.a fluid/libfluid.a \
-	interface/libinterface.a laplace/liblaplace.a solid/libsolid.a \
-	therm/libtherm.a
+	interface/libinterface.a laplace/liblaplace.a \
+	porous/libporous.a solid/libsolid.a therm/libtherm.a
 am_libequations_a_OBJECTS =
 libequations_a_OBJECTS = $(am_libequations_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
@@ -327,13 +327,14 @@ top_builddir = ../..
 top_srcdir = ../..
 noinst_LIBRARIES = libequations.a
 AUTOMAKE_OPTIONS = no-dependencies
-SUBDIRS = cl electromagnetics fluid interface laplace solid therm
+SUBDIRS = cl electromagnetics fluid interface laplace porous solid therm
 libequations_a_SOURCES = 
 libequations_a_LIBADD = cl/libcl.a \
 			electromagnetics/libelectromagnetics.a \
 			fluid/libfluid.a \
 			interface/libinterface.a \
 			laplace/liblaplace.a \
+			porous/libporous.a \
 			solid/libsolid.a \
 			therm/libtherm.a
 

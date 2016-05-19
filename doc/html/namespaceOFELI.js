@@ -29,6 +29,7 @@ var namespaceOFELI =
     [ "Equa_Electromagnetics", "classOFELI_1_1Equa__Electromagnetics.html", "classOFELI_1_1Equa__Electromagnetics" ],
     [ "Equa_Fluid", "classOFELI_1_1Equa__Fluid.html", "classOFELI_1_1Equa__Fluid" ],
     [ "Equa_Laplace", "classOFELI_1_1Equa__Laplace.html", "classOFELI_1_1Equa__Laplace" ],
+    [ "Equa_Porous", "classOFELI_1_1Equa__Porous.html", "classOFELI_1_1Equa__Porous" ],
     [ "Equa_Solid", "classOFELI_1_1Equa__Solid.html", "classOFELI_1_1Equa__Solid" ],
     [ "Equa_Therm", "classOFELI_1_1Equa__Therm.html", "classOFELI_1_1Equa__Therm" ],
     [ "Equation", "classOFELI_1_1Equation.html", "classOFELI_1_1Equation" ],
@@ -109,5 +110,6 @@ var namespaceOFELI =
     [ "triangle", "classOFELI_1_1triangle.html", "classOFELI_1_1triangle" ],
     [ "TrMatrix", "classOFELI_1_1TrMatrix.html", "classOFELI_1_1TrMatrix" ],
     [ "UserData", "classOFELI_1_1UserData.html", "classOFELI_1_1UserData" ],
-    [ "Vect", "classOFELI_1_1Vect.html", "classOFELI_1_1Vect" ]
+    [ "Vect", "classOFELI_1_1Vect.html", "classOFELI_1_1Vect" ],
+    [ "WaterPorous2D", "classOFELI_1_1WaterPorous2D.html", "classOFELI_1_1WaterPorous2D" ]
 ];

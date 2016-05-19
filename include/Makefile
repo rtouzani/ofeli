@@ -341,6 +341,7 @@ pkginclude_HEADERS = OFELI.h \
 			config.h \
 			datadir.h \
 			Laplace.h \
+			Porous.h \
 			Therm.h \
 			Solid.h \
 			Fluid.h \

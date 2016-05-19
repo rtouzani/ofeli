@@ -1,34 +1,37 @@
-<?xml version="1.0"?>
-<!DOCTYPE CodeBlocks_project_file>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="1"/>
+	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="cmesh"/>
-		<Option makefile="Makefile_cmesh"/>
-		<Option makefile_is_custom="0"/>
-		<Option compiler="0"/>
+		<Option title="cmesh" />
+		<Option makefile="Makefile_cmesh" />
+		<Option pch_mode="0" />
+		<Option compiler="gcc" />
 		<Build>
 			<Target title="default">
 				<Option output="../../util/conv/src/cmesh" prefix_auto="0" extension_auto="1" />
-				<Option working_dir="../../util/conv/examples"/>
-				<Option object_output=".objs"/>
-				<Option deps_output=".deps"/>
-				<Option type="1"/>
-				<Option compiler="0"/>
-				<Option parameters="--input disk.bamg --from bamg --to ofeli"/>
-				<Option projectResourceIncludeDirsRelation="1"/>
+				<Option working_dir="../../util/conv/examples" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--input disk.bamg --from bamg --to ofeli" />
+				<Option projectResourceIncludeDirsRelation="1" />
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="default;" />
+		</VirtualTargets>
 		<Compiler>
-			<Add directory="../../include"/>
+			<Add directory="../../include" />
 		</Compiler>
 		<Linker>
-			<Add library="libofeli.a"/>
-			<Add directory="../../src"/>
+			<Add library="libofeli.a" />
+			<Add directory="../../src" />
 		</Linker>
-		<Unit filename="../../util/conv/src/cmesh.cpp">
-			<Option compilerVar="CPP"/>
-			<Option target="default"/>
-		</Unit>
+		<Unit filename="../../util/conv/src/cmesh.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -330,6 +330,7 @@ AC_OUTPUT(
    include/equations/laplace/Makefile
    include/equations/solid/Makefile
    include/equations/therm/Makefile
+   include/equations/porous/Makefile
    include/io/Makefile
    include/io/fparser/Makefile
    include/io/tclap/Makefile
@@ -350,6 +351,7 @@ AC_OUTPUT(
    src/equations/fluid/Makefile
    src/equations/interface/Makefile
    src/equations/laplace/Makefile
+   src/equations/porous/Makefile
    src/equations/solid/Makefile
    src/equations/therm/Makefile
    src/io/Makefile
