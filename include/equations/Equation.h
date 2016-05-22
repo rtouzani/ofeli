@@ -223,16 +223,16 @@ class Equation : virtual public AbsEqua<T_>
  *  @param [out] be Local vector, the length of which is the total number of element equations. 
  *  @remark All degrees of freedom are transferred to the local vector
  */
-    void ElementNodeVector(const Vect<T_>&           b,
-                                 LocalVect<T_,NEE_>& be);
+    void ElementNodeVector(const Vect<T_>&     b,
+                           LocalVect<T_,NEE_>& be);
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
  *  @param [out] be Local vector, the length of which is the total number of element equations. 
  *  @remark Vector <tt>b</tt> is assumed to contain only one degree of freedom by node.
  */
-    void ElementNodeVectorSingleDOF(const Vect<T_>&           b,
-                                          LocalVect<T_,NEN_>& be);
+    void ElementNodeVectorSingleDOF(const Vect<T_>&     b,
+                                    LocalVect<T_,NEN_>& be);
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
@@ -240,16 +240,16 @@ class Equation : virtual public AbsEqua<T_>
  *  @param [in] dof Degree of freedom to transfer to the local vector
  *  @remark Only yhe dega dof is transferred to the local vector
  */
-    void ElementNodeVector(const Vect<T_>&           b,
-                                 LocalVect<T_,NEN_>& be,
-                                 int                 dof);
+    void ElementNodeVector(const Vect<T_>&     b,
+                           LocalVect<T_,NEN_>& be,
+                           int                 dof);
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
  *  @param [out] be Local vector, the length of which is 
  */
-    void ElementSideVector(const Vect<T_>&           b,
-                                 LocalVect<T_,NSE_>& be);
+    void ElementSideVector(const Vect<T_>&     b,
+                           LocalVect<T_,NSE_>& be);
 
 /** \brief Localize Element Vector.
  *  @param [in] b Global vector to be localized
@@ -269,8 +269,8 @@ class Equation : virtual public AbsEqua<T_>
  *  It uses the Element pointer <tt>_theElement</tt>
  */
     void ElementVector(const Vect<T_>& b,
-                             int       dof_type=NODE_FIELD,
-                             int       flag=0);
+                       int             dof_type=NODE_FIELD,
+                       int             flag=0);
 
 /** \brief Localize Side Vector.
  *  @param [in] b Global vector to be localized
@@ -733,8 +733,8 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::LocalNodeVector(Vect<T_>& b)
 
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&           b,
-                                                               LocalVect<T_,NEE_>& be)
+void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&     b,
+                                                         LocalVect<T_,NEE_>& be)
 {
    size_t k = 0;
    Node *nd;
@@ -747,9 +747,9 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&        
 
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&           b,
-                                                               LocalVect<T_,NEN_>& be,
-                                                               int                 dof)
+void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&     b,
+                                                         LocalVect<T_,NEN_>& be,
+                                                         int                 dof)
 {
    size_t k = 0;
    Node *nd;
@@ -763,8 +763,8 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&        
 
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVectorSingleDOF(const Vect<T_>&           b,
-                                                                        LocalVect<T_,NEN_>& be)
+void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVectorSingleDOF(const Vect<T_>&     b,
+                                                                  LocalVect<T_,NEN_>& be)
 {
    for (size_t n=1; n<=NEN_; ++n)
       be(n) = b((*_theElement)(n)->n());
@@ -772,8 +772,8 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVectorSingleDOF(const Vect<T_>
 
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<T_>&           b,
-                                                               LocalVect<T_,NSE_>& be)
+void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<T_>&     b,
+                                                         LocalVect<T_,NSE_>& be)
 {
    size_t k = 0;
    Side *sd;
@@ -788,8 +788,8 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<T_>&        
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
-                                                           int       dof_type,
-                                                           int       flag)
+                                                     int             dof_type,
+                                                     int             flag)
 {
    size_t k=0;
    switch (dof_type) {
@@ -804,8 +804,11 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
             }
          }
          else {
-            for (size_t n=1; n<=NEN_; ++n)
-               ePrev[k++] = b(_theElement->getNodeLabel(n));
+            for (size_t n=1; n<=NEN_; ++n) {
+               Node *nd = (*_theElement)(n);
+               if (nd->getDOF(flag))
+                  ePrev[k++] = b(nd->getDOF(flag));
+            }
          }
          break;
 
@@ -819,8 +822,11 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
             }
          }
          else {
-            for (size_t n=1; n<=NEN_; n++)
-               ePrev[k++] = b(_theElement->getSideLabel(n));
+            for (size_t n=1; n<=NEN_; n++) {
+               Side *sd=_theElement->getPtrSide(n);
+               if (sd->getDOF(flag))
+                  ePrev[k++] = b(sd->getDOF(flag));
+            }
          }
    }
 }

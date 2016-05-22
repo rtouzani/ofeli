@@ -44,6 +44,7 @@ TimeStepping::TSPtr TimeStepping::TS [] = {
    &TimeStepping::solveLeapFrog,            // Leap Frog
    &TimeStepping::solveAB2,                 // Adams Bashforth 2
    &TimeStepping::solveRK4,                 // Runge Kutta 4
+   &TimeStepping::solveRK3_TVD,             // TVD Runge Kutta 3
    &TimeStepping::solveBDF2                 // Backward Differentiation Formula
 };
 
@@ -57,6 +58,7 @@ TimeStepping::ASPtr TimeStepping::AS [] = {
    &TimeStepping::AssembleLeapFrog,
    &TimeStepping::AssembleAB2,
    &TimeStepping::AssembleRK4,
+   &TimeStepping::AssembleRK3_TVD,
    &TimeStepping::AssembleBDF2
 };
 
@@ -70,6 +72,7 @@ TimeStepping::ASSPtr TimeStepping::ASS [] = {
    &TimeStepping::SAssembleLeapFrog,
    &TimeStepping::SAssembleAB2,
    &TimeStepping::SAssembleRK4,
+   &TimeStepping::SAssembleRK3_TVD,
    &TimeStepping::SAssembleBDF2
 };
 
@@ -83,6 +86,7 @@ TimeStepping::RHSPtr TimeStepping::RHS [] = {
    &TimeStepping::setRHS_LeapFrog,
    &TimeStepping::setRHS_AB2,
    &TimeStepping::setRHS_RK4,
+   &TimeStepping::setRHS_RK3_TVD,
    &TimeStepping::setRHS_BDF2
 };
 
@@ -96,6 +100,7 @@ TimeStepping::PreSolvePtr TimeStepping::PS [] = {
    &TimeStepping::PreSolve_LeapFrog,
    &TimeStepping::PreSolve_AB2,
    &TimeStepping::PreSolve_RK4,
+   &TimeStepping::PreSolve_RK3_TVD,
    &TimeStepping::PreSolve_BDF2
 };
 
@@ -103,7 +108,7 @@ TimeStepping::PreSolvePtr TimeStepping::PS [] = {
 TimeStepping::TimeStepping() :
           _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1),
           _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
-          _regex(false), _explicit(false), _bc(NULL), _A(NULL), _time_step(0.1),
+          _regex(false), _explicit(false), _set_bc(false), _A(NULL), _time_step(0.1),
           _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
 {
 }
@@ -114,7 +119,7 @@ TimeStepping::TimeStepping(TimeScheme s,
                            real_t     final_time) :
               _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1),
               _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
-              _explicit(false), _bc(NULL), _A(NULL), _time_step(0.1), _time(0.),
+              _explicit(false), _set_bc(false), _A(NULL), _time_step(0.1), _time(0.),
               _final_time(1.), _beta(0.25), _gamma(0.5)
 {
    set(s,time_step,final_time);
@@ -149,8 +154,8 @@ void TimeStepping::setPDE(AbsEqua<real_t>& eq)
       _k3.setSize(_theMesh->getNbDOF());
    }
    _b.setSize(_nb_eq);
-   _vv.setSize(_nb_eq);
-   _f.setSize(_nb_eq);
+   _vv.setSize(_theMesh->getNbDOF());
+   _f.setSize(_theMesh->getNbDOF());
 }
 
 
@@ -168,7 +173,7 @@ void TimeStepping::set(TimeScheme s,
    _time_step = _time_step0 = time_step;
    _nb_ssteps = 1;
    _explicit = false;
-   if (s==FORWARD_EULER || s==HEUN || s==RK4 || s==LEAP_FROG || s==AB2)
+   if (s==FORWARD_EULER || s==HEUN || s==RK4 || s==RK3_TVD || s==LEAP_FROG || s==AB2)
       _explicit = true;
    if (s==HEUN || s==NEWMARK)
       _nb_ssteps = 2;
@@ -254,6 +259,7 @@ void TimeStepping::setRHS(Vect<real_t>& f)
 void TimeStepping::setBC(Vect<real_t>& u)
 {
    _bc = &u;
+   _set_bc = true;
 }
 
 
@@ -265,19 +271,19 @@ void TimeStepping::setNewmarkParameters(real_t beta,
 }
 
 
-void TimeStepping::SAssembly(const Side&   sd,
-                                   real_t* b,
-                                   real_t* A)
+void TimeStepping::SAssembly(const Side& sd,
+                             real_t*     b,
+                             real_t*     A)
 {
    (this->*_sassemb)(sd,b,A);
 }
 
 
 void TimeStepping::Assembly(const Element& el,
-                                  real_t*  b,
-                                  real_t*  A0,
-                                  real_t*  A1,
-                                  real_t*  A2)
+                            real_t*        b,
+                            real_t*        A0,
+                            real_t*        A1,
+                            real_t*        A2)
 {
    (this->*_assemb)(el,b,A0,A1,A2);
 }
@@ -442,12 +448,17 @@ void TimeStepping::solveRK4()
       for (size_t i=1; i<=_nb_eq; i++)
          _b(i) /= _D(i);
       insertBC(_b,_v);
+      *_w = _u = _v;
+      _f0 = _f1; _f1 = *_f2;
+      _f01 = NULL;
    }
    else
       return;
-   *_w = _u = _v;
-   _f0 = _f1; _f1 = (*_f2);
-   _f01 = NULL;
+}
+
+
+void TimeStepping::solveRK3_TVD()
+{
 }
 
 
@@ -514,7 +525,7 @@ void TimeStepping::AssembleForwardEuler(const Element& el,
          eb[i] += (eA1[k]-eA0[k])*eu[j];
       }
    }
-   if (_bc)
+   if (_set_bc)
       update_bc_diag(el,Vect<real_t>(&el,*_bc),eA1,eb);
    element_assembly(el,eA1,eb,_D,_b);
 }
@@ -549,7 +560,7 @@ void TimeStepping::AssembleBackwardEuler(const Element& el,
          eb[i] += d*eA1[k]*eu[j];
       }
    }
-   if (_bc)
+   if (_set_bc)
       update_bc(el,Vect<real_t>(&el,*_bc),eA0,eb);
    element_assembly(el,eA0,eb,_A,_b);
 }
@@ -586,7 +597,7 @@ void TimeStepping::AssembleCrankNicolson(const Element& el,
          eb[i] += (d*eA1[k] - z)*eu[j];
       }
    }
-   if (_bc)
+   if (_set_bc)
       update_bc(el,Vect<real_t>(&el,*_bc),eA0,eb);
    element_assembly(el,eA0,eb,_A,_b);
 }
@@ -634,7 +645,7 @@ void TimeStepping::AssembleHeun(const Element& el,
          }
       }
    }
-   if (_bc)
+   if (_set_bc)
       update_bc_diag(el,Vect<real_t>(&el,*_bc),eA1,eb);
    element_assembly(el,eA1,eb,_D,_b);
 }
@@ -689,7 +700,7 @@ void TimeStepping::AssembleAB2(const Element& el,
          }
       }
    }
-   if (_bc)
+   if (_set_bc)
       update_bc_diag(el,Vect<real_t>(&el,*_bc),eA1,eb);
    element_assembly(el,eA1,eb,_D,_b);
 }
@@ -744,7 +755,7 @@ void TimeStepping::AssembleLeapFrog(const Element& el,
          }
       }
    }
-   if (_bc)
+   if (_set_bc)
       update_bc_diag(el,Vect<real_t>(&el,*_bc),eA1,eb);
    element_assembly(el,eA1,eb,_D,_b);
 }
@@ -789,7 +800,7 @@ void TimeStepping::AssembleRK4(const Element& el,
                for (size_t j=0; j<n; j++, m++)
                   eb[i] -= eA0[m]*eu[j];
             }
-            Element_Assembly(el,eb,_k1);
+            element_assembly(el,eb,_k1);
          }
          break;
 
@@ -800,7 +811,7 @@ void TimeStepping::AssembleRK4(const Element& el,
                for (size_t j=0; j<n; j++, m++)
                   eb[i] -= eA0[m]*(eu[j] + 0.5*_time_step*ek[j]);
             }
-            Element_Assembly(el,eb,_k2);
+            element_assembly(el,eb,_k2);
          }
          break;
 
@@ -811,7 +822,7 @@ void TimeStepping::AssembleRK4(const Element& el,
                for (size_t j=0; j<n; j++, m++)
                   eb[i] -= eA0[m]*(eu[j] + 0.5*_time_step*ek[j]);
             }
-            Element_Assembly(el,eb,_k3);
+            element_assembly(el,eb,_k3);
          }
          break;
 
@@ -830,12 +841,21 @@ void TimeStepping::AssembleRK4(const Element& el,
                   eb[i] += eA1[m]*eu[j];
                }
             }
-            if (_bc)
+            if (_set_bc)
                update_bc_diag(el,Vect<real_t>(&el,*_bc),eA1,eb);
             element_assembly(el,eA1,eb,_D,_b);
          }
          break;
    }
+}
+
+
+void TimeStepping::AssembleRK3_TVD(const Element& el,
+                                   real_t*        eb,
+                                   real_t*        eA0,
+                                   real_t*        eA1,
+                                   real_t*        eA2)
+{
 }
 
 
@@ -893,6 +913,13 @@ void TimeStepping::SAssembleRK4(const Side& sd,
 }
 
 
+void TimeStepping::SAssembleRK3_TVD(const Side& sd,
+                                    real_t*     sb,
+                                    real_t*     sA)
+{
+}
+
+
 void TimeStepping::AssembleNewmark(const Element& el,
                                    real_t*        eb,
                                    real_t*        eA0,
@@ -921,7 +948,7 @@ void TimeStepping::AssembleNewmark(const Element& el,
             eb[i] += z*ev[j] - eA1[k]*edu[j];
          }
       }
-      if (_bc)
+      if (_set_bc)
          update_bc(el,Vect<real_t>(&el,*_bc),eA0,eb);
       element_assembly(el,eA0,eb,_A,_b);
    }
@@ -974,7 +1001,7 @@ void TimeStepping::AssembleBDF2(const Element& el,
          }
       }
    }
-   if (_bc)
+   if (_set_bc)
       update_bc(el,Vect<real_t>(&el,*_bc),eA0,eb);
    element_assembly(el,eA0,eb,_A,_b);
 }
@@ -1048,6 +1075,12 @@ Vect<real_t>& TimeStepping::setRHS_RK4()
 }
 
 
+Vect<real_t>& TimeStepping::setRHS_RK3_TVD()
+{
+   return _f;
+}
+
+
 Vect<real_t>& TimeStepping::setRHS_Newmark()
 {
    if (_step==1 && _sstep==1)
@@ -1062,18 +1095,6 @@ Vect<real_t>& TimeStepping::setRHS_BDF2()
 }
 
 
-void TimeStepping::PreSolve_ForwardEuler() { }
-
-  
-void TimeStepping::PreSolve_BackwardEuler() { }
-
-
-void TimeStepping::PreSolve_CrankNicolson() { }
-
-
-void TimeStepping::PreSolve_Heun () { }
-
-
 void TimeStepping::PreSolve_Newmark()
 {
    if (_step==1 && _sstep==1)
@@ -1083,18 +1104,6 @@ void TimeStepping::PreSolve_Newmark()
       *_du += ((1-_gamma)*_time_step)*_ddu;
    }
 }
-
-
-void TimeStepping::PreSolve_LeapFrog() { }
-
-
-void TimeStepping::PreSolve_AB2() { }
-
-
-void TimeStepping::PreSolve_RK4() { }
-
-
-void TimeStepping::PreSolve_BDF2() { }
 
 
 void TimeStepping::insertBC(const Vect<real_t>& b,
@@ -1136,6 +1145,8 @@ ostream& operator<<(ostream&            s,
       scheme = "Adams-Bashforth";
    else if (ts._sc==RK4)
       scheme = "Runge-Kutta 4";
+   else if (ts._sc==RK3_TVD)
+      scheme = "Runge-Kutta 3, TVD";
    else if (ts._sc==BDF2)
       scheme = "BDF 2";
    else

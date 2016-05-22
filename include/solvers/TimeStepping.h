@@ -145,6 +145,11 @@ class TimeStepping
  */
     void setRK4RHS(Vect<real_t> &f);
 
+/** \brief Set intermediate right-hand side vector for the TVD Runge-Kutta 3 method
+ *  @param [in] f Vector containing the RHS
+ */
+    void setRK3_TVDRHS(Vect<real_t> &f);
+
 /** \brief Set initial condition for the system of differential equations
  *  @param [in] u Vector containing initial condition for the unknown
  *  @remark If a second-order differential equation is to be solved, use the
@@ -247,10 +252,10 @@ class TimeStepping
 
  */
     void Assembly(const Element& el,
-                        real_t*  b,
-                        real_t*  A0,
-                        real_t*  A1,
-                        real_t*  A2=NULL);
+                  real_t*        b,
+                  real_t*        A0,
+                  real_t*        A1,
+                  real_t*        A2=NULL);
 
 /** \brief Assemble side arrays into global matrix and right-hand side
  *  \details This member function is to be called from finite element equation
@@ -262,16 +267,16 @@ e)
  *  [Default: <tt>NULL</tt>]
 
  */
-    void SAssembly(const Side&   sd,
-                         real_t* b,
-                         real_t* A=NULL);
+    void SAssembly(const Side& sd,
+                   real_t*     b,
+                   real_t*     A=NULL);
 
 //-----------------------------   INSPECTORS  ----------------------------------
 
 /// \brief Return LinearSolver instance
     LinearSolver<real_t> &getLSolver() { return _ls; }
 
-    friend ostream & operator<<(      ostream&      s,
+    friend ostream & operator<<(ostream&            s,
                                 const TimeStepping& ts);
 
  private:
@@ -282,7 +287,7 @@ e)
    int _verb, _sc;
    Iteration _s;
    Preconditioner _p;
-   bool _constant_matrix, _regex, _explicit;
+   bool _constant_matrix, _regex, _explicit, _set_bc;
    Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _D, _k1, _k2, _k3, _k4;
    Matrix<real_t> *_A;
@@ -291,15 +296,15 @@ e)
    LinearSolver<real_t> _ls;
 
    typedef void (TimeStepping::* TSPtr)();
-   static TSPtr TS[10];
+   static TSPtr TS[11];
    TSPtr _solve;
 
    typedef void (TimeStepping::* ASPtr)(const Element&,real_t*,real_t*,real_t*,real_t*);
-   static ASPtr AS[10];
+   static ASPtr AS[11];
    ASPtr _assemb;
 
    typedef void (TimeStepping::* ASSPtr)(const Side&,real_t*,real_t*);
-   static ASSPtr ASS[10];
+   static ASSPtr ASS[11];
    ASSPtr _sassemb;
 
    typedef void (TimeStepping::* MassPtr)();
@@ -307,11 +312,11 @@ e)
    MassPtr _mass_opt;
 
    typedef Vect<real_t>& (TimeStepping::* RHSPtr)();
-   static RHSPtr RHS[10];
+   static RHSPtr RHS[11];
    RHSPtr _set_rhs;
 
    typedef void (TimeStepping::* PreSolvePtr)();
-   static PreSolvePtr PS[10];
+   static PreSolvePtr PS[11];
    PreSolvePtr _presolve;
 
 // Functions to solve the linear system issued from time integration schemes
@@ -322,82 +327,91 @@ e)
    void solveAB2();
    void solveLeapFrog();
    void solveRK4();
+   void solveRK3_TVD();
    void solveNewmark();
    void solveBDF2();
 
 // Functions to assemble the linear system for time integration schemes
    void AssembleForwardEuler(const Element& el,
-                                   real_t*  eb,
-                                   real_t*  eA0,
-                                   real_t*  eA1,
-                                   real_t*  eA2=NULL);
-   void SAssembleForwardEuler(const Side&   sd,
-                                    real_t* sb,
-                                    real_t* sA=NULL);
+                             real_t*        eb,
+                             real_t*        eA0,
+                             real_t*        eA1,
+                             real_t*        eA2=NULL);
+   void SAssembleForwardEuler(const Side& sd,
+                              real_t*     sb,
+                              real_t*     sA=NULL);
    void AssembleBackwardEuler(const Element& el,
-                                    real_t*  eb,
-                                    real_t*  eA0,
-                                    real_t*  eA1,
-                                    real_t*  eA2=NULL);
-   void SAssembleBackwardEuler(const Side&   sd,
-                                     real_t* sb,
-                                     real_t* sA=NULL);
+                              real_t*        eb,
+                              real_t*        eA0,
+                              real_t*        eA1,
+                              real_t*        eA2=NULL);
+   void SAssembleBackwardEuler(const Side& sd,
+                               real_t*     sb,
+                               real_t*     sA=NULL);
    void AssembleCrankNicolson(const Element& el,
-                                    real_t*  eb,
-                                    real_t*  eA0,
-                                    real_t*  eA1,
-                                    real_t*  eA2=NULL);
-   void SAssembleCrankNicolson(const Side&   sd,
-                                     real_t* sb,
-                                     real_t* sA=NULL);
+                              real_t*        eb,
+                              real_t*        eA0,
+                              real_t*        eA1,
+                              real_t*        eA2=NULL);
+   void SAssembleCrankNicolson(const Side& sd,
+                               real_t*     sb,
+                               real_t*     sA=NULL);
    void AssembleHeun(const Element& el,
-                           real_t*  eb,
-                           real_t*  eA0,
-                           real_t*  eA1,
-                           real_t*  eA2=NULL);
-   void SAssembleHeun(const Side&   sd,
-                            real_t* sb,
-                            real_t* sA=NULL);
+                     real_t*        eb,
+                     real_t*        eA0,
+                     real_t*        eA1,
+                     real_t*        eA2=NULL);
+   void SAssembleHeun(const Side& sd,
+                      real_t*     sb,
+                      real_t*     sA=NULL);
    void AssembleAB2(const Element& el,
-                          real_t*  eb,
-                          real_t*  eA0,
-                          real_t*  eA1,
-                          real_t*  eA2=NULL);
-   void SAssembleAB2(const Side&   sd,
-                           real_t* sb,
-                           real_t* sA=NULL);
+                    real_t*        eb,
+                    real_t*        eA0,
+                    real_t*        eA1,
+                    real_t*        eA2=NULL);
+   void SAssembleAB2(const Side& sd,
+                     real_t*     sb,
+                     real_t*     sA=NULL);
    void AssembleLeapFrog(const Element& el,
-                               real_t*  eb,
-                               real_t*  eA0,
-                               real_t*  eA1,
-                               real_t*  eA2=NULL);
-   void SAssembleLeapFrog(const Side&   sd,
-                                real_t* sb,
-                                real_t* sA=NULL);
+                         real_t*        eb,
+                         real_t*        eA0,
+                         real_t*        eA1,
+                         real_t*        eA2=NULL);
+   void SAssembleLeapFrog(const Side& d,
+                          real_t*     sb,
+                          real_t*     sA=NULL);
    void AssembleRK4(const Element& el,
-                          real_t*  eb,
-                          real_t*  eA0,
-                          real_t*  eA1,
-                          real_t*  eA2=NULL);
-   void SAssembleRK4(const Side&   sd,
-                           real_t* sb,
-                           real_t* sA=NULL);
+                    real_t*        eb,
+                    real_t*        eA0,
+                    real_t*        eA1,
+                    real_t*        eA2=NULL);
+   void AssembleRK3_TVD(const Element& el,
+                        real_t*        eb,
+                        real_t*        eA0,
+                        real_t*        eA1,
+                        real_t*        eA2=NULL);
+   void SAssembleRK4(const Side& sd,
+                     real_t*     sb,
+                     real_t*     sA=NULL);
+   void SAssembleRK3_TVD(const Side& sd,
+                         real_t*     sb,
+                         real_t*     sA=NULL);
    void AssembleNewmark(const Element& el,
-                              real_t*  eb,
-                              real_t*  eA0,
-                              real_t*  eA1,
-                              real_t*  eA2=NULL);
-   void SAssembleNewmark(const Side&   sd,
-                               real_t* sb,
-                               real_t* eA=NULL);
+                        real_t*        eb,
+                        real_t*        eA0,
+                        real_t*        eA1,
+                        real_t*        eA2=NULL);
+   void SAssembleNewmark(const Side& sd,
+                         real_t*     sb,
+                         real_t*     eA=NULL);
    void AssembleBDF2(const Element& el,
-                           real_t*  eb,
-                           real_t*  eA0,
-                           real_t*  eA1,
-                           real_t*  eA2=NULL);
-   void SAssembleBDF2(const Side&   sd,
-                            real_t* sb,
-                            real_t* sA=NULL);
+                     real_t*        eb,
+                     real_t*        eA0,
+                     real_t*        eA1,
+                     real_t*        eA2=NULL);
+   void SAssembleBDF2(const Side& sd,
+                      real_t*     sb,
+                      real_t*     sA=NULL);
 
 // Functions to return the right-hand side for each time integration scheme
    Vect<real_t>& setRHS_ForwardEuler();
@@ -407,19 +421,21 @@ e)
    Vect<real_t>& setRHS_AB2();
    Vect<real_t>& setRHS_LeapFrog();
    Vect<real_t>& setRHS_RK4();
+   Vect<real_t>& setRHS_RK3_TVD();
    Vect<real_t>& setRHS_Newmark();
    Vect<real_t>& setRHS_BDF2();
 
 // Functions to compute a predictor
-   void PreSolve_ForwardEuler();
-   void PreSolve_BackwardEuler();
-   void PreSolve_CrankNicolson();
-   void PreSolve_Heun();
-   void PreSolve_AB2();
-   void PreSolve_LeapFrog();
-   void PreSolve_RK4();
+   void PreSolve_ForwardEuler() { }
+   void PreSolve_BackwardEuler() { }
+   void PreSolve_CrankNicolson() { }
+   void PreSolve_Heun() { }
+   void PreSolve_AB2() { }
+   void PreSolve_LeapFrog() { }
+   void PreSolve_RK4() { }
+   void PreSolve_RK3_TVD() { }
    void PreSolve_Newmark();
-   void PreSolve_BDF2();
+   void PreSolve_BDF2() { }
 
    void eval(real_t t);
    void insertBC(const Vect<real_t>& b, Vect<real_t>& v);

@@ -279,11 +279,13 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           s.Assembly(TheElement,eRHS.get(),eA0.get(),eA1.get());
        }
        MESH_SD {
-          set(theSide);
-          this->SideVector(*_u);
-          if (_terms&FLUX && _bf)
-             BoundaryRHS(*_bf,GLOBAL_ARRAY);
-          s.SAssembly(TheSide,sRHS.get());
+          if (TheSide.isReferenced()) {
+             set(theSide);
+             this->SideVector(*_u);
+             if (_terms&FLUX && _sf)
+                BoundaryRHS(*_sf,GLOBAL_ARRAY);
+             s.SAssembly(TheSide,sRHS.get());
+          }
        }
     }
 

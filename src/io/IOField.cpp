@@ -134,10 +134,10 @@ IOField::IOField(const string& mesh_file,
 }
 
 
-IOField::IOField(const string&    file,
-                       Mesh&      ms,
-                       AccessType access,
-                       bool       compact)
+IOField::IOField(const string& file,
+                 Mesh&         ms,
+                 AccessType    access,
+                bool           compact)
         : _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(&ms)
 {
    _is_opened = false;
@@ -207,8 +207,8 @@ void IOField::open()
 }
 
 
-void IOField::open(const string&    file,
-                         AccessType access)
+void IOField::open(const string& file,
+                   AccessType    access)
 {
    _file = file;
    _access = access;
@@ -279,8 +279,8 @@ void IOField::put(Mesh& ms)
       *_of << "   <Elements shape=\"" << shape << "\"  nodes=\"" << nbn << "\">" << endl;
       mesh_elements(*_theMesh) {
          for (size_t i=1; i<=nbn; i++)
-            *_of << setw(8) << The_element.getNodeLabel(i);
-         *_of << setw(8) << The_element.getCode() << "   ";
+            *_of << setw(10) << The_element.getNodeLabel(i);
+         *_of << setw(10) << The_element.getCode() << "   ";
          k++;
          if (k%5==0)
             *_of << endl;

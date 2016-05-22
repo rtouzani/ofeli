@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                       Class DC2DT3: Diffusion-Convection Element
+                     Class DC2DT3: Diffusion-Convection Element
                using 3-Node Triangular Finite element in two dimensions
 
   ==============================================================================*/
@@ -238,12 +238,12 @@ void DC2DT3::Diffusion(const LocalMatrix<real_t,2,2>& diff,
                        real_t                         coef)
 {
    real_t c=_area*coef;
-   for (size_t i=1; i<=3; i++)
-      for (size_t j=1; j<=3; j++)
-         eA0(i,j) += c*(diff(1,1)*_dSh[i-1].x*_dSh[j-1].x
-                      + diff(2,2)*_dSh[i-1].y*_dSh[j-1].y
-                      + diff(1,2)*_dSh[i-1].y*_dSh[j-1].x
-                      + diff(2,1)*_dSh[i-1].x*_dSh[j-1].y);
+   for (size_t i=0; i<3; i++)
+      for (size_t j=0; j<3; j++)
+         eA0(i+1,j+1) += c*(diff(1,1)*_dSh[i].x*_dSh[j].x
+                          + diff(2,2)*_dSh[i].y*_dSh[j].y
+                          + diff(1,2)*_dSh[i].y*_dSh[j].x
+                          + diff(2,1)*_dSh[i].x*_dSh[j].y);
    eMat += eA0;
 }
 
@@ -253,8 +253,8 @@ void DC2DT3::DiffusionToRHS(real_t coef)
    Point<real_t> u;
    for (size_t i=1; i<=3; i++)
       u += _dSh(i)*ePrev(i);
-   for (size_t j=1; j<=3; j++)
-      eRHS(j) -= coef*_diff*_area*(_dSh[j-1]*u);
+   for (size_t j=0; j<3; j++)
+      eRHS(j+1) -= coef*_diff*_area*(_dSh[j]*u);
 }
 
 

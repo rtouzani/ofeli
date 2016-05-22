@@ -1077,7 +1077,7 @@ void saveTecplot(string input_file,
       if (count==0) {
          mesh_elements(mesh) {
             for (n=1; n<=The_element.getNbNodes(); n++)
-               fp << "  " << The_element(n)->n();
+               fp << setw(10) << The_element(n)->n();
             fp << endl;
          }
       }
@@ -1151,7 +1151,7 @@ void saveVTK(string input_file,
       *pf << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
       mesh_nodes(mesh)
          *pf << The_node.getX() << "  " << The_node.getY() << "  " << The_node.getZ() << endl;
-      *pf << "\nCELLS " << mesh.getNbElements() << " " << size << endl;
+      *pf << "\nCELLS " << mesh.getNbElements() << setw(10) << size << endl;
       mesh_elements(mesh) {
          int s = The_element.getShape();
          if (s==LINE)
@@ -1165,9 +1165,9 @@ void saveVTK(string input_file,
          else if (s==PENTAHEDRON)
             m = 6;
          else;
-         *pf << setw(9) << m;
+         *pf << setw(8) << m;
          for (size_t i=0; i<m; i++)
-            *pf << The_element(i+1)->n()-1;
+           *pf << setw(10) << The_element(i+1)->n()-1;
          *pf << endl;
       }
       *pf << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
