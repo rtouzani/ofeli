@@ -74,7 +74,7 @@ while test $# -gt 0; do
 	;;
 
     --cflags)
-        echo -I${prefix}/include/ofeli  -Wall  
+        echo -I${prefix}/include/ofeli  -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
        	;;
 
     --data)

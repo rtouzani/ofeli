@@ -114,8 +114,8 @@ class XMLParser : public Parser
    int get(Mesh& ms,
            int   format=ASCII);
 
-   int get(Mesh&    ms,
-           real_t** v);
+   int get(Mesh&                    ms,
+           vector<vector<real_t> >& v);
 
    int get(Mesh&         ms,
            Vect<real_t>& v,
@@ -164,7 +164,7 @@ class XMLParser : public Parser
    PrescriptionPar _par;
    vector<PrescriptionPar> *_vp;
    vector<real_t> *_ft;
-   real_t **_V;
+   vector<vector<real_t> > *_V;
 
    virtual bool on_tag_open(string tag_name, StringMap& attributes);
    virtual bool on_cdata(string cdata);

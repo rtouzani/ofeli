@@ -461,8 +461,8 @@ int XMLParser::get(Mesh&         ms,
 }
 
 
-int XMLParser::get(Mesh&  ms,
-                   real_t **v)
+int XMLParser::get(Mesh&                    ms,
+                   vector<vector<real_t> >& v)
 {
    _set_mesh = _set_field = true;
    _theMesh = &ms;
@@ -471,7 +471,7 @@ int XMLParser::get(Mesh&  ms,
    _nb_sides = _theMesh->getNbSides();
    _nb_edges = _theMesh->getNbEdges();
    _scan = 0;
-   _V = v;
+   _V = &v;
    _all_steps = 1;
    _compact = true;
    _type = FIELD;
@@ -483,7 +483,7 @@ int XMLParser::get(Mesh&  ms,
          return 0;
       }
       else
-         THROW_RT("get(Mesh,real_t **): Failed to parse XML file.");
+         THROW_RT("get(Mesh,vector<vector<real_t> >): Failed to parse XML file.");
    }
    CATCH("XMLParser");
    return 0;
@@ -1349,6 +1349,9 @@ bool XMLParser::on_cdata(string cdata)
       if (_tag_name=="Data")
          read_tab_data(tokens,it);
    }
+
+   else
+      ;
    return true;
 }
 
@@ -1410,10 +1413,9 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
       if (_all_steps>0 && _compact) {
          size_t i = 0;
          while (it!=tokens.end()) {
-            _V[i] = new real_t [nb];
             _time = atof((*it++).c_str());
             for (size_t j=0; j<nb; j++)
-               _V[i][j] = atof((*it++).c_str());
+               (*_V)[i].push_back(atof((*it++).c_str()));
             i++;
          }
       }

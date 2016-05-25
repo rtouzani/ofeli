@@ -35,6 +35,7 @@
 namespace OFELI {
 
 IOField::IOField()
+        : _of(NULL)
 {
    _is_closed = false;
    _field_opened = false;
@@ -42,22 +43,11 @@ IOField::IOField()
    _compact = true;
 }
 
-  /*
-IOField::IOField(const string &file, int access, bool compact)
-{
-   _is_closed = false;
-   _compact = compact;
-   _field_opened = false;
-   _no_mesh_file = true;
-   open(file,access);
-}*/
-
-
 
 IOField::IOField(const string& file,
                  AccessType    access,
                  bool          compact)
-        : _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(NULL)
+        : _of(NULL), _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(NULL)
 {
    _is_opened = false;
    _ipf = NULL;
@@ -81,7 +71,7 @@ IOField::IOField(const string& file,
 IOField::IOField(const string& file,
                  AccessType    access,
                  const string& name)
-        : _field_name(name), _field_opened(false), _compact(true),
+        : _of(NULL), _field_name(name), _field_opened(false), _compact(true),
           _no_mesh_file(true), _theMesh(NULL)
 {
    _is_opened = false;
@@ -108,7 +98,7 @@ IOField::IOField(const string& mesh_file,
                  Mesh&         ms,
                  AccessType    access,
                  bool          compact)
-        : _field_opened(false), _compact(compact), _no_mesh_file(false), _theMesh(&ms)
+        : _of(NULL), _field_opened(false), _compact(compact), _no_mesh_file(false), _theMesh(&ms)
 {
    _is_opened = false;
    _ipf = NULL;
@@ -138,7 +128,7 @@ IOField::IOField(const string& file,
                  Mesh&         ms,
                  AccessType    access,
                 bool           compact)
-        : _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(&ms)
+        : _of(NULL), _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(&ms)
 {
    _is_opened = false;
    _ipf = NULL;
@@ -167,6 +157,8 @@ IOField::~IOField()
 {
    if (_access==OUT && _is_closed==false)
       close();
+   if (_of)
+      delete _of;
 }
 
 
@@ -196,8 +188,6 @@ void IOField::open()
 {
    if (_access == OUT)
       _of = new ofstream(_file.c_str());
-   else if (_access == BIN_OUT)
-      _of = new ofstream(_file.c_str(),ios::binary);
    else
       ;
    _state = 0;
@@ -212,7 +202,7 @@ void IOField::open(const string& file,
 {
    _file = file;
    _access = access;
-   if (access==IN || access==BIN_IN)
+   if (access==IN)
       _state = 0;
    else if (_access == OUT) {
       _of = new ofstream(_file.c_str(),ios::out);
@@ -223,12 +213,6 @@ void IOField::open(const string& file,
       *_of << "   <date>" << __DATE__ << "</date>" << endl;
       *_of << "   <author></author>\n</info>" << endl;
       _field_name = "abcdefghijklmnopqrstuvwxyz";
-   }
-   else if (_access==BIN_OUT) {
-      _of = new ofstream(_file.c_str(),ios::binary|ios::out);
-      _field_opened = false;
-      _of->setf(ios::right);
-      *_of << setprecision(16) << scientific;
    }
    else
       _is_closed = false;
@@ -310,13 +294,6 @@ void IOField::put(Mesh& ms)
          *_of << endl;
       *_of << "   </Sides>" << endl;
    }
-   /*   if (_nb_mat>1 || ms.getMaterial().getName(1)!="Generic") {
-      *_of << "   <Material>" << endl;
-      for (size_t i=0; i<_nb_mat; i++)
-         *_of << setw(9) << ms.getMaterial().getCode(i+1) << "   "
-              << ms.getMaterial().getName(i+1) << endl;
-      *_of << "   </Material>" << endl;
-      }*/
    *_of << "</Mesh>" << endl;
 }
 
@@ -324,7 +301,7 @@ void IOField::put(Mesh& ms)
 void IOField::put(const Vect<real_t>& v)
 {
    try {
-      if (_access==OUT || _access==BIN_OUT) {
+      if (_access==OUT) {
          if (v.getName() != _field_name) {
             if (_field_opened==true)
                *_of << "</Field>" << endl;
@@ -348,28 +325,19 @@ void IOField::put(const Vect<real_t>& v)
             *_of << v.getTime() << endl;
          else
             *_of << "   <Step time=\"" << v.getTime() << "\">" << endl;
-         if (_access==BIN_OUT) {
-            string s; 
-	 //         s = *(v.getBinary());
-            *_of << s << endl;
-         }
-         else {
-            size_t l = 0;
-            for (size_t i=1; i<=v.getNb(); i++) {
-               for (size_t j=1; j<=v.getNbDOF(); j++)
-                  *_of << setprecision(8) << setw(18) << v(i,j);
-               l++;
-               if (l%(10/v.getNbDOF())==0)
-                  *_of << endl;
-            }
-            if (l%(10/v.getNbDOF())!=0)
+         size_t l = 0;
+         for (size_t i=1; i<=v.getNb(); i++) {
+            for (size_t j=1; j<=v.getNbDOF(); j++)
+               *_of << setprecision(8) << setw(18) << v(i,j);
+            l++;
+            if (l%(10/v.getNbDOF())==0)
                *_of << endl;
          }
+         if (l%(10/v.getNbDOF())!=0)
+            *_of << endl;
          if (!_compact)
             *_of << "   </Step>" << endl;
       }
-      else if (_access==BIN_OUT)
-         _of->write(reinterpret_cast<const char *>(&v),sizeof(v));
       else
          THROW_RT("put(Vect,real_t): This instance of IOField was constructed for input");
    }
@@ -383,7 +351,7 @@ void IOField::put(const Vect<real_t>& v)
 void IOField::put(const PETScVect<real_t>& v)
 {
    try {
-      if (_access==OUT || _access==BIN_OUT) {
+      if (_access==OUT) {
          if (v.getName() != _field_name) {
             if (_field_opened==true)
                *_of << "</Field>" << endl;
@@ -407,28 +375,19 @@ void IOField::put(const PETScVect<real_t>& v)
             *_of << v.getTime() << endl;
          else
             *_of << "   <Step time=\"" << v.getTime() << "\">" << endl;
-         if (_access==BIN_OUT) {
-            string s; 
-	 //         s = *(v.getBinary());
-            *_of << s << endl;
-         }
-         else {
-            size_t l = 0;
-            for (size_t i=1; i<=v.getNb(); i++) {
-               for (size_t j=1; j<=v.getNbDOF(); j++)
-                  *_of << setprecision(8) << setw(18) << v(i,j);
-               l++;
-               if (l%(10/v.getNbDOF())==0)
-                  *_of << endl;
-            }
-            if (l%(10/v.getNbDOF())!=0)
+         size_t l = 0;
+         for (size_t i=1; i<=v.getNb(); i++) {
+            for (size_t j=1; j<=v.getNbDOF(); j++)
+               *_of << setprecision(8) << setw(18) << v(i,j);
+            l++;
+            if (l%(10/v.getNbDOF())==0)
                *_of << endl;
          }
+         if (l%(10/v.getNbDOF())!=0)
+            *_of << endl;
          if (!_compact)
             *_of << "   </Step>" << endl;
       }
-      else if (_access==BIN_OUT)
-         _of->write(reinterpret_cast<const char *>(&v),sizeof(v));
       else
          THROW_RT("put(Vect,real_t): This instance of IOField was constructed for input");
    }
@@ -457,8 +416,6 @@ real_t IOField::get(Vect<real_t>& v)
 int IOField::get(Vect<real_t>& v,
                  real_t        t)
 {
-  //   if (_access != IN)
-  //     _e.Message(__FILE__,__LINE__,61);
    return XMLParser::get(*_theMesh,v,t);
 }
 

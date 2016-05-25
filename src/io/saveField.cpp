@@ -332,10 +332,10 @@ void saveField(PETScVect<real_t>& v,
 }
 
 
-void saveField(      PETScVect<real_t>& v,
-               const Mesh&              mesh,
-                     string             output_file,
-                     int                opt)
+void saveField(PETScVect<real_t>& v,
+               const Mesh&        mesh,
+               string             output_file,
+               int                opt)
 {
    bool mts = false;
    static int ts = 0;
@@ -608,8 +608,8 @@ void saveField(      PETScVect<real_t>& v,
 
 void saveField(const Vect<real_t>& v,
                const Mesh&         mesh,
-                     string        output_file,
-                     int           opt)
+               string              output_file,
+               int                 opt)
 {
    bool mts = false;
    static int ts = 0;
@@ -877,10 +877,10 @@ void saveField(const Vect<real_t>& v,
 }
 
 
-void saveField(      Vect<real_t>& v,
-               const Grid&         g,
-                     string        output_file,
-                     int           opt)
+void saveField(Vect<real_t>& v,
+               const Grid&   g,
+               string        output_file,
+               int           opt)
 {
    static int ts = 0;
    size_t i, j;
@@ -1016,7 +1016,7 @@ void saveTecplot(string input_file,
    cout << "Number of found time steps: " << nb_time << ", Running from "
         << "time: " << tm[0] << " to time: " << tm[nb_time-1] << "." << endl;
 
-   real_t **field = new real_t * [nb_time];
+   vector<vector<real_t> > field(nb_time);
    IOField io(mesh_file,input_file,mesh,IOField::IN);
    io.get(mesh,field);
    size_t nb_dof = io.getNbDOF();
@@ -1113,9 +1113,9 @@ void saveVTK(string input_file,
       return;
    }
 
-   real_t **field = new real_t * [nb_time];
+   vector<vector<real_t> > field(nb_time);
    for (size_t i=0; i<nb_time; i++)
-      field[i] = new real_t [nb_dof*mesh.getNbNodes()];
+      field[i].resize(nb_dof*mesh.getNbNodes());
    IOField io(mesh_file,input_file,mesh,IOField::IN);
    io.get(mesh,field);
 
@@ -1206,9 +1206,6 @@ void saveVTK(string input_file,
    }
    pf->close();
    delete pf;
-   for (size_t i=0; i<nb_time; i++)
-      delete [] field[i];
-   delete [] field;
 }
 
 
@@ -1241,9 +1238,7 @@ void saveGmsh(string input_file,
    }
 
    IOField io(mesh_file,input_file,mesh,IOField::IN);
-   real_t **field = new real_t * [nb_time];
-   for (i=0; i<nb_time; i++)
-      field[i] = new real_t [nb_dof*nb_nodes];
+   vector<vector<real_t> > field(nb_time);
    io.get(mesh,field);
    tt = 'S';
    if (nb_dof == mesh.getDim())
@@ -1329,9 +1324,6 @@ void saveGmsh(string input_file,
          pf << "};" << endl;
          break;
    }
-   for (i=0; i<nb_time; i++)
-      delete [] field[i];
-   delete [] field;
 }
 
 } /* namespace OFELI */

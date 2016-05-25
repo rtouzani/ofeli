@@ -85,10 +85,8 @@ class IOField : public XMLParser
 
 /// Enumerated values for file access type
     enum AccessType {
-       IN      = 1,
-       OUT     = 2,
-       BIN_IN  = 3,
-       BIN_OUT = 4
+       IN  = 1,
+       OUT = 2
     };
 
 /// Default constructor
@@ -96,7 +94,7 @@ class IOField : public XMLParser
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     IOField(const string& file,
-                  char*   access);
+            char*         access);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Constructor using file name.
@@ -140,8 +138,8 @@ class IOField : public XMLParser
  *  @param [in] compact Flag to choose a compact storage or not [Default: <tt>true</tt>]
  */
     IOField(const string& file,
-                  Mesh&   ms,
-             AccessType   access,
+            Mesh&         ms,
+            AccessType    access,
                   bool    compact=true);
 
 /** \brief Constructor using file name and field name.
@@ -242,8 +240,8 @@ class IOField : public XMLParser
                   string mesh_file);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    int get(Mesh&    ms,
-            real_t** v) { return XMLParser::get(ms,v); }
+    int get(Mesh&                    ms,
+            vector<vector<real_t> >& v) { return XMLParser::get(ms,v); }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
