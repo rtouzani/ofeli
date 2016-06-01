@@ -42,7 +42,7 @@ namespace OFELI {
  */
 
 /*! \defgroup Laplace Laplace equation
- *  \brief Gathers equation classes for the Laplace equation
+ *  \brief Laplace and Poisson equations
  */
 
 /*! \file Equa_Laplace.h

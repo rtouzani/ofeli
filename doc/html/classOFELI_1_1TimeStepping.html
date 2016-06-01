@@ -100,6 +100,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#aa7e53c44ddd0bfff4147278d5c15f3a3">setRK4RHS</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;f)</td></tr>
 <tr class="memdesc:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set intermediate right-hand side vector for the Runge-Kutta method.  <a href="#aa7e53c44ddd0bfff4147278d5c15f3a3">More...</a><br /></td></tr>
 <tr class="separator:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b036e819127321d9d992f5433e4369a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#a1b036e819127321d9d992f5433e4369a">setRK3_TVDRHS</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;f)</td></tr>
+<tr class="memdesc:a1b036e819127321d9d992f5433e4369a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set intermediate right-hand side vector for the TVD Runge-Kutta 3 method.  <a href="#a1b036e819127321d9d992f5433e4369a">More...</a><br /></td></tr>
+<tr class="separator:a1b036e819127321d9d992f5433e4369a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1cd58fec176472be29a4dfb1be829e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#af1cd58fec176472be29a4dfb1be829e3">setInitial</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
 <tr class="memdesc:af1cd58fec176472be29a4dfb1be829e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for the system of differential equations.  <a href="#af1cd58fec176472be29a4dfb1be829e3">More...</a><br /></td></tr>
 <tr class="separator:af1cd58fec176472be29a4dfb1be829e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -294,6 +297,30 @@ For second order systems: The following schemes are implemented Newmark (value: 
 </div><div class="memdoc">
 
 <p>Set intermediate right-hand side vector for the Runge-Kutta method. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Vector containing the RHS </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a1b036e819127321d9d992f5433e4369a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setRK3_TVDRHS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set intermediate right-hand side vector for the TVD Runge-Kutta 3 method. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Vector containing the RHS </td></tr>

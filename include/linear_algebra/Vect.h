@@ -69,7 +69,7 @@ using Eigen::Matrix;
 extern FunctionParser theParser;
 
 /** \defgroup VectMat Vector and Matrix
- *  \brief Gathers vector and matrix related classes
+ *  \brief Vector and matrix classes
  */
 
 /*! \file Vect.h

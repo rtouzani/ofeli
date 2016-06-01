@@ -25,8 +25,8 @@
 
   ==============================================================================
 
-  Definition of abstract class 'FE_Electromagnetics' for Finite Element Equations
-                         to solve electromagnetic problems
+      Definition of abstract class 'FE_Electromagnetics' for Finite Element
+                  Equations to solve electromagnetic problems
 
   ==============================================================================*/
 
@@ -45,7 +45,7 @@ namespace OFELI {
  */
 
 /*! \defgroup Electromagnetics Electromagnetics
- *  \brief Gathers electromagnetic equation classes
+ *  \brief Electromagnetic equations
  */
 
 /*! \file Equa_Electromagnetics.h

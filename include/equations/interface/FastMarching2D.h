@@ -89,8 +89,8 @@ class FastMarching2D
  *  negative on the other side. They must contain the signed distance on the nodes surrounding
  *  the interface but can take any value on other nodes, provided they have the right sign.
  */
-    FastMarching2D(const Grid&         g,
-                         Vect<real_t>& ls);
+    FastMarching2D(const Grid&   g,
+                   Vect<real_t>& ls);
 
 /** \brief Constructor using grid, level set function and velocity to extend.
  *  @param [in] g Instance of class Grid
@@ -101,9 +101,9 @@ class FastMarching2D
  *  @param [in] F Vector containing the front speed at grid nodes. Only values on nodes surrounding the
  *  interface are relevant.
  */
-    FastMarching2D(const Grid&         g,
-                         Vect<real_t>& ls,
-                         Vect<real_t>& F);
+    FastMarching2D(const Grid&   g,
+                   Vect<real_t>& ls,
+                   Vect<real_t>& F);
 
 /// \brief Destructor
     ~FastMarching2D();

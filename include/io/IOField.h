@@ -69,7 +69,7 @@ namespace OFELI {
  */
 
 /** \defgroup IO Input/Output
- *  \brief Gathers Input/Output utility classes
+ *  \brief Input/Output utility classes
  */
 
 /*! \class IOField

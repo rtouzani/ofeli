@@ -51,7 +51,7 @@ namespace OFELI {
  */
 
 /** \defgroup ConservationLaws Conservation Law Equations
- *  \brief For solvers of conservation law equations
+ *  \brief Conservation law equations
  */
 
 

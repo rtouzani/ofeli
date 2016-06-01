@@ -43,7 +43,7 @@ namespace OFELI {
  */
 
 /*! \defgroup Porous Porous Media problems
- *  \brief Gathers Porous Media equation classes
+ *  \brief Porous Media equation classes
  */
 
 /*! \file Equa_Porous.h

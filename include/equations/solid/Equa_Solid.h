@@ -44,7 +44,7 @@ namespace OFELI {
  */
 
 /*! \defgroup Solid Solid Mechanics
- *  \brief Gathers Solid Mechanics finite element equations related classes
+ *  \brief Solid Mechanics finite element equations
  */
 
 /*! \file Equa_Solid.h
@@ -302,7 +302,7 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  *  @param [in] M Vector containing diagonal mass matrix
  */
 /*    void buildEigen(SkSMatrix<T_>& K,
-                    Vect<T_>&      M)
+                      Vect<T_>&      M)
     {
        MESH_EL {
           set(theElement);

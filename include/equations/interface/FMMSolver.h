@@ -50,7 +50,7 @@ namespace OFELI {
  */
 
 /** \defgroup Interface Interface Problems
- *  \brief Gathers classes and functions for general interface problems, including image processing
+ *  \brief Interface problems, including image processing
  */
 
 /** \class FMMSolver

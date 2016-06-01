@@ -6,6 +6,7 @@ var classOFELI_1_1TimeStepping =
     [ "set", "classOFELI_1_1TimeStepping.html#a584a3841c197ddb1ec0494389823d561", null ],
     [ "setPDE", "classOFELI_1_1TimeStepping.html#af97477a7dcb02936e3d43493fc80420d", null ],
     [ "setRK4RHS", "classOFELI_1_1TimeStepping.html#aa7e53c44ddd0bfff4147278d5c15f3a3", null ],
+    [ "setRK3_TVDRHS", "classOFELI_1_1TimeStepping.html#a1b036e819127321d9d992f5433e4369a", null ],
     [ "setInitial", "classOFELI_1_1TimeStepping.html#af1cd58fec176472be29a4dfb1be829e3", null ],
     [ "setInitial", "classOFELI_1_1TimeStepping.html#ac7c3734ad9c03eadfe2287c18de39945", null ],
     [ "setInitialRHS", "classOFELI_1_1TimeStepping.html#a9b86e899eb64ac7c5d3716f3d20c2bb2", null ],

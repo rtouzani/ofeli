@@ -51,7 +51,7 @@ namespace OFELI {
  */
 
 /** \defgroup Util Utilities
- *  \brief Gathers utility functions and classes
+ *  \brief Utility functions and classes
  */
 
 

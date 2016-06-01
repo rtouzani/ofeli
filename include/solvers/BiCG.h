@@ -56,7 +56,7 @@ namespace OFELI {
  */
 
 /*! \defgroup Solver Solver
- *  \brief Gathers Solver functions
+ *  \brief Solver functions and classes
  */
 
 /*! \file BiCG.h
@@ -86,10 +86,10 @@ template<class T_>
 int BiCG(const SpMatrix<T_>& A,
          const Prec<T_>&     P,
          const Vect<T_>&     b,
-               Vect<T_>&     x,
-               int           max_it,
-               real_t&       toler,
-               int           verbose)
+         Vect<T_>&           x,
+         int                 max_it,
+         real_t&             toler,
+         int                 verbose)
 {
    if (verbose>0)
       cout << "Running preconditioned BiCG method ..." << endl;
@@ -175,12 +175,12 @@ int BiCG(const SpMatrix<T_>& A,
  */
 template<class T_>
 int BiCG(const SpMatrix<T_>& A,
-               int           prec,
+         int                 prec,
          const Vect<T_>&     b,
-               Vect<T_>&     x,
-               int           max_it,
-               real_t        toler,
-               int           verbose)
+         Vect<T_>&           x,
+         int                 max_it,
+         real_t              toler,
+         int                 verbose)
 {
    return BiCG(A,Prec<T_>(A,prec),b,x,max_it,toler,verbose);
 }

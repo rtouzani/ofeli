@@ -43,7 +43,7 @@ namespace OFELI {
  */
 
 /*! \defgroup Fluid Fluid Dynamics
- *  \brief Gathers Fluid Dynamics equation classes
+ *  \brief Fluid Dynamics equations
  */
 
 /*! \file Equa_Fluid.h

@@ -42,7 +42,7 @@ namespace OFELI {
  */
 
 /** \defgroup Shape Shape Function
- *  \brief Gathers shape function classes
+ *  \brief Shape function classes
  */
 
 /*! \file Line2.h

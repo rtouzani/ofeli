@@ -44,7 +44,7 @@ namespace OFELI {
  */
 
 /*! \defgroup Therm Heat Transfer
- *  \brief Gathers Heat Transfer equation classes
+ *  \brief Heat Transfer equations
  */
 
 /*! \file Equa_Therm.h

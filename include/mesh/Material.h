@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                    Definition of Class Material to select materials
+                 Definition of Class Material to select materials
 
   ==============================================================================*/
 
@@ -53,7 +53,7 @@ namespace OFELI {
  */
 
 /*! \defgroup Physics Physical properties of media
- *  \brief A module that contains classes for physical properties of materials and media
+ *  \brief Physical properties of materials and media
  */
 
 /*! \file Material.h

@@ -53,11 +53,11 @@ namespace OFELI {
  */
 
 /** \defgroup Global Global Variables
- *  \brief Gathers all global variables in the library
+ *  \brief All global variables in the library
  */
 
 /** \defgroup Mesh Finite Element Mesh
- *  \brief Gathers mesh related classes
+ *  \brief %Mesh management classes
  */
 
 /// \ingroup Global
@@ -154,7 +154,7 @@ class Mesh
  *     - QUADRILATERAL: %Mesh elements are quadrilaterals [default]
  */
     Mesh(const Grid& g,
-               int   opt=QUADRILATERAL);
+         int         opt=QUADRILATERAL);
 
 /** \brief Constructor of dual mesh for a uniform finite difference grid given by and instance of 
  *  class Grid.
@@ -168,8 +168,8 @@ class Mesh
  *  mainly useful if a cell centered finite volume method is used.
  */
     Mesh(const Grid& g,
-               int   shape,
-               int   opt);
+         int         shape,
+         int         opt);
 
 /** \brief Constructor for a uniform 1-D finite element mesh.
  *  \details The domain is the line (xmin,xmax)
@@ -276,10 +276,10 @@ class Mesh
     @param [in] bc Flag to remove (<tt>true</tt>) or not (<tt>false</tt>) imposed Degrees of Freedom [Default: <tt>false</tt>]
  */
     Mesh(const Mesh&  mesh,
-               int    opt,
-               size_t dof1,
-               size_t dof2,
-               bool   bc=false);
+         int          opt,
+         size_t       dof1,
+         size_t       dof2,
+         bool         bc=false);
 
 /// \brief Copy Constructor
 /// @param [in] ms Mesh instance to copy
@@ -338,8 +338,8 @@ class Mesh
  *  @param [in] nb_dof Number of degrees of freedom per node (Default value: 1)
  */
     void get(const string& mesh_file,
-                   int     ff,
-                   int     nb_dof=1);
+             int           ff,
+             int           nb_dof=1);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Read mesh data in binary file
