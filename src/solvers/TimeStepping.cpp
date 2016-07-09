@@ -106,10 +106,10 @@ TimeStepping::PreSolvePtr TimeStepping::PS [] = {
 
 
 TimeStepping::TimeStepping() :
-          _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1),
+          _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1), _non_linear(0),
           _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
           _regex(false), _explicit(false), _set_bc(false), _A(NULL), _time_step(0.1),
-          _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
+	  _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
 {
 }
 
@@ -117,10 +117,10 @@ TimeStepping::TimeStepping() :
 TimeStepping::TimeStepping(TimeScheme s,
                            real_t     time_step,
                            real_t     final_time) :
-              _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1),
+              _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1), _non_linear(0),
               _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
-              _explicit(false), _set_bc(false), _A(NULL), _time_step(0.1), _time(0.),
-              _final_time(1.), _beta(0.25), _gamma(0.5)
+              _explicit(false), _set_bc(false), _A(NULL),
+	      _time_step(0.1), _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
 {
    set(s,time_step,final_time);
 }
@@ -297,18 +297,40 @@ real_t TimeStepping::runOneTimeStep()
       cout << "Running time step: " << _step << ", time: " << _time << " ..." << endl;
    if (_bc)
       _theEqua->setInput(BOUNDARY_CONDITION,*_bc);
-   for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
-      _theEqua->setInput(SOURCE,(this->*_set_rhs)());
-      if (_explicit)
-         _D = 0;
-      else
-         *_A = 0;
-      _b = 0;
-      if (_sc==int(RK4))
-         _k1 = 0, _k2 = 0, _k3 = 0;
-      (this->*_presolve)();
-      _theEqua->build(*this);
-      (this->*_solve)();
+   if (_non_linear) {
+      for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
+         size_t it=1;
+	 real_t err=1;
+         while (it<=_max_it && err>_toler) {
+            _theEqua->setInput(SOURCE,(this->*_set_rhs)());
+            if (_explicit)
+               _D = 0;
+            else
+               *_A = 0;
+            _b = 0;
+            if (_sc==int(RK4))
+               _k1 = 0, _k2 = 0, _k3 = 0;
+            (this->*_presolve)();
+            _theEqua->build(*this);
+            (this->*_solve)();
+	    it++;
+	 }
+      }
+   }
+   else {
+      for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
+         _theEqua->setInput(SOURCE,(this->*_set_rhs)());
+         if (_explicit)
+            _D = 0;
+         else
+            *_A = 0;
+         _b = 0;
+         if (_sc==int(RK4))
+            _k1 = 0, _k2 = 0, _k3 = 0;
+         (this->*_presolve)();
+         _theEqua->build(*this);
+         (this->*_solve)();
+      }
    }
    theTimeStep = _time_step;
    return _time_step;

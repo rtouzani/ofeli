@@ -271,6 +271,13 @@ e)
                    real_t*     b,
                    real_t*     A=NULL);
 
+/** \brief Set the differential system as nonlinear
+ *  \details By default, the differential system is considered as linear. This
+ *  function enables also selecting the iterative procedure to linearize if necessary
+ *  @param [in] opt Flag to select a nonlineary differential system
+ */
+    void setNonLinear(int opt) { _non_linear = opt; }
+
 //-----------------------------   INSPECTORS  ----------------------------------
 
 /// \brief Return LinearSolver instance
@@ -284,14 +291,14 @@ e)
    AbsEqua<real_t> *_theEqua;
    Mesh *_theMesh;
    size_t _order, _nb_eq, _nb_dof, _nb_ssteps, _step, _sstep;
-   int _verb, _sc;
+   int _verb, _sc, _non_linear, _max_it;
    Iteration _s;
    Preconditioner _p;
    bool _constant_matrix, _regex, _explicit, _set_bc;
    Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _D, _k1, _k2, _k3, _k4;
    Matrix<real_t> *_A;
-   real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2;
+   real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;
    real_t _beta, _gamma;
    LinearSolver<real_t> _ls;
 

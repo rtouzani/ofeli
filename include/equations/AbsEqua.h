@@ -462,7 +462,7 @@ protected :
    real_t             _time_parameter1, _time_parameter2, _time_parameter3;
    EigenProblemSolver _ev;
    Matrix<T_>         *_A, *_CM;
-   Vect<T_>           *_bc, *_bf, *_sf, *_u, *_v, *_b, *_LM, _uu;
+   Vect<T_>           *_bc, *_bf, *_sf, *_u, *_v, *_w, *_b, *_LM, _uu;
    bool               _eigen, _sol_given, _bc_given, _init_given, _bf_given, _sf_given; 
    bool               _constant_matrix, _constant_mesh, _set_matrix;
    int                _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
