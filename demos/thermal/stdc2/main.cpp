@@ -102,9 +102,7 @@ int main(int argc, char *argv[])
 // Output and save result
    if (data.getOutput() > 0)
       cout << u;
-   if (data.getPlot()) {
-      IOField pf(data.getPlotFile(),IOField::OUT);
-      pf.put(u);
-   }
+   if (data.getPlot())
+      saveField(b,data.getPlotFile(),GMSH);
    return 0;
 }

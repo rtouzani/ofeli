@@ -1216,7 +1216,6 @@ void saveGmsh(string input_file,
    Mesh mesh(mesh_file);
    char tt;
    size_t i, k, nb_dof=0, nb_en;
-   size_t nb_nodes = mesh.getNbNodes();
    ofstream pf(output_file.c_str());
    pf << setprecision(16);
 

@@ -338,11 +338,10 @@ void Domain::insertCircle(size_t n1,
    ll.node.push_back(_v[n1-1]);
    ll.node.push_back(_v[n2-1]);
    ll.Dcode = dc; ll.Ncode = nc;
-   real_t h = _v[n1-1].h, cx = _v[n3-1].x, cy = _v[n3-1].y;
-   real_t a1 = _v[n1-1].x - cx, a2 = _v[n2-1].x - cx;
-   real_t b1 = _v[n1-1].y - cy, b2 = _v[n2-1].y - cy;
-   real_t r = sqrt(a1*a1 + b1*b1);
-   real_t theta1 = atan2(b1,a1), theta2 = atan2(b2,a2);
+   Point<real_t> cc(_v[n3-1]);
+   Point<real_t> a1=_v[n1-1]-cc, a2=_v[n2-1]-cc;
+   real_t h=_v[n1-1].h, r=sqrt((a1,a1));
+   real_t theta1=atan2(a1.y,a1.x), theta2=atan2(a2.y,a2.x);
    real_t theta = theta1;
    if (theta1 >= theta2)
       theta2 += 2*OFELI_PI;
@@ -353,17 +352,17 @@ void Domain::insertCircle(size_t n1,
       theta += (theta2-theta1)/nb;
       if (i<nb-1) {
          ll.n2 = _nb_vertices + 1;
-         v.x = cx + r*cos(theta);
-         v.y = cy + r*sin(theta);
+         v.x = cc.x + r*cos(theta);
+         v.y = cc.y + r*sin(theta);
          v.h = h;
          v.code = dc;
+         _v.push_back(v);
       }
       if (i>0)
          ll.n1 = _nb_vertices;
       _l.push_back(ll);
-      _v.push_back(v);
-      _nb_vertices++;
       _nb_lines++;
+      _nb_vertices++;
    }
    _nb_vertices--;
 }
@@ -402,11 +401,10 @@ void Domain::getCircle()
    ln.Ncode = _ff->getI("Neumann Code: ");
 
    real_t h = _v[n1-1].h;
-   real_t cx = _v[n3-1].x, cy = _v[n3-1].y;
-   real_t a1 = _v[n1-1].x - cx, a2 = _v[n2-1].x - cx;
-   real_t b1 = _v[n1-1].y - cy, b2 = _v[n2-1].y - cy;
-   real_t r = sqrt(a1*a1 + b1*b1);
-   real_t theta1 = atan2(b1,a1), theta2 = atan2(b2,a2);
+   Point<real_t> cc(_v[n3-1]);
+   Point<real_t> a1=_v[n1-1]-cc, a2=_v[n2-1]-cc;
+   real_t r = sqrt((a1,a1));
+   real_t theta1 = atan2(a1.y,a1.x), theta2 = atan2(a2.y,a2.x);
    real_t theta = theta1;
    if (theta1 >= theta2)
       theta2 += 2*OFELI_PI;
@@ -414,8 +412,8 @@ void Domain::getCircle()
       theta += (theta2-theta1)/nb;
       if (i<nb-1) {
          ln.n2 = _nb_vertices + 1;
-         v.x = cx + r*cos(theta);
-         v.y = cy + r*sin(theta);
+         v.x = cc.x + r*cos(theta);
+         v.y = cc.y + r*sin(theta);
          v.h = h;
          v.code = dc;
          _v.push_back(v);
@@ -1405,10 +1403,8 @@ int Domain::saveAsBamg()
       mf << endl;
    }
 
-cout<<"#1"<<endl;
    mf << "\nSubDomain    1" << endl;
    mf << "    2    1    1    1" << endl;
-cout<<"#2"<<endl;
    mf.close();
 
    cout << "Mesh stored in file: " << emfile << endl;
@@ -1554,8 +1550,8 @@ void Domain::genGeo(string file)
    if (_nb_vertices > 0) {
       mf << "\nVertices  " << setw(5) << _nb_vertices << endl;
       for (size_t i=0; i<_nb_vertices; i++)
-         mf << setprecision(8) << setw(12) << _v[i].x
-            << setprecision(8) << setw(12) << _v[i].y
+         mf << setprecision(8) << setw(16) << _v[i].x
+            << setprecision(8) << setw(16) << _v[i].y
             << setw(6) << _v[i].code << endl;
    }
    if (_nb_lines > 0) {
@@ -1671,13 +1667,14 @@ void Domain::gm2()
    _ln.resize(_nb_lines);
    for (size_t is=0; is<_nb_contours; is++) {
       for (size_t i=0; i<_c[is].nb; i++) {
-         size_t n = _c[is].line[i];
-         real_t dc = _l[n-1].Dcode, nc = _l[n-1].Ncode;
+         size_t n=_c[is].line[i];
+         real_t dc=_l[n-1].Dcode, nc=_l[n-1].Ncode;
          _ln[kl].i = kl + 1;
          if (i==0)
             kl0 = kl + 1;
          _ln[kl].dc = dc; _ln[kl].nc = nc;
-         mf << "  " << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << "  " << _v[_l[n-1].n1-1].code << endl;
+         mf << "  " << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << "  "
+            << _v[_l[n-1].n1-1].code << endl;
          for (size_t j=1; j<_l[n-1].nb; j++) {
             mf << "  " << _l[n-1].node[j].x << "  " << _l[n-1].node[j].y << "  " << dc << endl;
             _ln[kl+1].i = _ln[kl].j = kl + 2;

@@ -35,18 +35,18 @@
 namespace OFELI {
 
 EigenProblemSolver::EigenProblemSolver()
-            : _theEqua(NULL), _theMesh(NULL), _K(NULL), _M(NULL),
-              _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(false),
-              _max_it(100), _dim(1), _nb_eq(0), _nb_eigv(1), _opt(1),
-              _epsv(1.e-8), _epsj(1.e-10)
+                   : _theEqua(NULL), _theMesh(NULL), _K(NULL), _M(NULL),
+                     _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(false),
+                     _max_it(100), _dim(1), _nb_eq(0), _nb_eigv(1), _opt(1),
+                     _epsv(1.e-8), _epsj(1.e-10)
 { }
 
 
 EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
                                        int               n)
-            : _theEqua(NULL), _theMesh(NULL), _K(&A), _M(NULL),
-              _K_alloc(false), _M_alloc(false), _lM_alloc(true), _diag(true),
-              _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
+                   : _theEqua(NULL), _theMesh(NULL), _K(&A), _M(NULL),
+                     _K_alloc(false), _M_alloc(false), _lM_alloc(true), _diag(true),
+                     _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    _nb_eq = _nb_eigv = _K->getNbRows();
    if (n>0)
@@ -60,9 +60,9 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
 EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
                                        Vect<real_t>&     ev,
                                        int               n)
-            : _theEqua(NULL), _theMesh(NULL), _K(&A), _M(NULL),
-              _K_alloc(false), _M_alloc(false), _lM_alloc(true), _diag(true),
-              _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
+                   : _theEqua(NULL), _theMesh(NULL), _K(&A), _M(NULL),
+                    _K_alloc(false), _M_alloc(false), _lM_alloc(true), _diag(true),
+                    _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    _nb_eq = _nb_eigv = _K->getNbRows();
    if (n>0)
@@ -77,10 +77,10 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
 
 EigenProblemSolver::EigenProblemSolver(AbsEqua<real_t>& eq,
                                        bool             lumped)
-            : _K(NULL), _M(NULL),
-              _K_alloc(true), _M_alloc(false), _lM_alloc(true), _diag(true),
-              _max_it(100), _dim(1), _nb_eq(0), _nb_eigv(1), _opt(1),
-              _epsv(1.e-8), _epsj(1.e-10)
+                   : _K(NULL), _M(NULL),
+                     _K_alloc(true), _M_alloc(false), _lM_alloc(true), _diag(true),
+                     _max_it(100), _dim(1), _nb_eq(0), _nb_eigv(1), _opt(1),
+                     _epsv(1.e-8), _epsj(1.e-10)
 {
    setPDE(eq,lumped);
 }
@@ -89,8 +89,8 @@ EigenProblemSolver::EigenProblemSolver(AbsEqua<real_t>& eq,
 EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
                                        SkSMatrix<real_t>& M,
                                        int                n)
-            : _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(false),
-              _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
+                   : _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(false),
+                     _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    _nb_eq = _nb_eigv = _K->getNbRows();
    if (n>0)
@@ -102,8 +102,8 @@ EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
 EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
                                        Vect<real_t>&      M,
                                        int                n)
-            : _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(true),
-              _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
+                   : _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(true),
+                     _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    _nb_eq = _nb_eigv = _K->getNbRows();
    if (n>0)
@@ -236,7 +236,7 @@ int EigenProblemSolver::runSubSpace(size_t nb_eigv,
    _K->Factor();
 
 // Starting iterations
-   int it = 0;
+   size_t it = 0;
    while (it<_max_it) {
       it++;
 
@@ -323,7 +323,7 @@ int EigenProblemSolver::runJacobi(DMatrix<real_t>& wm)
    const size_t max_it = 12;
    real_t ajj, aii, ab, det, ca, cg;
    real_t aj, bj, ak, bk, xj, xk, bb, eps;
-   int i, j, k;
+   size_t i, j, k;
    Vect<real_t> wv(_dim);
 
 // Initialization
@@ -473,11 +473,11 @@ L240: wv = _eigv;
 
 int EigenProblemSolver::init()
 {
-   int i, j, ind=0;
+   size_t ind=0, ncon=0;
    Vect<real_t> w(_nb_eq);
-   int nums=int(_nb_eq/_dim), ncon=0;
+   int nums=int(_nb_eq/_dim);
    if (_diag) {
-      for (i=1; i<=_nb_eq; i++) {
+      for (size_t i=1; i<=_nb_eq; i++) {
          _ev(1,i) = (*_lM)(i);
          if ((*_lM)(i) > 0.)
             ncon++;
@@ -485,7 +485,7 @@ int EigenProblemSolver::init()
       }
    }
    else {
-      for (i=1; i<=_nb_eq; i++) {
+      for (size_t i=1; i<=_nb_eq; i++) {
          _ev(1,i) = (*_M)(i,i);
          if ((*_M)(i,i) > 0.)
             ncon++;
@@ -496,21 +496,21 @@ int EigenProblemSolver::init()
 // Check degrees of freedom
    if (_dim > ncon)
       return 1;
-   for (i=1; i<=_nb_eq; i++)
-      for (j=2; j<=_dim; j++)
+   for (size_t i=1; i<=_nb_eq; i++)
+      for (size_t j=2; j<=_dim; j++)
          _ev(j,i) = 0.;
 
 // Find lowest dividers and place them in ascending order
    int ldif=int(_nb_eq)-nums;
-   for (j=2; j<=_dim; j++) {
+   for (size_t j=2; j<=_dim; j++) {
       real_t s = 0.;
-      for (i=1; i<=ldif; i++) {
+      for (size_t i=1; i<=size_t(ldif); i++) {
          if (w(i) >= s) {
             s = w(i);
             ind = i;
          }
       }
-      for (i=ldif; i<=_nb_eq; i++) {
+      for (size_t i=size_t(ldif); i<=_nb_eq; i++) {
          if (w(i) > s) {
             s = w(i);
             ind = i;
@@ -527,7 +527,7 @@ int EigenProblemSolver::init()
 int EigenProblemSolver::checkSturm(int& nb_found,
                                    int& nb_lost)
 {
-   int i, ncon=0, err=0;
+   size_t ncon=0, err=0, i=0;
    real_t eps=0.01, eigu, eigl, eigenb;
 
    for (i=0; i<_dim; i++)
@@ -580,7 +580,7 @@ real_t EigenProblemSolver::getEigenValue(int n) const
 void EigenProblemSolver::getEigenVector(int           n,
                                         Vect<real_t>& v) const
 {
-   if (n>_nb_eigv)
+   if (n>int(_nb_eigv))
       return;
    v.resize(_nb_eq);
    v = _ev.getRow(n);

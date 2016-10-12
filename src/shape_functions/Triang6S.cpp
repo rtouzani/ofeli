@@ -72,6 +72,7 @@ Triang6S::Triang6S(const Element* el)
    _x31 = _x[2] - _x[0];
    _x32 = _x[2] - _x[1];
    _det = _x21.x*_x31.y-_x21.y*_x31.x;
+   _area = 0.5*_det;
    try {
       if (_det < 0.0)
          THROW_RT("set(Element *): Negative determinant of jacobian");
@@ -87,7 +88,7 @@ Triang6S::Triang6S(const Element* el)
 }
 
 
-real_t Triang6S::Sh(      size_t         i,
+real_t Triang6S::Sh(size_t               i,
                     const Point<real_t>& s) const
 {
    switch (i) {
@@ -102,7 +103,7 @@ real_t Triang6S::Sh(      size_t         i,
 }
 
 
-Point<real_t> Triang6S::DSh(      size_t         i,
+Point<real_t> Triang6S::DSh(size_t               i,
                             const Point<real_t>& s) const
 {
    Point<real_t> dsh;

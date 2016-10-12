@@ -299,8 +299,8 @@ real_t TimeStepping::runOneTimeStep()
       _theEqua->setInput(BOUNDARY_CONDITION,*_bc);
    if (_non_linear) {
       for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
-         size_t it=1;
-	 real_t err=1;
+         int it=1;
+         real_t err=1;
          while (it<=_max_it && err>_toler) {
             _theEqua->setInput(SOURCE,(this->*_set_rhs)());
             if (_explicit)

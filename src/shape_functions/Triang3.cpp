@@ -91,6 +91,7 @@ void Triang3::set(const Element* el)
    _h2 = Distance(_x[1],_x[2]),
    _h3 = Distance(_x[2],_x[0]);
    _det = (_x[1].x-_x[0].x)*(_x[2].y-_x[0].y) - (_x[1].y-_x[0].y)*(_x[2].x-_x[0].x);
+   _area = 0.5*_det;
    try {
       if (_det<0.0)
          THROW_RT("set(Element *): Negative determinant of jacobian");
@@ -131,6 +132,7 @@ void Triang3::set(const Side* sd)
    real_t b = _x[0].z*(_x[1].x-_x[2].x) - _x[1].z*(_x[0].x-_x[2].x) + _x[2].z*(_x[0].x-_x[1].x);
    real_t c = _x[0].x*(_x[1].y-_x[2].y) - _x[1].x*(_x[0].y-_x[2].y) + _x[2].x*(_x[0].y-_x[1].y);
    _det = sqrt(a*a + b*b + c*c);
+   _area = 0.5*_det;
    _c = (_x[0]+_x[1]+_x[2])*OFELI_THIRD;
    try {
       if (_det<0.0)
