@@ -37,16 +37,16 @@
 namespace OFELI {
 
 SteklovPoincare2DBE::SteklovPoincare2DBE(const Mesh& mesh,
-                                               bool  ext)
+                                         bool        ext)
 {
    setMesh(mesh,ext);
 }
 
 
-SteklovPoincare2DBE::SteklovPoincare2DBE(const Mesh& mesh,
+SteklovPoincare2DBE::SteklovPoincare2DBE(const Mesh&         mesh,
                                          const Vect<real_t>& g, 
-                                               Vect<real_t>& b,
-                                               bool          ext)
+                                         Vect<real_t>&       b,
+                                         bool                ext)
 {
    setMesh(mesh,ext);
    Solve(b,g);
@@ -66,11 +66,11 @@ void SteklovPoincare2DBE::setMesh(const Mesh& mesh,
       _ext = 1; 
    _util();
    _nb_eq = _theMesh->getNbSides();
-   _A.setSize(_nb_eq,_nb_eq);
+   _A.setSize(_nb_eq);
 }
 
 
-int SteklovPoincare2DBE::Solve(      Vect<real_t>& b,
+int SteklovPoincare2DBE::Solve(Vect<real_t>&       b,
                                const Vect<real_t>& g)
 {
    b = 0;

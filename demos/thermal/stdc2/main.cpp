@@ -103,6 +103,6 @@ int main(int argc, char *argv[])
    if (data.getOutput() > 0)
       cout << u;
    if (data.getPlot())
-      saveField(b,data.getPlotFile(),GMSH);
+      saveField(u,data.getPlotFile(),GMSH);
    return 0;
 }
