@@ -384,7 +384,7 @@ void getGambit(string file,
    std::getline(mf,line);
 
 // Nodes
-   for (size_t i=0; i<nb_nodes; i++) {
+   for (int i=0; i<nb_nodes; i++) {
       Point<real_t> x;
       std::getline(mf,line);
       istringstream s(line);
@@ -409,7 +409,7 @@ void getGambit(string file,
 // Elements
    std::getline(mf,line);
    int shape=0;
-   for (size_t i=0; i<nb_elements; i++) {
+   for (int i=0; i<nb_elements; i++) {
       mf >> n1 >> n2 >> n3;
       if (n2==1)
          shape = LINE;
@@ -424,7 +424,7 @@ void getGambit(string file,
       else if (n2==6)
          shape = TETRAHEDRON;
       theElement = new Element(n1,shape);
-      for (size_t j=1; j<=n3; j++) {
+      for (int j=1; j<=n3; j++) {
          mf >> n4;
          TheElement.Add(mesh[n4]);
       }
@@ -436,14 +436,14 @@ void getGambit(string file,
 // Material properties
    string str;
    size_t mc = 0;
-   for (size_t i=0; i<nb_el_gr; i++) {
+   for (int i=0; i<nb_el_gr; i++) {
       std::getline(mf,line);
       s >> str >> n1; s >> str >> n2;
       mf >> str >> n3; mf >> str >> n4;
       mf >> str;
       ++mc;
       mf >> n4;
-      for (size_t j=1; j<=n2; j++) {
+      for (int j=1; j<=n2; j++) {
          mf >> n1;
          mesh(n1)->setCode(mc);
       }
@@ -460,7 +460,7 @@ void getGambit(string file,
      mf >> mark >> n1 >> n2 >> n3 >> n4;
      DOFCode(mark,nb_dof,code);
      first_dof = 1;
-     for (size_t i=1; i<=n2; i++) {
+     for (int i=1; i<=n2; i++) {
         mf >> n5;
         if (n1 == 1) {
            mf >> n3 >> n4;

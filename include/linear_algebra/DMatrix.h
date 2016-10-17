@@ -494,6 +494,7 @@ template<class T_>
 DMatrix<T_>::DMatrix(size_t nr) : _qr_set(0)
 {
    setSize(nr);
+   _fact = false;
    _is_diagonal = false;
 }
 
@@ -503,6 +504,7 @@ DMatrix<T_>::DMatrix(size_t nr,
                      size_t nc) : _qr_set(0)
 {
    setSize(nr,nc);
+   _fact = false;
    _diag.resize(nr);
    _is_diagonal = false;
 }
@@ -511,6 +513,7 @@ DMatrix<T_>::DMatrix(size_t nr,
 template<class T_>
 DMatrix<T_>::DMatrix(Vect<T_>& v) : _qr_set(0)
 {
+   _fact = false;
    _is_diagonal = true;
    _length = v.size();
    _nb_rows = _nb_cols = _size = sqrt(real_t(_length));

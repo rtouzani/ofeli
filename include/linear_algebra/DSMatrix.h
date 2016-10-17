@@ -343,6 +343,7 @@ DSMatrix<T_>::DSMatrix()
 template<class T_>
 DSMatrix<T_>::DSMatrix(size_t dim)
 {
+   _fact = false;
    _is_diagonal = false;
    setSize(dim);
 }
@@ -353,6 +354,7 @@ DSMatrix<T_>::DSMatrix(const DSMatrix<T_>& m)
 {
    _size = _nb_rows = _nb_cols = m._size;
    _length = m._length;
+   _fact = m._fact;
    _is_diagonal = false;
    _a.resize(_length);
    _a = m._a;

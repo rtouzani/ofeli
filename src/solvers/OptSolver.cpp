@@ -180,7 +180,7 @@ void OptSolver::setGradient(string exp,
    }
    CATCH("OptSolver");
    try {
-      if (i>_size || i<=0)
+      if (i>int(_size) || i<=0)
          THROW_RT("setGradient(exp,i): Index is out of order");
    }
    CATCH_EXIT("OptSolver");

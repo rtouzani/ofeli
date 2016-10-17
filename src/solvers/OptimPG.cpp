@@ -87,9 +87,9 @@ int OptimPG(OptSolver&          opt,
    ProjActiveSet(xc-gc,lb,ub,pgc);
    pgc = xc - pgc;
 
-   size_t it=1;
+   int it=1;
    real_t lambda=0.;
-   while (pgc.getWNorm2()>toler & it<=max_it) {
+   while ((pgc.getWNorm2()>toler) & (it<=max_it)) {
       lambda = 1;
       ProjActiveSet(xc-lambda*gc,lb,ub,xt);
       real_t ft = opt.Objective(xt);

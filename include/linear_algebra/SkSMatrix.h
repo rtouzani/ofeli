@@ -435,6 +435,7 @@ SkSMatrix<T_>::SkSMatrix(Mesh&  mesh,
                          size_t dof,
                          int    is_diagonal)
 {
+   _fact = false;
    _is_diagonal = is_diagonal;
    setMesh(mesh,dof);
 }

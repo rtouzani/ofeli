@@ -280,6 +280,7 @@ BMatrix<T_>::BMatrix(size_t size,
           THROW_RT("BMatrix(size_t,int,int): Illegal arguments.");
    }
    CATCH("BMatrix");
+   _fact = false;
    setSize(size,ld,ud);
 }
 

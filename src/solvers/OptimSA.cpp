@@ -269,7 +269,6 @@ int OptimSA(OptSolver&          opt,
    Vect<real_t> fstar(neps), xp(n), nacp(n);
 
    real_t exprep(real_t rdum);
-   void rmarin(int ij, int kl);
    real_t ranmar(void);
    
    srand((unsigned)time(NULL));
@@ -457,9 +456,8 @@ L100:
 /*			
     Required Functions (included):
       exprep - Replaces the function \a exp to avoid under- and overflows.\n
-      rmarin - Initializes the random number generator ranmar_.\n
       ranmar - The actual random number generator. Note that
-               rmarin_ must run first (OptimSA does this). It produces uniform
+               rmarin must run first (OptimSA does this). It produces uniform
                random numbers on [0,1]. These routines are from
                Usenet's comp.lang.fortran. For a reference, see
                "Toward a Universal Random Number Generator"
@@ -498,44 +496,6 @@ real_t exprep(real_t rdum)
    else
       ret = exp(rdum);
    return ret;
-}
-
-
-void rmarin(int ij, int kl, int i1, int i2)
-/*-----------------------------------------------------------------------------
-    This function and the next function generate random numbers. See
-    the comments for OptimSA for more information. The only changes from the
-    original code is that:
-    (1)  The test to make sure that rmarin_ runs first was taken out since
-         OptimSA assures that this is done (this test didn't compile under IBM's VS
-         Fortran) and
-    (2)  typing ivec as integer was taken out since ivec isn't used. With these
-         exceptions, all following lines are original.
-
-   This is the initialization routine for the random number generator ranmar_()
-  -----------------------------------------------------------------------------*/
-{
-   if (ij < 0 || ij > 31328 || kl < 0 || kl > 30081) {
-      cout << "The first random number seed must have a value between 0 and 31328\n";
-      cout << "The second seed must have a value between 0 and 30081\n";
-      exit(1);
-   }
-   static real_t u_[97];
-   int i = ij / 177 % 177 + 2, j = ij % 177 + 2;
-   int k = kl / 169 % 178 + 1, l = kl % 169;
-   for (size_t ii=1; ii<=97; ++ii) {
-      real_t s=0., t=0.5;
-      for (size_t jj=1; jj<=24; ++jj) {
-         int m = i * j % 179 * k % 179;
-         i = j; j = k; k = m;
-         l = (l * 53 + 1) % 169;
-         if (l * m % 64 >= 32)
-            s += t;
-         t *= 0.5;
-      }
-      u_[ii-1] = s;
-   }
-   i1 = 97, i2 = 33;
 }
 
 

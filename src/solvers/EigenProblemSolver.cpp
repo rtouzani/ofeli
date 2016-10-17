@@ -464,7 +464,7 @@ L210: for (i=1; i<=_dim; i++) {
 //    Update work array and start new sweep if allowed
 L240: wv = _eigv;
    }
-   while (nswp < max_it);
+   while (nswp < int(max_it));
 
 // Jacobi tolerance not satisfied
    goto L210;

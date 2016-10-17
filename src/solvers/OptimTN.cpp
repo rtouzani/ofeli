@@ -278,7 +278,7 @@ L40:
 //       Set up parameters used in updating the preconditioning strategy
          yksk = w[5]*w[4];
          lreset = 0;
-         if (icycle==n-1 || difnew<epsred*(fkeep-fnew))
+         if (icycle==int(n)-1 || difnew<epsred*(fkeep-fnew))
             lreset = 1;
          if (!lreset) {
             yrsr = w[8]*w[7];
@@ -525,7 +525,7 @@ int modlnp(OptSolver&    opt,
    v = 0.;
 
 // Main Iteration
-   size_t k;
+   int k;
    for (k=1; k<=max_it; k++) {
       ++nlincg;
       if (modet>1)
