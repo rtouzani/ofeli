@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -530,7 +530,7 @@ int BMatrix<T_>::solve(Vect<T_>& b)
    int ret = 0;
    try {
       if (_size<3 || _ld<0 || _ud<0 || _ud+_ld+1>int(_size))
-         THROW_RT("Solve(Vect<double>): Illegal arguments.");
+         THROW_RT("solve(Vect<double>): Illegal arguments.");
    }
    CATCH("BMatrix");
    if (_fact == false)

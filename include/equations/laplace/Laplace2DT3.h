@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -82,6 +82,26 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
     Laplace2DT3(Mesh&         ms,
                 Vect<real_t>& b);
 
+/** \brief Constructor that solves a standard Poisson equation
+ *  \details This constructor builds and solves the linear system of equations. The solved
+ *  problem is the Poisson equation with mixed (Dirichlet and Neumann) boundary conditions.
+ *  The finite element linear system is solved by the preconditioned (DILU, Diagonal ILU 
+ *  preconditioner) Conjugate Gradient method.
+ *  @param [in] ms Mesh instance
+ *  @param [in] b Vector containing the source term (right-hand side of the equation) at
+ *  mesh nodes
+ *  @param [in] Dbc Vector containing prescribed values of the solution (Dirichlet
+ *  boundary condition) at nodes with positive code. Its size is the total number of nodes
+ *  @param [in] Nbc Vector containing prescribed fluxes (Neumann boundary conditions)
+ *  at sides, its size is the total number of sides
+ *  @param [out] u Vector containing finite element solution at nodes 
+ */
+    Laplace2DT3(Mesh&         ms,
+                Vect<real_t>& b,
+                Vect<real_t>& Dbc,
+                Vect<real_t>& Nbc,
+                Vect<real_t>& u);
+
 /// \brief Constructor for an element
     Laplace2DT3(Element* el);
 
@@ -143,7 +163,7 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
 
  private:
 
-   SpMatrix<real_t> _A;
+   SpMatrix<real_t> *_A;
    void set(const Element* el);
    void set(const Side* sd);
 };

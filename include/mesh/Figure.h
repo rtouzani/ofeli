@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -188,7 +188,7 @@ class Figure
 };
 
 
-/** \fn Figure operator&&(const Figure& f1, const Figure& f2)
+/** \fn Figure operator&&(const Figure &f1, const Figure &f2)
  *  \brief Function to define a Figure instance as the intersection of two Figure instances
  *  \ingroup Mesh
  *  @param [in] f1 First Figure instance
@@ -206,7 +206,7 @@ Figure operator&&(const Figure& f1,
 }
 
 
-/** \fn Figure operator&&(const Figure &f1, const Figure &f2)
+/** \fn Figure operator||(const Figure &f1, const Figure &f2)
  *  \brief Function to define a Figure instance as the union of two Figure instances
  *  \ingroup Mesh
  *  @param [in] f1 First Figure instance

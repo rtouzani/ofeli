@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                      Class Laplace2DT3 : Laplace Equation
+                      Class Laplace2DT3: Laplace Equation
               using 3-Node Triangular finite element in two dimensions
 
   ==============================================================================*/
@@ -41,6 +41,7 @@ Laplace2DT3::Laplace2DT3(Mesh&             ms,
             : Equation<real_t,3,3,2,2>(ms)
 {
    _u = &b;
+   _A = &A;
 }
 
 
@@ -54,7 +55,27 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
 
 Laplace2DT3::Laplace2DT3(Mesh& ms)
             : Equation<real_t,3,3,2,2>(ms)
-{  }
+{
+}
+
+
+Laplace2DT3::Laplace2DT3(Mesh&         ms,
+                         Vect<real_t>& b,
+                         Vect<real_t>& Dbc,
+                         Vect<real_t>& Nbc,
+                         Vect<real_t>& u)
+            : Equation<real_t,3,3,2,2>(ms)
+{
+   _bf = &b;
+   _u = &b;
+   _bc_given = true;
+   _bc = &Dbc;
+   _sf = &Nbc;
+   _A = new SpMatrix<real_t>(*_theMesh);
+   build();
+   solve(u);
+   delete _A;
+}
 
 
 Laplace2DT3::Laplace2DT3(Element* el)
@@ -96,14 +117,16 @@ void Laplace2DT3::set(const Side* sd)
 
 void Laplace2DT3::build()
 {
+   *_A = 0;
+   _b = new Vect<real_t>(_A->size());
    MESH_EL {
       set(theElement);
       LHS();
       BodyRHS(*_bf);
       if (_bc_given)
          updateBC(*_bc);
-      element_assembly(*theElement,eMat,_A);
-      ElementAssembly(*_u);
+      ElementAssembly(*_A);
+      ElementAssembly(*_b);
    }
    MESH_SD {
       set(theSide);
@@ -136,11 +159,12 @@ void Laplace2DT3::buildEigen(int opt)
 
 int Laplace2DT3::solve(Vect<real_t>& u)
 {
-   Vect<real_t> x(_A.size());
-   LinearSolver<real_t> ls(_A,*_u,x);
+   Vect<real_t> x(_A->size());
+   LinearSolver<real_t> ls(*_A,*_b,x);
    ls.setTolerance(1.e-7);
-   int nb_it = ls.solve(CG_SOLVER,ILU_PREC);
+   int nb_it = ls.solve(CG_SOLVER,DILU_PREC);
    u.insertBC(*_theMesh,x,*_bc);
+   delete _b;
    return nb_it;
 }
 

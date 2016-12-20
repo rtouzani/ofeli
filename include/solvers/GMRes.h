@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -150,8 +150,7 @@ int GMRes(const SpMatrix<T_>& A,
    real_t res;
    int it=1;
    size_t n=b.size();
-   Vect<T_> s(m+1), cs(m+1), sn(m+1), w(n);
-   Vect<T_> H(m+1,m+1);
+   Vect<T_> s(m+1), cs(m+1), sn(m+1), w(n), H(m+1,m+1);
 
    real_t normb=b.getNorm2();
    Vect<T_> r(b);

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -95,7 +95,7 @@ Mesh::Mesh()
 Mesh::Mesh(const string& file,
            bool          bc,
            int           opt,
-	   int           nb_dof)
+           int           nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(2), _nb_dof(0),
        _nb_vertices(0), _first_dof(1), _nb_mat(0), _verb(0), _no_imposed_dof(false),
        _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
@@ -584,7 +584,7 @@ Mesh::Mesh(real_t xmin,
       for (size_t j=0; j<=ny; j++) {
          n++;
          the_node = new Node(n,x);
-         the_node->setNbDOF(1);
+         The_node.setNbDOF(1);
          _code[0] = 0;
          if (j==0  && cy0>0)
             _code[0] = cy0;
@@ -594,8 +594,8 @@ Mesh::Mesh(real_t xmin,
             _code[0] = cx0;
          if (i==nx && cxN>0)
             _code[0] = cxN;
-         the_node->setDOF(_first_dof,1);
-         the_node->setCode(_code);
+         The_node.setDOF(_first_dof,1);
+         The_node.setCode(_code);
          Add(the_node);
          x.y += hy;
          if (i>0 && j>0 && opt) {
@@ -603,24 +603,24 @@ Mesh::Mesh(real_t xmin,
                if (opt==QUADRILATERAL) {
                   ne++;
                   the_element = new Element(ne,QUADRILATERAL,1);
-                  the_element->Add(_nodes[n-ny-3]);
-                  the_element->Add(_nodes[n-2]);
-                  the_element->Add(_nodes[n-1]);
-                  the_element->Add(_nodes[n-ny-2]);
+                  The_element.Add(_nodes[n-ny-3]);
+                  The_element.Add(_nodes[n-2]);
+                  The_element.Add(_nodes[n-1]);
+                  The_element.Add(_nodes[n-ny-2]);
                   Add(the_element);
                }
                else if (opt==TRIANGLE) {
                   ne++;
                   the_element = new Element(ne,TRIANGLE,1);
-                  the_element->Add(_nodes[n-ny-3]);
-                  the_element->Add(_nodes[n-2]);
-                  the_element->Add(_nodes[n-1]);
+                  The_element.Add(_nodes[n-ny-3]);
+                  The_element.Add(_nodes[n-2]);
+                  The_element.Add(_nodes[n-1]);
                   Add(the_element);
                   ne++;
                   the_element = new Element(ne,TRIANGLE,1);
-                  the_element->Add(_nodes[n-1]);
-                  the_element->Add(_nodes[n-ny-2]);
-                  the_element->Add(_nodes[n-ny-3]);
+                  The_element.Add(_nodes[n-1]);
+                  The_element.Add(_nodes[n-ny-2]);
+                  The_element.Add(_nodes[n-ny-3]);
                   Add(the_element);
                }
                else
@@ -637,11 +637,11 @@ Mesh::Mesh(real_t xmin,
    if (cx0<0) {
       for (size_t j=1; j<=ny; j++) {
          the_side = new Side(is++,LINE);
-         the_side->Add(getPtrNode(n));
-         the_side->Add(getPtrNode(n+1));
+         The_side.Add(getPtrNode(n));
+         The_side.Add(getPtrNode(n+1));
          n++;
-         the_side->setNbDOF(1);
-         the_side->setCode(1,-cx0);
+         The_side.setNbDOF(1);
+         The_side.setCode(1,-cx0);
          Add(the_side);
       }
    }
@@ -649,11 +649,11 @@ Mesh::Mesh(real_t xmin,
    if (cxN<0) {
       for (size_t j=1; j<=ny; j++) {
          the_side = new Side(is++,LINE);
-         the_side->Add(getPtrNode(n));
-         the_side->Add(getPtrNode(n+1));
+         The_side.Add(getPtrNode(n));
+         The_side.Add(getPtrNode(n+1));
          n++;
-         the_side->setNbDOF(1);
-         the_side->setCode(1,-cxN);
+         The_side.setNbDOF(1);
+         The_side.setCode(1,-cxN);
          Add(the_side);
       }
    }
@@ -661,11 +661,11 @@ Mesh::Mesh(real_t xmin,
    if (cy0<0) {
       for (size_t i=1; i<=nx; i++) {
          the_side = new Side(is++,LINE);
-         the_side->Add(getPtrNode(n));
-         the_side->Add(getPtrNode(n+ny+1));
+         The_side.Add(getPtrNode(n));
+         The_side.Add(getPtrNode(n+ny+1));
          n += ny + 1;
-         the_side->setNbDOF(1);
-         the_side->setCode(1,-cy0);
+         The_side.setNbDOF(1);
+         The_side.setCode(1,-cy0);
          Add(the_side);
       }
    }
@@ -673,17 +673,17 @@ Mesh::Mesh(real_t xmin,
    if (cyN<0) {
       for (size_t i=1; i<=nx; i++) {
          the_side = new Side(is++,LINE);
-         the_side->Add(getPtrNode(n));
-         the_side->Add(getPtrNode(n+ny+1));
+         The_side.Add(getPtrNode(n));
+         The_side.Add(getPtrNode(n+ny+1));
          n += ny + 1;
-         the_side->setNbDOF(1);
-         the_side->setCode(1,-cyN);
+         The_side.setNbDOF(1);
+         The_side.setCode(1,-cyN);
          Add(the_side);
       }
    }
    NumberEquations();
    mesh_elements(*this)
-      theMaterial.check(the_element->getCode());
+      theMaterial.check(The_element.getCode());
 }
 
 
@@ -723,7 +723,7 @@ Mesh::Mesh(real_t xmin,
          x.x = xmin;
          for (size_t i=0; i<=nx; i++) {
             the_node = new Node(++n,x);
-            the_node->setNbDOF(1);
+            The_node.setNbDOF(1);
             _code[0] = 0;
             if (j==0  && cy0>0) _code[0] = cy0;
             if (j==ny && cyN>0) _code[0] = cyN;
@@ -796,48 +796,48 @@ Mesh::Mesh(real_t xmin,
    n = 1;
    for (size_t j=1; j<=ny; j++) {
       the_side = new Side(is++,LINE);
-      the_side->Add(getPtrNode(n));
-      the_side->Add(getPtrNode(n+1));
+      The_side.Add(getPtrNode(n));
+      The_side.Add(getPtrNode(n+1));
       n++;
       the_side->setNbDOF(1);
       if (cy0<0) {
-         the_side->setCode(1,-cy0);
+         The_side.setCode(1,-cy0);
          Add(the_side);
       }
    }
    n = nx*(ny+1) + 1;
    for (size_t j=1; j<=ny; j++) {
       the_side = new Side(is++,LINE);
-      the_side->Add(getPtrNode(n));
-      the_side->Add(getPtrNode(n+1));
+      The_side.Add(getPtrNode(n));
+      The_side.Add(getPtrNode(n+1));
       n++;
-      the_side->setNbDOF(1);
+      The_side.setNbDOF(1);
       if (cyN<0) {
-         the_side->setCode(1,-cyN);
+         The_side.setCode(1,-cyN);
          Add(the_side);
       }
    }
    n = 1;
    for (size_t i=1; i<=nx; i++) {
       the_side = new Side(is++,LINE);
-      the_side->Add(getPtrNode(n));
-      the_side->Add(getPtrNode(n+ny+1));
+      The_side.Add(getPtrNode(n));
+      The_side.Add(getPtrNode(n+ny+1));
       n += ny + 1;
-      the_side->setNbDOF(1);
+      The_side.setNbDOF(1);
       if (cx0<0) {
-         the_side->setCode(1,-cx0);
+         The_side.setCode(1,-cx0);
          Add(the_side);
       }
    }
    n = ny + 1;
    for (size_t i=1; i<=nx; i++) {
       the_side = new Side(is++,LINE);
-      the_side->Add(getPtrNode(n));
-      the_side->Add(getPtrNode(n+ny+1));
+      The_side.Add(getPtrNode(n));
+      The_side.Add(getPtrNode(n+ny+1));
       n += ny + 1;
-      the_side->setNbDOF(1);
+      The_side.setNbDOF(1);
       if (cxN<0) {
-         the_side->setCode(1,-cxN);
+         The_side.setCode(1,-cxN);
          Add(the_side);
       }
    }
@@ -876,7 +876,7 @@ Mesh::Mesh(const Mesh& ms)
 
 // Insert sides
    mesh_sides(ms)
-      Add(new Side(side_label,The_side.getShape()));
+      Add(new Side(The_side));
    
    if (ms._node_in_coarse_element.size()>0) {
       for (size_t i=0; i<_nb_nodes; i++)
@@ -1015,7 +1015,7 @@ Mesh::~Mesh()
 {
    if (_verb>2)
       cout << "Removing Mesh instance ..." << endl;
-   for (size_t i=0; i<_nodes.size(); i++) {
+   /*   for (size_t i=0; i<_nodes.size(); i++) {
       if (_nodes[i])
          delete _nodes[i];
    }
@@ -1030,7 +1030,7 @@ Mesh::~Mesh()
    for (size_t i=0; i<_edges.size(); i++) {
       if (_edges[i])
          delete _edges[i];
-   }
+         }*/
 }
 
 
@@ -1797,9 +1797,9 @@ int Mesh::getAllSides(int opt)
          size_t i1 = The_element(nsd[i][0])->n(),
                 i2 = The_element(nsd[i][1])->n(),
                 i3 = 0, i4 = 0;
-         if (ns > 2)
+         if (ns>2)
             i3 = The_element(nsd[i][2])->n();
-         if (ns > 3)
+         if (ns>3)
             i4 = The_element(nsd[i][3])->n();
          ND ssd(i1,i2,i3,i4);
          ssd.e1 = element_label, ssd.e2 = 0;

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -161,9 +161,14 @@ void getBamg(string file,
                x.y = ff.getD();
                x.z = 0.;
                mark = ff.getI();
+               if (mark<0)
+                  mark = 0;
                nd = new Node(i+1,x);
                nd->setNbDOF(nb_dof);
-               DOFCode(mark, nb_dof, code);
+               for (size_t i=0; i<nb_dof; i++)
+                  if (code[i]<0)
+                     code[i] = 0;
+               DOFCode(mark,nb_dof,code);
                nd->setDOF(first_dof,nb_dof);
                nd->setCode(code);
                mesh.Add(nd);
@@ -177,6 +182,10 @@ void getBamg(string file,
                ii = ff.getI();
                jj = ff.getI();
                mark = ff.getI();
+               if (mark<0)
+                  mark = -mark;
+               else
+                  mark = 0;
                sd = new Side(n+1,LINE);
                sd->Add(mesh[ii]);
                sd->Add(mesh[jj]);

@@ -1227,7 +1227,7 @@ long Triangles::SplitInternalEdgeWithBorderVertices()
                      if (nbv<nbvx) {
                         vertices[nbv].r = P;
                         vertices[nbv++].m = Metric(0.5,v0.m,0.5,v1.m);
-                        vertices[nbv].ReferenceNumber=0;
+                        vertices[nbv].ReferenceNumber = 0;
                         vertices[nbv].DirOfSearch = NoDirOfSearch;
                      }
                      NbSplitEdge++;

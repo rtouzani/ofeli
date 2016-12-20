@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin16.0.0
-host_triplet = i386-apple-darwin16.0.0
+build_triplet = i386-apple-darwin16.1.0
+host_triplet = i386-apple-darwin16.1.0
 subdir = src/equations
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -109,7 +109,7 @@ libequations_a_DEPENDENCIES = cl/libcl.a \
 	electromagnetics/libelectromagnetics.a fluid/libfluid.a \
 	interface/libinterface.a laplace/liblaplace.a \
 	porous/libporous.a solid/libsolid.a therm/libtherm.a
-am_libequations_a_OBJECTS =
+am_libequations_a_OBJECTS = DG.$(OBJEXT)
 libequations_a_OBJECTS = $(am_libequations_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -126,18 +126,19 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)/include
 depcomp =
 am__depfiles_maybe =
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_$(V))
-am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
-am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
-CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_$(V))
-am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
-am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
+CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+AM_V_CXX = $(am__v_CXX_$(V))
+am__v_CXX_ = $(am__v_CXX_$(AM_DEFAULT_VERBOSITY))
+am__v_CXX_0 = @echo "  CXX     " $@;
+am__v_CXX_1 = 
+CXXLD = $(CXX)
+CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
+	-o $@
+AM_V_CXXLD = $(am__v_CXXLD_$(V))
+am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CXXLD_0 = @echo "  CXXLD   " $@;
+am__v_CXXLD_1 = 
 SOURCES = $(libequations_a_SOURCES)
 DIST_SOURCES = $(libequations_a_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
@@ -286,10 +287,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin16.0.0
+build = i386-apple-darwin16.1.0
 build_alias = 
 build_cpu = i386
-build_os = darwin16.0.0
+build_os = darwin16.1.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -297,10 +298,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin16.0.0
+host = i386-apple-darwin16.1.0
 host_alias = 
 host_cpu = i386
-host_os = darwin16.0.0
+host_os = darwin16.1.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -328,8 +329,9 @@ top_srcdir = ../..
 noinst_LIBRARIES = libequations.a
 AUTOMAKE_OPTIONS = no-dependencies
 SUBDIRS = cl electromagnetics fluid interface laplace porous solid therm
-libequations_a_SOURCES = 
-libequations_a_LIBADD = cl/libcl.a \
+libequations_a_SOURCES = DG.cpp
+libequations_a_LIBADD = \
+			cl/libcl.a \
 			electromagnetics/libelectromagnetics.a \
 			fluid/libfluid.a \
 			interface/libinterface.a \
@@ -341,6 +343,7 @@ libequations_a_LIBADD = cl/libcl.a \
 all: all-recursive
 
 .SUFFIXES:
+.SUFFIXES: .cpp .o .obj
 $(srcdir)/Makefile.in: # $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -384,6 +387,12 @@ mostlyclean-compile:
 
 distclean-compile:
 	-rm -f *.tab.c
+
+.cpp.o:
+	$(AM_V_CXX)$(CXXCOMPILE) -c -o $@ $<
+
+.cpp.obj:
+	$(AM_V_CXX)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run 'make' without going through this Makefile.

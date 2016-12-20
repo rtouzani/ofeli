@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -71,6 +71,9 @@ class OptSolver
 
  public:
 
+/*! \enum OptMethod
+ * \brief Choose optimization algorithm
+ */
    enum OptMethod {
       GRADIENT             = 0,   /*!< Gradient method                                  */
       TRUNCATED_NEWTON     = 1,   /*!< Truncated Newton method                          */

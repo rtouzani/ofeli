@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -87,7 +87,7 @@ class Reconstruction
  *  @param [out] v Vect instance that contains on output smoothed field
  */
     void P0toP1(const Vect<real_t>& u,
-                      Vect<real_t>& v);
+                Vect<real_t>&       v);
 
 /** \brief Smooth an Discontinuous P1 field to obtain a nodewise (Continuous P<sub>1</sub>)
  *  field by L<sup>2</sup> projection
@@ -96,7 +96,7 @@ class Reconstruction
  *  @warning This function is valid for P<sub>1</sub> triangles (2-D) only.
  */
     void DP1toP1(const Vect<real_t>& u,
-                       Vect<real_t>& v);
+                 Vect<real_t>&       v);
 
     friend class Mesh;
 

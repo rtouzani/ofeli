@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -81,16 +81,16 @@ private:
 
    Mesh *_mesh;
    real_t _average;
-   void elementT3(const Vect<real_t>&         u,
-                        Vect<real_t>&         M,
-                        Vect<Point<real_t> >& b);
+   void elementT3(const Vect<real_t>&   u,
+                  Vect<real_t>&         M,
+                  Vect<Point<real_t> >& b);
 };
 
 
 /// \fn ostream& operator<<(ostream& s, const Estimator &r)
 /// \ingroup Equation
 /// \brief Output estimator vector in output stream
-ostream& operator<<(      ostream&   s,
+ostream& operator<<(ostream&         s,
                     const Estimator& r);
 
 } /* namespace OFELI */

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
    cout << "\n";
    cout << "===========================================================================\n";
    cout << "g2m, A Program to generate 2-D meshes\n";
-   cout << "g2m, version 2.0, Copyright (c) 1998 - 2016  Rachid Touzani\n";
+   cout << "g2m, version 2.0, Copyright (c) 1998 - 2017  Rachid Touzani\n";
    cout << "---------------------------------------------------------------------------\n";
    cout << "This program is free software: you can redistribute it and/or modify\n";
    cout << "it under the terms of the GNU Lesser General Public License as published by\n";

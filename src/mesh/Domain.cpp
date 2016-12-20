@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -286,6 +286,7 @@ void Domain::insertLine(size_t n1,
    Ln ll;
    ll.n1 = n1; ll.n2 = n2;
    ll.Dcode = dc; ll.Ncode = nc;
+   _mark.push_back(dc);
    ll.nb = 2;
    ll.node.push_back(_v[n1-1]);
    ll.node.push_back(_v[n2-1]);
@@ -312,6 +313,7 @@ int Domain::getLine()
    ll.n1 = n1, ll.n2 = n2;
    ll.Dcode = _ff->getI("Dirichlet Code: ");
    ll.Ncode = _ff->getI("Neumann Code: ");
+   _mark.push_back(ll.Dcode);
    ll.nb = 2;
    ll.node.push_back(_v[n1-1]);
    //   Vertex v;
@@ -370,7 +372,7 @@ void Domain::insertCircle(size_t n1,
 
 void Domain::getCircle()
 {
-   size_t nb=36;
+   size_t nb = 36;
    size_t n1 = _ff->getI("First end vertex: ");
    Ln ln;
    Vertex v;
@@ -401,8 +403,7 @@ void Domain::getCircle()
    ln.Ncode = _ff->getI("Neumann Code: ");
 
    real_t h = _v[n1-1].h;
-   Point<real_t> cc(_v[n3-1]);
-   Point<real_t> a1=_v[n1-1]-cc, a2=_v[n2-1]-cc;
+   Point<real_t> cc(_v[n3-1]), a1=_v[n1-1]-cc, a2=_v[n2-1]-cc;
    real_t r = sqrt((a1,a1));
    real_t theta1 = atan2(a1.y,a1.x), theta2 = atan2(a2.y,a2.x);
    real_t theta = theta1;
@@ -533,8 +534,8 @@ void Domain::insertHole(const vector<size_t>& h)
    for (size_t i=0; i<nb; i++)
       hh.line.push_back(h[i]);
    for (size_t i=0; i<nb-1; i++) {
-      size_t n1 = hh.line[i], n2 = hh.line[i+1];
-      size_t i1 = _l[n1-1].n2, i2 = _l[n2-1].n1;
+      size_t n1=hh.line[i], n2=hh.line[i+1];
+      size_t i1=_l[n1-1].n2, i2=_l[n2-1].n1;
       try {
          if (i1 != i2)
             THROW_RT("insertHole(vector<size_t>): Lines " + itos(n1) + " and " + itos(n2) +
@@ -558,8 +559,8 @@ int Domain::getHole()
       hh.line[i] = _ff->getI("Line Label: ");
 
    for (size_t i=0; i<size_t(nb-1); i++) {
-      size_t n1 = hh.line[i], n2 = hh.line[i+1];
-      size_t i1 = _l[n1-1].n2, i2 = _l[n2-1].n1;
+      size_t n1=hh.line[i], n2=hh.line[i+1];
+      size_t i1=_l[n1-1].n2, i2=_l[n2-1].n1;
       try {
          if (i1 != i2)
             THROW_RT("getHole(): Lines " + itos(n1) + " and " + itos(n2) + " are not correctly connected.");
@@ -1261,7 +1262,7 @@ int Domain::saveAsEasymesh()
          nb = _l[n-1].nb;
          dc = _l[n-1].Dcode; nc = _l[n-1].Ncode;
          if (i==0)
-           kl0 = kl + 1;
+            kl0 = kl + 1;
          _ln[kl].i = kl + 1;
          _ln[kl].dc = dc; _ln[kl].nc = nc;
          mf << kl << ": " << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << "  "
@@ -1543,7 +1544,7 @@ Domain &Domain::operator*=(real_t a)
 void Domain::genGeo(string file)
 {
    ofstream mf(file.c_str());
-    
+
    mf << "MeshVersionFormatted 0" << endl;
    mf << "Dimension  2" << endl;
    mf << "AngleOfCornerBound 46" << endl;
@@ -1599,7 +1600,50 @@ void Domain::genMesh(string geo_file,
    main_bamg(geo_file,bamg_file);
    _theMesh = new Mesh;
    getBamg(bamg_file,*_theMesh,_nb_dof);
+   removeUnusedNodes();
    _theMesh->put(mesh_file);
+}
+
+
+void Domain::removeUnusedNodes()
+{
+   Mesh ms(*_theMesh);
+   vector<int> used(_theMesh->getNbNodes());
+   vector<Node *> nd(_theMesh->getNbNodes());
+   Clear(used);
+   MESH_EL {
+      for (size_t i=1; i<=TheElement.getNbNodes(); i++)
+         used[TheElement(i)->n()-1]++;
+   }
+   delete _theMesh;
+
+   _theMesh = new Mesh;
+   _theMesh->setDim(ms.getDim());
+   size_t n=0;
+   for (size_t i=1; i<=ms.getNbNodes(); i++) {
+      size_t in=ms[i]->n()-1;
+      nd[in] = NULL;
+      if (used[in]>0) {
+         nd[in] = ms[in+1];
+         nd[in]->setLabel(++n);
+         _theMesh->Add(nd[in]);
+      }
+   }
+   MeshElements(ms) {
+      Element *el = new Element(theElementLabel,TheElement.getShape(),TheElement.getCode());
+      for (size_t i=1; i<=TheElement.getNbNodes(); i++)
+         el->Add(nd[TheElement(i)->n()-1]);
+      _theMesh->Add(el);
+   }
+   MeshSides(ms) {
+      Side *sd = new Side(theSideLabel,TheSide.getShape());
+      for (size_t i=1; i<=TheSide.getNbNodes(); i++)
+         sd->Add(nd[TheSide(i)->n()-1]);
+      sd->setNbDOF(TheSide.getNbDOF());
+      for (size_t i=1; i<=sd->getNbDOF(); i++)
+         sd->setCode(i,TheSide.getCode(i));
+      _theMesh->Add(sd);
+   }
 }
 
 
@@ -1609,8 +1653,8 @@ void Domain::genMesh()
    _geo_file = prefix + ".geo";
    _bamg_file = prefix + ".bamg";
    genMesh(_geo_file,_bamg_file,prefix+".m");
-   
 }
+
 
 void Domain::genMesh(const string& file)
 {

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -60,68 +60,68 @@ using std::unique;
 
 
 /// Set simple skyline structure of matrix (for node based unknowns)
-    size_t SimpleSkyline(const Mesh&           mesh,
-                               vector<size_t>& ch);
+    size_t SimpleSkyline(const Mesh&     mesh,
+                         vector<size_t>& ch);
 
 /// Set skyline structure of matrix (for node based unknowns)
-    size_t NodeSkyline(const Mesh&           mesh,
-                             vector<size_t>& ch);
+    size_t NodeSkyline(const Mesh&     mesh,
+                       vector<size_t>& ch);
 
 /// Set skyline structure of matrix (for node based unknowns and selected DOF)
-    size_t NodeSkyline(const Mesh&           mesh,
-                             vector<size_t>& ch,
-                             size_t          dof1,
-                             size_t          dof2);
+    size_t NodeSkyline(const Mesh&     mesh,
+                       vector<size_t>& ch,
+                       size_t          dof1,
+                       size_t          dof2);
 
 /// Set skyline structure of matrix (for node based unknowns)
-    size_t NodeSkyline(const Mesh&           mesh,
-                             vector<size_t>& ch,
-                             size_t          dof);
+    size_t NodeSkyline(const Mesh&     mesh,
+                       vector<size_t>& ch,
+                       size_t          dof);
 
 /// Set skyline structure of matrix (for side based unknowns)
-    size_t SideSkyline(const Mesh&           mesh,
-                             vector<size_t>& ch);
+    size_t SideSkyline(const Mesh&     mesh,
+                       vector<size_t>& ch);
 
 /// Set skyline structure of matrix (for side based unknowns)
-    size_t SideSkyline(const Mesh& m,
-                             vector<size_t>& ch,
-                             size_t          dof1,
-                             size_t          dof2);
+    size_t SideSkyline(const Mesh&     m,
+                       vector<size_t>& ch,
+                       size_t          dof1,
+                       size_t          dof2);
 
 /// Set skyline structure of matrix (for side based unknowns)
-    size_t SideSkyline(const Mesh&           mesh,
-                             vector<size_t>& ch,
-                             size_t          dof);
+    size_t SideSkyline(const Mesh&     mesh,
+                       vector<size_t>& ch,
+                       size_t          dof);
 
 /// Set skyline structure of matrix (for element based unknowns)
-    size_t ElementSkyline(const Mesh&           mesh,
-                                vector<size_t>& ch);
+    size_t ElementSkyline(const Mesh&     mesh,
+                          vector<size_t>& ch);
 
 /// Set skyline structure of matrix (for element based unknowns)
-    size_t ElementSkyline(const Mesh&           mesh,
-                                vector<size_t>& ch,
-                                size_t          dof);
+    size_t ElementSkyline(const Mesh&     mesh,
+                          vector<size_t>& ch,
+                          size_t          dof);
 
 /// Set a simple graph of matrix (for node based unknowns)
-    size_t SimpleGraph(const Mesh&           mesh,
-                             vector<long>&   xadj,
-                             vector<size_t>& adjncy);
+    size_t SimpleGraph(const Mesh&     mesh,
+                       vector<long>&   xadj,
+                       vector<size_t>& adjncy);
 
 /// Set graph of matrix (for node based unknowns)
-    size_t NodeGraph(const Mesh&           mesh,
-                           vector<size_t>& row_ptr,
-                           vector<size_t>& col_ind,
-                           vector<RC>&     IJ,
-                           vector<size_t>& nbc);
+    size_t NodeGraph(const Mesh&     mesh,
+                     vector<size_t>& row_ptr,
+                     vector<size_t>& col_ind,
+                     vector<RC>&     IJ,
+                     vector<size_t>& nbc);
 
 /// Set graph of matrix (for node based unknowns)
-    size_t NodeGraph(const Mesh&           mesh,
-                           size_t          dof1,
-                           size_t          dof2,
-                           vector<size_t>& row_ptr,
-                           vector<size_t>& col_ind,
-                           vector<RC>&     IJ,
-                           vector<size_t>& nbc);
+    size_t NodeGraph(const Mesh&     mesh,
+                     size_t          dof1,
+                     size_t          dof2,
+                     vector<size_t>& row_ptr,
+                     vector<size_t>& col_ind,
+                     vector<RC>&     IJ,
+                     vector<size_t>& nbc);
 
 /// Set graph of matrix (for side based unknowns)
     size_t SideGraph(const Mesh&           mesh,
@@ -131,63 +131,63 @@ using std::unique;
                            vector<size_t>& nbc);
 
 /// Set graph of matrix (for side based unknowns)
-    size_t SideGraph(const Mesh&           mesh,
-                           size_t          dof1,
-                           size_t          dof2,
-                           vector<size_t>& row_ptr,
-                           vector<size_t>& col_ind,
-                           vector<RC>&     IJ,
-                           vector<size_t>& nbc);
+    size_t SideGraph(const Mesh&     mesh,
+                     size_t          dof1,
+                     size_t          dof2,
+                     vector<size_t>& row_ptr,
+                     vector<size_t>& col_ind,
+                     vector<RC>&     IJ,
+                     vector<size_t>& nbc);
 
 /// Set graph of matrix (for element based unknowns)
-    size_t ElementGraph(const Mesh&           mesh,
-                              vector<size_t>& row_ptr,
-                              vector<size_t>& col_ind,
-                              vector<RC>&     IJ,
-                              vector<size_t>& nbc);
-
-/// Set graph of matrix (for side/node coupling)
-    size_t SideNodeGraph(const Mesh&           m,
-                               vector<size_t>& row_ptr,
-                               vector<size_t>& col_ind,
-                               vector<RC>&     IJ,
-                               vector<size_t>& nbc);
-
-/// Set graph of matrix (for side/node coupling)
-    size_t NodeSideGraph(const Mesh&           mesh,
-                               vector<size_t>& row_ptr,
-                               vector<size_t>& col_ind,
-                               vector<RC>&     IJ,
-                               vector<size_t>& nbc);
-
-    size_t NodeGraphScal(const Mesh&           mesh,
-                               vector<size_t>& row_ptr,
-                               vector<size_t>& col_ind,
-                               vector<RC>&     IJ,
-                               vector<size_t>& nbc);
-
-    size_t NodeGraphScal(const Mesh&           mesh,
-                               size_t          dof,
-                               size_t          nb_eq,
-                               vector<size_t>& row_ptr,
-                               vector<size_t>& col_ind,
-                               vector<RC>&     IJ,
-                               vector<size_t>& nbc);
-
-    size_t XGraph(const Mesh&           mesh,
+    size_t ElementGraph(const Mesh&     mesh,
                         vector<size_t>& row_ptr,
                         vector<size_t>& col_ind,
                         vector<RC>&     IJ,
                         vector<size_t>& nbc);
 
+/// Set graph of matrix (for side/node coupling)
+    size_t SideNodeGraph(const Mesh&     m,
+                         vector<size_t>& row_ptr,
+                         vector<size_t>& col_ind,
+                         vector<RC>&     IJ,
+                         vector<size_t>& nbc);
+
+/// Set graph of matrix (for side/node coupling)
+    size_t NodeSideGraph(const Mesh&     mesh,
+                         vector<size_t>& row_ptr,
+                         vector<size_t>& col_ind,
+                         vector<RC>&     IJ,
+                         vector<size_t>& nbc);
+
+    size_t NodeGraphScal(const Mesh&     mesh,
+                         vector<size_t>& row_ptr,
+                         vector<size_t>& col_ind,
+                         vector<RC>&     IJ,
+                         vector<size_t>& nbc);
+
+    size_t NodeGraphScal(const Mesh&     mesh,
+                         size_t          dof,
+                         size_t          nb_eq,
+                         vector<size_t>& row_ptr,
+                         vector<size_t>& col_ind,
+                         vector<RC>&     IJ,
+                         vector<size_t>& nbc);
+
+    size_t XGraph(const Mesh&     mesh,
+                  vector<size_t>& row_ptr,
+                  vector<size_t>& col_ind,
+                  vector<RC>&     IJ,
+                  vector<size_t>& nbc);
+
 /// Set graph of matrix (for DG P0/P0 matrix)
-    size_t DG0Graph(const Mesh&           m,
-                          vector<RC>&     I,
-                          vector<size_t>& nbc);
+    size_t DG0Graph(const Mesh&     m,
+                    vector<RC>&     I,
+                    vector<size_t>& nbc);
 
 /// Set graph of matrix for DG matrix
-    size_t DGGraph(const Mesh&       m,
-    	                 vector<RC>& I);
+    size_t DGGraph(const Mesh& m,
+    	             vector<RC>& I);
 
     void StoreGraph(const vector<RC>& IJ,
                     vector<size_t>&   row_ptr,

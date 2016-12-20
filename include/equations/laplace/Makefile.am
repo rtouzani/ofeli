@@ -5,11 +5,12 @@ AUTOMAKE_OPTIONS = no-dependencies
 ssdir =		$(pkgincludedir)/equations/laplace
 
 ss_HEADERS =	Equa_Laplace.h \
-		Laplace1DL2.h \
-		Laplace1DL3.h \
-		Laplace2DT3.h \
-		Laplace3DT4.h \
-		Laplace2DMHRT0.h \
-		Laplace2DFVT.h \
-		SteklovPoincare2DBE.h
+					Laplace1DL2.h \
+					Laplace1DL3.h \
+					Laplace2DT3.h \
+					Laplace3DT4.h \
+					Laplace2DMHRT0.h \
+					Laplace2DFVT.h \
+					LaplaceDG2DP1.h \
+					SteklovPoincare2DBE.h
 

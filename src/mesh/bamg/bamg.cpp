@@ -82,7 +82,7 @@ int main_bamg(string input_file,
    strcpy(argv[5],"-v");
    strcpy(argv[6],"0");
 
-   for (i=1; i<argc; i++)
+   for (i=1; i<argc; i++) {
       if (!strcmp(argv[i],"-v") && ++i<argc)
          verbosity = atoi(argv[i]);
       else if (!strcmp(argv[i],"-NoRescaling")) 
@@ -283,6 +283,7 @@ int main_bamg(string input_file,
          cout << endl;
          exit(3);
       }
+   }
 
 // some verification
    NoMeshReconstruction = fmeshr != 0;
@@ -406,11 +407,11 @@ int main_bamg(string input_file,
             delete [] solMBB, solMBB = NULL;
       }
       BTh.IntersectGeomMetric(errg,iso);
-      if (ratio) 
+      if (ratio)
          BTh.SmoothMetric(ratio);
       BTh.MaxSubDivision(maxsubdiv);
 
-      if (iso) 
+      if (iso)
          anisomax = 1;
       BTh.BoundAnisotropy(anisomax,hminaniso);
       if (foM) {
@@ -428,9 +429,9 @@ int main_bamg(string input_file,
             else
                Thr = new Triangles(fmeshr,cutoffradian), Thb=&BTh;
          }
-         Triangles & Th( *(NoMeshReconstruction 
-                         ? new Triangles(*Thr,&Thr->Gh,Thb,nbvx)
-                         : new Triangles(nbvx,BTh,KeepBackVertices)));
+         Triangles& Th( *(NoMeshReconstruction 
+                        ? new Triangles(*Thr,&Thr->Gh,Thb,nbvx)
+                        : new Triangles(nbvx,BTh,KeepBackVertices)));
          if (Thr != &BTh)
             delete Thr;
          if (costheta<=1.0)

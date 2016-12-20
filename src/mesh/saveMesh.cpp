@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 1998 - 2016 Rachid Touzani
+    Copyright (C) 1998 - 2017 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                   Functions to save mesh in various file formats
+                 Functions to save mesh in various file formats
 
   ==============================================================================*/
 

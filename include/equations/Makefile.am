@@ -6,6 +6,7 @@ SUBDIRS = cl electromagnetics fluid interface laplace solid therm porous
 
 ssdir = $(pkgincludedir)/equations
 
-ss_HEADERS =	AbsEqua.h \
-		Equation.h \
-		EquaUtil.h
+ss_HEADERS =	DG.h \
+					AbsEqua.h \
+					Equation.h \
+					EquaUtil.h

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -168,7 +168,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  the same contents more than once and are not necessarily ordered
  */
     SpMatrix(const vector<RC>& I,
-                   int         opt=1);
+             int               opt=1);
 #endif
 
 #ifndef USE_EIGEN
@@ -182,7 +182,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
  */
     SpMatrix(const vector<RC>& I,
              const vector<T_>& a,
-                   int         opt=1);
+             int               opt=1);
 #endif
 
 #ifndef USE_EIGEN
@@ -192,8 +192,8 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [in] row_ptr Vector of row pointers (See the above description of this class).
  *  @param [in] col_ind Vector of column indices (See the above description of this class).\n
  */
-    SpMatrix(      size_t          nr,
-                   size_t          nc,
+    SpMatrix(size_t                nr,
+             size_t                nc,
              const vector<size_t>& row_ptr,
              const vector<size_t>& col_ind);
 #endif
@@ -205,8 +205,8 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [in] col_ind Vector of column indices (See the above description of this class).\n
  *  @param [in] a vector instance containing matrix entries stored columnwise
  */
-    SpMatrix(      size_t          nr,
-                   size_t          nc,
+    SpMatrix(size_t                nr,
+             size_t                nc,
              const vector<size_t>& row_ptr,
              const vector<size_t>& col_ind,
              const vector<T_>&     a);
@@ -330,8 +330,8 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [in,out] b Vect instance that contains right-hand side.
  *  @param [in] u Vect instance that conatins imposed valued at DOFs where they are to be imposed.
  */
-    void DiagPrescribe(      Mesh&     mesh,
-                             Vect<T_>& b,
+    void DiagPrescribe(Mesh&           mesh,
+                       Vect<T_>&       b,
                        const Vect<T_>& u);
 
 /** \brief Impose by a diagonal method an essential boundary condition using the Mesh instance
@@ -344,7 +344,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [in,out] b Vect instance that contains right-hand side.
  *  @param [in] u Vect instance that conatins imposed valued at DOFs where they are to be imposed.
  */
-    void DiagPrescribe(      Vect<T_>& b,
+    void DiagPrescribe(Vect<T_>&       b,
                        const Vect<T_>& u);
 
 /// \brief Set size of matrix (case where it's a square matrix).
@@ -365,7 +365,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  the same contents more than once and are not necessarily ordered
  */
     void setGraph(const vector<RC>& I,
-                        int         opt=1);
+                  int               opt=1);
 
 /// \brief Get <tt>i</tt>-th row vector.
     Vect<T_> getRow(size_t i) const;
@@ -421,37 +421,37 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [out] w Vector that contains on output the result.
  */
     void Mult(const Vect<T_>& v,
-                    Vect<T_>& w) const;
+              Vect<T_>&       w) const;
 
 /** \brief Multiply matrix by vector <tt>x</tt> and add to <tt>y</tt>.
  *  @param [in] x Vector to multiply by matrix
  *  @param [out] y Vector to add to the result. <tt>y</tt> contains on output the result.
  */
     void MultAdd(const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /** \brief Multiply matrix by vector <tt>a*x</tt> and add to <tt>y</tt>.
  *  @param [in] a Constant to multiply by matrix
  *  @param [in] x Vector to multiply by matrix
  *  @param [out] y Vector to add to the result. <tt>y</tt> contains on output the result.
  */
-    void MultAdd(      T_        a,
+    void MultAdd(T_              a,
                  const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /** \brief Multiply transpose of matrix by vector <tt>x</tt> and save in <tt>y</tt>.
  *  @param [in] x Vector to multiply by matrix
  *  @param [out] y Vector that contains on output the result.
  */
     void TMult(const Vect<T_>& x,
-                     Vect<T_>& y) const;
+               Vect<T_>&       y) const;
    
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_            a,
+    void Axpy(T_                  a,
               const SpMatrix<T_>& m);
 
 /** \brief Add to matrix the product of a matrix by a scalar
@@ -459,7 +459,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [in] m Pointer to Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_          a,
+    void Axpy(T_                a,
               const Matrix<T_>* m) { }
 
 /** \brief Assign a value to an entry of the matrix
@@ -467,18 +467,18 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [in] j Column index
  *  @param [in] val Value to assign to <tt>a(i,j)</tt>
  */
-    void set(      size_t i,
-                   size_t j,
-             const T_&    val);
+    void set(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /** \brief Add a value to an entry of the matrix
  *  @param [in] i Row index
  *  @param [in] j Column index
  *  @param [in] val Constant value to add to <tt>a(i,j)</tt>
  */
-    void add(      size_t i,
-                   size_t j,
-             const T_&    val);
+    void add(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /// \brief Operator =.
 /// \details Assign constant value <tt>x</tt> to all matrix entries.
@@ -504,7 +504,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  <tt>n</tt> if the <tt>n</tt>-th pivot is null.
  */
     int DILUFactorize(vector<size_t>& id,
-		      vector<T_>&     pivot) const;
+                      vector<T_>&     pivot) const;
 
 /** \brief Perform an Incomplete LU factorization of matrix
  *  \return Return <tt>0</tt> if the factorization was normally achieved,
@@ -519,21 +519,21 @@ template<class T_> class SpMatrix : public Matrix<T_>
     void DILUSolve(const vector<size_t>& id,
                    const vector<T_>&     pivot,
                    const Vect<T_>&       b,
-                         Vect<T_>&       x) const;
+                   Vect<T_>&             x) const;
 
 /** \brief Solve a linear system with an incompletely factorized matrix
  *  @param [in] b Vect instance containing the right-hand side
  *  @param [out] x Vect instance containing on output the solution
  */
     void ILUSolve(const Vect<T_>& b,
-                        Vect<T_>& x) const;
+                  Vect<T_>&       x) const;
 
 /** \brief Solve a linear system with an incompletely factorized matrix
  *  @param [in] b Vect instance containing the right-hand side
  *  @param [out] x Vect instance containing on output the solution
  */
     void SSORSolve(const Vect<T_>& b,
-                         Vect<T_>& x) const;
+                   Vect<T_>&       x) const;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Solve the linear system of equations.
@@ -565,7 +565,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @return Number of actual performed iterations 
  */
     int solve(const Vect<T_>& b,
-                    Vect<T_>& x);
+              Vect<T_>&       x);
 
 /** \brief Choose solver and preconditioner for an iterative procedure
  *  @param [in] solver Option to choose iterative solver in an enumerated variable
@@ -1132,11 +1132,10 @@ template<class T_>
 void SpMatrix<T_>::setGraph(const vector<RC>& I,
                             int               opt)
 {
-   size_t i;
    _length = I.size();
    _nb_rows = _nb_cols = 0;
-   _IJ.resize(I.size());
-   for (i=0; i<_length; i++) {
+   _IJ.resize(_length);
+   for (size_t i=0; i<_length; i++) {
       _nb_rows = std::max(_nb_rows,I[i].first);
       _nb_cols = std::max(_nb_cols,I[i].second);
       _IJ[i] = RC(I[i].first-1,I[i].second-1);
@@ -1150,17 +1149,7 @@ void SpMatrix<T_>::setGraph(const vector<RC>& I,
    _length = _IJ.size();
    _row_ptr.resize(_size+1);
    _col_ind.resize(_length);
-   for (size_t i=0; i<_size; i++)
-      _row_ptr[i] = 0;
-   for (size_t j=0; j<_length; j++) {
-      _row_ptr[_IJ[j].first]++;
-      _col_ind[j] = _IJ[j].second + 1;
-   }
-   for (size_t k=1; k<_size; k++)
-      _row_ptr[k] += _row_ptr[k-1];
-   for (int ii=_size; ii>0; ii--)
-      _row_ptr[ii] = _row_ptr[ii-1] + 1;
-   _row_ptr[0] = 0;
+   StoreGraph(_IJ,_row_ptr,_col_ind);
 #ifdef USE_EIGEN
    for (size_t i=0; i<_row_ptr.size()-1; i++)
       _nbc.push_back(_row_ptr[i+1]-_row_ptr[i]);
@@ -1526,11 +1515,7 @@ Vect<T_> SpMatrix<T_>::operator*(const Vect<T_>& x) const
    for (size_t i=0; i<_length; i++)
       y[_IJ[i].first] += _A.coeff(_IJ[i].first,_IJ[i].second)*x[_IJ[i].second];
 #else
-   size_t l=0;
-   for (size_t i=0; i<_nb_rows; ++i) {
-      for (size_t j=0; j<_row_ptr[i+1]-_row_ptr[i]; ++j)
-         y[i] += _a[_row_ptr[i]+j] * x[_col_ind[l++]-1];
-   }
+   Mult(x,y);
 #endif
    return y;
 }
@@ -1647,7 +1632,7 @@ void SpMatrix<T_>::set(size_t    i,
    int k=_col_index(i,j);
    try { 
       if (k<0)
-         THROW_RT("set(i,j,x): Index pair : (" + itos(int(i)) + "," + itos(int(j)) + ") is not compatible "
+         THROW_RT("set(i,j,x): Index pair (" + itos(int(i)) + "," + itos(int(j)) + ") is not compatible "
                   "with sparse storage.");
       else
          _a[_row_ptr[i-1]+k] = val;

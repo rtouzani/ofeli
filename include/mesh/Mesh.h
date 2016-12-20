@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -132,8 +132,8 @@ class Mesh
  */
     Mesh(const string& file,
          bool          bc=false,
-	 int           opt=NODE_DOF,
-	 int           nb_dof=1);
+         int           opt=NODE_DOF,
+         int           nb_dof=1);
 
 /** \brief Constructor for a 1-D mesh.
  *  The domain is the interval [0,L]

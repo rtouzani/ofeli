@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -39,7 +39,7 @@
 namespace OFELI {
 
 void Reconstruction::P0toP1(const Vect<real_t>& u,
-                                  Vect<real_t>& v)
+                            Vect<real_t>&       v)
 {
    size_t nb_dof = u.getNbDOF();
    v.setSize(_theMesh->getNbNodes(),nb_dof);
@@ -109,34 +109,30 @@ void Reconstruction::P0toP1(const Vect<real_t>& u,
 
 
 void Reconstruction::DP1toP1(const Vect<real_t>& u,
-                                   Vect<real_t>& v)
+                             Vect<real_t>&       v)
 {
    _M.setSize(_theMesh->getNbNodes());
    _M = 0;
-   size_t nb_dof = u.getNbDOF();
-   v.setSize(_theMesh->getNbNodes(),nb_dof);
    v = 0;
-   mesh_elements(*_theMesh) {
-      size_t n = element_label;
+   MESH_EL {
+      size_t n = theElementLabel;
       try {
-         if (_theMesh->getDim()==2 && the_element->getShape()==TRIANGLE) {
-            real_t a = OFELI_THIRD*Triang3(the_element).getArea();
-            real_t b = 0.25*a;
-            size_t n1 = The_element(1)->n(), n2 = The_element(2)->n(), n3 = The_element(3)->n();
-            _M.add(n1,a);
-            _M.add(n2,a);
-            _M.add(n3,a);
-            v.add(n1,b*(2*u(n,1)+u(n,2)+u(n,3)));
-            v.add(n2,b*(u(n,1)+2*u(n,2)+u(n,3)));
-            v.add(n3,b*(u(n,1)+u(n,2)+2*u(n,3)));
+         if (_theMesh->getDim()==2 && TheElement.getShape()==TRIANGLE) {
+            real_t a = Triang3(theElement).getArea();
+            _M(TheElement(1)->n()) += a;
+            _M(TheElement(2)->n()) += a;
+            _M(TheElement(3)->n()) += a;
+            v(TheElement(1)->n()) += 0.25*a*(2*u(n,1) + u(n,2) + u(n,3));
+            v(TheElement(2)->n()) += 0.25*a*(2*u(n,2) + u(n,3) + u(n,1));
+            v(TheElement(3)->n()) += 0.25*a*(2*u(n,3) + u(n,1) + u(n,2));
          }
          else
-            THROW_RT("DP1toP1(...): Not valid for element:" + itos(n));
+            THROW_RT("DP1toP1(...): Not valid for element: " + itos(n));
       }
       CATCH("Reconstruction");
    }
-   mesh_nodes(*_theMesh)
-      v(node_label) /= _M(node_label);
+   for (size_t i=1; i<=_theMesh->getNbNodes(); i++)
+      v(i) /= _M(i);
 }
 
 } /* namespace OFELI */

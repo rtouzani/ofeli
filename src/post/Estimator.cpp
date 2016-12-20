@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -61,9 +61,9 @@ void Estimator::setError(const Vect<real_t>& u)
 }
 
 
-void Estimator::elementT3(const Vect<real_t>&         u,
-                                Vect<real_t>&         M,
-                                Vect<Point<real_t> >& b)
+void Estimator::elementT3(const Vect<real_t>&   u,
+                          Vect<real_t>&         M,
+                          Vect<Point<real_t> >& b)
 {
    Vect<Point<real_t> > Du(*_mesh,0,ELEMENT_DOF);
    size_t k, n, nb=u.getNbDOF();
@@ -113,7 +113,7 @@ void Estimator::elementT3(const Vect<real_t>&         u,
 }
 
 
-ostream& operator<<(      ostream&   s,
+ostream& operator<<(ostream&         s,
                     const Estimator& r)
 {
    s << "LOCAL ERROR INFORMATION" << endl << endl;
@@ -123,7 +123,7 @@ ostream& operator<<(      ostream&   s,
       s << setw(6) << element_label << "   ";
       s << setprecision(8) << setw(18) << r.Err(element_label) << endl;
    }
-   s << endl << "Average Error : " << r.getAverage() << endl;
+   s << endl << "Average Error: " << r.getAverage() << endl;
    s << "Relative Errors in Elements" << endl << endl;
    mesh_nodes(r.getMesh()) {
       s << setw(6) << element_label << "   ";

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2017 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -289,6 +289,7 @@ private:
    vector<LP> _ln;
    vector<size_t> _v_label, _l_label, _h_label;
    vector<size_t> _required_vertex, _required_edge;
+   vector<int> _mark;
    size_t _dim, _nb_vertices, _nb_lines, _nb_contours, _nb_holes, _sub_domain;
    size_t _nb_dof, _nb_required_vertices, _nb_required_edges, _nb_sub_domains;
    size_t _ret_cont, _ret_line, _ret_save, _ret_sd;
@@ -314,6 +315,7 @@ private:
    void gm1();
    void gm2();
    void gm3();
+   void removeUnusedNodes();
    int remove(size_t          item,
               size_t&         length,
               vector<size_t>& set);
