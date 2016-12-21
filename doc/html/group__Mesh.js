@@ -594,6 +594,7 @@ var group__Mesh =
     [ "operator<<", "group__Mesh.html#gaf9b09b452f388266880ddea6e252fc84", null ],
     [ "operator<<", "group__Mesh.html#gaf7ef339dbd0f05fdf9898d60a3828381", null ],
     [ "operator&&", "group__Mesh.html#gae87aa9fb0bfb847d62e55e09af615143", null ],
+    [ "operator||", "group__Mesh.html#ga30ab6256f4524f01f0d6671a85f099c9", null ],
     [ "operator-", "group__Mesh.html#gaa0af2abfee4aabcdc0158974eff61547", null ],
     [ "operator<<", "group__Mesh.html#ga00741e0b93b5ca44406b8415d9c7b623", null ],
     [ "operator<<", "group__Mesh.html#gad2fa9fa8df6ed7cf1f2e116e0f5a3523", null ],

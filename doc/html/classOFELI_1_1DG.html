@@ -28,7 +28,7 @@
   <ul class="tablist">
    <li><a href="../index.html"><span>Home</span></a>
     <li><a href="../overview.html"><span>Overview</span></a>
-    <li><a href="extlib.html"><span>External Libraries</span></a>
+    <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
     <li><a href="../tutorial.html"><span>Tutorial</span></a>
@@ -40,7 +40,16 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -55,18 +64,84 @@
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dir_d3ef26f298dd93bbdf1855c71a6f7281.html','');});
+$(document).ready(function(){initNavTree('classOFELI_1_1DG.html','');});
 </script>
 <div id="doc-content">
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classOFELI_1_1DG-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">lesson4 Directory Reference</div>  </div>
+<div class="title">DG Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Enables preliminary operations and utilities for the Discontinous Galerkin method.  
+ <a href="classOFELI_1_1DG.html#details">More...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for DG:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="classOFELI_1_1DG.png" usemap="#DG_map" alt=""/>
+  <map id="DG_map" name="DG_map">
+<area href="classOFELI_1_1LaplaceDG2DP1.html" title="To build and solve the linear system for the Poisson problem using the DG P1 2-D triangle element..." alt="LaplaceDG2DP1" shape="rect" coords="0,56,106,80"/>
+</map>
+ </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aeb953cf746c1b45576cb767cefcbe81f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DG.html#aeb953cf746c1b45576cb767cefcbe81f">DG</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;ms, size_t degree=1)</td></tr>
+<tr class="memdesc:aeb953cf746c1b45576cb767cefcbe81f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with mesh and degree of the method.  <a href="#aeb953cf746c1b45576cb767cefcbe81f">More...</a><br /></td></tr>
+<tr class="separator:aeb953cf746c1b45576cb767cefcbe81f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bab5798fe4280f5dd2631cd81f2549f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bab5798fe4280f5dd2631cd81f2549f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DG.html#a6bab5798fe4280f5dd2631cd81f2549f">~DG</a> ()</td></tr>
+<tr class="memdesc:a6bab5798fe4280f5dd2631cd81f2549f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a6bab5798fe4280f5dd2631cd81f2549f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac48e824f9733572fae5f1b012bb69c44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac48e824f9733572fae5f1b012bb69c44"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DG.html#ac48e824f9733572fae5f1b012bb69c44">setGraph</a> ()</td></tr>
+<tr class="memdesc:ac48e824f9733572fae5f1b012bb69c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix graph. <br /></td></tr>
+<tr class="separator:ac48e824f9733572fae5f1b012bb69c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Enables preliminary operations and utilities for the Discontinous Galerkin method. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aeb953cf746c1b45576cb767cefcbe81f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1DG.html">DG</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td>
+          <td class="paramname"><em>ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>degree</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor with mesh and degree of the method. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ms</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">degree</td><td>Polynomial degree of the <a class="el" href="classOFELI_1_1DG.html" title="Enables preliminary operations and utilities for the Discontinous Galerkin method. ">DG</a> method [Default: <code>1</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 
@@ -188,7 +263,7 @@ Files</h2></td></tr>
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2017 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

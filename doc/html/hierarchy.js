@@ -96,6 +96,9 @@ var hierarchy =
       ] ]
     ] ],
     [ "BiotSavart", "classOFELI_1_1BiotSavart.html", null ],
+    [ "DG", "classOFELI_1_1DG.html", [
+      [ "LaplaceDG2DP1", "classOFELI_1_1LaplaceDG2DP1.html", null ]
+    ] ],
     [ "Domain", "classOFELI_1_1Domain.html", null ],
     [ "Edge", "classOFELI_1_1Edge.html", null ],
     [ "EdgeList", "classOFELI_1_1EdgeList.html", null ],
@@ -187,6 +190,5 @@ var hierarchy =
     [ "UserData< T_ >", "classOFELI_1_1UserData.html", null ],
     [ "Vect< T_ >", "classOFELI_1_1Vect.html", null ],
     [ "Point< real_t >", "structOFELI_1_1Point.html", null ],
-    [ "UserData< double >", "classOFELI_1_1UserData.html", null ],
     [ "Vect< real_t >", "classOFELI_1_1Vect.html", null ]
 ];

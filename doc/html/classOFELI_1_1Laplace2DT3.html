@@ -28,7 +28,7 @@
   <ul class="tablist">
    <li><a href="../index.html"><span>Home</span></a>
     <li><a href="../overview.html"><span>Overview</span></a>
-    <li><a href="extlib.html"><span>External Libraries</span></a>
+    <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
     <li><a href="../tutorial.html"><span>Tutorial</span></a>
@@ -40,6 +40,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
     </ul>
   </div>
@@ -104,6 +105,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afa9e37015733a19abe2b38ed870bb686"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Laplace2DT3.html#afa9e37015733a19abe2b38ed870bb686">Laplace2DT3</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;ms, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
 <tr class="memdesc:afa9e37015733a19abe2b38ed870bb686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh and solution vector.  <a href="#afa9e37015733a19abe2b38ed870bb686">More...</a><br /></td></tr>
 <tr class="separator:afa9e37015733a19abe2b38ed870bb686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae625c2192b7751caf2b3cb82d56163a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Laplace2DT3.html#ae625c2192b7751caf2b3cb82d56163a3">Laplace2DT3</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;ms, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;Dbc, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;Nbc, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
+<tr class="memdesc:ae625c2192b7751caf2b3cb82d56163a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that solves a standard Poisson equation.  <a href="#ae625c2192b7751caf2b3cb82d56163a3">More...</a><br /></td></tr>
+<tr class="separator:ae625c2192b7751caf2b3cb82d56163a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae14ee5a9a190b5322e5aa4c11d62bb10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae14ee5a9a190b5322e5aa4c11d62bb10"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Laplace2DT3.html#ae14ee5a9a190b5322e5aa4c11d62bb10">Laplace2DT3</a> (<a class="el" href="classOFELI_1_1Element.html">Element</a> *el)</td></tr>
 <tr class="memdesc:ae14ee5a9a190b5322e5aa4c11d62bb10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an element. <br /></td></tr>
@@ -420,6 +424,62 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ms</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Problem right-hand side </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae625c2192b7751caf2b3cb82d56163a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1Laplace2DT3.html">Laplace2DT3</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td>
+          <td class="paramname"><em>ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Dbc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Nbc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>u</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor that solves a standard Poisson equation. </p>
+<p>This constructor builds and solves the linear system of equations. The solved problem is the Poisson equation with mixed (Dirichlet and Neumann) boundary conditions. The finite element linear system is solved by the preconditioned (DILU, Diagonal ILU preconditioner) Conjugate Gradient method. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ms</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Vector containing the source term (right-hand side of the equation) at mesh nodes </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Dbc</td><td>Vector containing prescribed values of the solution (Dirichlet boundary condition) at nodes with positive code. Its size is the total number of nodes </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Nbc</td><td>Vector containing prescribed fluxes (Neumann boundary conditions) at sides, its size is the total number of sides </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">u</td><td>Vector containing finite element solution at nodes </td></tr>
   </table>
   </dd>
 </dl>
@@ -2348,7 +2408,7 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2017 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

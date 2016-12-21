@@ -262,21 +262,11 @@ class TimeStepping
  *  classes
  *  @param [in] sd Reference to Side class
  *  @param [in] b Pointer to side right-hand side
- *  @param [in] A Pointer to matrix
-e)
- *  [Default: <tt>NULL</tt>]
-
+ *  @param [in] A Pointer to matrix [Default: <tt>NULL</tt>]
  */
     void SAssembly(const Side& sd,
                    real_t*     b,
                    real_t*     A=NULL);
-
-/** \brief Set the differential system as nonlinear
- *  \details By default, the differential system is considered as linear. This
- *  function enables also selecting the iterative procedure to linearize if necessary
- *  @param [in] opt Flag to select a nonlineary differential system
- */
-    void setNonLinear(int opt) { _non_linear = opt; }
 
 //-----------------------------   INSPECTORS  ----------------------------------
 

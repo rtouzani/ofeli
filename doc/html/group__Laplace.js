@@ -322,6 +322,7 @@ var group__Laplace =
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#af62a1b268971f05194f9d2874be2eaee", null ],
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#ac8e104036329d6ad5f25e7ef005161bb", null ],
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#afa9e37015733a19abe2b38ed870bb686", null ],
+      [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#ae625c2192b7751caf2b3cb82d56163a3", null ],
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#ae14ee5a9a190b5322e5aa4c11d62bb10", null ],
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#ad961b8fb352a262a1af98a33ba431667", null ],
       [ "~Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#a51b53313df382865d371677bcd2a4e08", null ],
@@ -387,6 +388,16 @@ var group__Laplace =
       [ "eRHS", "classOFELI_1_1Laplace2DT3.html#adcc60b1ce1fc1e1fac565ee33dbd0275", null ],
       [ "eRes", "classOFELI_1_1Laplace2DT3.html#a77c1b06813b364b23e485536ff560ac1", null ],
       [ "sRHS", "classOFELI_1_1Laplace2DT3.html#a9c5c653e8a1a6a05ff3264117b29ab2d", null ]
+    ] ],
+    [ "LaplaceDG2DP1", "classOFELI_1_1LaplaceDG2DP1.html", [
+      [ "LaplaceDG2DP1", "classOFELI_1_1LaplaceDG2DP1.html#a589d1190bb5758b3313f9e6f3883ff06", null ],
+      [ "~LaplaceDG2DP1", "classOFELI_1_1LaplaceDG2DP1.html#ab3eebcf1c4438c9d61753c660c2454e1", null ],
+      [ "set", "classOFELI_1_1LaplaceDG2DP1.html#aab2ca661840b8b0b504a193da13f89c1", null ],
+      [ "set", "classOFELI_1_1LaplaceDG2DP1.html#af074042967d78df0c3563eaeee640ae3", null ],
+      [ "build", "classOFELI_1_1LaplaceDG2DP1.html#a7740c7ab195c03ac140f1f75f633470f", null ],
+      [ "Smooth", "classOFELI_1_1LaplaceDG2DP1.html#a8f985f95ecbc78b165e7225321ad7256", null ],
+      [ "run", "classOFELI_1_1LaplaceDG2DP1.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
+      [ "setGraph", "classOFELI_1_1LaplaceDG2DP1.html#ac48e824f9733572fae5f1b012bb69c44", null ]
     ] ],
     [ "SteklovPoincare2DBE", "classOFELI_1_1SteklovPoincare2DBE.html", [
       [ "SteklovPoincare2DBE", "classOFELI_1_1SteklovPoincare2DBE.html#a9eb689bc7d6a0c6aeaa8733b3aea86fb", null ],

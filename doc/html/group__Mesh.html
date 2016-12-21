@@ -28,7 +28,7 @@
   <ul class="tablist">
    <li><a href="../index.html"><span>Home</span></a>
     <li><a href="../overview.html"><span>Overview</span></a>
-    <li><a href="extlib.html"><span>External Libraries</span></a>
+    <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
     <li><a href="../tutorial.html"><span>Tutorial</span></a>
@@ -40,6 +40,7 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
     </ul>
   </div>
@@ -257,6 +258,9 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memitem:gae87aa9fb0bfb847d62e55e09af615143"><td class="memItemLeft" align="right" valign="top">Figure&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gae87aa9fb0bfb847d62e55e09af615143">operator&amp;&amp;</a> (const Figure &amp;f1, const Figure &amp;f2)</td></tr>
 <tr class="memdesc:gae87aa9fb0bfb847d62e55e09af615143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to define a <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance as the intersection of two <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instances.  <a href="group__Mesh.html#gae87aa9fb0bfb847d62e55e09af615143">More...</a><br /></td></tr>
 <tr class="separator:gae87aa9fb0bfb847d62e55e09af615143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30ab6256f4524f01f0d6671a85f099c9"><td class="memItemLeft" align="right" valign="top">Figure&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#ga30ab6256f4524f01f0d6671a85f099c9">operator||</a> (const Figure &amp;f1, const Figure &amp;f2)</td></tr>
+<tr class="memdesc:ga30ab6256f4524f01f0d6671a85f099c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to define a <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance as the union of two <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instances.  <a href="group__Mesh.html#ga30ab6256f4524f01f0d6671a85f099c9">More...</a><br /></td></tr>
+<tr class="separator:ga30ab6256f4524f01f0d6671a85f099c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa0af2abfee4aabcdc0158974eff61547"><td class="memItemLeft" align="right" valign="top">Figure&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gaa0af2abfee4aabcdc0158974eff61547">operator-</a> (const Figure &amp;f1, const Figure &amp;f2)</td></tr>
 <tr class="memdesc:gaa0af2abfee4aabcdc0158974eff61547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to define a <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance as the set subtraction of two <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instances.  <a href="group__Mesh.html#gaa0af2abfee4aabcdc0158974eff61547">More...</a><br /></td></tr>
 <tr class="separator:gaa0af2abfee4aabcdc0158974eff61547"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -664,7 +668,42 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>Function to define a <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance as the intersection of two <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instances. </p>
-<p>Function to define a <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance as the union of two <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instances.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f1</td><td>First <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">f2</td><td>Second <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Updated resulting <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga30ab6256f4524f01f0d6671a85f099c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Figure operator|| </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Figure.html">Figure</a> &amp;&#160;</td>
+          <td class="paramname"><em>f1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Figure.html">Figure</a> &amp;&#160;</td>
+          <td class="paramname"><em>f2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to define a <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance as the union of two <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instances. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">f1</td><td>First <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information. ">Figure</a> instance </td></tr>
@@ -1975,7 +2014,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2017 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>
