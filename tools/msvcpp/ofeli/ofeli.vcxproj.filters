@@ -671,6 +671,12 @@
     <ClInclude Include="..\..\..\include\solvers\EigenProblemSolver.h">
       <Filter>Headers\solvers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\laplace\LaplaceDG2DP1.h">
+      <Filter>Headers\equations\laplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\equations\DG.h">
+      <Filter>Headers\equations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\util\Gauss.cpp">
@@ -1113,6 +1119,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\solvers\EigenProblemSolver.cpp">
       <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\DG.cpp">
+      <Filter>Source Files\equations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\equations\laplace\LaplaceDG2DP1.cpp">
+      <Filter>Source Files\equations\laplace</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

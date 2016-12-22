@@ -33,6 +33,7 @@
     <ClInclude Include="..\..\..\include\equations\cl\Muscl1D.h" />
     <ClInclude Include="..\..\..\include\equations\cl\Muscl2DT.h" />
     <ClInclude Include="..\..\..\include\equations\cl\Muscl3DT.h" />
+    <ClInclude Include="..\..\..\include\equations\DG.h" />
     <ClInclude Include="..\..\..\include\equations\electromagnetics\BiotSavart.h" />
     <ClInclude Include="..\..\..\include\equations\electromagnetics\EC2D1T3.h" />
     <ClInclude Include="..\..\..\include\equations\electromagnetics\EC2D2T3.h" />
@@ -58,6 +59,7 @@
     <ClInclude Include="..\..\..\include\equations\laplace\Laplace2DFVT.h" />
     <ClInclude Include="..\..\..\include\equations\laplace\Laplace2DMHRT0.h" />
     <ClInclude Include="..\..\..\include\equations\laplace\Laplace2DT3.h" />
+    <ClInclude Include="..\..\..\include\equations\laplace\LaplaceDG2DP1.h" />
     <ClInclude Include="..\..\..\include\equations\laplace\SteklovPoincare2DBE.h" />
     <ClInclude Include="..\..\..\include\equations\solid\Bar2DL2.h" />
     <ClInclude Include="..\..\..\include\equations\solid\Beam3DL2.h" />
@@ -211,6 +213,7 @@
     <ClCompile Include="..\..\..\src\equations\cl\Muscl1D.cpp" />
     <ClCompile Include="..\..\..\src\equations\cl\Muscl2DT.cpp" />
     <ClCompile Include="..\..\..\src\equations\cl\Muscl3DT.cpp" />
+    <ClCompile Include="..\..\..\src\equations\DG.cpp" />
     <ClCompile Include="..\..\..\src\equations\electromagnetics\BiotSavart.cpp" />
     <ClCompile Include="..\..\..\src\equations\electromagnetics\EC2D1T3.cpp" />
     <ClCompile Include="..\..\..\src\equations\electromagnetics\EC2D2T3.cpp" />
@@ -231,6 +234,7 @@
     <ClCompile Include="..\..\..\src\equations\laplace\Laplace2DFVT.cpp" />
     <ClCompile Include="..\..\..\src\equations\laplace\Laplace2DMHRT0.cpp" />
     <ClCompile Include="..\..\..\src\equations\laplace\Laplace2DT3.cpp" />
+    <ClCompile Include="..\..\..\src\equations\laplace\LaplaceDG2DP1.cpp" />
     <ClCompile Include="..\..\..\src\equations\laplace\SteklovPoincare2DBE.cpp" />
     <ClCompile Include="..\..\..\src\equations\solid\Bar2DL2.cpp" />
     <ClCompile Include="..\..\..\src\equations\solid\Beam3DL2.cpp" />

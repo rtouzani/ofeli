@@ -34,6 +34,7 @@
 		<Unit filename="../../include/config.h" />
 		<Unit filename="../../include/datadir.h" />
 		<Unit filename="../../include/equations/AbsEqua.h" />
+		<Unit filename="../../include/equations/DG.h" />
 		<Unit filename="../../include/equations/EquaUtil.h" />
 		<Unit filename="../../include/equations/Equation.h" />
 		<Unit filename="../../include/equations/cl/ICPG1D.h" />
@@ -69,6 +70,7 @@
 		<Unit filename="../../include/equations/laplace/Laplace2DFVT.h" />
 		<Unit filename="../../include/equations/laplace/Laplace2DMHRT0.h" />
 		<Unit filename="../../include/equations/laplace/Laplace2DT3.h" />
+		<Unit filename="../../include/equations/laplace/LaplaceDG2DP1.h" />
 		<Unit filename="../../include/equations/laplace/SteklovPoincare2DBE.h" />
 		<Unit filename="../../include/equations/solid/Bar2DL2.h" />
 		<Unit filename="../../include/equations/solid/Beam3DL2.h" />
@@ -209,6 +211,7 @@
 		<Unit filename="../../include/util/macros.h" />
 		<Unit filename="../../include/util/qksort.h" />
 		<Unit filename="../../include/util/util.h" />
+		<Unit filename="../../src/equations/DG.cpp" />
 		<Unit filename="../../src/equations/cl/ICPG1D.cpp" />
 		<Unit filename="../../src/equations/cl/ICPG2DT.cpp" />
 		<Unit filename="../../src/equations/cl/ICPG3DT.cpp" />
@@ -239,6 +242,7 @@
 		<Unit filename="../../src/equations/laplace/Laplace2DFVT.cpp" />
 		<Unit filename="../../src/equations/laplace/Laplace2DMHRT0.cpp" />
 		<Unit filename="../../src/equations/laplace/Laplace2DT3.cpp" />
+		<Unit filename="../../src/equations/laplace/LaplaceDG2DP1.cpp" />
 		<Unit filename="../../src/equations/laplace/SteklovPoincare2DBE.cpp" />
 		<Unit filename="../../src/equations/solid/Bar2DL2.cpp" />
 		<Unit filename="../../src/equations/solid/Beam3DL2.cpp" />
