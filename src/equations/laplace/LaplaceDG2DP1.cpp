@@ -185,8 +185,7 @@ void LaplaceDG2DP1::build()
 int LaplaceDG2DP1::run()
 {
    build();
-   solve();
-   return 0;
+   return solve();
 }
 
 

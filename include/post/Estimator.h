@@ -56,20 +56,31 @@ class Estimator
 
  public:
 
+/*! \enum ESTIMATOR_TYPE
+ * Enumerate variable that selects an error estimator for mesh adaptation purposes
+ */
+enum EstimatorType {
+   ESTIM_ZZ      =  0,    /*!< Zhu-Zienckiewicz elementwise estimator     */
+   ESTIM_ND_JUMP =  1     /*!< Normal derivative jump sidewise estimator  */
+};
+
 /// \brief Default Constructor
     Estimator() { }
 
-/// \brief Constructor using finite element mesh.
-    Estimator(Mesh& m);
+/** \brief Constructor using finite element mesh and elementwise estimator
+ *  @param [in,out] e Vector that contains once the member function setError is invoked
+ *  a posteriori estimator at each element
+ */
+    Estimator(Mesh&         m,
+              Vect<real_t>& e);
 
 /// \brief Destructor
     ~Estimator() { }
 
+    void setType(EstimatorType t=ESTIM_ZZ);
+
 /// \brief Calculate error using Vect solution vector \a u.
     void setError(const Vect<real_t>& u);
-
-/// \brief Elementwise vector error.
-    Vect<real_t> Err;
 
 /// \brief Return averaged error.
     real_t getAverage() const { return _average; }
@@ -77,13 +88,20 @@ class Estimator
 /// \brief Return a reference to the finite element mesh.
     Mesh& getMesh() const { return *_mesh; }
 
+    friend ostream& operator<<(ostream& s, const Estimator& r);
+
 private:
 
+   size_t _nb_el, _nb_sd, _nb_nd;
    Mesh *_mesh;
    real_t _average;
-   void elementT3(const Vect<real_t>&   u,
-                  Vect<real_t>&         M,
-                  Vect<Point<real_t> >& b);
+   Vect<real_t> *_est;
+   Vect<Point<real_t> > _N;
+   EstimatorType _est_type;
+   void elementT3_ZZ(const Vect<real_t>&   u,
+                     Vect<real_t>&         M,
+                     Vect<Point<real_t> >& b);
+   void elementT3_ND_JUMP(const Vect<real_t>& u);
 };
 
 

@@ -67,14 +67,11 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
             : Equation<real_t,3,3,2,2>(ms)
 {
    _bf = &b;
-   _u = &b;
+   _u = &u;
    _bc_given = true;
    _bc = &Dbc;
    _sf = &Nbc;
    _A = new SpMatrix<real_t>(*_theMesh);
-   build();
-   solve(u);
-   delete _A;
 }
 
 
@@ -131,7 +128,7 @@ void Laplace2DT3::build()
    MESH_SD {
       set(theSide);
       BoundaryRHS(*_sf);
-      SideAssembly(*_u);
+      SideAssembly(*_b);
    }
 }
 
@@ -159,13 +156,22 @@ void Laplace2DT3::buildEigen(int opt)
 
 int Laplace2DT3::solve(Vect<real_t>& u)
 {
-   Vect<real_t> x(_A->size());
+   Vect<real_t> x(_b->size());
    LinearSolver<real_t> ls(*_A,*_b,x);
    ls.setTolerance(1.e-7);
    int nb_it = ls.solve(CG_SOLVER,DILU_PREC);
    u.insertBC(*_theMesh,x,*_bc);
    delete _b;
    return nb_it;
+}
+
+
+int Laplace2DT3::run()
+{
+   build();
+   int n = solve(*_u);
+   delete _A;
+   return n;
 }
 
 

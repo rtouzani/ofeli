@@ -14,4 +14,4 @@ clean:
 	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
 
 .c.o:
-	`ofeli-config --cc` `ofeli-config --cflags` -c $<
+	`ofeli-config --cc`  `ofeli-config --cflags` -c $<

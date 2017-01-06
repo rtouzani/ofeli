@@ -794,16 +794,16 @@ class Vect
  *  <tt>TETRA4</tt>, <tt>HEXA8</tt>, <tt>PENTA6</tt>
  */
     real_t getAverage(const Element& el,
-                            int      type) const;
+                      int            type) const;
 
 /** \brief Save vector in a file according to a given format
  *  @param [in] file Output file where to save the vector
  *  @param [in] opt Option to choose file format to save. This is to be chosen
  *  among enumerated values: <tt>GMSH</tt>, <tt>GNUPLOT</tt>, <tt>MATLAB</tt>,
- *  <tt>TECPLOT</tt> and <tt>VTK</tt>
+ *  <tt>TECPLOT</tt> and <tt>VTK</tt> (Default: <tt>GMSH</tt>)
  */
    void save(string file,
-             int    opt);
+             int    opt=GMSH);
    
 /** \brief Multiply by a constant then add to a vector.
  *  @param [in] x Vect instance to add
@@ -817,7 +817,7 @@ class Vect
  *  @param [in] x Vect instance by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_        a,
+    void Axpy(T_              a,
               const Vect<T_>& x);
 
 /// \brief Assign a value to an entry for a 1-D vector
@@ -1183,9 +1183,9 @@ Vect<T_>::Vect(const Element*  el,
 #if !defined (USE_EIGEN)
           vector<T_>(),
 #endif
-           _nx(el->getNbNodes()), _ny(v._ny), _nz(1),
-           _nb(el->getNbNodes()), _nb_dof(v._nb_dof), _dg_degree(-1),
-           _grid(false), _with_mesh(false), _name(v._name), _time(v._time)
+          _nx(el->getNbNodes()), _ny(v._ny), _nz(1),
+          _nb(el->getNbNodes()), _nb_dof(v._nb_dof), _dg_degree(-1),
+          _grid(false), _with_mesh(false), _name(v._name), _time(v._time)
 {
    setSize(_nx,_ny);
    for (size_t n=1; n<=el->getNbNodes(); ++n) {
@@ -1245,8 +1245,8 @@ Vect<T_>::Vect(const Vect<T_>& v,
 
 template<class T_>
 Vect<T_>::Vect(const Vect<T_>& v,
-                     size_t    nb_dof,
-                     size_t    first_dof)
+               size_t          nb_dof,
+               size_t          first_dof)
          : _size(v._size), _nx(v._nx), _ny(v._ny), _nz(v._nz),
            _nb(v._nb), _dof_type(v._dof_type), _nb_dof(v._nb_dof),
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
@@ -1357,8 +1357,7 @@ void Vect<T_>::setMesh(Mesh&  m,
    else if (dof_type==ELEMENT_FIELD || dof_type==ELEMENT_DOF)
       _nb = _theMesh->getNbElements();
    if (nb_dof==0)
-      _nb_dof = n/_nb;
-   _size = _nb_dof * _nb;
+      _nb_dof = n/_theMesh->getNbNodes();
    setSize(_nb,_nb_dof,1);
    clear();
 }
@@ -1716,7 +1715,7 @@ T_ Vect<T_>::getMax() const
 template<class T_>
 void Vect<T_>::removeBC(const Mesh&     ms,
                         const Vect<T_>& v,
-                              int       dof)
+                        int             dof)
 {
    if (dof==0) {
       size_t n = 1;
@@ -1993,7 +1992,7 @@ void Vect<T_>::insertBC(Mesh&                m,
       if (m.NodesAreDOF()) {
          mesh_nodes(m) {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
-	       set(i,0);
+               set(i,0);
                if (The_node.getCode(k)==0)
                   set(i,v(The_node.getDOF(k)));
                i++;

@@ -82,11 +82,8 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
     Laplace2DT3(Mesh&         ms,
                 Vect<real_t>& b);
 
-/** \brief Constructor that solves a standard Poisson equation
- *  \details This constructor builds and solves the linear system of equations. The solved
- *  problem is the Poisson equation with mixed (Dirichlet and Neumann) boundary conditions.
- *  The finite element linear system is solved by the preconditioned (DILU, Diagonal ILU 
- *  preconditioner) Conjugate Gradient method.
+/** \brief Constructor that initializes a standard Poisson equation
+ *  \details This constructor sets data for the Poisson equation with mixed (Dirichlet and Neumann) boundary conditions.
  *  @param [in] ms Mesh instance
  *  @param [in] b Vector containing the source term (right-hand side of the equation) at
  *  mesh nodes
@@ -94,7 +91,7 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
  *  boundary condition) at nodes with positive code. Its size is the total number of nodes
  *  @param [in] Nbc Vector containing prescribed fluxes (Neumann boundary conditions)
  *  at sides, its size is the total number of sides
- *  @param [out] u Vector containing finite element solution at nodes 
+ *  @param [in] u Vector to contain the finite element solution at nodes once the member function run() is called.
  */
     Laplace2DT3(Mesh&         ms,
                 Vect<real_t>& b,
@@ -160,6 +157,16 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
  */
     void Axb(const Vect<real_t>& x,
              Vect<real_t>&       b);
+
+/** \brief Build and solve the linear system of equations using an iterative method.
+ *  \details The matrix is preconditioned by the diagonal ILU method.
+ *  The linear system is solved either by the Conjugate Gradient method if the matrix is symmetric
+ *  positive definite (<tt>eps=-1</tt>) or the GMRES method if not. The solution is stored in the vector
+ *  <tt>u</tt> given in the constructor.
+ *  @return Number of performed iterations. Note that the maximal number
+ *  is 1000 and the tolerance is 1.e-8
+ */
+    int run();
 
  private:
 

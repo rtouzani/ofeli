@@ -67,36 +67,49 @@ void getMesh(string             file,
 {
    switch (form) {
 
-      case OFELI_FF:    break;
+      case OFELI_FF:
+         break;
 
-      case GMSH:        getGmsh(file,mesh,nb_dof);
-                        break;
+      case GMSH:
+         getGmsh(file,mesh,nb_dof);
+         break;
 
-      case GNUPLOT:     break;
+      case GNUPLOT:
+         break;
 
-      case MATLAB:      getMatlab(file,mesh,nb_dof);
-                        break;
+      case MATLAB:
+         getMatlab(file,mesh,nb_dof);
+         break;
 
-      case VTK:         break;
+      case VTK:
+         break;
 
-      case TECPLOT:     break;
+      case TECPLOT:
+         break;
 
-      case EASYMESH:    getEasymesh(file,mesh,nb_dof);
-                        break;
-      case GAMBIT:      getGambit(file,mesh,nb_dof);
-                        break;
+      case EASYMESH:
+         getEasymesh(file,mesh,nb_dof);
+         break;
 
-      case BAMG:        getBamg(file,mesh,nb_dof);
-                        break;
+      case GAMBIT:
+         getGambit(file,mesh,nb_dof);
+         break;
 
-      case NETGEN:      getNetgen(file,mesh,nb_dof);
-                        break;
+      case BAMG:
+         getBamg(file,mesh,nb_dof);
+         break;
 
-      case TETGEN:      getTetgen(file,mesh,nb_dof);
-                        break;
+      case NETGEN:
+         getNetgen(file,mesh,nb_dof);
+         break;
 
-      case TRIANGLE_FF: getTriangle(file,mesh,nb_dof);
-                        break;
+      case TETGEN:
+         getTetgen(file,mesh,nb_dof);
+         break;
+
+      case TRIANGLE_FF:
+         getTriangle(file,mesh,nb_dof);
+         break;
    }
 }
 
@@ -165,9 +178,9 @@ void getBamg(string file,
                   mark = 0;
                nd = new Node(i+1,x);
                nd->setNbDOF(nb_dof);
-               for (size_t i=0; i<nb_dof; i++)
-                  if (code[i]<0)
-                     code[i] = 0;
+               for (size_t j=0; j<nb_dof; j++)
+                  if (code[j]<0)
+                     code[j] = 0;
                DOFCode(mark,nb_dof,code);
                nd->setDOF(first_dof,nb_dof);
                nd->setCode(code);

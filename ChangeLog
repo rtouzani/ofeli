@@ -2,7 +2,7 @@ HISTORY OF CHANGES IN OFELI
 
 
 --------------------------------------------------------------------------------------
-ofeli-3.1.0, 2017-1-3
+ofeli-3.1.0, 2017-1-6
 --------------------------------------------------------------------------------------
 * The repository is now hosted by git at: github.com/rtouzani/ofeli
 * Added: Solver for symmetric eigenvalue problems as well as demo programs to test it
