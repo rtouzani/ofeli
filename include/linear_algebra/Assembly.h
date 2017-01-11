@@ -76,7 +76,7 @@ void element_assembly(const E_&               e,
    for (size_t n=1; n<=e.getNbNodes(); n++) {
       Node *nd=e.getPtrNode(n);
       for (size_t k=1; k<=nd->getNbDOF(); k++)
-         b.add(nd->getDOF(k),be(i++));
+         b(nd->getDOF(k)) += be(i++);
    }
 }
 
@@ -98,7 +98,7 @@ void element_assembly(const E_&                    e,
       Node *nd = e.getPtrNode(n);
       for (size_t k=1; k<=nd->getNbDOF(); k++) {
          i++;
-         b.add(nd->getDOF(k),ae(i,i));
+         b(nd->getDOF(k)) += ae(i,i);
       }
    }
 }
@@ -126,7 +126,7 @@ void element_assembly(const E_&                    e,
          for (size_t jn=1; jn<=e.getNbNodes(); jn++) {
             Node *nd2=e.getPtrNode(jn);
             for (size_t l=1; l<=nd2->getNbDOF(); l++) {
-               A->add(ii,nd2->getDOF(l),ae(i,j));
+               (*A)(ii,nd2->getDOF(l)) += ae(i,j);
                j++;
             }
          }
@@ -157,7 +157,7 @@ void element_assembly(const E_&                    e,
          for (size_t jn=1; jn<=e.getNbNodes(); jn++) {
             Node *nd2 = e.getPtrNode(jn);
             for (size_t l=1; l<=nd2->getNbDOF(); l++) {
-               A.add(ii,nd2->getDOF(l),ae(i,j));
+               A(ii,nd2->getDOF(l)) += ae(i,j);
                j++;
             }
          }
@@ -189,7 +189,7 @@ void element_assembly(const E_&                    e,
                Node *nd2 = e.getPtrNode(jn);
                for (size_t l=1; l<=nd2->getNbDOF(); l++) {
                   if ((jj=nd2->getDOF(l)) > 0)
-                     A.add(ii,jj,ae(i,j));
+                     A(ii,jj) += ae(i,j);
                   j++;
                }
             }
@@ -220,7 +220,7 @@ void element_assembly(const E_&                    e,
          for (size_t jn=1; jn<=e.getNbNodes(); jn++) {
             Node *nd2 = e.getPtrNode(jn);
             for (size_t l=1; l<=nd2->getNbDOF(); l++) {
-               A.add(ii,nd2->getDOF(l),ae(i,j));
+               A(ii,nd2->getDOF(l)) += ae(i,j);
                j++;
             }
          }
@@ -245,7 +245,7 @@ void side_assembly(const E_&               e,
 {
    size_t i = 1;
    for (size_t n=1; n<=N_; n++)
-      b.add(e.getNodeLabel(n),be(i++));
+      b(e.getNodeLabel(n)) += be(i++);
 }
 
 
@@ -262,7 +262,7 @@ void side_assembly(const E_&                    e,
                    Vect<T_>&                    b)
 {
    for (size_t n=1; n<=N_; n++)
-      b.add(e.getNodeLabel(n),ae(n,n));
+      b(e.getNodeLabel(n)) += ae(n,n);
 }
 
 
@@ -284,7 +284,7 @@ void side_assembly(const E_&                    e,
       for (size_t jn=1; jn<=N_; jn++) {
          size_t jj = e.getNodeLabel(jn);
          if (ii >= jj)
-            A.add(ii,jj,ae(i,j));
+            A(ii,jj) += ae(i,j);
          j++;
       }
       i++;
@@ -315,7 +315,7 @@ void side_assembly(const Element&               e,
                Side *s2 = e.getPtrSide(m);
                for (size_t l=1; l<=s2->getNbDOF(); l++) {
                   if (s2->getDOF(l)!=0)
-                     A.add(s1->getDOF(k),s2->getDOF(l),ae(i,j));
+                     A(s1->getDOF(k),s2->getDOF(l)) += ae(i,j);
                   j++;
                }
             }
@@ -342,7 +342,7 @@ void side_assembly(const Element&               e,
                Side *s2 = e.getPtrSide(m);
                for (size_t l=1; l<=s2->getNbDOF(); l++) {
                   if (s2->getDOF(l)!=0)
-                     A->add(s1->getDOF(k),s2->getDOF(l),ae(i,j));
+                     (*A)(s1->getDOF(k),s2->getDOF(l)) += ae(i,j);
                   j++;
                }
             }
@@ -385,7 +385,7 @@ void Assembly(const Element&              el,
       for (size_t k=1; k<=nd->getNbDOF(); ++k) {
          size_t ik = nd->getNbDOF()*(i-1) + k;
          if (nd->getDOF(k)!=0)
-            b.add(nd->getDOF(k),be(ik));
+            b(nd->getDOF(k)) += be(ik);
       }
    }
 }
@@ -415,7 +415,7 @@ void side_assembly(const Element&               e,
                Side *s2 = e.getPtrSide(m);
                for (size_t l=1; l<=s2->getNbDOF(); l++) {
                   if ((jj=s2->getDOF(l)) > 0)
-                     A.add(ii,jj,ae(i,j));
+                     A(ii,jj) += ae(i,j);
                   j++;
                }
             }
@@ -450,7 +450,7 @@ void side_assembly(const Element&               e,
                for (size_t l=1; l<=s2->getNbDOF(); l++) {
                   size_t jj = s2->getDOF(l);
                   if (jj)
-                     A.add(ii,jj,ae(i,j));
+                     A(ii,jj) += ae(i,j);
                   j++;
                }
             }
@@ -478,7 +478,7 @@ void side_assembly(const Element&          e,
       Side *sd = e.getPtrSide(n);
       for (size_t k=1; k<=sd->getNbDOF(); k++) {
          if (sd->getDOF(k) != 0)
-            b.add(sd->getDOF(k),be(i));
+            b(sd->getDOF(k)) += be(i);
          i++;
       }
    }
@@ -498,8 +498,8 @@ void element_assembly(const E_& e,
       for (size_t k=1; k<=e.getNbDOF(); k++, i++, j+=nee+1) {
          size_t ii=nd->getDOF(k);
          if (ii) {
-            b.add(ii,be[i]);
-            A.add(ii,ae[j]);
+            b(ii) += be[i];
+            A(ii) += ae[j];
          }
       }
    }
@@ -515,7 +515,7 @@ void Element_Assembly(const E_&     e,
    for (size_t in=1; in<=e.getNbNodes(); in++) {
       Node *nd=e(in);
       for (size_t k=1; k<=e.getNbDOF(); k++, i++)
-         b.add(nd->getDOF(k)*(nd->n())+k,be[i]);
+         b(nd->getDOF(k)*(nd->n())+k) += be[i];
    }
 }
 
@@ -530,7 +530,7 @@ void element_assembly(const E_& e,
       Node *nd=e(in);
       for (size_t k=1; k<=e.getNbDOF(); k++, i++) {
          if (nd->getDOF(k))
-            b.add(nd->getDOF(k),be[i]);
+            b(nd->getDOF(k)) += be[i];
       }
    }
 }
@@ -543,20 +543,20 @@ void element_assembly(const E_&   e,
                       Matrix<T_>* A,
                       Vect<T_>&   b)
 {
-   size_t i=0, j=0, ii=0, jj=0;
+   size_t i=0, j=0, jj=0;
    size_t nen=e.getNbNodes(), nb_dof=e.getNbDOF();
    for (size_t in=1; in<=nen; in++) {
-      Node *nd1=e(in);
       for (size_t k=1; k<=nb_dof; k++, j++) {
-         if ((ii=nd1->getDOF(k)))
+         size_t ii = e(in)->getDOF(k);
+         if (ii>0) {
             b.add(ii,be[j]);
-         for (size_t jn=1; jn<=nen; jn++) {
-            Node *nd2=e(jn);
-            for (size_t l=1; l<=nb_dof; l++, i++) {
-               if (ii && (jj=nd2->getDOF(l)))
-                  A->add(ii,jj,ae[i]);
+            for (size_t jn=1; jn<=nen; jn++) {
+               for (size_t l=1; l<=nb_dof; l++, i++) {
+                  if ((jj=e(jn)->getDOF(l)))
+                     (*A)(ii,jj) += ae[i];
+               }
             }
-         }
+	 }
       }
    }
 }
@@ -567,17 +567,15 @@ void element_assembly(const E_&   e,
                       const T_*   ae,
                       Matrix<T_>* A)
 {
-   size_t i=0, j=0, jj=0;
+   size_t i=0, jj=0;
    size_t nen=e.getNbNodes(), nb_dof=e.getNbDOF();
    for (size_t in=1; in<=nen; in++) {
-      Node *nd1=e(in);
-      for (size_t k=1; k<=nb_dof; k++, j++) {
-         size_t ii=nd1->getDOF(k);
+      for (size_t k=1; k<=nb_dof; k++) {
+         size_t ii=e(in)->getDOF(k);
          for (size_t jn=1; jn<=nen; jn++) {
-            Node *nd2=e(jn);
             for (size_t l=1; l<=nb_dof; l++, i++) {
-               if (ii && (jj=nd2->getDOF(l)))
-                  A->add(ii,jj,ae[i]);
+               if (ii>0 && (jj=e(jn)->getDOF(l)))
+                  (*A)(ii,jj) += ae[i];    
             }
          }
       }
@@ -590,17 +588,15 @@ void element_assembly(const E_& e,
                       const T_* ae,
                       Vect<T_>* A)
 {
-   size_t i=0, j=0;
+   size_t i=0;
    size_t nen=e.getNbNodes(), nb_dof=e.getNbDOF();
    for (size_t in=1; in<=nen; in++) {
-      Node *nd1=e(in);
-      for (size_t k=1; k<=nb_dof; k++, j++) {
-         size_t ii=nd1->getDOF(k);
+      for (size_t k=1; k<=nb_dof; k++) {
+         size_t ii=e(in)->getDOF(k);
          for (size_t jn=1; jn<=nen; jn++) {
-            for (size_t l=1; l<=nb_dof; l++, i++) {
-               if (ii == e(jn)->getDOF(l))
+            for (size_t l=1; l<=nb_dof; l++, i++)
+               if ((ii>0) && (ii==e(jn)->getDOF(l)))
                   (*A)(ii) += ae[i];
-            }
          }
       }
    }

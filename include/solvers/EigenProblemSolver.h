@@ -103,7 +103,7 @@ class EigenProblemSolver
 
 /** \brief Constructor for Symmetric Skyline Matrices.
  *  @param [in] K "Stiffness" matrix
- *  @param [in] M Diagonal "Mass" matrix stored as a Vect instance
+ *  @param [in] M "Mass" matrix
  *  @param [in] n Number of eigenvalues to extract. By default all eigenvalues are 
  *  computed.
  *  \note The generalized eigenvalue problem is defined by <tt>Kx = aMx</tt>,
@@ -183,7 +183,7 @@ class EigenProblemSolver
  *  @param [in] lumped Mass matrix is lumped (\a true) or not (\a false) [Default: <tt>true</tt>]
  */
     void setPDE(AbsEqua<real_t>& eq,
-                bool              lumped=true);
+                bool             lumped=true);
 
 /** \brief Run the eigenproblem solver
  *  @param [in] nb Number of eigenvalues to be computed. By default, all eigenvalues are computed.
@@ -198,8 +198,8 @@ class EigenProblemSolver
  *  @param [in] eM Pointer to element mass (or assimilated) matrix
  */
     void Assembly(const Element& el,
-                        real_t*  eK,
-                        real_t*  eM);
+                  real_t*        eK,
+                  real_t*        eM);
 
 /** \brief Assemble side arrays into global matrix and right-hand side
  *  \details This member function is to be called from finite element equation
@@ -207,8 +207,8 @@ class EigenProblemSolver
  *  @param [in] sd Reference to Side class
  *  @param [in] sK Pointer to side stiffness
  */
-    void SAssembly(const Side&   sd,
-                         real_t* sK);
+    void SAssembly(const Side& sd,
+                   real_t*     sK);
 
 /** \brief Run the subspace iteration solver.
  *  \details This function rune the Bathe subspace iteration method.
@@ -268,7 +268,7 @@ class EigenProblemSolver
     void getEigenVector(int           n,
                         Vect<real_t>& v) const;
 
-    friend ostream & operator<<(      ostream&            s,
+    friend ostream & operator<<(ostream&                  s,
                                 const EigenProblemSolver& es);
 
  private:

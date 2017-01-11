@@ -69,8 +69,8 @@ $(document).ready(function(){initNavTree('classOFELI_1_1Estimator.html','');});
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classOFELI_1_1Estimator-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Estimator Class Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a> &raquo; <a class="el" href="group__Equation.html">General Purpose Equations</a></div></div>  </div>
@@ -80,20 +80,25 @@ $(document).ready(function(){initNavTree('classOFELI_1_1Estimator.html','');});
 <p>To calculate an a posteriori estimator of the solution.  
  <a href="classOFELI_1_1Estimator.html#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abb232095ed221e3cc2b045ff79053b51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb232095ed221e3cc2b045ff79053b51"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#abb232095ed221e3cc2b045ff79053b51">Estimator</a> ()</td></tr>
 <tr class="memdesc:abb232095ed221e3cc2b045ff79053b51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
 <tr class="separator:abb232095ed221e3cc2b045ff79053b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac75af9393b8c8d81788583aac7f1957c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac75af9393b8c8d81788583aac7f1957c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#ac75af9393b8c8d81788583aac7f1957c">Estimator</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m)</td></tr>
-<tr class="memdesc:ac75af9393b8c8d81788583aac7f1957c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using finite element mesh. <br /></td></tr>
-<tr class="separator:ac75af9393b8c8d81788583aac7f1957c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6082c5873ca1c8b6cf5b3b1482934534"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a6082c5873ca1c8b6cf5b3b1482934534">Estimator</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;e)</td></tr>
+<tr class="memdesc:a6082c5873ca1c8b6cf5b3b1482934534"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using finite element mesh and elementwise estimator.  <a href="#a6082c5873ca1c8b6cf5b3b1482934534">More...</a><br /></td></tr>
+<tr class="separator:a6082c5873ca1c8b6cf5b3b1482934534"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66fefe296cc283f479648d938ba05052"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66fefe296cc283f479648d938ba05052"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a66fefe296cc283f479648d938ba05052">~Estimator</a> ()</td></tr>
 <tr class="memdesc:a66fefe296cc283f479648d938ba05052"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:a66fefe296cc283f479648d938ba05052"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97ceb23cb630a1d1e445d786bc04edf9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a97ceb23cb630a1d1e445d786bc04edf9">setType</a> (<a class="el" href="classOFELI_1_1Estimator.html#a3d248e8029a03537eb6296f93345f51e">EstimatorType</a> t=<a class="el" href="classOFELI_1_1Estimator.html#a3d248e8029a03537eb6296f93345f51ea7794313b487e60087acd23190b1ef61d">ESTIM_ZZ</a>)</td></tr>
+<tr class="memdesc:a97ceb23cb630a1d1e445d786bc04edf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select type of a posteriori estimator.  <a href="#a97ceb23cb630a1d1e445d786bc04edf9">More...</a><br /></td></tr>
+<tr class="separator:a97ceb23cb630a1d1e445d786bc04edf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca95573e4283df6627347b119e498420"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca95573e4283df6627347b119e498420"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#aca95573e4283df6627347b119e498420">setError</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
 <tr class="memdesc:aca95573e4283df6627347b119e498420"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate error using <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> solution vector <em>u</em>. <br /></td></tr>
@@ -106,18 +111,100 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a913c6c03741d94f86d65690fd7d5902a">getMesh</a> () const </td></tr>
 <tr class="memdesc:a913c6c03741d94f86d65690fd7d5902a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to the finite element mesh. <br /></td></tr>
 <tr class="separator:a913c6c03741d94f86d65690fd7d5902a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a00369788e0e9ba4da42b728b8c46179d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a00369788e0e9ba4da42b728b8c46179d"></a>
-<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a00369788e0e9ba4da42b728b8c46179d">Err</a></td></tr>
-<tr class="memdesc:a00369788e0e9ba4da42b728b8c46179d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elementwise vector error. <br /></td></tr>
-<tr class="separator:a00369788e0e9ba4da42b728b8c46179d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>To calculate an a posteriori estimator of the solution. </p>
 <p>This class enables calculating an estimator of a solution in order to evaluate reliability. Estimation uses the so-called Zienkiewicz-Zhu estimator. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="a3d248e8029a03537eb6296f93345f51e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classOFELI_1_1Estimator.html#a3d248e8029a03537eb6296f93345f51e">EstimatorType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enumerate variable that selects an error estimator for mesh adaptation purposes </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a3d248e8029a03537eb6296f93345f51ea7794313b487e60087acd23190b1ef61d"></a>ESTIM_ZZ&#160;</td><td class="fielddoc">
+<p>Zhu-Zienckiewicz elementwise estimator </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a3d248e8029a03537eb6296f93345f51eaca80926339029dc37fa92e00a4341e99"></a>ESTIM_ND_JUMP&#160;</td><td class="fielddoc">
+<p>Normal derivative jump sidewise estimator </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a6082c5873ca1c8b6cf5b3b1482934534"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1Estimator.html">Estimator</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor using finite element mesh and elementwise estimator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">e</td><td>Vector that contains once the member function setError is invoked a posteriori estimator at each element </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a97ceb23cb630a1d1e445d786bc04edf9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Estimator.html#a3d248e8029a03537eb6296f93345f51e">EstimatorType</a>&#160;</td>
+          <td class="paramname"><em>t</em> = <code><a class="el" href="classOFELI_1_1Estimator.html#a3d248e8029a03537eb6296f93345f51ea7794313b487e60087acd23190b1ef61d">ESTIM_ZZ</a></code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Select type of a posteriori estimator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">t</td><td>Type of estimator. It has to be chosen among the enumerated values: <ul>
+<li>
+<code>ESTIM_ZZ</code>: The Zhu-Zienckiewicz estimator (Default value) </li>
+<li>
+<code>ESTIM_ND_JUMP</code>: An estimator based on the jump of normal derivatives of the solution across mesh sides </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 
 </div> <!-- class text -->

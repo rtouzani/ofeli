@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                       Implementation of class 'TimeStepping'
+                      Implementation of class 'TimeStepping'
 
   ==============================================================================*/
 
@@ -53,7 +53,7 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
       _nb_eq = _nb_eigv = n;
    _lM = new Vect<real_t>(_nb_eq);
    *_lM = 1;
-   run(n);
+   run(_nb_eigv);
 }
 
 
@@ -61,8 +61,8 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
                                        Vect<real_t>&     ev,
                                        int               n)
                    : _theEqua(NULL), _theMesh(NULL), _K(&A), _M(NULL),
-                    _K_alloc(false), _M_alloc(false), _lM_alloc(true), _diag(true),
-                    _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
+                     _K_alloc(false), _M_alloc(false), _lM_alloc(true), _diag(true),
+                     _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    _nb_eq = _nb_eigv = _K->getNbRows();
    if (n>0)
@@ -92,10 +92,9 @@ EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
                    : _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(false),
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
-   _nb_eq = _nb_eigv = _K->getNbRows();
-   if (n>0)
-      _nb_eq = _nb_eigv = n;
    setMatrix(K,M);
+   if (n==0)
+      _nb_eigv = n;
 }
 
 
@@ -105,10 +104,9 @@ EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
                    : _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(true),
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
-   _nb_eq = _nb_eigv = _K->getNbRows();
-   if (n>0)
-      _nb_eq = _nb_eigv = n;
    setMatrix(K,M);
+   if (n==0)
+      _nb_eigv = n;
 }
 
 
@@ -582,8 +580,16 @@ void EigenProblemSolver::getEigenVector(int           n,
 {
    if (n>int(_nb_eigv))
       return;
-   v.resize(_nb_eq);
-   v = _ev.getRow(n);
+   if (_theEqua) {
+      v.resize(_theMesh->getNbDOF());
+      Vect<real_t> w(_nb_eq);
+      w = _ev.getRow(n);
+      v.insertBC(*_theMesh,w);
+   }
+   else {
+      v.resize(_nb_eq);
+      v = _ev.getRow(n);
+   }
 }
 
 

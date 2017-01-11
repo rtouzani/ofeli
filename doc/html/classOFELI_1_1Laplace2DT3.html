@@ -106,7 +106,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:afa9e37015733a19abe2b38ed870bb686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh and solution vector.  <a href="#afa9e37015733a19abe2b38ed870bb686">More...</a><br /></td></tr>
 <tr class="separator:afa9e37015733a19abe2b38ed870bb686"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae625c2192b7751caf2b3cb82d56163a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Laplace2DT3.html#ae625c2192b7751caf2b3cb82d56163a3">Laplace2DT3</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;ms, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;Dbc, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;Nbc, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
-<tr class="memdesc:ae625c2192b7751caf2b3cb82d56163a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that solves a standard Poisson equation.  <a href="#ae625c2192b7751caf2b3cb82d56163a3">More...</a><br /></td></tr>
+<tr class="memdesc:ae625c2192b7751caf2b3cb82d56163a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes a standard Poisson equation.  <a href="#ae625c2192b7751caf2b3cb82d56163a3">More...</a><br /></td></tr>
 <tr class="separator:ae625c2192b7751caf2b3cb82d56163a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae14ee5a9a190b5322e5aa4c11d62bb10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae14ee5a9a190b5322e5aa4c11d62bb10"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Laplace2DT3.html#ae14ee5a9a190b5322e5aa4c11d62bb10">Laplace2DT3</a> (<a class="el" href="classOFELI_1_1Element.html">Element</a> *el)</td></tr>
@@ -147,6 +147,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a335d3f93476ec46ea3f591099398253e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Laplace2DT3.html#a335d3f93476ec46ea3f591099398253e">Axb</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
 <tr class="memdesc:a335d3f93476ec46ea3f591099398253e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the product of the stiffness matrix by a given vector.  <a href="#a335d3f93476ec46ea3f591099398253e">More...</a><br /></td></tr>
 <tr class="separator:a335d3f93476ec46ea3f591099398253e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58e8be2db2660128e4e6456a9c981fb5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Laplace2DT3.html#a58e8be2db2660128e4e6456a9c981fb5">run</a> ()</td></tr>
+<tr class="memdesc:a58e8be2db2660128e4e6456a9c981fb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build and solve the linear system of equations using an iterative method.  <a href="#a58e8be2db2660128e4e6456a9c981fb5">More...</a><br /></td></tr>
+<tr class="separator:a58e8be2db2660128e4e6456a9c981fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a707e4f7e7fe3140fd7a6fefe4774f03d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Laplace.html#a707e4f7e7fe3140fd7a6fefe4774f03d">build</a> (<a class="el" href="classOFELI_1_1EigenProblemSolver.html">EigenProblemSolver</a> &amp;e)</td></tr>
 <tr class="memdesc:a707e4f7e7fe3140fd7a6fefe4774f03d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the linear system for an eigenvalue problem.  <a href="#a707e4f7e7fe3140fd7a6fefe4774f03d">More...</a><br /></td></tr>
 <tr class="separator:a707e4f7e7fe3140fd7a6fefe4774f03d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -472,14 +475,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
 </div><div class="memdoc">
 
-<p>Constructor that solves a standard Poisson equation. </p>
-<p>This constructor builds and solves the linear system of equations. The solved problem is the Poisson equation with mixed (Dirichlet and Neumann) boundary conditions. The finite element linear system is solved by the preconditioned (DILU, Diagonal ILU preconditioner) Conjugate Gradient method. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor that initializes a standard Poisson equation. </p>
+<p>This constructor sets data for the Poisson equation with mixed (Dirichlet and Neumann) boundary conditions. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ms</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Vector containing the source term (right-hand side of the equation) at mesh nodes </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">Dbc</td><td>Vector containing prescribed values of the solution (Dirichlet boundary condition) at nodes with positive code. Its size is the total number of nodes </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">Nbc</td><td>Vector containing prescribed fluxes (Neumann boundary conditions) at sides, its size is the total number of sides </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">u</td><td>Vector containing finite element solution at nodes </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Vector to contain the finite element solution at nodes once the member function <a class="el" href="classOFELI_1_1Laplace2DT3.html#a58e8be2db2660128e4e6456a9c981fb5" title="Build and solve the linear system of equations using an iterative method. ">run()</a> is called. </td></tr>
   </table>
   </dd>
 </dl>
@@ -737,6 +740,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a58e8be2db2660128e4e6456a9c981fb5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int run </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build and solve the linear system of equations using an iterative method. </p>
+<p>The matrix is preconditioned by the diagonal ILU method. The linear system is solved either by the Conjugate Gradient method if the matrix is symmetric positive definite (<code>eps=-1</code>) or the GMRES method if not. The solution is stored in the vector <code>u</code> given in the constructor. </p><dl class="section return"><dt>Returns</dt><dd>Number of performed iterations. Note that the maximal number is 1000 and the tolerance is 1.e-8 </dd></dl>
 
 </div>
 </div>

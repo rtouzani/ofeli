@@ -189,6 +189,5 @@ var hierarchy =
     [ "TimeStepping", "classOFELI_1_1TimeStepping.html", null ],
     [ "UserData< T_ >", "classOFELI_1_1UserData.html", null ],
     [ "Vect< T_ >", "classOFELI_1_1Vect.html", null ],
-    [ "Point< real_t >", "structOFELI_1_1Point.html", null ],
-    [ "Vect< real_t >", "classOFELI_1_1Vect.html", null ]
+    [ "Point< real_t >", "structOFELI_1_1Point.html", null ]
 ];

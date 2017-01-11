@@ -416,7 +416,6 @@ AC_OUTPUT(
    tools/msvcpp/Makefile
    tools/msvcpp/beam/Makefile
    tools/msvcpp/cfield/Makefile
-   tools/msvcpp/cmesh/Makefile
    tools/msvcpp/contact/Makefile
    tools/msvcpp/ec2d1/Makefile
    tools/msvcpp/eigen_demo1/Makefile

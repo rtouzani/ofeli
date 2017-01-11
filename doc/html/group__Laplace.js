@@ -335,6 +335,7 @@ var group__Laplace =
       [ "Post", "classOFELI_1_1Laplace2DT3.html#a9ae33cd5527d05dd7b3085e121d60dd5", null ],
       [ "solve", "classOFELI_1_1Laplace2DT3.html#aaf08be7387628b3e58d2bbe2308b80ad", null ],
       [ "Axb", "classOFELI_1_1Laplace2DT3.html#a335d3f93476ec46ea3f591099398253e", null ],
+      [ "run", "classOFELI_1_1Laplace2DT3.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
       [ "build", "classOFELI_1_1Laplace2DT3.html#a707e4f7e7fe3140fd7a6fefe4774f03d", null ],
       [ "updateBC", "classOFELI_1_1Laplace2DT3.html#a4ac833b4b2f78ec8581d1d7e9a0c6b6e", null ],
       [ "updateBC", "classOFELI_1_1Laplace2DT3.html#a43d3a73fe5f0bad77d57203cd70c38d9", null ],

@@ -59,7 +59,7 @@
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of the current release
  */
-#define OFELI_RELEASE_DATE            "4-2016"
+#define OFELI_RELEASE_DATE            "1-2017"
 
 
 /*! \typedef lsize_t
@@ -234,11 +234,7 @@ typedef  std::complex<double>  complex_t;
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 // Macro
 #define XGRAPH_          0
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-/// A macro to define any number
-#define ANY               123.45678901e05
+#define ANY              123.45678901e05 // A macro to define any number
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \enum FieldName
@@ -293,7 +289,7 @@ enum ElementShape {
    PENTAHEDRON       ///< Elements are pentahedra (prisms)
 };
 
-/*! \brief FileFormat
+/*! \brief ExternalFileFormat
  * \brief Enumerate variable that selects external file formats
  */
 enum ExternalFileFormat {
@@ -323,9 +319,8 @@ enum ElementType {
    PENTA6   =  5             /*!< Pentahedral element with 6 nodes (P1*Q1) */
 };
 
-#define PATH_MATERIAL_WIN  "c:\\Program Files (x86)\\ofeli\\material"
 #ifdef WIN32
-#define PATH_MATERIAL  "c:\\Program Files (x86)\\ofeli\\material"
+#define PATH_MATERIAL "c:\\Program Files\\ofeli-"OFELI_VERSION"\\material\\"
 #else
 #include "datadir.h"
 #endif
@@ -342,19 +337,14 @@ enum ElementType {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define OFELI_CONJ std::conj
 #define OFELI_ABS  std::abs
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #define NOMINMAX
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #ifdef WIN32
 #define PATH_SEP "\\";
 #else
 #define PATH_SEP "/";
 #endif
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define MATERIAL_EXT      ".md"
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-              Definition of class 'Estimator' for error post-estimation
+             Definition of class 'Estimator' for error post-estimation
 
   ==============================================================================*/
 
@@ -56,7 +56,7 @@ class Estimator
 
  public:
 
-/*! \enum ESTIMATOR_TYPE
+/*! \enum EstimatorType
  * Enumerate variable that selects an error estimator for mesh adaptation purposes
  */
 enum EstimatorType {
@@ -68,6 +68,7 @@ enum EstimatorType {
     Estimator() { }
 
 /** \brief Constructor using finite element mesh and elementwise estimator
+ *  @param [in] m Mesh instance
  *  @param [in,out] e Vector that contains once the member function setError is invoked
  *  a posteriori estimator at each element
  */
@@ -77,6 +78,14 @@ enum EstimatorType {
 /// \brief Destructor
     ~Estimator() { }
 
+/** \brief Select type of a posteriori estimator
+ *  @param [in] t Type of estimator. It has to be chosen among the enumerated values:
+ *  <ul>
+ *     <li><tt>ESTIM_ZZ</tt>: The Zhu-Zienckiewicz estimator (Default value)
+ *     <li><tt>ESTIM_ND_JUMP</tt>: An estimator based on the jump of normal derivatives of
+ *         the solution across mesh sides
+ *  </ul>
+ */
     void setType(EstimatorType t=ESTIM_ZZ);
 
 /// \brief Calculate error using Vect solution vector \a u.

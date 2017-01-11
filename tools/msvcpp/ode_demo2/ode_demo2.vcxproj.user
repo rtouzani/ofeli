@@ -8,4 +8,14 @@
     <LocalDebuggerCommandArguments>0.1</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LocalDebuggerCommandArguments>0.1</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>../../../demos/solvers/ODE</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LocalDebuggerCommandArguments>0.1</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>../../../demos/solvers/ODE</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>

@@ -10,4 +10,14 @@
     <LocalDebuggerWorkingDirectory>..\..\..\demos\solvers\EIGEN</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LocalDebuggerCommandArguments>eigen_demo2.dat</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>../../../demos/solvers/EIGEN</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LocalDebuggerCommandArguments>eigen_demo2.dat</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>../../../demos/solvers/EIGEN</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>

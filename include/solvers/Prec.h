@@ -72,9 +72,9 @@ size_t inv_diag(size_t      n,
 }
 
 template<class T_>
-size_t inv_diag(      size_t      n,
+size_t inv_diag(size_t            n,
                 const Matrix<T_>* A,
-                      vector<T_>& diag)
+                vector<T_>&       diag)
 {
    for (size_t i=1; i<=n; i++) {
       T_ d=(*A)(i,i);
@@ -128,7 +128,7 @@ template<class T_> class Prec
  *  </ul>
  */
    Prec(const SpMatrix<T_>& A,
-              int           type=DIAG_PREC) 
+        int                 type=DIAG_PREC) 
     {
        _type = type;
        setMatrix(A);
@@ -146,7 +146,7 @@ template<class T_> class Prec
  *  </ul>
  */
     Prec(const Matrix<T_>* A,
-               int         type=DIAG_PREC) 
+         int               type=DIAG_PREC) 
     {
        _type = type;
        setMatrix(A);
@@ -280,7 +280,7 @@ template<class T_> class Prec
  *  @param [out] x Solution vector
  */
     void solve(const Vect<T_>& b,
-                     Vect<T_>& x) const
+               Vect<T_>&       x) const
     {
 
       switch (_type) {
@@ -344,7 +344,7 @@ template<class T_> class Prec
  *  @param [out] x Solution vector
  */
     void TransSolve(const Vect<T_>& b,
-                          Vect<T_>& x) const { x = b; TransSolve(x); }
+                    Vect<T_>&       x) const { x = b; TransSolve(x); }
 
 /// Return i-th pivot of preconditioning matrix
     T_ & getPivot(size_t i) const { return _pivot[i-1]; }

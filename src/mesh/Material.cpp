@@ -40,18 +40,19 @@ Material::Material()
    for (size_t i=0; i<MAX_NB_MATERIALS; i++)
       _code[i] = 120394;
    _nb_mat = 0;
-   if (getenv("OFELI_PATH_MATERIAL")==NULL) {
-      if (getenv("OS")==NULL)
-         _path = PATH_MATERIAL;
-      else {
-         if (string(getenv("OS"))=="Windows_NT")
-            _path = PATH_MATERIAL_WIN;
-         else
-            _path = PATH_MATERIAL;
-      }
-   }
+   if (getenv("OFELI_PATH_MATERIAL")==NULL)
+      _path = PATH_MATERIAL;
    else
       _path = getenv("OFELI_PATH_MATERIAL");
+
+   string mat_file = _path + PATH_SEP;
+   mat_file += "Generic.md";
+   if (!ifstream(mat_file.c_str())) {
+      cout << "Error in class Material: Material directory not found." << endl;
+      cout << "Edit the file include/OFELI_Config.h and modify the line with PATH_MATERIAL," << endl;
+      cout << "or Set the pathname for the directory Material in the environment variable OFELI_PATH_MATERIAL." << endl;
+      exit(1);
+   }
 }
 
 
