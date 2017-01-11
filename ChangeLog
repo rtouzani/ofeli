@@ -23,6 +23,7 @@ ofeli-3.1.0, 2017-1-11
   1st order Discontinuous Galerkin method
 * A minor bug in class Vect is fixed
 * Some management of class EigenProblemSolver is performed
+* WARNING: There is still a problem in the eigen demo no. 2: Will be handled in the forthcoming release.
 
 --------------------------------------------------------------------------------------
 ofeli-3.0.2, 2015-12-4

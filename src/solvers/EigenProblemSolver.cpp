@@ -208,7 +208,9 @@ int EigenProblemSolver::runSubSpace(size_t nb_eigv,
       _nb_eigv = _nb_eq;
    _dim = ss_dim;
    if (_dim==0)
-      _dim = _nb_eigv;
+      _dim = _nb_eigv + 1;
+   if (_dim > _nb_eq)
+      _dim = _nb_eq;
    Vect<real_t> old_eigv(_dim), wv(_nb_eq), ww(_dim);
    DMatrix<real_t> wm(_dim);
    _pK.setSize(_dim);
