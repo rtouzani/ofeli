@@ -211,6 +211,7 @@ int EigenProblemSolver::runSubSpace(size_t nb_eigv,
       _dim = _nb_eigv + 1;
    if (_dim > _nb_eq)
       _dim = _nb_eq;
+cout<<"nb_eigv = "<<_nb_eigv<<", nb_eq = "<<_nb_eq<<", dim = "<<_dim<<endl;
    Vect<real_t> old_eigv(_dim), wv(_nb_eq), ww(_dim);
    DMatrix<real_t> wm(_dim);
    _pK.setSize(_dim);
@@ -583,13 +584,13 @@ void EigenProblemSolver::getEigenVector(int           n,
    if (n>int(_nb_eigv))
       return;
    if (_theEqua) {
-      v.resize(_theMesh->getNbDOF());
+      v.setSize(_theMesh->getNbDOF());
       Vect<real_t> w(_nb_eq);
       w = _ev.getRow(n);
       v.insertBC(*_theMesh,w);
    }
    else {
-      v.resize(_nb_eq);
+      v.setSize(_nb_eq);
       v = _ev.getRow(n);
    }
 }

@@ -53,13 +53,13 @@
  * \def OFELI_VERSION
  * gives the current version of the library
  */
-#define OFELI_VERSION                 "3.1.0"
+#define OFELI_VERSION                 "3.1.1"
 
 /*!
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of the current release
  */
-#define OFELI_RELEASE_DATE            "1-2017"
+#define OFELI_RELEASE_DATE            "3-2017"
 
 
 /*! \typedef lsize_t

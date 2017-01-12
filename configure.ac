@@ -29,7 +29,7 @@ sinclude([VERSION])
 AC_SUBST(VERSION)
 AC_SUBST(RELEASE)
 
-AC_INIT([ofeli], 3.1.0)
+AC_INIT([ofeli], 3.1.1)
 AC_CONFIG_SRCDIR([src/mesh/Mesh.cpp])
 AM_INIT_AUTOMAKE
 
