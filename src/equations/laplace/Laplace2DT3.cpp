@@ -138,7 +138,7 @@ void Laplace2DT3::buildEigen(int opt)
    set(theElement);
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
-         eA0(i,j) += _area*_dSh(i)*_dSh(j);
+         eA0(i,j) += _area*(_dSh(i),_dSh(j));
    if (opt==0) {
       real_t c = 0.5*OFELI_SIXTH*_area;
       eA1(1,1) += 2*c; eA1(2,2) += 2*c; eA1(3,3) += 2*c;
@@ -147,9 +147,7 @@ void Laplace2DT3::buildEigen(int opt)
    }
    else {
       real_t c = OFELI_THIRD*_area;
-      eA1(1,1) += c;
-      eA1(2,2) += c;
-      eA1(3,3) += c;
+      eA1(1,1) += c; eA1(2,2) += c; eA1(3,3) += c;
    }
 }
 
@@ -179,7 +177,7 @@ void Laplace2DT3::LHS(real_t coef)
 {
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
-         eMat(i,j) += coef*_area*_dSh(i)*_dSh(j);
+         eMat(i,j) += coef*_area*(_dSh(i),_dSh(j));
 }
 
 

@@ -159,14 +159,14 @@ class DSMatrix : public Matrix<T_>
  *  @param [in] i row index to be assigned
  *  @param [in] v Vect instance to copy
  */
-    void setRow(      size_t    i,
+    void setRow(size_t          i,
                 const Vect<T_>& v);
 
 /** \brief Copy a given vector to a prescribed column in the matrix.
  *  @param [in] i column index to be assigned
  *  @param [in] v Vect instance to copy
  */
-    void setColumn(      size_t    i,
+    void setColumn(size_t          i,
                    const Vect<T_>& v);
 
 /// \brief Set matrix as diagonal and assign its diagonal entries as a constant
@@ -182,9 +182,9 @@ class DSMatrix : public Matrix<T_>
  *  @param [in] j column index
  *  @param [in] val value to add to <tt>a(i,j)</tt>
  */
-    void add(      size_t  i,
-                   size_t  j,
-             const T_&     val);
+    void add(size_t    i,
+             size_t    j,
+             const T_& val);
 
 /** \brief Operator <tt>()</tt> (Constant version).
  *  @param [in] i Row index
@@ -196,6 +196,9 @@ class DSMatrix : public Matrix<T_>
 /** \brief Operator <tt>()</tt> (Non constant version).
  *  @param [in] i Row index
  *  @param [in] j Column index
+ *  @warning To modify a value of an entry of the matrix it is safer not to
+ *  modify both lower and upper triangles. Otherwise, wrong values will be 
+ *  assigned. If not sure, please use the member functions set or add.
  */
     T_ & operator()(size_t i,
                     size_t j);
@@ -208,6 +211,14 @@ class DSMatrix : public Matrix<T_>
 /// Assign matrix to identity times <tt>x</tt>.
     DSMatrix<T_> & operator=(const T_& x);
 
+/// \brief Operator +=.
+/// \details Add constant value <tt>x</tt> to all matrix entries.
+    DSMatrix & operator+=(const T_& x);
+
+/// \brief Operator -=.
+/// \details Subtract constant value <tt>x</tt> from to all matrix entries.
+    DSMatrix & operator-=(const T_& x);
+
 /** \brief Factorize matrix (<tt>LDL<sup>T</sup></tt>)
  *  @return
  *  <ul>
@@ -219,34 +230,34 @@ class DSMatrix : public Matrix<T_>
 
 /// \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>.
     void MultAdd(const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /** \brief Multiply matrix by vector <tt>a*x</tt> and add to <tt>y</tt>.
  *  @param [in] a Constant to multiply by matrix
  *  @param [in] x Vector to multiply by matrix
  *  @param [in,out] y Vector to add to the result. <tt>y</tt> contains on output the result.
  */
-    void MultAdd(      T_        a,
+    void MultAdd(T_              a,
                  const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /// \brief Multiply matrix by vector <tt>x</tt> and save result in <tt>y</tt>.
     void Mult(const Vect<T_>& x,
-                    Vect<T_>& y) const;
+              Vect<T_>&       y) const;
 
 /** \brief Multiply transpose of matrix by vector <tt>x</tt> and add result in <tt>y</tt>.
  *  @param [in] x Vector to add to <tt>y</tt>
  *  @param [in,out] y on input, vector to add to. On output, result.
  */
     void TMult(const Vect<T_>& x,
-                     Vect<T_>& y) const;
+               Vect<T_>&       y) const;
    
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_            a,
+    void Axpy(T_                  a,
               const DSMatrix<T_>& m);
    
 /** \brief Add to matrix the product of a matrix by a scalar
@@ -254,7 +265,7 @@ class DSMatrix : public Matrix<T_>
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_          a,
+    void Axpy(T_                a,
               const Matrix<T_>* m);
 
 /** \brief Solve linear system.
@@ -289,7 +300,7 @@ class DSMatrix : public Matrix<T_>
  *  </ul>
  */
     int solve(const Vect<T_>& b,
-                    Vect<T_>& x);
+              Vect<T_>&       x);
 
 /** \brief Solve a linear system using the LDLt (Crout) factorization
  *  \details This function solves a linear system. The LDLt factorization is 
@@ -303,7 +314,7 @@ class DSMatrix : public Matrix<T_>
  *  </ul>
  */
     int setLDLt(const Vect<T_>& b,
-                      Vect<T_>& x);
+                Vect<T_>&       x);
 
 /** \brief Return matrix as C-Array.
  *  Matrix is stored row by row.
@@ -380,9 +391,9 @@ void DSMatrix<T_>::setSize(size_t dim)
 
 
 template<class T_>
-void DSMatrix<T_>::set(      size_t  i,
-                             size_t  j,
-                       const T_&     val)
+void DSMatrix<T_>::set(size_t    i,
+                       size_t    j,
+                       const T_& val)
 {
    if (i>=j)
       _a[i*(i-1)/2+j-1] = val;
@@ -412,9 +423,9 @@ void DSMatrix<T_>::setDiag(const vector<T_>& d)
 
 
 template<class T_>
-void DSMatrix<T_>::add(      size_t  i,
-                             size_t  j,
-                       const T_&     val)
+void DSMatrix<T_>::add(size_t    i,
+                       size_t    j,
+                       const T_& val)
 {
    if (i>=j)
       _a[i*(i-1)/2+j-1] += val;
@@ -442,6 +453,23 @@ T_ & DSMatrix<T_>::operator()(size_t i,
       return _a[j*(j-1)/2+i-1];
 }
 
+
+template<class T_>
+DSMatrix<T_> & DSMatrix<T_>::operator+=(const T_& x)
+{
+   for (size_t i=1; i<=_length; ++i)
+      _a.add(i,x);
+   return *this;
+}
+
+
+template<class T_>
+DSMatrix<T_> & DSMatrix<T_>::operator-=(const T_& x)
+{
+   for (size_t i=1; i<=_length; ++i)
+      _a.add(i,-x);
+   return *this;
+}
 
 template<class T_>
 DSMatrix<T_> & DSMatrix<T_>::operator=(const DSMatrix<T_>& m)

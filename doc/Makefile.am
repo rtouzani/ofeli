@@ -9,6 +9,7 @@ dist_doc_DATA =	COPYING \
 		citing.html \
 		copyright.html \
 		download.html \
+		extlib.html \
 		fformats.html \
 		index.html \
 		presentations.html \
@@ -28,6 +29,7 @@ doc_DATA =	COPYING \
 		citing.html \
 		copyright.html \
 		download.html \
+		extlib.html \
 		fformats.html \
 		index.html \
 		presentations.html \

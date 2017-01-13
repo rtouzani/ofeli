@@ -149,27 +149,27 @@ class Matrix
 
 /// \brief Multiply matrix by vector <tt>x</tt> and add to <tt>y</tt>
     virtual void MultAdd(const Vect<T_>& x,
-                               Vect<T_>& y) const = 0;
+                         Vect<T_>&       y) const = 0;
 
 /// \brief Multiply matrix by vector <tt>a*x</tt> and add to <tt>y</tt>
-    virtual void MultAdd(      T_        a,
+    virtual void MultAdd(T_              a,
                          const Vect<T_>& x,
-                               Vect<T_>& y) const = 0;
+                         Vect<T_>&       y) const = 0;
 
 /// \brief Multiply matrix by vector <tt>x</tt> and save in <tt>y</tt>
     virtual void Mult(const Vect<T_>& x,
-                            Vect<T_>& y) const = 0;
+                      Vect<T_>&       y) const = 0;
 
 /// \brief Multiply transpose of matrix by vector <tt>x</tt> and save in <tt>y</tt>
     virtual void TMult(const Vect<T_>& v,
-                             Vect<T_>& w) const = 0;
+                       Vect<T_>&       w) const = 0;
 
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] x %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    virtual void Axpy(      T_          a,
+    virtual void Axpy(T_                a,
                       const Matrix<T_>* x) = 0;
 
 /// \brief Initialize matrix storage in the case where only diagonal terms are stored.
@@ -205,7 +205,7 @@ class Matrix
  *  @param [in] a Element matrix as a C-array
  */
     void Assembly(const Element& el,
-                        T_*      a);
+                  T_*            a);
 
 /** \brief Assembly of element matrix into global matrix.
  *  \details Case where element matrix is given by a DMatrix instance.
@@ -222,7 +222,7 @@ class Matrix
  *  @param [in] a Element matrix as a C-array
  */
     void DGAssembly(const Element& el,
-                          T_*      a);
+                    T_*            a);
 
     void DGAssembly(const Element&                                               el,
                     const LocalMatrix<T_,MAX_NB_ELEMENT_DOF,MAX_NB_ELEMENT_DOF>& a);
@@ -244,7 +244,7 @@ class Matrix
  *  @param [in] a Side matrix as a C-array instance
  */
     void Assembly(const Side& sd, 
-                              T_*   a);
+                  T_*         a);
 
 /** \brief Assembly of side matrix into global matrix.
  *  \details Case where side matrix is given by a DMatrix instance.
@@ -255,10 +255,10 @@ class Matrix
                   const DMatrix<T_>& a);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void Prescribe(      Mesh& mesh,
-                         Vect<T_>& b,
+    void Prescribe(Mesh& mesh,
+                   Vect<T_>&       b,
                    const Vect<T_>& u,
-                         int       flag=0);
+                   int             flag=0);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Impose by a penalty method an essential boundary condition, using the Mesh instance
@@ -274,18 +274,18 @@ class Matrix
  *  be modified (<tt>dof>0</tt>)\n
  *  or both matrix and right-hand side (<tt>dof=0</tt>, default value).
  */
-    void Prescribe(      Vect<T_>& b,
+    void Prescribe(Vect<T_>&       b,
                    const Vect<T_>& u,
-                         int       flag=0)
+                   int             flag=0)
        { Prescribe(*_theMesh,b,u,flag); }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void Prescribe(      int       dof,
-                         int       code,
-                         Mesh&     mesh,
-                         Vect<T_>& b,
+    void Prescribe(int             dof,
+                   int             code,
+                   Mesh&           mesh,
+                   Vect<T_>&       b,
                    const Vect<T_>& u,
-                         int       flag=0);
+                   int       flag=0);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Impose by a penalty method an essential boundary condition to a given
@@ -302,11 +302,11 @@ class Matrix
  *  @param [in] flag Parameter to determine whether only the right-hand side is to be modified\n
  *  (<tt>dof>0</tt>) or both matrix and right-hand side (<tt>dof=0</tt>, default value).
  */
-    void Prescribe(      int       dof,
-                         int       code,
-                         Vect<T_>& b,
+    void Prescribe(int             dof,
+                   int             code,
+                   Vect<T_>&       b,
                    const Vect<T_>& u,
-                         int       flag=0)
+                   int             flag=0)
        { Prescribe(dof,code,*_theMesh,b,u,flag); }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -331,11 +331,11 @@ class Matrix
        { Prescribe(*_theMesh,b,flag); }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void Prescribe(      size_t    dof,
-                         Mesh&     mesh,
-                         Vect<T_>& b,
+    void Prescribe(size_t          dof,
+                   Mesh&           mesh,
+                   Vect<T_>&       b,
                    const Vect<T_>& u,
-                         int       flag=0);
+                   int             flag=0);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Impose by a penalty method an essential boundary condition when only one DOF is treated.
@@ -352,19 +352,19 @@ class Matrix
  *  be modified (<tt>dof>0</tt>)\n
  *  or both matrix and right-hand side (<tt>dof=0</tt>, default value).
  */
-    void Prescribe(      size_t    dof,
-                         Vect<T_>& b,
+    void Prescribe(size_t          dof,
+                   Vect<T_>&       b,
                    const Vect<T_>& u,
-                         int       flag=0);
+                   int             flag=0);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void Prescribe1(      Mesh&     mesh,
-                          Vect<T_>& b,
+    void Prescribe1(Mesh&           mesh,
+                    Vect<T_>&       b,
                     const Vect<T_>& u,
-                          int       flag=0);
-    void Prescribe1(      Vect<T_>& b,
+                    int             flag=0);
+    void Prescribe1(Vect<T_>&       b,
                     const Vect<T_>& u,
-                          int       flag=0)
+                    int             flag=0)
        { Prescribe1(*_theMesh,b,u,flag); }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -393,9 +393,9 @@ class Matrix
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Add <tt>val</tt> to entry <tt>(i,j)</tt>.
-    virtual void add(      size_t  i,
-                           size_t  j,
-                     const T_&     val) = 0;
+    virtual void add(size_t    i,
+                     size_t    j,
+                     const T_& val) = 0;
 
 /// \brief Factorize matrix. Available only if the storage class enables it.
     virtual int Factor() = 0;
@@ -417,7 +417,7 @@ class Matrix
  *    </uL>
  */
     int solve(const Vect<T_>& b,
-                    Vect<T_>& x);
+              Vect<T_>&       x);
 
 /** \brief Factorize matrix and solve the linear system.
  *  \details This is available only if the storage cass enables it.
@@ -437,7 +437,7 @@ class Matrix
  *    </ul>
  */
     int FactorAndSolve(const Vect<T_>& b,
-                             Vect<T_>& x);
+                       Vect<T_>&       x);
 
 /// \brief Return number of stored terms in matrix.
     size_t getLength() const { return _length; }
@@ -461,9 +461,9 @@ class Matrix
  *  @param [in] j Column index
  *  @param [in] val Value to assign
  */
-    virtual void set(      size_t  i,
-                           size_t  j,
-                     const T_&     val) = 0;
+    virtual void set(size_t    i,
+                     size_t    j,
+                     const T_& val) = 0;
 
 /** \brief Operator () (Non constant version).
  *  \details Returns the <tt>(i,j)</tt> entry of the matrix.
@@ -660,7 +660,7 @@ void Matrix<T_>::init_set_mesh(Mesh&  mesh,
 
 template<class T_>
 void Matrix<T_>::Assembly(const Element& el,
-                                T_*      a)
+                          T_*            a)
 {
    size_t kk=0;
    if (_is_diagonal) {
@@ -716,7 +716,7 @@ void Matrix<T_>::Assembly(const Element&     el,
 
 template<class T_>
 void Matrix<T_>::DGAssembly(const Element& el,
-                                  T_*      a)
+                            T_*            a)
 {
    size_t kk=0;
    if (_is_diagonal) {
@@ -776,7 +776,7 @@ void Matrix<T_>::DGAssembly(const Side&                                         
 
 template<class T_>
 void Matrix<T_>::Assembly(const Side& sd,
-                                      T_*   a)
+                          T_*         a)
 {
    size_t kk = 0;
    for (size_t in=1; in<=sd.getNbNodes(); ++in) {
@@ -819,10 +819,10 @@ void Matrix<T_>::Assembly(const Side&        sd,
 
 
 template<class T_>
-void Matrix<T_>::Prescribe(      Mesh&     mesh,
-                                 Vect<T_>& b,
+void Matrix<T_>::Prescribe(Mesh&           mesh,
+                           Vect<T_>&       b,
                            const Vect<T_>& u,
-                                 int       flag)
+                           int             flag)
 {
    MeshNodes(mesh) {
       for (size_t i=1; i<=theNode->getNbDOF(); ++i) {
@@ -840,12 +840,12 @@ void Matrix<T_>::Prescribe(      Mesh&     mesh,
 
 
 template<class T_>
-void Matrix<T_>::Prescribe(      int       dof,
-                                 int       code,
-                                 Mesh&     mesh,
-                                 Vect<T_>& b,
+void Matrix<T_>::Prescribe(int             dof,
+                           int             code,
+                           Mesh&           mesh,
+                           Vect<T_>&       b,
                            const Vect<T_>& u,
-                                 int       flag)
+                           int             flag)
 {
    MeshNodes(mesh) {
       if (theNode->getCode(dof)==code) {
@@ -880,11 +880,11 @@ void Matrix<T_>::Prescribe(Mesh&     mesh,
 
 
 template<class T_>
-void Matrix<T_>::Prescribe(      size_t    dof,
-                                 Mesh&     mesh,
-                                 Vect<T_>& b,
+void Matrix<T_>::Prescribe(size_t          dof,
+                           Mesh&           mesh,
+                           Vect<T_>&       b,
                            const Vect<T_>& u,
-                                 int       flag)
+                           int             flag)
 {
    mesh_nodes(mesh) {
       if (The_node.getCode(dof)>0) {
@@ -900,10 +900,10 @@ void Matrix<T_>::Prescribe(      size_t    dof,
 
 
 template<class T_>
-void Matrix<T_>::Prescribe1(      Mesh&     mesh,
-                                  Vect<T_>& b,
+void Matrix<T_>::Prescribe1(Mesh&           mesh,
+                            Vect<T_>&       b,
                             const Vect<T_>& u,
-                                  int       flag)
+                            int             flag)
 {
    mesh_nodes(mesh) {
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
@@ -948,7 +948,7 @@ void Matrix<T_>::PrescribeSide(Mesh& mesh)
 
 template<class T_>
 int Matrix<T_>::solve(const Vect<T_>& b,
-                            Vect<T_>& x)
+                      Vect<T_>&       x)
 {
    x = b;
    return solve(x);

@@ -66,7 +66,7 @@ while test $# -gt 0; do
 	;;
 
     --version)
-	echo 3.1.0
+	echo 3.1.1
 	;;
 
     --help)

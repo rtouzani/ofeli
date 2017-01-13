@@ -50,7 +50,7 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
 {
    _nb_eq = _nb_eigv = _K->getNbRows();
    if (n>0)
-      _nb_eq = _nb_eigv = n;
+      _nb_eigv = n;
    _lM = new Vect<real_t>(_nb_eq);
    *_lM = 1;
    run(_nb_eigv);
@@ -65,8 +65,8 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    _nb_eq = _nb_eigv = _K->getNbRows();
-   if (n>0)
-      _nb_eq = _nb_eigv = n;
+   _nb_eigv = std::max(n,1);
+   _nb_eigv = std::min(_nb_eq,_nb_eigv);
    _lM = new Vect<real_t>(_nb_eq);
    *_lM = 1;
    run(n);
@@ -93,8 +93,8 @@ EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    setMatrix(K,M);
-   if (n==0)
-      _nb_eigv = n;
+   _nb_eigv = std::max(n,1);
+   _nb_eigv = std::min(_nb_eq,_nb_eigv);
 }
 
 
@@ -105,8 +105,8 @@ EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    setMatrix(K,M);
-   if (n==0)
-      _nb_eigv = n;
+   _nb_eigv = std::max(n,1);
+   _nb_eigv = std::min(_nb_eq,_nb_eigv);
 }
 
 
@@ -164,7 +164,7 @@ void EigenProblemSolver::setPDE(AbsEqua<real_t>& eq,
       _lM = new Vect<real_t>(_nb_eq);
    else {
       _diag = _lM_alloc = false, _M_alloc = true;
-      _M = new SkSMatrix<real_t>(_nb_eq);
+      _M = new SkSMatrix<real_t>(*_theMesh);
    }
 }
 
@@ -173,9 +173,8 @@ int EigenProblemSolver::run(int nb)
 {
    if (_theEqua)
       _theEqua->build(*this);
-   _nb_eigv = nb;
-   if (nb==0)
-      _nb_eigv = _nb_eq;
+   _nb_eigv = std::max(nb,1);
+   _nb_eigv = std::min(_nb_eq,_nb_eigv);
    return runSubSpace(_nb_eigv);
 }
 
@@ -203,15 +202,9 @@ int EigenProblemSolver::runSubSpace(size_t nb_eigv,
                                     size_t ss_dim)
 {
    int ret=0;
-   _nb_eigv = nb_eigv;
-   if (_nb_eigv>_nb_eq)
-      _nb_eigv = _nb_eq;
-   _dim = ss_dim;
-   if (_dim==0)
-      _dim = _nb_eigv + 1;
-   if (_dim > _nb_eq)
-      _dim = _nb_eq;
-cout<<"nb_eigv = "<<_nb_eigv<<", nb_eq = "<<_nb_eq<<", dim = "<<_dim<<endl;
+   _nb_eigv = std::min(nb_eigv,_nb_eq);
+   _dim = std::max(ss_dim,_nb_eigv+1);
+   _dim = std::min(_dim,_nb_eq);
    Vect<real_t> old_eigv(_dim), wv(_nb_eq), ww(_dim);
    DMatrix<real_t> wm(_dim);
    _pK.setSize(_dim);
@@ -229,7 +222,7 @@ cout<<"nb_eigv = "<<_nb_eigv<<", nb_eq = "<<_nb_eq<<", dim = "<<_dim<<endl;
          _ev.setRow(i,wv);
       }
    }
-
+  
 // Initialization
    int err=0;
 
@@ -312,7 +305,6 @@ void EigenProblemSolver::Mxv(const Vect<real_t>& b,
    if (_diag) {
       for (size_t i=1; i<=b.size(); i++)
          c(i) = (*_lM)(i)*b(i);
-      return;
    }
    else
       _M->Mult(b,c);
@@ -360,7 +352,7 @@ int EigenProblemSolver::runJacobi(DMatrix<real_t>& wm)
                if (det < 0)
                   return 1;
                real_t sqdt = sqrt(det);
-               real_t det1=0.5*ab+sqdt, det2=0.5*ab-sqdt;
+               real_t det1 = 0.5*ab+sqdt, det2 = 0.5*ab-sqdt;
                real_t den = det1;
                if (fabs(det2) > fabs(det1))
                   den = det2;
@@ -553,10 +545,10 @@ int EigenProblemSolver::checkSturm(int& nb_found,
 // Shift K by eigenb and factorize
    if (_diag)
       for (i=1; i<=_nb_eq; i++)
-         (*_K)(i,i) -= eigenb*(*_lM)(i);
+         _K->add(i,i,-eigenb*(*_lM)(i));
    else
       for (i=1; i<=_nb_eq; i++)
-         (*_K)(i,i) -= eigenb*(*_M)(i,i);
+         _K->add(i,i,-eigenb*(*_M)(i,i));
    _K->Factor();
 
 // Count negative elements on diagonal
