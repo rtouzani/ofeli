@@ -30,6 +30,7 @@
   ==============================================================================*/
 
 #include "solvers/OptSolver.h"
+#include "util/util.h"
 
 #include <iostream>
 using std::cout;
@@ -268,7 +269,6 @@ int OptimSA(OptSolver&          opt,
    size_t n=x.size();
    Vect<real_t> fstar(neps), xp(n), nacp(n);
 
-   real_t exprep(real_t rdum);
    real_t ranmar(void);
    
    srand((unsigned)time(NULL));
@@ -478,25 +478,6 @@ L100:
       3. \a rmarin and ranmar are designed to be protable; they should not
       cause any problems.
 */	  
-
-
-real_t exprep(real_t rdum)
-/*-----------------------------------------------------------------------------
-    This function replaces exp to avoid under- and overflows and is
-    designed for IBM 370 type machines. It may be necessary to modify
-    it for other machines. Note that the maximum and minimum values of
-    exprep are such that they has no effect on the algorithm.
-  -----------------------------------------------------------------------------*/
-{
-   real_t ret;
-   if (rdum > 174.)
-      ret = 3.69e75;
-   else if (rdum < -180.)
-      ret = 0.;
-   else
-      ret = exp(rdum);
-   return ret;
-}
 
 
 real_t ranmar(int i1, int i2)

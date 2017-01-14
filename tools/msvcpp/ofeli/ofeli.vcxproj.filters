@@ -464,15 +464,6 @@
     <ClInclude Include="..\..\..\include\solvers\ODESolver.h">
       <Filter>Headers\solvers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\solvers\OptimAux.h">
-      <Filter>Headers\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\solvers\OptimSA.h">
-      <Filter>Headers\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\solvers\OptimTN.h">
-      <Filter>Headers\solvers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\solvers\Prec.h">
       <Filter>Headers\solvers</Filter>
     </ClInclude>
@@ -676,6 +667,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\equations\DG.h">
       <Filter>Headers\equations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\OptSolver.h">
+      <Filter>Headers\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solvers\MyOpt.h">
+      <Filter>Headers\solvers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1125,6 +1122,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\equations\laplace\LaplaceDG2DP1.cpp">
       <Filter>Source Files\equations\laplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\OptSolver.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\OptimNM.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\OptimPG.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\OptimSA.cpp">
+      <Filter>Source Files\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solvers\OptimTN.cpp">
+      <Filter>Source Files\solvers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

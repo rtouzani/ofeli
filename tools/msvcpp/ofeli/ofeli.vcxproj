@@ -184,10 +184,9 @@
     <ClInclude Include="..\..\..\include\solvers\Iter.h" />
     <ClInclude Include="..\..\..\include\solvers\Jacobi.h" />
     <ClInclude Include="..\..\..\include\solvers\LinearSolver.h" />
+    <ClInclude Include="..\..\..\include\solvers\MyOpt.h" />
     <ClInclude Include="..\..\..\include\solvers\ODESolver.h" />
-    <ClInclude Include="..\..\..\include\solvers\OptimAux.h" />
-    <ClInclude Include="..\..\..\include\solvers\OptimSA.h" />
-    <ClInclude Include="..\..\..\include\solvers\OptimTN.h" />
+    <ClInclude Include="..\..\..\include\solvers\OptSolver.h" />
     <ClInclude Include="..\..\..\include\solvers\Prec.h" />
     <ClInclude Include="..\..\..\include\solvers\Richardson.h" />
     <ClInclude Include="..\..\..\include\solvers\Schur.h" />
@@ -355,6 +354,11 @@
     <ClCompile Include="..\..\..\src\solvers\BSpline.cpp" />
     <ClCompile Include="..\..\..\src\solvers\EigenProblemSolver.cpp" />
     <ClCompile Include="..\..\..\src\solvers\ODESolver.cpp" />
+    <ClCompile Include="..\..\..\src\solvers\OptimNM.cpp" />
+    <ClCompile Include="..\..\..\src\solvers\OptimPG.cpp" />
+    <ClCompile Include="..\..\..\src\solvers\OptimSA.cpp" />
+    <ClCompile Include="..\..\..\src\solvers\OptimTN.cpp" />
+    <ClCompile Include="..\..\..\src\solvers\OptSolver.cpp" />
     <ClCompile Include="..\..\..\src\solvers\Solver.cpp" />
     <ClCompile Include="..\..\..\src\solvers\TimeStepping.cpp" />
     <ClCompile Include="..\..\..\src\util\Gauss.cpp" />

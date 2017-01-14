@@ -470,7 +470,24 @@ inline T_ Dot(const Point<T_>& x,
    return (x.x*y.x + x.y*y.y + x.z*y.z);
 }
     
-    
+
+/** \fn double exprep(double x)
+ *  \ingroup Util
+ *  \brief Compute the exponential function with avoiding over and underflows
+ */
+inline real_t exprep(real_t x)
+{
+   real_t e;
+   if (x > 174.)
+      e = 3.69e75;
+   else if (x < -180.)
+      e = 0.;
+   else
+      e = exp(x);
+   return e;
+}
+
+
 /** \fn void Assign(vector<T_>& v, const T_ &a)
  *  \ingroup Util
  *  \brief Assign the value <tt>a</tt> to all entries of a vector <tt>v</tt>

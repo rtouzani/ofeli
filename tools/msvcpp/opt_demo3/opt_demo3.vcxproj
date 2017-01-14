@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -22,7 +22,7 @@
     <ClCompile Include="..\..\..\demos\solvers\OPTIM\opt_demo1.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D7F103C1-C984-4655-ABE7-692208017D41}</ProjectGuid>
+    <ProjectGuid>{38C5F2C3-CF2E-4B18-9627-6C7695DDB0E5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>opt_demo1</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>

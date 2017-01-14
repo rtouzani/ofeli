@@ -4,10 +4,12 @@ HISTORY OF CHANGES IN OFELI
 ofeli-3.1.1, 2017-3-1
 --------------------------------------------------------------------------------------
 
+CHANGES AND NEW DEVELOPMENTS
+* N:030101:01 - The function exprep has been removed from  OptimSA.cpp to util.h
+
 BUGS:
-* B030101001: A Warning concerning assignment operators has been added
-*
+* B:030101:01 - A Warning concerning assignment operators has been added
 
 DOCUMENTATION:
-* New documentation on bugs, new developments and documentation: More detailed and organized
-* Added: Documentation on used external libraries	
+* D:030101:01 - New documentation on bugs, new developments and documentation: More detailed and organized
+* D:030101:02 - Added: Documentation on used external libraries	
