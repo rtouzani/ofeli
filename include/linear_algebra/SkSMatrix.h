@@ -278,6 +278,9 @@ public:
 /** \brief Operator () (Non constant version).
  *  @param [in] i Row index
  *  @param [in] j Column index
+ *  @warning To modify a value of an entry of the matrix it is safer not to
+ *  modify both lower and upper triangles. Otherwise, wrong values will be 
+ *  assigned. If not sure, use the member functions set or add.
  */
     T_ & operator()(size_t i,
                     size_t j);

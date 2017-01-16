@@ -680,10 +680,9 @@ void Matrix<T_>::Assembly(const Element& el,
       for (size_t k=1; k<=nd1->getNbDOF(); ++k) {
          for (size_t j=1; j<=el.getNbNodes(); ++j) {
             Node *nd2=el(j);
-            for (size_t l=1; l<=nd2->getNbDOF(); ++l) {
+            for (size_t l=1; l<=nd2->getNbDOF(); ++l, kk++) {
                if (nd1->getDOF(k)!=0 && nd2->getDOF(l)!=0)
                   add(nd1->getDOF(k),nd2->getDOF(l),a[kk]);
-               kk++;
             }
          }
       }
@@ -702,10 +701,9 @@ void Matrix<T_>::Assembly(const Element&     el,
          size_t j=1;
          for (size_t jn=1; jn<=el.getNbNodes(); ++jn) {
             Node *nd2=el(jn);
-            for (size_t l=1; l<=nd2->getNbDOF(); ++l) {
+            for (size_t l=1; l<=nd2->getNbDOF(); ++l, j++) {
                if (nd1->getDOF(k)!=0 && nd2->getDOF(l)!=0)
                   add(nd1->getDOF(k),nd2->getDOF(l),a(i,j));
-               j++;
             }
          }
          i++;
@@ -737,10 +735,9 @@ void Matrix<T_>::DGAssembly(const Element& el,
       for (size_t k=1; k<=nd1->getNbDOF(); ++k) {
          for (size_t j=1; j<=el.getNbNodes(); ++j) {
             Node *nd2=el(j);
-            for (size_t l=1; l<=nd2->getNbDOF(); ++l) {
+            for (size_t l=1; l<=nd2->getNbDOF(); ++l, kk++) {
                if (nd1->getDOF(k)!=0 && nd2->getDOF(l)!=0)
                   add(nd1->getDOF(k),nd2->getDOF(l),a[kk]);
-               kk++;
             }
          }
       }
@@ -784,10 +781,9 @@ void Matrix<T_>::Assembly(const Side& sd,
       for (size_t k=1; k<=nd1->getNbDOF(); ++k) {
          for (size_t jn=1; jn<=sd.getNbNodes(); ++jn) {
             Node *nd2=sd(jn);
-            for (size_t l=1; l<=nd2->getNbDOF(); ++l) {
+            for (size_t l=1; l<=nd2->getNbDOF(); ++l, kk++) {
                if (nd1->getDOF(k)!=0 && nd2->getDOF(l)!=0)
                   add(nd1->getDOF(k),nd2->getDOF(l),a[kk]);
-               kk++;
             }
          }
       }
@@ -806,10 +802,9 @@ void Matrix<T_>::Assembly(const Side&        sd,
          size_t j=1;
          for (size_t jn=1; jn<=sd.getNbNodes(); ++jn) {
             Node *nd2=sd(jn);
-            for (size_t l=1; l<=nd2->getNbDOF(); ++l) {
+            for (size_t l=1; l<=nd2->getNbDOF(); ++l, j++) {
                if (nd1->getDOF(k)!=0 && nd2->getDOF(l)!=0)
                   add(nd1->getDOF(k),nd2->getDOF(l),a(i,j));
-               j++;
             }
          }
          i++;

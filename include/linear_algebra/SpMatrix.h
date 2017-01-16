@@ -1656,7 +1656,7 @@ void SpMatrix<T_>::add(size_t    i,
 
 
 template<class T_>
-void SpMatrix<T_>::Axpy(      T_            a,
+void SpMatrix<T_>::Axpy(T_                  a,
                         const SpMatrix<T_>& m)
 {
 #ifdef USE_EIGEN
@@ -1907,7 +1907,7 @@ int SpMatrix<T_>::solve(Vect<T_>& b)
 
 template<class T_>
 int SpMatrix<T_>::solve(const Vect<T_>& b,
-                              Vect<T_>& x)
+                        Vect<T_>&       x)
 {
    int nb_it = 0;
 #ifdef USE_EIGEN

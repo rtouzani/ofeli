@@ -5,7 +5,7 @@ ofeli-3.1.1, 2017-3-1
 --------------------------------------------------------------------------------------
 
 CHANGES AND NEW DEVELOPMENTS
-* N:030101:01 - The function exprep has been removed from  OptimSA.cpp to util.h
+* N:030101:01 - The function exprep has been moved from  OptimSA.cpp to util.h
 
 BUGS:
 * B:030101:01 - A Warning concerning assignment operators has been added

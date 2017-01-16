@@ -105,9 +105,9 @@ class DSMatrix : public Matrix<T_>
  *  @param [in] j column index
  *  @param [in] val value to assign to <tt>a(i,j)</tt>
  */
-    void set(      size_t  i,
-                   size_t  j,
-             const T_&     val);
+    void set(size_t    i,
+             size_t    j,
+             const T_& val);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setMesh(Mesh&  mesh,
@@ -198,7 +198,7 @@ class DSMatrix : public Matrix<T_>
  *  @param [in] j Column index
  *  @warning To modify a value of an entry of the matrix it is safer not to
  *  modify both lower and upper triangles. Otherwise, wrong values will be 
- *  assigned. If not sure, please use the member functions set or add.
+ *  assigned. If not sure, use the member functions set or add.
  */
     T_ & operator()(size_t i,
                     size_t j);

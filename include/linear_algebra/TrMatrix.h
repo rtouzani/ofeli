@@ -230,7 +230,7 @@ class TrMatrix : public Matrix<T_>
  *  \b Warning: %Matrix is modified after this function.
  */
     int solve(const Vect<T_>& b,
-                    Vect<T_>& x);
+              Vect<T_>&       x);
 
 /// \brief Return C-Array.
     T_ *get() const { return &_a[0]; }

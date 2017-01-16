@@ -647,8 +647,8 @@ Vect<T_> DMatrix<T_>::getColumn(size_t j) const
 
 
 template<class T_>
-void DMatrix<T_>::setColumn(       size_t    j,
-                             const Vect<T_>& v)
+void DMatrix<T_>::setColumn(size_t          j,
+                            const Vect<T_>& v)
 {
    for (size_t i=0; i<_nb_rows; i++)
       _a[_nb_cols*i+j-1] = v[i];
@@ -676,7 +676,7 @@ Vect<T_> DMatrix<T_>::getRow(size_t i) const
 
 
 template<class T_>
-void DMatrix<T_>::setRow(      size_t    i,
+void DMatrix<T_>::setRow(size_t          i,
                          const Vect<T_>& v)
 {
    for (size_t j=0; j<_nb_cols; j++)
@@ -720,7 +720,7 @@ void DMatrix<T_>::Mult(const Vect<T_>& x,
 
 template<class T_>
 void DMatrix<T_>::TMult(const Vect<T_>& x,
-                              Vect<T_>& y) const
+                        Vect<T_>&       y) const
 {
    for (size_t i=0; i<_nb_rows; i++)
       for (size_t j=0; j<_nb_cols; j++)
@@ -729,9 +729,9 @@ void DMatrix<T_>::TMult(const Vect<T_>& x,
 
 
 template<class T_>
-void DMatrix<T_>::add(      size_t  i,
-                            size_t  j,
-                      const T_&     val)
+void DMatrix<T_>::add(size_t    i,
+                      size_t    j,
+                      const T_& val)
 {
    _a[_nb_cols*(i-1)+j-1] += val;
 }
@@ -813,7 +813,7 @@ int DMatrix<T_>::setTransLU()
 
 template<class T_>
 int DMatrix<T_>::solveTrans(const Vect<T_>& b,
-                                  Vect<T_>& x)
+                            Vect<T_>&       x)
 {
    int ret = 0;
    if (_nb_rows != _nb_cols)
@@ -826,7 +826,7 @@ int DMatrix<T_>::solveTrans(const Vect<T_>& b,
 
 template<class T_>
 int DMatrix<T_>::solve(const Vect<T_>& b,
-                             Vect<T_>& x)
+                       Vect<T_>&       x)
 {
    int ret = 0;
    if (_nb_rows != _nb_cols)
@@ -913,7 +913,7 @@ int DMatrix<T_>::solveTransLU(Vect<T_>& b)
 
 template<class T_>
 int DMatrix<T_>::solveLU(const Vect<T_>& b,
-                               Vect<T_>& x)
+                         Vect<T_>&       x)
 {
    x = b;
    return solveLU(x);
@@ -922,7 +922,7 @@ int DMatrix<T_>::solveLU(const Vect<T_>& b,
 
 template<class T_>
 int DMatrix<T_>::solveTransLU(const Vect<T_>& b,
-                                    Vect<T_>& x)
+                              Vect<T_>&       x)
 {
    x = b;
    return solveTrans(x);
@@ -1009,7 +1009,7 @@ T_ DMatrix<T_>::get(size_t i,
 
 
 template<class T_>
-void DMatrix<T_>::Axpy(      T_           a,
+void DMatrix<T_>::Axpy(T_                 a,
                        const DMatrix<T_>& m)
 {
    Axpy(a,m._a,_a);
@@ -1017,7 +1017,7 @@ void DMatrix<T_>::Axpy(      T_           a,
 
 
 template<class T_>
-void DMatrix<T_>::Axpy(      T_          a,
+void DMatrix<T_>::Axpy(T_                a,
                        const Matrix<T_>* m)
 {
    for (size_t i=0; i<_length; i++)
@@ -1221,7 +1221,7 @@ Vect<T_> operator*(const DMatrix<T_>& A,
 /// \ingroup VectMat
 /// \brief Output matrix in output stream
 template<class T_>
-ostream& operator<<(      ostream&     s,
+ostream& operator<<(ostream&           s,
                     const DMatrix<T_>& a)
 {
    s.setf(ios::right|ios::scientific);
