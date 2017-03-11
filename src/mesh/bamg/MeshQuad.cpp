@@ -325,45 +325,45 @@ int Triangles::SplitElement(int choice)
          if (withBackground) {
             assert(edgesGtoB); 
             ong = ProjectOnCurve(*edgesGtoB[Gh.Number(edges[i].on)],
-                                 edges[i][0],edges[i][1],0.5,vertices[k],
+                                 edges[i][0],edges[i][1],0.5,_vertices[k],
                                  newVertexOnBThEdge[kvb],
                                  newVerticesOnGeomEdge[kvg++]);
-            vertices[k].ReferenceNumber = edges[i].ref;
-            vertices[k].DirOfSearch = NoDirOfSearch;        
+            _vertices[k].ReferenceNumber = edges[i].ref;
+            _vertices[k].DirOfSearch = NoDirOfSearch;        
 
 //          get the Info on background mesh 
             double s = newVertexOnBThEdge[kvb];
             Vertex &bv0 = newVertexOnBThEdge[kvb][0];
             Vertex &bv1 = newVertexOnBThEdge[kvb][1];
 //          compute the metrix of the new points 
-            vertices[k].m =  Metric(1-s,bv0,s,bv1); 
+            _vertices[k].m =  Metric(1-s,bv0,s,bv1); 
             kvb++;
          }
          else {
-            ong = Gh.ProjectOnCurve(edges[i],0.5,vertices[k],newVerticesOnGeomEdge[kvg++]);
+            ong = Gh.ProjectOnCurve(edges[i],0.5,_vertices[k],newVerticesOnGeomEdge[kvg++]);
 //          vertices[k].i = toI2( vertices[k].r);
-            vertices[k].ReferenceNumber = edges[i].ref;
-            vertices[k].DirOfSearch = NoDirOfSearch;
-            vertices[k].m = Metric(0.5,edges[i][0],0.5,edges[i][1]);	      
+            _vertices[k].ReferenceNumber = edges[i].ref;
+            _vertices[k].DirOfSearch = NoDirOfSearch;
+            _vertices[k].m = Metric(0.5,edges[i][0],0.5,edges[i][1]);	      
          }
       }
       else {
-         vertices[k].r = ((R2) edges[i][0] + (R2)  edges[i][1] )*0.5;
-         vertices[k].m = Metric(0.5,edges[i][0],0.5,edges[i][1]);
-         vertices[k].on = 0;
+         _vertices[k].r = ((R2)edges[i][0] + (R2)edges[i][1] )*0.5;
+         _vertices[k].m = Metric(0.5,edges[i][0],0.5,edges[i][1]);
+         _vertices[k].on = 0;
       }
-      R2 AB = vertices[k].r;
+      R2 AB = _vertices[k].r;
       R2 AA = (A+AB)*0.5;
       R2 BB = (AB+B)*0.5;
-      vertices[k].ReferenceNumber = edges[i].ref;
-      vertices[k].DirOfSearch = NoDirOfSearch;	    
+      _vertices[k].ReferenceNumber = edges[i].ref;
+      _vertices[k].DirOfSearch = NoDirOfSearch;	    
       newedges[ie].on = Gh.Containing(AA,ong);
-      newedges[ie++].v[1] = vertices + k;
+      newedges[ie++].v[1] = _vertices + k;
       newedges[ie] = edges[i];
       newedges[ie].adj[0] = newedges + ie -1;
       newedges[ie].adj[1] = newedges + (edges[i].adj[1]-edges) ;
       newedges[ie].on =  Gh.Containing(BB,ong);
-      newedges[ie++].v[0] = vertices + k;
+      newedges[ie++].v[0] = _vertices + k;
       k++;
    }
    if (edgesGtoB)
@@ -399,7 +399,7 @@ int Triangles::SplitElement(int choice)
             kedge[3*i+j] = ks;
             if (ii<nbt) // good triangle
                kedge[3*ii+jj] = ks;
-            Vertex &A=vertices[ks];
+            Vertex &A=_vertices[ks];
             double aa=0, bb=0, cc=0, dd;
             if ((dd=Area2(v0.r,v1.r,A.r)) >= 0) { // warning PB roundoff error
                if (t.link && ((aa=Area2(A.r,t[1].r,t[2].r)) < 0.0 
@@ -410,7 +410,7 @@ int Triangles::SplitElement(int choice)
                                << " " <<  aa  << " " << bb << " " << cc << " " << dd << endl;
             }
             else {
-              if (tt.link && ( (aa=Area2(A.r    , tt[1].r, tt[2].r)) < 0 
+               if (tt.link && ( (aa=Area2(A.r    , tt[1].r, tt[2].r)) < 0 
                            ||   (bb=Area2(tt[0].r, A.r    , tt[2].r)) < 0 
                            ||   (cc=Area2(tt[0].r,tt[1].r, A.r    )) < 0)) 
                   ferr++, cerr << " Warning : " << ke+nbvold << " not in triangle " << ii 
@@ -447,10 +447,10 @@ int Triangles::SplitElement(int choice)
                   kedge[3*i+j] = k; 
                   kedge[3*ii+jj] = k;
                   if (k<nbvx) {
-                     vertices[k].r = ((R2)v0+(R2)v1)/2;
-                     vertices[k].ReferenceNumber = 0;
-                     vertices[k].DirOfSearch = NoDirOfSearch;
-                     vertices[k].m =  Metric(0.5,v0,0.5,v1);
+                     _vertices[k].r = ((R2)v0+(R2)v1)/2;
+                     _vertices[k].ReferenceNumber = 0;
+                     _vertices[k].DirOfSearch = NoDirOfSearch;
+                     _vertices[k].m =  Metric(0.5,v0,0.5,v1);
                   }
                   k++;
                   kkk[nbsplitedge++] = j;	      
@@ -524,7 +524,7 @@ int Triangles::SplitElement(int choice)
                Triangle &t1=triangles[kkk++];
                t1 = t0;
                assert(kedge[3*i+i0]>=0);
-               Vertex *v3 = vertices + kedge[3*i+k0];
+               Vertex *v3 = _vertices + kedge[3*i+k0];
                t0(i2) = v3;
                t1(i1) = v3;
                t0.SetAllFlag(k2,0);
@@ -538,12 +538,10 @@ int Triangles::SplitElement(int choice)
                t2 = t1 = t0;
                assert(kedge[3*i+k1]>=0);
                assert(kedge[3*i+k2]>=0);
-               Vertex *v01 = vertices + kedge[3*i+k2];
-               Vertex *v02 = vertices + kedge[3*i+k1]; 
-               t0(i1) = v01; 
-               t0(i2) = v02; 
-               t1(i2) = v02;
-               t1(i0) = v01; 
+               Vertex *v01 = _vertices + kedge[3*i+k2];
+               Vertex *v02 = _vertices + kedge[3*i+k1]; 
+               t0(i1) = v01; t0(i2) = v02; 
+               t1(i2) = v02; t1(i0) = v01; 
                t2(i0) = v02; 
                t0.SetAllFlag(k0,0);
                t1.SetAllFlag(k1,0);
@@ -559,29 +557,23 @@ int Triangles::SplitElement(int choice)
                Triangle &t1=triangles[kkk++], &t2=triangles[kkk++], &t3=triangles[kkk++];
                t3 = t2 = t1 = t0;
                assert(kedge[3*i+k0] >=0 && kedge[3*i+k1] >=0 && kedge[3*i+k2] >=0);
-               Vertex *v12 = vertices + kedge[3*i+k0];
-               Vertex *v02 = vertices + kedge[3*i+k1]; 
-               Vertex *v01 = vertices + kedge[3*i+k2];
-               t0(i1) = v01;
-               t0(i2) = v02;
+               Vertex *v12 = _vertices + kedge[3*i+k0];
+               Vertex *v02 = _vertices + kedge[3*i+k1]; 
+               Vertex *v01 = _vertices + kedge[3*i+k2];
+               t0(i1) = v01; t0(i2) = v02;
                t0.SetAllFlag(k0,hid[k0]);
-               t1(i0) = v01;
-               t1(i2) = v12;
+               t1(i0) = v01; t1(i2) = v12;
                t0.SetAllFlag(k1,hid[k1]);
-               t2(i0) = v02;
-               t2(i1) = v12;
+               t2(i0) = v02; t2(i1) = v12;
                t2.SetAllFlag(k2,hid[k2]);
-               t3(i0) = v12;
-               t3(i1) = v02;
-               t3(i2) = v01;
+               t3(i0) = v12; t3(i1) = v02; t3(i2) = v01;
                t3.SetAllFlag(0,hid[0]);	   
                t3.SetAllFlag(1,hid[1]);	   
                t3.SetAllFlag(2,hid[2]);
                if (kk == 6) {
                   Triangle &t4 = triangles[kkk++];
                   Triangle &t5 = triangles[kkk++];
-                  t4 = t3;
-                  t5 = t3;
+                  t4 = t3; t5 = t3;
                   t0.SetHidden(k0);
                   t1.SetHidden(k1);
                   t2.SetHidden(k2);
@@ -589,15 +581,13 @@ int Triangles::SplitElement(int choice)
                   t4.SetHidden(1);
                   t5.SetHidden(2);
                   if (nbv < nbvx) {
-                     vertices[nbv].r = ((R2)*v01 + (R2)*v12  + (R2)*v02 ) / 3.0;
-                     vertices[nbv].ReferenceNumber = 0;
-                     vertices[nbv].DirOfSearch = NoDirOfSearch;
+                     _vertices[nbv].r = ((R2)*v01 + (R2)*v12  + (R2)*v02 ) / 3.0;
+                     _vertices[nbv].ReferenceNumber = 0;
+                     _vertices[nbv].DirOfSearch = NoDirOfSearch;
                      double a3[] = {1./3.,1./3.,1./3.};
-                     vertices[nbv].m = Metric(a3,v0->m,v1->m,v2->m);
-                     Vertex *vc = vertices + nbv++;
-                     t3(i0) = vc;
-                     t4(i1) = vc;
-                     t5(i2) = vc;
+                     _vertices[nbv].m = Metric(a3,v0->m,v1->m,v2->m);
+                     Vertex *vc = _vertices + nbv++;
+                     t3(i0) = vc; t4(i1) = vc; t5(i2) = vc;
                   }
                else
                   goto Error;
@@ -618,10 +608,10 @@ int Triangles::SplitElement(int choice)
       kkk = nbt;
    }
    for (i=0; i<nbv; i++)
-      vertices[i].m = vertices[i].m*2.;
+      _vertices[i].m = _vertices[i].m*2.;
    if (withBackground)
       for (i=0;i<BTh.nbv;i++)
-         BTh.vertices[i].m =  BTh.vertices[i].m*2.;
+         BTh._vertices[i].m =  BTh._vertices[i].m*2.;
    ret = 2;
    if (nbt>= nbtx)
       goto Error; 

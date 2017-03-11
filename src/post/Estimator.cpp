@@ -35,28 +35,28 @@
 
 namespace OFELI {
 
-Estimator::Estimator(Mesh&         m,
-                     Vect<real_t>& e)
+Estimator::Estimator(Mesh& m)
 {
    _mesh = &m;
-   _est = &e;
    _est_type = ESTIM_ZZ;
-   _est->setMesh(*_mesh,1,ELEMENT_DOF);
    _nb_el = _mesh->getNbElements();
    _nb_nd = _mesh->getNbNodes();
+   _nb_dof = (*_mesh)[1]->getNbDOF();
 }
 
 
 void Estimator::setType(EstimatorType t)
 {
    _est_type = t;
-   if (_est_type==ESTIM_ZZ)
-      _est->setSize(_nb_el);
+   if (_est_type==ESTIM_ZZ) {
+      _nd_I.setSize(_nb_nd);
+      _el_I.setSize(_nb_el);
+   }
    else if (_est_type==ESTIM_ND_JUMP) {
       _mesh->getAllSides();
       _nb_sd = _mesh->getNbSides();
       _N.setSize(_nb_sd);
-      _est->setSize(_nb_sd);
+      _sd_I.setSize(_nb_sd);
       mesh_sides(*_mesh) {
          Point<real_t> T(The_side(1)->getCoord()-The_side(2)->getCoord());
          _N(side_label) = Point<real_t>(T.y,-T.x);
@@ -65,40 +65,65 @@ void Estimator::setType(EstimatorType t)
 }
 
 
-void Estimator::setError(const Vect<real_t>& u)
+void Estimator::setSolution(const Vect<real_t>& u)
 {
    if (_est_type==ESTIM_ZZ) {
-      Vect<real_t> M(_mesh->getNbNodes());
+      Vect<real_t> M(_nb_nd);
       Vect<Point<real_t> > b(*_mesh);
       the_element = (*_mesh)(1);
       try {
          if (The_element.getShape()==TRIANGLE && The_element.getNbNodes()==3)
-            elementT3_ZZ(u, M, b);
+            elementT3_ZZ(u,b);
          else
             THROW_RT("This element is not implemented for Estimator calculation.");
       }
       CATCH("Estimator");
       _average = 0;
       mesh_elements(*_mesh)
-         _average += (*_est)(element_label);
-      _average /= _mesh->getNbElements();
+         _average += _el_I(element_label);
+      _average /= _nb_el;
    }
    else if (_est_type==ESTIM_ND_JUMP) {
       elementT3_ND_JUMP(u);
       _average = 0;
       mesh_sides(*_mesh)
-         _average += (*_est)(side_label);
+         _average += _sd_I(side_label);
       _average /= _nb_sd;
       mesh_sides(*_mesh)
-         (*_est)(side_label) /= _average;
+         _sd_I(side_label) /= _average;
    }
+}
+
+
+void Estimator::getNodeWiseIndex(Vect<real_t>& I)
+{
+   I.setSize(_nb_nd,_nb_dof);
+   I = _nd_I;
+   real_t emax = I.getNormMax();
+   for (size_t i=0; i<_nb_nd; i++)
+      I(i) /= emax;
+}
+
+
+void Estimator::getElementWiseIndex(Vect<real_t>& I)
+{
+   I.setSize(_nb_el,_nb_dof);
+   I = _el_I;
+}
+
+
+void Estimator::getSideWiseIndex(Vect<real_t>& I)
+{
+   I.setSize(_nb_sd,_nb_dof);
+   I = _sd_I;
 }
 
 
 void Estimator::elementT3_ND_JUMP(const Vect<real_t>& u)
 {
+   _sd_I.setSize(_nb_sd);
    mesh_sides(*_mesh) {
-      (*_est)(side_label) = 0;
+      _sd_I(side_label) = 0;
       Element *el1 = The_side.getNeighborElement(1),
               *el2 = The_side.getNeighborElement(2);
       real_t u1 = u((*el1)(1)->n()), u2 = u((*el1)(2)->n()), u3 = u((*el1)(3)->n());
@@ -108,41 +133,42 @@ void Estimator::elementT3_ND_JUMP(const Vect<real_t>& u)
          Triang3 tr(el2);
          u1 = u((*el2)(1)->n()), u2 = u((*el2)(2)->n()), u3 = u((*el2)(3)->n());
          real_t dudn2 = (_N(side_label),u1*tr.DSh(1)+u2*tr.DSh(2)+u3*tr.DSh(3));
-         (*_est)(side_label) = fabs(dudn1 - dudn2);
+         _sd_I(side_label) = fabs(dudn1 - dudn2);
       }
    }
 }
 
 
 void Estimator::elementT3_ZZ(const Vect<real_t>&   u,
-                             Vect<real_t>&         M,
                              Vect<Point<real_t> >& b)
 {
-   Vect<Point<real_t> > Du(*_mesh,0,ELEMENT_DOF);
-   size_t nb=u.getNbDOF();
+   _el_I.setSize(_nb_el);
+   _nd_I.setSize(_nb_nd);
+   Vect<real_t> E(_nb_el), M(_nb_nd);
+   M = 0;
+   Vect<Point<real_t> > Du(_nb_el,_nb_dof);
    try {
-      if (nb==0)
+      if (_nb_dof==0)
          THROW_RT("This procedure is not allowed with non constant nb of DOF per node.");
    }
    CATCH("Estimator");
    mesh_elements(*_mesh) {
       Triang3 tr(the_element);
       real_t c = tr.getArea()*OFELI_THIRD;
-      for (size_t k=1; k<=nb; k++) {
+      for (size_t k=1; k<=_nb_dof; k++) {
          Du(element_label,k) =  tr.DSh(1)*u(The_element(1)->n(),k)
                               + tr.DSh(2)*u(The_element(2)->n(),k)
                               + tr.DSh(3)*u(The_element(3)->n(),k);
       }
       for (size_t i=1; i<=3; i++) {
-         size_t n = The_element(i)->n();
-         M(n) += c;
-         for (size_t k=1; k<=nb; k++)
-            b(n,k) += c*Du(element_label,k);
+         M(The_element(i)->n()) += c;
+         for (size_t k=1; k<=_nb_dof; k++)
+            b(The_element(i)->n(),k) += c*Du(element_label,k);
       }
    }
 
    mesh_nodes(*_mesh) {
-      for (size_t k=1; k<=nb; k++)
+      for (size_t k=1; k<=_nb_dof; k++)
          b(node_label,k) /= M(node_label);
    }
   
@@ -153,19 +179,31 @@ void Estimator::elementT3_ZZ(const Vect<real_t>&   u,
       size_t n1 = The_element(1)->n(),
              n2 = The_element(2)->n(),
              n3 = The_element(3)->n();
-      for (size_t k=1; k<=nb; k++) {
+      for (size_t k=1; k<=_nb_dof; k++) {
          g[0] = 0.5*(b(n2,k) + b(n3,k));
          g[1] = 0.5*(b(n3,k) + b(n1,k));
          g[2] = 0.5*(b(n1,k) + b(n2,k));
          real_t c = tr.getArea()*OFELI_THIRD;
          for (size_t i=0; i<3; i++) {
-            (*_est)(n) += c*((Du(n,k).x-g[i].x)*(Du(n,k).x-g[i].x) +
-                             (Du(n,k).y-g[i].y)*(Du(n,k).y-g[i].y));
+            _el_I(n) += c*((Du(n,k).x-g[i].x)*(Du(n,k).x-g[i].x) +
+                           (Du(n,k).y-g[i].y)*(Du(n,k).y-g[i].y));
          }
       }
    }
-   mesh_elements(*_mesh)
-      (*_est)(element_label) = sqrt((*_est)(element_label)/_mesh->getNbElements());
+
+   /*   _nd_I = 0;
+   mesh_elements(*_mesh) {
+      _el_I(element_label) = sqrt(_el_I(element_label)/_nb_el);
+      Triang3 tr(the_element);
+      real_t c = tr.getArea()*OFELI_THIRD;
+      _nd_I(The_element(1)->n()) += c*_el_I(element_label);
+      _nd_I(The_element(2)->n()) += c*_el_I(element_label);
+      _nd_I(The_element(3)->n()) += c*_el_I(element_label);
+   }
+   mesh_nodes(*_mesh)
+      _nd_I(node_label) /= M(node_label);
+   */
+
 }
 
 
@@ -177,13 +215,13 @@ ostream& operator<<(ostream&         s,
    s << "Errors in elements" << endl << endl;
    mesh_elements(r.getMesh()) {
       s << setw(6) << element_label << "   ";
-      s << setprecision(8) << setw(18) << (*r._est)(element_label) << endl;
+      s << setprecision(8) << setw(18) << r._el_I(element_label) << endl;
    }
    s << endl << "Average Error: " << r.getAverage() << endl;
    s << "Relative Errors in Elements" << endl << endl;
    mesh_nodes(r.getMesh()) {
       s << setw(6) << element_label << "   ";
-      s << setprecision(8) << setw(18) << ((*r._est)(element_label)-r.getAverage())/r.getAverage() << endl;
+      s << setprecision(8) << setw(18) << (r._el_I(element_label)-r.getAverage())/r.getAverage() << endl;
    }
    return s;
 }

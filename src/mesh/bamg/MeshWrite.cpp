@@ -96,8 +96,8 @@ void Triangles::Write_msh(ostream& f) const
    f.precision(12);
    f << nbv << " " << nbInT << " " << nbe << endl;
    for (i=0; i<nbv; i++)
-      f << vertices[i].r.x << " " << vertices[i].r.y << " " 
-        << vertices[i].ref() << endl;
+      f << _vertices[i].r.x << " " << _vertices[i].r.y << " " 
+        << _vertices[i].ref() << endl;
    for (i=0; i<nbt; i++)
       if (reft[i]>=0)
          f << Number(triangles[i][0])+1 << " " 
@@ -172,7 +172,7 @@ void Triangles::WriteElements(ostream& f,
 }
 
 
-ostream& operator <<(      ostream&   f,
+ostream& operator <<(ostream&         f,
                      const Triangles& Th) 
 {
    long* reft = new long[Th.nbt];
@@ -197,7 +197,7 @@ ostream& operator <<(      ostream&   f,
       f.precision(12);
       f << "\nVertices\n" << Th.nbv << endl;
       for (long i=0; i<Th.nbv; i++) {
-         Vertex& v = Th.vertices[i];
+         Vertex& v = Th._vertices[i];
          f << v.r.x << " " << v.r.y << " " << v.ref() << endl;
       }
    }
@@ -302,7 +302,7 @@ ostream& operator <<(      ostream&   f,
          if (mark[i] == -1) {
             k--;
             Icoor2 dete[3];
-            I2 I = Th.BTh.toI2(Th.vertices[i].r);
+            I2 I = Th.BTh.toI2(Th._vertices[i].r);
             Triangle* tb = Th.BTh.FindTriangleContaining(I,dete);
             if (tb->link) {
                double aa=(double)dete[1]/tb->det, bb=(double)dete[2]/tb->det;
@@ -344,7 +344,7 @@ void Geometry::Write(const char* filename)
 }
 
 
-ostream& operator <<(      ostream&  f,
+ostream& operator <<(ostream&        f,
                      const Geometry& Gh) 
 {
    long NbCorner=0;
@@ -357,7 +357,7 @@ ostream& operator <<(      ostream&  f,
       f.precision(12);
       f << "\nVertices\n" << Gh.nbv << endl;
       for (long i=0; i<Gh.nbv; i++) {
-         GeometricalVertex& v = Gh.vertices[i];
+         GeometricalVertex& v = Gh._vertices[i];
          if (v.Required())
             nbreqv++;
          f << v.r.x << " " << v.r.y << " " << v.ref() << endl;
@@ -405,7 +405,7 @@ ostream& operator <<(      ostream&  f,
    if (NbCorner) {
       f << "\nCorners\n" << NbCorner << endl;
       for (long i=0,j=0; i<Gh.nbv; i++) {
-         GeometricalVertex& v = Gh.vertices[i];
+         GeometricalVertex& v = Gh._vertices[i];
          if (v.Corner()) 
             j++, f << Gh.Number(v)+1 << (j % 5 ? ' ' : '\n');
       }
@@ -414,7 +414,7 @@ ostream& operator <<(      ostream&  f,
    if (nbreqv) {
       f << "\nRequiredVertices\n"<< nbreqv << endl;
       for (long j=0,i=0; i<Gh.nbv; i++) {
-         GeometricalVertex& v = Gh.vertices[i];
+         GeometricalVertex& v = Gh._vertices[i];
          if (v.Required()) 
          j++,f << i+1 << (j % 5 ? ' ' : '\n');
       }

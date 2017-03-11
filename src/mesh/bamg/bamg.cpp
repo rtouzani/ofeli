@@ -338,7 +338,7 @@ int main_bamg(string input_file,
             MatVVP2x2 Vp(M/coef);
             Vp.Maxh(hmin);
             Vp.Minh(hmax);
-            Gh.vertices[iv].m = Vp;
+            Gh._vertices[iv].m = Vp;
          }
       }
       Triangles Th(nbvx,Gh);
@@ -491,7 +491,7 @@ int main_bamg(string input_file,
                long i0, i1, i2;
                double a[3];
                Icoor2 dete[3];
-               I2 I = Th.BTh.toI2(Th.vertices[i].r);
+               I2 I = Th.BTh.toI2(Th._vertices[i].r);
                Triangle & tb = *Th.BTh.FindTriangleContaining(I,dete);
                if (tb.det>0) {
                   a[0] = (dete[0]) / tb.det;

@@ -172,13 +172,13 @@ void Triangles::ConsGeometry(double cutoffradian,
 
 // construction of edges[].adj 
    for (i=0; i<nbv; i++) 
-      vertices[i].color = 0;
+      _vertices[i].color = 0;
    for (i=0; i<nbe; i++)
       for (j=0; j<2; j++) 
 	 edges[i].v[j]->color++;
 
    for (i=0; i<nbv; i++) 
-      vertices[i].color = (vertices[i].color==2) ? -1 : -2;
+      _vertices[i].color = (_vertices[i].color==2) ? -1 : -2;
    for (i=0; i<nbe; i++) {
       for (j=0; j<2; j++) {
          Vertex *v=edges[i].v[j];
@@ -270,7 +270,7 @@ void Triangles::ConsGeometry(double cutoffradian,
          colorV[i] = k++;
    Gh.nbv = k;
    Gh.nbe = nbe;
-   Gh.vertices = new GeometricalVertex[k];
+   Gh._vertices = new GeometricalVertex[k];
    Gh.edges = new GeometricalEdge[nbe];
    Gh.NbSubDomains = NbSubDomains;
    Gh.subdomains = new GeometricalSubDomain[NbSubDomains];
@@ -284,10 +284,10 @@ void Triangles::ConsGeometry(double cutoffradian,
       long j;
       for (i=0; i<nbv; i++) {
          if ((j=colorV[i])>=0) {
-            Vertex &v = Gh.vertices[j];
-            v = vertices[i];
+            Vertex &v = Gh._vertices[j];
+            v = _vertices[i];
             v.color = 0;
-            VerticesOnGeomVertex[j] = VertexOnGeom(vertices[i], Gh.vertices[j]);
+            VerticesOnGeomVertex[j] = VertexOnGeom(_vertices[i],Gh._vertices[j]);
          }
       }
    }
@@ -295,14 +295,14 @@ void Triangles::ConsGeometry(double cutoffradian,
    double *len = new double [Gh.nbv];
    for (i=0; i<Gh.nbv; i++)
       len[i] = 0;
-   Gh.pmin =  Gh.vertices[0].r;
-   Gh.pmax =  Gh.vertices[0].r;
+   Gh.pmin =  Gh._vertices[0].r;
+   Gh.pmax =  Gh._vertices[0].r;
 
    for (i=0; i<Gh.nbv; i++) {
-     Gh.pmin.x = Min(Gh.pmin.x,Gh.vertices[i].r.x);
-     Gh.pmin.y = Min(Gh.pmin.y,Gh.vertices[i].r.y);
-     Gh.pmax.x = Max(Gh.pmax.x,Gh.vertices[i].r.x);
-     Gh.pmax.y = Max(Gh.pmax.y,Gh.vertices[i].r.y);
+     Gh.pmin.x = Min(Gh.pmin.x,Gh._vertices[i].r.x);
+     Gh.pmin.y = Min(Gh.pmin.y,Gh._vertices[i].r.y);
+     Gh.pmax.x = Max(Gh.pmax.x,Gh._vertices[i].r.x);
+     Gh.pmax.y = Max(Gh.pmax.y,Gh._vertices[i].r.y);
    }
    R2 DD05 = (Gh.pmax-Gh.pmin)*0.05;
    Gh.pmin -= DD05;
@@ -314,8 +314,8 @@ void Triangles::ConsGeometry(double cutoffradian,
    for (i=0; i<nbe; i++) {
       long i0 = Number(edges[i][0]), i1 = Number(edges[i][1]);
       long j0 = colorV[i0], j1 = colorV[i1];
-      Gh.edges[i].v[0] = Gh.vertices + j0;
-      Gh.edges[i].v[1] = Gh.vertices + j1;
+      Gh.edges[i].v[0] = Gh._vertices + j0;
+      Gh.edges[i].v[1] = Gh._vertices + j1;
       Gh.edges[i].flag = 0;
       Gh.edges[i].tg[0] = R2();
       Gh.edges[i].tg[1] = R2();
@@ -334,11 +334,11 @@ void Triangles::ConsGeometry(double cutoffradian,
          }
       }
 
-      R2 x12 = Gh.vertices[j0].r-Gh.vertices[j1].r;
+      R2 x12 = Gh._vertices[j0].r-Gh._vertices[j1].r;
       double l12 = Norme2(x12);        
       hmin = Min(hmin,l12);
-      Gh.vertices[j1].color++;
-      Gh.vertices[j0].color++;
+      Gh._vertices[j1].color++;
+      Gh._vertices[j0].color++;
       len[j0] += l12;
       len[j1] += l12;
       hmin = Min(hmin,l12);
@@ -347,10 +347,10 @@ void Triangles::ConsGeometry(double cutoffradian,
       assert(k==i);
    }
    for (i=0; i<Gh.nbv; i++) {
-      if (Gh.vertices[i].color > 0) 
-         Gh.vertices[i].m = Metric(len[i] /(double)Gh.vertices[i].color);
+      if (Gh._vertices[i].color > 0) 
+         Gh._vertices[i].m = Metric(len[i] /(double)Gh._vertices[i].color);
       else
-         Gh.vertices[i].m = Metric(hmin);
+         Gh._vertices[i].m = Metric(hmin);
    }
    delete [] len;
    for (i=0; i<NbSubDomains; i++) {
@@ -360,7 +360,7 @@ void Triangles::ConsGeometry(double cutoffradian,
       long i1=Number(triangles[it][VerticesOfTriangularEdge[j][1]]);
       k = edge4->findtrie(i0,i1);
       if (k>=0) {
-         subdomains[i].sens = (vertices + i0 == edges[k].v[0]) ? 1 : -1;
+         subdomains[i].sens = (_vertices + i0 == edges[k].v[0]) ? 1 : -1;
          subdomains[i].edge = edges+k;
          Gh.subdomains[i].edge = Gh.edges + k;
          Gh.subdomains[i].sens = subdomains[i].sens;
@@ -387,7 +387,7 @@ void Geometry::EmptyGeometry()
    curves = 0;
    triangles = 0;
    edges = 0;
-   vertices = 0;
+   _vertices = 0;
    NbSubDomains = 0;
    nbiv = nbv = nbvx = 0;
    nbe = nbt = nbtx = 0;
@@ -406,25 +406,25 @@ Geometry::Geometry(const Geometry& Gh)
    name = new char[strlen(Gh.name)+4];
    strcpy(name,"cp:");
    strcat(name,Gh.name);
-   vertices = nbv ? new GeometricalVertex[nbv] : NULL;
+   _vertices = nbv ? new GeometricalVertex[nbv] : NULL;
    triangles = nbt ? new Triangle[nbt]:NULL;
    edges = nbe ? new GeometricalEdge[nbe]:NULL;
    curves = NbOfCurves ? new Curve[NbOfCurves]:NULL;
    subdomains = NbSubDomains ? new GeometricalSubDomain[NbSubDomains]:NULL;
    for (i=0; i<nbv; i++)
-      vertices[i].Set(Gh.vertices[i],Gh,*this);
+      _vertices[i].Set(Gh._vertices[i],Gh,*this);
    for (i=0; i<nbe; i++)
       edges[i].Set(Gh.edges[i],Gh,*this);
    for (i=0; i<NbOfCurves; i++)
       curves[i].Set(Gh.curves[i],Gh,*this);
    for (i=0; i<NbSubDomains; i++)
       subdomains[i].Set(Gh.subdomains[i],Gh,*this);
-   assert(!nbt);   
+   assert(!nbt);
 }
 
 
-GeometricalEdge* Geometry::Containing(const R2               P, 
-                                            GeometricalEdge* start) const
+GeometricalEdge* Geometry::Containing(const R2         P, 
+                                      GeometricalEdge* start) const
 {
    GeometricalEdge *on=start, *pon=0;
    int k=0;
@@ -445,10 +445,10 @@ GeometricalEdge* Geometry::Containing(const R2               P,
 }
 
 
-GeometricalEdge* Geometry::ProjectOnCurve(const Edge&         e,
-                                                double        s,
-                                                Vertex&       V,
-                                                VertexOnGeom& GV) const 
+GeometricalEdge* Geometry::ProjectOnCurve(const Edge&   e,
+                                          double        s,
+                                          Vertex&       V,
+                                          VertexOnGeom& GV) const 
 {
    double save_s=s;
    int NbTry=0;
@@ -607,30 +607,30 @@ void Geometry::AfterRead()
    {
       double eps=1e-20;
       QuadTree quadtree; // to find same vertices
-      Vertex *v0=vertices; 
+      Vertex *v0=_vertices; 
       GeometricalVertex *v0g = (GeometricalVertex *)(void *)v0;
       int k=0;
       for (i=0; i<nbv; i++) 
-         vertices[i].link = vertices + i;
+         _vertices[i].link = _vertices + i;
       for (i=0; i<nbv; i++) {
-         vertices[i].i = toI2(vertices[i].r);
-         Vertex *v = quadtree.NearestVertex(vertices[i].i.x,vertices[i].i.y);
-         if (v && Norme1(v->r-vertices[i])<eps) { 
+         _vertices[i].i = toI2(_vertices[i].r);
+         Vertex *v = quadtree.NearestVertex(_vertices[i].i.x,_vertices[i].i.y);
+         if (v && Norme1(v->r-_vertices[i])<eps) { 
             GeometricalVertex *vg = (GeometricalVertex *)(void *)v;
             int j=vg-v0g;
-            assert(v== &(Vertex &)vertices[j]);
-            vertices[i].link = vertices + j;
+            assert(v== &(Vertex &)_vertices[j]);
+            _vertices[i].link = _vertices + j;
             k++;
          }
          else
-            quadtree.Add(vertices[i]);
+            quadtree.Add(_vertices[i]);
       }
       if (k) {
          cout << " Number of distinct vertices " << nbv - k << " Over " << nbv << endl;
          cout << " The duplicate vertex " << endl;
          for (i=0; i<nbv; i++)
-            if (!vertices[i].IsThe())
-               cout << " " << i << " and " << Number(vertices[i].The()) << endl;
+            if (!_vertices[i].IsThe())
+               cout << " " << i << " and " << Number(_vertices[i].The()) << endl;
          MeshError(102);
       }
 
@@ -663,7 +663,7 @@ void Geometry::AfterRead()
    }
    if (verbosity>7)
       for (i=0; i<nbv; i++)
-         if (vertices[i].Required())
+         if (_vertices[i].Required())
             cout << "     The geo vertices  " << i << " is required" << endl;
    for (i=0; i<nbv; i++) 
       hv[i] = -1;
@@ -717,32 +717,32 @@ void Geometry::AfterRead()
          double angle2 = !j2 ? OppositeAngle(eangle[i2]) : eangle[i2];
          double da12 = Abs(angle2-angle1);
          if (verbosity>9)
-            cout << "     check angle " << i << " " << i1 << " " << i2  << " " << 180*(da12)/Pi 
-                 << " " << 180*MaximalAngleOfCorner/Pi << vertices[i] << endl;
+            cout << "     check angle " << i << " " << i1 << " " << i2 << " " << 180*(da12)/Pi 
+                 << " " << 180*MaximalAngleOfCorner/Pi << _vertices[i] << endl;
          if (  (da12 >= MaximalAngleOfCorner) 
             && (da12 <= 2*Pi-MaximalAngleOfCorner)) {
-            vertices[i].SetCorner() ; 
+            _vertices[i].SetCorner() ; 
             if (verbosity>7)
                cout << "     The vertex " << i << " is a corner (angle) " 
                     << 180*(da12)/ Pi << " " << 180*MaximalAngleOfCorner/Pi << endl;
          }
 //       if the ref a changing then is SetRequired();
          if (edges[i1].flag != edges[i2].flag) {
-            vertices[i].SetRequired();
+            _vertices[i].SetRequired();
             if (verbosity>7)
                cout << "     The vertex " << i << " is Required the flag change (crack or equi)" << endl;
          }
          if (edges[i1].ref != edges[i2].ref) {
-            vertices[i].SetRequired();
+            _vertices[i].SetRequired();
             if (verbosity>7)
                cout << "     The vertex " << i << " is Required ref" << endl;
          }
       }
 
       if (ord != 2) {
-         vertices[i].SetCorner();
+         _vertices[i].SetCorner();
          if (verbosity>7)
-            cout << "     the vertex " << i << " is a corner ordre = " << ord << endl;
+            cout << "     the vertex " << i << " is a corner order = " << ord << endl;
       }
 
 //    close the list around the vertex 
@@ -806,8 +806,8 @@ void Geometry::AfterRead()
 
    if (verbosity>7)
       for (i=0; i<nbv; i++)
-         if (vertices[i].Required())
-            cout << "     The  geo  vertex " << i << " is required " << endl;
+         if (_vertices[i].Required())
+            cout << "     The  geo  vertex " << i << " is required." << endl;
 
    for (int step=0; step<2; step++) {
       for (i=0; i<nbe; i++)
@@ -889,9 +889,9 @@ void Geometry::AfterRead()
 Geometry::~Geometry() 
 {
    assert(NbRef<=0);
-   if (vertices)
-      delete [] vertices;
-   vertices = NULL;
+   if (_vertices)
+      delete [] _vertices;
+   _vertices = NULL;
    if (edges)
       delete [] edges;
    edges = NULL;

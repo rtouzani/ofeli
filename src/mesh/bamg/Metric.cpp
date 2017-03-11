@@ -215,8 +215,8 @@ void Triangles::IntersectGeomMetric(const double err=1,
 }
 
 
-void  Triangles::BoundAnisotropy(double anisomax,
-                                 double hminaniso)
+void Triangles::BoundAnisotropy(double anisomax,
+                                double hminaniso)
 {
    double lminaniso=1/(Max(hminaniso*hminaniso,1e-100));
    if (verbosity>1)
@@ -225,7 +225,7 @@ void  Triangles::BoundAnisotropy(double anisomax,
    double coef=1./(anisomax*anisomax);
    double hn1=1.e30, hn2=1e-30, rnx=1.e-30;  
    for (long i=0; i<nbv; i++) {
-      MatVVP2x2 Vp(vertices[i]);
+      MatVVP2x2 Vp(_vertices[i]);
       double lmax=Vp.lmax();
       h1=Min(h1,Vp.lmin());
       h2=Max(h2,Vp.lmax());
@@ -235,7 +235,7 @@ void  Triangles::BoundAnisotropy(double anisomax,
       hn1 = Min(hn1,Vp.lmin());
       hn2 = Max(hn2,Vp.lmax());
       rnx = Max(rnx,Vp.Aniso2());
-      vertices[i].m = Vp;
+      _vertices[i].m = Vp;
    }
 
    if (verbosity>2) {
@@ -250,13 +250,13 @@ void  Triangles::BoundAnisotropy(double anisomax,
 void Triangles::IntersectConsMetric(const double* s,
                                     const long    nbsol,
                                     const int*    typsols,
-				    const double  hmin1,
+                                    const double  hmin1,
                                     const double  hmax1,
                                     const double  coef,
-				    const double  anisomax,
+                                    const double  anisomax,
                                     const double  CutOff,
                                     const int     NbJacobi,
-				    const int     DoNormalisation,
+                                    const int     DoNormalisation,
                                     const double  power,
                                     const int     choice)
 {
@@ -571,7 +571,7 @@ void Triangles::IntersectConsMetric(const double* s,
             hn2 = Max(hn2,Vp.lmax());
             rnx = Max(rnx,Vp.Aniso2());
             Metric MVp(Vp);
-            vertices[iv].m.IntersectWith(MVp);
+            _vertices[iv].m.IntersectWith(MVp);
          } // for all vertices
 
          if (verbosity>2) {
@@ -622,7 +622,7 @@ void Triangles::ReadMetric(const char* fmetrix,
       double h;
       if (j == 1) {
          f_metrix >> h;
-         vertices[iv].m = Metric(Max(hmin,Min(hmax, h*coef)));
+         _vertices[iv].m = Metric(Max(hmin,Min(hmax, h*coef)));
       }
       else if (j==3) {
          double a, b, c;	     
@@ -631,7 +631,7 @@ void Triangles::ReadMetric(const char* fmetrix,
          MatVVP2x2 Vp(M/coef);
          Vp.Maxh(hmin);
          Vp.Minh(hmax);
-         vertices[iv].m = Vp;
+         _vertices[iv].m = Vp;
       }
    }
 }
@@ -642,15 +642,15 @@ void Triangles::WriteMetric(ostream& f,
    if (iso) {
       f << nbv << " " << 1 << endl;
       for (long iv=0; iv<nbv; iv++) {
-         MatVVP2x2 V=vertices[iv].m;
+         MatVVP2x2 V=_vertices[iv].m;
          f << V.hmin() << endl;
       }
    }
    else {
       f << nbv << " " << 3 << endl;
       for (long iv=0; iv<nbv; iv++)
-         f << vertices[iv].m.a11 << " " << vertices[iv].m.a21 << " " 
-           << vertices[iv].m.a22 << endl;
+         f << _vertices[iv].m.a11 << " " << _vertices[iv].m.a21 << " " 
+           << _vertices[iv].m.a22 << endl;
    }
 }
 
@@ -729,22 +729,22 @@ void Triangles::SmoothMetric(double raisonmax)
       kch = 0;
       for (i=Head0; i>=0; i=first_np_or_next_t0[ip=i], first_np_or_next_t0[ip]=-1) {
 //       for all triangles around the vertex s
-         Triangle *t=vertices[i].t;
+         Triangle *t=_vertices[i].t;
          assert(t);
-         Vertex &vi=vertices[i];
-         TriangleAdjacent ta(t,EdgesVertexTriangle[vertices[i].vint][0]);
+         Vertex &vi=_vertices[i];
+         TriangleAdjacent ta(t,EdgesVertexTriangle[_vertices[i].vint][0]);
          Vertex *pvj0 = ta.EdgeVertex(0);
          while (1) {
             ta = Previous(Adj(ta));
-            assert(vertices+i == ta.EdgeVertex(1));
+            assert(_vertices+i == ta.EdgeVertex(1));
             Vertex *vj = &(*ta.EdgeVertex(0));
             if (vj) {
-               j = vj - vertices;
+               j = vj - _vertices;
                assert(j>=0 && j<nbv);
                R2 Aij = (R2)(*vj) - (R2)vi;
                double ll=Norme2(Aij);
-	       if (0) {
-                 double hi=ll/vi.m(Aij), hj=ll/vj->m(Aij);
+               if (0) {
+                  double hi=ll/vi.m(Aij), hj=ll/vj->m(Aij);
                   if (hi < hj) {
                      double dh=(hj-hi)/ll;
                      if (dh>logseuil) {
@@ -778,10 +778,10 @@ void Triangles::SmoothMetric(double raisonmax)
 }
 
 
-void Geometry::ReadMetric(const char*  fmetrix,
-                                double hmin=1.0e-30,
-                                double hmax=1.0e30,
-                                double coef=1)
+void Geometry::ReadMetric(const char* fmetrix,
+                          double      hmin=1.0e-30,
+                          double      hmax=1.0e30,
+                          double      coef=1)
 {
   hmin = Max(hmin,MinimalHmin());
   MeshIstream f_metrix(fmetrix);
@@ -802,7 +802,7 @@ void Geometry::ReadMetric(const char*  fmetrix,
       double h;
       if (j == 1) {
          f_metrix >> h;
-         vertices[iv].m = Metric(Max(hmin,Min(hmax, h*coef)));
+         _vertices[iv].m = Metric(Max(hmin,Min(hmax, h*coef)));
       }
       else if (j==3) {
          double a, b, c;
@@ -811,7 +811,7 @@ void Geometry::ReadMetric(const char*  fmetrix,
          MatVVP2x2 Vp(M/coef);
 	 Vp.Maxh(hmin);
          Vp.Minh(hmax);
-         vertices[iv].m = Vp;
+         _vertices[iv].m = Vp;
       }
    }
 }
@@ -819,7 +819,7 @@ void Geometry::ReadMetric(const char*  fmetrix,
 
 double LengthInterpole(const MetricAnIso Ma,
                        const MetricAnIso Mb,
-                             R2          AB)
+                       R2                AB)
 {
    double k=1./2.;
    int level=0;

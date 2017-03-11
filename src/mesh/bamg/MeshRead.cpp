@@ -64,7 +64,7 @@ void Triangles::Read(MeshIstream& f_in,
          double h;
          for (i=0; i<nbv; i++) {
             f_in >> h;
-	    vertices[i].m = Metric(h);
+            _vertices[i].m = Metric(h);
          }
       }
       else if (!strcmp(fieldname,"Vertices")) { 
@@ -73,16 +73,16 @@ void Triangles::Read(MeshIstream& f_in,
          if (verbosity>3)
             cout << "   Nb of Vertices = " << nbv << endl;
          nbvx = nbv;
-         vertices = new Vertex[nbvx];
-         assert(vertices);
+         _vertices = new Vertex[nbvx];
+         assert(_vertices);
          ordre = new Vertex* [nbvx];
          assert(ordre);
          nbiv = nbv;
          for (i=0; i<nbv; i++) {
-            f_in >> vertices[i].r.x >> vertices[i].r.y >> vertices[i].ReferenceNumber;
-            vertices[i].DirOfSearch = NoDirOfSearch;
-            vertices[i].m = M1;
-            vertices[i].color = 0;
+            f_in >> _vertices[i].r.x >> _vertices[i].r.y >> _vertices[i].ReferenceNumber;
+            _vertices[i].DirOfSearch = NoDirOfSearch;
+            _vertices[i].m = M1;
+            _vertices[i].color = 0;
          }
          nbtx =  2*nbv - 2; // for filling The Holes and quadrilaterals 
          triangles = new Triangle [nbtx];
@@ -92,7 +92,7 @@ void Triangles::Read(MeshIstream& f_in,
       else if (!strcmp(fieldname,"Triangles")) { 
          if (dim !=2)
             cerr << "ReadMesh: Dimension <> 2" <<endl, f_in.ShowIoErr(0);
-         if (!vertices || !triangles || !nbv)
+         if (!_vertices || !triangles || !nbv)
             cerr << "ReadMesh:Triangles before Vertices" <<endl,
          f_in.ShowIoErr(0);
          int NbOfTria;
@@ -114,7 +114,7 @@ void Triangles::Read(MeshIstream& f_in,
       else if (!strcmp(fieldname,"Quadrilaterals")) {
          if (dim !=2)
             cerr << "ReadMesh: Dimension <> 2" <<endl , f_in.ShowIoErr(0);
-         if (!vertices || !triangles || !nbv )
+         if (!_vertices || !triangles || !nbv )
             cerr << "ReadMesh:Quadrilaterals before Vertices" <<endl,
          f_in.ShowIoErr(0);
          f_in >> NbOfQuad;
@@ -140,17 +140,17 @@ void Triangles::Read(MeshIstream& f_in,
          f_in >> NbVerticesOnGeomVertex;
          if (verbosity>5)
             cout << "   NbVerticesOnGeomVertex = " << NbVerticesOnGeomVertex << endl
-                 << " Gh.vertices " << Gh.vertices << endl;
+                 << " Gh.vertices " << Gh._vertices << endl;
          if (NbVerticesOnGeomVertex) {
             VerticesOnGeomVertex = new VertexOnGeom[NbVerticesOnGeomVertex];
             if (verbosity>7)
                cout << "   VerticesOnGeomVertex = " << VerticesOnGeomVertex << endl
-                    << "   Gh.vertices " << Gh.vertices << endl;
+                    << "   Gh.vertices " << Gh._vertices << endl;
             assert(VerticesOnGeomVertex);
 	    for (long i0=0; i0<NbVerticesOnGeomVertex; i0++) { 
                long i1, i2;
                f_in >> i1 >> i2;
-               VerticesOnGeomVertex[i0] = VertexOnGeom(vertices[i1-1],Gh.vertices[i2-1]);
+               VerticesOnGeomVertex[i0] = VertexOnGeom(_vertices[i1-1],Gh._vertices[i2-1]);
             }
          }
       }
@@ -165,7 +165,7 @@ void Triangles::Read(MeshIstream& f_in,
                long i1, i2;
                double s=0;
                f_in >> i1 >> i2 >> s;
-               VerticesOnGeomEdge[i0] = VertexOnGeom(vertices[i1-1],Gh.edges[i2-1],s);
+               VerticesOnGeomEdge[i0] = VertexOnGeom(_vertices[i1-1],Gh.edges[i2-1],s);
             }
          }
       }
@@ -187,15 +187,15 @@ void Triangles::Read(MeshIstream& f_in,
             assert(i1>0 && i2>0);
             assert(i1<=nbv && i2<=nbv);
             i1--; i2--;
-            edges[i].v[0] = vertices + i1;
-            edges[i].v[1] = vertices + i2;
+            edges[i].v[0] = _vertices + i1;
+            edges[i].v[1] = _vertices + i2;
             edges[i].adj[0] = 0;
             edges[i].adj[1] = 0;
-            R2 x12 = vertices[i2].r-vertices[i1].r;
+            R2 x12 = _vertices[i2].r-_vertices[i1].r;
             double l12=sqrt((x12,x12));        
             if (!hvertices) {
-               vertices[i1].color++;
-               vertices[i2].color++;
+               _vertices[i1].color++;
+               _vertices[i2].color++;
                len[i1] += l12;
                len[i2] += l12;
             }
@@ -205,10 +205,10 @@ void Triangles::Read(MeshIstream& f_in,
 //       Definition of the default of the given mesh size 
          if (!hvertices) {
             for (i=0; i<nbv; i++) 
-               if (vertices[i].color > 0) 
-                  vertices[i].m = Metric(len[i]/vertices[i].color);
-               else 
-                  vertices[i].m = Metric(hmin);
+               if (_vertices[i].color > 0) 
+                  _vertices[i].m = Metric(len[i]/_vertices[i].color);
+               else
+                  _vertices[i].m = Metric(hmin);
             delete [] len;
          }
          if (verbosity>5)
@@ -216,7 +216,7 @@ void Triangles::Read(MeshIstream& f_in,
 
 //       construction of edges[].adj
          for (i=0; i<nbv; i++) 
-            vertices[i].color = (vertices[i].color ==2) ? -1 : -2;
+            _vertices[i].color = (_vertices[i].color ==2) ? -1 : -2;
          for (i=0; i<nbe; i++) {
             for (j=0; j<2; j++) {
                Vertex *v=edges[i].v[j];
@@ -225,7 +225,7 @@ void Triangles::Read(MeshIstream& f_in,
                   v->color = i*2 + j;
                else if (i0>=0) {// i and i0 edge are adjacent by the vertex v
                   j0 = i0%2, i0 = i0/2;
-	          assert(v==edges[i0 ].v[j0]);
+                  assert(v==edges[i0 ].v[j0]);
                   edges[i].adj[j] = edges + i0;
                   edges[i0].adj[j0] = edges + i;
                   assert(edges[i0].v[j0]==v);
@@ -283,7 +283,7 @@ void Triangles::Read(MeshIstream& f_in,
 }
 
 
-void  Triangles::Read_msh(MeshIstream& f_in)
+void Triangles::Read_msh(MeshIstream& f_in)
 {
    if (verbosity>1)
       cout << " -- ReadMesh .msh file " << f_in.CurrentFile << endl;	
@@ -299,11 +299,11 @@ void  Triangles::Read_msh(MeshIstream& f_in)
    nbtx =  2*nbv - 2; // for filling The Holes and quadrilaterals 
    triangles = new Triangle [nbtx];
    assert(triangles);
-   vertices = new Vertex[nbvx];
+   _vertices = new Vertex[nbvx];
    ordre = new Vertex* [nbvx];
    edges = new Edge[nbe];
    for (i=0; i<nbv; i++)
-      f_in >> vertices[i].r.x >> vertices[i].r.y >> vertices[i].ReferenceNumber;
+      f_in >> _vertices[i].r.x >> _vertices[i].r.y >> _vertices[i].ReferenceNumber;
    for (i=0; i<nbt; i++) {
       long i1, i2, i3, r;
       f_in >> i1 >> i2 >> i3 >> r;
@@ -313,8 +313,8 @@ void  Triangles::Read_msh(MeshIstream& f_in)
    for (i=0; i<nbe; i++) {
       long i1, i2, r;
       f_in >> i1 >> i2 >> r;
-      edges[i].v[0] = vertices + i1 - 1;
-      edges[i].v[1] = vertices + i2 - 1;
+      edges[i].v[0] = _vertices + i1 - 1;
+      edges[i].v[1] = _vertices + i2 - 1;
       edges[i].adj[0] = 0;
       edges[i].adj[1] = 0;
       edges[i].ref = r;
@@ -366,8 +366,8 @@ void Geometry::ReadGeometry(const char* filename)
 }
 
 
-void Geometry::ReadGeometry(      MeshIstream& f_in,
-                            const char*        filename)
+void Geometry::ReadGeometry(MeshIstream& f_in,
+                            const char*  filename)
 {
    if (verbosity>1)
       cout << " -- ReadGeometry " << filename << endl;
@@ -412,7 +412,7 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
          for (i=0; i<nbv; i++) {
             double h;
             f_in >> h;
-            vertices[i].m = Metric(h);
+            _vertices[i].m = Metric(h);
          }
       }
       else if (!strcmp(fieldname,"MetricVertices")) {
@@ -426,7 +426,7 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
          for (i=0; i<nbv; i++) {
             double a11, a21, a22;
             f_in >> a11 >> a21 >> a22; 
-            vertices[i].m = Metric(a11,a21,a22);
+            _vertices[i].m = Metric(a11,a21,a22);
          }
       }
       else if (!strcmp(fieldname,"h1h2VpVertices")) {
@@ -440,33 +440,34 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
          for (i=0; i<nbv; i++) {
             double h1, h2, v1, v2;
             f_in >> h1 >> h2 >> v1 >> v2; 
-            vertices[i].m = Metric(MatVVP2x2(1/(h1*h1),1/(h2*h2),D2(v1,v2)));
+            _vertices[i].m = Metric(MatVVP2x2(1/(h1*h1),1/(h2*h2),D2(v1,v2)));
          }
       }
       else if (!strcmp(fieldname,"Vertices")) {
          assert(dim==2);
          f_in >> nbv;
          nbvx = nbv;
-         vertices = new GeometricalVertex[nbvx];
+         _vertices = new GeometricalVertex[nbvx];
          if (verbosity>5) 
-	    cout << "     Geom Record Vertices nbv = " << nbv << "vertices = " << vertices << endl;
+            cout << "     Geom Record Vertices nbv = " << nbv << "vertices = " 
+                 << _vertices << endl;
          assert(nbvx >= nbv);
          nbiv = nbv;
          for (i=0; i<nbv; i++) {
-            f_in >> vertices[i].r.x;
-            f_in >> vertices[i].r.y;
-            f_in >> vertices[i].ReferenceNumber;
-            vertices[i].DirOfSearch = NoDirOfSearch;
-            vertices[i].color = 0;
-            vertices[i].Set();
+            f_in >> _vertices[i].r.x;
+            f_in >> _vertices[i].r.y;
+            f_in >> _vertices[i].ReferenceNumber;
+            _vertices[i].DirOfSearch = NoDirOfSearch;
+            _vertices[i].color = 0;
+            _vertices[i].Set();
          }
-         pmin = pmax = vertices[0].r;
+         pmin = pmax = _vertices[0].r;
          for (i=0; i<nbv; i++) {
-            pmin.x = Min(pmin.x,vertices[i].r.x);
-            pmin.y = Min(pmin.y,vertices[i].r.y);
-            pmax.x = Max(pmax.x,vertices[i].r.x);
-            pmax.y = Max(pmax.y,vertices[i].r.y);
-         }	    
+            pmin.x = Min(pmin.x,_vertices[i].r.x);
+            pmin.y = Min(pmin.y,_vertices[i].r.y);
+            pmax.x = Max(pmax.x,_vertices[i].r.x);
+            pmax.y = Max(pmax.y,_vertices[i].r.y);
+         }
          R2 DD05 = (pmax-pmin)*0.05;
          pmin -= DD05;
          pmax += DD05;
@@ -476,7 +477,8 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
             cout << "     Geom: min=" << pmin << "max =" << pmax
                  << " hmin = " << MinimalHmin() <<  endl;
       }
-      else if (!strcmp(fieldname,"MaximalAngleOfCorner")||!strcmp(fieldname,"AngleOfCornerBound")) {
+      else if (!strcmp(fieldname,"MaximalAngleOfCorner") ||
+               !strcmp(fieldname,"AngleOfCornerBound")) {
          f_in >> MaximalAngleOfCorner;
          if (verbosity>5) 
             cout << "     Geom Record MaximalAngleOfCorner " << MaximalAngleOfCorner << endl;
@@ -505,9 +507,9 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
             for (i=0; i<nbe; i++) {
                f_in >> i1 >> i2 >> edges[i].ref;
                i1--; i2--;
-               edges[i].v[0] = vertices + i1;
-               edges[i].v[1] = vertices + i2;
-               R2 x12 = vertices[i2].r-vertices[i1].r;
+               edges[i].v[0] = _vertices + i1;
+               edges[i].v[1] = _vertices + i2;
+               R2 x12 = _vertices[i2].r-_vertices[i1].r;
                double l12=sqrt((x12,x12));
                edges[i].tg[0] = zero2;
                edges[i].tg[1] = zero2;
@@ -515,8 +517,8 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
                edges[i].Adj[0] = edges[i].Adj[1] = 0;
                edges[i].flag = 0;
                if (!hvertices) {
-                  vertices[i1].color++;
-                  vertices[i2].color++;
+                  _vertices[i1].color++;
+                  _vertices[i2].color++;
                   len[i1] += l12;
                   len[i2] += l12;
                }
@@ -525,10 +527,10 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
 //          definition the default of the given mesh size 
             if (!hvertices) {
                for (i=0; i<nbv; i++) 
-                  if (vertices[i].color > 0) 
-                     vertices[i].m = Metric(len[i]/vertices[i].color);
+                  if (_vertices[i].color > 0) 
+                     _vertices[i].m = Metric(len[i]/_vertices[i].color);
                   else
-                     vertices[i].m = Metric(Hmin);
+                     _vertices[i].m = Metric(Hmin);
                delete [] len;
                if (verbosity>3) 
                   cout << "     Geom Hmin " << Hmin << endl;
@@ -561,8 +563,8 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
             assert(j<=nbv);
             assert(j>0);
             j--;
-            vertices[j].SetCorner();
-            vertices[j].SetRequired();
+            _vertices[j].SetCorner();
+            _vertices[j].SetRequired();
          }
       }
       else if (!strcmp(fieldname,"RequiredVertices")) { 
@@ -573,7 +575,7 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
             assert(j<=nbv);
             assert(j>0);
             j--;
-            vertices[j].SetRequired();
+            _vertices[j].SetRequired();
          }
       }
       else if (!strcmp(fieldname,"RequiredEdges")) { 
@@ -594,7 +596,7 @@ void Geometry::ReadGeometry(      MeshIstream& f_in,
             long i0, i1, i2, i3;
             for (i=0; i<NbSubDomains; i++) {
                f_in >> i0 >> i1 >> i2 >> i3;
-	       assert(i0 == 2);
+               assert(i0 == 2);
                assert(i1<=nbe && i1>0);
                subdomains[i].edge=edges + (i1-1);
                subdomains[i].sens = (int) i2;

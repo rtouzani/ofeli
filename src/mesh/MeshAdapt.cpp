@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                         Implementation of class 'MeshAdapt'
+                       Implementation of class 'MeshAdapt'
 
   ==============================================================================*/
 
@@ -60,7 +60,7 @@ void MeshAdapt::setDefault()
    _nb_Jacobi = 3;
    _nb_smooth = 3;
    _abs_error = true;
-   _err = 0.01;
+   _err = 0.004;
    _geo_err = 0.1;
    _verb = 0;
    _omega = 1.8;
@@ -88,6 +88,7 @@ void MeshAdapt::setDefault()
    _allquad = 0;
    _iter = 0;
    _domain = NULL;
+   _nb_subdiv = 300;
 }
 
 
@@ -95,8 +96,10 @@ void MeshAdapt::set(Domain& dom)
 {
    setDefault();
    _domain = &dom;
+   _scale_fact = max(_domain->getMaxCoord().x,_domain->getMaxCoord().y);
+   *_domain *= 1./_scale_fact;
    setGeoFile("mesh.geo");
-   dom.genGeo(_geo_file);
+   _domain->genGeo(_geo_file);
    setOutputMesh("mesh.0.bamg");
    run();
 }
@@ -105,6 +108,8 @@ void MeshAdapt::set(Domain& dom)
 void MeshAdapt::set(Mesh& ms)
 {
    _ms.push_back(&ms);
+   _scale_fact = max(_domain->getMaxCoord().x,_domain->getMaxCoord().y);
+   *_ms[0] *= 1./_scale_fact;
    _nb_nodes = _ms[0]->getNbNodes();
    _nb_elements = _ms[0]->getNbElements();
    setOutputMesh("mesh.0.bamg");
@@ -141,14 +146,37 @@ void MeshAdapt::setSolution(const Vect<real_t>& u)
 }
 
 
+int MeshAdapt::run(const Vect<real_t>& u)
+{
+   saveMbb("MeshAdapt.bb",u);
+   getSolutionMbb("MeshAdapt.bb");
+   int ret = run();
+   remove("MeshAdapt.bb");
+   return ret;
+}
+
+
+int MeshAdapt::run(const Vect<real_t>& u,
+                   Vect<real_t>&       v)
+{
+   saveMbb("MeshAdapt.bb",u);
+   getSolutionMbb("MeshAdapt.bb");
+   int ret = run();
+   v.setMesh(_theMesh);
+   MeshToMesh(u,v,_nb_subdiv,_nb_subdiv,0);
+   remove("MeshAdapt.bb");
+   return ret;
+}
+
+
 int MeshAdapt::run()
 {
    verbosity = _verb;
    MeshIstreamErrorHandler = MeshErrorIO;
    hinterpole = 1;
    int fileout=0, NoMeshReconstruction=0;
-   double costheta=2;
-   double *solMbb=0, *solMBB=0;
+   real_t costheta=2;
+   real_t *solMbb=0, *solMBB=0;
    int *typesolsBB=NULL;
    long nbsolbb=0, lsolbb=0, nbsolBB=0, lsolBB=0;
    int rbbeqMbb=0, rBBeqMBB=0;
@@ -213,7 +241,7 @@ int MeshAdapt::run()
             MatVVP2x2 Vp(M/_coef);
             Vp.Maxh(_hmin);
             Vp.Minh(_hmax);
-            Gh.vertices[iv].m = Vp;
+            Gh._vertices[iv].m = Vp;
          }
       }
       Triangles Th(_max_nb_vertices,Gh);
@@ -257,7 +285,8 @@ int MeshAdapt::run()
       if (_set_mbb) {
          solMbb = ReadbbFile(_mbb_file.c_str(),nbsolbb,lsolbb,2,2);
          if (lsolbb != BTh.nbv) {
-            cerr << "fatal error nbsol " << nbsolbb << " " << lsolbb << " =! " << BTh.nbv << endl;
+            cerr << "fatal error nbsol " << nbsolbb << " " << lsolbb << " =! "
+		 << BTh.nbv << endl;
             cerr << "size of sol incorrect" << endl;
             MeshError(99);
          }
@@ -324,7 +353,7 @@ int MeshAdapt::run()
                   cout << "Interpolation P1 files: " << _rBB_file << ", " << _wBB_file << endl;
             }
             const int dim = 2;
-            double *solbb=NULL, *solBB=NULL;
+            real_t *solbb=NULL, *solBB=NULL;
             if (_set_rbb)
                solbb = rbbeqMbb ? solMbb : ReadbbFile(_rbb_file.c_str(),nbsolbb,lsolbb,2,2);
             if (_set_rBB)
@@ -351,9 +380,9 @@ int MeshAdapt::run()
                cout << "nb of fields BB: " << nbfieldBB << endl;
             for (int i=0; i<Th.nbv; i++) {
                long i0, i1, i2;
-               double a[3];
+               real_t a[3];
                Icoor2 dete[3];
-               I2 I = Th.BTh.toI2(Th.vertices[i].r);
+               I2 I = Th.BTh.toI2(Th._vertices[i].r);
                Triangle &tb = *Th.BTh.FindTriangleContaining(I,dete);
                if (tb.det>0) {
                   a[0] = dete[0]/tb.det;
@@ -364,7 +393,7 @@ int MeshAdapt::run()
                   i2 = Th.BTh.Number(tb[2]);
                }
                else {
-                  double aa, bb;
+                  real_t aa, bb;
                   TriangleAdjacent ta = CloseBoundaryEdge(I,&tb,aa,bb).Adj();
                   int k = ta;
                   Triangle &tc = *(Triangle *)ta;
@@ -392,9 +421,16 @@ int MeshAdapt::run()
    }
    _ms.push_back(new Mesh);
    getBamg(_output_mesh_file,*_ms[_iter]);
+   _theMesh = *_ms[_iter];
+   _theMesh *= _scale_fact;
    _nb_nodes = _ms[_iter]->getNbNodes();
    _nb_elements = _ms[_iter]->getNbElements();
    _iter++;
+   if (_iter>1) {
+      for (size_t i=0; i<=_iter; i++)
+          remove(string("mesh."+itos(i)+".bamg").c_str());
+      remove("mesh.geo");
+   }
    return 0;
 }
 
@@ -415,43 +451,15 @@ void MeshAdapt::getSolution(Vect<real_t>& u,
       }
    }
 }
-    
+
 
 void MeshAdapt::Interpolate(const Vect<real_t>& u,
                             Vect<real_t>&       v)
 {
-   Triangles BTh(_background_mesh_file.c_str()),
-             Th(_output_mesh_file.c_str());
-   for (int i=0; i<Th.nbv; i++) {
-      long i0, i1, i2;
-      double a[3];
-      Icoor2 dete[3];
-      I2 I = BTh.toI2(Th.vertices[i].r);
-      Triangle tb = *BTh.FindTriangleContaining(I,dete);
-      if (tb.det>0) {
-         a[0] = dete[0]/tb.det;
-         a[1] = dete[1]/tb.det;
-         a[2] = dete[2]/tb.det;
-         i0 = BTh.Number(tb[0]);
-         i1 = BTh.Number(tb[1]);
-         i2 = BTh.Number(tb[2]);
-      }
-      else {
-         double aa, bb;
-         TriangleAdjacent ta = CloseBoundaryEdge(I,&tb,aa,bb).Adj();
-         int k = ta;
-         Triangle &tc = *(Triangle *)ta;
-         i0 = BTh.Number(tc[0]);
-         i1 = BTh.Number(tc[1]);
-         i2 = BTh.Number(tc[2]);
-         a[VerticesOfTriangularEdge[k][1]] = aa;
-         a[VerticesOfTriangularEdge[k][0]] = bb;
-         a[OppositeVertex[k]] = 1 - aa - bb;
-      }
-      v[i] = a[0]*u[i0] + a[1]*u[i1] + a[2]*u[i2];
-   }
+   v.setMesh(_theMesh);
+   MeshToMesh(u,v,_nb_subdiv,_nb_subdiv,0);
 }
-  
+
 
 ostream& operator<<(ostream&         s,
                     const MeshAdapt& a)

@@ -193,9 +193,9 @@ void HexahedraToTetrahedra(Mesh& m1,
 }
 
 
-void DeformMesh(      Mesh&         mesh,
+void DeformMesh(Mesh&               mesh,
                 const Vect<real_t>& u,
-                      real_t        a)
+                real_t              a)
 {
    mesh_nodes(mesh) {
       size_t n=node_label;
@@ -206,9 +206,9 @@ void DeformMesh(      Mesh&         mesh,
 
 
 #ifdef USE_PETSC
-void DeformMesh(      Mesh&              mesh,
+void DeformMesh(Mesh&                    mesh,
                 const PETScVect<real_t>& u,
-                      real_t             a)
+                real_t                   a)
 {
    mesh_nodes(mesh) {
       size_t n=node_label, m=The_node.getNbDOF();
@@ -538,9 +538,9 @@ void order_edge_nodes(pair<size_t,size_t>& ed)
 }
 
 
-size_t clean_edges(      vector<pair<size_t,size_t> >& p,
-                         vector<pair<size_t,size_t> >& q,
-                   const size_t&                       n)
+size_t clean_edges(vector<pair<size_t,size_t> >& p,
+                   vector<pair<size_t,size_t> >& q,
+                   const size_t&                 n)
 {
    size_t k=0;
    for (size_t i=0; i<n; i++) {
@@ -662,7 +662,7 @@ void RootLs(size_t&         root,
 }
 
 
-void RCM(size_t& root,
+void RCM(size_t&         root,
          vector<long>&   xadj,
          vector<size_t>& adjncy,
          vector<size_t>& mask,
@@ -822,11 +822,11 @@ void DofCode(int    mark,
 }
 
 
-void MeshToGrid(      Mesh&         m,
-                      Grid&         g,
+void MeshToGrid(Mesh&               m,
+                Grid&               g,
                 const Vect<real_t>& u,
-                      Vect<real_t>& ug,
-                      size_t        dof)
+                Vect<real_t>&       ug,
+                size_t              dof)
 {
    Point<real_t> xm, xM;
    int nx=g.getNx(), ny=g.getNy(), nz=g.getNz();
@@ -926,11 +926,11 @@ void MeshToGrid(      Mesh&         m,
 }
 
 
-void GridToMesh(      Grid&         g,
-                      Mesh&         m,
+void GridToMesh(Grid&               g,
+                Mesh&               m,
                 const Vect<real_t>& ug,
-                      Vect<real_t>& u,
-                      size_t        dof)
+                Vect<real_t>&       u,
+                size_t              dof)
 {
    Point<real_t> x, xi, s;
    size_t dim = m.getDim();
@@ -994,29 +994,40 @@ void GridToMesh(      Grid&         g,
 }
 
 
-void MeshToMesh(      Mesh&         m1,
-                      Mesh&         m2,
+void MeshToMesh(const Vect<real_t>& u1,
+                Vect<real_t>&       u2, 
+                size_t              nx,
+                size_t              ny,
+                size_t              nz,
+                size_t              dof)
+{
+   MeshToMesh(u1.getMesh(),u2.getMesh(),u1,u2,nx,ny,nz,dof);
+}
+
+
+void MeshToMesh(Mesh&               m1,
+                Mesh&               m2,
                 const Vect<real_t>& u1,
-                      Vect<real_t>& u2, 
-                      size_t        nx,
-                      size_t        ny,
-                      size_t        nz,
-                      size_t        dof)
+                Vect<real_t>&       u2, 
+                size_t              nx,
+                size_t              ny,
+                size_t              nz,
+                size_t              dof)
 {
    MeshToMesh(m1,m2,u1,u2,m1.getMinCoord(),m1.getMaxCoord(),nx,ny,nz);
 }
 
 
-void MeshToMesh(      Mesh&          m1,
-                      Mesh&          m2,
+void MeshToMesh(Mesh&                m1,
+                Mesh&                m2,
                 const Vect<real_t>&  u1,
-                      Vect<real_t>&  u2, 
+                Vect<real_t>&        u2,
                 const Point<real_t>& xmin,
                 const Point<real_t>& xmax,
-                      size_t         nx,
-                      size_t         ny,
-                      size_t         nz,
-                      size_t         dof)
+                size_t               nx,
+                size_t               ny,
+                size_t               nz,
+                size_t               dof)
 {
    Grid g;
    g.setDomain(xmin,xmax);
@@ -1182,49 +1193,49 @@ real_t getMeanSideMeasure(const Mesh& m)
 }
 
 
-void setNodeCodes(     Mesh&   m,
-                 const string& exp,
-                       int     code,
-                       size_t  dof)
+void setNodeCodes(Mesh&         m,
+                  const string& exp,
+                  int           code,
+                  size_t        dof)
 {
    mesh_nodes(m)
       The_node.setCode(exp,code,dof);
 }
 
 
-void setBoundaryNodeCodes(      Mesh&   m,
+void setBoundaryNodeCodes(Mesh&         m,
                           const string& exp,
-                                int     code,
-                                size_t  dof)
+                          int           code,
+                          size_t        dof)
 {
    MeshBoundaryNodes(m)
       theNode->setCode(exp,code,dof);
 }
 
 
-void setSideCodes(      Mesh&   m,
+void setSideCodes(Mesh&         m,
                   const string& exp,
-                        int     code,
-                        size_t  dof)
+                  int           code,
+                  size_t        dof)
 {
    mesh_sides(m)
       The_side.setCode(exp,code,dof);
 }
 
 
-void setBoundarySideCodes(      Mesh&   m,
+void setBoundarySideCodes(Mesh&         m,
                           const string& exp,
-                                int     code,
-                                size_t  dof)
+                          int           code,
+                          size_t        dof)
 {
    MeshBoundarySides(m)
       theSide->setCode(exp,code,dof);
 }
 
 
-void setElementCodes(      Mesh&   m,
+void setElementCodes(Mesh&         m,
                      const string& exp,
-                           int     code)
+                     int           code)
 {
    mesh_elements(m)
       The_element.setCode(exp,code);

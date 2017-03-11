@@ -65,9 +65,7 @@ namespace bamg {
 
 inline double OppositeAngle(double a) { return a<0 ? Pi + a : a - Pi; }
 
-Icoor2 inline det(const I2& a,
-                  const I2& b,
-                  const I2& c)
+Icoor2 inline det(const I2& a, const I2& b, const I2& c)
 {
    Icoor2 bax=b.x-a.x, bay=b.y-a.y; 
    Icoor2 cax=c.x-a.x, cay=c.y-a.y;
@@ -75,7 +73,7 @@ Icoor2 inline det(const I2& a,
 }
 
 
-// def de numerotation dans un triangles 
+// Numbering in a triangle 
 static const short VerticesOfTriangularEdge[3][2] = {{1,2},{2,0},{0,1}};
 static const short EdgesVertexTriangle[3][2] = {{1,2},{2,0},{0,1}};
 static const short OppositeVertex[3] = {0,1,2};
@@ -87,7 +85,7 @@ static const short PreviousVertex[3] = {2,0,1};
 
 long AGoodNumberPrimeWith(long n);
 
-// remark all the angle are in radian beetwen [-Pi,Pi]
+// All angles are in radian beetwen [-Pi,Pi]
 
 
 class Geometry;
@@ -161,24 +159,23 @@ double QuadQuality(const Vertex &, const Vertex &, const Vertex &, const Vertex 
 
 class TriangleAdjacent
 {
-  friend ostream& operator <<(ostream& f, const TriangleAdjacent &ta)
-  {
-    f << "{" << ta.t << "," << int(ta.a) << "}";
+   friend ostream& operator <<(ostream& f, const TriangleAdjacent &ta)
+   {
+      f << "{" << ta.t << "," << int(ta.a) << "}";
       return f;
-  }
+   }
 
  public:
-  Triangle *t;
-  int a;
+   Triangle *t;
+   int a;
+   TriangleAdjacent(Triangle *tt, int aa): t(tt),a(aa &3) { };
+   TriangleAdjacent() { };
 
-  TriangleAdjacent(Triangle *tt, int aa): t(tt),a(aa &3) { };
-  TriangleAdjacent() { };
-
-  operator Triangle* () const { return t; }
-  operator Triangle& () const { return *t; }
-  operator int() const { return a; }
-  TriangleAdjacent& operator++() { a = NextEdge[a]; return *this; }
-  TriangleAdjacent operator--() { a = PreviousEdge[a]; return *this; }
+   operator Triangle* () const { return t; }
+   operator Triangle& () const { return *t; }
+   operator int() const { return a; }
+   TriangleAdjacent& operator++() { a = NextEdge[a]; return *this; }
+   TriangleAdjacent operator--() { a = PreviousEdge[a]; return *this; }
 
   inline TriangleAdjacent Adj() const;
   int swap();
@@ -441,7 +438,7 @@ class Triangle
    }
 
    double QualityQuad(int a,int option=1) const;
-   Triangle *Quadrangle(Vertex * &v0, Vertex * &v1, Vertex * &v2, Vertex * &v3) const;
+   Triangle *Quadrangle(Vertex* &v0, Vertex* &v1, Vertex* &v2, Vertex* &v3) const;
 
    void SetLocked(int a)
    {
@@ -644,8 +641,8 @@ class VertexOnGeom
    }
 
    void Set(const Triangles &,
-                  long,
-                  Triangles &);
+            long,
+            Triangles &);
 };
 
 
@@ -667,7 +664,7 @@ class VertexOnEdge
   Edge *be;
   double abcisse;
   VertexOnEdge(Vertex* w, Edge* bw, double s) : v(w), be(bw), abcisse(s) {}
-  VertexOnEdge(){}
+  VertexOnEdge() { }
   inline void Set(const Triangles &, long, Triangles &);
   void SetOnBTh() { v->onbe = this; v->vint = IsVertexOnEdge; }  
   Vertex & operator[](int i) const { return (*be)[i]; }
@@ -755,7 +752,7 @@ class Triangles {
   long NbOfTriangleSearchFind;
   long NbOfSwapTriangle;
   char *name, *identity;
-  Vertex *vertices;
+  Vertex *_vertices;
 
   long NbVerticesOnGeomVertex;
   VertexOnGeom* VerticesOnGeomVertex;
@@ -791,8 +788,8 @@ class Triangles {
 
   double MinimalHmin() { return 2.0/coefIcoor; }
   double MaximalHmax() { return Max(pmax.x-pmin.x,pmax.y-pmin.y); }
-  const Vertex & operator[]  (long i) const { return vertices[i]; }
-  Vertex & operator[](long i) { return vertices[i]; }
+  const Vertex & operator[] (long i) const { return _vertices[i]; }
+  Vertex & operator[](long i) { return _vertices[i]; }
   const Triangle & operator()  (long i) const { return triangles[i]; }
   Triangle & operator()(long i) { return triangles[i]; }
   I2 toI2(const R2 & P) const {
@@ -834,8 +831,8 @@ class Triangles {
   
   long Number(const Triangle &t) const { return long(&t - triangles); }
   long Number(const Triangle *t) const { return long(t - triangles); }
-  long Number(const Vertex &t) const { return long(&t - vertices); }
-  long Number(const Vertex *t) const { return long(t - vertices); }
+  long Number(const Vertex &t) const { return long(&t - _vertices); }
+  long Number(const Vertex *t) const { return long(t - _vertices); }
   long Number(const Edge &t) const { return long(&t - edges); }
   long Number(const Edge *t) const { return long(t - edges); }
   long Number2(const Triangle *t) const { return long(t - triangles); }
@@ -884,7 +881,7 @@ class Geometry
   long nbv,nbt,nbiv,nbe; // nombre de sommets, de Geometry, de sommets initiaux,
   long NbSubDomains, NbEquiEdges, NbCrackedEdges, NbOfCurves;
   int empty(){return (nbv ==0) && (nbt==0) && (nbe==0) && (NbSubDomains==0); }
-  GeometricalVertex *vertices;   // data of vertices
+  GeometricalVertex *_vertices;   // data of vertices
   Triangle *triangles; 
   GeometricalEdge *edges;
   QuadTree *_quadtree;
@@ -919,12 +916,12 @@ class Geometry
   }
 
   void ReadMetric(const char *, double hmin, double hmax, double coef);
-  const GeometricalVertex & operator[](long i) const { return vertices[i]; }
-  GeometricalVertex & operator[](long i) { return vertices[i]; }
+  const GeometricalVertex & operator[](long i) const { return _vertices[i]; }
+  GeometricalVertex & operator[](long i) { return _vertices[i]; }
   const  GeometricalEdge & operator()(long i) const { return edges[i]; }
   GeometricalEdge & operator()(long i) { return edges[i]; }
-  long Number(const GeometricalVertex & t) const { return long(&t - vertices); }
-  long Number(const GeometricalVertex * t) const { return long(t - vertices); }
+  long Number(const GeometricalVertex & t) const { return long(&t - _vertices); }
+  long Number(const GeometricalVertex * t) const { return long(t - _vertices); }
   long Number(const GeometricalEdge & t) const { return long(&t - edges); }
   long Number(const GeometricalEdge * t) const { return long(t - edges); }
   long Number(const Curve * c) const { return long(c - curves); }
@@ -934,10 +931,10 @@ class Geometry
         edges[i].SetUnMark();
   }
 
- GeometricalEdge *ProjectOnCurve(const Edge &, double, Vertex &,VertexOnGeom &) const ;
-  GeometricalEdge *Containing(const R2 P,  GeometricalEdge * start) const;
- friend ostream& operator <<(ostream& f, const   Geometry & Gh); 
- void Write(const char *filename);
+  GeometricalEdge *ProjectOnCurve(const Edge &, double, Vertex &, VertexOnGeom &) const ;
+  GeometricalEdge *Containing(const R2 P, GeometricalEdge* start) const;
+  friend ostream& operator<<(ostream& f, const Geometry& Gh); 
+  void Write(const char *filename);
 };
 
 inline Triangles::Triangles(long i) : Gh(*new Geometry()), BTh(*this)
@@ -991,7 +988,8 @@ inline double Triangle::QualityQuad(int a,
          q = -1;
       else if (!t->link)
          q = -1;
-      else if (aa[0]&16 || aa[1]&16  || aa[2] & 16 || t->aa[0] & 16 || t->aa[1] & 16 || t->aa[2] & 16)
+      else if (aa[0]&16 || aa[1]&16  || aa[2] & 16 || t->aa[0] & 16 || 
+               t->aa[1] & 16 || t->aa[2] & 16)
          q = -1;
       else if(option) {
          const Vertex &v2 = *ns[VerticesOfTriangularEdge[a][0]];
@@ -1007,29 +1005,29 @@ inline double Triangle::QualityQuad(int a,
 }
 
 
-inline void Vertex::Set(const Vertex&    rec,
-                        const Triangles& ,
-                              Triangles&  )
+inline void Vertex::Set(const Vertex& rec,
+                        const Triangles&,
+                        Triangles&)
 { 
    *this  = rec;
 }
 
 
 inline void GeometricalVertex::Set(const GeometricalVertex& rec,
-                                   const Geometry&             ,
-                                   const Geometry&              )
+                                   const Geometry&,
+                                   const Geometry&)
 {
    *this  = rec;
 }
 
 
 inline void Edge::Set(const Triangles& Th,
-                            long       i,
-                            Triangles& ThNew)
+                      long             i,
+                      Triangles&       ThNew)
 {
    *this = Th.edges[i];
-   v[0] = ThNew.vertices + Th.Number(v[0]);    
-   v[1] = ThNew.vertices + Th.Number(v[1]);
+   v[0] = ThNew._vertices + Th.Number(v[0]);    
+   v[1] = ThNew._vertices + Th.Number(v[1]);
    if (on) 
       on = ThNew.Gh.edges + Th.Gh.Number(on);
    if (adj[0])
@@ -1041,11 +1039,11 @@ inline void Edge::Set(const Triangles& Th,
 
 inline void GeometricalEdge::Set(const GeometricalEdge& rec,
                                  const Geometry&        Gh,
-                                       Geometry&        GhNew)
+                                 Geometry&              GhNew)
 {
    *this = rec;
-   v[0] = GhNew.vertices + Gh.Number(v[0]);    
-   v[1] = GhNew.vertices + Gh.Number(v[1]); 
+   v[0] = GhNew._vertices + Gh.Number(v[0]);    
+   v[1] = GhNew._vertices + Gh.Number(v[1]); 
    if (Adj[0])
       Adj[0] = GhNew.edges + Gh.Number(Adj[0]);     
    if (Adj[1])
@@ -1054,8 +1052,8 @@ inline void GeometricalEdge::Set(const GeometricalEdge& rec,
 
  
 inline void Curve::Set(const Curve&    rec,
-                       const Geometry& Gh ,
-                             Geometry& GhNew)
+                       const Geometry& Gh,
+                       Geometry&       GhNew)
 {
    *this = rec;
    be = GhNew.edges + Gh.Number(be);    
@@ -1067,15 +1065,15 @@ inline void Curve::Set(const Curve&    rec,
 
 inline void Triangle::Set(const Triangle&  rec,
                           const Triangles& Th,
-                                Triangles& ThNew)
+                          Triangles&       ThNew)
 {
    *this = rec;
    if (ns[0])
-      ns[0] = ThNew.vertices + Th.Number(ns[0]);
+      ns[0] = ThNew._vertices + Th.Number(ns[0]);
    if (ns[1])
-      ns[1] = ThNew.vertices + Th.Number(ns[1]);
+      ns[1] = ThNew._vertices + Th.Number(ns[1]);
    if (ns[2])
-      ns[2] = ThNew.vertices + Th.Number(ns[2]);
+      ns[2] = ThNew._vertices + Th.Number(ns[2]);
    if (at[0])
       at[0] = ThNew.triangles + Th.Number(at[0]);
    if (at[1])
@@ -1088,17 +1086,17 @@ inline void Triangle::Set(const Triangle&  rec,
 
 
 inline void VertexOnVertex::Set(const Triangles& Th,
-                                      long       i,
-                                      Triangles& ThNew)
+                                long             i,
+                                Triangles&       ThNew)
 {
    *this = Th.VertexOnBThVertex[i];  
-   v = ThNew.vertices + Th.Number(v);
+   v = ThNew._vertices + Th.Number(v);
 }
 
 
 inline void SubDomain::Set(const Triangles& Th,
-                                 long       i,
-                                 Triangles& ThNew)
+                           long             i,
+                           Triangles&       ThNew)
 {
    *this = Th.subdomains[i];
    assert(head-Th.triangles>=0 && head-Th.triangles<Th.nbt);
@@ -1118,23 +1116,23 @@ inline void GeometricalSubDomain::Set(const GeometricalSubDomain& rec,
 
 
 inline void VertexOnEdge::Set(const Triangles& Th,
-                                    long       i,
-                                    Triangles& ThNew)
+                              long             i,
+                              Triangles&       ThNew)
 {
-  *this = Th.VertexOnBThEdge[i];  
-  v = ThNew.vertices + Th.Number(v);
+  *this = Th.VertexOnBThEdge[i];
+  v = ThNew._vertices + Th.Number(v);
 }
 
 
 inline void VertexOnGeom::Set(const VertexOnGeom& rec,
                               const Triangles&    Th,
-                                    Triangles&    ThNew)
+                              Triangles&          ThNew)
 {
-   *this = rec;  
-   mv = ThNew.vertices + Th.Number(mv);
+   *this = rec;
+   mv = ThNew._vertices + Th.Number(mv);
    if (gv) {
       if (abscisse<0)
-         gv = ThNew.Gh.vertices + Th.Gh.Number(gv);
+         gv = ThNew.Gh._vertices + Th.Gh.Number(gv);
       else
          ge = ThNew.Gh.edges + Th.Gh.Number(ge);
    }
@@ -1150,8 +1148,8 @@ inline double Edge::MetricLength() const
 inline void Triangles::ReMakeTriangleContainingTheVertex()
 {
    for (long i=0; i<nbv; i++) {
-      vertices[i].vint = 0;
-      vertices[i].t = 0;
+      _vertices[i].vint = 0;
+      _vertices[i].t = 0;
    }
    for (long i=0; i<nbt; i++) 
       triangles[i].SetTriangleContainingTheVertex();
@@ -1169,7 +1167,7 @@ inline void Triangles::UnMarkUnSwapTriangle()
 inline void Triangles::SetVertexFieldOn()
 {
    for (long i=0; i<nbv; i++) 
-      vertices[i].on = 0;
+      _vertices[i].on = 0;
    for (long j=0; j<NbVerticesOnGeomVertex; j++) 
       VerticesOnGeomVertex[j].SetOn();
    for (long k=0; k<NbVerticesOnGeomEdge; k++)
@@ -1180,7 +1178,7 @@ inline void Triangles::SetVertexFieldOn()
 inline void Triangles::SetVertexFieldOnBTh()
 {
    for (long i=0; i<nbv; i++)
-      vertices[i].on = 0;
+      _vertices[i].on = 0;
    for (long j=0; j<NbVertexOnBThVertex; j++ ) 
       VertexOnBThVertex[j].SetOnBTh();
    for (long k=0; k<NbVertexOnBThEdge; k++) 
@@ -1189,7 +1187,7 @@ inline void Triangles::SetVertexFieldOnBTh()
 
 
 inline void TriangleAdjacent::SetAdj2(const TriangleAdjacent& ta,
-                                            int               l)
+                                      int                     l)
 {
    if (t) {
       t->at[a] = ta.t;
@@ -1285,7 +1283,7 @@ inline Triangle::Triangle(Triangles* Th,
                           long       j,
                           long       k)
 {
-   Vertex *v = Th->vertices;
+   Vertex *v = Th->_vertices;
    assert(i>=0 && j>=0 && k>=0);
    ns[0] = v + i;
    ns[1] = v + j;
@@ -1363,12 +1361,11 @@ int inline TriangleAdjacent::swap()
 
 int SwapForForcingEdge(Vertex* &         pva,
                        Vertex* &         pvb,
-		       TriangleAdjacent& tt1,
+                       TriangleAdjacent& tt1,
                        Icoor2&           dets1,
-		       Icoor2&           detsa,
+                       Icoor2&           detsa,
                        Icoor2&           detsb,
                        int&              nbswap);
-
 
 int ForceEdge(Vertex&           a,
               Vertex&           b,

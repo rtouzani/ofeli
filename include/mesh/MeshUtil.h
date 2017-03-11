@@ -313,6 +313,41 @@ void MeshToMesh(Mesh&               m1,
                 size_t              nz=0,
                 size_t              dof=1);
 
+
+/** \fn void MeshToMesh(Mesh &m1, Mesh &m2, const Vect<real_t> &u1, Vect<real_t> &u2, 
+ *                      size_t nx, size_t ny=1, size_t nz=1, size_t dof=1)
+ * \ingroup Mesh
+ * \brief Function to redefine a vector defined on a mesh to a new mesh
+ *
+ * \details The program interpolates (piecewise linear) first the vector on a finer structured
+ * grid. Then the values on the new mesh nodes are computed.
+ *
+ * \remark For efficiency the number of grid cells must be large enough so that interpolation provides
+ * efficient accuracy
+ *
+ * @param [in] u1 Input vector of nodal values defined on first mesh. This vector instance must
+ *             contain Mesh instance
+ * @param [out] u2 Output vector of nodal values defined on second mesh. This vector instance must
+ *             contain Mesh instance
+ * @param [in] nx Number of cells in the <tt>x</tt>-direction in the fine structured grid
+ * @param [in] ny Number of cells in the <tt>y</tt>-direction in the fine structured grid
+ *                The default value of <tt>ny</tt> is <tt>0</tt>, i.e. a 1-D grid
+ * @param [in] nz Number of cells in the <tt>z</tt>-direction in the fine structured grid
+ *                The default value of <tt>nz</tt> is <tt>0</tt>, i.e. a 1-D or 2-D grid
+ * @param [in] dof Label of degree of freedom of vector <tt>u</tt>. Only this dof is considered.
+ *                 [Default: <tt>1</tt>]
+ *
+ * @note The input vector <tt>u1</tt> is a one degree of freedom per node vector, i.e. its
+ * size must be equal (or greater than) the total number of nodes of mesh <tt>m1</tt>.
+ * The size of vector <tt>u2</tt> is deduced from the mesh <tt>m2</tt>
+ */
+void MeshToMesh(const Vect<real_t>& u1,
+                Vect<real_t>&       u2,
+                size_t              nx,
+                size_t              ny=0,
+                size_t              nz=0,
+                size_t              dof=1);
+
 /** \fn void MeshToMesh(Mesh &m1, Mesh &m2, const Vect<real_t> &u1, Vect<real_t> &u2, 
  *                      const Point<real_t> &xmin, const Point<real_t> &xmax, size_t nx, 
  *                      size_t ny, size_t nz, size_t dof=1)

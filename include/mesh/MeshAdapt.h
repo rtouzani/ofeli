@@ -91,7 +91,6 @@ class MeshAdapt
 
  public:
 
-
 /// \brief Default constructor
     MeshAdapt();
 
@@ -174,14 +173,14 @@ class MeshAdapt
  *  @note If <tt>r</tt> is 0 then no smoothing is performed, if <tt>r</tt> lies in
  *  <tt>[1.1,10]</tt> then the smoothing changes the metric such that the largest
  *  geometrical progression (speed of mesh size variation in mesh is bounded by
- *  <tt>r</tt> (by default no smoothing)
+ *  <tt>r</tt>) (by default no smoothing)
  */
     void setRatio(real_t r) { _ratio = r; }
 
 /// \brief Do not scale solution before metric computation
 /// \details By default, solution is scaled (between 0 and 1)
     void setNoScaling() { _scaling = false; }
-   
+
 /// \brief Do not keep old vertices
 /// \details By default, old vertices are kept
     void setNoKeep() { _keep_vertices = false; }
@@ -270,23 +269,42 @@ class MeshAdapt
    void Interpolate(const Vect<real_t>& u,
                     Vect<real_t>&       v);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
-   
-/// \brief Run adaption process
+
+/** \brief Run adaption process
+ *  \details 
+ *  @return Return code: 
+ */
     int run();
+
+/** \brief Run adaptation process using a solution vector
+ *  @param [in] u Solution vector defined on the input mesh
+ *  @return 
+ */
+    int run(const Vect<real_t>& u);
+
+
+/** \brief Run adaptation process using a solution vector and interpolates solution on the
+ *  adapted mesh
+ *  @param [in] u
+ *  @return 
+ */
+    int run(const Vect<real_t>& u,
+            Vect<real_t>&       v);
 
     friend ostream & operator<<(ostream& s, const MeshAdapt& a);
 
  private:
 
    vector<Mesh *> _ms;
-   const  Vect<real_t> *_u;
+   Mesh _theMesh;
+   const Vect<real_t> *_u;
    int    _nb_Jacobi, _nb_smooth, _verb, _allquad;
-   size_t _nb_nodes, _nb_elements, _max_nb_vertices, _iter;
+   size_t _nb_nodes, _nb_elements, _max_nb_vertices, _iter, _nb_subdiv;
    bool   _abs_error, _anisotropic, _scaling, _keep_vertices;
    bool   _set_outm, _set_geo, _hessian, _set_bgm, _set_metric;
    bool   _splitbedge, _set_mbb, _set_mBB, _set_rbb, _set_rBB;
    bool   _set_wbb, _set_wBB, _set_meshr, _set_ometric;
-   real_t _err, _hmin, _hmax, _hmin_aniso, _aniso_max, _max_subdiv, _omega;
+   real_t _scale_fact, _err, _hmin, _hmax, _hmin_aniso, _aniso_max, _max_subdiv, _omega;
    real_t _ratio, _power, _coef, _geo_err, _cutoff_radian, _cut_off;
    string _output_mesh_file, _geo_file, _bb_file, _BB_file, _background_mesh_file;
    string _metric_file, _mbb_file, _mBB_file, _rbb_file, _rBB_file, _wbb_file;

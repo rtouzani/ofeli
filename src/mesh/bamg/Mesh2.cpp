@@ -7,9 +7,9 @@
 //          not be sold or used for a commercial purpose with- 
 //          out our consent: fax (33) 1 39 63 55 14       
 //
-// AUTHOR:   F. Hecht,    
-// ORG    :  INRIA
-// E-MAIL :   Frederic.Hecht@Inria.fr
+// AUTHOR:  F. Hecht,    
+// ORG   :  INRIA
+// E-MAIL:  Frederic.Hecht@Inria.fr
 //
 // ORIG-DATE:     Dec 97
 
@@ -69,25 +69,23 @@ void MeshError(int Err)
 }
 
 
-ostream& operator <<(      ostream&  f,
+ostream& operator <<(ostream&        f,
                      const Triangle& ta)
 {
    if (CurrentTh)
-      f << "[" << CurrentTh->Number(ta) << "::" 
-        <<  CurrentTh->Number(ta.ns[0]) << "," 
-        <<  CurrentTh->Number(ta.ns[1]) << "," 
-        <<  CurrentTh->Number(ta.ns[2]) << "," 
-        << "{" <<  CurrentTh->Number(ta.at[0]) << " " << ta.aa[0] << "} " 
-        << "{" <<  CurrentTh->Number(ta.at[1]) << " " << ta.aa[1] << "} " 
-        << "{" <<  CurrentTh->Number(ta.at[2]) << " " << ta.aa[2] << "} " 
-        << "]";
+      f << "[" << CurrentTh->Number(ta) << "::"
+        <<  CurrentTh->Number(ta.ns[0]) << ","
+        <<  CurrentTh->Number(ta.ns[1]) << ","
+        <<  CurrentTh->Number(ta.ns[2]) << ","
+        << "{" <<  CurrentTh->Number(ta.at[0]) << " " << ta.aa[0] << "} "
+        << "{" <<  CurrentTh->Number(ta.at[1]) << " " << ta.aa[1] << "} "
+        << "{" <<  CurrentTh->Number(ta.at[2]) << " " << ta.aa[2] << "} ]";
    else
       f << "[" 
         << ta.ns[0] << "," << ta.ns[1] << "," << ta.ns[2] << "," 
         << "{" << ta.at[0] << " " << ta.aa[0] << "} " 
         << "{" << ta.at[1] << " " << ta.aa[1] << "} " 
-        << "{" << ta.at[2] << " " << ta.aa[2] << "} " 
-        << "]";
+        << "{" << ta.at[2] << " " << ta.aa[2] << "} ]";
    return f;
 }
 
@@ -118,21 +116,21 @@ void swap(Triangle* t1,
 
    int as1 = NextEdge[a1], as2 = NextEdge[a2];
    int ap1 = PreviousEdge[a1], ap2 = PreviousEdge[a2];
-   (*t1)(VerticesOfTriangularEdge[a1][1]) = s2 ; // before sb
-   (*t2)(VerticesOfTriangularEdge[a2][1]) = s1  ; // before sa
-// mise a jour des 2 adjacences externes 
+   (*t1)(VerticesOfTriangularEdge[a1][1]) = s2;  // before sb
+   (*t2)(VerticesOfTriangularEdge[a2][1]) = s1;  // before sa
+// update both external adjacencies 
    TriangleAdjacent taas1=t1->Adj(as1),
    taas2 = t2->Adj(as2),
    tas1(t1,as1), tas2(t2,as2),
    ta1(t1,a1),ta2(t2,a2);
-// externe haut gauche
+// external top left
    taas1.SetAdj2(ta2,taas1.GetAllFlag_UnSwap());
 // externe bas droite
    taas2.SetAdj2(ta1,taas2.GetAllFlag_UnSwap());
 // remove the Mark UnMarkSwap 
    t1->SetUnMarkUnSwap(ap1);
    t2->SetUnMarkUnSwap(ap2);
-// interne 
+// internal
    tas1.SetAdj2(tas2);
    t1->det = det1;
    t2->det = det2;
@@ -343,7 +341,7 @@ TriangleAdjacent CloseBoundaryEdgeV2(I2        C,
       I2 A((I2)*er.EdgeVertex(0));
       I2 B((I2)*er.EdgeVertex(1));
       I2 AB=B-A, AC=C-A, CB=B-C;
-      double aa = (double) (AB,AC), bb = (double) (AB,CB);
+      double aa=double((AB,AC)), bb=double((AB,CB));
       if (aa<0)
          a = 1, b = 0;
       else if (bb<0)
@@ -381,7 +379,7 @@ Metric Triangles::MetricAt(const R2& A) const
 void ListofIntersectionTriangles::SplitEdge(const Triangles& Bh,
                                             const R2&        A,
                                             const R2&        B,
-                                                  int        nbegin)
+                                            int              nbegin)
 {
    Triangle *tbegin, *t;
    Icoor2 deta[3], deti=0, detj=0;
@@ -483,9 +481,10 @@ void ListofIntersectionTriangles::SplitEdge(const Triangles& Bh,
       else {
          i2 = iedge;
          i0 = NextEdge[i2];
-         i1 = NextEdge[i0]; 
-         dt[VerticesOfTriangularEdge[iedge][0]] = detj;// we revert i,j because
-         dt[VerticesOfTriangularEdge[iedge][1]] = deti;// we take the Triangle by the other side
+         i1 = NextEdge[i0];
+//       We revert i, j because we take the triangle by the other side
+         dt[VerticesOfTriangularEdge[iedge][0]] = detj;
+         dt[VerticesOfTriangularEdge[iedge][1]] = deti;
          dt[iedge] = det(a,b,(*t)[OppositeVertex[iedge]]);
       }
       if ((dt[i=VerticesOfTriangularEdge[i0][0]] < 0) &&
@@ -614,7 +613,7 @@ int ListofIntersectionTriangles::NewItem(Triangle* tt,
 }
 
 
-int ListofIntersectionTriangles::NewItem(      R2      A,
+int ListofIntersectionTriangles::NewItem(R2            A,
                                          const Metric& mm)
 {
    int n;
@@ -979,10 +978,10 @@ int Triangle::swap(short a,
 }
 
 
-double Vertex::Smoothing(      Triangles& Th,
+double Vertex::Smoothing(Triangles&       Th,
                          const Triangles& BTh,
-                               Triangle* &tstart,
-                               double     omega)
+                         Triangle*        &tstart,
+                         double           omega)
 {
    Vertex *s=this;
    Vertex &vP=*s, vPsave=vP;
@@ -1225,10 +1224,10 @@ long Triangles::SplitInternalEdgeWithBorderVertices()
                   if (v0.on && v1.on) {
                      R2 P = (R2(v0) + R2(v1))*0.5;
                      if (nbv<nbvx) {
-                        vertices[nbv].r = P;
-                        vertices[nbv++].m = Metric(0.5,v0.m,0.5,v1.m);
-                        vertices[nbv].ReferenceNumber = 0;
-                        vertices[nbv].DirOfSearch = NoDirOfSearch;
+                        _vertices[nbv].r = P;
+                        _vertices[nbv++].m = Metric(0.5,v0.m,0.5,v1.m);
+                        _vertices[nbv].ReferenceNumber = 0;
+                        _vertices[nbv].DirOfSearch = NoDirOfSearch;
                      }
                      NbSplitEdge++;
                      if (verbosity>7)
@@ -1245,7 +1244,7 @@ long Triangles::SplitInternalEdgeWithBorderVertices()
       long iv = nbvold, NbSwap = 0;
       Icoor2 dete[3];
       for (long i=nbvold; i<nbv; i++) {
-         Vertex &vi=vertices[i];
+         Vertex &vi=_vertices[i];
          vi.i = toI2(vi.r);
          vi.r = toR2(vi.i);
          vi.ReferenceNumber = 0; 
@@ -1302,7 +1301,7 @@ long Triangles::InsertNewPoints(long  nbvold,
       for (long is3=0; is3<nbvnew; is3++) {
          long j = nbvold +(k3 = (k3 + PrimeNumber)% nbvnew);
          long i = nbvold+is3; 
-         ordre[i] = vertices + j;
+         ordre[i] = _vertices + j;
          ordre[i]->ReferenceNumber = i;
       }
 
@@ -1316,7 +1315,7 @@ long Triangles::InsertNewPoints(long  nbvold,
          vi.m.Box(hx,hy);
          Icoor1 hi=(Icoor1)(hx*coefIcoor), hj=(Icoor1)(hy*coefIcoor);
          if (!_quadtree->ToClose(vi,seuil,hi,hj)) {
-            Vertex &vj=vertices[iv];
+            Vertex &vj=_vertices[iv];
             long j=vj.ReferenceNumber; 
             assert(&vj== ordre[j]);
             Exchange(vi,vj);
@@ -1344,7 +1343,7 @@ long Triangles::InsertNewPoints(long  nbvold,
       nbv = iv;
    }
    for (i=nbvold; i<nbv; i++) 
-      NbSwap += vertices[i].Optim(1);  
+      NbSwap += _vertices[i].Optim(1);  
    if (verbosity>3) 
       cout << " NbSwap = " << NbSwap << endl;
    NbTSwap +=  NbSwap ;
@@ -1369,8 +1368,8 @@ void  Triangles::NewPoints(Triangles& Bh,
       for (i=0; i<Bh.nbv; i++) {
          Vertex &bv = Bh[i];
          if (!bv.on) {
-            vertices[nbv].r = bv.r;
-            vertices[nbv++].m = bv.m;
+            _vertices[nbv].r = bv.r;
+            _vertices[nbv++].m = bv.m;
          }
       }
       int nbv1=nbv;
@@ -1425,7 +1424,7 @@ void  Triangles::NewPoints(Triangles& Bh,
             if (first_np_or_next_t[k]==iter)  // this edge is done before 
                continue; // next edge of the triangle 
             lIntTria.SplitEdge(Bh,A,B);
-            lIntTria.NewPoints(vertices,nbv,nbvx);
+            lIntTria.NewPoints(_vertices,nbv,nbvx);
          }
       }
 
@@ -1437,7 +1436,7 @@ void  Triangles::NewPoints(Triangles& Bh,
 
       Headt = nbt; // empty list
       for (i=nbvold; i<nbv; i++) { // for all triangles containing the vertex i
-         Vertex *s = vertices + i;
+         Vertex *s = _vertices + i;
          TriangleAdjacent ta(s->t, EdgesVertexTriangle[s->vint][1]);
          Triangle *tbegin = (Triangle*) ta;
          long kt;
@@ -1454,7 +1453,7 @@ void  Triangles::NewPoints(Triangles& Bh,
 
    long NbSwapf=0;
    for (i=0; i<nbv; i++)
-      NbSwapf += vertices[i].Optim(0);
+      NbSwapf += _vertices[i].Optim(0);
    NbTSwap +=  NbSwapf;
    if (verbosity>3)
       cout << "   ";
@@ -1549,9 +1548,9 @@ void  Triangles::NewPointsOld(Triangles &Bh)
                BeginNewPoint[j] = 0;
                EndNewPoint[j] = -1; // empty list          
                for (long iv=first_np_or_next_t[k]; iv<nbv; iv++) 
-               if (vertices[iv].color > kolor)
+               if (_vertices[iv].color > kolor)
                   break; // the color is passed            
-               else if (vertices[iv].color == kolor) {
+               else if (_vertices[iv].color == kolor) {
                   EndNewPoint[j] = iv; 
                   if (kkk) // one time test
                      kkk=0, BeginNewPoint[j] = iv;
@@ -1563,14 +1562,14 @@ void  Triangles::NewPointsOld(Triangles &Bh)
             long nbvNew=nbv;
             nbv = NbvOld;
             for (long iv=NbvOld; iv<nbvNew; iv++) {
-               vertices[nbv].color = color;
-               vertices[nbv].ReferenceNumber = nbv;  // circular link
-               R2 C = vertices[iv].r;
-               vertices[nbv].r = C;
-               vertices[nbv].m =  vertices[iv].m ;
+               _vertices[nbv].color = color;
+               _vertices[nbv].ReferenceNumber = nbv;  // circular link
+               R2 C = _vertices[iv].r;
+               _vertices[nbv].r = C;
+               _vertices[nbv].m = _vertices[iv].m ;
 //             test if the new point is not to close to the 2 opposite vertex
                R2 CC1=C-vC1, CC2=C-vC2;
-               if (((vC1.m(CC1)+vertices[nbv].m(CC1))>seuil) && ((vC2.m(CC2)+vertices[nbv].m(CC2))>seuil))
+               if (((vC1.m(CC1)+_vertices[nbv].m(CC1))>seuil) && ((vC2.m(CC2)+_vertices[nbv].m(CC2))>seuil))
                   nbv++;
             }
             EndNewPoint[j] = nbv-1;
@@ -1595,14 +1594,14 @@ void  Triangles::NewPointsOld(Triangles &Bh)
          for (int j0=0; j0<3; j0++) {
             for (long i0=BeginNewPoint[j0]; i0<=EndNewPoint[j0]; i0++) {
 //             find the nearest point one the opposite edge to compute i1
-               Vertex &vi0=vertices[i0];
+               Vertex &vi0=_vertices[i0];
                int kstack=0;
                long stack[10];
                int j1=j0; 
                while (j0 != (j1 = NextEdge[j1])) { // loop on the 2 other edge
 //                computation of the intersection of edge j1 and DOrto
 //                take the good sens
-                  if (BeginNewPoint[j1]> EndNewPoint[j1])
+                  if (BeginNewPoint[j1] > EndNewPoint[j1])
                      continue;
                   else if (EndNewPoint[j1] - BeginNewPoint[j1] <1) {
                      for (long ii1=BeginNewPoint[j1]; ii1<=EndNewPoint[j1]; ii1++)
@@ -1621,19 +1620,19 @@ void  Triangles::NewPointsOld(Triangles &Bh)
                   int sss = (c11-c10) >0 ? 1 : -1;
                   long ii0=BeginNewPoint[j1], ii1=EndNewPoint[j1];
                   double ciii=-1, cii0=-1, cii1=-1;
-                  if (sss * ((cii0=vi0.m(D,(R2)vertices[ii0]))-c0)>0)
+                  if (sss * ((cii0=vi0.m(D,(R2)_vertices[ii0]))-c0)>0)
                      stack[kstack++] = ii0;
-                  else if (sss * ((cii1=vi0.m(D,(R2)vertices[ii1]))-c0)<0)
+                  else if (sss * ((cii1=vi0.m(D,(R2)_vertices[ii1]))-c0)<0)
                      stack[kstack++] = ii1;
                   else {
                      while ((ii1-ii0)> 1) {
                         long iii = (ii0+ii1)/2;
-                        ciii = vi0.m(D,(R2)vertices[iii]);
+                        ciii = vi0.m(D,(R2)_vertices[iii]);
                         if (sss*(ciii-c0)<0)
                            ii0 = iii;
                         else
                            ii1 = iii;
-                     }	        	      
+                     }
                      stack[kstack++] = ii0;
                      if (ii1 != ii0)
                         stack[kstack++] = ii1;
@@ -1648,8 +1647,8 @@ void  Triangles::NewPointsOld(Triangles &Bh)
                   assert(i1<nbv && i1>=0);
                   assert(i0<nbv && i0>=0);
                   assert(i1!=i0);
-                  R2 v01 = (R2)vertices[i1]-(R2)vertices[i0];
-                  double d01 = (vertices[i0].m(v01) + vertices[i1].m(v01));
+                  R2 v01 = (R2)_vertices[i1]-(R2)_vertices[i0];
+                  double d01 = (_vertices[i0].m(v01) + _vertices[i1].m(v01));
 #ifdef TRACETRIANGLE
                   if (trace) {
                      cout << "\n test j" << j <<" "  << i0 
@@ -1664,32 +1663,32 @@ void  Triangles::NewPointsOld(Triangles &Bh)
                      if (i1<nbvold) {
 //                      remove all the points i0;
                         long ip, ipp;
-                        for (ip=i0; i0!=(ipp=vertices[ip].ReferenceNumber); ip=ipp)
-                           vertices[ip].ReferenceNumber = -1;// mark remove
-                        vertices[ip].ReferenceNumber = -1;// mark remove
+                        for (ip=i0; i0!=(ipp=_vertices[ip].ReferenceNumber); ip=ipp)
+                           _vertices[ip].ReferenceNumber = -1;// mark remove
+                        _vertices[ip].ReferenceNumber = -1;// mark remove
                      }
                      else {
 //                      remove on of two points
                         long ip0, ip1, ipp0, ipp1;
                         int kk0=1, kk1=1;
 //                      count the number of common points to compute weight w0,w1
-                        for (ip0=i0; i0!=(ipp0=vertices[ip0].ReferenceNumber); ip0=ipp0)
+                        for (ip0=i0; i0!=(ipp0=_vertices[ip0].ReferenceNumber); ip0=ipp0)
                            kk0++;
-                        for (ip1=i1; i1!=(ipp1=vertices[ip1].ReferenceNumber); ip1=ipp1)
+                        for (ip1=i1; i1!=(ipp1=_vertices[ip1].ReferenceNumber); ip1=ipp1)
                            kk1++;
                         double w0=double(kk0)/(kk0+kk1), w1=double(kk1)/(kk0+kk1);
 //                      make a circular link
-                        Exchange(vertices[i0].ReferenceNumber,vertices[i1].ReferenceNumber);
+                        Exchange(_vertices[i0].ReferenceNumber,_vertices[i1].ReferenceNumber);
 //                      the new coordinate 
-                        R2 C= vertices[i0].r*w0 + vertices[i1].r*w1;
+                        R2 C = _vertices[i0].r*w0 + _vertices[i1].r*w1;
 #ifdef TRACETRIANGLE
                         if (trace)
-                           cout << "\n ref = " << vertices[i0].ref << " " << vertices[i1].ref << endl;
+                           cout << "\n ref = " << _vertices[i0].ref << " " << _vertices[i1].ref << endl;
 #endif
 //                      update the new point points of the list 
-                        for (ip0=i0; i0!=(ipp0=vertices[ip0].ReferenceNumber); ip0=ipp0)
-                           vertices[ip0].r = C;
-                        vertices[ip0].r = C;
+                        for (ip0=i0; i0!=(ipp0=_vertices[ip0].ReferenceNumber); ip0=ipp0)
+                           _vertices[ip0].r = C;
+                        _vertices[ip0].r = C;
                      }
                   }
                }
@@ -1701,13 +1700,13 @@ void  Triangles::NewPointsOld(Triangles &Bh)
 
       long ip, ipp, kkk=nbvold;
       for (i=nbvold; i<nbv; i++) {
-         if (vertices[i].ReferenceNumber>=0) {
-            for (ip=i; i!=(ipp=vertices[ip].ReferenceNumber); ip=ipp)
-               vertices[ip].ReferenceNumber = -1;
-            vertices[ip].ReferenceNumber = -1;
-            vertices[kkk] = vertices[i];
-            vertices[kkk].i = toI2(vertices[kkk].r);
-            vertices[kkk++].ReferenceNumber = 0; 
+         if (_vertices[i].ReferenceNumber>=0) {
+            for (ip=i; i!=(ipp=_vertices[ip].ReferenceNumber); ip=ipp)
+               _vertices[ip].ReferenceNumber = -1;
+            _vertices[ip].ReferenceNumber = -1;
+            _vertices[kkk] = _vertices[i];
+            _vertices[kkk].i = toI2(_vertices[kkk].r);
+            _vertices[kkk++].ReferenceNumber = 0; 
          }
       }
 
@@ -1726,7 +1725,7 @@ void  Triangles::NewPointsOld(Triangles &Bh)
          const long PrimeNumber=AGoodNumberPrimeWith(nbv);
          long k3=rand()%nbvnew;
          for (long is3=0; is3<nbvnew; is3++) 
-            ordre[nbvold+is3]= &vertices[nbvold+(k3=(k3+PrimeNumber)%nbvnew)];
+            ordre[nbvold+is3]= &_vertices[nbvold+(k3=(k3+PrimeNumber)%nbvnew)];
 
          for (i=nbvold; i<nbv; i++) {
             Vertex *vi=ordre[i];
@@ -1740,13 +1739,13 @@ void  Triangles::NewPointsOld(Triangles &Bh)
       cout << " Nb swap = " << NbSwap << " after ";
 
       for (i=nbvold;i<nbv;i++) 
-         NbSwap += vertices[i].Optim(1);  
+         NbSwap += _vertices[i].Optim(1);  
  
       for (i=nbtold; i<nbt; i++)
          first_np_or_next_t[i] = 1;
       Headt = nbt; // empty list 
       for (i=nbvold; i<nbv; i++) { // for all triangles containing the vertex i
-         Vertex *s  = vertices + i;
+         Vertex *s = _vertices + i;
          TriangleAdjacent ta(s->t, EdgesVertexTriangle[s->vint][1]);
          Triangle *tbegin=(Triangle*)ta;
          long kt;
@@ -1773,13 +1772,13 @@ void Triangles::Insert()
    double time0=CPUtime(), time1, time2, time3;
    SetIntCoor();
    for (long i=0; i<nbv; i++) 
-      ordre[i] = &vertices[i];
+      ordre[i] = &_vertices[i];
 
 // construction d'un ordre aleatoire 
    const long PrimeNumber = AGoodNumberPrimeWith(nbv);
    long k3 = rand()%nbv;
    for (int is3=0; is3<nbv; is3++) 
-      ordre[is3] = & vertices[k3 = (k3 + PrimeNumber)% nbv];
+      ordre[is3] = & _vertices[k3 = (k3 + PrimeNumber)% nbv];
    long i;
    for (i=2; det(ordre[0]->i,ordre[1]->i,ordre[i]->i)==0;) {
       if (++i>=nbv) {
@@ -1845,7 +1844,7 @@ void Triangles::Insert()
 #ifdef NBLOOPOPTIM
    k3 = rand()%nbv;
    for (int is4=0; is4<nbv; is4++) 
-      ordre[is4] = &vertices[k3 = (k3 + PrimeNumber)% nbv];
+      ordre[is4] = &_vertices[k3 = (k3 + PrimeNumber)% nbv];
    double timeloop=time2;
    for (int Nbloop=0; Nbloop<NBLOOPOPTIM; Nbloop++) {
       double time000 = timeloop;
@@ -1905,7 +1904,7 @@ void Triangles::ForceBoundary()
       MeshError(10);
    }
    for (long j=0; j<nbv; j++)
-      Nbswap += vertices[j].Optim(1,0);
+      Nbswap += _vertices[j].Optim(1,0);
    if (verbosity>3)
       cout << "     Nb of inforced edge = " << nbfe << " Nb of Swap "
            << Nbswap << endl;
@@ -1949,8 +1948,8 @@ void Triangles::FindSubDomain(int OutSide=0)
                      HeapTriangle[i] = ta;
                   }
                }
-	    }
-	    i--;
+            }
+            i--;
          }
       }
    }
@@ -2157,31 +2156,31 @@ void Triangles::ReNumberingVertex(long *renu)
 // warning be careful because pointer
 // from on mesh to over mesh 
 //  --  so do ReNumbering a the beginning
-   Vertex *ve = vertices + nbv;
+   Vertex *ve = _vertices + nbv;
    long it, ie, i;
    for (it=0; it<nbt; it++)
-      triangles[it].ReNumbering(vertices,ve,renu);
+      triangles[it].ReNumbering(_vertices,ve,renu);
    for (ie=0; ie<nbe; ie++)
-      edges[ie].ReNumbering(vertices,ve,renu);
+      edges[ie].ReNumbering(_vertices,ve,renu);
    for (i=0; i<NbVerticesOnGeomVertex; i++) {
       Vertex *v=VerticesOnGeomVertex[i].mv;
-      if (v>=vertices && v<ve)
-         VerticesOnGeomVertex[i].mv = vertices + renu[Number(v)];
+      if (v>=_vertices && v<ve)
+         VerticesOnGeomVertex[i].mv = _vertices + renu[Number(v)];
    }
    for (i=0; i<NbVerticesOnGeomEdge; i++) {
       Vertex *v=VerticesOnGeomEdge[i].mv;
-      if (v>=vertices && v<ve)
-	 VerticesOnGeomEdge[i].mv = vertices + renu[Number(v)];
+      if (v>=_vertices && v<ve)
+	 VerticesOnGeomEdge[i].mv = _vertices + renu[Number(v)];
    }
    for (i=0; i<NbVertexOnBThVertex; i++) {
       Vertex *v=VertexOnBThVertex[i].v;
-      if (v>=vertices && v<ve)
-         VertexOnBThVertex[i].v = vertices + renu[Number(v)];
+      if (v>=_vertices && v<ve)
+         VertexOnBThVertex[i].v = _vertices + renu[Number(v)];
    }
    for (i=0; i<NbVertexOnBThEdge; i++) {
       Vertex *v=VertexOnBThEdge[i].v;
-      if (v>=vertices && v<ve)
-	VertexOnBThEdge[i].v = vertices + renu[Number(v)];
+      if (v>=_vertices && v<ve)
+         VertexOnBThEdge[i].v = _vertices + renu[Number(v)];
    }
 
 // move the vertices without a copy of the array 
@@ -2190,11 +2189,11 @@ void Triangles::ReNumberingVertex(long *renu)
    for (it=0; it<nbv; it++) { // for all sub cycles of the permutation renu
       if (renu[it]>=0) { // a new sub cycle
          i = it;
-         Vertex ti=vertices[i],tj;
+         Vertex ti=_vertices[i],tj;
          while ( (j=renu[i]) >= 0) { // i is old, and j is new 
             renu[i] = -1 - renu[i]; // mark 
-            tj = vertices[j]; // save new
-            vertices[j] = ti; // new <- old
+            tj = _vertices[j]; // save new
+            _vertices[j] = ti; // new <- old
             i = j;     // next 
             ti = tj;
          }
@@ -2325,15 +2324,15 @@ void Triangles::PreInit(long  inbvx,
    nbe = 0; 
    name = fname;
    if (inbvx) {
-      vertices = new Vertex[nbvx];
-      assert(vertices);
+      _vertices = new Vertex[nbvx];
+      assert(_vertices);
       ordre = new Vertex *[nbvx];
       assert(ordre);
       triangles = new Triangle[nbtx];
       assert(triangles);
    }
    else {
-      vertices = 0;
+      _vertices = 0;
       ordre = 0;
       triangles = 0;
       nbtx = 0;
@@ -2367,7 +2366,7 @@ void Triangles::PreInit(long  inbvx,
    NbSubDomains = 0;
    if (verbosity>98) 
       cout << "Triangles::PreInit() " << nbvx << " " << nbtx 
-           << " " << vertices << " " << ordre << " " <<  triangles << endl;
+           << " " << _vertices << " " << ordre << " " <<  triangles << endl;
 }
 
 
@@ -2419,13 +2418,13 @@ void Triangles::GeomToTriangles1(long inbvx,
       cerr << " Too much vertices on geometry " << NbVerticesOnGeomVertex << " >= " << nbvx << endl; 
       MeshError(1);
    }
-   assert(vertices);
+   assert(_vertices);
    for (i=0; i<Gh.nbv; i++) {
       if (Gh[i].Required()) {
-         vertices[nbv] = Gh[i];
-         vertices[nbv].i = I2(0,0);
-         Gh[i].to = vertices + nbv;
-         VerticesOnGeomVertex[nbv] = VertexOnGeom(vertices[nbv],Gh[i]);
+         _vertices[nbv] = Gh[i];
+         _vertices[nbv].i = I2(0,0);
+         Gh[i].to = _vertices + nbv;
+         VerticesOnGeomVertex[nbv] = VertexOnGeom(_vertices[nbv],Gh[i]);
          nbv++;
       }
       else
@@ -2502,7 +2501,7 @@ void Triangles::GeomToTriangles1(long inbvx,
                Vertex *A1;
                VertexOnGeom *GA1;
                Edge *PreviousNewEdge=0;
-               assert(A0-vertices>=0 && A0-vertices <nbv);
+               assert(A0-_vertices>=0 && A0-_vertices <nbv);
                if (ongequi->Required()) {
                   GeometricalVertex *GA1 = *(*peequi)[1-k0equi].on;
                   A1 = GA1->to;
@@ -2524,8 +2523,8 @@ void Triangles::GeomToTriangles1(long inbvx,
                         while ((i!=NbCreatePointOnCurve) && sNew <= L) { 
                            assert (sNew >= L0);
                            assert(LAB);
-                           assert(vertices && nbv<nbvx);
-                           A1 = vertices + nbv++;
+                           assert(_vertices && nbv<nbvx);
+                           A1 = _vertices + nbv++;
                            GA1 = VerticesOnGeomEdge + NbVerticesOnGeomEdge;
                            Edge *e = edges + nbe++;
                            double se=(sNew-L0)/LAB;
@@ -2558,14 +2557,14 @@ void Triangles::GeomToTriangles1(long inbvx,
                         assert(eeequi[k1equi].on->IsRequiredVertex());
                         GeometricalVertex *GA1 = *eeequi[k1equi].on;
                         A1 = GA1->to;
-                        assert(A1-vertices>=0 && A1-vertices <nbv);
+                        assert(A1-_vertices>=0 && A1-_vertices <nbv);
                         break;
                      }
                      if (!ee.adj[k1]) {
                         cerr << "Error adj edge " << BTh.Number(ee) << ", nbe = " << nbe 
-                             << " Gh.vertices " << Gh.vertices 
+                             << " Gh.vertices " << Gh._vertices 
                              << " k1 = " << k1 << " on=" << *ee[k1].on << endl;
-                        cerr << ee[k1].on->gv-Gh.vertices << endl;
+                        cerr << ee[k1].on->gv-Gh._vertices << endl;
                      }
                      pe = ee.adj[k1]; // next edge
                      k0 = pe->Intersection(ee);
@@ -2655,8 +2654,8 @@ void Triangles::GeomToTriangles0(long inbvx)
    for (i=0; i<Gh.nbv; i++)
       if (Gh[i].Required() && Gh[i].IsThe()) {
          if (nbv<nbvx)
-            vertices[nbv] = Gh[i];
-         Gh[i].to = vertices + nbv;
+            _vertices[nbv] = Gh[i];
+         Gh[i].to = _vertices + nbv;
          VerticesOnGeomVertex[nbv]= VertexOnGeom(*Gh[i].to,Gh[i]);
          nbv++;
    }
@@ -2755,7 +2754,7 @@ void Triangles::GeomToTriangles0(long inbvx)
                               assert(kk1!=kk0);
                               double sbb=(ss-ll0)/(ll1-ll0);
                               double bb=(kk1+sbb)/NbSubEdge, aa=1-bb;
-                              vb = &vertices[nbv++];
+                              vb = &_vertices[nbv++];
                               vb->m = Metric(aa,a->m,bb,b->m);
                               vb->ReferenceNumber = e->ref;
                               vb->DirOfSearch = NoDirOfSearch;
@@ -2882,8 +2881,8 @@ Triangles::~Triangles()
       CurrentTh = 0;
    if (verbosity>10)
       cout << " ~Triangles "<< this <<" "<< identity << endl;
-   if (vertices)
-      delete [] vertices;
+   if (_vertices)
+      delete [] _vertices;
    if (edges)
       delete [] edges;
    if (triangles)
@@ -2926,14 +2925,14 @@ Triangles::~Triangles()
 
 void Triangles::SetIntCoor(const char* strfrom)
 {
-   pmin = pmax = vertices[0].r;
+   pmin = pmax = _vertices[0].r;
 
-// recherche des extrema des vertices pmin,pmax
+// COmpute extrema for vertices
    for (long i=0; i<nbv; i++) {
-      pmin.x = Min(pmin.x,vertices[i].r.x);
-      pmin.y = Min(pmin.y,vertices[i].r.y);
-      pmax.x = Max(pmax.x,vertices[i].r.x);
-      pmax.y = Max(pmax.y,vertices[i].r.y);
+      pmin.x = Min(pmin.x,_vertices[i].r.x);
+      pmin.y = Min(pmin.y,_vertices[i].r.y);
+      pmax.x = Max(pmax.x,_vertices[i].r.x);
+      pmax.y = Max(pmax.y,_vertices[i].r.y);
    }
    R2 DD=(pmax-pmin)*0.05;
    pmin = pmin - DD;
@@ -2943,7 +2942,7 @@ void Triangles::SetIntCoor(const char* strfrom)
 
 // Generation of integer coord  
    for (long i=0; i<nbv; i++)
-      vertices[i].i = toI2(vertices[i].r);
+      _vertices[i].i = toI2(_vertices[i].r);
 
 // computation of the det 
    int Nberr=0;
@@ -2960,7 +2959,7 @@ void Triangles::SetIntCoor(const char* strfrom)
             }
             cerr << " Triangle " << i << "  det  (I2) = " << triangles[i].det ;
             cerr << " (R2) " << Det(v1->r-v0->r,v2->r-v0->r);
-            cerr << "; The 3  vertices " << endl;
+            cerr << "; The 3 vertices " << endl;
             cerr << Number(*v0) << " " << Number(*v1) << " " << Number(*v2) << ": ";
             cerr << v0->r << v1->r << v2->r << " ; ";
             cerr << v0->i << v1->i << v2->i << endl;
@@ -3044,9 +3043,9 @@ void Triangles::FillHoleInMesh()
          if (st[i] >=0) {
             if (i<nbe) {
                long i0=edge4->i(i);
-               ordre[i0] = vertices + i0;
+               ordre[i0] = _vertices + i0;
                long i1=edge4->j(i);
-               ordre[i1] = vertices + i1;
+               ordre[i1] = _vertices + i1;
             }
             else {
                k++;
@@ -3071,8 +3070,8 @@ void Triangles::FillHoleInMesh()
 //    Generation of the mesh with boundary points   
       long nbvb = 0;
       for (i=0; i<nbv; i++) {
-         vertices[i].t = 0;
-         vertices[i].vint = 0;
+         _vertices[i].t = 0;
+         _vertices[i].vint = 0;
          if (ordre[i]) 
             ordre[nbvb++] = ordre[i];
       }
@@ -3216,7 +3215,7 @@ void Triangles::FillHoleInMesh()
       delete edge4;
       delete [] st;
       for (i=0; i<nbv; i++)
-         _quadtree->Add(vertices[i]);
+         _quadtree->Add(_vertices[i]);
       SetVertexFieldOn();
       for (i=0; i<nbe; i++) {
          if (edges[i].on) { 
@@ -3305,7 +3304,7 @@ Triangles::Triangles(Triangles& Th,
    for (i=0; i<nbe; i++)
       edges[i].Set(Th,i,*this);
    for (i=0; i<nbv; i++)
-      vertices[i].Set(Th.vertices[i],Th,*this);
+      _vertices[i].Set(Th._vertices[i],Th,*this);
    for (i=0; i<NbSubDomains; i++)
       subdomains[i].Set(Th,i,*this);
    for (i=0; i<NbVerticesOnGeomVertex; i++)
@@ -3355,7 +3354,7 @@ void Triangles::SmoothingVertex(int    nbiter,
 // Note: If Background == Triangle, we cannot use fast research
    if (this==&BTh) {
       for (i=0; i<nbv; i++)
-         tstart[i] = vertices[i].t;
+         tstart[i] = _vertices[i].t;
    }     
    else {
       for (i=0; i<nbv; i++)
@@ -3372,11 +3371,11 @@ void Triangles::SmoothingVertex(int    nbiter,
       double delta=0;
       for (i=0; i<nbv; i++)
          if (tstart[i] != &vide)    // not a boundary vertex 
-	    delta = Max(delta,vertices[i].Smoothing(*this,BTh,tstart[i],omega));
+	    delta = Max(delta,_vertices[i].Smoothing(*this,BTh,tstart[i],omega));
       if (!NbOfQuad) {
          for (i=0; i<nbv; i++)
             if (tstart[i] != &vide) // not a boundary vertex 
-	       NbSwap += vertices[i].Optim(1);
+               NbSwap += _vertices[i].Optim(1);
       }
       if (verbosity>3)
          cout << "    Move max = " <<  sqrt(delta) << " iteration = " 
@@ -3506,10 +3505,10 @@ int Triangles::CrackMesh()
    }
    ReMakeTriangleContainingTheVertex();
    int nbcrakev=0;
-   Vertex *vlast = vertices + nbv;
-   Vertex *vend = vertices + nbvx;
+   Vertex *vlast = _vertices + nbv;
+   Vertex *vend = _vertices + nbvx;
    for (int iv=0; iv<nbv; iv++) {
-      Vertex &v = vertices[iv];
+      Vertex &v = _vertices[iv];
       Vertex *vv = &v;  
       int kk=0, kc=0, kkk=0;
       Triangle *tbegin=v.t;
@@ -3561,7 +3560,7 @@ int Triangles::CrackMesh()
 // set the ref
    cout << " set the ref " << endl;
    NbCrackedVertices = nbcrakev;
-   nbv = vlast - vertices;
+   nbv = vlast - _vertices;
    int nbnewv =  nbv - nbv; // nb of new vrtices 
    if (nbcrakev && verbosity>1)
       cout << " Nb of cracked vertices: " << nbcrakev 
@@ -3574,7 +3573,7 @@ int Triangles::CrackMesh()
          vog[i] = VerticesOnGeomVertex[i];
       delete [] VerticesOnGeomVertex;
       VerticesOnGeomVertex = vog;
-      Vertex *LastOld = vertices + nbv - nbnewv;
+      Vertex *LastOld = _vertices + nbv - nbnewv;
       for (int iec=0; iec< NbCrackedEdges; iec ++)
       for (k=0; k<2; k++) {
          Edge &e = *(k ? CrackedEdges[iec].a.edge : CrackedEdges[iec].b.edge);
@@ -3652,9 +3651,9 @@ Triangles::Triangles(const Triangles& Tho,
    PreInit(inbvx,cname);
    for (i=0; i<Tho.nbv; i++) {
       if (kk[i]>=0) {
-         vertices[nbv] = Tho.vertices[i];
-         if (!vertices[nbv].ref())
-            vertices[nbv].ReferenceNumber = refv[i];
+         _vertices[nbv] = Tho._vertices[i];
+         if (!_vertices[nbv].ref())
+            _vertices[nbv].ReferenceNumber = refv[i];
          nbv++;
       }
    }
@@ -3688,13 +3687,13 @@ Triangles::Triangles(const Triangles& Tho,
 }
 
 
-Triangle* Triangles::FindTriangleContaining(const I2&       B,
-                                                  Icoor2    dete[3],
-                                                  Triangle* tstart) const
+Triangle* Triangles::FindTriangleContaining(const I2& B,
+                                            Icoor2    dete[3],
+                                            Triangle* tstart) const
 { // in: B
   // out: t
   // out: dete[3]
-  // t the triangle and s0,s1,s2 the 3 vertices of t
+  // t the triangle with vertices s0,s1,s2
   // in dete[3] = { det(B,s1,s2), det(s0,B,s2), det(s0,s1,B) }
   // with det(a,b,c) = -1 if one of 3 vertices a,b,c is NULL 
    Triangle *t = NULL;
@@ -3705,49 +3704,48 @@ Triangle* Triangles::FindTriangleContaining(const I2&       B,
       Vertex *a = _quadtree->NearestVertex(B.x,B.y);
       if (!a || !a->t) {
          if (a) {
-            cerr << "Attention PB TriangleContainingTheVertex vertex number = " << Number(a) << endl;
+            cerr << "Attention PB TriangleContainingTheVertex vertex number = " 
+                 << Number(a) << endl;
             cerr << "We forget a call to ReMakeTriangleContainingTheVertex" << endl;
          }
          cerr << "Pb with " << B << toR2(B) << endl;
          MeshError(7777);
       }
-      assert(a>=vertices && a<vertices+nbv);
+      assert(a>=_vertices && a<_vertices+nbv);
       t = a->t;
       assert(t>=triangles && t<triangles+nbt);
    }
    Icoor2 detop;
-   int kkkk=0;          // number of test triangles
+   int kk=0;            // number of test triangles
    while (t->det<0) {   // the initial triangle is outside
       int k0=(*t)(0) ? (((*t)(1) ? ((*t)(2) ? -1 : 2) : 1)) : 0;
       assert(k0>=0);    // k0 the NULL vertex
-      int k1 = NextVertex[k0], k2 = PreviousVertex[k0];
+      int k1=NextVertex[k0], k2=PreviousVertex[k0];
       dete[k0] = det(B,(*t)[k1],(*t)[k2]);
       dete[k1] = dete[k2] = -1;
       if (dete[k0]>0)   // outside B
          return t;
       t = t->TriangleAdj(OppositeEdge[k0]);
-      assert(kkkk<2);
-      kkkk++;
+      assert(kk<2);
+      kk++;
    }
    int jj = 0;
-   detop = det(*(*t)(VerticesOfTriangularEdge[jj][0]),*(*t)(VerticesOfTriangularEdge[jj][1]),B); 
+   detop = det(*(*t)(VerticesOfTriangularEdge[jj][0]),
+               *(*t)(VerticesOfTriangularEdge[jj][1]),B); 
    while (t->det>0) {
-      assert(kkkk++<2000); 
+      assert(kk++<2000);
       int j = OppositeVertex[jj];
       dete[j] = detop;  // det(*b,*s1,*s2);
-      int jn = NextVertex[j], jp = PreviousVertex[j];
+      int jn=NextVertex[j], jp=PreviousVertex[j];
       dete[jp] = det(*(*t)(j),*(*t)(jn),B);
       dete[jn] = t->det - dete[j] - dete[jp];
-      int k = 0, ii[3];
+      int k=0, ii[3];
       if (dete[0]<0)
          ii[k++] = 0; 
       if (dete[1]<0)
          ii[k++] = 1;
       if (dete[2]<0)
          ii[k++] = 2;
-//    0 => ok
-//    1 => go in way 1
-//    2 => two way go in way 1 or 2 randomly
       if (k==0)
          break;
       if (k==2 && BinaryRand())
@@ -3757,12 +3755,16 @@ Triangle* Triangles::FindTriangleContaining(const I2&       B,
       if (t1.det()<0 && k==2)
          t1 = t->Adj(jj=ii[1]);
       t = t1;
-      j = t1; // for optimization we know the -det[OppositeVertex[j]];
+//    for optimization we know the -det[OppositeVertex[j]]
+      j = t1; 
       detop = -dete[OppositeVertex[jj]];
       jj = j;
    }
-   if (t->det<0) // outside triangle 
-      dete[0] = dete[1] = dete[2] = -1, dete[OppositeVertex[jj]] = detop;
+   if (t->det<0) {
+//    outside triangle 
+      dete[0] = dete[1] = dete[2] = -1;
+      dete[OppositeVertex[jj]] = detop;
+   }
    return t;
 }
 

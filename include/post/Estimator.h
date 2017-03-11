@@ -67,13 +67,10 @@ enum EstimatorType {
 /// \brief Default Constructor
     Estimator() { }
 
-/** \brief Constructor using finite element mesh and elementwise estimator
+/** \brief Constructor using finite element mesh
  *  @param [in] m Mesh instance
- *  @param [in,out] e Vector that contains once the member function setError is invoked
- *  a posteriori estimator at each element
  */
-    Estimator(Mesh&         m,
-              Vect<real_t>& e);
+    Estimator(Mesh& m);
 
 /// \brief Destructor
     ~Estimator() { }
@@ -88,8 +85,18 @@ enum EstimatorType {
  */
     void setType(EstimatorType t=ESTIM_ZZ);
 
-/// \brief Calculate error using Vect solution vector \a u.
-    void setError(const Vect<real_t>& u);
+/** \brief Provide solution vector in order to determine error index.
+ *  @param [in] u Vector containing solution at mesh nodes
+ */
+    void setSolution(const Vect<real_t>& u);
+
+/** \brief Get vector containing elementwise error index
+ *  @param [in,out] e Vector that contains once the member function setError is invoked
+ *  a posteriori estimator at each element
+ */
+    void getElementWiseIndex(Vect<real_t>& e);
+    void getNodeWiseIndex(Vect<real_t>& e);
+    void getSideWiseIndex(Vect<real_t>& e);
 
 /// \brief Return averaged error.
     real_t getAverage() const { return _average; }
@@ -101,14 +108,13 @@ enum EstimatorType {
 
 private:
 
-   size_t _nb_el, _nb_sd, _nb_nd;
+    size_t _nb_el, _nb_sd, _nb_nd, _nb_dof;
    Mesh *_mesh;
    real_t _average;
-   Vect<real_t> *_est;
+   Vect<real_t> _el_I, _sd_I, _nd_I;
    Vect<Point<real_t> > _N;
    EstimatorType _est_type;
    void elementT3_ZZ(const Vect<real_t>&   u,
-                     Vect<real_t>&         M,
                      Vect<Point<real_t> >& b);
    void elementT3_ND_JUMP(const Vect<real_t>& u);
 };

@@ -231,7 +231,7 @@ QuadTree::QuadTree(Triangles* t,
    _root = NewQuadTreeBox();
    assert(MaxISize>MaxICoor);
    for (long i=0; i<nbv; i++) 
-      Add(t->vertices[i]);
+      Add(t->_vertices[i]);
 }
 
 
@@ -359,7 +359,7 @@ Vertex* QuadTree::NearestVertexWithNormal(Icoor1 i,
 }
 
 
-ostream& operator <<(      ostream&  f,
+ostream& operator <<(ostream&        f,
                      const QuadTree& qt)
 {
    f << " the quadtree "  << endl;
