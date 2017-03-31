@@ -105,10 +105,10 @@ extern Edge    *the_edge;
 class Grid;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-typedef std::vector<Node *>      NodeSet;
-typedef std::vector<Element *>   ElementSet;
-typedef std::vector<Side *>      SideSet;
-typedef std::vector<Edge *>      EdgeSet;
+typedef std::vector<Node *>    NodeSet;
+typedef std::vector<Element *> ElementSet;
+typedef std::vector<Side *>    SideSet;
+typedef std::vector<Edge *>    EdgeSet;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 class Mesh
@@ -125,7 +125,8 @@ class Mesh
  *  @param [in] file File containing mesh data. The extension of the file yields the file format:
  *              The extension .m implies OFELI file format and .msh implies GMSH msh file.
  *  @param [in] bc Flag to remove (true) or not (false) imposed Degrees of Freedom [default: false]
- *  @param [in] opt Type of DOF support: To choose among enumerated values <tt>NODE_DOF</tt>, <tt>SIDE_DOF</tt> or <tt>ELEMENT_DOF</tt>.\n
+ *  @param [in] opt Type of DOF support: To choose among enumerated values <tt>NODE_DOF</tt>, <tt>SIDE_DOF</tt> 
+ *              or <tt>ELEMENT_DOF</tt>.\n
  *  Say if degrees of freedom (unknowns) are supported by nodes, sides or elements.
  *  @param [in] nb_dof Number of degrees of freedom per node [Default: <tt>1</tt>]. This value is meaningful only
  *  if other format than OFELI's one is used. Otherwise, the information is contained in the OFELI file format.
@@ -275,11 +276,11 @@ class Mesh
  *  @param [in] dof2 Label of last degree of freedom to select to the output mesh
     @param [in] bc Flag to remove (<tt>true</tt>) or not (<tt>false</tt>) imposed Degrees of Freedom [Default: <tt>false</tt>]
  */
-    Mesh(const Mesh&  mesh,
-         int          opt,
-         size_t       dof1,
-         size_t       dof2,
-         bool         bc=false);
+    Mesh(const Mesh& mesh,
+         int         opt,
+         size_t      dof1,
+         size_t      dof2,
+         bool        bc=false);
 
 /// \brief Copy Constructor
 /// @param [in] ms Mesh instance to copy
@@ -342,9 +343,6 @@ class Mesh
              int           nb_dof=1);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-/// \brief Read mesh data in binary file
-/// @param [in] mesh_file Mesh file name
-    void Bget(const string& mesh_file);
     void Get(const string& mesh_file) { get(mesh_file); }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

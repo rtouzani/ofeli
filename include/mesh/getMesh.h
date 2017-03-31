@@ -56,7 +56,6 @@ class Mesh;
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 struct El  {
   size_t label, type, region, nb_nodes, node[30];
-  
   int code[6], cc;
 };
 

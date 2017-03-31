@@ -390,10 +390,10 @@ class ODESolver
    real_t eval(string exp, real_t t);
 };
 
-/// \fn ostream & operator<<(ostream& s, const DESolver &de)
+/// \fn ostream & operator<<(ostream& s, const ODESolver &de)
 /// \brief Output differential system information
 /// \ingroup Solver
-    ostream & operator<<(      ostream&   s,
+    ostream & operator<<(ostream&         s,
                          const ODESolver& de);
 
 /*! @} End of Doxygen Groups */

@@ -33,9 +33,9 @@
 
 namespace OFELI {
 
-void saveMesh(const string&            file,
-              const Mesh&              mesh,
-                    ExternalFileFormat form)
+void saveMesh(const string&      file,
+              const Mesh&        mesh,
+              ExternalFileFormat form)
 {
    switch(form) {
 
@@ -394,7 +394,7 @@ void saveVTK(const string& file,
    
 
 void saveBamg(const string& file,
-                    Mesh&   mesh)
+              Mesh&         mesh)
 {
    mesh.getAllSides();
    ofstream of(file.c_str());

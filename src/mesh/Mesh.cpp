@@ -2765,19 +2765,19 @@ void Mesh::get(const string& mesh_file,
       if (ff==OFELI_FF)
          get(mesh_file);
       else if (ff==GMSH)
-         getGmsh(mesh_file, *this, nb_dof);
+         getGmsh(mesh_file,*this,nb_dof);
       else if (ff==MATLAB)
-         getMatlab(mesh_file, *this, nb_dof);
+         getMatlab(mesh_file,*this,nb_dof);
       else if (ff==EASYMESH)
-         getEasymesh(mesh_file, *this, nb_dof);
+         getEasymesh(mesh_file,*this,nb_dof);
       else if (ff==GAMBIT)
-         getGambit(mesh_file, *this, nb_dof);
+         getGambit(mesh_file,*this,nb_dof);
       else if (ff==BAMG)
-         getBamg(mesh_file, *this, nb_dof);
+         getBamg(mesh_file,*this,nb_dof);
       else if (ff==NETGEN)
-         getNetgen(mesh_file, *this, nb_dof);
+         getNetgen(mesh_file,*this,nb_dof);
       else if (ff==TRIANGLE_FF)
-         getTriangle(mesh_file, *this, nb_dof);
+         getTriangle(mesh_file,*this,nb_dof);
       else
          THROW_RT("get(string,int,int): Unknown file format "+itos(ff));
    }

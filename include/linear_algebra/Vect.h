@@ -795,15 +795,6 @@ class Vect
  */
     real_t getAverage(const Element& el,
                       int            type) const;
-
-/** \brief Save vector in a file according to a given format
- *  @param [in] file Output file where to save the vector
- *  @param [in] opt Option to choose file format to save. This is to be chosen
- *  among enumerated values: <tt>GMSH</tt>, <tt>GNUPLOT</tt>, <tt>MATLAB</tt>,
- *  <tt>TECPLOT</tt> and <tt>VTK</tt> (Default: <tt>GMSH</tt>)
- */
-   void save(string file,
-             int    opt=GMSH);
    
 /** \brief Multiply by a constant then add to a vector.
  *  @param [in] x Vect instance to add
@@ -2699,49 +2690,29 @@ real_t Vect<T_>::getAverage(const Element& el,
          return 0.5*((*this)(el(1)->n())+(*this)(el(2)->n()));
 
       case TRIANG3: 
-         return OFELI_THIRD*((*this)(el(1)->n()) +
-                             (*this)(el(2)->n()) +
+         return OFELI_THIRD*((*this)(el(1)->n()) + (*this)(el(2)->n()) +
                              (*this)(el(3)->n()));
 
       case QUAD4:
-         return 0.25*((*this)(el(1)->n()) +
-                      (*this)(el(2)->n()) +
-                      (*this)(el(3)->n()) +
-                      (*this)(el(4)->n()));
+         return 0.25*((*this)(el(1)->n()) + (*this)(el(2)->n()) +
+                      (*this)(el(3)->n()) + (*this)(el(4)->n()));
 
       case TETRA4:
-         return 0.25*((*this)(el(1)->n()) +
-                      (*this)(el(2)->n()) +
-                      (*this)(el(3)->n()) +
-                      (*this)(el(4)->n()));
+         return 0.25*((*this)(el(1)->n()) + (*this)(el(2)->n()) +
+                      (*this)(el(3)->n()) + (*this)(el(4)->n()));
 
       case PENTA6:
-         return OFELI_SIXTH*((*this)(el(1)->n()) +
-                             (*this)(el(2)->n()) +
-                             (*this)(el(3)->n()) +
-                             (*this)(el(4)->n()) +
-                             (*this)(el(5)->n()) +
-                             (*this)(el(6)->n()));
+         return OFELI_SIXTH*((*this)(el(1)->n()) + (*this)(el(2)->n()) +
+                             (*this)(el(3)->n()) + (*this)(el(4)->n()) +
+                             (*this)(el(5)->n()) + (*this)(el(6)->n()));
 
       case HEXA8:
-         return 0.125*((*this)(el(1)->n()) +
-                       (*this)(el(2)->n()) +
-                       (*this)(el(3)->n()) +
-                       (*this)(el(4)->n()) +
-                       (*this)(el(5)->n()) +
-                       (*this)(el(6)->n()) +
-                       (*this)(el(7)->n()) +
-                       (*this)(el(8)->n()));
+         return 0.125*((*this)(el(1)->n()) + (*this)(el(2)->n()) +
+                       (*this)(el(3)->n()) + (*this)(el(4)->n()) +
+                       (*this)(el(5)->n()) + (*this)(el(6)->n()) +
+                       (*this)(el(7)->n()) + (*this)(el(8)->n()));
    }
    return 0.;
-}
-
-
-template<class T_>
-void Vect<T_>::save(string file,
-                    int    opt)
-{
-   saveField(*this,file,opt);
 }
 
 

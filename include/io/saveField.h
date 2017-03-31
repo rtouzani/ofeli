@@ -50,6 +50,8 @@ namespace OFELI {
  *  \brief Prototypes for functions to save mesh in various file formats.
  */
 
+template<class T_> class Vect;
+
 /** \fn void saveField(Vect<real_t> &v, string output_file, int opt)
  *  \ingroup Util
  *  \brief Save a vector to an output file in a given file format
