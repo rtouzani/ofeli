@@ -68,7 +68,7 @@ void getMesh(string             file,
    switch (form) {
 
       case OFELI_FF:
-         break;7
+         break;
 
       case GMSH:
          getGmsh(file,mesh,nb_dof);

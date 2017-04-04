@@ -36,7 +36,6 @@
 
 #include "OFELI.h"
 #include "Therm.h"
-#include "User.h"
 using namespace OFELI;
 
 
@@ -51,23 +50,20 @@ int main(int argc, char *argv[])
    theFinalTime = data.getMaxTime();
    theTimeStep = data.getTimeStep();
    Mesh ms(data.getMeshFile());
-   User ud(ms);
 
 // Declare problem data (matrix, rhs, boundary conditions, body forces)
    SkSMatrix<double> A(ms);
-   Vect<double> b(ms), u(ms), bc(ms);
+   Vect<double> b(ms), u(ms), bc(ms), sf(ms);
 
 // Read in initial solution
-   ud.setInitialData(u);
+   u = 0.;
 
 // Loop over time steps
 // --------------------
    TimeLoop {
       b = 0;
-
-//    Read in boundary conditions
-      ud.setTime(theTime);
-      ud.setDBC(bc);
+      bc = 0;
+      sf.setSideBC(1,"1.0");
 
 //    Loop over elements
       MeshElements(ms) {
@@ -91,7 +87,7 @@ int main(int argc, char *argv[])
 //    Loop over edges (sides)
       MeshSides(ms) {
          DC2DT3 eq(theSide,u,theTime);
-         eq.BoundaryRHS(ud);
+         eq.BoundaryRHS(sf);
          eq.SideAssembly(b);
       }
 

@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin16.4.0
-host_triplet = i386-apple-darwin16.4.0
+build_triplet = i386-apple-darwin16.5.0
+host_triplet = i386-apple-darwin16.5.0
 subdir = doc/tutorial
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -228,10 +228,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin16.4.0
+build = i386-apple-darwin16.5.0
 build_alias = 
 build_cpu = i386
-build_os = darwin16.4.0
+build_os = darwin16.5.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -239,10 +239,10 @@ datarootdir = ${prefix}/share
 docdir = $(datadir)/ofeli/doc/tutorial
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin16.4.0
+host = i386-apple-darwin16.5.0
 host_alias = 
 host_cpu = i386
-host_os = darwin16.4.0
+host_os = darwin16.5.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -274,8 +274,7 @@ dist_doc_DATA = lesson1.html \
 		lesson4.html \
 		lesson5.html \
 		lesson6.html \
-		lesson7.html \
-		lesson8.html
+		lesson7.html
 
 doc_DATA = lesson1.html \
 		lesson2.html \
@@ -283,8 +282,7 @@ doc_DATA = lesson1.html \
 		lesson4.html \
 		lesson5.html \
 		lesson6.html \
-		lesson7.html \
-		lesson8.html
+		lesson7.html
 
 all: all-am
 

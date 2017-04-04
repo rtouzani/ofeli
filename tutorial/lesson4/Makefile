@@ -16,7 +16,6 @@
 
 
 
-
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
     false; \
@@ -88,8 +87,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin16.4.0
-host_triplet = i386-apple-darwin16.4.0
+build_triplet = i386-apple-darwin16.5.0
+host_triplet = i386-apple-darwin16.5.0
 bin_PROGRAMS = lesson4$(EXEEXT)
 subdir = tutorial/lesson4
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -97,13 +96,13 @@ am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(dist_lesson4_DATA) \
-	$(lesson4_HEADERS) $(am__DIST_COMMON)
+	$(am__DIST_COMMON)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/include/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(lesson4dir)" \
-	"$(DESTDIR)$(lesson4dir)" "$(DESTDIR)$(lesson4dir)"
+	"$(DESTDIR)$(lesson4dir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_lesson4_OBJECTS = main.$(OBJEXT)
 lesson4_OBJECTS = $(am_lesson4_OBJECTS)
@@ -171,7 +170,6 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 DATA = $(dist_lesson4_DATA) $(lesson4_DATA)
-HEADERS = $(lesson4_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -272,10 +270,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin16.4.0
+build = i386-apple-darwin16.5.0
 build_alias = 
 build_cpu = i386
-build_os = darwin16.4.0
+build_os = darwin16.5.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -283,10 +281,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin16.4.0
+host = i386-apple-darwin16.5.0
 host_alias = 
 host_cpu = i386
-host_os = darwin16.4.0
+host_os = darwin16.5.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -313,11 +311,10 @@ top_builddir = ../..
 top_srcdir = ../..
 AUTOMAKE_OPTIONS = no-dependencies
 lesson4_SOURCES = main.cpp
-lesson4_HEADERS = User.h
 lesson4_LDADD = $(top_builddir)/src/libofeli.a
 lesson4dir = $(datadir)/ofeli/tutorial/lesson4
-lesson4_DATA = main.cpp User.h test.dat test.m Makefile.standalone lesson4.cbp README
-dist_lesson4_DATA = main.cpp User.h test.dat test.m Makefile.standalone lesson4.cbp README
+lesson4_DATA = main.cpp test.dat test.m Makefile.standalone lesson4.cbp README
+dist_lesson4_DATA = main.cpp test.dat test.m Makefile.standalone lesson4.cbp README
 all: all-am
 
 .SUFFIXES:
@@ -451,27 +448,6 @@ uninstall-lesson4DATA:
 	@list='$(lesson4_DATA)'; test -n "$(lesson4dir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(lesson4dir)'; $(am__uninstall_files_from_dir)
-install-lesson4HEADERS: $(lesson4_HEADERS)
-	@$(NORMAL_INSTALL)
-	@list='$(lesson4_HEADERS)'; test -n "$(lesson4dir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(lesson4dir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(lesson4dir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(lesson4dir)'"; \
-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(lesson4dir)" || exit $$?; \
-	done
-
-uninstall-lesson4HEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(lesson4_HEADERS)'; test -n "$(lesson4dir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(lesson4dir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -557,9 +533,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
+all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(lesson4dir)" "$(DESTDIR)$(lesson4dir)" "$(DESTDIR)$(lesson4dir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(lesson4dir)" "$(DESTDIR)$(lesson4dir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -613,8 +589,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_lesson4DATA install-lesson4DATA \
-	install-lesson4HEADERS
+install-data-am: install-dist_lesson4DATA install-lesson4DATA
 
 install-dvi: install-dvi-am
 
@@ -659,7 +634,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-dist_lesson4DATA \
-	uninstall-lesson4DATA uninstall-lesson4HEADERS
+	uninstall-lesson4DATA
 
 .MAKE: install-am install-strip
 
@@ -670,14 +645,13 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_lesson4DATA \
 	install-am install-binPROGRAMS install-data install-data-am \
 	install-dist_lesson4DATA install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-lesson4DATA \
-	install-lesson4HEADERS install-man install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS uninstall-dist_lesson4DATA \
-	uninstall-lesson4DATA uninstall-lesson4HEADERS
+	install-info install-info-am install-lesson4DATA install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS \
+	uninstall-dist_lesson4DATA uninstall-lesson4DATA
 
 .PRECIOUS: Makefile
 

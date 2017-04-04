@@ -9,7 +9,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>Lesson 7</title>
+<title>Lesson 8</title>
 <link rel="stylesheet" type="text/css" href="../doxygen.css" />
 <link rel="stylesheet" type="text/css" href="../tabs.css"  />
 </head>
@@ -149,91 +149,246 @@
 
 &nbsp;
 <p>
-<h2>Lesson 7: Using Mesh Generator</h2>
+<h2>Lesson 7: Using File Converters</h2>
 
 <p><table border="2" cellpadding="2" cellspacing="0" >
 <tr>
-<td align="center" width="35"><a href="lesson6.html"><img src="../im/backward.gif" border="0"></a></td>
 <td align="center" width="35"><a href="../tutorial.html"><img src="../im/top.gif" border="0"></a></td>
-<td align="center" width="35"><a href="lesson8.html"><img src="../im/forward.gif" border="0"></a></td>
+<td align="center" width="35"><a href="lesson6.html"><img src="../im/backward.gif" border="0"></a></td>
 </tr>
 </table>
 </p>
 
-<p><span class=text>The current release of <span class="LOGO">OFELI</span> is not provided within a native mesh
-generator. For this, we prefer to add to the package a public domain mesh generator that we have interfaced with
-<span class=logo>OFELI</span> classes. The included mesh generator is called <span class=tt>BAMG</span>.
-It was developed by an INRIA team.<br><br>
+<p class=EL>A mesh file converter: cmesh</p>
 
-To generate a 2-D finite element mesh you have to use the class <a href="../html/classOFELI_1_1Domain.html" class=cc>Domain</a> to create a domain and then
-call the function <span class=tt>BAMG</span> that generates a mesh file in the <span class=tt>XML</span> format. The following example
-contained in the <span class=LOGO>OFELI</span> package illustrates a typical usage of the mesh generator. It uses the program
-<span class=tt>g2m</span> created while you install the utilities</span>
+<p><span class=text>The program <span class=var>cmesh</span> converts
+mesh files to and from
+<span class=LOGO>OFELI</span> <span class=var>XML</span>
+mesh file format. The command line of the program is:</p>
+<pre><font color="blue" size=3>
+    cmesh  --from &lt;ofeli|em|bamg|gambit|gmsh|netgen|tetgen|matlab|triangle&gt;
+           --to &lt;ofeli|gpl|gmsh|tec|vtk|matlab&gt; -i &lt;string&gt; 
+           [-o &lt;string&gt;] [-n &lt;int&gt;] [--version] [-h]
+</font></pre></p>
+<p><span class=text>where:</span></p>
+<pre><font color="blue" size=3>
+       --from &lt;ofeli|em|bamg|gambit|gmsh|netgen|tetgen|matlab|triangle&gt;
+         (required)
+</font></pre></p>
+<p><span class=text>Available input formats:</p>
 
-<p class=EL>An example</p>
+<table border="1" cellpadding="4">
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>ofeli</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>OFELI</span> mesh file (*.m)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>em</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>EasyMesh</span> files (*.s *.e *.n)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>bamg</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>BAMG</span>  file (*.bamg)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>gambit</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Gambit</span>  Neutral file (*.neu)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>gmsh</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Gmsh</span> file (*.msh)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>netgen</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Netgen</span> file (*.vol)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>tetgen</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Tetgen</span> files (*.node and *.ele)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>matlab</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Matlab</span> file (*-matlab.m)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>triangle</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Triangle</span> files (*.node and *.ele)</SPAN></td>
+            </tr>
+</table></p>
+<pre><font color="blue" size=3>
+     --to &lt;ofeli|amd|gpl|gmsh|tec|vtk|matlab&gt;
+     (required)
+</font></pre></p>
 
-<span class=text>We now give an example of <span class=tt>XML</span> to generate a domain and then a mesh</span>
+<p><span class=text>Available output formats:</p>
+<table border="1" cellpadding="4">
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>ofeli</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>OFELI</span> mesh file (*.m)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>em</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>EasyMesh</span> files (*.s *.e *.n)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>bamg</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>BAMG</span>  file (*.bamg)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>gambit</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Gambit</span>  Neutral file (*.neu)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>gmsh</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Gmsh</span> file (*.msh)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>netgen</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Netgen</span> file (*.vol)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>tetgen</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Tetgen</span> files (*.node and *.ele)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>matlab</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Matlab</span> file (*-matlab.m)</SPAN></td>
+            </tr>
+            <tr>
+                <td align="left"><SPAN CLASS=TEXT>triangle</SPAN></td>
+                <td align="left"><SPAN CLASS=TEXT><span class=var>Triangle</span> files (*.node and *.ele)</SPAN></td>
+            </tr>
+</table></p>
 
-<p><table bgcolor="#e0f8f7" border="1" rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
-&lt;OFELI_File&gt;
-&lt;info&gt;
-    &lt;title&gt;Definition of a domain with a hole&lt;/title&gt;
-    &lt;date&gt;January 1, 2010&lt;/date&gt;
-    &lt;author&gt;R. Touzani&lt;/author&gt;
-&lt;/info&gt;
-&lt;Domain dim="2"&gt;
-      &lt;vertex&gt;    0.      0.    2   0.1&lt;/vertex&gt;
-      &lt;vertex&gt;    1.      0.    2   0.1&lt;/vertex&gt;
-      &lt;vertex&gt;    1.      1.    2   0.1&lt;/vertex&gt;
-      &lt;vertex&gt;    0.      1.    2   0.1&lt;/vertex&gt;
-      &lt;vertex&gt;    0.4     0.4   1   0.01&lt;/vertex&gt;
-      &lt;vertex&gt;    0.6     0.4   1   0.01&lt;/vertex&gt;
-      &lt;vertex&gt;    0.6     0.6   1   0.01&lt;/vertex&gt;
-      &lt;vertex&gt;    0.4     0.6   1   0.01&lt;/vertex&gt;
-      &lt;vertex&gt;    0.1     0.2   1   0.01&lt;/vertex&gt;
-      &lt;vertex&gt;    0.2     0.2   1   0.01&lt;/vertex&gt;
-      &lt;line&gt;  1   2   2   0 &lt;/line&gt;
-      &lt;line&gt;  2   3   2   0 &lt;/line&gt;
-      &lt;line&gt;  3   4   2   0 &lt;/line&gt;
-      &lt;line&gt;  4   1   2   0 &lt;/line&gt;
-      &lt;line&gt;  5   6   1   0 &lt;/line&gt;
-      &lt;line&gt;  6   7   1   0 &lt;/line&gt;
-      &lt;line&gt;  7   8   1   0 &lt;/line&gt;
-      &lt;line>  8   5   1   0 &lt;/line&gt;
-      &lt;circle&gt; 9    9   10   1   1&lt;/circle&gt;
-      &lt;SubDomain&gt;  1    1    10&lt;/SubDomain&gt;
-&lt;/Domain&gt;
-&lt;/OFELI_File&gt;
+<pre><font color="blue" size=3>-i &lt;string&gt;,  --input &lt;string&gt;</font></pre></p>
+
+<p><span class=text>(required)  Mesh Input File</p>
+<pre><font color="blue" size=3>-o &lt;string&gt;,  --output &lt;string&gt;</font></pre>
+<p><span class=text>Mesh Output File</p>
+
+<pre><font color="blue" size=3>-n &lt;int&gt;,  --nb_dof &lt;int&gt;</font></pre>
+<p><span class=text>Nb. of degrees of freedom per node</p>
+
+<pre><font color="blue" size=3>--version</font></pre>
+<p><span class=text>Displays version information and exits.</p>
+
+<pre><font color="blue" size=3>-h,  --help</font></pre>
+<p><span class=text>Displays usage information and exits.</p>
+
+<p><span class=text>
+Here, in the invoked programs and file formats are the following:
+<ul>
+<li>
+<p><span class=text>
+<a href="../fformats.html" class=cc>ofeli</a> is the actual XML format defined in <span class="LOGO">OFELI</span>
+<li><p><span class=text>
+<span class=VAR>EasyMesh</span> is a free program that generates two dimensional, unstructured, Delaunay
+    and constrained Delaunay triangulations in general domains. It can be downloaded from the site:
+    <a href="http://www-dinma.univ.trieste.it/nirftc/research/easymesh/Default.htm">http://www-dinma.univ.trieste.it/nirftc/research/easymesh/Default.htm</a>
+<li><p><span class=text>
+<span class=VAR>Gnuplot</span> is a command-line driven program for producing 2D and 3D plots. It is under
+    the GNU General Public License. Available information can be found in the site:
+    <a href="http://www.gnuplot.info/">www.gnuplot.info/</a>
+<li><p><span class=text>
+  <span class=VAR>BAMG</span> is a 2-D mesh generator. It allows to construct adapted meshes from a given
+    metric. It was developed at INRIA, France. Available information can be found in the site :
+    <a href="http://www-rocq1.inria.fr/gamma/cdrom/www/bamg/eng.htm">www-rocq1.inria.fr/gamma/cdrom/www/bamg/eng.htm</a>
+<!--<li><span class=VAR>EMC2</span> is a portable, interactive and graphic software Edition of two dimensional
+    geometry and mesh. It can be downloaded from the site:
+    <a href="http://www-rocq1.inria.fr/gamma/cdrom/www/emc2/eng.htm">www-rocq1.inria.fr/gamma/cdrom/www/emc2/eng.htm</a><br><br>-->
+<li><p><span class=text>
+  <span class=VAR>Gambit</span> is a commercial mesh generator. Available information can be
+    found in the site:
+    <a href="http://fluent.com/software/gambit/">http://fluent.com/software/gambit/</a>
+<li><p><span class=text>
+  <span class=VAR>Gmsh</span> is a free three-dimensional finite element mesh generator with built-in pre- and post-processing
+    facilities. It can be downloaded from the site:
+    <a href="http://www.geuz.org/gmsh/">www.geuz.org/gmsh/</a>
+<li><p><span class=text>
+  <span class=VAR>Tecplot</span> is high quality post graphical commercial processing program developed by
+    Amtec. Available information can be found in the site:
+    <a href="http://www.tecplot.com">www.tecplot.com</a>
+<li><p><span class=text>
+<span class=VAR>Matlab</span> is a language of scientific computing including visualization. It is developed
+    by MathWorks. Available information can be found in the site :
+    <a href="http://www.mathworks.com/products/matlab/">www.mathworks.com/products/matlab/</a><br>
+<li><p><span class=text>
+<span class=VAR>VTK</span> is an open source library of graphical processing. It is developed
+    by <a href="http://www.kitware.com">kitware</a>. Graphical postprocessing can be obtained by software
+    <a href="http://mayavi.sourceforge.net">MayaVi</a> or <a href="http://www.paraview.org">Paraview</a>
+    for instance.
+</ul>
+<li><p><span class=text> The optional argument is an integer that defines the (constant) number of degrees of freedom per node.
+This information is indeed not always available from mesh generators and is needed in <span class=var>MDF</span> format.
+Its default value is <span class=var>1</span>.
+</ul>
+
+<p class=EL>A field file converter : cfield</p>
+
+<p><span class=text>The program <span class=var>cfield</span> converts input and output field used by
+<span class="LOGO">OFELI</span> in <span class=var>FFI</span> format
+to other formats.
+
+<p><span class=text>
+The command line of the program is:</p>
+
+<pre><font color="blue" size=3>
+     cfield  -f &lt;gmsh|gpl|tec|vtk&gt; -m &lt;string&gt; -i &lt;string&gt; [-o &lt;string&gt;]  [--version] [-h]
+</font></pre></p>
+
+<p><span class=text>where:
+<pre><font color="blue" size=3>
+-f &lt;gmsh|gpl|tec|vtk&gt;,  --format &lt;gmsh|gpl|tec|vtk&gt;
 </font></pre>
-</td></tr></table></p>
+<p><span class=text>(required)</p>
 
-<p>
-<span class=text>The above text file enables generating a rectangular domain containing a circular hole.
+<p><span class=text> Available output formats:
 
-Once this file is created and called <span class=VAR>test.dom</span>, we can generate the file <span class=VAR>test.m</span>
-by typing
-<pre><font color="blue" size=3>   g2m -d test.dom
-</font></pre></span></p>
+<table border="1" cellpadding="4">
+   <tr>
+        <td align="left"><SPAN CLASS=TEXT>gmsh</SPAN></td>
+        <td align="left"><SPAN CLASS=TEXT><span class=var>Gmsh</span> Postprocessing File (*.pos)</SPAN></td>
+   </tr>
+   <tr>
+        <td align="left"><SPAN CLASS=TEXT>gpl</SPAN></td>
+        <td align="left"><SPAN CLASS=TEXT><span class=var>Gnuplot</span> File (*-gnuplot.dat)</SPAN></td>
+   </tr>
+   <tr>
+        <td align="left"><SPAN CLASS=TEXT>tec</SPAN></td>
+        <td align="left"><SPAN CLASS=TEXT><span class=var>Tecplot</span>  file (*-tecplot.dat)</SPAN></td>
+   </tr>
+   <tr>
+        <td align="left"><SPAN CLASS=TEXT>vtk</SPAN></td>
+        <td align="left"><SPAN CLASS=TEXT><span class=var>vtk</span> file (*.vtk)</SPAN></td>
+   </tr>
+</table></p>
 
-Note that all parameters of the command <span class=VAR>g2m</span> can
-be obtained by typing</p>
+<pre><font color="blue" size=3>  -m &lt;string&gt;,  --mesh &lt;string&gt;</font></pre>
+<span class=text> (required)  Mesh file name</p>
 
-<pre><font color="blue" size=3>   g2m --help
-</font></pre></span></p>
+<pre><font color="blue" size=3>  -i <string>,  --input <string></font></pre>
+<span class=text>(required)  Input field file name</p>
+
+<pre><font color="blue" size=3>  -o <string>,  --output <string></font></pre>
+<span class=text> Output field file name</p>
+
+<pre><font color="blue" size=3>  --version</font></pre>
+<span class=text> Displays version information and exits.</p>
+
+<pre><font color="blue" size=3>  -h,  --help</font></pre>
+<span class=text>Displays usage information and exits.</p>
+<br>
 
 <p><table align="center" border="2" cellpadding="2" cellspacing="0" >
 <tr>
-<td align="center" width="35"><a href="lesson6.html"><img src="../im/backward.gif" border="0"></a></td>
 <td align="center" width="35"><a href="../tutorial.html"><img src="../im/top.gif" border="0"></a></td>
-<td align="center" width="35"><a href="lesson8.html"><img src="../im/forward.gif" border="0"></a></td>
+<td align="center" width="35"><a href="lesson6.html"><img src="../im/backward.gif" border="0"></a></td>
 </tr>
 </table>
 
 &nbsp;
 <div id="foot_bar">
-        Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+        Copyright &copy; 1998-2017 Rachid Touzani&nbsp;
 </div>
 
 </body>

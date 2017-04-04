@@ -222,29 +222,23 @@ which are <span class=TT>theFinalTime</span> and <span class=TT>theTimeStep</spa
 <tr><td>
 <pre><font color="blue" size=3>   Mesh ms(data.getMeshFile());</font></pre>
 </td></tr></table></p>
-<li><span class=TEXT>In the present example, we introduce boundary conditions through a user defined class. This may be
-optional for Dirichlet conditions but necessary for Neumann ones.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   User ud(ms);</font></pre>
-</td></tr></table></p>
-<p>Implementation of class <span class=TT>User</span> will be given later.</span>
 <li><span class=TEXT>We declare matrix and vector data: first, the matrix <span class=TT>A</span> is declared
 as instance of class <span class=TT><a href="../html/classOFELI_1_1SkSMatrix.html">SkSMatrix</a></span>. The vectors <span class=TT>b</span>,
-<span class=TT>u</span> and <span class=TT>bc</span> will contain respectively, alternatively the right-hand side
-and the current solution, the previous solution and prescribed Dirichlet boundary conditions.
+<span class=TT>u</span>, <span class=TT>bc</span> and <span class=TT>sf</span> will contain respectively, alternatively the right-hand side
+and the current solution, the previous solution and prescribed
+Dirichlet and Neumann boundary conditions.
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
 <pre><font color="blue" size=3>   SkSMatrix&lt;double&gt; A(ms);
-   Vect&lt;double&gt; b(ms.getNbDOF()), u(ms.getNbDOF()), bc(ms.getNbDOF());
+   Vect&lt;double&gt; b(ms), u(ms), bc(ms), sf(ms);
 </font></pre>
 </td></tr></table>
 </span></p>
-<li><span class=TEXT>Since, we are dealing with a transient problem, we need initial data. This is retrieved
-from class member <span class=TT>setInitialData</span> of class <span class=TT>User</span> :
+<li><span class=TEXT>Since, we are dealing with a transient problem, we need initial data.
+We choose here the initial condition <span class=TT>u=0.</span>:
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   ud.setInitialData(u);</font></pre>
+<pre><font color="blue" size=3>   u = 0.0;</font></pre>
 </td></tr></table>
 </span></p>
 <li><span class=TEXT>We start a loop over time steps. For this we use a macro defined
@@ -264,17 +258,19 @@ to zero since this one will be assembled.
 <pre><font color="blue" size=3>      b = 0;</font></pre>
 </td></tr></table>
 </span></p>
-<li><span class=TEXT>We next transmit the user data class instance <span class=TT>ud</span> the time value:
+<li><span class=TEXT>We next define Dirichlet and Neumann boundary
+conditions. We impose here a homogeneous boundary condition using
+vector <span class=VAR>bc</span>.
+The Neumann boundary condition is given by assigning to sides with
+code <span class=TT>1</span>, the value <span class=TT>1</span>. This
+is done, as an example here, by using the member function <span class=TT>setSideBC</span>
+of class <span class=TT><a href="../html/classOFELI_1_1Vect.html">Vect</a></span>. We also
+assign the Dirichlet boundary condition <span class=TT>0.</span> to
+nodes with nonzero code:
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>      ud.setTime(theTime);</font></pre>
-</td></tr></table>
-</span>
-<li><span class=TEXT>In order to deal with a problem with time-dependent boundary condition we re-fill vector
-<span class=TT>bc</span> at this level.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>      ud.setDBC(bc);</font></pre>
+<pre><font color="blue" size=3>      bc = 0;
+      sf.setSideBC(1,"1.0"); </font></pre>
 </td></tr></table>
 </span></p>
 <li><span class=TEXT>We write a loop over finite elements as in the previous lessons:
@@ -322,11 +318,11 @@ over given sides. The loop looks like the one over elements:
 <pre><font color="blue" size=3>         DC2DT3 eq(theSide,u,theTime);</font></pre>
 </td></tr></table>
 </span></p>
-<li><span class=TEXT>We fill the side vector using the instance <span class=TT>ud</span> of class <span class=TT>User</span>.
+<li><span class=TEXT>We fill the side vector using the vector <span class=TT>sf</span>.
 The function <span class=TT>BoundaryRHS</span> calculates the side integral.
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>         eq.BoundaryRHS(ud);</font></pre>
+<pre><font color="blue" size=3>         eq.BoundaryRHS(sf);</font></pre>
 </td></tr></table>
 </span></p>
 <li><span class=TEXT>We assemble side vectors just like for elements and close the loop.
@@ -369,74 +365,6 @@ to store it as a previous solution.
 <p>and then close the time stepping loop and the program.</span>
 </ul>
 
-<h4><font color="red">A user defined class</font></h4>
-
-<span class=text>We have now to implement class <span class=TT>User</span> that defines boundary conditions,
-initial conditions. The class is defined in file <span class=TT>User.h</span>
-in the Example 4 in the <span class=TT>tutorial</span> directory.</span>
-
-<ul type="square">
-<li><span class=TEXT>Of course, we start by including file <span class=TT>OFELI.h</span> and invoking the namespace:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>#include "OFELI.h"
-using namespace OFELI;</font></pre>
-</td></tr></table>
-</span></p>
-<li><span class=TEXT>Class <span class=TT>User</span> derives from abstract class <a href="../html/classOFELI_1_1UserData.html">UserData</a>.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>class User : public UserData&lt;double&gt; {</font></pre>
-</td></tr></table>
-</span></p>
-<li><span class=TEXT>This class has only public members and no attributes.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>public :</font></pre>
-</td></tr></table>
-</span></p>
-<li><span class=TEXT>We have a constructor that provides the mesh to the class : nothing to do, the parent
-class does the job for you.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   User(Mesh &mesh) : UserData&lt;double&gt;(mesh) { }</font></pre>
-</td></tr></table>
-</span></p>
-<li><span class=TEXT>We define a member class to give a value to prescribe for boundary condition in function
-of node code, node coordinates, time value and degree of freedom: Here, we impose that a code <span class=TT>2</span>
-imposes the value <span class=TT>1.0</span>. Any other code will impose the default value <span class=TT>0.0</span>.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   double BoundaryCondition(const Point&lt;double&gt; &x, int code, double time=0., size_t dof=1)
-   {
-      double ret = 0.0;
-      if (code == 2)
-         ret = 1.0;
-      return ret;
-   }</font></pre>
-</td></tr></table>
-</span></p>
-<li><span class=TEXT>The same scheme works for Neumann boundary condition:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   double SurfaceForce(const Point&lt;double&gt; &x, int code, double time, size_t dof)
-   {
-      if (code)
-         return 1.0;
-      else
-         return 0.0;
-   }
-</font></pre>
-</td></tr></table>
-</span></p>
-<li><span class=TEXT>The class definition ends here
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>};</font></pre>
-</td></tr></table></p>
-<li><span class=TEXT>Let us finally note that since no implementation is given for initial condition,
-the default one is <span class=TT>0.0</span> for each degree of freedom.</span>
-</ul></p>
 
 <p class=EL>A test</p>
 
@@ -453,7 +381,7 @@ The convergence is obtained after 3 iterations.</span>
 
 &nbsp;
 <div id="foot_bar">
-   Copyright &copy; 1998-2016 Rachid Touzani&nbsp;
+   Copyright &copy; 1998-2017 Rachid Touzani&nbsp;
 </div>
 
 </body>
