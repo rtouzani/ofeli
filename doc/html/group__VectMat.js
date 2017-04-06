@@ -156,6 +156,8 @@ var group__VectMat =
       [ "operator()", "group__OFELI.html#gaacbbe150d69a1246cb76f24419cae7ac", null ],
       [ "operator=", "group__OFELI.html#gad8745bcf8d77744b35dfc21729390781", null ],
       [ "operator=", "group__OFELI.html#ga442562f575365780ef9c6a30f0b5e62f", null ],
+      [ "operator+=", "group__OFELI.html#ga2de435bdd5a859f29062d553ff8993c5", null ],
+      [ "operator-=", "group__OFELI.html#gae9a33a5b3ae098ebcbac4751c57e12ba", null ],
       [ "setLDLt", "group__OFELI.html#gad177e53c00ddc5579499a4ae8a67c1ac", null ],
       [ "MultAdd", "group__OFELI.html#ga891baacc01ccea53b33d0da6fd57d653", null ],
       [ "MultAdd", "group__OFELI.html#ga182aa2a623c3a9e200cc74350c173c9b", null ],
@@ -197,9 +199,7 @@ var group__VectMat =
       [ "operator[]", "classOFELI_1_1DSMatrix.html#a760177d294663b1dd8941afd331b0fbb", null ],
       [ "operator[]", "classOFELI_1_1DSMatrix.html#a0c9fc831c3cfa8fe5b57e99da5ac1e52", null ],
       [ "operator+=", "classOFELI_1_1DSMatrix.html#aa3cbfbe86d6789ebc8b34b261402fb9a", null ],
-      [ "operator+=", "classOFELI_1_1DSMatrix.html#adaed73bab677150385013d0d6e138c69", null ],
       [ "operator-=", "classOFELI_1_1DSMatrix.html#a82f89bc074972e8d49e6459ea384d672", null ],
-      [ "operator-=", "classOFELI_1_1DSMatrix.html#a778ac464768eefc4fd77ab93207c70cb", null ],
       [ "operator*=", "classOFELI_1_1DSMatrix.html#a7c1370eca69f9880d5456fb9f4e1da44", null ]
     ] ],
     [ "LocalMatrix", "classOFELI_1_1LocalMatrix.html", [
@@ -785,7 +785,6 @@ var group__VectMat =
       [ "getSCurl", "classOFELI_1_1Vect.html#a6e14e1aee9a896c97889af582b3dd912", null ],
       [ "getDivergence", "classOFELI_1_1Vect.html#a2e49c4ac4b5a80dd3598d3abc4faaca3", null ],
       [ "getAverage", "classOFELI_1_1Vect.html#ad8791476a0ae8aa57721eb93628dbb4c", null ],
-      [ "save", "classOFELI_1_1Vect.html#acf5b616d6a2c06e4e736f1ce064f77c3", null ],
       [ "MultAdd", "classOFELI_1_1Vect.html#ad0f90653534fc8b2f68aee497de6ca0a", null ],
       [ "Axpy", "classOFELI_1_1Vect.html#ad549cf0857fc340838eec060fec2d675", null ],
       [ "set", "classOFELI_1_1Vect.html#ab2de1f5bbeb4e8d838636f9defdcdb4a", null ],

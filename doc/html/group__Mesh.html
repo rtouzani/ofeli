@@ -1277,6 +1277,20 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The input vector <code>u1</code> is a one degree of freedom per node vector, i.e. its size must be equal (or greater than) the total number of nodes of mesh <code>m1</code>. The size of vector <code>u2</code> is deduced from the mesh <code>m2</code></dd></dl>
+<p>The program interpolates (piecewise linear) first the vector on a finer structured grid. Then the values on the new mesh nodes are computed.</p>
+<dl class="section remark"><dt>Remarks</dt><dd>For efficiency the number of grid cells must be large enough so that interpolation provides efficient accuracy</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u1</td><td>Input vector of nodal values defined on first mesh. This vector instance must contain <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">u2</td><td>Output vector of nodal values defined on second mesh. This vector instance must contain <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nx</td><td>Number of cells in the <code>x</code>-direction in the fine structured grid </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ny</td><td>Number of cells in the <code>y</code>-direction in the fine structured grid The default value of <code>ny</code> is <code>0</code>, i.e. a 1-D grid </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nz</td><td>Number of cells in the <code>z</code>-direction in the fine structured grid The default value of <code>nz</code> is <code>0</code>, i.e. a 1-D or 2-D grid </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Label of degree of freedom of vector <code>u</code>. Only this dof is considered. [Default: <code>1</code>]</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section note"><dt>Note</dt><dd>The input vector <code>u1</code> is a one degree of freedom per node vector, i.e. its size must be equal (or greater than) the total number of nodes of mesh <code>m1</code>. The size of vector <code>u2</code> is deduced from the mesh <code>m2</code> </dd></dl>
 
 </div>

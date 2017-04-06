@@ -229,6 +229,7 @@ var group__Util =
     [ "Dot", "group__Util.html#gabf958d091d1d938bb714e296b0895237", null ],
     [ "Dot", "group__Util.html#ga34568b34b56830083fb67b1fa24356d6", null ],
     [ "Dot", "group__Util.html#ga40e3a890d86d09f82f0fe3c1f4dcd886", null ],
+    [ "exprep", "group__Util.html#ga491e375d2e6242002ab45478351b4040", null ],
     [ "Assign", "group__Util.html#ga95c3924a3fe4285f2cb621e078972ffb", null ],
     [ "Clear", "group__Util.html#gabfacec3331ff08b7886dc681e1adf816", null ],
     [ "Clear", "group__Util.html#ga7808353adb143c4fe7564aecda624f47", null ],

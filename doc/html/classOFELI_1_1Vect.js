@@ -75,7 +75,6 @@ var classOFELI_1_1Vect =
     [ "getSCurl", "classOFELI_1_1Vect.html#a6e14e1aee9a896c97889af582b3dd912", null ],
     [ "getDivergence", "classOFELI_1_1Vect.html#a2e49c4ac4b5a80dd3598d3abc4faaca3", null ],
     [ "getAverage", "classOFELI_1_1Vect.html#ad8791476a0ae8aa57721eb93628dbb4c", null ],
-    [ "save", "classOFELI_1_1Vect.html#acf5b616d6a2c06e4e736f1ce064f77c3", null ],
     [ "MultAdd", "classOFELI_1_1Vect.html#ad0f90653534fc8b2f68aee497de6ca0a", null ],
     [ "Axpy", "classOFELI_1_1Vect.html#ad549cf0857fc340838eec060fec2d675", null ],
     [ "set", "classOFELI_1_1Vect.html#ab2de1f5bbeb4e8d838636f9defdcdb4a", null ],

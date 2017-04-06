@@ -201,6 +201,7 @@ var group__Solver =
     [ "GMRes", "group__Solver.html#ga09f27d5e80a346625e5ff7e54f1f45df", null ],
     [ "GS", "group__Solver.html#ga8dcd7991586a9eb1badcff25e0f291d2", null ],
     [ "Jacobi", "group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24", null ],
+    [ "operator<<", "group__Solver.html#ga2d412d67f3804d00223120371bcdfa48", null ],
     [ "operator<<", "group__Solver.html#ga3f1c03ea316fa554006a28910fbe47c0", null ],
     [ "Richardson", "group__Solver.html#gac3e56edcd67f3f8eddb9717c36c4157f", null ],
     [ "Schur", "group__Solver.html#ga86daf449b352504b085c354af030b1c2", null ],

@@ -1149,6 +1149,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:gaacbbe150d69a1246cb76f24419cae7ac"><td class="memItemLeft" align="right" valign="top">T_ &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#gaacbbe150d69a1246cb76f24419cae7ac">operator()</a> (size_t i, size_t j)</td></tr>
 <tr class="memdesc:gaacbbe150d69a1246cb76f24419cae7ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator <code>()</code> (Non constant version).  <a href="#gaacbbe150d69a1246cb76f24419cae7ac">More...</a><br /></td></tr>
 <tr class="separator:gaacbbe150d69a1246cb76f24419cae7ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2de435bdd5a859f29062d553ff8993c5"><td class="memItemLeft" align="right" valign="top">DSMatrix &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga2de435bdd5a859f29062d553ff8993c5">operator+=</a> (const T_ &amp;x)</td></tr>
+<tr class="memdesc:ga2de435bdd5a859f29062d553ff8993c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator +=.  <a href="#ga2de435bdd5a859f29062d553ff8993c5">More...</a><br /></td></tr>
+<tr class="separator:ga2de435bdd5a859f29062d553ff8993c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9a33a5b3ae098ebcbac4751c57e12ba"><td class="memItemLeft" align="right" valign="top">DSMatrix &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#gae9a33a5b3ae098ebcbac4751c57e12ba">operator-=</a> (const T_ &amp;x)</td></tr>
+<tr class="memdesc:gae9a33a5b3ae098ebcbac4751c57e12ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator -=.  <a href="#gae9a33a5b3ae098ebcbac4751c57e12ba">More...</a><br /></td></tr>
+<tr class="separator:gae9a33a5b3ae098ebcbac4751c57e12ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad8745bcf8d77744b35dfc21729390781"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad8745bcf8d77744b35dfc21729390781"></a>
 DSMatrix&lt; T_ &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#gad8745bcf8d77744b35dfc21729390781">operator=</a> (const DSMatrix&lt; T_ &gt; &amp;m)</td></tr>
 <tr class="memdesc:gad8745bcf8d77744b35dfc21729390781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator <code>=</code> Copy matrix <code>m</code> to current matrix instance. <br /></td></tr>
@@ -4490,8 +4496,47 @@ Note that this function modifies the matrix contents is a factorization is perfo
   </table>
   </dd>
 </dl>
+<dl class="section warning"><dt>Warning</dt><dd>To modify a value of an entry of the matrix it is safer not to modify both lower and upper triangles. Otherwise, wrong values will be assigned. If not sure, use the member functions set or add. </dd></dl>
 
 <p>Implements <a class="el" href="classOFELI_1_1Matrix.html#a98a5eea24da5bcb89516b2bd80a652d2">Matrix&lt; T_ &gt;</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga2de435bdd5a859f29062d553ff8993c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DSMatrix&lt; T_ &gt; &amp; operator+= </td>
+          <td>(</td>
+          <td class="paramtype">const T_ &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Operator +=. </p>
+<p>Add constant value <code>x</code> to all matrix entries. </p>
+
+</div>
+</div>
+<a class="anchor" id="gae9a33a5b3ae098ebcbac4751c57e12ba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DSMatrix&lt; T_ &gt; &amp; operator-= </td>
+          <td>(</td>
+          <td class="paramtype">const T_ &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Operator -=. </p>
+<p>Subtract constant value <code>x</code> from to all matrix entries. </p>
 
 </div>
 </div>
@@ -6655,6 +6700,7 @@ Note that this function modifies the matrix contents is a factorization is perfo
   </table>
   </dd>
 </dl>
+<dl class="section warning"><dt>Warning</dt><dd>To modify a value of an entry of the matrix it is safer not to modify both lower and upper triangles. Otherwise, wrong values will be assigned. If not sure, use the member functions set or add. </dd></dl>
 
 <p>Implements <a class="el" href="classOFELI_1_1Matrix.html#a98a5eea24da5bcb89516b2bd80a652d2">Matrix&lt; T_ &gt;</a>.</p>
 

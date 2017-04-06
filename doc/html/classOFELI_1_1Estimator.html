@@ -89,9 +89,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#abb232095ed221e3cc2b045ff79053b51">Estimator</a> ()</td></tr>
 <tr class="memdesc:abb232095ed221e3cc2b045ff79053b51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
 <tr class="separator:abb232095ed221e3cc2b045ff79053b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6082c5873ca1c8b6cf5b3b1482934534"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a6082c5873ca1c8b6cf5b3b1482934534">Estimator</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;e)</td></tr>
-<tr class="memdesc:a6082c5873ca1c8b6cf5b3b1482934534"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using finite element mesh and elementwise estimator.  <a href="#a6082c5873ca1c8b6cf5b3b1482934534">More...</a><br /></td></tr>
-<tr class="separator:a6082c5873ca1c8b6cf5b3b1482934534"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac75af9393b8c8d81788583aac7f1957c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#ac75af9393b8c8d81788583aac7f1957c">Estimator</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m)</td></tr>
+<tr class="memdesc:ac75af9393b8c8d81788583aac7f1957c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using finite element mesh.  <a href="#ac75af9393b8c8d81788583aac7f1957c">More...</a><br /></td></tr>
+<tr class="separator:ac75af9393b8c8d81788583aac7f1957c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66fefe296cc283f479648d938ba05052"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66fefe296cc283f479648d938ba05052"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a66fefe296cc283f479648d938ba05052">~Estimator</a> ()</td></tr>
 <tr class="memdesc:a66fefe296cc283f479648d938ba05052"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -99,10 +99,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a97ceb23cb630a1d1e445d786bc04edf9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a97ceb23cb630a1d1e445d786bc04edf9">setType</a> (<a class="el" href="classOFELI_1_1Estimator.html#a3d248e8029a03537eb6296f93345f51e">EstimatorType</a> t=<a class="el" href="classOFELI_1_1Estimator.html#a3d248e8029a03537eb6296f93345f51ea7794313b487e60087acd23190b1ef61d">ESTIM_ZZ</a>)</td></tr>
 <tr class="memdesc:a97ceb23cb630a1d1e445d786bc04edf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select type of a posteriori estimator.  <a href="#a97ceb23cb630a1d1e445d786bc04edf9">More...</a><br /></td></tr>
 <tr class="separator:a97ceb23cb630a1d1e445d786bc04edf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca95573e4283df6627347b119e498420"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca95573e4283df6627347b119e498420"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#aca95573e4283df6627347b119e498420">setError</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
-<tr class="memdesc:aca95573e4283df6627347b119e498420"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate error using <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> solution vector <em>u</em>. <br /></td></tr>
-<tr class="separator:aca95573e4283df6627347b119e498420"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6fe5bb0ec25b8e2fec7331f7ea33afb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#af6fe5bb0ec25b8e2fec7331f7ea33afb">setSolution</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
+<tr class="memdesc:af6fe5bb0ec25b8e2fec7331f7ea33afb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide solution vector in order to determine error index.  <a href="#af6fe5bb0ec25b8e2fec7331f7ea33afb">More...</a><br /></td></tr>
+<tr class="separator:af6fe5bb0ec25b8e2fec7331f7ea33afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52f5df03e050b74f199dc6e3b6b47c72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a52f5df03e050b74f199dc6e3b6b47c72">getElementWiseIndex</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;e)</td></tr>
+<tr class="memdesc:a52f5df03e050b74f199dc6e3b6b47c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get vector containing elementwise error index.  <a href="#a52f5df03e050b74f199dc6e3b6b47c72">More...</a><br /></td></tr>
+<tr class="separator:a52f5df03e050b74f199dc6e3b6b47c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a339fd80b6f16ed203804fd6123a568b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a339fd80b6f16ed203804fd6123a568b1"></a>
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Estimator.html#a339fd80b6f16ed203804fd6123a568b1">getAverage</a> () const </td></tr>
 <tr class="memdesc:a339fd80b6f16ed203804fd6123a568b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return averaged error. <br /></td></tr>
@@ -138,7 +140,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a6082c5873ca1c8b6cf5b3b1482934534"></a>
+<a class="anchor" id="ac75af9393b8c8d81788583aac7f1957c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -146,27 +148,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname"><a class="el" href="classOFELI_1_1Estimator.html">Estimator</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>m</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>e</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor using finite element mesh and elementwise estimator. </p>
+<p>Constructor using finite element mesh. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">e</td><td>Vector that contains once the member function setError is invoked a posteriori estimator at each element </td></tr>
   </table>
   </dd>
 </dl>
@@ -198,6 +189,54 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <code>ESTIM_ND_JUMP</code>: An estimator based on the jump of normal derivatives of the solution across mesh sides </li>
 </ul>
 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af6fe5bb0ec25b8e2fec7331f7ea33afb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setSolution </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provide solution vector in order to determine error index. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Vector containing solution at mesh nodes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a52f5df03e050b74f199dc6e3b6b47c72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void getElementWiseIndex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get vector containing elementwise error index. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">e</td><td>Vector that contains once the member function setError is invoked a posteriori estimator at each element </td></tr>
   </table>
   </dd>
 </dl>
