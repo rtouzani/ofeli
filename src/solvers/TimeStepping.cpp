@@ -35,7 +35,7 @@ using std::cout;
 namespace OFELI {
 
 TimeStepping::TSPtr TimeStepping::TS [] = {
-   NULL,                                    // Stationary problem (not used)
+   &TimeStepping::solveStationary,          // Stationary problem
    &TimeStepping::solveForwardEuler,        // Forward Euler
    &TimeStepping::solveBackwardEuler,       // Backward Euler
    &TimeStepping::solveCrankNicolson,       // Crank-Nicolson
@@ -49,7 +49,7 @@ TimeStepping::TSPtr TimeStepping::TS [] = {
 };
 
 TimeStepping::ASPtr TimeStepping::AS [] = {
-   NULL,
+   &TimeStepping::AssembleStationary,  
    &TimeStepping::AssembleForwardEuler,  
    &TimeStepping::AssembleBackwardEuler,
    &TimeStepping::AssembleCrankNicolson,
@@ -63,7 +63,7 @@ TimeStepping::ASPtr TimeStepping::AS [] = {
 };
 
 TimeStepping::ASSPtr TimeStepping::ASS [] = {
-   NULL,
+   &TimeStepping::SAssembleStationary,  
    &TimeStepping::SAssembleForwardEuler,  
    &TimeStepping::SAssembleBackwardEuler,
    &TimeStepping::SAssembleCrankNicolson,
@@ -77,7 +77,7 @@ TimeStepping::ASSPtr TimeStepping::ASS [] = {
 };
 
 TimeStepping::RHSPtr TimeStepping::RHS [] = {
-   NULL,
+   &TimeStepping::setRHS_Stationary,
    &TimeStepping::setRHS_ForwardEuler,
    &TimeStepping::setRHS_BackwardEuler,
    &TimeStepping::setRHS_CrankNicolson,
@@ -91,7 +91,7 @@ TimeStepping::RHSPtr TimeStepping::RHS [] = {
 };
 
 TimeStepping::PreSolvePtr TimeStepping::PS [] = {
-   NULL,
+   &TimeStepping::PreSolve_Stationary,
    &TimeStepping::PreSolve_ForwardEuler,
    &TimeStepping::PreSolve_BackwardEuler,
    &TimeStepping::PreSolve_CrankNicolson,
@@ -106,10 +106,10 @@ TimeStepping::PreSolvePtr TimeStepping::PS [] = {
 
 
 TimeStepping::TimeStepping() :
-          _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1), _non_linear(0),
-          _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
-          _regex(false), _explicit(false), _set_bc(false), _A(NULL), _time_step(0.1),
-	  _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
+              _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1), _non_linear(0),
+              _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
+              _regex(false), _explicit(false), _set_bc(false), _A(NULL), _time_step(0.1),
+              _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
 {
 }
 
@@ -120,7 +120,7 @@ TimeStepping::TimeStepping(TimeScheme s,
               _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1), _non_linear(0),
               _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
               _explicit(false), _set_bc(false), _A(NULL),
-	      _time_step(0.1), _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
+              _time_step(0.1), _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
 {
    set(s,time_step,final_time);
 }
@@ -313,8 +313,8 @@ real_t TimeStepping::runOneTimeStep()
             (this->*_presolve)();
             _theEqua->build(*this);
             (this->*_solve)();
-	    it++;
-	 }
+            it++;
+	      }
       }
    }
    else {
@@ -346,6 +346,17 @@ void TimeStepping::run(bool opt)
       runOneTimeStep();
       theTimeStep = _time_step;
    }
+}
+
+
+void TimeStepping::solveStationary()
+{
+   _ls.setMatrix(_A);
+   _ls.setRHS(_b);
+   _ls.setSolution(_vv);
+   _ls.solve(_s,_p);
+   insertBC(_vv,_v);
+   *_w = _u = _v;
 }
 
 
@@ -529,6 +540,26 @@ void TimeStepping::solveBDF2()
       insertBC(_vv,*_w);
       _u = _v; _v = *_w;
    }
+}
+
+
+void TimeStepping::AssembleStationary(const Element& el,
+                                      real_t*        eb,
+                                      real_t*        eA0,
+                                      real_t*        eA1,
+                                      real_t*        eA2)
+{
+   if (_set_bc)
+      update_bc(el,Vect<real_t>(&el,*_bc),eA0,eb);
+   element_assembly(el,eA0,eb,_A,_b);
+}
+
+
+void TimeStepping::SAssembleStationary(const Side& sd,
+                                       real_t*     sb,
+                                       real_t*     sA)
+{
+   element_assembly(sd,sA,sb,_A,_b);
 }
 
 
@@ -1037,6 +1068,12 @@ void TimeStepping::SAssembleBDF2(const Side& sd,
 }
 
 
+Vect<real_t>& TimeStepping::setRHS_Stationary()
+{
+   return *_f2;
+}
+
+
 Vect<real_t>& TimeStepping::setRHS_ForwardEuler()
 {
    return _f1;
@@ -1148,10 +1185,10 @@ void TimeStepping::insertBC0(const Vect<real_t>& b,
 ostream& operator<<(ostream&            s,
                     const TimeStepping& ts)
 {
-   s << "\nTIME STEPPING FOR A TIME DEPENDENT PROBLEM\n\n";
-   s << "Number of equations: \t\t" << ts._nb_eq << endl;
    string scheme;
-   if (ts._sc==FORWARD_EULER)
+   if (ts._sc==STATIONARY)
+      scheme = "Stationary";
+   else if (ts._sc==FORWARD_EULER)
       scheme = "Forward Euler";
    else if (ts._sc==BACKWARD_EULER)
       scheme = "Backward Euler";
@@ -1173,11 +1210,19 @@ ostream& operator<<(ostream&            s,
       scheme = "BDF 2";
    else
       ;
-   s << "Time integration scheme: \t" << scheme << endl;
-   s << "Final time: \t\t\t" << ts._final_time << endl;
-   s << "First time step value:\t\t" << ts._time_step0 << endl;
-   s << "Final time step value:\t\t" << ts._time_step << endl;
-   s << "Number of time steps:\t\t" << ts._step << endl;
+   if (ts._sc==STATIONARY) {
+      s << "STATIONARY ANALYSIS." << endl;
+      s << "Number of equations: \t\t" << ts._nb_eq << endl;
+   }
+   else {
+      s << "\nTIME STEPPING FOR A TIME DEPENDENT PROBLEM\n\n";
+      s << "Number of equations: \t\t" << ts._nb_eq << endl;
+      s << "Time integration scheme: \t" << scheme << endl;
+      s << "Final time: \t\t\t" << ts._final_time << endl;
+      s << "First time step value:\t\t" << ts._time_step0 << endl;
+      s << "Final time step value:\t\t" << ts._time_step << endl;
+      s << "Number of time steps:\t\t" << ts._step << endl;
+   }
    return s;
 }
 

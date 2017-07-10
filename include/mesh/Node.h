@@ -94,7 +94,7 @@ class Node
  *  @param [in] label Label of node
  *  @param [in] x %Node coordinates
  */
-    Node(      size_t         label,
+    Node(size_t               label,
          const Point<real_t>& x);
 
 /// \brief Copy Constructor
@@ -135,8 +135,8 @@ class Node
  *  @param [in] dof Degree of Freedom for which code is assigned [Default: 1]
  */
     void setCode(const string& exp,
-                       int     code,
-                       size_t  dof=1);
+                 int           code,
+                 size_t        dof=1);
 
 /** \brief Set i-th coordinate.
  *  @param [in] i Coordinate index (1..3)
@@ -237,15 +237,15 @@ class Node
     void setLevel(int level) { _level = level; }
 
 /** \brief Return node level
- *  Node level decreases when element is refined (starting from 0).
+ *  \details Node level decreases when element is refined (starting from 0).
  *  If the level is 0, then the element has no parents
  */
     int getLevel() const { return _level; }
 
     friend class Mesh;
     friend void Refine(Mesh &in_mesh, Mesh &out_mesh);
-    friend ostream& operator<<(      ostream& s,
-                               const Mesh&    ms);
+    friend ostream& operator<<(ostream&    s,
+                               const Mesh& ms);
 
  private:
 

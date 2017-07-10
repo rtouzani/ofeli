@@ -121,8 +121,8 @@ class WaterPorous2D : public Equa_Porous<real_t,3,3,2,2>
  private:
     void set(const Element *el);
     void set(const Side *sd);
-    size_t _nb_nodes, _nb_elements, _max_iter, _verb;
-    real_t _Kxe, _Kye, _toler, _area, _length;
+    size_t _nb_nodes, _nb_elements, _verb;
+    real_t _Kxe, _Kye, _area, _length;
 };
 
 /*! @} End of Doxygen Groups */

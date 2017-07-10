@@ -77,7 +77,7 @@ XMLParser::XMLParser(string file,
                      int    format)
           : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
             _set_domain(false), _prescription_opened(false), _type(type), _verb(0),
-	    _format(format), _file(file), _nb_dof(1), _scan(0), _dof_support(NODE_FIELD),
+            _format(format), _file(file), _nb_dof(1), _scan(0), _dof_support(NODE_FIELD),
             _nb_mat(0), _theMesh(&ms), _v(NULL), _parser(NULL), _ipf(NULL)
 {
    _nb_nodes = _theMesh->getNbNodes();
@@ -93,12 +93,12 @@ XMLParser::XMLParser(string file,
 
 XMLParser::XMLParser(const XMLParser& p)
           : _is_opened(p._is_opened), _is_closed(p._is_closed), _set_mesh(p._set_mesh),
-	    _set_field(p._set_field), _set_file(p._set_file), _set_domain(p._set_domain),
-	    _time(p._time), _sought_time(p._sought_time), _type(p._type), _verb(p._verb),
-	    _format(p._format), _file(p._file), _mesh_file(p._mesh_file),
-	    _sought_name(p._sought_name), _tag_name(p._tag_name), _xml(p._xml), _mat(p._mat),
+            _set_field(p._set_field), _set_file(p._set_file), _set_domain(p._set_domain),
+            _time(p._time), _sought_time(p._sought_time), _type(p._type), _verb(p._verb),
+            _format(p._format), _file(p._file), _mesh_file(p._mesh_file),
+            _sought_name(p._sought_name), _tag_name(p._tag_name), _xml(p._xml), _mat(p._mat),
             _nb_dof(p._nb_dof), _dim(p._dim), _nb_nodes(p._nb_nodes), _nb_elements(p._nb_elements),
-	    _nb_sides(p._nb_sides), _nb_edges(p._nb_edges), _scan(p._scan), _nb_el_nodes(p._nb_el_nodes),
+            _nb_sides(p._nb_sides), _nb_edges(p._nb_edges), _scan(p._scan), _nb_el_nodes(p._nb_el_nodes),
             _nb_sd_nodes(p._nb_sd_nodes), _dof_support(p._dof_support),_theMesh(p._theMesh),
             _v(p._v), _parser(p._parser), _ipf(p._ipf)
 { }
@@ -462,7 +462,8 @@ int XMLParser::get(Mesh&         ms,
 
 
 int XMLParser::get(Mesh&                    ms,
-                   vector<vector<real_t> >& v)
+                   vector<vector<real_t> >& v,
+                   string&                  name)
 {
    _set_mesh = _set_field = true;
    _theMesh = &ms;
@@ -477,9 +478,9 @@ int XMLParser::get(Mesh&                    ms,
    _type = FIELD;
    try {
       if (parse(_xml)) {
-         for (size_t i=0; i<ms.getNbNodes(); i++)
          if (_verb>0)
             cout << "Parse done" << endl;
+         name = _name;
          return 0;
       }
       else

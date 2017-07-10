@@ -1018,7 +1018,8 @@ void saveTecplot(string input_file,
 
    vector<vector<real_t> > field(nb_time);
    IOField io(mesh_file,input_file,mesh,IOField::IN);
-   io.get(mesh,field);
+   string name;
+   io.get(mesh,field,name);
    size_t nb_dof = io.getNbDOF();
    string shape;
    if (mesh.getShape()==LINE)
@@ -1117,7 +1118,8 @@ void saveVTK(string input_file,
    for (size_t i=0; i<nb_time; i++)
       field[i].resize(nb_dof*mesh.getNbNodes());
    IOField io(mesh_file,input_file,mesh,IOField::IN);
-   io.get(mesh,field);
+   string name;
+   io.get(mesh,field,name);
 
    bool scalar = true;
    if (nb_dof>1)
@@ -1238,12 +1240,13 @@ void saveGmsh(string input_file,
 
    IOField io(mesh_file,input_file,mesh,IOField::IN);
    vector<vector<real_t> > field(nb_time);
-   io.get(mesh,field);
+   string name;
+   io.get(mesh,field,name);
    tt = 'S';
    if (nb_dof == mesh.getDim())
       tt = 'V';
 
-   pf << "View \"u\" {" << endl;
+   pf << "View \"" << name << "\" {" << endl;
    size_t j;
    switch (mesh.getDim()) {
 
@@ -1270,7 +1273,7 @@ void saveGmsh(string input_file,
                pf << "Q";
             pf << "(";
             for (k=1; k<nb_en; k++)
-	       pf << The_element(k)->getX() << "," << The_element(k)->getY() << ",0.,";
+               pf << The_element(k)->getX() << "," << The_element(k)->getY() << ",0.,";
             pf << The_element(nb_en)->getX() << "," << The_element(nb_en)->getY() 
                << ",0.) {" << endl;
             for (i=0; i<nb_time; i++) {
@@ -1302,7 +1305,7 @@ void saveGmsh(string input_file,
                pf << "Y";
             pf << "(";
             for (k=1; k<=nb_en-1; k++)
-	       pf << The_element(k)->getX() << ","
+               pf << The_element(k)->getX() << ","
                   << The_element(k)->getY() << ","
                   << The_element(k)->getZ() << ",";
             pf << The_element(nb_en)->getX() << ","

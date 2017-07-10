@@ -588,7 +588,7 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Side* sd)
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Element*  el,
                                            const Vect<T_>& u,
-                                                 real_t    time)
+                                           real_t          time)
 {
    _label = el->n();
    _time = time;
@@ -598,7 +598,7 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Element*  el,
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Side*     sd,
                                            const Vect<T_>& u,
-                                                 real_t    time)
+                                           real_t          time)
 {
    _label = sd->n();
    _time = time;
@@ -884,7 +884,7 @@ size_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::getNbEq() const
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Element&  el,
                                                    const Vect<T_>& x,
-                                                         Vect<T_>& b)
+                                                   Vect<T_>&       b)
 {
    size_t ii=0, jj=0, nb_dof=NEE_/NEN_, ik, jl;
    for (size_t i=1; i<=NEN_; ++i) {
@@ -907,7 +907,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Element&  el,
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Side&     sd,
                                                    const Vect<T_>& x,
-                                                         Vect<T_>& b)
+                                                   Vect<T_>&       b)
 {
    size_t ii=0, jj=0, nb_dof=NSE_/NSN_, ik, jl;
    for (size_t i=1; i<=NSN_; ++i) {

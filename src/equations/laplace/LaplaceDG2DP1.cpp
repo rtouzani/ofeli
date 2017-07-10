@@ -161,11 +161,11 @@ void LaplaceDG2DP1::build()
 //       Dirichlet boundary condition sides
          if ((*_theSide)(1)->getCode(1)>0 && (*_theSide)(2)->getCode(1)>0) {
             real_t g = c*((*_dbc)(_is(1))+(*_dbc)(_is(2)));
-            for (size_t i=1; i<=3; i++) {
+            for (size_t i=1; i<=2; i++) {
                size_t ii = _ls1(i);
                _b(II(ii)) += _eps*_F1(ii)*g + 0.5*_z(ii)*_sigma*(*_dbc)(_is(i));
                _A(II(ii),II(ii)) += 0.5*_sigma*_z(ii);
-               for (size_t j=1; j<=3; j++) {
+               for (size_t j=1; j<=2; j++) {
                   size_t jj = _ls1(j);
                   _A(II(ii),II(jj)) -= c*(_F1(jj)*_z(ii)-_eps*_F1(ii)*_z(jj));
                }
@@ -191,7 +191,7 @@ int LaplaceDG2DP1::run()
 
 int LaplaceDG2DP1::solve()
 {
-   LinearSolver<double> ls(5000,1.e-8,1);
+   LinearSolver<double> ls(1000,1.e-6,1);
    int nb_it = 0;
    if (_eps==-1)
       nb_it = ls.solve(_A,_b,*_u,CG_SOLVER,DILU_PREC);

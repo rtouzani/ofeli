@@ -61,7 +61,7 @@ Side::Side()
 }
 
 
-Side::Side(      size_t  label,
+Side::Side(size_t        label,
            const string& shape)
 {
    try {
@@ -146,8 +146,8 @@ void Side::setNode(size_t i,
 
 
 void Side::setCode(const string& exp,
-                         int     code,
-                         size_t  dof)
+                   int           code,
+                   size_t        dof)
 {
    PARSE(exp.c_str(),"x,y,z,t");
    real_t d[3];
@@ -271,9 +271,8 @@ real_t Side::getMeasure() const
    }
 
    else if (_shape==TRIANGLE) {
-      x[0] = _node[0]->getCoord();
-      x[1] = _node[1]->getCoord();
-      x[2] = _node[2]->getCoord();
+      for (size_t i=0; i<3; i++)
+         x[i] = _node[i]->getCoord();
       real_t a = x[0].y*(x[1].z-x[2].z) - x[1].y*(x[0].z-x[2].z) + x[2].y*(x[0].z-x[1].z);
       real_t b = x[0].z*(x[1].x-x[2].x) - x[1].z*(x[0].x-x[2].x) + x[2].z*(x[0].x-x[1].x);
       real_t c = x[0].x*(x[1].y-x[2].y) - x[1].x*(x[0].y-x[2].y) + x[2].x*(x[0].y-x[1].y);
@@ -291,10 +290,8 @@ real_t Side::getMeasure() const
    }
 
    else if (_shape==QUADRILATERAL) {
-      x[0] = _node[0]->getCoord();
-      x[1] = _node[1]->getCoord();
-      x[2] = _node[2]->getCoord();
-      x[3] = _node[3]->getCoord();
+      for (size_t i=0; i<4; i++)
+         x[i] = _node[i]->getCoord();
       Point<real_t> dshl[4];
       dshl[0].x = dshl[3].x = dshl[0].y = dshl[1].y = -0.25; 
       dshl[1].x = dshl[2].x = dshl[3].y = dshl[2].y =  0.25;
@@ -313,7 +310,7 @@ real_t Side::getMeasure() const
       CATCH("Side");
       try {
          if (m<0)
-            THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + "is negative.");
+            THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + " is negative.");
       }
       CATCH("Side");
    }
@@ -424,8 +421,8 @@ int Side::isReferenced()
 }
 
 
-ostream& operator<<(      ostream& s,
-                    const Side&    sd)
+ostream& operator<<(ostream&    s,
+                    const Side& sd)
 {
    s << "\n Side: " << setw(5) << sd.n();
    s << " **  " << sd.getNbDOF() << " d.o.f.  ** Codes ";

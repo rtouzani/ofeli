@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-      Definition of class Hexa8 for shape functions of 8-Node hexahedral
+        Definition of class Hexa8 for shape functions of 8-Node hexahedral
                             element in three dimensions
 
   ==============================================================================*/
@@ -54,14 +54,14 @@ class Side;
 
 /*! \class Hexa8
  *  \ingroup Shape
- *  \brief Defines a three-dimensional 8-node hexahedral finite element using Q1-isoparametric interpolation.
+ *  \brief Defines a three-dimensional 8-node hexahedral finite element using Q1-isoparametric
+ *  interpolation.
  *
- *  \details The reference element is the cube <tt>[-1,1]*[-1,1]*[-1,1]</tt>.
+ *  \details The reference element is the cube <tt>[-1,1]x[-1,1]x[-1,1]</tt>.
  *  The user must take care to the fact
  *  that determinant of jacobian and other quantities depend on the point in the
  *  reference element where they are calculated. For this, before any utilization of
  *  shape functions or jacobian, function \b getLocal(s) must be invoked.
- *
  */
 
 class Hexa8 : public FEShape
@@ -92,12 +92,18 @@ class Hexa8 : public FEShape
  */
     Point<real_t> DSh(size_t i) { return _dsh[i-1]; }
 
-/// \brief Calculate shape function derivatives and integration weights
-/// for 1-point Gauss rule
+/** \brief Calculate shape function derivatives and integration weights
+ *  for 1-point Gauss rule
+ *  @param [in] dsh Vector of shape function derivatives at the Gauss point
+ *  @param [in] w Weight of integration formula at Gauss point
+ */
     void atGauss1(LocalVect<Point<real_t>,8>& dsh, real_t& w);
 
-/// \brief Calculate shape function derivatives and integration weights
-/// for 2x2x2-point Gauss rule
+/** \brief Calculate shape function derivatives and integration weights
+ *  for 2x2x2-point Gauss rule
+ *  @param [in] dsh Vector of shape function derivatives at the Gauss points
+ *  @param [in] w Weights of integration formula at Gauss points
+ */
     void atGauss2(LocalMatrix<Point<real_t>,8,8>& dsh,
                   LocalVect<real_t,8>&            w);
 

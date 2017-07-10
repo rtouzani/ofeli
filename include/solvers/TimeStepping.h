@@ -317,6 +317,7 @@ class TimeStepping
    PreSolvePtr _presolve;
 
 // Functions to solve the linear system issued from time integration schemes
+   void solveStationary();
    void solveForwardEuler();
    void solveBackwardEuler();
    void solveCrankNicolson();
@@ -329,6 +330,14 @@ class TimeStepping
    void solveBDF2();
 
 // Functions to assemble the linear system for time integration schemes
+   void AssembleStationary(const Element& el,
+                           real_t*        eb,
+                           real_t*        eA0,
+                           real_t*        eA1,
+                           real_t*        eA2=NULL);
+   void SAssembleStationary(const Side& sd,
+                            real_t*     sb,
+                            real_t*     sA=NULL);
    void AssembleForwardEuler(const Element& el,
                              real_t*        eb,
                              real_t*        eA0,
@@ -411,6 +420,7 @@ class TimeStepping
                       real_t*     sA=NULL);
 
 // Functions to return the right-hand side for each time integration scheme
+   Vect<real_t>& setRHS_Stationary();
    Vect<real_t>& setRHS_ForwardEuler();
    Vect<real_t>& setRHS_BackwardEuler();
    Vect<real_t>& setRHS_CrankNicolson();
@@ -423,6 +433,7 @@ class TimeStepping
    Vect<real_t>& setRHS_BDF2();
 
 // Functions to compute a predictor
+   void PreSolve_Stationary() { }
    void PreSolve_ForwardEuler() { }
    void PreSolve_BackwardEuler() { }
    void PreSolve_CrankNicolson() { }
@@ -442,7 +453,7 @@ class TimeStepping
 /// \fn ostream & operator<<(ostream& s, const TimeStepping &ts)
 /// \brief Output differential system information
 /// \ingroup Solver
-    ostream & operator<<(      ostream&      s,
+    ostream & operator<<(ostream&            s,
                          const TimeStepping& ts);
 
 /*! @} End of Doxygen Groups */

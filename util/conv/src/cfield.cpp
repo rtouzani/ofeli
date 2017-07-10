@@ -69,17 +69,7 @@ int main(int argc, char **argv)
    string cc;
    inf >> cc;
    inf.close();
-
-//----------
-// I N P U T
-//----------
-
    Mesh mesh(mesh_file);
-   Vect<double> v(mesh);
-
-//------------
-// O U T P U T
-//------------
 
 // Gnuplot File
    if (output_format=="gpl") {
@@ -110,18 +100,18 @@ int main(int argc, char **argv)
 
 
 void parse(int     argc,
-	   char**  argv,
-	   string& mesh_file,
-	   string& input_file, 
+           char**  argv,
+           string& mesh_file,
+           string& input_file, 
            string& output_file,
-	   string& output_format)
+           string& output_format)
 {
    const char help[]=
         "Available output formats:"
-        "\n   gmsh  : Gmsh Postprocessing File (*.pos)"
-        "\n   gpl   : Gnuplot File (*_gnuplot.dat)"
-        "\n   tec   : Tecplot file (*_tecplot.dat)"
-        "\n   vtk   : vtk file (*.vtk)";
+        "\n   gmsh: Gmsh Postprocessing File (*.pos)"
+        "\n   gpl : Gnuplot File (*_gnuplot.dat)"
+        "\n   tec : Tecplot file (*_tecplot.dat)"
+        "\n   vtk : vtk file (*.vtk)";
 
    try {
       CmdLine cmd("cfield",' ',"2.2");

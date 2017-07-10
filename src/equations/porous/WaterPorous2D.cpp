@@ -40,12 +40,9 @@ namespace OFELI {
  */
 
 WaterPorous2D::WaterPorous2D()
-              : _nb_nodes(0), _nb_elements(0), _max_iter(50), _verb(1), _toler(1.e-5)
+              : _nb_nodes(0), _nb_elements(0), _verb(1)
 {
    _nb_dof = 1;
-   _verb = 1;
-   _max_iter = 50;
-   _toler = 1.e-5;
    _cw = 1.e-6;
    _Kx = _Ky = 1.;
    _mu = 1.;
@@ -54,14 +51,11 @@ WaterPorous2D::WaterPorous2D()
 
 WaterPorous2D::WaterPorous2D(Mesh&  ms,
                              size_t verb)
-              : _nb_nodes(ms.getNbNodes()), _nb_elements(ms.getNbElements()), _max_iter(50), _verb(verb)
+              : _nb_nodes(ms.getNbNodes()), _nb_elements(ms.getNbElements()),
+                _verb(verb)
 {
    _theMesh = &ms;
    _nb_dof = 1;
-   _nb_nodes = ms.getNbNodes();
-   _nb_elements = ms.getNbElements();
-   _max_iter = 50;
-   _toler = 1.e-6;
    _cw = 1.e-6;
    _phi.setSize(_nb_nodes);
    _phi = 1.;
@@ -128,10 +122,12 @@ void WaterPorous2D::Mass()
 void WaterPorous2D::Mobility()
 {
    real_t c=_area*_Mw*_density;
+   c=_area;
    for (size_t i=1; i<=3; i++) {
-      for (size_t j=1; j<=3; j++)
+      for (size_t j=1; j<=3; j++) {
          eA0(i,j) += c*(_Kxe*_dSh(i).x*_dSh(j).x +
                         _Kye*_dSh(i).y*_dSh(j).y);
+      }
    }
 }
 

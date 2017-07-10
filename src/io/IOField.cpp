@@ -318,7 +318,7 @@ void IOField::put(const Vect<real_t>& v)
                else if (v.getDOFType()==SIDE_FIELD)
                   *_of << "<Field name=\"" << v.getName() << "\" type=\"Side\"";
                *_of << " nb_dof=\"" << v.getNbDOF() << "\">" << endl;
-	    }
+            }
             _field_opened = true;
          }
          if (_compact)
@@ -447,6 +447,16 @@ int IOField::get(DSMatrix<real_t>& A,
    for (size_t i=1; i<=A.getNbRows(); i++)
       for (size_t j=1; j<=i; j++)
          A(i,j) = v(i,j);
+   return ret;
+}
+
+
+int IOField::get(Mesh&                    ms,
+                 vector<vector<real_t> >& v,
+                 string&                  name)
+{
+   int ret = XMLParser::get(ms,v,name);
+   _field_name = name;
    return ret;
 }
 

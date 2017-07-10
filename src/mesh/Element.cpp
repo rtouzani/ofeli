@@ -298,7 +298,7 @@ void Element::Add(Side* sd)
          _nb_sides = 0;
          try {
             THROW_RT("Add(Side *): Shape of side is incompatible with element.");
-	 }
+         }
          CATCH("Element");
          break;
 
@@ -321,7 +321,7 @@ void Element::Add(Side* sd)
          try {
             if (sd->getShape()!=LINE)
                THROW_RT("Add(Side *): Shape of side is incompatible with element.");
-	 }
+         }
          CATCH("Element");
          if ( (nd1==_node[0] && nd2==_node[1]) || (nd1==_node[1] && nd2==_node[0]) )
             _side[0] = sd;
@@ -495,7 +495,7 @@ real_t Element::getMeasure() const
             }
             CATCH("Element");
             break;
-	 }
+         }
 
       case TRIANGLE:
          {
@@ -505,17 +505,17 @@ real_t Element::getMeasure() const
             m = 0.5*((x[1].x-x[0].x)*(x[2].y-x[0].y) - (x[1].y-x[0].y)*(x[2].x-x[0].x));
             try {
                if (m==0)
-                  THROW_RT("getMeasure(): Area of triangle " + itos(_label) + "is null.");
+                  THROW_RT("getMeasure(): Area of triangle " + itos(_label) + " is null.");
             }
             CATCH("Element");
             try {
                if (m<0)
                   THROW_RT("getMeasure(): Area of triangle " + itos(_label) +
-                           "is negative. Triangle is incorrectly oriented.");
+                           " is negative. Triangle is incorrectly oriented.");
             }
             CATCH("Element");
             break;
-	 }
+         }
 
       case TETRAHEDRON:
          {
@@ -549,17 +549,17 @@ real_t Element::getMeasure() const
             m = OFELI_SIXTH*(J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3));
             try {
                if (m==0)
-                  THROW_RT("getMeasure(): Area of tetrahedron " + itos(_label) + "is null.");
+                  THROW_RT("getMeasure(): Area of tetrahedron " + itos(_label) + " is null.");
             }
             CATCH("Element");
             try {
                 if (m<0)
                   THROW_RT("getMeasure(): Area of tetrahedron " + itos(_label) +
-                           "is negative. Tetrahedron is incorrectly oriented.");
+                           " is negative. Tetrahedron is incorrectly oriented.");
             }
             CATCH("Element");
             break;
-	 }
+         }
 
       case QUADRILATERAL:
          {
@@ -579,22 +579,21 @@ real_t Element::getMeasure() const
             m = dxds*dydt - dxdt*dyds;
             try {
                if (m==0)
-                  THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + "is null.");
+                  THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + " is null.");
             }
             CATCH("Element");
             try {
                if (m<0)
                   THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) +
-                           "is negative. Quadrilateral is incorrectly oriented.");
+                           " is negative. Quadrilateral is incorrectly oriented.");
             }
             CATCH("Element");
             break;
-	 }
+         }
 
       case HEXAHEDRON:
          {
-            size_t i, j, k;
-            for (j=0; j<8; j++)
+            for (size_t j=0; j<8; j++)
                x[j] = _node[j]->getCoord();
             dshl[0] = Point<real_t>(-0.125,-0.125,-0.125);
             dshl[1] = Point<real_t>( 0.125,-0.125,-0.125);
@@ -604,18 +603,18 @@ real_t Element::getMeasure() const
             dshl[5] = Point<real_t>( 0.125,-0.125, 0.125);
             dshl[6] = Point<real_t>( 0.125, 0.125, 0.125);
             dshl[7] = Point<real_t>(-0.125, 0.125, 0.125);
-            Point<real_t> a;
-            for (j=0; j<8; j++)
+            Point<real_t> a = 0;
+            for (size_t j=0; j<8; j++)
                a += dshl[j].x * x[j];
             LocalMatrix<real_t,3,3> J, IJ;
             J(1,1) = a.x; J(2,1) = a.y; J(3,1) = a.z;
             a = 0;
-            for (j=0; j<8; j++)
+            for (size_t j=0; j<8; j++)
                a += dshl[j].y * x[j];
             J(1,2) = a.z; J(2,2) = a.y; J(3,2) = a.y;
             J(1,3) = a.x; J(2,3) = a.y; J(3,3) = a.z;
-            for (i=0; i<3; i++) {
-               j = (i+1)%3; k = (j+1)%3;
+            for (size_t i=0; i<3; i++) {
+               size_t j = (i+1)%3; size_t k = (j+1)%3;
                IJ(i+1,i+1) = J(j+1,j+1) * J(k+1,k+1) - J(j+1,k+1) * J(k+1,j+1);
                IJ(j+1,i+1) = J(j+1,k+1) * J(k+1,i+1) - J(j+1,i+1) * J(k+1,k+1);
                IJ(i+1,j+1) = J(k+1,j+1) * J(i+1,k+1) - J(i+1,j+1) * J(k+1,k+1);
@@ -623,13 +622,13 @@ real_t Element::getMeasure() const
             m = J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3);
             try {
                if (m==0)
-                  THROW_RT("getMeasure(): Area of hexahedron " + itos(_label) + "is null.");
+                  THROW_RT("getMeasure(): Area of hexahedron " + itos(_label) + " is null.");
             }
             CATCH("Element");
             try {
                if (m<0)
                   THROW_RT("getMeasure(): Area of hexahedron " + itos(_label) +
-                           "is negative. Hexahedron is incorrectly oriented.");
+                           " is negative. Hexahedron is incorrectly oriented.");
             }
             CATCH("Element");
             break;
@@ -728,14 +727,14 @@ bool Element::isActive() const
 }
 
 
-ostream& operator<<(      ostream& s,
+ostream& operator<<(ostream&       s,
                     const Element& el)
 {
    s << "\n Element: " << setw(6) << el.n();
    s << " ** Code: " << setw(8) << el.getCode();
    s << " ** Nodes: ";
    for (size_t i=1; i<=el.getNbNodes(); i++)
-         s << " " << el.getNodeLabel(i);
+      s << " " << el.getNodeLabel(i);
    s << endl;
    return s;
 }

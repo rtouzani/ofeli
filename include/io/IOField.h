@@ -241,7 +241,8 @@ class IOField : public XMLParser
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     int get(Mesh&                    ms,
-            vector<vector<real_t> >& v) { return XMLParser::get(ms,v); }
+            vector<vector<real_t> >& v,
+            string&                  name);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:

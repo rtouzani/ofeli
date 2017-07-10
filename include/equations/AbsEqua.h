@@ -175,7 +175,7 @@ enum TimeScheme {
 /*! \enum PDE
  * Choose partial differential equation to `
  */
-enum PDE {
+enum PDE_Name {
    LAPLACE,                      /*!< Laplace equation                        */
    DIFFUSION_CONVECTION,         /*!< Diffusion Convection equation           */
    THERMAL_PHASE_CHANGE,         /*!< Thermal phase change problem (Stefan)   */

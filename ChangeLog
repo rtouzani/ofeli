@@ -13,6 +13,7 @@ CHANGES AND NEW DEVELOPMENTS
 	
 BUGS:
 * B:030101:01 - A Warning concerning assignment operators has been added
+*B:030101:02 - A bug in function element_assembly has been fixed
 
 DOCUMENTATION:
 * D:030101:01 - New documentation on bugs, new developments and documentation: More detailed and organized

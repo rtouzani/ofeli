@@ -107,12 +107,17 @@ void Elas3DH8::set(const Element* el)
 
 void Elas3DH8::set(const Side* sd)
 {
+cout<<"[1]"<<endl;
    _nb_dof = 3;
    Init(sd);
+cout<<"[2]"<<endl;
    _quad = new Quad4(sd);
+cout<<"[3]"<<endl;
    _hexa = NULL;
    SideNodeCoordinates();
+cout<<"[4]"<<endl;
    _area = _theSide->getMeasure();
+cout<<"[5]"<<endl;
    Gauss g(2);
    _xg[0] = g.x(1); _xg[1] = g.x(2);
    _wg[0] = g.w(1); _wg[1] = g.w(2);

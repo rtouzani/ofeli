@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-          Implementation of class Hexa8 for Hexahedral Eight-Node Element
+         Implementation of class Hexa8 for Hexahedral Eight-Node Element
 
   ==============================================================================*/
 
@@ -65,7 +65,7 @@ Hexa8::Hexa8(const Element* el)
    _dsh.resize(8);
    _dshl.resize(8);
    for (size_t i=0; i<8; i++) {
-      Node *node = el->getPtrNode(i+1);
+      Node *node = (*el)(i+1);
       _x[i] = node->getCoord();
       _node[i] = node->n();
    }
@@ -82,14 +82,10 @@ void Hexa8::setLocal(const Point<real_t>& s)
 
    xp = 1 + s.x; xm = 1 - s.x; zp = 0.125*(1 + s.z); 
    yp = 1 + s.y; ym = 1 - s.y; zm = 0.125*(1 - s.z);
-   _sh[0] = xm * ym * zm;
-   _sh[1] = xp * ym * zm;
-   _sh[2] = xp * yp * zm;
-   _sh[3] = xm * yp * zm;
-   _sh[4] = xm * ym * zp;
-   _sh[5] = xp * ym * zp;
-   _sh[6] = xp * yp * zp;
-   _sh[7] = xm * yp * zp;
+   _sh[0] = xm * ym * zm; _sh[1] = xp * ym * zm;
+   _sh[2] = xp * yp * zm; _sh[3] = xm * yp * zm;
+   _sh[4] = xm * ym * zp; _sh[5] = xp * ym * zp;
+   _sh[6] = xp * yp * zp; _sh[7] = xm * yp * zp;
    _dshl[0] = Point<real_t>(-ym*zm,-xm*zm,-0.125*xm*ym);
    _dshl[1] = Point<real_t>( ym*zm,-xp*zm,-0.125*xp*ym);
    _dshl[2] = Point<real_t>( yp*zm, xp*zm,-0.125*xp*yp);
@@ -114,9 +110,9 @@ void Hexa8::setLocal(const Point<real_t>& s)
 
    for (i=0; i<3; i++) {
       j = (i+1)%3; k = (j+1)%3;
-      IJ(i+1,i+1) = J(j+1,j+1) * J(k+1,k+1) - J(j+1,k+1) * J(k+1,j+1);
-      IJ(j+1,i+1) = J(j+1,k+1) * J(k+1,i+1) - J(j+1,i+1) * J(k+1,k+1);
-      IJ(i+1,j+1) = J(k+1,j+1) * J(i+1,k+1) - J(i+1,j+1) * J(k+1,k+1);
+      IJ(i+1,i+1) = J(j+1,j+1)*J(k+1,k+1) - J(j+1,k+1)*J(k+1,j+1);
+      IJ(j+1,i+1) = J(j+1,k+1)*J(k+1,i+1) - J(j+1,i+1)*J(k+1,k+1);
+      IJ(i+1,j+1) = J(k+1,j+1)*J(i+1,k+1) - J(i+1,j+1)*J(k+1,k+1);
    }
 
    _det = J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3);
@@ -150,13 +146,11 @@ void Hexa8::atGauss1(LocalVect<Point<real_t>,8>& dsh,
 void Hexa8::atGauss2(LocalMatrix<Point<real_t>,8,8>& dsh,
                      LocalVect<real_t,8>&            w)
 {
-   Point<real_t> xg;
    real_t wg[2];
    size_t ijk = 1;
    Gauss g(2);
-   xg.x = g.x(1); xg.y = g.x(2); xg.z = g.x(3);
-   wg[0] = g.w(1);
-   wg[1] = g.w(2);
+   Point<real_t> xg(g.x(1),g.x(2),g.x(3));
+   wg[0] = g.w(1); wg[1] = g.w(2);
    for (size_t i=0; i<2; i++)
       for (size_t j=0; j<2; j++)
          for (size_t k=0; k<2; k++) {

@@ -79,7 +79,7 @@ Quad4::Quad4(const Element* el)
 Quad4::Quad4(const Side* side)
 {
    try {
-      if (side->getNbNodes() != 3)
+      if (side->getNbNodes() != 4)
          THROW_RT("Quad4(Side *): Illegal number of side nodes: " + itos(side->getNbNodes()));
    }
    CATCH("Quad4");

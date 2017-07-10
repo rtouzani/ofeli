@@ -98,8 +98,8 @@ class XMLParser : public Parser
    int scan(size_t ind=1);
 
    int scan(vector<real_t>& t,
-	    int             type,
-	    size_t          ind=1);
+            int             type,
+            size_t          ind=1);
 
    void setFile(string file);
 
@@ -115,7 +115,8 @@ class XMLParser : public Parser
            int   format=ASCII);
 
    int get(Mesh&                    ms,
-           vector<vector<real_t> >& v);
+           vector<vector<real_t> >& v,
+           string&                  name);
 
    int get(Mesh&         ms,
            Vect<real_t>& v,

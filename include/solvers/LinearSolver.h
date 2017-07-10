@@ -473,7 +473,7 @@ int LinearSolver<T_>::solve(Iteration      s,
          _A->solve(*_b,*_x);
       }
       else if (_s==CG_SOLVER)
-         ret = CG(A,_p,*_b,*_x,_max_it,_toler,_verbose);
+         ret = CG(A,SSOR_PREC,*_b,*_x,_max_it,_toler,_verbose);
       else if (_s==GMRES_SOLVER)
          ret = GMRes(A,_p,*_b,*_x,10,_max_it,_toler,_verbose);
       else if (_s==CGS_SOLVER)
