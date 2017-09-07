@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>											
+<OFELI_File>											
+  <info>											
+    <title>Mesh of unit square</title>
+    <date>25/11/2013</date>
+    <author>Leap Energy</author>
+  </info>
+  <Project name="Adaptation Test">	
+    <Domain dim="2">
+       <vertex>     0.0      0.0      1   0.05</vertex>
+       <vertex>     2.0      0.0      1   0.05</vertex>
+       <vertex>     2.0      1.0      1   0.05</vertex>
+       <vertex>     0.0      1.0      1   0.05</vertex>
+       <line>   1   2   1 </line>
+       <line>   2   3   1 </line>
+       <line>   3   4   1 </line>
+       <line>   4   1   1 </line>
+       <SubDomain>   2   1   0   </SubDomain>
+    </Domain>
+  </Project>											
+</OFELI_File>											

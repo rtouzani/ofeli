@@ -1,0 +1,32 @@
+
+bin_PROGRAMS = ad1 ad2
+AUTOMAKE_OPTIONS = no-dependencies
+
+ad1_SOURCES = adapt_demo1.cpp
+ad2_SOURCES = adapt_demo2.cpp
+
+ad1_LDADD  = $(top_builddir)/src/libofeli.a
+ad2_LDADD  = $(top_builddir)/src/libofeli.a
+
+ad1dir   =	$(datadir)/ofeli/demos/adapt
+ad2dir   =	$(datadir)/ofeli/demos/adapt
+
+ad1_DATA =	adapt_demo1.cpp \
+		rect.dom \
+		Makefile.standalone \
+		adapt_demo1.cbp \
+		README
+
+dist_ad1_DATA =	adapt_demo1.cpp \
+		rect.dom \
+		Makefile.standalone \
+		adapt_demo1.cbp \
+		README
+
+ad2_DATA =	adapt_demo2.cpp \
+		L.dom \
+		adapt_demo2.cbp
+
+dist_ad2_DATA =	adapt_demo2.cpp \
+		L.dom \
+		adapt_demo2.cbp

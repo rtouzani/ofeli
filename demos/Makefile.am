@@ -1,3 +1,3 @@
 
-SUBDIRS = thermal solid fluid electromagnetics solvers
+SUBDIRS = thermal solid fluid electromagnetics solvers adapt
 

@@ -1,0 +1,18 @@
+
+all:	ad1 ad2
+
+ad1:	$(OBJ)
+	`ofeli-config --cxx` `ofeli-config --cflags` -o ad1 adapt_demo1.o `ofeli-config --libs`
+
+ad2:	$(OBJ)
+	`ofeli-config --cxx` `ofeli-config --cflags` -o ad2 adapt_demo2.o `ofeli-config --libs`
+
+clean:
+	/bin/rm -f *.o ad1`ofeli-config --exe_ext` ad2`ofeli-config --exe_ext`
+
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

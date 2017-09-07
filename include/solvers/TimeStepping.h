@@ -137,8 +137,10 @@ class TimeStepping
 /** \brief Define partial differential equation to solve
  *  \details The used equation class must have been constructed using the Mesh instance
  *  @param [in] eq Reference to equation instance
+ *  @param [in] nl Toggle to say if the considered equation is linear (Default value = 0) or not
  */
-    void setPDE(AbsEqua<real_t>& eq);
+    void setPDE(AbsEqua<real_t>& eq,
+                bool             nl=false);
 
 /** \brief Set intermediate right-hand side vector for the Runge-Kutta method
  *  @param [in] f Vector containing the RHS
@@ -284,12 +286,13 @@ class TimeStepping
    int _verb, _sc, _non_linear, _max_it;
    Iteration _s;
    Preconditioner _p;
-   bool _constant_matrix, _regex, _explicit, _set_bc;
+   bool _constant_matrix, _regex, _explicit, _set_bc, _nl;
    Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _D, _k1, _k2, _k3, _k4;
    Matrix<real_t> *_A;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;
-   real_t _beta, _gamma;
+   real_t _beta, _gamma, _nl_toler;
+   int _max_nl_it;
    LinearSolver<real_t> _ls;
 
    typedef void (TimeStepping::* TSPtr)();

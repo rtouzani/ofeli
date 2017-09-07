@@ -106,10 +106,11 @@ TimeStepping::PreSolvePtr TimeStepping::PS [] = {
 
 
 TimeStepping::TimeStepping() :
-              _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1), _non_linear(0),
+              _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1),
               _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
               _regex(false), _explicit(false), _set_bc(false), _A(NULL), _time_step(0.1),
-              _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
+              _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5), _nl_toler(1.e-6),
+              _max_nl_it(100)
 {
 }
 
@@ -117,10 +118,11 @@ TimeStepping::TimeStepping() :
 TimeStepping::TimeStepping(TimeScheme s,
                            real_t     time_step,
                            real_t     final_time) :
-              _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1), _non_linear(0),
+              _theEqua(NULL), _theMesh(NULL), _order(0), _step(0), _verb(1),
               _s(DIRECT_SOLVER), _p(IDENT_PREC), _constant_matrix(false),
               _explicit(false), _set_bc(false), _A(NULL),
-              _time_step(0.1), _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5)
+              _time_step(0.1), _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5),
+              _nl_toler(1.e-6), _max_nl_it(100)
 {
    set(s,time_step,final_time);
 }
@@ -133,11 +135,13 @@ TimeStepping::~TimeStepping()
 }
 
 
-void TimeStepping::setPDE(AbsEqua<real_t>& eq)
+void TimeStepping::setPDE(AbsEqua<real_t>& eq,
+                          bool             nl)
 {
    _theEqua = &eq;
    _theMesh = &(_theEqua->getMesh());
    _nb_eq = _theMesh->getNbEq();
+   _nl = nl;
    if (_A)
       delete _A;
    if (_explicit)
@@ -156,6 +160,8 @@ void TimeStepping::setPDE(AbsEqua<real_t>& eq)
    _b.setSize(_nb_eq);
    _vv.setSize(_theMesh->getNbDOF());
    _f.setSize(_theMesh->getNbDOF());
+   if (!_nl)
+      _max_nl_it = 1;
 }
 
 
@@ -291,17 +297,20 @@ void TimeStepping::Assembly(const Element& el,
 
 real_t TimeStepping::runOneTimeStep()
 {
+   bool _converge = false;
+   if (_nl)
+      _converge = true;
    _step++;
    _time = theTime;
    if (_verb>0)
       cout << "Running time step: " << _step << ", time: " << _time << " ..." << endl;
    if (_bc)
       _theEqua->setInput(BOUNDARY_CONDITION,*_bc);
-   if (_non_linear) {
+   if (_nl) {
       for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
          int it=1;
          real_t err=1;
-         while (it<=_max_it && err>_toler) {
+         while (it<=_max_nl_it && err>_nl_toler) {
             _theEqua->setInput(SOURCE,(this->*_set_rhs)());
             if (_explicit)
                _D = 0;

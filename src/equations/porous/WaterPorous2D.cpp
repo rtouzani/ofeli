@@ -122,7 +122,6 @@ void WaterPorous2D::Mass()
 void WaterPorous2D::Mobility()
 {
    real_t c=_area*_Mw*_density;
-   c=_area;
    for (size_t i=1; i<=3; i++) {
       for (size_t j=1; j<=3; j++) {
          eA0(i,j) += c*(_Kxe*_dSh(i).x*_dSh(j).x +
@@ -152,12 +151,12 @@ void WaterPorous2D::BoundaryRHS(const Vect<real_t>& sf,
 {
    real_t c=0.5*_length;
    if (opt==GLOBAL_ARRAY) {
-      for (size_t i=1; i<=2; i++)
-         sRHS(i) += c*sf((*_theSide)(i)->n());
+      sRHS(1) += c*sf((*_theSide)(1)->n());
+      sRHS(2) += c*sf((*_theSide)(2)->n());
    }
    else {
-      for (size_t i=1; i<=2; i++)
-         sRHS(i) += c*sf(i);
+      sRHS(1) += c*sf(1);
+      sRHS(2) += c*sf(2);
    }
 }
 

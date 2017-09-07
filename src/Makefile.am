@@ -53,6 +53,7 @@ LAPLACE_OBJS = \
 			equations/laplace/SteklovPoincare2DBE.o
 
 POROUS_OBJS = \
+			equations/porous/WaterPorous1D.o \
 			equations/porous/WaterPorous2D.o
 
 SOLID_OBJS = \

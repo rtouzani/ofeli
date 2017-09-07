@@ -260,7 +260,24 @@ if test "$ans" = "y" ; then
     ./opt_demo3 test.dat
 fi
 
-cd ../../../
+echo "-----------------------------------------------------------------"
+echo "Testing Mesh Adaptation Demos ..."
+
+cd ../../adapt
+echo "Test mesh adaptation demo 1 (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   ./ad1 rect.dom
+    /bin/rm *.pos *.m
+fi
+
+echo "Test mesh adaptation demo 2 (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   ./ad2 L.dom
+fi
+
+cd ../../
 echo "================================================================="
 echo "Testing OFELI Utilities ..."
 echo "-----------------------------------------------------------------"

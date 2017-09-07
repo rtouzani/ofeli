@@ -404,6 +404,7 @@ AC_OUTPUT(
    demos/solvers/ODE/Makefile
    demos/solvers/EIGEN/Makefile
    demos/solvers/OPTIM/Makefile
+   demos/adapt/Makefile
    doc/Makefile
    doc/html/Makefile
    doc/demos/Makefile
@@ -448,6 +449,8 @@ AC_OUTPUT(
    tools/msvcpp/opt_demo3/Makefile
    tools/msvcpp/ts_demo1/Makefile
    tools/msvcpp/ts_demo2/Makefile
+   tools/msvcpp/adapt_demo1/Makefile
+   tools/msvcpp/adapt_demo2/Makefile
    ofeli-config
    test_ofeli.sh
 )
