@@ -95,9 +95,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a584a3841c197ddb1ec0494389823d561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#a584a3841c197ddb1ec0494389823d561">set</a> (<a class="el" href="group__OFELI.html#ga672626c8ddef10da0244c15db4085f40">TimeScheme</a> s, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time_step=<a class="el" href="group__Global.html#gafe343e984bb2022a960c0285c90ba97d">theTimeStep</a>, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> final_time=<a class="el" href="group__Global.html#ga3fb590e5375a439474a2799323b4572b">theFinalTime</a>)</td></tr>
 <tr class="memdesc:a584a3841c197ddb1ec0494389823d561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define data of the differential equation or system.  <a href="#a584a3841c197ddb1ec0494389823d561">More...</a><br /></td></tr>
 <tr class="separator:a584a3841c197ddb1ec0494389823d561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af97477a7dcb02936e3d43493fc80420d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#af97477a7dcb02936e3d43493fc80420d">setPDE</a> (<a class="el" href="classOFELI_1_1AbsEqua.html">AbsEqua</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;eq)</td></tr>
-<tr class="memdesc:af97477a7dcb02936e3d43493fc80420d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define partial differential equation to solve.  <a href="#af97477a7dcb02936e3d43493fc80420d">More...</a><br /></td></tr>
-<tr class="separator:af97477a7dcb02936e3d43493fc80420d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84a0a64105a619ae4ee1158f6ac8492e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#a84a0a64105a619ae4ee1158f6ac8492e">setPDE</a> (<a class="el" href="classOFELI_1_1AbsEqua.html">AbsEqua</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;eq, bool nl=false)</td></tr>
+<tr class="memdesc:a84a0a64105a619ae4ee1158f6ac8492e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define partial differential equation to solve.  <a href="#a84a0a64105a619ae4ee1158f6ac8492e">More...</a><br /></td></tr>
+<tr class="separator:a84a0a64105a619ae4ee1158f6ac8492e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#aa7e53c44ddd0bfff4147278d5c15f3a3">setRK4RHS</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;f)</td></tr>
 <tr class="memdesc:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set intermediate right-hand side vector for the Runge-Kutta method.  <a href="#aa7e53c44ddd0bfff4147278d5c15f3a3">More...</a><br /></td></tr>
 <tr class="separator:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -259,7 +259,7 @@ For second order systems: The following schemes are implemented Newmark (value: 
 
 </div>
 </div>
-<a class="anchor" id="af97477a7dcb02936e3d43493fc80420d"></a>
+<a class="anchor" id="a84a0a64105a619ae4ee1158f6ac8492e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -267,8 +267,18 @@ For second order systems: The following schemes are implemented Newmark (value: 
           <td class="memname">void setPDE </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classOFELI_1_1AbsEqua.html">AbsEqua</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>eq</em></td><td>)</td>
+          <td class="paramname"><em>eq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>nl</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -277,6 +287,7 @@ For second order systems: The following schemes are implemented Newmark (value: 
 <p>The used equation class must have been constructed using the <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">eq</td><td>Reference to equation instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nl</td><td>Toggle to say if the considered equation is linear (Default value = 0) or not </td></tr>
   </table>
   </dd>
 </dl>

@@ -36,6 +36,7 @@ var hierarchy =
           [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html", null ]
         ] ],
         [ "Equa_Laplace< real_t, 4, 4, 3, 3 >", "classOFELI_1_1Equa__Laplace.html", null ],
+        [ "Equa_Porous< real_t, 2, 2, 1, 1 >", "classOFELI_1_1Equa__Porous.html", null ],
         [ "Equa_Porous< real_t, 3, 3, 2, 2 >", "classOFELI_1_1Equa__Porous.html", [
           [ "WaterPorous2D", "classOFELI_1_1WaterPorous2D.html", null ]
         ] ],
@@ -152,6 +153,7 @@ var hierarchy =
       [ "TrMatrix< T_ >", "classOFELI_1_1TrMatrix.html", null ]
     ] ],
     [ "Mesh", "classOFELI_1_1Mesh.html", null ],
+    [ "MeshAdapt", "classOFELI_1_1MeshAdapt.html", null ],
     [ "Muscl", "classOFELI_1_1Muscl.html", [
       [ "Muscl1D", "classOFELI_1_1Muscl1D.html", [
         [ "ICPG1D", "classOFELI_1_1ICPG1D.html", null ],

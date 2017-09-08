@@ -172,6 +172,7 @@ enum TimeScheme {
    BDF2            = 10     /*!< Backward Difference Formula (2nd Order)   */
 };
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /*! \enum PDE
  * Choose partial differential equation to `
  */
@@ -184,6 +185,7 @@ enum PDE_Name {
    PLANAR_TRUSS,                 /*!< 2-D truss equation                      */
    SPATIAL_BEAM                  /*!< 3-D beam equations                      */
 };
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \enum FEType
  * Choose Finite Element Type

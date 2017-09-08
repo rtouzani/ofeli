@@ -63,7 +63,6 @@ void MeshErrorIO(ios&);
 
 using namespace bamg;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace OFELI {
 /*!
  *  \addtogroup OFELI
@@ -270,23 +269,35 @@ class MeshAdapt
                     Vect<real_t>&       v);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/** \brief Run adaption process
- *  \details 
+/** \brief Run adaptation process
  *  @return Return code: 
+ *  <ul>
+ *     <li>= 0: Adaptation has been normally completed
+ *     <li>= 1: An error occured
+ *  </ul>
  */
     int run();
 
 /** \brief Run adaptation process using a solution vector
  *  @param [in] u Solution vector defined on the input mesh
- *  @return 
+ *  @return Return code: 
+ *  <ul>
+ *     <li>= 0: Adaptation has been normally completed
+ *     <li>= 1: An error occured
+ *  </ul>
  */
     int run(const Vect<real_t>& u);
 
 
 /** \brief Run adaptation process using a solution vector and interpolates solution on the
  *  adapted mesh
- *  @param [in] u
- *  @return 
+ *  @param [in] u Solution vector defined on the input mesh
+ *  @param [in] v Solution vector defined on the (adapted) output mesh
+ *  @return Return code: 
+ *  <ul>
+ *     <li>= 0: Adaptation has been normally completed
+ *     <li>= 1: An error occured
+ *  </ul>
  */
     int run(const Vect<real_t>& u,
             Vect<real_t>&       v);
@@ -328,7 +339,5 @@ class MeshAdapt
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */
-
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #endif
