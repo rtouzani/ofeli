@@ -808,27 +808,35 @@ void ODESolver::solveRK3_TVD()
          THROW_RT("solveRK3_TVD(): Runge-Kutta scheme is valid for first order equations only.");
    }
    CATCH_EXIT("ODESolver");
-   real_t k1, k2;
    if (_type==SCALAR_LINEAR) {
-      k1 = _d1  - _c0*_y0;
-      k2 = _d01 - _c0*(_y0 + 0.5*_time_step*k1); 
-      _y2 = _y1 = _y0 + OFELI_THIRD*_time_step*(k1+k2)/_c1;
+      real_t t = _time - _time_step;
+      real_t y1 = _y0 + _time_step*(_d1 - _c0*_y0);
+      t += _time_step;
+      real_t y2 = 0.75*_y0 + 0.25*y1 + 0.25*_time_step*(_d01 - _c0*y1);
+      t -= 0.5*_time_step;
+      _y2 = _y1 = OFELI_THIRD*(_y0 + 2*y2 + 2*_time_step*(_d2 - _c0*y2));
       _y0 = _y1;
       _d0 = _d1 = _d2;
       return;
    }
    else if (_type==SCALAR_NL) {
-      k1 = eval(_expF[0],_time-_time_step,_y0);
-      k2 = eval(_expF[0],_time-0.5*_time_step,_y0+0.5*_time_step*k1);
-      _y2 = _y1 = _y0 + OFELI_SIXTH*_time_step*(k1+2*k2);
+      real_t t = _time - _time_step;
+      real_t y1 = _y0 + _time_step*eval(_expF[0],t,_y0);
+      t += _time_step;
+      real_t y2 = 0.75*_y0 + 0.25*y1 + 0.25*_time_step*eval(_expF[0],t,y1);
+      t -= 0.5*_time_step;
+      _y2 = _y1 = OFELI_THIRD*(_y0 + 2*y2 + 2*_time_step*eval(_expF[0],t,y2));
       _y0 = _y1;
       return;
    }
    else if (_type==VECTOR_NL) {
       for (size_t i=0; i<_nb_eq; i++) {
-         k1 = eval(_expF[i],_time-_time_step,_u[i]);
-         k2 = eval(_expF[i],_time-0.5*_time_step,_u[i]+0.5*_time_step*k1);
-         (*_w)[i] = _v[i] = _u[i] + OFELI_SIXTH*_time_step*(k1+2*k2);
+         real_t t = _time - _time_step;
+         real_t y1 = _u[i] + _time_step*eval(_expF[i],t,_u[i]);
+         t += _time_step;
+         real_t y2 = 0.75*_u[0] + 0.25*y1 + 0.25*_time_step*eval(_expF[i],t,y1);
+         t -= 0.5*_time_step;
+         (*_w)[i] = _v[i] = OFELI_THIRD*(_u[i] + 2*y2 + 2*_time_step*eval(_expF[i],t,y2));
       }
       _u = _v;
       return;
