@@ -58,6 +58,7 @@ class FMM2D : public FMM
  public:
 /*!
  * \brief Constructor
+ * \details Constructor using Grid instance
  * \param [in] g Instance of class Grid
  * \param [in] phi Vector containing the level set function at grid nodes.
  * The values are <tt>0</tt> on the interface (from which the distance is computed),
@@ -67,9 +68,9 @@ class FMM2D : public FMM
  * \param [in] HA true if the program must be executed with high accuracy,
  * false otherwise
  */
-    FMM2D(const Grid&         g,
-                Vect<real_t>* phi,
-                bool          HA);
+    FMM2D(const Grid&   g,
+          Vect<real_t>& phi,
+          bool          HA);
 
 /// Initialize the heap
 /// \param [in,out] NarrowPt Heap containing Narrow points
@@ -97,9 +98,9 @@ class FMM2D : public FMM
     real_t check_error();
 
  private:
-    
-    void UpdateExt(size_t        i,
-                   size_t        j,
+
+    void UpdateExt(int           i,
+                   int           j,
                    real_t        dx,
                    real_t        dy,
                    Vect<real_t>& F);

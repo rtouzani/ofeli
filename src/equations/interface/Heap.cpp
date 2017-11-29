@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                           Implementation of class 'Heap'
+                         Implementation of class 'Heap'
 
   ==============================================================================*/
 
@@ -33,10 +33,9 @@
 
 namespace OFELI {
 
-Heap::Heap(size_t size):_heap(size)
+Heap::Heap(size_t size)
+     : _heap(size), _max_size(0), _size(0)
 {
-   _size = 0;
-   _max_size = _size;
 }
 
 
@@ -46,28 +45,24 @@ Heap::~Heap()
 
 
 Heap::Heap(Vect<IPoint>& vec)
+     : _max_size(vec.size()*vec.size()), _size(0)
 {
-   _size = 0;
-   _max_size = vec.size()*vec.size();
    _heap.resize(_max_size);
-   for (size_t i=0; i<vec.size(); ++i) {
-      _size++;
+   for (size_t i=0; i<vec.size(); i++, _size++)
       Add(vec[i]);
-   }
 }
 
 
 Heap::Heap(Heap& H)
+     : _max_size(H._max_size), _size(H._size)
 {
-   _max_size = H._max_size;
-   _size = H._size;
    _heap.resize(_max_size);
    for (size_t i=0; i<_size; ++i)
       _heap[i] = H._heap[i];
 }
 
 
-Heap & Heap::operator=(const Heap& H)
+Heap& Heap::operator=(const Heap& H)
 {
    _size = H._size;
    _heap.resize(_size);
@@ -79,51 +74,53 @@ Heap & Heap::operator=(const Heap& H)
 
 IPoint Heap::operator[](size_t ind) const
 {
-   if (ind>_size) {
-      cerr << "ERROR: OutOfBound\n";
-      exit(-1);
+   try {
+      if (ind > _size)
+         THROW_RT("operator[]: Out of bounds");
    }
+   CATCH_EXIT("Heap");
    return _heap[ind];
 }
 
 
-IPoint & Heap::operator[](size_t ind)
+IPoint& Heap::operator[](size_t ind)
 {
-   if (ind>_size) {
-      cerr << "ERROR: OutOfBound\n";
-      exit(-1);
+   try {
+      if (ind > _size)
+         THROW_RT("operator[]: Out of bounds");
    }
+   CATCH_EXIT("Heap");
    return _heap[ind];
 }
 
 
-IPoint Heap::Service()
+IPoint Heap::Current()
 {
-   IPoint elem;
+   IPoint el;
    if (_size != 0) {
-      elem = _heap(1);
+      el = _heap(1);
       _heap(1) = _heap(_size);
       _size--;
       Down_Heap();
    }
-   return elem;
+   return el;
 }
 
 
 void Heap::Add(IPoint el)
 {
-   _size++;
-   _heap(_size) = el;
+   _heap(++_size) = el;
+std::cout<<"             Added: "<<el.getX()<<"  "<<el.getY()<<endl;
    Up_Heap(_size);
 }
 
 
 void Heap::Down_Heap(size_t rank)
 {
-   while (rank <= _size/2) {
-      size_t rgFils = 2*rank;  // son's on the left rank
+    while (rank <= _size/2) {
+      size_t rgFils = 2*rank;  // son on the left rank
       if (rgFils+1 <= _size) { // son on the right exist
-         if (_heap(rgFils) > _heap(rgFils + 1) )
+         if (_heap(rgFils) > _heap(rgFils+1))
             rgFils++;
       }
       if (_heap(rank) > _heap(rgFils)) {
@@ -138,17 +135,17 @@ void Heap::Down_Heap(size_t rank)
 
 void Heap::Up_Heap(size_t rank)
 {
-   while (rank > 1 && (_heap(rank/2) > _heap(rank))) {
+   while (rank>1 && _heap(rank/2)>_heap(rank)) {
       IPoint aux = _heap(rank/2);
       _heap(rank/2) = _heap(rank);
       _heap(rank)  = aux;
-      rank = rank/2;
+      rank /= 2;
    }
 }
 
 
 bool Heap::Find(const IPoint& pt,
-                      size_t& ind)
+                size_t&       ind)
 {
    for (size_t i=0; i<_size; ++i) {
       if (_heap[i] == pt) {
@@ -161,15 +158,15 @@ bool Heap::Find(const IPoint& pt,
 
 
 void Heap::Update(const real_t& val,
-                        size_t  rg)
+                  size_t        rg)
 {
    _heap[rg].setValue(val);
    Up_Heap(rg);
 }
 
 
-ostream & operator<<(      ostream& s,
-                     const Heap&    H)
+ostream & operator<<(ostream&    s,
+                     const Heap& H)
 {
    s << " The heap: [ \n";
    for (size_t i=0; i<H._size; ++i) {

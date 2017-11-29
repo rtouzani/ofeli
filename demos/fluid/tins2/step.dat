@@ -10,7 +10,7 @@
    <max_time value="5.0"/>
    <verbose value="1"/>
    <plot value="10"/>
-   <mesh_file value="step.m"/>
+   <mesh_file value="sstep.m"/>
    <parameter label="Reynolds" value="100"/>
    <parameter label="v_file" value="step.v"/>
    <parameter label="p_file" value="step.p"/>

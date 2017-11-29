@@ -334,8 +334,9 @@ class Vect
 /** \brief Initialize vector with an algebraic expression
  *  \details This function can be used for instance in 1-D
  *  @param [in] exp Regular algebraic expression that defines a function of <tt>x</tt>
- *  which are coordinates of nodes
- *  @param [in] x Vector
+ *  which are values of vector. This expression must use the variable \c x as coordinate of
+ *  vector.
+ *  @param [in] x Vector that defined coordinates
  */
     void set(const string&       exp,
              const Vect<real_t>& x);
@@ -353,7 +354,11 @@ class Vect
 /** \brief Initialize vector with an algebraic expression 
  *  @param [in] x Vect instance that contains coordinates of points
  *  @param [in] exp Regular algebraic expression that defines a function of x and i
- *  which are coordinates of nodes and indices starting from <tt>1</tt>.
+ *  which are coordinates.
+ *  @example Consider that we want to initialize the Vect instance with the values
+ *  v[i] = exp(1+x[i]);
+ *  then, we use this member function as follows
+ *  v.set("exp("1+x",x);
  */
     void set(const Vect<real_t>& x,
              const string&       exp);
@@ -961,14 +966,13 @@ class Vect
 
 /** \brief Initialize vector entries by setting extremal values and interval
  *  @param [in] vmin Minimal value to assign to the first entry
- *  @param [in] delta Interval
  *  @param [in] vmax Maximal value to assign to the lase entry
- *  @remark Vector's size is deduced from the arguments. The vector does not need
- *  to be sized before using this function
+ *  @param [in] Number of points
+ *  @remark The vector has a size of \c n. It is sized in this function
  */
-    void setUniform(T_ vmin,
-                    T_ delta,
-                    T_ vmax);
+    void setUniform(T_     vmin,
+                    T_     vmax,
+                    size_t n);
 
 /** \brief Operator <tt>=</tt>
  *  \details Assign a constant to vector entries
@@ -1573,14 +1577,13 @@ inline void Vect<real_t>::operator=(string s)
 
 
 template<class T_>
-void Vect<T_>::setUniform(T_ vmin,
-                          T_ delta,
-                          T_ vmax)
+void Vect<T_>::setUniform(T_     vmin,
+                          T_     vmax,
+                          size_t n)
 {
-   setSize((vmax-vmin)/delta+delta+1);
-   (*this)[0] = vmin;
-   for (size_t i=1; i<_nx; i++)
-      (*this)[i] = (*this)[i-1] + delta;
+   setSize(n);
+   for (size_t i=0; i<_nx; i++)
+      (*this)[i] = T_(i)*(vmax-vmin)/T_(_nx-1);
 }
 
 

@@ -35,18 +35,18 @@
 
 namespace OFELI {
 
-FMM3D::FMM3D(const Grid&         g,
-                   Vect<real_t>* phi,
-                   bool HA)
+FMM3D::FMM3D(const Grid&   g,
+             Vect<real_t>& phi,
+             bool          HA)
       : FMM(g,phi,HA)
 {
    real_t i1, i2, j1, j2, k1, k2;
-   for (size_t k=1; k<=_nz+1; ++k) {
-      for (size_t i=1; i<=_nx+1; ++i) {
-         for (size_t j=1; j<=_ny+1; ++j) {
+   for (int k=1; k<=_nz+1; ++k) {
+      for (int i=1; i<=_nx+1; ++i) {
+         for (int j=1; j<=_ny+1; ++j) {
             i1 = i2 = j1 = j2 = k1 = k2 = 1.;
             if (i>=2)
-	      i1 = (*_phi)(i,j,k)*(*_phi)(i-1,j,k);
+               i1 = (*_phi)(i,j,k)*(*_phi)(i-1,j,k);
             if (i<=_nx)
                i2 = (*_phi)(i,j,k)*(*_phi)(i+1,j,k);
             if (j>=2)
@@ -56,38 +56,38 @@ FMM3D::FMM3D(const Grid&         g,
             if (k>=2)
                k1 = (*_phi)(i,j,k)*(*_phi)(i,j,k-1);
             if (k<=_nz)
-	      k2 = (*_phi)(i,j,k)*(*_phi)(i,j,k+1);
+               k2 = (*_phi)(i,j,k)*(*_phi)(i,j,k+1);
             if ((i1<0.) || (i2<0.) || (j1<0.) || (j2<0.) || (k1<0.) || (k2<0.))
                _AlivePt(i,j,k) = (*_phi)(i,j,k);
-            }
          }
       }
+   }
 
-//    if one wants to use the method with high accuracy
-//    an appropriate initial solution is necessary
-      if (_high_accuracy) {
-         for (size_t k=1; k<=_nz+1; ++k) {
-            for (size_t i=1; i<=_nx+1; ++i) {
-               for (size_t j=1; j<=_ny+1; ++j) {
-                  i1 = i2 = j1 = j2 = k1 = k2 = 1.;
-                  if (i>3 && _AlivePt(i-1,j,k)!=_inf)
-                     i1 = (*_phi)(i,j,k)*(*_phi)(i-2,j,k);
-                  if (i+2<=_nx+1 && _AlivePt(i+1,j,k)!=_inf)
-                     i2 = (*_phi)(i,j,k)*(*_phi)(i+2,j,k);
-                  if (j>3 && _AlivePt(i,j-1,k)!=_inf)
-                     j1 = (*_phi)(i,j,k)*(*_phi)(i,j-2,k);
-                  if (j+2<=_ny+1 && _AlivePt(i,j+1,k)!=_inf)
-                     j2 = (*_phi)(i,j,k)*(*_phi)(i,j+2,k);
-                  if (k>3 && _AlivePt(i,j,k-1)!=_inf)
-                     k1 = (*_phi)(i,j,k)*(*_phi)(i,j,k-2);
-                  if (k+2<=_ny+1 && _AlivePt(i,j,k+1)!=_inf)
-                     k2 = (*_phi)(i,j,k)*(*_phi)(i,j,k+2);
-                  if ((i1<0.) || (i2<0.) || (j1<0.) || (j2<0.) || (k1<0.) || (k2<0.))
-                     _AlivePt(i,j,k) = (*_phi)(i,j,k);
-               }
+// if one wants to use the method with high accuracy
+// an appropriate initial solution is necessary
+   if (_high_accuracy) {
+      for (int k=1; k<=_nz+1; ++k) {
+         for (int i=1; i<=_nx+1; ++i) {
+            for (int j=1; j<=_ny+1; ++j) {
+               i1 = i2 = j1 = j2 = k1 = k2 = 1.;
+               if (i>3 && _AlivePt(i-1,j,k)!=_inf)
+                  i1 = (*_phi)(i,j,k)*(*_phi)(i-2,j,k);
+               if (i+2<=_nx+1 && _AlivePt(i+1,j,k)!=_inf)
+                  i2 = (*_phi)(i,j,k)*(*_phi)(i+2,j,k);
+               if (j>3 && _AlivePt(i,j-1,k)!=_inf)
+                  j1 = (*_phi)(i,j,k)*(*_phi)(i,j-2,k);
+               if (j+2<=_ny+1 && _AlivePt(i,j+1,k)!=_inf)
+                  j2 = (*_phi)(i,j,k)*(*_phi)(i,j+2,k);
+               if (k>3 && _AlivePt(i,j,k-1)!=_inf)
+                  k1 = (*_phi)(i,j,k)*(*_phi)(i,j,k-2);
+               if (k+2<=_ny+1 && _AlivePt(i,j,k+1)!=_inf)
+                  k2 = (*_phi)(i,j,k)*(*_phi)(i,j,k+2);
+               if ((i1<0.) || (i2<0.) || (j1<0.) || (j2<0.) || (k1<0.) || (k2<0.))
+                  _AlivePt(i,j,k) = (*_phi)(i,j,k);
             }
          }
       }
+   }
 }
 
 
@@ -95,8 +95,7 @@ void FMM3D::solve()
 {
    IPoint pt, p;
    LocalVect<IPoint,6> Vs;
-   size_t ii, jj, kk, ind;
-   int sign;
+   size_t ind;
 
 // Allocate the heap
    Heap NarrowPt((_nx+1)*(_ny+1)*(_nz+1));
@@ -112,21 +111,20 @@ void FMM3D::solve()
    InitHeap(NarrowPt);
 
 // Solution
-   while (NarrowPt.getSize() > 0 ) {
-      pt = NarrowPt.Service();
-      ii = pt.getX(); jj = pt.getY(), kk = pt.getZ();
+   while (NarrowPt.getSize() > 0) {
+      pt = NarrowPt.Current();
 //    add point to Alive
       _AlivePt(pt.getX(),pt.getY(),pt.getZ()) = pt.getSgn()*pt.getValue();
 //    update the point as frozen
       _TAlive(pt.getX(),pt.getY(),pt.getZ()) = pt.getSgn()*pt.getValue();
 
 //    This point and its neighbour have the same sign
-      sign = Sgn(_AlivePt(pt.getX(),pt.getY(),pt.getZ()));
+      int sign = Sgn(_AlivePt(pt.getX(),pt.getY(),pt.getZ()));
       pt.GenerateNeighbour(Vs);
 
 //    Treating the point's neighbours
       for (size_t l=0; l<6; ++l) {
-         ii = Vs[l].getX(); jj = Vs[l].getY(); kk = Vs[l].getZ();
+         size_t ii=Vs[l].getX(), jj=Vs[l].getY(), kk=Vs[l].getZ();
          if ((ii>=1 && ii<=_nx+1) && (jj>=1 && jj<=_ny+1) && (kk>=1 && kk<=_nz+1)) {
 //          faraway point
             if (_TAlive(ii,jj,kk) == _inf) {
@@ -165,9 +163,9 @@ void FMM3D::Evaluate(IPoint& pt,
       val1 = val2 = _inf;
       for (int i=0; i<2; ++i) {
          pni = pt + Neigbour[2*j+i]; // Next neighbour
-         if ( (pni.getX()>=1) && (size_t(pni.getX())<=_nx+1) &&
-              (pni.getY()>=1) && (size_t(pni.getY())<=_ny+1) &&
-              (pni.getZ()>=1) && (size_t(pni.getZ())<=_nz+1) &&
+         if ( (pni.getX()>=1) && (pni.getX()<=_nx+1) &&
+              (pni.getY()>=1) && (pni.getY()<=_ny+1) &&
+              (pni.getZ()>=1) && (pni.getZ()<=_nz+1) &&
               (std::abs(_TAlive(pni.getX(),pni.getY(),pni.getZ())) < _inf)) {
             v1 = std::abs(_TAlive(pni.getX(),pni.getY(),pni.getZ()));
 
@@ -175,11 +173,11 @@ void FMM3D::Evaluate(IPoint& pt,
                val1 = v1;
                pni2 = pt;
                pni2 = pni2 + 2*Neigbour[2*j+i];
-               if ((pni2.getX()>=1) && (size_t(pni2.getX())<=_nx+1) &&
-                   (pni2.getY()>=1) && (size_t(pni2.getY())<=_ny+1) &&
-                   (pni2.getZ()>=1) && (size_t(pni2.getZ())<=_nz+1)) {
+               if ((pni2.getX()>=1) && (pni2.getX()<=_nx+1) &&
+                   (pni2.getY()>=1) && (pni2.getY()<=_ny+1) &&
+                   (pni2.getZ()>=1) && (pni2.getZ()<=_nz+1)) {
                   v2 = std::abs(_TAlive(pni2.getX(),pni2.getY(),pni2.getZ()));
-                  if ((v2<_inf) && (v2<=v1))
+                  if (v2<_inf && v2<=v1)
                      val2 = v2;
                   else
                      val2 = _inf;
@@ -208,7 +206,7 @@ void FMM3D::Evaluate(IPoint& pt,
 // Solving the quadratic equation
    real_t xmin, ymin, zmin;
    real_t max_sol = _inf;
-   int ret = MaxQuadratic(a,b,c,max_sol);
+   int ret = FMM::MaxQuadratic(a,b,c,max_sol);
    if (ret==0) {
       if (ii==1)
          xmin = std::abs(_AlivePt(ii+1,jj,kk) );
@@ -246,39 +244,39 @@ void FMM3D::Evaluate(IPoint& pt,
 void FMM3D::InitHeap(Heap& NarrowPt)
 {
    int sign;
-   for (size_t i=1; i<_nx+1; ++i) {
-      for (size_t j=1; j<_ny+1; ++j) {
-         for (size_t k=1; k<_nz+1; ++k) {
+   for (int i=1; i<int(_nx)+1; ++i) {
+      for (int j=1; j<int(_ny)+1; ++j) {
+         for (int k=1; k<int(_nz)+1; ++k) {
             if (_AlivePt(i,j,k) < _inf) {
                IPoint pt;
                sign = Sgn(_AlivePt(i,j,k));
-               if ((i>=2) && _TAlive(i-1,j,k)==_inf) {
-                  pt.setX(i-1); pt.setY(j); pt.setZ(k);
+               if (i>=2 && _TAlive(i-1,j,k)==_inf) {
+                  pt.setXYZ(i-1,j,k);
                   Evaluate(pt,sign);
                   NarrowPt.Add(pt);
                }
-               if ((i<=_nx) && _TAlive(i+1,j,k)==_inf) {
-                  pt.setX(i+1); pt.setY(j); pt.setZ(k);
+               if (i<=int(_nx) && _TAlive(i+1,j,k)==_inf) {
+                  pt.setXYZ(i+1,j,k);
                   Evaluate(pt,sign);
                   NarrowPt.Add(pt);
                }
-               if ((j>=2) && _TAlive(i,j-1,k)==_inf) {
-                  pt.setX(i); pt.setY(j-1); pt.setZ(k);
+               if (j>=2 && _TAlive(i,j-1,k)==_inf) {
+                  pt.setXYZ(i,j-1,k);
                   Evaluate(pt,sign);
                   NarrowPt.Add(pt);
                }
-               if ((j<=_ny) && _TAlive(i,j+1,k)==_inf) {
-                  pt.setX(i); pt.setY(j+1); pt.setZ(k);
+               if (j<=int(_ny) && _TAlive(i,j+1,k)==_inf) {
+                  pt.setXYZ(i,j+1,k);
                   Evaluate(pt,sign);
                   NarrowPt.Add(pt);
                }
-               if ((k>=2) && _TAlive(i,j,k-1)==_inf) {
-                  pt.setX(i); pt.setY(j); pt.setZ(k-1);
+               if (k>=2 && _TAlive(i,j,k-1)==_inf) {
+                  pt.setXYZ(i,j,k-1);
                   Evaluate(pt,sign);
                   NarrowPt.Add(pt);
                }
-               if ((k<=_nz) && _TAlive(i,j,k+1)==_inf) {
-                  pt.setX(i); pt.setY(j); pt.setZ(k+1);
+               if (k<=int(_nz) && _TAlive(i,j,k+1)==_inf) {
+                  pt.setXYZ(i,j,k+1);
                   Evaluate(pt,sign);
                   NarrowPt.Add(pt);
                }
@@ -352,20 +350,20 @@ void FMM3D::UpdateExt(size_t        i,
 
 real_t FMM3D::check_error()
 {
-   real_t dx, dy, dz, err=0;
+   real_t err=0;
    real_t hx=_gd->getHx(), hy=_gd->getHy(), hz=_gd->getHz();
    for (size_t i=1; i<=_nx; i++) {
       for (size_t j=1; j<=_ny; j++) {
          for (size_t k=1; k<=_nz; k++) {
-            dx = (*_phi)(i+1,j+1,k+1) + (*_phi)(i+1,j+1,k  ) + (*_phi)(i+1,j  ,k+1) +
-                 (*_phi)(i+1,j  ,k  ) - (*_phi)(i  ,j+1,k+1) - (*_phi)(i  ,j+1,k  ) -
-                 (*_phi)(i  ,j  ,k+1) - (*_phi)(i  ,j  ,k  );
-            dy = (*_phi)(i  ,j+1,k+1) + (*_phi)(i  ,j+1,k  ) + (*_phi)(i+1,j+1,k+1) +
-                 (*_phi)(i+1,j+1,k  ) - (*_phi)(i  ,j  ,k+1) - (*_phi)(i  ,j  ,k  ) -
-                 (*_phi)(i+1,j  ,k+1) - (*_phi)(i+1,j  ,k  );
-            dz = (*_phi)(i  ,j  ,k+1) + (*_phi)(i  ,j+1,k+1) + (*_phi)(i+1,j  ,k+1) +
-                 (*_phi)(i+1,j+1,k+1) - (*_phi)(i  ,j  ,k  ) - (*_phi)(i  ,j+1,k  ) -
-                 (*_phi)(i+1,j  ,k  ) - (*_phi)(i+1,j+1,k  );
+            real_t dx = (*_phi)(i+1,j+1,k+1) + (*_phi)(i+1,j+1,k  ) + (*_phi)(i+1,j  ,k+1) +
+                        (*_phi)(i+1,j  ,k  ) - (*_phi)(i  ,j+1,k+1) - (*_phi)(i  ,j+1,k  ) -
+                        (*_phi)(i  ,j  ,k+1) - (*_phi)(i  ,j  ,k  );
+            real_t dy = (*_phi)(i  ,j+1,k+1) + (*_phi)(i  ,j+1,k  ) + (*_phi)(i+1,j+1,k+1) +
+                        (*_phi)(i+1,j+1,k  ) - (*_phi)(i  ,j  ,k+1) - (*_phi)(i  ,j  ,k  ) -
+                        (*_phi)(i+1,j  ,k+1) - (*_phi)(i+1,j  ,k  );
+            real_t dz = (*_phi)(i  ,j  ,k+1) + (*_phi)(i  ,j+1,k+1) + (*_phi)(i+1,j  ,k+1) +
+                        (*_phi)(i+1,j+1,k+1) - (*_phi)(i  ,j  ,k  ) - (*_phi)(i  ,j+1,k  ) -
+                        (*_phi)(i+1,j  ,k  ) - (*_phi)(i+1,j+1,k  );
             err += dx*dx/(hx*hx) + dy*dy/(hy*hy) + dz*dz/(hz*hz);
          }
       }

@@ -25,8 +25,8 @@
 
   ==============================================================================
 
-               Definition of Template Class FastMarching2D for Fast Marching
-                     algorithm on 2-D structured uniform grids
+           Definition of Template Class FastMarching2D for Fast Marching
+                 algorithm on 2-D structured uniform grids
 
   ==============================================================================*/
 
@@ -125,8 +125,7 @@ class FastMarching2D
     Grid _g;
     const Grid *_cg;
     Vect<size_t> _pos;
-    Vect<real_t> *_A, *_v;
-    Vect<real_t> _ls, _f, _u, _sol;
+    Vect<real_t> *_A, *_v, _ls, _f, _u, _sol;
     Vect<Pt> _heap;
 
     void Init();

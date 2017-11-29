@@ -33,16 +33,16 @@
 
 namespace OFELI {
 
-FMMSolver::FMMSolver(const Grid&         g,
-                           Vect<real_t>& phi,
-                           bool          HA)
+FMMSolver::FMMSolver(const Grid&   g,
+                     Vect<real_t>& phi,
+                     bool          HA)
 {
    _phi = &phi;
    _dim = CheckDimension(g);
    if (_dim==3)
-      _theFM = new FMM3D(g,_phi,HA);
+      _theFM = new FMM3D(g,*_phi,HA);
    else
-      _theFM = new FMM2D(g,_phi,HA);
+      _theFM = new FMM2D(g,*_phi,HA);
 }
 
 

@@ -117,7 +117,7 @@ class Heap
 
 /// \brief extract the heap's first element
 /// \return element at the top of the Heap
-    IPoint Service();
+    IPoint Current();
 
 /// \brief Add element to the Heap
 /// \param [in] el node to add to the Heap
@@ -142,8 +142,8 @@ class Heap
     void Down_Heap(size_t rank = 1);
     void Up_Heap(size_t rank);
 
-    friend ostream & operator<< (      ostream& s,
-                                 const Heap&    H);
+    friend ostream & operator<< (ostream&    s,
+                                 const Heap& H);
 };
 
 /*! @} End of Doxygen Groups */

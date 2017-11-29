@@ -39,9 +39,8 @@ using std::cout;
 
 namespace OFELI {
 
-TINS2DT3B::TINS2DT3B()
+TINS2DT3B::TINS2DT3B() : _Re(0.)
 {
-   _Re = 0;
    _b = NULL;
 }
 
@@ -50,13 +49,12 @@ TINS2DT3B::TINS2DT3B(Mesh&         mesh,
                      Vect<real_t>& u,
                      Vect<real_t>& p,
                      real_t&       ts,
-                     real_t        Re)
+                     real_t        Re) : _Re(Re), _p(&p)
 {
+   _Re = Re;
    _step = 1;
    _b = NULL;
    _u = &u;
-   _p = &p;
-   _Re = Re;
    initEquation(mesh,ts);
    _bc_given = _bf_given = _sf_given = false;
 }
@@ -175,6 +173,7 @@ void TINS2DT3B::VelocityMatrix()
    if (_verbose>2)
       cout << "Calculating velocity matrices ..." << endl;
    Point<real_t> z;
+
    MESH_EL {
       set(theElement);
       real_t c=OFELI_SIXTH*_dens*_det/_time_step, aa=0.25*_det*_visc/_Re;
@@ -187,8 +186,8 @@ void TINS2DT3B::VelocityMatrix()
             eMat(2*i+2,2*j+2) = 2*z.y*_dSh[j].y + z.x*_dSh[j].x;
          }
       }
-      eMat(1,1) += c; eMat(2,2) += c; eMat(3,3) += c;
-      eMat(4,4) += c; eMat(5,5) += c; eMat(6,6) += c;
+      for (size_t i=0; i<6; i++)
+         eMat(i,i) += c;
       eMat.Symmetrize();
       ElementAssembly(TheElement,_VM);
    }

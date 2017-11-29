@@ -61,6 +61,7 @@ class FMM3D : public FMM
  public:
 
 /** \brief Constructor
+ * \details Constructor using Grid instance
  * \param [in] g Instance of class Grid
  * \param [in] phi Vector containing the level set function at grid nodes.
  * The values are <tt>0</tt> on the interface (from which the distance is computed),
@@ -70,9 +71,9 @@ class FMM3D : public FMM
  * \param [in] HA true if the program must be executed with high accuracy,
  * false otherwise
  */
-   FMM3D(const Grid&         g,
-               Vect<real_t>* phi,
-               bool          HA);
+   FMM3D(const Grid&   g,
+         Vect<real_t>& phi,
+         bool          HA);
 
 /// \brief Initialize heap
 /// \param NarrowPt
@@ -82,9 +83,9 @@ class FMM3D : public FMM
     void solve();
 
 /** \brief Compute the distance from node to interface
- *  \param [in] pt node to treat
- *  \param [in] sign the node's sign
- *  \return distance from node <tt>pt</tt> to interface
+ *  \param [in] pt %Node to treat
+ *  \param [in] sign %Node's sign
+ *  \return Distance from node <tt>pt</tt> to interface
  */
     void Evaluate(IPoint& pt,
                   int     sign);

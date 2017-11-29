@@ -81,11 +81,15 @@ class IPoint
 
    void setValue(real_t v) { _value = Abs(v); }
 
-   void setX(int ii) { _i = ii; }
+   void setX(int i) { _i = i; }
 
-   void setY(int jj)  { _j = jj; }
+   void setY(int j)  { _j = j; }
 
-   void setZ(int kk) { _k = kk; }
+   void setZ(int k) { _k = k; }
+
+   void setXY(int i, int j) { _i = i; _j = j; }
+
+   void setXYZ(int i, int j, int k) { _i = i; _j = j; _k = k; }
 
    void setSgn(int sg) { _sign = sg; }
 
@@ -102,9 +106,11 @@ class IPoint
    void GenerateNeighbour(LocalVect<IPoint,6>& Neighbour);
 };
 
+
 IPoint operator*(const int&    i,
                  const IPoint& p);
 
+ 
 void GenerateDisplacement(LocalVect<IPoint,6>& NXi,
                           bool                 three_D=false);
 

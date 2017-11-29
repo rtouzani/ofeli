@@ -231,6 +231,15 @@ typedef  std::complex<double>  complex_t;
  */
 #define FILENAME_LENGTH                  150
 
+/*! \def MAX_FFT_SIZE
+ *  \ingroup IO
+ *  \brief Maximal size for the FFT Table 
+ *  This table can be used by the FFT for any number of points from 2 up to MAX_FFT_SIZE.
+ *  For example, if MAX_FFT_SIZE = 14, then we can transform anywhere from 
+ *  2 to 2^15 = 32,768 points, using the same sine and cosine table.
+ */
+#define MAX_FFT_SIZE                     15
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 // Macro
 #define XGRAPH_          0

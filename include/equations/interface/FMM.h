@@ -67,7 +67,8 @@ class FMM
    real_t _inf;
    Vect<real_t> _AlivePt, _TAlive, *_phi;
    bool _high_accuracy;
-   size_t _nx, _ny, _nz;
+   int _nx, _ny, _nz;
+   int MaxQuadratic(real_t a, real_t b, real_t c, real_t& x);
 
  public:
 
@@ -83,9 +84,9 @@ class FMM
  *  @param [in] HA <tt>true</tt> if the program must be executed with high accuracy,
  *  \a false otherwise
  */
-    FMM(const Grid&         g,
-              Vect<real_t>* phi,
-              bool          HA=false);
+    FMM(const Grid&   g,
+        Vect<real_t>& phi,
+        bool          HA=false);
 
 /// \brief Destructor
 /// \details FMM class destructor

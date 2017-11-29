@@ -37,13 +37,12 @@ using std::max;
 
 namespace OFELI {
 
-FMM::FMM(const Grid&         g,
-               Vect<real_t>* phi,
-               bool HA)
-    : _high_accuracy(HA)
+FMM::FMM(const Grid&   g,
+         Vect<real_t>& phi,
+         bool          HA)
+    : _phi(&phi), _high_accuracy(HA)
 {
    _inf = std::numeric_limits<real_t>::max();
-   _phi = phi;
    _nx = g.getNx(); _ny = g.getNy(); _nz = g.getNz();
    Point<real_t> pMin(g.getXMin()), pMax(g.getXMax());
    if (_nz==0) {
@@ -65,11 +64,19 @@ FMM::~FMM()
 }
 
 
-int MaxQuadratic(real_t  a,
-                 real_t  b,
-                 real_t  c,
-                 real_t& x)
+int FMM::MaxQuadratic(real_t  a,
+                      real_t  b,
+                      real_t  c,
+                      real_t& x)
 {
+   if (a == 0) {
+      if (b == 0)
+         x = _inf;
+      else
+         x = -c/b;
+      return 1;
+   }
+   
    real_t delta = b*b - 4.0*a*c;
    if (c != 0) {
       if (delta<0)

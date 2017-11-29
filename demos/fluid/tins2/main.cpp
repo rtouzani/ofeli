@@ -5,7 +5,7 @@
                               **********************
 
                  A Finite Element Code for Transient Incompressible
-                       Fluid Flow Simulations in 2-D Geometries
+                         Fluid Flow Simulations in 2-D
 
   ------------------------------------------------------------------------------
 
@@ -40,12 +40,10 @@ int main(int argc, char *argv[])
       exit(1);
    }
    IPF proj(argv[1]);
-   int verbose = proj.getVerbose();
    Mesh mesh(proj.getMeshFile());
    theTimeStep = proj.getTimeStep();
    theFinalTime = proj.getMaxTime();
    int plot_flag=proj.getPlot();
-   double tol=proj.getTolerance();
    double Re=proj.getDouble("Reynolds");
    cout << endl;
    cout << "=================================================================================\n\n";
@@ -64,15 +62,15 @@ int main(int argc, char *argv[])
    Vect<double> u(mesh,"Velocity",0), p(mesh,"Pressure",0,1);
    Vect<double> bc(mesh), bf(mesh), sf(mesh);
    TINS2DT3B eq(mesh,u,p,theTimeStep,Re);
-   eq.setVerbose(verbose);
-   eq.setTolerance(tol);
+   eq.setVerbose(proj.getVerbose());
+   eq.setTolerance(proj.getTolerance());
    Prescription pr(mesh,proj.getDataFile());
    pr.get(INITIAL_FIELD,u);
    eq.setInput(INITIAL_FIELD,u);
 
 // Loop on time steps
    TimeLoop {
-      if (verbose>0)
+      if (proj.getVerbose()>0)
          cout << "Performing step: " << theStep << ", time: " << theTime << endl;
       pr.get(BOUNDARY_CONDITION,bc,theTime);
       eq.setInput(BOUNDARY_CONDITION,bc);
