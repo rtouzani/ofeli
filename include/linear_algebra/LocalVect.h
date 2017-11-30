@@ -37,6 +37,7 @@
 #include "mesh/Element.h"
 #include "mesh/Side.h"
 #include "mesh/Node.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 /*!
@@ -108,7 +109,7 @@ public:
  */
     LocalVect(const Element*  el,
               const Vect<T_>& v,
-                    int       opt=0);
+              int             opt=0);
 
 /** \brief Constructor of a side vector from a global Vect instance.
  *  \details The constructed vector has local numbering of nodes
@@ -120,7 +121,7 @@ public:
  */
     LocalVect(const Side*     sd,
               const Vect<T_>& v,
-                    int       opt=0);
+              int             opt=0);
 
 /// \brief Destructor
     ~LocalVect() { }
@@ -138,7 +139,7 @@ public:
  */
     void getLocal(const Element&  el,
                   const Vect<T_>& v,
-                        int       type);
+                  int             type);
 
 /** \brief Localize an element vector from a global Vect instance.
  *  \details The constructed vector has local numbering of nodes
@@ -150,7 +151,7 @@ public:
  */
     void Localize(const Element*  el,
                   const Vect<T_>& v,
-                        size_t    k=0);
+                  size_t          k=0);
 
 /** \brief Localize a side vector from a global Vect instance.
  *  \details The constructed vector has local numbering of nodes
@@ -162,7 +163,7 @@ public:
  */
     void Localize(const Side*     sd,
                   const Vect<T_>& v,
-                        size_t    k=0);
+                  size_t          k=0);
 
 /// \brief Operator <tt>[]</tt> (Non constant version).
 /// \details <tt>v[i]</tt> starts at <tt>v[0]</tt> to <tt>v[size()-1]</tt>
@@ -295,7 +296,7 @@ LocalVect<T_,N_>::LocalVect(const LocalVect<T_,N_>& v)
 template<class T_,size_t N_>
 LocalVect<T_,N_>::LocalVect(const Element*  el,
                             const Vect<T_>& v,
-                                  int       opt)
+                            int             opt)
 {
    if (opt==0)
       Localize(el,v);
@@ -310,7 +311,7 @@ LocalVect<T_,N_>::LocalVect(const Element*  el,
 template<class T_,size_t N_>
 LocalVect<T_,N_>::LocalVect(const Side*     sd,
                             const Vect<T_>& v,
-                                  int       opt)
+                            int             opt)
 {
    if (opt==0)
       Localize(sd,v);
@@ -325,7 +326,7 @@ LocalVect<T_,N_>::LocalVect(const Side*     sd,
 template<class T_,size_t N_>
 void LocalVect<T_,N_>::getLocal(const Element&  el,
                                 const Vect<T_>& v,
-                                      int       type)
+                                int             type)
 {
    size_t i=0;
    if (type==LINE2) {
@@ -382,7 +383,7 @@ void LocalVect<T_,N_>::getLocal(const Element&  el,
 template<class T_,size_t N_>
 void LocalVect<T_,N_>::Localize(const Element*  el,
                                 const Vect<T_>& v,
-                                      size_t    k)
+                                size_t          k)
 {
    size_t i = 0;
    if (k==0) {
@@ -402,7 +403,7 @@ void LocalVect<T_,N_>::Localize(const Element*  el,
 template<class T_,size_t N_>
 void LocalVect<T_,N_>::Localize(const Side*     sd,
                                 const Vect<T_>& v,
-                                      size_t    k)
+                                size_t          k)
 {
    size_t i = 0;
    if (k==0) {
@@ -541,7 +542,7 @@ LocalVect<T_,N_> operator-(const LocalVect<T_,N_>& x,
  *  \return    a*x
  */
 template<class T_,size_t N_>
-LocalVect<T_,N_> operator*(      T_                a,
+LocalVect<T_,N_> operator*(T_                      a,
                            const LocalVect<T_,N_>& x)
 {
    LocalVect<T_,N_> v(x);
@@ -557,7 +558,7 @@ LocalVect<T_,N_> operator*(      T_                a,
  *  \return    x/a
  */
 template<class T_,size_t N_>
-LocalVect<T_,N_> operator/(      T_                a,
+LocalVect<T_,N_> operator/(T_                      a,
                            const LocalVect<T_,N_>& x)
 {
    LocalVect<T_,N_> v(x);
@@ -614,9 +615,9 @@ template<size_t I_>
 struct _meta_scale
 {
    template<class T_, size_t N_>
-   static void _scale(      T_                a,
+   static void _scale(T_                      a,
                       const LocalVect<T_,N_>& x,
-                            LocalVect<T_,N_>& y)
+                      LocalVect<T_,N_>&       y)
    {
       y[I_] = a*x[I_];
       _meta_scale<I_-1>::_scale(a,x,y);
@@ -628,9 +629,9 @@ template<>
 struct _meta_scale<0>
 {
    template<class T_, size_t N_>
-   static void _scale(      T_                a,
+   static void _scale(T_                      a,
                       const LocalVect<T_,N_>& x,
-                            LocalVect<T_,N_>& y)
+                      LocalVect<T_,N_>&       y)
    {
       y[0] = a*x[0];
    }
@@ -643,9 +644,9 @@ struct _meta_scale<0>
  *  \brief Multiply vector <tt>x</tt> by constant <tt>a</tt> and store result in <tt>y</tt>.
  */
 template<class T_, size_t N_>
-inline void Scale(      T_                a,
+inline void Scale(T_                      a,
                   const LocalVect<T_,N_>& x,
-                        LocalVect<T_,N_>& y)
+                  LocalVect<T_,N_>&       y)
 {
    _meta_scale<N_-1>::_scale(a,x,y);
 }
@@ -690,9 +691,9 @@ template<size_t I_>
 struct _meta_axpy
 {
   template<class T_, size_t N_>
-  static void _axpy(      T_                a,
+  static void _axpy(T_                      a,
                     const LocalVect<T_,N_>& x,
-                          LocalVect<T_,N_>& y)
+                    LocalVect<T_,N_>&       y)
   {
      y[I_] += a*x[I_];
      _meta_axpy<I_-1>::_axpy(a,x,y);
@@ -704,9 +705,9 @@ template<>
 struct _meta_axpy<0>
 {
   template<class T_, size_t N_>
-  static void _axpy(      T_                a,
+  static void _axpy(T_                      a,
                     const LocalVect<T_,N_>& x,
-                          LocalVect<T_,N_>& y)
+                    LocalVect<T_,N_>&       y)
   {
      y[0] += a*x[0];
   }
@@ -718,9 +719,9 @@ struct _meta_axpy<0>
  * \brief Add <tt>a*x</tt> to vector <tt>y</tt>.
  */
 template<class T_, size_t N_>
-inline void Axpy(      T_                a,
+inline void Axpy(T_                      a,
                  const LocalVect<T_,N_>& x,
-                       LocalVect<T_,N_>& y)
+                 LocalVect<T_,N_>&       y)
 {
    _meta_axpy<N_-1>::_axpy(a,x,y);
 }
@@ -734,7 +735,7 @@ struct _meta_xpy
 {
   template<class T_, size_t N_>
   void xpy_(const LocalVect<T_,N_>& x,
-                  LocalVect<T_,N_>& y)
+            LocalVect<T_,N_>&       y)
   {
      y[I_] += x[I_];
      _meta_axpy<I_-1>::_xpy(x,y);
@@ -747,7 +748,7 @@ struct _meta_xpy<0>
 {
   template<class T_, size_t N_>
   void _xpy(const LocalVect<T_,N_>& x,
-                  LocalVect<T_,N_>& y)
+            LocalVect<T_,N_>&       y)
   {
      y[0] += x[0];
   }
@@ -760,7 +761,7 @@ struct _meta_xpy<0>
  */
 template<class T_, size_t N_>
 inline void Xpy(const LocalVect<T_,N_>& x,
-                      LocalVect<T_,N_>& y)
+                LocalVect<T_,N_>&       y)
 {
    _meta_xpy<N_-1>::_xpy(x,y);
 }
@@ -772,7 +773,7 @@ struct _meta_copy
 {
   template<class T_, size_t N_>
   void _copy(const LocalVect<T_,N_>& x,
-                   LocalVect<T_,N_>& y)
+             LocalVect<T_,N_>&       y)
   {
      y[I_] = x[I_];
      _meta_axpy<I_-1>::_xpy(x,y);
@@ -785,7 +786,7 @@ struct _meta_copy<0>
 {
   template<class T_, size_t N_>
   void _copy(const LocalVect<T_,N_>& x,
-                   LocalVect<T_,N_>& y)
+             LocalVect<T_,N_>&       y)
   { y[0] = x[0]; }
 };
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
@@ -797,7 +798,7 @@ struct _meta_copy<0>
  */
 template<class T_, size_t N_>
 inline void Copy(const LocalVect<T_,N_>& x,
-                       LocalVect<T_,N_>& y)
+                 LocalVect<T_,N_>&       y)
 {
    _meta_copy<N_-1>::_copy(x,y);
 }
@@ -808,7 +809,7 @@ inline void Copy(const LocalVect<T_,N_>& x,
  *  \ingroup VectMat
  */
 template<class T_,size_t N_>
-ostream& operator<<(      ostream&          s,
+ostream& operator<<(ostream&                s,
                     const LocalVect<T_,N_>& v)
 {
    s.setf(ios::scientific);

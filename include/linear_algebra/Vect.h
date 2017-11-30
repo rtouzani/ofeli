@@ -60,6 +60,7 @@ using std::setprecision;
 #include "io/fparser/fparser.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Tetra4.h"
+#include "OFELIException.h"
 
 #if defined (USE_EIGEN)
 #include <Eigen/Dense>
@@ -1371,11 +1372,8 @@ void Vect<T_>::set(const T_* v,
 template<class T_>
 void Vect<T_>::setDG(int degree)
 {
-   try {
-      if (_with_mesh==false)
-         THROW_RT("setDG(int): To be used only if a Mesh instance is associated to the vector");
-   }
-   CATCH("Vect");
+   if (_with_mesh==false)
+      throw OFELIException("In Vect::setDG(int): To be used only if a Mesh instance is associated to the vector");
    _dg_degree = degree;
    if (degree<0)
       return;
@@ -1425,18 +1423,12 @@ void Vect<T_>::set(const string&       exp,
    int err;
    real_t d[4];
    PARSE(exp.c_str(),"x");
-   try {
-      for (size_t i=0; i<x.size(); i++) {
-         d[0] = x[i];
-         set(i+1,EVAL(d));
-         try {
-            if ((err=theParser.EvalError()))
-               THROW_RT("set(string,dof): Illegal regular expression. Error code: "+itos(err));
-         }
-         CATCH("Vect");
-      }
+   for (size_t i=0; i<x.size(); i++) {
+      d[0] = x[i];
+      set(i+1,EVAL(d));
+      if ((err=theParser.EvalError()))
+         throw OFELIException("In Vect::set(string,dof): Illegal regular expression. Error code: "+itos(err));
    }
-   CATCH("Vect");
 }
 
 
@@ -1444,35 +1436,26 @@ template <class T_>
 void Vect<T_>::set(const string& exp,
                    size_t        dof)
 {
-   try {
-      if (_theMesh==NULL)
-         THROW_RT("set(string,dof): No mesh is defined");
-   }
-   CATCH_EXIT("Vect");
+   if (_theMesh==NULL)
+      throw OFELIException("In Vect::set(string,dof): No mesh is defined");
    int err;
    real_t d[4];
    PARSE(exp.c_str(),"x,y,z,t");
-   try {
-      if (_dof_type==NODE_FIELD) {
-         mesh_nodes(*_theMesh) {
-            d[0] = The_node.getCoord(1);
-            d[1] = The_node.getCoord(2);
-            d[2] = The_node.getCoord(3);
-            d[3] = _time;
-            set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
-            try {
-               if ((err=theParser.EvalError()))
-                  THROW_RT("set(string,dof): Illegal regular expression. Error code: " + itos(err));
-            }
-            CATCH("Vect");
-         }
+   if (_dof_type==NODE_FIELD) {
+      mesh_nodes(*_theMesh) {
+         d[0] = The_node.getCoord(1);
+         d[1] = The_node.getCoord(2);
+         d[2] = The_node.getCoord(3);
+         d[3] = _time;
+         set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
+         if ((err=theParser.EvalError()))
+            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. Error code: "+itos(err));
       }
-      else if (_dof_type==ELEMENT_FIELD) {
-      }
-      else
-         THROW_RT("set(string,size_t): This member function is for nodewise vectors only.");
    }
-   CATCH("Vect");
+   else if (_dof_type==ELEMENT_FIELD) {
+   }
+   else
+      throw OFELIException("In Vect::set(string,size_t): This member function is for nodewise vectors only.");
 }
 
 
@@ -1482,33 +1465,24 @@ void Vect<T_>::set(Mesh&  ms,
                    size_t dof)
 {
    setMesh(ms);
-   try {
-      if (_theMesh==NULL)
-         THROW_RT("set(ms,string,dof): No mesh is defined");
-   }
-   CATCH_EXIT("Vect");
+   if (_theMesh==NULL)
+      throw OFELIException("In Vect::set(ms,string,dof): No mesh is defined");
    int err;
    real_t d[4];
    PARSE(exp.c_str(),"x,y,z,t");
-   try {
-      if (_dof_type==NODE_FIELD) {
-         mesh_nodes(*_theMesh) {
-            d[0] = The_node.getCoord(1);
-            d[1] = The_node.getCoord(2);
-            d[2] = The_node.getCoord(3);
-            d[3] = _time;
-            set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
-            try {
-               if ((err=theParser.EvalError()))
-                  THROW_RT("set(string,dof): Illegal regular expression. Error code: " + itos(err));
-            }
-            CATCH("Vect");
-         }
+   if (_dof_type==NODE_FIELD) {
+      mesh_nodes(*_theMesh) {
+         d[0] = The_node.getCoord(1);
+         d[1] = The_node.getCoord(2);
+         d[2] = The_node.getCoord(3);
+         d[3] = _time;
+         set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
+         if ((err=theParser.EvalError()))
+            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. Error code: "+itos(err));
       }
-      else
-         THROW_RT("set(string,size_t): This member function is for nodewise vectors only.");
    }
-   CATCH("Vect");
+   else
+      throw OFELIException("In Vect::set(string,size_t): This member function is for nodewise vectors only.");
 }
 
 
@@ -1524,11 +1498,8 @@ void Vect<T_>::set(const Vect<real_t>& x,
       d[0] = x[i];
       d[1] = i + 1;
       set(i+1,theParser.Eval(d));
-      try {
-         if ((err=theParser.EvalError()))
-            THROW_RT("set(Vect,string): Illegal regular expression. Error code: " + itos(err));
-      }
-      CATCH("Vect");
+      if ((err=theParser.EvalError()))
+         throw OFELIException("In Vect::set(Vect,string): Illegal regular expression. Error code: "+itos(err));
    }
 }
 
@@ -2182,11 +2153,8 @@ void Vect<T_>::setNodeBC(Mesh&         m,
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          if (The_node.getCode(dof)==code) {
             set(node_label,dof,theParser.Eval(d));
-            try {
-               if ((err=theParser.EvalError()))
-                  THROW_RT("setNodeBC(Mesh,int,string,size_t): Illegal regular expression. Error code: " + itos(err));
-            }
-            CATCH("Vect");
+            if ((err=theParser.EvalError()))
+               throw OFELIException("In Vect::setNodeBC(Mesh,int,string,size_t): Illegal regular expression. Error code: "+itos(err));
          }
       }
    }
@@ -2206,11 +2174,8 @@ void Vect<T_>::setSideBC(Mesh&   m,
             the_node = The_side(n);
             for (size_t i=1; i<=The_side.getNbDOF(); i++) {
                set(node_label,dof,val);
-               try {
-                  if ((err=theParser.EvalError()))
-                     THROW_RT("setSideBC(Mesh,int,T_,size_t): Illegal regular expression. Error code: " + itos(err));
-               }
-               CATCH("Vect");
+               if ((err=theParser.EvalError()))
+                  throw OFELIException("In Vect::setSideBC(Mesh,int,T_,size_t): Illegal regular expression. Error code: "+itos(err));
             }
          }
       }
@@ -2237,11 +2202,8 @@ void Vect<T_>::setSideBC(Mesh&         m,
             d[2] = The_node.getCoord(3);
             for (size_t i=1; i<=The_side.getNbDOF(); i++) {
                set(node_label,dof,theParser.Eval(d));
-               try {
-                  if ((err=theParser.EvalError()))
-                     THROW_RT("setSideBC(Mesh,int,string,size_t): Illegal regular expression. Error code: " + itos(err));
-               }
-               CATCH("Vect");
+               if ((err=theParser.EvalError()))
+                  throw OFELIException("In Vect::setSideBC(Mesh,int,string,size_t): Illegal regular expression. Error code: "+itos(err));
             }
          }
       }
@@ -2437,34 +2399,31 @@ void Vect<T_>::getGradient(Vect<T_>& v)
    v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
    v.setTime(_time);
    mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==LINE) {
-            a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
-            b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
-            v.set(element_label,a/b);
-         }
-         else if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            aa = (*this)(The_element(1)->n())*t.DSh(1) + 
-                 (*this)(The_element(2)->n())*t.DSh(2) + 
-                 (*this)(The_element(3)->n())*t.DSh(3);
-            v.set(element_label,1,aa.x);
-            v.set(element_label,2,aa.y);
-         }
-         else if (The_element.getShape()==TETRAHEDRON) {
-	    Tetra4 t(the_element);
-            aa = (*this)(The_element(1)->n())*t.DSh(1) + 
-                 (*this)(The_element(2)->n())*t.DSh(2) + 
-	         (*this)(The_element(3)->n())*t.DSh(3) + 
-	         (*this)(The_element(4)->n())*t.DSh(4);
-            v.set(element_label,1,aa.x);
-            v.set(element_label,2,aa.y);
-            v.set(element_label,3,aa.z);
-         }
-         else
-            THROW_RT("getGradient(): This function doesn't work for this element.");
+      if (The_element.getShape()==LINE) {
+         a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
+         b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
+         v.set(element_label,a/b);
       }
-      CATCH("Vect");
+      else if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         aa = (*this)(The_element(1)->n())*t.DSh(1) + 
+              (*this)(The_element(2)->n())*t.DSh(2) + 
+              (*this)(The_element(3)->n())*t.DSh(3);
+         v.set(element_label,1,aa.x);
+         v.set(element_label,2,aa.y);
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Tetra4 t(the_element);
+         aa = (*this)(The_element(1)->n())*t.DSh(1) + 
+              (*this)(The_element(2)->n())*t.DSh(2) + 
+	      (*this)(The_element(3)->n())*t.DSh(3) + 
+	      (*this)(The_element(4)->n())*t.DSh(4);
+         v.set(element_label,1,aa.x);
+         v.set(element_label,2,aa.y);
+         v.set(element_label,3,aa.z);
+      }
+      else
+         throw OFELIException("In Vect::getGradient(): This function doesn't work for this element.");
    }
 }
 
@@ -2478,7 +2437,6 @@ void Vect<T_>::getGradient(Vect<Point<T_> >& v)
    v.setMesh(*_theMesh,_theMesh->getDim());
    v.setTime(_time);
    mesh_elements(*_theMesh) {
-      try {
       if (The_element.getShape()==LINE) {
          a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
          b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
@@ -2500,9 +2458,7 @@ void Vect<T_>::getGradient(Vect<Point<T_> >& v)
          v.set(element_label,aa);
       }
       else
-         THROW_RT("getGradient(): This function doesn't work for this element.");
-      }
-      CATCH_EXIT("Vect");
+         throw OFELIException("In Vect::getGradient(): This function doesn't work for this element.");
    }
 }
 
@@ -2516,42 +2472,39 @@ void Vect<T_>::getCurl(Vect<T_>& v)
    v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
    v.setTime(_time);
    mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==LINE) {
-            a = (*this)(The_element(2)) - (*this)(The_element(1));
-            b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
-            v.set(element_label,a/b);
-         }
-         else if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            du = (*this)(The_element(1)->n())*t.DSh(1) + 
-                 (*this)(The_element(2)->n())*t.DSh(2) + 
-                 (*this)(The_element(3)->n())*t.DSh(3);
-            v.set(element_label,1, du.y);
-	    v.set(element_label,2,-du.x);
-         }
-         else if (The_element.getShape()==TETRAHEDRON) {
-            Tetra4 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),1)*t.DSh(4);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),2)*t.DSh(4);
-            dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),3)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),3)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),3)*t.DSh(4);
-            v.set(element_label,1,dw.y - dv.z);
-            v.set(element_label,2,du.z - dw.x);
-            v.set(element_label,3,dv.x - du.y);
-         }
-         else
-            THROW_RT("getCurl(): This function doesn't work for this element.");
+      if (The_element.getShape()==LINE) {
+         a = (*this)(The_element(2)) - (*this)(The_element(1));
+         b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
+         v.set(element_label,a/b);
       }
-      CATCH("Vect");
+      else if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         du = (*this)(The_element(1)->n())*t.DSh(1) + 
+              (*this)(The_element(2)->n())*t.DSh(2) + 
+              (*this)(The_element(3)->n())*t.DSh(3);
+         v.set(element_label,1, du.y);
+         v.set(element_label,2,-du.x);
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Tetra4 t(the_element);
+         du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),1)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),1)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),1)*t.DSh(4);
+         dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),2)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),2)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),2)*t.DSh(4);
+         dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),3)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),3)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),3)*t.DSh(4);
+         v.set(element_label,1,dw.y - dv.z);
+         v.set(element_label,2,du.z - dw.x);
+         v.set(element_label,3,dv.x - du.y);
+      }
+      else
+         throw OFELIException("In Vect::getCurl(): This function doesn't work for this element.");
    }
 }
 
@@ -2565,40 +2518,37 @@ void Vect<T_>::getCurl(Vect<Point<T_> >& v)
    v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
    v.setTime(_time);
    mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==LINE) {
-            a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
-            b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
-            v.set(element_label,a/b);
-         }
-         else if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            du = (*this)(The_element(1)->n())*t.DSh(1) + 
-                 (*this)(The_element(2)->n())*t.DSh(2) + 
-                 (*this)(The_element(3)->n())*t.DSh(3);
-            v.set(element_label,1, du.y);
-            v.set(element_label,2,-du.x);
-         }
-         else if (The_element.getShape()==TETRAHEDRON) {
-            Tetra4 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),1)*t.DSh(4);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),2)*t.DSh(4);
-            dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),3)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),3)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),3)*t.DSh(4);
-            v.set(element_label,Point<T_>(dw.y-dv.z,du.z-dw.x,dv.x-du.y));
-         }
-         else
-            THROW_RT("getCurl(): This function doesn't work for this element.");
+      if (The_element.getShape()==LINE) {
+         a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
+         b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
+         v.set(element_label,a/b);
       }
-      CATCH("Vect");
+      else if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         du = (*this)(The_element(1)->n())*t.DSh(1) + 
+              (*this)(The_element(2)->n())*t.DSh(2) + 
+              (*this)(The_element(3)->n())*t.DSh(3);
+         v.set(element_label,1, du.y);
+         v.set(element_label,2,-du.x);
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Tetra4 t(the_element);
+         du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),1)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),1)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),1)*t.DSh(4);
+         dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),2)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),2)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),2)*t.DSh(4);
+         dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),3)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),3)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),3)*t.DSh(4);
+         v.set(element_label,Point<T_>(dw.y-dv.z,du.z-dw.x,dv.x-du.y));
+      }
+      else
+         throw OFELIException("In Vect::getCurl(): This function doesn't work for this element.");
    }
 }
 
@@ -2606,30 +2556,24 @@ void Vect<T_>::getCurl(Vect<Point<T_> >& v)
 template <class T_>
 void Vect<T_>::getSCurl(Vect<T_>& v)
 {
-   try {
-      if (_theMesh->getDim()==1 || _theMesh->getDim()==3)
-         THROW_RT("getSCurl(): This function is valid for 2-D only.");
-   }
-   CATCH("Vect");
+   if (_theMesh->getDim()==1 || _theMesh->getDim()==3)
+      throw OFELIException("In Vect::getSCurl(): This function is valid for 2-D only.");
    Point<T_> du, dv;
    v.setMesh(*_theMesh,1);
    v.setTime(_time);
    mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3);
-            v.set(element_label,dv.x - du.y);
-         }
-         else
-            THROW_RT("getSCurl(): This function doesn't work for this element");
+      if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),1)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),1)*t.DSh(3);
+         dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),2)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),2)*t.DSh(3);
+         v.set(element_label,dv.x - du.y);
       }
-      CATCH("Vect");
+      else
+         throw OFELIException("In Vect::getSCurl(): This function doesn't work for this element");
    }
 }
 
@@ -2643,42 +2587,39 @@ void Vect<T_>::getDivergence(Vect<T_>& v)
    v.setMesh(*_theMesh,1);
    v.setTime(_time);
    mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==LINE) {
-            a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
-            b = The_element(2)->getX() - The_element(1)->getX();
-            v.set(element_label,a/b);
-         }
-         else if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3);
-            v.set(element_label,du.x + dv.y);
-         }
-         else if (The_element.getShape()==TETRAHEDRON) {
-            Tetra4 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),1)*t.DSh(4);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),2)*t.DSh(4);
-            dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),3)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),3)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),3)*t.DSh(4);
-            v.set(element_label,du.x + dv.y + dw.z);
-         }
-         else
-            THROW_RT("getDivergence(): This function doesn't work for this element.");
+      if (The_element.getShape()==LINE) {
+         a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
+         b = The_element(2)->getX() - The_element(1)->getX();
+         v.set(element_label,a/b);
       }
-      CATCH("Vect");
+      else if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),1)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),1)*t.DSh(3);
+         dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),2)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),2)*t.DSh(3);
+         v.set(element_label,du.x + dv.y);
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Tetra4 t(the_element);
+         du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),1)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),1)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),1)*t.DSh(4);
+         dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),2)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),2)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),2)*t.DSh(4);
+         dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
+              (*this)(The_element(2)->n(),3)*t.DSh(2) + 
+              (*this)(The_element(3)->n(),3)*t.DSh(3) + 
+              (*this)(The_element(4)->n(),3)*t.DSh(4);
+         v.set(element_label,du.x + dv.y + dw.z);
+      }
+      else
+         throw OFELIException("In Vect::getDivergence(): This function doesn't work for this element.");
    }
 }
 

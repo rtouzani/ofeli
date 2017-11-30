@@ -89,6 +89,7 @@ XMLSP_OBJS = \
 			io/xmlsp/xmlsp.o
 
 LINEAR_ALGEBRA_OBJS = \
+			linear_algebra/FFT.o \
 			linear_algebra/GraphOfMatrix.o
 
 MESH_OBJS = \

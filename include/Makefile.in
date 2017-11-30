@@ -335,8 +335,10 @@ AUTOMAKE_OPTIONS = no-dependencies
 SUBDIRS = equations shape_functions io linear_algebra mesh post solvers util
 
 #includedir = $(pkgincludedir)
-pkginclude_HEADERS = OFELI.h \
+pkginclude_HEADERS = \
+			OFELI.h \
 			OFELI_Config.h \
+			OFELIException.h \
 			config.h.in \
 			config.h \
 			datadir.h \

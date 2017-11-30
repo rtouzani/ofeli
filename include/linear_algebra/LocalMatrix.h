@@ -39,6 +39,7 @@
 #include "linear_algebra/SkMatrix.h"
 #include "linear_algebra/SkSMatrix.h"
 #include "linear_algebra/SpMatrix.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 /*!
@@ -83,21 +84,21 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
  *  @param [in] el Pointer to Element
  *  @param [in] a Global matrix as instance of class SpMatrix.
  */
-    LocalMatrix(      Element*      el,
+    LocalMatrix(Element*            el,
                 const SpMatrix<T_>& a);
 
 /** \brief Constructor of a local matrix associated to element from a SkMatrix
  *  @param [in] el Pointer to Element
  *  @param [in] a Global matrix as instance of class SkMatrix.
  */
-    LocalMatrix(      Element*      el,
+    LocalMatrix(Element*            el,
                 const SkMatrix<T_>& a);
 
 /** \brief Constructor of a local matrix associated to element from a SkSMatrix
  *  @param [in] el Pointer to Element
  *  @param [in] a Global matrix as instance of class SkSMatrix.
  */
-    LocalMatrix(      Element*       el,
+    LocalMatrix(Element*             el,
                 const SkSMatrix<T_>& a);
 
 /// Destructor
@@ -128,7 +129,7 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
  *  @param [in] a Global matrix as instance of class SpMatrix.
  *  This function is called by its corresponding constructor.
  */
-    void Localize(      Element*      el,
+    void Localize(Element*            el,
                   const SpMatrix<T_>& a);
 
 /** \brief Initialize matrix as element matrix from global SkMatrix
@@ -136,7 +137,7 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
  *  @param [in] a Global matrix as instance of class SkMatrix.
  *  This function is called by its corresponding constructor.
  */
-    void Localize(      Element*      el,
+    void Localize(Element*            el,
                   const SkMatrix<T_>& a);
 
 /** \brief Initialize matrix as element matrix from global SkSMatrix.
@@ -144,8 +145,8 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
  *  @param [in] a Global matrix as instance of class SkSMatrix.
  *  This function is called by its corresponding constructor.
  */
-    void Localize(      Element*       el,
-                  const       SkSMatrix<T_>& a);
+    void Localize(Element*             el,
+                  const SkSMatrix<T_>& a);
 
 /// \brief Operator <tt>=</tt>
 /// \details Copy instance <tt>m</tt> into current instance.
@@ -188,7 +189,7 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
  *  @param [out] y Resulting vector (<tt>y += a * x</tt>)
  */
     void MultAdd(const LocalVect<T_,NC_>& x,
-                       LocalVect<T_,NR_>& y);
+                 LocalVect<T_,NR_>&       y);
 
 /** \brief Multiply matrix by scaled vector and add result to vector.
  *  @param [in] a Constant to premultiply by vector <tt>x</tt>.
@@ -197,14 +198,14 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
  */
     void MultAddScal(const T_&                a,
                      const LocalVect<T_,NC_>& x,
-                           LocalVect<T_,NR_>& y);
+                     LocalVect<T_,NR_>&       y);
 
 /** \brief Multiply matrix by vector.
  *  @param [in] x Vector to multiply matrix by.
  *  @param [out] y Resulting vector.
  */
     void Mult(const LocalVect<T_,NC_>& x,
-                    LocalVect<T_,NR_>& y);
+              LocalVect<T_,NR_>&       y);
 
 /// \brief Symmetrize matrix
 /// \details Fill upper triangle to form a symmetric matrix.
@@ -283,7 +284,7 @@ LocalMatrix<T_,NR_,NC_>::LocalMatrix(const LocalMatrix<T_,NR_,NC_>& m)
 
 
 template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix(      Element*      el,
+LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*            el,
                                      const SpMatrix<T_>& a)
 {
    Localize(el,a);
@@ -291,15 +292,15 @@ LocalMatrix<T_,NR_,NC_>::LocalMatrix(      Element*      el,
 
 
 template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix(      Element* el,
-                                     const SkMatrix<T_>&  a)
+LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*            el,
+                                     const SkMatrix<T_>& a)
 {
    Localize(el,a);
 }
 
 
 template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix(      Element*       el,
+LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*             el,
                                      const SkSMatrix<T_>& a)
 {
    Localize(el,a);
@@ -311,11 +312,8 @@ template<class T_,size_t NR_,size_t NC_>
 void LocalMatrix<T_,NR_,NC_>::set(int opt)
 {
    if (opt==IDENTITY) {
-      try {
-         if (NR_!=NC_)
-            THROW_RT("set(opt): This argument is valid for square matrices only.");
-      }
-      CATCH_EXIT("LocalMatrix");
+      if (NR_!=NC_)
+         throw OFELIException("In LocalMatrix::set(opt): This argument is valid for square matrices only.");
       for (size_t i=0; i<NR_*NC_; i++)
          _a[i] = 0;
       for (size_t j=0; j<NR_; j++)
@@ -326,7 +324,7 @@ void LocalMatrix<T_,NR_,NC_>::set(int opt)
 
 
 template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Localize(      Element*      el,
+void LocalMatrix<T_,NR_,NC_>::Localize(Element*            el,
                                        const SpMatrix<T_>& a)
 {
    for (size_t n=1; n<=el->getNbNodes(); n++) {
@@ -339,7 +337,7 @@ void LocalMatrix<T_,NR_,NC_>::Localize(      Element*      el,
 
 
 template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Localize(      Element*      el,
+void LocalMatrix<T_,NR_,NC_>::Localize(Element*            el,
                                        const SkMatrix<T_>& a)
 {
    for (size_t n=1; n<=el->getNbNodes(); n++) {
@@ -352,7 +350,7 @@ void LocalMatrix<T_,NR_,NC_>::Localize(      Element*      el,
 
 
 template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Localize(      Element*       el,
+void LocalMatrix<T_,NR_,NC_>::Localize(Element*             el,
                                        const SkSMatrix<T_>& a)
 {
    for (size_t n=1; n<=el->getNbNodes(); n++) {
@@ -453,7 +451,7 @@ LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator/=(const T_& x)
 
 template<class T_,size_t NR_,size_t NC_>
 void LocalMatrix<T_,NR_,NC_>::MultAdd(const LocalVect<T_,NC_>& x,
-                                            LocalVect<T_,NR_>& y)
+                                      LocalVect<T_,NR_>&       y)
 {
    size_t k=0;
    for (size_t i=0; i<NR_; i++)
@@ -465,7 +463,7 @@ void LocalMatrix<T_,NR_,NC_>::MultAdd(const LocalVect<T_,NC_>& x,
 template<class T_,size_t NR_,size_t NC_>
 void LocalMatrix<T_,NR_,NC_>::MultAddScal(const T_&                a,
                                           const LocalVect<T_,NC_>& x,
-                                                LocalVect<T_,NR_>& y)
+                                          LocalVect<T_,NR_>&       y)
 {
    size_t k=0;
    for (size_t i=0; i<NR_; i++)
@@ -476,7 +474,7 @@ void LocalMatrix<T_,NR_,NC_>::MultAddScal(const T_&                a,
 
 template<class T_,size_t NR_,size_t NC_>
 void LocalMatrix<T_,NR_,NC_>::Mult(const LocalVect<T_,NC_>& x,
-                                         LocalVect<T_,NR_>& y)
+                                   LocalVect<T_,NR_>&       y)
 {
    y = 0;
    MultAdd(x,y);
@@ -496,18 +494,12 @@ template<class T_,size_t NR_,size_t NC_>
 int LocalMatrix<T_,NR_,NC_>::Factor()
 {
    register size_t j, k;
-   try {
-      if (NR_!=NC_)
-         THROW_RT("Factor(): Can't factor a rectangle matrix.");
-   }
-   CATCH_EXIT("LocalMatrix");
+   if (NR_!=NC_)
+      throw OFELIException("In LocalMatrix::Factor(): Can't factor a rectangle matrix.");
    for (size_t i=1; i<NR_; ++i) {
       for (j=1; j<=i; j++) {
-         try {
-            if (Abs(_a[NR_*(j-1)+j-1]) < OFELI_EPSMCH)
-               THROW_RT("Factor(): The " + itos(i) + "-th pivot is too small.");
-         }
-         CATCH_EXIT("LocalMatrix");
+         if (Abs(_a[NR_*(j-1)+j-1]) < OFELI_EPSMCH)
+            throw OFELIException("In LocalMatrix::Factor(): The "+itos(i)+"-th pivot is too small.");
          _a[NR_*i+j-1] /= _a[NR_*(j-1)+j-1];
          for (k=0; k<j; k++)
             _a[NR_*i+j] -= _a[NR_*i+k]*_a[NR_*k+j];
@@ -524,11 +516,8 @@ template<class T_,size_t NR_,size_t NC_>
 int LocalMatrix<T_,NR_,NC_>::Solve(LocalVect<T_,NR_>& b)
 {
    register int i, j;
-   try {
-      if (NR_!=NC_)
-         THROW_RT("Factor(): Can't solve with a rectangle matrix.");
-   }
-   CATCH_EXIT("LocalMatrix");
+   if (NR_!=NC_)
+      throw OFELIException("In LocalMatrix::Factor(): Can't solve with a rectangle matrix.");
    for (i=0; i<int(NR_); i++) {
       T_ s = 0;
       for (j=0; j<i; j++)
@@ -536,11 +525,8 @@ int LocalMatrix<T_,NR_,NC_>::Solve(LocalVect<T_,NR_>& b)
       b[i] -= s;
    }
    for (i=NR_-1; i>-1; i--) {
-      try {
-         if (Abs(_a[NR_*i+i]) < OFELI_EPSMCH)
-           THROW_RT("Solve(b): The " + itos(i+1) + "-th diagonal entry is too small.");
-      }
-      CATCH_EXIT("LocalMatrix");
+      if (Abs(_a[NR_*i+i]) < OFELI_EPSMCH)
+         throw OFELIException("In LocalMatrix::Solve(b): The "+itos(i+1)+"-th diagonal entry is too small.");
       b[i] /= _a[NR_*i+i];
       for (j=0; j<i; j++)
          b[j] -= b[i] * _a[NR_*j+i];
@@ -561,11 +547,8 @@ int LocalMatrix<T_,NR_,NC_>::FactorAndSolve(LocalVect<T_,NR_>& b)
 template<class T_,size_t NR_,size_t NC_>
 void LocalMatrix<T_,NR_,NC_>::Invert(LocalMatrix<T_,NR_,NC_>& A)
 {
-   try {
-      if (NR_!=NC_)
-         THROW_RT("Invert(A): This function is valid for square matrices only.");
-   }
-   CATCH_EXIT("LocalMatrix");
+   if (NR_!=NC_)
+      throw OFELIException("In LocalMatrix::Invert(A): This function is valid for square matrices only.");
    LocalVect<T_,NR_> b;
    Factor();
    for (size_t i=1; i<=NR_; i++) {
@@ -600,7 +583,7 @@ T_ LocalMatrix<T_,NR_,NC_>::getInnerProduct(const LocalVect<T_,NC_>& x,
     \return <tt>a*x</tt>
  */
 template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> operator*(      T_                       a,
+LocalMatrix<T_,NR_,NC_> operator*(T_                             a,
                                   const LocalMatrix<T_,NR_,NC_>& x)
 {
    LocalMatrix<T_,NR_,NC_> z;
@@ -686,7 +669,7 @@ LocalMatrix<T_,NR_,NC_> operator-(const LocalMatrix<T_,NR_,NC_>& x,
 /// \brief Output vector in output stream
 /// \ingroup VectMat
 template<class T_, size_t NR_, size_t NC_>
-ostream& operator<<(      ostream&                 s,
+ostream& operator<<(ostream&                       s,
                     const LocalMatrix<T_,NR_,NC_>& a)
 {
    s.width(6);
