@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -35,6 +35,7 @@
 #include "mesh/Node.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "io/fparser/fparser.h"
+#include "OFELIException.h"
 
 extern FunctionParser theParser;
 
@@ -51,17 +52,14 @@ Element::Element()
 }
 
 
-Element::Element(      size_t  label,
+Element::Element(size_t        label,
                  const string& shape)
         : _active(true), _nb_nodes(0), _nb_eq(0), _nb_sides(0), _label(label),
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
           _code(1), _parent(NULL)
 {
-   try {
-      if (label<1)
-         THROW_RT("Element(size_t,string): Illegal element label " + itos(label));
-   }
-   CATCH("Element");
+   if (label<1)
+      throw OFELIException("Element::Element(size_t,string): Illegal element label "+itos(label));
    shape_index(shape);
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
@@ -75,29 +73,23 @@ Element::Element(size_t label,
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
           _code(1), _shape(shape), _parent(NULL)
 {
-   try {
-      if (label<1)
-         THROW_RT("Element(size_t,int): Illegal element label " + itos(label));
-   }
-   CATCH("Element");
+   if (label<1)
+      throw OFELIException("Element::Element(size_t,int): Illegal element label "+itos(label));
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
       _neig_el[i] = NULL;
 }
 
 
-Element::Element(      size_t  label,
+Element::Element(size_t        label,
                  const string& shape,
-                       int     c)
+                 int           c)
         : _active(true), _nb_nodes(0), _nb_eq(0), _nb_sides(0), _label(label),
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
           _code(c), _parent(NULL)
 {
-   try {
-      if (label<1)
-         THROW_RT("Element(size_t,string,int): Illegal element label " + itos(label));
-   }
-   CATCH("Element");
+   if (label<1)
+      throw OFELIException("Element::Element(size_t,string,int): Illegal element label "+itos(label));
    shape_index(shape);
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
@@ -112,11 +104,8 @@ Element::Element(size_t label,
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
           _code(c), _shape(shape), _parent(NULL)
 {
-   try {
-      if (label<1)
-         THROW_RT("Element(size_t,int,int): Illegal element label " + itos(label));
-   }
-   CATCH("Element");
+   if (label<1)
+      throw OFELIException("Element::Element(size_t,int,int): Illegal element label " + itos(label));
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
       _neig_el[i] = NULL;
@@ -236,11 +225,8 @@ int Element::setSide(size_t  n,
 
 void Element::Add(Node* node)
 {
-   try {
-      if (!node)
-         THROW_RT("Add(Node *): Trying to add an undefined node");
-   }
-   CATCH("Element");
+   if (!node)
+      throw OFELIException("Element::Add(Node *): Trying to add an undefined node");
    _node[_nb_nodes++] = node;
    _nb_eq += node->getNbDOF();
 }
@@ -260,12 +246,9 @@ void Element::Add(Node* node,
 void Element::Replace(size_t label,
                       Side*  side)
 {
-   try {
-      if (!side)
-         THROW_RT("Replace(size_t,Side *): Trying to replace " + itos(label) + 
-                  "-th side by an undefined side.");
-   }
-   CATCH("Element");
+   if (!side)
+      throw OFELIException("Element::Replace(size_t,Side *): Trying to replace "+itos(label) + 
+                           "-th side by an undefined side.");
    _side[label-1] = side;
 }
 
@@ -273,12 +256,9 @@ void Element::Replace(size_t label,
 void Element::Replace(size_t label,
                       Node*  node)
 {
-   try {
-      if (!node)
-         THROW_RT("Replace(size_t,Node *): Trying to replace " + itos(label) +
-                  "-th node by an undefined node.");
-   }
-   CATCH("Element");
+   if (!node)
+      throw OFELIException("Element::Replace(size_t,Node *): Trying to replace "+itos(label) +
+                           "-th node by an undefined node.");
    _node[label-1] = node;
 }
 
@@ -286,28 +266,19 @@ void Element::Replace(size_t label,
 void Element::Add(Side* sd)
 {
    Node *nd1=(*sd)(1), *nd2=(*sd)(2);
-   try {
-      if (!sd)
-         THROW_RT("Add(Side *): Trying to add an undefined side.");
-   }
-   CATCH("Element");
+   if (!sd)
+      throw OFELIException("Element::Add(Side *): Trying to add an undefined side.");
 
    switch (_shape) {
 
       case LINE:
          _nb_sides = 0;
-         try {
-            THROW_RT("Add(Side *): Shape of side is incompatible with element.");
-         }
-         CATCH("Element");
+         throw OFELIException("Element::Add(Side *): Shape of side is incompatible with element.");
          break;
 
       case TRIANGLE:
-         try {
-            if (sd->getShape()!=LINE)
-               THROW_RT("Add(Side *): Shape of side is incompatible with element.");
-         }
-         CATCH("Element");
+         if (sd->getShape()!=LINE)
+            throw OFELIException("Element::Add(Side *): Shape of side is incompatible with element.");
          if ( (nd1==_node[0] && nd2==_node[1]) || (nd1==_node[1] && nd2==_node[0]) )
             _side[0] = sd;
          if ( (nd1==_node[1] && nd2==_node[2]) || (nd1==_node[2] && nd2==_node[1]) )
@@ -318,11 +289,8 @@ void Element::Add(Side* sd)
          break;
 
       case QUADRILATERAL:
-         try {
-            if (sd->getShape()!=LINE)
-               THROW_RT("Add(Side *): Shape of side is incompatible with element.");
-         }
-         CATCH("Element");
+         if (sd->getShape()!=LINE)
+            throw OFELIException("Element::Add(Side *): Shape of side is incompatible with element.");
          if ( (nd1==_node[0] && nd2==_node[1]) || (nd1==_node[1] && nd2==_node[0]) )
             _side[0] = sd;
          if ( (nd1==_node[1] && nd2==_node[2]) || (nd1==_node[2] && nd2==_node[1]) )
@@ -335,22 +303,16 @@ void Element::Add(Side* sd)
          break;
 
       case TETRAHEDRON:
-         try {
-            if (sd->getShape()!=TRIANGLE)
-               THROW_RT("Add(Side *): Shape of side is incompatible with element.");
-         }
-         CATCH("Element");
+         if (sd->getShape()!=TRIANGLE)
+            throw OFELIException("Element::Add(Side *): Shape of side is incompatible with element.");
          if ( (nd1==_node[2] && nd2==_node[0]) || (nd1==_node[0] && nd2==_node[2]) )
             _side[0] = sd;
          _nb_sides = 4;
          break;
 
       case HEXAHEDRON:
-         try {
-            if (sd->getShape()!=QUADRILATERAL)
-               THROW_RT("Add(Side *): Shape of side is incompatible with element.");
-         }
-         CATCH("Element");
+         if (sd->getShape()!=QUADRILATERAL)
+            throw OFELIException("Element::Add(Side *): Shape of side is incompatible with element.");
          _nb_sides = 6;
          break;
    }
@@ -361,11 +323,8 @@ void Element::Add(Side* sd,
                   int   k)
 {
    if (k>0) {
-      try {
-         if (!sd)
-            THROW_RT("Add(Side *,int): Trying to add an undefined side.");
-      }
-      CATCH("Element");
+      if (!sd)
+         throw OFELIException("Element::Add(Side *,int): Trying to add an undefined side.");
       _side[k-1] = sd;
    }
 }
@@ -489,11 +448,8 @@ real_t Element::getMeasure() const
             x[0] = _node[0]->getCoord();
             x[1] = _node[1]->getCoord();
             m = (x[1].x-x[0].x)*(x[1].x-x[0].x) - (x[1].y-x[0].y)*(x[1].y-x[0].y);
-            try {
-               if (m==0)
-                  THROW_RT("getMeasure(): Length of line " + itos(_label) + " is null.");
-            }
-            CATCH("Element");
+            if (m==0)
+               throw OFELIException("Element::getMeasure(): Length of line "+itos(_label)+" is null.");
             break;
          }
 
@@ -503,17 +459,11 @@ real_t Element::getMeasure() const
             x[1] = _node[1]->getCoord();
             x[2] = _node[2]->getCoord();
             m = 0.5*((x[1].x-x[0].x)*(x[2].y-x[0].y) - (x[1].y-x[0].y)*(x[2].x-x[0].x));
-            try {
-               if (m==0)
-                  THROW_RT("getMeasure(): Area of triangle " + itos(_label) + " is null.");
-            }
-            CATCH("Element");
-            try {
-               if (m<0)
-                  THROW_RT("getMeasure(): Area of triangle " + itos(_label) +
-                           " is negative. Triangle is incorrectly oriented.");
-            }
-            CATCH("Element");
+            if (m==0)
+               throw OFELIException("Element::getMeasure(): Area of triangle "+itos(_label)+" is null.");
+            if (m<0)
+               throw OFELIException("Element::getMeasure(): Area of triangle "+itos(_label) +
+                                    " is negative. Triangle is incorrectly oriented.");
             break;
          }
 
@@ -547,17 +497,11 @@ real_t Element::getMeasure() const
                IJ(i+1,j+1) = J(k+1,j+1) * J(i+1,k+1) - J(i+1,j+1) * J(k+1,k+1);
             }
             m = OFELI_SIXTH*(J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3));
-            try {
-               if (m==0)
-                  THROW_RT("getMeasure(): Area of tetrahedron " + itos(_label) + " is null.");
-            }
-            CATCH("Element");
-            try {
-                if (m<0)
-                  THROW_RT("getMeasure(): Area of tetrahedron " + itos(_label) +
-                           " is negative. Tetrahedron is incorrectly oriented.");
-            }
-            CATCH("Element");
+            if (m==0)
+               throw OFELIException("Element::getMeasure(): Area of tetrahedron "+itos(_label)+" is null.");
+             if (m<0)
+                throw OFELIException("Element::getMeasure(): Area of tetrahedron "+itos(_label) +
+                                     " is negative. Tetrahedron is incorrectly oriented.");
             break;
          }
 
@@ -577,17 +521,11 @@ real_t Element::getMeasure() const
                dydt += dshl[i].y*x[i].y;
             }
             m = dxds*dydt - dxdt*dyds;
-            try {
-               if (m==0)
-                  THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + " is null.");
-            }
-            CATCH("Element");
-            try {
-               if (m<0)
-                  THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) +
-                           " is negative. Quadrilateral is incorrectly oriented.");
-            }
-            CATCH("Element");
+            if (m==0)
+               throw OFELIException("Element::getMeasure(): Area of quadrilateral "+itos(_label)+" is null.");
+            if (m<0)
+                throw OFELIException("Element::getMeasure(): Area of quadrilateral " + itos(_label) +
+                                     " is negative. Quadrilateral is incorrectly oriented.");
             break;
          }
 
@@ -620,17 +558,11 @@ real_t Element::getMeasure() const
                IJ(i+1,j+1) = J(k+1,j+1) * J(i+1,k+1) - J(i+1,j+1) * J(k+1,k+1);
             }
             m = J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3);
-            try {
-               if (m==0)
-                  THROW_RT("getMeasure(): Area of hexahedron " + itos(_label) + " is null.");
-            }
-            CATCH("Element");
-            try {
-               if (m<0)
-                  THROW_RT("getMeasure(): Area of hexahedron " + itos(_label) +
-                           " is negative. Hexahedron is incorrectly oriented.");
-            }
-            CATCH("Element");
+            if (m==0)
+               throw OFELIException("Element::getMeasure(): Area of hexahedron "+itos(_label)+" is null.");
+            if (m<0)
+               throw OFELIException("Element::getMeasure(): Area of hexahedron "+itos(_label) +
+                                    " is negative. Hexahedron is incorrectly oriented.");
             break;
          }
       }
@@ -644,25 +576,23 @@ Point<real_t> Element::getUnitNormal(size_t i) const
    Point<real_t> N, x[4];
    real_t s=0.;
    i--;
-   try {
-      if (_shape==TRIANGLE) {
-         j = (i+1)%3;
-         x[0] = _node[i]->getCoord();
-         x[1] = _node[j]->getCoord();
-         N = Point<real_t>(x[1].y-x[0].y,x[0].x-x[1].x);
-         s = sqrt(N*N);
-      }
-      else if (_shape==QUADRILATERAL) {
-         j = (i+1)%4;
-         x[0] = _node[i]->getCoord();
-         x[1] = _node[j]->getCoord();
-         N = Point<real_t>(x[1].y-x[0].y,x[0].x-x[1].x);
-         s = sqrt(N*N);
-      }
-      else
-         THROW_RT("getUnitNormal(size_t): Calculation of outward normal is not available for element shape " + itos(_shape));
+   if (_shape==TRIANGLE) {
+      j = (i+1)%3;
+      x[0] = _node[i]->getCoord();
+      x[1] = _node[j]->getCoord();
+      N = Point<real_t>(x[1].y-x[0].y,x[0].x-x[1].x);
+      s = sqrt(N*N);
    }
-   CATCH("Element");
+   else if (_shape==QUADRILATERAL) {
+      j = (i+1)%4;
+      x[0] = _node[i]->getCoord();
+      x[1] = _node[j]->getCoord();
+      N = Point<real_t>(x[1].y-x[0].y,x[0].x-x[1].x);
+      s = sqrt(N*N);
+   }
+   else
+      throw OFELIException("Element::getUnitNormal(size_t): Calculation of outward normal "
+                           "is not available for element shape " + itos(_shape));
    return N*(1./s);
 }
 
@@ -696,11 +626,8 @@ void Element::setChild(Element* el)
 
 Element *Element::getChild(size_t i) const
 {
-   try {
-      if (i>_nb_childs)
-         THROW_RT("getChild(size_t): Number of children is too large: " + itos(i));
-   }
-   CATCH("Element");
+   if (i>_nb_childs)
+      throw OFELIException("Element::getChild(size_t): Number of children is too large: "+itos(i));
    return _child[i-1];
 }
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,6 +55,7 @@ using std::setprecision;
 #include "util/util.h"
 #include "linear_algebra/DMatrix.h"
 #include "mesh/Material.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -296,23 +297,14 @@ void getEasymesh(string file,
    ifstream    ef, nf, sf;
 
    nf.open((file+".n").c_str());
-   try {
-      if (nf.fail())
-         THROW_RT(" File " + file + ".n not found.");
-   }
-   CATCH("getEasymesh(...):");
+   if (nf.fail())
+      throw OFELIException("getEasyMesh(...): File " + file + ".n not found.");
    ef.open((file+".e").c_str());
-   try {
-      if (ef.fail())
-         THROW_RT(" File " + file + ".e not found.");
-   }
-   CATCH("getEasymesh(...):");
+   if (ef.fail())
+      throw OFELIException("getEasyMesh(...): File " + file + ".e not found.");
    sf.open((file+".s").c_str());
-   try {
-      if (sf.fail())
-         THROW_RT(" File " + file + ".s not found.");
-   }
-   CATCH("getEasymesh(...):");
+   if (sf.fail())
+      throw OFELIException("getEasyMesh(...): File " + file + ".s not found.");
    i = 0;
    sf >> nb_sides;
    for (n=0; n<nb_sides; n++) {
@@ -389,11 +381,8 @@ void getGambit(string file,
    sh[PENTAHEDRON] = "penta";
 
    ifstream mf(file.c_str());
-   try {
-      if (mf.fail())
-         THROW_RT(" File " + file + " not found.");
-   }
-   CATCH_EXIT("getGambit(...):");
+   if (mf.fail())
+      throw OFELIException("getGambith(...): File " + file + " not found.");
 
    for (size_t i=0; i<6; i++)
       std::getline(mf,line);
@@ -487,55 +476,52 @@ void getGambit(string file,
         if (n1 == 1) {
            mf >> n3 >> n4;
            theElement = mesh(n5);
-           try {
-              if (TheElement.getShape()==TRIANGLE && TheElement.getNbNodes()==3) {
-                 theSide = new Side(++sd_label,LINE);
-                 TheSide.Add(mesh[TheElement(n4    )->n()]);
-                 TheSide.Add(mesh[TheElement(n4%3+1)->n()]);
-              }
-              else if (TheElement.getShape()==QUADRILATERAL && TheElement.getNbNodes()==4) {
-                 theSide = new Side(++sd_label,LINE);
-                 theSide->Add(mesh[TheElement(n4    )->n()]);
-                 theSide->Add(mesh[TheElement(n4%4+1)->n()]);
-              }
-              else if (TheElement.getShape()==TETRAHEDRON && TheElement.getNbNodes()==4) {
-                 if (n4==1)
-                    nn1 = 2, nn2 = 1, nn3 = 3;
-                 else if (n4==2)
-                    nn1 = 1, nn2 = 2, nn3 = 4;
-                 else if (n4==3)
-                    nn1 = 2, nn2 = 3, nn3 = 4;
-                 else if (n4==4)
-                    nn1 = 3, nn2 = 1, nn3 = 4;
-                 theSide = new Side(++sd_label,TRIANGLE);
-                 TheSide.Add(mesh[TheElement(nn1)->n()]);
-                 TheSide.Add(mesh[TheElement(nn2)->n()]);
-                 TheSide.Add(mesh[TheElement(nn3)->n()]);
-              }
-              else if (TheElement.getShape()==HEXAHEDRON && TheElement.getNbNodes()==8) {
-                 if (n4==1)
-                    nn1=1, nn2=2, nn3=6, nn4=5;
-                 else if (n4==2)
-                    nn1=2, nn2=4, nn3=8, nn4=6;
-                 else if (n4==3)
-                    nn1=4, nn2=3, nn3=7, nn4=8;
-                 else if (n4==4)
-                    nn1=3, nn2=1, nn3=5, nn4=7;
-                 else if (n4==5)
-                    nn1=2, nn2=1, nn3=3, nn4=4;
-                 else if (n4==6)
-                    nn1=5, nn2=6, nn3=8, nn4=7;
-                 theSide = new Side(++sd_label,QUADRILATERAL);
-                 TheSide.Add(mesh[TheElement(nn1)->n()]);
-                 TheSide.Add(mesh[TheElement(nn2)->n()]);
-                 TheSide.Add(mesh[TheElement(nn3)->n()]);
-                 TheSide.Add(mesh[TheElement(nn4)->n()]);
-              }
-              else
-                 THROW_RT(" Element shape " + sh[TheElement.getShape()] +
-                          "incompatible with " + itos(TheElement.getNbNodes()) + "nodes.");
+           if (TheElement.getShape()==TRIANGLE && TheElement.getNbNodes()==3) {
+              theSide = new Side(++sd_label,LINE);
+              TheSide.Add(mesh[TheElement(n4    )->n()]);
+              TheSide.Add(mesh[TheElement(n4%3+1)->n()]);
            }
-           CATCH_EXIT("getGambit(...):");
+           else if (TheElement.getShape()==QUADRILATERAL && TheElement.getNbNodes()==4) {
+              theSide = new Side(++sd_label,LINE);
+              TheSide.Add(mesh[TheElement(n4    )->n()]);
+              TheSide.Add(mesh[TheElement(n4%4+1)->n()]);
+           }
+           else if (TheElement.getShape()==TETRAHEDRON && TheElement.getNbNodes()==4) {
+              if (n4==1)
+                 nn1 = 2, nn2 = 1, nn3 = 3;
+              else if (n4==2)
+                 nn1 = 1, nn2 = 2, nn3 = 4;
+              else if (n4==3)
+                 nn1 = 2, nn2 = 3, nn3 = 4;
+              else if (n4==4)
+                 nn1 = 3, nn2 = 1, nn3 = 4;
+              theSide = new Side(++sd_label,TRIANGLE);
+              TheSide.Add(mesh[TheElement(nn1)->n()]);
+              TheSide.Add(mesh[TheElement(nn2)->n()]);
+              TheSide.Add(mesh[TheElement(nn3)->n()]);
+           }
+           else if (TheElement.getShape()==HEXAHEDRON && TheElement.getNbNodes()==8) {
+              if (n4==1)
+                 nn1=1, nn2=2, nn3=6, nn4=5;
+              else if (n4==2)
+                 nn1=2, nn2=4, nn3=8, nn4=6;
+              else if (n4==3)
+                 nn1=4, nn2=3, nn3=7, nn4=8;
+              else if (n4==4)
+                 nn1=3, nn2=1, nn3=5, nn4=7;
+              else if (n4==5)
+                 nn1=2, nn2=1, nn3=3, nn4=4;
+              else if (n4==6)
+                 nn1=5, nn2=6, nn3=8, nn4=7;
+              theSide = new Side(++sd_label,QUADRILATERAL);
+              TheSide.Add(mesh[TheElement(nn1)->n()]);
+              TheSide.Add(mesh[TheElement(nn2)->n()]);
+              TheSide.Add(mesh[TheElement(nn3)->n()]);
+              TheSide.Add(mesh[TheElement(nn4)->n()]);
+           }
+           else
+              throw OFELIException("getGambit(...): Element shape " + sh[TheElement.getShape()] +
+                                   "incompatible with " + itos(TheElement.getNbNodes()) + "nodes.");
            TheSide.setNbDOF(nb_dof);
            for (size_t j=1; j<=nb_dof; j++)
               TheSide.setCode(j,code[j-1]);
@@ -909,11 +895,8 @@ void getGmsh(string file,
 
    ifstream pf;
    pf.open(file.c_str());
-   try {
-      if (pf.fail())
-         THROW_RT("Can't open file "+file);
-   }
-   CATCH_EXIT("getGmsh(...):");
+   if (pf.fail())
+      throw OFELIException("getGmsh(...): Can't open file "+file);
    pf >> kw;
    ln++;
    if (kw=="$MeshFormat") {
@@ -921,20 +904,14 @@ void getGmsh(string file,
       ln++;
       pf >> kw;
       ln++;
-      try {
-         if (kw != "$EndMeshFormat")
-            THROW_RT(" Keyword EndMeshFormat unfound.");
-      }
-      CATCH("getGmsh(...):");
+      if (kw != "$EndMeshFormat")
+         throw OFELIException("getGmsh(...): Keyword EndMeshFormat unfound.");
       format = 2;
    }
    if (format ==2)
       pf >> kw, ln++;
-   try {
-      if ( (kw!="$NOD") && (kw!="$Nodes") )
-         THROW_RT("Illegal file format in line "+itos(ln));
-   }
-   CATCH_EXIT("getGmsh(...):");
+   if ( (kw!="$NOD") && (kw!="$Nodes") )
+      throw OFELIException("getGmsh(...): Illegal file format in line "+itos(ln));
    pf >> nb_nodes;
    vector<Nd> nod(nb_nodes);
    vector<size_t> num(2*nb_nodes);
@@ -958,20 +935,14 @@ void getGmsh(string file,
    }
    pf >> kw;
    ln++;
-   try {
-      if ( (kw!="$ENDNOD") && (kw!="$EndNodes") )
-         THROW_RT("Illegal file format in line "+itos(ln));
-   }
-   CATCH_EXIT("getGmsh(...):");
+   if ( (kw!="$ENDNOD") && (kw!="$EndNodes") )
+      throw OFELIException("getGmsh(...): Illegal file format in line "+itos(ln));
 
    pf >> kw;
    ln++;
    if (format==1) {
-      try {
-         if (kw!="$ELM")
-            THROW_RT("Illegal file format in line "+itos(ln));
-      }
-      CATCH("getGmsh(...):");
+      if (kw!="$ELM")
+         throw OFELIException("getGmshh(...): Illegal file format in line "+itos(ln));
       pf >> nb_elements;
       ln++;
       elem.resize(nb_elements);
@@ -987,18 +958,12 @@ void getGmsh(string file,
       }
       pf >> kw;
       ln++;
-      try {
-         if (kw!="$ENDELM")
-            THROW_RT("Illegal file format in line "+itos(ln));
-      }
-      CATCH_EXIT("getGmsh(...):");
+      if (kw!="$ENDELM")
+         throw OFELIException("getGmsh(...): Illegal file format in line "+itos(ln));
    }
    else if (format==2) {
-      try {
-         if (kw!="$Elements")
-            THROW_RT("Illegal file format in line "+itos(ln));
-      }
-      CATCH("getGmsh(...):");
+      if (kw!="$Elements")
+         throw OFELIException("getGmsh(...): Illegal file format in line "+itos(ln));
       pf >> nb_el;
       ln++;
       nb_elements = 0;
@@ -1048,21 +1013,15 @@ void getGmsh(string file,
       }
       pf >> kw;
       ln++;
-      try {
-         if (kw!="$EndElements")
-            THROW_RT("Illegal file format in line "+itos(ln));
-      }
-      CATCH_EXIT("getGmsh(...):");
+      if (kw!="$EndElements")
+         throw OFELIException("getGmsh(...): Illegal file format in line "+itos(ln));
    }
    if (format==2) {
       pf >> kw;
       if (pf.eof()==0) {
          ln++;
-         try {
-            if (kw!="$PhysicalNames")
-            THROW_RT("Illegal file format in line "+itos(ln));
-         }
-         CATCH_EXIT("getGmsh(...):");
+         if (kw!="$PhysicalNames")
+            throw OFELIException("getGmsh(...): Illegal file format in line "+itos(ln));
          pf >> n1;
          vector<int> pnn(n1);
          vector<string> pn(n1);
@@ -1223,11 +1182,8 @@ void getMatlab(string file,
    int code[MAX_NBDOF_NODE];
    ifstream mf;
    mf.open(file.c_str());
-   try {
-      if (mf.fail())
-         THROW_RT(" File " + file + " not found.");
-   }
-   CATCH("getMatlab(...):");
+   if (mf.fail())
+      throw OFELIException("getMatlab(...): File "+file+" not found.");
 
    mf >> nb_nodes;
    Vect<Point<real_t> > x;
@@ -1324,11 +1280,8 @@ void getNetgen(string file,
    ifstream    nf;
 
    nf.open((file+".vol").c_str());
-   try {
-      if (nf.fail())
-         THROW_RT(" File " + file + ".vol not found.");
-   }
-   CATCH_EXIT("getNetgen(...):");
+   if (nf.fail())
+      throw OFELIException("getNetgen(...): File " + file + ".vol not found.");
 
    string ch, cc;
    std::getline(nf,ch);
@@ -1551,11 +1504,8 @@ void getTetgen(string file,
 
 // Read node file
    ifstream nf((file+".node").c_str());
-   try {
-      if (nf.fail())
-         THROW_RT(" File " + file + ".node not found.");
-   }
-   CATCH("getTetgen(...):");
+   if (nf.fail())
+      throw OFELIException("getTetgen(...): File "+file+".node not found.");
    nf >> nb_nodes >> dim >> i >> j;
    vector<Nd> nod(nb_nodes);
    vector<size_t> num(nb_nodes);
@@ -1573,11 +1523,8 @@ void getTetgen(string file,
 
 // Read element file
    ifstream ef((file+".ele").c_str());
-   try {
-      if (ef.fail())
-         THROW_RT(" File " + file + ".ele not found.");
-   }
-   CATCH_EXIT("getTetgen(...):");
+   if (ef.fail())
+      throw OFELIException("getTetgen(...): File " + file + ".ele not found.");
    ef >> nb_elements >> k >> i;
    vector<El> elem(nb_elements);
    for (j=0; j<nb_elements; j++) {
@@ -1619,7 +1566,7 @@ void getTetgen(string file,
                TheSide.Add(mesh[num[elem[j].node[i]-1]]);
             if (cd%2 == 1) {
                for (i=0; i<TheSide.getNbNodes(); i++) {
-		  theNode = TheSide(i+1);
+                  theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
                   for (k=0; k<nb_dof; k++)
                      TheNode.setCode(k+1,code[k]);
@@ -1656,7 +1603,7 @@ void getTetgen(string file,
                TheSide.Add(mesh[num[elem[j].node[i]-1]]);
             if (cd%2 == 1) {
                for (i=0; i<TheSide.getNbNodes(); i++) {
-		  theNode = TheSide(i+1);
+                  theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
                   for (k=0; k<nb_dof; k++)
                      TheNode.setCode(k+1,code[k]);
@@ -1676,7 +1623,7 @@ void getTetgen(string file,
                TheSide.Add(mesh[num[elem[j].node[i]-1]]);
             if (cd%2 == 1) {
                for (i=0; i<TheSide.getNbNodes(); i++) {
-		  theNode = TheSide(i+1);
+                  theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
                   for (k=0; k<nb_dof; k++)
                      TheNode.setCode(k+1,code[k]);
@@ -1729,17 +1676,11 @@ void getTriangle(string file,
    ifstream nf, ef, sf;
 
    nf.open((file+".node").c_str());
-   try {
-      if (nf.fail())
-         THROW_RT(" File " + file + ".node not found.");
-   }
-   CATCH("getTriangle(...):");
+   if (nf.fail())
+      throw OFELIException("getTriangle(...): File " + file + ".node not found.");
    ef.open((file+".ele").c_str());
-   try {
-      if (ef.fail())
-         THROW_RT(" File " + file + ".ele not found.");
-   }
-   CATCH_EXIT("getTriangle(...):");
+   if (ef.fail())
+      throw OFELIException("getTriangle(...): File " + file + ".ele not found.");
 
    mesh.setDim(2);
    size_t first_dof = 1;

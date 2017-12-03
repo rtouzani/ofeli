@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -60,6 +60,9 @@ namespace OFELI {
  *  \details This class enables computing the signed distance function with respect to
  *  an interface. It works in 2-D and 3-D on a structured grid.
  *  The class is an interface for client. It points to FMM
+ *
+ * \author M. Sylla, B. Meden
+ * \copyright GNU Lesser Public License
  */
 class FMMSolver
 {

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -49,6 +49,9 @@ namespace OFELI {
  * \details This template class enables monitoring any iterative process.
  * It simply sets default values for tolerance, maximal number of iterations
  * and enables checking convergence using two successive iterates.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template<class T_> class Iter
@@ -92,9 +95,9 @@ template<class T_> class Iter
  *  @return true if convergence criterion is satisfied, false if not
  *  \details After checking, this function copied <tt>v</tt> into <tt>u</tt>.
  */
-    bool check(      Vect<T_>& u,
+    bool check(Vect<T_>&       u,
                const Vect<T_>& v,
-                     int       opt=2);
+               int             opt=2);
 
  private:
 
@@ -129,9 +132,9 @@ Iter<T_>::Iter(int    max_it,
 
 
 template<class T_>
-bool Iter<T_>::check(      Vect<T_>& u,
+bool Iter<T_>::check(Vect<T_>& u,
                      const Vect<T_>& v,
-                           int       opt)
+                     int       opt)
 {
    real_t a, b=0;
    size_t n=u.size();

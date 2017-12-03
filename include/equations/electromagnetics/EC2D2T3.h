@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -48,6 +48,23 @@ namespace OFELI {
  *  @{
  */
 
+/*! \file EC2D2T3.h
+ *  \brief Definition file for class EC2D2T3.
+ */
+
+/*! \class EC2D2T3
+ *  \ingroup Electromagnetics
+ *  \brief Eddy current problems in 2-D domains using transversal approximation.
+ *
+ *  Builds finite element arrays for time harmonic eddy current problems in 2-D domains
+ *  with transversal configurations (Magnetic field has two nonzero components).
+ *  Uses 3-Node triangles.
+ *
+ *  The unknown is the time-harmonic scalar potential (complex valued).
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
 
 class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
 {
@@ -86,9 +103,9 @@ class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
                   SpMatrix<real_t>& D);
 
 /// \brief Compute constant to multiply by potential
-    complex_t Constant(      real_t        omega,
+    complex_t Constant(real_t              omega,
                        const Vect<real_t>& u,
-                             complex_t&    I);
+                       complex_t&          I);
 
 /// \brief Compute magnetic pressure in element
     real_t MagneticPressure(const Vect<real_t>& u);

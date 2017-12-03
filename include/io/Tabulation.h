@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -62,6 +62,9 @@ namespace OFELI {
  * calculating the value of the function using piecewise multilinear interpolation.\n
  * The file defining the function is an XML file where any function is introduced via the
  * tag "Function". 
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

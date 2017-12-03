@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -53,9 +53,13 @@ namespace OFELI {
  */
 
 
-/// \fn ostream & operator<<(ostream& s, const std::complex<double> &x)
-/// \brief Output a complex number.
-/// \ingroup Util
+/** \fn ostream & operator<<(ostream& s, const std::complex<double> &x)
+ *  \brief Output a complex number.
+ * \ingroup Util
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
 inline ostream& operator<<(ostream&         s,
                            const complex_t& x)
 {
@@ -67,9 +71,13 @@ inline ostream& operator<<(ostream&         s,
 }
 
 
-/// \fn ostream & operator<<(ostream& s, const std::string &c)
-/// \brief Output a string.
-/// \ingroup Util
+/** \fn ostream & operator<<(ostream& s, const std::string &c)
+ *  \brief Output a string.
+ *  \ingroup Util
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
 inline ostream& operator<<(ostream&           s,
                            const std::string& c)
 {
@@ -79,9 +87,13 @@ inline ostream& operator<<(ostream&           s,
 }
 
 
-/// \fn ostream & operator<<(ostream& s, const vector<T_> &v)
-/// \brief Output a vector instance.
-/// \ingroup Util
+/** \fn ostream & operator<<(ostream& s, const vector<T_> &v)
+ *  \brief Output a vector instance.
+ *  \ingroup Util
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
 template<class T_>
 ostream&operator<<(ostream&          s,
                    const vector<T_>& v)
@@ -92,9 +104,13 @@ ostream&operator<<(ostream&          s,
 }
 
 
-/// \fn ostream & operator<<(ostream& s, const std::pair<T_,T_> &a)
-/// \brief Output a pair instance.
-/// \ingroup Util
+/** \fn ostream & operator<<(ostream& s, const std::pair<T_,T_> &a)
+ *  \brief Output a pair instance.
+ *  \ingroup Util
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
 template<class T_>
 inline ostream& operator<<(ostream&                s,
                            const std::pair<T_,T_>& a)

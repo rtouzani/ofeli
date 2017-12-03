@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 1998 - 2017 Rachid Touzani
+    Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -30,6 +30,7 @@
   ==============================================================================*/
 
 #include "mesh/saveMesh.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -89,11 +90,8 @@ void saveGmsh(const string& file,
    int type=0;
    size_t i;
    ofstream pf(file.c_str());
-   try {
-      if (pf.fail())
-         THROW_RT(" cannot open file " + file);
-   }
-   CATCH("saveGmsh(string,Mesh):");
+   if (pf.fail())
+      throw OFELIException("saveGmsh(string,Mesh): cannot open file " + file);
 
    pf << "$NOD\n" << mesh.getNbNodes() << endl;
    mesh_nodes(mesh)
@@ -102,23 +100,20 @@ void saveGmsh(const string& file,
    pf << "$ENDNOD" << endl;
    pf << "$ELM\n" << mesh.getNbElements() << endl;
    mesh_elements(mesh) {
-      try {
-         if (The_element.getShape()==LINE)
-            type = 1;
-         else if (The_element.getShape()==TRIANGLE)
-            type = 2;
-         else if (The_element.getShape()==QUADRILATERAL)
-            type = 3;
-         else if (The_element.getShape()==TETRAHEDRON)
-            type = 4;
-         else if (The_element.getShape()==HEXAHEDRON)
-            type = 5;
-         else if (The_element.getShape()==PENTAHEDRON)
-            type = 6;
-         else
-            THROW_RT(" Element shape not recognized.");
-      }
-      CATCH("saveGmsh(...):");
+      if (The_element.getShape()==LINE)
+         type = 1;
+      else if (The_element.getShape()==TRIANGLE)
+         type = 2;
+      else if (The_element.getShape()==QUADRILATERAL)
+         type = 3;
+      else if (The_element.getShape()==TETRAHEDRON)
+         type = 4;
+      else if (The_element.getShape()==HEXAHEDRON)
+         type = 5;
+      else if (The_element.getShape()==PENTAHEDRON)
+         type = 6;
+      else
+         throw OFELIException("saveGmsh(string,Mesh): Element shape not recognized.");
       pf << element_label << "  " << type << "  " << The_element.getCode() << "  0  "
          << The_element.getNbNodes();
       for (i=1; i<=The_element.getNbNodes(); i++)
@@ -148,17 +143,11 @@ void saveGmsh(const string& file,
 void saveGnuplot(const string& file,
                  const Mesh&   mesh)
 {
-   try {
-      if (mesh.getDim() != 2)
-         THROW_RT(" This function is valid for 2-D only.");
-   }
-   CATCH("saveGnuplot(string,Mesh):");
+   if (mesh.getDim() != 2)
+      throw OFELIException("saveGnuplot(string,Mesh):  This function is valid for 2-D only.");
    ofstream pf(file.c_str());
-   try {
-      if (pf.fail())
-         THROW_RT(" cannot open file " + file);
-   }
-   CATCH("saveGnuplot(string,Mesh):");
+   if (pf.fail())
+      throw OFELIException("saveGnuplot(string,Mesh): Cannot open file " + file);
    size_t n, m;
 
    const Node *nd;
@@ -170,11 +159,8 @@ void saveGnuplot(const string& file,
          m = 4;
       if (The_element.getShape()==TRIANGLE)
          m = 3;
-      try {
-         if (!m)
-            THROW_RT(" Illegal element geometry.");
-      }
-      CATCH("saveGnuplot(string,Mesh):");
+      if (!m)
+         throw OFELIException("saveGnuplot(string,Mesh): Illegal element geometry.");
 
       for (n=1; n<=m; n++) {
          nd = The_element(n);
@@ -192,17 +178,11 @@ void saveGnuplot(const string& file,
 void saveMatlab(const string& file,
                 const Mesh&   mesh)
 {
-   try {
-      if (mesh.getDim() != 2)
-         THROW_RT(" This function is valid for 2-D only.");
-   }
-   CATCH("saveMatlab(string,Mesh):");
+   if (mesh.getDim() != 2)
+      throw OFELIException("saveMatlab(string,Mesh): This function is valid for 2-D only.");
    ofstream pf(file.c_str());
-   try {
-      if (pf.fail())
-         THROW_RT(" cannot open file " + file);
-   }
-   CATCH("saveatlab(string,Mesh):");
+   if (pf.fail())
+      throw OFELIException("saveMatlab(string,Mesh): Cannot open file " + file);
 
    mesh_elements(mesh) {
       pf << "x = [ ";
@@ -230,11 +210,8 @@ void saveTecplot(const string& file,
    sh[HEXAHEDRON] = "hexa";
    sh[PENTAHEDRON] = "penta";
    ofstream pf(file.c_str());
-   try {
-      if (pf.fail())
-         THROW_RT(" cannot open file " + file);
-   }
-   CATCH("saveTecplot(string,Mesh):");
+   if (pf.fail())
+      throw OFELIException("saveTecplot(string,Mesh): Cannot open file " + file);
 
    size_t n, m;
    pf << "TITLE = \" \"\n";
@@ -281,21 +258,18 @@ void saveTecplot(const string& file,
 
    mesh_elements(mesh) {
       m = 0;
-      try {
-         if (The_element.getShape()==QUADRILATERAL)
-            m = 4;
-         else if (The_element.getShape()==TRIANGLE)
-            m = 3;
-         else if (The_element.getShape()==TETRAHEDRON)
-            m = 4;
-         else if (The_element.getShape()==HEXAHEDRON)
-            m = 8;
-         else if (The_element.getShape()==LINE)
-            m = 2;
-         else if (!m)
-            THROW_RT(" Illegal element geometry");
-      }
-      CATCH("saveTecplot(string,Mesh):");
+      if (The_element.getShape()==QUADRILATERAL)
+         m = 4;
+      else if (The_element.getShape()==TRIANGLE)
+         m = 3;
+      else if (The_element.getShape()==TETRAHEDRON)
+         m = 4;
+      else if (The_element.getShape()==HEXAHEDRON)
+         m = 8;
+      else if (The_element.getShape()==LINE)
+         m = 2;
+      else if (!m)
+         throw OFELIException("saveTecplot(string,Mesh): Illegal element geometry");
       for (n=1; n<=m; n++)
          pf << The_element(n)->n() << "  ";
       pf << endl;
@@ -309,11 +283,8 @@ void saveVTK(const string& file,
 {
    size_t m=0, size, i;
    ofstream pf(file.c_str());
-   try {
-      if (pf.fail())
-         THROW_RT(" cannot open file " + file);
-   }
-   CATCH("saveVTK(string,Mesh,int):");
+   if (pf.fail())
+      throw OFELIException("saveVTK(string,Mesh): Cannot open file " + file);
 
    pf << "# vtk DataFile Version 2.0\n";
    pf << "Imported from XML (OFELI) file" << endl;
@@ -329,23 +300,20 @@ void saveVTK(const string& file,
 
    size = 0;
    mesh_elements(mesh) {
-      try {
-         if (The_element.getShape()==LINE)
-            m = 2;
-         else if (The_element.getShape()==TRIANGLE)
-            m = 3;
-         else if (The_element.getShape()==QUADRILATERAL)
-            m = 4;
-         else if (The_element.getShape()==TETRAHEDRON)
-            m = 4;
-         else if (The_element.getShape()==HEXAHEDRON)
-            m = 8;
-         else if (The_element.getShape()==PENTAHEDRON)
-            m = 6;
-         else
-            THROW_RT(" Illegal element Geometry.");
-      }
-      CATCH("saveVTK(file,Mesh,int):");
+      if (The_element.getShape()==LINE)
+         m = 2;
+      else if (The_element.getShape()==TRIANGLE)
+         m = 3;
+      else if (The_element.getShape()==QUADRILATERAL)
+         m = 4;
+      else if (The_element.getShape()==TETRAHEDRON)
+         m = 4;
+      else if (The_element.getShape()==HEXAHEDRON)
+         m = 8;
+      else if (The_element.getShape()==PENTAHEDRON)
+         m = 6;
+      else
+         throw OFELIException("saveVTK(string,Mesh): Illegal element Geometry.");
       size += m+1;
    }
    pf << "CELLS " << mesh.getNbElements() << " " << size << endl;

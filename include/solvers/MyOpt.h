@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,8 +52,11 @@ namespace OFELI {
  *  \ingroup Solver
  *  \brief Abstract class to define by user specified optimization function
  *
- * The user has to implement a class that inherits from the present one where
- * the virtual functions are implemented.
+ *  \details The user has to implement a class that inherits from the present one where
+ *  the virtual functions are implemented.
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 class MyOpt

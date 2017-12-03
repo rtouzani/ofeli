@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -58,12 +58,13 @@ class Side;
  *  \ingroup Mesh
  * \brief To describe an edge.
  *
- * Defines an edge of a 3-D finite element mesh. The edges are given
+ * \details Defines an edge of a 3-D finite element mesh. The edges are given
  * in particular by a list of nodes. Each node can be accessed by the
  * member function getPtrNode.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
-
 class Edge
 {
 
@@ -177,7 +178,7 @@ class Edge
 /// \details Returns pointer to node of local label <tt>i</tt>
     Node *operator()(size_t i) { return getPtrNode(i); }
 
-private:
+ private:
 
    std::vector<int>    _code;
    std::vector<size_t> _dof;

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -91,6 +91,9 @@ namespace OFELI {
  *    <li>2nd order Backward Differentiation Formula (value: \a BDF2) for linear first-order systems
  *    <li>Newmark (value: \a NEWMARK) for linear second-order systems with constant matrices
  * </ul>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class ODESolver

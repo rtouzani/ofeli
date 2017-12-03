@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -73,6 +73,8 @@ struct Pt
  *  This class enables running a Fast Marching procedure to calculate the signed distance function
  *  and extend a given front speed.
  *
+ * \author M. Sylla, B. Meden
+ * \copyright GNU Lesser Public License
  */
 
 class FastMarching2D

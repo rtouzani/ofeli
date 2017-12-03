@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -59,6 +59,8 @@ class Side;
  *
  *  \details Solution method is a second-order MUSCL Finite Volume scheme on triangles
  *
+ * \author S. Clain, V. Clauzon
+ * \copyright GNU Lesser Public License
  */
 class ICPG2DT : public Muscl2DT {
 

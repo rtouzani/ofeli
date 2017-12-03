@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -56,12 +56,10 @@ void saveField(Vect<real_t>& v,
                int           opt)
 {
    const Mesh *mesh = &(v.getMesh());
-   try {
-      if (mesh==NULL)
-         THROW_RT(" Vector does not contain mesh information.\n"
-                  "Try the function saveField(Vect<real_t>,Mesh,string,int)");
-   }
-   CATCH("saveField(Vect<real_t>,string,int):");
+   if (mesh==NULL)
+      throw OFELIException("In saveField(v,*mesh,output_file,opt): "
+                           " Vector does not contain mesh information.\n"
+                           "Try the function saveField(Vect<real_t>,Mesh,string,int)");
    saveField(v,*mesh,output_file,opt);
 }
 
@@ -888,17 +886,13 @@ void saveField(Vect<real_t>& v,
    size_t nb_dof = v.getNbDOF();
    if (nb_dof>1)
       scalar = false;
-   try {
-      if (scalar==false)
-         THROW_RT(" This function is not implemented for vector data");
-   }
-   CATCH("saveField(Vect<real_t>,Grid,string,int):");
+   if (scalar==false)
+      throw OFELIException("In saveField(Vect<real_t>,Grid,string,int): "
+                           " This function is not implemented for vector data");
    ofstream fp(output_file.c_str());
-   try {
-      if (fp.fail())
-         THROW_RT(" Failed to open file "+output_file);
-   }
-   CATCH("saveField(Vect<real_t>,Grid,string,int):");
+   if (fp.fail())
+      throw OFELIException("In saveField(Vect<real_t>,Grid,string,int): "
+                           " Failed to open file "+output_file);
    fp.setf(ios::right|ios::scientific);
    size_t nx=g.getNx(), ny=g.getNy(), nz=g.getNz();
 
@@ -906,11 +900,9 @@ void saveField(Vect<real_t>& v,
 
       case VTK:
       {
-         try {
-            if (nz > 1)
-               THROW_RT(" This function is not implemented for 3-D");
-         }
-         CATCH("saveField(Vect<real_t>,Grid,string,int):");
+         if (nz > 1)
+            throw OFELIException("In saveField(Vect<real_t>,Grid,string,int): "
+                                 "This function is not implemented for 3-D");
          fp << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII\nDATASET POLYDATA\n";
          fp << "POINTS " << (nx+1)*(ny+1)*(nz+1) << " double\n";
          for (i=1; i<=nx+1; i++) {
@@ -983,11 +975,9 @@ void saveGnuplot(string input_file,
          m = 4;
       if (The_element.getShape()==TRIANGLE)
          m = 3;
-      try {
-         if (!m)
-            THROW_RT(" Unknown element shape " + itos(element_label));
-      }
-      CATCH("saveGnuplot(string,string,string):");
+      if (!m)
+         throw OFELIException("In saveGnuplot(string,string,string): "
+                              " Unknown element shape " + itos(element_label));
       for (n=1; n<=m; n++) {
          the_node = The_element(n);
          fp << setprecision(4) << setw(18) << The_node.getX() << " "

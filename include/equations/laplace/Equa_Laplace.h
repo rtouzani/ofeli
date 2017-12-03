@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -53,14 +53,14 @@ namespace OFELI {
  *  \ingroup Laplace
  * \brief Abstract class for classes about the Laplace equation.
  *
- * \b Template \b Arguments:
+ * \tparam T_ Data type (real_t, float, complex<real_t>, ...)
+ * \tparam NEN_ Number of element nodes
+ * \tparam NEE_ Number of element equations
+ * \tparam NSN_ Number of side nodes
+ * \tparam NSE_ Number of side equations
  *
- * \arg \b T_   : data type (double, float, ...)
- * \arg \b NEN_ : Number of element nodes
- * \arg \b NEE_ : Number of element equations
- * \arg \b NSN_ : Number of side nodes
- * \arg \b NSE_ : Number of side equations
- *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_> class Equa_Laplace;

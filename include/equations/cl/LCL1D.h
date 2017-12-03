@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -59,6 +59,8 @@ class Side;
  *  \brief Class to solve the linear conservation law (Hyperbolic equation)
  *  in 1-D by a MUSCL Finite Volume scheme
  *
+ * \author S. Clain, V. Clauzon
+ * \copyright GNU Lesser Public License
  */
 class LCL1D : public Muscl1D {
 

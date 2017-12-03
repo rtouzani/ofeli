@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -552,7 +552,7 @@ size_t NodeGraphScal(const Mesh&     mesh,
                       IJ.push_back(RC(jj-1,ii-1));
                 }
             }
-	 }
+         }
       }
    }
    return FinalizeGraph(row_ptr,col_ind,IJ,nbc);

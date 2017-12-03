@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -59,7 +59,10 @@ namespace OFELI {
  * The user has to implement a class that inherits from the present one where
  * the virtual functions are implemented.
  *
- * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)
+ * \tparam T_ Data type (real_t, float, complex<real_t>, ...)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template <class T_> class UserData

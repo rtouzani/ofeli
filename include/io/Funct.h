@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -64,6 +64,9 @@ namespace OFELI {
               for z=z_0,...,z_K
                   read v(x,y,z)
    \endverbatim
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 

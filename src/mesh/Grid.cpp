@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -32,6 +32,7 @@
 #include "mesh/Grid.h"
 #include "mesh/MeshUtil.h"
 #include "linear_algebra/GraphOfMatrix.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -53,11 +54,8 @@ Grid::Grid(real_t xm,
    _h.y = _h.z = 0;
    _cm = 0;
    _cM = 0;
-   try {
-      if (xM <= xm)
-         THROW_RT("Grid(real_t,real_t,size_t): xmin = " + dtos(xm) + " is larger than xmax = " + dtos(xM));
-   }
-   CATCH("Grid");
+   if (xM <= xm)
+      throw OFELIException("Grid::Grid(real_t,real_t,size_t): xmin = "+dtos(xm)+" is larger than xmax = "+dtos(xM));
    _xmin.x = xm; 
    _xmax.x = xM;
    _xmin.y = _xmax.y = _xmin.z = _xmax.z = 0;
@@ -80,18 +78,12 @@ Grid::Grid(real_t xm,
    _h.z = 0;
    _cm = 0;
    _cM = 0;
-   try {
-      if (xM <= xm)
-         THROW_RT("Grid(real_t,real_t,real_t,size_t,size_t): xmin = " + dtos(xm) + 
-                  " is larger than xmax = " + dtos(xM));
-   }
-   CATCH("Grid");
-   try {
-      if (yM <= ym)
-         THROW_RT("Grid(real_t,real_t,real_t,size_t,size_t): ymin = " + dtos(ym) + 
-                  " is larger than ymax = " + dtos(yM));
-   }
-   CATCH("Grid");
+   if (xM <= xm)
+      throw OFELIException("Grid::Grid(real_t,real_t,real_t,size_t,size_t): xmin = " + dtos(xm) + 
+                           " is larger than xmax = " + dtos(xM));
+   if (yM <= ym)
+      throw OFELIException("Grid::Grid(real_t,real_t,real_t,size_t,size_t): ymin = " + dtos(ym) + 
+                           " is larger than ymax = " + dtos(yM));
    _xmin.x = xm; _xmin.y = ym; _xmin.z = 0; 
    _xmax.x = xM; _xmax.y = yM; _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
@@ -113,18 +105,12 @@ Grid::Grid(Point<real_t> m,
    _h.z = 0;
    _cm = 0;
    _cM = 0;
-   try {
-      if (M.x <= m.x)
-         THROW_RT("Grid(Point<real_t>,Point<real_t>,size_t,size_t): xmin = " + dtos(M.x) + 
-                  " is larger than xmax = " + dtos(m.x));
-   }
-   CATCH("Grid");
-   try {
-      if (M.y <= m.y)
-         THROW_RT("Grid(Point<real_t>,Point<real_t>,size_t,size_t): ymin = " + dtos(M.y) + 
-                  " is larger than ymax = " + dtos(m.y));
-   }
-   CATCH("Grid");
+   if (M.x <= m.x)
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t): xmin = " + dtos(M.x) + 
+                           " is larger than xmax = " + dtos(m.x));
+   if (M.y <= m.y)
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t): ymin = " + dtos(M.y) + 
+                           " is larger than ymax = " + dtos(m.y));
    _xmin = m; _xmax = M;
    _xmin.z = _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
@@ -150,24 +136,15 @@ Grid::Grid(real_t xm,
    _n.x = npx; _n.y = npy; _n.z = npz;
    _cm = 0;
    _cM = 0;
-   try {
-      if (xM <= xm)
-         THROW_RT("Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): xmin = " + 
-                  dtos(xM) + " is larger than xmax = " + dtos(xm));
-   }
-   CATCH("Grid");
-   try {
-      if (yM <= ym)
-         THROW_RT("Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): ymin = " + 
-                  dtos(yM) + " is larger than ymax = " + dtos(ym));
-   }
-   CATCH("Grid");
-   try {
-      if (zM <= zm)
-         THROW_RT("Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): zmin = " + 
-                  dtos(zM) + " is larger than zmax = " + dtos(zm));
-   }
-   CATCH("Grid");
+   if (xM <= xm)
+      throw OFELIException("Grid::Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): xmin = " + 
+                            dtos(xM) + " is larger than xmax = " + dtos(xm));
+   if (yM <= ym)
+      throw OFELIException("Grid::Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): ymin = " + 
+                           dtos(yM) + " is larger than ymax = " + dtos(ym));
+   if (zM <= zm)
+      throw OFELIException("Grid::Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): zmin = " + 
+                           dtos(zM) + " is larger than zmax = " + dtos(zm));
    _xmin.x = xm; _xmin.y = ym; _xmin.z = zm; 
    _xmax.x = xM; _xmax.y = yM; _xmax.z = zM;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
@@ -194,24 +171,15 @@ Grid::Grid(Point<real_t> m,
       _dim = 2;
    if (npy==0)
       _dim = 1;
-   try {
-      if (M.x <= m.x)
-         THROW_RT("Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): xmin = " + dtos(M.x) + 
-                  " is larger than xmax = " + dtos(m.x));
-   }
-   CATCH("Grid");
-   try {
-      if (M.y <= m.y)
-         THROW_RT("Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): ymin = " + dtos(M.y) + 
-                  " is larger than ymax = " + dtos(m.y));
-   }
-   CATCH("Grid");
-   try {
-      if (M.z <= m.z)
-         THROW_RT("Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): zmin = " + dtos(M.z) + 
-                  " is larger than zmax = " + dtos(m.z));
-   }
-   CATCH("Grid");
+   if (M.x <= m.x)
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): xmin = " + dtos(M.x) + 
+                           " is larger than xmax = " + dtos(m.x));
+   if (M.y <= m.y)
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): ymin = " + dtos(M.y) + 
+                           " is larger than ymax = " + dtos(m.y));
+   if (M.z <= m.z)
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): zmin = " + dtos(M.z) + 
+                           " is larger than zmax = " + dtos(m.z));
    _xmin = m; _xmax = M;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
@@ -253,11 +221,8 @@ void Grid::setN(size_t nx,
             for (size_t k=1; k<=_n.z; k++)
              _active(i,j,k) = 1;
    }
-   try {
-      if (_h==0)
-         THROW_RT("setN(size_t,size_t,size_t): Grid size must be given first.");
-   }
-   CATCH("Grid");
+   if (_h==0)
+      throw OFELIException("Grid::setN(size_t,size_t,size_t): Grid size must be given first.");
 }
 
 

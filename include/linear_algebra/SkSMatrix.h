@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -64,6 +64,9 @@ namespace OFELI {
    @endverbatim
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 template<class T_> class SkSMatrix;
@@ -697,14 +700,12 @@ void SkSMatrix<T_>::set(size_t    i,
                         size_t    j,
                         const T_& val)
 {
-   try {
-      if (i>=j)
-         _a[_ch[i-1]+j-i] = val;
-      else
-         THROW_RT("set(i,j,x): Index pair (" + itos(int(i)) + "," + itos(int(j)) + ") is not " +
-                  "compatible with skyline symmeric storage.");
-   }
-   CATCH("SkSMatrix");
+   if (i>=j)
+      _a[_ch[i-1]+j-i] = val;
+   else
+      throw OFELIException("In SkSMatrix::set(i,j,x): Index pair (" + itos(int(i)) +
+                           "," + itos(int(j)) + ") is not " +
+                           "compatible with skyline symmeric storage.");
 }
 
 
@@ -881,13 +882,10 @@ int SkSMatrix<T_>::setLDLt()
    size_t di=0, dij;
    T_ s;
    T_ pivot = _a[_ch[0]];
-   try {
-      if (Abs(pivot) < OFELI_EPSMCH)
-         THROW_RT("Factor(): The first pivot is null.");
-      else
-         _a[_ch[0]] = T_(1.)/pivot;
-   }
-   CATCH_EXIT("SkSMatrix");
+   if (Abs(pivot) < OFELI_EPSMCH)
+      throw OFELIException("In SkSMatrix::Factor(): The first pivot is null.");
+   else
+      _a[_ch[0]] = T_(1.)/pivot;
 
    for (size_t i=1; i<_size; i++) {
       size_t dj = 0;
@@ -905,13 +903,10 @@ int SkSMatrix<T_>::setLDLt()
          pivot -= s*_a[_ch[i]+k-i];
          _a[_ch[i]+k-i] = s;
       }
-      try {
-         if (Abs(pivot) < OFELI_EPSMCH)
-            THROW_RT("Factor(): The " + itos(int(i)+1) + "-th pivot is null.");
-         else
-            _a[_ch[i]] = T_(1.)/pivot;
-      }
-      CATCH_EXIT("SkSMatrix");
+      if (Abs(pivot) < OFELI_EPSMCH)
+         throw OFELIException("In SkSMatrix::Factor(): The " + itos(int(i)+1) + "-th pivot is null.");
+      else
+         _a[_ch[i]] = T_(1.)/pivot;
    }
    _fact = true;
    return 0;
@@ -924,11 +919,8 @@ int SkSMatrix<T_>::solve(Vect<T_>& b)
    int ret = 0;
    if (_is_diagonal) {
       for (size_t i=0; i<_size; i++) {
-         try {
-            if (Abs(_a[i]) < OFELI_EPSMCH)
-               THROW_RT("solve(b): The " + itos(i+1) + "-th diagonal is null.");
-         }
-         CATCH_EXIT("SkSMatrix");
+         if (Abs(_a[i]) < OFELI_EPSMCH)
+            throw OFELIException("In SkSMatrix::solve(b): The " + itos(i+1) + "-th diagonal is null.");
          b[i] /= _a[i];
       }
       return 0;
@@ -1032,6 +1024,9 @@ void SkSMatrix<T_>::Axpy(T_                a,
  *  @param [in] A SkSMatrix instance to multiply by vector
  *  @param [in] b Vect instance 
  *  \return Vect instance containing <tt>A*b</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 Vect<T_> operator*(const SkSMatrix<T_>& A,
@@ -1045,6 +1040,9 @@ Vect<T_> operator*(const SkSMatrix<T_>& A,
 /** \fn ostream & operator<<(ostream& s, const SkSMatrix<T_> &a)
  *  \ingroup VectMat
  *  \brief Output matrix in output stream
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 ostream& operator<<(ostream&             s,

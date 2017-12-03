@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -73,6 +73,9 @@ class Mesh;
  *  to pointers to element sides provided the member function getAllSides of Mesh has been
  *  invoked. With this, an element can be tested to see if it is on the boundary, i.e. if it
  *  has at least one side on the boundary
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Element

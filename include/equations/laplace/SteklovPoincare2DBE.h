@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -67,6 +67,9 @@ namespace OFELI {
  *
  *  @note Although the mesh of the inner domain is not necessary to solve the problem, this one must be provided in 
  *  order to calculate the outward normal.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class SteklovPoincare2DBE {

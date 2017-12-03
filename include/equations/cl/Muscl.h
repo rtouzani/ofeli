@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -28,9 +28,6 @@
                             Definition of Class Muscl
                       Mother class for Muscl finite volumes
                 
-       Author: S. Clain
-               clain@mip.ups-tlse.fr
-
   ==============================================================================*/
 
 
@@ -64,6 +61,8 @@ class Mesh;
  * Everything here is common for both 2D and 3D muscl methods !
  * Virtual functions are implemented in Muscl2D and Muscl3D classes
  *
+ * \author S. Clain, V. Clauzon
+ * \copyright GNU Lesser Public License
  */
  
 class Muscl {

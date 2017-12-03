@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,6 +55,9 @@ class Side;
  *  interpolation
  *
  *  \details The reference element is the rectangle triangle with two unit edges.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Triang6S : public triangle

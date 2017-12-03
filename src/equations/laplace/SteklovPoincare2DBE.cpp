@@ -8,7 +8,7 @@
 
    This file is part of the OFELI Library
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -101,11 +101,8 @@ void SteklovPoincare2DBE::_util()
    for (size_t s=1; s<=_theMesh->getNbSides(); s++) {
       const Side *sd = _theMesh->getPtrSide(s);
       const Element *el = sd->getNeighborElement(1);
-      try {
-         if (el->getShape()!=TRIANGLE)
-            THROW_RT("_util(): This class is valid for triangles only.");
-      }
-      CATCH("SteklovPoincare");
+      if (el->getShape()!=TRIANGLE)
+         throw OFELIException("SteklovPoincare2DBE::_util(): This class is valid for triangles only.");
       Triang3 tr(el);
       x1 = sd->getPtrNode(1)->getCoord();
       x2 = sd->getPtrNode(2)->getCoord();

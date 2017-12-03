@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -69,7 +69,9 @@ namespace OFELI {
  * piecewise linear) using the Ampere equation. This magnetic induction is
  * obtained by using the Biot-Savart formula which can be either a volume,
  * surface or line formula depending on the nature of the current density vector.
- * 
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 class BiotSavart
 {

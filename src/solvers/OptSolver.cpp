@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -33,6 +33,7 @@
 #include "solvers/Optim.h"
 #include <limits>
 #include <algorithm>
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -125,13 +126,9 @@ real_t OptSolver::Objective(const Vect<real_t>& x)
    if (_exp) {
       int err;
       theParser.Parse(_exp_obj.c_str(),_var.c_str());
-      real_t v;
-      try {
-         v = theParser.Eval(x);
-         if ((err=theParser.EvalError()))
-            THROW_RT("Objective(x): Illegal algebraic expression "+itos(err));
-      }
-      CATCH("OptSolver");
+      real_t v = theParser.Eval(x);
+      if ((err=theParser.EvalError()))
+         throw OFELIException("In OptSolver::Objective(x): Illegal algebraic expression "+itos(err));
       return v;
    }
    else
@@ -146,12 +143,9 @@ void OptSolver::Gradient(const Vect<real_t>& x,
       int err;
       for (size_t i=0; i<_size; i++) {
          theParser.Parse(_exp_grad[i].c_str(),_var.c_str());
-         try {
-            g[i] = theParser.Eval(x);
-            if ((err=theParser.EvalError()))
-               THROW_RT("Gradient(x,g): Illegal algebraic expression "+itos(err));
-         }
-         CATCH("OptSolver");
+         g[i] = theParser.Eval(x);
+         if ((err=theParser.EvalError()))
+            throw OFELIException("In OptSolver::Gradient(x,g): Illegal algebraic expression "+itos(err));
       }
    }
    else
@@ -174,16 +168,10 @@ void OptSolver::setObjective(string exp)
 void OptSolver::setGradient(string exp,
                             int    i)
 {
-   try {
-      if (_opt_method==SIMULATED_ANNEALING)
-         THROW_RT("setGradient(exp,i): Providing the gradient is useless for the simulated annealing method.");
-   }
-   CATCH("OptSolver");
-   try {
-      if (i>int(_size) || i<=0)
-         THROW_RT("setGradient(exp,i): Index is out of order");
-   }
-   CATCH_EXIT("OptSolver");
+   if (_opt_method==SIMULATED_ANNEALING)
+      throw OFELIException("In OptSolver::setGradient(exp,i): Providing the gradient is useless for the simulated annealing method.");
+   if (i>int(_size) || i<=0)
+      throw OFELIException("In OptSolver::setGradient(exp,i): Index is out of order");
    _exp_grad[i-1] = exp;
 }
 
@@ -273,11 +261,8 @@ void OptSolver::setBC(const Vect<real_t>& bc)
 
 int OptSolver::run()
 {
-   try {
-      if (_method_set==false)
-         THROW_RT("run(): No optimization method has been chosen.");
-   }
-   CATCH_EXIT("OptSolver");
+   if (_method_set==false)
+      throw OFELIException("In OptSolver::run(): No optimization method has been chosen.");
    int ret = 0;
    if (_opt_method==TRUNCATED_NEWTON) {
       if (_verb>0)

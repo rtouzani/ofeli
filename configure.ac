@@ -1,5 +1,5 @@
 dnl ------------------------------------------------------------------------------
-dnl OFELI - Copyright (C) 2008-2017 Rachid Touzani
+dnl OFELI - Copyright (C) 1998-2018 Rachid Touzani
 
 dnl This file is part of OFELI.
 

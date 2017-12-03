@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,6 +55,9 @@ namespace OFELI {
  * Matrices can be square or rectangle ones.
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 class Mesh;
@@ -770,11 +773,8 @@ int DMatrix<T_>::setLU()
 {
    for (size_t i=1; i<_size; i++) {
       for (size_t j=1; j<=i; j++) {
-         try {
-            if (Abs(_a[_nb_rows*(j-1)+j-1]) < OFELI_EPSMCH)
-               THROW_RT("setLU(): The " + itos(int(i)) + "-th pivot is null.");
-         }
-         CATCH_EXIT("DMatrix");
+         if (Abs(_a[_nb_rows*(j-1)+j-1]) < OFELI_EPSMCH)
+            throw OFELIException("In DMatrix::setLU(): The " + itos(int(i)) + "-th pivot is null.");
          _a[_nb_rows*i+j-1] /= _a[_nb_rows*(j-1)+j-1];
          for (size_t k=0; k<j; k++)
             _a[_nb_rows*i+j] -= _a[_nb_rows*i+k]*_a[_nb_rows*k+j];
@@ -793,11 +793,8 @@ int DMatrix<T_>::setTransLU()
 {
    for (size_t i=1; i<_size; i++) {
       for (size_t j=1; j<=i; j++) {
-         try {
-            if (Abs(_a[_nb_rows*(i-1)+i-1]) < OFELI_EPSMCH)
-               THROW_RT("setTLU(): The " + itos(int(i)) + "-th pivot is null.");
-         }
-         CATCH_EXIT("DMatrix");
+         if (Abs(_a[_nb_rows*(i-1)+i-1]) < OFELI_EPSMCH)
+            throw OFELIException("In DMatrix::setTLU(): The " + itos(int(i)) + "-th pivot is null.");
          _a[_nb_rows*j+i-1] /= _a[_nb_rows*(i-1)+i-1];
          for (size_t k=0; k<j; k++)
             _a[_nb_rows*j+i] -= _a[_nb_rows*k+i]*_a[_nb_rows*j+k];
@@ -872,11 +869,8 @@ int DMatrix<T_>::solveLU(Vect<T_>& b)
       b[i] -= s;
    }
    for (int ii=int(_size)-1; ii>-1; ii--) {
-      try {
-         if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
-            THROW_RT("solveLU(Vect<T_>): The " + itos(ii+1) + "-th pivot is null.");
-      }
-      CATCH_EXIT("DMatrix");
+      if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
+         throw OFELIException("In DMatrix::solveLU(Vect<T_>): The " + itos(ii+1) + "-th pivot is null.");
       b[ii] /= _a[_nb_cols*ii+ii];
       for (size_t j=0; j<size_t(ii); j++)
          b[j] -= b[ii] * _a[_nb_cols*j+ii];
@@ -898,11 +892,8 @@ int DMatrix<T_>::solveTransLU(Vect<T_>& b)
       b[i] -= s;
    }
    for (int ii=int(_size)-1; ii>-1; ii--) {
-      try {
-         if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
-            THROW_RT("solveLU(Vect<real_t>): The " + itos(ii+1) + "-th pivot is null.");
-      }
-      CATCH_EXIT("DMatrix");
+      if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
+         throw OFELIException("In DMatrix::solveLU(Vect<real_t>): The " + itos(ii+1) + "-th pivot is null.");
       b[ii] /= _a[_nb_cols*ii+ii];
       for (size_t j=0; j<size_t(ii); j++)
          b[j] -= b[ii] * _a[_nb_cols*ii+j];
@@ -958,11 +949,8 @@ DMatrix<T_>& DMatrix<T_>::operator-=(const DMatrix<T_>& m)
 template<class T_>
 DMatrix<T_>& DMatrix<T_>::operator=(const T_& x)
 {
-   try {
-      if (_nb_rows!=_nb_cols)
-         THROW_RT("operator=(T_): Operator is valid for square matrices only.");
-   }
-   CATCH_EXIT("DMatrix");
+   if (_nb_rows!=_nb_cols)
+      throw OFELIException("In DMatrix::operator=(T_): Operator is valid for square matrices only.");
    _fact = false;
    Clear(_a);
    for (size_t i=1; i<=_size; i++) {

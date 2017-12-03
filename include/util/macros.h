@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -43,15 +43,6 @@ namespace OFELI {
  */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#define THROW_RT(s)   throw std::runtime_error(s)
-
-#define CATCH(c)      catch(const exception &e) { \
-                            std::cerr << "Exception thrown in OFELI::" << c << "::" << e.what() << endl; }
-
-#define CATCH_EXIT(c) catch(const exception &e) { \
-                            std::cerr << "Exception thrown in OFELI::" << c << "::" << e.what() << \
-                            "\nProgram stops." << endl; exit(1); }
-
 #define MESH_NODES    for (topNode(); (theNode=getNode());)
 #define MESH_ELEMENTS for (topElement(); (theElement=getElement());)
 #define MESH_SIDES    for (topSide(); (theSide=getSide());)

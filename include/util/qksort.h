@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -61,6 +61,9 @@ bool _less(const T_ &x, const T_ &y);
  *
  * The calling program must provide an overloading of the operator <
  * for the type \b T_
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 template<class T_>
 void QuickSort(std::vector<T_>& a,
@@ -101,6 +104,9 @@ void QuickSort(std::vector<T_>& a,
  * @param [in,out] a Vector to sort.
  * @param [in] begin index of starting index (default value is 0)
  * @param [in] end index of ending index (default value is the vector size - 1)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 template<class T_>
 void qksort(std::vector<T_>& a,
@@ -144,6 +150,9 @@ void qksort(std::vector<T_>& a,
  * @param [in] compare A function object that implements the ordering. The user
  * must provide this function that returns a boolean function that is true if
  * the first argument is less than the second and false if not.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 template<class T_, class C_>
 void qksort(std::vector<T_>& a,

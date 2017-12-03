@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -56,6 +56,9 @@ class Mesh;
  * The matrix can have different numbers of lower and upper co-diagonals
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 
@@ -116,7 +119,7 @@ class BMatrix : public Matrix<T_>
 
 /// \brief Multiply matrix by vector <tt>x</tt> and add result to <tt>y</tt>
     void MultAdd(const Vect<T_>& x,
-                       Vect<T_>& y) const;
+                 Vect<T_>&       y) const;
 
 /// \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>
     void MultAdd(T_              a,
@@ -235,7 +238,7 @@ class BMatrix : public Matrix<T_>
  *  </ul>
  */
     int solve(const Vect<T_>& b,
-                    Vect<T_>& x);
+              Vect<T_>&       x);
 
 /// \brief Return C-Array.
     T_* get() const { return _a; }
@@ -275,11 +278,8 @@ BMatrix<T_>::BMatrix(size_t size,
                      int    ld,
                      int    ud)
 {
-   try {
-       if (size<3 || ld<0 || ud<0 || ud+ld+1>int(size))
-          THROW_RT("BMatrix(size_t,int,int): Illegal arguments.");
-   }
-   CATCH("BMatrix");
+   if (size<3 || ld<0 || ud<0 || ud+ld+1>int(size))
+      throw OFELIException("In BMatrix::BMatrix(size_t,int,int): Illegal arguments.");
    _fact = false;
    setSize(size,ld,ud);
 }
@@ -302,10 +302,7 @@ template<class T_>
 void BMatrix<T_>::setMesh(Mesh&  mesh,
                           size_t dof)
 {
-   try {
-      THROW_RT("setMesh(Mesh,size_t): This member function is not valid for class BMatrix");
-   }
-   CATCH("BMatrix");
+   throw OFELIException("In BMatrix::setMesh(Mesh,size_t): This member function is not valid for class BMatrix");
 }
 
 
@@ -314,10 +311,8 @@ void BMatrix<T_>::setMesh(Mesh&  mesh,
                           size_t dof,
                           size_t type)
 {
-   try {
-      THROW_RT("setMesh(Mesh,size_t,size_t): This member function is not valid for class BMatrix");
-   }
-   CATCH("BMatrix");
+         throw OFELIException("In SkSMatrix::setMesh(Mesh,size_t,size_t): "
+                              "This member function is not valid for class BMatrix");
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -327,10 +322,7 @@ void BMatrix<T_>::setMesh(size_t dof,
                           Mesh&  mesh,
                           int    code)
 {
-   try {
-      THROW_RT("setMesh(size_t,Mesh,int): This member function is not valid for class BMatrix");
-   }
-   CATCH("BMatrix");
+   throw OFELIException("In BMatrix::setMesh(size_t,Mesh,int): This member function is not valid for class BMatrix");
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -340,10 +332,8 @@ void BMatrix<T_>::setMesh(size_t dof,
                           size_t nb_eq,
                           Mesh&  mesh)
 {
-   try {
-      THROW_RT("setMesh(size_t,size_t,Mesh): This member function is not valid for class BMatrix");
-   }
-   CATCH("BMatrix");
+         throw OFELIException("In SkSMatrix::setMesh(size_t,size_t,Mesh): "
+                              "This member function is not valid for class BMatrix");
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -452,13 +442,11 @@ template<class T_>
 T_ & BMatrix<T_>::operator()(size_t i,
                              size_t j)
 {
-   try {
-      if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
-         return _a[i-1][_ld+j-i];
-      else
-         THROW_RT("operator(): Illegal pair of indices "+itos(int(i))+","+itos(int(j))+").");
-   }
-   CATCH("BMatrix");
+   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
+      return _a[i-1][_ld+j-i];
+   else
+      throw OFELIException("In BMatrix::operator(): Illegal pair of indices " +
+                           itos(int(i))+","+itos(int(j))+").");
    return _zero;
 }
 
@@ -508,11 +496,8 @@ int BMatrix<T_>::setLU()
 {
    for (int i=0; i<int(_size)-1; i++) {
       int kend=std::min(_ld+1,int(_size)-i), kjend=std::min(_ud+1,int(_size)-i);
-      try {
-         if (Abs(_a[i][_ld]) < OFELI_EPSMCH)
-            THROW_RT("Factor(): The " + itos(int(i)+1) + "-th pivot is null.");
-      }
-      CATCH_EXIT("BMatrix");
+      if (Abs(_a[i][_ld]) < OFELI_EPSMCH)
+         throw OFELIException("In BMatrix::Factor(): The " + itos(int(i)+1) + "-th pivot is null.");
       for (int k=1; k!=kend; k++) {
          _a[k+i][_ld-k] /= _a[i][_ld];
          for (int j=1; j!=kjend; j++)
@@ -528,11 +513,8 @@ template<class T_>
 int BMatrix<T_>::solve(Vect<T_>& b)
 {
    int ret = 0;
-   try {
-      if (_size<3 || _ld<0 || _ud<0 || _ud+_ld+1>int(_size))
-         THROW_RT("solve(Vect<double>): Illegal arguments.");
-   }
-   CATCH("BMatrix");
+   if (_size<3 || _ld<0 || _ud<0 || _ud+_ld+1>int(_size))
+      throw OFELIException("In BMatrix::solve(Vect<double>): Illegal arguments.");
    if (_fact == false)
       ret = setLU();
 

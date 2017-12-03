@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -58,6 +58,9 @@ class Grid;
  * \brief Abstract class for the fast marching algorithm
  *
  * This abstract class manages the fast marching method
+ *
+ * \author M. Sylla, B. Meden
+ * \copyright GNU Lesser Public License
  */
 class FMM
 {

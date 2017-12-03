@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -32,6 +32,7 @@
 #include "io/XMLParser.h"
 #include "util/banner.h"
 #include "io/IPF.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -134,12 +135,9 @@ int IPF::contains(const string& label) const
 string IPF::getString(const string& label) const
 {
    int i=contains(label);
-   try {
-      if (i>0)
-         return _param_value[i-1];
-      THROW_RT("getString(string): Parameter " + label + " unfound in project file.");
-   }
-   CATCH("IPF");
+   if (i>0)
+      return _param_value[i-1];
+   throw OFELIException("In IPF::getString(string): Parameter " + label + " unfound in project file.");
    return " ";
 }
 
@@ -157,12 +155,9 @@ string IPF::getString(const string& label,
 int IPF::getInteger(const string& label) const
 {
    int i=contains(label);
-   try {
-      if (i>0)
-         return atoi(_param_value[i-1].c_str());
-      THROW_RT("getInteger(string): Parameter " + label + " unfound in project file.");
-   }
-   CATCH("IPF");
+   if (i>0)
+      return atoi(_param_value[i-1].c_str());
+   throw OFELIException("In IPF::getInteger(string): Parameter " + label + " unfound in project file.");
    return 0;
 }
    
@@ -180,13 +175,10 @@ int IPF::getInteger(const string& label,
 real_t IPF::getDouble(const string& label) const
 {
    int i=contains(label);
-   try {
-      if (i>0)
-         return atof(_param_value[i-1].c_str());
-      THROW_RT("getDouble(string): Parameter " + label + " unfound in project file.");
-    }
-    CATCH("IPF");
-    return 0;
+   if (i>0)
+      return atof(_param_value[i-1].c_str());
+   throw OFELIException("In IPF::getDouble(string): Parameter " + label + " unfound in project file.");
+   return 0;
 }
    
    
@@ -205,16 +197,13 @@ complex_t IPF::getComplex(const string& label) const
    real_t ar, ai;
    complex_t a;
    int i=contains(label);
-   try {
-      if (i>0) {
-         ar = atof(_param_value[i-1].c_str());
-         ai = atof(_param_value[i-1].c_str());
-         a = complex_t(ar,ai);
-         return a;
-      }
-      THROW_RT("getComplex(string): Parameter " + label + " unfound in project file.");
+   if (i>0) {
+      ar = atof(_param_value[i-1].c_str());
+      ai = atof(_param_value[i-1].c_str());
+      a = complex_t(ar,ai);
+      return a;
    }
-   CATCH("IPF");
+   throw OFELIException("In IPF::getComplex(string): Parameter " + label + " unfound in project file.");
    return 0;
 }
    
@@ -246,10 +235,7 @@ void IPF::get(const string&       label,
          return;
       }
    }
-   try {
-      THROW_RT("get(string,Vect<real_t>): Parameter " + label + " unfound in project file.");
-   }
-   CATCH("IPF");
+   throw OFELIException("In IPF::get(string,Vect<real_t>): Parameter " + label + " unfound in project file.");
 }
 
 

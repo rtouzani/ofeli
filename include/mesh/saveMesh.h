@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -101,6 +101,9 @@ struct Nd {
  *     <li><tt>VTK</tt>: Graphics format for the free postprocessor \b ParaView: 
  *         <tt>http://public.kitware.com/VTK/</tt>
  *  </ul>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void saveMesh(const string&            file,
               const Mesh&              mesh,
@@ -115,6 +118,9 @@ void saveMesh(const string&            file,
  *  \note \b Gmsh is a free mesh generator that can be downloaded from the site: http://www.geuz.org/gmsh/
  *  @param [out] file Output file in \b Gmsh format.
  *  @param [in] mesh Mesh instance to save.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void saveGmsh(const string& gp_file,
               const Mesh&   mesh);
@@ -128,6 +134,9 @@ void saveGmsh(const string& gp_file,
  *  <tt>http://www.gnuplot.info/</tt>
  *  @param [out] file Output file in \b Gnuplot format.
  *  @param [in] mesh Mesh instance to save.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void saveGnuplot(const string& file,
                  const Mesh&   mesh);
@@ -141,6 +150,9 @@ void saveGnuplot(const string& file,
  *  <tt>http://www.mathworks.com/products/matlab/</tt>
  *  @param [out] file Output file in \b Matlab format.
  *  @param [in] mesh Mesh instance to save.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void saveMatlab(const string& file,
                 const Mesh&   mesh);
@@ -154,6 +166,9 @@ void saveMatlab(const string& file,
  *  <tt>http://www.tecplot.com</tt>
  *  @param [out] file Output file in \b Tecplot format.
  *  @param [in] mesh Mesh instance to save.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void saveTecplot(const string& file,
                  const Mesh&   mesh);
@@ -168,6 +183,9 @@ void saveTecplot(const string& file,
  *  <tt>http://public.kitware.com/VTK/</tt>
  *  @param [out] file Output file in \b VTK format.
  *  @param [in] mesh Mesh instance to save.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void saveVTK(const string& file,
              const Mesh&   mesh);
@@ -182,9 +200,12 @@ void saveVTK(const string& file,
  * in the site:\n
  * <tt>http://raweb.inria.fr/rapportsactivite/RA2002/gamma/uid25.html</tt>
  * @param [in] mesh Mesh instance.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void saveBamg(const string& file,
-                    Mesh&   mesh);
+              Mesh&         mesh);
               
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

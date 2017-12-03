@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -56,8 +56,10 @@ namespace OFELI {
  * <tt>metis</tt> library that is included in the OFELI library. A more detailed
  * description of metis can be found in the web site:\n
  * http://www.csit.fsu.edu/~burkardt/c_src/metis/metis.html
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
-
 class Partition
 {
 

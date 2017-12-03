@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -62,6 +62,9 @@ class Side;
  *  that determinant of jacobian and other quantities depend on the point in the
  *  reference element where they are calculated. For this, before any utilization of
  *  shape functions or jacobian, function \b getLocal(s) must be invoked.
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 class Hexa8 : public FEShape

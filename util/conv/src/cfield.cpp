@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
    string mesh_file, input_file, output_file, output_format, inp;
    cout << "\n\n";
    cout << "cfield, A Program to convert an XML OFELI file to other field file formats.\n";
-   cout << "cfield, version 2.0, Copyright (c) 1998 - 2017 Rachid Touzani\n\n";
+   cout << "cfield, version 2.0, Copyright (c) 1998 - 2018 Rachid Touzani\n\n";
    cout << "This program is free software: you can redistribute it and/or modify\n";
    cout << "it under the terms of the GNU Lesser General Public License as published by\n";
    cout << "the Free Software Foundation, either version 3 of the License, or\n";

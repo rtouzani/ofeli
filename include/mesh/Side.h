@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -79,8 +79,10 @@ class Element;
  * according to the following list:
  *
  *  \htmlinclude "SideDescription.html"
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
-
 class Side
 {
 
@@ -343,9 +345,13 @@ private:
 // Associated functions
 //-----------------------------------------------------------------------------
 
-/// \fn ostream & operator<<(ostream& s, const Side &sd)
-/// \brief Output side data
-/// \ingroup Mesh
+/** \fn ostream & operator<<(ostream& s, const Side &sd)
+ *  \brief Output side data
+ *  \ingroup Mesh
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
     ostream& operator<<(ostream&    s,
                         const Side& sd);
 

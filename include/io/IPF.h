@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -66,6 +66,8 @@ namespace OFELI {
  * through information members of the class. Note that all the
  * parameters have default values
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class IPF {

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,6 +34,7 @@
 #include "io/output.h"
 #include "linear_algebra/Point.h"
 #include "io/fparser/fparser.h"
+#include "OFELIException.h"
 
 extern FunctionParser theParser;
 
@@ -91,11 +92,8 @@ Node::~Node() { }
 
 void Node::setNbDOF(size_t n)
 {
-   try {
-      if (n<=0)
-         THROW_RT("setNbDOF(size_t): Illegal argument.");
-   }
-   CATCH("Node");
+   if (n<=0)
+      throw OFELIException("Node::setNbDOF(size_t): Illegal argument.");
    _nb_dof = n;
    for (size_t i=0; i<_nb_dof; i++) {
       _dof[i] = _first_dof + i;
@@ -106,11 +104,8 @@ void Node::setNbDOF(size_t n)
 
 void Node::Add(Element* el)
 {
-   try {
-      if (!el)
-         THROW_RT("Add(Element *): Trying to add an illegal neighbour element.");
-   }
-   CATCH("Node");
+   if (!el)
+      throw OFELIException("Node::Add(Element *): Trying to add an illegal neighbour element.");
    _el.push_back(el);
    _neig_i++; _nb_neig_el++;
 }

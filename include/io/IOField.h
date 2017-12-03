@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -76,6 +76,9 @@ namespace OFELI {
  *  \ingroup IO
  * \brief Enables working with files in the XML Format.
  * \details This class has methods to store vectors in files and read from files.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class IOField : public XMLParser

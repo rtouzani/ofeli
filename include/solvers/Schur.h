@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -69,6 +69,9 @@ namespace OFELI {
  * Template Argument:
  *
  * \tparam <T_> data type (real_t, float, ...)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 template <class T_>
 void Schur(SkMatrix<T_>& A,

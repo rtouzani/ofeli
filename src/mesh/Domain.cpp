@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,6 +34,7 @@
 #include "mesh/Mesh.h"
 #include "io/XMLParser.h"
 #include <algorithm>
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -203,18 +204,12 @@ int Domain::getCurve()
       ll.node.resize(nb+1);
       data[0] = _v[n1-1].x; data[1] = _v[n1-1].y; data[2] = _v[n1-1].z;
       real_t vv = theParser.Eval(data);
-      try {
-         if (fabs(vv) > 1.e-8)
-            THROW_RT("getCurve(): )");
-      }
-      CATCH("Domain");
+      if (fabs(vv) > 1.e-8)
+         throw OFELIException("Domain::getCurve(): )");
       data[0] = _v[n2-1].x; data[1] = _v[n2-1].y; data[2] = _v[n2-1].z;
       vv = theParser.Eval(data);
-      try {
-         if (fabs(vv) > 1.e-8)
-            THROW_RT("getCurve(): ");
-      }
-      CATCH("Domain");
+      if (fabs(vv) > 1.e-8)
+         throw OFELIException("In Domain::getCurve(): ");
       ll.node[0] = _v[n1-1];
       ll.node[1] = _v[n2-1];
       data[0] = 0.9*ll.node[0].x + 0.1*ll.node[1].x;
@@ -299,17 +294,11 @@ int Domain::getLine()
 {
    Ln ll;
    size_t n1 = _ff->getI("First End Point: ");
-   try {
-      if (n1 > _nb_vertices)
-         THROW_RT("getLine(): Vertex " + itos(n1) + " is not defined.");
-   }
-   CATCH("Domain");
+   if (n1 > _nb_vertices)
+      throw OFELIException("In Domain::getLine(): Vertex "+itos(n1)+" is not defined.");
    size_t n2 = _ff->getI("Second End Point: ");
-   try {
-      if (n2 > _nb_vertices)
-         THROW_RT("getLine(): Vertex " + itos(n2) + " is not defined.");
-   }
-   CATCH("Domain");
+   if (n2 > _nb_vertices)
+      throw OFELIException("In Domain::getLine(): Vertex "+itos(n2)+" is not defined.");
    ll.n1 = n1, ll.n2 = n2;
    ll.Dcode = _ff->getI("Dirichlet Code: ");
    ll.Ncode = _ff->getI("Neumann Code: ");
@@ -378,25 +367,16 @@ void Domain::getCircle()
    Vertex v;
    ln.n1 = n1;
    ln.node.push_back(_v[n1-1]);
-   try {
-      if (n1 > _nb_vertices)
-         THROW_RT("getCircle(): Vertex " + itos(n1) + " is not defined.");
-   }
-   CATCH("Domain");
+   if (n1 > _nb_vertices)
+      throw OFELIException("In Domain::getCircle(): Vertex "+itos(n1)+" is not defined.");
    size_t n2 = _ff->getI("Second end vertex: ");
-   try {
-      if (n2 > _nb_vertices)
-         THROW_RT("getCircle(): Vertex " + itos(n2) + " is not defined.");
-   }
-   CATCH("Domain");
+   if (n2 > _nb_vertices)
+      throw OFELIException("In Domain::getCircle(): Vertex "+itos(n2)+" is not defined.");
    ln.n2 = n2;
    ln.node.push_back(_v[n2-1]);
    size_t n3 = _ff->getI("Center vertex: ");
-   try {
-      if (n3 > _nb_vertices)
-         THROW_RT("getCircle(): Vertex " + itos(n3) + " is not defined.");
-   }
-   CATCH("Domain");
+   if (n3 > _nb_vertices)
+      throw OFELIException("In Domain::getCircle(): Vertex "+itos(n3)+" is not defined.");
    ln.nb = nb;
 
    int dc = ln.Dcode = _ff->getI("Dirichlet Code: ");
@@ -432,11 +412,9 @@ void Domain::insertContour(const vector<size_t>& c)
 {
    size_t i, i1, i2, n1, n2;
    size_t nb = c.size();
-   try {
-      if (nb>_nb_lines)
-         THROW_RT("insertContour(vector<size_t>): Number of lines is larger than number of defined lines.");
-   }
-   CATCH_EXIT("Domain");
+   if (nb>_nb_lines)
+      throw OFELIException("In Domain::insertContour(vector<size_t>): "
+                           "Number of lines is larger than number of defined lines.");
    Cont cc;
    cc.nb = nb;
    for (i=0; i<nb; i++)
@@ -448,20 +426,14 @@ void Domain::insertContour(const vector<size_t>& c)
       if (i1 != i2) {
          i1 = _l[n1-1].n1; i2 = _l[n2-1].n1;
          cc.orientation[i] = -1;
-         try {
-            if (i1 != i2)
-               THROW_RT("insertContour(vector<size_t>): Lines " + itos(n1) + " and " + itos(n2) +
-                        " are not correctly connected.\nContour cancelled.");
-         }
-         CATCH("Domain");
+         if (i1 != i2)
+            throw OFELIException("In Domain::insertContour(vector<size_t>): Lines "+itos(n1)+" and "+itos(n2) +
+                                 " are not correctly connected.\nContour cancelled.");
       }
    }
    n1 = cc.line[0]; n2 = cc.line[nb-1];
-   try {
-      if (_l[n1-1].n1 != _l[n2-1].n2)
-         THROW_RT("insertContour(vector<size_t>): Contour is not closed.");
-   }
-   CATCH("Domain");
+   if (_l[n1-1].n1 != _l[n2-1].n2)
+      throw OFELIException("In Domain::insertContour(vector<size_t>): Contour is not closed.");
    _c.push_back(cc);
    _nb_sub_domains++;
    _nb_contours++;
@@ -471,21 +443,15 @@ void Domain::insertContour(const vector<size_t>& c)
 int Domain::getContour()
 {
    size_t nb = _ff->getI("Number of lines: ");
-   try {
-      if (nb > _nb_lines)
-         THROW_RT("getContour(): Number of contour lines is larger than number of lines.");
-   }
-   CATCH("Domain");
+   if (nb > _nb_lines)
+      throw OFELIException("In Domain::getContour(): Number of contour lines is larger than number of lines.");
    Cont cc;
    cc.nb = nb;
    cout << "Give list of lines in direct order.\n";
    for (size_t i=0; i<nb; i++) {
       size_t n = _ff->getI("Line Label: ");
-      try {
-         if (n > _nb_lines)
-            THROW_RT("getContour(): Label of line is larger than number of lines.");
-      }
-      CATCH("Domain");
+      if (n > _nb_lines)
+         throw OFELIException("In Domain::getContour(): Label of line is larger than number of lines.");
       cc.line.push_back(n);
    }
 
@@ -497,20 +463,14 @@ int Domain::getContour()
       else {
          cc.orientation.push_back(-1);
          i1 = _l[n1-1].n1; i2 = _l[n2-1].n1;
-         try {
-            if (i1 != i2)
-               THROW_RT("getContour(): Lines " + itos(n1) + " and " + itos(n2) + 
-                        " are not correctly connected.\nContour cancelled.");
-         }
-         CATCH("Domain");
+         if (i1 != i2)
+            throw OFELIException("In Domain::getContour(): Lines "+itos(n1)+" and "+itos(n2)+ 
+                                 " are not correctly connected.\nContour cancelled.");
       }
    }
 
-   try {
-      if (_l[cc.line[0]-1].n1 != _l[cc.line[nb-1]-1].n2)
-         THROW_RT("getContour(): Contour is not closed.");
-   }
-   CATCH("Domain");
+   if (_l[cc.line[0]-1].n1 != _l[cc.line[nb-1]-1].n2)
+      throw OFELIException("In Domain::getContour(): Contour is not closed.");
    _c.push_back(cc);
    _nb_contours++;
 
@@ -536,12 +496,9 @@ void Domain::insertHole(const vector<size_t>& h)
    for (size_t i=0; i<nb-1; i++) {
       size_t n1=hh.line[i], n2=hh.line[i+1];
       size_t i1=_l[n1-1].n2, i2=_l[n2-1].n1;
-      try {
-         if (i1 != i2)
-            THROW_RT("insertHole(vector<size_t>): Lines " + itos(n1) + " and " + itos(n2) +
-                     " are not correctly connected.\nHole cancelled.");
-      }
-      CATCH("Domain");
+      if (i1 != i2)
+         throw OFELIException("In Domain::insertHole(vector<size_t>): Lines "+itos(n1) +
+                              " and "+itos(n2)+" are not correctly connected.\nHole cancelled.");
    }
    _h.push_back(hh);
    _nb_holes++;
@@ -561,11 +518,9 @@ int Domain::getHole()
    for (size_t i=0; i<size_t(nb-1); i++) {
       size_t n1=hh.line[i], n2=hh.line[i+1];
       size_t i1=_l[n1-1].n2, i2=_l[n2-1].n1;
-      try {
-         if (i1 != i2)
-            THROW_RT("getHole(): Lines " + itos(n1) + " and " + itos(n2) + " are not correctly connected.");
-      }
-      CATCH("Domain");
+      if (i1 != i2)
+         throw OFELIException("In Domain::getHole(): Lines "+itos(n1)+" and " +
+                              itos(n2) + " are not correctly connected.");
    }
    _h.push_back(hh);
    _nb_holes++;
@@ -577,16 +532,11 @@ void Domain::insertSubDomain(size_t ln,
                              int    orient,
                              int    code)
 {
-   try {
-      if (ln==0 || ln>_nb_lines)
-         THROW_RT("insertSubDomain(size_t,int,int): Illegal line label");
-   }
-   CATCH_EXIT("Domain");
-   try {
-      if (orient!=1 && orient!=-1)
-         THROW_RT("insertSubDomain(size_t,int,int): Orientation must be equal to 1 or -1");
-   }
-   CATCH_EXIT("Domain");
+   if (ln==0 || ln>_nb_lines)
+      throw OFELIException("In Domain::insertSubDomain(size_t,int,int): Illegal line label");
+   if (orient!=1 && orient!=-1)
+      throw OFELIException("In Domain::insertSubDomain(size_t,int,int): Orientation "
+                           "must be equal to 1 or -1");
    Sd sd;
    sd.line = int(ln);
    sd.orient = orient;
@@ -609,11 +559,9 @@ void Domain::insertSubDomain(size_t n,
          k++;
       }
    }
-   try {
-      if (_sub_domain+1 > _nb_sub_domains)
-         THROW_RT("insertSubDomain(size_t,int): Number of read subdomains is larger than number of contours");
-   }
-   CATCH_EXIT("Domain");
+   if (_sub_domain+1 > _nb_sub_domains)
+      throw OFELIException("In Domain::insertSubDomain(size_t,int): Number of read "
+                           "subdomains is larger than number of contours");
    Sd sd;
    sd.contour = int(n);
    sd.code = code;
@@ -625,11 +573,9 @@ void Domain::insertSubDomain(size_t n,
 int Domain::getSubDomain()
 {
    Sd sd;
-   try {
-      if (_sub_domain+1 > _nb_sub_domains)
-         THROW_RT("getSubDomain(): Number of read subdomains is larger than number of contours");
-   }
-   CATCH("Domain");
+   if (_sub_domain+1 > _nb_sub_domains)
+      throw OFELIException("In Domain::getSubDomain(): Number of read subdomains "
+                           "is larger than number of contours");
    sd.contour = _ff->getI("Contour label: ");
    int code = _ff->getI("Material code for subdomain: ");
    sd.code = code;
@@ -1198,11 +1144,8 @@ int Domain::saveAsEasymesh()
    int     dc, nc, c;
    real_t h;
 
-   try {
-      if (!_c[0].nb)
-         THROW_RT("saveAsEasyMesh: No Contour is defined.");
-   }
-   CATCH("Domain");
+   if (!_c[0].nb)
+      throw OFELIException("In Domain::saveAsEasyMesh: No Contour is defined.");
    string mfile = _ff->getS("File Name (.d): ");
    string emfile = mfile + ".d";
    ofstream mf(emfile.c_str());
@@ -1296,11 +1239,8 @@ int Domain::saveAsEasymesh()
 
 int Domain::saveAsBamg()
 {
-   try {
-      if (_c[0].nb == 0)
-         THROW_RT("saveAsBamg: No Contour is defined.");
-   }
-   CATCH("Domain");
+   if (_c[0].nb == 0)
+      throw OFELIException("In Domain::saveAsBamg: No Contour is defined.");
    string mfile = _ff->getS("File Name (.geo): ");
    string emfile = mfile + ".geo";
    ofstream mf(emfile.c_str());
@@ -1422,11 +1362,8 @@ int Domain::saveAsTriangle()
    real_t  h, area=0;
    string mfile, emfile;
 
-   try {
-      if (_c[0].nb == 0)
-         THROW_RT("saveAsTriangle(): No Contour is defined.");
-   }
-   CATCH("Domain");
+   if (_c[0].nb == 0)
+      throw OFELIException("In Domain::saveAsTriangle(): No Contour is defined.");
    mfile = _ff->getS("File Name (.poly): ");
    emfile = mfile + ".poly";
    ofstream mf(emfile.c_str());
@@ -1683,11 +1620,8 @@ void Domain::gm1()
 
 void Domain::gm2()
 {
-   try {
-      if (_c[0].nb == 0)
-         THROW_RT("gm2(): No Contour is defined.");
-   }
-   CATCH("Domain");
+   if (_c[0].nb == 0)
+      throw OFELIException("In Domain::gm2(): No Contour is defined.");
    string prefix = _output_file.substr(0,_output_file.rfind("."));
    string geo_file=prefix+".geo", bamg_file=prefix+".bamg";
    ofstream mf(geo_file.c_str());
@@ -1806,11 +1740,8 @@ void Domain::gm3()
 void Domain::gm()
 {
    cout << endl;
-   try {
-      if (_c[0].nb == 0)
-         THROW_RT("gm(): No Contour is defined.");
-   }
-   CATCH("Domain");
+   if (_c[0].nb == 0)
+      throw OFELIException("In Domain::gm(): No Contour is defined.");
    string emfile="out.geo", outfile="out.bamg", ofeli_file="out.m";
    ofstream mf(emfile.c_str());
 

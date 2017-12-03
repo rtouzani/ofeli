@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,11 +55,9 @@ Line3::Line3()
 
 Line3::Line3(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 3)
-         THROW_RT("Line3(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Line3");
+   if (el->getNbNodes() != 3)
+      throw OFELIException("Line3::Line3(Element *): Illegal number of element nodes: " +
+                           itos(el->getNbNodes()));
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);
@@ -73,11 +71,8 @@ Line3::Line3(const Element* el)
    }
    Point<real_t> dxdl = (_x[2]-_x[0]);
    _det = 0.5*dxdl.Norm();
-   try {
-      if (_det == 0.0)
-         THROW_RT("Line3(Element *): Determinant of jacobian is null");
-   }
-   CATCH("Line3");
+   if (_det == 0.0)
+      throw OFELIException("Line3::Line3(Element *): Determinant of jacobian is null");
    _el = el;
    _sd = NULL;
 }
@@ -85,11 +80,9 @@ Line3::Line3(const Element* el)
 
 Line3::Line3(const Side *sd)
 {
-   try {
-      if (sd->getNbNodes() != 3)
-         THROW_RT("Line3(Side *): Illegal number of side nodes: " + itos(sd->getNbNodes()));
-   }
-   CATCH("Line3");
+   if (sd->getNbNodes() != 3)
+      throw OFELIException("Line3::Line3(Side *): Illegal number of side nodes: " +
+                           itos(sd->getNbNodes()));
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);
@@ -103,11 +96,8 @@ Line3::Line3(const Side *sd)
    }
    Point<real_t> dxdl = _x[2] - _x[0];
    _det = 0.5*dxdl.Norm();
-   try {
-      if (_det == 0.0)
-         THROW_RT("Line3(Side *): Determinant of jacobian is null");
-   }
-   CATCH("Line3");
+   if (_det == 0.0)
+      throw OFELIException("Line3::Line3(Side *): Determinant of jacobian is null");
 }
 
 

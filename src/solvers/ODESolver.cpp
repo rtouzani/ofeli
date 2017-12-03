@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -30,6 +30,7 @@
   ==============================================================================*/
 
 #include "solvers/ODESolver.h"
+#include "OFELIException.h"
 using std::cout;
 
 namespace OFELI {
@@ -142,11 +143,8 @@ void ODESolver::setCoef(string a0,
 void ODESolver::setMatrices(DMatrix<real_t>& A0,
                             DMatrix<real_t>& A1)
 {
-   try {
-      if (A0.getNbRows()!=_nb_eq || A1.getNbRows()!=_nb_eq)
-         THROW_RT("setMatrices(...): Matrix size is different from system size");
-   }
-   CATCH_EXIT("ODESolver");
+   if (A0.getNbRows()!=_nb_eq || A1.getNbRows()!=_nb_eq)
+      throw OFELIException("In ODESolver::setMatrices(...): Matrix size is different from system size");
    _A0 = &A0;
    _A1 = &A1;
    _order = 1;
@@ -159,11 +157,8 @@ void ODESolver::setMatrices(DMatrix<real_t>& A0,
                             DMatrix<real_t>& A2)
 {
    setMatrices(A0,A1);
-   try {
-      if (A2.getNbRows()!=_nb_eq)
-         THROW_RT("setMatrices(...): Matrix size is different from system size");
-   }
-   CATCH_EXIT("ODESolver");
+   if (A2.getNbRows()!=_nb_eq)
+      throw OFELIException("In ODESolver::setMatrices(...): Matrix size is different from system size");
    _A2 = &A2;
    _order = 2;
    _lhs = true;
@@ -176,11 +171,8 @@ void ODESolver::setF(string F)
    if (_step==1)
       nb_eq = 0;
    nb_eq++;
-   try {
-      if (nb_eq>_nb_eq && _step>1)
-         THROW_RT("setF(string): Number of calls is larger than system size.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (nb_eq>_nb_eq && _step>1)
+      throw OFELIException("In ODESolver::setF(string): Number of calls is larger than system size.");
    _type = SCALAR_NL;
    if (nb_eq>1)
       _type = VECTOR_NL;
@@ -205,12 +197,9 @@ real_t ODESolver::eval(string exp,
    d[0] = t; d[1] = y;
    int err;
    theParser.Parse(exp.c_str(),"t,y");
-   try {
-      v = theParser.Eval(d);
-      if ((err=theParser.EvalError()))
-         THROW_RT("eval(string,real_t,real_t): Illegal algebraic expression "+itos(err));
-   }
-   CATCH("ODESolver");
+   v = theParser.Eval(d);
+   if ((err=theParser.EvalError()))
+      throw OFELIException("In ODESolver::eval(string,real_t,real_t): Illegal algebraic expression "+itos(err));
    return v;
 }
 
@@ -221,12 +210,9 @@ real_t ODESolver::eval(string exp,
    real_t v;
    int err;
    theParser.Parse(exp.c_str(),"t");
-   try {
-      v = theParser.Eval(t);
-      if ((err=theParser.EvalError()))
-         THROW_RT("eval(string,real_t): Illegal algebraic expression "+itos(err));
-   }
-   CATCH("ODESolver");
+   v = theParser.Eval(t);
+   if ((err=theParser.EvalError()))
+      throw OFELIException("In ODESolver::eval(string,real_t): Illegal algebraic expression "+itos(err));
    return v;
 }
 
@@ -246,15 +232,12 @@ void ODESolver::set(TimeScheme s,
    if (s==RK4)
       _nb_ssteps = 4;
    _sc = int(s);
-   try {
-      if (s<0 || s>10) {
-         _solve = NULL;
-         THROW_RT("set(...): Time integration scheme not available.");
-      }
-      else
-         _solve = TS[int(s)];
+   if (s<0 || s>10) {
+      _solve = NULL;
+      throw OFELIException("In ODESolver::set(...): Time integration scheme not available.");
    }
-   CATCH_EXIT("ODESolver");
+   else
+      _solve = TS[int(s)];
    _constant_matrix = false;
 }
 
@@ -285,11 +268,8 @@ void ODESolver::setInitialRHS(real_t f)
 
 void ODESolver::setInitial(Vect<real_t>& u)
 {
-   try {
-      if (u.size()!=_nb_eq)
-         THROW_RT("setInitial(Vect<real_t>): Vector size is different from system size");
-   }
-   CATCH_EXIT("ODESolver");
+   if (u.size()!=_nb_eq)
+      throw OFELIException("In ODESolver::setInitial(Vect<real_t>): Vector size is different from system size");
    _w = &u;
    _u = *_w;
    _order = 1;
@@ -301,11 +281,8 @@ void ODESolver::setInitial(Vect<real_t>& u,
                            Vect<real_t>& v)
 {
    setInitial(u);
-   try {
-      if (v.size()!=_nb_eq)
-         THROW_RT("setInitial(Vect<real_t>,Vect<real_t>): Vector size is different from system size");
-   }
-   CATCH_EXIT("ODESolver");
+   if (v.size()!=_nb_eq)
+      throw OFELIException("In ODESolver::setInitial(Vect<real_t>,Vect<real_t>): Vector size is different from system size");
    _du = &v;
    _order = 2;
    _init = true;
@@ -332,11 +309,8 @@ void ODESolver::setRHS(string f)
    if (theTime>0)
       nb_eq = 0;
    nb_eq++;
-   try {
-      if (nb_eq>_nb_eq && _step>1)
-         THROW_RT("setRHS(string): Number of calls is larger than system size.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (nb_eq>_nb_eq && _step>1)
+      throw OFELIException("In ODESolver::setRHS(string): Number of calls is larger than system size.");
    _type = SCALAR_LINEAR;
    if (nb_eq>1)
       _type = VECTOR_LINEAR;
@@ -349,11 +323,8 @@ void ODESolver::setRHS(string f)
 
 void ODESolver::setRHS(Vect<real_t>& f)
 {
-   try {
-      if (f.size()!=_nb_eq)
-         THROW_RT("setRHS(Vect<real_t>): Vector size is different from system size");
-   }
-   CATCH_EXIT("ODESolver");
+   if (f.size()!=_nb_eq)
+      throw OFELIException("In ODESolver::setRHS(Vect<real_t>): Vector size is different from system size");
    _f2 = &f;
    if (_step==0 && _f1.size()==0)
       _f1.setSize(_nb_eq);
@@ -372,16 +343,10 @@ void ODESolver::setNewmarkParameters(real_t beta,
 real_t ODESolver::runOneTimeStep()
 {
    if (_step==0) {
-      try {
-         if (_init==false)
-         THROW_RT("runOneTimeStep(): No initial condition has been given.");
-      }
-      CATCH_EXIT("ODESolver");
-      try {
-         if (_lhs==false && _rhs==false)
-         THROW_RT("runOneTimeStep(): ODE insufficiently defined.");
-      }
-      CATCH_EXIT("ODESolver");
+      if (_init==false)
+         throw OFELIException("In ODESolver::runOneTimeStep(): No initial condition has been given.");
+      if (_lhs==false && _rhs==false)
+         throw OFELIException("In ODESolver::runOneTimeStep(): ODE insufficiently defined.");
    }
    _step++;
    _time = theTime;
@@ -430,11 +395,8 @@ void ODESolver::run(bool opt)
 
 void ODESolver::solveForwardEuler()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveForwardEuler(): Forward Euler scheme is implemented for first order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveForwardEuler(): Forward Euler scheme is implemented for first order equations only.");
    if (_type==SCALAR_LINEAR) {
       _y1 = _y0 + _time_step*(_d1-_c0*_y0)/_c1;
       _y2 = _y0 = _y1;
@@ -475,16 +437,10 @@ void ODESolver::solveForwardEuler()
 
 void ODESolver::solveBackwardEuler()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveBackwardEuler(): Backward Euler scheme is implemented for first order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
-   try {
-      if (_type==SCALAR_NL || _type==VECTOR_NL)
-         THROW_RT("solveBackwardEuler(): Backward Euler scheme is not implemented for a nonlinear ODE.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveBackwardEuler(): Backward Euler scheme is implemented for first order equations only.");
+   if (_type==SCALAR_NL || _type==VECTOR_NL)
+      throw OFELIException("In ODESolver::solveBackwardEuler(): Backward Euler scheme is not implemented for a nonlinear ODE.");
    if (_type==SCALAR_LINEAR) {
       _y1 = (_c1*_y0+_time_step*_d2)/(_c1+_time_step*_c0);
       _y2 = _y0 = _y1;
@@ -509,16 +465,10 @@ void ODESolver::solveBackwardEuler()
 
 void ODESolver::solveCrankNicolson()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveCrankNicolson(): Crank-Nicolson scheme is implemented for first order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
-   try {
-      if (_type==SCALAR_NL || _type==VECTOR_NL)
-         THROW_RT("solveCrankNicolson(): Crank-Nicolson scheme is not implemented for nonlinear ODEs.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveCrankNicolson(): Crank-Nicolson scheme is implemented for first order equations only.");
+   if (_type==SCALAR_NL || _type==VECTOR_NL)
+      throw OFELIException("In ODESolver::solveCrankNicolson(): Crank-Nicolson scheme is not implemented for nonlinear ODEs.");
    if (_type==SCALAR_LINEAR) {
       _y1 = (_c1 - 0.5*_time_step*_c0)*_y0 + 0.5*_time_step*(_d1+_d2);
       _y1 /= _c1 + 0.5*_time_step*_c0;
@@ -547,11 +497,8 @@ void ODESolver::solveCrankNicolson()
 
 void ODESolver::solveHeun()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveHeun(): Heun scheme is implemented for first order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveHeun(): Heun scheme is implemented for first order equations only.");
    if (_type==SCALAR_LINEAR) {
       real_t yz = _y0 + _time_step*(_d1-_c0*_y0)/_c1;
       _y1 = _y0 + 0.5*_time_step*(_d1+_d2-_c0*(_y0+yz))/_c1;
@@ -602,11 +549,8 @@ void ODESolver::solveHeun()
 
 void ODESolver::solveLeapFrog()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveLeapFrog(): Leap Frog scheme is implemented for first order equations only.");
-   }
-   CATCH_EXIT("DESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveLeapFrog(): Leap Frog scheme is implemented for first order equations only.");
    if (_type==SCALAR_LINEAR) {
       if (_step==1) {
          _y1 = _y0 + _time_step*(_d0 - _c0*_y0)/_c1;
@@ -670,11 +614,8 @@ void ODESolver::solveLeapFrog()
 
 void ODESolver::solveAB2()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveAB2(): Adams-Bashforth scheme is implemented for first order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveAB2(): Adams-Bashforth scheme is implemented for first order equations only.");
    if (_type==SCALAR_LINEAR) {
       if (_step==1)
          _y1 = _y0 + _time_step*(_d0-_c0*_y0)/_c1;   
@@ -738,11 +679,8 @@ void ODESolver::solveAB2()
 
 void ODESolver::solveRK4()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveRK4(): Runge-Kutta scheme is valid for first order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveRK4(): Runge-Kutta scheme is valid for first order equations only.");
    real_t k1, k2, k3, k4;
    if (_type==SCALAR_LINEAR) {
       k1 = _d1  - _c0*_y0;
@@ -803,11 +741,8 @@ void ODESolver::solveRK4()
 
 void ODESolver::solveRK3_TVD()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveRK3_TVD(): Runge-Kutta scheme is valid for first order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveRK3_TVD(): Runge-Kutta scheme is valid for first order equations only.");
    if (_type==SCALAR_LINEAR) {
       real_t t = _time - _time_step;
       real_t y1 = _y0 + _time_step*(_d1 - _c0*_y0);
@@ -868,16 +803,10 @@ void ODESolver::solveRK3_TVD()
 
 void ODESolver::solveNewmark()
 {
-   try {
-      if (_order==1)
-         THROW_RT("solveNewmark(): Newmark scheme is valid for second order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
-   try {
-      if (_type==SCALAR_NL)
-         THROW_RT("solveNewmark(): Newmark scheme is not implemented for a nonlinear ODE.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==1)
+      throw OFELIException("In ODESolver::solveNewmark(): Newmark scheme is valid for second order equations only.");
+   if (_type==SCALAR_NL)
+      throw OFELIException("In ODESolver::solveNewmark(): Newmark scheme is not implemented for a nonlinear ODE.");
    if (_type==SCALAR_LINEAR) {
       if (_step==1)
          _ddy = (_d0 - _c1*_dy1 - _c0*_y1)/_c2;
@@ -928,16 +857,10 @@ void ODESolver::solveNewmark()
 
 void ODESolver::solveBDF2()
 {
-   try {
-      if (_order==2)
-         THROW_RT("solveBDF2(): BDF2 scheme is implemented for first order equations only.");
-   }
-   CATCH_EXIT("ODESolver");
-   try {
-      if (_type==SCALAR_NL)
-         THROW_RT("solveBDF2(): BDF2 scheme is not implemented for a nonlinear ODE.");
-   }
-   CATCH_EXIT("ODESolver");
+   if (_order==2)
+      throw OFELIException("In ODESolver::solveBDF2(): BDF2 scheme is implemented for first order equations only.");
+   if (_type==SCALAR_NL)
+      throw OFELIException("In ODESolver::solveBDF2(): BDF2 scheme is not implemented for a nonlinear ODE.");
    if (_type==SCALAR_LINEAR) {
       if (_step==1)
          _y1 = (_time_step*_d2 + _c1*_y0)/(_c1+_time_step*_c0);

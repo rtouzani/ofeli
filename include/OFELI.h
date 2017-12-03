@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -39,6 +39,8 @@
  *
  *  To be included in conjunction with problem dependent header files.
  */
+
+#include "OFELIException.h"
 
 #include "util/macros.h"
 #include "util/banner.h"

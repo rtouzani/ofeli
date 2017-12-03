@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -75,15 +75,18 @@ namespace OFELI {
  *  @return Number of performed iterations
  *
  * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 template< class T_>
 int GS(const SpMatrix<T_>& A,
        const Vect<T_>&     b,
-             Vect<T_>&     x,
-             real_t        omega,
-             int           max_it,
-             real_t        toler,
-             int           verbose)
+       Vect<T_>&           x,
+       real_t              omega,
+       int                 max_it,
+       real_t              toler,
+       int                 verbose)
 {
    if (verbose>0)
       cout << "Running Gauss-Seidel method ..." << endl;

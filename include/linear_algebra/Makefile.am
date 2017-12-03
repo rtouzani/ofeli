@@ -10,7 +10,6 @@ ss_HEADERS =	Assembly.h \
 		BMatrix.h \
 		DMatrix.h \
 		DSMatrix.h \
-		FFT.h \
 		GraphOfMatrix.h \
 		LocalMatrix.h \
 		LocalVect.h \

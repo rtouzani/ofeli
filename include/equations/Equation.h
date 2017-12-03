@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -35,6 +35,7 @@
 #define __EQUATION_H
 
 #include "equations/AbsEqua.h"
+#include "OFELIException.h"
 
 extern FunctionParser theParser;
 
@@ -67,6 +68,8 @@ class Node;
  * \arg \b NSN_ : Number of side nodes
  * \arg \b NSN_ : Number of side equations
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
@@ -965,11 +968,9 @@ real_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty(const string& exp,
    d[2] = _center.z;
    d[3] = _time;
    r = theParser.Eval(d);
-   try {
-      if ((err=theParser.EvalError()))
-         THROW_RT("setMaterialProperty(string,string): Error in evaluation in expression " + prop);
-   }
-   CATCH("Equation<>");
+   if ((err=theParser.EvalError()))
+      throw OFELIException("In Equation::setMaterialProperty(string,string): "
+                           "Error in evaluation in expression " + prop);
    return r;
 }
 

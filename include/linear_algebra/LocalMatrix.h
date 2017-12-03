@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -63,6 +63,8 @@ namespace OFELI {
  * \tparam NR_ number of rows of matrix
  * \tparam NC_ number of columns of matrix
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template<class T_, size_t NC_> class LocalVect;

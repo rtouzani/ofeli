@@ -89,6 +89,8 @@ namespace OFELI {
  * is a Mesh data (<a href="../fileformats/MDFFormat.htm">MDF</a>) file.
  * \li Data can be given separated by any number of blanks or a carriage return.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

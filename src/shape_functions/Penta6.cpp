@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -51,11 +51,9 @@ Penta6::Penta6()
 
 Penta6::Penta6(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 6)
-         THROW_RT("Penta6(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Penta6");
+   if (el->getNbNodes() != 6)
+      throw OFELIException("Penta6::Penta6(Element *): Illegal number of element nodes: " +
+                           itos(el->getNbNodes()));
    _sh.resize(6);
    _node.resize(6);
    _x.resize(6);
@@ -130,11 +128,8 @@ void Penta6::setLocal(const Point<real_t>& s)
       dsdx(j,i) = dxds(j,k)*dxds(k,i) - dxds(j,i)*dxds(k,k); 
    }
    _det = dxds(1,1)*dsdx(1,1) + dxds(1,2)*dsdx(2,1) + dxds(1,3)*dsdx(3,1);
-   try {
-      if (_det == 0.0)
-         THROW_RT("setLocal(Point<real_t>): Determinant of jacobian is null");
-   }
-   CATCH("Penta6");
+   if (_det == 0.0)
+      throw OFELIException("Penta6::setLocal(Point<real_t>): Determinant of jacobian is null");
 
 // Global derivatives
    real_t c = 1./_det;

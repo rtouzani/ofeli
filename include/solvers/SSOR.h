@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -72,14 +72,17 @@ namespace OFELI {
  *
  *  \arg \a T_ data type (double, float, ...)\n
  *  \arg \a M_ %Matrix storage class\n
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template< class T_, class M_>
 int SSOR(const M_&       A,
          const Vect<T_>& b,
-               Vect<T_>& x,
-               int       max_it,
-               real_t    toler,
-               int       verbose)
+         Vect<T_>&       x,
+         int             max_it,
+         real_t          toler,
+         int             verbose)
 {
    size_t i, l, k;
    int it;

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -53,6 +53,9 @@ namespace OFELI {
  * This class enables choosing multiple selection criteria by using
  * function <tt>select...</tt> However, the intersection of these properties 
  * must be empty.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class NodeList {
@@ -135,6 +138,9 @@ class NodeList {
  * \details This class enables choosing multiple selection criteria by using
  * function <tt>select...</tt> However, the intersection of these properties 
  * must be empty.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class ElementList {
@@ -218,8 +224,10 @@ class ElementList {
  * \details This class enables choosing multiple selection criteria by using
  * function <tt>select...</tt> However, the intersection of these properties 
  * must be empty.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
-
 class SideList {
 
  public:
@@ -287,8 +295,10 @@ class SideList {
  * \details This class enables choosing multiple selection criteria by using
  * function <tt>select...</tt> However, the intersection of these properties 
  * must be empty.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
-
 class EdgeList {
 
  public:
@@ -349,27 +359,43 @@ class EdgeList {
 };
 
 
-/// \fn ostream & operator<<(ostream& s, const NodeList& nl)
-/// \brief Output NodeList instance
-/// \ingroup Mesh
+/** \fn ostream & operator<<(ostream& s, const NodeList& nl)
+ *  \brief Output NodeList instance
+ *  \ingroup Mesh
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
     ostream& operator<<(ostream&        s,
                         const NodeList& nl);
 
-/// \fn ostream & operator<<(ostream& s, const ElementList &el)
-/// \brief Output ElementList instance
-/// \ingroup Mesh
+/** \fn ostream & operator<<(ostream& s, const ElementList &el)
+ *  \brief Output ElementList instance
+ *  \ingroup Mesh
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
     ostream& operator<<(ostream&           s,
                         const ElementList& el);
 
-/// \fn ostream & operator<<(ostream& s, const SideList& sl)
-/// \brief Output SideList instance
-/// \ingroup Mesh
+/** \fn ostream & operator<<(ostream& s, const SideList& sl)
+ *  \brief Output SideList instance
+ *  \ingroup Mesh
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
     ostream& operator<<(ostream&        s,
                         const SideList& sl);
    
-/// \fn ostream & operator<<(ostream& s, const EdgeList& el)
-/// \brief Output EdgeList instance
-/// \ingroup Mesh
+/** \fn ostream & operator<<(ostream& s, const EdgeList& el)
+ * \brief Output EdgeList instance
+ * \ingroup Mesh
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
     ostream& operator<<(ostream&        s,
                         const EdgeList& el);
 

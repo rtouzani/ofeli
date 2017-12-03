@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
    cout << "\n";
    cout << "===========================================================================\n";
    cout << "g2m, A Program to generate 2-D meshes\n";
-   cout << "g2m, version 2.0, Copyright (c) 1998 - 2017  Rachid Touzani\n";
+   cout << "g2m, version 2.0, Copyright (c) 1998 - 2018  Rachid Touzani\n";
    cout << "---------------------------------------------------------------------------\n";
    cout << "This program is free software: you can redistribute it and/or modify\n";
    cout << "it under the terms of the GNU Lesser General Public License as published by\n";
@@ -139,12 +139,8 @@ bool parse(int     argc,
       cmd.parse(argc,argv);
       vtk_opt = vtk.getValue();
 
-      try {
-         if (dom.isSet() && geo.isSet()) {
-            THROW_RT("You cannot give domain and geometry input files.");
-         }
-      }
-      CATCH_EXIT("g2m");
+      if (dom.isSet() && geo.isSet())
+         throw OFELIException("You cannot give domain and geometry input files.");
 
       if (dom.isSet() || geo.isSet())
          inter = false;

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -52,11 +52,8 @@ Tetra4::Tetra4()
     
 Tetra4::Tetra4(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 4)
-         THROW_RT("Tetra4(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Tetra4");
+   if (el->getNbNodes() != 4)
+      throw OFELIException("Tetra4::Tetra4(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
    set(el);
 }
 
@@ -108,16 +105,10 @@ void Tetra4::CalculateShape()
    }
 
    _det = J(1,1)*IJ(1,1)+J(2,1)*IJ(1,2)+J(3,1)*IJ(1,3);
-   try {
-      if (_det < 0.0)
-        THROW_RT("set(Element *): Negative determinant of jacobian");
-   }
-   CATCH("Tetra4");
-   try {
-      if (_det == 0.0)
-         THROW_RT("set(Element *): Determinant of jacobian is null");
-   }
-   CATCH("Tetra4");
+   if (_det < 0.0)
+      throw OFELIException("Tetra4::set(Element *): Negative determinant of jacobian");
+   if (_det == 0.0)
+      throw OFELIException("Tetra4::set(Element *): Determinant of jacobian is null");
    real_t c = 1./_det;
    for (i=0; i<4; i++) {
       _dsh[i].x = c*(IJ(1,1)*_dshl[i].x + IJ(2,1)*_dshl[i].y + IJ(3,1)*_dshl[i].z);

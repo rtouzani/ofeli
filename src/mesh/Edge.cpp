@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -31,6 +31,7 @@
 
 #include "mesh/Edge.h"
 #include "util/util.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -48,11 +49,8 @@ Edge::Edge()
 
 Edge::Edge(size_t label)
 {
-   try {
-      if (label<1)
-         THROW_RT("Edge(size_t): Illegal edge label " + itos(label));
-   }
-   CATCH("Edge");
+   if (label<1)
+      throw OFELIException("Edge::Edge(size_t): Illegal edge label "+itos(label));
    _label = label;
    _nb_eq = _nb_nodes = 0;
    _neig_sd = 0;
@@ -88,11 +86,8 @@ Edge::~Edge() { }
 
 void Edge::Add(Node* node)
 {
-   try {
-      if (node==NULL)
-         THROW_RT("Add(Node *):  Trying to add an undefined node.");
-   }
-   CATCH("Edge");
+   if (node==NULL)
+      throw OFELIException("Edge::Add(Node *):  Trying to add an undefined node.");
    _node[_nb_nodes++] = node;
    _nb_eq += node->getNbDOF();
 }

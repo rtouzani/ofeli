@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -53,11 +53,9 @@ Quad4::Quad4()
 
 Quad4::Quad4(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 4)
-         THROW_RT("Quad4(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Quad4");
+   if (el->getNbNodes() != 4)
+      throw OFELIException("Quad4::Quad4(Element *): Illegal number of element nodes: " +
+                           itos(el->getNbNodes()));
    _sh.resize(4);
    _node.resize(4);
    _x.resize(4);
@@ -78,11 +76,9 @@ Quad4::Quad4(const Element* el)
 
 Quad4::Quad4(const Side* side)
 {
-   try {
-      if (side->getNbNodes() != 4)
-         THROW_RT("Quad4(Side *): Illegal number of side nodes: " + itos(side->getNbNodes()));
-   }
-   CATCH("Quad4");
+   if (side->getNbNodes() != 4)
+      throw OFELIException("Quad4::Quad4(Side *): Illegal number of side nodes: " +
+                           itos(side->getNbNodes()));
    _sh.resize(4);
    _node.resize(4);
    _x.resize(4);
@@ -155,16 +151,10 @@ void Quad4::setLocal(const Point<real_t>& s)
       dydt += dshl[i].y*_x[i].y;
    }
    _det = dxds*dydt - dxdt*dyds;
-   try {
-      if (_det < 0.0)
-         THROW_RT("setLocal(Point<real_t>): Negative determinant of jacobian");
-   }
-   CATCH("Quad4");
-   try {
-      if (_det == 0.0)
-         THROW_RT("setLocal(setLocal(Point<real_t>): Determinant of jacobian is null");
-   }
-   CATCH("Quad4");
+   if (_det < 0.0)
+      throw OFELIException("Quad4::setLocal(Point<real_t>): Negative determinant of jacobian");
+   if (_det == 0.0)
+      throw OFELIException("Quad4::setLocal(setLocal(Point<real_t>): Determinant of jacobian is null");
    real_t c = 1./_det;
    real_t dsdx =  c*dydt, dsdy = -c*dxdt, dtdx = -c*dyds, dtdy =  c*dxds;
    for (size_t i=0; i<4; i++) {

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -71,6 +71,9 @@ namespace OFELI {
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
  * \tparam N_ Vector size
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template<class T_> class Vect;

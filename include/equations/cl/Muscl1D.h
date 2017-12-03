@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -25,11 +25,8 @@
 
   ==============================================================================
 
-                            Definition of Class Muscl1D
-                      Class for Muscl finite volumes for 1-D problems
-
-       Author: S. Clain
-               clain@mip.ups-tlse.fr
+                          Definition of Class Muscl1D
+                    Class for Muscl finite volumes for 1-D problems
 
   ==============================================================================*/
 
@@ -56,6 +53,8 @@ template<class T_> class Vect;
  *  \ingroup ConservationLaws
  *  \brief Class for 1-D hyperbolic solvers with Muscl scheme.
  *
+ * \author S. Clain, V. Clauzon
+ * \copyright GNU Lesser Public License
  */
 
 

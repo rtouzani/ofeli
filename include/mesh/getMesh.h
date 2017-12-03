@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -94,46 +94,55 @@ struct Nd {
  *  @param [out] mesh Mesh instance created by the function.
  *  @param [in] nb_dof Number of degrees of freedom for each node. This information
  *  is not provided, in general, by mesh generators. Its default value here is 1.
-*/
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
 void getMesh(string             file,
              ExternalFileFormat form,
              Mesh&              mesh,
              size_t             nb_dof=1);
 
 /** \fn void getBamg(string file, Mesh& mesh, size_t nb_dof=1)
-    \ingroup Util
-    \brief Construct an instance of class Mesh from a mesh file stored in
-    <a href="www-rocq1.inria.fr/gamma/cdrom/www/bamg/eng.htm">Bamg</a> format.
-
-    @param [in] file Name of a file written in the Bamg format.\n
-    \note \b Bamg is a 2-D mesh generator. It allows to construct adapted meshes from a 
-    given metric. It was developed at INRIA, France. Available information can be found 
-    in the site:\n
-    <tt>http://raweb.inria.fr/rapportsactivite/RA2002/gamma/uid25.html</tt>
-    @param [out] mesh Mesh instance created by the function.
-    @param [in] nb_dof Number of degrees of freedom for each node. This information
-    is not provided, in general, by mesh generators. Its default value here is 1.
-*/
+ *  \ingroup Util
+ *  \brief Construct an instance of class Mesh from a mesh file stored in
+ *  <a href="www-rocq1.inria.fr/gamma/cdrom/www/bamg/eng.htm">Bamg</a> format.
+ *
+ *  @param [in] file Name of a file written in the Bamg format.\n
+ *  \note \b Bamg is a 2-D mesh generator. It allows to construct adapted meshes from a 
+ *   given metric. It was developed at INRIA, France. Available information can be found 
+ *  in the site:\n
+ *  <tt>http://raweb.inria.fr/rapportsactivite/RA2002/gamma/uid25.html</tt>
+ *  @param [out] mesh Mesh instance created by the function.
+ *  @param [in] nb_dof Number of degrees of freedom for each node. This information
+ *  is not provided, in general, by mesh generators. Its default value here is 1.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
 void getBamg(string file,
              Mesh&  mesh,
              size_t nb_dof=1);
 
 /** \fn void getEasymesh(string file, Mesh &mesh, size_t nb_dof=1)
-    \ingroup Util
-    \brief Construct an instance of class Mesh from a mesh file stored in
-    <a href="http://www-dinma.univ.trieste.it/nirftc/research/easymesh/Default.htm">Easymesh</a> format.
-
-    @param [in] file Name of a file (without extension) written in \b Easymesh format.
-    Actually, the function Easymesh2MDF attempts to read mesh data from files <tt>file.e</tt>,
-    <tt>file.n</tt> and <tt>file.s</tt> produced by \b Easymesh. 
-    
-    \note \b Easymesh is a free program that generates 2-D, unstructured, Delaunay and 
-    constrained Delaunay triangulations in general domains. It can be downloaded from the site:\n
-    http://www-dinma.univ.trieste.it/nirftc/research/easymesh/Default.htm
-    @param [in] mesh Mesh instance created by the function.
-    @param [in] nb_dof Number of degrees of freedom for each node. This information
-    is not provided, in general, by mesh generators. Its default value here is 1.
-*/
+ *  \ingroup Util
+ *  \brief Construct an instance of class Mesh from a mesh file stored in
+ *  <a href="http://www-dinma.univ.trieste.it/nirftc/research/easymesh/Default.htm">Easymesh</a> format.
+ *
+ *  @param [in] file Name of a file (without extension) written in \b Easymesh format.
+ *  Actually, the function Easymesh2MDF attempts to read mesh data from files <tt>file.e</tt>,
+ *  <tt>file.n</tt> and <tt>file.s</tt> produced by \b Easymesh. 
+ *  
+ *  \note \b Easymesh is a free program that generates 2-D, unstructured, Delaunay and 
+ *  constrained Delaunay triangulations in general domains. It can be downloaded from the site:\n
+ *  http://www-dinma.univ.trieste.it/nirftc/research/easymesh/Default.htm
+ *  @param [in] mesh Mesh instance created by the function.
+ *  @param [in] nb_dof Number of degrees of freedom for each node. This information
+ *  is not provided, in general, by mesh generators. Its default value here is 1.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
 void getEasymesh(string file,
                  Mesh&  mesh,
                  size_t nb_dof=1);
@@ -150,6 +159,9 @@ void getEasymesh(string file,
  *  @param [out] mesh Mesh instance created by the function.
  *  @param [in] nb_dof Number of degrees of freedom for each node. This information
  *  is not provided, in general, by mesh generators. Its default value here is 1.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void getGambit(string file,
                Mesh&  mesh,
@@ -165,6 +177,9 @@ void getGambit(string file,
  *  @param [out] mesh Mesh instance created by the function.
  *  @param [in] nb_dof Number of degrees of freedom for each node. This information
  *  is not provided, in general, by mesh generators. Its default value here is 1.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void getGmsh(string file,
              Mesh&  mesh,
@@ -181,6 +196,9 @@ void getGmsh(string file,
  *  @param [out] mesh Mesh instance created by the function.
  *  @param [in] nb_dof Number of degrees of freedom for each node. This information
  *  is not provided, in general, by mesh generators. Its default value here is 1.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void getMatlab(string file,
                Mesh&  mesh,
@@ -196,6 +214,9 @@ void getMatlab(string file,
  *  @param [out] mesh Mesh instance created by the function.
  *  @param [in] nb_dof Number of degrees of freedom for each node. This information
  *   is not provided, in general, by mesh generators. [ default = 1 ]
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void getNetgen(string file,
                Mesh&  mesh,
@@ -212,6 +233,9 @@ void getNetgen(string file,
  *  @param [out] mesh Mesh instance created by the function.
  *  @param [in] nb_dof Number of degrees of freedom for each node. This information
  *  is not provided, in general, by mesh generators. Its default value here is 1.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void getTetgen(string file,
                Mesh&  mesh,
@@ -229,6 +253,9 @@ void getTetgen(string file,
  *  @param [out] mesh Mesh instance created by the function.
  *  @param [in] nb_dof Number of degrees of freedom for each node. This information
  *  is not provided, in general, by mesh generators. Its default value here is 1.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void getTriangle(string file,
                  Mesh&  mesh,

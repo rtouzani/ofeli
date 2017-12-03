@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,6 +34,7 @@
 #include "mesh/MeshUtil.h"
 #include "equations/AbsEqua.h"
 #include "io/XMLParser.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -68,11 +69,9 @@ int Prescription::get(int           type,
    XMLParser p(_file,*_theMesh,XMLParser::PRESCRIBE);
    p.get(type,_p);
    for (size_t k=0; k<_p.size(); k++) {
-      try {
-         if ((ret=PARSE(_p[k].fct,"x,y,z,t")) != -1)
-            THROW_RT("get(int,Vect<real_t>,real_t,size_t): Error in expression parsing.");
-      }
-      CATCH("Prescription");
+      if ((ret=PARSE(_p[k].fct,"x,y,z,t")) != -1)
+         throw OFELIException("In Prescription::get(int,Vect<real_t>,real_t,size_t):"
+                              " Error in expression parsing.");
       if (dof) {
          if (type==BOUNDARY_CONDITION)
             get_boundary_condition(v,k,dof);
@@ -122,12 +121,10 @@ void Prescription::get_point_force(Vect<real_t>& v,
          if (_p[k].bz)
             e += (_p[k].z-_data[2])*(_p[k].z-_data[2]);
          if (i==_p[k].dof && sqrt(e)<OFELI_EPSMCH && p) {
-	    v(node_label,i) = EVAL(_data);
-            try {
-               if ((err=EVAL_ERR))
-                  THROW_RT("get_point_force(Vect<real_t>,size_t): Error in expression evaluation.");
-            }
-            CATCH("Prescription");
+            v(node_label,i) = EVAL(_data);
+            if ((err=EVAL_ERR))
+               throw OFELIException("In Prescription::get_point_force(Vect<real_t>,size_t): "
+                                    "Error in expression evaluation.");
          }
       }
    }
@@ -152,11 +149,9 @@ void Prescription::get_point_force(Vect<real_t>& v,
          e += (_p[k].z-z)*(_p[k].z-z);
       if (sqrt(e)<OFELI_EPSMCH && _p[k].dof==dof) {
          v(node_label,dof) = EVAL(_data);
-         try {
-            if ((err=EVAL_ERR))
-               THROW_RT("get_point_force(Vect<real_t>,size_t,size_t): Error in expression evaluation.");
-         }
-         CATCH("Prescription");
+         if ((err=EVAL_ERR))
+            throw OFELIException("In Prescription::get_point_force(Vect<real_t>,size_t,size_t): "
+                                 "Error in expression evaluation.");
       }
    }
 }
@@ -173,11 +168,9 @@ void Prescription::get_boundary_condition(Vect<real_t>& v,
       _data[2] = the_node->getZ();
       if (the_node->getCode(dof)==_p[k].code) {
          v(node_label,dof) = EVAL(_data);
-         try {
-            if ((err=EVAL_ERR))
-               THROW_RT("get_boundary_condition(Vect<real_t>,size_t,size_t): Error in expression evaluation.");
-         }
-         CATCH("Prescription");
+         if ((err=EVAL_ERR))
+            throw OFELIException("In Prescription::get_boundary_condition(Vect<real_t>,size_t,size_t): "
+                                 "Error in expression evaluation.");
       }
    }
 }
@@ -196,11 +189,9 @@ void Prescription::get_boundary_condition(Vect<real_t>& v,
          l++;
          if (the_node->getCode(_p[k].dof)==_p[k].code && i==_p[k].dof) {
             v(l) = EVAL(_data);
-            try {
-               if ((err=EVAL_ERR))
-                  THROW_RT("get_boundary_condition(Vect<real_t>,size_t): Error in expression evaluation.");
-            }
-            CATCH("Prescription");
+            if ((err=EVAL_ERR))
+               throw OFELIException("In Prescription::get_boundary_condition(Vect<real_t>,size_t): "
+                                    "Error in expression evaluation.");
          }
       }
    }
@@ -227,11 +218,9 @@ void Prescription::get_boundary_force(Vect<real_t>& v,
          real_t z = EVAL(_data);
          for (i=1; i<=n; i++)
             v(The_side(i)->n()) = z;
-         try {
-            if ((err=EVAL_ERR))
-               THROW_RT("get_boundary_force(Vect<real_t>,size_t,size_t): Error in expression evaluation.");
-         }
-         CATCH("Prescription");
+         if ((err=EVAL_ERR))
+            throw OFELIException("In Prescription::get_boundary_force(Vect<real_t>,size_t,size_t): "
+                                 "Error in expression evaluation.");
       }
    }
 }
@@ -254,11 +243,9 @@ void Prescription::get_boundary_force(Vect<real_t>& v,
             }
             _data[0] /= n, _data[1] /= n, _data[2] /= n;
             v(The_side.getDOF(j)) = EVAL(_data);
-            try {
-                 if ((err=EVAL_ERR))
-                    THROW_RT("get_boundary_force(Vect<real_t>,size_t): Error in expression evaluation.");
-            }
-            CATCH("Prescription");
+            if ((err=EVAL_ERR))
+               throw OFELIException("In Prescription::get_boundary_force(Vect<real_t>,size_t): "
+                                    "Error in expression evaluation.");
          }
       }
    }
@@ -276,11 +263,9 @@ void Prescription::get_initial(Vect<real_t>& v,
          _data[1] = the_node->getY();
          _data[2] = the_node->getZ();
          v(node_label) = EVAL(_data);
-         try {
-            if ((err=EVAL_ERR))
-               THROW_RT("get_initial(Vect<real_t>,size_t,size_t): Error in expression evaluation.");
-         }
-         CATCH("Prescription");
+         if ((err=EVAL_ERR))
+            throw OFELIException("In Prescription::get_initial(Vect<real_t>,size_t,size_t): "
+                                 "Error in expression evaluation.");
       }
    }
 }
@@ -298,11 +283,9 @@ void Prescription::get_initial(Vect<real_t>& v,
       for (i=1; i<=the_node->getNbDOF(); i++) {
          if (i==_p[k].dof) {
             v(the_node->getDOF(_p[k].dof)) = EVAL(_data);
-            try {
-               if ((err=EVAL_ERR))
-                  THROW_RT("get_initial(Vect<real_t>,size_t): Error in expression evaluation.");
-            }
-            CATCH("Prescription");
+            if ((err=EVAL_ERR))
+               throw OFELIException("In Prescription::get_initial(Vect<real_t>,size_t): "
+                                    "Error in expression evaluation.");
          }
       }
    }
@@ -320,11 +303,9 @@ void Prescription::get_body_force(Vect<real_t>& v,
          _data[1] = the_node->getY();
          _data[2] = the_node->getZ();
          v(node_label) = EVAL(_data);
-         try {
-            if ((err=EVAL_ERR))
-               THROW_RT("get_body_force(Vect<real_t>,size_t,size_t): Error in expression evaluation.");
-         }
-         CATCH("Prescription");
+         if ((err=EVAL_ERR))
+            throw OFELIException("In Prescription::get_body_force(Vect<real_t>,size_t,size_t): "
+                                 "Error in expression evaluation.");
       }
    }
 }
@@ -343,11 +324,9 @@ void Prescription::get_body_force(Vect<real_t>& v,
          l++;
          if (i==_p[k].dof) {
             v(l) = EVAL(_data);
-            try {
-               if ((err=EVAL_ERR))
-                  THROW_RT("get_body_force(Vect<real_t>,size_t): Error in expression evaluation.");
-            }
-            CATCH("Prescription");
+            if ((err=EVAL_ERR))
+               throw OFELIException("In Prescription::get_body_force(Vect<real_t>,size_t): "
+                                    "Error in expression evaluation.");
          }
       }
    }

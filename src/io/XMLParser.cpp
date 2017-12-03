@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -44,6 +44,7 @@
 #include "shape_functions/Hexa8.h"
 #include "shape_functions/Penta6.h"
 #include "io/Tabulation.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -129,18 +130,12 @@ void XMLParser::open()
 // read chunks, parse them, and save for one chunk parse
    set_skip_whitespaces(true);
    _is.open(_file.c_str());
-   try {
-      if (_is.fail())
-         THROW_RT("open(): File " + _file + " cannot be opened.");
-   }
-   CATCH("XMLParser");
+   if (_is.fail())
+      throw OFELIException("In XMLParser::open(): File " + _file + " cannot be opened.");
 
 // begin parsing
-   try {
-      if (!begin())
-         THROW_RT("open: Failed to initialize parser for file " + _file);
-   }
-   CATCH("XMLParser");
+   if (!begin())
+      throw OFELIException("In XMLParser::open: Failed to initialize parser for file " + _file);
    string chunk;
    char buff[64];
    while (!_is.eof() && _is.good()) {
@@ -149,19 +144,13 @@ void XMLParser::open()
       _xml.append(buff,len);
       chunk.assign(buff,len);
    }
-   try {
-      if (_is.bad()) {
-         _is.close();
-         THROW_RT("open(): Failed to read file.");
-      }
+   if (_is.bad()) {
+      _is.close();
+      throw OFELIException("In XMLParser::open(): Failed to read file.");
    }
-   CATCH("XMLParser");
    _is.close();
-   try {
-      if (!end())
-         THROW_RT("open(): Failed to finalize parsing.");
-   }
-   CATCH("XMLParser");
+   if (!end())
+      throw OFELIException("In XMLParser::open(): Failed to finalize parsing.");
    _is_opened = true;
 }
 
@@ -174,19 +163,16 @@ int XMLParser::scan(size_t ind)
    }
    _scan = ind;
    _set_mesh = _set_field = true;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0 || _scan>1)
-            cout << "Parse done" << endl;
-         _scan = false;
-         cout << "----------------------------------------------------------------------" << endl;
-         cout << "Scanning complete." << endl;
-         return 0;
-      }
-      else
-         THROW_RT("scan(size_t): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0 || _scan>1)
+         cout << "Parse done" << endl;
+      _scan = false;
+      cout << "----------------------------------------------------------------------" << endl;
+      cout << "Scanning complete." << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::scan(size_t): Failed to parse XML file.");
    return -1;
 }
 
@@ -202,20 +188,17 @@ int XMLParser::scan(vector<real_t>& t,
    _ft->clear();
    _rtype = type;
    _compact = true;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0 || _scan>1)
-            cout << "Parse done" << endl;
-         if (_verb>1 || _scan>1) {
-            cout << "----------------------------------------------------------------------" << endl;
-            cout << "Scanning complete." << endl;
-         }
-         return 0;
+   if (parse(_xml)) {
+      if (_verb>0 || _scan>1)
+         cout << "Parse done" << endl;
+      if (_verb>1 || _scan>1) {
+         cout << "----------------------------------------------------------------------" << endl;
+         cout << "Scanning complete." << endl;
       }
-      else
-         THROW_RT("scan(vector<real_t>,int,size_t): Failed to parse XML file.");
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::scan(vector<real_t>,int,size_t): Failed to parse XML file.");
    return -1;
 }
 
@@ -230,16 +213,13 @@ int XMLParser::get(Domain& dm)
    _type = DOMAIN_;
    _theDomain->_nb_dof = 1;
    _theDomain->_dim = 2;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done." << endl;
-         return 0;
-      }
-      else
-         THROW_RT("get(Domain): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done." << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(Domain): Failed to parse XML file.");
    return 0;
 }
 
@@ -251,16 +231,13 @@ int XMLParser::get(Tabulation& t)
    _scan = 0;
    _theMesh = NULL;
    _type = FUNCTION;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done." << endl;
-         return 0;
-      }
-   else
-      THROW_RT("get(Tabulation): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done." << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(Tabulation): Failed to parse XML file.");
    return 0;
 }
 
@@ -272,16 +249,13 @@ int XMLParser::get(IPF& ipf)
    _set_mesh = _set_field = false;
    _scan = 0;
    _theMesh = NULL;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done." << endl;
-         return 0;
-      }
-      else
-         THROW_RT("get(IPF): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done." << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(IPF): Failed to parse XML file.");
    return 0;
 }
 
@@ -291,16 +265,13 @@ int XMLParser::getMaterial()
    _set_mesh = _set_field = false;
    _scan = 0;
    _theMesh = NULL;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done." << endl;
-         return 0;
-      }
-      else
-         THROW_RT("getMaterial(): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done." << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::getMaterial(): Failed to parse XML file.");
    return 0;
 }
 
@@ -314,16 +285,13 @@ int XMLParser::get(int                      type,
    _set_mesh = _set_field = false;
    _scan = 0;
    _compact = true;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done." << endl;
-         return 0;
-      }
-      else
-         THROW_RT("get(int,vector<PrescriptionPar>): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done." << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(int,vector<PrescriptionPar>): Failed to parse XML file.");
    return 0;
 }
 
@@ -340,16 +308,13 @@ int XMLParser::get(Mesh& ms,
    _nb_sides = _theMesh->getNbSides();
    _nb_edges = _theMesh->getNbEdges();
    _format = format;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done." << endl;
-         return 0;
-      }
-      else
-         THROW_RT("get(Mesh,int): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done." << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(Mesh,int): Failed to parse XML file.");
    return 0;
 }
 
@@ -372,16 +337,13 @@ int XMLParser::get(Vect<real_t>& v,
    _nb_dof = 1;
    _v->setName(_name);
    _nx = v.getNx(), _ny = v.getNy(), _nz = v.getNz();
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done" << endl;
-         return 0;
-      }
-      else
-         THROW_RT("get(Vect<real_t>,string): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done" << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(Vect<real_t>,string): Failed to parse XML file.");
    return 0;
 }
 
@@ -407,16 +369,13 @@ int XMLParser::get(Vect<real_t>& v,
    _compact = true;
    _all_steps = 0;
    _nx = 0, _ny = _nz = 1;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done" << endl;
-         return 0;
-      }
-      else
-         THROW_RT("get(Vect<real_t>,real_t,string,int): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done" << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(Vect<real_t>,real_t,string,int): Failed to parse XML file.");
    return 0;
 }
 
@@ -447,16 +406,13 @@ int XMLParser::get(Mesh&         ms,
    _name = v.getName();
    _v->setMesh(*_theMesh,_nb_dof,_dof_support);
    _v->setName(_name);
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done" << endl;
-         return 0;
-      }
-      else
-         THROW_RT("get(Vect<real_t>,real_t,string,int): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done" << endl;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(Vect<real_t>,real_t,string,int): Failed to parse XML file.");
    return 0;
 }
 
@@ -476,17 +432,14 @@ int XMLParser::get(Mesh&                    ms,
    _all_steps = 1;
    _compact = true;
    _type = FIELD;
-   try {
-      if (parse(_xml)) {
-         if (_verb>0)
-            cout << "Parse done" << endl;
-         name = _name;
-         return 0;
-      }
-      else
-         THROW_RT("get(Mesh,vector<vector<real_t> >): Failed to parse XML file.");
+   if (parse(_xml)) {
+      if (_verb>0)
+         cout << "Parse done" << endl;
+      name = _name;
+      return 0;
    }
-   CATCH("XMLParser");
+   else
+      throw OFELIException("In XMLParser::get(Mesh,vector<vector<real_t> >): Failed to parse XML file.");
    return 0;
 }
 

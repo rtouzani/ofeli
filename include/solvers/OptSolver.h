@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -64,7 +64,9 @@ namespace OFELI {
 /*! \class OptSolver
  * \ingroup Solver
  * \brief To solve an optimization problem with bound constraints
- * 
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 class OptSolver
 {

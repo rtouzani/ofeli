@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -78,6 +78,9 @@ template <class T_> class AbsEqua;
  *  The eigenproblem can be originated from a PDE. For this, we will refer
  *  to the matrices K and M as <i>Stiffness</i> and <i>Mass</i> matrices
  *  respectively. 
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class EigenProblemSolver

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -61,6 +61,8 @@ namespace OFELI {
  *
  *  \details Problem being formulated in time harmonics, the solution is complex valued.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class HelmholtzBT3 : virtual public Equa_Electromagnetics<complex_t,3,3,2,2>

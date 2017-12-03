@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -59,7 +59,7 @@
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of the current release
  */
-#define OFELI_RELEASE_DATE            "3-2017"
+#define OFELI_RELEASE_DATE            "1-2018"
 
 
 /*! \typedef lsize_t

@@ -1,6 +1,6 @@
 /*==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -51,13 +51,19 @@ namespace OFELI {
  * \ingroup Util
  * \brief Return sign of <tt>a</tt>: <tt>-1</tt> or <tt>1</tt>. 
  */
-inline int Sgn(real_t a) { return (((a) > 0) ? (1) : -(1)); }
+inline int Sgn(real_t a)
+{
+   return (((a) > 0) ? (1) : -(1));
+}
 
 /** \fn real_t Abs2(complex_t a)
  *  \ingroup Util
  *  \brief Return square of modulus of complex number <tt>a</tt>
  */
-inline real_t Abs2(complex_t a) { return (a.real()*a.real()+a.imag()*a.imag()); }
+inline real_t Abs2(complex_t a)
+{
+   return (a.real()*a.real()+a.imag()*a.imag());
+}
 
 /** \fn real_t Abs2(real_t a)
  *  \ingroup Util
@@ -102,7 +108,9 @@ inline complex_t Conjg(complex_t a) { return complex_t(a.real(),-a.imag()); }
 inline real_t Max(real_t a,
                   real_t b,
                   real_t c)
-    { return std::max(std::max(a,b),c); }
+{
+   return std::max(std::max(a,b),c);
+}
 
 /** \fn int Max(int a, int b, int c)
  *  \ingroup Util
@@ -111,7 +119,9 @@ inline real_t Max(real_t a,
 inline int Max(int a,
                int b,
                int c)
-    { return std::max(std::max(a,b),c); }
+{
+   return std::max(std::max(a,b),c);
+}
 
 /** \fn real_t Min(real_t a, real_t b, real_t c)
  *  \ingroup Util
@@ -120,7 +130,9 @@ inline int Max(int a,
 inline real_t Min(real_t a,
                   real_t b,
                   real_t c)
-    { return std::min(std::min(a,b),c); }
+{
+   return std::min(std::min(a,b),c);
+}
 
 /** \fn Min(int a, int b, int c)
  *  \ingroup Util
@@ -129,7 +141,9 @@ inline real_t Min(real_t a,
 inline int  Min(int a,
                 int b,
                 int c)
-    { return std::min(std::min(a,b),c); }
+{
+   return std::min(std::min(a,b),c);
+}
 
 /** \fn real_t Max(real_t a, real_t b, real_t c, real_t d)
  *  \ingroup Util
@@ -140,7 +154,9 @@ inline real_t Max(real_t a,
                   real_t b,
                   real_t c,
                   real_t d)
-    { return std::max(Max(a,b,c),d); }
+{
+   return std::max(Max(a,b,c),d);
+}
 
 /** \fn int Max(int a, int b, int  c, int d)
  *  \ingroup Util
@@ -151,7 +167,9 @@ inline int Max(int a,
                int b,
                int c,
                int d)
-    { return std::max(Max(a,b,c),d); }
+{
+   return std::max(Max(a,b,c),d);
+}
 
 /** \fn real_t Min(real_t a, real_t b, real_t c, real_t d)
  *  \ingroup Util
@@ -162,7 +180,9 @@ inline real_t Min(real_t a,
                   real_t b,
                   real_t c,
                   real_t d)
-    { return std::min(Min(a,b,c),d); }
+{
+   return std::min(Min(a,b,c),d);
+}
 
 /// \fn int Min(int a, int b, int c, int d)
 /// \ingroup Util
@@ -171,7 +191,9 @@ inline int Min(int a,
                int b,
                int c,
                int d)
-    { return std::min(Min(a,b,c),d); }
+{
+   return std::min(Min(a,b,c),d);
+}
 
 /// \fn real_t Arg(complex_t x)
 /// \ingroup Util
@@ -493,8 +515,8 @@ inline real_t exprep(real_t x)
  *  \brief Assign the value <tt>a</tt> to all entries of a vector <tt>v</tt>
  */
 template<class T_>
-inline void Assign(      vector<T_>& v,
-                   const T_&         a)
+inline void Assign(vector<T_>& v,
+                   const T_&   a)
 {
    for (size_t i=0; i<v.size(); i++)
       v[i] = a;
@@ -555,7 +577,10 @@ inline real_t Nrm2(const vector<real_t>& x)
  *  \brief Return 2-norm of <tt>a</tt>
  */
 template<class T_>
-inline real_t Nrm2(const Point<T_>& a) { return sqrt(Dot(a,a)); }
+inline real_t Nrm2(const Point<T_>& a)
+{
+   return sqrt(Dot(a,a));
+}
 
 
 /** \fn bool Equal(real_t x, real_t y, real_t toler=OFELI_EPSMCH)

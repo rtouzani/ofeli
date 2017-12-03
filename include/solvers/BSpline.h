@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,16 +50,16 @@ namespace OFELI {
 void compute_intervals(Vect<size_t>& u,
                        size_t        n,
                        size_t        t);
-real_t blend(      size_t k,
-                   size_t t,
+real_t blend(size_t              k,
+             size_t              t,
              const Vect<size_t>& u,
-                   real_t v);
+             real_t              v);
 void compute_point(const Vect<size_t>&         u,
-                         size_t                n,
-                         size_t                t,
-                         real_t                v,
+                   size_t                      n,
+                   size_t                      t,
+                   real_t                      v,
                    const Vect<Point<real_t> >& control,
-                         Point<real_t>&        output);
+                   Point<real_t>&              output);
 
 
 /*! \file BSpline.h
@@ -81,6 +81,9 @@ void compute_point(const Vect<size_t>&         u,
  *  \note Condition: <tt>n+2>t</tt> (No curve results if <tt>n+2<=t</tt>)
  *  Control vector contains the number of points specified by <tt>n</tt>
  *  Output array is the proper size to hold <tt>num_output</tt> point structures
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void BSpline(size_t                n,
              size_t                t,

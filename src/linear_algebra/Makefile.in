@@ -106,7 +106,7 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 liblinear_algebra_a_AR = $(AR) $(ARFLAGS)
 liblinear_algebra_a_LIBADD =
-am_liblinear_algebra_a_OBJECTS = FFT.$(OBJEXT) GraphOfMatrix.$(OBJEXT)
+am_liblinear_algebra_a_OBJECTS = GraphOfMatrix.$(OBJEXT)
 liblinear_algebra_a_OBJECTS = $(am_liblinear_algebra_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -283,9 +283,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LIBRARIES = liblinear_algebra.a
 AUTOMAKE_OPTIONS = no-dependencies
-liblinear_algebra_a_SOURCES = FFT.cpp \
-										GraphOfMatrix.cpp
-
+liblinear_algebra_a_SOURCES = GraphOfMatrix.cpp
 all: all-am
 
 .SUFFIXES:

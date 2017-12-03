@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,6 +55,9 @@ namespace OFELI {
  *  \ingroup Fluid
  *  \brief Builds finite element arrays for incompressible Navier-Stokes equations in 2-D
  *  domains using Q<sub>1</sub>/P<sub>0</sub> element and a penaly formulation for the incompressibility condition.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class NSP2DQ41 : virtual public Equa_Fluid<real_t,4,8,2,4>

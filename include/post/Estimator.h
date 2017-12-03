@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -49,6 +49,9 @@ namespace OFELI {
  *
  *  \details This class enables calculating an estimator of a solution in order to
  *  evaluate reliability. Estimation uses the so-called Zienkiewicz-Zhu estimator.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Estimator

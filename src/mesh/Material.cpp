@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -32,6 +32,7 @@
 #include "mesh/Material.h"
 #include "io/XMLParser.h"
 #include "linear_algebra/Point.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -82,7 +83,7 @@ void Material::scanXML()
 }
 
 
-int Material::set(      int     m,
+int Material::set(int           m,
                   const string& name)
 {
    string file = _path + PATH_SEP;
@@ -167,7 +168,7 @@ real_t Material::getProperty(Prop& prop)
 }
 
 
-real_t Material::getProperty(      Prop&          prop,
+real_t Material::getProperty(Prop&                prop,
                              const Point<real_t>& x,
                              const real_t&        t)
 {
@@ -184,430 +185,342 @@ real_t Material::getProperty(      Prop&          prop,
 
 real_t Material::Density()
 {
-   try {
-      if (_density[_index_mat].exist)
-         return getProperty(_density[_index_mat]);
-      else
-         THROW_RT("Density(): This property is not present for material " + _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_density[_index_mat].exist)
+      return getProperty(_density[_index_mat]);
+   else
+      throw OFELIException("Material::Density(): This property is not present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::Density(const Point<real_t>& x,
-                               real_t         t)
+                         real_t               t)
 {
-   try {
    if (_density[_index_mat].exist)
       return getProperty(_density[_index_mat],x,t);
    else
-      THROW_RT("Density(Point<real_t>,real_t): This property is not present for material " +
-               _mat[_index_mat]);
-   }
-   CATCH("Material");
+      throw OFELIException("Material::Density(Point<real_t>,real_t): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::SpecificHeat()
 {
-   try {
-      if (_specific_heat[_index_mat].exist)
-         return getProperty(_specific_heat[_index_mat]);
-      else
-         THROW_RT("SpecificHeat(): This property is not present for material " + _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_specific_heat[_index_mat].exist)
+      return getProperty(_specific_heat[_index_mat]);
+   else
+      throw OFELIException("Material::SpecificHeat(): This property is not present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::SpecificHeat(const Point<real_t>& x,
-                                    real_t         t)
+                              real_t               t)
 {
-   try {
-      if (_specific_heat[_index_mat].exist)
-         return getProperty(_specific_heat[_index_mat],x,t);
-      else
-	THROW_RT("SpecificHeat(Point<real_t>,real_t): This property is not present for material " +
-		 _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_specific_heat[_index_mat].exist)
+      return getProperty(_specific_heat[_index_mat],x,t);
+   else
+      throw OFELIException("Material::SpecificHeat(Point<real_t>,real_t): This property is not present for material " +
+   _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::ThermalConductivity()
 {
-   try {
-      if (_thermal_conductivity[_index_mat].exist)
-         return getProperty(_thermal_conductivity[_index_mat]);
-      else
-         THROW_RT("ThermalConductivity(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_thermal_conductivity[_index_mat].exist)
+      return getProperty(_thermal_conductivity[_index_mat]);
+   else
+      throw OFELIException("Material::ThermalConductivity(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::ThermalConductivity(const Point<real_t>& x,
-                                           real_t         t)
+                                     real_t               t)
 {
-   try {
-      if (_thermal_conductivity[_index_mat].exist)
-         return getProperty(_thermal_conductivity[_index_mat],x,t);
-      else
-         THROW_RT("ThermalConductivity(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_thermal_conductivity[_index_mat].exist)
+      return getProperty(_thermal_conductivity[_index_mat],x,t);
+   else
+      throw OFELIException("Material::ThermalConductivity(Point<real_t>,real_t): This "
+                           "property is not present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::MeltingTemperature()
 {
-   try {
-      if (_melting_temperature[_index_mat].exist)
-         return getProperty(_melting_temperature[_index_mat]);
-      else
-         THROW_RT("MeltingTemperature(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_melting_temperature[_index_mat].exist)
+      return getProperty(_melting_temperature[_index_mat]);
+   else
+      throw OFELIException("Material::MeltingTemperature(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::MeltingTemperature(const Point<real_t>& x,
-                                          real_t         t)
+                                    real_t               t)
 {
-   try {
-      if (_melting_temperature[_index_mat].exist)
-         return getProperty(_melting_temperature[_index_mat],x,t);
-      else
-         THROW_RT("MeltingTemperature(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_melting_temperature[_index_mat].exist)
+      return getProperty(_melting_temperature[_index_mat],x,t);
+   else
+      throw OFELIException("Material::MeltingTemperature(Point<real_t>,real_t): This property "
+                           "is not present for material "+_mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::EvaporationTemperature()
 {
-   try {
-      if (_evaporation_temperature[_index_mat].exist)
-         return getProperty(_evaporation_temperature[_index_mat]);
-      else
-         THROW_RT("EvaporationTemperature(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_evaporation_temperature[_index_mat].exist)
+      return getProperty(_evaporation_temperature[_index_mat]);
+   else
+      throw OFELIException("Material::EvaporationTemperature(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::EvaporationTemperature(const Point<real_t>& x,
-                                              real_t         t)
+                                        real_t               t)
 {
-   try {
-      if (_evaporation_temperature[_index_mat].exist)
-         return getProperty(_evaporation_temperature[_index_mat],x,t);
-      else
-         THROW_RT("EvaporationTemperature(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_evaporation_temperature[_index_mat].exist)
+      return getProperty(_evaporation_temperature[_index_mat],x,t);
+   else
+      throw OFELIException("Material::EvaporationTemperature(Point<real_t>,real_t): This property is not "
+                           "present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::ThermalExpansion()
 {
-   try {
-      if (_thermal_expansion[_index_mat].exist)
-         return getProperty(_thermal_expansion[_index_mat]);
-      else
-         THROW_RT("ThermalExpansion(): This property is not present for material "+_mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_thermal_expansion[_index_mat].exist)
+      return getProperty(_thermal_expansion[_index_mat]);
+   else
+      throw OFELIException("Material::ThermalExpansion(): This property is not present for material "+_mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::ThermalExpansion(const Point<real_t>& x,
-                                        real_t         t)
+                                  real_t               t)
 {
-   try {
-      if (_thermal_expansion[_index_mat].exist)
-         return getProperty(_thermal_expansion[_index_mat],x,t);
-      else
-         THROW_RT("ThermalExpansion(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_thermal_expansion[_index_mat].exist)
+      return getProperty(_thermal_expansion[_index_mat],x,t);
+   else
+      throw OFELIException("Material::ThermalExpansion(Point<real_t>,real_t): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::LatentHeatForMelting()
 {
-   try {
-      if (_latent_heat_melting[_index_mat].exist)
-         return getProperty(_latent_heat_melting[_index_mat]);
-      else
-         THROW_RT("LatentHeatForMelting(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_latent_heat_melting[_index_mat].exist)
+      return getProperty(_latent_heat_melting[_index_mat]);
+   else
+      throw OFELIException("Material::LatentHeatForMelting(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::LatentHeatForMelting(const Point<real_t>& x,
-                                            real_t         t)
+                                      real_t              t)
 {
-   try {
-      if (_latent_heat_melting[_index_mat].exist)
-         return getProperty(_latent_heat_melting[_index_mat],x,t);
-      else
-         THROW_RT("LatentHeatForMelting(Point<real_t>,real_t): This property is not present for material "
-                  + _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_latent_heat_melting[_index_mat].exist)
+      return getProperty(_latent_heat_melting[_index_mat],x,t);
+   else
+      throw OFELIException("Material::LatentHeatForMelting(Point<real_t>,real_t): This property is not present for material "
+                           + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::LatentHeatForEvaporation()
 {
-   try {
-      if (_latent_heat_evaporation[_index_mat].exist)
-         return getProperty(_latent_heat_evaporation[_index_mat]);
-      else
-         THROW_RT("LatentHeatForEvaporation(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_latent_heat_evaporation[_index_mat].exist)
+      return getProperty(_latent_heat_evaporation[_index_mat]);
+   else
+      throw OFELIException("Material::LatentHeatForEvaporation(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::LatentHeatForEvaporation(const Point<real_t>& x,
-                                                real_t         t)
+                                          real_t               t)
 {
-   try {
-      if (_latent_heat_evaporation[_index_mat].exist)
-         return getProperty(_latent_heat_evaporation[_index_mat],x,t);
-      else
-         THROW_RT("LatentHeatForEvaporation(Point<real_t>,real_t): This property is not present for material "
-                  + _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_latent_heat_evaporation[_index_mat].exist)
+       return getProperty(_latent_heat_evaporation[_index_mat],x,t);
+   else
+      throw OFELIException("Material::LatentHeatForEvaporation(Point<real_t>,real_t): This property is "
+                           "not present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::DielectricConstant()
 {
-   try {
-      if (_dielectric_constant[_index_mat].exist)
-         return getProperty(_dielectric_constant[_index_mat]);
-      else
-         THROW_RT("DielectricConstant(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_dielectric_constant[_index_mat].exist)
+      return getProperty(_dielectric_constant[_index_mat]);
+   else
+      throw OFELIException("Material::DielectricConstant(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::DielectricConstant(const Point<real_t>& x,
-                                          real_t         t)
+                                    real_t               t)
 {
-   try {
-      if (_dielectric_constant[_index_mat].exist)
-         return getProperty(_dielectric_constant[_index_mat],x,t);
-      else
-         THROW_RT("DielectricConstant(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_dielectric_constant[_index_mat].exist)
+      return getProperty(_dielectric_constant[_index_mat],x,t);
+   else
+      throw OFELIException("Material::DielectricConstant(Point<real_t>,real_t): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::ElectricConductivity()
 {
-   try {
-      if (_electric_conductivity[_index_mat].exist)
-         return getProperty(_electric_conductivity[_index_mat]);
-      else
-         THROW_RT("ElectricConductivity(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_electric_conductivity[_index_mat].exist)
+      return getProperty(_electric_conductivity[_index_mat]);
+   else
+      throw OFELIException("Material::ElectricConductivity(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::ElectricConductivity(const Point<real_t>& x,
-                                            real_t         t)
+                                      real_t               t)
 {
-   try {
-      if (_electric_conductivity[_index_mat].exist)
-         return getProperty(_electric_conductivity[_index_mat],x,t);
-      else
-         THROW_RT("ElectricConductivity(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_electric_conductivity[_index_mat].exist)
+      return getProperty(_electric_conductivity[_index_mat],x,t);
+   else
+      throw OFELIException("Material::ElectricConductivity(Point<real_t>,real_t): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::ElectricResistivity()
 {
-   try {
-      if (_electric_resistivity[_index_mat].exist)
-         return getProperty(_electric_resistivity[_index_mat]);
-      else
-         THROW_RT("ElectricResistivity(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_electric_resistivity[_index_mat].exist)
+      return getProperty(_electric_resistivity[_index_mat]);
+   else
+      throw OFELIException("Material::ElectricResistivity(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::ElectricResistivity(const Point<real_t>& x,
-                                           real_t         t)
+                                     real_t               t)
 {
-   try {
-      if (_electric_resistivity[_index_mat].exist)
-         return getProperty(_electric_resistivity[_index_mat],x,t);
-      else
-         THROW_RT("ElectricResistivity(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_electric_resistivity[_index_mat].exist)
+      return getProperty(_electric_resistivity[_index_mat],x,t);
+   else
+      throw OFELIException("Material::ElectricResistivity(Point<real_t>,real_t): This property "
+                           "is not present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::MagneticPermeability()
 {
-   try {
-      if (_magnetic_permeability[_index_mat].exist)
-         return getProperty(_magnetic_permeability[_index_mat]);
-      else
-         THROW_RT("Density(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_magnetic_permeability[_index_mat].exist)
+      return getProperty(_magnetic_permeability[_index_mat]);
+   else
+      throw OFELIException("Material::Density(Point<real_t>,real_t): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::MagneticPermeability(const Point<real_t>& x,
-                                            real_t         t)
+                                      real_t               t)
 {
-   try {
-      if (_magnetic_permeability[_index_mat].exist)
-         return getProperty(_magnetic_permeability[_index_mat],x,t);
-      else
-         THROW_RT("MagneticPermeability(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_magnetic_permeability[_index_mat].exist)
+      return getProperty(_magnetic_permeability[_index_mat],x,t);
+   else
+      throw OFELIException("Material::MagneticPermeability(Point<real_t>,real_t): This property "
+                           "is not present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::Viscosity()
 {
-   try {
-      if (_viscosity[_index_mat].exist)
-         return getProperty(_viscosity[_index_mat]);
-      else
-         THROW_RT("Viscosity(): This property is not present for material " + _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_viscosity[_index_mat].exist)
+      return getProperty(_viscosity[_index_mat]);
+   else
+      throw OFELIException("Material::Viscosity(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::Viscosity(const Point<real_t>& x,
-                                 real_t         t)
+                           real_t               t)
 {
-   try {
-      if (_viscosity[_index_mat].exist)
-         return getProperty(_viscosity[_index_mat],x,t);
-      else
-         THROW_RT("Viscosity(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_viscosity[_index_mat].exist)
+      return getProperty(_viscosity[_index_mat],x,t);
+   else
+      throw OFELIException("Material::Viscosity(Point<real_t>,real_t): This property is not "
+                           "present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::YoungModulus()
 {
-   try {
-      if (_young_modulus[_index_mat].exist)
-         return getProperty(_young_modulus[_index_mat]);
-      else
-         THROW_RT("YoungModulus(): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_young_modulus[_index_mat].exist)
+      return getProperty(_young_modulus[_index_mat]);
+   else
+      throw OFELIException("Material::YoungModulus(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::YoungModulus(const Point<real_t>& x,
-                                    real_t         t)
+                              real_t               t)
 {
-   try {
-      if (_young_modulus[_index_mat].exist)
-         return getProperty(_young_modulus[_index_mat],x,t);
-      else
-         THROW_RT("YoungModulus(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_young_modulus[_index_mat].exist)
+      return getProperty(_young_modulus[_index_mat],x,t);
+   else
+      throw OFELIException("Material::YoungModulus(Point<real_t>,real_t): This property is not "
+                           "present for material " + _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::PoissonRatio()
 {
-   try {
-      if (_poisson_ratio[_index_mat].exist)
-         return getProperty(_poisson_ratio[_index_mat]);
-      else
-         THROW_RT("PoissonRatio(): This property is not present for material "+_mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_poisson_ratio[_index_mat].exist)
+      return getProperty(_poisson_ratio[_index_mat]);
+   else
+      throw OFELIException("Material::PoissonRatio(): This property is not present for material " +
+                           _mat[_index_mat]);
    return 0.;
 }
 
 
 real_t Material::PoissonRatio(const Point<real_t>& x,
-                                    real_t         t)
+                              real_t               t)
 {
-   try {
-      if (_poisson_ratio[_index_mat].exist)
-         return getProperty(_poisson_ratio[_index_mat],x,t);
-      else
-         THROW_RT("PoissonRatio(Point<real_t>,real_t): This property is not present for material " +
-                  _mat[_index_mat]);
-   }
-   CATCH("Material");
+   if (_poisson_ratio[_index_mat].exist)
+      return getProperty(_poisson_ratio[_index_mat],x,t);
+   else
+      throw OFELIException("Material::PoissonRatio(Point<real_t>,real_t): This property is not "
+                           "present for material " + _mat[_index_mat]);
    return 0.;
 }
 
@@ -618,9 +531,9 @@ real_t Material::Property(int i)
 }
 
 
-real_t Material::Property(      int            i,
+real_t Material::Property(int                  i,
                           const Point<real_t>& x,
-                                real_t         t)
+                          real_t               t)
 {
    return getProperty(_prop[_index_mat][i-1],x,t);
 }
@@ -830,7 +743,7 @@ void Material::getFunction(size_t i)
 }
 
 
-ostream& operator<<(      ostream&  s,
+ostream& operator<<(ostream&        s,
                     const Material& m)
 {
    s << "\nNumber of Materials: " << m.getNbMat() << endl;

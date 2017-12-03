@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,11 +52,9 @@ Line2::Line2()
 
 Line2::Line2(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 2)
-         THROW_RT("Line2(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Line2");
+   if (el->getNbNodes() != 2)
+      throw OFELIException("Line2::Line2(Element *): Illegal number of element nodes: " +
+                           itos(el->getNbNodes()));
    _sh.resize(2);
    _node.resize(2);
    _x.resize(2);
@@ -72,22 +70,17 @@ Line2::Line2(const Element* el)
    _sd = NULL;
    Point<real_t> dl = 0.5*(_x[1] - _x[0]);
    _det = dl.Norm();
-   try {
-      if (_det == 0.0)
-         THROW_RT("Line2(Element *): Determinant of jacobian is null");
-   }
-   CATCH("Line2");
+   if (_det == 0.0)
+      throw OFELIException("Line2::Line2(Element *): Determinant of jacobian is null");
    _length = 2*_det;
 }
 
 
 Line2::Line2(const Side* side)
 {
-   try {
-      if (side->getNbNodes() != 2)
-         THROW_RT("Line2(Side *): Illegal number of side nodes: " + itos(side->getNbNodes()));
-   }
-   CATCH("Line2");
+   if (side->getNbNodes() != 2)
+      throw OFELIException("Line2::Line2(Side *): Illegal number of side nodes: " +
+                           itos(side->getNbNodes()));
    _sh.resize(2);
    _node.resize(2);
    _x.resize(2);
@@ -103,11 +96,8 @@ Line2::Line2(const Side* side)
    _el = NULL;
    Point<real_t> dl = 0.5*(_x[1] - _x[0]);
    _det = dl.Norm();
-   try {
-      if (_det == 0.0)
-         THROW_RT("Line2(Side *): Determinant of jacobian is null");
-   }
-   CATCH("Line2");
+   if (_det == 0.0)
+      throw OFELIException("Line2::Line2(Side *): Determinant of jacobian is null");
    _length = 2*_det;
 }
    
@@ -130,11 +120,8 @@ Line2::Line2(const Edge* edge)
    _el = NULL;
    Point<real_t> dl = 0.5*(_x[1] - _x[0]);
    _det = dl.Norm();
-   try {
-      if (_det == 0.0)
-         THROW_RT("Line2(Edge *): Determinant of jacobian is null");
-   }
-   CATCH("Line2");
+   if (_det == 0.0)
+      throw OFELIException("Line2::Line2(Edge *): Determinant of jacobian is null");
    _length = 2*_det;
 }
    

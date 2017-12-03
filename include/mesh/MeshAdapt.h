@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -73,7 +73,6 @@ namespace OFELI {
  *  \brief Definition file for class MeshAdapt
  */
 
-
 /*! \class MeshAdapt
  * \ingroup Mesh
  * \brief To adapt mesh in function of given solution
@@ -82,9 +81,10 @@ namespace OFELI {
  * @remark Class MeshAdapt is mainly based on the software 'Bamg' developed
  * by F. Hecht, Universite Pierre et Marie Curie, Paris.
  * We warmly thank him for accepting incoporation of Bamg in the OFELI package 
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
-
-
 class MeshAdapt
 {
 

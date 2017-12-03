@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,6 +50,8 @@ namespace OFELI {
  *  \details This class build the linear system of equations for a standard elliptic
  *  equation using the Discontinuous Galerkin P<sub>1</sub> finite element method.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class LaplaceDG2DP1 : public DG {

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -41,8 +41,8 @@ FastMarching2D::FastMarching2D()
 }
 
 
-FastMarching2D::FastMarching2D(const Grid&         g,
-			             Vect<real_t>& ls)
+FastMarching2D::FastMarching2D(const Grid&   g,
+                               Vect<real_t>& ls)
 {
    _v = new Vect<real_t>(g.getNx()+1,g.getNy()+1);
    *_v = 1;
@@ -53,9 +53,9 @@ FastMarching2D::FastMarching2D(const Grid&         g,
 }
 
 
-FastMarching2D::FastMarching2D(const Grid&         g,
-			             Vect<real_t>& ls,
-			             Vect<real_t>& F)
+FastMarching2D::FastMarching2D(const Grid&   g,
+                               Vect<real_t>& ls,
+                               Vect<real_t>& F)
 {
    _v = &F;
    _A = &ls;
@@ -1016,16 +1016,12 @@ void FastMarching2D::setGrayWithObstacle(size_t i,
 
 void FastMarching2D::ExtendLocalVelocity(Vect<real_t>& dis)
 {
-   try {
-      if (_nx<5)
-         THROW_RT("ExtendLocalVelocity(Vect<real_t>): Number of grid intervals in x must be larger than 4");
-   }
-   CATCH("FastMarching2D");
-   try {
-      if (_ny<5)
-         THROW_RT("ExtendLocalVelocity(Vect<real_t>): Number of grid intervals in y must be larger than 4");
-   }
-   CATCH("FastMarching2D");
+   if (_nx<5)
+      throw OFELIException("FastMarching2D::ExtendLocalVelocity(Vect<real_t>): "
+                           "Number of grid intervals in x must be larger than 4");
+   if (_ny<5)
+      throw OFELIException("FastMarching2D::ExtendLocalVelocity(Vect<real_t>): "
+                           "Number of grid intervals in y must be larger than 4");
 
    Point2D<real_t> x1, x2;
    Vect<real_t> bd(_f), a(_f);
@@ -1165,16 +1161,12 @@ real_t FastMarching2D::Interp(Point2D<real_t>& xx)
 {
    real_t ui=0, alpha=0;
    int ifi=0, jfi=0;
-   try {
-      if (xx.x>=_g.getX(_nx))
-         THROW_RT("Interp(Point2D<real_t>): Interpolation points goes beyond extremal point.");
-   }
-   CATCH("FastMarching2D");
-   try {
-      if (xx.y>=_g.getY(_ny))
-         THROW_RT("Interp(Point2D<real_t>): Interpolation points goes beyond extremal point.");
-   }
-   CATCH("FastMarching2D");
+   if (xx.x>=_g.getX(_nx))
+      throw OFELIException("FastMarching2D::Interp(Point2D<real_t>): "
+                           "Interpolation points goes beyond extremal point.");
+   if (xx.y>=_g.getY(_ny))
+      throw OFELIException("FastMarching2D::Interp(Point2D<real_t>): "
+                           "Interpolation points goes beyond extremal point.");
 
    size_t i=1, j=1;
    while (_g.getX(i)<xx.x) 
@@ -1183,50 +1175,41 @@ real_t FastMarching2D::Interp(Point2D<real_t>& xx)
    while (_g.getY(j)<xx.y)
       j++;
    j--;
-   try {
-      if (i==0)
-         THROW_RT("Interp(Point2D<real_t>): Illegal index i=0");
-   }
-   CATCH("FastMarching2D");
-   try {
-      if (j==0)
-         THROW_RT("Interp(Point2D<real_t>): Illegal index j=0");
-   }
-   CATCH("FastMarching2D");
+   if (i==0)
+      throw OFELIException("FastMarching2D::Interp(Point2D<real_t>): Illegal index i=0");
+   if (j==0)
+      throw OFELIException("FastMarching2D::Interp(Point2D<real_t>): Illegal index j=0");
 
-   try {
-      if (xx.x-_g.getX(i)<4*DBL_EPSILON) {
-         ifi = i;
-         jfi = 0;
-         xx.x = _g.getX(i);
-      }
-      if (_g.getX(i+1)-xx.x<4*DBL_EPSILON) {
-         ifi = i + 1;
-         jfi = 0;
-         xx.x = _g.getX(i+1);
-      }
-      if (xx.y-_g.getY(j)<4*DBL_EPSILON) {
-         jfi = j;
-         ifi = 0;
-         xx.y = _g.getY(j);
-      }
-      if (_g.getY(j+1)-xx.y<4*DBL_EPSILON) {
-         jfi = j + 1; 
-         ifi = 0;
-         xx.y = _g.getY(j+1);
-      }
-      if (ifi==0) {
-         alpha = (xx.x-_g.getX(i))/(_g.getX(i+1)-_g.getX(i));
-         ui = alpha*_u(i+1,jfi) + (1-alpha)*_u(i,jfi);
-      }
-      else if (jfi==0) {
-         alpha = (xx.y-_g.getY(j))/(_g.getY(j+1)-_g.getY(j));
-         ui = alpha*_u(ifi,j+1) + (1-alpha)*_u(ifi,j);
-      }
-      else
-         THROW_RT("Interp(Point2D<real_t>): Illegal index.");
+   if (xx.x-_g.getX(i)<4*DBL_EPSILON) {
+      ifi = i;
+      jfi = 0;
+      xx.x = _g.getX(i);
    }
-   CATCH("FastMarching2D");
+   if (_g.getX(i+1)-xx.x<4*DBL_EPSILON) {
+      ifi = i + 1;
+      jfi = 0;
+      xx.x = _g.getX(i+1);
+   }
+   if (xx.y-_g.getY(j)<4*DBL_EPSILON) {
+      jfi = j;
+      ifi = 0;
+      xx.y = _g.getY(j);
+   }
+   if (_g.getY(j+1)-xx.y<4*DBL_EPSILON) {
+      jfi = j + 1; 
+      ifi = 0;
+      xx.y = _g.getY(j+1);
+   }
+   if (ifi==0) {
+      alpha = (xx.x-_g.getX(i))/(_g.getX(i+1)-_g.getX(i));
+      ui = alpha*_u(i+1,jfi) + (1-alpha)*_u(i,jfi);
+   }
+   else if (jfi==0) {
+      alpha = (xx.y-_g.getY(j))/(_g.getY(j+1)-_g.getY(j));
+      ui = alpha*_u(ifi,j+1) + (1-alpha)*_u(ifi,j);
+   }
+   else
+      throw OFELIException("FastMarching2D::Interp(Point2D<real_t>): Illegal index.");
    return ui;
 }
 

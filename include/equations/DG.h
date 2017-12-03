@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -51,6 +51,8 @@ namespace OFELI {
  *  \brief Enables preliminary operations and utilities for the 
  *  Discontinous Galerkin method
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class DG {

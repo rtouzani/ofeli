@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -59,6 +59,8 @@ class Side;
  * The unknowns are supported by extremities of the interval: each
  * extremity supports two unknowns, the function and its line derivative.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Line2H : public FEShape

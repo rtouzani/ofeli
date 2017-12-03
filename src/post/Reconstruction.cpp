@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -48,58 +48,56 @@ void Reconstruction::P0toP1(const Vect<real_t>& u,
    _M = 0;
    mesh_elements(*_theMesh) {
       size_t n = element_label;
-      try {
-         if (_theMesh->getDim()==1 && The_element.getShape()==LINE) {
-            real_t a = Line2(the_element).getLength();
-            size_t n1=The_element(1)->n(), n2=The_element(2)->n();
-            _M(n1) += a; _M(n2) += a;
-            for (size_t k=1; k<=nb_dof; k++) {
-               v(n1,k) += a*u(n,k);
-               v(n2,k) += a*u(n,k);
-            }
+      if (_theMesh->getDim()==1 && The_element.getShape()==LINE) {
+         real_t a = Line2(the_element).getLength();
+         size_t n1=The_element(1)->n(), n2=The_element(2)->n();
+         _M(n1) += a; _M(n2) += a;
+         for (size_t k=1; k<=nb_dof; k++) {
+            v(n1,k) += a*u(n,k);
+            v(n2,k) += a*u(n,k);
          }
-         else if (_theMesh->getDim()==2 && The_element.getShape()==TRIANGLE) {
-            real_t a = Triang3(the_element).getArea();
-            size_t n1=The_element(1)->n(), n2=The_element(2)->n(), n3=The_element(3)->n();
-            _M(n1) += a; _M(n2) += a; _M(n3) += a;
-            for (size_t k=1; k<=nb_dof; k++) {
-               v(n1,k) += a*u(n,k);
-               v(n2,k) += a*u(n,k);
-               v(n3,k) += a*u(n,k);
-            }
-         }
-         else if (_theMesh->getDim()==2 && The_element.getShape()==QUADRILATERAL) {
-            Quad4 q(the_element);
-	    q.setLocal(Point<double>(0.,0.));
-            real_t a = fabs(q.getDet());
-            size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
-                   n3=The_element(3)->n(), n4=The_element(4)->n();
-            _M(n1) += a; _M(n2) += a;
-            _M(n3) += a; _M(n4) += a;
-            for (size_t k=1; k<=nb_dof; k++) {
-               v(n1,k) += a*u(n,k);
-               v(n2,k) += a*u(n,k);
-               v(n3,k) += a*u(n,k);
-               v(n4,k) += a*u(n,k);
-            }
-         }
-         else if (_theMesh->getDim()==3 && The_element.getShape()==TETRAHEDRON) {
-            real_t a = fabs(Tetra4(the_element).getVolume());
-            size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
-                   n3=The_element(3)->n(), n4=The_element(4)->n();
-            _M(n1) += a; _M(n2) += a;
-            _M(n3) += a; _M(n4) += a;
-            for (size_t k=1; k<=nb_dof; k++) {
-               v(n1,k) += a*u(n,k);
-               v(n2,k) += a*u(n,k);
-               v(n3,k) += a*u(n,k);
-               v(n4,k) += a*u(n,k);
-            }
-         }
-         else
-            THROW_RT("P0toP1(...): Not valid for element: " + itos(element_label));
       }
-      CATCH("Reconstruction");
+      else if (_theMesh->getDim()==2 && The_element.getShape()==TRIANGLE) {
+         real_t a = Triang3(the_element).getArea();
+         size_t n1=The_element(1)->n(), n2=The_element(2)->n(), n3=The_element(3)->n();
+         _M(n1) += a; _M(n2) += a; _M(n3) += a;
+         for (size_t k=1; k<=nb_dof; k++) {
+            v(n1,k) += a*u(n,k);
+            v(n2,k) += a*u(n,k);
+            v(n3,k) += a*u(n,k);
+         }
+      }
+      else if (_theMesh->getDim()==2 && The_element.getShape()==QUADRILATERAL) {
+         Quad4 q(the_element);
+         q.setLocal(Point<double>(0.,0.));
+         real_t a = fabs(q.getDet());
+         size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
+                n3=The_element(3)->n(), n4=The_element(4)->n();
+         _M(n1) += a; _M(n2) += a;
+         _M(n3) += a; _M(n4) += a;
+         for (size_t k=1; k<=nb_dof; k++) {
+            v(n1,k) += a*u(n,k);
+            v(n2,k) += a*u(n,k);
+            v(n3,k) += a*u(n,k);
+            v(n4,k) += a*u(n,k);
+         }
+      }
+      else if (_theMesh->getDim()==3 && The_element.getShape()==TETRAHEDRON) {
+         real_t a = fabs(Tetra4(the_element).getVolume());
+         size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
+                n3=The_element(3)->n(), n4=The_element(4)->n();
+         _M(n1) += a; _M(n2) += a;
+         _M(n3) += a; _M(n4) += a;
+         for (size_t k=1; k<=nb_dof; k++) {
+            v(n1,k) += a*u(n,k);
+            v(n2,k) += a*u(n,k);
+            v(n3,k) += a*u(n,k);
+            v(n4,k) += a*u(n,k);
+         }
+      }
+      else
+         throw OFELIException("Reconstruction::P0toP1(...): Not valid for element: " +
+                              itos(element_label));
    }
    mesh_nodes(*_theMesh) {
       for (size_t k=1; k<=nb_dof; k++)
@@ -116,20 +114,17 @@ void Reconstruction::DP1toP1(const Vect<real_t>& u,
    v = 0;
    MESH_EL {
       size_t n = theElementLabel;
-      try {
-         if (_theMesh->getDim()==2 && TheElement.getShape()==TRIANGLE) {
-            real_t a = Triang3(theElement).getArea();
-            _M(TheElement(1)->n()) += a;
-            _M(TheElement(2)->n()) += a;
-            _M(TheElement(3)->n()) += a;
-            v(TheElement(1)->n()) += 0.25*a*(2*u(n,1) + u(n,2) + u(n,3));
-            v(TheElement(2)->n()) += 0.25*a*(2*u(n,2) + u(n,3) + u(n,1));
-            v(TheElement(3)->n()) += 0.25*a*(2*u(n,3) + u(n,1) + u(n,2));
-         }
-         else
-            THROW_RT("DP1toP1(...): Not valid for element: " + itos(n));
+      if (_theMesh->getDim()==2 && TheElement.getShape()==TRIANGLE) {
+         real_t a = Triang3(theElement).getArea();
+         _M(TheElement(1)->n()) += a;
+         _M(TheElement(2)->n()) += a;
+         _M(TheElement(3)->n()) += a;
+         v(TheElement(1)->n()) += 0.25*a*(2*u(n,1) + u(n,2) + u(n,3));
+         v(TheElement(2)->n()) += 0.25*a*(2*u(n,2) + u(n,3) + u(n,1));
+         v(TheElement(3)->n()) += 0.25*a*(2*u(n,3) + u(n,1) + u(n,2));
       }
-      CATCH("Reconstruction");
+      else
+         throw OFELIException("Reconstruction::DP1toP1(...): Not valid for element: " + itos(n));
    }
    for (size_t i=1; i<=_theMesh->getNbNodes(); i++)
       v(i) /= _M(i);

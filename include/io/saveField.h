@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -65,6 +65,9 @@ template<class T_> class Vect;
  *  MATLAB
  *  TECPLOT
  *  VTK
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
    void saveField(Vect<real_t>& v,
                   string        output_file,
@@ -84,6 +87,9 @@ template<class T_> class Vect;
  *  @param [in] opt Option to choose file format to save. This is to be chosen
  *  among enumerated values: <tt>GMSH</tt>, <tt>GNUPLOT</tt>, <tt>MATLAB</tt>,
  *  <tt>TECPLOT</tt>, <tt>VTK</tt>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
    void saveField(const Vect<real_t>& v,
                   const Mesh&         mesh,
@@ -101,6 +107,9 @@ template<class T_> class Vect;
  *  @param [in] opt Option to choose file format to save. This is to be chosen
  *  among enumerated values: <tt>GMSH</tt>, <tt>GNUPLOT</tt>, <tt>MATLAB</tt>,
  *  <tt>TECPLOT</tt>, <tt>VTK</tt>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
    void saveField(PETScVect<real_t>& v,
                   string             output_file,
@@ -116,6 +125,9 @@ template<class T_> class Vect;
  *  @param [in] opt Option to choose file format to save. This is to be chosen
  *  among enumerated values: <tt>GMSH</tt>, <tt>GNUPLOT</tt>, <tt>MATLAB</tt>,
  *  <tt>TECPLOT</tt>, <tt>VTK</tt>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
    void saveField(PETScVect<real_t>& v,
                   const Mesh&        mesh,
@@ -132,6 +144,9 @@ template<class T_> class Vect;
  *  @param [in] output_file Output file where to save the vector
  *  @param [in] opt Option to choose file format to save. This is to be chosen
  *  among enumerated values: <tt>VTK</tt>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
     void saveField(Vect<real_t>& v,
                    const Grid&   g,
@@ -148,6 +163,9 @@ template<class T_> class Vect;
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (gnuplot format file)
  *  @param [in] mesh_file File containing mesh data
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
     void saveGnuplot(string input_file,
                      string output_file,
@@ -162,6 +180,9 @@ template<class T_> class Vect;
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (gnuplot format file)
  *  @param [in] mesh_file File containing mesh data
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
     void saveTecplot(string input_file,
                      string output_file,
@@ -178,6 +199,9 @@ template<class T_> class Vect;
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (VTK format file)
  *  @param [in] mesh_file File containing mesh data
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
     void saveVTK(string input_file,
                  string output_file,
@@ -193,6 +217,9 @@ template<class T_> class Vect;
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (Gmsh format file)
  *  @param [in] mesh_file File containing mesh data
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
     void saveGmsh(string input_file,
                   string output_file,

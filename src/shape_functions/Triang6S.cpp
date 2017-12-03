@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -53,11 +53,8 @@ Triang6S::Triang6S()
 
 Triang6S::Triang6S(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 6)
-         THROW_RT("Triang6S(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Triang6S");
+   if (el->getNbNodes() != 6)
+      throw OFELIException("Triang6S::Triang6S(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
    _sh.resize(6);
    _node.resize(6);
    _x.resize(6);
@@ -73,16 +70,10 @@ Triang6S::Triang6S(const Element* el)
    _x32 = _x[2] - _x[1];
    _det = _x21.x*_x31.y-_x21.y*_x31.x;
    _area = 0.5*_det;
-   try {
-      if (_det < 0.0)
-         THROW_RT("set(Element *): Negative determinant of jacobian");
-   }
-   CATCH("Triang6S");
-   try {
-      if (_det == 0.0)
-         THROW_RT("set(Element *): Determinant of jacobian is null");
-   }
-   CATCH("Triang6S");
+   if (_det < 0.0)
+      throw OFELIException("Triang6S::set(Element *): Negative determinant of jacobian");
+   if (_det == 0.0)
+      throw OFELIException("Triang6S::set(Element *): Determinant of jacobian is null");
    _c =(_x[0] + _x[1] + _x[2])*OFELI_THIRD;
    _el = el;
 }

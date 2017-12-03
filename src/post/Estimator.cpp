@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -71,13 +71,10 @@ void Estimator::setSolution(const Vect<real_t>& u)
       Vect<real_t> M(_nb_nd);
       Vect<Point<real_t> > b(*_mesh);
       the_element = (*_mesh)(1);
-      try {
-         if (The_element.getShape()==TRIANGLE && The_element.getNbNodes()==3)
-            elementT3_ZZ(u,b);
-         else
-            THROW_RT("This element is not implemented for Estimator calculation.");
-      }
-      CATCH("Estimator");
+      if (The_element.getShape()==TRIANGLE && The_element.getNbNodes()==3)
+         elementT3_ZZ(u,b);
+      else
+         throw OFELIException("Estimator::This element is not implemented for Estimator calculation.");
       _average = 0;
       mesh_elements(*_mesh)
          _average += _el_I(element_label);
@@ -147,11 +144,9 @@ void Estimator::elementT3_ZZ(const Vect<real_t>&   u,
    Vect<real_t> E(_nb_el), M(_nb_nd);
    M = 0;
    Vect<Point<real_t> > Du(_nb_el,_nb_dof);
-   try {
-      if (_nb_dof==0)
-         THROW_RT("This procedure is not allowed with non constant nb of DOF per node.");
-   }
-   CATCH("Estimator");
+   if (_nb_dof==0)
+         throw OFELIException("Estimator::This procedure is not allowed with"
+                              " non constant nb of DOF per node.");
    mesh_elements(*_mesh) {
       Triang3 tr(the_element);
       real_t c = tr.getArea()*OFELI_THIRD;

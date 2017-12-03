@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -54,6 +54,9 @@ namespace OFELI {
  * \brief Heap for priority queue
  *
  * \details This class manages the priority queue
+ *
+ * \author M. Sylla, B. Meden
+ * \copyright GNU Lesser Public License
  */
 class Heap
 {

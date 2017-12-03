@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -64,12 +64,14 @@ class Edge;
 /*! \class FEShape
  *  \ingroup Shape
  *  \brief Parent class from which inherit all finite element shape classes
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
-
 class FEShape
 {
 
- public :
+ public:
 
 /// \brief Default Constructor
     FEShape() { }
@@ -163,12 +165,14 @@ class FEShape
  *  \ingroup Shape
  *  \brief Defines a triangle.
  *  The reference element is the rectangle triangle with two unit edges.
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
-
 class triangle : public FEShape
 {
 
- public :
+ public:
 
     using FEShape::_dsh;
 

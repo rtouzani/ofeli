@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -70,6 +70,9 @@ class FMM3D : public FMM
  * other nodes, provided they have the right sign.
  * \param [in] HA true if the program must be executed with high accuracy,
  * false otherwise
+ *
+ * \author M. Sylla, B. Meden
+ * \copyright GNU Lesser Public License
  */
    FMM3D(const Grid&   g,
          Vect<real_t>& phi,

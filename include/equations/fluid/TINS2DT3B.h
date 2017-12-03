@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -60,6 +60,8 @@ namespace OFELI {
  * \c coef that will be multiplied by the contribution of the current element. 
  * This makes possible testing different algorithms.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 

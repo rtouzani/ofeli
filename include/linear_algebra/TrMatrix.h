@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -57,6 +57,9 @@ class Mesh;
  * The template parameter is the type of matrix entries
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 
@@ -275,10 +278,8 @@ template<class T_>
 void TrMatrix<T_>::setMesh(Mesh&  mesh,
                            size_t dof)
 {
-   try {
-      THROW_RT("setMesh(Mesh,size_t): This member function is not valid for class TrMatrix");
-   }
-   CATCH_EXIT("TrMatrix");
+   throw OFELIException("In TrMatrix::setMesh(Mesh,size_t): This member "
+                        "function is not valid for class TrMatrix");
 }
 
 
@@ -287,10 +288,8 @@ void TrMatrix<T_>::setMesh(Mesh&  mesh,
                            size_t dof,
                            size_t type)
 {
-   try {
-      THROW_RT("setMesh(Mesh,size_t,size_t): This member function is not valid for class TrMatrix");
-   }
-   CATCH_EXIT("TrMatrix");
+   throw OFELIException("In TrMatrix::setMesh(Mesh,size_t,size_t): "
+                        "This member function is not valid for class TrMatrix");
 }
 
 
@@ -337,10 +336,8 @@ void TrMatrix<T_>::setMesh(size_t dof,
                            Mesh&  mesh,
                            int    code)
 {
-   try {
-      THROW_RT("setMesh(Mesh,Mesh,int): This member function is not valid for class TrMatrix");
-   }
-   CATCH_EXIT("TrMatrix");
+   throw OFELIException("In TrMatrix::setMesh(Mesh,Mesh,int): "
+                        "This member function is not valid for class TrMatrix");
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -475,19 +472,17 @@ template<class T_>
 T_ & TrMatrix<T_>::operator()(size_t i,
                               size_t j)
 {
-   try {
-      if (i==j)
-         return _a[3*i-2];
-      else if (i==j+1)
-         return _a[3*i-3];
-      else if (i==j-1)
-         return _a[3*i-1];
-      else {
-         THROW_RT("Operator(): Index pair (" + itos(int(i)) + "," + itos(int(j)) +
-                  ") is not compatible with tridiagonal structure.");
-      }
+   if (i==j)
+      return _a[3*i-2];
+   else if (i==j+1)
+      return _a[3*i-3];
+   else if (i==j-1)
+      return _a[3*i-1];
+   else {
+      throw OFELIException("In TrMatrix::Operator(): Index pair (" +
+                           itos(int(i)) + "," + itos(int(j)) +
+                           ") is not compatible with tridiagonal structure.");
    }
-   CATCH("TrMatrix");
    return _zero;
 }
 
@@ -522,10 +517,8 @@ TrMatrix<T_> & TrMatrix<T_>::operator*=(const T_& x)
 template<class T_>
 int TrMatrix<T_>::Factor()
 {
-   try {
-      THROW_RT("Factor(): Matrix cannot be fatorized separately Call Solve(b) directly.");
-   }
-   CATCH("TrMatrix");
+   throw OFELIException("In TrMatrix::Factor(): Matrix cannot be fatorized separately "
+                        "Call Solve(b) directly.");
    return 1;
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
@@ -537,24 +530,18 @@ int TrMatrix<T_>::solve(Vect<T_>& b)
    int ret = 0;
    T_ p=0;
    for (size_t i=1; i<_size; ++i) {
-      try {
-         ret = int(i);
-         if (Abs(_a[3*i-2]) < OFELI_EPSMCH)
-            THROW_RT("solve(Vect<T_>): The " + itos(int(i)) + "-th pivot is null."); 
-         else
-            p = _a[3*i]/_a [3*i-2];
-      }
-      CATCH_EXIT("TrMatrix");
+      ret = int(i);
+      if (Abs(_a[3*i-2]) < OFELI_EPSMCH)
+         throw OFELIException("In TrMatrix::solve(Vect<T_>): The " + itos(int(i)) + "-th pivot is null."); 
+      else
+         p = _a[3*i]/_a [3*i-2];
       _a[3*i+1] -= p*_a[3*i-1];
       b.add(i+1,-p*b(i));
    }
-   try {
-      if (Abs(_a[3*_size-2]) < OFELI_EPSMCH)
-         THROW_RT("solve(Vect<T_>): The " + itos(_size) + "-th pivot is null.");
-      else
-         b(_size) /= _a[3*_size-2];
-   }
-   CATCH_EXIT("TrMatrix");
+   if (Abs(_a[3*_size-2]) < OFELI_EPSMCH)
+      throw OFELIException("In TrMatrix::solve(Vect<T_>): The " + itos(_size) + "-th pivot is null.");
+   else
+      b(_size) /= _a[3*_size-2];
    for (int j=int(_size)-1; j>0; j--)
       b(j) = (b(j)-_a[3*j-1]*b(j+1))/_a[3*j-2];
    return ret;
@@ -594,6 +581,9 @@ T_ TrMatrix<T_>::get(size_t i,
  *  @param [in] A TrMatrix instance to multiply by vector
  *  @param [in] b Vect instance 
  *  \return Vect instance containing <tt>A*b</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 Vect<T_> operator*(const TrMatrix<T_>& A,
@@ -617,6 +607,9 @@ Vect<T_> operator*(const TrMatrix<T_>& A,
  *  \brief Operator * (Premultiplication of matrix by constant)
  *  \ingroup VectMat
  *  @return a*A
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 TrMatrix<T_> operator*(T_                  a,
@@ -628,9 +621,13 @@ TrMatrix<T_> operator*(T_                  a,
    return v;
 }
 
+
 /** \fn ostream& operator<<(ostream& s, const TrMatrix<T_>& a)
  *  \ingroup VectMat
  *  \brief Output matrix in output stream
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 ostream& operator<<(ostream&            s,

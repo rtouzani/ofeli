@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -30,6 +30,7 @@
   ==============================================================================*/
 
 #include "io/FFI.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -52,11 +53,8 @@ FFI::FFI(const string& file)
    _is = new ifstream;
    _string_nb = 0;
    _is->open(file.c_str());
-   try {
-      if (_is->fail())
-         THROW_RT("FFI(string): Trying to open file " + file + ". File not found.");
-   }
-   CATCH("FFI");
+   if (_is->fail())
+      throw OFELIException("In FFI::FFI(string): Trying to open file " + file + ". File not found.");
    _input_file = file;
    *_is >> _ident;
    _msg = 2;
@@ -74,26 +72,17 @@ FFI::FFI(const string& file,
    _is = new ifstream;
    _string_nb = 1;
    _is->open(file.c_str());
-   try {
-      if (_is->fail())
-         THROW_RT("FFI(string,string): Trying to open file " + file + ". File not found.");
-   }
-   CATCH("FFI");
+   if (_is->fail())
+      throw OFELIException("FFI::FFI(string,string): Trying to open file " + file + ". File not found.");
    _input_file = file;
    _is->getline(_buffer,120);
-   try {
-      if (_is->fail())
-         THROW_RT("FFI(string,string): End of file " + file + " reached.");
-   }
-   CATCH("FFI");
+   if (_is->fail())
+      throw OFELIException("In FFI::FFI(string,string): End of file " + file + " reached.");
    _iss = new istringstream(string(_buffer),istringstream::in);
    *_iss >> _ident;
-   try {
-      if (_ident != ident)
-         THROW_RT("FFI(string,string): Trying to read file " + file +
-                  ". File must start with string: " + ident);
-   }
-   CATCH("FFI");
+   if (_ident != ident)
+      throw OFELIException("In FFI::FFI(string,string): Trying to read file " + file +
+                           ". File must start with string: " + ident);
    delete _iss;
    _iss = NULL;
    _eol = true;
@@ -125,23 +114,18 @@ void FFI::open(const string& file,
    _is = new ifstream;
    _string_nb = 1;
    _is->open(file.c_str());
-   try {
-      if (_is->fail())
-         THROW_RT("open(string,string): Trying to open file " + file + ". File not found.");
-   }
-   CATCH("FFI");
+   if (_is->fail())
+      throw OFELIException("In FFI::open(string,string): Trying to open file " +
+                           file + ". File not found.");
    _input_file = file;
    _is->getline(_buffer,120);
    if (_iss)
       delete _iss;
    _iss = new istringstream(string(_buffer),istringstream::in);
    *_iss >> _ident;
-   try {
-      if (_ident != ident)
-         THROW_RT("FFI(string,string): Trying to read file " + file +
-                  ". File must start with string: " + ident);
-   }
-   CATCH("FFI");
+   if (_ident != ident)
+      throw OFELIException("In FFI::FFI(string,string): Trying to read file " + file +
+                           ". File must start with string: " + ident);
    _eol = true;
    _msg = 1;
    _non_fatal = false;
@@ -158,23 +142,18 @@ void FFI::open(const string& file,
    _is = new ifstream;
    _string_nb = 1;
    _is->open(file.c_str());
-   try {
-      if (_is->fail())
-         THROW_RT("open(string,string,int): Trying to open file " + file + ". File not found.");
-   }
-   CATCH("FFI");
+   if (_is->fail())
+      throw OFELIException("In FFI::open(string,string,int): Trying to open file "
+                           + file + ". File not found.");
    _input_file = file;
    _is->getline(_buffer,120);
    if (_iss)
       delete _iss;
    _iss = new istringstream(string(_buffer),istringstream::in);
    *_iss >> _ident;
-   try {
-      if (_ident != ident)
-         THROW_RT("open(string,string,int): Trying to read file " + file +
-                  ". File must start with string: " + ident);
-   }
-   CATCH("FFI");
+   if (_ident != ident)
+      throw OFELIException("In FFI::open(string,string,int): Trying to read file " + file +
+                           ". File must start with string: " + ident);
    _eol = true;
    _msg = c;
    _non_fatal = false;
@@ -189,11 +168,8 @@ void FFI::open(const string& file)
    _is = new ifstream;
    _string_nb = 1;
    _is->open(file.c_str());
-   try {
-      if (_is->fail())
-         THROW_RT("open(string): Trying to open file " + file + ". File not found.");
-   }
-   CATCH("FFI");
+   if (_is->fail())
+      throw OFELIException("In FFI::open(string): Trying to open file " + file + ". File not found.");
    _input_file = file;
    *_is >> _ident;
    _msg = 1;
@@ -257,11 +233,9 @@ int FFI::getI(const string& msg)
 {
    if (msg != "0")
       cout << msg;
-   try {
-      if (get_token())
-         THROW_RT("getI(string): End of file " + _input_file + " reached.");
-   }
-   CATCH("FFI");
+   if (get_token())
+      throw OFELIException("In FFI::getI(string): End of file " +
+                           _input_file + " reached.");
    int i = stringTo<int>(_token);
    _string_nb++;
    return i;
@@ -272,11 +246,9 @@ real_t FFI::getD(const string& msg)
 {
    if (msg != "0")
       cout << msg;
-   try {
-      if (get_token())
-         THROW_RT("getD(string): End of file " + _input_file + " reached.");
-   }
-   CATCH("FFI");
+   if (get_token())
+      throw OFELIException("In FFI::getD(string): End of file "
+                           + _input_file + " reached.");
    real_t d = stringTo<real_t>(_token);
    _string_nb++;
    return d;
@@ -287,11 +259,8 @@ string FFI::getS(const string& msg)
 {
    if (msg != "0")
       cout << msg;
-   try {
-      if (get_token())
-         THROW_RT("getS(string): End of file " + _input_file + " reached.");
-   }
-   CATCH("FFI");
+   if (get_token())
+      throw OFELIException("In FFI::getS(string): End of file " + _input_file + " reached.");
    _string_nb++;
    return _token;
 }

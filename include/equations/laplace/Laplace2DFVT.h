@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -53,6 +53,9 @@ namespace OFELI {
 /*! \class Laplace2DFVT
  *  \ingroup Laplace
  *  \brief To build and solve the Laplace equation using a standard Finite Volume method.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Element;

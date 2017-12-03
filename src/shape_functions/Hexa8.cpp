@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -53,11 +53,9 @@ Hexa8::Hexa8()
 
 Hexa8::Hexa8(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 8)
-         THROW_RT("Hexa8(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Hexa8");
+   if (el->getNbNodes() != 8)
+      throw OFELIException("Hexa8::Hexa8(Element *): Illegal number of element nodes: " +
+                           itos(el->getNbNodes()));
    _label = el->n();
    _sh.resize(8);
    _node.resize(8);
@@ -116,16 +114,10 @@ void Hexa8::setLocal(const Point<real_t>& s)
    }
 
    _det = J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3);
-   try {
-      if (_det < 0.0)
-         THROW_RT("setLocal(Point<real_t>): Negative determinant of jacobian");
-   }
-   CATCH("Hexa8");
-   try {
-      if (_det == 0.0)
-         THROW_RT("setLocal(Point<real_t>): Determinant of jacobian is null");
-   }
-   CATCH("Hexa8");
+   if (_det < 0.0)
+      throw OFELIException("Hexa8::setLocal(Point<real_t>): Negative determinant of jacobian");
+   if (_det == 0.0)
+      throw OFELIException("Hexa8::setLocal(Point<real_t>): Determinant of jacobian is null");
 
    real_t c = 1./_det;
    for (i=0; i<8; i++)
@@ -151,7 +143,7 @@ void Hexa8::atGauss2(LocalMatrix<Point<real_t>,8,8>& dsh,
    Gauss g(2);
    Point<real_t> xg(g.x(1),g.x(2),g.x(3));
    wg[0] = g.w(1); wg[1] = g.w(2);
-   for (size_t i=0; i<2; i++)
+   for (size_t i=0; i<2; i++) {
       for (size_t j=0; j<2; j++)
          for (size_t k=0; k<2; k++) {
             setLocal(xg);
@@ -160,6 +152,7 @@ void Hexa8::atGauss2(LocalMatrix<Point<real_t>,8,8>& dsh,
                dsh(l,ijk) = _dsh[l-1];
             ijk++;
          }
+   }
 }
 
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -73,6 +73,9 @@ namespace OFELI {
  * differential equations of the form
  *       [A2]{y"} + [A1]{y'} + [A0]{y} = {b}
  * 
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ *
  * \details Features:
  * <ul>
  *    <li>The system may be first or second order (first and/or second order
@@ -453,9 +456,13 @@ class TimeStepping
    void insertBC0(const Vect<real_t>& b, Vect<real_t>& v);
 };
 
-/// \fn ostream & operator<<(ostream& s, const TimeStepping &ts)
-/// \brief Output differential system information
-/// \ingroup Solver
+/** \fn ostream & operator<<(ostream& s, const TimeStepping &ts)
+ * \brief Output differential system information
+ * \ingroup Solver
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
     ostream & operator<<(ostream&            s,
                          const TimeStepping& ts);
 

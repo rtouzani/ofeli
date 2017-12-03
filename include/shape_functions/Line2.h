@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -61,6 +61,9 @@ class Edge;
  * \details Defines geometric quantities associated to 2-node linear segment element
  * <tt>P<sub>1</sub></tt> in the space. The reference element is the segment <tt>[-1,1]</tt>.
  * Note that the line length is not checked unless the function check is called.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Line2 : public FEShape

@@ -34,8 +34,10 @@
 
 /*!
  * \file OFELIException.h
- * \brief 
+ * \brief Definition file for class OFELIException
  */
+
+#include <stdexcept>
 
 namespace OFELI {
 /*!
@@ -49,6 +51,9 @@ namespace OFELI {
  * \ingroup 
  * \brief To handle exceptions in OFELI
  * \details This class enables using exceptions in programs using OFELI
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 class OFELIException : public std::runtime_error
 {
@@ -56,11 +61,11 @@ class OFELIException : public std::runtime_error
  public:
 
 /// \brief This form will be used most often in a throw.
-    OFELIException(const string& description) : runtime_error(description)
+    OFELIException(const std::string& description) : runtime_error(description)
     { };
 
 /// \brief Throw with no error message.
-    OFELIException() : std::runtime_error("Exception thrown in OFELI:  ") { }; 
+    OFELIException() : std::runtime_error("Exception thrown in OFELI: ") { }; 
 };
 
 } /* namespace OFELI */

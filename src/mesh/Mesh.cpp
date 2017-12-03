@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -62,6 +62,7 @@ using std::string;
 #include "mesh/saveMesh.h"
 #include "mesh/getMesh.h"
 #include <algorithm>
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -599,34 +600,32 @@ Mesh::Mesh(real_t xmin,
          Add(the_node);
          x.y += hy;
          if (i>0 && j>0 && opt) {
-            try {
-               if (opt==QUADRILATERAL) {
-                  ne++;
-                  the_element = new Element(ne,QUADRILATERAL,1);
-                  The_element.Add(_nodes[n-ny-3]);
-                  The_element.Add(_nodes[n-2]);
-                  The_element.Add(_nodes[n-1]);
-                  The_element.Add(_nodes[n-ny-2]);
-                  Add(the_element);
-               }
-               else if (opt==TRIANGLE) {
-                  ne++;
-                  the_element = new Element(ne,TRIANGLE,1);
-                  The_element.Add(_nodes[n-ny-3]);
-                  The_element.Add(_nodes[n-2]);
-                  The_element.Add(_nodes[n-1]);
-                  Add(the_element);
-                  ne++;
-                  the_element = new Element(ne,TRIANGLE,1);
-                  The_element.Add(_nodes[n-1]);
-                  The_element.Add(_nodes[n-ny-2]);
-                  The_element.Add(_nodes[n-ny-3]);
-                  Add(the_element);
-               }
-               else
-                  THROW_RT("Mesh(real_t,real_t,real_t,real_t,size_t,size_t,int,int,int,int,int): Illegal option "+itos(opt));
+            if (opt==QUADRILATERAL) {
+               ne++;
+               the_element = new Element(ne,QUADRILATERAL,1);
+               The_element.Add(_nodes[n-ny-3]);
+               The_element.Add(_nodes[n-2]);
+               The_element.Add(_nodes[n-1]);
+               The_element.Add(_nodes[n-ny-2]);
+               Add(the_element);
             }
-            CATCH_EXIT("Mesh");
+            else if (opt==TRIANGLE) {
+               ne++;
+               the_element = new Element(ne,TRIANGLE,1);
+               The_element.Add(_nodes[n-ny-3]);
+               The_element.Add(_nodes[n-2]);
+               The_element.Add(_nodes[n-1]);
+               Add(the_element);
+               ne++;
+               the_element = new Element(ne,TRIANGLE,1);
+               The_element.Add(_nodes[n-1]);
+               The_element.Add(_nodes[n-ny-2]);
+               The_element.Add(_nodes[n-ny-3]);
+               Add(the_element);
+            }
+            else
+               throw OFELIException("Mesh::Mesh(real_t,real_t,real_t,real_t,size_t,size_t,int,int,int,int,int): "
+                                    "Illegal option "+itos(opt));
          }
       }
       x.x += hx;
@@ -748,46 +747,44 @@ Mesh::Mesh(real_t xmin,
          for (size_t i=1; i<=nx; i++) {
             Node *nd[8] = { _nodes[n], _nodes[n+1], _nodes[n+nx+2], _nodes[n+nx+1], _nodes[n+nn],
                             _nodes[n+nn+1], _nodes[n+nn+nx+2], _nodes[n+nn+nx+1] };
-            try {
-               if (opt==HEXAHEDRON) {
-                  the_element = new Element(++ne,HEXAHEDRON,1);
-                  for (size_t i=0; i<8; i++)
-                     The_element.Add(nd[i]);
-		  n++;
-                  Add(the_element);
-               }
-               else if (opt==TETRAHEDRON) {
-                  the_element = new Element(++ne,TETRAHEDRON,1);
-                  The_element.Add(nd[0]); The_element.Add(nd[1]);
-                  The_element.Add(nd[3]); The_element.Add(nd[7]);
-                  Add(the_element);
-                  the_element = new Element(++ne,TETRAHEDRON,1);
-                  The_element.Add(nd[0]); The_element.Add(nd[1]);
-                  The_element.Add(nd[4]); The_element.Add(nd[7]);
-                  Add(the_element);
-                  the_element = new Element(++ne,TETRAHEDRON,1);
-                  The_element.Add(nd[1]); The_element.Add(nd[2]);
-                  The_element.Add(nd[3]); The_element.Add(nd[7]);
-                  Add(the_element);
-                  the_element = new Element(++ne,TETRAHEDRON,1);
-                  The_element.Add(nd[1]); The_element.Add(nd[2]);
-                  The_element.Add(nd[6]); The_element.Add(nd[7]);
-                  Add(the_element);
-                  the_element = new Element(++ne,TETRAHEDRON,1);
-                  The_element.Add(nd[0]); The_element.Add(nd[4]);
-                  The_element.Add(nd[5]); The_element.Add(nd[7]);
-                  Add(the_element);
-                  the_element = new Element(++ne,TETRAHEDRON,1);
-                  The_element.Add(nd[1]); The_element.Add(nd[5]);
-                  The_element.Add(nd[6]); The_element.Add(nd[7]);
-                  Add(the_element);
-               }
-               else
-                  THROW_RT("Mesh(real_t,real_t,real_t,real_t,size_t,size_t,int,int,int,int,int): Illegal option "+itos(opt));
+            if (opt==HEXAHEDRON) {
+               the_element = new Element(++ne,HEXAHEDRON,1);
+               for (size_t i=0; i<8; i++)
+                  The_element.Add(nd[i]);
+               n++;
+               Add(the_element);
             }
-            CATCH_EXIT("Mesh");
+            else if (opt==TETRAHEDRON) {
+               the_element = new Element(++ne,TETRAHEDRON,1);
+               The_element.Add(nd[0]); The_element.Add(nd[1]);
+               The_element.Add(nd[3]); The_element.Add(nd[7]);
+               Add(the_element);
+               the_element = new Element(++ne,TETRAHEDRON,1);
+               The_element.Add(nd[0]); The_element.Add(nd[1]);
+               The_element.Add(nd[4]); The_element.Add(nd[7]);
+               Add(the_element);
+               the_element = new Element(++ne,TETRAHEDRON,1);
+               The_element.Add(nd[1]); The_element.Add(nd[2]);
+               The_element.Add(nd[3]); The_element.Add(nd[7]);
+               Add(the_element);
+               the_element = new Element(++ne,TETRAHEDRON,1);
+               The_element.Add(nd[1]); The_element.Add(nd[2]);
+               The_element.Add(nd[6]); The_element.Add(nd[7]);
+               Add(the_element);
+               the_element = new Element(++ne,TETRAHEDRON,1);
+               The_element.Add(nd[0]); The_element.Add(nd[4]);
+               The_element.Add(nd[5]); The_element.Add(nd[7]);
+               Add(the_element);
+               the_element = new Element(++ne,TETRAHEDRON,1);
+               The_element.Add(nd[1]); The_element.Add(nd[5]);
+               The_element.Add(nd[6]); The_element.Add(nd[7]);
+               Add(the_element);
+            }
+            else
+               throw OFELIException("Mesh::Mesh(real_t,real_t,real_t,real_t,size_t,size_t,int,int,int,int,int):"
+                                    " Illegal option "+itos(opt));
          }
-	 n++;
+         n++;
       }
       n += nx + 1;
    }
@@ -910,12 +907,9 @@ Mesh::Mesh(const Mesh&          m,
        _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
        _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
 {
-   try {
-      if (m.getDim()!=2)
-         THROW_RT("Mesh(Mesh,Point<real_t>,Point<real_t>)\n"
-                  "This constructor is valid for 2-D meshes only.");
-   }
-   CATCH_EXIT("Mesh");
+   if (m.getDim()!=2)
+      throw OFELIException("Mesh::Mesh(Mesh,Point<real_t>,Point<real_t>)\n"
+                           "This constructor is valid for 2-D meshes only.");
    _max_nb_nodes = m.getNbNodes();
    _max_nb_elements = m.getNbElements();
    _max_nb_sides = m.getNbSides();
@@ -1078,13 +1072,11 @@ void Mesh::RenumberNode(size_t n1,
                         size_t n2)
 {
    Node *nd = getPtrNode(n1);
-   try {
-      if (nd)
-         nd->setLabel(n2);
-      else
-         THROW_RT("RenumberNode(size_t,size_t): Node with label " + itos(n1) + " does not exist.");
-   }
-   CATCH_EXIT("Mesh");
+   if (nd)
+      nd->setLabel(n2);
+   else
+      throw OFELIException("Mesh::RenumberNode(size_t,size_t): Node with label "
+                           + itos(n1) + " does not exist.");
 }
 
 
@@ -1092,13 +1084,11 @@ void Mesh::RenumberElement(size_t n1,
                            size_t n2)
 {
    Element *el = getPtrElement(n1);
-   try {
-      if (el)
-         el->setLabel(n2);
-      else
-         THROW_RT("RenumberElement(size_t,size_t): Element with label " + itos(n1) + " does not exist.");
-   }
-   CATCH_EXIT("Mesh");
+   if (el)
+      el->setLabel(n2);
+   else
+      throw OFELIException("Mesh::RenumberElement(size_t,size_t): Element with label " +
+                           itos(n1)+" does not exist.");
 }
 
 
@@ -1106,13 +1096,11 @@ void Mesh::RenumberSide(size_t n1,
                         size_t n2)
 {
    Side *sd = getPtrSide(n1);
-   try {
-      if (sd)
-         sd->setLabel(n2);
-      else
-         THROW_RT("RenumberSide(size_t,size_t): Side with label " + itos(n1) + " does not exist.");
-   }
-   CATCH_EXIT("Mesh");
+   if (sd)
+      sd->setLabel(n2);
+   else
+      throw OFELIException("Mesh::RenumberSide(size_t,size_t): Side with label " +
+                           itos(n1)+" does not exist.");
 }
 
 
@@ -1120,13 +1108,11 @@ void Mesh::RenumberEdge(size_t n1,
                         size_t n2)
 {
    Edge *ed = getPtrEdge(n1);
-   try {
-      if (ed)
-         ed->setLabel(n2);
-      else
-         THROW_RT("RenumberEdge(size_t,size_t): Edge with label " + itos(n1) + " does not exist.");
-   }
-   CATCH_EXIT("Mesh");
+   if (ed)
+      ed->setLabel(n2);
+   else
+      throw OFELIException("Mesh::RenumberEdge(size_t,size_t): Edge with label " +
+                           itos(n1)+" does not exist.");
 }
 
 
@@ -1185,11 +1171,9 @@ void Mesh::inCoarse(Mesh& ms,
       _node_in_coarse_element.push_back(NULL);
 
    mesh_elements(ms) {
-      try {
-         if (The_element.getShape() != TRIANGLE)
-            THROW_RT("inCoarse(Mesh,bool): Element " + itos(element_label) + " is not a triangle.");
-      }
-      CATCH_EXIT("Mesh");
+      if (The_element.getShape() != TRIANGLE)
+         throw OFELIException("Mesh::inCoarse(Mesh,bool): Element "+itos(element_label) +
+                              " is not a triangle.");
       for (i=0; i<3; i++) {
          x[i] = (The_element)(i+1)->getCoord(1);
          y[i] = (The_element)(i+1)->getCoord(2);
@@ -1228,11 +1212,9 @@ void Mesh::inFine(Mesh& ms,
       _node_in_fine_element.push_back(NULL);
 
    mesh_elements(ms) {
-      try {
-         if (the_element->getShape() != TRIANGLE)
-            THROW_RT("inFine(Mesh,bool): This function is valid for triangles only.");
-      }
-      CATCH_EXIT("Mesh");
+      if (the_element->getShape() != TRIANGLE)
+         throw OFELIException("Mesh::inFine(Mesh,bool): This function is valid for "
+                              "triangles only.");
       for (i=0; i<3; i++) {
          x[i] = The_element(i+1)->getCoord(1);
          y[i] = The_element(i+1)->getCoord(2);
@@ -1265,11 +1247,8 @@ void Mesh::Delete(Node* nd)
 {
    if (_verb > 5)
       cout << "Deleting node " << nd->n() << endl;
-   try {
-      if (!nd)
-         THROW_RT("Delete(Node *): Node does not exist.");
-   }
-   CATCH_EXIT("Mesh");
+   if (!nd)
+      throw OFELIException("Mesh::Delete(Node *): Node does not exist.");
 }
 
 
@@ -1277,11 +1256,8 @@ void Mesh::Delete(Element* el)
 {
    if (_verb > 5)
       cout << "Deleting element " << el->n() << endl;
-   try {
-      if (!el)
-         THROW_RT("Delete(Element *): Element does not exist.");
-   }
-   CATCH_EXIT("Mesh");
+   if (!el)
+      throw OFELIException("Mesh::Delete(Element *): Element does not exist.");
 }
 
 
@@ -1289,11 +1265,8 @@ void Mesh::Delete(Side* sd)
 {
    if (_verb > 5)
       cout << "Deleting side " << sd->n() << endl;
-   try {
-      if (!sd)
-         THROW_RT("Delete(Side *): Side does not exist.");
-   }
-   CATCH_EXIT("Mesh");
+   if (!sd)
+      throw OFELIException("Mesh::Delete(Side *): Side does not exist.");
 }
 
 
@@ -1760,11 +1733,8 @@ void Mesh::selectDOF(int    dof_type,
 
 int Mesh::getAllSides(int opt)
 {
-   try {
-      if (_dim==1)
-         THROW_RT("getAllSides(): No sides can be created for 1-D meshes");
-   }
-   CATCH("Mesh");
+   if (_dim==1)
+      throw OFELIException("Mesh::getAllSides(): No sides can be created for 1-D meshes");
    if (_all_sides_created==true) {
       if (_verb > 0) {
          cout << "Attempting to create all mesh sides:\n";
@@ -1787,11 +1757,8 @@ int Mesh::getAllSides(int opt)
 // Add all mesh sides
    nb_all_sides = 0;
    mesh_elements(*this) {
-      try {
-         if (_dim==3 && the_element->getShape()!=TETRAHEDRON)
-            THROW_RT("getAllSides(): Member function is not valid for this element type.");
-      }
-      CATCH_EXIT("Mesh");
+      if (_dim==3 && the_element->getShape()!=TETRAHEDRON)
+         throw OFELIException("Mesh::getAllSides(): Member function is not valid for this element type.");
       ns = init_side_node_numbering(The_element.getShape(),nsd,sh);
       for (i=0; i<The_element.getNbSides(); i++) {
          size_t i1 = The_element(nsd[i][0])->n(),
@@ -1924,16 +1891,10 @@ int Mesh::getAllSides(int opt)
 
 int Mesh::getAllEdges()
 {
-   try {
-      if (_dim==1)
-         THROW_RT("getAllEdges(): No edges can be created for 1-D meshes");
-   }
-   CATCH("Mesh");
-   try {
-      if (_dim==2)
-         THROW_RT("getAllEdges(): No edges can be created for 2-D meshes");
-   }
-   CATCH("Mesh");
+   if (_dim==1)
+      throw OFELIException("Mesh::getAllEdges(): No edges can be created for 1-D meshes");
+   if (_dim==2)
+      throw OFELIException("Mesh::getAllEdges(): No edges can be created for 2-D meshes");
    if (_all_edges_created == true) {
       if (_verb > 0) {
          cout << "Attempting to create all mesh edges: \n";
@@ -1960,11 +1921,8 @@ int Mesh::getAllEdges()
    ND eed;
    nb_all_edges = 0;
    mesh_sides(*this) {
-      try {
-         if (the_side->getShape()!=TRIANGLE)
-            THROW_RT("getAllEdges(): Edges can be created for triangular faces only");
-      }
-      CATCH("Mesh");
+      if (the_side->getShape()!=TRIANGLE)
+         throw OFELIException("Mesh::getAllEdges(): Edges can be created for triangular faces only");
       for (i=0; i<3; i++) {
          eed = ND(The_side(nsd[i][0])->n(),The_side(nsd[i][1])->n(),0,0);
          eed.e1 = side_label;
@@ -2069,12 +2027,9 @@ int Mesh::createInternalSideList()
 
 int Mesh::getBoundarySides()
 {
-   try {
-      if (_boundary_sides_created == true)
-         THROW_RT("getBoundarySides(): Attempting to create boundary sides: \n"
-                  "Boundary sides were created already. Skipping !");
-   }
-   CATCH("Mesh");
+   if (_boundary_sides_created == true)
+      throw OFELIException("Mesh::getBoundarySides(): Attempting to create boundary sides: \n"
+                           "Boundary sides were created already. Skipping !");
    size_t k, ns=0, i;
    vector<vector<size_t> > nsd;
    int sh;
@@ -2107,11 +2062,8 @@ int Mesh::getBoundarySides()
    }
 
    mesh_elements(*this) {
-      try {
-         if (_dim==3 && the_element->getShape() != TETRAHEDRON)
-            THROW_RT("getBoundarySides(): Member function is not valid for this element type.");
-      }
-      CATCH("Mesh");
+      if (_dim==3 && the_element->getShape() != TETRAHEDRON)
+         throw OFELIException("Mesh::getBoundarySides(): Member function is not valid for this element type.");
       ns = init_side_node_numbering(the_element->getShape(), nsd, sh);
       for (i=0; i<the_element->getNbSides(); i++) {
          i3 = i4 = 0;
@@ -2391,11 +2343,8 @@ void Mesh::AddMidNodes(int g)
 void Mesh::set(Node* nd)
 {
    size_t n = nd->n();
-   try {
-      if (n>_nb_nodes)
-         THROW_RT("set(Node *): The node label is beyond the total number of nodes.");
-   }
-   CATCH("Mesh");
+   if (n>_nb_nodes)
+      throw OFELIException("Mesh::set(Node *): The node label is beyond the total number of nodes.");
    _nodes[n-1] = nd;
 }
 
@@ -2403,11 +2352,8 @@ void Mesh::set(Node* nd)
 void Mesh::set(Element* el)
 {
    size_t n = el->n();
-   try {
-      if (n>_nb_elements)
-         THROW_RT("set(Element *): The element label is beyond the total number of elements.");
-   }
-   CATCH_EXIT("Mesh");
+   if (n>_nb_elements)
+      throw OFELIException("Mesh::set(Element *): The element label is beyond the total number of elements.");
    _elements[n-1] = el;
 }
 
@@ -2415,11 +2361,8 @@ void Mesh::set(Element* el)
 void Mesh::set(Side* sd)
 {
    size_t n = sd->n();
-   try {
-      if (n>_nb_sides)
-         THROW_RT("set(Side *): The side label is beyond the total number of sides.");
-   }
-   CATCH_EXIT("Mesh");
+   if (n>_nb_sides)
+      throw OFELIException("Mesh::set(Side *): The side label is beyond the total number of sides.");
    _sides[n-1] = sd;
 }
 
@@ -2520,12 +2463,9 @@ void Mesh::setList(const std::vector<Side *>& sl)
 void Mesh::checkNodeLabels()
 {
    for (size_t i=0; i<_nb_nodes; i++) {
-      try {
-         if (_nodes[i]->n()>_nb_nodes)
-            THROW_RT("checkNodeLabels(): The node label: " + itos(_nodes[i]->n()) + 
-                     " exceeds the total number of nodes.");
-      }
-      CATCH_EXIT("Mesh");
+      if (_nodes[i]->n()>_nb_nodes)
+         throw OFELIException("Mesh::checkNodeLabels(): The node label: " + itos(_nodes[i]->n()) + 
+                              " exceeds the total number of nodes.");
    }
    if (_nb_nodes>0)
       qksort(_nodes,0,_nb_nodes-1,_node_compare);
@@ -2535,12 +2475,9 @@ void Mesh::checkNodeLabels()
 void Mesh::checkElementLabels()
 {
    for (size_t i=0; i<_nb_elements; i++) {
-      try {
-         if (_elements[i]->n()>_nb_elements)
-            THROW_RT("checkElementLabels(): The element label: " + itos(_elements[i]->n()) + 
-                     " exceeds the total number of elements.");
-      }
-      CATCH("Mesh");
+      if (_elements[i]->n()>_nb_elements)
+         throw OFELIException("Mesh::checkElementLabels(): The element label: " + itos(_elements[i]->n()) + 
+                              " exceeds the total number of elements.");
    }
    if (_nb_elements>0)
       qksort(_elements,0,_nb_elements-1,_element_compare);
@@ -2550,12 +2487,9 @@ void Mesh::checkElementLabels()
 void Mesh::checkSideLabels()
 {
    for (size_t i=0; i<_nb_sides; i++) {
-      try {
-         if (_sides[i]->n()>_nb_sides)
-            THROW_RT("checkSideLabels(): The side label: " + itos(_sides[i]->n()) + 
-                     " exceeds the total number of sides.");
-      }
-      CATCH("Mesh");
+      if (_sides[i]->n()>_nb_sides)
+         throw OFELIException("Mesh::checkSideLabels(): The side label: " + itos(_sides[i]->n()) + 
+                              " exceeds the total number of sides.");
    }
    if (_nb_sides>0)
       qksort(_sides,0,_nb_sides-1,_side_compare);
@@ -2565,11 +2499,8 @@ void Mesh::checkSideLabels()
 void Mesh::AddNodes(int p)
 {
    mesh_elements(*this) {
-      try {
-         if (the_element->getShape() != TRIANGLE)
-            THROW_RT("AddNodes(int): This function is valid for triangles only.");
-      }
-      CATCH("Mesh");
+      if (the_element->getShape() != TRIANGLE)
+         throw OFELIException("Mesh::AddNodes(int): This function is valid for triangles only.");
    }
    getAllSides();
 
@@ -2761,27 +2692,24 @@ void Mesh::get(const string& mesh_file,
                int           ff, 
                int           nb_dof)
 {
-   try {
-      if (ff==OFELI_FF)
-         get(mesh_file);
-      else if (ff==GMSH)
-         getGmsh(mesh_file,*this,nb_dof);
-      else if (ff==MATLAB)
-         getMatlab(mesh_file,*this,nb_dof);
-      else if (ff==EASYMESH)
-         getEasymesh(mesh_file,*this,nb_dof);
-      else if (ff==GAMBIT)
-         getGambit(mesh_file,*this,nb_dof);
-      else if (ff==BAMG)
-         getBamg(mesh_file,*this,nb_dof);
-      else if (ff==NETGEN)
-         getNetgen(mesh_file,*this,nb_dof);
-      else if (ff==TRIANGLE_FF)
-         getTriangle(mesh_file,*this,nb_dof);
-      else
-         THROW_RT("get(string,int,int): Unknown file format "+itos(ff));
-   }
-   CATCH("Mesh");
+   if (ff==OFELI_FF)
+      get(mesh_file);
+   else if (ff==GMSH)
+      getGmsh(mesh_file,*this,nb_dof);
+   else if (ff==MATLAB)
+      getMatlab(mesh_file,*this,nb_dof);
+   else if (ff==EASYMESH)
+      getEasymesh(mesh_file,*this,nb_dof);
+   else if (ff==GAMBIT)
+      getGambit(mesh_file,*this,nb_dof);
+   else if (ff==BAMG)
+      getBamg(mesh_file,*this,nb_dof);
+   else if (ff==NETGEN)
+      getNetgen(mesh_file,*this,nb_dof);
+   else if (ff==TRIANGLE_FF)
+      getTriangle(mesh_file,*this,nb_dof);
+   else
+      throw OFELIException("Mesh::get(string,int,int): Unknown file format "+itos(ff));
 }
 
 
@@ -2948,11 +2876,8 @@ L5:
                   ;
                }
                ++memory;
-               try {
-                  if (memory > _available_memory && _available_memory > 0)
-                     THROW_RT("FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
-               }
-               CATCH_EXIT("Mesh");
+               if (memory > _available_memory && _available_memory > 0)
+                  throw OFELIException("Mesh::FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
                ++xadj[ii];
                for (size_t is=m; is<=memory; ++is)
                   adjncy[m+memory-is] = adjncy[m+memory-is-1];
@@ -2960,11 +2885,8 @@ L5:
                goto L9;
 L7:
                ++memory;
-               try {
-                  if (memory > _available_memory && _available_memory > 0)
-                     THROW_RT("FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
-               }
-               CATCH_EXIT("Mesh");
+               if (memory > _available_memory && _available_memory > 0)
+                  throw OFELIException("Mesh::FindGraph(vector<long>,vector<size_t>): Insufficient Memory");
                ++xadj[ii];
                for (size_t is=l; is<=memory; ++is) {
                   size_t isn = memory + l - is;

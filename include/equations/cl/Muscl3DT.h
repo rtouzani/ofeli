@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -70,6 +70,8 @@ template<class T_> class Vect;
  *  \ingroup ConservationLaws
  *  \brief Class for 3-D hyperbolic solvers with Muscl scheme using tetrahedra
  *
+ * \author S. Clain, V. Clauzon
+ * \copyright GNU Lesser Public License
  */
 
 class Muscl3DT : public Muscl {

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,6 +52,9 @@ namespace OFELI {
  * \details Operators <tt>=</tt> and <tt>()</tt> are overloaded. The actual 
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 template<class T_>
@@ -207,10 +210,14 @@ struct Point2D {
 // Associated functions
 //-----------------------------------------------------------------------------
 
-/// \fn bool operator== (const Point2D<T_>& a, const Point2D<T_>& b)
-/// \brief Operator ==.
-/// \ingroup Util
-/// \details Return <tt>true</tt> if <tt>a=b</tt>, false if not.
+/** \fn bool operator== (const Point2D<T_>& a, const Point2D<T_>& b)
+ *  \brief Operator ==.
+ *  \ingroup Util
+ *  \details Return <tt>true</tt> if <tt>a=b</tt>, false if not.
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 bool operator== (const Point2D<T_>& a,
                  const Point2D<T_>& b)
@@ -218,109 +225,157 @@ bool operator== (const Point2D<T_>& a,
    return (a.x==b.x && a.y==b.y);
 }
 
-/// \fn Point2D<T_> operator+ (const Point2D<T_>& a, const Point2D<T_>& b)
-/// \brief Operator +.
-/// \ingroup Util
-/// \details Return sum of two points <tt>a</tt> and <tt>b</tt>
+
+/** \fn Point2D<T_> operator+ (const Point2D<T_>& a, const Point2D<T_>& b)
+ *  \brief Operator +.
+ *  \ingroup Util
+ *  \details Return sum of two points <tt>a</tt> and <tt>b</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator+ (const Point2D<T_>& a,
                        const Point2D<T_>& b)
    { return Point2D<T_>(a.x+b.x,a.y+b.y); }
 
-/// \fn Point2D<T_> operator+ (const Point2D<T_> &a, const T_ &x)
-/// \brief Operator +.
-/// \ingroup Util
-/// \details Translate <tt>a</tt> by <tt>x</tt>
+ 
+/** \fn Point2D<T_> operator+ (const Point2D<T_> &a, const T_ &x)
+ *  \brief Operator +.
+ *  \ingroup Util
+ *  \details Translate <tt>a</tt> by <tt>x</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator+ (const Point2D<T_>& a,
                        const T_&          x)
     { return Point2D<T_>(a.x+x,a.y+x); }
 
 
-/// \fn Point2D<T_> operator- (const Point2D<T_>& a)
-/// \brief Unary Operator <tt>-</tt>
-/// \ingroup Util
-/// \details Return minus <tt>a</tt>
+/** \fn Point2D<T_> operator- (const Point2D<T_>& a)
+ *  \brief Unary Operator <tt>-</tt>
+ *  \ingroup Util
+ *  \details Return minus <tt>a</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator- (const Point2D<T_>& a) { return Point2D<T_>(-a.x,-a.y); }
 
 
-/// \fn Point2D<T_> operator- (const Point2D<T_>& a, const Point2D<T_>& b)
-/// \brief Operator <tt>-</tt>
-/// \ingroup Util
-/// \details Return point <tt>a</tt> minus point <tt>b</tt>
+/** \fn Point2D<T_> operator- (const Point2D<T_>& a, const Point2D<T_>& b)
+ *  \brief Operator <tt>-</tt>
+ *  \ingroup Util
+ *  \details Return point <tt>a</tt> minus point <tt>b</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator- (const Point2D<T_>& a,
                        const Point2D<T_>& b)
     { return Point2D<T_>(a.x-b.x,a.y-b.y); }
 
 
-/// \fn Point2D<T_> operator- (const Point2D<T_>& a, const T_& x)
-/// \brief Operator <tt>-</tt>
-/// \ingroup Util
-/// \details Translate <tt>a</tt> by <tt>-x</tt>
+/** \fn Point2D<T_> operator- (const Point2D<T_>& a, const T_& x)
+ *  \brief Operator <tt>-</tt>
+ *  \ingroup Util
+ *  \details Translate <tt>a</tt> by <tt>-x</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator- (const Point2D<T_>& a,
                        const T_&          x)
     { return Point2D<T_>(a.x-x,a.y-x); }
 
 
-/// \fn Point2D<T_> operator* (const T_ &a, const Point2D<T_> &b)
-/// \brief Operator *.
-/// \ingroup Util
-/// \details Return point <tt>b</tt> premultiplied by constant <tt>a</tt>
+/** \fn Point2D<T_> operator* (const T_ &a, const Point2D<T_> &b)
+ *  \brief Operator *.
+ *  \ingroup Util
+ *  \details Return point <tt>b</tt> premultiplied by constant <tt>a</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator* (const T_&          a,
                        const Point2D<T_>& b)
    { return Point2D<T_>(a*b.x,a*b.y); }
 
 
-/// \fn Point2D<T_> operator* (const int& a, const Point2D<T_>& b)
-/// Operator *.
-/// \ingroup Util
-/// Return point <tt>b</tt> divided by integer constant <tt>a</tt>
+/** \fn Point2D<T_> operator* (const int& a, const Point2D<T_>& b)
+ *  Operator *.
+ *  \ingroup Util
+ *  Return point <tt>b</tt> divided by integer constant <tt>a</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator* (const int&         a,
                        const Point2D<T_>& b)
    { return Point2D<T_>(a*b.x,a*b.y); }
 
 
-/// \fn Point2D<T_> operator* (const Point2D<T_>& b, const T_& a)
-/// \brief Operator <tt>/</tt>
-/// \ingroup Util
-/// \details Return point <tt>b</tt> postmultiplied by constant <tt>a</tt>
+/** \fn Point2D<T_> operator* (const Point2D<T_>& b, const T_& a)
+ *  \brief Operator <tt>/</tt>
+ *  \ingroup Util
+ *  \details Return point <tt>b</tt> postmultiplied by constant <tt>a</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator* (const Point2D<T_>& b,
                        const T_&          a)
    { return Point2D<T_>(a*b.x,a*b.y);}
 
 
-/// \fn Point2D<T_> operator* (const Point2D<T_> &b, const int &a)
-/// \brief Operator <tt>*</tt>
-/// \ingroup Util
-/// \details Return point <tt>b</tt> postmultiplied by constant <tt>a</tt>
+/** \fn Point2D<T_> operator* (const Point2D<T_> &b, const int &a)
+ *  \brief Operator <tt>*</tt>
+ *  \ingroup Util
+ *  \details Return point <tt>b</tt> postmultiplied by constant <tt>a</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator* (const Point2D<T_>& b,
                        const int&         a)
    { return Point2D<T_>(a*b.x,a*b.y);}
 
-/// \fn T_ operator* (const Point2D<T_>& b, const Point2D<T_>& a)
-/// \brief Operator *.
-/// \ingroup Util
-/// \details Return point \a b postmultiplied by integer constant \a a.
+
+/** \fn T_ operator* (const Point2D<T_>& b, const Point2D<T_>& a)
+ *  \brief Operator *.
+ *  \ingroup Util
+ *  \details Return point \a b postmultiplied by integer constant \a a.
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 T_ operator* (const Point2D<T_>& b,
               const Point2D<T_>& a)
    { return (a.x*b.x+a.y*b.y); }
 
-/// \fn Point2D<T_> operator/ (const Point2D<T_>& b, const T_& a)
-/// \brief Operator <tt>/</tt>
-/// \ingroup Util
-/// \details Return point <tt>b</tt> divided by constant <tt>a</tt>
+/** \fn Point2D<T_> operator/ (const Point2D<T_>& b, const T_& a)
+ *  \brief Operator <tt>/</tt>
+ *  \ingroup Util
+ *  \details Return point <tt>b</tt> divided by constant <tt>a</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 Point2D<T_> operator/ (const Point2D<T_>& b,
                        const T_&          a)
    { return Point2D<T_>(b.x/a,b.y/a);}
+
 
 /** \fn bool areClose(const Point2D<real_t> &a, const Point2D<real_t> &b, real_t toler=OFELI_EPSMCH)
  *  \brief Return <tt>true</tt> if both instances of class \b Point2D<real_t> are distant with
@@ -338,27 +393,41 @@ inline bool areClose(const Point2D<real_t>& a,
 }
 
 
-/// \fn real_t SqrDistance(const Point2D<real_t> &a, const Point2D<real_t> &b)
-/// \brief Return squared euclidean distance between points <tt>a</tt> and <tt>b</tt>
-/// \ingroup Util
+/** \fn real_t SqrDistance(const Point2D<real_t> &a, const Point2D<real_t> &b)
+ *  \brief Return squared euclidean distance between points <tt>a</tt> and <tt>b</tt>
+ *  \ingroup Util
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 inline real_t SqrDistance(const Point2D<real_t>& a,
                           const Point2D<real_t>& b)
 {
    return ((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y));
 }
 
-/// \fn real_t Distance(const Point2D<real_t>& a, const Point2D<real_t>& b)
-/// \brief Return euclidean distance between points <tt>a</tt> and <tt>b</tt>
-/// \ingroup Util
+
+/** \fn real_t Distance(const Point2D<real_t>& a, const Point2D<real_t>& b)
+ *  \brief Return euclidean distance between points <tt>a</tt> and <tt>b</tt>
+ * \ingroup Util
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 inline real_t Distance(const Point2D<real_t>& a,
                        const Point2D<real_t>& b)
 {
    return sqrt(SqrDistance(a,b));
 }
 
-/// \fn ostream & operator<<(std::ostream& s, const Point2D<T_>& a)
-/// \brief Output point coordinates.
-/// \ingroup Util
+
+/** \fn ostream & operator<<(std::ostream& s, const Point2D<T_>& a)
+ *  \brief Output point coordinates.
+ * \ingroup Util
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
 template <class T_>
 std::ostream & operator<<(      std::ostream& s,
                           const Point2D<T_>&  a)

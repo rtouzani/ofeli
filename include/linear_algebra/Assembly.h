@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -66,6 +66,9 @@ namespace OFELI {
  *  @param [in] e Reference to local entity (Element or Side)
  *  @param [in] be Local vector
  *  @param [in,out] b Global vector
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&               e,
@@ -87,6 +90,9 @@ void element_assembly(const E_&               e,
  *  @param [in] e Reference to local entity (Element or Side)
  *  @param [in] ae Local matrix
  *  @param [in,out] b Global vector
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&                    e,
@@ -109,6 +115,9 @@ void element_assembly(const E_&                    e,
  *  @param [in] e Reference to local entity (Element or Side)
  *  @param [in] ae Local matrix
  *  @param [in,out] A Pointer to global matrix
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&                    e,
@@ -138,6 +147,9 @@ void element_assembly(const E_&                    e,
  *  @param [in] e Reference to local entity (Element or Side)
  *  @param [in] ae Local matrix
  *  @param [in,out] A Global matrix
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&                    e,
@@ -167,6 +179,9 @@ void element_assembly(const E_&                    e,
  *  @param [in] e Reference to local entity (Element or Side)
  *  @param [in] ae Local matrix
  *  @param [in,out] A Global matrix
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&                    e,
@@ -199,6 +214,9 @@ void element_assembly(const E_&                    e,
  *  @param [in] e Reference to local entity (Element or Side)
  *  @param [in] ae Local matrix
  *  @param [in,out] A Global matrix
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_,class E_>
 void element_assembly(const E_&                    e,
@@ -228,6 +246,9 @@ void element_assembly(const E_&                    e,
  *  @param [in] e Reference to local entity (Element or Side)
  *  @param [in] be Local vector
  *  @param [in,out] b Global vector
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_,class E_>
 void side_assembly(const E_&               e,
@@ -246,6 +267,9 @@ void side_assembly(const E_&               e,
  *  @param [in] e Reference to local entity (Element or Side)
  *  @param [in] ae Local matrix 
  *  @param [in,out] b Global vector
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_,class E_>
 void side_assembly(const E_&                    e,
@@ -289,6 +313,9 @@ void side_assembly(const E_&                    e,
  *  @param [in] e Reference to local Element
  *  @param [in] ae Local matrix
  *  @param [in,out] A Global matrix
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_>
 void side_assembly(const Element&               e,
@@ -387,6 +414,9 @@ void Assembly(const Element&              el,
  *  @param [in] e Reference to local Element
  *  @param [in] ae Local matrix
  *  @param [in,out] A Global matrix
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_>
 void side_assembly(const Element&               e,
@@ -419,6 +449,9 @@ void side_assembly(const Element&               e,
  *  @param [in] e Reference to local Element
  *  @param [in] ae Local matrix
  *  @param [in,out] A Global matrix
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_>
 void side_assembly(const Element&               e,
@@ -453,6 +486,9 @@ void side_assembly(const Element&               e,
  *  @param [in] e Reference to local Element
  *  @param [in] be Local vector
  *  @param [in,out] b Global vector
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_,size_t N_>
 void side_assembly(const Element&          e,

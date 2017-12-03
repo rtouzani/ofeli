@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -31,6 +31,7 @@
 
 #include "io/IOField.h"
 #include "io/saveField.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -165,11 +166,8 @@ IOField::~IOField()
 void IOField::saveGMSH(string output_file,
                        string mesh_file)
 {
-   try {
-      if (_access!=OUT)
-         THROW_RT("saveGMSH(...): File must have been opened with the option OUT");
-   }
-   CATCH("IOField");
+   if (_access!=OUT)
+      throw OFELIException("In IOField::saveGMSH(...): File must have been opened with the option OUT");
    close();
    _is_closed = true;
    saveGmsh(_file,output_file,mesh_file);
@@ -300,48 +298,45 @@ void IOField::put(Mesh& ms)
 
 void IOField::put(const Vect<real_t>& v)
 {
-   try {
-      if (_access==OUT) {
-         if (v.getName() != _field_name) {
-            if (_field_opened==true)
-               *_of << "</Field>" << endl;
-            _field_name = v.getName();
-            if (v.getDOFType()==NONE) {
-               *_of << "<Field name=\"" << v.getName() << "\" type=\"None\"";
-               *_of << " nb_dof=\"1\">" << endl;
-            }
-            else {
-               if (v.getDOFType()==NODE_FIELD)
-                  *_of << "<Field name=\"" << v.getName() << "\" type=\"Node\"";
-               else if (v.getDOFType()==ELEMENT_FIELD)
-                  *_of << "<Field name=\"" << v.getName() << "\" type=\"Element\"";
-               else if (v.getDOFType()==SIDE_FIELD)
-                  *_of << "<Field name=\"" << v.getName() << "\" type=\"Side\"";
-               *_of << " nb_dof=\"" << v.getNbDOF() << "\">" << endl;
-            }
-            _field_opened = true;
+   if (_access==OUT) {
+      if (v.getName() != _field_name) {
+         if (_field_opened==true)
+            *_of << "</Field>" << endl;
+         _field_name = v.getName();
+         if (v.getDOFType()==NONE) {
+            *_of << "<Field name=\"" << v.getName() << "\" type=\"None\"";
+            *_of << " nb_dof=\"1\">" << endl;
          }
-         if (_compact)
-            *_of << v.getTime() << endl;
-         else
-            *_of << "   <Step time=\"" << v.getTime() << "\">" << endl;
-         size_t l = 0;
-         for (size_t i=1; i<=v.getNb(); i++) {
-            for (size_t j=1; j<=v.getNbDOF(); j++)
-               *_of << setprecision(8) << setw(18) << v(i,j);
-            l++;
-            if (l%(10/v.getNbDOF())==0)
-               *_of << endl;
+         else {
+            if (v.getDOFType()==NODE_FIELD)
+               *_of << "<Field name=\"" << v.getName() << "\" type=\"Node\"";
+            else if (v.getDOFType()==ELEMENT_FIELD)
+               *_of << "<Field name=\"" << v.getName() << "\" type=\"Element\"";
+            else if (v.getDOFType()==SIDE_FIELD)
+               *_of << "<Field name=\"" << v.getName() << "\" type=\"Side\"";
+            *_of << " nb_dof=\"" << v.getNbDOF() << "\">" << endl;
          }
-         if (l%(10/v.getNbDOF())!=0)
-            *_of << endl;
-         if (!_compact)
-            *_of << "   </Step>" << endl;
+         _field_opened = true;
       }
+      if (_compact)
+         *_of << v.getTime() << endl;
       else
-         THROW_RT("put(Vect,real_t): This instance of IOField was constructed for input");
+         *_of << "   <Step time=\"" << v.getTime() << "\">" << endl;
+      size_t l = 0;
+      for (size_t i=1; i<=v.getNb(); i++) {
+         for (size_t j=1; j<=v.getNbDOF(); j++)
+            *_of << setprecision(8) << setw(18) << v(i,j);
+         l++;
+         if (l%(10/v.getNbDOF())==0)
+            *_of << endl;
+      }
+      if (l%(10/v.getNbDOF())!=0)
+         *_of << endl;
+      if (!_compact)
+         *_of << "   </Step>" << endl;
    }
-   CATCH("IOField");
+   else
+      throw OFELIException("In IOField::put(Vect,real_t): This instance of IOField was constructed for input");
    _state++;
    _field_opened = true;
 }
@@ -350,48 +345,45 @@ void IOField::put(const Vect<real_t>& v)
 #ifdef USE_PETSC
 void IOField::put(const PETScVect<real_t>& v)
 {
-   try {
-      if (_access==OUT) {
-         if (v.getName() != _field_name) {
-            if (_field_opened==true)
-               *_of << "</Field>" << endl;
-            _field_name = v.getName();
-            if (v.getDOFType()==NONE) {
-               *_of << "<Field name=\"" << v.getName() << "\" type=\"None\"";
-               *_of << " nb_dof=\"1\">" << endl;
-            }
-            else {
-               if (v.getDOFType()==NODE_FIELD)
-                  *_of << "<Field name=\"" << v.getName() << "\" type=\"Node\"";
-               else if (v.getDOFType()==ELEMENT_FIELD)
-                  *_of << "<Field name=\"" << v.getName() << "\" type=\"Element\"";
-               else if (v.getDOFType()==SIDE_FIELD)
-                  *_of << "<Field name=\"" << v.getName() << "\" type=\"Side\"";
-               *_of << " nb_dof=\"" << v.getNbDOF() << "\">" << endl;
-            }
-            _field_opened = true;
+   if (_access==OUT) {
+      if (v.getName() != _field_name) {
+         if (_field_opened==true)
+            *_of << "</Field>" << endl;
+         _field_name = v.getName();
+         if (v.getDOFType()==NONE) {
+            *_of << "<Field name=\"" << v.getName() << "\" type=\"None\"";
+            *_of << " nb_dof=\"1\">" << endl;
          }
-         if (_compact)
-            *_of << v.getTime() << endl;
-         else
-            *_of << "   <Step time=\"" << v.getTime() << "\">" << endl;
-         size_t l = 0;
-         for (size_t i=1; i<=v.getNb(); i++) {
-            for (size_t j=1; j<=v.getNbDOF(); j++)
-               *_of << setprecision(8) << setw(18) << v(i,j);
-            l++;
-            if (l%(10/v.getNbDOF())==0)
-               *_of << endl;
+         else {
+            if (v.getDOFType()==NODE_FIELD)
+               *_of << "<Field name=\"" << v.getName() << "\" type=\"Node\"";
+            else if (v.getDOFType()==ELEMENT_FIELD)
+               *_of << "<Field name=\"" << v.getName() << "\" type=\"Element\"";
+            else if (v.getDOFType()==SIDE_FIELD)
+               *_of << "<Field name=\"" << v.getName() << "\" type=\"Side\"";
+            *_of << " nb_dof=\"" << v.getNbDOF() << "\">" << endl;
          }
-         if (l%(10/v.getNbDOF())!=0)
-            *_of << endl;
-         if (!_compact)
-            *_of << "   </Step>" << endl;
+         _field_opened = true;
       }
+      if (_compact)
+         *_of << v.getTime() << endl;
       else
-         THROW_RT("put(Vect,real_t): This instance of IOField was constructed for input");
+         *_of << "   <Step time=\"" << v.getTime() << "\">" << endl;
+      size_t l = 0;
+      for (size_t i=1; i<=v.getNb(); i++) {
+         for (size_t j=1; j<=v.getNbDOF(); j++)
+            *_of << setprecision(8) << setw(18) << v(i,j);
+         l++;
+         if (l%(10/v.getNbDOF())==0)
+            *_of << endl;
+      }
+      if (l%(10/v.getNbDOF())!=0)
+         *_of << endl;
+      if (!_compact)
+         *_of << "   </Step>" << endl;
    }
-   CATCH("IOField");
+   else
+      throw OFELIException("In IOField::put(Vect,real_t): This instance of IOField was constructed for input");
    _state++;
    _field_opened = true;
 }
@@ -400,14 +392,10 @@ void IOField::put(const PETScVect<real_t>& v)
 
 real_t IOField::get(Vect<real_t>& v)
 {
-   try {
-      if (_access != IN)
-         THROW_RT("get(Vect): This instance of IOField was constructed for output");
-   }
-   CATCH("IOField");
-   if (_no_mesh_file) {
+   if (_access != IN)
+      throw OFELIException("In IOField::get(Vect): This instance of IOField was constructed for output");
+   if (_no_mesh_file)
       return XMLParser::get(v);
-   }
    else
       return XMLParser::get(*_theMesh,v);
 }

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -56,6 +56,8 @@ class Side;
  *
  * The reference element is the right tetrahedron with four unit edges interpolation.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Tetra4 : public FEShape

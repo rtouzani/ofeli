@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,6 +50,8 @@ namespace OFELI {
  *  \ingroup Util
  * \brief Calculate data for %Gauss integration.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template<class T_, size_t N_> class LocalVect;

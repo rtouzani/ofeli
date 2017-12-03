@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -84,6 +84,9 @@ struct PrescriptionPar {
  *  \brief To prescribe various types of data by an algebraic expression.
  *  Data may consist in boundary conditions, forces, tractions, fluxes, initial condition.
  *  All these data types can be defined through an enumerated variable.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Prescription

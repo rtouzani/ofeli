@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -74,22 +74,16 @@ Heap& Heap::operator=(const Heap& H)
 
 IPoint Heap::operator[](size_t ind) const
 {
-   try {
-      if (ind > _size)
-         THROW_RT("operator[]: Out of bounds");
-   }
-   CATCH_EXIT("Heap");
+   if (ind > _size)
+      throw OFELIException("Heap::operator[]: Out of bounds");
    return _heap[ind];
 }
 
 
 IPoint& Heap::operator[](size_t ind)
 {
-   try {
-      if (ind > _size)
-         THROW_RT("operator[]: Out of bounds");
-   }
-   CATCH_EXIT("Heap");
+   if (ind > _size)
+      throw OFELIException("Heap::operator[]: Out of bounds");
    return _heap[ind];
 }
 

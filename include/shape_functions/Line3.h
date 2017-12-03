@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -64,6 +64,9 @@ class Side;
  * must be invoked.\n
  * Element nodes are ordered as the following: the left one, the central one
  * and the right one.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Line3 : public FEShape

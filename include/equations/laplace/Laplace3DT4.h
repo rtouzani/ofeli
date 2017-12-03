@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -54,6 +54,9 @@ namespace OFELI {
  *  \ingroup Laplace
  *  \brief To build element equation for the Laplace equation
  *  using the 3-D tetrahedral element (<tt>P<sub>1</sub></tt>).
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Laplace3DT4 : virtual public Equa_Laplace<real_t,4,4,3,3> {

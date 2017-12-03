@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -58,6 +58,9 @@ namespace OFELI {
  *  Uses 3-Node triangles.
  *
  *  The unknown is the time-harmonic magnetic induction (complex valued).
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>

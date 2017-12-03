@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,6 +55,9 @@ namespace OFELI {
  *  \ingroup Laplace
  *  \brief To build element equation for the 2-D elliptic equation
  *  using the Mixed Hybrid finite element at lowest degree (Raviart-Thomas <tt>RT<sub>0</sub></tt>).
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Laplace2DMHRT0 : virtual public Equa_Laplace<real_t,3,3,2,2> {

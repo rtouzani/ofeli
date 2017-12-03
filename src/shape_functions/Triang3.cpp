@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -50,11 +50,9 @@ Triang3::Triang3()
    
 Triang3::Triang3(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 3)
-         THROW_RT("Triang3(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Triang3");
+   if (el->getNbNodes() != 3)
+      throw OFELIException("Triang3::Triang3(Element *): Illegal number of element nodes: " +
+                           itos(el->getNbNodes()));
    _el = el; _sd = NULL;
    set(el);
 }
@@ -62,11 +60,9 @@ Triang3::Triang3(const Element* el)
 
 Triang3::Triang3(const Side* sd)
 {
-   try {
-      if (sd->getNbNodes() != 3)
-         THROW_RT("Triang3(Side *): Illegal number of side nodes: " + itos(sd->getNbNodes()));
-   }
-   CATCH("Triang3");
+   if (sd->getNbNodes() != 3)
+      throw OFELIException("Triang3::Triang3(Side *): Illegal number of side nodes: " +
+                           itos(sd->getNbNodes()));
    _el = NULL; _sd = sd;
    set(sd);
 }
@@ -92,16 +88,10 @@ void Triang3::set(const Element* el)
    _h3 = Distance(_x[2],_x[0]);
    _det = (_x[1].x-_x[0].x)*(_x[2].y-_x[0].y) - (_x[1].y-_x[0].y)*(_x[2].x-_x[0].x);
    _area = 0.5*_det;
-   try {
-      if (_det<0.0)
-         THROW_RT("set(Element *): Negative determinant of jacobian");
-   }
-   CATCH("Triang3");
-   try {
-      if (_det==0.0)
-         THROW_RT("set(Element *): Determinant of jacobian is null");
-   }
-   CATCH("Triang3");
+   if (_det<0.0)
+      throw OFELIException("Triang3::set(Element *): Negative determinant of jacobian");
+   if (_det==0.0)
+      throw OFELIException("Triang3::set(Element *): Determinant of jacobian is null");
    _c = (_x[0]+_x[1]+_x[2])*OFELI_THIRD;
    _dsh[0].x = (_x[1].y - _x[2].y)/_det;
    _dsh[0].y = (_x[2].x - _x[1].x)/_det;
@@ -134,16 +124,10 @@ void Triang3::set(const Side* sd)
    _det = sqrt(a*a + b*b + c*c);
    _area = 0.5*_det;
    _c = (_x[0]+_x[1]+_x[2])*OFELI_THIRD;
-   try {
-      if (_det<0.0)
-         THROW_RT("set(Side *): Negative determinant of jacobian");
-   }
-   CATCH("Triang3");
-   try {
-      if (_det==0.0)
-         THROW_RT("set(Side *): Determinant of jacobian is null");
-   }
-   CATCH("Triang3");
+   if (_det<0.0)
+      throw OFELIException("Triang3::set(Side *): Negative determinant of jacobian");
+   if (_det==0.0)
+      throw OFELIException("Triang3::set(Side *): Determinant of jacobian is null");
 }
 
 

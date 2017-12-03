@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -51,6 +51,9 @@ namespace OFELI {
  * \brief class for the fast marching 2-D algorithm
  *
  * \details This class manages the 2-D Fast Marching method 
+ *
+ * \author M. Sylla, B. Meden
+ * \copyright GNU Lesser Public License
  */
 
 class FMM2D : public FMM

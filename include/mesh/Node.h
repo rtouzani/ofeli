@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -265,9 +265,13 @@ class Node
 // Associated functions
 //-----------------------------------------------------------------------------
 
-/// \fn ostream & operator<<(ostream& s, const Node &nd)
-/// \brief Output node data.
-/// \ingroup Mesh
+/** \fn ostream & operator<<(ostream& s, const Node &nd)
+ *  \brief Output node data.
+ *  \ingroup Mesh
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
     ostream & operator<<(ostream&    s,
                          const Node& nd);
 

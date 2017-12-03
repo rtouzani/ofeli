@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -44,6 +44,8 @@ using std::vector;
 
 #include <iostream>
 #include <fstream>
+#include <valarray>
+using std::valarray;
 using std::ostream;
 using std::istream;
 using std::endl;
@@ -89,6 +91,8 @@ namespace OFELI {
  *  \class Vect
  *  \ingroup VectMat
  *  \brief To handle general purpose vectors.
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  *
  * This template class enables defining and manipulating vectors of various data types.
  * It inherits from the class std::vector
@@ -356,7 +360,7 @@ class Vect
  *  @param [in] x Vect instance that contains coordinates of points
  *  @param [in] exp Regular algebraic expression that defines a function of x and i
  *  which are coordinates.
- *  @example Consider that we want to initialize the Vect instance with the values
+ *  Consider for instance that we want to initialize the Vect instance with the values
  *  v[i] = exp(1+x[i]);
  *  then, we use this member function as follows
  *  v.set("exp("1+x",x);
@@ -968,7 +972,7 @@ class Vect
 /** \brief Initialize vector entries by setting extremal values and interval
  *  @param [in] vmin Minimal value to assign to the first entry
  *  @param [in] vmax Maximal value to assign to the lase entry
- *  @param [in] Number of points
+ *  @param [in] n Number of points (including extremities)
  *  @remark The vector has a size of \c n. It is sized in this function
  */
     void setUniform(T_     vmin,
@@ -1027,6 +1031,8 @@ class Vect
  *  @param [in] v Vect instance by which the current instance is multiplied
  */
     T_ operator,(const Vect<T_>& v) const;
+
+    void FFT(Vect<complex_t>& v);
 
 #if defined (USE_EIGEN)
 /** \brief Casting operator
@@ -1298,19 +1304,13 @@ Vect<T_>::Vect(size_t          d,
          : _nb(v._nb), _dof_type(v._dof_type), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(name), _time(v._time)
 {
-   try {
-     if (d<=0)
-        THROW_RT("Vect(size_t,Vect<T_>,string): Illegal value of nb_dof = "+itos(d));
-   }
-   CATCH("Vect");
+   if (d<=0)
+      throw OFELIException("In Vect::Vect(size_t,Vect<T_>,string): Illegal value of nb_dof = "+itos(d));
    size_t nd=v.getNbDOF();
    vector<size_t> dof_list(nd);
    dof_select(d,dof_list);
-   try {
-      if (_nb_dof>nd)
-         THROW_RT("Vect(size_t,Vect<T_>,string): Illegal value of dof = "+itos(nd));
-   }
-   CATCH("Vect");
+   if (_nb_dof>nd)
+      throw OFELIException("In Vect::Vect(size_t,Vect<T_>,string): Illegal value of dof = "+itos(nd));
    _theMesh = &(v.getMesh());
    setSize(_nb,_nb_dof,1);
    for (size_t i=1; i<=_nb; i++) {
@@ -1536,13 +1536,38 @@ void Vect<T_>::setSize(size_t nx,
 
 
 template<>
+inline void Vect<real_t>::FFT(Vect<complex_t>& v)
+{
+   void fft(vector<complex_t>& x);
+   v.resize(_size);
+   for (size_t i=0; i<_size; i++)
+      v[i] = (*this)[i];
+   if (_size <= 1)
+      return;
+ 
+// divide
+   vector<complex_t> even, odd;
+   void OddEven(Vect<complex_t>&, vector<complex_t>&, vector<complex_t>&);
+   OddEven(v,odd,even);
+
+// conquer
+   fft(even);
+   fft(odd);
+
+// combine
+   for (size_t k=0; k<_size/2; ++k) {
+      complex_t t = std::polar(1.0,-2*OFELI_PI*k/_size)*odd[k];
+      v[k        ] = even[k] + t;
+      v[k+_size/2] = even[k] - t;
+   }
+}
+
+
+template<>
 inline void Vect<real_t>::operator=(string s)
 {
-   try {
-      if (_theMesh==NULL)
-         THROW_RT("operator=(string): No mesh is defined");
-   }
-   CATCH_EXIT("Vect");
+   if (_theMesh==NULL)
+      throw OFELIException("In Vect::operator=(string): No mesh is defined");
    set(s);
 }
 
@@ -2154,7 +2179,8 @@ void Vect<T_>::setNodeBC(Mesh&         m,
          if (The_node.getCode(dof)==code) {
             set(node_label,dof,theParser.Eval(d));
             if ((err=theParser.EvalError()))
-               throw OFELIException("In Vect::setNodeBC(Mesh,int,string,size_t): Illegal regular expression. Error code: "+itos(err));
+               throw OFELIException("In Vect::setNodeBC(Mesh,int,string,size_t): "
+                                    "Illegal regular expression. Error code: "+itos(err));
          }
       }
    }
@@ -2162,10 +2188,10 @@ void Vect<T_>::setNodeBC(Mesh&         m,
 
 
 template<class T_>
-void Vect<T_>::setSideBC(Mesh&   m,
-                         int     code,
-                         T_      val,
-                         size_t  dof)
+void Vect<T_>::setSideBC(Mesh&  m,
+                         int    code,
+                         T_     val,
+                         size_t dof)
 {
    int err;
    mesh_sides(m) {
@@ -2175,7 +2201,8 @@ void Vect<T_>::setSideBC(Mesh&   m,
             for (size_t i=1; i<=The_side.getNbDOF(); i++) {
                set(node_label,dof,val);
                if ((err=theParser.EvalError()))
-                  throw OFELIException("In Vect::setSideBC(Mesh,int,T_,size_t): Illegal regular expression. Error code: "+itos(err));
+                  throw OFELIException("In Vect::setSideBC(Mesh,int,T_,size_t): "
+                                       "Illegal regular expression. Error code: "+itos(err));
             }
          }
       }
@@ -2203,7 +2230,8 @@ void Vect<T_>::setSideBC(Mesh&         m,
             for (size_t i=1; i<=The_side.getNbDOF(); i++) {
                set(node_label,dof,theParser.Eval(d));
                if ((err=theParser.EvalError()))
-                  throw OFELIException("In Vect::setSideBC(Mesh,int,string,size_t): Illegal regular expression. Error code: "+itos(err));
+                  throw OFELIException("In Vect::setSideBC(Mesh,int,string,size_t): "
+                                       "Illegal regular expression. Error code: "+itos(err));
             }
          }
       }
@@ -3372,6 +3400,9 @@ istream& operator>>(istream&  s,
 /** \fn ostream &operator<<(ostream &s, const Vect<T_> &v)
  *  \brief Output vector in output stream
  *  \ingroup VectMat
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 ostream &operator<<(ostream&        s,
@@ -3406,7 +3437,56 @@ ostream &operator<<(ostream&        s,
    }
    return s;
 }
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+inline void fft(vector<complex_t>& x)
+{
+   size_t n = x.size();
+   if (n <= 1)
+      return;
+ 
+// divide
+   vector<complex_t> even, odd;
+   void OddEven(vector<complex_t>&,vector<complex_t>&,vector<complex_t>&);
+   OddEven(x,odd,even);
+ 
+// conquer
+   fft(even);
+   fft(odd);
+ 
+// combine
+   for (size_t k=0; k<n/2; ++k) {
+      complex_t t = std::polar(1.0,-2*OFELI_PI*k/n)*odd[k];
+      x[k    ] = even[k] + t;
+      x[k+n/2] = even[k] - t;
+   }
+}
+
+
+template<class T_>
+inline void OddEven(vector<T_>& x,
+                    vector<T_>& odd,
+                    vector<T_>& even)
+{
+   for (typename vector<T_>::iterator it=x.begin(); it!=x.end();) {
+      odd.push_back(*(it++));
+      even.push_back(*(it++));
+   }
+}
+
+
+template<class T_>
+inline void OddEven(Vect<T_>&   x,
+                    vector<T_>& odd,
+                    vector<T_>& even)
+{
+   for (typename Vect<T_>::iterator it=x.begin(); it!=x.end();) {
+      odd.push_back(*(it++));
+      even.push_back(*(it++));
+   }
+}
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */

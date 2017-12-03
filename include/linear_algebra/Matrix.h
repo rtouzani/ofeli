@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -42,6 +42,7 @@ using std::ostream;
 #include "linear_algebra/GraphOfMatrix.h"
 #include "linear_algebra/Vect.h"
 #include "util/util.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 /*!
@@ -111,6 +112,9 @@ class Side;
  * \details
  *
  * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 class Matrix

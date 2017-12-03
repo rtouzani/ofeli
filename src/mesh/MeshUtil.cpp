@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,6 +52,7 @@ using std::string;
 #include "shape_functions/Penta6.h"
 #include "linear_algebra/LocalVect.h"
 #include "post/Reconstruction.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -268,11 +269,8 @@ void Refine(Mesh& in_mesh,
 // Divide elements
    size_t el_label=0;
    mesh_elements(in_mesh) {
-      try {
-         if (The_element.getShape() != TRIANGLE)
-            THROW_RT(" Element " + itos(element_label) + " is not a triangle.");
-      }
-      CATCH("Refine(Mesh,Mesh):");
+      if (The_element.getShape() != TRIANGLE)
+         throw OFELIException("Refine(...): Element " + itos(element_label) + " is not a triangle.");
       Node *nd[6]={NULL,NULL,NULL,NULL,NULL,NULL};
       nd[0] = The_element(1); 
       nd[1] = The_element(2); 
@@ -834,21 +832,12 @@ void MeshToGrid(Mesh&               m,
    size_t dim = m.getDim();
 
    mesh_elements(m) {
-      try {
-         if (dim==1 && The_element.getShape() != LINE)
-            THROW_RT(" Element " + itos(element_label) + " is not a line.");
-      }
-      CATCH("MeshToGrid(Mesh,Grid,Vect<real_t>,Vect<real_t>):");
-      try {
-         if (dim==2 && The_element.getShape() != TRIANGLE)
-            THROW_RT(" Element "+itos(element_label)+" is not a triangle.");
-      }
-      CATCH("MeshToGrid(Mesh,Grid,Vect<real_t>,Vect<real_t>)");
-      try {
-         if (dim==3 && The_element.getShape() != TETRAHEDRON)
-            THROW_RT(" Element "+itos(element_label)+" is not a tetrahedron.");
-      }
-      CATCH("MeshToGrid(Mesh,Grid,Vect<real_t>,Vect<real_t>):");
+      if (dim==1 && The_element.getShape() != LINE)
+         throw OFELIException("MeshToGrid(...): Element "+itos(element_label)+" is not a line.");
+      if (dim==2 && The_element.getShape() != TRIANGLE)
+         throw OFELIException("MeshToGrid(...): Element "+itos(element_label)+" is not a triangle.");
+      if (dim==3 && The_element.getShape() != TETRAHEDRON)
+         throw OFELIException("MeshToGrid(...): Element "+itos(element_label)+" is not a tetrahedron.");
 
       xm = xM = The_element(1)->getCoord();
       for (size_t l=2; l<=The_element.getNbNodes(); l++) {
@@ -1035,29 +1024,26 @@ void MeshToMesh(Mesh&                m1,
       //   Vect<real_t> ug((nx+1)*(ny+1)*(nz+1)*u1.getNbDOF());
    Vect<real_t> ug(nx+1,ny+1,nz+1);
 
-   try {
-      if (u1.getDOFType()==NODE_FIELD) {
-         MeshToGrid(m1,g,u1,ug);
-         GridToMesh(g,m2,ug,u2);
-      }
-      else if (u1.getDOFType()==ELEMENT_FIELD) {
-         int nb_dof = u1.getNbDOF();
-         Vect<real_t> nu1(m1,nb_dof,NODE_FIELD), nu2(m2,nb_dof,NODE_FIELD);
-         Reconstruction r(m1);
-         r.P0toP1(u1,nu1);
-         MeshToGrid(m1,g,nu1,ug);
-         GridToMesh(g,m2,ug,nu2);
-         mesh_elements(m2) {
-            real_t w = 0;
-            for (size_t i=1; i<=The_element.getNbNodes(); i++)
-               w += nu2(The_element(i)->n(),dof);
-            u2(element_label,dof) = w/The_element.getNbNodes();
-         }
-      }
-      else
-         THROW_RT(" DOF data type not implemented.");
+   if (u1.getDOFType()==NODE_FIELD) {
+      MeshToGrid(m1,g,u1,ug);
+      GridToMesh(g,m2,ug,u2);
    }
-   CATCH("MeshToMesh(...):");
+   else if (u1.getDOFType()==ELEMENT_FIELD) {
+      int nb_dof = u1.getNbDOF();
+      Vect<real_t> nu1(m1,nb_dof,NODE_FIELD), nu2(m2,nb_dof,NODE_FIELD);
+      Reconstruction r(m1);
+      r.P0toP1(u1,nu1);
+      MeshToGrid(m1,g,nu1,ug);
+      GridToMesh(g,m2,ug,nu2);
+      mesh_elements(m2) {
+         real_t w = 0;
+         for (size_t i=1; i<=The_element.getNbNodes(); i++)
+            w += nu2(The_element(i)->n(),dof);
+         u2(element_label,dof) = w/The_element.getNbNodes();
+      }
+   }
+   else
+      throw OFELIException("MeshToMesh(...): DOF data type not implemented.");
 }
 
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,11 +55,9 @@ Line2H::Line2H()
 
 Line2H::Line2H(const Element* el)
 {
-   try {
-      if (el->getNbNodes() != 2)
-         THROW_RT("Line2H(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
-   }
-   CATCH("Line2H");
+   if (el->getNbNodes() != 2)
+      throw OFELIException("Line2H::Line2H(Element *): Illegal number of element nodes: " +
+                           itos(el->getNbNodes()));
    _sh.resize(2);
    _node.resize(2);
    _x.resize(2);
@@ -74,11 +72,8 @@ Line2H::Line2H(const Element* el)
    real_t dydl = 0.5*(_x[1].y - _x[0].y);
    real_t dzdl = 0.5*(_x[1].z - _x[0].z);
    _det = sqrt(dxdl*dxdl + dydl*dydl + dzdl*dzdl);
-   try {
-      if (_det == 0.0)
-         THROW_RT("Line2H(Element *): Determinant of jacobian is null");
-   }
-   CATCH("Line2H");
+   if (_det == 0.0)
+      throw OFELIException("Line2H::Line2H(Element *): Determinant of jacobian is null");
    _el = el;
    _sd = NULL;
 }
@@ -86,11 +81,9 @@ Line2H::Line2H(const Element* el)
 
 Line2H::Line2H(const Side* side)
 {
-   try {
-      if (side->getNbNodes() != 2)
-         THROW_RT("Line2H(Side *): Illegal number of element sides: " + itos(side->getNbNodes()));
-   }
-   CATCH("Line2H");
+   if (side->getNbNodes() != 2)
+      throw OFELIException("Line2H::Line2H(Side *): Illegal number of element sides: " +
+                           itos(side->getNbNodes()));
    for (size_t i=0; i<2; i++) {
       Node *node = side->getPtrNode(i+1);
       _x[i] = node->getCoord();

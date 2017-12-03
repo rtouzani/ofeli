@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -56,6 +56,9 @@ class Mesh;
  * This class enables storing and manipulating symmetric dense matrices.
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 
@@ -507,11 +510,8 @@ int DSMatrix<T_>::setLDLt()
          pivot -= s*_a[(i+1)*i/2+j];
          _a[(i+1)*i/2+j] = s;
       }
-      try {
-         if (Abs(pivot) < OFELI_EPSMCH)
-            THROW_RT("setLDLt(): The " + itos(int(i)+1) + "-th pivot is null.");
-      }
-      CATCH_EXIT("DSMatrix");
+      if (Abs(pivot) < OFELI_EPSMCH)
+         throw OFELIException("In DSMatrix::setLDLt(): The " + itos(int(i)+1) + "-th pivot is null.");
       if (pivot<0)
          err = -1;
       _a[(i+1)*i/2+i] = 1./pivot;

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -89,6 +89,9 @@ using std::unique;
  * access to specific solvers (see class LinearSolver)
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 template<class T_> class SpMatrix : public Matrix<T_>
@@ -1463,14 +1466,12 @@ T_ & SpMatrix<T_>::operator()(size_t i,
    return _A.coeffRef(i-1,j-1);
 #else
    int k=_col_index(i,j);
-   try {
-      if (k<0)
-        THROW_RT("set(i,j,x): Index pair: (" + itos(int(i)) + "," + itos(int(j)) + ") is not compatible "
-                  "with sparse storage.");
-      else
-         return _a[_row_ptr[i-1]+k];
-   }
-   CATCH("SpMatrix");
+   if (k<0)
+      throw OFELIException("In SpMatrix::set(i,j,x): Index pair: (" + itos(int(i)) +
+                           "," + itos(int(j)) + ") is not compatible "
+                           "with sparse storage.");
+   else
+      return _a[_row_ptr[i-1]+k];
    return _temp;
 #endif
 }
@@ -1630,14 +1631,12 @@ void SpMatrix<T_>::set(size_t    i,
    _A.coeffRef(i-1,j-1) = val;
 #else
    int k=_col_index(i,j);
-   try { 
-      if (k<0)
-         THROW_RT("set(i,j,x): Index pair (" + itos(int(i)) + "," + itos(int(j)) + ") is not compatible "
-                  "with sparse storage.");
+   if (k<0)
+      throw OFELIException("In SpMatrix::set(i,j,x): Index pair (" + itos(int(i)) +
+                           "," + itos(int(j)) + ") is not compatible "
+                           "with sparse storage.");
       else
          _a[_row_ptr[i-1]+k] = val;
-   }
-   CATCH("SpMatrix");
 #endif
 }
 
@@ -1709,11 +1708,8 @@ int SpMatrix<T_>::DILUFactorize(vector<size_t>& id,
       for (size_t j=_row_ptr[i]; j<_row_ptr[i+1]; j++, k++) {
          if (_col_ind[j]==i+1) {
             id[i] = k + 1;
-            try {
-               if (_a[k]==static_cast<T_>(0))
-                  THROW_RT("DILUFactorize(...): Zero pivot detected in row "+itos(i+1));
-            }
-            CATCH_EXIT("SpMatrix");
+            if (_a[k]==static_cast<T_>(0))
+               throw OFELIException("In SpMatrix::DILUFactorize(...): Zero pivot detected in row "+itos(i+1));
             pivot[i] = _a[k];
          }
       }
@@ -1857,11 +1853,9 @@ void SpMatrix<T_>::SSORSolve(const Vect<T_>& b,
       for (size_t j=_row_ptr[i]; j<_row_ptr[i+1]; j++, k++) {
          if (_col_ind[j]==i+1) {
             id[i] = k + 1;
-            try {
-               if (_a[k]==static_cast<T_>(0))
-                  THROW_RT("setMatrix(SpMatrix<T_>): Zero pivot detected in row "+itos(i+1));
-            }
-            CATCH_EXIT("SpMatrix");
+            if (_a[k]==static_cast<T_>(0))
+               throw OFELIException("In SpMatrix::setMatrix(SpMatrix<T_>): Zero pivot detected in row " +
+                                    itos(i+1));
          }
       }
    }
@@ -2047,6 +2041,9 @@ T_ SpMatrix<T_>::get(size_t i,
  *  @param [in] A SpMatrix instance to multiply by vector
  *  @param [in] b Vect instance 
  *  \return Vect instance containing <tt>A*b</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 Vect<T_> operator*(const SpMatrix<T_>& A,
@@ -2059,7 +2056,10 @@ Vect<T_> operator*(const SpMatrix<T_>& A,
 
 /** \fn ostream & operator<<(ostream& s, const SpMatrix<T_> &A)
  *  \ingroup VectMat
- *  Output matrix in output stream
+ *  \brief Output matrix in output stream
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 ostream& operator<<(ostream&            s,

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -63,6 +63,7 @@ using namespace Eigen;
 #include "linear_algebra/DMatrix.h"
 #include "linear_algebra/DSMatrix.h"
 #endif
+#include "OFELIException.h"
 
 namespace OFELI {
 /*!
@@ -115,6 +116,9 @@ template<class T_> class LinearSolver
  *    <li><tt>1</tt>: Output iteration information,
  *    <li><tt>2</tt> and greater: Output iteration information and solution at each iteration.
  *  </ul>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
     LinearSolver(int    max_it,
                  real_t tolerance,
@@ -154,9 +158,9 @@ template<class T_> class LinearSolver
  */
     LinearSolver(TrMatrix<T_>&   A,
                  const Vect<T_>& b,
-                  Vect<T_>&      x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
+                 Vect<T_>&      x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                                     _s(DIRECT_SOLVER), _p(DIAG_PREC),
+                                     _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
     {  }
 
 /** \brief Constructor using a banded matrix, right-hand side and solution vector
@@ -166,7 +170,7 @@ template<class T_> class LinearSolver
  */
     LinearSolver(BMatrix<T_>&    A,
                  const Vect<T_>& b,
-                       Vect<T_>& x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                       _s(DIRECT_SOLVER), _p(DIAG_PREC),
                                       _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
     {  }
@@ -381,11 +385,8 @@ int LinearSolver<T_>::solve(Iteration      s,
 {
    _s = s, _p = p;
    int ret=0;
-   try {
-      if (!_matrix_set)
-         THROW_RT("solve(): No matrix has been defined.");
-   }
-   CATCH("LinearSolver");
+   if (!_matrix_set)
+      throw OFELIException("In LinearSolver::solve(): No matrix has been defined.");
 
    if (_A->isDiagonal()) {
       if (_x) {
@@ -402,90 +403,81 @@ int LinearSolver<T_>::solve(Iteration      s,
 
 #if defined (USE_EIGEN)
    VectorX x;
-   try {
-      if (_s==CG_SOLVER) {
-         try {
-            if (_p==IDENT_PREC) {
-               ConjugateGradient<SparseMatrix<T_>,Lower,IdentityPreconditioner> im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-            }
-            else if (_p==DIAG_PREC) {
-               ConjugateGradient<SparseMatrix<T_>,Lower,DiagonalPreconditioner<T_> > im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-            }
-            else if (_p==ILU_PREC) {
-               ConjugateGradient<SparseMatrix<T_>,Lower,IncompleteLUT<T_> > im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-            }
-            else
-               THROW_RT("solve(Iteration,Preconditioner): This preconditioner is not available in the eigen library.");
-         }
-         CATCH("LinearSolver");
+   if (_s==CG_SOLVER) {
+      if (_p==IDENT_PREC) {
+         ConjugateGradient<SparseMatrix<T_>,Lower,IdentityPreconditioner> im;
+         im.setTolerance(_toler);
+         im.compute(A.getEigenMatrix());
+         x = im.solve(VectorX(*_b));
+         ret = im.iterations();
       }
-      else if (_s==BICG_STAB_SOLVER) {
-         try {
-            if (_p==IDENT_PREC) {
-               Eigen::BiCGSTAB<SparseMatrix<T_>,IdentityPreconditioner> im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-            }
-            else if (_p==DIAG_PREC) {
-               Eigen::BiCGSTAB<SparseMatrix<T_>,DiagonalPreconditioner<T_> > im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-            }
-            else if (_p==ILU_PREC) {
-               Eigen::BiCGSTAB<SparseMatrix<T_>,IncompleteLUT<T_> > im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-            }
-            else
-               THROW_RT("solve(Iteration,Preconditioner): This preconditioner is not available in the eigen library.");
-         }
-         CATCH("LinearSolver");
+      else if (_p==DIAG_PREC) {
+         ConjugateGradient<SparseMatrix<T_>,Lower,DiagonalPreconditioner<T_> > im;
+         im.setTolerance(_toler);
+         im.compute(A.getEigenMatrix());
+         x = im.solve(VectorX(*_b));
+         ret = im.iterations();
+      }
+      else if (_p==ILU_PREC) {
+         ConjugateGradient<SparseMatrix<T_>,Lower,IncompleteLUT<T_> > im;
+         im.setTolerance(_toler);
+         im.compute(A.getEigenMatrix());
+         x = im.solve(VectorX(*_b));
+         ret = im.iterations();
       }
       else
-         THROW_RT("solve(Iteration,Preconditioner): This iterative solver is not available in the eigen library.");
+         throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): 
+                               This preconditioner is not available in the eigen library.");
    }
-   CATCH("LinearSolver");
+   else if (_s==BICG_STAB_SOLVER) {
+      if (_p==IDENT_PREC) {
+         Eigen::BiCGSTAB<SparseMatrix<T_>,IdentityPreconditioner> im;
+         im.setTolerance(_toler);
+         im.compute(A.getEigenMatrix());
+         x = im.solve(VectorX(*_b));
+         ret = im.iterations();
+      }
+      else if (_p==DIAG_PREC) {
+         Eigen::BiCGSTAB<SparseMatrix<T_>,DiagonalPreconditioner<T_> > im;
+         im.setTolerance(_toler);
+         im.compute(A.getEigenMatrix());
+         x = im.solve(VectorX(*_b));
+         ret = im.iterations();
+      }
+      else if (_p==ILU_PREC) {
+         Eigen::BiCGSTAB<SparseMatrix<T_>,IncompleteLUT<T_> > im;
+         im.setTolerance(_toler);
+         im.compute(A.getEigenMatrix());
+         x = im.solve(VectorX(*_b));
+         ret = im.iterations();
+      }
+      else
+         throw OFELIException("In LinearSOlver::solve(Iteration,Preconditioner): This preconditioner
+                            is not available in the eigen library.");
+   }
+   else
+      throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): 
+                               This iterative solver is not available in the eigen library.");
    _x->setSize(x.size(),1,1);
    *_x = x;
 #else
-   try {
-      if (_s==DIRECT_SOLVER) {
-         if (_fact)
-            _A->Factor();
-         _A->solve(*_b,*_x);
-      }
-      else if (_s==CG_SOLVER)
-         ret = CG(A,SSOR_PREC,*_b,*_x,_max_it,_toler,_verbose);
-      else if (_s==GMRES_SOLVER)
-         ret = GMRes(A,_p,*_b,*_x,10,_max_it,_toler,_verbose);
-      else if (_s==CGS_SOLVER)
-         ret = CGS(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-      else if (_s==BICG_SOLVER)
-         ret = BiCG(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-      else if (_s==BICG_STAB_SOLVER)
-         ret = BiCGStab(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-      else
-         THROW_RT("solve(Iteration,Preconditioner): This solver is not available.");
+   if (_s==DIRECT_SOLVER) {
+      if (_fact)
+         _A->Factor();
+      _A->solve(*_b,*_x);
    }
-   CATCH("LinearSolver");
+   else if (_s==CG_SOLVER)
+      ret = CG(A,SSOR_PREC,*_b,*_x,_max_it,_toler,_verbose);
+   else if (_s==GMRES_SOLVER)
+      ret = GMRes(A,_p,*_b,*_x,10,_max_it,_toler,_verbose);
+   else if (_s==CGS_SOLVER)
+      ret = CGS(A,_p,*_b,*_x,_max_it,_toler,_verbose);
+   else if (_s==BICG_SOLVER)
+      ret = BiCG(A,_p,*_b,*_x,_max_it,_toler,_verbose);
+   else if (_s==BICG_STAB_SOLVER)
+      ret = BiCGStab(A,_p,*_b,*_x,_max_it,_toler,_verbose);
+   else
+      throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): This solver is not available.");
 #endif
    return ret;
 }

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -71,8 +71,10 @@ namespace OFELI {
  *  \ingroup Mesh
  *  \brief To store and treat finite element geometric information.
  *
- * This class is essentially useful to construct data for mesh generators.
+ * \details This class is essentially useful to construct data for mesh generators.
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Domain

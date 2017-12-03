@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -41,6 +41,7 @@
 #include <iostream>
 
 #include "OFELI_Config.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 /*!
@@ -59,6 +60,9 @@ namespace OFELI {
  *  A normal usage of the class is, once an instance is constructed,
  *  to use alternatively, Start, Stop and Resume. Elapsed time can be obtained
  *  once the member function Stop is called.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Timer
@@ -98,11 +102,8 @@ class Timer
  */
     void Stop()
     {
-       try {
-          if (!_st0)
-             THROW_RT("Stop(): The function Start() must have been called before.");
-       }
-       CATCH("Timer");
+       if (!_st0)
+          throw OFELIException("Timer::Stop(): The function Start() must have been called before.");
        _t1 = clock();
        _ct += _t1-_t0;
        _st1 = true;
@@ -118,11 +119,8 @@ class Timer
 /// \brief Return elapsed time (in seconds)
     real_t get() const
     {
-       try {
-          if (!_st0 || !_st1)
-             THROW_RT("get(): The function Start() must have been called before.");
-       }
-       CATCH("Timer");
+       if (!_st0 || !_st1)
+         throw OFELIException("Timer::get(): The function Start() must have been called before.");
        return _ct/real_t(CLOCKS_PER_SEC);
    }
    

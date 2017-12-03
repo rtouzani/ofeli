@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -57,8 +57,10 @@ namespace OFELI {
  * \ingroup Solver
  * \brief To perform various reconstruction operations.
  *
- * This class enables various reconstruction operations like smoothing, projections, ...
+ * \details This class enables various reconstruction operations like smoothing, projections, ...
  *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template<class T_> class Vect;

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -56,6 +56,9 @@ namespace OFELI {
  *  \ingroup Laplace
  *  \brief To build element equation for a 1-D elliptic equation
  *  using the 2-Node line element (<tt>P<sub>1</sub></tt>).
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 class Laplace1DL2 : virtual public Equa_Laplace<real_t,2,2,1,1> {

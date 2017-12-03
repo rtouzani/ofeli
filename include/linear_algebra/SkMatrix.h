@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -68,6 +68,9 @@ class Mesh;
  @endverbatim
  * 
  * \tparam T_ Data type (double, float, complex<double>, ...)
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 
 template<class T_>
@@ -582,7 +585,6 @@ void SkMatrix<T_>::set(size_t    i,
                        size_t    j,
                        const T_& val)
 {
-   try {
       int k=0, l=0;
       if (i>1)
          k = int(j-i+_ch[i-1]-_ch[i-2]-1);
@@ -593,10 +595,8 @@ void SkMatrix<T_>::set(size_t    i,
       else if (l>=0 && i<=j)
          _aU[_ch[j-1]+i-j] = val;
       else
-         THROW_RT("Set(i,j,x): Index pair: ("+itos(int(i))+","+itos(int(j))+") is not " +
-                  "compatible with skyline symmeric storage.");
-   }
-   CATCH("SkMatrix");
+         throw OFELIException("In SkMatrix::Set(i,j,x): Index pair: ("+itos(int(i))+"," +
+                              itos(int(j))+") is not " + "compatible with skyline symmeric storage.");
 }
 
 
@@ -709,20 +709,17 @@ T_ & SkMatrix<T_>::operator()(size_t i,
                               size_t j)
 {
    int k=0, l=0;
-   try {
-      if (i>1)
-         k = int(j-i+_ch[i-1]-_ch[i-2]-1);
-      if (j>1)
-         l = int(i-j+_ch[j-1]-_ch[j-2]-1);
-      if (k>=0 && i>j)
-         return _a[_ch[i-1]+j-i];
-      else if (l>=0 && i<=j)
-         return _aU[_ch[j-1]+i-j];
-      else
-         THROW_RT("Operator(): Index pair (" + itos(int(i)) + "," + itos(int(j)) + 
-                  ") is not compatible with skyline structure");
-   }
-   CATCH("SkMatrix");
+   if (i>1)
+      k = int(j-i+_ch[i-1]-_ch[i-2]-1);
+   if (j>1)
+      l = int(i-j+_ch[j-1]-_ch[j-2]-1);
+   if (k>=0 && i>j)
+      return _a[_ch[i-1]+j-i];
+   else if (l>=0 && i<=j)
+      return _aU[_ch[j-1]+i-j];
+   else
+      throw OFELIException("In SkMatrix::Operator(): Index pair (" + itos(int(i)) + "," +
+                           itos(int(j)) + ") is not compatible with skyline structure");
    return _temp;
 }
 
@@ -833,11 +830,8 @@ int SkMatrix<T_>::setLU()
    if (_is_diagonal)
       return 0;
    size_t k, di, dij, i=0;
-   try {
-      if (Abs(_aU[_ch[0]]) < OFELI_EPSMCH)
-         THROW_RT("Factor(): The first pivot is null.");
-   }
-   CATCH_EXIT("SkMatrix");
+   if (Abs(_aU[_ch[0]]) < OFELI_EPSMCH)
+      throw OFELIException("In SkMatrix::Factor(): The first pivot is null.");
    for (i=1; i<_size; i++) {
       size_t dj = 0;
       for (size_t j=di=i+1+_ch[i-1]-_ch[i]; j<i; j++) {
@@ -852,11 +846,8 @@ int SkMatrix<T_>::setLU()
       }
       for (k=0; k<i-di; k++)
          _aU[_ch[i]] -= _a[_ch[i]+k+di-i]*_aU[_ch[i]+k+di-i];
-      try {
-         if (Abs(_aU[_ch[i]]) < OFELI_EPSMCH)
-            THROW_RT("Factor(): The " + itos(i+1) + "-th pivot is null.");
-      }
-      CATCH_EXIT("SkMatrix");
+      if (Abs(_aU[_ch[i]]) < OFELI_EPSMCH)
+         throw OFELIException("In SkMatrix::Factor(): The " + itos(i+1) + "-th pivot is null.");
    }
    _fact = true;
    return 0;
@@ -869,11 +860,8 @@ int SkMatrix<T_>::solve(Vect<T_>& b)
    int ret = 0;
    if (_is_diagonal) {
       for (size_t i=0; i<_size; i++) {
-         try {
-            if (Abs(_aU[i]) < OFELI_EPSMCH)
-               THROW_RT("solve(b): The " + itos(i+1) + "-th diagonal is null.");
-         }
-         CATCH_EXIT("SkMatrix");
+         if (Abs(_aU[i]) < OFELI_EPSMCH)
+            throw OFELIException("In SkMatrix::solve(b): The " + itos(i+1) + "-th diagonal is null.");
          b[i] /= _aU[i];
       }
       return 0;
@@ -890,11 +878,8 @@ int SkMatrix<T_>::solve(Vect<T_>& b)
       b[i] -= s;
    }
    for (int k=int(_size-1); k>0; k--) {
-      try {
-         if (Abs(_aU[_ch[k]]) < OFELI_EPSMCH)
-            THROW_RT("solve(b): The " + itos(k+1) + "-th pivot is null.");
-      }
-      CATCH_EXIT("SkMatrix");
+      if (Abs(_aU[_ch[k]]) < OFELI_EPSMCH)
+         throw OFELIException("In SkMatrix::solve(b): The " + itos(k+1) + "-th pivot is null.");
       b[k] /= _aU[_ch[k]];
       di = k+1+_ch[k-1]-_ch[k];
       for (j=0; j<k-di; j++)
@@ -936,11 +921,8 @@ int SkMatrix<T_>::solveLU(const Vect<T_>& b,
       x[i] -= s;
    }
    for (int k=int(_size-1); k>0; k--) {
-      try {
-         if (Abs(_aU[_ch[k]]) < OFELI_EPSMCH)
-            THROW_RT("solveLU(b,x): The " + itos(k+1) + "-th pivot is null.");
-      }
-      CATCH_EXIT("SkMatrix");
+      if (Abs(_aU[_ch[k]]) < OFELI_EPSMCH)
+         throw OFELIException("In SkMatrix::solveLU(b,x): The " + itos(k+1) + "-th pivot is null.");
       x[k] /= _aU[_ch[k]];
       di = k+1+_ch[k-1]-_ch[k];
       for (j=0; j<k-di; j++)
@@ -994,6 +976,9 @@ void SkMatrix<T_>::Axpy(T_                a,
  *  @param [in] A SkMatrix instance to multiply by vector
  *  @param [in] b Vect instance 
  *  \return Vect instance containing <tt>A*b</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 Vect<T_> operator*(const SkMatrix<T_>& A,
@@ -1007,6 +992,12 @@ Vect<T_> operator*(const SkMatrix<T_>& A,
 /** \fn ostream & operator<<(ostream &s, const SkMatrix<T_> &a)
  *  \ingroup VectMat
  *  \brief Output matrix in output stream
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
  */
 template<class T_>
 ostream& operator<<(ostream&            s,

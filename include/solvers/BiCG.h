@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -81,6 +81,9 @@ namespace OFELI {
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (double, float, complex<double>, ...)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 template<class T_>
 int BiCG(const SpMatrix<T_>& A,
@@ -172,6 +175,9 @@ int BiCG(const SpMatrix<T_>& A,
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (double, float, complex<double>, ...)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 template<class T_>
 int BiCG(const SpMatrix<T_>& A,

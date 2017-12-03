@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -37,6 +37,7 @@
 #include "shape_functions/Tetra4.h"
 #include "shape_functions/Hexa8.h"
 #include "util/util.h"
+#include "OFELIException.h"
 
 extern FunctionParser theParser;
 
@@ -64,11 +65,8 @@ Side::Side()
 Side::Side(size_t        label,
            const string& shape)
 {
-   try {
-      if (label<1)
-         THROW_RT("Side(size_t,string): Illegal side label "+itos(label));
-   }
-   CATCH("Side");
+   if (label<1)
+      throw OFELIException("Side::Side(size_t,string): Illegal side label "+itos(label));
    shape_index(shape);
    _label = label;
    _nb_nodes = _nb_edges = _nb_eq = 0;
@@ -88,11 +86,8 @@ Side::Side(size_t        label,
 Side::Side(size_t label,
            int    shape)
 {
-   try {
-      if (label<1)
-         THROW_RT("Side(size_t,int): Illegal side label "+itos(label));
-   }
-   CATCH("Side");
+   if (label<1)
+      throw OFELIException("Side::Side(size_t,int): Illegal side label "+itos(label));
    _shape = shape;
    _label = label;
    _nb_nodes = _nb_edges = _nb_eq = 0;
@@ -164,11 +159,8 @@ void Side::setCode(const string& exp,
 
 void Side::Add(Node* node)
 {
-   try {
-      if (!node)
-         THROW_RT("Add(Node *): Trying to add an undefined node");
-   }
-   CATCH("Side");
+   if (!node)
+      throw OFELIException("Side::Add(Node *): Trying to add an undefined node");
    _node[_nb_nodes++] = node;
    _nb_eq += node->getNbDOF();
 }
@@ -176,11 +168,8 @@ void Side::Add(Node* node)
    
 void Side::Add(Edge* edge)
 {
-   try {
-      if (edge==NULL)
-         THROW_RT("Add(Edge): Trying to add an undefined edge");
-   }
-   CATCH("Side");
+   if (edge==NULL)
+      throw OFELIException("Side::Add(Edge): Trying to add an undefined edge");
    _ed[_nb_edges++] = edge;
 }
    
@@ -188,11 +177,9 @@ void Side::Add(Edge* edge)
 void Side::Replace(size_t label,
                    Node*  node)
 {
-   try {
-     if (!node)
-        THROW_RT("Replace(size_t,Node *): Trying to replace an undefined node to size "+itos(label));
-   }
-   CATCH("Side");
+   if (!node)
+      throw OFELIException("Side::Replace(size_t,Node *): Trying to replace "
+                           "an undefined node to size "+itos(label));
    _node[label-1] = node;
 }
 
@@ -219,11 +206,8 @@ void Side::setChild(Side* sd)
 
 Side *Side::getChild(size_t i) const
 {
-   try {
-      if (i > _nb_childs)
-         THROW_RT("getChild(size_t): Number of children is "+itos(i));
-   }
-   CATCH("Side");
+   if (i > _nb_childs)
+      throw OFELIException("Side::getChild(size_t): Number of children is "+itos(i));
    return _child[i-1];
 }
 
@@ -263,11 +247,8 @@ real_t Side::getMeasure() const
       x[0] = _node[0]->getCoord();
       x[1] = _node[1]->getCoord();
       m = sqrt((x[1].x-x[0].x)*(x[1].x-x[0].x) + (x[1].y-x[0].y)*(x[1].y-x[0].y));
-      try {
-         if (m==0)
-            THROW_RT("getMeasure(): Length of line "+itos(_label)+" is null.");
-      }
-      CATCH("Side");
+      if (m==0)
+         throw OFELIException("Side::getMeasure(): Length of line "+itos(_label)+" is null.");
    }
 
    else if (_shape==TRIANGLE) {
@@ -277,16 +258,10 @@ real_t Side::getMeasure() const
       real_t b = x[0].z*(x[1].x-x[2].x) - x[1].z*(x[0].x-x[2].x) + x[2].z*(x[0].x-x[1].x);
       real_t c = x[0].x*(x[1].y-x[2].y) - x[1].x*(x[0].y-x[2].y) + x[2].x*(x[0].y-x[1].y);
       m = 0.5*sqrt(a*a + b*b + c*c);
-      try {
-         if (m==0)
-            THROW_RT("getMeasure(): Area of triangle "+itos(_label)+" is null.");
-      }
-      CATCH("Side");
-      try {
-         if (m<0)
-            THROW_RT("getMeasure(): Area of triangle " + itos(_label) + "is negative.");
-      }
-      CATCH("Side");
+      if (m==0)
+         throw OFELIException("Side::getMeasure(): Area of triangle "+itos(_label)+" is null.");
+      if (m<0)
+         throw OFELIException("Side::getMeasure(): Area of triangle " + itos(_label) + "is negative.");
    }
 
    else if (_shape==QUADRILATERAL) {
@@ -303,16 +278,10 @@ real_t Side::getMeasure() const
          dydt += dshl[i].y*x[i].y;
       }
       m = dxds*dydt - dxdt*dyds;
-      try {
-         if (m==0)
-            THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + " is null.");
-      }
-      CATCH("Side");
-      try {
-         if (m<0)
-            THROW_RT("getMeasure(): Area of quadrilateral " + itos(_label) + " is negative.");
-      }
-      CATCH("Side");
+      if (m==0)
+         throw OFELIException("Side::getMeasure(): Area of quadrilateral " + itos(_label) + " is null.");
+      if (m<0)
+         throw OFELIException("Side::getMeasure(): Area of quadrilateral " + itos(_label) + " is negative.");
    }
 
    return m;
@@ -333,41 +302,39 @@ Point<real_t> Side::getNormal() const
 {
    Point<real_t> N, T, c;
    the_element = getNeighborElement(1);
-   try {
-      if (The_element.getShape()==TRIANGLE) {
-         T = _node[0]->getCoord() - _node[1]->getCoord();
-         N.x = -T.y; N.y = T.x;
-         c = Triang3(the_element).getCenter();
-         if (N*(_node[0]->getCoord()-c) < 0)
-            N = -N;
-      }
-      else if (The_element.getShape()==QUADRILATERAL) {
-         T = _node[0]->getCoord() - _node[1]->getCoord();
-         N.x = -T.y; N.y = T.x;
-         c = Quad4(the_element).getCenter();
-         if (N*(_node[0]->getCoord()-c) < 0)
-            N = -N;
-      }
-      else if (The_element.getShape()==TETRAHEDRON) {
-         Point<real_t> AB = _node[1]->getCoord() - _node[0]->getCoord();
-         Point<real_t> AC = _node[2]->getCoord() - _node[0]->getCoord();
-         N = CrossProduct(AB,AC);
-         c = Tetra4(the_element).getCenter();
-         if (N*(_node[0]->getCoord()-c) < 0)
-            N = -N;
-      }
-      else if (The_element.getShape()==HEXAHEDRON) {
-         Point<real_t> AB = _node[1]->getCoord() - _node[0]->getCoord();
-         Point<real_t> AC = _node[2]->getCoord() - _node[0]->getCoord();
-         N = CrossProduct(AB,AC);
-         c = Hexa8(the_element).getCenter();
-         if (N*(_node[0]->getCoord()-c) < 0)
-            N = -N;
-      }
-      else
-         THROW_RT("getNormal(): Computation of normal to side is not implemented for this element.");
+   if (The_element.getShape()==TRIANGLE) {
+      T = _node[0]->getCoord() - _node[1]->getCoord();
+      N.x = -T.y; N.y = T.x;
+      c = Triang3(the_element).getCenter();
+      if (N*(_node[0]->getCoord()-c) < 0)
+         N = -N;
    }
-   CATCH("Side");
+   else if (The_element.getShape()==QUADRILATERAL) {
+      T = _node[0]->getCoord() - _node[1]->getCoord();
+      N.x = -T.y; N.y = T.x;
+      c = Quad4(the_element).getCenter();
+      if (N*(_node[0]->getCoord()-c) < 0)
+         N = -N;
+   }
+   else if (The_element.getShape()==TETRAHEDRON) {
+      Point<real_t> AB = _node[1]->getCoord() - _node[0]->getCoord();
+      Point<real_t> AC = _node[2]->getCoord() - _node[0]->getCoord();
+      N = CrossProduct(AB,AC);
+      c = Tetra4(the_element).getCenter();
+      if (N*(_node[0]->getCoord()-c) < 0)
+         N = -N;
+   }
+   else if (The_element.getShape()==HEXAHEDRON) {
+      Point<real_t> AB = _node[1]->getCoord() - _node[0]->getCoord();
+      Point<real_t> AC = _node[2]->getCoord() - _node[0]->getCoord();
+      N = CrossProduct(AB,AC);
+      c = Hexa8(the_element).getCenter();
+      if (N*(_node[0]->getCoord()-c) < 0)
+         N = -N;
+   }
+   else
+      throw OFELIException("Side::getNormal(): Computation of normal to side is not"
+                           " implemented for this element.");
    return N;
 }
 

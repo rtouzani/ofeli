@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -73,6 +73,9 @@ enum { MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_Z, MAX_Z };
  *  \brief Return label of a given node
  *  @param [in] nd Reference to Node instance
  *  @return Label of node
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline size_t Label(const Node& nd) { return nd.n(); }
 
@@ -81,6 +84,9 @@ inline size_t Label(const Node& nd) { return nd.n(); }
  * \brief Return label of a given element
  *  @param [in] el Reference to Element instance
  *  @return Label of element
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline size_t Label(const Element& el) { return el.n(); }
 
@@ -89,6 +95,9 @@ inline size_t Label(const Element& el) { return el.n(); }
  *  \brief Return label of a given side
  *  @param [in] sd Reference to Side instance
  *  @return Label of side
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline size_t Label(const Side& sd) { return sd.n(); }
 
@@ -97,6 +106,9 @@ inline size_t Label(const Side& sd) { return sd.n(); }
  *  \brief Return label of a given edge
  *  @param [in] ed Reference to Edge instance
  *  @return Label of edge
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline size_t Label(const Edge& ed) { return ed.n(); }
 
@@ -106,6 +118,9 @@ inline size_t Label(const Edge& ed) { return ed.n(); }
  *  @param [in] el Reference to Element instance
  *  @param [in] n Local label of node in element
  *  @return Global label of node
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline size_t NodeLabel(const Element& el, size_t n) { return el.getNodeLabel(n); }
 
@@ -115,6 +130,9 @@ inline size_t NodeLabel(const Element& el, size_t n) { return el.getNodeLabel(n)
  *  @param [in] sd Reference to Side instance
  *  @param [in] n Local label of node in side
  *  @return Global label of node
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline size_t NodeLabel(const Side& sd, size_t n) { return sd.getNodeLabel(n); }
 
@@ -123,6 +141,9 @@ inline size_t NodeLabel(const Side& sd, size_t n) { return sd.getNodeLabel(n); }
  * \brief Return coordinates of a given node
  *  @param [in] nd Reference to Node instance
  *  @return Coordinates of node
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline Point<real_t> Coord(const Node& nd) { return nd.getCoord(); }
 
@@ -132,6 +153,9 @@ inline Point<real_t> Coord(const Node& nd) { return nd.getCoord(); }
  *  @param [in] nd Reference to Node instance
  *  @param [in] i Label of dof [Default: <tt>1</tt>]
  *  @return Code of dof of node
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline int Code(const Node& nd, size_t i=1) { return nd.getCode(i); }
 
@@ -140,6 +164,9 @@ inline int Code(const Node& nd, size_t i=1) { return nd.getCode(i); }
  *  \brief Return code of a given element
  *  @param [in] el Reference to Element instance
  *  @return Code of element
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline int Code(const Element& el) { return el.getCode(); }
 
@@ -149,6 +176,9 @@ inline int Code(const Element& el) { return el.getCode(); }
  *  @param [in] sd Reference to Side instance
  *  @param [in] i Label of dof [Default: <tt>1</tt>]
  *  @return Code of dof of side
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 inline int Code(const Side& sd, size_t i=1) { return sd.getCode(i); }
 
@@ -159,6 +189,9 @@ inline int Code(const Side& sd, size_t i=1) { return sd.getCode(i); }
  *  @param [in] el2 Reference to second Side instance
  *  @return <tt>true</tt> is elements are equal, <i>i.e.</i> if they have the same nodes,
  *  <tt>false</tt> if not.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 bool operator==(const Element& el1,
                 const Element& el2);
@@ -170,6 +203,9 @@ bool operator==(const Element& el1,
  *  @param [in] sd2 Reference to second Side instance
  *  @return <tt>true</tt> is sides are equal, <i>i.e.</i> if they have the same nodes,
  *  <tt>false</tt> if not.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 bool operator==(const Side& sd1,
                 const Side& sd2);
@@ -182,6 +218,9 @@ bool operator==(const Side& sd1,
  *  @param [in] u Displacement field at nodes
  *  @param [in] a Amplification factor [Default: <tt>1</tt>].
  *  The displacement is multiplied by <tt>a</tt> before to be added to node coordinates
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void DeformMesh(Mesh&               mesh,
                 const Vect<real_t>& u,
@@ -196,6 +235,9 @@ void DeformMesh(Mesh&               mesh,
  *  @param [in] u Displacement field at nodes
  *  @param [in] a Amplification factor [Default: <tt>1</tt>].
  *  The displacement is multiplied by <tt>a</tt> before to be added to node coordinates
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void DeformMesh(Mesh&                    mesh,
                 const PETScVect<real_t>& u,
@@ -303,6 +345,9 @@ void GridToMesh(Grid &g, Mesh &m, const Vect<real_t> &ug, Vect<real_t> &u, size_
  * @note The input vector <tt>u1</tt> is a one degree of freedom per node vector, i.e. its
  * size must be equal (or greater than) the total number of nodes of mesh <tt>m1</tt>.
  * The size of vector <tt>u2</tt> is deduced from the mesh <tt>m2</tt>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void MeshToMesh(Mesh&               m1,
                 Mesh&               m2,
@@ -340,6 +385,9 @@ void MeshToMesh(Mesh&               m1,
  * @note The input vector <tt>u1</tt> is a one degree of freedom per node vector, i.e. its
  * size must be equal (or greater than) the total number of nodes of mesh <tt>m1</tt>.
  * The size of vector <tt>u2</tt> is deduced from the mesh <tt>m2</tt>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void MeshToMesh(const Vect<real_t>& u1,
                 Vect<real_t>&       u2,
@@ -378,6 +426,9 @@ void MeshToMesh(const Vect<real_t>& u1,
  * @note The input vector <tt>u1</tt> is a one degree of freedom per node vector, i.e. its
  * size must be equal (or greater than) the total number of nodes of mesh <tt>m1</tt>.
  * The size of vector <tt>u2</tt> is deduced from the mesh <tt>m2</tt>
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void MeshToMesh(Mesh&                m1,
                 Mesh&                m2,
@@ -394,6 +445,9 @@ void MeshToMesh(Mesh&                m1,
  * \ingroup Mesh
  * \brief Return maximal size of element edges for given mesh
  * @param [in] m Reference to mesh instance
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 real_t getMaxSize(const Mesh& m);
 
@@ -401,6 +455,9 @@ real_t getMaxSize(const Mesh& m);
  * \ingroup Mesh
  * \brief Return minimal size of element edges for given mesh
  * @param [in] m Reference to mesh instance
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 real_t getMinSize(const Mesh& m);
 
@@ -408,6 +465,9 @@ real_t getMinSize(const Mesh& m);
  *  \ingroup Mesh
  *  \brief Return minimal measure (length, area or volume) of elements of given mesh
  *  @param [in] m Reference to mesh instance
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 real_t getMinElementMeasure(const Mesh& m);
 
@@ -415,6 +475,9 @@ real_t getMinElementMeasure(const Mesh& m);
  *  \ingroup Mesh
  *  \brief Return maximal measure (length, area or volume) of elements of given mesh
  *  @param [in] m Reference to mesh instance
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 real_t getMaxElementMeasure(const Mesh &m);
 
@@ -423,6 +486,9 @@ real_t getMaxElementMeasure(const Mesh &m);
  * \brief Return minimal measure (length or area) of sides of given mesh
  * @param [in] m Reference to mesh instance
  * @note Use this function only if sides are present in the mesh and for 2-D meshes
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 real_t getMinSideMeasure(const Mesh &m);
 
@@ -431,6 +497,9 @@ real_t getMinSideMeasure(const Mesh &m);
  * \brief Return maximal measure (length or area) of sides of given mesh
  * @param [in] m Reference to mesh instance
  * @note Use this function only if sides are present in the mesh and for 2-D meshes
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 real_t getMaxSideMeasure(const Mesh &m);
 
@@ -438,6 +507,9 @@ real_t getMaxSideMeasure(const Mesh &m);
  * \ingroup Mesh
  * \brief Return average measure (length, area or volume) of elements of given mesh
  * @param [in] m Reference to mesh instance
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 real_t getMeanElementMeasure(const Mesh &m);
 
@@ -446,6 +518,9 @@ real_t getMeanElementMeasure(const Mesh &m);
  * \brief Return average measure (length or area) of sides of given mesh
  * @param [in] m Reference to mesh instance
  * @note Use this function only if sides are present in the mesh and for 2-D meshes
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 real_t getMeanSideMeasure(const Mesh &m);
 
@@ -473,6 +548,9 @@ void setNodeCodes(Mesh&         m,
  * coordinates of nodes, according to <tt>fparser</tt> parser
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void setBoundaryNodeCodes(Mesh&         m,
                           const string& exp,
@@ -488,6 +566,9 @@ void setBoundaryNodeCodes(Mesh&         m,
  * coordinates of side nodes, according to <tt>fparser</tt> parser
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void setSideCodes(Mesh&         m,
                   const string& exp,
@@ -503,6 +584,9 @@ void setSideCodes(Mesh&         m,
  * coordinates of side nodes, according to <tt>fparser</tt> parser
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void setBoundarySideCodes(Mesh&         m,
                           const string& exp,
@@ -517,6 +601,9 @@ void setBoundarySideCodes(Mesh&         m,
  * @param [in] exp Regular expression using <tt>x</tt>, <tt>y</tt>, and <tt>z</tt>
  * coordinates of element nodes, according to <tt>fparser</tt> parser
  * @param [in] code Code to assign
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 void setElementCodes(Mesh&         m,
                      const string& exp,
@@ -528,6 +615,9 @@ void setElementCodes(Mesh&         m,
  * @param [in] nd Pointer to Node
  * @param [in] el Pointer to Element
  * @return Local label of the node if this one is found, <tt>0</tt> if not.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 int NodeInElement(const Node*    nd,
                   const Element* el);
@@ -538,6 +628,9 @@ int NodeInElement(const Node*    nd,
  * @param [in] nd Pointer to Node
  * @param [in] sd Pointer to Side
  * @return Local label of the node if this one is found, <tt>0</tt> if not.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 int NodeInSide(const Node* nd,
                const Side* sd);
@@ -548,6 +641,9 @@ int NodeInSide(const Node* nd,
  * @param [in] sd Pointer to Side
  * @param [in] el Pointer to Element
  * @return Local label of the side if this one is found, <tt>0</tt> if not.
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 int SideInElement(const Side*    sd,
                   const Element* el);

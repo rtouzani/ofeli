@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2017 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -43,6 +43,7 @@ using std::setw;
 #include "linear_algebra/Vect.h"
 #include "util/util.h"
 #include "linear_algebra/Matrix.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 /*!
@@ -94,6 +95,9 @@ size_t inv_diag(size_t            n,
  *  \details The preconditioner type is chosen in the constructor
  *
  * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
 
 template<class T_> class Prec
@@ -171,11 +175,8 @@ template<class T_> class Prec
 /// @param [in] A %Matrix to precondition
     void setMatrix(const Matrix<T_>* A)
     {
-       try {
-          if (_type==-1)
-             THROW_RT("setMatrix(Matrix<T_> *): Choose preconditioner before setting matrix !");
-       }
-       CATCH("Prec");
+       if (_type==-1)
+          throw OFELIException("In Prec::setMatrix(Matrix<T_> *): Choose preconditioner before setting matrix !");
        _a = (SpMatrix<T_> *)A;
        _size = _a->size();
        _length = _a->getLength();
@@ -188,11 +189,8 @@ template<class T_> class Prec
           case DIAG_PREC:
              _pivot.resize(_size);
              int i;
-             try {
-                if ((i=inv_diag()) != 0)
-                   THROW_RT("setMatrix(Matrix<T_> *): Zero pivot detected in row "+itos(i));
-             }
-             CATCH("Prec");
+             if ((i=inv_diag()) != 0)
+                throw OFELIException("In Prec::setMatrix(Matrix<T_> *): Zero pivot detected in row "+itos(i));
              break;
 
           case DILU_PREC:
@@ -212,11 +210,8 @@ template<class T_> class Prec
 /// @param [in] A %Matrix to precondition (instance of class SpMatrix)
     void setMatrix(const SpMatrix<T_>& A)
     {
-       try {
-          if (_type==-1)
-             THROW_RT("setMatrix(SpMatrix<T_>): Choose preconditioner before setting matrix !");
-       }
-       CATCH("Prec");
+       if (_type==-1)
+          throw OFELIException("In Prec::setMatrix(SpMatrix<T_>): Choose preconditioner before setting matrix !");
        _a = &A;
        _size = _a->size();
        _length = _a->getLength();
@@ -229,11 +224,8 @@ template<class T_> class Prec
           case DIAG_PREC:
              _pivot.resize(_size);
              size_t i;
-             try {
-                if ((i=inv_diag()) != 0)
-                   THROW_RT("setMatrix(SpMatrix<T_>): Zero pivot detected in row "+itos(int(i)));
-             }
-             CATCH("Prec");
+             if ((i=inv_diag()) != 0)
+                throw OFELIException("In Prec::setMatrix(SpMatrix<T_>): Zero pivot detected in row "+itos(int(i)));
              break;
 
           case DILU_PREC:
