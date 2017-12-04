@@ -151,6 +151,7 @@ var group__Fluid =
       [ "setInput", "classOFELI_1_1TINS2DT3B.html#af84606c2cecfcef03d6820a323ffbdcc", null ],
       [ "runOneTimeStep", "classOFELI_1_1TINS2DT3B.html#a97ceb92f009f5eee1340388708fd5939", null ],
       [ "run", "classOFELI_1_1TINS2DT3B.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
+      [ "setSurfaceTension", "classOFELI_1_1TINS2DT3B.html#a55ee88d42cccec53bf3728344216c495", null ],
       [ "Viscosity", "classOFELI_1_1TINS2DT3B.html#a16f74d585baef846ec638fb02ca45ad6", null ],
       [ "Viscosity", "classOFELI_1_1TINS2DT3B.html#a91cf8d8aac8ff153f8bb1ebc92d2a82a", null ],
       [ "Density", "classOFELI_1_1TINS2DT3B.html#a665daeb8dfba9734c2a1f611419e7b3a", null ],

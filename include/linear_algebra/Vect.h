@@ -134,6 +134,8 @@ class Side;
 template<class T_> class PETScVect;
 #endif
 
+template<class T_> void OddEven(Vect<T_>& v, vector<T_>& odd, vector<T_>& even);
+
 #if defined (USE_EIGEN)
 template<class T_>
 class Vect
@@ -1032,7 +1034,25 @@ class Vect
  */
     T_ operator,(const Vect<T_>& v) const;
 
-    void FFT(Vect<complex_t>& v);
+/** \brief Compute FFT transform of vector
+ *  \details This member function computes the FFT (Fast Fourier Transform) of the vector
+ *  contained in the instance and stores it in vector \c v, which is complex valued
+ *  @param [in] v Vect instance containing the FFT
+ *  @remark The size of Vect instance must be a power of two and must not exceed
+ *  the value of 2^MAX_FFT_SIZE (This value is set in the header "constants.h")
+ *  @remark The Vect instance can be either a Vect<double> or Vec<complex<double> >
+ */
+    void getFFT(Vect<complex_t>& v);
+
+/** \brief Compute Inverse FFT transform of vector
+ *  \details This member function computes the inverse FFT (Fast Fourier Transform) of the vector
+ *  contained in the instance and stores it in vector \c v, which is complex valued
+ *  @param [in] v Vect instance containing the FFT
+ *  @remark The size of Vect instance must be a power of two and must not exceed
+ *  the value of 2^MAX_FFT_SIZE (This value is set in the header "constants.h")
+ *  @remark The Vect instance can be either a Vect<double> or Vec<complex<double> >
+ */
+    void getInvFFT(Vect<complex_t>& v);
 
 #if defined (USE_EIGEN)
 /** \brief Casting operator
@@ -1536,18 +1556,27 @@ void Vect<T_>::setSize(size_t nx,
 
 
 template<>
-inline void Vect<real_t>::FFT(Vect<complex_t>& v)
+inline void Vect<real_t>::getFFT(Vect<complex_t>& v)
 {
    void fft(vector<complex_t>& x);
+   int logn = int(log(real_t(_size))/(log(2.0))+0.01);
+   if (_size<2)
+      throw OFELIException("In Vect<T_>::getFFT(v): Vector size is less than two.\n"
+                           "Can't run FFT.");
+   else if ((logn-1) > MAX_FFT_SIZE)
+      throw OFELIException("In Vect<T_>::getFFT(v): FFT has too many points.");
+   else if (int(pow(2.0,logn)) != _size)
+      throw OFELIException("In Vect<T_>::getFFT(v): Vector size not a power of 2.\n"
+                           "Can't run FFT.");
+   if (_size <= 1)
+      return;
+
    v.resize(_size);
    for (size_t i=0; i<_size; i++)
       v[i] = (*this)[i];
-   if (_size <= 1)
-      return;
  
 // divide
    vector<complex_t> even, odd;
-   void OddEven(Vect<complex_t>&, vector<complex_t>&, vector<complex_t>&);
    OddEven(v,odd,even);
 
 // conquer
@@ -1560,6 +1589,129 @@ inline void Vect<real_t>::FFT(Vect<complex_t>& v)
       v[k        ] = even[k] + t;
       v[k+_size/2] = even[k] - t;
    }
+}
+
+
+template<>
+inline void Vect<complex_t>::getFFT(Vect<complex_t>& v)
+{
+   void fft(vector<complex_t>& x);
+   int logn = int(log(real_t(_size))/(log(2.0))+0.01);
+   if (_size<2)
+      throw OFELIException("In Vect<T_>::getFFT(v): Vector size is less than two.\n"
+                           "Can't run FFT.");
+   else if ((logn-1) > MAX_FFT_SIZE)
+      throw OFELIException("In Vect<T_>::getFFT(v): FFT has too many points.");
+   else if (int(pow(2.0,logn)) != _size)
+      throw OFELIException("In Vect<T_>::getFFT(v): Vector size not a power of 2.\n"
+                           "Can't run FFT.");
+   if (_size <= 1)
+      return;
+
+   v.resize(_size);
+   for (size_t i=0; i<_size; i++)
+      v[i] = (*this)[i];
+ 
+// divide
+   vector<complex_t> even, odd;
+   OddEven(v,odd,even);
+
+// conquer
+   fft(even);
+   fft(odd);
+
+// combine
+   for (size_t k=0; k<_size/2; ++k) {
+      complex_t t = std::polar(1.0,-2*OFELI_PI*k/_size)*odd[k];
+      v[k        ] = even[k] + t;
+      v[k+_size/2] = even[k] - t;
+   }
+}
+
+
+template<>
+inline void Vect<real_t>::getInvFFT(Vect<complex_t>& v)
+{
+   void fft(vector<complex_t>& x);
+   int logn = int(log(real_t(_size))/(log(2.0))+0.01);
+   if (_size<2)
+      throw OFELIException("In Vect<T_>::getInvFFT(v): Vector size is less than two.\n"
+                           "Can't run Inverse FFT.");
+
+   else if ((logn-1) > MAX_FFT_SIZE)
+      throw OFELIException("In Vect<T_>::getInvFFT(v): FFT has too many points.");
+
+   else if (int(pow(2.0,logn)) != _size)
+      throw OFELIException("In Vect<T_>::getInvFFT(v): Vector size not a power of 2.\n"
+                           "Can't run FFT.");
+   if (_size <= 1)
+      return;
+
+   v.resize(_size);
+   for (size_t i=0; i<_size; i++)
+      v[i] = (*this)[i];
+ 
+// divide
+   vector<complex_t> even, odd;
+   OddEven(v,odd,even);
+
+// conquer
+   fft(even);
+   fft(odd);
+
+// combine
+   for (size_t k=0; k<_size/2; ++k) {
+      complex_t t = std::polar(1.0,-2*OFELI_PI*k/_size)*odd[k];
+      v[k        ] = even[k] + t;
+      v[k+_size/2] = even[k] - t;
+   }
+
+// conjugate and scale
+   for (size_t i=0; i<_size; i++)
+      v[i] = std::conj(v[i])*(1.0/_size);
+}
+
+
+template<>
+inline void Vect<complex_t>::getInvFFT(Vect<complex_t>& v)
+{
+   void fft(vector<complex_t>& x);
+   int logn = int(log(real_t(_size))/(log(2.0))+0.01);
+   if (_size<2)
+      throw OFELIException("In Vect<T_>::getInvFFT(v): Vector size is less than two.\n"
+                           "Can't run FFT.");
+
+   else if ((logn-1) > MAX_FFT_SIZE)
+      throw OFELIException("In Vect<T_>::getFFT(v): FFT has too many points.");
+
+   else if (int(pow(2.0,logn)) != _size)
+      throw OFELIException("In Vect<T_>::getFFT(v): Vector size not a power of 2.\n"
+                           "Can't run FFT.");
+   if (_size <= 1)
+      return;
+
+   v.resize(_size);
+   for (size_t i=0; i<_size; i++)
+      v[i] = std::conj((*this)[i]);
+ 
+// divide
+   vector<complex_t> even, odd;
+   OddEven(v,odd,even);
+
+// conquer
+   fft(even);
+   fft(odd);
+
+// combine
+   for (size_t k=0; k<_size/2; ++k) {
+      complex_t t = std::polar(1.0,-2*OFELI_PI*k/_size)*odd[k];
+      v[k        ] = even[k] + t;
+      v[k+_size/2] = even[k] - t;
+   }
+
+// conjugate and scale
+   for (size_t i=0; i<_size; i++)
+      v[i] = std::conj(v[i])*(1.0/_size);
 }
 
 
@@ -3437,10 +3589,32 @@ ostream &operator<<(ostream&        s,
    }
    return s;
 }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+template<class T_>
+inline void OddEven(vector<T_>& x,
+                    vector<T_>& odd,
+                    vector<T_>& even)
+{
+   for (typename vector<T_>::iterator it=x.begin(); it!=x.end();) {
+      even.push_back(*(it++));
+      odd.push_back(*(it++));
+   }
+}
+
+
+template<class T_>
+inline void OddEven(Vect<T_>&   x,
+                    vector<T_>& odd,
+                    vector<T_>& even)
+{
+   for (typename Vect<T_>::iterator it=x.begin(); it!=x.end();) {
+      even.push_back(*(it++));
+      odd.push_back(*(it++));
+   }
+}
+
+
 inline void fft(vector<complex_t>& x)
 {
    size_t n = x.size();
@@ -3449,7 +3623,6 @@ inline void fft(vector<complex_t>& x)
  
 // divide
    vector<complex_t> even, odd;
-   void OddEven(vector<complex_t>&,vector<complex_t>&,vector<complex_t>&);
    OddEven(x,odd,even);
  
 // conquer
@@ -3461,30 +3634,6 @@ inline void fft(vector<complex_t>& x)
       complex_t t = std::polar(1.0,-2*OFELI_PI*k/n)*odd[k];
       x[k    ] = even[k] + t;
       x[k+n/2] = even[k] - t;
-   }
-}
-
-
-template<class T_>
-inline void OddEven(vector<T_>& x,
-                    vector<T_>& odd,
-                    vector<T_>& even)
-{
-   for (typename vector<T_>::iterator it=x.begin(); it!=x.end();) {
-      odd.push_back(*(it++));
-      even.push_back(*(it++));
-   }
-}
-
-
-template<class T_>
-inline void OddEven(Vect<T_>&   x,
-                    vector<T_>& odd,
-                    vector<T_>& even)
-{
-   for (typename Vect<T_>::iterator it=x.begin(); it!=x.end();) {
-      odd.push_back(*(it++));
-      even.push_back(*(it++));
    }
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

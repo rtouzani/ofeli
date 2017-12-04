@@ -17,7 +17,9 @@ var hierarchy =
     ] ],
     [ "AbsEqua< real_t >", "classOFELI_1_1AbsEqua.html", [
       [ "Equation< real_t, NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equation.html", [
-        [ "Equa_Electromagnetics< real_t, 3, 6, 2, 4 >", "classOFELI_1_1Equa__Electromagnetics.html", null ],
+        [ "Equa_Electromagnetics< real_t, 3, 6, 2, 4 >", "classOFELI_1_1Equa__Electromagnetics.html", [
+          [ "EC2D2T3", "classOFELI_1_1EC2D2T3.html", null ]
+        ] ],
         [ "Equa_Fluid< real_t, 3, 6, 2, 4 >", "classOFELI_1_1Equa__Fluid.html", [
           [ "TINS2DT3B", "classOFELI_1_1TINS2DT3B.html", null ]
         ] ],
@@ -172,6 +174,7 @@ var hierarchy =
     [ "Node", "classOFELI_1_1Node.html", null ],
     [ "NodeList", "classOFELI_1_1NodeList.html", null ],
     [ "ODESolver", "classOFELI_1_1ODESolver.html", null ],
+    [ "OFELIException", "classOFELI_1_1OFELIException.html", null ],
     [ "OptSolver", "classOFELI_1_1OptSolver.html", null ],
     [ "Partition", "classOFELI_1_1Partition.html", null ],
     [ "PETScMatrix< T_ >", "classOFELI_1_1PETScMatrix.html", null ],

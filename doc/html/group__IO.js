@@ -93,5 +93,6 @@ var group__IO =
     [ "MAX_NB_PAR", "group__IO.html#ga97ca5377821329e0968969b872036ebb", null ],
     [ "MAX_ARRAY_SIZE", "group__IO.html#ga40af4217190d59d7145e58a278f9f87d", null ],
     [ "MAX_INPUT_STRING_LENGTH", "group__IO.html#gada5cee067e2e94be1e183047e5ecfb0f", null ],
-    [ "FILENAME_LENGTH", "group__IO.html#ga610ce22de673afc7b1e8b0e7b3c9fe7a", null ]
+    [ "FILENAME_LENGTH", "group__IO.html#ga610ce22de673afc7b1e8b0e7b3c9fe7a", null ],
+    [ "MAX_FFT_SIZE", "group__IO.html#ga98cbec7e63ecb2bee0ba38e7511177c5", null ]
 ];

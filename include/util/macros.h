@@ -74,9 +74,29 @@ namespace OFELI {
 #define EVAL_ERR theParser.EvalError()
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/*! \def CATCH_EXCEPTION
+ *  \ingroup Util
+ *  This macro can be inserted after a <tt>try</tt> loop to catch a thrown 
+ *  exception.
+ */
+#define CATCH_EXCEPTION                                   \
+   catch(OFELIException &e) {                             \
+      cout << "OFELI exception: " << e.what() << endl;    \
+      fout.close();                                       \
+      return 1;                                           \
+   }                                                      \
+   catch(runtime_error &e) {                              \
+      cout << "Runtime exception: " << e.what() << endl;  \
+      return 1;                                           \
+   }                                                      \
+   catch( ... ) {                                         \
+      cout << "Unexpected Exception: " << endl;           \
+      return 1;                                           \
+   }                                                      \
+
 /*! \def TheNode
  *  \ingroup Mesh
- * A macro that gives the instance pointed by \a theNode
+ *  A macro that gives the instance pointed by \a theNode
  */
 #define TheNode (*theNode)
 

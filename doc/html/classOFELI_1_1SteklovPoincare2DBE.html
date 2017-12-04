@@ -107,7 +107,9 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Solver of the Steklov Poincare problem in 2-D geometries using piecewie constant boundary elemen. </p>
 <p><a class="el" href="classOFELI_1_1SteklovPoincare2DBE.html" title="Solver of the Steklov Poincare problem in 2-D geometries using piecewie constant boundary elemen...">SteklovPoincare2DBE</a> solves the Steklov Poincare problem in 2-D: Given the trace of a harmonic function on the boundary of a given (inner or outer) domain, this class computes the normal derivative of the function. The normal is considered as oriented out of the bounded (inner) domain in both inner and outer configurations. The numerical approximation uses piecewise constant (<code>P<sub>0</sub></code>) approximation on edges of the boundary. Solution is obtained from the GMRES iterative solver without preconditioning. The given data is the vector (instance of class <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a>) of piecewise constant values of the harmonic function on the boundary and the returned solution is piecewise constant value of the normal derivative considered either as a <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.</p>
-<dl class="section note"><dt>Note</dt><dd>Although the mesh of the inner domain is not necessary to solve the problem, this one must be provided in order to calculate the outward normal. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Although the mesh of the inner domain is not necessary to solve the problem, this one must be provided in order to calculate the outward normal.</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9eb689bc7d6a0c6aeaa8733b3aea86fb"></a>
 <div class="memitem">

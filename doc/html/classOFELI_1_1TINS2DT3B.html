@@ -118,6 +118,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#a58e8be2db2660128e4e6456a9c981fb5">run</a> ()</td></tr>
 <tr class="memdesc:a58e8be2db2660128e4e6456a9c981fb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run (in the case of one step run) <br /></td></tr>
 <tr class="separator:a58e8be2db2660128e4e6456a9c981fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55ee88d42cccec53bf3728344216c495"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55ee88d42cccec53bf3728344216c495"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#a55ee88d42cccec53bf3728344216c495">setSurfaceTension</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> sigma)</td></tr>
+<tr class="memdesc:a55ee88d42cccec53bf3728344216c495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add surface tension interface force. <br /></td></tr>
+<tr class="separator:a55ee88d42cccec53bf3728344216c495"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a4ac833b4b2f78ec8581d1d7e9a0c6b6e">updateBC</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;el, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;bc)</td></tr>
 <tr class="memdesc:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update Right-Hand side by taking into account essential boundary conditions.  <a href="#a4ac833b4b2f78ec8581d1d7e9a0c6b6e">More...</a><br /></td></tr>
 <tr class="separator:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -323,7 +327,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Builds finite element arrays for thermal diffusion and convection in 2-D domains using 3-Node triangles. </p>
-<p>Note that members calculating element arrays have as an argument a double <code>coef</code> that will be multiplied by the contribution of the current element. This makes possible testing different algorithms. </p>
+<p>Note that members calculating element arrays have as an argument a double <code>coef</code> that will be multiplied by the contribution of the current element. This makes possible testing different algorithms.</p>
+<dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a03c8421ef1bf22f4a8d12c856839fe2f"></a>
 <div class="memitem">

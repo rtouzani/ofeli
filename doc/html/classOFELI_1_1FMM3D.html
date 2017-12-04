@@ -83,9 +83,9 @@ $(document).ready(function(){initNavTree('classOFELI_1_1FMM3D.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af256e431318bcb0de46c27690a39e139"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FMM3D.html#af256e431318bcb0de46c27690a39e139">FMM3D</a> (const <a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;g, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; *phi, bool HA)</td></tr>
-<tr class="memdesc:af256e431318bcb0de46c27690a39e139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#af256e431318bcb0de46c27690a39e139">More...</a><br /></td></tr>
-<tr class="separator:af256e431318bcb0de46c27690a39e139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af757c0a80b01606d035d2d895541ea54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FMM3D.html#af757c0a80b01606d035d2d895541ea54">FMM3D</a> (const <a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;g, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;phi, bool HA)</td></tr>
+<tr class="memdesc:af757c0a80b01606d035d2d895541ea54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#af757c0a80b01606d035d2d895541ea54">More...</a><br /></td></tr>
+<tr class="separator:af757c0a80b01606d035d2d895541ea54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a585324f323f99da120e5efd1f33b094e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FMM3D.html#a585324f323f99da120e5efd1f33b094e">InitHeap</a> (Heap &amp;NarrowPt)</td></tr>
 <tr class="memdesc:a585324f323f99da120e5efd1f33b094e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize heap.  <a href="#a585324f323f99da120e5efd1f33b094e">More...</a><br /></td></tr>
 <tr class="separator:a585324f323f99da120e5efd1f33b094e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,7 +107,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="textblock"><p>class for the 3-D fast marching algorithm </p>
 <p>This class manages the 3-D Fast Marching Method </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="af256e431318bcb0de46c27690a39e139"></a>
+<a class="anchor" id="af757c0a80b01606d035d2d895541ea54"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -120,7 +120,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; *&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>phi</em>, </td>
         </tr>
         <tr>
@@ -138,14 +138,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor using <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a> instance </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">g</td><td>Instance of class <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a> </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">phi</td><td>Vector containing the level set function at grid nodes. The values are <code>0</code> on the interface (from which the distance is computed), positive on one side and negative on the other side. They must contain the signed distance on the nodes surrounding the interface but can take any value on other nodes, provided they have the right sign. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">HA</td><td>true if the program must be executed with high accuracy, false otherwise </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">HA</td><td>true if the program must be executed with high accuracy, false otherwise</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section author"><dt>Author</dt><dd>M. Sylla, B. Meden </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 
 </div>
 </div>
@@ -201,12 +203,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Compute the distance from node to interface. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pt</td><td>node to treat </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">sign</td><td>the node's sign </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pt</td><td>Node to treat </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sign</td><td>Node's sign </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>distance from node <code>pt</code> to interface </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Distance from node <code>pt</code> to interface </dd></dl>
 
 </div>
 </div>

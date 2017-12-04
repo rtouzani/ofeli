@@ -61,11 +61,11 @@ class OFELIException : public std::runtime_error
  public:
 
 /// \brief This form will be used most often in a throw.
-    OFELIException(const std::string& description) : runtime_error(description)
+    OFELIException(const std::string& s) : runtime_error(s)
     { };
 
 /// \brief Throw with no error message.
-    OFELIException() : std::runtime_error("Exception thrown in OFELI: ") { }; 
+    OFELIException() : std::runtime_error("Exception thrown in OFELI:\n") { }; 
 };
 
 } /* namespace OFELI */

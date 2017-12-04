@@ -124,6 +124,7 @@ var group__Util =
     [ "OFELI_IMAG", "group__Util.html#gabc62695fed9872c4959b89dd05367568", null ],
     [ "PARSE", "group__Util.html#ga10e74cbd505845fdc4d183cbe9743f2e", null ],
     [ "EVAL", "group__Util.html#gaf6e22fe1529e7e758618dd0509596231", null ],
+    [ "CATCH_EXCEPTION", "group__Util.html#ga9ed8a2986962bb8b00ad9d33d25a4858", null ],
     [ "lsize_t", "group__Util.html#ga1aadac8d3d34b439b8a455e2d135d80c", null ],
     [ "real_t", "group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c", null ],
     [ "complex_t", "group__Util.html#ga7a290272a0e3fa68da99df83e1643226", null ],
