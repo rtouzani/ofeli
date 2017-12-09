@@ -1561,6 +1561,9 @@ T_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group_
 <tr class="memitem:gaec86278ba42d21024e3e9da1a57ee08d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#gaec86278ba42d21024e3e9da1a57ee08d">check</a> (Vect&lt; T_ &gt; &amp;u, const Vect&lt; T_ &gt; &amp;v, int opt=2)</td></tr>
 <tr class="memdesc:gaec86278ba42d21024e3e9da1a57ee08d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check convergence.  <a href="#gaec86278ba42d21024e3e9da1a57ee08d">More...</a><br /></td></tr>
 <tr class="separator:gaec86278ba42d21024e3e9da1a57ee08d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd18d8209c23c006d7a0ba574cda652b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#gacd18d8209c23c006d7a0ba574cda652b">check</a> (T_ &amp;u, const T_ &amp;v)</td></tr>
+<tr class="memdesc:gacd18d8209c23c006d7a0ba574cda652b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check convergence for a scalar case (one equation)  <a href="#gacd18d8209c23c006d7a0ba574cda652b">More...</a><br /></td></tr>
+<tr class="separator:gacd18d8209c23c006d7a0ba574cda652b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeccb35e1c449b861305d1765f86395f4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#gaeccb35e1c449b861305d1765f86395f4">solve</a> (Iteration s, Preconditioner p=DIAG_PREC)</td></tr>
 <tr class="memdesc:gaeccb35e1c449b861305d1765f86395f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve equations using prescribed solver and preconditioner.  <a href="#gaeccb35e1c449b861305d1765f86395f4">More...</a><br /></td></tr>
 <tr class="separator:gaeccb35e1c449b861305d1765f86395f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -7478,7 +7481,44 @@ Solution is performed only is factorization has previouly been invoked. </dd></d
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">u</td><td>Solution vector at previous iteration </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Solution vector at current iteration </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Vector norm for convergence checking <code>1</code>: 1-norm, <code>2</code>: 2-norm, 0: Max. norm [default: <code>2</code>] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Vector norm for convergence checking <code>1</code>: 1-norm, <code>2</code>: 2-norm, 0: Max. norm [Default: <code>2</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if convergence criterion is satisfied, false if not</dd></dl>
+<p>After checking, this function copied <code>v</code> into <code>u</code>. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacd18d8209c23c006d7a0ba574cda652b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool check </td>
+          <td>(</td>
+          <td class="paramtype">T_ &amp;&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T_ &amp;&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check convergence for a scalar case (one equation) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">u</td><td>Solution at previous iteration </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Solution at current iteration </td></tr>
   </table>
   </dd>
 </dl>

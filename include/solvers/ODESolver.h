@@ -49,6 +49,7 @@ using std::string;
 #include "OFELI_Config.h"
 #include "linear_algebra/Vect.h"
 #include "solvers/LinearSolver.h"
+#include "solvers/Iter.h"
 #include "equations/AbsEqua.h"
 
 namespace OFELI {
@@ -178,8 +179,18 @@ class ODESolver
  *  y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))\n
  *  In the case of a system of ODEs, this function can be called once for each equation, 
  *  given in the order of the unknowns
- */ 
-    void setF(string F);
+ */
+    void setF(string f);
+
+/** \brief Set derivative with respect to the unknown of the function defining the ODE
+ *  \details This function enables prescribing the value of the 1-st derivative
+ *  for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be
+ *  used for nonlinear ODEs of the form 
+ *  y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))\n
+ *  In the case of a system of ODEs, this function can be called once for each equation, 
+ *  given in the order of the unknowns
+ */
+    void setDF(string df);
 
 /** \brief Set intermediate right-hand side vector for the Runge-Kutta method
  *  @param [in] f
@@ -306,6 +317,20 @@ class ODESolver
  */
     void setVerbose(int v=0) { _verb = v; }
 
+/** \brief Set maximal number of iterations
+ *  \details This function is useful for a non linear ODE (or system of ODEs)
+ *  if an implicit scheme is used
+ *  @param [in] max_it Maximal number of iterations [Default: <tt>100</tt>]
+ */
+    void setMaxIter(int max_it) { _iter.setMaxIter(max_it); }
+
+/** \brief Set tolerance value for convergence
+ *  \details This function is useful for a non linear ODE (or system of ODEs)
+ *  if an implicit scheme is used
+ *  @param [in] toler Tolerance value [Default: <tt>1.e-8</tt>]
+ */
+    void setTolerance(real_t toler) { _iter.setTolerance(toler); }
+
 /// \brief Run one time step
 /// @return Value of new time step if this one is updated
     real_t runOneTimeStep();
@@ -325,14 +350,14 @@ class ODESolver
 /// \brief Return solution in the case of a scalar equation
     real_t get() const { return _y2; }
 
-    friend ostream & operator<<(      ostream&   s,
+    friend ostream & operator<<(ostream&         s,
                                 const ODESolver& de);
 
  private:
 
    enum DEType {
       SCALAR_LINEAR  = 0,      /*!< Linear Scalar Differential Equation        */
-      SCALAR_NL      = 1,      /*!< Nonlinear Scalar Differential              */
+      SCALAR_NL      = 1,      /*!< Nonlinear Scalar Differential Equation     */
       VECTOR_LINEAR  = 2,      /*!< Linear Differential system of equations    */
       VECTOR_NL      = 3,      /*!< Nonlinear Differential system of equations */
    };
@@ -344,16 +369,17 @@ class ODESolver
    Preconditioner _p;
    bool _a0, _a1, _a2, _constant_matrix, _regex, _explicit, _init, _lhs, _rhs, _rhsF;
    Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv;
-   Vect<real_t> *_du, _ddu, _dv, _ddv, _vF1, _vF2, _vF, _D, _k1, _k2, _k3, _k4;
+   Vect<real_t> *_du, _ddu, _dv, _ddv, _vF1, _vF2, _vF, _vDF1, _D, _k1, _k2, _k3, _k4;
    DMatrix<real_t> *_A0, *_A1, *_A2;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2;
    real_t _y0, _y1, _dy1, _y2, _dy2, _ddy, _d0, _d1, _d2, _d01;
    string _exc[3];
-   vector<string> _expF, _expA0, _expA1, _expA2;
+   vector<string> _expF, _expDF, _expA0, _expA1, _expA2;
    real_t _beta, _gamma;
    LinearSolver<real_t> _ls;
    DEType _type;
-   bool _alloc_f2, _alloc_f01;
+   bool _alloc_f2, _alloc_f01, _setF_called, _setDF1_called;
+   Iter<real_t> _iter;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    typedef void (ODESolver::* TSPtr)();

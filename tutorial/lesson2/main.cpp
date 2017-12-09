@@ -47,35 +47,37 @@ int main(int argc, char *argv[])
    Mesh ms(argv[1]);
 
 // Declare problem data (matrix, rhs, boundary conditions, body forces)
-   SkSMatrix<double> A(ms);
-   Vect<double> b(ms), bc(ms);
-   bc.setNodeBC(1,"y");
+   try {
+      SkSMatrix<double> A(ms);
+      Vect<double> b(ms), bc(ms);
+      bc.setNodeBC(1,"y");
 
-// Loop over elements
-// ------------------
+//    Loop over elements
+//    ------------------
 
-   MeshElements(ms) {
+      MeshElements(ms) {
 
-//    Declare an instance of class DC2DT3 (contains equation)
-      DC2DT3 eq(theElement);
+//       Declare an instance of class DC2DT3 (contains equation)
+         DC2DT3 eq(theElement);
 
-//    Diffusion contribution to matrix
-      eq.Diffusion();
+//       Diffusion contribution to matrix
+         eq.Diffusion();
 
-//    Assemble element matrix and RHS
-//    For this example, assembling the RHS is useless
-      eq.ElementAssembly(A);
-      eq.ElementAssembly(b);
-   }
+//       Assemble element matrix and RHS
+//       For this example, assembling the RHS is useless
+         eq.ElementAssembly(A);
+         eq.ElementAssembly(b);
+      }
 
-// Impose boundary conditions on matrix and RHS
-   A.Prescribe(b,bc);
+//    Impose boundary conditions on matrix and RHS
+      A.Prescribe(b,bc);
 
-// Solve the linear system of equations
-   A.solve(b);
+//    Solve the linear system of equations
+      A.solve(b);
 
-// Output solution
-   cout << "\nSolution:\n" << b;
+//    Output solution
+      cout << "\nSolution:\n" << b;
+   } CATCH_EXCEPTION
 
    return 0;
 }

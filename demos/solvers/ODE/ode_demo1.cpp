@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 
 // Set function that defines the ODE
    ode.setF("2*exp(t)-1-y");
+
 // Solve the equation: Contains the loop on time steps
    ode.run();
 

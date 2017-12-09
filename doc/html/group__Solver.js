@@ -39,7 +39,8 @@ var group__Solver =
       [ "setMaxIter", "classOFELI_1_1Iter.html#a9e6d15777f4c9d95999313bafae5e5e7", null ],
       [ "setTolerance", "classOFELI_1_1Iter.html#a4d0e665f8f92335ec10c4ccf9e9171b7", null ],
       [ "setVerbose", "classOFELI_1_1Iter.html#afc81729fb2aa1720f446f48f1c3977ff", null ],
-      [ "check", "group__OFELI.html#gaec86278ba42d21024e3e9da1a57ee08d", null ]
+      [ "check", "group__OFELI.html#gaec86278ba42d21024e3e9da1a57ee08d", null ],
+      [ "check", "group__OFELI.html#gacd18d8209c23c006d7a0ba574cda652b", null ]
     ] ],
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html", [
       [ "LinearSolver", "classOFELI_1_1LinearSolver.html#a2ffc285126a28fba1fa2d1c681f261cf", null ],
@@ -85,7 +86,8 @@ var group__Solver =
       [ "setNbEq", "classOFELI_1_1ODESolver.html#a3b264f305b8fe76a3ae0520e151e47fb", null ],
       [ "setCoef", "classOFELI_1_1ODESolver.html#a2ea2722af101302a690f5874e4536748", null ],
       [ "setCoef", "classOFELI_1_1ODESolver.html#a6e0120918529bcfdfbb281db4dfff8a1", null ],
-      [ "setF", "classOFELI_1_1ODESolver.html#a65a819d5eb01a16a3f70a53daea8e7f8", null ],
+      [ "setF", "classOFELI_1_1ODESolver.html#a8e734c537232e7be6f58fd92ce129bd8", null ],
+      [ "setDF", "classOFELI_1_1ODESolver.html#ab9b2376f06f314b038b0b77860f84d2b", null ],
       [ "setRK4RHS", "classOFELI_1_1ODESolver.html#a8af5428b41cbdbd33226187aefbcd40c", null ],
       [ "setRK4RHS", "classOFELI_1_1ODESolver.html#aa7e53c44ddd0bfff4147278d5c15f3a3", null ],
       [ "setInitial", "classOFELI_1_1ODESolver.html#af1cd58fec176472be29a4dfb1be829e3", null ],
@@ -104,6 +106,8 @@ var group__Solver =
       [ "setNonConstantMatrix", "classOFELI_1_1ODESolver.html#ad0f5cc02d42fd6d2c81ef09d85671670", null ],
       [ "setLinearSolver", "classOFELI_1_1ODESolver.html#a03025e97482684280a54df4817908825", null ],
       [ "setVerbose", "classOFELI_1_1ODESolver.html#ab0dff7ac814d61fe684767c7d33b1c1a", null ],
+      [ "setMaxIter", "classOFELI_1_1ODESolver.html#a9e6d15777f4c9d95999313bafae5e5e7", null ],
+      [ "setTolerance", "classOFELI_1_1ODESolver.html#a4d0e665f8f92335ec10c4ccf9e9171b7", null ],
       [ "runOneTimeStep", "classOFELI_1_1ODESolver.html#af8c8f582bd6836d2145e823ce5ed5ef4", null ],
       [ "run", "classOFELI_1_1ODESolver.html#ab174fb4127d2dfb1b5e0d57b9e40b617", null ],
       [ "getLSolver", "classOFELI_1_1ODESolver.html#a799a12990da0e52bb134bf40ee4159e2", null ],

@@ -79,20 +79,19 @@ namespace OFELI {
  *  This macro can be inserted after a <tt>try</tt> loop to catch a thrown 
  *  exception.
  */
-#define CATCH_EXCEPTION                                   \
-   catch(OFELIException &e) {                             \
-      cout << "OFELI exception: " << e.what() << endl;    \
-      fout.close();                                       \
-      return 1;                                           \
-   }                                                      \
-   catch(runtime_error &e) {                              \
-      cout << "Runtime exception: " << e.what() << endl;  \
-      return 1;                                           \
-   }                                                      \
-   catch( ... ) {                                         \
-      cout << "Unexpected Exception: " << endl;           \
-      return 1;                                           \
-   }                                                      \
+#define CATCH_EXCEPTION                                      \
+   catch(OFELIException &e) {                                \
+      std::cout << "OFELI exception: " << e.what() << endl;  \
+      return 1;                                              \
+   }                                                         \
+   catch(runtime_error &e) {                                 \
+      std::cout << "Runtime exception: " << e.what() << endl;\
+      return 1;                                              \
+   }                                                         \
+   catch( ... ) {                                            \
+      std::cout << "Unexpected Exception: " << endl;         \
+      return 1;                                              \
+   }
 
 /*! \def TheNode
  *  \ingroup Mesh
@@ -325,10 +324,10 @@ namespace OFELI {
  * \brief A macro to loop on iterations for an iterative procedure.
  * \details It uses the following global variables defined in \b OFELI:
  * <tt>theIteration, MaxNbIterations, Converged</tt>
+ * @warning The variable <tt>theIteration</tt> must be zeroed before using this macro 
  */
 #define IterationLoop \
           while (++theIteration<MaxNbIterations && Converged==false)
-
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

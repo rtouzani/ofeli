@@ -60,19 +60,19 @@ var NAVTREEINDEX =
 "classOFELI_1_1MeshAdapt.html#aa2ce64299b3601479b9a8d65efe0b831",
 "classOFELI_1_1Muscl2DT.html#afc81729fb2aa1720f446f48f1c3977ff",
 "classOFELI_1_1NSP2DQ41.html#ad4f24e4b8e88af61f56e9201a13a32bc",
-"classOFELI_1_1PETScMatrix.html#a8834efe36631472e72fde5b34ce68b35",
-"classOFELI_1_1PETScWrapper.html#a08de4952108b7adaae510d91a299d20e",
-"classOFELI_1_1Rectangle.html#ae8f96a561ac988c417b6841c5ab71cdd",
-"classOFELI_1_1SkMatrix.html#aef09987e0073d32aae2ea5dfeb7118ee",
-"classOFELI_1_1Sphere.html#a365c3b4ced8699612dbce7bd450bdfe9",
-"classOFELI_1_1TimeStepping.html#af8c8f582bd6836d2145e823ce5ed5ef4",
-"classOFELI_1_1Vect.html#a01bee4ae700ef4920c024b7697fc6c19",
-"classOFELI_1_1WaterPorous2D.html#a89bd21576b89e5399599a81c8fb63869",
-"group__Mesh.html#gaf9b09b452f388266880ddea6e252fc84",
-"group__OFELI.html#ga64ce814d36b63603a04ea6961feee51d",
-"group__OFELI.html#gaba6e067afa946a45652dfccd7aeb6393",
-"group__OFELI.html#gga42582cc9e68e05cf30ccad02e4ba8ff6af8c1841ed2b2d4e99067e4d90186b3e6",
-"namespaceOFELI.html"
+"classOFELI_1_1PETScMatrix.html#a838b1147e06cd9f9eb3795437d331471",
+"classOFELI_1_1PETScVect.html#aff8ebf2e373d6311f1bba710375fc8ed",
+"classOFELI_1_1Rectangle.html#a71939e7756332cc5afa172c701a901c5",
+"classOFELI_1_1SkMatrix.html#adab7bac07980d8559413234bab7609d2",
+"classOFELI_1_1Sphere.html#a2520b3fc10894bb8fc4a96014dfb0d08",
+"classOFELI_1_1TimeStepping.html#ad0b215af0339c42514f036bf711ffffd",
+"classOFELI_1_1UserData.html#af6ecb9a6d3b5a814496e3410176005d7",
+"classOFELI_1_1WaterPorous2D.html#a707e4f7e7fe3140fd7a6fefe4774f03d",
+"group__Mesh.html#gae05d586683c6ca879ed127fb281fb71e",
+"group__OFELI.html#ga61cf373a94a5fedbca306e016bc489c9",
+"group__OFELI.html#gab2b9819f0e12bada7d7378d5272e35a6",
+"group__OFELI.html#gga42582cc9e68e05cf30ccad02e4ba8ff6a8681ead3c505065584ae7202d7b2cefe",
+"group__VectMat.html#gac885dafce75b4320b0e23fb7f6e06261"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -247,6 +247,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a8bc76639788ffbef4af28d44d9da907d">getNz</a> () const </td></tr>
 <tr class="memdesc:a8bc76639788ffbef4af28d44d9da907d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of grid points in the <code>z</code>-direction if grid indexing is set. <br /></td></tr>
 <tr class="separator:a8bc76639788ffbef4af28d44d9da907d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f98706508f51b38628eb74a17c36b4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a5f98706508f51b38628eb74a17c36b4a">setIJK</a> (const string &amp;exp)</td></tr>
+<tr class="memdesc:a5f98706508f51b38628eb74a17c36b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a given function (given by an interpretable algebraic expression) of indices components of vector.  <a href="#a5f98706508f51b38628eb74a17c36b4a">More...</a><br /></td></tr>
+<tr class="separator:a5f98706508f51b38628eb74a17c36b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91b44f24411b86cd8ea66c443d0486a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a91b44f24411b86cd8ea66c443d0486a0">setNodeBC</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m, int code, T_ val, size_t dof=1)</td></tr>
 <tr class="memdesc:a91b44f24411b86cd8ea66c443d0486a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a given value to components of vector with given code.  <a href="#a91b44f24411b86cd8ea66c443d0486a0">More...</a><br /></td></tr>
 <tr class="separator:a91b44f24411b86cd8ea66c443d0486a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -421,12 +424,12 @@ const <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td><td 
 <tr class="memitem:a0a8180613a100809e1ec7fdd2820e336"><td class="memItemLeft" align="right" valign="top">T_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a0a8180613a100809e1ec7fdd2820e336">operator,</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v) const </td></tr>
 <tr class="memdesc:a0a8180613a100809e1ec7fdd2820e336"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Dot (scalar) product of two vectors.  <a href="#a0a8180613a100809e1ec7fdd2820e336">More...</a><br /></td></tr>
 <tr class="separator:a0a8180613a100809e1ec7fdd2820e336"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31fe85efc95efe883e8b26388aafe030"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a31fe85efc95efe883e8b26388aafe030">getFFT</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;v)</td></tr>
-<tr class="memdesc:a31fe85efc95efe883e8b26388aafe030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute FFT transform of vector.  <a href="#a31fe85efc95efe883e8b26388aafe030">More...</a><br /></td></tr>
-<tr class="separator:a31fe85efc95efe883e8b26388aafe030"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc65f23d7d4bb9ab86de1cfcde316f2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#abc65f23d7d4bb9ab86de1cfcde316f2e">getInvFFT</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;v)</td></tr>
-<tr class="memdesc:abc65f23d7d4bb9ab86de1cfcde316f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute Inverse FFT transform of vector.  <a href="#abc65f23d7d4bb9ab86de1cfcde316f2e">More...</a><br /></td></tr>
-<tr class="separator:abc65f23d7d4bb9ab86de1cfcde316f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bfa7a095063d746b24ac73417d330c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a3bfa7a095063d746b24ac73417d330c8">getFFT</a> ()</td></tr>
+<tr class="memdesc:a3bfa7a095063d746b24ac73417d330c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute FFT transform of vector.  <a href="#a3bfa7a095063d746b24ac73417d330c8">More...</a><br /></td></tr>
+<tr class="separator:a3bfa7a095063d746b24ac73417d330c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a577bde2a7b466164f2eb41cf17bb0508"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a577bde2a7b466164f2eb41cf17bb0508">getInvFFT</a> ()</td></tr>
+<tr class="memdesc:a577bde2a7b466164f2eb41cf17bb0508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute Inverse FFT transform of vector.  <a href="#a577bde2a7b466164f2eb41cf17bb0508">More...</a><br /></td></tr>
+<tr class="separator:a577bde2a7b466164f2eb41cf17bb0508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace791c9e434274fc34740543dc6b75d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#ace791c9e434274fc34740543dc6b75d6">operator VectorX</a> () const </td></tr>
 <tr class="memdesc:ace791c9e434274fc34740543dc6b75d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting operator.  <a href="#ace791c9e434274fc34740543dc6b75d6">More...</a><br /></td></tr>
 <tr class="separator:ace791c9e434274fc34740543dc6b75d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1487,6 +1490,30 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
 
 </div>
 </div>
+<a class="anchor" id="a5f98706508f51b38628eb74a17c36b4a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setIJK </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>exp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Assign a given function (given by an interpretable algebraic expression) of indices components of vector. </p>
+<p>This function enable assigning a value to vector entries as function of indices </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">exp</td><td>Regular algebraic expression to assign. It must involve the variables <code>i</code>, <code>j</code> and/or <code>k</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a91b44f24411b86cd8ea66c443d0486a0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1526,10 +1553,10 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
 <p>Assign a given value to components of vector with given code. </p>
 <p>Vector components are assumed nodewise </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>Instance of mesh </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>Code for which nodes will be assigned prescribed value </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Value to prescribe </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Degree of Freedom for which the value is assigned [default: <code>1</code>] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>The value is assigned if the node has this code </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Value to assign </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Degree of freedom to assign [Default: <code>1</code>] </td></tr>
   </table>
   </dd>
 </dl>
@@ -3350,54 +3377,42 @@ This operator is available only if the Eigen library was installed in conjunctio
 
 </div>
 </div>
-<a class="anchor" id="a31fe85efc95efe883e8b26388aafe030"></a>
+<a class="anchor" id="a3bfa7a095063d746b24ac73417d330c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void getFFT </td>
+          <td class="memname"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt;<a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>&gt; getFFT </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Compute FFT transform of vector. </p>
-<p>This member function computes the FFT (Fast Fourier Transform) of the vector contained in the instance and stores it in vector <code>v</code>, which is complex valued </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing the FFT </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This member function computes the FFT (Fast Fourier Transform) of the vector contained in the instance and returns it </p><dl class="section return"><dt>Returns</dt><dd><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a>&lt;complex&lt;double&gt; &gt; instance containing the FFT </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The size of <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance must be a power of two and must not exceed the value of 2^MAX_FFT_SIZE (This value is set in the header "constants.h") </dd>
 <dd>
 The <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance can be either a Vect&lt;double&gt; or Vec&lt;complex&lt;double&gt; &gt; </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="abc65f23d7d4bb9ab86de1cfcde316f2e"></a>
+<a class="anchor" id="a577bde2a7b466164f2eb41cf17bb0508"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void getInvFFT </td>
+          <td class="memname"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt;<a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>&gt; getInvFFT </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Compute Inverse FFT transform of vector. </p>
-<p>This member function computes the inverse FFT (Fast Fourier Transform) of the vector contained in the instance and stores it in vector <code>v</code>, which is complex valued </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing the FFT </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This member function computes the inverse FFT (Fast Fourier Transform) of the vector contained in the instance and returns it </p><dl class="section return"><dt>Returns</dt><dd><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a>&lt;complex&lt;double&gt; &gt; instance containing the FFT </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The size of <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance must be a power of two and must not exceed the value of 2^MAX_FFT_SIZE (This value is set in the header "constants.h") </dd>
 <dd>
 The <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance can be either a Vect&lt;double&gt; or Vec&lt;complex&lt;double&gt; &gt; </dd></dl>

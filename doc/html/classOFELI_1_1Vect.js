@@ -49,6 +49,7 @@ var classOFELI_1_1Vect =
     [ "getNx", "classOFELI_1_1Vect.html#ac6108ee34e301370c503a4036edaf444", null ],
     [ "getNy", "classOFELI_1_1Vect.html#a3faf43ad9af0105239d4c871919556e9", null ],
     [ "getNz", "classOFELI_1_1Vect.html#a8bc76639788ffbef4af28d44d9da907d", null ],
+    [ "setIJK", "classOFELI_1_1Vect.html#a5f98706508f51b38628eb74a17c36b4a", null ],
     [ "setNodeBC", "classOFELI_1_1Vect.html#a91b44f24411b86cd8ea66c443d0486a0", null ],
     [ "setSideBC", "classOFELI_1_1Vect.html#a61338dd05b312b6bc4359efc4472ed94", null ],
     [ "setNodeBC", "classOFELI_1_1Vect.html#a59de521e163d166dee14d2b2bea598d6", null ],
@@ -106,7 +107,7 @@ var classOFELI_1_1Vect =
     [ "push_back", "classOFELI_1_1Vect.html#a94407a2ae16d8766df36fe20489d050d", null ],
     [ "getMeshPtr", "classOFELI_1_1Vect.html#aa3386473895a824034e60061651e98f6", null ],
     [ "operator,", "classOFELI_1_1Vect.html#a0a8180613a100809e1ec7fdd2820e336", null ],
-    [ "getFFT", "classOFELI_1_1Vect.html#a31fe85efc95efe883e8b26388aafe030", null ],
-    [ "getInvFFT", "classOFELI_1_1Vect.html#abc65f23d7d4bb9ab86de1cfcde316f2e", null ],
+    [ "getFFT", "classOFELI_1_1Vect.html#a3bfa7a095063d746b24ac73417d330c8", null ],
+    [ "getInvFFT", "classOFELI_1_1Vect.html#a577bde2a7b466164f2eb41cf17bb0508", null ],
     [ "operator VectorX", "classOFELI_1_1Vect.html#ace791c9e434274fc34740543dc6b75d6", null ]
 ];

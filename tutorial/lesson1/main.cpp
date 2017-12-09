@@ -47,30 +47,32 @@ int main(int argc, char *argv[])
    int NbN = N+1;
 
 // Declare problem data (matrix, rhs, boundary conditions, body forces)
-   TrMatrix<double> A(NbN);
-   Vect<double> b(ms);
-   b.set("16*pi*pi*sin(4*pi*x)");
+   try {
+      TrMatrix<double> A(NbN);
+      Vect<double> b(ms);
+      b.set("16*pi*pi*sin(4*pi*x)");
 
-// Build matrix and R.H.S.
-   double h = L/double(N);
-   b *= h;
-   for (int i=2; i<NbN; i++) {
-      A(i,i  ) =  2./h;
-      A(i,i+1) = -1./h;
-      A(i,i-1) = -1./h;
-   }
+//    Build matrix and R.H.S.
+      double h = L/double(N);
+      b *= h;
+      for (int i=2; i<NbN; i++) {
+         A(i,i  ) =  2./h;
+         A(i,i+1) = -1./h;
+         A(i,i-1) = -1./h;
+      }
 
-// Impose boundary conditions
-   A(1,1) = 1.; A(1,2) = 0.; b(1) = 0;
-   A(NbN,NbN) = 1.; A(NbN-1,NbN) = 0.; b(NbN) = 0;
+//    Impose boundary conditions
+      A(1,1) = 1.; A(1,2) = 0.; b(1) = 0;
+      A(NbN,NbN) = 1.; A(NbN-1,NbN) = 0.; b(NbN) = 0;
 
-// Solve the linear system of equations
-   A.solve(b);
+//    Solve the linear system of equations
+      A.solve(b);
 
-// Output solution and error
-   cout << "\nSolution:\n" << b;
-   Vect<double> sol(ms);
-   sol.set("sin(4*pi*x)");
-   cout << "Error = " << (b-sol).getNormMax() << endl;
+//    Output solution and error
+      cout << "\nSolution:\n" << b;
+      Vect<double> sol(ms);
+      sol.set("sin(4*pi*x)");
+      cout << "Error = " << (b-sol).getNormMax() << endl;
+   } CATCH_EXCEPTION
    return 0;
 }

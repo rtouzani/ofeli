@@ -744,6 +744,7 @@ var group__OFELI =
       [ "getNx", "classOFELI_1_1Vect.html#ac6108ee34e301370c503a4036edaf444", null ],
       [ "getNy", "classOFELI_1_1Vect.html#a3faf43ad9af0105239d4c871919556e9", null ],
       [ "getNz", "classOFELI_1_1Vect.html#a8bc76639788ffbef4af28d44d9da907d", null ],
+      [ "setIJK", "classOFELI_1_1Vect.html#a5f98706508f51b38628eb74a17c36b4a", null ],
       [ "setNodeBC", "classOFELI_1_1Vect.html#a91b44f24411b86cd8ea66c443d0486a0", null ],
       [ "setSideBC", "classOFELI_1_1Vect.html#a61338dd05b312b6bc4359efc4472ed94", null ],
       [ "setNodeBC", "classOFELI_1_1Vect.html#a59de521e163d166dee14d2b2bea598d6", null ],
@@ -801,8 +802,8 @@ var group__OFELI =
       [ "push_back", "classOFELI_1_1Vect.html#a94407a2ae16d8766df36fe20489d050d", null ],
       [ "getMeshPtr", "classOFELI_1_1Vect.html#aa3386473895a824034e60061651e98f6", null ],
       [ "operator,", "classOFELI_1_1Vect.html#a0a8180613a100809e1ec7fdd2820e336", null ],
-      [ "getFFT", "classOFELI_1_1Vect.html#a31fe85efc95efe883e8b26388aafe030", null ],
-      [ "getInvFFT", "classOFELI_1_1Vect.html#abc65f23d7d4bb9ab86de1cfcde316f2e", null ],
+      [ "getFFT", "classOFELI_1_1Vect.html#a3bfa7a095063d746b24ac73417d330c8", null ],
+      [ "getInvFFT", "classOFELI_1_1Vect.html#a577bde2a7b466164f2eb41cf17bb0508", null ],
       [ "operator VectorX", "classOFELI_1_1Vect.html#ace791c9e434274fc34740543dc6b75d6", null ]
     ] ],
     [ "Muscl1D", "classOFELI_1_1Muscl1D.html", [
@@ -4900,7 +4901,8 @@ var group__OFELI =
       [ "setMaxIter", "classOFELI_1_1Iter.html#a9e6d15777f4c9d95999313bafae5e5e7", null ],
       [ "setTolerance", "classOFELI_1_1Iter.html#a4d0e665f8f92335ec10c4ccf9e9171b7", null ],
       [ "setVerbose", "classOFELI_1_1Iter.html#afc81729fb2aa1720f446f48f1c3977ff", null ],
-      [ "check", "group__OFELI.html#gaec86278ba42d21024e3e9da1a57ee08d", null ]
+      [ "check", "group__OFELI.html#gaec86278ba42d21024e3e9da1a57ee08d", null ],
+      [ "check", "group__OFELI.html#gacd18d8209c23c006d7a0ba574cda652b", null ]
     ] ],
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html", [
       [ "LinearSolver", "classOFELI_1_1LinearSolver.html#a2ffc285126a28fba1fa2d1c681f261cf", null ],
@@ -4946,7 +4948,8 @@ var group__OFELI =
       [ "setNbEq", "classOFELI_1_1ODESolver.html#a3b264f305b8fe76a3ae0520e151e47fb", null ],
       [ "setCoef", "classOFELI_1_1ODESolver.html#a2ea2722af101302a690f5874e4536748", null ],
       [ "setCoef", "classOFELI_1_1ODESolver.html#a6e0120918529bcfdfbb281db4dfff8a1", null ],
-      [ "setF", "classOFELI_1_1ODESolver.html#a65a819d5eb01a16a3f70a53daea8e7f8", null ],
+      [ "setF", "classOFELI_1_1ODESolver.html#a8e734c537232e7be6f58fd92ce129bd8", null ],
+      [ "setDF", "classOFELI_1_1ODESolver.html#ab9b2376f06f314b038b0b77860f84d2b", null ],
       [ "setRK4RHS", "classOFELI_1_1ODESolver.html#a8af5428b41cbdbd33226187aefbcd40c", null ],
       [ "setRK4RHS", "classOFELI_1_1ODESolver.html#aa7e53c44ddd0bfff4147278d5c15f3a3", null ],
       [ "setInitial", "classOFELI_1_1ODESolver.html#af1cd58fec176472be29a4dfb1be829e3", null ],
@@ -4965,6 +4968,8 @@ var group__OFELI =
       [ "setNonConstantMatrix", "classOFELI_1_1ODESolver.html#ad0f5cc02d42fd6d2c81ef09d85671670", null ],
       [ "setLinearSolver", "classOFELI_1_1ODESolver.html#a03025e97482684280a54df4817908825", null ],
       [ "setVerbose", "classOFELI_1_1ODESolver.html#ab0dff7ac814d61fe684767c7d33b1c1a", null ],
+      [ "setMaxIter", "classOFELI_1_1ODESolver.html#a9e6d15777f4c9d95999313bafae5e5e7", null ],
+      [ "setTolerance", "classOFELI_1_1ODESolver.html#a4d0e665f8f92335ec10c4ccf9e9171b7", null ],
       [ "runOneTimeStep", "classOFELI_1_1ODESolver.html#af8c8f582bd6836d2145e823ce5ed5ef4", null ],
       [ "run", "classOFELI_1_1ODESolver.html#ab174fb4127d2dfb1b5e0d57b9e40b617", null ],
       [ "getLSolver", "classOFELI_1_1ODESolver.html#a799a12990da0e52bb134bf40ee4159e2", null ],
@@ -5352,5 +5357,6 @@ var group__OFELI =
     [ "Iter", "group__OFELI.html#ga52a964fddab510b9f151dc0e0fd611b8", null ],
     [ "Iter", "group__OFELI.html#ga078e68fa4370649b93926df9d245f193", null ],
     [ "check", "group__OFELI.html#gaec86278ba42d21024e3e9da1a57ee08d", null ],
+    [ "check", "group__OFELI.html#gacd18d8209c23c006d7a0ba574cda652b", null ],
     [ "solve", "group__OFELI.html#gaeccb35e1c449b861305d1765f86395f4", null ]
 ];

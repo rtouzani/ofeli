@@ -78,26 +78,39 @@ template<class T_> class Iter
 /// \brief Destructor
     ~Iter() { }
 
-/// \brief Set maximal number of iterations
+/** \brief Set maximal number of iterations
+ *  @param [in] max_it Maximal number of iterations [Default: <tt>100</tt>]
+ */
     void setMaxIter(int max_it) { _max_it = max_it; }
 
 /// \brief Set tolerance value for convergence
+/// @param [in] toler Tolerance value [Default: <tt>1.e-8</tt>]
     void setTolerance(real_t toler) { _toler = toler; }
 
 /// \brief Set verbosity parameter
+/// @param [in] v Verbosity parameter [Default: <tt>0</tt>]
     void setVerbose(int v) { _verbose = v; }
 
 /** \brief Check convergence
  *  @param [in,out] u Solution vector at previous iteration
  *  @param [in] v Solution vector at current iteration
  *  @param [in] opt Vector norm for convergence checking
- *  <tt>1</tt>: 1-norm, <tt>2</tt>: 2-norm, 0: Max. norm [default: <tt>2</tt>]
+ *  <tt>1</tt>: 1-norm, <tt>2</tt>: 2-norm, 0: Max. norm [Default: <tt>2</tt>]
  *  @return true if convergence criterion is satisfied, false if not
  *  \details After checking, this function copied <tt>v</tt> into <tt>u</tt>.
  */
     bool check(Vect<T_>&       u,
                const Vect<T_>& v,
                int             opt=2);
+
+/** \brief Check convergence for a scalar case (one equation)
+ *  @param [in,out] u Solution at previous iteration
+ *  @param [in] v Solution at current iteration
+ *  @return true if convergence criterion is satisfied, false if not
+ *  \details After checking, this function copied <tt>v</tt> into <tt>u</tt>.
+ */
+    bool check(T_&       u,
+               const T_& v);
 
  private:
 
@@ -109,12 +122,9 @@ template<class T_> class Iter
 
 template<class T_>
 Iter<T_>::Iter()
+         : _conv(false), _toler(1.e-8), _verbose(0), _max_it(100)
 {
    _it = 1;
-   _max_it = 100;
-   _toler = 1.e-8;
-   _conv = false;
-   _verbose = 0;
 }
 
 
@@ -132,9 +142,9 @@ Iter<T_>::Iter(int    max_it,
 
 
 template<class T_>
-bool Iter<T_>::check(Vect<T_>& u,
+bool Iter<T_>::check(Vect<T_>&       u,
                      const Vect<T_>& v,
-                     int       opt)
+                     int             opt)
 {
    real_t a, b=0;
    size_t n=u.size();
@@ -174,6 +184,34 @@ bool Iter<T_>::check(Vect<T_>& u,
       if (_verbose > 0)
          cout << "Convergence after " << _it-1 << " iterations, Discrepancy: " 
               << b << endl;
+      return true;
+   }
+   else
+      return false;
+}
+
+
+template<class T_>
+bool Iter<T_>::check(T_&       u,
+                     const T_& v)
+{
+   _it++;
+   real_t a = std::abs(u);
+   if (fabs(a)<_toler)
+      a = 1;
+   real_t b = std::abs(u-v)/a;
+   if (_verbose > 1)
+      cout << "Iteration " << _it-1 << ", Discrepancy: " << b << endl;
+   u = v;
+
+   if (b>_toler && _it>_max_it) {
+      if (_verbose > 0)
+         cout << "No convergence after " << _it-1 << " iterations, Discrepancy: " << b << endl;
+      return true;
+   }
+   if (b<_toler && _it<=_max_it) {
+      if (_verbose > 0)
+         cout << "Convergence after " << _it-1 << " iterations, Discrepancy: " << b << endl;
       return true;
    }
    else

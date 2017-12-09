@@ -501,12 +501,20 @@ class Vect
 /// \brief Return number of grid points in the <tt>z</tt>-direction if grid indexing is set
     size_t getNz() const { return _nz; }
 
+/** \brief Assign a given function (given by an interpretable algebraic expression) of indices 
+ *  components of vector.
+ *  \details This function enable assigning a value to vector entries as function of indices 
+ *  @param [in] exp  Regular algebraic expression to assign. It must involve the variables <tt>i</tt>,
+ *  <tt>j</tt> and/or <tt>k</tt>.
+ */
+    void setIJK(const string& exp);
+
 /** \brief Assign a given value to components of vector with given code
  *  \details Vector components are assumed nodewise
- *  @param [in] m Instance of mesh
- *  @param [in] code Code for which nodes will be assigned prescribed value
- *  @param [in] val Value to prescribe
- *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ *  @param [in] m Mesh instance
+ *  @param [in] code The value is assigned if the node has this code
+ *  @param [in] val Value to assign
+ *  @param [in] dof Degree of freedom to assign [Default: <tt>1</tt>]
  */
     void setNodeBC(Mesh&  m,
                    int    code,
@@ -849,10 +857,10 @@ class Vect
              size_t k,
              T_     val);
 
-
-/// \brief Add a value to an entry for a 1-index vector
-/// @param [in] i Rank index in vector (starts at <tt>1</tt>)
-/// @param [in] val Value to assign
+/** \brief Add a value to an entry for a 1-index vector
+ *  @param [in] i Rank index in vector (starts at <tt>1</tt>)
+ *  @param [in] val Value to assign
+ */
     void add(size_t i,
              T_     val);
 
@@ -1036,23 +1044,23 @@ class Vect
 
 /** \brief Compute FFT transform of vector
  *  \details This member function computes the FFT (Fast Fourier Transform) of the vector
- *  contained in the instance and stores it in vector \c v, which is complex valued
- *  @param [in] v Vect instance containing the FFT
+ *  contained in the instance and returns it
+ *  @return Vect<complex<double> > instance containing the FFT
  *  @remark The size of Vect instance must be a power of two and must not exceed
  *  the value of 2^MAX_FFT_SIZE (This value is set in the header "constants.h")
  *  @remark The Vect instance can be either a Vect<double> or Vec<complex<double> >
  */
-    void getFFT(Vect<complex_t>& v);
+    Vect<complex_t> getFFT();
 
 /** \brief Compute Inverse FFT transform of vector
  *  \details This member function computes the inverse FFT (Fast Fourier Transform) of the vector
- *  contained in the instance and stores it in vector \c v, which is complex valued
- *  @param [in] v Vect instance containing the FFT
+ *  contained in the instance and returns it
+ *  @return Vect<complex<double> > instance containing the FFT
  *  @remark The size of Vect instance must be a power of two and must not exceed
  *  the value of 2^MAX_FFT_SIZE (This value is set in the header "constants.h")
  *  @remark The Vect instance can be either a Vect<double> or Vec<complex<double> >
  */
-    void getInvFFT(Vect<complex_t>& v);
+    Vect<complex_t> getInvFFT();
 
 #if defined (USE_EIGEN)
 /** \brief Casting operator
@@ -1437,6 +1445,26 @@ void Vect<T_>::select(const Vect<T_>& v,
 
 
 template <class T_>
+void Vect<T_>::setIJK(const string& exp)
+{
+   int err;
+   real_t d[3];
+   PARSE(exp.c_str(),"i,j,k");
+   for (size_t i=1; i<=_nx; ++i) {
+      for (size_t j=1; j<=_ny; ++j) {
+         for (size_t k=1; k<=_nz; ++k) {
+            d[0] = i, d[1] = j, d[2] = k;
+            set(i,j,k,EVAL(d));
+            if ((err=theParser.EvalError()))
+               throw OFELIException("In Vect::setIJK(string,dof): Illegal regular expression."
+                                    " Error code: "+itos(err));
+         }
+      }
+   }
+}
+
+
+template <class T_>
 void Vect<T_>::set(const string&       exp,
                    const Vect<real_t>& x)
 {
@@ -1555,8 +1583,8 @@ void Vect<T_>::setSize(size_t nx,
 }
 
 
-template<>
-inline void Vect<real_t>::getFFT(Vect<complex_t>& v)
+template<class T_>
+Vect<complex_t> Vect<T_>::getFFT()
 {
    void fft(vector<complex_t>& x);
    int logn = int(log(real_t(_size))/(log(2.0))+0.01);
@@ -1568,10 +1596,8 @@ inline void Vect<real_t>::getFFT(Vect<complex_t>& v)
    else if (int(pow(2.0,logn)) != _size)
       throw OFELIException("In Vect<T_>::getFFT(v): Vector size not a power of 2.\n"
                            "Can't run FFT.");
-   if (_size <= 1)
-      return;
 
-   v.resize(_size);
+   Vect<complex_t> v(_size);
    for (size_t i=0; i<_size; i++)
       v[i] = (*this)[i];
  
@@ -1589,48 +1615,12 @@ inline void Vect<real_t>::getFFT(Vect<complex_t>& v)
       v[k        ] = even[k] + t;
       v[k+_size/2] = even[k] - t;
    }
+   return v;
 }
 
 
-template<>
-inline void Vect<complex_t>::getFFT(Vect<complex_t>& v)
-{
-   void fft(vector<complex_t>& x);
-   int logn = int(log(real_t(_size))/(log(2.0))+0.01);
-   if (_size<2)
-      throw OFELIException("In Vect<T_>::getFFT(v): Vector size is less than two.\n"
-                           "Can't run FFT.");
-   else if ((logn-1) > MAX_FFT_SIZE)
-      throw OFELIException("In Vect<T_>::getFFT(v): FFT has too many points.");
-   else if (int(pow(2.0,logn)) != _size)
-      throw OFELIException("In Vect<T_>::getFFT(v): Vector size not a power of 2.\n"
-                           "Can't run FFT.");
-   if (_size <= 1)
-      return;
-
-   v.resize(_size);
-   for (size_t i=0; i<_size; i++)
-      v[i] = (*this)[i];
- 
-// divide
-   vector<complex_t> even, odd;
-   OddEven(v,odd,even);
-
-// conquer
-   fft(even);
-   fft(odd);
-
-// combine
-   for (size_t k=0; k<_size/2; ++k) {
-      complex_t t = std::polar(1.0,-2*OFELI_PI*k/_size)*odd[k];
-      v[k        ] = even[k] + t;
-      v[k+_size/2] = even[k] - t;
-   }
-}
-
-
-template<>
-inline void Vect<real_t>::getInvFFT(Vect<complex_t>& v)
+template<class T_>
+Vect<complex_t> Vect<T_>::getInvFFT()
 {
    void fft(vector<complex_t>& x);
    int logn = int(log(real_t(_size))/(log(2.0))+0.01);
@@ -1642,14 +1632,12 @@ inline void Vect<real_t>::getInvFFT(Vect<complex_t>& v)
       throw OFELIException("In Vect<T_>::getInvFFT(v): FFT has too many points.");
 
    else if (int(pow(2.0,logn)) != _size)
-      throw OFELIException("In Vect<T_>::getInvFFT(v): Vector size not a power of 2.\n"
-                           "Can't run FFT.");
-   if (_size <= 1)
-      return;
+      throw OFELIException("In Vect<T_>::getInvFFT(v): Vector size is not a power of 2.\n"
+                           "Can't run Inverse FFT.");
 
-   v.resize(_size);
+   Vect<complex_t> v(_size);
    for (size_t i=0; i<_size; i++)
-      v[i] = (*this)[i];
+      v[i] = complex_t(std::conj((*this)[i]));
  
 // divide
    vector<complex_t> even, odd;
@@ -1669,49 +1657,7 @@ inline void Vect<real_t>::getInvFFT(Vect<complex_t>& v)
 // conjugate and scale
    for (size_t i=0; i<_size; i++)
       v[i] = std::conj(v[i])*(1.0/_size);
-}
-
-
-template<>
-inline void Vect<complex_t>::getInvFFT(Vect<complex_t>& v)
-{
-   void fft(vector<complex_t>& x);
-   int logn = int(log(real_t(_size))/(log(2.0))+0.01);
-   if (_size<2)
-      throw OFELIException("In Vect<T_>::getInvFFT(v): Vector size is less than two.\n"
-                           "Can't run FFT.");
-
-   else if ((logn-1) > MAX_FFT_SIZE)
-      throw OFELIException("In Vect<T_>::getFFT(v): FFT has too many points.");
-
-   else if (int(pow(2.0,logn)) != _size)
-      throw OFELIException("In Vect<T_>::getFFT(v): Vector size not a power of 2.\n"
-                           "Can't run FFT.");
-   if (_size <= 1)
-      return;
-
-   v.resize(_size);
-   for (size_t i=0; i<_size; i++)
-      v[i] = std::conj((*this)[i]);
- 
-// divide
-   vector<complex_t> even, odd;
-   OddEven(v,odd,even);
-
-// conquer
-   fft(even);
-   fft(odd);
-
-// combine
-   for (size_t k=0; k<_size/2; ++k) {
-      complex_t t = std::polar(1.0,-2*OFELI_PI*k/_size)*odd[k];
-      v[k        ] = even[k] + t;
-      v[k+_size/2] = even[k] - t;
-   }
-
-// conjugate and scale
-   for (size_t i=0; i<_size; i++)
-      v[i] = std::conj(v[i])*(1.0/_size);
+   return v;
 }
 
 
