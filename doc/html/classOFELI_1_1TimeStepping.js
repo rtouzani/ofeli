@@ -16,6 +16,8 @@ var classOFELI_1_1TimeStepping =
     [ "setConstantMatrix", "classOFELI_1_1TimeStepping.html#ad0b215af0339c42514f036bf711ffffd", null ],
     [ "setNonConstantMatrix", "classOFELI_1_1TimeStepping.html#ad0f5cc02d42fd6d2c81ef09d85671670", null ],
     [ "setLinearSolver", "classOFELI_1_1TimeStepping.html#a03025e97482684280a54df4817908825", null ],
+    [ "setNLTerm0", "classOFELI_1_1TimeStepping.html#ac813a41f1f5c3d248cba17a2bf55159a", null ],
+    [ "setNLTerm", "classOFELI_1_1TimeStepping.html#afa50a030ed9900fbe29d9f3632ad960e", null ],
     [ "setVerbose", "classOFELI_1_1TimeStepping.html#ab0dff7ac814d61fe684767c7d33b1c1a", null ],
     [ "runOneTimeStep", "classOFELI_1_1TimeStepping.html#af8c8f582bd6836d2145e823ce5ed5ef4", null ],
     [ "run", "classOFELI_1_1TimeStepping.html#ab174fb4127d2dfb1b5e0d57b9e40b617", null ],

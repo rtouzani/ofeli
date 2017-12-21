@@ -133,6 +133,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a03025e97482684280a54df4817908825"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#a03025e97482684280a54df4817908825">setLinearSolver</a> (<a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s=<a class="el" href="group__OFELI.html#ggad0624a8576d3ca1d4af97479546930eaa8b17dcef7858d58588a474eac2a062b6">DIRECT_SOLVER</a>, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
 <tr class="memdesc:a03025e97482684280a54df4817908825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set linear solver data.  <a href="#a03025e97482684280a54df4817908825">More...</a><br /></td></tr>
 <tr class="separator:a03025e97482684280a54df4817908825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac813a41f1f5c3d248cba17a2bf55159a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#ac813a41f1f5c3d248cba17a2bf55159a">setNLTerm0</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a0, <a class="el" href="classOFELI_1_1Matrix.html">Matrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;A0)</td></tr>
+<tr class="memdesc:ac813a41f1f5c3d248cba17a2bf55159a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set vectors defining a noninear first order system of ODEs.  <a href="#ac813a41f1f5c3d248cba17a2bf55159a">More...</a><br /></td></tr>
+<tr class="separator:ac813a41f1f5c3d248cba17a2bf55159a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa50a030ed9900fbe29d9f3632ad960e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#afa50a030ed9900fbe29d9f3632ad960e">setNLTerm</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a0, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a1, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a2)</td></tr>
+<tr class="memdesc:afa50a030ed9900fbe29d9f3632ad960e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set vectors defining a nonlinear second order system of ODEs.  <a href="#afa50a030ed9900fbe29d9f3632ad960e">More...</a><br /></td></tr>
+<tr class="separator:afa50a030ed9900fbe29d9f3632ad960e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0dff7ac814d61fe684767c7d33b1c1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#ab0dff7ac814d61fe684767c7d33b1c1a">setVerbose</a> (int v=0)</td></tr>
 <tr class="memdesc:ab0dff7ac814d61fe684767c7d33b1c1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set verbosity parameter:  <a href="#ab0dff7ac814d61fe684767c7d33b1c1a">More...</a><br /></td></tr>
 <tr class="separator:ab0dff7ac814d61fe684767c7d33b1c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -538,6 +544,83 @@ IDENT_PREC, DIAG_PREC, ILU_PREC [Default: <code>DIAG_PREC</code>] </td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The argument <em>p</em> has no effect if the solver is DIRECT_SOLVER </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac813a41f1f5c3d248cba17a2bf55159a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setNLTerm0 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Matrix.html">Matrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A0</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set vectors defining a noninear first order system of ODEs. </p>
+<p>The ODE system has the form a1(u)' + a0(u) = 0 </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a0</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance defining the 0-th order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a1</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance defining the first order term </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afa50a030ed9900fbe29d9f3632ad960e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setNLTerm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set vectors defining a nonlinear second order system of ODEs. </p>
+<p>The ODE system has the form a2(u)'' + a1(u)' + a0(u) = 0 </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a0</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance defining the 0-th order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a1</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance defining the first order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a2</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance defining the second order term </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

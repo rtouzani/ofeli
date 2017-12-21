@@ -591,7 +591,7 @@ var group__VectMat =
       [ "DiagPrescribe", "classOFELI_1_1SpMatrix.html#ab1df9bcbafe4b605f7dd449e55f98dd9", null ],
       [ "setSize", "classOFELI_1_1SpMatrix.html#a97deb13018c1b55b18bfe25a9e339e8d", null ],
       [ "setSize", "classOFELI_1_1SpMatrix.html#a6cd98f8e60c54091bc2249e99677f8c3", null ],
-      [ "setGraph", "classOFELI_1_1SpMatrix.html#ae854deae85a59963c3e2bc45f7ea7cbd", null ],
+      [ "setGraph", "classOFELI_1_1SpMatrix.html#adca22436d448fc219f940996ff43735a", null ],
       [ "getRow", "classOFELI_1_1SpMatrix.html#aca4442e9e5d2d998bdeed7382f72416c", null ],
       [ "getColumn", "classOFELI_1_1SpMatrix.html#a41b22a9bdb6e7816adda67eb2b3fcadd", null ],
       [ "operator()", "classOFELI_1_1SpMatrix.html#a906d09665a54a68d6333925dc83c57c8", null ],

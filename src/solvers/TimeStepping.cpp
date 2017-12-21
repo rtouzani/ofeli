@@ -370,7 +370,8 @@ void TimeStepping::solveStationary()
 void TimeStepping::solveForwardEuler()
 {
    if (_order==2)
-      throw OFELIException("In TimeStepping::solveForwardEuler(): Forward Euler scheme is implemented for first order equations only.");
+      throw OFELIException("In TimeStepping::solveForwardEuler(): Forward Euler "
+                           "scheme is implemented for first order equations only.");
    for (size_t i=1; i<=_nb_eq; i++)
       _b(i) /= _D(i);
    insertBC(_b,_v);
@@ -382,7 +383,8 @@ void TimeStepping::solveForwardEuler()
 void TimeStepping::solveBackwardEuler()
 {
    if (_order==2)
-      throw OFELIException("In TimeStepping::solveBackwardEuler(): Backward Euler scheme is implemented for first order equations only.");
+      throw OFELIException("In TimeStepping::solveBackwardEuler(): Backward Euler "
+                           "scheme is implemented for first order equations only.");
    _ls.setMatrix(_A);
    _ls.setRHS(_b);
    _ls.setSolution(_vv);
@@ -395,7 +397,8 @@ void TimeStepping::solveBackwardEuler()
 void TimeStepping::solveCrankNicolson()
 {
    if (_order==2)
-      throw OFELIException("In TimeStepping::solveCrankNicolson(): Crank-Nicolson scheme is implemented for first order equations only.");
+      throw OFELIException("In TimeStepping::solveCrankNicolson(): "
+                           "Crank-Nicolson scheme is implemented for first order equations only.");
    _ls.setMatrix(_A);
    _ls.setRHS(_b);
    _ls.setSolution(_vv);
@@ -409,7 +412,8 @@ void TimeStepping::solveCrankNicolson()
 void TimeStepping::solveHeun()
 {
    if (_order==2)
-      throw OFELIException("In TimeStepping::solveHeun(): Heun scheme is implemented for first order equations only.");
+      throw OFELIException("In TimeStepping::solveHeun(): Heun scheme is "
+                           "implemented for first order equations only.");
    for (size_t i=1; i<=_nb_eq; i++)
       _b(i) /= _D(i);
    if (_sstep==1)
@@ -426,7 +430,8 @@ void TimeStepping::solveHeun()
 void TimeStepping::solveLeapFrog()
 {
    if (_order==2)
-      throw OFELIException("In TimeStepping::solveLeapFrog(): Leap Frog scheme is implemented for first order equations only.");
+      throw OFELIException("In TimeStepping::solveLeapFrog(): Leap Frog "
+                           "scheme is implemented for first order equations only.");
    for (size_t i=1; i<=_nb_eq; i++)
       _b(i) /= _D(i);
    if (_step==1) {
@@ -444,7 +449,8 @@ void TimeStepping::solveLeapFrog()
 void TimeStepping::solveAB2()
 {
    if (_order==2)
-      throw OFELIException("In TimeStepping::solveAB2(): Adams-Bashforth scheme is implemented for first order equations only.");
+      throw OFELIException("In TimeStepping::solveAB2(): Adams-Bashforth "
+                           "scheme is implemented for first order equations only.");
    for (size_t i=1; i<=_nb_eq; i++)
       _b(i) /= _D(i);
    if (_step==1) {
@@ -462,7 +468,8 @@ void TimeStepping::solveAB2()
 void TimeStepping::solveRK4()
 {
    if (_order==2)
-      throw OFELIException("In TimeStepping::solveRK4(): Runge-Kutta scheme is valid for first order equations only.");
+      throw OFELIException("In TimeStepping::solveRK4(): Runge-Kutta scheme "
+                           "is valid for first order equations only.");
    if (_sstep==4) {
       for (size_t i=1; i<=_nb_eq; i++)
          _b(i) /= _D(i);
@@ -484,7 +491,8 @@ void TimeStepping::solveRK3_TVD()
 void TimeStepping::solveNewmark()
 {
    if (_order!=2)
-      throw OFELIException("In TimeStepping::solveNewmark(): Newmark scheme is valid for second order equations only.");
+      throw OFELIException("In TimeStepping::solveNewmark(): Newmark scheme "
+                           "is valid for second order equations only.");
    if (_step==1 && _sstep==1) {
       for (size_t i=1; i<=_nb_eq; i++)
          _b(i) /= _D(i);
@@ -507,7 +515,8 @@ void TimeStepping::solveNewmark()
 void TimeStepping::solveBDF2()
 {
   if (_order==2)
-     throw OFELIException("In TimeStepping::solveBDF2(): BDF2 scheme is implemented for first order equations only.");
+     throw OFELIException("In TimeStepping::solveBDF2(): BDF2 scheme is "
+                          "implemented for first order equations only.");
    _ls.setMatrix(_A);
    _ls.setRHS(_b);
    _ls.setSolution(_vv);

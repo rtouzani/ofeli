@@ -170,8 +170,8 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  (opt=1) or not (opt=0). In the latter case, this vector can have
  *  the same contents more than once and are not necessarily ordered
  */
-    SpMatrix(const vector<RC>& I,
-             int               opt=1);
+    SpMatrix(const Vect<RC>& I,
+             int             opt=1);
 #endif
 
 #ifndef USE_EIGEN
@@ -183,9 +183,9 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  (<tt>opt=1</tt>: default) or not (<tt>opt=0</tt>). In the latter case, this vector can have
  *  the same contents more than once and are not necessarily ordered
  */
-    SpMatrix(const vector<RC>& I,
-             const vector<T_>& a,
-             int               opt=1);
+    SpMatrix(const Vect<RC>& I,
+             const Vect<T_>& a,
+             int             opt=1);
 #endif
 
 #ifndef USE_EIGEN
@@ -367,8 +367,8 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  (<tt>opt=1</tt>: default) or not (<tt>opt=0</tt>). In the latter case, this vector can have
  *  the same contents more than once and are not necessarily ordered
  */
-    void setGraph(const vector<RC>& I,
-                  int               opt=1);
+    void setGraph(const Vect<RC>& I,
+                  int             opt=1);
 
 /// \brief Get <tt>i</tt>-th row vector.
     Vect<T_> getRow(size_t i) const;
@@ -777,8 +777,8 @@ SpMatrix<T_>::SpMatrix(size_t dof,
 
 #ifndef USE_EIGEN
 template<class T_>
-SpMatrix<T_>::SpMatrix(const vector<RC>& I,
-                       int               opt) : _is_dense(0), _extended(0)
+SpMatrix<T_>::SpMatrix(const Vect<RC>& I,
+                       int             opt) : _is_dense(0), _extended(0)
 {
    _is_diagonal = false;
    setGraph(I,opt);
@@ -792,9 +792,9 @@ SpMatrix<T_>::SpMatrix(const vector<RC>& I,
 
 #ifndef USE_EIGEN
 template<class T_>
-SpMatrix<T_>::SpMatrix(const vector<RC>& I,
-                       const vector<T_>& a,
-                       int               opt) : _is_dense(0), _extended(0)
+SpMatrix<T_>::SpMatrix(const Vect<RC>& I,
+                       const Vect<T_>& a,
+                       int             opt) : _is_dense(0), _extended(0)
 {
    _is_diagonal = false;
    size_t n=I.size();
@@ -1107,7 +1107,7 @@ void SpMatrix<T_>::setMesh(size_t dof,
 template<class T_>
 void SpMatrix<T_>::setMesh(size_t dof,
                            size_t nb_eq,
-			   Mesh&  mesh)
+                           Mesh&  mesh)
 {
    _type = 0;
    _dof = 0;
@@ -1132,8 +1132,8 @@ void SpMatrix<T_>::setExtendedGraph()
    
 
 template<class T_>
-void SpMatrix<T_>::setGraph(const vector<RC>& I,
-                            int               opt)
+void SpMatrix<T_>::setGraph(const Vect<RC>& I,
+                            int             opt)
 {
    _length = I.size();
    _nb_rows = _nb_cols = 0;
@@ -1854,8 +1854,8 @@ void SpMatrix<T_>::SSORSolve(const Vect<T_>& b,
          if (_col_ind[j]==i+1) {
             id[i] = k + 1;
             if (_a[k]==static_cast<T_>(0))
-               throw OFELIException("In SpMatrix::setMatrix(SpMatrix<T_>): Zero pivot detected in row " +
-                                    itos(i+1));
+               throw OFELIException("In SpMatrix::setMatrix(SpMatrix<T_>):"
+                                    " Zero pivot detected in row " + itos(i+1));
          }
       }
    }

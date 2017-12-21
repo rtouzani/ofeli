@@ -98,6 +98,8 @@ var group__Solver =
       [ "setInitialRHS", "classOFELI_1_1ODESolver.html#a03b0ab4b60d3d19f73499d6ccf8b5c4c", null ],
       [ "setMatrices", "classOFELI_1_1ODESolver.html#a8f294036ba5c4c042190a777923aea39", null ],
       [ "setMatrices", "classOFELI_1_1ODESolver.html#a5cb40025ed875f05963306f97f4350aa", null ],
+      [ "seODEVectors", "classOFELI_1_1ODESolver.html#af231347a5fe8d3a7419167f917ebfae7", null ],
+      [ "seODEVectors", "classOFELI_1_1ODESolver.html#adbc6aadf8052e73121c0398bd2599924", null ],
       [ "setRHS", "classOFELI_1_1ODESolver.html#a4dcc6c83ae5f9c7a958e9ba081f8eeb6", null ],
       [ "setRHS", "classOFELI_1_1ODESolver.html#ab51f289a00d4ce4f45d6e811f545cfff", null ],
       [ "setRHS", "classOFELI_1_1ODESolver.html#a3dbf209fb629cc8da401e9fe178505e8", null ],
@@ -111,6 +113,8 @@ var group__Solver =
       [ "runOneTimeStep", "classOFELI_1_1ODESolver.html#af8c8f582bd6836d2145e823ce5ed5ef4", null ],
       [ "run", "classOFELI_1_1ODESolver.html#ab174fb4127d2dfb1b5e0d57b9e40b617", null ],
       [ "getLSolver", "classOFELI_1_1ODESolver.html#a799a12990da0e52bb134bf40ee4159e2", null ],
+      [ "getTimeDerivative", "classOFELI_1_1ODESolver.html#a261faa1002654dcc823cd64769196b42", null ],
+      [ "getTimeDerivative", "classOFELI_1_1ODESolver.html#a40eff94c5c42c3f01b7883b3043b4064", null ],
       [ "get", "classOFELI_1_1ODESolver.html#adb3d75689bdd8aad7c9e197d4d9bd87a", null ]
     ] ],
     [ "OptSolver", "classOFELI_1_1OptSolver.html", [
@@ -181,6 +185,8 @@ var group__Solver =
       [ "setConstantMatrix", "classOFELI_1_1TimeStepping.html#ad0b215af0339c42514f036bf711ffffd", null ],
       [ "setNonConstantMatrix", "classOFELI_1_1TimeStepping.html#ad0f5cc02d42fd6d2c81ef09d85671670", null ],
       [ "setLinearSolver", "classOFELI_1_1TimeStepping.html#a03025e97482684280a54df4817908825", null ],
+      [ "setNLTerm0", "classOFELI_1_1TimeStepping.html#ac813a41f1f5c3d248cba17a2bf55159a", null ],
+      [ "setNLTerm", "classOFELI_1_1TimeStepping.html#afa50a030ed9900fbe29d9f3632ad960e", null ],
       [ "setVerbose", "classOFELI_1_1TimeStepping.html#ab0dff7ac814d61fe684767c7d33b1c1a", null ],
       [ "runOneTimeStep", "classOFELI_1_1TimeStepping.html#af8c8f582bd6836d2145e823ce5ed5ef4", null ],
       [ "run", "classOFELI_1_1TimeStepping.html#ab174fb4127d2dfb1b5e0d57b9e40b617", null ],

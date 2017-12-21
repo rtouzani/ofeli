@@ -182,6 +182,9 @@ class ODESolver
  */
     void setF(string f);
 
+    void setF(int    i,
+              string f);
+
 /** \brief Set derivative with respect to the unknown of the function defining the ODE
  *  \details This function enables prescribing the value of the 1-st derivative
  *  for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be
@@ -251,7 +254,7 @@ class ODESolver
     void setMatrices(DMatrix<real_t>& A0,
                      DMatrix<real_t>& A1);
 
-/** \brief Define matrices for a system of second ODEs
+/** \brief Define matrices for a system of second-order ODEs
  *  \details Matrices are given as references to class DMatrix.
  *  @param [in] A0 Reference to matrix in front of the 0-th order term (no time derivative)
  *  @param [in] A1 Reference to matrix in front of the 1-st order term (first time derivative)
@@ -261,6 +264,30 @@ class ODESolver
     void setMatrices(DMatrix<real_t>& A0,
                      DMatrix<real_t>& A1,
                      DMatrix<real_t>& A2);
+
+/** \brief Define matrices for an implicit nonlinear system of first-order ODEs
+ *  \details The system has the nonlinear implicit form 
+ *       a1(u)' + a0(u) = 0 
+ *  Vectors a0, a1 are given as references to class Vect.
+ *  @param [in] a0 Reference to vector in front of the 0-th order term (no time derivative)
+ *  @param [in] a1 Reference to vector in front of the 1-st order term (first time derivative)
+ *  @remark This function has to be called at each time step
+ */
+    void seODEVectors(Vect<real_t>& a0,
+                      Vect<real_t>& a1);
+
+/** \brief Define matrices for an implicit nonlinear system of second-order ODEs
+ *  \details The system has the nonlinear implicit form 
+ *       a2(u)'' + a1(u)' + a0(u) = 0 
+ *  Vectors a0, a1, a2 are given as references to class Vect.
+ *  @param [in] a0 Reference to vector in front of the 0-th order term (no time derivative)
+ *  @param [in] a1 Reference to vector in front of the 1-st order term (first time derivative)
+ *  @param [in] a2 Reference to vector in front of the 2-nd order term (second time derivative)
+ *  @remark This function has to be called at each time step
+ */
+    void seODEVectors(Vect<real_t>& a0,
+                      Vect<real_t>& a1,
+                      Vect<real_t>& a2);
 
 /// \brief Set right-hand side vector for a system of ODE
 /// @param [in] b Vect instance containing right-hand side for a linear system
@@ -347,6 +374,22 @@ class ODESolver
 /// \brief Return LinearSolver instance
     LinearSolver<real_t> &getLSolver() { return _ls; }
 
+/** \brief Get time derivative of solution
+ *  \details Return approximate time derivative of solution in the case
+ *  of a single equation
+ *  @param [in] i Index of component whose time derivative is sought
+ *  @return Time derivative of the i-th component of the solution
+ *  @remark If we are solving one equation, this parameter is not used.
+ */
+    real_t getTimeDerivative(int i=1) const;
+
+/** \brief Get time derivative of solution (for a system)
+ *  \details Get approximate time derivative of solution in the case
+ *  of an ODE system
+ *  @param [out] y Vector containing time derivative of solution
+ */
+    void getTimeDerivative(Vect<real_t>& y) const;
+
 /// \brief Return solution in the case of a scalar equation
     real_t get() const { return _y2; }
 
@@ -368,11 +411,12 @@ class ODESolver
    Iteration _s;
    Preconditioner _p;
    bool _a0, _a1, _a2, _constant_matrix, _regex, _explicit, _init, _lhs, _rhs, _rhsF;
-   Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv;
+   Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv, _dudt;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _vF1, _vF2, _vF, _vDF1, _D, _k1, _k2, _k3, _k4;
    DMatrix<real_t> *_A0, *_A1, *_A2;
+   //   Vect<real_t> *_a0, *_a1, *_a2;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2;
-   real_t _y0, _y1, _dy1, _y2, _dy2, _ddy, _d0, _d1, _d2, _d01;
+   real_t _y0, _y1, _dy1, _y2, _dy2, _ddy, _d0, _d1, _d2, _d01, _dydt;
    string _exc[3];
    vector<string> _expF, _expDF, _expA0, _expA1, _expA2;
    real_t _beta, _gamma;
@@ -417,6 +461,7 @@ class ODESolver
 
    real_t eval(string exp, real_t t, real_t y);
    real_t eval(string exp, real_t t);
+   real_t eval(string exp, real_t t, const Vect<real_t>& y);
 };
 
 /// \fn ostream & operator<<(ostream& s, const ODESolver &de)

@@ -224,6 +224,26 @@ class TimeStepping
     void setLinearSolver(Iteration      s=DIRECT_SOLVER,
                          Preconditioner p=DIAG_PREC);
 
+/** \brief Set vectors defining a noninear first order system of ODEs
+ *  \details The ODE system has the form
+ *     a1(u)' + a0(u) = 0
+ *  @param [in] a0 Vect instance defining the 0-th order term
+ *  @param [in] a1 Vect instance defining the first order term
+ */
+    void setNLTerm0(Vect<real_t>&   a0,
+                    Matrix<real_t>& A0);
+
+/** \brief Set vectors defining a nonlinear second order system of ODEs
+ *  \details The ODE system has the form
+ *     a2(u)'' + a1(u)' + a0(u) = 0
+ *  @param [in] a0 Vect instance defining the 0-th order term
+ *  @param [in] a1 Vect instance defining the first order term
+ *  @param [in] a2 Vect instance defining the second order term
+ */
+    void setNLTerm(Vect<real_t>& a0,
+                   Vect<real_t>& a1,
+                   Vect<real_t>& a2);
+
 /** \brief Set verbosity parameter:
  *  \details
  *  <ul>
@@ -292,6 +312,7 @@ class TimeStepping
    bool _constant_matrix, _regex, _explicit, _set_bc, _nl;
    Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _D, _k1, _k2, _k3, _k4;
+   Vect<real_t> *_a0, *_a1, *_a2;
    Matrix<real_t> *_A;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;
    real_t _beta, _gamma, _nl_toler;

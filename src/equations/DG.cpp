@@ -82,7 +82,7 @@ DG::~DG()
 
 int DG::setGraph()
 {
-   vector<std::pair<size_t,size_t> > ij;
+   Vect<std::pair<size_t,size_t> > ij;
    MESH_EL {
       _ne = theElementLabel;
       for (size_t i=1; i<=_nb_el_dof; i++) {
