@@ -92,6 +92,10 @@ var group__Util =
       [ "x", "structOFELI_1_1Point2D.html#a4333b1040efe8cd32f7c76bfc2269e0d", null ],
       [ "y", "structOFELI_1_1Point2D.html#ab4943c75e718fe503722ac7d26c746a6", null ]
     ] ],
+    [ "OFELIException", "classOFELI_1_1OFELIException.html", [
+      [ "OFELIException", "group__OFELI.html#gacd7a732bc4bb145d8d4167ccf89cb051", null ],
+      [ "OFELIException", "group__OFELI.html#gafe2fb758805e119f9f8db227302200b8", null ]
+    ] ],
     [ "Gauss", "classOFELI_1_1Gauss.html", [
       [ "Gauss", "classOFELI_1_1Gauss.html#af9f3b1e7a7b3a7c9f04b9eea81ea836b", null ],
       [ "Gauss", "classOFELI_1_1Gauss.html#aecd62a41ddc1a71da8acbb12cce50dbc", null ],

@@ -201,7 +201,7 @@ struct Point {
 /// (up to tolerance <tt>toler</tt>)
 /// \details Default value for <tt>toler</tt> is the <tt>OFELI_TOLERANCE</tt> constant.
     bool isCloseTo(const Point<double>& a,
-                         double         toler=OFELI_TOLERANCE) const
+                   double               toler=OFELI_TOLERANCE) const
     {
        return areClose(*this,a,toler);
     }
@@ -410,7 +410,7 @@ inline Point<double> CrossProduct(const Point<double>& lp,
  */
 inline bool areClose(const Point<double>& a,
                      const Point<double>& b,
-                           double         toler=OFELI_TOLERANCE)
+                     double               toler=OFELI_TOLERANCE)
 {
    if (((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z)) < toler*toler)
       return true;
@@ -444,6 +444,26 @@ inline double Distance(const Point<double>& a,
    return sqrt(SqrDistance(a,b));
 }
 
+
+/** \fn Point<T_> operator- (const Point<T_> &a)
+ * \brief Unary Operator <tt>-</tt>
+ * \ingroup Util
+ * \details Return minus <tt>a</tt>
+ *
+ *  \author Rachid Touzani
+ *  \copyright GNU Lesser Public License
+ */
+inline bool operator< (const Point<size_t>& a,
+                       const Point<size_t>& b)
+{
+   if (a.x < b.x)
+      return true;
+   if (a.x==b.x && a.y<b.y)
+      return true;
+   return false;
+}
+
+
 /** \fn ostream & operator<<(std::ostream &s, const Point<T_> &a)
  *  \brief Output point coordinates.
  *  \ingroup Util
@@ -452,8 +472,8 @@ inline double Distance(const Point<double>& a,
  *  \copyright GNU Lesser Public License
  */
 template <class T_>
-std::ostream & operator<<(      std::ostream& s,
-                          const Point<T_>&    a)
+std::ostream & operator<<(std::ostream&    s,
+                          const Point<T_>& a)
 {
    s.setf(ios::scientific);
    s << "( " << std::setprecision(8) << setw(12) << a.x << " , ";

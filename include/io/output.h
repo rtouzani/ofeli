@@ -38,6 +38,7 @@ using std::setw;
 #include <iomanip>
 #include <complex>
 #include <string>
+#include <list>
 
 #include <vector>
 using std::vector;
@@ -100,6 +101,26 @@ ostream&operator<<(ostream&          s,
 {
    for (size_t i=0; i<v.size(); i++)
       s << i << ": " << v[i] << std::endl;
+   return s;
+}
+
+
+/** \fn ostream & operator<<(ostream& s, const list<T_> &l)
+ *  \brief Output a vector instance.
+ *  \ingroup Util
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
+template<class T_>
+ostream&operator<<(ostream&             s,
+                   const std::list<T_>& l)
+{
+   typename std::list<T_>::const_iterator it = l.begin();
+   while (it != l.end()) {
+      s << *it << std::endl;
+      it++;
+   }
    return s;
 }
 

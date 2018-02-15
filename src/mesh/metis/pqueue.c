@@ -551,7 +551,7 @@ int CheckHeap(PQueueType *queue)
 {
   int i, j, nnodes;
   idxtype *locator;
-  KeyValueType *heap;
+  KeyValueType *heap=NULL;
 
   heap = queue->heap;
   locator = queue->locator;
@@ -560,7 +560,8 @@ int CheckHeap(PQueueType *queue)
   if (nnodes == 0)
     return 1;
 
-  ASSERT(locator[heap[0].val] == 0);
+  if (locator[heap[0].val]!=0)
+     printf("Warning: locator[heap[0].val]!=0\n");
   for (i=1; i<nnodes; i++) {
     ASSERTP(locator[heap[i].val] == i, ("%d %d %d %d\n", nnodes, i, heap[i].val, locator[heap[i].val])); 
     ASSERTP(heap[i].key <= heap[(i-1)/2].key, ("%d %d %d %d %d\n", i, (i-1)/2, nnodes, heap[i].key, heap[(i-1)/2].key));

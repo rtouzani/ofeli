@@ -46,8 +46,8 @@ void ReductionSimultanee(MetricAnIso M1,
    const double c=-c21+a11*a22;
    const double bb=b*b, ac= a*c;
    const double delta = bb - 4 * ac;
-   if (bb + Abs(ac) < 1.0e-20 || (delta< 1.0E-4 * bb ) ) {
-      if (Abs(a) < 1.e-30 )
+   if (bb + Abs(ac) < 1.0e-20 || (delta< 1.0E-4*bb)) {
+      if (Abs(a) < 1.e-30)
          l1 = l2 = 0;
       else 
          l1 = l2 = -b/(2*a); 
@@ -75,6 +75,7 @@ void ReductionSimultanee(MetricAnIso M1,
   return;
 }
 
+
 MetricAnIso Intersection(const MetricAnIso M1,
                          const MetricAnIso M2);
 
@@ -95,7 +96,7 @@ MetricAnIso Intersection(const MetricAnIso M1,
 
 MetricAnIso::MetricAnIso(const double      a[3],
                          const MetricAnIso m0,
-	                 const MetricAnIso m1,
+                         const MetricAnIso m1,
                          const MetricAnIso m2)
 {
    MetricAnIso mab(a[0]*m0.a11 + a[1]*m1.a11 + a[2]*m2.a11,
@@ -112,9 +113,9 @@ MetricAnIso::MetricAnIso(const double      a[3],
 }
 
 
-MetricAnIso::MetricAnIso(      double      a,
+MetricAnIso::MetricAnIso(double            a,
                          const MetricAnIso ma,
-                               double      b,
+                         double            b,
                          const MetricAnIso mb)
 {
    MetricAnIso mab(a*ma.a11+b*mb.a11,a*ma.a21+b*mb.a21,a*ma.a22+b*mb.a22);
@@ -136,7 +137,7 @@ MatVVP2x2::MatVVP2x2(const MetricAnIso M)
    double b=-a11-a22,c=-c21+a11*a22;
    double delta = b*b - 4*c;
    double n2=(c11+c22+c21);
-   if (n2 < 1e-30) 
+   if (n2 < 1e-30)
       lambda1=lambda2=0, v.x=1, v.y=0;
    else if (delta < eps*n2)
       lambda1 = lambda2 = -b/2, v.x = 1, v.y = 0;
@@ -198,9 +199,9 @@ void Triangles::IntersectGeomMetric(const double err=1,
          VertexOnGeom GV;
          Gh.ProjectOnCurve(edges[i],ss[j],V,GV);
          {
-	    GeometricalEdge *eg = GV;
-	    double s=GV;
-	    R2 tg;
+            GeometricalEdge *eg = GV;
+            double s=GV;
+            R2 tg;
             double R1=eg->R1tg(s,tg), ht=hmax;
             if (R1>1.0e-20)
                ht = Min(Max(errC/R1,hmin),hmax);
@@ -221,14 +222,14 @@ void Triangles::BoundAnisotropy(double anisomax,
    double lminaniso=1/(Max(hminaniso*hminaniso,1e-100));
    if (verbosity>1)
       cout << " -- BoundAnisotropy by  " << anisomax << endl; 
-   double h1=1.e30,h2=1e-30,rx=0;
+   double h1=1.e30, h2=1e-30, rx=0;
    double coef=1./(anisomax*anisomax);
    double hn1=1.e30, hn2=1e-30, rnx=1.e-30;  
    for (long i=0; i<nbv; i++) {
       MatVVP2x2 Vp(_vertices[i]);
       double lmax=Vp.lmax();
-      h1=Min(h1,Vp.lmin());
-      h2=Max(h2,Vp.lmax());
+      h1 = Min(h1,Vp.lmin());
+      h2 = Max(h2,Vp.lmax());
       rx = Max(rx,Vp.Aniso2());
       Vp *= Min(lminaniso,lmax)/lmax;
       Vp.BoundAniso2(coef);
@@ -313,9 +314,9 @@ void Triangles::IntersectConsMetric(const double* s,
       OnBoundary[iv] = 0;
       Mmassxx[iv] = 0;
    }
-   for (i=0; i<nbt; i++)
+   for (i=0; i<nbt; i++) {
       if (triangles[i].link) {
-	 const Triangle &t=triangles[i];
+         const Triangle &t=triangles[i];
          R2 A=t[0], B=t[1], C=t[2];
          iA = Number(t[0]);
          iB = Number(t[1]);
@@ -345,143 +346,143 @@ void Triangles::IntersectConsMetric(const double* s,
       }
       else
          workT[i] = -1;
+   }
 
-      for (long nusol=0; nusol<nbsol; nusol++) {
-         double smin=ss[0], smax=ss[0];
-         double h1=1.e30, h2=1e-30, rx=0;
-         double coef = 1./(anisomax*anisomax);
-         double hn1=1.e30, hn2=1e-30, rnx =1.e-30;  
-         int nbfield = typsols? sizeoftype[typsols[nusol]] : 1; 
-         if (nbfield==1) 
-            for (iv=0, k=0; iv<nbv; iv++, k+=n) {
-               dxdx[iv] = dxdy[iv] = dydy[iv] = 0;
-               smin = Min(smin,ss[k]);
-               smax = Max(smax,ss[k]);
-            }
-         else {
-            for (iv=0, k=0; iv<nbv; iv++, k+=n) {
-               double v=0;		     
-               for (int i=0; i<nbfield; i++)
-                  v += ss[k+i]*ss[k+i];
-                  v = sqrt(v);
-                  smin = Min(smin,v);
-                  smax = Max(smax,v);
-            }
+   for (long nusol=0; nusol<nbsol; nusol++) {
+      double smin=ss[0], smax=ss[0];
+      double h1=1.e30, h2=1e-30, rx=0;
+      double coef = 1./(anisomax*anisomax);
+      double hn1=1.e30, hn2=1e-30, rnx =1.e-30;  
+      int nbfield = typsols? sizeoftype[typsols[nusol]] : 1; 
+      if (nbfield==1) {
+         for (iv=0, k=0; iv<nbv; iv++, k+=n) {
+            dxdx[iv] = dxdy[iv] = dydy[iv] = 0;
+            smin = Min(smin,ss[k]);
+            smax = Max(smax,ss[k]);
          }
-         double sdelta=smax-smin;
-         double absmax=Max(Abs(smin),Abs(smax));
-         double cnorm=DoNormalisation ? coef2/sdelta : coef2;
-         if (verbosity>2) 
-            cout << "    Solution " << nusol <<  " Min = " << smin << " Max = " 
-                 << smax << " Delta =" << sdelta << " cnorm = " << cnorm
-                 << " Nb of fields =" << nbfield << endl;
-         if (sdelta < 1.0e-10*Max(absmax,1e-20) && (nbfield ==1)) {
-            if (verbosity>2)
-               cout << "      Solution " << nusol << " is constant. We skip. " 
-                    << " Min = " << smin << " Max = " << smax << endl;
-            continue;
+      }
+      else {
+         for (iv=0, k=0; iv<nbv; iv++, k+=n) {
+            double v=0;		     
+            for (int i=0; i<nbfield; i++)
+               v += ss[k+i]*ss[k+i];
+            v = sqrt(v);
+            smin = Min(smin,v);
+            smax = Max(smax,v);
          }
+      }
+      double sdelta=smax-smin;
+      double absmax=Max(Abs(smin),Abs(smax));
+      double cnorm=DoNormalisation ? coef2/sdelta : coef2;
+      if (verbosity>2) 
+         cout << "    Solution " << nusol <<  " Min = " << smin << " Max = " 
+              << smax << " Delta =" << sdelta << " cnorm = " << cnorm
+              << " Nb of fields =" << nbfield << endl;
+      if (sdelta < 1.0e-10*Max(absmax,1e-20) && (nbfield ==1)) {
+         if (verbosity>2)
+            cout << "      Solution " << nusol << " is constant. We skip. " 
+                 << " Min = " << smin << " Max = " << smax << endl;
+         continue;
+      }
 
-         double *sf=ss; 
-	 for (long nufield=0; nufield<nbfield; nufield++, ss++) {
-            for (iv=0, k=0; iv<nbv; iv++, k+=n)
-               dxdx[iv] = dxdy[iv] = dydy[iv] = 0;
-            for (i=0; i<nbt; i++) { 
-               if (triangles[i].link) {
-                  R2 A=triangles[i][0], B=triangles[i][1], C=triangles[i][2];
-                  R2 nAB=Orthogonal(B-A), nBC=Orthogonal(C-B), nCA=Orthogonal(A-C);
-                  iA = Number(triangles[i][0]);
-                  iB = Number(triangles[i][1]);
-                  iC = Number(triangles[i][2]);
-                  Triangle *tBC = triangles[i].TriangleAdj(OppositeEdge[0]);
-                  Triangle *tCA = triangles[i].TriangleAdj(OppositeEdge[1]);
-                  Triangle *tAB = triangles[i].TriangleAdj(OppositeEdge[2]);
-                  sA = ss[iA*n], sB = ss[iB*n], sC = ss[iC*n];
-                  R2 Grads = (nAB*sC + nBC*sA + nCA*sB)/detT[i];
-                  if (choice) {
-                     int nbb=0;
-                     double dd=detT[i], lla, llb, llc, llf;
-                     double taa[3][3], bb[3];
-                     for (int j=0; j<3; j++) {
-                        int ie = OppositeEdge[j];
-                        TriangleAdjacent ta=triangles[i].Adj(ie);
-                        Triangle *tt=ta;
-                        if (tt && tt->link) {
-                           Vertex &v = *ta.OppositeVertex();
-                           R2 V = v;
-                           long iV = Number(v);
-                           double lA = bamg::Area2(V,B,C)/dd;
-                           double lB = bamg::Area2(A,V,C)/dd;
-                           double lC = bamg::Area2(A,B,V)/dd;
-                           taa[0][j] = lB*lC;
-                           taa[1][j] = lC*lA;
-                           taa[2][j] = lA*lB;
-                           lla = lA, llb = lB, llc = lC, llf = ss[iV*n];
-                           bb[j] = ss[iV*n] - (sA*lA + sB*lB + sC*lC);
-                        }
-                        else {
-                           nbb++;
-                           taa[0][j] = 0;
-                           taa[1][j] = 0;
-                           taa[2][j] = 0;
-                           taa[j][j] = 1;
-                           bb[j] = 0;
-                        }
-		     }
-
-                     double det33 =  det3x3(taa[0],taa[1],taa[2]);		
-                     double cBC   =  det3x3(bb,taa[1],taa[2]);
-                     double cCA   =  det3x3(taa[0],bb,taa[2]);
-                     double cAB   =  det3x3(taa[0],taa[1],bb);
-                     assert(det33);
-                     double Hxx = cAB*(nBC.x*nCA.x) + cBC*(nCA.x*nAB.x) + cCA*(nAB.x*nBC.x);
-                     double Hyy = cAB*(nBC.y*nCA.y) +  cBC*(nCA.y*nAB.y) + cCA*(nAB.y*nBC.y);
-                     double Hxy = cAB*(nBC.y*nCA.x) +  cBC*(nCA.y*nAB.x) + cCA*(nAB.y*nBC.x) 
-                               + cAB*(nBC.x*nCA.y) +  cBC*(nCA.x*nAB.y) + cCA*(nAB.x*nBC.y);
-                     double coef = 1.0/(3*dd*det33);
-                     double coef2 = 2*coef;
-                     Hxx *= coef2, Hyy *= coef2, Hxy *= coef2;
-                     if (nbb==0) {
-                        dxdx[iA] += Hxx;
-                        dydy[iA] += Hyy;
-                        dxdy[iA] += Hxy;
-                        dxdx[iB] += Hxx;
-                        dydy[iB] += Hyy;
-                        dxdy[iB] += Hxy;
-                        dxdx[iC] += Hxx;
-                        dydy[iC] += Hyy;
-                        dxdy[iC] += Hxy;
+      double *sf=ss; 
+      for (long nufield=0; nufield<nbfield; nufield++, ss++) {
+         for (iv=0, k=0; iv<nbv; iv++, k+=n)
+            dxdx[iv] = dxdy[iv] = dydy[iv] = 0;
+         for (i=0; i<nbt; i++) { 
+            if (triangles[i].link) {
+               R2 A=triangles[i][0], B=triangles[i][1], C=triangles[i][2];
+               R2 nAB=Orthogonal(B-A), nBC=Orthogonal(C-B), nCA=Orthogonal(A-C);
+               iA = Number(triangles[i][0]);
+               iB = Number(triangles[i][1]);
+               iC = Number(triangles[i][2]);
+               Triangle *tBC = triangles[i].TriangleAdj(OppositeEdge[0]);
+               Triangle *tCA = triangles[i].TriangleAdj(OppositeEdge[1]);
+               Triangle *tAB = triangles[i].TriangleAdj(OppositeEdge[2]);
+               sA = ss[iA*n], sB = ss[iB*n], sC = ss[iC*n];
+               R2 Grads = (nAB*sC + nBC*sA + nCA*sB)/detT[i];
+               if (choice) {
+                  int nbb=0;
+                  double dd=detT[i];
+                  double taa[3][3], bb[3];
+                  for (int j=0; j<3; j++) {
+                     int ie = OppositeEdge[j];
+                     TriangleAdjacent ta=triangles[i].Adj(ie);
+                     Triangle *tt=ta;
+                     if (tt && tt->link) {
+                        Vertex &v = *ta.OppositeVertex();
+                        R2 V = v;
+                        long iV = Number(v);
+                        double lA = bamg::Area2(V,B,C)/dd;
+                        double lB = bamg::Area2(A,V,C)/dd;
+                        double lC = bamg::Area2(A,B,V)/dd;
+                        taa[0][j] = lB*lC;
+                        taa[1][j] = lC*lA;
+                        taa[2][j] = lA*lB;
+                        bb[j] = ss[iV*n] - (sA*lA + sB*lB + sC*lC);
+                     }
+                     else {
+                        nbb++;
+                        taa[0][j] = 0;
+                        taa[1][j] = 0;
+                        taa[2][j] = 0;
+                        taa[j][j] = 1;
+                        bb[j] = 0;
                      }
                   }
-                  else {
-//                   if edge on boundary no contribution  => normal = 0
-                     if (!tBC || !tBC->link)
-                        nBC = O;
-                     if (!tCA || !tCA->link)
-                        nCA = O;
-                     if (!tAB || !tAB->link)
-                        nAB = O;
-//                   Remark we forgot a 1/2 because
-//                   \int_{edge} w_i = 1/2 if i is in edge 
-//                                     0  if not
-//                   if we don't take the boundary 
-//                   dxdx[iA] += ( nCA.x + nAB.x ) *Grads.x;
 
-                     dxdx[iA] += (nCA.x + nAB.x)*Grads.x;
-                     dxdx[iB] += (nAB.x + nBC.x)*Grads.x;
-                     dxdx[iC] += (nBC.x + nCA.x)*Grads.x;
-
-//                   warning optimization (1) the divide by 2 is done on the metrix construction
-                     dxdy[iA] += ((nCA.y + nAB.y)*Grads.x + (nCA.x + nAB.x)*Grads.y) ;
-                     dxdy[iB] += ((nAB.y + nBC.y)*Grads.x + (nAB.x + nBC.x)*Grads.y) ;
-                     dxdy[iC] += ((nBC.y + nCA.y)*Grads.x + (nBC.x + nCA.x)*Grads.y) ; 
-                     dydy[iA] += (nCA.y + nAB.y)*Grads.y;
-                     dydy[iB] += (nAB.y + nBC.y)*Grads.y;
-                     dydy[iC] += (nBC.y + nCA.y)*Grads.y;
+                  double det33 =  det3x3(taa[0],taa[1],taa[2]);		
+                  double cBC   =  det3x3(bb,taa[1],taa[2]);
+                  double cCA   =  det3x3(taa[0],bb,taa[2]);
+                  double cAB   =  det3x3(taa[0],taa[1],bb);
+                  assert(det33);
+                  double Hxx = cAB*(nBC.x*nCA.x) + cBC*(nCA.x*nAB.x) + cCA*(nAB.x*nBC.x);
+                  double Hyy = cAB*(nBC.y*nCA.y) +  cBC*(nCA.y*nAB.y) + cCA*(nAB.y*nBC.y);
+                  double Hxy = cAB*(nBC.y*nCA.x) +  cBC*(nCA.y*nAB.x) + cCA*(nAB.y*nBC.x) 
+                             + cAB*(nBC.x*nCA.y) +  cBC*(nCA.x*nAB.y) + cCA*(nAB.x*nBC.y);
+                  double coef = 1.0/(3*dd*det33);
+                  double coef2 = 2*coef;
+                  Hxx *= coef2, Hyy *= coef2, Hxy *= coef2;
+                  if (nbb==0) {
+                     dxdx[iA] += Hxx;
+                     dydy[iA] += Hyy;
+                     dxdy[iA] += Hxy;
+                     dxdx[iB] += Hxx;
+                     dydy[iB] += Hyy;
+                     dxdy[iB] += Hxy;
+                     dxdx[iC] += Hxx;
+                     dydy[iC] += Hyy;
+                     dxdy[iC] += Hxy;
                   }
                }
-            }
+               else {
+//                if edge on boundary no contribution  => normal = 0
+                  if (!tBC || !tBC->link)
+                     nBC = O;
+                  if (!tCA || !tCA->link)
+                     nCA = O;
+                  if (!tAB || !tAB->link)
+                     nAB = O;
+//                Remark we forgot a 1/2 because
+//                \int_{edge} w_i = 1/2 if i is in edge 
+//                                  0  if not
+//                if we don't take the boundary 
+//                dxdx[iA] += ( nCA.x + nAB.x ) *Grads.x;
 
+                  dxdx[iA] += (nCA.x + nAB.x)*Grads.x;
+                  dxdx[iB] += (nAB.x + nBC.x)*Grads.x;
+                  dxdx[iC] += (nBC.x + nCA.x)*Grads.x;
+
+//                warning optimization (1) the divide by 2 is done on the metrix construction
+                  dxdy[iA] += ((nCA.y + nAB.y)*Grads.x + (nCA.x + nAB.x)*Grads.y) ;
+                  dxdy[iB] += ((nAB.y + nBC.y)*Grads.x + (nAB.x + nBC.x)*Grads.y) ;
+                  dxdy[iC] += ((nBC.y + nCA.y)*Grads.x + (nBC.x + nCA.x)*Grads.y) ; 
+                  dydy[iA] += (nCA.y + nAB.y)*Grads.y;
+                  dydy[iB] += (nAB.y + nBC.y)*Grads.y;
+                  dydy[iC] += (nBC.y + nCA.y)*Grads.y;
+               }
+            }
+         }
 
          long kk=0;
          for (iv=0, k=0; iv<nbv; iv++, k+=n) {
@@ -572,7 +573,7 @@ void Triangles::IntersectConsMetric(const double* s,
             rnx = Max(rnx,Vp.Aniso2());
             Metric MVp(Vp);
             _vertices[iv].m.IntersectWith(MVp);
-         } // for all vertices
+         }
 
          if (verbosity>2) {
             cout << "              Field " << nufield << " of solution " << nusol  << endl;
@@ -635,6 +636,7 @@ void Triangles::ReadMetric(const char* fmetrix,
       }
    }
 }
+
 
 void Triangles::WriteMetric(ostream& f,
                             int      iso)
@@ -809,7 +811,7 @@ void Geometry::ReadMetric(const char* fmetrix,
          f_metrix >> a >> b >> c;
          MetricAnIso M(a,b,c);
          MatVVP2x2 Vp(M/coef);
-	 Vp.Maxh(hmin);
+         Vp.Maxh(hmin);
          Vp.Minh(hmax);
          _vertices[iv].m = Vp;
       }
@@ -863,13 +865,14 @@ double LengthInterpole(const MetricAnIso Ma,
             lMs2[level] = si;
             K[level] = k;
             level++;
+         }
+         else
+            L[i]= l += s, S[i] = sss += k, i++;
       }
-      else
-         L[i]= l += s, S[i] = sss += k, i++;
+      else 
+         L[i] = l += s, S[i] = sss += k, i++;
    }
-   else 
-      L[i] = l += s, S[i] = sss += k, i++;
-   }
+
 // warning for optimisation S is in [0:0.5] not in [0:1]
    assert(i<512);
    LastMetricInterpole.lab = l;
@@ -882,10 +885,10 @@ double LengthInterpole(const MetricAnIso Ma,
 
 
 double abscisseInterpole(const MetricAnIso Ma,
-                        const MetricAnIso Mb,
-                              R2          AB,
-                              double       s,
-                              int         optim)
+                        const MetricAnIso  Mb,
+                        R2                 AB,
+                        double             s,
+                        int                optim)
 {
    if (!optim)
       LengthInterpole(Ma,Mb,AB);

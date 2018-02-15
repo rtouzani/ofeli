@@ -104,6 +104,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8a4f1696826d3621a451457b78d8bf3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a8a4f1696826d3621a451457b78d8bf3c">Vect</a> (size_t n, T_ *x)</td></tr>
 <tr class="memdesc:a8a4f1696826d3621a451457b78d8bf3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an instance of class <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> as an image of a C/C++ array.  <a href="#a8a4f1696826d3621a451457b78d8bf3c">More...</a><br /></td></tr>
 <tr class="separator:a8a4f1696826d3621a451457b78d8bf3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a851c5f6fd53f7e6f6e5acac7085bf441"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a851c5f6fd53f7e6f6e5acac7085bf441">Vect</a> (<a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;g)</td></tr>
+<tr class="memdesc:a851c5f6fd53f7e6f6e5acac7085bf441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with a <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a> instance.  <a href="#a851c5f6fd53f7e6f6e5acac7085bf441">More...</a><br /></td></tr>
+<tr class="separator:a851c5f6fd53f7e6f6e5acac7085bf441"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3f3925e619b8b612e13b1e4a18c3a2d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#ae3f3925e619b8b612e13b1e4a18c3a2d">Vect</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m, int nb_dof=0, int dof_type=NODE_FIELD)</td></tr>
 <tr class="memdesc:ae3f3925e619b8b612e13b1e4a18c3a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with a mesh instance.  <a href="#ae3f3925e619b8b612e13b1e4a18c3a2d">More...</a><br /></td></tr>
 <tr class="separator:ae3f3925e619b8b612e13b1e4a18c3a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,6 +181,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7d7317a28c3fd047820dfcf32d6743fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a7d7317a28c3fd047820dfcf32d6743fc">setDG</a> (int degree=1)</td></tr>
 <tr class="memdesc:a7d7317a28c3fd047820dfcf32d6743fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Discontinuous Galerkin type vector.  <a href="#a7d7317a28c3fd047820dfcf32d6743fc">More...</a><br /></td></tr>
 <tr class="separator:a7d7317a28c3fd047820dfcf32d6743fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3524721b275c1b2cfb0b5284ad073f88"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a3524721b275c1b2cfb0b5284ad073f88">isGrid</a> () const </td></tr>
+<tr class="memdesc:a3524721b275c1b2cfb0b5284ad073f88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if vector is constructed for a grid.  <a href="#a3524721b275c1b2cfb0b5284ad073f88">More...</a><br /></td></tr>
+<tr class="separator:a3524721b275c1b2cfb0b5284ad073f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2116275419db9f448ca42e80a6de901d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2116275419db9f448ca42e80a6de901d"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a2116275419db9f448ca42e80a6de901d">getNbDOF</a> () const </td></tr>
 <tr class="memdesc:a2116275419db9f448ca42e80a6de901d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return vector number of degrees of freedom. <br /></td></tr>
@@ -594,6 +600,30 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Dimension of vector to construct </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>C-array to copy </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a851c5f6fd53f7e6f6e5acac7085bf441"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1Vect.html">Vect</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;&#160;</td>
+          <td class="paramname"><em>g</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor with a <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a> instance. </p>
+<p>The constructed vector has as size the total number of grid nodes </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">g</td><td><a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a> instance </td></tr>
   </table>
   </dd>
 </dl>
@@ -1381,6 +1411,24 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a3524721b275c1b2cfb0b5284ad073f88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isGrid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Say if vector is constructed for a grid. </p>
+<p>Vectors constructed for grids are defined with the help of a <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a> instance </p><dl class="section return"><dt>Returns</dt><dd>true if vector is constructed with a <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a> instance </dd></dl>
 
 </div>
 </div>
@@ -3558,7 +3606,7 @@ The <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpos
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2017 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2018 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

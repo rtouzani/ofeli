@@ -18,66 +18,69 @@
 * This function performs k-way refinement
 **************************************************************************/
 void MCRandom_KWayEdgeRefineHorizontal(CtrlType *ctrl, GraphType *graph, int nparts, 
-       float *orgubvec, int npasses)
+                                       float *orgubvec, int npasses)
 {
-  int i, ii, iii, j, k, pass, nvtxs, ncon, nmoves, nbnd, myndegrees, same; 
-  int from, me, to, oldcut, gain;
-  idxtype *xadj, *adjncy, *adjwgt;
-  idxtype *where, *perm, *bndptr, *bndind;
-  EDegreeType *myedegrees;
-  RInfoType *myrinfo;
-  float *npwgts, *nvwgt, *minwgt, *maxwgt, maxlb, minlb, ubvec[MAXNCON], tvec[MAXNCON];
+   int i, ii, iii, j, k, pass, nvtxs, ncon, nmoves, nbnd, myndegrees, same; 
+   int from, me, to, oldcut, gain;
+   idxtype *xadj, *adjncy, *adjwgt;
+   idxtype *where, *perm, *bndptr, *bndind;
+   EDegreeType *myedegrees;
+   RInfoType *myrinfo;
+   float *npwgts, *nvwgt, *minwgt, *maxwgt, maxlb, minlb, ubvec[MAXNCON], tvec[MAXNCON];
 
-  nvtxs = graph->nvtxs;
-  ncon = graph->ncon;
-  xadj = graph->xadj;
-  adjncy = graph->adjncy;
-  adjwgt = graph->adjwgt;
+   for (i=0; i<MAXNCON; i++)
+      ubvec[i] = 0.;
 
-  bndptr = graph->bndptr;
-  bndind = graph->bndind;
+   nvtxs = graph->nvtxs;
+   ncon = graph->ncon;
+   xadj = graph->xadj;
+   adjncy = graph->adjncy;
+   adjwgt = graph->adjwgt;
 
-  where = graph->where;
-  npwgts = graph->npwgts;
+   bndptr = graph->bndptr;
+   bndind = graph->bndind;
+
+   where = graph->where;
+   npwgts = graph->npwgts;
   
   /* Setup the weight intervals of the various subdomains */
-  minwgt =  fwspacemalloc(ctrl, nparts*ncon);
-  maxwgt = fwspacemalloc(ctrl, nparts*ncon);
+   minwgt =  fwspacemalloc(ctrl, nparts*ncon);
+   maxwgt = fwspacemalloc(ctrl, nparts*ncon);
 
   /* See if the orgubvec consists of identical constraints */
-  maxlb = minlb = orgubvec[0];
-  for (i=1; i<ncon; i++) {
-    minlb = (orgubvec[i] < minlb ? orgubvec[i] : minlb);
-    maxlb = (orgubvec[i] > maxlb ? orgubvec[i] : maxlb);
-  }
-  same = (fabs(maxlb-minlb) < .01 ? 1 : 0);
+   maxlb = minlb = orgubvec[0];
+   for (i=1; i<ncon; i++) {
+      minlb = (orgubvec[i] < minlb ? orgubvec[i] : minlb);
+      maxlb = (orgubvec[i] > maxlb ? orgubvec[i] : maxlb);
+   }
+   same = (fabs(maxlb-minlb) < .01 ? 1 : 0);
 
 
   /* Let's not get very optimistic. Let Balancing do the work */
-  ComputeHKWayLoadImbalance(ncon, nparts, npwgts, ubvec);
-  for (i=0; i<ncon; i++)
-    ubvec[i] = amax(ubvec[i], orgubvec[i]);
+   ComputeHKWayLoadImbalance(ncon, nparts, npwgts, ubvec);
+   for (i=0; i<ncon; i++)
+      ubvec[i] = amax(ubvec[i], orgubvec[i]);
 
-  if (!same) {
-    for (i=0; i<nparts; i++) {
-      for (j=0; j<ncon; j++) {
-        maxwgt[i*ncon+j] = ubvec[j]/nparts;
-        minwgt[i*ncon+j] = (float)(1.0/(ubvec[j]*nparts));
+   if (!same) {
+      for (i=0; i<nparts; i++) {
+         for (j=0; j<ncon; j++) {
+            maxwgt[i*ncon+j] = ubvec[j]/nparts;
+            minwgt[i*ncon+j] = (float)(1.0/(ubvec[j]*nparts));
+         }
       }
-    }
-  }
-  else {
-    maxlb = ubvec[0];
-    for (i=1; i<ncon; i++) 
-      maxlb = (ubvec[i] > maxlb ? ubvec[i] : maxlb);
+   }
+   else {
+      maxlb = ubvec[0];
+      for (i=1; i<ncon; i++) 
+         maxlb = (ubvec[i] > maxlb ? ubvec[i] : maxlb);
 
-    for (i=0; i<nparts; i++) {
-      for (j=0; j<ncon; j++) {
-        maxwgt[i*ncon+j] = maxlb/nparts;
-        minwgt[i*ncon+j] = (float)(1.0/(maxlb*nparts));
+      for (i=0; i<nparts; i++) {
+         for (j=0; j<ncon; j++) {
+            maxwgt[i*ncon+j] = maxlb/nparts;
+            minwgt[i*ncon+j] = (float)(1.0/(maxlb*nparts));
+         }
       }
-    }
-  }
+   }
 
 
   perm = idxwspacemalloc(ctrl, nvtxs);

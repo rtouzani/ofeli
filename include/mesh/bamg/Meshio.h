@@ -86,8 +86,9 @@ class MeshIstream {
 
    MeshIstream& err()
    {
-      if (!in.good() ) ShowIoErr(in.rdstate());
-         return *this;
+      if (!in.good() )
+         ShowIoErr(in.rdstate());
+      return *this;
    }
 
    MeshIstream(const char* file_name)
@@ -100,7 +101,7 @@ class MeshIstream {
       }
       if (verbosity>4)
          cout << "    Openfile : " << file_name << endl;
-         err();
+      err();
    }
 
    int eof()

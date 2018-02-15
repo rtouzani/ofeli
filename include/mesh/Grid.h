@@ -51,8 +51,6 @@ using std::string;
 #include "mesh/Node.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
-#include "util/util.h"
-#include "linear_algebra/Vect.h"
 
 namespace OFELI {
 /*!
@@ -351,7 +349,7 @@ class Grid
  *  @param [in] i Index of cell
  *  @return <tt>1</tt> if cell is active, <tt>0</tt> if not
  */
-    int isActive(size_t i) const { return _active(i); }
+    int isActive(size_t i) const { return _active[i-1]; }
 
 /** \brief Say if cell is active or not (2-D grid)
  *  @param [in] i <tt>i</tt>-th index of cell
@@ -360,7 +358,7 @@ class Grid
  */
     int isActive(size_t i,
                  size_t j) const
-       { return _active(i,j); }
+       { return _active[_n.y*(i-1)+j-1]; }
 
 /** \brief Say if cell is active or not (3-D grid)
  *  @param [in] i <tt>i</tt>-th index of cell
@@ -371,14 +369,14 @@ class Grid
     int isActive(size_t i,
                  size_t j,
                  size_t k) const
-       { return _active(i,j,k); }
+       { return _active[_n.y*_n.z*(i-1)+_n.z*(j-1)+k-1]; }
 
   private:
     size_t _dim;
     Point<real_t> _xmin, _xmax, _h;
     Point<size_t> _n;
     Point<int> _cm, _cM;
-    Vect<int> _active;
+    vector<int> _active;
 };
 
 /** \fn ostream & operator<<(ostream& s, const Grid &g)

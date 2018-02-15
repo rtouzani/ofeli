@@ -87,7 +87,7 @@ ODESolver::ODESolver(TimeScheme s,
            _alloc_f01(false), _setF_called(false), _setDF1_called(false)
 {
    set(s,time_step,final_time);
-   if (_nb_eq>1) {
+   //   if (_nb_eq>1) {
       _u.setSize(_nb_eq);
       _v.setSize(_nb_eq);
       _b.setSize(_nb_eq);
@@ -95,7 +95,7 @@ ODESolver::ODESolver(TimeScheme s,
       _vF2.setSize(_nb_eq);
       _ddu.setSize(_nb_eq);
       _dudt.setSize(_nb_eq);
-   }
+      //   }
 }
 
 
@@ -209,34 +209,22 @@ void ODESolver::setF(string f)
       throw OFELIException("In ODESolver::setF(string): Number of calls is larger "
                            "than system size.");
    _type = SCALAR_NL;
+cout<<"#1"<<endl;
    if (nb_eq>1)
       _type = VECTOR_NL;
    _regex = true;
+cout<<"#2"<<endl;
    _expF.push_back(f);
+cout<<"#3"<<endl;
    _vF1.push_back(0.);
+cout<<"#4"<<endl;
    //   _vF1.push_back(eval(f,_time,_u));
    if (_nb_eq==1)
       _y0 = _u[0];
+cout<<"#5"<<endl;
    _lhs = _rhs = true;
    _setF_called = true;
 }
-
-/*
-void ODESolver::setF(int    i,
-                     string f)
-{
-   static size_t nb_eq=i;
-   if (i!=nb_eq+1)
-      throw OFELIException("In ODESolver::setF(int,string): Equation indexes must be subsequent.");
-   nb_eq++;
-   _nb_eq = nb_eq;
-   _type = VECTOR_NL;
-   _regex = true;
-   _expF.push_back(f);
-   _vF1.push_back(eval(f,_time,_u,i));
-   _lhs = _rhs = true;
-   _setF_called = true;
-   }*/
 
 
 void ODESolver::setDF(string df)

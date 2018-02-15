@@ -110,6 +110,12 @@ class Side;
 /*! \class Matrix
  *  \brief Virtual class to handle matrices for all storage formats.
  * \details
+ * This class enables storing and manipulating dense matrices.
+ * The template parameter is the type of matrix entries.
+ * Any matrix entry can be accessed by the () operator: For instance,
+ * if \c A is an instance of this class, \c A(i,j) stands for the entry
+ * at the i-th row and j-th column, \c i and \c j starting from 1.
+ * Entries of \c A can be assigned a value by the same operator.
  *
  * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)
  *

@@ -1106,7 +1106,7 @@ real_t getMinSideMeasure(const Mesh& m)
 
 real_t getMaxSize(const Mesh& m)
 {
-   real_t a=0, b;
+   real_t a=0, b=0;
    mesh_elements(m) {
       if (The_element.getShape()==LINE)
          b = Line2(the_element).getLength();
@@ -1130,7 +1130,7 @@ real_t getMaxSize(const Mesh& m)
 
 real_t getMinSize(const Mesh& m)
 {
-   real_t a=1./OFELI_EPSMCH, b;
+   real_t a=1./OFELI_EPSMCH, b=0;
    mesh_elements(m) {
       if (The_element.getShape()==LINE)
          b = Line2(the_element).getLength();

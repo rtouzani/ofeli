@@ -32,9 +32,10 @@
 #ifndef _IPOINT_H__
 #define _IPOINT_H__
 
-#include "linear_algebra/Vect.h"
-#include "linear_algebra/LocalVect.h"
+#include <vector>
 #include "util/util.h"
+#include <iostream>
+using std::ostream;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -47,29 +48,30 @@ namespace OFELI {
 class IPoint
 {
  private:
-   int _i, _j, _k, _sign;
-   real_t _value;
 
  public:
 
+   int i, j, k, sgn;
+   real_t val;
+
    IPoint();
 
-   IPoint(int i);
+   IPoint(int ix);
 
-   IPoint(size_t x,
-          size_t y,
+   IPoint(int ix,
+          int iy,
           real_t v=0.);
 
-   IPoint(size_t x,
-          size_t y,
-          size_t z,
+   IPoint(int ix,
+          int iy,
+          int iz,
           real_t v=0.);
 
    IPoint(const IPoint& p);
 
    ~IPoint() {}
 
-   bool operator>(IPoint& p) { return (_value > p._value); }
+   bool operator>(IPoint& p) { return (val > p.val); }
 
    IPoint &operator=(const IPoint& p);
 
@@ -77,42 +79,29 @@ class IPoint
 
    bool operator==(const IPoint& p);
 
-   IPoint& operator+(const IPoint& p);
+   IPoint& operator+=(const IPoint& p);
 
-   void setValue(real_t v) { _value = Abs(v); }
+   void set(int ix, int iy) { i = ix; j = iy; }
 
-   void setX(int i) { _i = i; }
+   void set(int ix, int iy, int iz) { i = ix; j = iy; k = iz; }
 
-   void setY(int j)  { _j = j; }
-
-   void setZ(int k) { _k = k; }
-
-   void setXY(int i, int j) { _i = i; _j = j; }
-
-   void setXYZ(int i, int j, int k) { _i = i; _j = j; _k = k; }
-
-   void setSgn(int sg) { _sign = sg; }
-
-   real_t getValue() const { return _value; }
-
-   int getX() const { return _i; }
-
-   int getY() const { return _j; }
-
-   int getZ() const { return _k; }		
-
-   int getSgn() const { return _sign; }
-
-   void GenerateNeighbour(LocalVect<IPoint,6>& Neighbour);
+   void getNeighbour(vector<IPoint>& neig);
 };
 
+bool operator==(const IPoint& a,
+                const IPoint& b);
 
-IPoint operator*(const int&    i,
+IPoint operator*(const int&    ix,
                  const IPoint& p);
 
+bool operator<(const IPoint& a,
+               const IPoint& b);
  
-void GenerateDisplacement(LocalVect<IPoint,6>& NXi,
-                          bool                 three_D=false);
+void getDisplacement(vector<IPoint>& NXi,
+                     bool            three_D=false);
+
+std::ostream & operator<<(std::ostream& s,
+                          const IPoint& a);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

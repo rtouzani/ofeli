@@ -68,9 +68,9 @@ double * ReadbbFile(const char* file,
 
 
 double* ReadBBFile(const char* file,
-                         long& nbsol,
-                         long& lsol,
-                         int*& typesols,
+                   long&       nbsol,
+                   long&       lsol,
+                   int*&       typesols,
                    const int   dim,
                    const int   typesol)
 {

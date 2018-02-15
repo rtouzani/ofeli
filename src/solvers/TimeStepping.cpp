@@ -295,9 +295,6 @@ void TimeStepping::Assembly(const Element& el,
 
 real_t TimeStepping::runOneTimeStep()
 {
-   bool _converge = false;
-   if (_nl)
-      _converge = true;
    _step++;
    _time = theTime;
    if (_verb>0)

@@ -37,32 +37,27 @@
 namespace OFELI {
 
 Grid::Grid()
+     : _dim(2), _n(10), _cm(0), _cM(0)
 {
-   _n = 10;
-   _cm = 0;
-   _cM = 0;
-   _dim = 2;
 }
 
 
 Grid::Grid(real_t xm,
            real_t xM,
            size_t npx)
+      : _dim(1), _cm(0), _cM(0)
 {
-   _dim = 1;
    _n.x = npx; _n.y = _n.z = 0;
    _h.y = _h.z = 0;
-   _cm = 0;
-   _cM = 0;
    if (xM <= xm)
       throw OFELIException("Grid::Grid(real_t,real_t,size_t): xmin = "+dtos(xm)+" is larger than xmax = "+dtos(xM));
    _xmin.x = xm; 
    _xmax.x = xM;
    _xmin.y = _xmax.y = _xmin.z = _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
-   _active.setSize(_n.x);
-   for (size_t i=1; i<=_n.x; i++)
-      _active(i) = 1;
+   _active.resize(_n.x);
+   for (size_t i=0; i<_n.x; i++)
+      _active[i] = 1;
 }
 
 
@@ -72,12 +67,10 @@ Grid::Grid(real_t xm,
            real_t yM,
            size_t npx,
            size_t npy)
+     : _dim(2), _cm(0), _cM(0)
 {
-   _dim = 2;
    _n.x = npx; _n.y = npy; _n.z = 0;
    _h.z = 0;
-   _cm = 0;
-   _cM = 0;
    if (xM <= xm)
       throw OFELIException("Grid::Grid(real_t,real_t,real_t,size_t,size_t): xmin = " + dtos(xm) + 
                            " is larger than xmax = " + dtos(xM));
@@ -88,10 +81,10 @@ Grid::Grid(real_t xm,
    _xmax.x = xM; _xmax.y = yM; _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
-   _active.setSize(_n.x,_n.y);
-   for (size_t i=1; i<=_n.x; i++)
-      for (size_t j=1; j<=_n.y; j++)
-          _active(i,j) = 1;
+   _active.resize(_n.x*_n.y);
+   for (size_t i=0; i<_n.x; i++)
+      for (size_t j=0; j<_n.y; j++)
+          _active[_n.y*i+j] = 1;
 }
 
 
@@ -99,12 +92,10 @@ Grid::Grid(Point<real_t> m,
            Point<real_t> M,
            size_t        npx,
            size_t        npy)
+      : _dim(2), _cm(0), _cM(0)
 {
-   _dim = 2;
    _n.x = npx; _n.y = npy; _n.z = 0;
    _h.z = 0;
-   _cm = 0;
-   _cM = 0;
    if (M.x <= m.x)
       throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t): xmin = " + dtos(M.x) + 
                            " is larger than xmax = " + dtos(m.x));
@@ -115,10 +106,10 @@ Grid::Grid(Point<real_t> m,
    _xmin.z = _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
-   _active.setSize(_n.x,_n.y);
-   for (size_t i=1; i<=_n.x; i++)
-      for (size_t j=1; j<=_n.y; j++)
-          _active(i,j) = 1;
+   _active.resize(_n.x*_n.y);
+   for (size_t i=0; i<_n.x; i++)
+      for (size_t j=0; j<_n.y; j++)
+          _active[_n.y*i+j] = 1;
 }
 
 
@@ -131,11 +122,9 @@ Grid::Grid(real_t xm,
            size_t npx,
            size_t npy,
            size_t npz)
+     : _dim(2), _cm(0), _cM(0)
 {
-   _dim = 2;
    _n.x = npx; _n.y = npy; _n.z = npz;
-   _cm = 0;
-   _cM = 0;
    if (xM <= xm)
       throw OFELIException("Grid::Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): xmin = " + 
                             dtos(xM) + " is larger than xmax = " + dtos(xm));
@@ -150,11 +139,11 @@ Grid::Grid(real_t xm,
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
    _h.z = (_xmax.z-_xmin.z)/_n.z;
-   _active.setSize(_n.x,_n.y,_n.z);
-   for (size_t i=1; i<=_n.x; i++)
-      for (size_t j=1; j<=_n.y; j++)
-         for (size_t k=1; k<=_n.z; k++)
-             _active(i,j,k) = 1;
+   _active.resize(_n.x*_n.y*_n.z);
+   for (size_t i=0; i<_n.x; i++)
+      for (size_t j=0; j<_n.y; j++)
+         for (size_t k=0; k<_n.z; k++)
+            _active[_n.y*_n.z*i+_n.z*j+k] = 1;
 }
 
 
@@ -163,10 +152,9 @@ Grid::Grid(Point<real_t> m,
            size_t        npx,
            size_t        npy,
            size_t        npz)
+     : _dim(3), _cm(0), _cM(0)
 {
-   _dim = 3;
    _n.x = npx; _n.y = npy; _n.z = npz;
-   _cm = 0; _cM = 0;
    if (npz==0)
       _dim = 2;
    if (npy==0)
@@ -184,11 +172,11 @@ Grid::Grid(Point<real_t> m,
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
    _h.z = (_xmax.z-_xmin.z)/_n.z;
-   _active.setSize(_n.x,_n.y,_n.z);
-   for (size_t i=1; i<=_n.x; i++)
-      for (size_t j=1; j<=_n.y; j++)
-         for (size_t k=1; k<=_n.z; k++)
-             _active(i,j,k) = 1;
+   _active.resize(_n.x*_n.y*_n.z);
+   for (size_t i=0; i<_n.x; i++)
+      for (size_t j=0; j<_n.y; j++)
+         for (size_t k=0; k<_n.z; k++)
+            _active[_n.y*_n.z*i+_n.z*j+k] = 1;
 }
 
 
@@ -196,30 +184,30 @@ void Grid::setN(size_t nx,
                 size_t ny,
                 size_t nz)
 {
+   _dim = 3;
    _n.x = nx; _n.y = ny; _n.z = nz;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
    _h.z = (_xmax.z-_xmin.z)/_n.z;
-   _dim = 3;
    if (nz==0) {
       _dim = 2;
-      _active.setSize(_n.x,_n.y);
-      for (size_t i=1; i<=_n.x; i++)
-         for (size_t j=1; j<=_n.y; j++)
-             _active(i,j) = 1;
+      _active.resize(_n.x*_n.y);
+      for (size_t i=0; i<_n.x; i++)
+         for (size_t j=0; j<_n.y; j++)
+            _active[_n.y*i+j] = 1;
    }
    if (ny==0) {
       _dim = 1;
-      _active.setSize(_n.x);
-      for (size_t i=1; i<=_n.x; i++)
-          _active(i) = 1;
+      _active.resize(_n.x);
+      for (size_t i=0; i<_n.x; i++)
+          _active[i] = 1;
    }
    if (_dim==3) {
-      _active.setSize(_n.x,_n.y,_n.z);
-      for (size_t i=1; i<=_n.x; i++)
-         for (size_t j=1; j<=_n.y; j++)
-            for (size_t k=1; k<=_n.z; k++)
-             _active(i,j,k) = 1;
+      _active.resize(_n.x*_n.y*_n.z);
+      for (size_t i=0; i<_n.x; i++)
+         for (size_t j=0; j<_n.y; j++)
+            for (size_t k=0; k<_n.z; k++)
+               _active[_n.y*_n.z*i+_n.z*j+k] = 1;
    }
    if (_h==0)
       throw OFELIException("Grid::setN(size_t,size_t,size_t): Grid size must be given first.");
@@ -456,10 +444,10 @@ int Grid::getCode(size_t i,
 void Grid::Deactivate(size_t i)
 {
    if (i)
-      _active(i) = 0;
+      _active[i-1] = 0;
    else {
-      for (size_t i=1; i<=_n.x; i++)
-         _active(i) = 0;
+      for (size_t ii=0; ii<_n.x; ii++)
+         _active[ii] = 0;
    }
 }
 
@@ -468,19 +456,19 @@ void Grid::Deactivate(size_t i,
                       size_t j)
 {
    if (i && j)
-      _active(i,j) = 0;
+      _active[_n.y*(i-1)+j-1] = 0;
    else if (i && !j) {
-      for (size_t j=1; j<=_n.y; j++)
-         _active(i,j) = 0;
+      for (size_t jj=1; jj<=_n.y; jj++)
+         _active[_n.y*(i-1)+jj-1] = 0;
    }
    else if (!i && j) {
-      for (size_t i=1; i<=_n.x; i++)
-         _active(i,j) = 0;
+      for (size_t ii=1; ii<=_n.x; ii++)
+         _active[_n.y*(ii-1)+j-1] = 0;
    }
    else if (!i && !j) {
-      for (size_t i=1; i<=_n.x; i++)
-         for (size_t j=1; j<=_n.y; j++)
-            _active(i,j) = 0;
+      for (size_t ii=1; ii<=_n.x; ii++)
+         for (size_t jj=1; jj<=_n.y; jj++)
+            _active[_n.y*(ii-1)+jj-1] = 0;
    }
 }
 
@@ -490,45 +478,45 @@ void Grid::Deactivate(size_t i,
                       size_t k)
 {
    if (i && j && k) 
-     _active(i,j,k) = 0;
+     _active[_n.y*_n.z*(i-1)+_n.z*(j-1)+k-1] = 0;
    else if (!i) {
       if (!j && k) {
-         for (size_t i=1; i<=_n.x; i++)
-            for (size_t j=1; j<=_n.y; j++)
-               _active(i,j,k) = 0;
+         for (size_t ii=1; ii<=_n.x; ii++)
+            for (size_t jj=1; jj<=_n.y; jj++)
+               _active[_n.y*_n.z*(ii-1)+_n.z*(jj-1)+k-1] = 0;
       }
       else if (j && !k) {
-         for (size_t i=1; i<=_n.x; i++)
-            for (size_t k=1; k<=_n.z; k++)
-               _active(i,j,k) = 0;
+         for (size_t ii=1; ii<=_n.x; ii++)
+            for (size_t kk=1; kk<=_n.z; kk++)
+               _active[_n.y*_n.z*(ii-1)+_n.z*(j-1)+kk-1] = 0;
       }
       else if (j && k) {
-         for (size_t i=1; i<=_n.x; i++)
-            _active(i,j,k) = 0;
+         for (size_t ii=1; ii<=_n.x; ii++)
+            _active[_n.y*_n.z*(ii-1)+_n.z*(j-1)+k-1] = 0;
       }
    }
    else if (!j) {
       if (i && !k) {
-         for (size_t j=1; j<=_n.y; j++)
-            for (size_t k=1; k<=_n.z; k++)
-               _active(i,j,k) = 0;
+         for (size_t jj=1; jj<=_n.y; jj++)
+            for (size_t kk=1; kk<=_n.z; kk++)
+               _active[_n.y*_n.z*(i-1)+_n.z*(jj-1)+kk-1] = 0;
       }
       if (i && k) {
-         for (size_t j=1; j<=_n.y; j++)
-            _active(i,j,k) = 0;
+         for (size_t jj=1; jj<=_n.y; jj++)
+            _active[_n.y*_n.z*(i-1)+_n.z*(jj-1)+k-1] = 0;
       }
    }
    else if (!k) {
       if (i && j) {
-         for (size_t k=1; k<=_n.z; k++)
-            _active(i,j,k) = 0;
+         for (size_t kk=1; kk<=_n.z; kk++)
+            _active[_n.y*_n.z*(i-1)+_n.z*(j-1)+kk-1] = 0;
       }
    }
 }
 
 
-ostream& operator<<(      ostream& s,
-                    const Grid&    g)
+ostream& operator<<(ostream&    s,
+                    const Grid& g)
 {
    size_t dim = 3;
    if (g.getNz()==0)

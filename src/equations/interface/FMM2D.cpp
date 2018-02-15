@@ -31,9 +31,9 @@
 
 
 #include "equations/interface/FMM2D.h"
-#include "linear_algebra/LocalVect.h"
 #include "mesh/Grid.h"
-#include <algorithm>
+#include <cmath>
+
 
 namespace OFELI {
 
@@ -42,257 +42,233 @@ FMM2D::FMM2D(const Grid&   g,
              bool          HA)
       : FMM(g,phi,HA)
 {
-   real_t i1, i2, j1, j2, i11, i21, j11, j21;
-
-// Initialization 
-cout<<"PHI\n"<<*_phi<<endl;
-   for (size_t i=1; i<=_nx+1; ++i) {
-      for (size_t j=1; j<=_ny+1; ++j) {
-         i1 = i2 = j1 = j2 = i11 = i21 = j11 = j21 = 1.;
-         if (i>=2)
-            i1 = (*_phi)(i,j)*(*_phi)(i-1,j);
-         if (i<=_nx)
-            i2 = (*_phi)(i,j)*(*_phi)(i+1,j);
-         if (j>=2)
-            j1 = (*_phi)(i,j)*(*_phi)(i,j-1);
-         if (j<=_ny)
-            j2 = (*_phi)(i,j)*(*_phi)(i,j+1);
-         if (i1<=0. || i2<=0. || j1<=0. || j2<=0.)
-            _AlivePt(i,j) = (*_phi)(i,j);
-      }
-   }
-cout<<"ALIVE_PT\n"<<_AlivePt<<endl;
-
-// If one wants to use the method with high accuracy
-// an appropriate initial solution is necessary
-   if (_high_accuracy) {
-     for (size_t i=1; i<=_nx+1; ++i) {
-        for (size_t j=1; j<=_ny+1; ++j) {
-            i1 = i2 = j1 = j2 = 1.;
-            if (i>3 && _AlivePt(i-1,j) != _inf)
-               i1 = (*_phi)(i,j)*(*_phi)(i-2,j);
-            if (i<=_nx-1 && _AlivePt(i+1,j) != _inf)
-               i2 = (*_phi)(i,j)*(*_phi)(i+2,j);
-            if (j>3 && _AlivePt(i,j-1) != _inf)
-               j1 = (*_phi)(i,j)*(*_phi)(i,j-2);
-            if (j<=_ny-1 && _AlivePt(i,j+1)!=_inf)
-               j2 = (*_phi)(i,j)*(*_phi)(i,j+2);
-            if (i1<0. || i2<0. || j1<0. || j2<0.)
-               _AlivePt(i,j) = (*_phi)(i,j);
-         }
-      }
-   }
+   set();
 }
 
 
-void FMM2D::solve()
+FMM2D::FMM2D(const Grid&         g,
+             Vect<real_t>&       phi,
+             const Vect<real_t>& F,
+             bool                HA)
+      : FMM(g,phi,HA)
+{
+   set();
+   _F = F;
+}
+
+
+void FMM2D::set()
+{
+// Initialization 
+   for (int i=1; i<=_nx+1; ++i) {
+      for (int j=1; j<=_ny+1; ++j) {
+         real_t i1=1, i2=1, j1=1, j2=1;
+         if (i>=2)
+            i1 = (*_u)(i,j)*(*_u)(i-1,j);
+         if (i<=_nx)
+            i2 = (*_u)(i,j)*(*_u)(i+1,j);
+         if (j>=2)
+            j1 = (*_u)(i,j)*(*_u)(i,j-1);
+         if (j<=_ny)
+            j2 = (*_u)(i,j)*(*_u)(i,j+1);
+         if (i1<=0. || i2<=0. || j1<=0. || j2<=0.)
+            _AlivePt(i,j) = (*_u)(i,j);
+      }
+   }
+cout<<"**\n"<<_AlivePt;
+
+// Appropriate initial solution is necessary for high accuracy
+   if (_high_accuracy) {
+      for (int i=1; i<=_nx+1; ++i) {
+         for (int j=1; j<=_ny+1; ++j) {
+            real_t i1=1., i2=1., j1=1., j2=1.;
+            if (i>3 && _AlivePt(i-1,j)!=_inf)
+               i1 = (*_u)(i,j)*(*_u)(i-2,j);
+            if (i<=_nx-1 && _AlivePt(i+1,j)<_inf)
+               i2 = (*_u)(i,j)*(*_u)(i+2,j);
+            if (j>3 && _AlivePt(i,j-1)<_inf)
+               j1 = (*_u)(i,j)*(*_u)(i,j-2);
+            if (j<=_ny-1 && _AlivePt(i,j+1)<_inf)
+               j2 = (*_u)(i,j)*(*_u)(i,j+2);
+            if (i1<0. || i2<0. || j1<0. || j2<0.)
+               _AlivePt(i,j) = (*_u)(i,j);
+         }
+      }
+   }
+   _F.setSize(_nx+1,_ny+1);
+   _F = 1.;
+}
+
+
+void FMM2D::run()
 {
    IPoint p;
-   LocalVect<IPoint,6> Vs;
    size_t ind;
-
-// Allocate the heap
-   Heap NarrowPt((_nx+1)*(_ny+1));
+   vector<IPoint> vs(4);
 
 // This vector is an interface between the vector _AlivePt and the Heap
+// Vector TAlive contains 3 types of points: Alive, Narrow, and faraway
    _TAlive.setSize(_nx+1,_ny+1);
-
-// Vctor TAlive contains 3 types of points: Alive, Narrow, and faraway
    _TAlive = _AlivePt;
 
 // Initialization of the heap
-cout<<"TAlive 1\n"<<_TAlive;
-   InitHeap(NarrowPt);
-cout<<"TAlive 2\n"<<_TAlive;
+   init();
 
-   while (NarrowPt.getSize() > 0) {
-cout<<"\n\nNb. of narrow points: "<<NarrowPt.getSize()<<endl;
-      IPoint pt = NarrowPt.Current(); // head of the heap
-      size_t ix=pt.getX(), iy=pt.getY();
-cout<<"POINT  ("<<ix<<","<<iy<<")"<<endl;
+   while (_Narrow.getSize()!=0) {
+      IPoint pt = _Narrow.Current(); // head of the heap
+      int ix=pt.i, iy=pt.j;
 //    Add point to Alive
-      _AlivePt(ix,iy) = pt.getSgn()*pt.getValue();
-//    Update point as frozen
-      _TAlive(ix,iy) = pt.getSgn()*pt.getValue();
-cout<<"Point is frozen"<<endl;
+      _AlivePt(ix,iy) = pt.sgn*pt.val;
+//    Set point as frozen
+      _TAlive(ix,iy) = pt.sgn*pt.val;
 
-//    This point and its neighbour have the same sign
+//    This point and its neighbours have the same sign
       int s = Sgn(_AlivePt(ix,iy));
 
-//    generating neighbour point
-      pt.GenerateNeighbour(Vs);
+//    Generating neighbour point
+      pt.getNeighbour(vs);
       for (size_t k=0; k<4; ++k) {
-         size_t m=Vs[k].getX(), n=Vs[k].getY();
-cout<<"Neighbour: "<<k<<"  mn = "<<m<<" "<<n<<endl;
-         if ((m>=1 && m<=_nx+1) && (n>=1 && n<=_ny+1)) {
+         int m=vs[k].i, n=vs[k].j;
+         if ((m>0 && m<=_nx+1) && (n>0 && n<=_ny+1)) {
 //          faraway point
-            if (_TAlive(m,n) == _inf) {
-cout<<"Faraway point: "<<m<<"  "<<n<<endl;
-               Evaluate(Vs[k],s);
-               Vs[k].setSgn(s);
+            if (_TAlive(m,n)==_inf) {
+               eval(vs[k],s);
+               vs[k].sgn = s;
 //             add to Narrow points
-               NarrowPt.Add(Vs[k]);
+               _Narrow.Add(vs[k]);
             }
 //          Narrow point to update
             else if ((_TAlive(m,n)<_inf) && (_AlivePt(m,n)==_inf)) {
-cout<<"Narrow point to update: "<<m<<"  "<<n<<endl;
-               Evaluate(Vs[k],s);
+               eval(vs[k],s);
 //             Point is already in the heap
-               if (NarrowPt.Find(Vs[k],ind)) {
+               if (_Narrow.Find(vs[k],ind))
 //                updating ...
-cout<<"Already in heap: "<<m<<"  "<<n<<" ... update"<<endl;
-                  NarrowPt.Update(Vs[k].getValue(),ind);
-               }
+                  _Narrow.Update(vs[k].val,ind);
             }
          }
       }
    }
-   *_phi = _AlivePt;
-cout<<*_phi;
+   *_u = _AlivePt;
 }
 
 
-void FMM2D::Evaluate(IPoint& pt,
-                     int     sign)
+void FMM2D::eval(IPoint& pt,
+                 int     sign)
 {
-   LocalVect<IPoint,6> neig;
-   real_t val1, v1, val2, v2;
+   vector<IPoint> neig(4);
 
 // Initialization of quadratic equation coefficients
-   real_t c=-_gd->getHx()*_gd->getHx(), b=0., a=0., aa=9.0/4.0;
-   GenerateDisplacement(neig);
-   for (size_t j=0; j<2; ++j) {
-      val1 = val2 = _inf;
-      for (size_t i=0; i<2; ++i) {
-         IPoint pni = pt + neig[2*j+i];
-         size_t ix=pni.getX(), iy=pni.getY();
-         if (ix>=1 && ix<=_nx+1 && iy>=1 && iy<=_ny+1 && 
-             std::abs(_TAlive(ix,iy)) < _inf) {
-            v1 = std::abs(_TAlive(ix,iy));
-            if (v1 < val1) {
+   real_t c=-_hx*_hx, b=0., a=0., aa=2.25;
+   getDisplacement(neig);
+   for (size_t k=0; k<2; ++k) {
+      real_t val1=_inf, val2=_inf;
+      for (size_t l=0; l<2; ++l) {
+         IPoint pni = pt;
+         pni += neig[2*k+l];
+         int ix=pni.i, iy=pni.j;
+         real_t v1=fabs(_TAlive(ix,iy));
+         if (ix>0 && ix<=_nx+1 && iy>0 && iy<=_ny+1 && v1<_inf) {
+            if (v1<val1) {
                val1 = v1;
-               IPoint pni2 = pt + 2*neig[2*j+i];
-               size_t jx=pni2.getX(), jy=pni2.getY();
-               if (jx>=1 && jx<=_nx+1 && jy>=1 && jy<=_ny+1) {
-                  v2 = std::abs(_TAlive(jx,jy));
+               IPoint pni2 = pt;
+               pni2 += 2*neig[2*k+l];
+               int jx=pni2.i, jy=pni2.j;
+               if (jx>0 && jx<=_nx+1 && jy>0 && jy<=_ny+1) {
+                  real_t v2=fabs(_TAlive(jx,jy));
+                  val2 = _inf;
                   if (v2<_inf && v2<=v1)
                      val2 = v2;
-                  else
-                     val2 = _inf;
                }
             }
          }
       }
 
 //    Computation with high accuracy
-      if (_high_accuracy && val2!=_inf) {
-         real_t temp = (4.0*val1 - val2)/3.0;
+      if (_high_accuracy && val2<_inf) {
+         real_t temp = OFELI_THIRD*(4.0*val1 - val2);
          a += aa;
-         b -= 2.0*aa*temp;
+         b -= aa*temp;
          c += aa*temp*temp;
       }
       else {
-         if (val1 != _inf) {
+         if (val1<_inf) {
             a += 1.0;
-            b -= 2.0*val1;
+            b -= val1;
             c += val1*val1;
          }
       }
    }
 
-// Solving the quadratic equation
+// Solve the quadratic equation
    real_t xmin=0, ymin=0, max_sol=_inf;
-cout<<"** max_sol: "<<max_sol<<" *** "<<a<<" "<<b<<" "<<c<<endl;
-   size_t ix=pt.getX(), iy=pt.getY();
-   if (FMM::MaxQuadratic(a,b,c,max_sol)==0) {
+   int ix=pt.i, iy=pt.j;
+   if (MaxQuad(a,b,c,max_sol)==0) {
       if (ix==1)
-         xmin = std::abs(_AlivePt(2,iy));
+         xmin = fabs(_AlivePt(2,iy));
       else if (ix==_nx+1)
-         xmin = std::abs(_AlivePt(_nx,iy));
+         xmin = fabs(_AlivePt(_nx,iy));
       else
-         xmin = std::min(std::abs(_AlivePt(ix-1,iy)),std::abs(_AlivePt(ix+1,iy)));
+         xmin = fmin(fabs(_AlivePt(ix-1,iy)),fabs(_AlivePt(ix+1,iy)));
       if (iy==1)
-         ymin = std::abs(_AlivePt(ix,2));
-      //      else if (ix==_nx+1)
+         ymin = fabs(_AlivePt(ix,2));
       else if (iy==_ny+1)
-         ymin = std::abs(_AlivePt(ix,_ny));
+         ymin = fabs(_AlivePt(ix,_ny));
       else
-         ymin = std::min(std::abs(_AlivePt(ix,iy-1)),std::abs(_AlivePt(ix,iy+1)));
-      max_sol = std::min(xmin,ymin) + _gd->getHx();
-cout<<"***"<<endl;
+         ymin = fmin(fabs(_AlivePt(ix,iy-1)),fabs(_AlivePt(ix,iy+1)));
+      max_sol = fmin(xmin,ymin) + _hx;
    }
-cout<<"++ max_sol: "<<max_sol<<endl;
 
 // if a better distance is found
-   if (Abs(_TAlive(ix,iy)) > max_sol)
+   if (fabs(_TAlive(ix,iy)) > max_sol)
       _TAlive(ix,iy) = sign*max_sol;
 
 // updating
-   pt.setValue(Abs(_TAlive(ix,iy)));
-cout<<"UPDATED: "<<ix<<" "<<iy<<": "<<pt.getValue()<<endl;
-   pt.setSgn(sign);
+   pt.val = fabs(_TAlive(ix,iy));
+   pt.sgn = sign;
 }
 
 
-void FMM2D::InitHeap(Heap& NarrowPt)
+void FMM2D::init()
 {
-   IPoint pt;
-   Vect<int> added(_nx+1,_ny+1);
-cout<<"in InitHeap\n"<<_AlivePt<<endl;
-
-   for (int i=1; i<=int(_nx)+1; ++i) {
-      for (int j=1; j<=int(_ny)+1; ++j ) {
-cout<<"INIT: "<<i<<" "<<j<<endl;
+   _added.setSize(_nx+1,_ny+1);
+   for (int i=1; i<=_nx+1; ++i) {
+      for (int j=1; j<=_ny+1; ++j) {
          if (_AlivePt(i,j)<_inf) {
-cout<<"OK"<<endl;
             int s = Sgn(_AlivePt(i,j));
-            if (i>=2 && _TAlive(i-1,j)==_inf) {
-cout<<"Processing ("<<i-1<<","<<j<<")"<<endl;
-               pt.setXY(i-1,j);
-               Evaluate(pt,s);
-               if (added(i-1,j)==0)
-                  NarrowPt.Add(pt), added(i-1,j) = 1;
-               NarrowPt.Add(pt);
-            }
-            if (i<=int(_nx) && _TAlive(i+1,j)==_inf) {
-cout<<"Processing ("<<i+1<<","<<j<<")"<<endl;
-               pt.setXY(i+1,j);
-               Evaluate(pt,s);
-               if (added(i+1,j)==0)
-                  NarrowPt.Add(pt), added(i+1,j) = 1;
-               NarrowPt.Add(pt), added(i-1,j) = 1;
-            }
-            if (j>=2 && _TAlive(i,j-1)==_inf) {
-cout<<"Processing ("<<i<<","<<j-1<<")"<<endl;
-               pt.setXY(i,j-1);
-               Evaluate(pt,s);
-               if (added(i,j-1)==0)
-                  NarrowPt.Add(pt), added(i,j-1) = 1;
-                NarrowPt.Add(pt), added(i-1,j) = 1;
-            }
-            if (j<=int(_ny) && _TAlive(i,j+1)==_inf) {
-cout<<"Processing ("<<i<<","<<j+1<<")"<<endl;
-               pt.setXY(i,j+1);
-               Evaluate(pt,s);
-               if (added(i,j+1)==0)
-                  NarrowPt.Add(pt), added(i,j+1) = 1;
-               NarrowPt.Add(pt), added(i-1,j) = 1;
-            }
+            if (i>1 && _TAlive(i-1,j)==_inf)
+               add(i-1,j,s);
+            if (i<=_nx && _TAlive(i+1,j)==_inf)
+               add(i+1,j,s);
+            if (j>1 && _TAlive(i,j-1)==_inf)
+               add(i,j-1,s);
+            if (j<=_ny && _TAlive(i,j+1)==_inf)
+               add(i,j+1,s);
          }
       }
    }
-cout<<"NARROW\n"<<NarrowPt<<endl;
+}
+
+
+void FMM2D::add(int i,
+                int j,
+                int s)
+{
+   if (_added(i,j)==0) {
+      IPoint pt(i,j);
+      eval(pt,s);
+      _Narrow.Add(pt), _added(i,j) = 1;
+   }
 }
 
 
 real_t FMM2D::check_error()
 {
-   real_t err=0, hx=_gd->getHx(), hy=_gd->getHy();
+   real_t err=0;
    for (int i=1; i<=_nx; i++) {
       for (int j=1; j<=_ny; j++) {
-         real_t dx = (*_phi)(i+1,j)-(*_phi)(i,j)+(*_phi)(i+1,j+1)-(*_phi)(i,j+1),
-                dy = (*_phi)(i,j+1)-(*_phi)(i,j)+(*_phi)(i+1,j+1)-(*_phi)(i+1,j);
-         err += dx*dx/(hx*hx) + dy*dy/(hy*hy);
+         real_t dx = (*_u)(i+1,j)-(*_u)(i,j)+(*_u)(i+1,j+1)-(*_u)(i,j+1),
+                dy = (*_u)(i,j+1)-(*_u)(i,j)+(*_u)(i+1,j+1)-(*_u)(i+1,j);
+         err += dx*dx/(_hx*_hx) + dy*dy/(_hy*_hy);
       }
    }
    return fabs(0.5*sqrt(err/(_nx*_ny))-1);
@@ -301,35 +277,32 @@ real_t FMM2D::check_error()
 
 void FMM2D::ExtendSpeed(Vect<real_t>& F)
 {
-   real_t dx=_gd->getHx(), dy=_gd->getHy();
    for (int i=1; i<=_nx; i++) {
       for (int j=1; j<=_ny; j++)
-         UpdateExt(i,j,dx,dy,F);
+         UpdateExt(i,j,F);
       for (int j=_ny; j>=1; j--)
-         UpdateExt(i,j,dx,dy,F);
+         UpdateExt(i,j,F);
    }
    for (int i=_nx; i>=1; i--) {
       for (int j=1; j<=_ny; j++)
-         UpdateExt(i,j,dx,dy,F);
+         UpdateExt(i,j,F);
       for (int j=_ny; j>=1; j--)
-         UpdateExt(i,j,dx,dy,F);
+         UpdateExt(i,j,F);
    }
 }
 
 
 void FMM2D::UpdateExt(int           i,
                       int           j,
-                      real_t        dx,
-                      real_t        dy,
                       Vect<real_t>& F)
 {
-   real_t f = 0.5/dx*((*_phi)(i+1,j)+(*_phi)(i+1,j+1)-(*_phi)(i,j)-(*_phi)(i,j+1)),
-          g = 0.5/dy*((*_phi)(i,j+1)+(*_phi)(i+1,j+1)-(*_phi)(i,j)-(*_phi)(i+1,j));
-   real_t c=0.5*(f/dx+g/dy), d=0.5*(f/dx-g/dy);
-   if (c == 0.)
-      F(i+1,j) = F(i,j+1) + c/d*(F(i,j)-F(i+1,j+1));
+   real_t f = 0.5/_hx*((*_u)(i+1,j)+(*_u)(i+1,j+1)-(*_u)(i,j)-(*_u)(i,j+1)),
+          g = 0.5/_hy*((*_u)(i,j+1)+(*_u)(i+1,j+1)-(*_u)(i,j)-(*_u)(i+1,j));
+   real_t c=0.5*(f/_hx+g/_hy), d=0.5*(f/_hx-g/_hy);
+   if (c==0.)
+      F(i+1,j  ) = F(i,j+1) + c/d*(F(i,j)-F(i+1,j+1));
    else
-      F(i+1,j+1) = F(i,j) + d/c*(F(i,j+1)-F(i+1,j));
+      F(i+1,j+1) = F(i,j  ) + d/c*(F(i,j+1)-F(i+1,j));
 }
 
 } /* namespace OFELI */

@@ -72,13 +72,13 @@ void Gauss::legendre(real_t  y,
    int nn = int(_np*(_np+1)/2);
    for (size_t j=2; j<=_np; j++, p0=p1, p1=p2)
       p2 = ((2*j-1)*y*p1 - (j-1)*p0)/j;
-      p = p2;
-      if (y==1.0)
-         dp = nn;
-      else if (y==-1.0)
-         dp = _np%2==1 ? nn : -nn;
-      else
-         dp = _np*(y*p1 - p0) / (y*y-1);
+   p = p2;
+   if (y==1.0)
+      dp = nn;
+   else if (y==-1.0)
+      dp = _np%2==1 ? nn : -nn;
+   else
+      dp = _np*(y*p1 - p0) / (y*y-1);
 }
 
 

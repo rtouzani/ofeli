@@ -66,8 +66,8 @@ int main(int argc, char **argv)
    Mesh ms(argv[1]);
    ms.save(file);
    string com = "gmsh " + file;
-   system(com.c_str());
+   int ret = system(com.c_str());
    remove(file.c_str());
    cout << "done." << endl;
-   return 0;
+   return ret;
 }

@@ -639,7 +639,7 @@ void Geometry::AfterRead()
       for (i=0; i<nbe; i++) {
          if (edges[i].Cracked()) {
 //          verification of crack
-           GeometricalEdge &e1 = edges[i], &e2 = *e1.link;
+            GeometricalEdge &e1 = edges[i], &e2 = *e1.link;
             cerr << i << " " << e1[0].The() << " " << e2[0].The() << " " 
                  << e1[1].The() << " " << e2[1].The() << endl;
             if (e1[0].The() == e2[0].The() && e1[1].The() == e2[1].The())

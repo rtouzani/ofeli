@@ -880,8 +880,6 @@ void saveField(Vect<real_t>& v,
                string        output_file,
                int           opt)
 {
-   static int ts = 0;
-   size_t i, j;
    bool scalar = true;
    size_t nb_dof = v.getNbDOF();
    if (nb_dof>1)
@@ -898,6 +896,62 @@ void saveField(Vect<real_t>& v,
 
    switch (opt) {
 
+      case GMSH:
+      {
+         fp << "View \"" << "#" << "\" {" << endl;
+         switch (g.getDim()) {
+
+            case 1:
+               for (size_t i=1; i<=nx; i++) {
+                  fp << "SL(";
+                  fp << g.getX(i) <<  ", 0., 0., " << g.getX(i+1) <<  ", 0., 0. ) {" << endl;
+                  fp << v(i) << "," << v(i+1) << "};" << endl;
+               }
+               fp << "};" << endl;
+               break;
+
+            case 2:
+               for (size_t i=1; i<=nx; i++) {
+                  for (size_t j=1; j<=ny; j++) {
+                     fp << "ST(";
+                     fp << g.getXY(i  ,j  ).x << "," << g.getXY(i  ,j  ).y << ",0.,";
+                     fp << g.getXY(i+1,j  ).x << "," << g.getXY(i+1,j  ).y << ",0.,";
+                     fp << g.getXY(i+1,j+1).x << "," << g.getXY(i+1,j+1).y << ",0.) {" << endl;
+                     fp << v(i,j) << "," << v(i+1,j) << "," << v(i+1,j+1) << "};" << endl;
+                     fp << "ST(";
+                     fp << g.getXY(i+1,j+1).x << "," << g.getXY(i+1,j+1).y << ",0.,";
+                     fp << g.getXY(i  ,j+1).x << "," << g.getXY(i  ,j+1).y << ",0.,";
+                     fp << g.getXY(i  ,j  ).x << "," << g.getXY(i  ,j  ).y << ",0.) {" << endl;
+                     fp << v(i+1,j+1) << "," << v(i,j+1) << "," << v(i,j) << "};" << endl;
+                  }
+               }
+               fp << "};" << endl;
+               break;
+
+            case 3:
+               for (size_t i=1; i<=nx; i++) {
+                  for (size_t j=1; j<=ny; j++) {
+                     for (size_t k=1; k<=nz; k++) {
+                        fp << "SH(";
+                        fp << g.getXYZ(i  ,j  ,k  ).x << "," << g.getXYZ(i  ,j  ,k  ).y << "," << g.getXYZ(i  ,j  ,k  ).z << ",";
+                        fp << g.getXYZ(i+1,j  ,k  ).x << "," << g.getXYZ(i+1,j  ,k  ).y << "," << g.getXYZ(i+1,j  ,k  ).z << ",\n";
+                        fp << g.getXYZ(i+1,j+1,k  ).x << "," << g.getXYZ(i+1,j+1,k  ).y << "," << g.getXYZ(i+1,j+1,k  ).z << ",";
+                        fp << g.getXYZ(i  ,j  ,k  ).x << "," << g.getXYZ(i  ,j  ,k  ).y << "," << g.getXYZ(i  ,j  ,k  ).z << ",\n";
+                        fp << g.getXYZ(i  ,j  ,k+1).x << "," << g.getXYZ(i  ,j  ,k+1).y << "," << g.getXYZ(i  ,j  ,k+1).z << ",";
+                        fp << g.getXYZ(i+1,j  ,k+1).x << "," << g.getXYZ(i+1,j  ,k+1).y << "," << g.getXYZ(i+1,j  ,k+1).z << ",\n";
+                        fp << g.getXYZ(i+1,j+1,k+1).x << "," << g.getXYZ(i+1,j+1,k+1).y << "," << g.getXYZ(i+1,j+1,k+1).z << ",";
+                        fp << g.getXYZ(i  ,j  ,k+1).x << "," << g.getXYZ(i  ,j  ,k+1).y << "," << g.getXYZ(i  ,j  ,k+1).z << ") {";
+                        fp << v(i,j,k  ) << "," << v(i+1,j,k  ) << "," << v(i+1,j+1,k  ) << "," << v(i,j,k  ) << ",";
+                        fp << v(i,j,k+1) << "," << v(i+1,j,k+1) << "," << v(i+1,j+1,k+1) << "," << v(i,j,k+1) << "};" << endl;
+                     }
+                  }
+               }
+               fp << "};" << endl;
+               break;
+         }
+      }
+      break;
+      
       case VTK:
       {
          if (nz > 1)
@@ -905,18 +959,15 @@ void saveField(Vect<real_t>& v,
                                  "This function is not implemented for 3-D");
          fp << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII\nDATASET POLYDATA\n";
          fp << "POINTS " << (nx+1)*(ny+1)*(nz+1) << " double\n";
-         for (i=1; i<=nx+1; i++) {
-            for (j=1; j<=ny+1; j++) {
-               fp << g.getX(i) << "  " << g.getY(j) << "  0.000"<< endl;
-            }
+         for (size_t i=1; i<=nx+1; i++) {
+            for (size_t j=1; j<=ny+1; j++)
+               fp << g.getX(i) << "  " << g.getY(j) << "  0.000" << endl;
          }
          fp << "POLYGONS  " << nx*ny << "  " << 5*nx*ny << endl;
          size_t nn = 1;
-         for (i=1; i<=nx; i++) {
-            for (j=1; j<=ny; j++) {
-               fp << "4  " << nn+j-2 << "  " << nn+j+ny-1 << "  " << nn+j+ny
-                  << "  " << nn+j-1 << endl;
-            }
+         for (size_t i=1; i<=nx; i++) {
+            for (size_t j=1; j<=ny; j++)
+               fp << "4  " << nn+j-2 << "  " << nn+j+ny-1 << "  " << nn+j+ny << "  " << nn+j-1 << endl;
             nn += ny+1;
          }
          if (v.getDOFType()==NODE_FIELD) {
@@ -926,21 +977,14 @@ void saveField(Vect<real_t>& v,
          else
             fp << "\nCELL_DATA  " << nx*ny << endl;
          fp << "SCALARS  u  double  1\nLOOKUP_TABLE  default" << endl;
-         for (size_t i=1; i<=nx; i++) {
-            for (size_t j=1; j<=ny; j++) {
+         for (size_t i=1; i<=nx+1; i++) {
+            for (size_t j=1; j<=ny+1; j++)
                fp << v(i,j) << "  ";
-            }
             fp << endl;
          }
       }
       break;
-
-      case TECPLOT:
-      {
-      }
-      break;
    }
-   ts++;
    fp.close();
 }
 

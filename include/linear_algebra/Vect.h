@@ -58,6 +58,7 @@ using std::setprecision;
 #include "OFELI_Config.h"
 #include "util/macros.h"
 #include "mesh/Mesh.h"
+#include "mesh/Grid.h"
 #include "linear_algebra/Point.h"
 #include "io/fparser/fparser.h"
 #include "shape_functions/Triang3.h"
@@ -136,12 +137,9 @@ template<class T_> class PETScVect;
 
 template<class T_> void OddEven(Vect<T_>& v, vector<T_>& odd, vector<T_>& even);
 
-#if defined (USE_EIGEN)
 template<class T_>
 class Vect
-#else
-template<class T_>
-class Vect
+#if !defined (USE_EIGEN)
           : public vector<T_>
 #endif
 /// @endcond
@@ -197,6 +195,12 @@ class Vect
  */
     Vect(size_t n,
          T_*    x);
+
+/** \brief Constructor with a Grid instance
+ *  \details The constructed vector has as size the total number of grid nodes
+ *  @param [in] g Grid instance
+ */
+    Vect(Grid& g);
 
 /** \brief Constructor with a mesh instance
  *  @param [in] m Mesh instance
@@ -429,9 +433,11 @@ class Vect
  */
     void setDG(int degree=1);
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    bool getGrid() const { return _grid; }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+/** \brief Say if vector is constructed for a grid
+ *  \details Vectors constructed for grids are defined with the help of a Grid instance
+ *  @return true if vector is constructed with a Grid instance
+ */
+    bool isGrid() const { return _grid; }
 
 /// \brief Return vector number of degrees of freedom
     size_t getNbDOF() const { return _nb_dof; }
@@ -1080,6 +1086,7 @@ class Vect
     void dof_select(size_t d, vector<size_t> &dof_list);
     size_t ijk(size_t i, size_t j)           const { return _ny*(i-1)+j-1; }
     size_t ijk(size_t i, size_t j, size_t k) const { return _ny*_nz*(i-1)+_nz*(j-1)+k-1; }
+    void setGrid(Grid& g);
 #if defined (USE_EIGEN)
     VectorX     _v;
 #endif
@@ -1131,7 +1138,7 @@ Vect<T_>::Vect(size_t nx,
 #endif
            _size(nx*ny), _nx(nx), _ny(ny), _nz(1),
            _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
-           _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
+           _grid(false), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
    _v.conservativeResize(_size);
@@ -1152,7 +1159,7 @@ Vect<T_>::Vect(size_t nx,
 #endif
            _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz),
            _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
-           _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
+           _grid(false), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
    _v.conservativeResize(_size);
@@ -1172,13 +1179,25 @@ Vect<T_>::Vect(size_t n,
 #endif
            _size(n), _nx(n), _ny(1), _nz(1),
            _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
-           _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
+           _grid(false), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
    _v.conservativeResize(_size);
 #endif
    for (size_t i=1; i<=n; ++i)
       set(i,x[i-1]);
+}
+
+
+template<class T_>
+Vect<T_>::Vect(Grid& g) :
+#if !defined (USE_EIGEN)
+           vector<T_>((g.getNx()+1)*(g.getNy()+1)*(g.getNz()+1)),
+#endif
+           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+           _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
+{
+   setGrid(g);
 }
 
 
@@ -1384,6 +1403,17 @@ void Vect<T_>::setMesh(Mesh&  m,
       _nb_dof = n/_theMesh->getNbNodes();
    setSize(_nb,_nb_dof,1);
    clear();
+}
+
+
+template<class T_>
+void Vect<T_>::setGrid(Grid& g)
+{
+   _nx = g.getNx() + 1;
+   _ny = g.getNy() + 1;
+   _nz = g.getNz() + 1;
+   _size = _nx*_ny*_nz;
+ 
 }
 
 

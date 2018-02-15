@@ -182,9 +182,6 @@ class ODESolver
  */
     void setF(string f);
 
-    void setF(int    i,
-              string f);
-
 /** \brief Set derivative with respect to the unknown of the function defining the ODE
  *  \details This function enables prescribing the value of the 1-st derivative
  *  for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be

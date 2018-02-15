@@ -36,11 +36,11 @@
 #include <config.h>
 #endif
 
-#include <complex>
 #include <stdexcept>
 #include "util/constants.h"
 #include "util/macros.h"
 #include "io/fparser/fparser.h"
+#include <complex>
 
 /*! \file OFELI_Config.h
  *  \ingroup Util
@@ -57,7 +57,7 @@
 
 /*!
  * \def OFELI_RELEASE_DATE
- * gives the date (month-year) of the current release
+ * gives the date (month-year) of current release
  */
 #define OFELI_RELEASE_DATE            "1-2018"
 

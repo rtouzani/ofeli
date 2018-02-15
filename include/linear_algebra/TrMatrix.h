@@ -52,9 +52,15 @@ class Mesh;
 /*! \class TrMatrix
  *  \ingroup VectMat
  * \brief To handle tridiagonal matrices.
- *
+ * \details 
  * This class enables storing and manipulating tridiagonal matrices.
- * The template parameter is the type of matrix entries
+ * The template parameter is the type of matrix entries.
+ * Any matrix entry can be accessed by the () operator: For instance,
+ * if \c A is an instance of this class, \c A(i,j) stands for the entry
+ * at the i-th row and j-th column, \c i and \c j starting from 1.
+ * If \c is difference from \c i-1, \c i or \c i+1, the returned value is \c 0.
+ * Entries of \c A can be assigned a value by the same operator. Only nonzero 
+ * entries can be assigned.
  *
  * \tparam T_ Data type (double, float, complex<double>, ...)
  *

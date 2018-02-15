@@ -101,7 +101,7 @@ class FMMSolver
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Execute the fast marching program
-    void solve() { this->_theFM->solve(); }
+    void run() { this->_theFM->run(); }
 
 /** \brief Extend speed by Sethian's method.
  *  \details The method consists in calculating a speed <tt>F</tt> such that

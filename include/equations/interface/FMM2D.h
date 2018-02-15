@@ -75,20 +75,37 @@ class FMM2D : public FMM
           Vect<real_t>& phi,
           bool          HA);
 
+/*!
+ * \brief Constructor
+ * \details Constructor using Grid instance
+ * \param [in] g Instance of class Grid
+ * \param [in] phi Vector containing the level set function at grid nodes.
+ * The values are <tt>0</tt> on the interface (from which the distance is computed),
+ * positive on one side and negative on the other side. They must contain the
+ * signed distance on the nodes surrounding the interface but can take any value on
+ * other nodes, provided they have the right sign.
+ * \param [in] F Right hand-side of the Eikonal equation
+ * \param [in] HA true if the program must be executed with high accuracy,
+ * false otherwise
+ */
+    FMM2D(const Grid&         g,
+          Vect<real_t>&       phi,
+          const Vect<real_t>& F,
+          bool                HA);
+
 /// Initialize the heap
-/// \param [in,out] NarrowPt Heap containing Narrow points
-    void InitHeap(Heap& NarrowPt);
+    void init();
 
 /// Execute Fast Marching Procedure
-    void solve();
+    void run();
 
 /** \brief compute the distance from node to interface
  * \param [in] pt node to treat
  * \param [in] sign Node sign
  * \return  distance from node <tt>pt</tt> to interface
  */
-   void Evaluate(IPoint& pt,
-                 int     sign);
+   void eval(IPoint& pt,
+             int     sign);
 
 /** \brief Extend the speed function to the whole grid
  *  \param [in,out] F Vector containing the speed at interface nodes on input
@@ -104,9 +121,15 @@ class FMM2D : public FMM
 
     void UpdateExt(int           i,
                    int           j,
-                   real_t        dx,
-                   real_t        dy,
                    Vect<real_t>& F);
+
+    void add(int i,
+             int j,
+             int s);
+
+    Vect<int> _added;
+
+    void set();
 };
 
 /*! @} End of Doxygen Groups */

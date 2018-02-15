@@ -426,8 +426,8 @@ int LinearSolver<T_>::solve(Iteration      s,
          ret = im.iterations();
       }
       else
-         throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): 
-                               This preconditioner is not available in the eigen library.");
+         throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
+                              "This preconditioner is not available in the eigen library.");
    }
    else if (_s==BICG_STAB_SOLVER) {
       if (_p==IDENT_PREC) {
@@ -452,12 +452,12 @@ int LinearSolver<T_>::solve(Iteration      s,
          ret = im.iterations();
       }
       else
-         throw OFELIException("In LinearSOlver::solve(Iteration,Preconditioner): This preconditioner
-                            is not available in the eigen library.");
+         throw OFELIException("In LinearSOlver::solve(Iteration,Preconditioner): "
+                              "This preconditioner is not available in the eigen library.");
    }
    else
-      throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): 
-                               This iterative solver is not available in the eigen library.");
+      throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
+                           "This iterative solver is not available in the eigen library.");
    _x->setSize(x.size(),1,1);
    *_x = x;
 #else

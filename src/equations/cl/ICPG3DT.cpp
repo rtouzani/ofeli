@@ -280,7 +280,7 @@ real_t ICPG3DT::RiemannSolver_ROE(int s)
       if (p_star<0) {
          if (_verbose)
             cerr << "Warning: negative pressure in left entropy fix method." << endl;
-            exit(2);
+         exit(2);
       }
       c_star = sqrt(_Gamma*p_star/rho_star);
       lambda_entropy_right = u_star - c_star;
@@ -438,7 +438,7 @@ real_t ICPG3DT::RiemannSolver_VFROE(int s)
       if (p_star<0) {
          if (_verbose)
             cerr << "Warning: negative pressure in right entropy fixed method." << endl;
-            exit(2);
+         exit(2);
       }
       c_star = sqrt(_Gamma*p_star/rho_star);
       lambda_entropy_left = u_star + c_star;

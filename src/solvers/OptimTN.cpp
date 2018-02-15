@@ -976,7 +976,7 @@ int linder(OptSolver&            opt,
 {
    size_t n=x.size();
    int tst, flag=0;
-   real_t oldf, gmin, step, xmin, a, b, e, b1, gtest1, gtest2;
+   real_t oldf, gmin, step, xmin=0., a, b, e, b1, gtest1, gtest2;
    real_t fw, gw, scxbnd, xw, tol;
 
    int lsprnt=0, nprnt=10000;

@@ -143,7 +143,7 @@ class IOField : public XMLParser
     IOField(const string& file,
             Mesh&         ms,
             AccessType    access,
-                  bool    compact=true);
+            bool          compact=true);
 
 /** \brief Constructor using file name and field name.
  *  @param [in] file File that contains field stored or to store

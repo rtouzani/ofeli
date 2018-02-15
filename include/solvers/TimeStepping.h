@@ -228,7 +228,7 @@ class TimeStepping
  *  \details The ODE system has the form
  *     a1(u)' + a0(u) = 0
  *  @param [in] a0 Vect instance defining the 0-th order term
- *  @param [in] a1 Vect instance defining the first order term
+ *  @param [in] A0 Matrix instance
  */
     void setNLTerm0(Vect<real_t>&   a0,
                     Matrix<real_t>& A0);

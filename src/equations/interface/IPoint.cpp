@@ -35,130 +35,152 @@
 
 namespace OFELI {
 
-IPoint::IPoint(): _i(1), _j(1), _k(0)
+IPoint::IPoint()
 {
-   _value = 0;
-   _sign = 1;
+   i = j = 1, k = 0;
+   val = 0;
+   sgn = 1;
 }
 
 
-IPoint::IPoint(int i) : _i(i), _sign(Sgn(i))
+IPoint::IPoint(int ix)
 {
+   sgn = Sgn(ix);
+   i = ix;
 }
 
 
-IPoint::IPoint(size_t x,
-               size_t y,
+IPoint::IPoint(int    ix,
+               int    iy,
                real_t v)
-       : _i(x), _j(y), _k(0)
 {
-   _value = Abs(v);
-   _sign = Sgn(v);
+   i = ix, j = iy, k = 0;
+   val = fabs(v);
+   sgn = Sgn(v);
 }
 
 
-IPoint::IPoint(size_t x,
-               size_t y,
-               size_t z,
+IPoint::IPoint(int    ix,
+               int    iy,
+               int    iz,
                real_t v)
-       : _i(x), _j(y), _k(z)
 {
-   _value = Abs(v);
-   _sign = Sgn(v);
+   i = ix, j = iy, k = iz;
+   val = fabs(v);
+   sgn = Sgn(v);
 }
 
 
 IPoint::IPoint(const IPoint& p)
 {
-   _i = p._i; 
-   _j = p._j; 
-   _k  = p._k;
-   _value = p._value; 
-   _sign = p._sign;
+   i = p.i, j = p.j, k = p.k;
+   val = p.val; 
+   sgn = p.sgn;
 }
 
 
 IPoint & IPoint::operator=(const IPoint& p)
 {
-   _i = p._i; 
-   _j = p._j; 
-   _k = p._k;
-   _value = p._value; 
-   _sign = p._sign;
+   i = p.i, j = p.j, k = p.k;
+   val = p.val; 
+   sgn = p.sgn;
    return *this;
 }
 
 
 IPoint &IPoint::operator=(const real_t& val)
 {
-   this->_value = val;
+   this->val = val;
    return *this;
 }
 
 
 bool IPoint::operator==(const IPoint& p)
 {
-   return ((_i==p._i) && (_j==p._j) && (_k==p._k));
+   return (i==p.i && j==p.j && k==p.k);
 }
 
 
-IPoint &IPoint::operator+(const IPoint& p)
+IPoint &IPoint::operator+=(const IPoint& p)
 {
-   _i += p._i;
-   _j += p._j;
-   _k += p._k;
+   i += p.i;
+   j += p.j; 
+   k += p.k;
    return *this;
 }
 
 
-void IPoint::GenerateNeighbour(LocalVect<IPoint,6>& Neighbour)
+void IPoint::getNeighbour(vector<IPoint>& neig)
 {
-   Neighbour[0]._i = _i - 1; Neighbour[0]._j = _j;
-   Neighbour[1]._i = _i + 1; Neighbour[1]._j = _j;
-   Neighbour[2]._i = _i;     Neighbour[2]._j = _j - 1;
-   Neighbour[3]._i = _i;     Neighbour[3]._j = _j + 1;
-   if (_k != 0) {
-      Neighbour[0]._k = _k;
-      Neighbour[1]._k = _k;
-      Neighbour[2]._k = _k;
-      Neighbour[3]._k = _k;
-      Neighbour[4]._i = _i; 
-      Neighbour[4]._j = _j;
-      Neighbour[4]._k = _k - 1;
-      Neighbour[5]._i = _i; 
-      Neighbour[5]._j = _j;
-      Neighbour[5]._k = _k + 1;
+   neig[0].i = i-1; neig[0].j = j;
+   neig[1].i = i+1; neig[1].j = j;
+   neig[2].i = i;   neig[2].j = j-1;
+   neig[3].i = i;   neig[3].j = j+1;
+   if (k != 0) {
+      neig[0].k = k; neig[1].k = k;
+      neig[2].k = k; neig[3].k = k;
+      neig[4].i = i; neig[4].j = j;
+      neig[4].k = k-1; neig[5].i = i; 
+      neig[5].j = j; neig[5].k = k+1;
    }
 }
 
 
-void GenerateDisplacement(LocalVect<IPoint,6>& NXi,
-                          bool                 three_D)
+void getDisplacement(vector<IPoint>& NXi,
+                     bool            three_D)
 {
-   NXi[0].setX(-1); NXi[0].setY( 0);
-   NXi[1].setX( 1); NXi[1].setY( 0);
-   NXi[2].setX( 0); NXi[2].setY(-1);
-   NXi[3].setX( 0); NXi[3].setY( 1);
+   NXi[0].i = -1; NXi[0].j =  0;
+   NXi[1].i =  1; NXi[1].j =  0;
+   NXi[2].i =  0; NXi[2].j = -1;
+   NXi[3].i =  0; NXi[3].j =  1;
 
    if (three_D) {
-      NXi[0].setZ( 0); NXi[1].setZ( 0);
-      NXi[2].setZ( 0); NXi[3].setZ( 0);	
-      NXi[4].setX( 0); NXi[4].setY( 0);
-      NXi[4].setZ(-1); NXi[5].setX( 0);
-      NXi[5].setY( 0); NXi[5].setZ( 1);
+      NXi[0].k =  0; NXi[1].k = 0;
+      NXi[2].k =  0; NXi[3].k = 0;	
+      NXi[4].i =  0; NXi[4].j = 0;
+      NXi[4].k = -1; NXi[5].i = 0;
+      NXi[5].j =  0; NXi[5].k = 1;
    }
 }
 
 
-IPoint operator*(const int&          i,
-                       const IPoint& p)
+bool operator==(const IPoint& a,
+                const IPoint& b)
+{ 
+   return (a.i==b.i && a.j==b.j && a.k==b.k); 
+}
+
+
+bool operator<(const IPoint& a,
+               const IPoint& b)
+{
+   if (a.i < b.i)
+      return true;
+   if (a.i==b.i && a.j<b.j)
+      return true;
+   return false;
+}
+
+
+IPoint operator*(const int&    ix,
+                 const IPoint& p)
 {
    IPoint res(p);
-   res.setX(i*res.getX());
-   res.setY(i*res.getY());
-   res.setZ(i*res.getZ());
+   res.i = ix*res.i;
+   res.j = ix*res.j;
+   res.k = ix*res.k;
    return res;
 }
+
+
+std::ostream & operator<<(std::ostream& s,
+                          const IPoint& a)
+{
+   s << "( " << a.i << "," << a.j << "," << a.k << " - "
+     << a.val << " - " << a.sgn << ")";
+   return s;
+}
+
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

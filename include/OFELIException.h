@@ -48,7 +48,7 @@ namespace OFELI {
 
 /*!
  * \class OFELIException
- * \ingroup 
+ * \ingroup Util
  * \brief To handle exceptions in OFELI
  * \details This class enables using exceptions in programs using OFELI
  *

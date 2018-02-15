@@ -61,36 +61,47 @@ namespace OFELI {
 class Heap
 {
  private:
-   Vect<IPoint> _heap;
+   vector<IPoint> _heap;
    size_t _max_size, _size;
+   void setHeap(Vect<IPoint> v);
+   void Pop() { _size--; }
 
  public:
+/*!
+ * \brief Default Constructor
+ */
+    Heap();
+
 /*!
  * \brief Constructor
  * \param [in] size the heap size
  */
-    Heap(size_t size = 0);
+    Heap(size_t size);
 
 /*!
  * \brief Constructor
  * Constructor using a vector of point of type IPoint
  * \param [in] vec vector of point of type IPoint 
  */
-   Heap(Vect<IPoint>& vec);
+   Heap(Vect<IPoint>& v);
 
 /*!
  * \brief Constructor
  * Constructor by copy
  * \param [in] tas Heap to copy from
  */
-   Heap(Heap& tas);
+   Heap(Heap& h);
 
 /// \brief Destructor
    ~Heap();
 
+/// \brief Set heap size
+/// \param [in] size Heap size
+    void set(size_t size);
+
 /// \brief Operator <tt>=</tt>
 /// \param [in] tas Heap to copy from
-    Heap & operator=(const Heap& H);
+    Heap & operator=(const Heap& h);
 
 /*!
  * \brief Operator <tt>[]</tt>
@@ -98,21 +109,19 @@ class Heap
  * \param [in] index in the Heap
  * \return point at the index <tt>ind</tt>
  */
-    IPoint operator[](size_t ind) const;
+    IPoint operator[](size_t i) const;
 
 /*!
  * \brief Operator <tt>[]</tt>
  * \param [in] index in the Heap
  * \return point at the index <tt>ind</tt>
  */
-    IPoint &operator[](size_t ind);
+    IPoint &operator[](size_t i);
 
 /// \brief Set Heap size
 /// \param [in] size heap new size
     void setSize(size_t size) { _max_size = size; }
 
-    void setHeap(Vect<IPoint> vec);
-    void Pop() { _size--; }
 
 /// \brief return Heap size
 /// \return Heap size
@@ -131,7 +140,7 @@ class Heap
  * \param [in] rg the index of the node to update
  */
     void Update(const real_t& val,
-                      size_t  rg);
+                size_t        rg);
 
 /*!
  * \brief Find a node in the Heap
@@ -140,13 +149,13 @@ class Heap
  * \return true if the node is in the Heap, false otherwise
  */
     bool Find(const IPoint& pt,
-                    size_t& ind);
+              size_t&       ind);
 
-    void Down_Heap(size_t rank = 1);
-    void Up_Heap(size_t rank);
+    void Down(size_t rank=1);
+    void Up(size_t rank);
 
     friend ostream & operator<< (ostream&    s,
-                                 const Heap& H);
+                                 const Heap& h);
 };
 
 /*! @} End of Doxygen Groups */

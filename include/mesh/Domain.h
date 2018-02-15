@@ -87,7 +87,7 @@ struct Vertex : public Point<real_t> {
 };
 
 struct Ln {
-   Ln() { }
+   Ln() : nb(0), n1(0), n2(0), Dcode(0), Ncode(0) { }
    size_t nb, n1, n2;
    int Dcode, Ncode;
    vector<real_t> s;

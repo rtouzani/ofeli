@@ -164,147 +164,147 @@ int OptimNM(OptSolver&    opt,
          for (size_t i=1; i<=n; i++) {
             if (ynewlo<y[i]) {
                ynewlo = y[i];
-            ihi = i;
+               ihi = i;
+            }
          }
-      }
 
-//    Calculate pbar, the centroid of the simplex vertices
-//    excepting the vertex with y value ynewlo
-      for (size_t i=0; i<n; i++) {
-         real_t z=0.0;
-         for (size_t  j=0; j<=n; j++)
-            z += p[i+j*n];
-         z -= p[i+ihi*n];  
-         pbar[i] = z/n;
-      }
+//       Calculate pbar, the centroid of the simplex vertices
+//       excepting the vertex with y value ynewlo
+         for (size_t i=0; i<n; i++) {
+            real_t z=0.0;
+            for (size_t  j=0; j<=n; j++)
+               z += p[i+j*n];
+            z -= p[i+ihi*n];  
+            pbar[i] = z/n;
+         }
 
-//    Reflection through the centroid
-      for (size_t i=0; i<n; i++)
-         pstar[i] = pbar[i] + rcoeff*(pbar[i]-p[i+ihi*n]);
-      real_t ystar = opt.Objective(pstar);
-      nb_eval++;
-
-//    Successful reflection, so extension
-      if (ystar<ylo) {
+//       Reflection through the centroid
          for (size_t i=0; i<n; i++)
-            p2star[i] = pbar[i] + ecoeff*(pstar[i]-pbar[i]);
-         y2star = opt.Objective(p2star);
+            pstar[i] = pbar[i] + rcoeff*(pbar[i]-p[i+ihi*n]);
+         real_t ystar = opt.Objective(pstar);
          nb_eval++;
 
-//       Check extension
-         if (ystar<y2star) {
+//       Successful reflection, so extension
+         if (ystar<ylo) {
             for (size_t i=0; i<n; i++)
-               p[i+ihi*n] = pstar[i];
-            y[ihi] = ystar;
-         }
-
-//       Retain extension or contraction
-         else {
-            for (size_t i=0; i<n; i++)
-               p[i+ihi*n] = p2star[i];
-            y[ihi] = y2star;
-         }
-      }
-
-//    No extension
-      else {
-         size_t l=0;
-         for (size_t i=0; i<=n; i++) {
-            if (ystar<y[i])
-               l++;
-         }
-
-         if (1<l) {
-            for (size_t i=0; i<n; i++)
-               p[i+ihi*n] = pstar[i];
-            y[ihi] = ystar;
-         }
-
-//       Contraction on the y(ihi) side of the centroid
-         else if (l==0) {
-            for (size_t i=0; i<n; i++)
-               p2star[i] = pbar[i] + ccoeff*(p[i+ihi*n]-pbar[i]);
+               p2star[i] = pbar[i] + ecoeff*(pstar[i]-pbar[i]);
             y2star = opt.Objective(p2star);
             nb_eval++;
 
-//          Contract the whole simplex
-            if (y[ihi]<y2star) {
-               for (size_t j=0; j<=n; j++) {
-                  for (size_t i=0; i<n; i++) {
-                     p[i+j*n] = (p[i+j*n] + p[i+ilo*n])*0.5;
-                     xmin[i] = p[i+j*n];
-                  }
-                  y[j] = opt.Objective(xmin);
-                  nb_eval++;
-               }
-               ylo = y[0];
-               ilo = 0;
-
-               for (size_t i=1; i<=n; i++) {
-                  if (y[i]<ylo) {
-                     ylo = y[i];
-                     ilo = i;
-                  }
-               }
-               continue;
-            }
-
-//          Retain contraction
-            else {
-               for (size_t i=0; i<n; i++)
-                  p[i+ihi*n] = p2star[i];
-               y[ihi] = y2star;
-            }
-         }
-
-//       Contraction on the reflection side of the centroid
-         else if (l==1) {
-            for (size_t i=0; i<n; i++)
-               p2star[i] = pbar[i] + ccoeff*(pstar[i]-pbar[i]);
-            y2star = opt.Objective(p2star);
-            nb_eval++;
-
-//          Retain reflection ?
-            if (y2star<=ystar) {
-               for (size_t i=0; i<n; i++)
-                  p[i+ihi*n] = p2star[i];
-               y[ihi] = y2star;
-            }
-            else {
+//          Check extension
+            if (ystar<y2star) {
                for (size_t i=0; i<n; i++)
                   p[i+ihi*n] = pstar[i];
                y[ihi] = ystar;
             }
+
+//          Retain extension or contraction
+            else {
+               for (size_t i=0; i<n; i++)
+                  p[i+ihi*n] = p2star[i];
+               y[ihi] = y2star;
+            }
+         }
+
+//       No extension
+         else {
+            size_t l=0;
+            for (size_t i=0; i<=n; i++) {
+               if (ystar<y[i])
+                  l++;
+            }
+
+            if (1<l) {
+               for (size_t i=0; i<n; i++)
+                  p[i+ihi*n] = pstar[i];
+               y[ihi] = ystar;
+            }
+
+//          Contraction on the y(ihi) side of the centroid
+            else if (l==0) {
+               for (size_t i=0; i<n; i++)
+                  p2star[i] = pbar[i] + ccoeff*(p[i+ihi*n]-pbar[i]);
+               y2star = opt.Objective(p2star);
+               nb_eval++;
+
+//             Contract the whole simplex
+               if (y[ihi]<y2star) {
+                  for (size_t j=0; j<=n; j++) {
+                     for (size_t i=0; i<n; i++) {
+                        p[i+j*n] = (p[i+j*n] + p[i+ilo*n])*0.5;
+                        xmin[i] = p[i+j*n];
+                     }
+                     y[j] = opt.Objective(xmin);
+                     nb_eval++;
+                  }
+                  ylo = y[0];
+                  ilo = 0;
+
+                  for (size_t i=1; i<=n; i++) {
+                     if (y[i]<ylo) {
+                        ylo = y[i];
+                        ilo = i;
+                     }
+                  }
+                  continue;
+               }
+
+//             Retain contraction
+               else {
+                  for (size_t i=0; i<n; i++)
+                     p[i+ihi*n] = p2star[i];
+                  y[ihi] = y2star;
+               }
+            }
+
+//          Contraction on the reflection side of the centroid
+            else if (l==1) {
+               for (size_t i=0; i<n; i++)
+                  p2star[i] = pbar[i] + ccoeff*(pstar[i]-pbar[i]);
+               y2star = opt.Objective(p2star);
+               nb_eval++;
+
+//             Retain reflection ?
+               if (y2star<=ystar) {
+                  for (size_t i=0; i<n; i++)
+                     p[i+ihi*n] = p2star[i];
+                  y[ihi] = y2star;
+               }
+               else {
+                  for (size_t i=0; i<n; i++)
+                     p[i+ihi*n] = pstar[i];
+                  y[ihi] = ystar;
+               }
+            }
+         }
+
+//       Check if ylo improved
+         if (y[ihi]<ylo) {
+            ylo = y[ihi];
+            ilo = ihi;
+         }
+         jcount--;
+         if (0<jcount)
+            continue;
+
+//       Check to see if minimum reached
+         if (nb_eval<=max_eval) {
+            jcount = conv;
+            real_t z=0.0;
+            for (size_t i=0; i<=n; i++)
+               z += y[i];
+            xx = z/(n+1);
+            z = 0.0;
+            for (size_t i=0; i<=n; i++)
+               z += (y[i]-xx)*(y[i]-xx);
+            if (z<=rq)
+               break;
          }
       }
 
-//    Check if ylo improved
-      if (y[ihi]<ylo) {
-         ylo = y[ihi];
-         ilo = ihi;
-      }
-      jcount--;
-      if (0<jcount)
-         continue;
-
-//    Check to see if minimum reached
-      if (nb_eval<=max_eval) {
-         jcount = conv;
-         real_t z=0.0;
-         for (size_t i=0; i<=n; i++)
-            z += y[i];
-         xx = z/(n+1);
-         z = 0.0;
-         for (size_t i=0; i<=n; i++)
-            z += (y[i]-xx)*(y[i]-xx);
-         if (z<=rq)
-            break;
-      }
-   }
-
-// Factorial tests to check that ynewlo is a local minimum
-   for (size_t i=0; i<n; i++)
-      xmin[i] = p[i+ilo*n];
+//    Factorial tests to check that ynewlo is a local minimum
+      for (size_t i=0; i<n; i++)
+         xmin[i] = p[i+ilo*n];
       ynewlo = y[ilo];
 
       if (max_eval<nb_eval) {

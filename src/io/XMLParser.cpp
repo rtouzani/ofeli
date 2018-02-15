@@ -1152,15 +1152,15 @@ void XMLParser::read_mesh(const StringMap::iterator& i)
    else if (_tag_name=="Elements") {
       if (i->first=="shape")
          _el_shape = i->second;
-         if (i->first=="nodes")
-            _nb_el_nodes = atoi((i->second).c_str());
+      if (i->first=="nodes")
+         _nb_el_nodes = atoi((i->second).c_str());
    }
 
    else if (_tag_name=="Sides") {
       if (i->first=="shape")
          _sd_shape = i->second;
-         if (i->first=="nodes")
-            _nb_sd_nodes = atoi((i->second).c_str());
+      if (i->first=="nodes")
+         _nb_sd_nodes = atoi((i->second).c_str());
    }
 
    else if (_tag_name=="Material") {

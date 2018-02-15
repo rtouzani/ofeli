@@ -34,7 +34,6 @@
 
 #include "OFELI_Config.h"
 using std::exception;
-using std::endl;
 
 namespace OFELI {
 /*!

@@ -66,12 +66,14 @@ class FMM
 {
 
  protected:
-   Grid *_gd;
-   real_t _inf;
-   Vect<real_t> _AlivePt, _TAlive, *_phi;
-   bool _high_accuracy;
+   Heap _Narrow;
+   const Grid *_grid;
+   size_t _dim;
    int _nx, _ny, _nz;
-   int MaxQuadratic(real_t a, real_t b, real_t c, real_t& x);
+   real_t _hx, _hy, _hz, _inf;
+   Vect<real_t> _AlivePt, _TAlive, *_u, _F;
+   bool _high_accuracy;
+   int MaxQuad(real_t a, real_t b, real_t c, real_t& x);
 
  public:
 
@@ -97,10 +99,10 @@ class FMM
 
 /// \brief Initialize the heap
 /// @param [in,out] NarrowPt Heap containing Narrow points
-    virtual void InitHeap(Heap& NarrowPt) = 0;
+//    virtual void init(Heap& NarrowPt) = 0;
 
 /// \brief Execute Fast Marching Procedure
-    virtual void solve() = 0;
+    virtual void run() = 0;
 
 /*!
  *  \brief compute the distance from node to interface
@@ -108,8 +110,8 @@ class FMM
  *  @param [in] sign node sign
  *  @return distance from node <tt>pt</tt> to interface
  */
-    virtual void Evaluate(IPoint& pt,
-                          int     sign) = 0;
+    virtual void eval(IPoint& pt,
+                      int     sign) = 0;
 
 /** \brief Extend speed by Sethian's method.
  *  \details The method consists in calculating a speed <tt>F</tt> such that

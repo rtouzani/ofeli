@@ -297,7 +297,7 @@ virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 class OFELI::TrMatrix&lt; T_ &gt;</h3>
 
 <p>To handle tridiagonal matrices. </p>
-<p>This class enables storing and manipulating tridiagonal matrices. The template parameter is the type of matrix entries</p>
+<p>This class enables storing and manipulating tridiagonal matrices. The template parameter is the type of matrix entries. Any matrix entry can be accessed by the () operator: For instance, if <code>A</code> is an instance of this class, <code>A(i,j)</code> stands for the entry at the i-th row and j-th column, <code>i</code> and <code>j</code> starting from 1. If <code>is</code> difference from <code>i-1</code>, <code>i</code> or <code>i+1</code>, the returned value is <code>0</code>. Entries of <code>A</code> can be assigned a value by the same operator. Only nonzero entries can be assigned.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T_</td><td>Data type (double, float, complex&lt;double&gt;, ...)</td></tr>
@@ -1257,7 +1257,7 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2017 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2018 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

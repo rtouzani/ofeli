@@ -336,7 +336,7 @@ void IOField::put(const Vect<real_t>& v)
          *_of << "   </Step>" << endl;
    }
    else
-      throw OFELIException("In IOField::put(Vect,real_t): This instance of IOField was constructed for input");
+      throw OFELIException("In IOField::put(Vect<real_t>): This instance of IOField was constructed for input");
    _state++;
    _field_opened = true;
 }
