@@ -75,7 +75,6 @@ void FMM2D::set()
             _AlivePt(i,j) = (*_u)(i,j);
       }
    }
-cout<<"**\n"<<_AlivePt;
 
 // Appropriate initial solution is necessary for high accuracy
    if (_high_accuracy) {

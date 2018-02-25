@@ -97,11 +97,11 @@ class Figure
        real_t dist=_fig[0]->getSignedDistance(p);
        for (size_t i=1; i<_nb_figs; i++) {
           if (_oper[i-1]==UNION)
-             dist = min(_fig[i]->getSignedDistance(p),dist);
+             dist = std::min(_fig[i]->getSignedDistance(p),dist);
           else if (_oper[i-1]==INTERSECTION)
-             dist = max(_fig[i]->getSignedDistance(p),dist);
+             dist = std::max(_fig[i]->getSignedDistance(p),dist);
           else if (_oper[i-1]==MINUS)
-             dist = max(-_fig[i]->getSignedDistance(p),dist);
+             dist = std::max(-_fig[i]->getSignedDistance(p),dist);
           else if (_oper[i-1]==SHIFT)
              dist = 0;
        }
@@ -303,7 +303,7 @@ class Rectangle : public Figure
  */
     real_t getSignedDistance(const Point<real_t>& p) const
     {
-       return -min(min(min(p.y-_v[0].y,_v[1].y-p.y),p.x-_v[0].x+p.x),_v[1].x-p.x);
+       return -std::min(std::min(std::min(p.y-_v[0].y,_v[1].y-p.y),p.x-_v[0].x+p.x),_v[1].x-p.x);
     }
 
 /// \brief Operator +=
@@ -352,7 +352,7 @@ class Brick : public Figure
  */
     Brick(const Point<real_t>& bbm,
           const Point<real_t>& bbM,
-                int            code=1)
+          int                  code=1)
     {
        _nb_figs++;
        _v[0] = bbm;
@@ -384,9 +384,9 @@ class Brick : public Figure
  */
     real_t getSignedDistance(const Point<real_t>& p) const
     {
-       return -min(min(min(min(min(p.y-_v[0].y, _v[1].y-p.y)
-                                  ,p.x-_v[0].x),_v[1].x-p.x)
-                                  ,p.z-_v[0].z),_v[1].z-p.z);
+       return -std::min(std::min(std::min(std::min(std::min(p.y-_v[0].y, _v[1].y-p.y)
+                                                           ,p.x-_v[0].x),_v[1].x-p.x)
+                                                           ,p.z-_v[0].z),_v[1].z-p.z);
     }
 
 /// \brief Operator +=
@@ -439,8 +439,8 @@ class Circle : public Figure
  *  @param [in] code Code to assign to the generated domain [Default: 1]
  */
     Circle(const Point<real_t>& c,
-                 real_t         r,
-                 int            code=1)
+           real_t               r,
+           int                  code=1)
     {
        _nb_figs++;
        _v[0] = c;
@@ -591,7 +591,7 @@ class Ellipse : public Figure
        _b = 1.;
     }
 
-/** \brief Constructor with given data
+/** \brief Constructor with given ellipse data
  *  @param [in] c Coordinates of center
  *  @param [in] a Semimajor axis
  *  @param [in] b Semiminor axis
@@ -618,17 +618,21 @@ class Ellipse : public Figure
        return sqrt((p.x-_v[0].x)*(p.x-_v[0].x)/(_a*_a)+(p.y-_v[0].y)*(p.y-_v[0].y)/(_b*_b))-1.0;
     }
 
-/// \brief Operator <tt>+=</tt>
-/// \details Translate ellipse by a vector <tt>a</tt>
+/** \brief Operator <tt>+=</tt>
+ *  \details Translate ellipse by a vector <tt>a</tt>
+ *  @param [in] a Vector defining the translation
+ */
     Ellipse & operator+=(Point<real_t> a)
     {
        _v[0] += a;
        return *this;
     }
 
-/// \brief Operator <tt>*=</tt>
-/// \details Scale ellipse by a factor <tt>a</tt>
-    Ellipse & operator+=(real_t a)
+/** \brief Operator <tt>*=</tt>
+ *  \details Scale ellipse by a factor <tt>a</tt>
+ *  @param [in] a Scaling value
+ */
+    Ellipse& operator+=(real_t a)
     {
        _a *= a;
        _b *= a;
@@ -679,7 +683,8 @@ class Triangle : public Figure
        _v[0] = v1;
        _v[1] = v2;
        _v[2] = v3;
-       _inv_det = 1.0/((_v[1].x-_v[0].x)*(_v[2].y-_v[0].y) - (_v[1].y-_v[0].y)*(_v[2].x-_v[0].x));
+       _inv_det = 1.0/((_v[1].x-_v[0].x)*(_v[2].y-_v[0].y) -
+                       (_v[1].y-_v[0].y)*(_v[2].x-_v[0].x));
        _code = code;
     }
 
@@ -700,8 +705,8 @@ class Triangle : public Figure
     real_t getSignedDistance(const Point<real_t>& p) const
     {
        real_t d=dLine(p,_v[0],_v[1]);
-       d = min(d,dLine(p,_v[1],_v[2]));
-       d = min(d,dLine(p,_v[2],_v[0]));
+       d = std::min(d,dLine(p,_v[1],_v[2]));
+       d = std::min(d,dLine(p,_v[2],_v[0]));
        real_t s = _inv_det*((_v[2].y-_v[0].y)*(p.x-_v[0].x)+(_v[0].x-_v[2].x)*(p.y-_v[0].y));
        real_t t = _inv_det*((_v[0].y-_v[1].y)*(p.x-_v[0].x)+(_v[1].x-_v[0].x)*(p.y-_v[0].y));
        if (s>=0 && s<=1 && t>=0 && s+t<=1)
@@ -756,7 +761,7 @@ class Polygon : public Figure
  *  @param [in] code Code to assign to the generated domain (Default value = 1)
  */
     Polygon(const Vect<Point<real_t> >& v,
-                  int                   code=1)
+            int                         code=1)
     {
        _nb_figs++;
        _nb_vertices = v.size();
@@ -782,8 +787,8 @@ class Polygon : public Figure
     {
        real_t d=dLine(p,_v[0],_v[1]);
        for (size_t i=1; i<_nb_vertices-1; i++)
-          d = min(d,dLine(p,_v[i],_v[i+1]));
-       d = min(d,dLine(p,_v[_nb_vertices-1],_v[0]));
+          d = std::min(d,dLine(p,_v[i],_v[i+1]));
+       d = std::min(d,dLine(p,_v[_nb_vertices-1],_v[0]));
        return d;
     }
 

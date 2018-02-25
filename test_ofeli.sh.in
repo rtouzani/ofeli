@@ -274,7 +274,8 @@ fi
 echo "Test mesh adaptation demo 2 (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
-   ./ad2 L.dom
+   ./ad2 1
+    /bin/rm *.pos *.m
 fi
 
 cd ../../

@@ -120,7 +120,7 @@ int solve(Mesh&               ms,
 
 
 void BC_RHS(int           opt,
-	    const Mesh&   ms,
+            const Mesh&   ms,
             Vect<double>& bc,
             Vect<double>& f)
 {

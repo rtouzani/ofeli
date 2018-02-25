@@ -96,7 +96,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9c282b46f5f2d37b731248e9ea737785"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a9c282b46f5f2d37b731248e9ea737785">More...</a><br /></td></tr>
 <tr class="separator:a9c282b46f5f2d37b731248e9ea737785"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b86e17e55b25da158fcdde6925b8488"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Ellipse.html#a7b86e17e55b25da158fcdde6925b8488">Ellipse</a> (<a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; c, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> <a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, int code=1)</td></tr>
-<tr class="memdesc:a7b86e17e55b25da158fcdde6925b8488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with given data.  <a href="#a7b86e17e55b25da158fcdde6925b8488">More...</a><br /></td></tr>
+<tr class="memdesc:a7b86e17e55b25da158fcdde6925b8488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with given ellipse data.  <a href="#a7b86e17e55b25da158fcdde6925b8488">More...</a><br /></td></tr>
 <tr class="separator:a7b86e17e55b25da158fcdde6925b8488"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5900986f0e62239ca60183f7a86fdd71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Ellipse.html#a5900986f0e62239ca60183f7a86fdd71">getSignedDistance</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p) const </td></tr>
 <tr class="memdesc:a5900986f0e62239ca60183f7a86fdd71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return signed distance of a given point from the current ellipse.  <a href="#a5900986f0e62239ca60183f7a86fdd71">More...</a><br /></td></tr>
@@ -175,7 +175,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
       </table>
 </div><div class="memdoc">
 
-<p>Constructor with given data. </p>
+<p>Constructor with given ellipse data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>Coordinates of center </td></tr>
@@ -238,7 +238,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Operator <code>+=</code> </p>
-<p>Translate ellipse by a vector <code>a</code> </p>
+<p>Translate ellipse by a vector <code>a</code> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>Vector defining the translation </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -257,7 +262,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Operator <code>*=</code> </p>
-<p>Scale ellipse by a factor <code>a</code> </p>
+<p>Scale ellipse by a factor <code>a</code> </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>Scaling value </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
