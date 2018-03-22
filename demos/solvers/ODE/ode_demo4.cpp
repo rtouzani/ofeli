@@ -65,31 +65,34 @@ int main(int argc, char *argv[])
    theTimeStep = atof(argv[1]);
 
 // Solution as a system of second-order ODEs
-   ODESolver ode(NEWMARK,theTimeStep,theFinalTime,2);
+   try {
+      ODESolver ode(NEWMARK,theTimeStep,theFinalTime,2);
 
-// Set differential equation coefficients
-   DMatrix<double> A0(2,2), A1(2,2), A2(2,2);
-   Vect<double> u(2), v(2);
-   u(1) = 0; u(2) = 1;
-   v(1) = OFELI_PI; v(2) = 0;
-   ode.setInitial(u,v);
-   ode.setRHS("(2-2*pi^2)*sin(pi*t)-2*pi*cos(pi*t)-cos(2*pi*t)");
-   ode.setRHS("(2-4*pi^2)*cos(2*pi*t)-2*pi*sin(2*pi*t)-sin(pi*t)");
-   ode.setMatrices(A0,A1,A2);
+//    Set differential equation coefficients
+      DMatrix<double> A0(2,2), A1(2,2), A2(2,2);
+      Vect<double> u(2), v(2);
+      u(1) = 0; u(2) = 1;
+      v(1) = OFELI_PI; v(2) = 0;
+      ode.setInitial(u,v);
+      ode.setRHS("(2-2*pi^2)*sin(pi*t)-2*pi*cos(pi*t)-cos(2*pi*t)");
+      ode.setRHS("(2-4*pi^2)*cos(2*pi*t)-2*pi*sin(2*pi*t)-sin(pi*t)");
+      ode.setMatrices(A0,A1,A2);
 
-// Loop on time steps to run the time integration scheme
-   TimeLoop {
-//    We have to provide the matrices at each time step
-//    since in the case of a direct solver, these matrices are modified after runOneTimeStep()
-      A0(1,1) =  2.; A0(1,2) = -1.; A0(2,1) = -1.; A0(2,2) =  2.;
-      A1(1,1) = -2.; A1(1,2) =  0.; A1(2,1) =  0.; A1(2,2) =  1.;
-      A2(1,1) =  2.; A2(1,2) =  0.; A2(2,1) =  0.; A2(2,2) =  1.;
-      ode.runOneTimeStep();
-   }
+//    Loop on time steps to run the time integration scheme
+      TimeLoop {
+//       We have to provide the matrices at each time step
+//       since in the case of a direct solver, these matrices are modified after runOneTimeStep()
+         A0(1,1) =  2.; A0(1,2) = -1.; A0(2,1) = -1.; A0(2,2) =  2.;
+         A1(1,1) = -2.; A1(1,2) =  0.; A1(2,1) =  0.; A1(2,2) =  1.;
+         A2(1,1) =  2.; A2(1,2) =  0.; A2(2,1) =  0.; A2(2,2) =  1.;
+         ode.runOneTimeStep();
+      }
 
-// Output differential equation information and error
-   cout << ode << endl;
-   cout << "Error: " << fabs(u(1)-sin(OFELI_PI*theFinalTime)) << ", "
-                     << fabs(u(2)-cos(2*OFELI_PI*theFinalTime)) << endl;
+//    Output differential equation information and error
+      cout << ode << endl;
+      cout << "Error: " << fabs(u(1)-sin(OFELI_PI*theFinalTime)) << ", "
+                        << fabs(u(2)-cos(2*OFELI_PI*theFinalTime)) << endl;
+   } CATCH_EXCEPTION
+
    return 0;
 }

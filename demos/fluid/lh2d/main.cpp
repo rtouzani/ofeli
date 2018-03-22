@@ -42,50 +42,54 @@ int main(int argc, char *argv[])
       cout << "Usage: lh2d <parameter file>" << endl;
       exit(1);
    }
-   IPF proj("lh2d - 1.0",argv[1]);
-   string project = proj.getProject();
-   theFinalTime = proj.getMaxTime();
-   int time_mod = proj.getPlot();
-   Mesh ms(proj.getMeshFile());
-   ms.getAllSides();
-   Vect<double> u(ms,1,ELEMENT_DOF);
-   LCL2DT eq(ms,u);
-   Reconstruction pp(ms);
 
-// Get velocity field
-   Vect<double> v(ms,2,SIDE_FIELD);
-   IOField vf(proj.getMeshFile(),proj.getString("vf"),ms,IOField::IN);
-   vf.get(v);
-   eq.setVelocity(v);
+   try {
+      IPF proj("lh2d - 1.0",argv[1]);
+      string project = proj.getProject();
+      theFinalTime = proj.getMaxTime();
+      int time_mod = proj.getPlot();
+      Mesh ms(proj.getMeshFile());
+      ms.getAllSides();
+      Vect<double> u(ms,1,ELEMENT_DOF);
+      LCL2DT eq(ms,u);
+      Reconstruction pp(ms);
 
-// Initial condition
-   set_init(u);
+//    Get velocity field
+      Vect<double> v(ms,2,SIDE_FIELD);
+      IOField vf(proj.getMeshFile(),proj.getString("vf"),ms,IOField::IN);
+      vf.get(v);
+      eq.setVelocity(v);
 
-// open output file
-   IOField ff(proj.getMeshFile(),proj.getPlotFile(),ms,IOField::OUT);
-   Vect<double> U(ms,"T",0.,1,NODE_FIELD);
-   pp.P0toP1(u,U);
-   ff.put(U);
+//    Initial condition
+      set_init(u);
 
-// Choose MUSCL method
-   eq.setMethod(Muscl::MULTI_SLOPE_M_METHOD);
+//    open output file
+      IOField ff(proj.getMeshFile(),proj.getPlotFile(),ms,IOField::OUT);
+      Vect<double> U(ms,"T",0.,1,NODE_FIELD);
+      pp.P0toP1(u,U);
+      ff.put(U);
 
-   eq.setBC(proj.getDouble("bc"));
-   eq.setCFL(proj.getDouble("CFL"));
+//    Choose MUSCL method
+      eq.setMethod(Muscl::MULTI_SLOPE_M_METHOD);
 
-// TIME LOOP
-   TimeLoop {
-      eq.setReconstruction();
-      eq.setBC(1,0.);                // reflection condition for the boundary side
-      theTimeStep = eq.runOneTimeStep();
-      if (theStep%time_mod==0) {
-         cout << "Saving step " << setw(8) << theStep << " at time " 
-              << theTime+theTimeStep << endl;
-         U.setTime(theTime+theTimeStep);
-         pp.P0toP1(u,U);
-         ff.put(U);
+      eq.setBC(proj.getDouble("bc"));
+      eq.setCFL(proj.getDouble("CFL"));
+
+//    TIME LOOP
+      TimeLoop {
+         eq.setReconstruction();
+         eq.setBC(1,0.);                // reflection condition for the boundary side
+         theTimeStep = eq.runOneTimeStep();
+         if (theStep%time_mod==0) {
+            cout << "Saving step " << setw(8) << theStep << " at time " 
+                 << theTime+theTimeStep << endl;
+            U.setTime(theTime+theTimeStep);
+            pp.P0toP1(u,U);
+            ff.put(U);
+         }
       }
-   }
+   } CATCH_EXCEPTION
+
    return 0;
 }
 

@@ -56,39 +56,42 @@ int main(int argc, char *argv[])
       cout << " opt = 1: L-shaped domain test (file: L.dom)" << endl;
       exit(1);
    }
-   int opt = atoi(argv[1]);
-   string domain_file = "rect.dom";
-   if (opt>0)
-      domain_file = "L.dom";
-   Domain dom(domain_file);
-   MeshAdapt ma(dom);
-   Mesh ms0 = ma.getMesh();
-   ms0.put("test.m");
-   Mesh ms("test.m");
 
-   Vect<double> bc(ms), f(ms);
-   BC_RHS(opt,ms,bc,f);
+   try {
+      int opt = atoi(argv[1]);
+      string domain_file = "rect.dom";
+      if (opt>0)
+         domain_file = "L.dom";
+      Domain dom(domain_file);
+      MeshAdapt ma(dom);
+      Mesh ms0 = ma.getMesh();
+      ms0.put("test.m");
+      Mesh ms("test.m");
 
-// Output solution
-   Vect<double> u(ms);
-   int nb_it = solve(ms,f,bc,u);
-   cout << "Number of iterations: " << nb_it << endl;
-   saveField(u,"u.pos",GMSH);
-   ms.put("mesh1.m");
+      Vect<double> bc(ms), f(ms);
+      BC_RHS(opt,ms,bc,f);
 
-// Generate adapted mesh
-   if (opt==0)
-      ma.setError(0.005);
-   else
-      ma.setError(0.0002);
-   Vect<double> v;
-   ma.run(u,v);
-   cout << ma;
-   Mesh &msa = ma.getMesh();
-   msa.put("mesh2.m");
+//    Output solution
+      Vect<double> u(ms);
+      int nb_it = solve(ms,f,bc,u);
+      cout << "Number of iterations: " << nb_it << endl;
+      saveField(u,"u.pos",GMSH);
+      ms.put("mesh1.m");
 
-// New solution
-   saveField(v,"v.pos",GMSH);
+//    Generate adapted mesh
+      if (opt==0)
+         ma.setError(0.005);
+      else
+         ma.setError(0.0002);
+      Vect<double> v;
+      ma.run(u,v);
+      cout << ma;
+      Mesh &msa = ma.getMesh();
+      msa.put("mesh2.m");
+
+//    New solution
+      saveField(v,"v.pos",GMSH);
+   } CATCH_EXCEPTION
    return 0;
 }
 

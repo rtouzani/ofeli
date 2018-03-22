@@ -39,50 +39,51 @@ int main(int argc, char *argv[])
       cout << " Usage: tins2 <project_file>" << endl;
       exit(1);
    }
-   IPF proj(argv[1]);
-   Mesh mesh(proj.getMeshFile());
-   theTimeStep = proj.getTimeStep();
-   theFinalTime = proj.getMaxTime();
-   int plot_flag=proj.getPlot();
-   double Re=proj.getDouble("Reynolds");
-   cout << endl;
-   cout << "=================================================================================\n\n";
-   cout << "                                   tins2\n\n";
-   cout << "                       A Finite Element Code for\n";
-   cout << "             2-D Dynamic Incompressible Fluid Flow Analysis\n\n";
-   cout << "                          V E R S I O N   2.0\n\n";
-   cout << "=================================================================================\n\n";
 
-   cout << "Running tins2 ...\n\n";
+   try {
+      IPF proj(argv[1]);
+      Mesh mesh(proj.getMeshFile());
+      theTimeStep = proj.getTimeStep();
+      theFinalTime = proj.getMaxTime();
+      int plot_flag=proj.getPlot();
+      double Re=proj.getDouble("Reynolds");
+      cout << endl;
+      cout << "=================================================================================\n\n";
+      cout << "                                   tins2\n\n";
+      cout << "                       A Finite Element Code for\n";
+      cout << "             2-D Dynamic Incompressible Fluid Flow Analysis\n\n";
+      cout << "                          V E R S I O N   2.0\n\n";
+      cout << "=================================================================================\n\n";
 
-// Read initial condition, boundary conditions, body and boundary forces
-   IOField vff(proj.getMeshFile(),proj.getString("v_file"),mesh,IOField::OUT);
-   IOField pff(proj.getMeshFile(),proj.getString("p_file"),mesh,IOField::OUT);
+//    Read initial condition, boundary conditions, body and boundary forces
+      IOField vff(proj.getMeshFile(),proj.getString("v_file"),mesh,IOField::OUT);
+      IOField pff(proj.getMeshFile(),proj.getString("p_file"),mesh,IOField::OUT);
 
-   Vect<double> u(mesh,"Velocity",0), p(mesh,"Pressure",0,1);
-   Vect<double> bc(mesh), bf(mesh), sf(mesh);
-   TINS2DT3B eq(mesh,u,p,theTimeStep,Re);
-   eq.setVerbose(proj.getVerbose());
-   eq.setTolerance(proj.getTolerance());
-   Prescription pr(mesh,proj.getDataFile());
-   pr.get(INITIAL_FIELD,u);
-   eq.setInput(INITIAL_FIELD,u);
+      Vect<double> u(mesh,"Velocity",0), p(mesh,"Pressure",0,1);
+      Vect<double> bc(mesh), bf(mesh), sf(mesh);
+      TINS2DT3B eq(mesh,u,p,theTimeStep,Re);
+      eq.setVerbose(proj.getVerbose());
+      eq.setTolerance(proj.getTolerance());
+      Prescription pr(mesh,proj.getDataFile());
+      pr.get(INITIAL_FIELD,u);
+      eq.setInput(INITIAL_FIELD,u);
 
-// Loop on time steps
-   TimeLoop {
-      if (proj.getVerbose()>0)
-         cout << "Performing step: " << theStep << ", time: " << theTime << endl;
-      pr.get(BOUNDARY_CONDITION,bc,theTime);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      pr.get(BODY_FORCE,bf,theTime);
-      eq.setInput(BODY_FORCE,bf);
-      pr.get(TRACTION,sf,theTime);
-      eq.setInput(TRACTION,sf);
-      eq.runOneTimeStep();
-      if (plot_flag>0 && theStep%plot_flag==0) {
-         p.setTime(theTime); u.setTime(theTime);
-         vff.put(u); pff.put(p);
+//    Loop on time steps
+      TimeLoop {
+         if (proj.getVerbose()>0)
+            cout << "Performing step: " << theStep << ", time: " << theTime << endl;
+         pr.get(BOUNDARY_CONDITION,bc,theTime);
+         eq.setInput(BOUNDARY_CONDITION,bc);
+         pr.get(BODY_FORCE,bf,theTime);
+         eq.setInput(BODY_FORCE,bf);
+         pr.get(TRACTION,sf,theTime);
+         eq.setInput(TRACTION,sf);
+         eq.runOneTimeStep();
+         if (plot_flag>0 && theStep%plot_flag==0) {
+            p.setTime(theTime); u.setTime(theTime);
+            vff.put(u); pff.put(p);
+         }
       }
-   }
+   } CATCH_EXCEPTION
    return 0;
 }

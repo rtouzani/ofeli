@@ -43,32 +43,34 @@ int main(int argc, char *argv[])
       exit(1);
    }
 
-   IPF proj(argv[1]);
-   Mesh ms(proj.getMeshFile(1));
-   int n = ms.getNbDOF();
+   try {
+      IPF proj(argv[1]);
+      Mesh ms(proj.getMeshFile(1));
+      int n = ms.getNbDOF();
 
-// Declare solution and boundary condition vectors
-   Vect<double> x(n), bc(ms);
-   bc.setNodeBC(2,"1");
+//    Declare solution and boundary condition vectors
+      Vect<double> x(n), bc(ms);
+      bc.setNodeBC(2,"1");
  
-// Define the Optimization Problem and choose the optimization algorithm
-   Opt opt(ms);
-   OptSolver os(opt,x);
-   os.setOptMethod(OptSolver::GRADIENT);
+//    Define the Optimization Problem and choose the optimization algorithm
+      Opt opt(ms);
+      OptSolver os(opt,x);
+      os.setOptMethod(OptSolver::GRADIENT);
 
-// Set Dirichlet boundary conditions as constraints for the optimization problem
-   os.setBC(bc);
+//    Set Dirichlet boundary conditions as constraints for the optimization problem
+      os.setBC(bc);
 
-// Run the optimization procedure
-// Some parameters are retrieved from project file
-   double toler = proj.getTolerance();
-   int max_it = proj.getNbIter();
-   int verb = proj.getVerbose();
-   os.run(toler,max_it,verb);
+//    Run the optimization procedure
+//    Some parameters are retrieved from project file
+      double toler = proj.getTolerance();
+      int max_it = proj.getNbIter();
+      int verb = proj.getVerbose();
+      os.run(toler,max_it,verb);
 
-// Output class information and solution
-   cout << os;
-   cout << "\nSolution:\n" << x;
+//    Output class information and solution
+      cout << os;
+      cout << "\nSolution:\n" << x;
+   } CATCH_EXCEPTION
 
    return 0;
 }

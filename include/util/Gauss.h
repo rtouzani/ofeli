@@ -65,10 +65,17 @@ class Gauss
     Gauss() { _triang = false; }
 
 /// \brief Constructor using number of Gauss points
+/// @param [in] np Number of integration points
     Gauss(size_t np);
 
-/// \brief Choose integration on triangle (7-point formula)
-/// \details If this is not selected, Gauss integration formula on <tt>[-1,1]</tt> is calculated.
+/// \brief Set number of integration points
+    void setNbPoints(size_t np) { _np = np; }
+
+/** \brief Choose integration on triangle (7-point formula)
+ *  \details If this is not selected, Gauss integration formula on <tt>[-1,1]</tt> is calculated.
+ *  @param [out] w Array of weights of integration points
+ *  @param [out] x Array of coordinates of integration points
+ */
     void setTriangle(LocalVect<real_t,7>&        w,
                      LocalVect<Point<real_t>,7>& x);
 

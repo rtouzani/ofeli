@@ -71,70 +71,69 @@ int main(int argc, char *argv[])
       cout << "=====================================================================\n\n";
    }
 
-//---------------------------------
+//----------
 // Read data
-//---------------------------------
+//----------
 
 // Read Mesh data
-   if (output_flag > 1)
-      cout << "Reading mesh data ...\n";
-   if (flag_volt)
-      ms0 = new Mesh(data.getMeshFile(1));
-   ms1 = new Mesh(data.getMeshFile(2));
-//   IOField pl_file(data.getMesh(2),data.getPlotFile(),ms1,OUT);
+   try {
+      if (output_flag > 1)
+         cout << "Reading mesh data ...\n";
+      if (flag_volt)
+         ms0 = new Mesh(data.getMeshFile(1));
+      ms1 = new Mesh(data.getMeshFile(2));
+//    IOField pl_file(data.getMesh(2),data.getPlotFile(),ms1,OUT);
 
-   if (output_flag > 1 && flag_volt)
-      cout << "Mesh Data of Inductor\n\n" << *ms0;
+      if (output_flag > 1 && flag_volt)
+         cout << "Mesh Data of Inductor\n\n" << *ms0;
 
-   if (output_flag > 1)
-      cout << "Mesh Data of Conductor\n\n" << *ms1;
+      if (output_flag > 1)
+         cout << "Mesh Data of Conductor\n\n" << *ms1;
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   if (output_flag > 1)
-      cout << "Allocating memory for matrices and R.H.S. ...\n";
-   A1 = new SkMatrix<complex_t>(*ms1);
-   b1 = new Vect<complex_t>(ms1->getNbDOF());
-   if (flag_volt) {
-      A0 = new SkMatrix<complex_t>(*ms0);
-      b0 = new Vect<complex_t>(ms0->getNbDOF());
-   }
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      if (output_flag > 1)
+         cout << "Allocating memory for matrices and R.H.S. ...\n";
+      A1 = new SkMatrix<complex_t>(*ms1);
+      b1 = new Vect<complex_t>(ms1->getNbDOF());
+      if (flag_volt) {
+         A0 = new SkMatrix<complex_t>(*ms0);
+         b0 = new Vect<complex_t>(ms0->getNbDOF());
+      }
 
-// Calculate scaled magnetic field
-// -------------------------------
+//    Calculate scaled magnetic field
+//    -------------------------------
 
-   if (output_flag > 1)
-      cout << "Calculating scaled magnetic field ...\n";
-   if (flag_volt)
-      ScaledMF(*ms0,*A0,*b0,current,omega,flag_volt);
-   ScaledMF(*ms1,*A1,*b1,current,omega,flag_volt);
+      if (output_flag > 1)
+         cout << "Calculating scaled magnetic field ...\n";
+      if (flag_volt)
+         ScaledMF(*ms0,*A0,*b0,current,omega,flag_volt);
+      ScaledMF(*ms1,*A1,*b1,current,omega,flag_volt);
 
-// Calculate magnetic field in the free space and update it in the conductors
-// --------------------------------------------------------------------------
+//    Calculate magnetic field in the free space and update it in the conductors
+//    --------------------------------------------------------------------------
 
-   if (output_flag > 1)
-      cout << "Updating magnetic field ...\n";
-   if (flag_volt)
-      UpdateMF(*ms0, *ms1, omega, volt, *b0, *b1);
+      if (output_flag > 1)
+         cout << "Updating magnetic field ...\n";
+      if (flag_volt)
+         UpdateMF(*ms0, *ms1, omega, volt, *b0, *b1);
 
-// Output and save fields
-// ----------------------
+//    Output and save fields
+//    ----------------------
 
-   if (flag_volt && output_flag > 0)
-      cout << *b0;
-   if (output_flag > 0)
-      cout << *b1;
-//   pl_file.put(u0);
+      if (flag_volt && output_flag > 0)
+         cout << *b0;
+      if (output_flag > 0)
+         cout << *b1;
+//      pl_file.put(u0);
 
-   delete ms1;
-   delete A1;
-   delete b1;
-   if (flag_volt) {
-      delete ms0;
-      delete b0;
-      delete A0;
-   }
-#ifdef WITH_PAUSE
-   system("PAUSE");
-#endif
+      delete ms1;
+      delete A1;
+      delete b1;
+      if (flag_volt) {
+         delete ms0;
+         delete b0;
+         delete A0;
+      }
+   } CATCH_EXCEPTION
    return 0;
 }

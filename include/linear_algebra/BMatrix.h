@@ -332,8 +332,8 @@ void BMatrix<T_>::setMesh(size_t dof,
                           size_t nb_eq,
                           Mesh&  mesh)
 {
-         throw OFELIException("In SkSMatrix::setMesh(size_t,size_t,Mesh): "
-                              "This member function is not valid for class BMatrix");
+   throw OFELIException("In SkSMatrix::setMesh(size_t,size_t,Mesh): "
+                        "This member function is not valid for class BMatrix");
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

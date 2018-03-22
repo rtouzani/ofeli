@@ -71,85 +71,87 @@ int main(int argc, char *argv[])
 //-----------
 
 // Read Mesh data
-   if (verbose > 1)
-      cout << "Reading mesh data ...\n";
-   Mesh ms(data.getMeshFile());
-   if (verbose > 1)
-      cout << ms;
-
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   if (verbose > 1)
-      cout << "Allocating memory for matrix and R.H.S. ...\n";
-   SkSMatrix<double> A(ms);
-   Vect<double> b(ms), u(ms);
-   u.setName("Temperature");
-   Prescription pr(ms,data.getDataFile());
-   pr.get(INITIAL_FIELD,u);
-   Vect<double> bc(ms), body_f(ms), bound_f(ms);
-
-// --------------------
-// Loop over time steps
-// --------------------
-
-   TimeLoop {
-
-      if (verbose > 0)
-         cout << "Performing time step " << theStep << endl;
-      b = 0;
-
-//    Read boundary temperature and sources
-      pr.get(BOUNDARY_CONDITION,bc,theTime);
-      pr.get(SOURCE,body_f,theTime);
-      pr.get(FLUX,bound_f,theTime);
-
-//    Loop over elements
-//    ------------------
-
+   try {
       if (verbose > 1)
-         cout << "Looping over elements ...\n";
-      MeshElements(ms) {
-         DC2DT3 eq(theElement,u,theTime);
-         eq.LCapacity(double(1./theTimeStep));
-         eq.Diffusion();
-         eq.BodyRHS(body_f);
-         if (theStep==1)
-            eq.ElementAssembly(A);
-         eq.ElementAssembly(b);
+         cout << "Reading mesh data ...\n";
+      Mesh ms(data.getMeshFile());
+      if (verbose > 1)
+         cout << ms;
+
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      if (verbose > 1)
+         cout << "Allocating memory for matrix and R.H.S. ...\n";
+      SkSMatrix<double> A(ms);
+      Vect<double> b(ms), u(ms);
+      u.setName("Temperature");
+      Prescription pr(ms,data.getDataFile());
+      pr.get(INITIAL_FIELD,u);
+      Vect<double> bc(ms), body_f(ms), bound_f(ms);
+
+//    --------------------
+//    Loop over time steps
+//    --------------------
+
+      TimeLoop {
+
+         if (verbose > 0)
+            cout << "Performing time step " << theStep << endl;
+         b = 0;
+
+//       Read boundary temperature and sources
+         pr.get(BOUNDARY_CONDITION,bc,theTime);
+         pr.get(SOURCE,body_f,theTime);
+         pr.get(FLUX,bound_f,theTime);
+
+//       Loop over elements
+//       ------------------
+
+         if (verbose > 1)
+            cout << "Looping over elements ...\n";
+         MeshElements(ms) {
+            DC2DT3 eq(theElement,u,theTime);
+            eq.LCapacity(double(1./theTimeStep));
+            eq.Diffusion();
+            eq.BodyRHS(body_f);
+            if (theStep==1)
+               eq.ElementAssembly(A);
+            eq.ElementAssembly(b);
+         }
+
+//       Loop over sides
+//       ---------------
+
+         if (verbose > 1)
+            cout << "Looping over sides ...\n";
+         MeshSides(ms) {
+            DC2DT3 eq(theSide,u,theTime);
+            eq.BoundaryRHS(Vect<double>(theSide,bound_f));
+            eq.SideAssembly(b);
+         }
+
+//       Take account for boundary conditions and solve system
+//       -----------------------------------------------------
+
+         if (verbose > 1)
+            cout << "Imposing boundary conditions ...\n";
+         A.Prescribe(b,bc,theStep-1);
+
+         if (verbose > 1)
+            cout << "Solving linear system ...\n";
+         A.solve(b);
+         u = b;
+
+         u.setTime(theTime);
+         if (verbose > 2)
+            cout << "\nSolution at time: " << theTime << endl << u;
+         if (theStep%save_flag == 0)
+            pf.put(u);
       }
 
-//    Loop over sides
-//    ---------------
-
-      if (verbose > 1)
-         cout << "Looping over sides ...\n";
-      MeshSides(ms) {
-         DC2DT3 eq(theSide,u,theTime);
-         eq.BoundaryRHS(Vect<double>(theSide,bound_f));
-         eq.SideAssembly(b);
-      }
-
-//    Take account for boundary conditions and solve system
-//    -----------------------------------------------------
-
-      if (verbose > 1)
-         cout << "Imposing boundary conditions ...\n";
-      A.Prescribe(b,bc,theStep-1);
-
-      if (verbose > 1)
-         cout << "Solving linear system ...\n";
-      A.solve(b);
-      u = b;
-
-      u.setTime(theTime);
-      if (verbose > 2)
-         cout << "\nSolution at time: " << theTime << endl << u;
-      if (theStep%save_flag == 0)
-         pf.put(u);
-   }
-
-// Calculate error for the demo
-   void error(double time, const Mesh &ms, const Vect<double> &u);
-   error(theTime,ms,u);
+//    Calculate error for the demo
+      void error(double time, const Mesh &ms, const Vect<double> &u);
+      error(theTime,ms,u);
+   } CATCH_EXCEPTION
 
    return 0;
 }

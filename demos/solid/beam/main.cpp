@@ -61,51 +61,53 @@ int main(int argc, char *argv[])
    }
 
 // Read Mesh data
-   if (output_flag > 1)
-     cout << "Reading mesh data ..." << endl;
-   Mesh ms(data.getMeshFile());
-   if (output_flag > 1)
-      cout << ms;
-   Prescription p(ms,data.getDataFile());
+   try {
+      if (output_flag > 1)
+        cout << "Reading mesh data ..." << endl;
+      Mesh ms(data.getMeshFile());
+      if (output_flag > 1)
+         cout << ms;
+      Prescription p(ms,data.getDataFile());
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   SkSMatrix<double> A(ms);
-   if (verbose > 1)
-      cout << "Reading boundary conditions, body and boundary forces ...\n";
-   Vect<double> b(ms), bc(ms), bf(ms);
-   p.get(BOUNDARY_CONDITION,bc,0);
-   p.get(POINT_FORCE,bf);
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      SkSMatrix<double> A(ms);
+      if (verbose > 1)
+         cout << "Reading boundary conditions, body and boundary forces ...\n";
+      Vect<double> b(ms), bc(ms), bf(ms);
+      p.get(BOUNDARY_CONDITION,bc,0);
+      p.get(POINT_FORCE,bf);
 
-// Build matrix and R.H.S.
-   MeshElements(ms) {
-      Beam3DL2 eq(theElement,0.1,0.1,0.1);
-      eq.Stiffness();
-      eq.ElementAssembly(A);
-   }
-   b = bf;
-   A.Prescribe(b,bc);
-   A.solve(b);
+//    Build matrix and R.H.S.
+      MeshElements(ms) {
+         Beam3DL2 eq(theElement,0.1,0.1,0.1);
+         eq.Stiffness();
+         eq.ElementAssembly(A);
+      }
+      b = bf;
+      A.Prescribe(b,bc);
+      A.solve(b);
 
-// Output solution
-   if (output_flag > 0)
-      cout << b;
-   Vect<double> u(ms,3);
-   Beam3DL2 eq(ms,b,u);
-   ms.setVerbose(10);
+//    Output solution
+      if (output_flag > 0)
+         cout << b;
+      Vect<double> u(ms,3);
+      Beam3DL2 eq(ms,b,u);
+      ms.setVerbose(10);
 
-   cout << "Element     Axial Force       Bending Moment    Twisting Moment   Shear Force" << endl;
-   MeshElements(ms) {
-      Beam3DL2 eq(theElement,0.1,0.1,0.1,b);
-      cout << setw(8) << theElementLabel;
-      cout << " " << eq.AxialForce();
-      cout << " " << eq.BendingMoment();
-      cout << " " << eq.TwistingMoment();
-      cout << " " << eq.ShearForce() << endl;
-   }
+      cout << "Element     Axial Force       Bending Moment    Twisting Moment   Shear Force" << endl;
+      MeshElements(ms) {
+         Beam3DL2 eq(theElement,0.1,0.1,0.1,b);
+         cout << setw(8) << theElementLabel;
+         cout << " " << eq.AxialForce();
+         cout << " " << eq.BendingMoment();
+         cout << " " << eq.TwistingMoment();
+         cout << " " << eq.ShearForce() << endl;
+      }
 
-// Transform mesh to deformed one
-   DeformMesh(ms,u);
-   ms.put("deformed_beam.m");
-   saveTecplot("beam_tecplot.dat",ms);
+//    Transform mesh to deformed one
+      DeformMesh(ms,u);
+      ms.put("deformed_beam.m");
+      saveTecplot("beam_tecplot.dat",ms);
+   } CATCH_EXCEPTION
    return 0;
 }

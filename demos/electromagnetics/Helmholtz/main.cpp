@@ -57,64 +57,63 @@ int main(int argc, char *argv[])
       cout << "=====================================================================\n\n";
    }
 
-//----------
+// ----------
 // Read data
-//----------
+// ---------
 
 // Read Mesh data
-   if (output_flag > 1)
-      cout << "Reading mesh data ...\n";
-   Mesh ms(data.getMeshFile());
-   wave_nb = data.getDouble("wave_nb");
+   try {
+      if (output_flag > 1)
+         cout << "Reading mesh data ...\n";
+      Mesh ms(data.getMeshFile());
+      wave_nb = data.getDouble("wave_nb");
 
-   if (output_flag > 1)
-      cout << ms;
-   User ud(ms);
+      if (output_flag > 1)
+         cout << ms;
+      User ud(ms);
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   if (output_flag > 1)
-      cout << "Allocating memory for matrix and R.H.S. ...\n";
-   SkMatrix<complex_t> A(ms);
-   Vect<complex_t> b(ms.getNbDOF());
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      if (output_flag > 1)
+         cout << "Allocating memory for matrix and R.H.S. ...\n";
+      SkMatrix<complex_t> A(ms);
+      Vect<complex_t> b(ms.getNbDOF());
 
-// Read boundary conditions, body and boundary forces
-   if (output_flag > 1)
-      cout << "Reading boundary conditions ...\n";
-   Vect<complex_t> bc(ms.getNbDOF());
-   if (!bc_flag)
+//    Read boundary conditions, body and boundary forces
+      if (output_flag > 1)
+         cout << "Reading boundary conditions ...\n";
+      Vect<complex_t> bc(ms.getNbDOF());
+      if (!bc_flag)
+         ud.setDBC(bc);
+
+//    Read in boundary conditions and body forces
       ud.setDBC(bc);
 
-// Read in boundary conditions and body forces
-   ud.setDBC(bc);
+//    Loop over elements
+//    ------------------
 
-// Loop over elements
-// ------------------
+      MeshElements(ms) {
+         HelmholtzBT3 eq(theElement);
+         eq.LHS(wave_nb);
+         eq.ElementAssembly(A);
+      }
 
-   MeshElements(ms) {
-      HelmholtzBT3 eq(theElement);
-      eq.LHS(wave_nb);
-      eq.ElementAssembly(A);
-   }
+//    Loop over sides
+//    ---------------
 
-// Loop over sides
-// ---------------
+      MeshSides(ms) {
+         HelmholtzBT3 eq(theSide);
+         eq.BoundaryRHS(ud);
+         eq.SideAssembly(b);
+      }
 
-   MeshSides(ms) {
-      HelmholtzBT3 eq(theSide);
-      eq.BoundaryRHS(ud);
-      eq.SideAssembly(b);
-   }
+      A.Prescribe(b,bc);
+      A.solve(b);
 
-   A.Prescribe(b,bc);
-   A.solve(b);
+      if (output_flag > 0)
+         cout << b;
 
-   if (output_flag > 0)
-      cout << b;
-
-   void error(const Mesh &ms, User &ud, const Vect<complex<double> > &u);
-   error(ms,ud,b);
-#ifdef WITH_PAUSE
-   system("PAUSE");
-#endif
+      void error(const Mesh &ms, User &ud, const Vect<complex<double> > &u);
+      error(ms,ud,b);
+   } CATCH_EXCEPTION
    return 0;
 }

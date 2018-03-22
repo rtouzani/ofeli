@@ -46,30 +46,34 @@ int main(int argc, char *argv[])
       cout << "Usage: ls_demo2 <mesh_file>" << endl;
       exit(1);
    }
-   Mesh ms(argv[1],true);
 
-   SpMatrix<double> A(ms);
-   Vect<double> b(ms.getNbEq()), x(ms.getNbEq()), bc(ms), f(ms);
-   f = "exp(-20*(x*x+y*y))";
-   bc = 0;
+   try {
+      Mesh ms(argv[1],true);
 
-// Loop over elements
-   MeshElements(ms) {
-      Laplace2DT3 eq(theElement);
-      eq.LHS();
-      eq.BodyRHS(f);
-      eq.updateBC(bc);
-      eq.ElementAssembly(A);
-      eq.ElementAssembly(b);
-   }
+      SpMatrix<double> A(ms);
+      Vect<double> b(ms.getNbEq()), x(ms.getNbEq()), bc(ms), f(ms);
+      f = "exp(-20*(x*x+y*y))";
+      bc = 0;
 
-// Solve the linear system of equations by an iterative method
-   LinearSolver<double> ls(1000,1.e-8,0);
-   int nb_it = ls.solve(A,b,x,CG_SOLVER,DIAG_PREC);
-   cout << "Number of iterations: " << nb_it << endl;
+//    Loop over elements
+      MeshElements(ms) {
+         Laplace2DT3 eq(theElement);
+         eq.LHS();
+         eq.BodyRHS(f);
+         eq.updateBC(bc);
+         eq.ElementAssembly(A);
+         eq.ElementAssembly(b);
+      }
 
-// Create solution vector by inserting boundary nodes (Vector u)
-   Vect<double> u(ms);
-   u.insertBC(ms,x,bc);
+//    Solve the linear system of equations by an iterative method
+      LinearSolver<double> ls(1000,1.e-8,0);
+      int nb_it = ls.solve(A,b,x,CG_SOLVER,DIAG_PREC);
+      cout << "Number of iterations: " << nb_it << endl;
+
+//    Create solution vector by inserting boundary nodes (Vector u)
+      Vect<double> u(ms);
+      u.insertBC(ms,x,bc);
+   } CATCH_EXCEPTION
+
    return 0;
 }

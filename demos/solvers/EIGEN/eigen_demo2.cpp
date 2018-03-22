@@ -46,22 +46,24 @@ int main(int argc, char *argv[])
       return 0;
    }
 
-   banner("eigen_demo2");
-   IPF data(argv[1]);
-   int nb = data.getInteger("nb");
-   Mesh ms(data.getMeshFile());
+   try {
+      banner("eigen_demo2");
+      IPF data(argv[1]);
+      int nb = data.getInteger("nb");
+      Mesh ms(data.getMeshFile());
 
-// Solve the eigenvalue problem
-   Laplace2DT3 eq(ms);
-   EigenProblemSolver e(eq);
-   e.run(nb);
+//    Solve the eigenvalue problem
+      Laplace2DT3 eq(ms);
+      EigenProblemSolver e(eq);
+      e.run(nb);
 
-// Output eigenvalues, save eigenvectors for Gmsh post-processing
-   Vect<double> v(ms);
-   for (int i=1; i<=nb; i++) {
-      cout << "Eigenvalue #" << i << ": " << e.getEigenValue(i) << endl;
-      e.getEigenVector(i,v);
-      saveField(v,ms,data.getPlotFile(i),GMSH);
-   }
+//    Output eigenvalues, save eigenvectors for Gmsh post-processing
+      Vect<double> v(ms);
+      for (int i=1; i<=nb; i++) {
+         cout << "Eigenvalue #" << i << ": " << e.getEigenValue(i) << endl;
+         e.getEigenVector(i,v);
+         saveField(v,ms,data.getPlotFile(i),GMSH);
+      }
+   } CATCH_EXCEPTION
    return 0;
 }

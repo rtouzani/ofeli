@@ -32,10 +32,10 @@
 namespace OFELI {
 
 Gauss::Gauss(size_t np)
+      : _np(np)
 {
    _triang = false;
    real_t p, dp, r, z=1;
-   _np = np;
    for (size_t i=0; i<=(_np-1)/2; i++) {
       r = cos(OFELI_PI*(i+0.75)/(np+0.5));
       while (z==1) {
@@ -98,6 +98,5 @@ void Gauss::setTriangle(LocalVect<real_t,7>&        w,
    x(7) = Point<real_t>(OFELI_THIRD,OFELI_THIRD);
    w(7) = 27./60.;
 }
-
 
 } /* namespace OFELI */

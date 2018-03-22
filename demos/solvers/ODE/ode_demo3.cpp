@@ -62,37 +62,40 @@ int main(int argc, char *argv[])
    theTimeStep = atof(argv[1]);
 
 // Solution as a system of 2 first-order ODEs
-   ODESolver ode(BDF2,theTimeStep,theFinalTime,2);
+   try {
+      ODESolver ode(BDF2,theTimeStep,theFinalTime,2);
 
-// Set differential equation coefficients
-   DMatrix<double> A0(2,2), A1(2,2);
-   ode.setMatrices(A0,A1);
-   Vect<double> y(2), f(2), ff(2);
-   y(1) = 0; y(2) = 1;
-   f(1) = 0; f(2) = -3;
-   ode.setInitial(y);
-   ode.setInitialRHS(f); // Used for a multistep scheme only
-   ode.setRHS(f);
-   ode.setRK4RHS(ff);    // Used only if the RK4 scheme is used
+//    Set differential equation coefficients
+      DMatrix<double> A0(2,2), A1(2,2);
+      ode.setMatrices(A0,A1);
+      Vect<double> y(2), f(2), ff(2);
+      y(1) = 0; y(2) = 1;
+      f(1) = 0; f(2) = -3;
+      ode.setInitial(y);
+      ode.setInitialRHS(f); // Used for a multistep scheme only
+      ode.setRHS(f);
+      ode.setRK4RHS(ff);    // Used only if the RK4 scheme is used
 
-// Loop on time steps to run the time integration scheme
-   TimeLoop {
-      A1 = 1;
-      A0(1,1) = 0; A0(1,2) = -1; A0(2,1) = 1; A0(2,2) = -1;
-      f(1) = 0; f(2) = 3*(theTime-1)*exp(-theTime);
+//    Loop on time steps to run the time integration scheme
+      TimeLoop {
+         A1 = 1;
+         A0(1,1) = 0; A0(1,2) = -1; A0(2,1) = 1; A0(2,2) = -1;
+         f(1) = 0; f(2) = 3*(theTime-1)*exp(-theTime);
 
-//    Vector ff might be used in the case of a multistep scheme like RK4
-      double t=theTime-0.5*theTimeStep;
-      ff(1) = 0; ff(2) = 3*(t-1)*exp(-t);
+//       Vector ff might be used in the case of a multistep scheme like RK4
+         double t=theTime-0.5*theTimeStep;
+         ff(1) = 0; ff(2) = 3*(t-1)*exp(-t);
 
-//    Run one time step
-      ode.runOneTimeStep();
-      cout << y;
-   }
+//       Run one time step
+         ode.runOneTimeStep();
+         cout << y;
+      }
 
-// Output differential equation information and error
-   cout << ode << endl;
-   cout << "Error: " << fabs(y(1)-theFinalTime*exp(-theFinalTime)) << ", "
-        << fabs(y(2)-(1-theFinalTime)*exp(-theFinalTime)) << endl;
+//    Output differential equation information and error
+      cout << ode << endl;
+      cout << "Error: " << fabs(y(1)-theFinalTime*exp(-theFinalTime)) << ", "
+           << fabs(y(2)-(1-theFinalTime)*exp(-theFinalTime)) << endl;
+   } CATCH_EXCEPTION
+
    return 0;
 }

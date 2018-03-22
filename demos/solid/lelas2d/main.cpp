@@ -59,93 +59,95 @@ int main(int argc, char *argv[])
       cout << "=====================================================================\n\n";
    }
 
-//---------------------------------
+//----------
 // Read data
-//---------------------------------
+//----------
 
 // Read Mesh data
-   if (output_flag > 1)
-      cout << "Reading mesh data ...\n";
-   Mesh ms(data.getMeshFile(1));
-   Prescription p(ms,data.getDataFile());
-   if (output_flag > 1)
-      cout << ms;
+   try {
+      if (output_flag > 1)
+         cout << "Reading mesh data ...\n";
+      Mesh ms(data.getMeshFile(1));
+      Prescription p(ms,data.getDataFile());
+      if (output_flag > 1)
+         cout << ms;
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   if (output_flag > 1)
-      cout << "Allocating memory for matrix and R.H.S. ...\n";
-   SkSMatrix<double> A(ms);
-   Vect<double> b(ms);
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      if (output_flag > 1)
+         cout << "Allocating memory for matrix and R.H.S. ...\n";
+      SkSMatrix<double> A(ms);
+      Vect<double> b(ms);
 
-// Read boundary conditions, body and boundary forces
-   if (output_flag > 1)
-     cout << "Reading boundary conditions ..." << endl;
-   Vect<double> bc(ms);
-   p.get(BOUNDARY_CONDITION,bc,0);
-   if (output_flag > 1)
-     cout << "Reading body forces ..." << endl;
-   Vect<double> body_f(ms);
-   p.get(BODY_FORCE,body_f);
-   if (output_flag > 1)
-      cout << "Reading Boundary Tractions ..." << endl;
-   Vect<double> bound_f(ms,2,SIDE_DOF);
-   p.get(TRACTION,bound_f,0);
+//    Read boundary conditions, body and boundary forces
+      if (output_flag > 1)
+         cout << "Reading boundary conditions ..." << endl;
+      Vect<double> bc(ms);
+      p.get(BOUNDARY_CONDITION,bc,0);
+      if (output_flag > 1)
+         cout << "Reading body forces ..." << endl;
+      Vect<double> body_f(ms);
+      p.get(BODY_FORCE,body_f);
+      if (output_flag > 1)
+         cout << "Reading Boundary Tractions ..." << endl;
+      Vect<double> bound_f(ms,2,SIDE_DOF);
+      p.get(TRACTION,bound_f,0);
 
-// Loop over elements
-// ------------------
+//    Loop over elements
+//    ------------------
 
-   if (output_flag > 1)
-      cout << "Looping over elements ...\n";
-   MeshElements(ms) {
-      Elas2DQ4 eq(theElement);
-      eq.Deviator();
-      eq.Dilatation();
-      eq.BodyRHS(body_f);
-      eq.ElementAssembly(A);
-      eq.ElementAssembly(b);
-   }
+      if (output_flag > 1)
+         cout << "Looping over elements ...\n";
+      MeshElements(ms) {
+         Elas2DQ4 eq(theElement);
+         eq.Deviator();
+         eq.Dilatation();
+         eq.BodyRHS(body_f);
+         eq.ElementAssembly(A);
+         eq.ElementAssembly(b);
+      }
 
-// Loop over sides
-// ---------------
+//    Loop over sides
+//    ---------------
 
-   if (output_flag > 1)
-     cout << "Looping over sides ...\n";
-   MeshSides(ms) {
-      Elas2DQ4 eq(theSide);
-      eq.BoundaryRHS(bound_f);
-      eq.SideAssembly(b);
-   }
+      if (output_flag > 1)
+         cout << "Looping over sides ...\n";
+      MeshSides(ms) {
+         Elas2DQ4 eq(theSide);
+         eq.BoundaryRHS(bound_f);
+         eq.SideAssembly(b);
+      }
 
-// Take account for boundary conditions and solve system
-// -----------------------------------------------------
+//    Take account for boundary conditions and solve system
+//    -----------------------------------------------------
 
-   if (output_flag > 1)
-     cout << "Imposing boundary conditions ...\n";
-   A.Prescribe(b,bc);
-   A.solve(b);
+      if (output_flag > 1)
+         cout << "Imposing boundary conditions ...\n";
+      A.Prescribe(b,bc);
+      A.solve(b);
 
-   if (output_flag > 0)
-      cout << b;
+      if (output_flag > 0)
+         cout << b;
 
-   if (save_flag) {
-      IOField pl_file(data.getPlotFile(),IOField::OUT);
-      pl_file.put(b);
-   }
+      if (save_flag) {
+         IOField pl_file(data.getPlotFile(),IOField::OUT);
+         pl_file.put(b);
+      }
 
-// Calculate principal and Von-Mises stresses
-// ------------------------------------------
+//    Calculate principal and Von-Mises stresses
+//    ------------------------------------------
 
-   if (output_flag > 1)
-      cout << "Calculating stresses ...\n";
-   Vect<double> st(ms,"Principal Stress",0.0,3,ELEMENT_FIELD);
-   Vect<double> vm(ms,"Von-Mises Stress",0.0,3,ELEMENT_FIELD);
-   MeshElements(ms) {
-      LocalVect<double,3> ste;
-      Elas2DQ4 eq(theElement,b);
-      eq.Stress(ste,vm(theElementLabel));
-      st(theElementLabel,1) = ste(1);
-      st(theElementLabel,2) = ste(2);
-      st(theElementLabel,3) = ste(3);
-   }
+      if (output_flag > 1)
+         cout << "Calculating stresses ...\n";
+      Vect<double> st(ms,"Principal Stress",0.0,3,ELEMENT_FIELD);
+      Vect<double> vm(ms,"Von-Mises Stress",0.0,3,ELEMENT_FIELD);
+      MeshElements(ms) {
+         LocalVect<double,3> ste;
+         Elas2DQ4 eq(theElement,b);
+         eq.Stress(ste,vm(theElementLabel));
+         st(theElementLabel,1) = ste(1);
+         st(theElementLabel,2) = ste(2);
+         st(theElementLabel,3) = ste(3);
+      }
+   } CATCH_EXCEPTION
    return 0;
 }

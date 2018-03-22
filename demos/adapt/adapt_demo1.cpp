@@ -43,28 +43,30 @@ int main(int argc, char **argv)
    }
 
 // Generate background mesh
-   Domain dom(argv[1]);
-   MeshAdapt ma(dom);
-   Mesh &ms = ma.getMesh();
-// Background mesh stored in file 'mesh1.m'
-   ms.put("mesh1.m");
+   try {
+      Domain dom(argv[1]);
+      MeshAdapt ma(dom);
+      Mesh &ms = ma.getMesh();
+//    Background mesh stored in file 'mesh1.m'
+      ms.put("mesh1.m");
 
-// Set solution to adapt
-   Vect<double> u(ms), v;
-   u.set("exp(-100*x)+exp(-100*y)");
-// Solution on the background mesh stored for visualization with GMSH
-   saveField(u,"u.pos",GMSH);
+//    Set solution to adapt
+      Vect<double> u(ms), v;
+      u.set("exp(-100*x)+exp(-100*y)");
+//    Solution on the background mesh stored for visualization with GMSH
+      saveField(u,"u.pos",GMSH);
 
-// Generate adapted mesh
-   ma.setHMax(0.1);
-   ma.setError(0.04);
-   ma.run(u,v);
-   ms = ma.getMesh();
+//    Generate adapted mesh
+      ma.setHMax(0.1);
+      ma.setError(0.04);
+      ma.run(u,v);
+      ms = ma.getMesh();
 
-// Adapted mesh stored in file 'mesh2.m'
-// Interpolated solution on the adapted mesh is stored for visualization with GMSH
-   ms.put("mesh2.m");
-   saveField(v,"v.pos",GMSH);
-   cout << ma;
+//    Adapted mesh stored in file 'mesh2.m'
+//    Interpolated solution on the adapted mesh is stored for visualization with GMSH
+      ms.put("mesh2.m");
+      saveField(v,"v.pos",GMSH);
+      cout << ma;
+   } CATCH_EXCEPTION
    return 0;
 }

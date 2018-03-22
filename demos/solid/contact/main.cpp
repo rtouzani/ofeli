@@ -73,69 +73,71 @@ int main(int argc, char *argv[])
 //----------
 
 // Read parameters and mesh data
-   int output_flag = data.getOutput();
-   int save_flag = data.getSave();
-   MaxNbIterations = data.getNbIter();
-   theTolerance = data.getTolerance();
-   Mesh ms(data.getMeshFile(1));
+   try {
+      int output_flag = data.getOutput();
+      int save_flag = data.getSave();
+      MaxNbIterations = data.getNbIter();
+      theTolerance = data.getTolerance();
+      Mesh ms(data.getMeshFile(1));
 
-   Prescription p(ms,data.getDataFile());
-   if (verbose > 1)
-      cout << "Reading mesh data ...\n";
-   if (verbose > 1)
-      cout << ms;
+      Prescription p(ms,data.getDataFile());
+      if (verbose > 1)
+         cout << "Reading mesh data ...\n";
+      if (verbose > 1)
+         cout << ms;
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   if (verbose > 1)
-      cout << "Allocating memory for matrix and R.H.S. ...\n";
-   SkSMatrix<double> A(ms);
-   Vect<double> u(ms), v(ms);
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      if (verbose > 1)
+         cout << "Allocating memory for matrix and R.H.S. ...\n";
+      SkSMatrix<double> A(ms);
+      Vect<double> u(ms), v(ms);
 
-// Read boundary conditions, body and boundary forces
-   if (verbose > 1)
-      cout << "Reading boundary conditions, body and boundary forces ...\n";
-   Vect<double> bc(ms), body_f(ms), bound_f(ms);
-   p.get(BOUNDARY_CONDITION,bc,0);
-   p.get(BODY_FORCE,body_f,0);
-   p.get(BOUNDARY_FORCE,bound_f,0);
+//    Read boundary conditions, body and boundary forces
+      if (verbose > 1)
+         cout << "Reading boundary conditions, body and boundary forces ...\n";
+      Vect<double> bc(ms), body_f(ms), bound_f(ms);
+      p.get(BOUNDARY_CONDITION,bc,0);
+      p.get(BODY_FORCE,body_f,0);
+      p.get(BOUNDARY_FORCE,bound_f,0);
 
-//---------------
-// Iteration Loop
-//---------------
+//    ---------------
+//    Iteration Loop
+//    ---------------
 
-   Converged = false;
-   IterationLoop {
-        v = 0.; A = 0.;
-        MeshElements(ms) {
-           Elas2DT3 eq(theElement);
-           eq.Deviator();
-           eq.Dilatation();
-           eq.BodyRHS(body_f);
-           eq.ElementAssembly(A);
-           eq.ElementAssembly(v);
-        }
-        MeshSides(ms) {
-           Elas2DT3 eq(theSide,u);
-           eq.BoundaryRHS(bound_f);
-           eq.SignoriniContact(bound_f,penal);
-           eq.SideAssembly(A);
-           eq.SideAssembly(v);
-        }
-        A.Prescribe(v,bc);
-        A.solve(v);
+      Converged = false;
+      IterationLoop {
+         v = 0.; A = 0.;
+         MeshElements(ms) {
+            Elas2DT3 eq(theElement);
+            eq.Deviator();
+            eq.Dilatation();
+            eq.BodyRHS(body_f);
+            eq.ElementAssembly(A);
+            eq.ElementAssembly(v);
+         }
+         MeshSides(ms) {
+            Elas2DT3 eq(theSide,u);
+            eq.BoundaryRHS(bound_f);
+            eq.SignoriniContact(bound_f,penal);
+            eq.SideAssembly(A);
+            eq.SideAssembly(v);
+         }
+         A.Prescribe(v,bc);
+         A.solve(v);
 
-        theDiscrepancy = Discrepancy(u,v,2);
-        if (theDiscrepancy < theTolerance)
-           Converged = true;
-        if (verbose > 0)
-           cout << "Iteration: " << theIteration << ", Discrepancy: " << theDiscrepancy << endl;
-   }
+         theDiscrepancy = Discrepancy(u,v,2);
+         if (theDiscrepancy < theTolerance)
+            Converged = true;
+         if (verbose > 0)
+            cout << "Iteration: " << theIteration << ", Discrepancy: " << theDiscrepancy << endl;
+      }
 
-   if (output_flag > 1)
-      cout << u;
-   if (save_flag) {
-      IOField pl_file(data.getMeshFile(),data.getString("output_file"),ms,IOField::OUT);
-      pl_file.put(u);
-   }
+      if (output_flag > 1)
+         cout << u;
+      if (save_flag) {
+         IOField pl_file(data.getMeshFile(),data.getString("output_file"),ms,IOField::OUT);
+         pl_file.put(u);
+      }
+   } CATCH_EXCEPTION
    return 0;
 }

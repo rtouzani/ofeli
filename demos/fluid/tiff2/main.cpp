@@ -63,97 +63,99 @@ int main(int argc, char *argv[])
 //-----------
 
 // Read Mesh data
-   if (output_flag > 1)
-     cout << "Reading mesh data ...\n";
-   Mesh ms(data.getMeshFile());
-   User ud(ms);
-
-// Print Mesh data
-   if (output_flag > 1)
-      cout << ms;
-
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   if (output_flag > 1)
-      cout << "Allocating memory for matrix and R.H.S. ...\n";
-   SkSMatrix<double> A(ms);
-
-// Read initial condition, boundary conditions, body and boundary forces
-   Vect<double> b(ms), u(ms), bc(ms), body_f(ms), bound_f(ms);
-   Vect<double> pm(ms,1,NODE_DOF), ep(ms,1,ELEMENT_DOF), p(ms,1,NODE_DOF);
-   u = 0; bc = 0; body_f = 0; bound_f = 0; 
-   u.setName("Velocity");
-   ud.setInitialData(u);
-   ud.setDBC(bc);
-   ud.setBodyForce(body_f);
-   ud.setSurfaceForce(bound_f);
-
-   IOField v_file(data.getMeshFile(),data.getString("v_file"),ms,IOField::OUT);
-   IOField p_file(data.getMeshFile(),data.getString("p_file"),ms,IOField::OUT);
-
-// Loop over time steps
-// --------------------
-
-   TimeLoop {
-
+   try {
       if (output_flag > 1)
-         cout << "Performing time step " << theStep << " ..." << endl;
-      cout << "Step: " << theStep << ", Time: " << theTime << endl;
-      b = 0;
+        cout << "Reading mesh data ...\n";
+      Mesh ms(data.getMeshFile());
+      User ud(ms);
 
-//    Loop over elements
+//    Print Mesh data
       if (output_flag > 1)
-         cout << "Looping over elements ...\n";
-      MeshElements(ms) {
-         NSP2DQ41 eq(theElement,u,theTime);
-         eq.LMass(1./theTimeStep);
-         eq.Penal(1.e07);
-         eq.Viscous(0.1);
-         eq.RHS_Convection();
-         eq.BodyRHS(ud);
-         if (theStep==1)
-            eq.ElementAssembly(A);
-         eq.ElementAssembly(b);
-      }
+         cout << ms;
 
-//    Loop over sides
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
       if (output_flag > 1)
-        cout << "Looping over sides ...\n";
-      MeshSides(ms) {
-         NSP2DQ41 eq(theSide);
-         eq.BoundaryRHS(ud);
-         eq.SideAssembly(b);
+         cout << "Allocating memory for matrix and R.H.S. ...\n";
+      SkSMatrix<double> A(ms);
+
+//    Read initial condition, boundary conditions, body and boundary forces
+      Vect<double> b(ms), u(ms), bc(ms), body_f(ms), bound_f(ms);
+      Vect<double> pm(ms,1,NODE_DOF), ep(ms,1,ELEMENT_DOF), p(ms,1,NODE_DOF);
+      u = 0; bc = 0; body_f = 0; bound_f = 0; 
+      u.setName("Velocity");
+      ud.setInitialData(u);
+      ud.setDBC(bc);
+      ud.setBodyForce(body_f);
+      ud.setSurfaceForce(bound_f);
+
+      IOField v_file(data.getMeshFile(),data.getString("v_file"),ms,IOField::OUT);
+      IOField p_file(data.getMeshFile(),data.getString("p_file"),ms,IOField::OUT);
+
+//    Loop over time steps
+//    --------------------
+
+      TimeLoop {
+
+         if (output_flag > 1)
+            cout << "Performing time step " << theStep << " ..." << endl;
+         cout << "Step: " << theStep << ", Time: " << theTime << endl;
+         b = 0;
+
+//       Loop over elements
+         if (output_flag > 1)
+            cout << "Looping over elements ...\n";
+         MeshElements(ms) {
+            NSP2DQ41 eq(theElement,u,theTime);
+            eq.LMass(1./theTimeStep);
+            eq.Penal(1.e07);
+            eq.Viscous(0.1);
+            eq.RHS_Convection();
+            eq.BodyRHS(ud);
+            if (theStep==1)
+               eq.ElementAssembly(A);
+            eq.ElementAssembly(b);
+         }
+
+//       Loop over sides
+         if (output_flag > 1)
+            cout << "Looping over sides ...\n";
+         MeshSides(ms) {
+            NSP2DQ41 eq(theSide);
+            eq.BoundaryRHS(ud);
+            eq.SideAssembly(b);
+         }
+
+//       Impose boundary conditions and solve the linear system
+         A.Prescribe(b,bc,theStep-1);
+         if (theStep == 1)
+            A.Factor();
+         A.Solve(b);
+         u = b;
+
+//       Output and/or Store solution
+         u.setTime(theTime);
+         if (output_flag > 0)
+            cout << u;
+         if (save_flag)
+            v_file.put(u);
+
+//       Calculate and smooth pressure
+         double pres = 0.;
+         p.setTime(theTime);
+         p.setName("Pressure");
+         Reconstruction rr(ms);
+         ep = 0;
+         MeshElements(ms) {
+            NSP2DQ41 eq(theElement,u,theTime);
+            pres += eq.Pressure(1.e07);
+            ep(theElementLabel) += pres;
+         }
+         rr.P0toP1(ep,p);
+         if (output_flag > 0)
+            cout << p;
+         if (save_flag)
+            p_file.put(p);
       }
-
-//    Impose boundary conditions and solve the linear system
-      A.Prescribe(b,bc,theStep-1);
-      if (theStep == 1)
-         A.Factor();
-      A.Solve(b);
-      u = b;
-
-//    Output and/or Store solution
-      u.setTime(theTime);
-      if (output_flag > 0)
-         cout << u;
-      if (save_flag)
-         v_file.put(u);
-
-//    Calculate and smooth pressure
-      double pres = 0.;
-      p.setTime(theTime);
-      p.setName("Pressure");
-      Reconstruction rr(ms);
-      ep = 0;
-      MeshElements(ms) {
-         NSP2DQ41 eq(theElement,u,theTime);
-         pres += eq.Pressure(1.e07);
-         ep(theElementLabel) += pres;
-      }
-      rr.P0toP1(ep,p);
-      if (output_flag > 0)
-         cout << p;
-      if (save_flag)
-      p_file.put(p);
-   }
+   } CATCH_EXCEPTION
    return 0;
 }

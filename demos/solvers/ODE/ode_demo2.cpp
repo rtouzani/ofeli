@@ -52,23 +52,26 @@ int main(int argc, char *argv[])
 
 // Declare equation, give initial solution
 // Use the Heun scheme (you can modify this)
-   ODESolver ode(HEUN);
-   ode.setInitial(0.);
-   ode.setInitialRHS(1.);
+   try {
+      ODESolver ode(HEUN);
+      ode.setInitial(0.);
+      ode.setInitialRHS(1.);
 
-/* Solve the equation
-   The coefficients of the ode are given for each time step
-   We also give the appropriate right-hand side for the RK4 scheme when this
-   one is used                                                                 */
-   TimeLoop {
-      ode.setCoef(1,1,0,2*exp(theTime)-1);
-      ode.setRK4RHS(2*exp(theTime-0.5*theTimeStep)-1);
-      ode.runOneTimeStep();
-   }
+/*    Solve the equation
+      The coefficients of the ode are given for each time step
+      We also give the appropriate right-hand side for the RK4 scheme when this
+      one is used                                                                 */
+      TimeLoop {
+         ode.setCoef(1,1,0,2*exp(theTime)-1);
+         ode.setRK4RHS(2*exp(theTime-0.5*theTimeStep)-1);
+         ode.runOneTimeStep();
+      }
 
-// Output differential equation information, numerical solution and error at
-// final time
-   cout << ode << endl;
-   cout << "Error: " << fabs(exp(theFinalTime)-1-ode.get()) << endl;
+//    Output differential equation information, numerical solution and error at
+//    final time
+      cout << ode << endl;
+      cout << "Error: " << fabs(exp(theFinalTime)-1-ode.get()) << endl;
+   } CATCH_EXCEPTION
+
    return 0;
 }

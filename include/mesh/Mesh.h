@@ -181,15 +181,15 @@ class Mesh
  *  @param [in] ne Number of elements
  *  @param [in] c1 Code for the first node (x=xmin)
  *  @param [in] c2 Code for the last node (x=xmax)
- *  @param [in] opt Flag to generate elements as well (if not zero) [Default: 0].
- *  @remark The option opt can be set to 0 if the user intends to use finite differences.
+ *  @param [in] p Degree of approximation polynomial [Default: ].
+ *  @remark The option p can be set to 1 if the user intends to use finite differences.
  */
     Mesh(real_t xmin,
          real_t xmax,
          size_t ne,
          int    c1,
          int    c2,
-         int    opt=0);
+         int    p=1);
 
 /** \brief Constructor for a uniform 2-D structured finite element mesh.
  *  \details The domain is the rectangle (xmin,xmax)x(ymin,ymax)

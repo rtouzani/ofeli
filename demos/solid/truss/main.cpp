@@ -57,55 +57,57 @@ int main(int argc, char *argv[])
    }
 
 // Read Mesh data
-   if (output_flag > 1)
-      cout << "Reading mesh data ...\n";
-   Mesh ms(data.getMeshFile());
-   if (output_flag > 1)
-      cout << ms;
-   Prescription p(ms,data.getDataFile());
+   try {
+      if (output_flag > 1)
+         cout << "Reading mesh data ...\n";
+      Mesh ms(data.getMeshFile());
+      if (output_flag > 1)
+         cout << ms;
+      Prescription p(ms,data.getDataFile());
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   SkSMatrix<double> A(ms);
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      SkSMatrix<double> A(ms);
 
-   if (verbose > 1)
-      cout << "Reading boundary conditions, body and boundary forces ...\n";
-   Vect<double> bc(ms), bf(ms);
-   p.get(BOUNDARY_CONDITION,bc);
-   p.get(POINT_FORCE,bf);
-   Vect<double> b(bf);
-   double section = data.getDouble("section");
+      if (verbose > 1)
+         cout << "Reading boundary conditions, body and boundary forces ...\n";
+      Vect<double> bc(ms), bf(ms);
+      p.get(BOUNDARY_CONDITION,bc);
+      p.get(POINT_FORCE,bf);
+      Vect<double> b(bf);
+      double section = data.getDouble("section");
 
-// Loop over elements
-   if (verbose > 1)
-      cout << "Calculating and assembling element arrays ..." << endl;
-   MeshElements(ms) {
+//    Loop over elements
+      if (verbose > 1)
+         cout << "Calculating and assembling element arrays ..." << endl;
+      MeshElements(ms) {
 
-//    Declare an instance of class Bar2DL2
-      Bar2DL2 eq(theElement,section);
+//       Declare an instance of class Bar2DL2
+         Bar2DL2 eq(theElement,section);
 
-//    Stiffness matrix
-      eq.Stiffness();
+//       Stiffness matrix
+         eq.Stiffness();
 
-//    Assemble element matrix
-      eq.ElementAssembly(A);
-   }
+//       Assemble element matrix
+         eq.ElementAssembly(A);
+      }
 
-// Impose a concentrated vertical load at node 2
-   A.Prescribe(b);
+//    Impose a concentrated vertical load at node 2
+      A.Prescribe(b);
 
-// Solve the linear system of equations
-   if (verbose > 1)
-      cout << "Solving the linear system ...\n";
-   A.solve(b);
+//    Solve the linear system of equations
+      if (verbose > 1)
+         cout << "Solving the linear system ...\n";
+      A.solve(b);
 
-// Output solution
-   if (verbose > 1)
-      cout << "\nSolution:\n" << b;
+//    Output solution
+      if (verbose > 1)
+         cout << "\nSolution:\n" << b;
 
-// Transform mesh to deformed one
-   IOField pf(data.getMeshFile(),data.getPlotFile(),ms,IOField::OUT);
-   pf.put(b);
-   DeformMesh(ms,b,40);
-   ms.put(data.getProject()+"-1.m");
+//    Transform mesh to deformed one
+      IOField pf(data.getMeshFile(),data.getPlotFile(),ms,IOField::OUT);
+      pf.put(b);
+      DeformMesh(ms,b,40);
+      ms.put(data.getProject()+"-1.m");
+   } CATCH_EXCEPTION
    return 0;
 }

@@ -71,63 +71,65 @@ int main(int argc, char *argv[])
 //---------------------------------
 
 // Read Mesh data
-   if (output_flag > 1)
-      cout << "Reading mesh data ...\n";
-   Mesh ms(data.getMeshFile(),true);
-   Prescription p(ms,data.getDataFile());
-   if (output_flag > 1)
-      cout << ms;
+   try {
+      if (output_flag > 1)
+         cout << "Reading mesh data ...\n";
+      Mesh ms(data.getMeshFile(),true);
+      Prescription p(ms,data.getDataFile());
+      if (output_flag > 1)
+         cout << ms;
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   if (output_flag > 1)
-      cout << "Allocating memory for matrix and R.H.S. ...\n";
-   SpMatrix<double> A(ms);
-   Vect<double> u(ms.getNbEq()), b(ms.getNbEq());
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      if (output_flag > 1)
+         cout << "Allocating memory for matrix and R.H.S. ...\n";
+      SpMatrix<double> A(ms);
+      Vect<double> u(ms.getNbEq()), b(ms.getNbEq());
 
-// Read boundary conditions, body and boundary forces
-   if (output_flag > 1)
-      cout << "Reading boundary conditions, body and boundary sources ...\n";
-   Vect<double> bc(ms), body_f(ms), bound_f(ms,1,SIDE_FIELD);
-   p.get(BOUNDARY_CONDITION,bc);
-   p.get(BODY_FORCE,body_f);
-   p.get(BOUNDARY_FORCE,bound_f,0);
+//    Read boundary conditions, body and boundary forces
+      if (output_flag > 1)
+         cout << "Reading boundary conditions, body and boundary sources ...\n";
+      Vect<double> bc(ms), body_f(ms), bound_f(ms,1,SIDE_FIELD);
+      p.get(BOUNDARY_CONDITION,bc);
+      p.get(BODY_FORCE,body_f);
+      p.get(BOUNDARY_FORCE,bound_f,0);
 
-// Loop over elements
-   if (output_flag > 1)
-      cout << "Looping over elements ...\n";
-   MeshElements(ms) {
-      DC3DT4 eq(theElement);
-      eq.Diffusion();
-      eq.BodyRHS(body_f);
-      eq.updateBC(bc);
-      eq.ElementAssembly(A);
-      eq.ElementAssembly(b);
-   }
+//    Loop over elements
+      if (output_flag > 1)
+         cout << "Looping over elements ...\n";
+      MeshElements(ms) {
+         DC3DT4 eq(theElement);
+         eq.Diffusion();
+         eq.BodyRHS(body_f);
+         eq.updateBC(bc);
+         eq.ElementAssembly(A);
+         eq.ElementAssembly(b);
+      }
 
-// Loop over sides
-   if (output_flag > 1)
-     cout << "Looping over sides ...\n";
-   MeshSides(ms) {
-      DC3DT4 eq(theSide);
-      eq.BoundaryRHS(bound_f);
-      eq.SideAssembly(b);
-   }
+//    Loop over sides
+      if (output_flag > 1)
+         cout << "Looping over sides ...\n";
+      MeshSides(ms) {
+         DC3DT4 eq(theSide);
+         eq.BoundaryRHS(bound_f);
+         eq.SideAssembly(b);
+      }
 
-   if (output_flag > 1)
-      cout << "Solving linear system ...\n";
-   LinearSolver<double> ls(1000,1.e-8,0);
-   int nb_it = ls.solve(A,b,u,CG_SOLVER,SSOR_PREC);
-   cout << "Number of iterations: " << nb_it << endl;
+      if (output_flag > 1)
+         cout << "Solving linear system ...\n";
+      LinearSolver<double> ls(1000,1.e-8,0);
+      int nb_it = ls.solve(A,b,u,CG_SOLVER,SSOR_PREC);
+      cout << "Number of iterations: " << nb_it << endl;
 
-// Output solution
-   Vect<double> v(ms);
-   v.insertBC(ms,u,bc);
-   if (output_flag > 0)
-      cout << u;
+//    Output solution
+      Vect<double> v(ms);
+      v.insertBC(ms,u,bc);
+      if (output_flag > 0)
+         cout << u;
 
-   if (save_flag) {
-      IOField pf(data.getSaveFile(),IOField::OUT);
-      pf.put(v);
-   }
+      if (save_flag) {
+         IOField pf(data.getSaveFile(),IOField::OUT);
+         pf.put(v);
+      }
+   } CATCH_EXCEPTION
    return 0;
 }

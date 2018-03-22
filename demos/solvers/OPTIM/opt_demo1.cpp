@@ -42,21 +42,24 @@ using namespace OFELI;
 int main(int argc, char *argv[])
 {
 // Instantiate optimization solver class
-   OptSolver os;
+   try {
+      OptSolver os;
 
-// Select optimization algorithm
-// Here we choose the truncated Newton method
-   os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
+//    Select optimization algorithm
+//    Here we choose the truncated Newton method
+      os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
 
-// Define objective function and its gradient 
-   os.setObjective("x1^2-x1+1");
-   os.setGradient("2*x1-1");
+//    Define objective function and its gradient 
+      os.setObjective("x1^2-x1+1");
+      os.setGradient("2*x1-1");
 
-// Run the optimization procedure
-   os.run();
+//    Run the optimization procedure
+      os.run();
 
-// Output class information and solution
-   cout << os << endl;
-   cout << "Solution: " << os.getSolution() << endl;
+//    Output class information and solution
+      cout << os << endl;
+      cout << "Solution: " << os.getSolution() << endl;
+   } CATCH_EXCEPTION
+
    return 0;
 }

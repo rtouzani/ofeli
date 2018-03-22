@@ -513,7 +513,7 @@ Mesh::Mesh(real_t xmin,
            size_t ne,
            int    c1,
            int    c2,
-           int    opt)
+           int    p)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(1), _nb_dof(0), _nb_vertices(0),
        _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
@@ -524,29 +524,32 @@ Mesh::Mesh(real_t xmin,
 {
    theMaterial.set(1,"Generic");
    setNodesForDOF();
-   real_t x=xmin, h=(xmax-xmin)/ne;
+   real_t x=xmin, hp=(xmax-xmin)/(ne*p);
 
-   for (size_t i=0; i<=ne; i++) {
-      the_node = new Node(i+1,Point<real_t>(x));
-      the_node->setNbDOF(1);
-      _code[0] = 0;
-      if (i==0  && c1>0)
-         _code[0] = c1;
-      if (i==ne && c2>0)
-         _code[0] = c2;
-      the_node->setDOF(_first_dof,1);
-      the_node->setCode(_code);
+   vector<Node *> nd;
+   for (size_t n=1; n<=ne*p+1; n++) {
+      the_node = new Node(n,Point<real_t>(x));
+      The_node.setNbDOF(1);
+      The_node.setDOF(_first_dof,1);
+      The_node.setCode(1,0);
+      if (n==1)
+         The_node.setCode(1,c1);
+      if (n==ne*p+1)
+         The_node.setCode(1,c2);
       Add(the_node);
-      x += h;
+      nd.push_back(the_node);
+      x += hp;
    }
 
-   if (opt) {
-      for (size_t i=1; i<=ne; i++) {
-         the_element = new Element(i,LINE);
-         the_element->Add(getPtrNode(i));
-         the_element->Add(getPtrNode(i+1));
-         Add(the_element);
-      }
+   size_t n=0;
+   for (size_t e=1; e<=ne; e++) {
+      the_element = new Element(e,LINE);
+      The_element.Add(nd[n]);
+      n += p;
+      The_element.Add(nd[n]);
+      for (size_t m=1; m<p; m++)
+         The_element.Add(nd[n-p+m]);
+      Add(the_element);
    }
 
    NumberEquations();

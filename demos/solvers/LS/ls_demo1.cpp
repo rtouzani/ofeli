@@ -46,26 +46,28 @@ int main(int argc, char *argv[])
    size_t n=atoi(argv[1]);
 
 // Initialize matrix and right-hand side vector
-   TrMatrix<double> A(n);
-   Vect<double> b(n), x(n);
-   for (size_t i=2; i<n; i++) {
-      A(i,i)   =  2.0;
-      A(i,i-1) = -1.0;
-      A(i,i+1) = -1.0;
-   }
-   A(1,1)   =  2.0;
-   A(1,2)   = -1.0;
-   A(n,n-1) = -1.0;
-   A(n,n)   =  2.0;
-   b = 0.0;
-   b(n) = n+1;
+   try {
+      TrMatrix<double> A(n);
+      Vect<double> b(n), x(n);
+      for (size_t i=2; i<n; i++) {
+         A(i,i)   =  2.0;
+         A(i,i-1) = -1.0;
+         A(i,i+1) = -1.0;
+      }
+      A(1,1)   =  2.0;
+      A(1,2)   = -1.0;
+      A(n,n-1) = -1.0;
+      A(n,n)   =  2.0;
+      b = 0.0;
+      b(n) = n+1;
 
-// Solve the linear system by Gauss elimination
-   LinearSolver<double> ls(A,b,x);
-   ls.setSolver(DIRECT_SOLVER);
-   ls.solve();
+//    Solve the linear system by Gauss elimination
+      LinearSolver<double> ls(A,b,x);
+      ls.setSolver(DIRECT_SOLVER);
+      ls.solve();
 
-// Output solution vector
-   cout << "Solution:\n" << x << endl; 
+//    Output solution vector
+      cout << "Solution:\n" << x << endl; 
+   } CATCH_EXCEPTION
    return 0;
 }

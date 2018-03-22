@@ -52,21 +52,24 @@ int main(int argc, char *argv[])
 
 // Declare equation, give initial solution and give coefficients defining the ode
 // Use the Runge-Kutta scheme (you can modify this)
-   ODESolver ode(RK4);
+   try {
+      ODESolver ode(RK4);
 
-// Give initial condition
-   ode.setInitial(0.);
+//    Give initial condition
+      ode.setInitial(0.);
 
-// Set function that defines the ODE
-   ode.setF("2*exp(t)-1-y");
+//    Set function that defines the ODE
+      ode.setF("2*exp(t)-1-y");
 
-// Solve the equation: Contains the loop on time steps
-   ode.run();
+//    Solve the equation: Contains the loop on time steps
+      ode.run();
 
-// Output differential equation information, numerical solution and error at
-// final time
-   cout << ode << endl;
-   cout << "Solution:  " << ode.get() << endl; 
-   cout << "Error:     " << fabs(exp(theFinalTime)-1-ode.get()) << endl;
+//    Output differential equation information, numerical solution and error at
+//    final time
+      cout << ode << endl;
+      cout << "Solution:  " << ode.get() << endl; 
+      cout << "Error:     " << fabs(exp(theFinalTime)-1-ode.get()) << endl;
+   } CATCH_EXCEPTION
+
    return 0;
 }

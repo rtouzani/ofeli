@@ -195,30 +195,38 @@ using namespace OFELI;</font></pre>
       exit(1);
    }</font></pre>
 </td></tr></table></p>
+<li><SPAN class=TEXT>We show in this example how to use an exception
+handler in <span class=LOGO>OFELI</span> in order to properly handle error management.
+For this, use the <span class=VAR>try</span> command:<br>
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   try {</font></pre>
+</td></tr></table></p>
+
 <li><SPAN class=TEXT>We construct an instance of class <a href="../html/classOFELI_1_1Mesh.html">Mesh</a> by using the file that contains
 mesh data.<br>
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   Mesh ms(argv[1]);</font></pre>
+<pre><font color="blue" size=3>      Mesh ms(argv[1]);</font></pre>
 </td></tr></table></p>
 <li><SPAN class=TEXT>The problem matrix is symmetric and will be stored in skyline format (thus using class
 <a href="../html/classOFELI_1_1SkSMatrix.html">SkSMatrix&lt;double&gt;</a>)</span>
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   SkSMatrix&lt;double&gt; A(ms);</font></pre>
+<pre><font color="blue" size=3>      SkSMatrix&lt;double&gt; A(ms);</font></pre>
 </td></tr></table></p>
 <li><SPAN class=TEXT>Vectors <span class=TT>b</span> and <span class=TT>bc</span> (as instances
 of class <a href="../html/classOFELI_1_1Vect.html">Vect&lt;double&gt;</a>) will contain the right-hand side and the solution, and imposed boundary conditions at nodes:</span>
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   Vect&lt;double&gt; b(ms), bc(ms);</font></pre>
+<pre><font color="blue" size=3>      Vect&lt;double&gt; b(ms), bc(ms);</font></pre>
 </td></tr></table></p>
 <li><SPAN class=TEXT>We assign imposed boundary conditions to vector <span class=TT>bc</span> by 
 using member function <span class=TT>setNodeBC</span> which allows using an interpreted function of 
 node coordinates: We prescribe the function <span class=var>y</span> to nodes with code <span class=var>1</span>.
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   bc.setNodeBC(1,"y");</font></pre>
+<pre><font color="blue" size=3>      bc.setNodeBC(1,"y");</font></pre>
 </td></tr></table></p>
 <li><SPAN class=TEXT>We now start building the linear system. For this, we have to implement a loop over all element
 meshes by using member functions <span class=TT>topElement()</span> and <span class=TT>getElement()</span>. The returned
@@ -233,12 +241,12 @@ assemble matrix and right-hand side (which is <span class=TT>0</span> here).
 
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   MeshElements(ms) {
-      DC2DT3 eq(theElement);
-      eq.Diffusion();
-      eq.ElementAssembly(A);
-      eq.ElementAssembly(b);
-   }</font></pre>
+<pre><font color="blue" size=3>      MeshElements(ms) {
+         DC2DT3 eq(theElement);
+         eq.Diffusion();
+         eq.ElementAssembly(A);
+         eq.ElementAssembly(b);
+      }</font></pre>
 </td></tr></table></p>
 <p>
 Of course, in the present case, assembling the right-hand side is useless.</span></p>
@@ -246,21 +254,29 @@ Of course, in the present case, assembling the right-hand side is useless.</span
 technique. This is implemented via the function <span class=TT>Prescribe</span>, member of all matrix classes.</span>
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   A.Prescribe(b,bc);</font></pre>
+<pre><font color="blue" size=3>      A.Prescribe(b,bc);</font></pre>
 </td></tr></table></p>
 <li><SPAN class=TEXT>Solution is obtained by factorizing and backsubstituting:
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   A.solve(b);
+<pre><font color="blue" size=3>      A.solve(b);
 </font></pre>
 </td></tr></table></p>
 <p>Vector <span class=TT>b</span> contains now the solution.</span></p>
-<li><SPAN class=TEXT>We finally output the solution and end the program.
+<li><SPAN class=TEXT>We output the solution:
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   cout &lt;&lt; "\nSolution :\n" &lt;&lt; b;
+<pre><font color="blue" size=3>      cout &lt;&lt; "\nSolution :\n"&lt;&lt; b;
+</font></pre>
+</td></tr></table></p>
+<li><SPAN class=TEXT>We end the exception handler block by using the
+<span class=LOGO>OFELI</span> macro <span class=VAR>CATCH_EXCEPTION</span>, then we end the program
+<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+<tr><td>
+<pre><font color="blue" size=3>   } CATCH_EXCEPTION
    return 0;
 }</font></pre>
+</td></tr></table></p>
 </td></tr></table>
 </ul><br>
 
@@ -272,8 +288,10 @@ The imposed boundary conditions are
 <span class=text>Homogeneous Neumann boundary conditions are "imposed" on the portions <span class=VAR>x=0</span> and
 <span class=VAR>x=3</span>. The solution is then</span></p>
 <pre><font color="blue" size=3>   u(x,y)=y</font></pre></p>
-<span class=TEXT>The mesh file is <span class=VAR>test.m</span>. Note, in this file, that a code equal to
-<span class=TT>1</span> is associated to nodes with <span class=VAR>y=0</span> and <span class=VAR>y=1</span></span>.
+<span class=TEXT>The mesh file is <span class=VAR>test.m</span>. Note that the code 
+<span class=TT>1</span> is associated to nodes with  <span
+class=VAR>y</span>-coordinates
+<span class=VAR>0</span> and <span class=VAR>1</span></span>.
 </span><br></p>
 
 <p><SPAN class=TEXT><font color="#800080" size=3><b>You can now execute the code to obtain the exact solution.</b>
@@ -290,7 +308,7 @@ The imposed boundary conditions are
 
 &nbsp;
 <div id="foot_bar">
-   Copyright &copy; 1998-2017 Rachid Touzani&nbsp;
+   Copyright &copy; 1998-2018 Rachid Touzani&nbsp;
 </div>
 
 </body>

@@ -60,49 +60,51 @@ int main(int argc, char *argv[])
    }
 
 // Read Mesh data and options
-   if (data.getVerbose()>1)
-      cout << "Reading mesh data ...\n";
-   Mesh ms(data.getMeshFile(),true);
-   Prescription p(ms,data.getPrescriptionFile());
-   if (data.getVerbose()>2)
-      cout << ms;
-
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   if (data.getVerbose()>1)
-      cout << "Allocating memory for matrix and R.H.S. ...\n";
-   Vect<double> u(ms,"Temperature");
-   if (data.getVerbose()>1)
-      cout << "Reading boundary conditions, body and boundary forces ...\n";
-
-   Vect<double> bc(ms), body_f(ms), bound_f(ms);
-   p.get(BOUNDARY_CONDITION,bc);
-   p.get(SOURCE,body_f);
-   p.get(FLUX,bound_f);
-
-// Read velocity for convection
-   Vect<double> v(ms,2);
-   if (data.getInteger("v_flag")) {
+   try {
       if (data.getVerbose()>1)
-         cout << "Reading Velocity in file ...\n";
-      IOField ff(data.getMeshFile(),data.getString("v_file"),ms,IOField::IN);
-      ff.get(v);
-   }
+         cout << "Reading mesh data ...\n";
+      Mesh ms(data.getMeshFile(),true);
+      Prescription p(ms,data.getPrescriptionFile());
+      if (data.getVerbose()>2)
+         cout << ms;
 
-// Set equation features and choose solver
-   DC2DT3 eq(ms,u);
-   eq.setInput(BOUNDARY_CONDITION,bc);
-   eq.setInput(SOURCE,body_f);
-   eq.setInput(FLUX,bound_f);
-   eq.setInput(VELOCITY_FIELD,v);
-   eq.setTerms(DIFFUSION|CONVECTION);
-   eq.setSolver(GMRES_SOLVER,DILU_PREC);
-   int it = eq.run();
-   cout << "Number of iterations: " << it << endl;
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      if (data.getVerbose()>1)
+         cout << "Allocating memory for matrix and R.H.S. ...\n";
+      Vect<double> u(ms,"Temperature");
+      if (data.getVerbose()>1)
+         cout << "Reading boundary conditions, body and boundary forces ...\n";
 
-// Output and save result
-   if (data.getOutput() > 0)
-      cout << u;
-   if (data.getPlot())
-      saveField(u,data.getPlotFile(),GMSH);
+      Vect<double> bc(ms), body_f(ms), bound_f(ms);
+      p.get(BOUNDARY_CONDITION,bc);
+      p.get(SOURCE,body_f);
+      p.get(FLUX,bound_f);
+
+//    Read velocity for convection
+      Vect<double> v(ms,2);
+      if (data.getInteger("v_flag")) {
+         if (data.getVerbose()>1)
+            cout << "Reading Velocity in file ...\n";
+         IOField ff(data.getMeshFile(),data.getString("v_file"),ms,IOField::IN);
+         ff.get(v);
+      }
+
+//    Set equation features and choose solver
+      DC2DT3 eq(ms,u);
+      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setInput(SOURCE,body_f);
+      eq.setInput(FLUX,bound_f);
+      eq.setInput(VELOCITY_FIELD,v);
+      eq.setTerms(DIFFUSION|CONVECTION);
+      eq.setSolver(GMRES_SOLVER,DILU_PREC);
+      int it = eq.run();
+      cout << "Number of iterations: " << it << endl;
+
+//    Output and save result
+      if (data.getOutput() > 0)
+         cout << u;
+      if (data.getPlot())
+         saveField(u,data.getPlotFile(),GMSH);
+   } CATCH_EXCEPTION
    return 0;
 }

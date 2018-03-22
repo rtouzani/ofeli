@@ -42,27 +42,29 @@ int main(int argc, char *argv[])
    const int n = 6;
 
 // Define the matrix
-   DSMatrix<double> A(n);
-   A = 0;
-   A(1,1) = 2; A(1,2) = -1;
-   for (size_t i=2; i<n; i++) {
-      A(i,i-1) = -1;
-      A(i,i) = 2;
-      A(i,i+1) = -1;
-   }
-   A(n,n-1) = -1; A(n,n) = 2;
+   try {
+      DSMatrix<double> A(n);
+      A = 0;
+      A(1,1) = 2; A(1,2) = -1;
+      for (size_t i=2; i<n; i++) {
+         A(i,i-1) = -1;
+         A(i,i) = 2;
+         A(i,i+1) = -1;
+      }
+      A(n,n-1) = -1; A(n,n) = 2;
 
-// Solve the eigenvalue problem
-   Vect<double> ev;
-   EigenProblemSolver e(A,ev);
+//    Solve the eigenvalue problem
+      Vect<double> ev;
+      EigenProblemSolver e(A,ev);
 
-// Output eigenvalues, save eigenvectors
-   Vect<double> v(n);
-   for (int i=1; i<=n; i++) {
-      cout << "Eigenvalue #" << i << ": " << ev(i) << endl;
-      e.getEigenVector(i,v);
-      cout << "Eigen vector:\n" << v;
-   }
-   cout << "Nb. of iterations: " << e.getNbIter() << endl;
+//    Output eigenvalues, save eigenvectors
+      Vect<double> v(n);
+      for (int i=1; i<=n; i++) {
+         cout << "Eigenvalue #" << i << ": " << ev(i) << endl;
+         e.getEigenVector(i,v);
+         cout << "Eigen vector:\n" << v;
+      }
+      cout << "Nb. of iterations: " << e.getNbIter() << endl;
+   } CATCH_EXCEPTION
    return 0;
 }
