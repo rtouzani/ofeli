@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
    string ff = "phase.dat";
    if (argc>4)
       ff = argv[4];
-   ofstream oph(ff);
+   ofstream oph(ff.c_str());
 
 // Solution as a system of 3 first-order ODEs
    try {

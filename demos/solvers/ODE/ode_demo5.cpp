@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
    string ff = "phase.dat";
    if (argc>4)
       ff = argv[4];
-   ofstream oph(ff);
+   ofstream oph(ff.c_str());
 
 // Solution is stored in file given by the fourth argument
 // The phase portrait is solved in a file whose name can be given as a fifth argument,

@@ -52,53 +52,57 @@ int main(int argc, char *argv[])
       cout << "Usage: lesson3 <mesh_file>" << endl;
       exit(1);
    }
-   Mesh ms(argv[1],true);
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
+   try {
+      Mesh ms(argv[1],true);
+
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
 #if defined(USE_PETSC)
-   PETScWrapper<double> w(1,argv);
-   PETScMatrix<double> A(ms);
-   PETScVect<double> b(ms.getNbEq()), x(ms.getNbEq()), bc(ms), u(ms);
+      PETScWrapper<double> w(1,argv);
+      PETScMatrix<double> A(ms);
+      PETScVect<double> b(ms.getNbEq()), x(ms.getNbEq()), bc(ms), u(ms);
 #else
-   SpMatrix<double> A(ms);
-   Vect<double> b(ms.getNbEq()), x(ms.getNbEq()), bc(ms), u(ms);
+      SpMatrix<double> A(ms);
+      Vect<double> b(ms.getNbEq()), x(ms.getNbEq()), bc(ms), u(ms);
 #endif
-   bc.setNodeBC(1,"y");
+      bc.setNodeBC(1,"y");
 
-// Loop over elements
-// ------------------
+//    Loop over elements
+//    ------------------
 
-   MeshElements(ms) {
+      MeshElements(ms) {
 
-//    Declare an instance of class DC2DT3
-      DC2DT3 eq(theElement);
+//       Declare an instance of class DC2DT3
+         DC2DT3 eq(theElement);
 
-//    Diffusion contribution to matrix
-      eq.Diffusion();
+//       Diffusion contribution to matrix
+         eq.Diffusion();
 
-//    Boundary condition contribution to RHS
-      eq.updateBC(bc);
+//       Boundary condition contribution to RHS
+         eq.updateBC(bc);
 
-//    Assemble element matrix and RHS
-      eq.ElementAssembly(A);
-      eq.ElementAssembly(b);
-   }
+//       Assemble element matrix and RHS
+         eq.ElementAssembly(A);
+         eq.ElementAssembly(b);
+      }
 
 // Solve the linear system of equations by an iterative method
 #if defined(USE_EIGEN)
-   LinearSolver<double> ls(1000,1.e-8,1);
-   int nb_it = ls.solve(A,b,x,CG_SOLVER,DIAG_PREC);
+      LinearSolver<double> ls(1000,1.e-8,1);
+      int nb_it = ls.solve(A,b,x,CG_SOLVER,DIAG_PREC);
 #elif defined(USE_PETSC)
-   w.setLinearSystem(A,b,KSPCG,PCJACOBI,1.e-8);
-   w.solve(x);
-   int nb_it = w.getIterationNumber();
+      w.setLinearSystem(A,b,KSPCG,PCJACOBI,1.e-8);
+      w.solve(x);
+      int nb_it = w.getIterationNumber();
 #else
-   LinearSolver<double> ls(1000,1.e-8,0);
-   int nb_it = ls.solve(A,b,x,CG_SOLVER,DILU_PREC);
+      LinearSolver<double> ls(1000,1.e-8,0);
+      int nb_it = ls.solve(A,b,x,CG_SOLVER,DILU_PREC);
 #endif
-   cout << "Number of iterations: " << nb_it << endl;
+      cout << "Number of iterations: " << nb_it << endl;
 
-// Output solution
-   u.insertBC(ms,x,bc);
+//    Output solution
+      u.insertBC(ms,x,bc);
+   } CATCH_EXCEPTION
+
    return 0;
 }

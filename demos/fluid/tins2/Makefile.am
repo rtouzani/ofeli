@@ -14,7 +14,7 @@ tins2_DATA =	main.cpp \
 		cavity-60.dat \
 		cavity-30.m \
 		cavity-60.m \
-		step.geo \
+		step.dom \
 		step.dat \
 		Makefile.standalone \
 		README
@@ -24,7 +24,7 @@ dist_tins2_DATA =	main.cpp \
 			cavity-60.dat \
 			cavity-30.m \
 			cavity-60.m \
-			step.geo \
+			step.dom \
 			step.dat \
 			Makefile.standalone \
 			README

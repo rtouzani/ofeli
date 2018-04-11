@@ -114,6 +114,19 @@ public:
               const Vect<T_>& v,
               int             opt=0);
 
+/** \brief Constructor of an element vector from a global Vect instance.
+ *  \details The constructed vector has local numbering of nodes
+ *  @param [in] el Reference to Element instance to localize
+ *  @param [in] v Global vector to localize
+ *  @param [in] opt Option for DOF treatment
+ *     - = 0, Normal case [Default]
+ *     - Any other value : only one DOF is handled (Local vector has as dimension number of degrees of freedom)
+ */
+    LocalVect(const Element&  el,
+              const Vect<T_>& v,
+              int             opt=0)
+    { LocalVect<T_,N_>(&el,v,opt); }
+
 /** \brief Constructor of a side vector from a global Vect instance.
  *  \details The constructed vector has local numbering of nodes
  *  @param [in] sd Pointer to Side to localize
@@ -388,17 +401,17 @@ void LocalVect<T_,N_>::Localize(const Element*  el,
                                 const Vect<T_>& v,
                                 size_t          k)
 {
-   size_t i = 0;
+   size_t i=0;
    if (k==0) {
       for (size_t n=1; n<=el->getNbNodes(); ++n) {
          Node *nd = (*el)(n);
          for (size_t j=1; j<=nd->getNbDOF(); ++j)
-            _v[i++] = v(nd->getDOF(j));
+            _v[i++] = v(nd->getFirstDOF()+j-1);
       }
    }
    else {
-      for (size_t n=1; n<=el->getNbNodes(); ++n)
-         _v[i++] = v((*el)(n)->getDOF(k));
+     for (size_t n=1; n<=el->getNbNodes(); ++n)
+        _v[i++] = v((*el)(n)->getFirstDOF()+k-1);
    }
 }
 

@@ -46,62 +46,66 @@ int main(int argc, char *argv[])
       cout << " Usage: lesson4 <parameter_file>" << endl;
       exit(1);
    }
-   IPF data(argv[1]);
-   theFinalTime = data.getMaxTime();
-   theTimeStep = data.getTimeStep();
-   Mesh ms(data.getMeshFile());
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-   SkSMatrix<double> A(ms);
-   Vect<double> b(ms), u(ms), bc(ms), sf(ms);
+   try {
+      IPF data(argv[1]);
+      theFinalTime = data.getMaxTime();
+      theTimeStep = data.getTimeStep();
+      Mesh ms(data.getMeshFile());
 
-// Read in initial solution
-   u = 0.;
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
+      SkSMatrix<double> A(ms);
+      Vect<double> b(ms), u(ms), bc(ms), sf(ms);
 
-// Loop over time steps
-// --------------------
-   TimeLoop {
-      b = 0;
-      bc = 0;
-      sf.setSideBC(1,"1.0");
+//    Read in initial solution
+      u = 0.;
 
-//    Loop over elements
-      MeshElements(ms) {
+//    Loop over time steps
+//    --------------------
+      TimeLoop {
+         b = 0;
+         bc = 0;
+         sf.setSideBC(1,"1.0");
 
-//       Declare an instance of class DC2DT3
-         DC2DT3 eq(theElement,u,theTime);
+//       Loop over elements
+         MeshElements(ms) {
 
-//       Capacity contribution to matrix and to RHS
-         eq.LCapacityToLHS(1./theTimeStep);
-         eq.LCapacityToRHS(1./theTimeStep);
+//          Declare an instance of class DC2DT3
+            DC2DT3 eq(theElement,u,theTime);
 
-//       Diffusion contribution to matrix
-         eq.Diffusion();
+//          Capacity contribution to matrix and to RHS
+            eq.LCapacityToLHS(1./theTimeStep);
+            eq.LCapacityToRHS(1./theTimeStep);
 
-//       Assemble element matrix and RHS
+//          Diffusion contribution to matrix
+            eq.Diffusion();
+
+//          Assemble element matrix and RHS
+            if (theStep==1)
+               eq.ElementAssembly(A);
+            eq.ElementAssembly(b);
+         }
+
+//       Loop over edges (sides)
+         MeshSides(ms) {
+            DC2DT3 eq(theSide,u,theTime);
+            eq.BoundaryRHS(sf);
+            eq.SideAssembly(b);
+         }
+
+//       Impose boundary conditions on matrix and RHS
+//       Solve the linear system of equations.
+//       Factorize at first time step only
+         A.Prescribe(b,bc,theStep-1);
          if (theStep==1)
-            eq.ElementAssembly(A);
-         eq.ElementAssembly(b);
+            A.Factor();
+         A.solve(b);
+         u = b;
+
+//       Output solution
+         cout << "\nSolution for time: " << theTime << endl << u;
       }
+   } CATCH_EXCEPTION
 
-//    Loop over edges (sides)
-      MeshSides(ms) {
-         DC2DT3 eq(theSide,u,theTime);
-         eq.BoundaryRHS(sf);
-         eq.SideAssembly(b);
-      }
-
-//    Impose boundary conditions on matrix and RHS
-//    Solve the linear system of equations.
-//    Factorize at first time step only
-      A.Prescribe(b,bc,theStep-1);
-      if (theStep==1)
-         A.Factor();
-      A.solve(b);
-      u = b;
-
-//    Output solution
-      cout << "\nSolution for time: " << theTime << endl << u;
-   }
    return 0;
 }

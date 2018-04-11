@@ -91,9 +91,9 @@ Elas2DT3::Elas2DT3(const Side*         sd,
 
 Elas2DT3::Elas2DT3(const Side*         sd,
                    const Vect<real_t>& u,
-                         real_t        time,
-                         real_t        deltat,
-                         int           scheme)
+                   real_t              time,
+                   real_t              deltat,
+                   int                 scheme)
 {
    _time  = time;
    set(sd);
@@ -251,6 +251,7 @@ void Elas2DT3::MassToRHS(real_t coef)
 
 void Elas2DT3::Deviator(real_t coef)
 {
+_G = 1.;
    real_t c=_G*_area*coef;
    for (size_t i=1; i<=3; i++) {
       Point<real_t> a=c*_dSh(i);
@@ -261,7 +262,15 @@ void Elas2DT3::Deviator(real_t coef)
          eA0(2*i  ,2*j  ) += 2*a.y*_dSh(j).y + a.x*_dSh(j).x;
       }
    }
+   /*
+   for (size_t i=1; i<=3; i++) {
+      for (size_t j=1; j<=3; j++) {
+         eA0(2*i-1,2*j-1) += _area*_dSh(i)*_dSh(j);
+         eA0(2*i  ,2*j  ) += _area*_dSh(i)*_dSh(j);
+      }
+      }*/
    eMat = eA0;
+//cout<<eMat;
 }
 
 

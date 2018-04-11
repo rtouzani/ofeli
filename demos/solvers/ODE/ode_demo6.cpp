@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
    string ff = "phase.dat";
    if (argc>4)
       ff = argv[4];
-   ofstream oph(ff);
+   ofstream oph(ff.c_str());
 
    try {
       ODESolver ode(FORWARD_EULER,theTimeStep,theFinalTime,2);

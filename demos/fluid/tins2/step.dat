@@ -6,12 +6,12 @@
    <author></author>
 </info>
 <Project name="Step">
-   <time_step value="0.005"/>
-   <max_time value="5.0"/>
-   <verbose value="1"/>
+   <time_step value="0.01"/>
+   <max_time value="4.0"/>
+   <verbose value="5"/>
    <plot value="10"/>
-   <mesh_file value="sstep.m"/>
-   <parameter label="Reynolds" value="100"/>
+   <mesh_file value="step.m"/>
+   <parameter label="Reynolds" value="1"/>
    <parameter label="v_file" value="step.v"/>
    <parameter label="p_file" value="step.p"/>
 </Project>

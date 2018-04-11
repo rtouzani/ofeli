@@ -547,7 +547,7 @@ Mesh::Mesh(real_t xmin,
       The_element.Add(nd[n]);
       n += p;
       The_element.Add(nd[n]);
-      for (size_t m=1; m<p; m++)
+      for (int m=1; m<p; m++)
          The_element.Add(nd[n-p+m]);
       Add(the_element);
    }

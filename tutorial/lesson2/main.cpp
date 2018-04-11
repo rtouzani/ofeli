@@ -44,10 +44,12 @@ int main(int argc, char *argv[])
       cout << "Usage: lesson2 <mesh_file>" << endl;
       exit(1);
    }
-   Mesh ms(argv[1]);
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
    try {
+
+      Mesh ms(argv[1]);
+
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
       SkSMatrix<double> A(ms);
       Vect<double> b(ms), bc(ms);
       bc.setNodeBC(1,"y");

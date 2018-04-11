@@ -76,8 +76,6 @@ int main(int argc, char *argv[])
          eq.setInput(BOUNDARY_CONDITION,bc);
          pr.get(BODY_FORCE,bf,theTime);
          eq.setInput(BODY_FORCE,bf);
-         pr.get(TRACTION,sf,theTime);
-         eq.setInput(TRACTION,sf);
          eq.runOneTimeStep();
          if (plot_flag>0 && theStep%plot_flag==0) {
             p.setTime(theTime); u.setTime(theTime);

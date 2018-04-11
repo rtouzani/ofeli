@@ -681,7 +681,7 @@ void Matrix<T_>::Assembly(const Element& el,
             size_t n=nb_dof*(nd->n()-1) + k;
             add(n,n,a[kk]);
             kk += nb_dof*el.getNbNodes() + 1;
-	 }
+         }
       }
       return;
    }
@@ -691,7 +691,7 @@ void Matrix<T_>::Assembly(const Element& el,
          for (size_t j=1; j<=el.getNbNodes(); ++j) {
             Node *nd2=el(j);
             for (size_t l=1; l<=nd2->getNbDOF(); ++l, kk++) {
-               if (nd1->getDOF(k)!=0 && nd2->getDOF(l)!=0)
+               if (nd1->getDOF(k) && nd2->getDOF(l))
                   add(nd1->getDOF(k),nd2->getDOF(l),a[kk]);
             }
          }

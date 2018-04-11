@@ -29,7 +29,6 @@
 
   ==============================================================================*/
 
-
 #include "equations/fluid/TINS2DT3B.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
@@ -41,7 +40,6 @@ namespace OFELI {
 
 TINS2DT3B::TINS2DT3B() : _Re(0.)
 {
-   _b = NULL;
 }
 
 
@@ -49,32 +47,29 @@ TINS2DT3B::TINS2DT3B(Mesh&         mesh,
                      Vect<real_t>& u,
                      Vect<real_t>& p,
                      real_t&       ts,
-                     real_t        Re) : _Re(Re), _p(&p)
+                     real_t        Re)
+          :  _constant_matrix(true), _Re(Re), _p(&p)
 {
-   _Re = Re;
-   _step = 1;
-   _b = NULL;
+   _step = 0;
    _u = &u;
-   initEquation(mesh,ts);
+   init(mesh,ts);
    _bc_given = _bf_given = _sf_given = false;
+   _dens = 0.;
 }
 
 
-TINS2DT3B::~TINS2DT3B()
-{
-   if (_b)
-      delete _b;
-}
+TINS2DT3B::~TINS2DT3B() { }
 
 
-void TINS2DT3B::initEquation(Mesh&  mesh,
-                             real_t ts)
+void TINS2DT3B::init(Mesh&  mesh,
+                     real_t ts)
 {
    if (_verbose>2)
       cout << "Initializing Navier-Stokes equations settings ..." << endl;
    _theMesh = &mesh;
    _time_step = ts;
-   _theMesh->NumberEquations();
+   _theMesh->removeImposedDOF();
+   _VM.setMesh(*_theMesh);
    _MM.setSize(_theMesh->getNbNodes());
    _PM.setExtendedGraph();
    _PM.setMesh(*_theMesh,1);
@@ -87,17 +82,10 @@ void TINS2DT3B::initEquation(Mesh&  mesh,
    _PP.setType(DILU_PREC);
    _PP.setMatrix(_PM);
 #endif
-   _VM.setMesh(*_theMesh);
-   VelocityMatrix();
-#if !defined(USE_EIGEN)
-   _PV.setType(DILU_PREC);
-   _PV.setMatrix(_VM);
-#endif
    _uu.setSize(_theMesh->getNbEq());
-   _b = new Vect<real_t>(_theMesh->getNbEq());
-   _ub.setMesh(*_theMesh,2,ELEMENT_DOF);
-   _q.setMesh(*_theMesh,1,NODE_DOF);
-   _c.setMesh(*_theMesh,2,NODE_DOF);
+   _b.setSize(_theMesh->getNbEq());
+   _q.setSize(_theMesh->getNbNodes());
+   _c.setSize(_theMesh->getNbNodes(),2);
    _cfl = 0;
 }
 
@@ -108,13 +96,6 @@ void TINS2DT3B::setInput(EqDataType    opt,
    AbsEqua<real_t>::setInput(opt,u);
    if (opt==INITIAL_FIELD) {
       _u = &u;
-      mesh_elements(*_theMesh) {
-         size_t n1=The_element(1)->n(),
-                n2=The_element(2)->n(),
-                n3=The_element(3)->n();
-         _ub(element_label,1) = OFELI_THIRD*((*_u)(n1,1)+(*_u)(n2,1)+(*_u)(n3,1));
-         _ub(element_label,2) = OFELI_THIRD*((*_u)(n1,2)+(*_u)(n2,2)+(*_u)(n3,2));
-      }
       getPressure();
       updateVelocity();
    }
@@ -129,13 +110,14 @@ void TINS2DT3B::set(Element* el)
       setMaterial();
       _Re = 1;
    }
+   _ne = element_label;
    Triang3 tr(el);
    _center = tr.getCenter();
    _det = tr.getDet();
-   ElementNodeCoordinates();
-   _dSh(1) = tr.DSh(1);
-   _dSh(2) = tr.DSh(2);
-   _dSh(3) = tr.DSh(3);
+   for (size_t i=0; i<3; ++i) {
+      _dSh[i] = tr.DSh(i+1);
+      _en[i] = (*el)(i+1)->n();
+   }
    eMat = 0; eRHS = 0;
 }
 
@@ -167,45 +149,38 @@ int TINS2DT3B::runOneTimeStep()
 }
 
 
-void TINS2DT3B::VelocityMatrix()
+void TINS2DT3B::ElementVelocityMatrix()
+{
+   real_t a=0.25*_det*_visc/_Re;
+   for (size_t i=1; i<=3; i++) {
+      for (size_t j=1; j<=3; j++) {
+         eMat(2*i-1,2*j-1) = a*(2*_dSh(i).x*_dSh(j).x + _dSh(i).y*_dSh(j).y);
+         eMat(2*i-1,2*j  ) = a*_dSh(i).y*_dSh(j).x;
+         eMat(2*i  ,2*j-1) = a*_dSh(i).x*_dSh(j).y;
+         eMat(2*i  ,2*j  ) = a*(2*_dSh(i).y*_dSh(j).y + _dSh(i).x*_dSh(j).x);
+      }
+   }
+   a = _dens*_det/(6.*_time_step);
+   for (size_t i=1; i<=3; i++) {
+      eMat(2*i-1,2*i-1) += a;
+      eMat(2*i  ,2*i  ) += a;
+   }
+}
+
+
+void TINS2DT3B::SideVelocityMatrix()
 {
    const real_t penal=1.e20;
-   if (_verbose>2)
-      cout << "Calculating velocity matrices ..." << endl;
-   Point<real_t> z;
-
-   MESH_EL {
-      set(theElement);
-      real_t c=OFELI_SIXTH*_dens*_det/_time_step, aa=0.25*_det*_visc/_Re;
-      for (size_t i=0; i<3; i++) {
-         z = aa*_dSh[i];
-         for (size_t j=i; j<3; j++) {
-            eMat(2*i+1,2*j+1) = 2*z.x*_dSh[j].x + z.y*_dSh[j].y;
-            eMat(2*i+1,2*j+2) = z.y*_dSh[j].x;
-            eMat(2*i+2,2*j+1) = z.x*_dSh[j].y;
-            eMat(2*i+2,2*j+2) = 2*z.y*_dSh[j].y + z.x*_dSh[j].x;
-         }
-      }
-      for (size_t i=0; i<6; i++)
-         eMat(i,i) += c;
-      eMat.Symmetrize();
-      ElementAssembly(TheElement,_VM);
-   }
-
-   MESH_SD {
-      set(theSide);
-      for (size_t i=1; i<=2; i++) {
-         real_t c = 0.5*_length*penal;
-         if (TheSide.getCode(1)==PERIODIC_A)
-            sMat(2*i-1,2*i-1) += c;
-         else if (TheSide.getCode(1) == PERIODIC_B)
-            eMat(2*i-1,2*i-1) -= c;
-         if (TheSide.getCode(2)==PERIODIC_A)
-            sMat(2*i  ,2*i  ) += c;
-         else if (TheSide.getCode(2)==PERIODIC_B)
-            sMat(2*i  ,2*i  ) -= c;
-      }
-      SideAssembly(TheSide,_VM);
+   for (size_t i=1; i<=2; i++) {
+      real_t c = 0.5*_length*penal;
+      if (The_side.getCode(1)==PERIODIC_A)
+         sMat(2*i-1,2*i-1) += c;
+      else if (The_side.getCode(1) == PERIODIC_B)
+         eMat(2*i-1,2*i-1) -= c;
+      if (The_side.getCode(2)==PERIODIC_A)
+         sMat(2*i  ,2*i  ) += c;
+      else if (The_side.getCode(2)==PERIODIC_B)
+         sMat(2*i  ,2*i  ) -= c;
    }
 }
 
@@ -214,28 +189,25 @@ void TINS2DT3B::PressureMatrix()
 {
    if (_verbose>2)
       cout << "Calculating pressure matrix ..." << endl;
-   size_t size=_PM.size();
-   SpMatrix<real_t> Dx(1,*_theMesh), Dy(1,*_theMesh);
+   SpMatrix<real_t> Dx(1,*_theMesh,0), Dy(1,*_theMesh,0);
    mesh_elements(*_theMesh) {
       set(the_element);
-      real_t z=OFELI_SIXTH*_det/_time_step, a=0.35*_time_step*_det;
+      real_t z=_det/(6*_time_step), a=0.5*_time_step*_det;
       for (size_t i=0; i<3; i++) {
-         size_t ii=The_element(i+1)->n();
-         _MM(ii) += z;
+         _MM(_en[i]) += z;
          for (size_t j=0; j<3; j++) {
-            size_t jj=The_element(j+1)->n();
-            _PM.add(ii,jj,a*(_dSh[i]*_dSh[j]));
-            Dx.add(ii,jj,_dSh[j].x*_det);
-            Dy.add(ii,jj,_dSh[j].y*_det);
+            _PM.add(_en[i],_en[j],a*(_dSh[i]*_dSh[j]));
+            Dx.add(_en[i],_en[j],_dSh[j].x*_det);
+            Dy.add(_en[i],_en[j],_dSh[j].y*_det);
          }
       }
    }
-   for (size_t i=1; i<=size; i++) {
+   for (size_t i=1; i<=_PM.size(); i++) {
       for (size_t jj=_row_ptr[i-1]; jj<_row_ptr[i]; jj++) {
          size_t j=_col_ind[jj];
          for (size_t kk=_row_ptr[i-1]; kk<_row_ptr[i]; kk++) {
             size_t k=_col_ind[kk];
-            real_t d=OFELI_SIXTH*OFELI_SIXTH/_MM(k);
+            real_t d=1./(36*_MM(k));
             for (size_t ll=_row_ptr[j-1]; ll<_row_ptr[j]; ll++) {
                if (k==_col_ind[ll]) {
                   _PM.add(i,j,d*(Dx(i,k)*Dx(j,k)+Dy(i,k)*Dy(j,k)));
@@ -252,112 +224,91 @@ void TINS2DT3B::getMomentum()
 {
    if (_verbose>2)
       cout << "Solving momentum equations ..." << endl;
-   size_t i;
-   real_t ax, ay, bm, bv;
-   LocalVect<real_t,6> b, ce, us;
-
+   LocalVect<real_t,6> ce;
+   if (_step==1 || _constant_matrix==false)
+      _VM = 0;
+   _b = 0;
    size_t j=0;
-   *_b = 0;
-   mesh_nodes(*_theMesh) {
-      if (the_node->getCode(1)==0)
-         (*_b)[j++] = 0.5*_c(node_label,1);
-      if (the_node->getCode(2)==0)
-         (*_b)[j++] = 0.5*_c(node_label,2);
-   }
    _c = 0;
+   mesh_nodes(*_theMesh) {
+      if (The_node.getCode(1)==0)
+         _b[j++] = 0.5*_c(node_label,1);
+      if (The_node.getCode(2)==0)
+         _b[j++] = 0.5*_c(node_label,2);
+   }
 
 // Loop over elements
    mesh_elements(*_theMesh) {
-      size_t n=element_label;
       set(the_element);
       LocalVect<real_t,6> ue(the_element,*_u);
       LocalVect<real_t,3> pe(the_element,*_p,1);
-      us[0] = 0.5*(ue[2]+ue[4]); us[1] = 0.5*(ue[3]+ue[5]);
-      us[2] = 0.5*(ue[4]+ue[0]); us[3] = 0.5*(ue[5]+ue[1]);
-      us[4] = 0.5*(ue[0]+ue[2]); us[5] = 0.5*(ue[1]+ue[3]);
 
 //    cfl in element
-      real_t d1 = ue[0] + ue[2] + ue[4];
-      real_t d2 = ue[1] + ue[3] + ue[5];
+      real_t d1=ue[0]+ue[2]+ue[4], d2=ue[1]+ue[3]+ue[5];
       _cfl = std::max(_cfl,_time_step*sqrt(2*(d1*d1+d2*d2)/(9*_det)));
 
+//    Element matrix
+      if (_step==1 || _constant_matrix==false)
+         ElementVelocityMatrix();
+
 //    Mass (R.H.S.)
-      real_t cc=OFELI_SIXTH*_dens*_det/_time_step;
-      b = cc*ue;
-      cc *= 0.5;
-      b[0] = cc*(ue[0]+us[0]); b[1] = cc*(ue[1]+us[1]);
-      b[2] = cc*(ue[2]+us[2]); b[3] = cc*(ue[3]+us[3]);
-      b[4] = cc*(ue[4]+us[4]); b[5] = cc*(ue[5]+us[5]);
+      real_t cc=_dens*_det/(6.*_time_step);
+      for (size_t i=0; i<3; ++i) {
+         eRHS(2*i+1) = cc*ue[2*i  ];
+         eRHS(2*i+2) = cc*ue[2*i+1];
+      }
 
 //    Viscous Term (R.H.S.)
       cc = 0.25*_visc*_det/_Re;
-      for (i=0; i<3; i++) {
-         ax = cc*_dSh[i].x;
-         ay = cc*_dSh[i].y;
-         for (j=0; j<3; j++) {
-            b[2*i  ] -= ay*_dSh[j].x*ue[2*j+1] + (2*ax*_dSh[j].x+ay*_dSh[j].y)*ue[2*j  ];
-            b[2*i+1] -= ax*_dSh[j].y*ue[2*j  ] + (2*ay*_dSh[j].y+ax*_dSh[j].x)*ue[2*j+1];
+      for (size_t i=0; i<3; i++) {
+         for (size_t j=0; j<3; j++) {
+            eRHS(2*i+1) -= cc*(_dSh[i].y*_dSh[j].x*ue[2*j+1] + (2*_dSh[i].x*_dSh[j].x+_dSh[i].y*_dSh[j].y)*ue[2*j  ]);
+            eRHS(2*i+2) -= cc*(_dSh[i].x*_dSh[j].y*ue[2*j  ] + (2*_dSh[i].y*_dSh[j].y+_dSh[i].x*_dSh[j].x)*ue[2*j+1]);
          }
       }
 
 //    Convection
-      cc = 0.5*OFELI_TWELVETH*_det*_dens;
-      Point<real_t> du = _dSh[0]*ue[0] + _dSh[1]*ue[2] + _dSh[2]*ue[4];
-      Point<real_t> dv = _dSh[0]*ue[1] + _dSh[1]*ue[3] + _dSh[2]*ue[5];
-      for (i=0; i<3; i++) {
+      cc = _det*_dens/24.;
+      Point<real_t> du = _dSh[0]*ue[0] + _dSh[1]*ue[2] + _dSh[2]*ue[4],
+                    dv = _dSh[0]*ue[1] + _dSh[1]*ue[3] + _dSh[2]*ue[5];
+      for (size_t i=0; i<3; i++) {
          ce[2*i  ] = cc*((d1 + ue[2*i])*du.x + (d2 + ue[2*i+1])*du.y);
          ce[2*i+1] = cc*((d1 + ue[2*i])*dv.x + (d2 + ue[2*i+1])*dv.y);
       }
-      Axpy(-1.5,ce,b);
-      element_assembly(The_element,ce,_c);
+      Axpy(-1.5,ce,eRHS);
+      Assembly(The_element,ce,_c);
 
 //    Pressure Gradient
-      cc = OFELI_SIXTH*_det*(pe(1)+pe(2)+pe(3));
-      for (i=0; i<3; i++) {
-         b[2*i  ] += cc*_dSh[i].x;
-         b[2*i+1] += cc*_dSh[i].y;
+      Point<real_t> dp = _det/6.*(pe[0]*_dSh[0]+pe[1]*_dSh[1]+pe[2]*_dSh[2]);
+      for (size_t i=0; i<3; ++i) {
+         eRHS(2*i+1) -= dp.x;
+         eRHS(2*i+2) -= dp.y;
       }
 
 //    Body Force
       if (_bf_given) {
-         for (i=1; i<=3; i++) {
-            b(2*i-1) += (*_bf)(2*the_element->getNodeLabel(i)-1)*_det*OFELI_SIXTH;
-            b(2*i  ) += (*_bf)(2*the_element->getNodeLabel(i)  )*_det*OFELI_SIXTH;
+         for (size_t i=0; i<3; ++i) {
+            eRHS(2*i+1) += (*_bf)(2*_en[i]-1)*_det/6.;
+            eRHS(2*i+2) += (*_bf)(2*_en[i]  )*_det/6.;
          }
       }
+      
+//    Boundary conditions
+      Equa_Fluid<real_t,3,6,2,4>::updateBC(The_element,*_bc);
 
-//    Bubble velocity
-      Point<real_t> dbp=-0.225*_det*(_dSh[0]*pe(1)+_dSh[1]*pe(2)+_dSh[2]*pe(3));
-      bm = 0.144642857*_det*_dens/_time_step;
-      bv = 1.0125*_visc/_Re*_det*(_dSh[0]*_dSh[0]+_dSh[1]*_dSh[1]+_dSh[2]*_dSh[2]);
-      _ub(n,1) = (dbp.x + _ub(2*n-1)*(bm-bv))/(bm+bv);
-      _ub(n,2) = (dbp.y + _ub(2*n  )*(bm-bv))/(bm+bv);
-
-//    Assembly of R.H.S.
-      element_assembly(The_element,b,*_b);
-   }
-
-// Tractions
-   if (_sf_given) {
-      LocalVect<real_t,4> ss;
-      mesh_sides(*_theMesh) {
-         set(the_side);
-         ss[0] = 0.5*_length*(*_sf)(The_side(1)->n(),1);
-         ss[1] = 0.5*_length*(*_sf)(The_side(1)->n(),2);
-         ss[2] = 0.5*_length*(*_sf)(The_side(2)->n(),1);
-         ss[3] = 0.5*_length*(*_sf)(The_side(2)->n(),2);
-         side_assembly(The_side,ss,*_b);
-      }
+//    Assembly of matrix and R.H.S.
+      if (_step==1 || _constant_matrix==false)
+         Assembly(The_element,eMat,_VM);
+      Assembly(The_element,eRHS,_b);
    }
 
 // Solve the linear system
-   real_t toler=1.e-7;
 #ifdef USE_EIGEN
-   LinearSolver<double> ls(1000,toler,1);
-   int nb_it = ls.solve(_VM,*_b,_uu,CG_SOLVER,ILU_PREC);
+   LinearSolver<real_t> ls(1000,toler,1);
+   int nb_it = ls.solve(_VM,_b,_uu,CG_SOLVER,ILU_PREC);
 #else
-   LinearSolver<real_t> ls(_VM,*_b,_uu);
-   ls.setTolerance(toler);
+   LinearSolver<real_t> ls(_VM,_b,_uu);
+   ls.setTolerance(_toler);
    int nb_it = ls.solve(CG_SOLVER,DILU_PREC);
 #endif
    if (_bc_given)
@@ -369,19 +320,17 @@ void TINS2DT3B::getMomentum()
 
 int TINS2DT3B::getPressure()
 {
-   Vect<real_t> b(*_theMesh,1,NODE_DOF);
+   Vect<real_t> b(_theMesh->getNbNodes());
    if (_verbose>2)
       cout << "Solving pressure equation ..." << endl;
    mesh_elements(*_theMesh) {
       set(the_element);
-      size_t n=element_label;
       LocalVect<real_t,6> ue(the_element,*_u);
-      real_t d=OFELI_SIXTH*_det*(_dSh[0].x*ue[0] + _dSh[0].y*ue[1] +
-                                 _dSh[1].x*ue[2] + _dSh[1].y*ue[3] +
-                                 _dSh[2].x*ue[4] + _dSh[2].y*ue[5]);
-      b(The_element(1)->n()) += 0.225*_det*(_dSh[0].x*_ub(n,1)+_dSh[0].y*_ub(n,2)) - d;
-      b(The_element(2)->n()) += 0.225*_det*(_dSh[1].x*_ub(n,1)+_dSh[1].y*_ub(n,2)) - d;
-      b(The_element(3)->n()) += 0.225*_det*(_dSh[2].x*_ub(n,1)+_dSh[2].y*_ub(n,2)) - d;
+      double d = _det/3.*(_dSh[0].x*ue[0] + _dSh[0].y*ue[1] +
+                          _dSh[1].x*ue[2] + _dSh[1].y*ue[3] +
+                          _dSh[2].x*ue[4] + _dSh[2].y*ue[5]);
+      for (size_t i=0; i<3; ++i)
+         b(_en[i]) -= d;
    }
    real_t toler=1.e-7;
 #ifdef USE_EIGEN
@@ -392,7 +341,7 @@ int TINS2DT3B::getPressure()
 #endif
    if (_verbose>1)
       cout << "Nb. of CG iterations for pressure: " << nb_it << endl;
-   *_p += 2.0*_q;
+   *_p += 2.*_q;
    return nb_it;
 }
 
@@ -401,26 +350,18 @@ void TINS2DT3B::updateVelocity()
 {
    if (_verbose>2)
       cout << "Updating velocity ..." << endl;
-   real_t z = 14.0/9.0*_time_step;
    mesh_elements(*_theMesh) {
       set(the_element);
       LocalVect<real_t,3> qe(the_element,_q,1);
-      _ub(element_label,1) -= z*(_dSh[0].x*qe(1)+_dSh[1].x*qe(2)+_dSh[2].x*qe(3));
-      _ub(element_label,2) -= z*(_dSh[0].y*qe(1)+_dSh[1].y*qe(2)+_dSh[2].y*qe(3));
-      real_t d = OFELI_SIXTH*_det*(qe(1) + qe(2) + qe(3));
-      for (size_t i=0; i<3; i++) {
-         size_t n = The_element(i+1)->n();
+      Point<real_t> dp = _det/6.*(qe[0]*_dSh[0]+qe[1]*_dSh[1]+qe[2]*_dSh[2]);
+      for (size_t i=0; i<3; ++i) {
+         size_t n = _en[i];
          if ((*_theMesh)[n]->getCode(1)==0)
-            (*_u)(n,1) += d*_dSh[i].x/_MM(n);
+            (*_u)(n,1) -= dp.x/_MM(n);
          if ((*_theMesh)[n]->getCode(2)==0)
-            (*_u)(n,2) += d*_dSh[i].y/_MM(n);
+            (*_u)(n,2) -= dp.y/_MM(n);
       }
    }
-}
-
-
-void TINS2DT3B::setBuyoancy()
-{
 }
 
 } /* namespace OFELI */

@@ -38,7 +38,6 @@
 
 
 #include "equations/fluid/Equa_Fluid.h"
-#include "linear_algebra/Assembly.h"
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
@@ -118,8 +117,10 @@ class TINS2DT3B : virtual public Equa_Fluid<real_t,3,6,2,4> {
 
 private:
 
+   bool             _constant_matrix;
    real_t           _cfl, _Re;
-   Vect<real_t>     _ub, *_p, _MM, _c, _q;
+   size_t           _ne, _en[3];
+   Vect<real_t>     _b, *_p, _MM, _c, _q;
    vector<size_t>   _col_ind, _row_ptr;
    SpMatrix<real_t> _VM, _PM;
 #ifndef USE_EIGEN
@@ -130,13 +131,14 @@ private:
    void build();
    void set(Element *el);
    void set(Side *sd);
-   void initEquation(Mesh& mesh, real_t ts);
+   void init(Mesh& mesh, real_t ts);
    void PressureMatrix();
-   void VelocityMatrix();
    int getPressure();
    void getMomentum();
    void updateVelocity();
    void setBuyoancy();
+   void ElementVelocityMatrix();
+   void SideVelocityMatrix();
 };
 
 /*! @} End of Doxygen Groups */
