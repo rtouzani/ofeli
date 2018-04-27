@@ -30,7 +30,8 @@ ELECTROMAGNETICS_OBJS =	\
 
 FLUID_OBJS = \
 			equations/fluid/NSP2DQ41.o \
-			equations/fluid/TINS2DT3B.o \
+			equations/fluid/TINS2DT3S.o \
+			equations/fluid/TINS3DT4S.o \
 			equations/fluid/NS2DT3BT3.o
 
 INTERFACE_OBJS = \

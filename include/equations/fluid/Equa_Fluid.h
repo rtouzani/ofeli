@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-      Definition of abstract class 'FE_Fluid' for Finite Element Equations
+      Definition of abstract class 'Equa_Fluid' for Finite Element Equations
                          to solve fluid flow problems
 
   ==============================================================================*/

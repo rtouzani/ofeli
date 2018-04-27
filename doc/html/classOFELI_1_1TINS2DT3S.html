@@ -64,7 +64,7 @@
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('classOFELI_1_1TINS2DT3B.html','');});
+$(document).ready(function(){initNavTree('classOFELI_1_1TINS2DT3S.html','');});
 </script>
 <div id="doc-content">
 <div class="header">
@@ -72,22 +72,22 @@ $(document).ready(function(){initNavTree('classOFELI_1_1TINS2DT3B.html','');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="classOFELI_1_1TINS2DT3B-members.html">List of all members</a>  </div>
+<a href="classOFELI_1_1TINS2DT3S-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">TINS2DT3B Class Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a><a class="el" href="group__OFELI.html">OFELI</a> &raquo;  &#124; <a class="el" href="group__Fluid.html">Fluid Dynamics</a></div></div>  </div>
+<div class="title">TINS2DT3S Class Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a><a class="el" href="group__OFELI.html">OFELI</a> &raquo;  &#124; <a class="el" href="group__Fluid.html">Fluid Dynamics</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Builds finite element arrays for thermal diffusion and convection in 2-D domains using 3-Node triangles.  
- <a href="classOFELI_1_1TINS2DT3B.html#details">More...</a></p>
+<p>Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 2-D domains. Numerical approximation uses stabilized 3-node triangle finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration.  
+ <a href="classOFELI_1_1TINS2DT3S.html#details">More...</a></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for TINS2DT3B:</div>
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for TINS2DT3S:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
  <div class="center">
-  <img src="classOFELI_1_1TINS2DT3B.png" usemap="#TINS2DT3B_map" alt=""/>
-  <map id="TINS2DT3B_map" name="TINS2DT3B_map">
+  <img src="classOFELI_1_1TINS2DT3S.png" usemap="#TINS2DT3S_map" alt=""/>
+  <map id="TINS2DT3S_map" name="TINS2DT3S_map">
 <area href="classOFELI_1_1Equa__Fluid.html" alt="Equa_Fluid&lt; real_t, 3, 6, 2, 4 &gt;" shape="rect" coords="0,112,282,136"/>
 <area href="classOFELI_1_1Equation.html" alt="Equation&lt; real_t, NEN_, NEE_, NSN_, NSE_ &gt;" shape="rect" coords="0,56,282,80"/>
 <area href="classOFELI_1_1AbsEqua.html" alt="AbsEqua&lt; real_t &gt;" shape="rect" coords="0,0,282,24"/>
@@ -96,32 +96,28 @@ $(document).ready(function(){initNavTree('classOFELI_1_1TINS2DT3B.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aab01488700b6b8e13909b3f7d8a7cb08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab01488700b6b8e13909b3f7d8a7cb08"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#aab01488700b6b8e13909b3f7d8a7cb08">TINS2DT3B</a> ()</td></tr>
-<tr class="memdesc:aab01488700b6b8e13909b3f7d8a7cb08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
-<tr class="separator:aab01488700b6b8e13909b3f7d8a7cb08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03c8421ef1bf22f4a8d12c856839fe2f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#a03c8421ef1bf22f4a8d12c856839fe2f">TINS2DT3B</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;ts, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Re=0.)</td></tr>
-<tr class="memdesc:a03c8421ef1bf22f4a8d12c856839fe2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh.  <a href="#a03c8421ef1bf22f4a8d12c856839fe2f">More...</a><br /></td></tr>
-<tr class="separator:a03c8421ef1bf22f4a8d12c856839fe2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3dc9021d06a0f2d982fd8b1a484d1479"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3dc9021d06a0f2d982fd8b1a484d1479"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#a3dc9021d06a0f2d982fd8b1a484d1479">~TINS2DT3B</a> ()</td></tr>
-<tr class="memdesc:a3dc9021d06a0f2d982fd8b1a484d1479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a3dc9021d06a0f2d982fd8b1a484d1479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af84606c2cecfcef03d6820a323ffbdcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#af84606c2cecfcef03d6820a323ffbdcc">setInput</a> (<a class="el" href="group__OFELI.html#ga42582cc9e68e05cf30ccad02e4ba8ff6">EqDataType</a> opt, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
+<tr class="memitem:a81d968746b999b53b67c2753b6a4f56b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81d968746b999b53b67c2753b6a4f56b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3S.html#a81d968746b999b53b67c2753b6a4f56b">TINS2DT3S</a> ()</td></tr>
+<tr class="memdesc:a81d968746b999b53b67c2753b6a4f56b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:a81d968746b999b53b67c2753b6a4f56b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a759a18f60cd544920e69d09bcc4587e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3S.html#a759a18f60cd544920e69d09bcc4587e2">TINS2DT3S</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;ts, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Re=0.)</td></tr>
+<tr class="memdesc:a759a18f60cd544920e69d09bcc4587e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh.  <a href="#a759a18f60cd544920e69d09bcc4587e2">More...</a><br /></td></tr>
+<tr class="separator:a759a18f60cd544920e69d09bcc4587e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae48c1d7b75a5711a4ba2f7ab39f7ebcf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae48c1d7b75a5711a4ba2f7ab39f7ebcf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3S.html#ae48c1d7b75a5711a4ba2f7ab39f7ebcf">~TINS2DT3S</a> ()</td></tr>
+<tr class="memdesc:ae48c1d7b75a5711a4ba2f7ab39f7ebcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:ae48c1d7b75a5711a4ba2f7ab39f7ebcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af84606c2cecfcef03d6820a323ffbdcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3S.html#af84606c2cecfcef03d6820a323ffbdcc">setInput</a> (<a class="el" href="group__OFELI.html#ga42582cc9e68e05cf30ccad02e4ba8ff6">EqDataType</a> opt, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
 <tr class="memdesc:af84606c2cecfcef03d6820a323ffbdcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set equation input data.  <a href="#af84606c2cecfcef03d6820a323ffbdcc">More...</a><br /></td></tr>
 <tr class="separator:af84606c2cecfcef03d6820a323ffbdcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97ceb92f009f5eee1340388708fd5939"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97ceb92f009f5eee1340388708fd5939"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#a97ceb92f009f5eee1340388708fd5939">runOneTimeStep</a> ()</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3S.html#a97ceb92f009f5eee1340388708fd5939">runOneTimeStep</a> ()</td></tr>
 <tr class="memdesc:a97ceb92f009f5eee1340388708fd5939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one time step. <br /></td></tr>
 <tr class="separator:a97ceb92f009f5eee1340388708fd5939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58e8be2db2660128e4e6456a9c981fb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58e8be2db2660128e4e6456a9c981fb5"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#a58e8be2db2660128e4e6456a9c981fb5">run</a> ()</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3S.html#a58e8be2db2660128e4e6456a9c981fb5">run</a> ()</td></tr>
 <tr class="memdesc:a58e8be2db2660128e4e6456a9c981fb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run (in the case of one step run) <br /></td></tr>
 <tr class="separator:a58e8be2db2660128e4e6456a9c981fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55ee88d42cccec53bf3728344216c495"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55ee88d42cccec53bf3728344216c495"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TINS2DT3B.html#a55ee88d42cccec53bf3728344216c495">setSurfaceTension</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> sigma)</td></tr>
-<tr class="memdesc:a55ee88d42cccec53bf3728344216c495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add surface tension interface force. <br /></td></tr>
-<tr class="separator:a55ee88d42cccec53bf3728344216c495"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a4ac833b4b2f78ec8581d1d7e9a0c6b6e">updateBC</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;el, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;bc)</td></tr>
 <tr class="memdesc:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update Right-Hand side by taking into account essential boundary conditions.  <a href="#a4ac833b4b2f78ec8581d1d7e9a0c6b6e">More...</a><br /></td></tr>
 <tr class="separator:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -326,17 +322,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:ab022e77aaebf225fd38c136a6cf98921"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Builds finite element arrays for thermal diffusion and convection in 2-D domains using 3-Node triangles. </p>
-<p>Note that members calculating element arrays have as an argument a double <code>coef</code> that will be multiplied by the contribution of the current element. This makes possible testing different algorithms.</p>
+<div class="textblock"><p>Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 2-D domains. Numerical approximation uses stabilized 3-node triangle finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration. </p>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a03c8421ef1bf22f4a8d12c856839fe2f"></a>
+<a class="anchor" id="a759a18f60cd544920e69d09bcc4587e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classOFELI_1_1TINS2DT3B.html">TINS2DT3B</a> </td>
+          <td class="memname"><a class="el" href="classOFELI_1_1TINS2DT3S.html">TINS2DT3S</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td>
           <td class="paramname"><em>mesh</em>, </td>

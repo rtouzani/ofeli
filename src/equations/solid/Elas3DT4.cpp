@@ -132,24 +132,19 @@ void Elas3DT4::LMassToRHS(real_t coef)
 
 void Elas3DT4::Deviator(real_t coef)
 {
-   real_t c1=_G*_det*coef, c2=2*c1;
+   real_t c=_G*_det*coef;
    for (size_t j=1; j<=4; j++) {
-      real_t db11 = c2*_dSh(j).x;
-      real_t db22 = c2*_dSh(j).y;
-      real_t db33 = c2*_dSh(j).z;
-      real_t db42 = c1*_dSh(j).z;
-      real_t db43 = c1*_dSh(j).y;
-      real_t db53 = c1*_dSh(j).x;
+      Point<real_t> db=c*_dSh(j);
       for (size_t i=1; i<=4; i++) {
-         eMat(3*i-2,3*j-2) += _dSh(i).x*db11 + _dSh(i).z*db42 + _dSh(i).y*db43;
-         eMat(3*i-2,3*j-1) += _dSh(i).y*db53;
-         eMat(3*i-2,3*j  ) += _dSh(i).z*db53;
-         eMat(3*i-1,3*j-2) += _dSh(i).x*db43;
-         eMat(3*i-1,3*j-1) += _dSh(i).y*db22 + _dSh(i).z*db42 + _dSh(i).x*db53;
-         eMat(3*i-1,3*j  ) += _dSh(i).z*db43;
-         eMat(3*i  ,3*j-2) += _dSh(i).x*db42;
-         eMat(3*i  ,3*j-1) += _dSh(i).y*db42;
-         eMat(3*i  ,3*j  ) += _dSh(i).z*db33 + _dSh(i).y*db43 + _dSh(i).x*db53;
+         eMat(3*i-2,3*j-2) += 2*_dSh(i).x*db.x + _dSh(i).z*db.z + _dSh(i).y*db.y;
+         eMat(3*i-2,3*j-1) += _dSh(i).y*db.x;
+         eMat(3*i-2,3*j  ) += _dSh(i).z*db.x;
+         eMat(3*i-1,3*j-2) += _dSh(i).x*db.y;
+         eMat(3*i-1,3*j-1) += 2*_dSh(i).y*db.y + _dSh(i).z*db.z + _dSh(i).x*db.x;
+         eMat(3*i-1,3*j  ) += _dSh(i).z*db.y;
+         eMat(3*i  ,3*j-2) += _dSh(i).x*db.z;
+         eMat(3*i  ,3*j-1) += _dSh(i).y*db.z;
+         eMat(3*i  ,3*j  ) += 2*_dSh(i).z*db.z + _dSh(i).y*db.y + _dSh(i).x*db.x;
       }
    }
 }

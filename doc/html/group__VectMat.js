@@ -241,6 +241,7 @@ var group__VectMat =
       [ "LocalVect", "group__OFELI.html#gac7caf09325a5fabcd7c65f94020ab29a", null ],
       [ "LocalVect", "group__OFELI.html#gaae63436fee3197482a9a4c3afb80d33e", null ],
       [ "LocalVect", "group__OFELI.html#ga47fbfa673d4060c347c1bbe2bc44649b", null ],
+      [ "LocalVect", "classOFELI_1_1LocalVect.html#a3a8a69d64f0ab0cab4201a665f14f260", null ],
       [ "LocalVect", "group__OFELI.html#ga925727802157cff6df2686c7b31177f7", null ],
       [ "~LocalVect", "classOFELI_1_1LocalVect.html#a0468c56aeed8c024d5a609b99162b74a", null ],
       [ "getLocal", "group__OFELI.html#gaba6e067afa946a45652dfccd7aeb6393", null ],

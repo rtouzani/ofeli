@@ -104,6 +104,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ga47fbfa673d4060c347c1bbe2bc44649b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga47fbfa673d4060c347c1bbe2bc44649b">LocalVect</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> *el, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v, int opt=0)</td></tr>
 <tr class="memdesc:ga47fbfa673d4060c347c1bbe2bc44649b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of an element vector from a global <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="group__OFELI.html#ga47fbfa673d4060c347c1bbe2bc44649b">More...</a><br /></td></tr>
 <tr class="separator:ga47fbfa673d4060c347c1bbe2bc44649b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a8a69d64f0ab0cab4201a665f14f260"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LocalVect.html#a3a8a69d64f0ab0cab4201a665f14f260">LocalVect</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;el, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v, int opt=0)</td></tr>
+<tr class="memdesc:a3a8a69d64f0ab0cab4201a665f14f260"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of an element vector from a global <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="#a3a8a69d64f0ab0cab4201a665f14f260">More...</a><br /></td></tr>
+<tr class="separator:a3a8a69d64f0ab0cab4201a665f14f260"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga925727802157cff6df2686c7b31177f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga925727802157cff6df2686c7b31177f7">LocalVect</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> *sd, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v, int opt=0)</td></tr>
 <tr class="memdesc:ga925727802157cff6df2686c7b31177f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of a side vector from a global <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="group__OFELI.html#ga925727802157cff6df2686c7b31177f7">More...</a><br /></td></tr>
 <tr class="separator:ga925727802157cff6df2686c7b31177f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,7 +196,54 @@ Internally, no dynamic storage is used.</p>
 </dl>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a3a8a69d64f0ab0cab4201a665f14f260"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;&#160;</td>
+          <td class="paramname"><em>el</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>opt</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor of an element vector from a global <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance. </p>
+<p>The constructed vector has local numbering of nodes </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">el</td><td>Reference to <a class="el" href="classOFELI_1_1Element.html" title="To store and treat finite element geometric information. ">Element</a> instance to localize </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Global vector to localize </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Option for DOF treatment<ul>
+<li>= 0, Normal case [Default]</li>
+<li>Any other value : only one DOF is handled (Local vector has as dimension number of degrees of freedom) </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a8375edb31334b3bc1ff42de8894d26cd"></a>
 <div class="memitem">
 <div class="memproto">

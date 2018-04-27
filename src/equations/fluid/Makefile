@@ -107,7 +107,7 @@ am__v_AR_1 =
 libfluid_a_AR = $(AR) $(ARFLAGS)
 libfluid_a_LIBADD =
 am_libfluid_a_OBJECTS = NSP2DQ41.$(OBJEXT) NS2DT3BT3.$(OBJEXT) \
-	TINS2DT3B.$(OBJEXT)
+	TINS2DT3S.$(OBJEXT) TINS3DT4S.$(OBJEXT)
 libfluid_a_OBJECTS = $(am_libfluid_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -285,8 +285,9 @@ top_srcdir = ../../..
 noinst_LIBRARIES = libfluid.a
 AUTOMAKE_OPTIONS = no-dependencies
 libfluid_a_SOURCES = NSP2DQ41.cpp \
-			NS2DT3BT3.cpp \
-			TINS2DT3B.cpp
+							NS2DT3BT3.cpp \
+							TINS2DT3S.cpp \
+							TINS3DT4S.cpp
 
 all: all-am
 

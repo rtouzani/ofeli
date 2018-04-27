@@ -21,7 +21,10 @@ var hierarchy =
           [ "EC2D2T3", "classOFELI_1_1EC2D2T3.html", null ]
         ] ],
         [ "Equa_Fluid< real_t, 3, 6, 2, 4 >", "classOFELI_1_1Equa__Fluid.html", [
-          [ "TINS2DT3B", "classOFELI_1_1TINS2DT3B.html", null ]
+          [ "TINS2DT3S", "classOFELI_1_1TINS2DT3S.html", null ]
+        ] ],
+        [ "Equa_Fluid< real_t, 4, 12, 3, 9 >", "classOFELI_1_1Equa__Fluid.html", [
+          [ "TINS3DT4S", "classOFELI_1_1TINS3DT4S.html", null ]
         ] ],
         [ "Equa_Fluid< real_t, 4, 8, 2, 4 >", "classOFELI_1_1Equa__Fluid.html", [
           [ "NSP2DQ41", "classOFELI_1_1NSP2DQ41.html", null ]

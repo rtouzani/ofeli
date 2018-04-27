@@ -25,11 +25,11 @@
 
   ==============================================================================
 
-                       Implementation of class TINS2DT3B
+                       Implementation of class TINS2DT3S
 
   ==============================================================================*/
 
-#include "equations/fluid/TINS2DT3B.h"
+#include "equations/fluid/TINS2DT3S.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
 #include <algorithm>
@@ -38,12 +38,12 @@ using std::cout;
 
 namespace OFELI {
 
-TINS2DT3B::TINS2DT3B() : _Re(0.)
+TINS2DT3S::TINS2DT3S() : _Re(0.)
 {
 }
 
 
-TINS2DT3B::TINS2DT3B(Mesh&         mesh,
+TINS2DT3S::TINS2DT3S(Mesh&         mesh,
                      Vect<real_t>& u,
                      Vect<real_t>& p,
                      real_t&       ts,
@@ -58,10 +58,10 @@ TINS2DT3B::TINS2DT3B(Mesh&         mesh,
 }
 
 
-TINS2DT3B::~TINS2DT3B() { }
+TINS2DT3S::~TINS2DT3S() { }
 
 
-void TINS2DT3B::init(Mesh&  mesh,
+void TINS2DT3S::init(Mesh&  mesh,
                      real_t ts)
 {
    if (_verbose>2)
@@ -90,7 +90,7 @@ void TINS2DT3B::init(Mesh&  mesh,
 }
 
 
-void TINS2DT3B::setInput(EqDataType    opt,
+void TINS2DT3S::setInput(EqDataType    opt,
                          Vect<real_t>& u)
 {
    AbsEqua<real_t>::setInput(opt,u);
@@ -102,7 +102,7 @@ void TINS2DT3B::setInput(EqDataType    opt,
 }
 
 
-void TINS2DT3B::set(Element* el)
+void TINS2DT3S::set(Element* el)
 {
    Init(el);
    _visc = _dens = 1.;
@@ -114,6 +114,7 @@ void TINS2DT3B::set(Element* el)
    Triang3 tr(el);
    _center = tr.getCenter();
    _det = tr.getDet();
+   _cr = tr.getCircumRadius();
    for (size_t i=0; i<3; ++i) {
       _dSh[i] = tr.DSh(i+1);
       _en[i] = (*el)(i+1)->n();
@@ -122,7 +123,7 @@ void TINS2DT3B::set(Element* el)
 }
 
 
-void TINS2DT3B::set(Side* sd)
+void TINS2DT3S::set(Side* sd)
 {
    Init(sd);
    Line2 ln(sd);
@@ -133,7 +134,7 @@ void TINS2DT3B::set(Side* sd)
 }
 
 
-void TINS2DT3B::build()
+void TINS2DT3S::build()
 {
    _step++;
    getMomentum();
@@ -142,14 +143,14 @@ void TINS2DT3B::build()
 }
 
 
-int TINS2DT3B::runOneTimeStep()
+int TINS2DT3S::runOneTimeStep()
 {
    build();
    return 0;
 }
 
 
-void TINS2DT3B::ElementVelocityMatrix()
+void TINS2DT3S::ElementVelocityMatrix()
 {
    real_t a=0.25*_det*_visc/_Re;
    for (size_t i=1; i<=3; i++) {
@@ -168,7 +169,7 @@ void TINS2DT3B::ElementVelocityMatrix()
 }
 
 
-void TINS2DT3B::SideVelocityMatrix()
+void TINS2DT3S::SideVelocityMatrix()
 {
    const real_t penal=1.e20;
    for (size_t i=1; i<=2; i++) {
@@ -185,7 +186,7 @@ void TINS2DT3B::SideVelocityMatrix()
 }
 
 
-void TINS2DT3B::PressureMatrix()
+void TINS2DT3S::PressureMatrix()
 {
    if (_verbose>2)
       cout << "Calculating pressure matrix ..." << endl;
@@ -220,7 +221,7 @@ void TINS2DT3B::PressureMatrix()
 }
 
 
-void TINS2DT3B::getMomentum()
+void TINS2DT3S::getMomentum()
 {
    if (_verbose>2)
       cout << "Solving momentum equations ..." << endl;
@@ -244,8 +245,8 @@ void TINS2DT3B::getMomentum()
       LocalVect<real_t,3> pe(the_element,*_p,1);
 
 //    cfl in element
-      real_t d1=ue[0]+ue[2]+ue[4], d2=ue[1]+ue[3]+ue[5];
-      _cfl = std::max(_cfl,_time_step*sqrt(2*(d1*d1+d2*d2)/(9*_det)));
+      real_t d1=(ue[0]+ue[2]+ue[4])/3., d2=(ue[1]+ue[3]+ue[5])/3.;
+      _cfl = std::max(_cfl,_time_step*sqrt(d1*d1+d2*d2)/_cr);
 
 //    Element matrix
       if (_step==1 || _constant_matrix==false)
@@ -318,7 +319,7 @@ void TINS2DT3B::getMomentum()
 }
 
 
-int TINS2DT3B::getPressure()
+int TINS2DT3S::getPressure()
 {
    Vect<real_t> b(_theMesh->getNbNodes());
    if (_verbose>2)
@@ -326,7 +327,7 @@ int TINS2DT3B::getPressure()
    mesh_elements(*_theMesh) {
       set(the_element);
       LocalVect<real_t,6> ue(the_element,*_u);
-      double d = _det/3.*(_dSh[0].x*ue[0] + _dSh[0].y*ue[1] +
+      double d = _det/6.*(_dSh[0].x*ue[0] + _dSh[0].y*ue[1] +
                           _dSh[1].x*ue[2] + _dSh[1].y*ue[3] +
                           _dSh[2].x*ue[4] + _dSh[2].y*ue[5]);
       for (size_t i=0; i<3; ++i)
@@ -346,7 +347,7 @@ int TINS2DT3B::getPressure()
 }
 
 
-void TINS2DT3B::updateVelocity()
+void TINS2DT3S::updateVelocity()
 {
    if (_verbose>2)
       cout << "Updating velocity ..." << endl;

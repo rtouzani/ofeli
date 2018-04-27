@@ -11,7 +11,7 @@
    <verbose value="1"/>
    <plot value="5"/>
    <mesh_file value="cavity-60.m"/>
-   <parameter label="Reynolds" value="10"/>
+   <parameter label="Reynolds" value="100"/>
    <parameter label="v_file" value="cavity.v"/>
    <parameter label="p_file" value="cavity.p"/>
 </Project>

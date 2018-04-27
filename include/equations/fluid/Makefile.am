@@ -5,6 +5,7 @@ AUTOMAKE_OPTIONS = no-dependencies
 fluiddir = 	$(pkgincludedir)/equations/fluid
 
 fluid_HEADERS =	Equa_Fluid.h \
-		NSP2DQ41.h \
-		NS2DT3BT3.h \
-		TINS2DT3B.h
+						NSP2DQ41.h \
+						NS2DT3BT3.h \
+						TINS2DT3S.h \
+						TINS3DT4S.h

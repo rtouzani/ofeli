@@ -39,7 +39,8 @@
 #include <assert.h>
 
 #include "equations/fluid/NSP2DQ41.h"
-#include "equations/fluid/TINS2DT3B.h"
+#include "equations/fluid/TINS2DT3S.h"
+#include "equations/fluid/TINS3DT4S.h"
 
 /*! \file Fluid.h
  *  \brief File to include for Fluid Dynamics equations.

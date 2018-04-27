@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
       Vect<double> u(mesh,"Velocity",0), p(mesh,"Pressure",0,1);
       Vect<double> bc(mesh), bf(mesh), sf(mesh);
-      TINS2DT3B eq(mesh,u,p,theTimeStep,Re);
+      TINS2DT3S eq(mesh,u,p,theTimeStep,Re);
       eq.setVerbose(proj.getVerbose());
       eq.setTolerance(proj.getTolerance());
       Prescription pr(mesh,proj.getDataFile());
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 //    Loop on time steps
       TimeLoop {
          if (proj.getVerbose()>0)
-            cout << "Performing step: " << theStep << ", time: " << theTime << endl;
+            cout << "\nPerforming step: " << theStep << ", time: " << theTime << endl;
          pr.get(BOUNDARY_CONDITION,bc,theTime);
          eq.setInput(BOUNDARY_CONDITION,bc);
          pr.get(BODY_FORCE,bf,theTime);

@@ -25,16 +25,16 @@
 
   ==============================================================================
 
-                            Definition of class TINS2DT3B
+                            Definition of class TINS2DT3S
                 for 2-D Transient Incompressible Navier-Stokes Equations
-                using P1+Bubble elements for velocity, P1 for pressure
+                using P1 Stabilized elements for velocity, P1 for pressure
        Time integration is done using a second-order fractional step method
 
   ==============================================================================*/
 
 
-#ifndef __TINS2DT3B_H
-#define __TINS2DT3B_H
+#ifndef __TINS2DT3S_H
+#define __TINS2DT3S_H
 
 
 #include "equations/fluid/Equa_Fluid.h"
@@ -46,30 +46,28 @@ namespace OFELI {
  *  @{
  */
 
-/*! \file TINS2DT3B.h
- *  \brief Definition file for class TINS2DT3B.
+/*! \file TINS2DT3S.h
+ *  \brief Definition file for class TINS2DT3S.
  */
 
-/*! \class TINS2DT3B
+/*! \class TINS2DT3S
  *  \ingroup Fluid
- *  \brief Builds finite element arrays for thermal diffusion and convection in 2-D domains 
- *  using 3-Node triangles.
- *
- * Note that members calculating element arrays have as an argument a double
- * \c coef that will be multiplied by the contribution of the current element. 
- * This makes possible testing different algorithms.
+ *  \brief Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes
+ *  equations in 2-D domains. 
+ *  Numerical approximation uses stabilized 3-node triangle finite elements for velocity and pressure.
+ *  2nd-order projection scheme is used for time integration.
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
 
 
-class TINS2DT3B : virtual public Equa_Fluid<real_t,3,6,2,4> {
+class TINS2DT3S : virtual public Equa_Fluid<real_t,3,6,2,4> {
 
  public:
 
 /// Default Constructor
-    TINS2DT3B();
+    TINS2DT3S();
 
 /** \brief Constructor using mesh
  *  @param [in] mesh Mesh instance
@@ -83,14 +81,14 @@ class TINS2DT3B : virtual public Equa_Fluid<real_t,3,6,2,4> {
  *  value, then nondimensional form of the equations is assumed and material properties
  *  are ignored.
  */
-    TINS2DT3B(Mesh&         mesh,
+    TINS2DT3S(Mesh&         mesh,
               Vect<real_t>& u,
               Vect<real_t>& p,
               real_t&       ts,
               real_t        Re=0.);
 
 /// \brief Destructor
-    ~TINS2DT3B();
+    ~TINS2DT3S();
 
 /** \brief Set equation input data
  *  @param [in] opt Parameter to select type of input (enumerated values)
@@ -112,13 +110,10 @@ class TINS2DT3B : virtual public Equa_Fluid<real_t,3,6,2,4> {
 /// \brief Run (in the case of one step run)
     int run() { return runOneTimeStep(); }
 
-/// \brief Add surface tension interface force
-    int setSurfaceTension(real_t sigma);
-
 private:
 
    bool             _constant_matrix;
-   real_t           _cfl, _Re;
+   real_t           _cr, _cfl, _Re;
    size_t           _ne, _en[3];
    Vect<real_t>     _b, *_p, _MM, _c, _q;
    vector<size_t>   _col_ind, _row_ptr;

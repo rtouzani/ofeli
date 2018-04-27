@@ -98,9 +98,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a30bba05320d35fffb075fd54648ab696"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a30bba05320d35fffb075fd54648ab696">Mesh</a> (const <a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;g, int shape, int opt)</td></tr>
 <tr class="memdesc:a30bba05320d35fffb075fd54648ab696"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor of dual mesh for a uniform finite difference grid given by and instance of class <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a>.  <a href="#a30bba05320d35fffb075fd54648ab696">More...</a><br /></td></tr>
 <tr class="separator:a30bba05320d35fffb075fd54648ab696"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a268117aab5b996a391325da5a779d59e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a268117aab5b996a391325da5a779d59e">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, size_t ne, int c1, int c2, int opt=0)</td></tr>
-<tr class="memdesc:a268117aab5b996a391325da5a779d59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a uniform 1-D finite element mesh.  <a href="#a268117aab5b996a391325da5a779d59e">More...</a><br /></td></tr>
-<tr class="separator:a268117aab5b996a391325da5a779d59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b1b20a664f4e18d9c58fdc5483ba620"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a6b1b20a664f4e18d9c58fdc5483ba620">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, size_t ne, int c1, int c2, int p=1)</td></tr>
+<tr class="memdesc:a6b1b20a664f4e18d9c58fdc5483ba620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a uniform 1-D finite element mesh.  <a href="#a6b1b20a664f4e18d9c58fdc5483ba620">More...</a><br /></td></tr>
+<tr class="separator:a6b1b20a664f4e18d9c58fdc5483ba620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79e9ff9d897d8ebefe9f9e701d743572"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a79e9ff9d897d8ebefe9f9e701d743572">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymin, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymax, size_t nx, size_t ny, int cx0, int cxN, int cy0, int cyN, int opt=0)</td></tr>
 <tr class="memdesc:a79e9ff9d897d8ebefe9f9e701d743572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a uniform 2-D structured finite element mesh.  <a href="#a79e9ff9d897d8ebefe9f9e701d743572">More...</a><br /></td></tr>
 <tr class="separator:a79e9ff9d897d8ebefe9f9e701d743572"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -719,7 +719,7 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
 
 </div>
 </div>
-<a class="anchor" id="a268117aab5b996a391325da5a779d59e"></a>
+<a class="anchor" id="a6b1b20a664f4e18d9c58fdc5483ba620"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -757,7 +757,7 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>opt</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>p</em> = <code>1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -775,11 +775,11 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
     <tr><td class="paramdir">[in]</td><td class="paramname">ne</td><td>Number of elements </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">c1</td><td>Code for the first node (x=xmin) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">c2</td><td>Code for the last node (x=xmax) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Flag to generate elements as well (if not zero) [Default: 0]. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Degree of approximation polynomial [Default: ]. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section remark"><dt>Remarks</dt><dd>The option opt can be set to 0 if the user intends to use finite differences. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>The option p can be set to 1 if the user intends to use finite differences. </dd></dl>
 
 </div>
 </div>
