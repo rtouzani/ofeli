@@ -634,10 +634,9 @@ int ListofIntersectionTriangles::NewItem(R2            A,
 double ListofIntersectionTriangles::Length()
 {
    assert(Size>0);
-   R2 C;
    Metric Mx,My;
    int ii, jj;
-   R2 x, y, xy;
+   R2 C, x, y, xy;
    SegInterpolation *SegI=lSegsI;
    SegI = lSegsI;
    lSegsI[NbSeg].last = Size;// improvement
@@ -1438,7 +1437,7 @@ void  Triangles::NewPoints(Triangles& Bh,
       for (i=nbvold; i<nbv; i++) { // for all triangles containing the vertex i
          Vertex *s = _vertices + i;
          TriangleAdjacent ta(s->t, EdgesVertexTriangle[s->vint][1]);
-         Triangle *tbegin = (Triangle*) ta;
+         Triangle *tbegin = (Triangle*)ta;
          long kt;
          do { 
             kt = Number((Triangle*)ta);
@@ -1582,8 +1581,7 @@ void  Triangles::NewPointsOld(Triangles &Bh)
                  << " " << BeginNewPoint[2] << " " 
                  << " e " << EndNewPoint[0] << " " << EndNewPoint[1] 
                  << " " << EndNewPoint[2] << " " 
-                 << " s " << step[0] << " " << step[1] << " " << step[2] << " " 
-                 <<  endl;
+                 << " s " << step[0] << " " << step[1] << " " << step[2] << " " << endl;
          }
 #endif
          if (!t->link)
@@ -1595,39 +1593,38 @@ void  Triangles::NewPointsOld(Triangles &Bh)
             for (long i0=BeginNewPoint[j0]; i0<=EndNewPoint[j0]; i0++) {
 //             find the nearest point one the opposite edge to compute i1
                Vertex &vi0=_vertices[i0];
-               int kstack=0;
+               int kstack=0, j1=j0;
                long stack[10];
-               int j1=j0; 
-               while (j0 != (j1 = NextEdge[j1])) { // loop on the 2 other edge
+               while (j0 != (j1=NextEdge[j1])) { // loop on the 2 other edge
 //                computation of the intersection of edge j1 and DOrto
 //                take the good sens
                   if (BeginNewPoint[j1] > EndNewPoint[j1])
                      continue;
-                  else if (EndNewPoint[j1] - BeginNewPoint[j1] <1) {
+                  else if (EndNewPoint[j1] - BeginNewPoint[j1] < 1) {
                      for (long ii1=BeginNewPoint[j1]; ii1<=EndNewPoint[j1]; ii1++)
                         stack[kstack++] = ii1;
                      continue;
                   }
-                  int k0, k1;
+                  int k0=0, k1=0;
                   if (step[j1]<0)
-                     k0 = 1, k1 = 0; // reverse
+                     k0 = 1; // reverse
                   else
-                     k0 = 0, k1 = 1; 
-                  R2 V10 = (R2)(*t)[VerticesOfTriangularEdge[j1][k0]];
-                  R2 V11 = (R2)(*t)[VerticesOfTriangularEdge[j1][k1]];
+                     k1 = 1; 
+                  R2 V10 = R2((*t)[VerticesOfTriangularEdge[j1][k0]]);
+                  R2 V11 = R2((*t)[VerticesOfTriangularEdge[j1][k1]]);
                   R2 D=V11-V10;
-                  double c0=vi0.m(D,(R2) vi0), c10=vi0.m(D,V10), c11=vi0.m(D,V11);
-                  int sss = (c11-c10) >0 ? 1 : -1;
+                  double c0=vi0.m(D,R2(vi0)), c10=vi0.m(D,V10), c11=vi0.m(D,V11);
+                  int sss = (c11-c10)>0 ? 1 : -1;
                   long ii0=BeginNewPoint[j1], ii1=EndNewPoint[j1];
                   double ciii=-1, cii0=-1, cii1=-1;
-                  if (sss * ((cii0=vi0.m(D,(R2)_vertices[ii0]))-c0)>0)
+                  if (sss * ((cii0=vi0.m(D,R2(_vertices[ii0])))-c0)>0)
                      stack[kstack++] = ii0;
-                  else if (sss * ((cii1=vi0.m(D,(R2)_vertices[ii1]))-c0)<0)
+                  else if (sss * ((cii1=vi0.m(D,R2(_vertices[ii1])))-c0)<0)
                      stack[kstack++] = ii1;
                   else {
                      while ((ii1-ii0)> 1) {
                         long iii = (ii0+ii1)/2;
-                        ciii = vi0.m(D,(R2)_vertices[iii]);
+                        ciii = vi0.m(D,R2(_vertices[iii]));
                         if (sss*(ciii-c0)<0)
                            ii0 = iii;
                         else
@@ -1647,7 +1644,7 @@ void  Triangles::NewPointsOld(Triangles &Bh)
                   assert(i1<nbv && i1>=0);
                   assert(i0<nbv && i0>=0);
                   assert(i1!=i0);
-                  R2 v01 = (R2)_vertices[i1]-(R2)_vertices[i0];
+                  R2 v01 = R2(_vertices[i1])-R2(_vertices[i0]);
                   double d01 = (_vertices[i0].m(v01) + _vertices[i1].m(v01));
 #ifdef TRACETRIANGLE
                   if (trace) {
@@ -2318,8 +2315,7 @@ void Triangles::PreInit(long  inbvx,
    NbVertexOnBThEdge = 0;
    VertexOnBThVertex = 0;
    VertexOnBThEdge = 0;
-   NbCrackedVertices = 0;
-   NbCrackedEdges = 0;
+   NbCrackedVertices = NbCrackedEdges = 0;
    CrackedEdges = 0;  
    nbe = 0; 
    name = fname;
@@ -2358,12 +2354,9 @@ void Triangles::PreInit(long  inbvx,
    }
    _quadtree = 0;
    edges = 0;
-   VerticesOnGeomVertex = 0;
-   VerticesOnGeomEdge = 0;
-   NbVerticesOnGeomVertex = 0;
-   NbVerticesOnGeomEdge = 0;
+   VerticesOnGeomVertex = VerticesOnGeomEdge = 0;
+   NbVerticesOnGeomVertex = NbVerticesOnGeomEdge = NbSubDomains = 0;
    subdomains = 0;
-   NbSubDomains = 0;
    if (verbosity>98) 
       cout << "Triangles::PreInit() " << nbvx << " " << nbtx 
            << " " << _vertices << " " << ordre << " " <<  triangles << endl;
@@ -2515,7 +2508,7 @@ void Triangles::GeomToTriangles1(long inbvx,
                      assert(pe && ee.on);
                      ee.on->SetMark();
                      Vertex &v0=ee[0], &v1=ee[1];
-                     R2 AB = (R2)v1 - (R2)v0;
+                     R2 AB = R2(v1) - R2(v0);
                      double L0=L, LAB;
                      LAB = LengthInterpole(v0.m,v1.m,AB);
                      L += LAB;
@@ -2927,7 +2920,7 @@ void Triangles::SetIntCoor(const char* strfrom)
 {
    pmin = pmax = _vertices[0].r;
 
-// COmpute extrema for vertices
+// Compute extrema for vertices
    for (long i=0; i<nbv; i++) {
       pmin.x = Min(pmin.x,_vertices[i].r.x);
       pmin.y = Min(pmin.y,_vertices[i].r.y);
@@ -3052,8 +3045,8 @@ void Triangles::FillHoleInMesh()
                if (verbosity>20 && k<20) {
                   long i0=edge4->i(i), i1=edge4->j(i);
                   cerr << " Lose boundary edges " << i << " : " << i0 << " " << i1 << endl;
-	       }
-	    }
+               }
+            }
          }
       }
       if (k != 0) {
@@ -3097,12 +3090,10 @@ void Triangles::FillHoleInMesh()
       Vertex *v0=ordre[0], *v1=ordre[1];
       triangles[0](0) = 0; triangles[0](1) = v0; triangles[0](2) = v1;
       triangles[1](0) = 0; triangles[1](2) = v0; triangles[1](1) = v1;
-      const int e0 = OppositeEdge[0];
-      const int e1 = NextEdge[e0];
-      const int e2 = PreviousEdge[e0];
-      triangles[0].SetAdj2(e0, &triangles[1] ,e0);
-      triangles[0].SetAdj2(e1, &triangles[1] ,e2);
-      triangles[0].SetAdj2(e2, &triangles[1] ,e1);
+      const int e0=OppositeEdge[0], e1=NextEdge[e0], e2=PreviousEdge[e0];
+      triangles[0].SetAdj2(e0,&triangles[1],e0);
+      triangles[0].SetAdj2(e1,&triangles[1],e2);
+      triangles[0].SetAdj2(e2,&triangles[1],e1);
       triangles[0].det = -1;  // fake triangles
       triangles[1].det = -1;  // fake triangles
       triangles[0].SetTriangleContainingTheVertex();
@@ -3768,4 +3759,4 @@ Triangle* Triangles::FindTriangleContaining(const I2& B,
    return t;
 }
 
-}
+} /* namespace bamg */

@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
       Vect<double> v(n);
       for (int i=1; i<=n; i++) {
          cout << "Eigenvalue #" << i << ": " << ev(i) << endl;
-         e.getEigenVector(i,v);
-         cout << "Eigen vector:\n" << v;
+         //         e.getEigenVector(i,v);
+         //         cout << "Eigen vector:\n" << v;
       }
       cout << "Nb. of iterations: " << e.getNbIter() << endl;
    } CATCH_EXCEPTION

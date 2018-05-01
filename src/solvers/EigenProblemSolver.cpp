@@ -65,8 +65,9 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    _nb_eq = _nb_eigv = _K->getNbRows();
-   _nb_eigv = std::max(n,1);
-   _nb_eigv = std::min(_nb_eq,_nb_eigv);
+   _nb_eigv = n;
+   if (n==0)
+      _nb_eigv = _nb_eq;
    _lM = new Vect<real_t>(_nb_eq);
    *_lM = 1;
    run(n);
@@ -93,8 +94,9 @@ EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    setMatrix(K,M);
-   _nb_eigv = std::max(n,1);
-   _nb_eigv = std::min(_nb_eq,_nb_eigv);
+   _nb_eigv = n;
+   if (n==0)
+      _nb_eigv = _nb_eq;
 }
 
 
@@ -105,8 +107,9 @@ EigenProblemSolver::EigenProblemSolver(SkSMatrix<real_t>& K,
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
    setMatrix(K,M);
-   _nb_eigv = std::max(n,1);
-   _nb_eigv = std::min(_nb_eq,_nb_eigv);
+   _nb_eigv = n;
+   if (n==0)
+      _nb_eigv = _nb_eq;
 }
 
 
@@ -173,8 +176,9 @@ int EigenProblemSolver::run(int nb)
 {
    if (_theEqua)
       _theEqua->build(*this);
-   _nb_eigv = std::max(nb,1);
-   _nb_eigv = std::min(_nb_eq,_nb_eigv);
+   _nb_eigv = nb;
+   if (nb==0)
+      _nb_eigv = _nb_eq;
    return runSubSpace(_nb_eigv);
 }
 
@@ -258,10 +262,10 @@ int EigenProblemSolver::runSubSpace(size_t nb_eigv,
       int ii, jj, nnend, istp=int(_dim)-1;
       do {
          nnend=istp; istp=0; ii=1;
-         for (size_t i=1; i<=size_t(nnend); i++) {
-            jj = ii + int(_dim) - int(i) - 1;
+         for (int i=1; i<=nnend; i++) {
+            jj = ii + int(_dim) - i - 1;
             if (_eigv(i+1)<_eigv(i)) {
-               istp = int(i);
+               istp = i;
                Swap(_eigv(i),_eigv(i+1));
                Swap(_pM(jj),_pM(ii));
                for (size_t j=1; j<=_dim; j++)
