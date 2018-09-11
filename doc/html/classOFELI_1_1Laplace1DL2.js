@@ -1,7 +1,9 @@
 var classOFELI_1_1Laplace1DL2 =
 [
+    [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#a99491e895db140230776a3316c9e129e", null ],
     [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#a4604700cdcaae72cef18faaea701c0df", null ],
     [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#ab413f599660a00bf7f20a48e61f466a9", null ],
+    [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#a2812443a9ce5a762d4382268112acc97", null ],
     [ "~Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#a5478ca9494fb3f8ae3eb3efc072aeb7f", null ],
     [ "Matrix", "classOFELI_1_1Laplace1DL2.html#a7509f349595cb7f7dda42c8a9a4efd0a", null ],
     [ "BodyRHS", "classOFELI_1_1Laplace1DL2.html#aa6d7e87afcbeea4276573c9576d8d6ca", null ],

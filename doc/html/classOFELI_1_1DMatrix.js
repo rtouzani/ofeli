@@ -16,6 +16,7 @@ var classOFELI_1_1DMatrix =
     [ "getRow", "classOFELI_1_1DMatrix.html#a97237e5c52ffcc6fae8abd88c795b1f4", null ],
     [ "getRow", "classOFELI_1_1DMatrix.html#aca4442e9e5d2d998bdeed7382f72416c", null ],
     [ "set", "classOFELI_1_1DMatrix.html#a61cf373a94a5fedbca306e016bc489c9", null ],
+    [ "reset", "classOFELI_1_1DMatrix.html#ad20897c5c8bd47f5d4005989bead0e55", null ],
     [ "setRow", "classOFELI_1_1DMatrix.html#aef0e68c1876d30d52009f2da7b70bac4", null ],
     [ "setColumn", "classOFELI_1_1DMatrix.html#a6f5e171a5c0a57927f402553d1ae64b1", null ],
     [ "MultAdd", "classOFELI_1_1DMatrix.html#a182aa2a623c3a9e200cc74350c173c9b", null ],

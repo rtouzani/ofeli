@@ -138,6 +138,12 @@ class Matrix
 /// \brief Destructor
     virtual ~Matrix() { }
 
+/** \brief Set matrix to 0 and reset factorization parameter
+ *  @warning This function must be used if after a factorization, the matrix has
+ *  modified
+ */
+    virtual void reset() { }
+
 /// \brief Return number of rows.
     size_t getNbRows() const { return _nb_rows; }
 

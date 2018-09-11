@@ -157,6 +157,11 @@ class Equation : virtual public AbsEqua<T_>
     virtual void initEquation(Mesh&  mesh,
                               real_t ts);
 
+/** \brief Initialize equation.
+ *  @param [in] mesh Mesh instance
+ */
+    virtual void initEquation(Mesh& mesh);
+
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -605,6 +610,13 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Side*     sd,
 {
    _label = sd->n();
    _time = time;
+}
+
+
+template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<T_,NEN_,NEE_,NSN_,NSE_>::initEquation(Mesh& mesh)
+{
+   _theMesh = &mesh;
 }
 
 

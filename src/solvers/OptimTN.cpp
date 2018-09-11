@@ -133,8 +133,8 @@ int lmqnbc(OptSolver&          opt,
    int lhyr=9*n, lwtest=14*n;
 
 // Check parameters and set constants
-   int nwhy = chkucp(lwtest,max_fun,alpha,eta,peps,rteps,rtol,rtolsq,
-                     stepmx,ftest,xtol,xnorm,x,sm,tiny,accrcy);
+   int nwhy = chkucp(lwtest,max_fun,alpha,eta,peps,rteps,rtol,rtolsq,stepmx,ftest,
+                     xtol,xnorm,x,sm,tiny,accrcy);
    if (nwhy<0)
       return nwhy;
 
@@ -219,7 +219,7 @@ L20:
 
 // If required, print the details of this iteration
    if (verb>0)
-     monit(fnew,g,pivot,niter,nftotl,nb_obj_eval);
+      monit(fnew,g,pivot,niter,nftotl,nb_obj_eval);
    if (nwhy<0)
       return nwhy;
    if (nwhy==0 || nwhy==2)
@@ -276,7 +276,7 @@ L40:
          }
 
 //       Set up parameters used in updating the preconditioning strategy
-         yksk = w[5]*w[4];
+         yksk = (w[5],w[4]);
          lreset = 0;
          if (icycle==int(n)-1 || difnew<epsred*(fkeep-fnew))
             lreset = 1;
@@ -331,7 +331,7 @@ L140:
 //  Local search could be installed here
    f = oldf;
    if (verb>0)
-     monit(f,g,pivot,niter,nftotl,nb_obj_eval);
+      monit(f,g,pivot,niter,nftotl,nb_obj_eval);
    return nwhy;
 }
 
@@ -357,7 +357,7 @@ void monit(real_t              f,
 void ztime(vector<real_t>&    x,
            const vector<int>& pivot)
 {
-  for (size_t i=0; i<x.size(); ++i)
+   for (size_t i=0; i<x.size(); ++i)
       if (pivot[i])
          x[i] = 0.0;
 }
@@ -445,7 +445,7 @@ int cnvtst(real_t              alpha,
    real_t cmax=0.;
    int conv=0, imax=0;
    int ltest = flast - fnew <= gtpnew * -0.5;
-   for (size_t i=0; i<=g.size(); i++) {
+   for (int i=0; i<=g.size(); i++) {
       if (pivot[i] != 0 && pivot[i] != 2) {
          real_t t = -pivot[i] * g[i];
          if (t < 0.) {
@@ -453,7 +453,7 @@ int cnvtst(real_t              alpha,
             if (!ltest) {
                if (cmax > t) {
                   cmax = t;
-                  imax = int(i);
+                  imax = i;
                }
             }
          }
@@ -569,7 +569,7 @@ int modlnp(OptSolver&    opt,
 //    Test for convergence
       gtp = zsol*g;
       pr =  r*zsol;
-      qnew = (gtp + pr) * 0.5;
+      qnew = (gtp + pr)*0.5;
       qtest = k * (1. - qold/qnew);
       if (qtest < 0.)
          goto L70;
@@ -699,13 +699,13 @@ void lsout(int    loc,
    xlamda = 0;
    real_t yu=xmin+u, ya=a+xmin, yb=b+xmin, yw=xw+xmin, ybnd=scxbd+xmin;
    cout << "\n\n\nOutput from linear search" << endl;
-   cout << "  Tol and eps : " << tol << "  " << eps << endl;
-   cout << "  Current upper and lower bounds : " << ya << "  " << yb << endl;
-   cout << "  Strict upper bound : " << ybnd << endl;
-   cout << "  xw, fw, gw : " << yw << ", " << fw << ", " << gw << endl;
-   cout << "  xmin, fmin, gmin : " << xmin << ", " << fmin << ", " << gmin << endl;
-   cout << "  New estimate : " << yu << endl;
-   cout << "  iloc, itest : " << loc << ", " << test << endl;
+   cout << "  Tol and eps: " << tol << "  " << eps << endl;
+   cout << "  Current upper and lower bounds: " << ya << "  " << yb << endl;
+   cout << "  Strict upper bound: " << ybnd << endl;
+   cout << "  xw, fw, gw: " << yw << ", " << fw << ", " << gw << endl;
+   cout << "  xmin, fmin, gmin: " << xmin << ", " << fmin << ", " << gmin << endl;
+   cout << "  New estimate: " << yu << endl;
+   cout << "  iloc, itest: " << loc << ", " << test << endl;
 }
 
 

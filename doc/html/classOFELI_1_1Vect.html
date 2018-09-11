@@ -292,6 +292,15 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="memitem:a2bf3781e849a60a884abbaa66eff3ed4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a2bf3781e849a60a884abbaa66eff3ed4">insertBC</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;bc, int dof=0)</td></tr>
 <tr class="memdesc:a2bf3781e849a60a884abbaa66eff3ed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert boundary conditions.  <a href="#a2bf3781e849a60a884abbaa66eff3ed4">More...</a><br /></td></tr>
 <tr class="separator:a2bf3781e849a60a884abbaa66eff3ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ef125e3b7299fea92aee4d9489f9a5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a9ef125e3b7299fea92aee4d9489f9a5d">setRegex</a> (string r, int dof=1)</td></tr>
+<tr class="memdesc:a9ef125e3b7299fea92aee4d9489f9a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a regular expression that initializes vector.  <a href="#a9ef125e3b7299fea92aee4d9489f9a5d">More...</a><br /></td></tr>
+<tr class="separator:a9ef125e3b7299fea92aee4d9489f9a5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ef6746cd1bc9c0ccc514d9e25d7fbd1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a2ef6746cd1bc9c0ccc514d9e25d7fbd1">setFromRegex</a> (int dof=1)</td></tr>
+<tr class="memdesc:a2ef6746cd1bc9c0ccc514d9e25d7fbd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate vector entries from stored regular expression.  <a href="#a2ef6746cd1bc9c0ccc514d9e25d7fbd1">More...</a><br /></td></tr>
+<tr class="separator:a2ef6746cd1bc9c0ccc514d9e25d7fbd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5bff000c8b2c2165b63f0315f9d8d2b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#af5bff000c8b2c2165b63f0315f9d8d2b">withRegex</a> (int dof) const </td></tr>
+<tr class="memdesc:af5bff000c8b2c2165b63f0315f9d8d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> or <code>false</code> if a given dof is defined by a regular expression.  <a href="#af5bff000c8b2c2165b63f0315f9d8d2b">More...</a><br /></td></tr>
+<tr class="separator:af5bff000c8b2c2165b63f0315f9d8d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b00900f0b1070c202072e777280be92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a9b00900f0b1070c202072e777280be92">insertBC</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v, int dof=0)</td></tr>
 <tr class="memdesc:a9b00900f0b1070c202072e777280be92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert boundary conditions.  <a href="#a9b00900f0b1070c202072e777280be92">More...</a><br /></td></tr>
 <tr class="separator:a9b00900f0b1070c202072e777280be92"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2085,6 +2094,89 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
     <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance from which free degrees of freedom are copied to current instance. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bc</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance from which imposed degrees of freedom are copied to current instance. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Parameter to say if all degrees of freedom are concerned (=0, Default) or if only one degree of freedom (<code>dof</code>) is inserted into vector <code>v</code> which has only one degree of freedom by node or side </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a9ef125e3b7299fea92aee4d9489f9a5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setRegex </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dof</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define a regular expression that initializes vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">r</td><td>Regular expression as a function of <code>x</code>, <code>y</code>, <code>z</code> (coordinates) and <code>t</code> (time) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Label of dof for which expression is defined [Default: <code>1</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2ef6746cd1bc9c0ccc514d9e25d7fbd1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setFromRegex </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dof</em> = <code>1</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evaluate vector entries from stored regular expression. </p>
+<p>Vector entries can be evaluated from a given regular expression any time. This is useful when the vector depends on time. In this case, this function can be used at each time step, using a regular expression stored once for all. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Label of dof for which expression is set [Default: [Default: <code>1</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af5bff000c8b2c2165b63f0315f9d8d2b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool withRegex </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dof</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns <code>true</code> or <code>false</code> if a given dof is defined by a regular expression. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Label of dof which information is returned </td></tr>
   </table>
   </dd>
 </dl>

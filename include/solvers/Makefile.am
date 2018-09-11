@@ -4,7 +4,8 @@ AUTOMAKE_OPTIONS = no-dependencies
 
 ssdir =	$(pkgincludedir)/solvers
 
-ss_HEADERS =	BSpline.h \
+ss_HEADERS = \
+		BSpline.h \
 		BiCG.h \
 		BiCGStab.h \
 		CG.h \
@@ -16,6 +17,8 @@ ss_HEADERS =	BSpline.h \
 		Jacobi.h \
 		LinearSolver.h \
 		MyOpt.h \
+		MyNLAS.h \
+		NLASSolver.h \
 		ODESolver.h \
 		Optim.h \
 		OptSolver.h \

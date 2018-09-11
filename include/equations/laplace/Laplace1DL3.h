@@ -68,6 +68,10 @@ public :
 
     using AbsEqua<real_t>::setInput;
 
+/// Constructor using mesh instance
+/// @param [in] ms Mesh instance
+    Laplace1DL3(Mesh& ms);
+
 /** Constructor using mesh instance and solution vector
  *  @param [in] ms Mesh instance
  *  @param [in,out] u Vect instance that contains, after execution of \b run() the solution

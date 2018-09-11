@@ -60,8 +60,10 @@ var group__Laplace =
       [ "sRHS", "classOFELI_1_1Equa__Laplace.html#a9c5c653e8a1a6a05ff3264117b29ab2d", null ]
     ] ],
     [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html", [
+      [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#a99491e895db140230776a3316c9e129e", null ],
       [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#a4604700cdcaae72cef18faaea701c0df", null ],
       [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#ab413f599660a00bf7f20a48e61f466a9", null ],
+      [ "Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#a2812443a9ce5a762d4382268112acc97", null ],
       [ "~Laplace1DL2", "classOFELI_1_1Laplace1DL2.html#a5478ca9494fb3f8ae3eb3efc072aeb7f", null ],
       [ "Matrix", "classOFELI_1_1Laplace1DL2.html#a7509f349595cb7f7dda42c8a9a4efd0a", null ],
       [ "BodyRHS", "classOFELI_1_1Laplace1DL2.html#aa6d7e87afcbeea4276573c9576d8d6ca", null ],
@@ -126,6 +128,7 @@ var group__Laplace =
       [ "sRHS", "classOFELI_1_1Laplace1DL2.html#a9c5c653e8a1a6a05ff3264117b29ab2d", null ]
     ] ],
     [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html", [
+      [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#aa3c3bc48521536029513c7851815dc42", null ],
       [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#a101f6995b133edc6a6a3f437a990ba3d", null ],
       [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#a1e7175d0a989777d425fbcc3e5cad9dc", null ],
       [ "~Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#a833e625949a2c7c502b3381f66d4093a", null ],
@@ -319,6 +322,7 @@ var group__Laplace =
       [ "sRHS", "classOFELI_1_1Laplace2DMHRT0.html#a9c5c653e8a1a6a05ff3264117b29ab2d", null ]
     ] ],
     [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html", [
+      [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#a2dc758205e620706b545303911a6acf4", null ],
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#af62a1b268971f05194f9d2874be2eaee", null ],
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#ac8e104036329d6ad5f25e7ef005161bb", null ],
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#afa9e37015733a19abe2b38ed870bb686", null ],

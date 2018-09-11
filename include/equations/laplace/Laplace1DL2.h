@@ -67,6 +67,9 @@ public :
 
     using AbsEqua<real_t>::setInput;
 
+/// \brief Default constructor
+    Laplace1DL2();
+
 /// \brief Constructor for an element
     Laplace1DL2(Element* el);
 
@@ -76,6 +79,10 @@ public :
  */
     Laplace1DL2(Mesh&         ms,
                 Vect<real_t>& u);
+
+/// Constructor using mesh instance
+/// @param [in] ms Mesh instance
+    Laplace1DL2(Mesh& ms);
 
 /// \brief Destructor
     ~Laplace1DL2() { }

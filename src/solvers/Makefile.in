@@ -107,10 +107,10 @@ am__v_AR_1 =
 libsolvers_a_AR = $(AR) $(ARFLAGS)
 libsolvers_a_LIBADD =
 am_libsolvers_a_OBJECTS = BSpline.$(OBJEXT) \
-	EigenProblemSolver.$(OBJEXT) ODESolver.$(OBJEXT) \
-	OptimNM.$(OBJEXT) OptimSA.$(OBJEXT) OptimTN.$(OBJEXT) \
-	OptimPG.$(OBJEXT) OptSolver.$(OBJEXT) Solver.$(OBJEXT) \
-	TimeStepping.$(OBJEXT)
+	EigenProblemSolver.$(OBJEXT) NLASSolver.$(OBJEXT) \
+	ODESolver.$(OBJEXT) OptimNM.$(OBJEXT) OptimSA.$(OBJEXT) \
+	OptimTN.$(OBJEXT) OptimPG.$(OBJEXT) OptSolver.$(OBJEXT) \
+	Solver.$(OBJEXT) TimeStepping.$(OBJEXT)
 libsolvers_a_OBJECTS = $(am_libsolvers_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -290,6 +290,7 @@ AUTOMAKE_OPTIONS = no-dependencies
 libsolvers_a_SOURCES = \
 	BSpline.cpp \
 	EigenProblemSolver.cpp \
+	NLASSolver.cpp \
 	ODESolver.cpp \
 	OptimNM.cpp \
 	OptimSA.cpp \

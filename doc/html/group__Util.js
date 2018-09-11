@@ -188,7 +188,7 @@ var group__Util =
     [ "getTetgen", "group__Util.html#ga628ee53dcb902ee67c107a977cb70ec4", null ],
     [ "getTriangle", "group__Util.html#gaed4d9f94c771f6448c1b787429a9e9af", null ],
     [ "saveMesh", "group__Util.html#gac5360ac2fb798dbf75867f577fabf584", null ],
-    [ "saveGmsh", "group__Util.html#ga18b4983561589b0093083f2125fcda1a", null ],
+    [ "saveGmsh", "group__Util.html#ga439b96397c0dce42a51e6f9928ec130a", null ],
     [ "saveGnuplot", "group__Util.html#ga314c8c3aa821a9cee7679ba74ac0befc", null ],
     [ "saveMatlab", "group__Util.html#ga1c88c1371931c9b7eefc21a0c78ad1e9", null ],
     [ "saveTecplot", "group__Util.html#ga81e5a48f04ee8a35eb48b03dd795342e", null ],
@@ -247,9 +247,5 @@ var group__Util =
     [ "itos", "group__Util.html#ga20f271409637c91b02c586644cb542e0", null ],
     [ "itos", "group__Util.html#gaced1e9dfef391b5230ed690ed0393ad0", null ],
     [ "dtos", "group__Util.html#gaae85946bd22fc1adf6c822938881df7a", null ],
-    [ "stringTo", "group__Util.html#ga0bf36e2bd6efefdc0636c8f7b795b21d", null ],
-    [ "RTrim", "group__Util.html#ga685e11faa2cd6e9915a1e1038e220209", null ],
-    [ "LTrim", "group__Util.html#gac31bf9e50fa7488d821af3d1914abd16", null ],
-    [ "Trim", "group__Util.html#ga8de0a295590d6bfdf06b1e6290d300e5", null ],
-    [ "Swap", "group__Util.html#ga686eef4b6983e13e87ba995efb7b32bd", null ]
+    [ "stringTo", "group__Util.html#ga0bf36e2bd6efefdc0636c8f7b795b21d", null ]
 ];

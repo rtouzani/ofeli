@@ -5,7 +5,6 @@
    <date></date>
    <author></author>
 </info>
-<Mesh file="proj.m">  </Mesh>
 <Field name="u" type="Node" nb_dof="2">
    <Step time="0.000000e+000">
       <constant dof="1"> 1.0</constant>

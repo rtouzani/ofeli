@@ -71,12 +71,45 @@ var group__Solver =
       [ "setFact", "classOFELI_1_1LinearSolver.html#ae221a5369220070666177b57daf4cff2", null ],
       [ "setNoFact", "classOFELI_1_1LinearSolver.html#a524aa7001c68e0d79027f735f20e34de", null ]
     ] ],
+    [ "MyNLAS", "classOFELI_1_1MyNLAS.html", [
+      [ "MyNLAS", "classOFELI_1_1MyNLAS.html#aa16a84e131e9bc324caf7b0e825d9e9f", null ],
+      [ "MyNLAS", "classOFELI_1_1MyNLAS.html#a1d78397cd5575f6d40cd537334bee21a", null ],
+      [ "~MyNLAS", "classOFELI_1_1MyNLAS.html#ab036ce0151a62875a4e53cdb0c2d8d78", null ],
+      [ "Function", "classOFELI_1_1MyNLAS.html#a6665ba9fe20cfae949537444dbb6f1c5", null ],
+      [ "Gradient", "classOFELI_1_1MyNLAS.html#a025d9db785130fb7753682bb23851327", null ]
+    ] ],
     [ "MyOpt", "classOFELI_1_1MyOpt.html", [
       [ "MyOpt", "classOFELI_1_1MyOpt.html#a186344ab4107f258dc7ea7a289f73413", null ],
       [ "MyOpt", "classOFELI_1_1MyOpt.html#aeff7c69f0dff054a3632dcf75f9d861a", null ],
       [ "~MyOpt", "classOFELI_1_1MyOpt.html#a0e859db312298add4306a4758791315a", null ],
       [ "Objective", "classOFELI_1_1MyOpt.html#ae8a4aaff817c0d981f365ff3f072ae03", null ],
       [ "Gradient", "classOFELI_1_1MyOpt.html#a4fa02a77adabe7c211403aadf574d4fa", null ]
+    ] ],
+    [ "NLASSolver", "classOFELI_1_1NLASSolver.html", [
+      [ "NLASSolver", "classOFELI_1_1NLASSolver.html#a313620706abd07c233e36dc7b45b068f", null ],
+      [ "NLASSolver", "classOFELI_1_1NLASSolver.html#af51b33ccc0b4b0cad6f3611ef720cb87", null ],
+      [ "NLASSolver", "classOFELI_1_1NLASSolver.html#ac1656b2d822739cb3fb7b323f8079ca0", null ],
+      [ "NLASSolver", "classOFELI_1_1NLASSolver.html#aa3482f7a630b7d059c1b915176e7f0bc", null ],
+      [ "NLASSolver", "classOFELI_1_1NLASSolver.html#aa95f3a13e864d95497f2749de222c452", null ],
+      [ "~NLASSolver", "classOFELI_1_1NLASSolver.html#a983d681b2f47e7b4872a406e634c655e", null ],
+      [ "setVerbose", "classOFELI_1_1NLASSolver.html#aec36c78a753f6370a283f7ee60020fa3", null ],
+      [ "setMaxIter", "classOFELI_1_1NLASSolver.html#a9e6d15777f4c9d95999313bafae5e5e7", null ],
+      [ "setTolerance", "classOFELI_1_1NLASSolver.html#a4d0e665f8f92335ec10c4ccf9e9171b7", null ],
+      [ "set", "classOFELI_1_1NLASSolver.html#aed17157b8b5172e30a9132a8eb061c01", null ],
+      [ "setFunction", "classOFELI_1_1NLASSolver.html#aded9896bbfc5b7062a878f049328dbf4", null ],
+      [ "setFunction", "classOFELI_1_1NLASSolver.html#a04839207ef8c2248c2a6dd958d287b4b", null ],
+      [ "setGradient", "classOFELI_1_1NLASSolver.html#ac63af64b7883d535bb07ab4fee964aaa", null ],
+      [ "setGradient", "classOFELI_1_1NLASSolver.html#a27ce60ec61d8ab6f2514ef763950bfb7", null ],
+      [ "setf", "classOFELI_1_1NLASSolver.html#a31e77e80114a29bc0d792d13162ff26b", null ],
+      [ "setDf", "classOFELI_1_1NLASSolver.html#a1bcbb13ab556eda581413740f79eb6c9", null ],
+      [ "setPDE", "classOFELI_1_1NLASSolver.html#af97477a7dcb02936e3d43493fc80420d", null ],
+      [ "setInitial", "classOFELI_1_1NLASSolver.html#af1cd58fec176472be29a4dfb1be829e3", null ],
+      [ "setInitial", "classOFELI_1_1NLASSolver.html#a54f93b8af463c5ca893fb24a542e4d6a", null ],
+      [ "setInitial", "classOFELI_1_1NLASSolver.html#a5d4f3735e331deb3b35148cdab158de8", null ],
+      [ "run", "classOFELI_1_1NLASSolver.html#a13a43e6d814de94978c515cb084873b1", null ],
+      [ "get", "classOFELI_1_1NLASSolver.html#adb3d75689bdd8aad7c9e197d4d9bd87a", null ],
+      [ "get", "classOFELI_1_1NLASSolver.html#a2cb2189e3379851c95d13a7c7ed8d8d9", null ],
+      [ "getNbIter", "classOFELI_1_1NLASSolver.html#a4b90d074dab10cd5272e6f7b8c6cbb0e", null ]
     ] ],
     [ "ODESolver", "classOFELI_1_1ODESolver.html", [
       [ "ODESolver", "classOFELI_1_1ODESolver.html#a2e716223fdfa1868a6a683386da026f6", null ],
@@ -211,6 +244,7 @@ var group__Solver =
     [ "GMRes", "group__Solver.html#ga09f27d5e80a346625e5ff7e54f1f45df", null ],
     [ "GS", "group__Solver.html#ga8dcd7991586a9eb1badcff25e0f291d2", null ],
     [ "Jacobi", "group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24", null ],
+    [ "operator<<", "group__Solver.html#gab27d0cc4ff53840022eb049867af87c6", null ],
     [ "operator<<", "group__Solver.html#ga2d412d67f3804d00223120371bcdfa48", null ],
     [ "operator<<", "group__Solver.html#ga3f1c03ea316fa554006a28910fbe47c0", null ],
     [ "Richardson", "group__Solver.html#gac3e56edcd67f3f8eddb9717c36c4157f", null ],

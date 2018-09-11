@@ -35,6 +35,7 @@ var classOFELI_1_1SkSMatrix =
     [ "get", "classOFELI_1_1SkSMatrix.html#ae06e66a8f26e28bdf1e0209f7d0d96bb", null ],
     [ "set", "classOFELI_1_1SkSMatrix.html#a182f1806e243a5baed9d2e8a1c1ef067", null ],
     [ "get", "group__OFELI.html#ga7a7b1d2724593a6ec1212247d7964b8e", null ],
+    [ "reset", "classOFELI_1_1SkSMatrix.html#a7b0e029102ad38f4b814c6523aedb53d", null ],
     [ "getNbRows", "classOFELI_1_1SkSMatrix.html#ac64de7025d9f5712288b3093ca5408b1", null ],
     [ "getNbColumns", "classOFELI_1_1SkSMatrix.html#a879356293a4c2120a7f87bf231ce341c", null ],
     [ "setPenal", "classOFELI_1_1SkSMatrix.html#a72077468b17118c44394d286f7737bd4", null ],

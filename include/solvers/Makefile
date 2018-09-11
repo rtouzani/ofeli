@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin17.5.0
-host_triplet = i386-apple-darwin17.5.0
+build_triplet = i386-apple-darwin17.7.0
+host_triplet = i386-apple-darwin17.7.0
 subdir = include/solvers
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -181,7 +181,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall   -g -DDEBUG
+CPPFLAGS = -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -213,7 +213,7 @@ MPI_CFLAGS = -I${prefix}/include/mpi
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
 OBJEXT = o
-OFELI_CFLAGS = -I${prefix}/include/ofeli  -Wall   -g -DDEBUG
+OFELI_CFLAGS = -I${prefix}/include/ofeli  -Wall   -O3 -DNDEBUG -ffast-math -fstrict-aliasing
 OFELI_FLAGS = -I$(top_srcdir)/include
 OFELI_LDFLAGS = -L${exec_prefix}/lib 
 OFELI_LIB = -lofeli
@@ -247,10 +247,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin17.5.0
+build = i386-apple-darwin17.7.0
 build_alias = 
 build_cpu = i386
-build_os = darwin17.5.0
+build_os = darwin17.7.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -258,10 +258,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin17.5.0
+host = i386-apple-darwin17.7.0
 host_alias = 
 host_cpu = i386
-host_os = darwin17.5.0
+host_os = darwin17.7.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -288,7 +288,8 @@ top_builddir = ../..
 top_srcdir = ../..
 AUTOMAKE_OPTIONS = no-dependencies
 ssdir = $(pkgincludedir)/solvers
-ss_HEADERS = BSpline.h \
+ss_HEADERS = \
+		BSpline.h \
 		BiCG.h \
 		BiCGStab.h \
 		CG.h \
@@ -300,6 +301,8 @@ ss_HEADERS = BSpline.h \
 		Jacobi.h \
 		LinearSolver.h \
 		MyOpt.h \
+		MyNLAS.h \
+		NLASSolver.h \
 		ODESolver.h \
 		Optim.h \
 		OptSolver.h \

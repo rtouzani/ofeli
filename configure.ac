@@ -404,6 +404,7 @@ AC_OUTPUT(
    demos/solvers/ODE/Makefile
    demos/solvers/EIGEN/Makefile
    demos/solvers/OPTIM/Makefile
+   demos/solvers/NLAS/Makefile
    demos/adapt/Makefile
    doc/Makefile
    doc/html/Makefile

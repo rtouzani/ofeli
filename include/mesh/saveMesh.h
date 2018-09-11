@@ -105,9 +105,9 @@ struct Nd {
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-void saveMesh(const string&            file,
-              const Mesh&              mesh,
-                    ExternalFileFormat form);
+void saveMesh(const string&      file,
+              const Mesh&        mesh,
+              ExternalFileFormat form);
 
 
 /** \fn void saveGmsh(const string &file, const Mesh &mesh)
@@ -122,7 +122,7 @@ void saveMesh(const string&            file,
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-void saveGmsh(const string& gp_file,
+void saveGmsh(const string& file,
               const Mesh&   mesh);
 
 /** \fn void saveGnuplot(const string &file, const Mesh &mesh)

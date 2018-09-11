@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
    banner();
    if (argc>1)
       N = atoi(argv[1]);
-   Mesh ms(L,N);
+   Mesh ms(0.,L,N);
    int NbN = N+1;
 
 // Declare problem data (matrix, rhs, boundary conditions, body forces)

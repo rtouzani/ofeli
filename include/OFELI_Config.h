@@ -53,13 +53,13 @@
  * \def OFELI_VERSION
  * gives the current version of the library
  */
-#define OFELI_VERSION                 "3.1.1"
+#define OFELI_VERSION                 "3.2.0"
 
 /*!
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of current release
  */
-#define OFELI_RELEASE_DATE            "1-2018"
+#define OFELI_RELEASE_DATE            "9-2018"
 
 
 /*! \typedef lsize_t
@@ -290,6 +290,7 @@ enum DOFSupport {
  * \brief Enumerate list for element shapes
  */
 enum ElementShape {
+   POINT,            ///< Elements are single points
    LINE,             ///< Elements are segment lines
    TRIANGLE,         ///< Elements are triangles
    QUADRILATERAL,    ///< Elements are quadrilaterals
@@ -326,6 +327,17 @@ enum ElementType {
    TETRA4   =  3,            /*!< Tetrahedral element with 4 nodes (P1) */
    HEXA8    =  4,            /*!< Hexahedral element with 8 nodes (Q1) */
    PENTA6   =  5             /*!< Pentahedral element with 6 nodes (P1*Q1) */
+};
+
+/*! \enum NonLinearIter
+ * Selects iteration method for solving nonlinear problems
+ */
+enum NonLinearIter {
+   BISECTION     =  0,    /*!< Bisection method                          */
+   REGULA_FALSI  =  1,    /*!< Regula Falsi method                       */
+   PICARD        =  2,    /*!< Picard's iteration method                 */
+   SECANT        =  3,    /*!< Secant method                             */
+   NEWTON        =  4,    /*!< Newton's method                           */
 };
 
 #ifdef WIN32

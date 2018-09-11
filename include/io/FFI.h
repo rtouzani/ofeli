@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2012 Rachid Touzani
+   Copyright (C) 1998 - 2018 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -116,10 +116,15 @@ class FFI
     FFI(const string &file);
 
 /** \brief Constructor using file name and seeking a "magic number"
-    @param [in] file Input file name
-    @param [in] ident Identification string
+ *  @param [in] file Input file name
+ *  @param [in] ident Identification string
  */
     FFI(const string &file, const string &ident);
+
+/** \brief Constructor using a list to keywords to identify
+ *  @param [in] s Vector containing keywords
+ */
+    FFI(const vector<string>& s);
 
 /// Copy constructor
     FFI(const FFI &ff);
@@ -181,7 +186,7 @@ class FFI
  private:
 
    size_t            _msg, _string_nb;
-   string            _input_file, _token, _ident;
+   string            _input_file, _token, _ident, _prompt;
    char              _buffer[121];
    bool              _in, _non_fatal, _comment, _eol;
    vector<string>    _kw;

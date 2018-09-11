@@ -661,6 +661,30 @@ class Vect
                   const Vect<T_>& bc,
                   int             dof=0);
 
+/** \brief Define a regular expression that initializes vector
+ *  \details
+ *  @param [in] r Regular expression as a function of <tt>x</tt>, <tt>y</tt>, <tt>z</tt> 
+ *  (coordinates) and <tt>t</tt> (time)
+ *  @param [in] dof Label of dof for which expression is defined [Default: <tt>1</tt>] 
+ */
+    void setRegex(string r,
+                  int    dof=1);
+
+/** \brief Evaluate vector entries from stored regular expression
+ *  \details Vector entries can be evaluated from a given regular expression
+ *  any time. This is useful when the vector depends on time. In this
+ *  case, this function can be used at each time step, using a regular expression
+ *  stored once for all.
+ *  @param [in] dof Label of dof for which expression is set [Default: [Default: <tt>1</tt>] 
+ */
+    void setFromRegex(int dof=1);
+
+/** \brief Returns <tt>true</tt> or <tt>false</tt> if a given dof is defined by 
+ *  a regular expression
+ *  @param [in] dof Label of dof which information is returned
+ */
+    bool withRegex(int dof) const { return _with_regex[dof-1]; }
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if defined(USE_PETSC)
     void insertBC(Mesh&                m, 
@@ -1079,9 +1103,9 @@ class Vect
  private:
     size_t      _size, _nx, _ny, _nz, _nb, _dof_type, _nb_dof;
     int         _dg_degree;
-    bool        _grid, _with_mesh;
+    bool        _grid, _with_mesh, _with_regex[10];
     Mesh        *_theMesh;
-    string      _name;
+    string      _name, _regex[10];
     real_t      _time;
     void dof_select(size_t d, vector<size_t> &dof_list);
     size_t ijk(size_t i, size_t j)           const { return _ny*(i-1)+j-1; }
@@ -1108,7 +1132,10 @@ Vect<T_>::Vect() :
           _size(0), _nx(0), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
           _dg_degree(-1), _grid(true), _with_mesh(false),
           _theMesh(NULL), _name("#"), _time(0)
-{ }
+{
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
+}
 
 
 template<class T_>
@@ -1127,6 +1154,8 @@ Vect<T_>::Vect(size_t n) :
    for (size_t i=0; i<_size; i++)
       (*this)[i] = 0;
 #endif
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1147,6 +1176,8 @@ Vect<T_>::Vect(size_t nx,
    for (size_t i=0; i<_size; i++)
       (*this)[i] = 0;
 #endif
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1168,6 +1199,8 @@ Vect<T_>::Vect(size_t nx,
    for (size_t i=0; i<_size; i++)
       (*this)[i] = 0;
 #endif
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1186,6 +1219,8 @@ Vect<T_>::Vect(size_t n,
 #endif
    for (size_t i=1; i<=n; ++i)
       set(i,x[i-1]);
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1198,6 +1233,8 @@ Vect<T_>::Vect(Grid& g) :
            _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
 {
    setGrid(g);
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1208,6 +1245,8 @@ Vect<T_>::Vect(Mesh& m,
          : _dg_degree(-1), _grid(false), _with_mesh(true), _name("#"), _time(0)
 {
    setMesh(m,nb_dof,dof_type);
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1223,6 +1262,8 @@ Vect<T_>::Vect(Mesh&  m,
           _dg_degree(-1), _grid(false), _with_mesh(true), _name("#"), _time(t)
 {
    setMesh(m,nb_dof,dof_type);
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1242,6 +1283,8 @@ Vect<T_>::Vect(const Element*  el,
       for (size_t j=1; j<=nd->getNbDOF(); ++j)
          set(n,j,v(nd->n(),j));
    }
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1263,6 +1306,8 @@ Vect<T_>::Vect(const Side*     sd,
       for (size_t j=1; j<=nd->getNbDOF(); ++j)
          set(++i,v[k++]);
    }
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1289,6 +1334,8 @@ Vect<T_>::Vect(const Vect<T_>& v,
          i++;
       }
    }
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1305,6 +1352,11 @@ Vect<T_>::Vect(const Vect<T_>& v,
    for (size_t i=1; i<=_nb; i++)
       for (size_t j=1; j<=_nb_dof; j++)
          set(i,j,v(i,j+first_dof-1));
+   for (size_t i=0; i<10; ++i) {
+      _with_regex[i] = v._with_regex[i];
+      if (_with_regex[i])
+         _regex[i] = v._regex[i];
+   }
 }
 
 
@@ -1317,6 +1369,11 @@ Vect<T_>::Vect(const Vect<T_>& v)
    setSize(v._nx,v._ny,v._nz);
    for (size_t i=1; i<=_size; i++)
       set(i,v[i-1]);
+   for (size_t i=0; i<10; ++i) {
+      _with_regex[i] = v._with_regex[i];
+      if (_with_regex[i])
+         _regex[i] = v._regex[i];
+   }
 }
 
 
@@ -1341,6 +1398,8 @@ Vect<T_>::Vect(const Vect<T_>& v,
       for (size_t k=1; k<=_nz; k++)
          set(k,v(1,1,k));
    }
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1366,6 +1425,8 @@ Vect<T_>::Vect(size_t          d,
             set(i,dof_list[k],v(i,k+1));
       }
    }
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
 }
 
 
@@ -1374,7 +1435,10 @@ template<class T_>
 Vect<T_>::Vect(const VectorX& v)
          : _size(v.size()), _nx(_size), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
            _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
-{ }
+{
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
+}
 #endif
 
 
@@ -1527,13 +1591,15 @@ void Vect<T_>::set(const string& exp,
          d[3] = _time;
          set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
          if ((err=theParser.EvalError()))
-            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. Error code: "+itos(err));
+            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
+                                 "Error code: "+itos(err));
       }
    }
    else if (_dof_type==ELEMENT_FIELD) {
    }
    else
-      throw OFELIException("In Vect::set(string,size_t): This member function is for nodewise vectors only.");
+      throw OFELIException("In Vect::set(string,size_t): This member function is for "
+                           "nodewise vectors only.");
 }
 
 
@@ -1579,6 +1645,43 @@ void Vect<T_>::set(const Vect<real_t>& x,
       if ((err=theParser.EvalError()))
          throw OFELIException("In Vect::set(Vect,string): Illegal regular expression. Error code: "+itos(err));
    }
+}
+
+ 
+template<class T_>
+void Vect<T_>::setRegex(string r,
+                        int    dof)
+{
+   if (_theMesh==NULL)
+      throw OFELIException("In Vect::setRegex(string): No mesh is defined");
+   _regex[dof-1] = r;
+   _with_regex[dof-1] = true;
+}
+
+
+template<class T_>
+void Vect<T_>::setFromRegex(int dof)
+{
+   if (_theMesh==NULL)
+      throw OFELIException("In Vect::setFromRegex(): No mesh is defined");
+   int err;
+   real_t d[4];
+   PARSE(_regex[dof-1].c_str(),"x,y,z,t");
+   if (_dof_type==NODE_FIELD) {
+      mesh_nodes(*_theMesh) {
+         d[0] = The_node.getCoord(1);
+         d[1] = The_node.getCoord(2);
+         d[2] = The_node.getCoord(3);
+         d[3] = _time;
+         set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
+         if ((err=theParser.EvalError()))
+            throw OFELIException("In Vect::setFromRegex(): Illegal regular expression. Error code: "+itos(err));
+      }
+   }
+   else if (_dof_type==ELEMENT_FIELD) {
+   }
+   else
+      throw OFELIException("In Vect::setFromRegex(): This member function is for nodewise vectors only.");
 }
 
 

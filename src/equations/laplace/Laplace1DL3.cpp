@@ -36,6 +36,14 @@
 
 namespace OFELI {
 
+Laplace1DL3::Laplace1DL3(Mesh& ms)
+            : Equation<real_t,3,3,1,1>(ms)
+{
+   _lsf = _rsf = 0;
+   _A.setSize(ms.getNbDOF(),2,2);
+}
+
+
 Laplace1DL3::Laplace1DL3(Mesh&         ms,
                          Vect<real_t>& u)
             : Equation<real_t,3,3,1,1>(ms)

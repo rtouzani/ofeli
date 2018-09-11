@@ -142,6 +142,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a61cf373a94a5fedbca306e016bc489c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DMatrix.html#a61cf373a94a5fedbca306e016bc489c9">set</a> (size_t i, size_t j, const T_ &amp;val)</td></tr>
 <tr class="memdesc:a61cf373a94a5fedbca306e016bc489c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a constant value to an entry of the matrix.  <a href="#a61cf373a94a5fedbca306e016bc489c9">More...</a><br /></td></tr>
 <tr class="separator:a61cf373a94a5fedbca306e016bc489c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad20897c5c8bd47f5d4005989bead0e55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DMatrix.html#ad20897c5c8bd47f5d4005989bead0e55">reset</a> ()</td></tr>
+<tr class="memdesc:ad20897c5c8bd47f5d4005989bead0e55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix to 0 and reset factorization parameter.  <a href="#ad20897c5c8bd47f5d4005989bead0e55">More...</a><br /></td></tr>
+<tr class="separator:ad20897c5c8bd47f5d4005989bead0e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef0e68c1876d30d52009f2da7b70bac4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DMatrix.html#aef0e68c1876d30d52009f2da7b70bac4">setRow</a> (size_t i, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v)</td></tr>
 <tr class="memdesc:aef0e68c1876d30d52009f2da7b70bac4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a given vector to a prescribed row in the matrix.  <a href="#aef0e68c1876d30d52009f2da7b70bac4">More...</a><br /></td></tr>
 <tr class="separator:aef0e68c1876d30d52009f2da7b70bac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -744,6 +747,34 @@ class OFELI::DMatrix&lt; T_ &gt;</h3>
 </dl>
 
 <p>Implements <a class="el" href="classOFELI_1_1Matrix.html#ac0cea700fd87a3493ee917937ca21796">Matrix&lt; T_ &gt;</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad20897c5c8bd47f5d4005989bead0e55"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set matrix to 0 and reset factorization parameter. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This function must be used if after a factorization, the matrix has modified </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classOFELI_1_1Matrix.html#a7b0e029102ad38f4b814c6523aedb53d">Matrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>

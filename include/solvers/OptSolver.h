@@ -97,15 +97,15 @@ class OptSolver
     OptSolver(Vect<real_t>& x);
 
 /** \brief Constructor using vector of optimization variables
- *  @param [in] opt Reference to instance of used defined optimization class.
+ *  @param [in] opt Reference to instance of user defined optimization class.
  *  This class inherits from abstract class MyOpt. It must contain the member function
  *      \c double \c Objective(const Vect<double> &x)
  *  which returns the value of the objective for a given solution vector \c x. The user
- *  defined class must contain, if the optimization algothm requires it the member function
+ *  defined class must contain, if the optimization algorithm requires it the member function
  *      \c Gradient(const Vect<double> &x, Vect<double> &g)
  *  which stores the gradient of the objective in the vector \c g for a given optimization 
  *  vector \c x.
- *  The user defined class must also contain, if the optimization algothm requires it the
+ *  The user defined class must also contain, if the optimization algorithm requires it the
  *  member function
  *  @param [in] x Vector having as size the number of optimization variables.
  *  It contains the initial guess for the optimization algorithm.

@@ -35,6 +35,12 @@
 
 namespace OFELI {
 
+Laplace2DT3::Laplace2DT3()
+            : Equation<real_t,3,3,2,2>()
+{
+}
+
+
 Laplace2DT3::Laplace2DT3(Mesh&             ms,
                          SpMatrix<real_t>& A,
                          Vect<real_t>&     b)

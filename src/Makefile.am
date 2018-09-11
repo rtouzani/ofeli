@@ -192,6 +192,7 @@ SHAPE_FUNCTIONS_OBJS = \
 SOLVERS_OBJS =	\
 			solvers/BSpline.o \
 			solvers/EigenProblemSolver.o \
+			solvers/NLASSolver.o \
 			solvers/ODESolver.o \
 			solvers/OptimNM.o \
 			solvers/OptimSA.o \

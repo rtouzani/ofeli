@@ -283,6 +283,15 @@ class AbsEqua
  *  @param [in] p2
  *  @param [in] p3
  */
+    void getTangent(Matrix<T_>* Df) { _Df = Df; }
+
+/** \brief Set transient analysis settings
+ *  \details Define a set of parameters for time integration
+ *  @param [in] s Scheme
+ *  @param [in] p1
+ *  @param [in] p2
+ *  @param [in] p3
+ */
     void setTransient(int    s,
                       real_t p1=1,
                       real_t p2=1,
@@ -337,8 +346,7 @@ class AbsEqua
     {
        if (_set_matrix == false) {
           _matrix_type = SPARSE;
-          _A = new SpMatrix<T_>;
-          _A->setMesh(*_theMesh,0);
+          _A = new SpMatrix<T_>(*_theMesh);
        }
        _ls.setSolver(ls,pc);
     }
@@ -351,7 +359,7 @@ class AbsEqua
 
 
 /** \brief Solve the linear system
- *  @param [in] A Pointer to matrix of the system (Instance of class SpMatrix)
+ *  @param [in] A Pointer to matrix of the system
  *  @param [in] b Vector containing right-hand side
  *  @param [in,out] x Vector containing initial guess of solution on input, actual solution on output
  */
@@ -370,8 +378,8 @@ class AbsEqua
              _ls.setSolver(CG_SOLVER);
            else if (_matrix_type==SPARSE)
              _ls.setSolver(GMRES_SOLVER);
-      }
-      return _ls.solve();
+       }
+       return _ls.solve();
     }
 
 
@@ -466,7 +474,7 @@ protected :
    real_t             _theta, _alpha, _beta, _time_step, _time, _final_time;
    real_t             _time_parameter1, _time_parameter2, _time_parameter3;
    EigenProblemSolver _ev;
-   Matrix<T_>         *_A, *_CM;
+   Matrix<T_>         *_A, *_CM, *_Df;
    Vect<T_>           *_bc, *_bf, *_sf, *_u, *_v, *_w, *_b, *_LM, _uu;
    bool               _eigen, _sol_given, _bc_given, _init_given, _bf_given, _sf_given; 
    bool               _constant_matrix, _constant_mesh, _set_matrix;

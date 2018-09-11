@@ -411,7 +411,6 @@ class ODESolver
    Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv, _dudt;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _vF1, _vF2, _vF, _vDF1, _D, _k1, _k2, _k3, _k4;
    DMatrix<real_t> *_A0, *_A1, *_A2;
-   //   Vect<real_t> *_a0, *_a1, *_a2;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2;
    real_t _y0, _y1, _dy1, _y2, _dy2, _ddy, _d0, _d1, _d2, _d01, _dydt;
    string _exc[3];

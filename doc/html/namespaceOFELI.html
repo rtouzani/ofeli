@@ -309,8 +309,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Muscl3DT.html">Muscl3DT</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for 3-D hyperbolic solvers with <a class="el" href="classOFELI_1_1Muscl.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> scheme using tetrahedra.  <a href="classOFELI_1_1Muscl3DT.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1MyNLAS.html">MyNLAS</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class to define by user specified function.  <a href="classOFELI_1_1MyNLAS.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1MyOpt.html">MyOpt</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class to define by user specified optimization function.  <a href="classOFELI_1_1MyOpt.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1NLASSolver.html">NLASSolver</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To solve a system of nonlinear algebraic equations of the form f(u) = 0.  <a href="classOFELI_1_1NLASSolver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Node.html">Node</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To describe a node.  <a href="classOFELI_1_1Node.html#details">More...</a><br /></td></tr>
@@ -417,11 +423,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triang6S.html">Triang6S</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a 6-Node straight triangular finite element using <code>P<sub>2</sub></code> interpolation.  <a href="classOFELI_1_1Triang6S.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html">Triangle</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To store and treat a triangle.  <a href="classOFELI_1_1Triangle.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1triangle.html">triangle</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a triangle. The reference element is the rectangle triangle with two unit edges.  <a href="classOFELI_1_1triangle.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html">Triangle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To store and treat a triangle.  <a href="classOFELI_1_1Triangle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TrMatrix.html">TrMatrix</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To handle tridiagonal matrices.  <a href="classOFELI_1_1TrMatrix.html#details">More...</a><br /></td></tr>
@@ -987,9 +993,9 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memitem:gac5360ac2fb798dbf75867f577fabf584"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#gac5360ac2fb798dbf75867f577fabf584">saveMesh</a> (const string &amp;file, const <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh, ExternalFileFormat form)</td></tr>
 <tr class="memdesc:gac5360ac2fb798dbf75867f577fabf584"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function saves mesh data a file for a given external format.  <a href="group__Util.html#gac5360ac2fb798dbf75867f577fabf584">More...</a><br /></td></tr>
 <tr class="separator:gac5360ac2fb798dbf75867f577fabf584"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga18b4983561589b0093083f2125fcda1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga18b4983561589b0093083f2125fcda1a">saveGmsh</a> (const string &amp;gp_file, const <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh)</td></tr>
-<tr class="memdesc:ga18b4983561589b0093083f2125fcda1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function outputs a <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance in a file in <a href="http://www.geuz.org/gmsh/">Gmsh</a> format.  <a href="group__Util.html#ga18b4983561589b0093083f2125fcda1a">More...</a><br /></td></tr>
-<tr class="separator:ga18b4983561589b0093083f2125fcda1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga439b96397c0dce42a51e6f9928ec130a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga439b96397c0dce42a51e6f9928ec130a">saveGmsh</a> (const string &amp;file, const <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh)</td></tr>
+<tr class="memdesc:ga439b96397c0dce42a51e6f9928ec130a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function outputs a <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance in a file in <a href="http://www.geuz.org/gmsh/">Gmsh</a> format.  <a href="group__Util.html#ga439b96397c0dce42a51e6f9928ec130a">More...</a><br /></td></tr>
+<tr class="separator:ga439b96397c0dce42a51e6f9928ec130a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga314c8c3aa821a9cee7679ba74ac0befc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga314c8c3aa821a9cee7679ba74ac0befc">saveGnuplot</a> (const string &amp;file, const <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh)</td></tr>
 <tr class="memdesc:ga314c8c3aa821a9cee7679ba74ac0befc"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function outputs a <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance in a file in <a href="http://www.gnuplot.info/">Gmsh</a> format.  <a href="group__Util.html#ga314c8c3aa821a9cee7679ba74ac0befc">More...</a><br /></td></tr>
 <tr class="separator:ga314c8c3aa821a9cee7679ba74ac0befc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1055,6 +1061,10 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memitem:ga83b733ffbcdaae10616574956ac2bb24"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24">Jacobi</a> (const <a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> omega, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
 <tr class="memdesc:ga83b733ffbcdaae10616574956ac2bb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Jacobi solver function.  <a href="group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24">More...</a><br /></td></tr>
 <tr class="separator:ga83b733ffbcdaae10616574956ac2bb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab27d0cc4ff53840022eb049867af87c6"><td class="memItemLeft" align="right" valign="top">
+ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#gab27d0cc4ff53840022eb049867af87c6">operator&lt;&lt;</a> (ostream &amp;s, const <a class="el" href="classOFELI_1_1NLASSolver.html">NLASSolver</a> &amp;nl)</td></tr>
+<tr class="memdesc:gab27d0cc4ff53840022eb049867af87c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output differential system information. <br /></td></tr>
+<tr class="separator:gab27d0cc4ff53840022eb049867af87c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2d412d67f3804d00223120371bcdfa48"><td class="memItemLeft" align="right" valign="top">
 ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga2d412d67f3804d00223120371bcdfa48">operator&lt;&lt;</a> (ostream &amp;s, const <a class="el" href="classOFELI_1_1ODESolver.html">ODESolver</a> &amp;de)</td></tr>
 <tr class="memdesc:ga2d412d67f3804d00223120371bcdfa48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output differential system information. <br /></td></tr>
@@ -1291,23 +1301,6 @@ template&lt;class T_ &gt; </td></tr>
 <tr class="memitem:ga0bf36e2bd6efefdc0636c8f7b795b21d"><td class="memTemplItemLeft" align="right" valign="top">T_&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga0bf36e2bd6efefdc0636c8f7b795b21d">stringTo</a> (const std::string &amp;s)</td></tr>
 <tr class="memdesc:ga0bf36e2bd6efefdc0636c8f7b795b21d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to convert a string to a template type parameter. <br /></td></tr>
 <tr class="separator:ga0bf36e2bd6efefdc0636c8f7b795b21d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga685e11faa2cd6e9915a1e1038e220209"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga685e11faa2cd6e9915a1e1038e220209">RTrim</a> (char *s)</td></tr>
-<tr class="memdesc:ga685e11faa2cd6e9915a1e1038e220209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to remove blanks at the end of a string. <br /></td></tr>
-<tr class="separator:ga685e11faa2cd6e9915a1e1038e220209"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac31bf9e50fa7488d821af3d1914abd16"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#gac31bf9e50fa7488d821af3d1914abd16">LTrim</a> (char *s)</td></tr>
-<tr class="memdesc:gac31bf9e50fa7488d821af3d1914abd16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to remove blanks at the beginning of a string. <br /></td></tr>
-<tr class="separator:gac31bf9e50fa7488d821af3d1914abd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8de0a295590d6bfdf06b1e6290d300e5"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga8de0a295590d6bfdf06b1e6290d300e5">Trim</a> (char *s)</td></tr>
-<tr class="memdesc:ga8de0a295590d6bfdf06b1e6290d300e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to remove blanks at the beginning and end of a string. <br /></td></tr>
-<tr class="separator:ga8de0a295590d6bfdf06b1e6290d300e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga686eef4b6983e13e87ba995efb7b32bd"><td class="memTemplParams" colspan="2">
-template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga686eef4b6983e13e87ba995efb7b32bd"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga686eef4b6983e13e87ba995efb7b32bd">Swap</a> (T_ &amp;a, T_ &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
-<tr class="memdesc:ga686eef4b6983e13e87ba995efb7b32bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap elements <em>a</em> and <em>b</em>. <br /></td></tr>
-<tr class="separator:ga686eef4b6983e13e87ba995efb7b32bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>

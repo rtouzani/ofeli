@@ -5,6 +5,7 @@ AUTOMAKE_OPTIONS = no-dependencies
 libsolvers_a_SOURCES = \
 	BSpline.cpp \
 	EigenProblemSolver.cpp \
+	NLASSolver.cpp \
 	ODESolver.cpp \
 	OptimNM.cpp \
 	OptimSA.cpp \

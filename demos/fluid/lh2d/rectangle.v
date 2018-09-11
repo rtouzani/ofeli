@@ -5,7 +5,6 @@
    <date></date>
    <author></author>
 </info>
-<Mesh file="rectangle.m" />
 <Field name="v" type="Side" nb_dof="2">
    <Step time="0.000000e+000">
       <expression dof="1">0.5-y</expression>

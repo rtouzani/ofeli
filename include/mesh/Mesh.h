@@ -139,16 +139,25 @@ class Mesh
          int           nb_dof=1);
 
 /** \brief Constructor for a 1-D mesh.
- *  The domain is the interval [0,L]
- *  @param [in] L Length of the interval
+ *  The domain is the interval [xmin,xmax]
+ *  @param [in] xmin Value of xmin
+ *  @param [in] xmax Value of xmax
  *  @param [in] nb_el Number of elements to generate
  *  @param [in] p Degree of finite element polynomial (Default = 1)
  *  @param [in] nb_dof Number of degrees of freedom for each node (Default = 1)
  */
-    Mesh(real_t L,
+    Mesh(real_t xmin,
+         real_t xmax,
          size_t nb_el,
          size_t p=1,
          size_t nb_dof=1);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    Mesh(real_t xmax,
+         size_t nb_el,
+         size_t p=1,
+         size_t nb_dof=1);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Constructor for a uniform finite difference grid given by and instance of class Grid.
  *  @param [in] g Grid instance
@@ -1021,6 +1030,7 @@ class Mesh
    unsigned long     _available_memory;
    size_t            _n_view1, _n_view2, _e_view1, _e_view2, _s_view1, _s_view2, _ed_view1, _ed_view2;
 
+   void set1D(real_t xmin, real_t xmax, size_t nb_el, size_t p, size_t nb_dof);
    void FindSideNeighbors();
    void RenumberNodes(size_t m=GRAPH_MEMORY);
    void RenumberNodes(vector<size_t> &perm, size_t m=GRAPH_MEMORY);

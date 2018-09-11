@@ -28,7 +28,6 @@
                        Implementation of class 'ODESolver'
 
   ==============================================================================*/
-
 #include "solvers/ODESolver.h"
 #include "OFELIException.h"
 using std::cout;
@@ -87,15 +86,13 @@ ODESolver::ODESolver(TimeScheme s,
            _alloc_f01(false), _setF_called(false), _setDF1_called(false)
 {
    set(s,time_step,final_time);
-   //   if (_nb_eq>1) {
-      _u.setSize(_nb_eq);
-      _v.setSize(_nb_eq);
-      _b.setSize(_nb_eq);
-      _f0.setSize(_nb_eq);
-      _vF2.setSize(_nb_eq);
-      _ddu.setSize(_nb_eq);
-      _dudt.setSize(_nb_eq);
-      //   }
+   _u.setSize(_nb_eq);
+   _v.setSize(_nb_eq);
+   _b.setSize(_nb_eq);
+   _f0.setSize(_nb_eq);
+   _vF2.setSize(_nb_eq);
+   _ddu.setSize(_nb_eq);
+   _dudt.setSize(_nb_eq);
 }
 
 
@@ -154,19 +151,6 @@ void ODESolver::setMatrices(DMatrix<real_t>& A0,
    _lhs = true;
 }
 
-/*
-void ODESolver::setODEVectors(Vect<real_t>& a0,
-                              Vect<real_t>& a1)
-{
-   if (a0.size()!=_nb_eq || a1.size()!=_nb_eq)
-      throw OFELIException("In ODESolver::seODEVectors(...): Vector size is "
-                           "different from system size");
-   _a0 = &a0;
-   _a1 = &a1;
-   _order = 1;
-   _lhs = true;
-   }*/
-
 
 void ODESolver::setMatrices(DMatrix<real_t>& A0,
                             DMatrix<real_t>& A1,
@@ -180,20 +164,6 @@ void ODESolver::setMatrices(DMatrix<real_t>& A0,
    _order = 2;
    _lhs = true;
 }
-
-/*
-void ODESolver::setODEVectors(Vect<real_t>& a0,
-                              Vect<real_t>& a1,
-                              Vect<real_t>& a2)
-{
-   setODEVectors(a0,a1);
-   if (A2.getNbRows()!=_nb_eq)
-      throw OFELIException("In ODESolver::setODEVectors(...): Vector size is "
-                           "different from system size");
-   _a2 = &a2;
-   _order = 2;
-   _lhs = true;
-   }*/
 
 
 void ODESolver::setF(string f)
@@ -209,19 +179,13 @@ void ODESolver::setF(string f)
       throw OFELIException("In ODESolver::setF(string): Number of calls is larger "
                            "than system size.");
    _type = SCALAR_NL;
-cout<<"#1"<<endl;
    if (nb_eq>1)
       _type = VECTOR_NL;
    _regex = true;
-cout<<"#2"<<endl;
    _expF.push_back(f);
-cout<<"#3"<<endl;
    _vF1.push_back(0.);
-cout<<"#4"<<endl;
-   //   _vF1.push_back(eval(f,_time,_u));
    if (_nb_eq==1)
       _y0 = _u[0];
-cout<<"#5"<<endl;
    _lhs = _rhs = true;
    _setF_called = true;
 }
@@ -277,12 +241,12 @@ real_t ODESolver::eval(string exp,
 
 real_t ODESolver::eval(string              exp,
                        real_t              t,
-                       const Vect<real_t>& y)
+                       const Vect<real_t>& x)
 {
    real_t v, d[11];
    d[0] = t;
    for (size_t j=0; j<_nb_eq+1; ++j)
-      d[j+1] = y[j];
+      d[j+1] = x[j];
    int err;
    theParser.Parse(exp.c_str(),"t,y1,y2,y3,y4,y5,y6,y7,y8,y9,y10");
    v = theParser.Eval(d);

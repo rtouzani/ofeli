@@ -36,14 +36,30 @@
 
 namespace OFELI {
 
+Laplace1DL2::Laplace1DL2()
+            : _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
+{
+   _bc_given = _bf_given = false;
+}
+
+
+Laplace1DL2::Laplace1DL2(Mesh& ms)
+            : _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
+{
+   _theMesh = &ms;
+   _A.setSize(_theMesh->getNbDOF());
+   _bc_given = _bf_given = false;
+}
+
+
 Laplace1DL2::Laplace1DL2(Mesh&         ms,
                          Vect<real_t>& u)
+            : _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
 {
    _u = &u;
    _theMesh = &ms;
    _A.setSize(_theMesh->getNbDOF());
-   _lsf = _rsf = 0;
-   _is_lbc = _is_rbc = false;
+   _bc_given = _bf_given = false;
 }
 
 
@@ -126,28 +142,26 @@ void Laplace1DL2::BoundaryRHS(int    n,
 int Laplace1DL2::run()
 {
    *_u = 0;
+   size_t n = _theMesh->getNbNodes();
    MESH_EL {
       set(theElement);
       Matrix();
       if (_bf_given)
          BodyRHS(*_bf);
       if (_sf_given) {
-         if (theElementLabel==1)
-            BoundaryRHS(-1,_lsf);
-         if (theElementLabel==_theMesh->getNbElements())
-            BoundaryRHS(1,_rsf);
+         BoundaryRHS(1,(*_sf)(1));
+         BoundaryRHS(1,(*_sf)(2));
       }
       ElementAssembly(_A);
       ElementAssembly(*_u);
    }
-   if (_is_lbc) {
-      _A.set(1,2,0);
-      _u->set(1,_lbc*_A(1,1));
+   if ((*_theMesh)[1]->getCode(1)>0) {
+      _A.set(1,2,0.);
+      _u->set(1,(*_bc)(1)*_A(1,1));
    }
-   if (_is_rbc) {
-      size_t n = _theMesh->getNbDOF();
-      _A.set(n,n-1,0);
-      _u->set(n,_rbc*_A(n,n));
+   if ((*_theMesh)[n]->getCode(1)>0) {
+      _A.set(n,n-1,0.);
+      _u->set(n,(*_bc)(n)*_A(n,n));
    }
    return _A.Solve(*_u);
 }

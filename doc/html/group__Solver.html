@@ -86,8 +86,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver&lt; T_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve systems of linear equations by iterative methods.  <a href="classOFELI_1_1LinearSolver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1MyNLAS.html">MyNLAS</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class to define by user specified function.  <a href="classOFELI_1_1MyNLAS.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1MyOpt.html">MyOpt</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class to define by user specified optimization function.  <a href="classOFELI_1_1MyOpt.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1NLASSolver.html">NLASSolver</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To solve a system of nonlinear algebraic equations of the form f(u) = 0.  <a href="classOFELI_1_1NLASSolver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html">ODESolver</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To solve a system of ordinary differential equations.  <a href="classOFELI_1_1ODESolver.html#details">More...</a><br /></td></tr>
@@ -170,6 +176,10 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memitem:ga83b733ffbcdaae10616574956ac2bb24"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24">Jacobi</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> omega, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
 <tr class="memdesc:ga83b733ffbcdaae10616574956ac2bb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Jacobi solver function.  <a href="group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24">More...</a><br /></td></tr>
 <tr class="separator:ga83b733ffbcdaae10616574956ac2bb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab27d0cc4ff53840022eb049867af87c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab27d0cc4ff53840022eb049867af87c6"></a>
+ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#gab27d0cc4ff53840022eb049867af87c6">operator&lt;&lt;</a> (ostream &amp;s, const NLASSolver &amp;nl)</td></tr>
+<tr class="memdesc:gab27d0cc4ff53840022eb049867af87c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output differential system information. <br /></td></tr>
+<tr class="separator:gab27d0cc4ff53840022eb049867af87c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2d412d67f3804d00223120371bcdfa48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2d412d67f3804d00223120371bcdfa48"></a>
 ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga2d412d67f3804d00223120371bcdfa48">operator&lt;&lt;</a> (ostream &amp;s, const ODESolver &amp;de)</td></tr>
 <tr class="memdesc:ga2d412d67f3804d00223120371bcdfa48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output differential system information. <br /></td></tr>

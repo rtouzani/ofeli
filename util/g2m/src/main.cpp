@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
          d.setOutputFile(output_file);
          if (ret>0)
             d.generateMesh();
-         d.getMesh().put(output_file);
+         d.getMesh()->put(output_file);
       }
    }
    else {
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
          remove(bamg_file.c_str());
          cout << "File " << bamg_file << " deleted." << endl;
          if (vtk_opt) {
-            saveVTK(*file+".vtk",d->getMesh());
+            saveVTK(*file+".vtk",*(d->getMesh()));
             cout << "Mesh stored in vtk file " << *file+".vtk" << endl;
          }
       }

@@ -41,17 +41,17 @@ using namespace OFELI;
 
 int main()
 {
-// Instantiate solution vector (Initialized to 0)
    try {
+//    Instantiate solution vector (Initialized to 0)
       Vect<double> x(3);
 
 //    Instantiate optimization solver class using solution vector
       OptSolver os(x);
 
 //    Select optimization algorithm
-      os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
+      os.setOptMethod(OptSolver::GRADIENT);
 
-//    Choose objective function and its gradient 
+//    Set objective function and its gradient 
       os.setObjective("x1^2+(x1-x2)^2+(x2-x3)^2+x3^2-8*x3");
       os.setGradient("4*x1-2*x2",1);
       os.setGradient("-2*x1+4*x2-2*x3",2);

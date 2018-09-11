@@ -7,7 +7,7 @@
 </info>
 <Project name="cavity-30">
    <time_step value="0.01"/>
-   <max_time value="10."/>
+   <max_time value="5."/>
    <verbose value="2"/>
    <plot value="10"/>
    <mesh_file value="cavity-30.m"/>

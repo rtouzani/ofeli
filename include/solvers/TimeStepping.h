@@ -52,6 +52,8 @@ using std::string;
 #include "linear_algebra/Assembly.h"
 #include "solvers/LinearSolver.h"
 
+#define MAX_NB_PDES  10
+
 namespace OFELI {
 /*!
  *  \addtogroup OFELI
@@ -140,7 +142,7 @@ class TimeStepping
 /** \brief Define partial differential equation to solve
  *  \details The used equation class must have been constructed using the Mesh instance
  *  @param [in] eq Reference to equation instance
- *  @param [in] nl Toggle to say if the considered equation is linear (Default value = 0) or not
+ *  @param [in] nl Toggle to say if the considered equation is linear [Default: <tt>0</tt>] or not
  */
     void setPDE(AbsEqua<real_t>& eq,
                 bool             nl=false);
@@ -148,7 +150,7 @@ class TimeStepping
 /** \brief Set intermediate right-hand side vector for the Runge-Kutta method
  *  @param [in] f Vector containing the RHS
  */
-    void setRK4RHS(Vect<real_t> &f);
+    void setRK4RHS(Vect<real_t>& f);
 
 /** \brief Set intermediate right-hand side vector for the TVD Runge-Kutta 3 method
  *  @param [in] f Vector containing the RHS
@@ -203,13 +205,13 @@ class TimeStepping
  *  \details This is useful if the linear system is solved by
  *  a factorization method but has no effect otherwise
  */
-    void setConstantMatrix() { _constant_matrix = true; }
+    void setConstantMatrix() { _constant_matrix[_nb_pdes-1] = true; }
 
 /** \brief Say that matrix problem is variable
  *  \details This is useful if the linear system is solved by
  *  a factorization method but has no effect otherwise
  */
-    void setNonConstantMatrix() { _constant_matrix = false; }
+    void setNonConstantMatrix() { _constant_matrix[_nb_pdes-1] = false; }
 
 /** \brief Set linear solver data
  *  @param [in] s Solver identification parameter.
@@ -303,17 +305,20 @@ class TimeStepping
 
  private:
 
-   AbsEqua<real_t> *_theEqua;
-   Mesh *_theMesh;
-   size_t _order, _nb_eq, _nb_dof, _nb_ssteps, _step, _sstep;
-   int _verb, _sc, _non_linear, _max_it;
-   Iteration _s;
-   Preconditioner _p;
-   bool _constant_matrix, _regex, _explicit, _set_bc, _nl;
-   Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv;
-   Vect<real_t> *_du, _ddu, _dv, _ddv, _D, _k1, _k2, _k3, _k4;
+   AbsEqua<real_t> *_theEqua[MAX_NB_PDES];
+   Mesh *_theMesh[MAX_NB_PDES];
+   size_t _order, _nb_eq[MAX_NB_PDES], _nb_dof[MAX_NB_PDES], _nb_ssteps, _step, _sstep;
+   int _nb_pdes, _ind, _verb, _sc, _non_linear, _max_it;
+   Iteration _s[MAX_NB_PDES];
+   Preconditioner _p[MAX_NB_PDES];
+   bool _constant_matrix[MAX_NB_PDES], _regex, _explicit[MAX_NB_PDES], _set_bc[MAX_NB_PDES], _nl[MAX_NB_PDES];
+   Vect<real_t> _u[MAX_NB_PDES], _v[MAX_NB_PDES], *_w[MAX_NB_PDES], _f0[MAX_NB_PDES], _f1[MAX_NB_PDES];
+   Vect<real_t> *_f2[MAX_NB_PDES], _b[MAX_NB_PDES], *_f01[MAX_NB_PDES], _f[MAX_NB_PDES], *_bc[MAX_NB_PDES];
+   Vect<real_t> _bb[MAX_NB_PDES], _vv[MAX_NB_PDES];
+   Vect<real_t> *_du[MAX_NB_PDES], _ddu[MAX_NB_PDES], _dv[MAX_NB_PDES], _ddv[MAX_NB_PDES], _D[MAX_NB_PDES];
+   Vect<real_t> _k1[MAX_NB_PDES], _k2[MAX_NB_PDES], _k3[MAX_NB_PDES], _k4[MAX_NB_PDES];
    Vect<real_t> *_a0, *_a1, *_a2;
-   Matrix<real_t> *_A;
+   Matrix<real_t> *_A[MAX_NB_PDES];
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;
    real_t _beta, _gamma, _nl_toler;
    int _max_nl_it;

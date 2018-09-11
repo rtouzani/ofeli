@@ -1,32 +1,21 @@
 /*==============================================================================
-
                                     O  F  E  L  I
-
                           Object  Finite  Element  Library
-
   ==============================================================================
-
    Copyright (C) 1998 - 2018 Rachid Touzani
-
    This file is part of OFELI.
-
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-
    OFELI is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU Lesser General Public License for more details.
-
    You should have received a copy of the GNU Lesser General Public License
    along with OFELI. If not, see <http://www.gnu.org/licenses/>.
-
   ==============================================================================
-
                          Implementation of class 'Domain'
-
   ==============================================================================*/
 
 #include "mesh/Domain.h"
@@ -143,7 +132,21 @@ void Domain::insertVertex(real_t x,
 {
    Vertex v;
    v.label = ++_nb_vertices;
-   v.x = x; v.y = y; v.h = h;
+   v.x = x; v.y = y; v.z = 0.; v.h = h;
+   v.code = code;
+   _v.push_back(v);
+}
+
+
+void Domain::insertVertex(real_t x,
+                          real_t y,
+                          real_t z,
+                          real_t h,
+                          int    code)
+{
+   Vertex v;
+   v.label = ++_nb_vertices;
+   v.x = x; v.y = y; v.z = z; v.h = h;
    v.code = code;
    _v.push_back(v);
 }
@@ -275,6 +278,19 @@ int Domain::Position(real_t  s,
 
 void Domain::insertLine(size_t n1,
                         size_t n2,
+                        int    code)
+{
+   int dc=0, nc=0;
+   if (code<0)
+      nc = -code;
+   else
+      dc = code;
+   insertLine(n1,n2,dc,nc);
+}
+
+
+void Domain::insertLine(size_t n1,
+                        size_t n2,
                         int    dc,
                         int    nc)
 {
@@ -314,6 +330,20 @@ int Domain::getLine()
    _l.push_back(ll);
    _nb_lines++;
    return 0;
+}
+
+
+void Domain::insertCircle(size_t n1,
+                          size_t n2,
+                          size_t n3,
+                          int    code)
+{
+   int nc=0, dc=0;
+   if (code<0)
+      nc = -code;
+   else
+      dc = code;
+   insertCircle(n1,n2,n3,dc,nc);
 }
 
 
@@ -763,8 +793,7 @@ int Domain::Rectangle(real_t* x,
                       int     c1,
                       int     c2,
                       int     c3,
-                      int     c4,
-                      string  file)
+                      int     c4)
 {
    size_t m1, m2, m3, nn1, nn2, nn3;
    vector<int> cd;
@@ -788,6 +817,7 @@ int Domain::Rectangle(real_t* x,
       hy = ly*(r-1.)/(pow(r,real_t(n2))-1.);
    real_t yy=x[1], cs=1.75;
    size_t first_dof = 1;
+   _nb_dof = 1;
    for (size_t i=0; i<=n2; i++) {
       hx = lx/real_t(n1);
       if (r != 1)

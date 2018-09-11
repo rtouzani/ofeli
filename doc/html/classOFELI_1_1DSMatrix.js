@@ -34,6 +34,7 @@ var classOFELI_1_1DSMatrix =
     [ "setLDLt", "classOFELI_1_1DSMatrix.html#aafef379b7aa390875b01a1a3810a1e8f", null ],
     [ "getArray", "classOFELI_1_1DSMatrix.html#a094470ce0ea2e96ada8f1c888230a520", null ],
     [ "get", "group__OFELI.html#ga7a7b1d2724593a6ec1212247d7964b8e", null ],
+    [ "reset", "classOFELI_1_1DSMatrix.html#a7b0e029102ad38f4b814c6523aedb53d", null ],
     [ "getNbRows", "classOFELI_1_1DSMatrix.html#ac64de7025d9f5712288b3093ca5408b1", null ],
     [ "getNbColumns", "classOFELI_1_1DSMatrix.html#a879356293a4c2120a7f87bf231ce341c", null ],
     [ "setPenal", "classOFELI_1_1DSMatrix.html#a72077468b17118c44394d286f7737bd4", null ],

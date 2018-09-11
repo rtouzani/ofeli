@@ -122,7 +122,7 @@ Mesh::Mesh(const string& file,
 }
 
 
-Mesh::Mesh(real_t L,
+Mesh::Mesh(real_t xmax,
            size_t nb_el,
            size_t p,
            size_t nb_dof)
@@ -134,38 +134,24 @@ Mesh::Mesh(real_t L,
        _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
        _ed_view1(0), _ed_view2(0)
 {
-   size_t NbN = nb_el*p + 1;
+   set1D(0.,xmax,nb_el,p,nb_dof);
+}
 
-// Insert nodes
-   real_t xx=0., h=L/real_t(nb_el);
-   size_t nn=1;
-   for (size_t nnd=1; nnd<=NbN; nnd++) {
-      Point<real_t> x(xx);
-      Node *nd = new Node(nn++,x);
-      nd->setNbDOF(nb_dof);
-      for (size_t i=0; i<nb_dof; i++)
-         _code[i] = 0;
-      nd->setDOF(_first_dof,nb_dof);
-      nd->setCode(_code);
-      Add(nd);
-      xx += h/p;
-   }
-   _nb_eq = _nb_dof;
 
-// Insert elements
-   nn = 0;
-   for (size_t nne=1; nne<=nb_el; nne++) {
-      Element *el = new Element(nne,LINE,1);
-      for (size_t i=1; i<=p+1; i++)
-         el->Add(_nodes[nn++]);
-      nn--;
-      el->setCode(1);
-      el->getMeasure();
-      Add(el);
-   }
-   setNodesForDOF();
-   _boundary_nodes.push_back(_nodes[0]);
-   _boundary_nodes.push_back(_nodes[_nb_nodes-1]);
+Mesh::Mesh(real_t xmin,
+           real_t xmax,
+           size_t nb_el,
+           size_t p,
+           size_t nb_dof)
+     : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(1), _nb_dof(0),
+       _nb_vertices(0), _first_dof(1), _nb_mat(0), _nb_boundary_nodes(2), _verb(0), _no_imposed_dof(false),
+       _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
+       _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
+       _node_neighbor_elements_created(false), _element_neighbor_elements_created(false),
+       _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
+       _ed_view1(0), _ed_view2(0)
+{
+   set1D(xmin,xmax,nb_el,p,nb_dof);
 }
 
 
@@ -280,8 +266,7 @@ Mesh::Mesh(const Grid& g,
    }
 
 // Elements
-   n = ne = 0;
-   m = 1;
+   n = ne = 0, m = 1;
    switch (_dim) {
 
       case 1:
@@ -334,16 +319,16 @@ Mesh::Mesh(const Grid& g,
                for (j=1; j<=ny; j++) {
                   for (i=1; i<=nx; i++) {
                      if (g.isActive(i,j,k)) {
-                        el = new Element(++ne,HEXAHEDRON,1);
-                        el->Add(_nodes[nn(i  ,j  ,k  )-1]);
-                        el->Add(_nodes[nn(i+1,j  ,k  )-1]);
-                        el->Add(_nodes[nn(i+1,j+1,k  )-1]);
-                        el->Add(_nodes[nn(i  ,j+1,k  )-1]);
-                        el->Add(_nodes[nn(i  ,j  ,k+1)-1]);
-                        el->Add(_nodes[nn(i  ,j+1,k+1)-1]);
-                        el->Add(_nodes[nn(i+1,j+1,k+1)-1]);
-                        el->Add(_nodes[nn(i  ,j+1,k+1)-1]);
-                        Add(el);
+                        the_element = new Element(++ne,HEXAHEDRON,1);
+                        The_element.Add(_nodes[nn(i  ,j  ,k  )-1]);
+                        The_element.Add(_nodes[nn(i+1,j  ,k  )-1]);
+                        The_element.Add(_nodes[nn(i+1,j+1,k  )-1]);
+                        The_element.Add(_nodes[nn(i  ,j+1,k  )-1]);
+                        The_element.Add(_nodes[nn(i  ,j  ,k+1)-1]);
+                        The_element.Add(_nodes[nn(i  ,j+1,k+1)-1]);
+                        The_element.Add(_nodes[nn(i+1,j+1,k+1)-1]);
+                        The_element.Add(_nodes[nn(i  ,j+1,k+1)-1]);
+                        Add(the_element);
                      }
                   }
                }
@@ -353,7 +338,7 @@ Mesh::Mesh(const Grid& g,
    }
    NumberEquations();
    mesh_elements(*this)
-      theMaterial.check(the_element->getCode());
+      theMaterial.check(The_element.getCode());
 }
 
 
@@ -368,8 +353,6 @@ Mesh::Mesh(const Grid& g,
        _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0),
        _s_view1(0), _s_view2(0), _ed_view1(0), _ed_view2(0)
 {
-   Node *nd;
-   Element *el;
    size_t i, j, k, n1, n2;
    size_t nx=g.getNx(), ny=g.getNy(), nz=g.getNz();
    setNodesForDOF();
@@ -388,12 +371,12 @@ Mesh::Mesh(const Grid& g,
       case 1:
          for (i=1; i<=nx; i++) {
             Point<real_t> x = 0.5*(g.getCoord(i)+g.getCoord(i+1));
-            nd = new Node(++n,x);
+            the_node = new Node(++n,x);
             _code[0] = g.getCode(i);
-            nd->setNbDOF(1);
-            nd->setDOF(_first_dof,1);
-            nd->setCode(_code);
-            Add(nd);
+            The_node.setNbDOF(1);
+            The_node.setDOF(_first_dof,1);
+            The_node.setCode(_code);
+            Add(the_node);
          }
          break;
 
@@ -401,12 +384,12 @@ Mesh::Mesh(const Grid& g,
          for (i=1; i<=nx; i++) {
             for (j=1; j<=ny; j++) {
               Point<real_t> x = 0.5*(g.getCoord(i,j)+g.getCoord(i+1,j+1));
-               nd = new Node(++n,x);
+               the_node = new Node(++n,x);
                _code[0] = g.getCode(i,j);
-               nd->setNbDOF(1);
-               nd->setDOF(_first_dof,1);
-               nd->setCode(_code);
-               Add(nd);
+               The_node.setNbDOF(1);
+               The_node.setDOF(_first_dof,1);
+               The_node.setCode(_code);
+               Add(the_node);
             }
          }
          break;
@@ -416,12 +399,12 @@ Mesh::Mesh(const Grid& g,
             for (j=1; j<=ny; j++) {
                for (k=1; k<=nz; k++) {
                  Point<real_t> x = 0.5*(g.getCoord(i,j,k)+g.getCoord(i+1,j+1,k+1));
-                  nd = new Node(++n,x);
+                  the_node = new Node(++n,x);
                   _code[0] = g.getCode(i,j,k);
-                  nd->setNbDOF(1);
-                  nd->setDOF(_first_dof,1);
-                  nd->setCode(_code);
-                  Add(nd);
+                  The_node.setNbDOF(1);
+                  The_node.setDOF(_first_dof,1);
+                  The_node.setCode(_code);
+                  Add(the_node);
                }
             }
          }
@@ -435,10 +418,10 @@ Mesh::Mesh(const Grid& g,
 
       case 1:
          for (i=1; i<=nx-1; i++) {
-            el = new Element(++ne,LINE,1);
-            el->Add(_nodes[i-1]);
-            el->Add(_nodes[i]);
-            Add(el);
+            the_element = new Element(++ne,LINE,1);
+            The_element.Add(_nodes[i-1]);
+            The_element.Add(_nodes[i]);
+            Add(the_element);
          }
          break;
 
@@ -447,12 +430,12 @@ Mesh::Mesh(const Grid& g,
             for (j=1; j<=ny-1; j++) {
                for (i=1; i<=nx-1; i++) {
                   n1 = nn + i - 1;
-                  el = new Element(++ne,QUADRILATERAL,1);
-                  el->Add(_nodes[n1-1]);
-                  el->Add(_nodes[n1]);
-                  el->Add(_nodes[n1+nx+1]);
-                  el->Add(_nodes[n1+nx]);
-                  Add(el);
+                  the_element = new Element(++ne,QUADRILATERAL,1);
+                  The_element.Add(_nodes[n1-1]);
+                  The_element.Add(_nodes[n1]);
+                  The_element.Add(_nodes[n1+nx+1]);
+                  The_element.Add(_nodes[n1+nx]);
+                  Add(the_element);
                }
                nn += nx;
             }
@@ -461,16 +444,16 @@ Mesh::Mesh(const Grid& g,
             for (i=1; i<=nx-1; i++) {
                for (j=1; j<=ny-1; j++) {
                   n1 = nn + i - 1;
-                  el = new Element(++ne,TRIANGLE,1);
-                  el->Add(_nodes[n1-1]);
-                  el->Add(_nodes[n1+ny-1]);
-                  el->Add(_nodes[n1]);
-                  Add(el);
-                  el = new Element(++ne,TRIANGLE,1);
-                  el->Add(_nodes[n1+ny-1]);
-                  el->Add(_nodes[n1]);
-                  el->Add(_nodes[n1-1]);
-                  Add(el);
+                  the_element = new Element(++ne,TRIANGLE,1);
+                  The_element.Add(_nodes[n1-1]);
+                  The_element.Add(_nodes[n1+ny-1]);
+                  The_element.Add(_nodes[n1]);
+                  Add(the_element);
+                  the_element = new Element(++ne,TRIANGLE,1);
+                  The_element.Add(_nodes[n1+ny-1]);
+                  The_element.Add(_nodes[n1]);
+                  The_element.Add(_nodes[n1-1]);
+                  Add(the_element);
                }
                nn += ny;
             }
@@ -484,16 +467,16 @@ Mesh::Mesh(const Grid& g,
                   for (i=1; i<=nx-1; i++) {
                      n1 = nn + i - 1;
                      n2 = n1 + (nx+1)*(ny+1);
-                     el = new Element(++ne,HEXAHEDRON,1);
-                     el->Add(_nodes[n1-1]);
-                     el->Add(_nodes[n1]);
-                     el->Add(_nodes[n1+nx+1]);
-                     el->Add(_nodes[n1+nx]);
-                     el->Add(_nodes[n2-1]);
-                     el->Add(_nodes[n2]);
-                     el->Add(_nodes[n2+nx+1]);
-                     el->Add(_nodes[n2+nx]);
-                     Add(el);
+                     the_element = new Element(++ne,HEXAHEDRON,1);
+                     The_element.Add(_nodes[n1-1]);
+                     The_element.Add(_nodes[n1]);
+                     The_element.Add(_nodes[n1+nx+1]);
+                     The_element.Add(_nodes[n1+nx]);
+                     The_element.Add(_nodes[n2-1]);
+                     The_element.Add(_nodes[n2]);
+                     The_element.Add(_nodes[n2+nx+1]);
+                     The_element.Add(_nodes[n2+nx]);
+                     Add(the_element);
                   }
                   nn += nx + 1;
                }
@@ -504,7 +487,7 @@ Mesh::Mesh(const Grid& g,
    }
    NumberEquations();
    mesh_elements(*this)
-      theMaterial.check(the_element->getCode());
+      theMaterial.check(The_element.getCode());
 }
 
 
@@ -551,6 +534,19 @@ Mesh::Mesh(real_t xmin,
          The_element.Add(nd[n-p+m]);
       Add(the_element);
    }
+
+   the_side = new Side(1,POINT);
+   The_side.Add(_nodes[0]);
+   The_side.setCode(1,0);
+   if (nd[0]->getCode(1)==0)
+      The_side.setCode(1,1);
+   Add(the_side);
+   the_side = new Side(2,POINT);
+   The_side.Add(nd[_nb_nodes-1]);
+   The_side.setCode(1,0);
+   if (nd[_nb_nodes-1]->getCode(1)==0)
+      The_side.setCode(1,2);
+   Add(the_side);
 
    NumberEquations();
    mesh_elements(*this)
@@ -851,7 +847,7 @@ Mesh::Mesh(real_t xmin,
 Mesh::Mesh(const Mesh& ms)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0),
        _nb_edges(0), _nb_side_nodes(ms._nb_side_nodes),
-       _nb_element_nodes(ms._nb_element_nodes), _dim(ms._dim), _nb_dof(ms._nb_dof),
+       _nb_element_nodes(ms._nb_element_nodes), _dim(ms._dim), _nb_dof(0),
        _nb_vertices(ms._nb_vertices), _first_dof(ms._first_dof), _nb_mat(ms._nb_mat),
        _nb_eq(ms._nb_eq), _max_nb_nodes(ms._max_nb_nodes), _max_nb_elements(ms._max_nb_elements),
        _max_nb_sides(ms._max_nb_sides), _max_nb_edges(ms._max_nb_edges),
@@ -865,10 +861,9 @@ Mesh::Mesh(const Mesh& ms)
        _s_view1(ms._s_view1), _s_view2(ms._s_view2), _ed_view1(ms._ed_view1), _ed_view2(ms._ed_view2)
 {
 // Insert nodes
-   mesh_nodes(ms) {
+   mesh_nodes(ms)
       Add(new Node(The_node));
-      _nb_eq = _nb_dof;
-   }
+   _nb_eq = _nb_dof;
 
 // Insert elements
    mesh_elements(ms)
@@ -1028,6 +1023,61 @@ Mesh::~Mesh()
       if (_edges[i])
          delete _edges[i];
          }*/
+}
+
+
+void Mesh::set1D(real_t xmin,
+                 real_t xmax,
+                 size_t nb_el,
+                 size_t p,
+                 size_t nb_dof)
+{
+   size_t NbN = nb_el*p + 1;
+
+// Insert nodes
+   real_t xx=xmin, h=(xmax-xmin)/real_t(nb_el);
+   size_t nn=1;
+   for (size_t nnd=1; nnd<=NbN; nnd++) {
+      Point<real_t> x(xx);
+      Node *nd = new Node(nn++,x);
+      nd->setNbDOF(nb_dof);
+      for (size_t i=0; i<nb_dof; i++)
+         _code[i] = 0;
+      nd->setDOF(_first_dof,nb_dof);
+      nd->setCode(_code);
+      Add(nd);
+      xx += h/p;
+   }
+   _nb_eq = _nb_dof;
+
+// Insert elements
+   nn = 0;
+   for (size_t nne=1; nne<=nb_el; nne++) {
+      Element *el = new Element(nne,LINE,1);
+      for (size_t i=1; i<=p+1; i++)
+         el->Add(_nodes[nn++]);
+      nn--;
+      el->setCode(1);
+      el->getMeasure();
+      Add(el);
+   }
+   setNodesForDOF();
+   _boundary_nodes.push_back(_nodes[0]);
+   _boundary_nodes.push_back(_nodes[_nb_nodes-1]);
+
+// Insert sides
+   the_side = new Side(1,POINT);
+   The_side.Add(_nodes[0]);
+   The_side.setCode(1,0);
+   if (_nodes[0]->getCode(1)==0)
+      The_side.setCode(1,1);
+   Add(the_side);
+   the_side = new Side(2,POINT);
+   The_side.Add(_nodes[_nb_nodes-1]);
+   The_side.setCode(1,0);
+   if (_nodes[0]->getCode(1)==0)
+      The_side.setCode(1,2);
+   Add(the_side);
 }
 
 
@@ -2736,7 +2786,8 @@ void Mesh::put(const string& file) const
    size_t i, k;
    int sign, m;
 
-   string sh[10] = {"line",
+   string sh[11] = {"point",
+                    "line",
                     "triangle",
                     "quadrilateral",
                     "tetrahedron",

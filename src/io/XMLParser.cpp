@@ -1984,7 +1984,7 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
       while (it!=tokens.end())
          _theDomain->insertRequiredEdge(atoi((*it++).c_str()));
    }
-   else if (_tag_name=="SubDomain" && _set_domain) {
+   else if ((_tag_name=="subdomain"||_tag_name=="SubDomain") && _set_domain) {
       while (it!=tokens.end()) {
          size_t ln = atoi((*it++).c_str());
          int orient = atoi((*it++).c_str());
@@ -2007,7 +2007,8 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
          int c3 = atoi((*it++).c_str());
          int c4 = atoi((*it++).c_str());
          string file = *it++;
-         _theDomain->Rectangle(x,n1,n2,r,c1,c2,c3,c4,file);
+         _theDomain->Rectangle(x,n1,n2,r,c1,c2,c3,c4);
+         _theMesh->put(file);
       }
    }
 }

@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-               Definition of Template Class DMatrix for dense matrices
+              Definition of Template Class DMatrix for dense matrices
 
   ==============================================================================*/
 
@@ -188,6 +188,12 @@ class DMatrix : public Matrix<T_>
              size_t    j,
              const T_& val)
     { _a[_nb_cols*(i-1)+j-1] = val; }
+
+/** \brief Set matrix to 0 and reset factorization parameter
+ *  @warning This function must be used if after a factorization, the matrix has
+ *  modified
+ */
+    void reset();
 
 /** \brief Copy a given vector to a prescribed row in the matrix.
  *  @param [in] i row index to be assigned
@@ -765,6 +771,14 @@ T_ & DMatrix<T_>::operator()(size_t i,
    assert(j<=_nb_cols);
 #endif
    return _a[_nb_cols*(i-1)+j-1];
+}
+
+
+template<class T_>
+void DMatrix<T_>::reset()
+{
+   Clear(_a);
+   _fact = false;
 }
 
 

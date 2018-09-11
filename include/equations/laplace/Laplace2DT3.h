@@ -63,6 +63,9 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
 
  public:
 
+/// \brief Default constructor.
+    Laplace2DT3();
+
 /** \brief Constructor with mesh.
  *  @param [in] ms Mesh instance
  */

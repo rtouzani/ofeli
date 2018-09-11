@@ -89,9 +89,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0eb36f72caebac10b2dc4fa4b3cfa348"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a0eb36f72caebac10b2dc4fa4b3cfa348">Mesh</a> (const string &amp;file, bool bc=false, int opt=NODE_DOF, int nb_dof=1)</td></tr>
 <tr class="memdesc:a0eb36f72caebac10b2dc4fa4b3cfa348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a mesh file.  <a href="#a0eb36f72caebac10b2dc4fa4b3cfa348">More...</a><br /></td></tr>
 <tr class="separator:a0eb36f72caebac10b2dc4fa4b3cfa348"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad565a2bfeecdc7a79103e05e60594b89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#ad565a2bfeecdc7a79103e05e60594b89">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> L, size_t nb_el, size_t p=1, size_t nb_dof=1)</td></tr>
-<tr class="memdesc:ad565a2bfeecdc7a79103e05e60594b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a 1-D mesh. The domain is the interval [0,L].  <a href="#ad565a2bfeecdc7a79103e05e60594b89">More...</a><br /></td></tr>
-<tr class="separator:ad565a2bfeecdc7a79103e05e60594b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a830a0e51a1575188789ed6260c72cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a0a830a0e51a1575188789ed6260c72cd">Mesh</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, size_t nb_el, size_t p=1, size_t nb_dof=1)</td></tr>
+<tr class="memdesc:a0a830a0e51a1575188789ed6260c72cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a 1-D mesh. The domain is the interval [xmin,xmax].  <a href="#a0a830a0e51a1575188789ed6260c72cd">More...</a><br /></td></tr>
+<tr class="separator:a0a830a0e51a1575188789ed6260c72cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a511af0188a793ce22e001565e5a0ce9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Mesh.html#a511af0188a793ce22e001565e5a0ce9b">Mesh</a> (const <a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;g, int opt=QUADRILATERAL)</td></tr>
 <tr class="memdesc:a511af0188a793ce22e001565e5a0ce9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a uniform finite difference grid given by and instance of class <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids. ">Grid</a>.  <a href="#a511af0188a793ce22e001565e5a0ce9b">More...</a><br /></td></tr>
 <tr class="separator:a511af0188a793ce22e001565e5a0ce9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -584,7 +584,7 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
 
 </div>
 </div>
-<a class="anchor" id="ad565a2bfeecdc7a79103e05e60594b89"></a>
+<a class="anchor" id="a0a830a0e51a1575188789ed6260c72cd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -592,7 +592,13 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
           <td class="memname"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>L</em>, </td>
+          <td class="paramname"><em>xmin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>xmax</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -620,10 +626,11 @@ Say if degrees of freedom (unknowns) are supported by nodes, sides or elements. 
       </table>
 </div><div class="memdoc">
 
-<p>Constructor for a 1-D mesh. The domain is the interval [0,L]. </p>
+<p>Constructor for a 1-D mesh. The domain is the interval [xmin,xmax]. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">L</td><td>Length of the interval </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">xmin</td><td>Value of xmin </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">xmax</td><td>Value of xmax </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nb_el</td><td>Number of elements to generate </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Degree of finite element polynomial (Default = 1) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nb_dof</td><td>Number of degrees of freedom for each node (Default = 1) </td></tr>

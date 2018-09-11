@@ -128,7 +128,7 @@ IOField::IOField(const string& mesh_file,
 IOField::IOField(const string& file,
                  Mesh&         ms,
                  AccessType    access,
-                bool           compact)
+                 bool          compact)
         : _of(NULL), _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(&ms)
 {
    _is_opened = false;

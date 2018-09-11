@@ -53,7 +53,7 @@ OptSolver::OptSolver()
 OptSolver::OptSolver(Vect<real_t>& x)
           : _size(x.size()), _verb(1), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
             _max_it(1000), _x(&x), _toler(1.e-10), _exp(true), _sa_opt(false), _tn_opt(false),
-	    _obj_type(0), _x_set(false), _method_set(false)
+            _obj_type(0), _x_set(false), _method_set(false)
 {
    _lb.setSize(_size);
    _ub.setSize(_size);
@@ -171,7 +171,7 @@ void OptSolver::setGradient(string exp,
    if (_opt_method==SIMULATED_ANNEALING)
       throw OFELIException("In OptSolver::setGradient(exp,i): Providing the gradient is useless for the simulated annealing method.");
    if (i>int(_size) || i<=0)
-      throw OFELIException("In OptSolver::setGradient(exp,i): Index is out of order");
+      throw OFELIException("In OptSolver::setGradient(exp,i): Index is out of bounds");
    _exp_grad[i-1] = exp;
 }
 
@@ -179,7 +179,7 @@ void OptSolver::setGradient(string exp,
 void OptSolver::setTNDefaults()
 {
    _verb = 1;
-   _max_it = 100;
+   _max_it = 200;
    _toler = OFELI_EPSMCH;
 }
 

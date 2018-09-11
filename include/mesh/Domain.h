@@ -200,23 +200,56 @@ typedef struct { size_t n1, n2, n3, n4; int code; } El;
                       real_t h,
                       int code);
 
+/** \brief Insert a vertex (3-D case)
+ *  @param [in] x x-coordinate of vertex
+ *  @param [in] y y-coordinate of vertex
+ *  @param [in] z z-coordinate of vertex
+ *  @param [in] h mesh size around vertex
+ *  @param [in] code code of coordinate
+ */
+    void insertVertex(real_t x,
+                      real_t y,
+                      real_t z,
+                      real_t h,
+                      int code);
+
+/** \brief Insert a straight line
+ *  @param [in] n1 Label of the first vertex of line
+ *  @param [in] n2 Label of the second vertex of line
+ *  @param [in] c Code to associate to created nodes (Dirichlet) or sides (Neumann) if < 0
+ */
+    void insertLine(size_t n1,
+                    size_t n2,
+                    int    c);
+
 /** \brief Insert a straight line
  *  @param [in] n1 Label of the first vertex of line
  *  @param [in] n2 Label of the second vertex of line
  *  @param [in] dc Code to associate to created nodes (Dirichlet)
- *  @param [in] nc Code to associate to line (Neumann)
+ *  @param [in] nc Code to associate to created sides (Neumann)
  */
     void insertLine(size_t n1,
                     size_t n2,
-                    int    dc, 
+                    int    dc,
                     int    nc);
 
 /** \brief Insert a circluar arc
  *  @param [in] n1 Label of vertex defining the first end of the arc
  *  @param [in] n2 Label of vertex defining the second end of the arc
  *  @param [in] n3 Label of vertex defining the center of the arc
- *  @param [in] dc Dirichlet code for nodes on the arc
- *  @param [in] nc Neumann code for sides on the arc
+ *  @param [in] c Code to associate to created nodes (Dirichlet) or sides (Neumann) if < 0
+ */
+    void insertCircle(size_t n1,
+                      size_t n2,
+                      size_t n3,
+                      int    c);
+
+/** \brief Insert a circluar arc
+ *  @param [in] n1 Label of vertex defining the first end of the arc
+ *  @param [in] n2 Label of vertex defining the second end of the arc
+ *  @param [in] n3 Label of vertex defining the center of the arc
+ *  @param [in] dc Code to associate to created nodes (Dirichlet)
+ *  @param [in] nc Code to associate to created sides (Neumann)
  */
     void insertCircle(size_t n1,
                       size_t n2,
@@ -259,7 +292,10 @@ typedef struct { size_t n1, n2, n3, n4; int code; } El;
     void insertSubDomain(size_t ln,
                          int    orient,
                          int    code);
-   
+
+/// \brief Set Number of degrees of freedom per node
+    void setNbDOF(int nb_dof);
+
 /// \brief Return minimum coordinates of vertices
     Point<real_t> getMinCoord() const;
    
@@ -272,6 +308,19 @@ typedef struct { size_t n1, n2, n3, n4; int code; } El;
 /// \brief Define output mesh file
 /// @param [in] file String defining output mesh file
     void setOutputFile(string file) { _output_file = file; }
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    int Rectangle();
+    int Rectangle(real_t* x,
+                  size_t  n1,
+                  size_t  n2,
+                  real_t  r,
+                  int     c1,
+                  int     c2,
+                  int     c3,
+                  int     c4);
+    Mesh *getMesh() { return _theMesh; }
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
     friend class XMLParser;
 
@@ -303,7 +352,6 @@ private:
    int getContour();
    int getHole();
    int getSubDomain();
-   int Rectangle();
    int Disk();
    void deleteVertex();
    void deleteLine();
@@ -335,15 +383,6 @@ private:
                int    c2,
                int    c3,
                int    c4);
-   int Rectangle(real_t* x,
-                 size_t  n1,
-                 size_t  n2,
-                 real_t  r,
-                 int     c1,
-                 int     c2,
-                 int     c3,
-                 int     c4,
-                 string  file);
 };
 
 /*! @} End of Doxygen Groups */

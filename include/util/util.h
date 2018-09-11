@@ -34,7 +34,9 @@
 #include "linear_algebra/Point.h"
 #include "linear_algebra/Vect.h"
 #include <algorithm>
-
+#include <functional> 
+#include <cctype>
+#include <locale>
 using std::string;
 
 namespace OFELI {
@@ -662,6 +664,8 @@ T_ stringTo(const std::string& s)
 }
 
 
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \fn void RTrim(char* s)
  *  \ingroup Util
  *  \brief Function to remove blanks at the end of a string.
@@ -698,13 +702,11 @@ inline void LTrim(char* s)
    }
 }
 
-
 /** \fn void Trim(char* s)
  *  \ingroup Util
  *  \brief Function to remove blanks at the beginning and end of a string.
  */
 inline void Trim(char* s) { RTrim(s); LTrim(s); }
-
 
 /** \fn void Swap(T_& a, T_& b)
  *  \ingroup Util
@@ -719,7 +721,6 @@ inline void Swap(T_& a,
    b = t;
 }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 inline std::string zeros(size_t m,
                          size_t n=3)
 {
@@ -731,6 +732,26 @@ inline std::string zeros(size_t m,
       s += "0";
    return s+itos(int(m));
 }
+
+static inline std::string &ltrim(std::string &s)
+{
+   s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+           std::not1(std::ptr_fun<int, int>(std::isspace))));
+   return s;
+}
+
+static inline std::string &rtrim(std::string &s)
+{
+   s.erase(std::find_if(s.rbegin(), s.rend(),
+           std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+   return s;
+}
+
+static inline std::string &trim(std::string &s)
+{
+   return ltrim(rtrim(s));
+}
+
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */

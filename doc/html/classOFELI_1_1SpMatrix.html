@@ -255,6 +255,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 SpMat &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a837a14594e640fd6cde277f14df2b100">getEigenMatrix</a> ()</td></tr>
 <tr class="memdesc:a837a14594e640fd6cde277f14df2b100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to the matrix instance in Eigen library. <br /></td></tr>
 <tr class="separator:a837a14594e640fd6cde277f14df2b100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b0e029102ad38f4b814c6523aedb53d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#a7b0e029102ad38f4b814c6523aedb53d">reset</a> ()</td></tr>
+<tr class="memdesc:a7b0e029102ad38f4b814c6523aedb53d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix to 0 and reset factorization parameter.  <a href="#a7b0e029102ad38f4b814c6523aedb53d">More...</a><br /></td></tr>
+<tr class="separator:a7b0e029102ad38f4b814c6523aedb53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac64de7025d9f5712288b3093ca5408b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac64de7025d9f5712288b3093ca5408b1"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#ac64de7025d9f5712288b3093ca5408b1">getNbRows</a> () const </td></tr>
 <tr class="memdesc:ac64de7025d9f5712288b3093ca5408b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of rows. <br /></td></tr>
@@ -1664,6 +1667,34 @@ Default value is <code>DIAG_PREC</code> </td></tr>
 </dl>
 
 <p>Implements <a class="el" href="classOFELI_1_1Matrix.html#a6786c8f89b64c60ded42359c21df6a19">Matrix&lt; T_ &gt;</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7b0e029102ad38f4b814c6523aedb53d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set matrix to 0 and reset factorization parameter. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This function must be used if after a factorization, the matrix has modified </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classOFELI_1_1DMatrix.html#ad20897c5c8bd47f5d4005989bead0e55">DMatrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>

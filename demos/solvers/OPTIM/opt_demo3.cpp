@@ -52,10 +52,10 @@ int main(int argc, char *argv[])
       Vect<double> x(n), bc(ms);
       bc.setNodeBC(2,"1");
  
-//    Define the Optimization Problem and choose the optimization algorithm
+//    Define the optimization problem and choose the optimization algorithm
       Opt opt(ms);
       OptSolver os(opt,x);
-      os.setOptMethod(OptSolver::GRADIENT);
+      os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
 
 //    Set Dirichlet boundary conditions as constraints for the optimization problem
       os.setBC(bc);

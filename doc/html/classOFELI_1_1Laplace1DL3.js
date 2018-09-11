@@ -1,5 +1,6 @@
 var classOFELI_1_1Laplace1DL3 =
 [
+    [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#aa3c3bc48521536029513c7851815dc42", null ],
     [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#a101f6995b133edc6a6a3f437a990ba3d", null ],
     [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#a1e7175d0a989777d425fbcc3e5cad9dc", null ],
     [ "~Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#a833e625949a2c7c502b3381f66d4093a", null ],

@@ -128,19 +128,19 @@ void getBamg(string file,
    Point<real_t> x;
    static int mark;
    int code[MAX_NBDOF_NODE];
-   vector<string> kw(12);
-   kw[ 0] = "End$";
-   kw[ 1] = "MeshVer$sionFormatted";
-   kw[ 2] = "Dimension$";
-   kw[ 3] = "Vertices$";
-   kw[ 4] = "Edges$";
-   kw[ 5] = "Triangles$";
-   kw[ 6] = "SubDomain$FromMesh";
-   kw[ 7] = "VertexOnGeometricVertex$";
-   kw[ 8] = "VertexOnGeometricEdge$";
-   kw[ 9] = "EdgeOnGeometricEdge$";
-   kw[10] = "Identifier$";
-   kw[11] = "Geometry$";
+   vector<string> kw;
+   kw.push_back("End$");
+   kw.push_back("MeshVer$sionFormatted");
+   kw.push_back("Dimension$");
+   kw.push_back("Vertices$");
+   kw.push_back("Edges$");
+   kw.push_back("Triangles$");
+   kw.push_back("SubDomain$FromMesh");
+   kw.push_back("VertexOnGeometricVertex$");
+   kw.push_back("VertexOnGeometricEdge$");
+   kw.push_back("EdgeOnGeometricEdge$");
+   kw.push_back("Identifier$");
+   kw.push_back("Geometry$");
 
    mesh.setDim(2);
    FFI ff(file);
@@ -382,7 +382,7 @@ void getGambit(string file,
 
    ifstream mf(file.c_str());
    if (mf.fail())
-      throw OFELIException("getGambith(...): File " + file + " not found.");
+      throw OFELIException("getGambit(...): File " + file + " not found.");
 
    for (size_t i=0; i<6; i++)
       std::getline(mf,line);

@@ -261,6 +261,34 @@ if test "$ans" = "y" ; then
 fi
 
 echo "-----------------------------------------------------------------"
+echo "Testing Nonlinear Systems solver Demos ..."
+
+cd ../../solvers/NLAS
+echo "Test demo for a one-variable nonlinear equation with a user defined function (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   ./nl_demo1
+fi
+
+echo "Test demo for a one-variable nonlinear equation defined by a regular expression (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+    ./nl_demo2
+fi
+
+echo "Test demo for a multi-variable nonlinear equation with a user defined function (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+    ./nl_demo3
+fi
+
+echo "Test demo for a multi-variable nonlinear equation defined by a regular expression (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+    ./nl_demo4
+fi
+
+echo "-----------------------------------------------------------------"
 echo "Testing Mesh Adaptation Demos ..."
 
 cd ../../adapt

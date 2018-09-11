@@ -49,6 +49,7 @@ var classOFELI_1_1SpMatrix =
     [ "get", "classOFELI_1_1SpMatrix.html#ae06e66a8f26e28bdf1e0209f7d0d96bb", null ],
     [ "get", "classOFELI_1_1SpMatrix.html#a7a7b1d2724593a6ec1212247d7964b8e", null ],
     [ "getEigenMatrix", "classOFELI_1_1SpMatrix.html#a837a14594e640fd6cde277f14df2b100", null ],
+    [ "reset", "classOFELI_1_1SpMatrix.html#a7b0e029102ad38f4b814c6523aedb53d", null ],
     [ "getNbRows", "classOFELI_1_1SpMatrix.html#ac64de7025d9f5712288b3093ca5408b1", null ],
     [ "getNbColumns", "classOFELI_1_1SpMatrix.html#a879356293a4c2120a7f87bf231ce341c", null ],
     [ "setPenal", "classOFELI_1_1SpMatrix.html#a72077468b17118c44394d286f7737bd4", null ],

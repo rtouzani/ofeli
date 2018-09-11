@@ -173,7 +173,9 @@ var hierarchy =
         [ "LCL3DT", "classOFELI_1_1LCL3DT.html", null ]
       ] ]
     ] ],
+    [ "MyNLAS", "classOFELI_1_1MyNLAS.html", null ],
     [ "MyOpt", "classOFELI_1_1MyOpt.html", null ],
+    [ "NLASSolver", "classOFELI_1_1NLASSolver.html", null ],
     [ "Node", "classOFELI_1_1Node.html", null ],
     [ "NodeList", "classOFELI_1_1NodeList.html", null ],
     [ "ODESolver", "classOFELI_1_1ODESolver.html", null ],

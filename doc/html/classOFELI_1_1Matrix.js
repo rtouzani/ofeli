@@ -3,6 +3,7 @@ var classOFELI_1_1Matrix =
     [ "Matrix", "classOFELI_1_1Matrix.html#a3aede62f513da27e6f61ae7a972b4f96", null ],
     [ "Matrix", "classOFELI_1_1Matrix.html#a4a08c31941b608d62de67b028e19ca8d", null ],
     [ "~Matrix", "classOFELI_1_1Matrix.html#a50937512a2aece401826a35ccdf69f3b", null ],
+    [ "reset", "classOFELI_1_1Matrix.html#a7b0e029102ad38f4b814c6523aedb53d", null ],
     [ "getNbRows", "classOFELI_1_1Matrix.html#ac64de7025d9f5712288b3093ca5408b1", null ],
     [ "getNbColumns", "classOFELI_1_1Matrix.html#a879356293a4c2120a7f87bf231ce341c", null ],
     [ "setPenal", "classOFELI_1_1Matrix.html#a72077468b17118c44394d286f7737bd4", null ],
