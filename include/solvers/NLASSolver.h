@@ -241,10 +241,10 @@ class NLASSolver
 
 //-----------------------------   INSPECTORS  ----------------------------------
 
-/// \brief Return solution at current iteration (Case of a scalar equation)
+/// \brief Return solution (Case of a scalar equation)
     real_t get() const { return _y; }
 
-/// \brief Return solution at current time step (Case of a differential system)
+/// \brief Return solution (case of a nonlinear system of equations)
 /// @param [out] u Vector that contains on output the solution
     void get(Vect<real_t> &u) const;
 
@@ -297,7 +297,7 @@ private:
 //-----------------------------------------------------------------------------
 
 /// \fn ostream & operator<<(ostream& s, const NLASSolver &nl)
-/// \brief Output differential system information
+/// \brief Output nonlinear system information
 /// \ingroup Solver
     ostream & operator<<(ostream&          s,
                          const NLASSolver& nl);

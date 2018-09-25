@@ -105,7 +105,7 @@ class Direction {
   Icoor1 dir;
   public:
   Direction(): dir(MaxICoor){}; //  no direction set
-  Direction(Icoor1 i,Icoor1 j) { Icoor2  n2 = 2*(Abs(i)+Abs(j));  
+  Direction(Icoor1 i,Icoor1 j) { Icoor2 n2 = 2*(Abs(i)+Abs(j));  
                                  Icoor2 r = MaxICoor* (Icoor2) i;
                                  Icoor1 r1 = (Icoor1) (2*(r/ n2)); // odd number 
                                  dir = (j>0) ? r1 : r1+1; //  odd -> j>0 even -> j<0
@@ -230,9 +230,7 @@ class Edge
 
    double MetricLength() const;
 
-   inline void Set(const Triangles&,
-                         long,
-                         Triangles&);
+   inline void Set(const Triangles&, long, Triangles&);
 };
 
 

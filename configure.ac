@@ -408,6 +408,7 @@ AC_OUTPUT(
    demos/adapt/Makefile
    doc/Makefile
    doc/html/Makefile
+   doc/html/search/Makefile
    doc/demos/Makefile
    doc/im/Makefile
    doc/css/Makefile

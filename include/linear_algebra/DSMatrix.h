@@ -93,6 +93,18 @@ class DSMatrix : public Matrix<T_>
 /// @param [in] m DSMatrix instance to copy
     DSMatrix(const DSMatrix<T_>& m);
 
+/** \brief Constructor using mesh to initialize matrix.
+ *  @param [in] mesh Mesh instance for which matrix graph is determined.
+ *  @param [in] dof Option parameter, with default value <tt>0</tt>.\n
+ *  <tt>dof=1</tt> means that only one degree of freedom for each node (or element or side)
+ *  is taken to determine matrix structure. The value <tt>dof=0</tt> means that matrix
+ *  structure is determined using all DOFs.
+ *  @param [in] is_diagonal Boolean argument to say is the matrix is actually a diagonal matrix or not.
+ */
+    DSMatrix(Mesh&  mesh,
+             size_t dof=0,
+             int    is_diagonal=false);
+
 /// \brief Destructor
     ~DSMatrix() { }
 
@@ -114,15 +126,10 @@ class DSMatrix : public Matrix<T_>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setMesh(Mesh&  mesh,
-                 size_t dof=0)
-       { Matrix<T_>::init_set_mesh(mesh,dof); }
-
+                 size_t dof=0);
     void setMesh(size_t dof,
                  Mesh&  mesh,
                  int    code=0);
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setMesh(size_t dof,
                  size_t nb_eq,
                  Mesh&  mesh);
@@ -305,20 +312,6 @@ class DSMatrix : public Matrix<T_>
     int solve(const Vect<T_>& b,
               Vect<T_>&       x);
 
-/** \brief Solve a linear system using the LDLt (Crout) factorization
- *  \details This function solves a linear system. The LDLt factorization is 
- *  performed if this was not already done using the function setLU.
- *  @param [in] b Vect instance that contains right-hand side
- *  @param [out] x Vect instance that contains solution
- *  @return
- *  <ul>
- *     <li><tt>0</tt> if solution was normally performed
- *     <li><tt>n</tt> if the <tt>n</tt>-th pivot is null
- *  </ul>
- */
-    int setLDLt(const Vect<T_>& b,
-                Vect<T_>&       x);
-
 /** \brief Return matrix as C-Array.
  *  Matrix is stored row by row.
  *  Only lower triangle is stored.
@@ -372,6 +365,30 @@ DSMatrix<T_>::DSMatrix(const DSMatrix<T_>& m)
    _is_diagonal = false;
    _a.resize(_length);
    _a = m._a;
+}
+
+
+template<class T_>
+DSMatrix<T_>::DSMatrix(Mesh&  mesh,
+                       size_t dof,
+                       int    is_diagonal)
+{
+   _is_diagonal = is_diagonal;
+   _fact = false;
+   setMesh(mesh,dof);
+}
+
+
+template<class T_>
+void DSMatrix<T_>::setMesh(Mesh&  mesh,
+                           size_t dof)
+{
+   Matrix<T_>::init_set_mesh(mesh,dof);
+   _length = _size*_size;
+   _diag.resize(_size);
+   _a.resize(_length);
+   _zero = static_cast<T_>(0);
+   _fact = false;
 }
 
 
@@ -512,8 +529,6 @@ int DSMatrix<T_>::setLDLt()
       }
       if (Abs(pivot) < OFELI_EPSMCH)
          throw OFELIException("In DSMatrix::setLDLt(): The " + itos(int(i)+1) + "-th pivot is null.");
-      if (pivot<0)
-         err = -1;
       _a[(i+1)*i/2+i] = 1./pivot;
    }
    _fact = true;
@@ -622,7 +637,7 @@ template<class T_>
 void DSMatrix<T_>::Mult(const Vect<T_>& x,
                         Vect<T_>&       y) const
 {
-   y = 0;
+   y = T_(0);
    MultAdd(x,y);
 }
 

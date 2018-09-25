@@ -119,13 +119,13 @@ void getBamg(string file,
              Mesh&  mesh,
              size_t nb_dof)
 {
-   size_t  n, ii, jj, kk, i, k, nb_nodes, nb_elements, nb_sides, first_dof;
+   size_t  ii, jj, kk, k, nb_nodes, nb_elements, nb_sides, first_dof;
    int     key;
    Node    *nd;
    Element *el;
    Side    *sd;
-   string  ww;
    Point<real_t> x;
+   string ww;
    static int mark;
    int code[MAX_NBDOF_NODE];
    vector<string> kw;
@@ -170,7 +170,7 @@ void getBamg(string file,
          case 3:
             nb_nodes = ff.getI();
             first_dof = 1;
-            for (i=0; i<nb_nodes; i++) {
+            for (size_t i=0; i<nb_nodes; ++i) {
                x.x = ff.getD();
                x.y = ff.getD();
                x.z = 0.;
@@ -179,7 +179,7 @@ void getBamg(string file,
                   mark = 0;
                nd = new Node(i+1,x);
                nd->setNbDOF(nb_dof);
-               for (size_t j=0; j<nb_dof; j++)
+               for (size_t j=0; j<nb_dof; ++j)
                   if (code[j]<0)
                      code[j] = 0;
                DOFCode(mark,nb_dof,code);
@@ -192,14 +192,10 @@ void getBamg(string file,
 //       Edges
          case 4:
             nb_sides = ff.getI();
-            for (n=0; n<nb_sides; n++) {
+            for (size_t n=0; n<nb_sides; ++n) {
                ii = ff.getI();
                jj = ff.getI();
                mark = ff.getI();
-               if (mark<0)
-                  mark = -mark;
-               else
-                  mark = 0;
                sd = new Side(n+1,LINE);
                sd->Add(mesh[ii]);
                sd->Add(mesh[jj]);
@@ -214,7 +210,7 @@ void getBamg(string file,
 //       Triangles
          case 5:
             nb_elements = ff.getI();
-            for (n=0; n<nb_elements; n++) {
+            for (size_t n=0; n<nb_elements; ++n) {
                ii = ff.getI();
                jj = ff.getI();
                kk = ff.getI();
@@ -230,7 +226,7 @@ void getBamg(string file,
 //       SubDomain
          case 6:
             k = ff.getI();
-            for (n=0; n<k; n++) {
+            for (size_t n=0; n<k; ++n) {
                ii = ff.getI();
                jj = ff.getI();
                kk = ff.getI();
@@ -240,7 +236,7 @@ void getBamg(string file,
 //       VertexOnGeometricVertex
          case 7:
             k = ff.getI();
-            for (n=0; n<k; n++) {
+            for (size_t n=0; n<k; ++n) {
                ii = ff.getI();
                ff.getD();
             }
@@ -249,7 +245,7 @@ void getBamg(string file,
 //       VertexOnGeometricEdge
          case 8:
             k = ff.getI();
-            for (n=0; n<k; n++) {
+            for (size_t n=0; n<k; ++n) {
                ii = ff.getI();
                jj = ff.getI();
                ff.getD();
@@ -257,8 +253,9 @@ void getBamg(string file,
             break;
 
 //       EdgeOnGeometricEdge
-         case  9: k = ff.getI();
-            for (n=0; n<k; n++) {
+         case  9:
+            k = ff.getI();
+            for (size_t n=0; n<k; ++n) {
                ii = ff.getI();
                jj = ff.getI();
             }

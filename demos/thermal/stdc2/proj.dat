@@ -9,7 +9,7 @@
    <mesh_file>proj.m</mesh_file>
    <parameter label="v_flag" value="1"/>
    <parameter label="v_file">proj.v</parameter>
-   <plot_file>proj.t</plot_file>
+   <plot_file>proj.pos</plot_file>
    <verbose>5</verbose>
    <output>1</output>
    <plot>1</plot>

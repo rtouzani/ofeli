@@ -1,7 +1,7 @@
 
 MAINTAINERCLEANFILES = Makefile.in
 
-SUBDIRS = 
+SUBDIRS = search
 
 htmldir = $(datadir)/ofeli/doc/html
 

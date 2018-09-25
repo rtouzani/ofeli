@@ -69,13 +69,15 @@ typedef std::pair<size_t,size_t> RC;
  * Choose matrix storage and type
  */
 enum MatrixType {
-   SKYLINE        = 0x00800000,   /*!< Skyline storage         */
-   SPARSE         = 0x01000000,   /*!< Sparse storage          */
-   DIAGONAL       = 0x02000000,   /*!< Diagonal storage        */
-   TRIDIAGONAL    = 0x04000000,   /*!< Tridiagonal storage     */
-   SYMMETRIC      = 0x08000000,   /*!< Symmetric matrix        */
-   UNSYMMETRIC    = 0x10000000,   /*!< Unsymmetric matrix      */
-   IDENTITY       = 0x12000000    /*!< Identity matrix         */
+   DENSE          = 0x00001000,   /*!< Dense storage           */
+   SKYLINE        = 0x00002000,   /*!< Skyline storage         */
+   SPARSE         = 0x00004000,   /*!< Sparse storage          */
+   DIAGONAL       = 0x00008000,   /*!< Diagonal storage        */
+   TRIDIAGONAL    = 0x00010000,   /*!< Tridiagonal storage     */
+   BAND           = 0x00020000,   /*!< Band storage            */
+   SYMMETRIC      = 0x00040000,   /*!< Symmetric matrix        */
+   UNSYMMETRIC    = 0x00080000,   /*!< Unsymmetric matrix      */
+   IDENTITY       = 0x00100000    /*!< Identity matrix         */
 };
 
 /*! \enum Iteration
@@ -94,11 +96,11 @@ enum Iteration {
  * \brief Choose preconditioner for the linear system
  */
 enum Preconditioner {
-   IDENT_PREC       = 0,          /*!< Identity (No preconditioning)                 */
-   DIAG_PREC        = 1,          /*!< Diagonal preconditioner                       */
-   DILU_PREC        = 2,          /*!< ILU (Incomplete factorization) preconditioner */
+   IDENT_PREC       = 0,          /*!< Identity (No preconditioning)                           */
+   DIAG_PREC        = 1,          /*!< Diagonal preconditioner                                 */
+   DILU_PREC        = 2,          /*!< ILU (Incomplete factorization) preconditioner           */
    ILU_PREC         = 3,          /*!< DILU (Diagonal Incomplete factorization) preconditioner */
-   SSOR_PREC        = 4           /*!< SSOR preconditioner                           */
+   SSOR_PREC        = 4           /*!< SSOR preconditioner                                     */
 };
 
 template <class T_> class Vect;

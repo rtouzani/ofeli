@@ -77,9 +77,9 @@ void Triangles::Write(const char*        filename,
             Write_msh(f);
             break;
 
-	 default: 
+         default: 
             cerr << " Unknown mesh type file " << int(type) << " for writing " << filename <<endl;
-	    MeshError(1);
+            MeshError(1);
       }
       else {
          cerr << " Error opening file " << filename << endl;
@@ -90,21 +90,20 @@ void Triangles::Write(const char*        filename,
 
 void Triangles::Write_msh(ostream& f) const 
 {
-   long i;
    long *reft = new long[nbt];
    long nbInT = ConsRefTriangle(reft);
    f.precision(12);
    f << nbv << " " << nbInT << " " << nbe << endl;
-   for (i=0; i<nbv; i++)
+   for (long i=0; i<nbv; ++i)
       f << _vertices[i].r.x << " " << _vertices[i].r.y << " " 
         << _vertices[i].ref() << endl;
-   for (i=0; i<nbt; i++)
+   for (long i=0; i<nbt; ++i)
       if (reft[i]>=0)
          f << Number(triangles[i][0])+1 << " " 
            << Number(triangles[i][1])+1 << " " 
            << Number(triangles[i][2])+1 << " " 
            << subdomains[reft[i]].ref << endl;
-   for (i=0; i<nbe; i++)
+   for (long i=0; i<nbe; ++i)
       f << Number(edges[i][0]) +1 << " "  << Number(edges[i][1])+1
         << " " << edges[i].ref << endl;      
    delete [] reft;
@@ -172,8 +171,8 @@ void Triangles::WriteElements(ostream& f,
 }
 
 
-ostream& operator <<(ostream&         f,
-                     const Triangles& Th) 
+ostream& operator<<(ostream&         f,
+                    const Triangles& Th) 
 {
    long* reft = new long[Th.nbt];
    long nbInT = Th.ConsRefTriangle(reft);
@@ -196,17 +195,17 @@ ostream& operator <<(ostream&         f,
    { 
       f.precision(12);
       f << "\nVertices\n" << Th.nbv << endl;
-      for (long i=0; i<Th.nbv; i++) {
+      for (long i=0; i<Th.nbv; ++i) {
          Vertex& v = Th._vertices[i];
          f << v.r.x << " " << v.r.y << " " << v.ref() << endl;
       }
    }
-   long ie; 
+   long ie;
    {
       f << "\nEdges\n"<< Th.nbe << endl;
       for (ie=0; ie<Th.nbe; ie++) {
-	 Edge& e = Th.edges[ie];
-	 f << Th.Number(e[0])+1 << " " << Th.Number(e[1])+1 << " " << e.ref << endl;
+         Edge& e = Th.edges[ie];
+         f << Th.Number(e[0])+1 << " " << Th.Number(e[1])+1 << " " << e.ref << endl;
       }
       if (Th.NbCrackedEdges) {
          f << "\nCrackedEdges\n"<< Th.NbCrackedEdges << endl;
@@ -243,7 +242,7 @@ ostream& operator <<(ostream&         f,
    }
    { 
       f << "\nVertexOnGeometricEdge\n"<< Th.NbVerticesOnGeomEdge << endl;
-      for (long i0=0; i0<Th.NbVerticesOnGeomEdge; i0++) {
+      for (long i0=0; i0<Th.NbVerticesOnGeomEdge; ++i0) {
          const VertexOnGeom& v = Th.VerticesOnGeomEdge[i0];
          assert(v.OnGeomEdge());
          f << " " << Th.Number((Vertex * )v)+1;
@@ -252,26 +251,25 @@ ostream& operator <<(ostream&         f,
       }
    }
    {
-      long i0, k=0;
-      for (i0=0; i0<Th.nbe; i0++)
+      long k=0;
+      for (long i0=0; i0<Th.nbe; ++i0)
          if (Th.edges[i0].on)
             k++;
       f << "\nEdgeOnGeometricEdge\n"<< k << endl;
-      for (i0=0; i0<Th.nbe; i0++)
-         if (Th.edges[i0].on) 
+      for (long i0=0; i0<Th.nbe; ++i0)
+         if (Th.edges[i0].on)
             f << (i0+1) << " " << (1+Th.Gh.Number(Th.edges[i0].on)) << endl;
       if (Th.NbCrackedEdges) {
          f << "\nCrackedEdges\n"<< Th.NbCrackedEdges << endl;	  
-         for (i0=0; i0<Th.NbCrackedEdges; i0++) {
+         for (long i0=0; i0<Th.NbCrackedEdges; ++i0) {
             f << Th.Number(Th.CrackedEdges[i0].a.edge) << " " ;
             f << Th.Number(Th.CrackedEdges[i0].b.edge) << endl;
          }
       }
    }
    if (&Th.BTh != &Th && Th.BTh.OnDisk && Th.BTh.name) {
-      int *mark=new int[Th.nbv];
-      long i;
-      for (i=0; i<Th.nbv; i++)
+      int *mark = new int[Th.nbv];
+      for (long i=0; i<Th.nbv; ++i)
          mark[i] = -1;
       f << "\nMeshSupportOfVertices\n" << endl;
       WriteStr(f,Th.BTh.name);
@@ -280,7 +278,7 @@ ostream& operator <<(ostream&         f,
       f << endl;
       f << "\nVertexOnSupportVertex" << endl;
       f << Th.NbVertexOnBThVertex << endl;
-      for (i=0; i<Th.NbVertexOnBThVertex; i++) {
+      for (long i=0; i<Th.NbVertexOnBThVertex; ++i) {
          const VertexOnVertex & vov = Th.VertexOnBThVertex[i];
          long iv = Th.Number(vov.v);
          mark[iv] = 0;
@@ -288,7 +286,7 @@ ostream& operator <<(ostream&         f,
       }
       f << "\nVertexOnSupportEdge" << endl;
       f << Th.NbVertexOnBThEdge << endl;
-      for (i=0; i<Th.NbVertexOnBThEdge; i++) {
+      for (long i=0; i<Th.NbVertexOnBThEdge; ++i) {
          const VertexOnEdge& voe = Th.VertexOnBThEdge[i];
          long iv = Th.Number(voe.v);
          mark[iv] = 1;
@@ -298,7 +296,7 @@ ostream& operator <<(ostream&         f,
       long k = Th.nbv -  Th.NbVertexOnBThEdge - Th.NbVertexOnBThVertex;
       f << k << endl;
       CurrentTh = &Th.BTh;
-      for (i=0; i<Th.nbv; i++)
+      for (long i=0; i<Th.nbv; ++i)
          if (mark[i] == -1) {
             k--;
             Icoor2 dete[3];

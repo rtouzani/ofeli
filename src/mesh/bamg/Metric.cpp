@@ -184,7 +184,7 @@ void Triangles::IntersectGeomMetric(const double err=1,
                                     const int    iso=0)
 {
    if (verbosity>1)
-      cout << " -- IntersectGeomMetric geometric err=" << err << (iso ? " iso " : " aniso "  ) << endl;
+      cout << " -- IntersectGeomMetric geometric err = " << err << (iso ? " iso " : " aniso ") << endl;
    double ss[2]={0.00001,0.99999};
    double errC=2*sqrt(2*err);
    double hmax = Gh.MaximalHmax(), hmin = Gh.MinimalHmin();
@@ -291,7 +291,7 @@ void Triangles::IntersectConsMetric(const double* s,
           << nbt << " nbv= " << nbv 
           << " coef = " << coef << endl
           << "     hmin = " << hmin << " hmax=" << hmax 
-          << " anisomax = " << anisomax <<  " Nb Jacobi " << NbJacobi << " Power = " << power ;
+          << " anisomax = " << anisomax <<  " Nb Jacobi " << NbJacobi << " Power = " << power;
       if (RelativeMetric)
          cout << " RelativeErr with CutOff= "  <<  CutOff << endl;
       else
@@ -403,8 +403,7 @@ void Triangles::IntersectConsMetric(const double* s,
                R2 Grads = (nAB*sC + nBC*sA + nCA*sB)/detT[i];
                if (choice) {
                   int nbb=0;
-                  double dd=detT[i];
-                  double taa[3][3], bb[3];
+                  double dd=detT[i], taa[3][3], bb[3];
                   for (int j=0; j<3; j++) {
                      int ie = OppositeEdge[j];
                      TriangleAdjacent ta=triangles[i].Adj(ie);

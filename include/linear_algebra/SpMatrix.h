@@ -1709,7 +1709,8 @@ int SpMatrix<T_>::DILUFactorize(vector<size_t>& id,
          if (_col_ind[j]==i+1) {
             id[i] = k + 1;
             if (_a[k]==static_cast<T_>(0))
-               throw OFELIException("In SpMatrix::DILUFactorize(...): Zero pivot detected in row "+itos(i+1));
+               throw OFELIException("In SpMatrix::DILUFactorize(...): Zero pivot detected in row "
+                                    +itos(i+1));
             pivot[i] = _a[k];
          }
       }

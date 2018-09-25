@@ -20,8 +20,8 @@
 #include <setjmp.h>
 #include <new>
 #include <cassert>
-#include "mesh/bamg/Meshio.h"
 #include <iomanip>
+#include "mesh/bamg/Meshio.h"
 #include "mesh/bamg/Mesh2.h"
 #include "mesh/bamg/QuadTree.h"
 
@@ -208,8 +208,7 @@ int main_bamg(string input_file,
          cout << "     -Mbb filename   Set the solution  defined on the background mesh for" << endl;
          cout << "                     metric construction, the solutions was FE P1 defined on " << endl;
          cout << "                     the background mesh. bb file." << endl;
-         cout << "     -MBB filename   same with -Mbb but with BB file " << endl;
-         cout << "" << endl;
+         cout << "     -MBB filename   same with -Mbb but with BB file\n\n";
          cout << "     -errg (double)  Set the level of error on geometry (0.1) by default" << endl;
          cout << "     -coef (double)  Set the value of mutiplicative " << endl;
          cout << "                     coef on the mesh size (1 by default)." << endl;
@@ -220,7 +219,7 @@ int main_bamg(string input_file,
          cout << "                     given number (always limited by 10) " << endl;
          cout << "     -ratio (double) Set the ratio for a smoothing of the metric." << endl;
          cout << "                     If ratio is  0 then no smoothing" << endl;
-         cout << "	              and if ratio  is in  [1.1,10] then the smoothing " << endl;
+         cout << "	              and if ratio  is in  [1.1,10] then the smoothing" << endl;
          cout << "                     change the metrix such that the greatest geometrical" << endl;
          cout << "                     progression (speed of mesh size variation) " << endl;
          cout << "                     in a mesh is bounded  by ratio (by default no smoothing)." << endl;
@@ -231,13 +230,11 @@ int main_bamg(string input_file,
          cout << "                     (3 by default if the metric is set otherwise 0)." << endl;
          cout << "     -omega (double)  relaxation parameter for Smoothing " << endl;
          cout << "     -splitpbedge     split in 2 all internal edges with 2 vertex on boundary" << endl;
-         cout << "     -nosplitpbedge   d'ont cut internal edges with 2 vertex on boundary (default)" << endl;
-	 cout << "" << endl << "" << endl;
-         cout << "        the next arguments are used with the -Mbb argument" << endl;
-         cout << "" << endl;
+         cout << "     -nosplitpbedge   d'ont cut internal edges with 2 vertex on boundary (default)\n\n";
+         cout << "        the next arguments are used with the -Mbb argument\n\n";
          cout << "     -KeepBackVertices  Try to Keep old vertices (default) " << endl;
-         cout << "     -noKeepBackVertices  all vertices are create from scratch  " << endl;
-         cout << "     -err   (double)    Set the level of error (default 0.01)"    << endl;
+         cout << "     -noKeepBackVertices  all vertices are create from scratch" << endl;
+         cout << "     -err   (double)    Set the level of error (default 0.01)" << endl;
          cout << "     -iso               The constructed metric must be isotropic" << endl;
          cout << "     -aniso             The constructed metric can be anisotropic " << endl;
          cout << "     -anisomax (double) Set  maximum ratio  of anisotropy " << endl;
@@ -275,8 +272,7 @@ int main_bamg(string input_file,
          cout << "    Remark: one of output mesh file is require " << endl << endl;
          cout << "     -o       filename Create a DB Mesh file." << endl;
          cout << "     -omsh    filename Create a msh file (freefem3 file)." << endl;
-         cout << "     -oM filename      Create a metric file. " << endl;
-	 cout << endl << endl;
+         cout << "     -oM filename      Create a metric file.\n\n";
          cout << "     -thetaquad (double)  minimal angle of a quadrangle " << endl;
          cout << "     -2q                  split triangles in 3 quad and quad in 4 quad  " << endl;
          cout << "     -2                   split triangles in 4 trai and quad in 4 quad  " << endl;
@@ -548,5 +544,26 @@ int main_bamg(string input_file,
    for (i=1; i<datargc; i++)
       delete [] datargv[i];
    cout << flush;
+   return 0;
+}
+
+
+int bamg1(string input_file,
+          string output_file)
+{
+   int verbosity = 0;
+   Geometry Gh(input_file.c_str());
+   int nbvx=NBVMAX;
+   Triangles Th(nbvx,Gh);
+   Th.MakeQuadrangles(2);
+   Th.ReNumberingTheTriangleBySubDomain();
+   Th.Write(output_file.c_str(),Triangles::BDMesh);
+   if (verbosity>0) {
+      cout << "Number of Nodes: " << Th.nbv << endl;
+      if (Th.nbt-Th.NbOutT-Th.NbOfQuad*2)
+         cout << "Number of triangles: " << (Th.nbt-Th.NbOutT-Th.NbOfQuad*2) << endl;
+      if (Th.NbOfQuad)
+         cout  << "Number of quadrilaterals: " << Th.NbOfQuad << endl;
+   }
    return 0;
 }

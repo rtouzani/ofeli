@@ -50,7 +50,7 @@ echo "Test demo for 2-D steady state thermal computation (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
    ./stdc2 proj.dat
-   /bin/rm proj.t
+   /bin/rm proj.pos
 fi
 
 cd ../ttd2

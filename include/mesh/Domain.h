@@ -54,6 +54,7 @@ using std::string;
 extern FunctionParser theParser;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+int bamg1(string emfile, string outfile);
 int main_bamg(string emfile, string outfile);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

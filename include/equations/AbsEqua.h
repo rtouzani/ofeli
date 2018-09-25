@@ -236,16 +236,7 @@ class AbsEqua
                 _eigen(false), _sol_given(false), _bc_given(false),
                 _init_given(false), _bf_given(false), _sf_given(false), _set_matrix(false)
     {
-       _ls.setSolver(DIRECT_SOLVER);
     }
-
-/// \brief Constructor with mesh instance
-    AbsEqua(Mesh &mesh) : _theMesh(&mesh), _time_scheme(STATIONARY), _analysis(STEADY_STATE),
-                          _solver(-1), _step(0), _nb_fields(1), _final_time(0.),
-                          _A(NULL), _bc(NULL), _bf(NULL), _sf(NULL), _u(NULL), _v(NULL),
-                          _eigen(false), _sol_given(false), _bc_given(false), _init_given(false),
-                          _bf_given(false), _sf_given(false), _set_matrix(false)
-    {  }
 
 /// \brief Destructor
     virtual ~AbsEqua()
@@ -259,7 +250,7 @@ class AbsEqua
 
 /// \brief Return reference to Mesh instance
 /// @return Reference to Mesh instance
-    Mesh & getMesh() const { return *_theMesh; }
+    Mesh &getMesh() const { return *_theMesh; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \brief Build equation.
@@ -322,33 +313,63 @@ class AbsEqua
 /** \brief Choose solver for the linear system
  *  @param [in] ls Solver of the linear system.
  *  To choose among the enumerated values: <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>,
-    <tt>GMRES_SOLVER</tt>
-    <ul>
-      <li> <tt>DIRECT_SOLVER</tt>, Use a facorization solver [default]
-      <li> <tt>CG_SOLVER</tt>, Conjugate Gradient iterative solver
-      <li> <tt>CGS_SOLVER</tt>, Squared Conjugate Gradient iterative solver
-      <li> <tt>BICG_SOLVER</tt>, BiConjugate Gradient iterative solver
-      <li> <tt>BICG_STAB_SOLVER</tt>, BiConjugate Gradient Stabilized iterative solver
-      <li> <tt>GMRES_SOLVER</tt>, GMRES iterative solver
-      <li> <tt>QMR_SOLVER</tt>, QMR iterative solver
-    </ul>
+ *  <tt>GMRES_SOLVER</tt>
+ *  <ul>
+ *    <li> <tt>DIRECT_SOLVER</tt>, Use a facorization solver [default]
+ *    <li> <tt>CG_SOLVER</tt>, Conjugate Gradient iterative solver
+ *    <li> <tt>CGS_SOLVER</tt>, Squared Conjugate Gradient iterative solver
+ *    <li> <tt>BICG_SOLVER</tt>, BiConjugate Gradient iterative solver
+ *    <li> <tt>BICG_STAB_SOLVER</tt>, BiConjugate Gradient Stabilized iterative solver
+ *    <li> <tt>GMRES_SOLVER</tt>, GMRES iterative solver
+ *    <li> <tt>QMR_SOLVER</tt>, QMR iterative solver
+ *  </ul>
  *  @param [in] pc Preconditioner to associate to the iterative solver.
  *  If the direct solver was chosen for the first argument this argument is not used.
  *  Otherwise choose among the enumerated values:
-    <ul> 
-      <li> <tt>IDENT_PREC</tt>, Identity preconditioner (no preconditioning [default])
-      <li> <tt>DIAG_PREC</tt>, Diagonal preconditioner
-      <li> <tt>ILU_PREC</tt>, Incomplete LU factorization preconditioner
-    </ul>
+ *  <ul> 
+ *    <li> <tt>IDENT_PREC</tt>, Identity preconditioner (no preconditioning [default])
+ *    <li> <tt>DIAG_PREC</tt>, Diagonal preconditioner
+ *    <li> <tt>ILU_PREC</tt>, Incomplete LU factorization preconditioner
+ *  </ul>
  */
     void setSolver(Iteration      ls,
                    Preconditioner pc=IDENT_PREC)
     {
-       if (_set_matrix == false) {
-          _matrix_type = SPARSE;
-          _A = new SpMatrix<T_>(*_theMesh);
-       }
+       if (ls==DIRECT_SOLVER && _matrix_type==SPARSE)
+          throw OFELIException("In AbsEqua::setSolver(Iteration,Preconditioner): "
+                               "Choices of solver and storage modes are incompatible.");
+       if (!_set_matrix)
+          setMatrixType(SPARSE);
        _ls.setSolver(ls,pc);
+       _set_matrix = true;
+    }
+
+/** \brief Choose type of matrix
+ *  @param [in] t Type of the used matrix.
+ *  To choose among the enumerated values: <tt>SKYLINE</tt>, <tt>SPARSE</tt>, <tt>DIAGONAL</tt>
+ *  <tt>TRIDIAGONAL</tt>, <tt>SYMMETRIC</tt>, <tt>UNSYMMETRIC</tt>, <tt>IDENTITY</tt>
+ */
+    void setMatrixType(int t)
+    {
+       _matrix_type = t;
+       if (_A)
+          delete _A;
+       if (_matrix_type==SPARSE)
+          _A = new SpMatrix<T_>(*_theMesh);
+       else if (_matrix_type==DENSE|SYMMETRIC)
+          _A = new DSMatrix<T_>(*_theMesh);
+       else if (_matrix_type==DENSE)
+          _A = new DMatrix<T_>(*_theMesh);
+       else if (_matrix_type==SKYLINE|SYMMETRIC)
+          _A = new SkSMatrix<T_>(*_theMesh);
+       else if (_matrix_type==SKYLINE)
+          _A = new SkMatrix<T_>(*_theMesh);
+       else if (_matrix_type==TRIDIAGONAL)
+          _A = new TrMatrix<T_>(_theMesh->getNbEq());
+       else if (_matrix_type==BAND)
+          _A = new BMatrix<T_>;
+       _ls.setMatrix(_A);
+       _set_matrix = true;
     }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -357,18 +378,36 @@ class AbsEqua
     void setTerms(PDE_Terms t) { _terms = t; }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-
-/** \brief Solve the linear system
+/** \brief Solve the linear system with given matrix and right-hand side
  *  @param [in] A Pointer to matrix of the system
  *  @param [in] b Vector containing right-hand side
  *  @param [in,out] x Vector containing initial guess of solution on input, actual solution on output
  */
-    int SolveLinearSystem(Matrix<T_>* A,
+    int solveLinearSystem(Matrix<T_>* A,
                           Vect<T_>&   b,
                           Vect<T_>&   x)
     {
-       _set_matrix = true;
        _ls.setMatrix(A);
+       _ls.setRHS(b);
+       _ls.setSolution(x);
+       if (_ls.getSolver()<0) {
+          if (_matrix_type==SKYLINE)
+             _ls.setSolver(DIRECT_SOLVER);
+          else if (_matrix_type==(SPARSE|SYMMETRIC))
+             _ls.setSolver(CG_SOLVER);
+           else if (_matrix_type==SPARSE)
+             _ls.setSolver(GMRES_SOLVER);
+       }
+       return _ls.solve();
+    }
+
+/** \brief Solve the linear system with given right-hand side
+ *  @param [in] b Vector containing right-hand side
+ *  @param [in,out] x Vector containing initial guess of solution on input, actual solution on output
+ */
+    int solveLinearSystem(Vect<T_>& b,
+                          Vect<T_>& x)
+    {
        _ls.setRHS(b);
        _ls.setSolution(x);
        if (_ls.getSolver()<0) {
@@ -462,10 +501,9 @@ class AbsEqua
 
 /// \brief Choose tolerance value
     void setTolerance(real_t toler) { _toler = toler; }
-
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
    
-protected :
+ protected:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    Mesh               *_theMesh;
    int                _field_type, _time_scheme, _analysis, _verbose, _terms;
@@ -485,7 +523,7 @@ protected :
    Prescription       *_prescription;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-public:
+ public:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    void setMatrix(SkSMatrix<T_> &A)

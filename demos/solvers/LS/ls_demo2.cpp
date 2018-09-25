@@ -49,30 +49,19 @@ int main(int argc, char *argv[])
 
    try {
       Mesh ms(argv[1],true);
-
-      SpMatrix<double> A(ms);
-      Vect<double> b(ms.getNbEq()), x(ms.getNbEq()), bc(ms), f(ms);
+      Vect<double> u(ms), bc(ms), f(ms);
       f = "exp(-20*(x*x+y*y))";
       bc = 0;
 
-//    Loop over elements
-      MeshElements(ms) {
-         Laplace2DT3 eq(theElement);
-         eq.LHS();
-         eq.BodyRHS(f);
-         eq.updateBC(bc);
-         eq.ElementAssembly(A);
-         eq.ElementAssembly(b);
-      }
-
-//    Solve the linear system of equations by an iterative method
-      LinearSolver<double> ls(1000,1.e-8,0);
-      int nb_it = ls.solve(A,b,x,CG_SOLVER,DIAG_PREC);
-      cout << "Number of iterations: " << nb_it << endl;
-
-//    Create solution vector by inserting boundary nodes (Vector u)
-      Vect<double> u(ms);
-      u.insertBC(ms,x,bc);
+      Laplace2DT3 eq(ms);
+      eq.setInput(SOLUTION,u);
+      eq.setInput(SOURCE,f);
+      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setSolver(CG_SOLVER,DILU_PREC);
+      eq.run();
+      saveField(u,"sol.pos",GMSH);
+      cout << "Solution is stored in file 'sol.pos'" << endl;
+      cout << "You can plot this using GMSH" << endl;
    } CATCH_EXCEPTION
 
    return 0;

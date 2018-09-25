@@ -48,7 +48,7 @@ void Triangles::ConsGeometry(double cutoffradian,
 // generation of the adjacence of the triangles
    if (cutoffradian>=0)
       Gh.MaximalAngleOfCorner = cutoffradian;
-   SetOfEdges4 * edge4= new SetOfEdges4(nbt*3,nbv);
+   SetOfEdges4 *edge4 = new SetOfEdges4(nbt*3,nbv);
    long * st = new long[nbt*3];
    long i,k;
    int j; 
@@ -141,7 +141,7 @@ void Triangles::ConsGeometry(double cutoffradian,
       edges = new Edge[nbe];
       k =0;
       if (verbosity>4)
-         cout << "    Construction of the edges  " << nbe << endl;
+         cout << "    Construction of the edges " << nbe << endl;
       for (i=0; i<nbedges; i++) {
          long add = -1;
          if (st[i] < -1) { 

@@ -98,7 +98,6 @@ int main(int argc, char *argv[])
       eq.setTerms(DIFFUSION|CONVECTION);
       eq.setSolver(GMRES_SOLVER,DILU_PREC);
       int it = eq.run();
-      cout << "Number of iterations: " << it << endl;
 
 //    Output and save result
       if (data.getOutput() > 0)

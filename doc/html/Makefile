@@ -328,7 +328,7 @@ top_build_prefix = ../../
 top_builddir = ../..
 top_srcdir = ../..
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = 
+SUBDIRS = search
 html_DATA = $(wildcard *.html) \
 		$(wildcard *.png) \
 		$(wildcard *.gif) \

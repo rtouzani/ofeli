@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
          file = new string(geo_file.substr(0,geo_file.rfind(".")));
          string bamg_file = *file + ".bamg";
          cout << "Processing with geometry file: " << geo_file << endl;
-         main_bamg(geo_file,bamg_file);
+         bamg1(geo_file,bamg_file);
          Mesh ms;
          getBamg(bamg_file,ms,1);
          string ofeli_file = *file + ".m";

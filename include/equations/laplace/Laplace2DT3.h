@@ -126,16 +126,6 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
 /// @param [in] h Vector containing the source given function at mesh nodes
     void BoundaryRHS(const Vect<real_t>& h);
 
-/// \brief Define Source right-hand side of the equation
-/// @param f [in] Vector containing source values at nodes
-    void setSource(const Vect<real_t>& f);
-
-/** \brief Build global matrix and right-hand side.
- *  \details The problem matrix and right-hand side are the ones used in the constructor.
- *  They are updated in this member function.
- */
-    void build();
-
 /** \brief Build global stiffness and mass matrices for the eigen system
  *  @param [in] opt Flag to choose a lumed mass matrix (0) or consistent (1) [Default: <tt>0</tt>]
  */
@@ -163,16 +153,6 @@ class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
  */
     void Axb(const Vect<real_t>& x,
              Vect<real_t>&       b);
-
-/** \brief Build and solve the linear system of equations using an iterative method.
- *  \details The matrix is preconditioned by the diagonal ILU method.
- *  The linear system is solved either by the Conjugate Gradient method if the matrix is symmetric
- *  positive definite (<tt>eps=-1</tt>) or the GMRES method if not. The solution is stored in the vector
- *  <tt>u</tt> given in the constructor.
- *  @return Number of performed iterations. Note that the maximal number
- *  is 1000 and the tolerance is 1.e-8
- */
-    int run();
 
  private:
 

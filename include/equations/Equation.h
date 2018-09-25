@@ -96,6 +96,7 @@ class Equation : virtual public AbsEqua<T_>
   using AbsEqua<T_>::_bf;
   using AbsEqua<T_>::_sf;
   using AbsEqua<T_>::_u;
+  using AbsEqua<T_>::_uu;
   using AbsEqua<T_>::_sol_given;
   using AbsEqua<T_>::_init_given;
   using AbsEqua<T_>::_bc_given;
@@ -147,7 +148,7 @@ class Equation : virtual public AbsEqua<T_>
              real_t          time=0);
 
 /// \brief Destructor
-    virtual ~Equation() { }
+    virtual ~Equation();
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \brief Initialize equation.
@@ -156,11 +157,6 @@ class Equation : virtual public AbsEqua<T_>
  */
     virtual void initEquation(Mesh&  mesh,
                               real_t ts);
-
-/** \brief Initialize equation.
- *  @param [in] mesh Mesh instance
- */
-    virtual void initEquation(Mesh& mesh);
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -559,6 +555,7 @@ class Equation : virtual public AbsEqua<T_>
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh& mesh)
 {
+   AbsEqua<T_>::setMesh(mesh);
    _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
    _time_step = 0.1;
    initEquation(mesh,_time_step);
@@ -614,9 +611,10 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Side*     sd,
 
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::initEquation(Mesh& mesh)
+Equation<T_,NEN_,NEE_,NSN_,NSE_>::~Equation()
 {
-   _theMesh = &mesh;
+   if (_b)
+      delete _b, _b = NULL;
 }
 
 
@@ -628,6 +626,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::initEquation(Mesh&  mesh,
    _theMesh->removeImposedDOF();
    _time_step = ts;
    _b = new Vect<T_>(_theMesh->getNbEq());
+   _uu.setSize(_theMesh->getNbEq());
 }
 
 

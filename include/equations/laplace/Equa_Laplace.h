@@ -76,12 +76,16 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_A;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_b;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_uu;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_u;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA0;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA1;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eRHS;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf_given;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc_given;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf_given;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
@@ -93,19 +97,65 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
 /// \brief Destructor
     virtual ~Equa_Laplace() {  }
 
-/// \brief Solve the equation
-/*    int run()
-    {
-       int ret = 0;
-       _b = new Vect<real_t>(_theMesh->getNbEq());
-       build();
-       ret = this->SolveLinearSystem(_A,*_b,_uu);
-       _u->insertBC(*_theMesh,_uu,*_bc);
-       delete _b;
-       return ret;
-       }*/
+/// \brief Add finite element matrix to left-hand side
+/// @param [in] coef Value to multiply by the added matrix
+    virtual void LHS(real_t coef=1.) { }
 
-    virtual void build() { }
+/// \brief Add body source term to right-hand side
+/// @param [in] f Vector containing the source given function at mesh nodes
+    virtual void BodyRHS(const Vect<real_t>& f) { }
+
+/// \brief Add boundary source term to right-hand side
+/// @param [in] h Vector containing the source given function at mesh nodes
+    virtual void BoundaryRHS(const Vect<real_t>& h) { }
+
+/// \brief Define Source right-hand side of the equation
+/// @param f [in] Vector containing source values at nodes
+    virtual void setSource(const Vect<real_t>& f) { }
+
+/** \brief Build and solve the linear system of equations using an iterative method.
+ *  \details The matrix is preconditioned by the diagonal ILU method.
+ *  The linear system is solved either by the Conjugate Gradient method if the matrix is symmetric
+ *  positive definite (<tt>eps=-1</tt>) or the GMRES method if not. The solution is stored in the vector
+ *  <tt>u</tt> given in the constructor.
+ *  @return Number of performed iterations. Note that the maximal number
+ *  is 1000 and the tolerance is 1.e-8
+ */
+    int run()
+    {
+       build();
+       int ret = this->solveLinearSystem(*_b,_uu);
+       _u->insertBC(*_theMesh,_uu,*_bc);
+       return ret;
+    }
+
+
+/** \brief Build global matrix and right-hand side.
+ *  \details The problem matrix and right-hand side are the ones used in the constructor.
+ *  They are updated in this member function.
+ */
+    void build()
+    {
+       *_A = 0;
+       _b = new Vect<real_t>(_theMesh->getNbEq());
+       MESH_EL {
+          set(theElement);
+          LHS();
+          if (_bf_given)
+             BodyRHS(*_bf);
+          if (_bc_given)
+             this->updateBC(*_bc);
+          this->ElementAssembly(_A);
+          this->ElementAssembly(*_b);
+       }
+       if (_sf_given) {
+          MESH_SD {
+             set(theSide);
+             BoundaryRHS(*_sf);
+             this->SideAssembly(*_b);
+          }
+       }
+    }
 
 /// \brief Build matrices for an eigenvalue problem
     virtual void buildEigen(int opt=0) { }
@@ -123,7 +173,11 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
     }
 
  protected:
-    void set(const Element *el) { }
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+   virtual void set(const Element *el)=0;
+   virtual void set(const Side *sd)=0;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 };
 
 /*! @} End of Doxygen Groups */

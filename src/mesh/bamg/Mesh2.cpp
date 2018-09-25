@@ -165,11 +165,11 @@ long FindTriangle(Triangles& Th,
       int k = ta;
       Triangle *tc = ta;
       if (!tc->link) {
-	 ta = ta.Adj();
-	 tc = ta;
-	 k = ta;
-	 Exchange(aa,bb);
-	 assert(tc->link);
+         ta = ta.Adj();
+         tc = ta;
+         k = ta;
+         Exchange(aa,bb);
+         assert(tc->link);
       }
       a[VerticesOfTriangularEdge[k][0]] = aa;
       a[VerticesOfTriangularEdge[k][1]] = bb;
@@ -237,7 +237,7 @@ TriangleAdjacent Triangle::FindBoundaryEdge(int i) const
       k++; 
       ttc = t->at[j];
       ext = !ttc->link;
-      if (ext+exterieurp == 1) 
+      if (ext+exterieurp==1) 
          return TriangleAdjacent(t,j);
       jc = NextEdge[t->aa[j]&3];
       t = ttc;
@@ -1298,7 +1298,7 @@ long Triangles::InsertNewPoints(long  nbvold,
       const long PrimeNumber=AGoodNumberPrimeWith(nbv);
       long k3=rand()%nbvnew;
       for (long is3=0; is3<nbvnew; is3++) {
-         long j = nbvold +(k3 = (k3 + PrimeNumber)% nbvnew);
+         long j = nbvold +(k3 = (k3+PrimeNumber)%nbvnew);
          long i = nbvold+is3; 
          ordre[i] = _vertices + j;
          ordre[i]->ReferenceNumber = i;
@@ -1336,7 +1336,7 @@ long Triangles::InsertNewPoints(long  nbvold,
          }
       }
       if (verbosity>3) {
-         cout << "    Nb Of New Points " << iv << ", Nb Of To close Points " << nbv-iv;
+         cout << "    Nb Of new points " << iv << ", Nb of too close points " << nbv-iv;
          cout << " Nb swap = " << NbSwap << " after ";
       }
       nbv = iv;
@@ -1717,11 +1717,11 @@ void  Triangles::NewPointsOld(Triangles &Bh)
 
 //    Construction of a random order 
       if (!nbvnew)
-         break; 
+         break;
       if (nbvnew) {
          const long PrimeNumber=AGoodNumberPrimeWith(nbv);
          long k3=rand()%nbvnew;
-         for (long is3=0; is3<nbvnew; is3++) 
+         for (long is3=0; is3<nbvnew; is3++)
             ordre[nbvold+is3]= &_vertices[nbvold+(k3=(k3+PrimeNumber)%nbvnew)];
 
          for (i=nbvold; i<nbv; i++) {
@@ -2086,8 +2086,8 @@ void Triangles::FindSubDomain(int OutSide=0)
                else
                   subdomains[i].head = t = ta;
                if (t<triangles || t >= triangles+nbt || t->det < 0) {
-                  cerr << " Error in the def of subdomain: Wrong orientation " << i << " " << "Edge " << Gh.Number(eg) 
-                       << " " << sens << endl;
+                  cerr << " Error in the def of subdomain: Wrong orientation " << i << " " << "Edge "
+                       << Gh.Number(eg) << " " << sens << endl;
                   err++;
                   break;
                }
@@ -2673,7 +2673,7 @@ void Triangles::GeomToTriangles0(long inbvx)
                if (!ei.Mark() && ei[j].Required()) {
                   long nbvend=0;
                   Edge *PreviousNewEdge=0;
-                  lstep = -1;   //to do not create points
+                  lstep = -1;   // to do not create points
                   if (ei.Required()) {
                      if (j==0) {
                         if (step==0)
@@ -2758,6 +2758,8 @@ void Triangles::GeomToTriangles0(long inbvx)
                               edges[nbe].v[0] = va;
                               edges[nbe].v[1] = vb;
                               edges[nbe].ref = e->ref;
+                              if (e->ref>0)
+                                 edges[nbe].ref = 0;
                               edges[nbe].on = e;
                               edges[nbe].adj[0] = PreviousNewEdge;
                               if (PreviousNewEdge)
@@ -2814,7 +2816,7 @@ void Triangles::GeomToTriangles0(long inbvx)
          assert(VerticesOnGeomEdge || NbVerticesOnGeomEdge0==0);
          NbVerticesOnGeomEdge0 = NbVerticesOnGeomEdge;       
       }
-      else 
+      else
          assert(NbVerticesOnGeomEdge==NbVerticesOnGeomEdge0);
       assert(nbex=nbe);
    }
@@ -3056,7 +3058,7 @@ void Triangles::FillHoleInMesh()
                cout << " Edge " << i << " : " <<  Number(edges[i][0]) << " " <<  Number(edges[i][1]) 
                     << " " << edges[i].ref << endl; 
          }
-         cerr << k << " boundary edges  are not defined as edges " << endl;
+         cerr << k << " boundary edges are not defined as edges" << endl;
          MeshError(9998);
       }
 
@@ -3121,7 +3123,7 @@ void Triangles::FillHoleInMesh()
       TriangleAdjacent ta(0,0);
       long nbloss=0, knbe=0;
       for (i=0; i<nbe; i++) {
-         Vertex &a=edges[i][0], &b=edges[i][1];
+         Vertex &a=edges[i][0],&b=edges[i][1];
          if (a.t && b.t) {
             knbe++;
             if (ForceEdge(a,b,ta)<0)
@@ -3129,7 +3131,7 @@ void Triangles::FillHoleInMesh()
          }
       }
       if (nbloss) {
-         cerr << " We lost some  " << nbloss << " "  << " edges other " << knbe << endl;
+         cerr << " We lost some  " << nbloss << " edges other " << knbe << endl;
          MeshError(1100);
       }
       FindSubDomain(1);
@@ -3240,7 +3242,6 @@ Triangles::Triangles(Triangles& Th,
 {
    Gh.NbRef++;
    nbvxx = Max(nbvxx,Th.nbv); 
-   long i;
 // do all the allocation to be sure all the pointer exists
 
    char *cname = 0;
@@ -3282,7 +3283,6 @@ Triangles::Triangles(Triangles& Th,
       NbVertexOnBThEdge = 0;
       VertexOnBThEdge = 0;
    }
-
    if (nbe)
       edges = new Edge[nbe];
    if (NbSubDomains)
@@ -3290,17 +3290,17 @@ Triangles::Triangles(Triangles& Th,
    pmin = Th.pmin;
    pmax = Th.pmax;
    coefIcoor = Th.coefIcoor;
-   for (i=0; i<nbt; i++)
+   for (long i=0; i<nbt; i++)
       triangles[i].Set(Th.triangles[i],Th,*this);
-   for (i=0; i<nbe; i++)
+   for (long i=0; i<nbe; i++)
       edges[i].Set(Th,i,*this);
-   for (i=0; i<nbv; i++)
+   for (long i=0; i<nbv; i++)
       _vertices[i].Set(Th._vertices[i],Th,*this);
-   for (i=0; i<NbSubDomains; i++)
+   for (long i=0; i<NbSubDomains; i++)
       subdomains[i].Set(Th,i,*this);
-   for (i=0; i<NbVerticesOnGeomVertex; i++)
+   for (long i=0; i<NbVerticesOnGeomVertex; i++)
       VerticesOnGeomVertex[i].Set(Th.VerticesOnGeomVertex[i],Th,*this);
-   for (i=0; i<NbVerticesOnGeomEdge; i++)
+   for (long i=0; i<NbVerticesOnGeomEdge; i++)
       VerticesOnGeomEdge[i].Set(Th.VerticesOnGeomEdge[i],Th,*this);
    _quadtree = 0;
 }
@@ -3545,7 +3545,7 @@ int Triangles::CrackMesh()
    }
 
    if (nbcrakev) 
-      for (int iec=0; iec < NbCrackedEdges; iec++)
+      for (int iec=0; iec<NbCrackedEdges; iec++)
          CrackedEdges[iec].Set();
 
 // set the ref
@@ -3565,15 +3565,16 @@ int Triangles::CrackMesh()
       delete [] VerticesOnGeomVertex;
       VerticesOnGeomVertex = vog;
       Vertex *LastOld = _vertices + nbv - nbnewv;
-      for (int iec=0; iec< NbCrackedEdges; iec ++)
-      for (k=0; k<2; k++) {
-         Edge &e = *(k ? CrackedEdges[iec].a.edge : CrackedEdges[iec].b.edge);
-         for (j=0; j<2; j++) {
-            Vertex *v = e(j);
-            if (v>=LastOld) {
-               long old = v->ReferenceNumber;
-               long i = (v - LastOld);
-               vog[i] = vog[old];
+      for (int iec=0; iec< NbCrackedEdges; ++iec) {
+         for (k=0; k<2; k++) {
+            Edge &e = *(k ? CrackedEdges[iec].a.edge : CrackedEdges[iec].b.edge);
+            for (j=0; j<2; j++) {
+               Vertex *v = e(j);
+               if (v>=LastOld) {
+                  long old = v->ReferenceNumber;
+                  long i = (v - LastOld);
+                  vog[i] = vog[old];
+               }
             }
          }
       }
@@ -3601,10 +3602,10 @@ Triangles::Triangles(const Triangles& Tho,
    long *reft = new long[Tho.nbt];
    long nbInT = Tho.ConsRefTriangle(reft);
    long *refv = new long[Tho.nbv];
-   for (i=0; i< Tho.nbv; i++)
+   for (i=0; i<Tho.nbv; i++) {
       kk[i] = -1;
-   for (i=0; i<Tho.nbv; i++)
       refv[i] = 0;
+   }
    int nbNewBedge=0;
    for (i=0; i<Tho.nbt; i++) {
       if (reft[i] >=0 && flag[i]) {
@@ -3637,7 +3638,7 @@ Triangles::Triangles(const Triangles& Tho,
          kk[i] = k++;
    cout << " number of vertices " << k << " remove = " << Tho.nbv - k << endl;
    cout << " number of triangles " << kt << " remove = " << nbInT-kt << endl;
-   cout << " number of New boundary edge " << nbNewBedge << endl;
+   cout << " number of new boundary edges " << nbNewBedge << endl;
    long inbvx=k;
    PreInit(inbvx,cname);
    for (i=0; i<Tho.nbv; i++) {

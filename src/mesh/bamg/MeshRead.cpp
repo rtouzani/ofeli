@@ -32,7 +32,7 @@ void Triangles::Read(MeshIstream& f_in,
          break;
       f_in.err() ;
       if (verbosity>9)
-	 cout <<  "    " << fieldname << endl;
+         cout <<  "    " << fieldname << endl;
       if (!strcmp(fieldname,"MeshVersionFormatted"))
          f_in >> Version;
       else if (!strcmp(fieldname,"End"))
@@ -183,7 +183,7 @@ void Triangles::Read(MeshIstream& f_in,
                len[i] = 0;
          }
          for (i=0; i<nbe; i++) {
-            f_in >> i1 >> i2 >> edges[i].ref;        
+            f_in >> i1 >> i2 >> edges[i].ref;
             assert(i1>0 && i2>0);
             assert(i1<=nbv && i2<=nbv);
             i1--; i2--;

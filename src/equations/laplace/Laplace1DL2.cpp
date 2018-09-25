@@ -129,41 +129,10 @@ void Laplace1DL2::BodyRHS(const Vect<real_t>& f)
 }
 
 
-void Laplace1DL2::BoundaryRHS(int    n,
-                              real_t p)
+void Laplace1DL2::BoundaryRHS(const Vect<real_t>& h)
 {
-   if (n==-1)
-      eRHS(1) -= p;
-   else
-      eRHS(2) += p;
-}
-
-
-int Laplace1DL2::run()
-{
-   *_u = 0;
-   size_t n = _theMesh->getNbNodes();
-   MESH_EL {
-      set(theElement);
-      Matrix();
-      if (_bf_given)
-         BodyRHS(*_bf);
-      if (_sf_given) {
-         BoundaryRHS(1,(*_sf)(1));
-         BoundaryRHS(1,(*_sf)(2));
-      }
-      ElementAssembly(_A);
-      ElementAssembly(*_u);
-   }
-   if ((*_theMesh)[1]->getCode(1)>0) {
-      _A.set(1,2,0.);
-      _u->set(1,(*_bc)(1)*_A(1,1));
-   }
-   if ((*_theMesh)[n]->getCode(1)>0) {
-      _A.set(n,n-1,0.);
-      _u->set(n,(*_bc)(n)*_A(n,n));
-   }
-   return _A.Solve(*_u);
+   eRHS(1) -= h(1);
+   eRHS(2) += h(_theMesh->getNbNodes());
 }
 
 } /* namespace OFELI */

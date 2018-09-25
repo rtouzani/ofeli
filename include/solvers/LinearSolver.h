@@ -399,9 +399,9 @@ int LinearSolver<T_>::solve(Iteration      s,
       }
       return ret;
    }
-   SpMatrix<T_> &A=(SpMatrix<T_> &)(*_A);
 
 #if defined (USE_EIGEN)
+   SpMatrix<T_> &A = (SpMatrix<T_> &)(*_A);
    VectorX x;
    if (_s==CG_SOLVER) {
       if (_p==IDENT_PREC) {
@@ -466,18 +466,22 @@ int LinearSolver<T_>::solve(Iteration      s,
          _A->Factor();
       _A->solve(*_b,*_x);
    }
-   else if (_s==CG_SOLVER)
-      ret = CG(A,SSOR_PREC,*_b,*_x,_max_it,_toler,_verbose);
-   else if (_s==GMRES_SOLVER)
-      ret = GMRes(A,_p,*_b,*_x,10,_max_it,_toler,_verbose);
-   else if (_s==CGS_SOLVER)
-      ret = CGS(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-   else if (_s==BICG_SOLVER)
-      ret = BiCG(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-   else if (_s==BICG_STAB_SOLVER)
-      ret = BiCGStab(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-   else
-      throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): This solver is not available.");
+   else {
+      SpMatrix<T_> &A = (SpMatrix<T_> &)(*_A);
+      if (_s==CG_SOLVER)
+         ret = CG(A,_p,*_b,*_x,_max_it,_toler,_verbose);
+      else if (_s==GMRES_SOLVER)
+         ret = GMRes(A,_p,*_b,*_x,10,_max_it,_toler,_verbose);
+      else if (_s==CGS_SOLVER)
+         ret = CGS(A,_p,*_b,*_x,_max_it,_toler,_verbose);
+      else if (_s==BICG_SOLVER)
+         ret = BiCG(A,_p,*_b,*_x,_max_it,_toler,_verbose);
+      else if (_s==BICG_STAB_SOLVER)
+         ret = BiCGStab(A,_p,*_b,*_x,_max_it,_toler,_verbose);
+      else
+         throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
+                              "This solver is not available.");
+   }
 #endif
    return ret;
 }

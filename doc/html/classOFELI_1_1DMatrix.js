@@ -5,6 +5,7 @@ var classOFELI_1_1DMatrix =
     [ "DMatrix", "classOFELI_1_1DMatrix.html#a129bf5624725a68a0602aed6452bfe6b", null ],
     [ "DMatrix", "classOFELI_1_1DMatrix.html#a21b8942efb928b84b44339b5dfba10ae", null ],
     [ "DMatrix", "classOFELI_1_1DMatrix.html#a5d49496c7c63a0512f8628d52aad20bb", null ],
+    [ "DMatrix", "classOFELI_1_1DMatrix.html#acbb7360ae80562139b3be162f7aa6efa", null ],
     [ "~DMatrix", "classOFELI_1_1DMatrix.html#a8d58c077392c7226d414c1391d70a6d5", null ],
     [ "setDiag", "classOFELI_1_1DMatrix.html#ac4e475404ab75bd6cfe18a2aeb76a7de", null ],
     [ "setDiag", "classOFELI_1_1DMatrix.html#ada43e388310892d120dc1e2e2f9841ea", null ],

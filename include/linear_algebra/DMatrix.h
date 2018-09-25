@@ -107,6 +107,18 @@ class DMatrix : public Matrix<T_>
 /// @param [in] m %Matrix to copy
     DMatrix(const DMatrix<T_>& m);
 
+/** \brief Constructor using mesh to initialize structure of matrix.
+ *  @param [in] mesh Mesh instance for which matrix graph is determined.
+ *  @param [in] dof Option parameter, with default value <tt>0</tt>.\n
+ *  <tt>dof=1</tt> means that only one degree of freedom for each node (or element or side)
+ *  is taken to determine matrix structure. The value <tt>dof=0</tt> means that matrix
+ *  structure is determined using all DOFs.
+ *  @param [in] is_diagonal Boolean argument to say is the matrix is actually a diagonal matrix or not.
+ */
+    DMatrix(Mesh&  mesh,
+            size_t dof=0,
+            int    is_diagonal=false);
+
 /// \brief Destructor.
     ~DMatrix() { }
 
@@ -539,6 +551,17 @@ DMatrix<T_>::DMatrix(const DMatrix<T_>& m)
    _fact = m._fact;
    _is_diagonal = m._is_diagonal;
    _qr_set = m._qr_set;
+}
+
+
+template<class T_>
+DMatrix<T_>::DMatrix(Mesh&  mesh,
+                     size_t dof,
+                     int    is_diagonal)
+{
+   _is_diagonal = is_diagonal;
+   _fact = false;
+   setMesh(mesh,dof);
 }
 
 

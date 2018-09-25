@@ -115,7 +115,7 @@ template<class T_> class Prec
  *    <li><tt>DIAG_PREC</tt>: Diagonal preconditioner
  *    <li><tt>DILU_PREC</tt>: Diagonal Incomplete factorization preconditioner
  *    <li><tt>ILU_PREC</tt>: Incomplete factorization preconditioner
- *    <li><tt>SSOR_PREC</tt>: SSOR preconditioner
+ *    <li><tt>SSOR_PREC</tt>: SSOR (Symmetric Successive Over Relaxation) preconditioner
  *  </ul>
  */
     Prec(int type) { _type = type; }
@@ -128,7 +128,7 @@ template<class T_> class Prec
  *    <li><tt>DIAG_PREC</tt>: Diagonal preconditioner
  *    <li><tt>DILU_PREC</tt>: Diagonal Incomplete factorization preconditioner
  *    <li><tt>ILU_PREC</tt>: Incomplete factorization preconditioner
- *    <li><tt>SSOR_PREC</tt>: SSOR preconditioner
+ *    <li><tt>SSOR_PREC</tt>: SSOR (Symmetric Successive Over Relaxation) preconditioner
  *  </ul>
  */
    Prec(const SpMatrix<T_>& A,
@@ -146,7 +146,7 @@ template<class T_> class Prec
  *    <li><tt>DIAG_PREC</tt>: Diagonal preconditioner
  *    <li><tt>DILU_PREC</tt>: Diagonal Incomplete factorization preconditioner
  *    <li><tt>ILU_PREC</tt>: Incomplete factorization preconditioner
- *    <li><tt>SSOR_PREC</tt>: SSOR preconditioner
+ *    <li><tt>SSOR_PREC</tt>: SSOR (Symmetric Successive Over Relaxation) preconditioner
  *  </ul>
  */
     Prec(const Matrix<T_>* A,
@@ -166,7 +166,7 @@ template<class T_> class Prec
        <li> <tt>DIAG_PREC</tt>: Diagonal preconditioner
        <li> <tt>DILU_PREC</tt>: Diagonal Incomplete factorization preconditioner
        <li> <tt>ILU_PREC</tt>: Incomplete factorization preconditioner
-       <li> <tt>SSOR_PREC</tt>: SSOR preconditioner
+       <li> <tt>SSOR_PREC</tt>: SSOR (Symmetric Successive Over Relaxation) preconditioner
     </ul>
  */
     void setType(int type) { _type = type; }
@@ -176,7 +176,8 @@ template<class T_> class Prec
     void setMatrix(const Matrix<T_>* A)
     {
        if (_type==-1)
-          throw OFELIException("In Prec::setMatrix(Matrix<T_> *): Choose preconditioner before setting matrix !");
+          throw OFELIException("In Prec::setMatrix(Matrix<T_> *): Choose preconditioner before "
+                               "setting matrix !");
        _a = (SpMatrix<T_> *)A;
        _size = _a->size();
        _length = _a->getLength();
@@ -190,7 +191,8 @@ template<class T_> class Prec
              _pivot.resize(_size);
              int i;
              if ((i=inv_diag()) != 0)
-                throw OFELIException("In Prec::setMatrix(Matrix<T_> *): Zero pivot detected in row "+itos(i));
+                throw OFELIException("In Prec::setMatrix(Matrix<T_> *): Zero pivot detected in row "
+                                     + itos(i));
              break;
 
           case DILU_PREC:
@@ -211,7 +213,8 @@ template<class T_> class Prec
     void setMatrix(const SpMatrix<T_>& A)
     {
        if (_type==-1)
-          throw OFELIException("In Prec::setMatrix(SpMatrix<T_>): Choose preconditioner before setting matrix !");
+          throw OFELIException("In Prec::setMatrix(SpMatrix<T_>): Choose preconditioner before "
+                               "setting matrix !");
        _a = &A;
        _size = _a->size();
        _length = _a->getLength();
@@ -225,7 +228,8 @@ template<class T_> class Prec
              _pivot.resize(_size);
              size_t i;
              if ((i=inv_diag()) != 0)
-                throw OFELIException("In Prec::setMatrix(SpMatrix<T_>): Zero pivot detected in row "+itos(int(i)));
+                throw OFELIException("In Prec::setMatrix(SpMatrix<T_>): Zero pivot detected in row "
+                                     +itos(int(i)));
              break;
 
           case DILU_PREC:

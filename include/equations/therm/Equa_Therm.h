@@ -109,7 +109,6 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 /// \brief Destructor
     virtual ~Equa_Therm() { }
 
-
 /** \brief Set stabilized formulation
  *  \details Stabilized variational formulations are to be used when the Péclet number
  *  is large.\n
@@ -318,7 +317,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     {
        *_b = 0;
        build();
-       int ret=AbsEqua<T_>::SolveLinearSystem(_A,*_b,_uu);
+       int ret=AbsEqua<T_>::solveLinearSystem(*_b,_uu);
        _u->insertBC(*_theMesh,_uu,*_bc);
        return ret;
     }
@@ -344,7 +343,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        _uu.setSize(_theMesh->getNbEq());
        if (_analysis==STEADY_STATE) {
           build();
-          ret = AbsEqua<T_>::SolveLinearSystem(_A,*_b,_uu);
+          ret = AbsEqua<T_>::solveLinearSystem(*_b,_uu);
           _u->insertBC(*_theMesh,_uu,*_bc);
        }
        else {

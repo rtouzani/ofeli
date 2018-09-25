@@ -380,15 +380,6 @@ class DC2DT3 : public Equa_Therm<real_t,3,3,2,2>
     void build() { Equa_Therm<real_t,3,3,2,2>::build(); }
     void build(TimeStepping& s) { Equa_Therm<real_t,3,3,2,2>::build(s); }
 
-/** \brief Run the equation
- *  \details If the analysis (see function setAnalysis) is <tt>STEADY_STATE</tt>, then
- *  the function solves the stationary equation.\n
- *  If the analysis is <tt>TRANSIENT</tt>, then the function performs time stepping
- *  until the final time is reached.
- */
-//    int run() { return Equa_Therm<real_t,3,3,2,2>::run(); }
-
-
  protected:
     void set(const Element* el);
     void set(const Side* sd);

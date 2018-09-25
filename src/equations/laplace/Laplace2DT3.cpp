@@ -62,7 +62,7 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
 Laplace2DT3::Laplace2DT3(Mesh& ms)
             : Equation<real_t,3,3,2,2>(ms)
 {
-}
+} 
 
 
 Laplace2DT3::Laplace2DT3(Mesh&         ms,
@@ -77,7 +77,6 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
    _bc_given = true;
    _bc = &Dbc;
    _sf = &Nbc;
-   _A = new SpMatrix<real_t>(*_theMesh);
 }
 
 
@@ -118,29 +117,8 @@ void Laplace2DT3::set(const Side* sd)
 }
 
 
-void Laplace2DT3::build()
-{
-   *_A = 0;
-   _b = new Vect<real_t>(_A->size());
-   MESH_EL {
-      set(theElement);
-      LHS();
-      BodyRHS(*_bf);
-      if (_bc_given)
-         updateBC(*_bc);
-      ElementAssembly(*_A);
-      ElementAssembly(*_b);
-   }
-   MESH_SD {
-      set(theSide);
-      BoundaryRHS(*_sf);
-      SideAssembly(*_b);
-   }
-}
-
-
 void Laplace2DT3::buildEigen(int opt)
-{
+ {
    set(theElement);
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
@@ -167,15 +145,6 @@ int Laplace2DT3::solve(Vect<real_t>& u)
    u.insertBC(*_theMesh,x,*_bc);
    delete _b;
    return nb_it;
-}
-
-
-int Laplace2DT3::run()
-{
-   build();
-   int n = solve(*_u);
-   delete _A;
-   return n;
 }
 
 

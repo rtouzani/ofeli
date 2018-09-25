@@ -41,8 +41,8 @@ void WriteStr(ostream& out,
 
 
 double * ReadbbFile(const char* file,
-                          long& nbsol,
-                          long& lsol,
+                    long&       nbsol,
+                    long&       lsol,
                     const int   typesol,
                     const int   dim)
 {
@@ -197,7 +197,7 @@ char *MeshIstream::ReadStr()
       }
       else if (!instr) {
          instr = 1;
-         if ((*b == '"') ||  (*b == '\'' ) )
+         if (*b=='"' || *b=='\'')
             bb = *b--, k = 0;
       }
       else

@@ -7,7 +7,7 @@
 //          not be sold or used for a commercial purpose with- 
 //          out our consent : fax (33) 1 39 63 55 14       
 // --------------------------------------------------------
-// AUTHOR:   F. Hecht,    
+// AUTHOR:   F. Hecht,
 // ORG    :  INRIA
 // E-MAIL :   Frederic.Hecht@Inria.fr   
 //
@@ -111,8 +111,8 @@ double QuadQuality(const Vertex& a,
 GeometricalEdge* Triangles::ProjectOnCurve(Edge&         BhAB,
                                            Vertex&       vA,
                                            Vertex&       vB,
-					   double        theta,
-					   Vertex&       R,
+                                           double        theta,
+                                           Vertex&       R,
                                            VertexOnEdge& BR,
                                            VertexOnGeom& GR) 
 {
@@ -158,7 +158,7 @@ GeometricalEdge* Triangles::ProjectOnCurve(Edge&         BhAB,
       Exchange(pA,pB);
       Exchange(pvA,pvB);
       Exchange(A,B);
-      e =  vB.onbe->be;
+      e = vB.onbe->be;
    } 
    else
       assert(0);
@@ -175,8 +175,8 @@ GeometricalEdge* Triangles::ProjectOnCurve(Edge&         BhAB,
       Edge *neee, *eee;
       double lg =0, te0;
       for (eee=e, iii=sens, te0=tA;
-             eee && (((void*) eee) != pB) && (( void*) (v1=&((*eee)[iii]))) != pB ;
-             neee = eee->adj[iii],iii = 1-neee->Intersection(*eee), eee=neee, v0=v1, te0=1-iii) { 
+           eee && (((void*) eee) != pB) && (( void*) (v1=&((*eee)[iii]))) != pB ;
+           neee = eee->adj[iii],iii = 1-neee->Intersection(*eee), eee=neee, v0=v1, te0=1-iii) { 
          assert(kkk<100);
          kkk++;
          assert(eee);
@@ -230,20 +230,18 @@ void Triangles::MakeQuadrangles(double costheta)
       return;
    }
    long nbqq = (nbt*3)/2;
-   DoubleAndlong  *qq = new DoubleAndlong[nbqq];
-   long i, ij, k=0;
-   int j;
-   for (i=0; i<nbt; i++)
-      for (j=0; j<3; j++)
+   DoubleAndlong *qq = new DoubleAndlong[nbqq];
+   long k=0;
+   for (long i=0; i<nbt; ++i)
+      for (int j=0; j<3; ++j)
          if ((qq[k].q=triangles[i].QualityQuad(j))>=costheta)
             qq[k++].i3j=i*3+j;
    HeapSort(qq,k);
    long kk=0;
-   for (ij=0; ij<k; ij++) {
-      i = qq[ij].i3j/3;
-      j = int(qq[ij].i3j%3);
+   for (long ij=0; ij<k; ij++) {
+      int i=qq[ij].i3j/3, j=int(qq[ij].i3j%3);
       if (triangles[i].QualityQuad(j,0) >=costheta) 
-         triangles[i].SetHidden(j),kk++;
+         triangles[i].SetHidden(j), kk++;
    }
    NbOfQuad = kk;
    if (verbosity>2) {
@@ -317,26 +315,25 @@ int Triangles::SplitElement(int choice)
    for (i=0; i<nbe; i++) {
       GeometricalEdge *ong =  edges[i].on;
       newedges[ie] = edges[i];
-      newedges[ie].adj[0] = newedges + (edges[i].adj[0]-edges) ;
+      newedges[ie].adj[0] = newedges + (edges[i].adj[0]-edges);
       newedges[ie].adj[1] = newedges + ie +1;
       R2 A = edges[i][0],B = edges[i][1];
       kk += (i == edge4->addtrie(Number(edges[i][0]),Number(edges[i][1])));
       if (ong) { 
          if (withBackground) {
             assert(edgesGtoB); 
-            ong = ProjectOnCurve(*edgesGtoB[Gh.Number(edges[i].on)],
-                                 edges[i][0],edges[i][1],0.5,_vertices[k],
-                                 newVertexOnBThEdge[kvb],
+            ong = ProjectOnCurve(*edgesGtoB[Gh.Number(edges[i].on)],edges[i][0],
+                                 edges[i][1],0.5,_vertices[k],newVertexOnBThEdge[kvb],
                                  newVerticesOnGeomEdge[kvg++]);
             _vertices[k].ReferenceNumber = edges[i].ref;
-            _vertices[k].DirOfSearch = NoDirOfSearch;        
+            _vertices[k].DirOfSearch = NoDirOfSearch;
 
 //          get the Info on background mesh 
             double s = newVertexOnBThEdge[kvb];
             Vertex &bv0 = newVertexOnBThEdge[kvb][0];
             Vertex &bv1 = newVertexOnBThEdge[kvb][1];
-//          compute the metrix of the new points 
-            _vertices[k].m =  Metric(1-s,bv0,s,bv1); 
+//          compute the metrix of the new points
+            _vertices[k].m = Metric(1-s,bv0,s,bv1);
             kvb++;
          }
          else {
@@ -344,7 +341,7 @@ int Triangles::SplitElement(int choice)
 //          vertices[k].i = toI2( vertices[k].r);
             _vertices[k].ReferenceNumber = edges[i].ref;
             _vertices[k].DirOfSearch = NoDirOfSearch;
-            _vertices[k].m = Metric(0.5,edges[i][0],0.5,edges[i][1]);	      
+            _vertices[k].m = Metric(0.5,edges[i][0],0.5,edges[i][1]);
          }
       }
       else {
@@ -353,8 +350,7 @@ int Triangles::SplitElement(int choice)
          _vertices[k].on = 0;
       }
       R2 AB = _vertices[k].r;
-      R2 AA = (A+AB)*0.5;
-      R2 BB = (AB+B)*0.5;
+      R2 AA = (A+AB)*0.5, BB = (AB+B)*0.5;
       _vertices[k].ReferenceNumber = edges[i].ref;
       _vertices[k].DirOfSearch = NoDirOfSearch;	    
       newedges[ie].on = Gh.Containing(AA,ong);
@@ -458,7 +454,7 @@ int Triangles::SplitElement(int choice)
                else
                   cerr << endl << " Bug " << i << " " << j << " t = " << t << endl;
             }
-	    else {
+            else {
                kedge[3*i+j] = nbvold + ke;
                kkk[nbsplitedge++] = j;// previously splited
             }
@@ -515,7 +511,7 @@ int Triangles::SplitElement(int choice)
       t0.SetAdj2(1,0,hid[1]);
       t0.SetAdj2(2,0,hid[2]);
 
-      switch  (kk) {
+      switch (kk) {
 
          case 1: break;
 

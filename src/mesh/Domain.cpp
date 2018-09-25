@@ -281,10 +281,7 @@ void Domain::insertLine(size_t n1,
                         int    code)
 {
    int dc=0, nc=0;
-   if (code<0)
-      nc = -code;
-   else
-      dc = code;
+   (code<0) ? nc = -code : dc = code;
    insertLine(n1,n2,dc,nc);
 }
 
@@ -339,10 +336,7 @@ void Domain::insertCircle(size_t n1,
                           int    code)
 {
    int nc=0, dc=0;
-   if (code<0)
-      nc = -code;
-   else
-      dc = code;
+   (code<0) ? nc = -code : dc = code;
    insertCircle(n1,n2,n3,dc,nc);
 }
 
@@ -1516,41 +1510,41 @@ void Domain::genGeo(string file)
    mf << "Dimension  2" << endl;
    mf << "AngleOfCornerBound 46" << endl;
    if (_nb_vertices > 0) {
-      mf << "\nVertices  " << setw(5) << _nb_vertices << endl;
-      for (size_t i=0; i<_nb_vertices; i++)
-         mf << setprecision(8) << setw(16) << _v[i].x
-            << setprecision(8) << setw(16) << _v[i].y
-            << setw(6) << _v[i].code << endl;
+      mf << "\nVertices   " << _nb_vertices << endl;
+      for (size_t i=0; i<_nb_vertices; ++i)
+         mf << _v[i].x << "  " << _v[i].y << "  " << _v[i].code << endl;
    }
    if (_nb_lines > 0) {
-      mf << "\nEdges  " << setw(5) << _nb_lines << endl;
-      for (size_t i=0; i<_nb_lines; i++)
-         mf << setw(5) << _l[i].n1 << setw(5) << _l[i].n2
-            << setw(5) << _l[i].Ncode << setw(5) << endl;
+      mf << "\nEdges    " << _nb_lines << endl;
+      for (size_t i=0; i<_nb_lines; ++i) {
+         int code = _l[i].Dcode;
+         if (_l[i].Ncode)
+            code = -_l[i].Ncode;
+         mf << setw(5) << _l[i].n1 << "  " << _l[i].n2 << "  " << code << endl;
+      }
    }
    if (_nb_vertices > 0) {
       mf << "\nhVertices\n";
       for (size_t i=0; i<_nb_vertices; i++)
-         mf << "  " << setprecision(6) << setw(10) << _v[i].h;
+         mf << "  " << _v[i].h;
       mf << endl;
    }
    if (_nb_required_vertices > 0) {
       mf << "\nRequiredVertices" << setw(5) << _nb_required_vertices << endl;
       for (size_t i=0; i<_nb_required_vertices; i++)
-         mf << setw(5) << _required_vertex[i];
+        mf << "  " << _required_vertex[i];
       mf << endl;
    }
    if (_nb_required_edges > 0) {
       mf << "\nRequiredEdges" << setw(5) << _nb_required_edges << endl;
       for (size_t i=0; i<_nb_required_edges; i++)
-         mf << setw(5) << _required_edge[i];
+         mf << "  " << _required_edge[i];
       mf << endl;
    }
    if (_nb_sub_domains > 0) {
       mf << "\nSubDomain " << setw(6) << _nb_sub_domains << endl;
       for (size_t i=0; i<_nb_sub_domains; i++)
-         mf << setw(6) << 2 << setw(6) << _sd[i].line << setw(6) << _sd[i].orient << setw(6)
-            << _sd[i].code << endl;
+         mf << "  " << 2 << "  " << _sd[i].line << "  " << _sd[i].orient << "  " << _sd[i].code << endl;
    }
    mf << "\nEnd" << endl;
 }
@@ -1560,14 +1554,27 @@ void Domain::genMesh(string geo_file,
                      string bamg_file,
                      string mesh_file)
 {
-// Generate geometry file
    genGeo(geo_file);
-
-// Generate Bamg file
-   main_bamg(geo_file,bamg_file);
+   bamg::Geometry Gh(geo_file.c_str());
+   int nbvx=100000;
+   bamg::Triangles Th(nbvx,Gh);
+   Th.MakeQuadrangles(2);
+   Th.ReNumberingTheTriangleBySubDomain();
+   Th.Write(bamg_file.c_str(),bamg::Triangles::BDMesh);
    _theMesh = new Mesh;
    getBamg(bamg_file,*_theMesh,_nb_dof);
    removeUnusedNodes();
+   Vect<size_t> nd_ref(_theMesh->getNbNodes());
+   nd_ref = 0;
+   MESH_SD {
+      for (size_t i=1; i<=TheSide.getNbNodes(); i++)
+         if (TheSide.getCode(1))
+            nd_ref[TheSide(i)->n()-1]++;
+   }
+   MESH_ND {
+      if (nd_ref[theNodeLabel-1]>1)
+         TheNode.setCode(1,0);
+   }
    _theMesh->put(mesh_file);
 }
 
@@ -1754,7 +1761,7 @@ void Domain::gm2()
          << setw(6) << _sd[k].code << endl;
    mf << "\nEnd" << endl;
 
-   main_bamg(geo_file,bamg_file);
+   bamg1(geo_file,bamg_file);
    _theMesh = new Mesh;
    getBamg(bamg_file,*_theMesh,_nb_dof);
    ::remove(geo_file.c_str());
@@ -1886,7 +1893,7 @@ void Domain::gm()
    cout << "************************************************************************" << endl;
    cout << "                   Output provided by BAMG" << endl;
    cout << "************************************************************************" << endl;
-   main_bamg(emfile,outfile);
+   bamg1(emfile,outfile);
    cout << "************************************************************************" << endl;
    _theMesh = new Mesh;
    cout << "Converting output file to ofeli format ..." << endl;

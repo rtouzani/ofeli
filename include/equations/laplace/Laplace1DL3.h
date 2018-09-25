@@ -94,13 +94,11 @@ public :
     void BodyRHS(const Vect<real_t>& f);
 
 /** \brief Add Neumann contribution to Right-Hand %Side
- *  @param [in] n Parameter to select equal to <tt>0</tt> if the condition is at the left
- *  end of the domain and different if it is at the right of it
- *  @param [in] p Value of flux to add
- *  @note This member function is to be invoked only for the first or last element
+ *  @param [in] h Vector with size the total number of nodes. The first entry stands for
+ *  the force at the first node (Neumann condition) and the last entry is the force at
+ *  the last node (Neumann condition)
  */
-    void BoundaryRHS(int    n,
-                     real_t p);
+    void BoundaryRHS(const Vect<real_t>& h);
 
 /** \brief Set Traction data
  *  @param [in] f Value of traction (Neumann boundary condition)
@@ -110,18 +108,11 @@ public :
     void setTraction(real_t f,
                      int    lr);
 
-/** Run solution procedure
- *  This function is to be called when the constructor \b Laplace1DL2(mesh,u)
- *  is used.
- *  @return return code for the solution of the linear system
- */
-    int run();
-
 private:
    LocalMatrix<real_t,3,3> _dSh;
    real_t _lsf, _rsf;
    BMatrix<real_t> _A;
-   void set(Element *el);
+   void set(const Element* el);
 };
 
 /*! @} End of Doxygen Groups */

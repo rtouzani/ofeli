@@ -65,7 +65,7 @@ Laplace1DL3::~Laplace1DL3()
 }
 
 
-void Laplace1DL3::set(Element* el)
+void Laplace1DL3::set(const Element* el)
 {
    static real_t s[3]={-1,0,1};
    _theElement = el;
@@ -111,35 +111,10 @@ void Laplace1DL3::BodyRHS(const Vect<real_t>& f)
 }
 
 
-void Laplace1DL3::BoundaryRHS(int    n,
-                              real_t p)
-{                  
-   if (n==-1)
-      eRHS(1) -= p;
-   else
-      eRHS(3) += p;
-}
-
-
-int Laplace1DL3::run()
+void Laplace1DL3::BoundaryRHS(const Vect<real_t>& h)
 {
-   *_u = 0;
-   MESH_EL {
-      set(theElement);
-      Matrix();
-      if (_bf_given)
-         BodyRHS(*_bf);
-      if (_sf_given) {
-         if (theElementLabel==1)
-            BoundaryRHS(-1,_lsf);
-         if (theElementLabel==_theMesh->getNbElements())
-            BoundaryRHS(1,_rsf);
-      }
-      ElementAssembly(_A);
-      ElementAssembly(*_u);
-   }
-   _A.Prescribe(*_u,*_bc);
-   return _A.FactorAndSolve(*_u);
+   eRHS(1) -= h(1);
+   eRHS(3) += h(_theMesh->getNbNodes());
 }
 
 } /* namespace OFELI */
