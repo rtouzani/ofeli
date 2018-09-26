@@ -232,7 +232,7 @@ class AbsEqua
 /// \brief Default constructor
     AbsEqua() : _theMesh(NULL), _time_scheme(STATIONARY), _analysis(STEADY_STATE),
                 _solver(-1), _step(0), _nb_fields(1), _final_time(0.),
-                _A(NULL), _bc(NULL), _bf(NULL), _sf(NULL), _u(NULL), _v(NULL),
+                _A(NULL), _b(NULL), _bc(NULL), _bf(NULL), _sf(NULL), _u(NULL), _v(NULL),
                 _eigen(false), _sol_given(false), _bc_given(false),
                 _init_given(false), _bf_given(false), _sf_given(false), _set_matrix(false)
     {
@@ -243,6 +243,8 @@ class AbsEqua
     {
        if (_A)
           delete _A;
+       if (_b)
+          delete _b;
     }
 
 /// \brief Define mesh and renumber DOFs after removing imposed ones
@@ -264,9 +266,7 @@ class AbsEqua
     virtual int run() { return 0; }
     virtual int runSteadyState() { return run(); }
     virtual int runTransient() { return 0; }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \brief Set transient analysis settings
  *  \details Define a set of parameters for time integration
  *  @param [in] s Scheme
@@ -300,12 +300,6 @@ class AbsEqua
           _theta = 0.5;
    }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-// \brief Return number of (element or side) nodes.
-//    virtual size_t getNbNodes() const;
-
-// \brief Return number of (element or side) equations.
-//    virtual size_t getNbEq() const;
 
 /// \brief Return reference to linear solver instance
     LinearSolver<T_> &getLinearSolver() { return _ls; }
@@ -353,7 +347,7 @@ class AbsEqua
     {
        _matrix_type = t;
        if (_A)
-          delete _A;
+          delete _A, _A = NULL;
        if (_matrix_type==SPARSE)
           _A = new SpMatrix<T_>(*_theMesh);
        else if (_matrix_type==DENSE|SYMMETRIC)
@@ -513,7 +507,7 @@ class AbsEqua
    real_t             _time_parameter1, _time_parameter2, _time_parameter3;
    EigenProblemSolver _ev;
    Matrix<T_>         *_A, *_CM, *_Df;
-   Vect<T_>           *_bc, *_bf, *_sf, *_u, *_v, *_w, *_b, *_LM, _uu;
+   Vect<T_>           *_b, *_bc, *_bf, *_sf, *_u, *_v, *_w, *_LM, _uu;
    bool               _eigen, _sol_given, _bc_given, _init_given, _bf_given, _sf_given; 
    bool               _constant_matrix, _constant_mesh, _set_matrix;
    int                _sol_type, _init_type, _bc_type, _bf_type, _sf_type;

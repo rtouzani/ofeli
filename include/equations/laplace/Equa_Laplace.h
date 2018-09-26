@@ -129,7 +129,6 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
        return ret;
     }
 
-
 /** \brief Build global matrix and right-hand side.
  *  \details The problem matrix and right-hand side are the ones used in the constructor.
  *  They are updated in this member function.

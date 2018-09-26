@@ -109,7 +109,14 @@ class Equation : virtual public AbsEqua<T_>
 
 /// \brief Constructor with mesh instance.
 /// @param [in] mesh Mesh instance
-    Equation(Mesh &mesh);
+    Equation(Mesh &mesh)
+    {
+       AbsEqua<T_>::setMesh(mesh);
+       _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
+       _time_step = 0.1;
+       initEquation(mesh,_time_step);
+       _time = 0.;
+    }
 
 /** \brief Constructor with mesh instance, matrix and right-hand side.
  *  @param [in] mesh Mesh instance
@@ -120,14 +127,20 @@ class Equation : virtual public AbsEqua<T_>
     Equation(Mesh&     mesh,
              Vect<T_>& b,
              real_t&   t,
-             real_t&   ts);
+             real_t&   ts)
+    {
+       _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
+       initEquation(mesh,ts);
+       _time = t;
+       this->setInput(INITIAL_FIELD,b);
+    }
 
 /// \brief Constructor using Element data.
 /// @param [in] el Pointer to Element
-    Equation(const Element* el);
+    Equation(const Element* el) { _label = el->n(); }
 
 /// Constructor using Side data.
-    Equation(const Side* sd);
+    Equation(const Side* sd) { _label = sd->n(); }
 
 /** \brief Constructor using element data, solution at previous time step and time value.
  *  @param [in] el Pointer to element
@@ -136,7 +149,7 @@ class Equation : virtual public AbsEqua<T_>
  */
     Equation(const Element*  el,
              const Vect<T_>& u,
-             real_t          time=0);
+             real_t          time=0) { _label = el->n(); _time = time; }
 
 /** \brief Constructor using side data, solution at previous time step and time value.
  *  @param [in] sd Pointer to side
@@ -145,10 +158,10 @@ class Equation : virtual public AbsEqua<T_>
  */
     Equation(const Side*     sd,
              const Vect<T_>& u,
-             real_t          time=0);
+             real_t          time=0) { _label = sd->n(); _time = time; }
 
 /// \brief Destructor
-    virtual ~Equation();
+    virtual ~Equation() { }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \brief Initialize equation.
@@ -156,22 +169,31 @@ class Equation : virtual public AbsEqua<T_>
  *  @param [in] ts Time step value
  */
     virtual void initEquation(Mesh&  mesh,
-                              real_t ts);
-
+                              real_t ts)
+    {
+       _theMesh = &mesh;
+       _theMesh->removeImposedDOF();
+       _time_step = ts;
+       _b = new Vect<T_>(_theMesh->getNbEq());
+       _uu.setSize(_theMesh->getNbEq());
+    }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Return problem matrix: Case of a SpMatrix (sparse).
-/// @param [in] A 
+/// @param [in] A Reference to matrix
     void getMatrix(const SpMatrix<T_>& A) const { eMat.Localize(_theElement,A); }
 
 /// \brief Return problem matrix: Case of a SkMatrix (skyline)
+/// @param [in] A Reference to matrix
     void getMatrix(const SkMatrix<T_>& A) const { eMat.Localize(_theElement,A); }
 
 /// \brief Return problem matrix: Case of a SkSMatrix (symmetric skyline)
+/// @param [in] A Reference to matrix
     void getMatrix(const SkSMatrix<T_>& A) const { eMat.Localize(_theElement,A); }
 
 /// \brief Return problem matrix (Case of a SpMatrix (sparse))
+/// @param [in] A Reference to matrix
     void getSolution(const Vect<T_>& u) const { ePrev.Localize(_theElement,u); }
 
 /// \brief Return problem right-hand side vector
@@ -183,7 +205,22 @@ class Equation : virtual public AbsEqua<T_>
  *  @param [in] bc Vector that contains imposed values at all DOFs
  */
     void updateBC(const Element&  el,
-                  const Vect<T_>& bc);
+                  const Vect<T_>& bc)
+    {
+       _nb_dof = NEE_/NEN_;
+       size_t in=1;
+       for (size_t i=1; i<=NEN_; ++i) {
+          for (size_t k=1; k<=_nb_dof; ++k, ++in) {
+             size_t jn=1;
+             for (size_t j=1; j<=NEN_; ++j) {
+                for (size_t l=1; l<=_nb_dof; ++l, ++jn) {
+                   if (el(j)->getCode(l) > 0)
+                      eRHS(in) -= eMat(in,jn) * bc(el(j)->getFirstDOF()+l-1);
+                }
+             }
+          }
+       }
+    }
 
 /** \brief Update Right-Hand side by taking into account essential boundary conditions
  *  @param [in] bc Vector that contains imposed values at all DOFs
@@ -205,14 +242,77 @@ class Equation : virtual public AbsEqua<T_>
  *  </ul>
  */
     void DiagBC(int dof_type=NODE_DOF,
-                int dof=0);
+                int dof=0)
+    {
+       size_t in, jn;
+       _nb_dof = NEE_/NEN_;
+       if (dof_type==NODE_FIELD) {
+          if (dof) {
+             for (size_t i=1; i<=NEN_; i++) {
+                Node *nd1 = (*_theElement)(i);
+                if (nd1->getCode(dof)) {
+                   for (size_t j=1; j<=NEN_; j++) {
+                      Node *nd2 = (*_theElement)(j);
+                      in = nd1->n(), jn = nd2->n();
+                      if (in != jn)
+                         eMat(in,jn) = T_(0.);
+                   }
+                }
+             }
+          }
+          else {
+             size_t in=1;
+             for (size_t i=1; i<=NEN_; i++) {
+                for (size_t k=1; k<=_nb_dof; k++) {
+                   size_t jn = 1;
+                   for (size_t j=1; j<=NEN_; j++) {
+                      for (size_t l=1; l<=_nb_dof; l++) {
+                         if (in != jn && (*_theElement)(i)->getCode(k))
+                            eMat(in,jn) = T_(0.);
+                         jn++;
+                      }
+                   }
+                   in++;
+                }
+             }
+          }
+       }
+
+       else if (dof_type==SIDE_FIELD) {
+          if (dof) {
+             for (size_t i=1; i<=NEN_; i++) {
+                Side *sd1 = _theElement->getPtrSide(i);
+                if (sd1->getCode(dof))
+                   for (size_t j=1; j<=NEN_; j++)
+                      if (i != j)
+                         eMat(i,j) = T_(0.);
+             }
+          }
+          else {
+             for (size_t i=1; i<=NEN_; i++) {
+                for (size_t k=1; k<=_nb_dof; k++) {
+                   if (_theElement->getPtrSide(i)->getCode(k)) {
+                      size_t in = (*_theElement)(i)->getDOF(k);
+                      for (size_t j=1; j<=NEN_; j++) {
+                         for (size_t l=1; l<=_nb_dof; l++) {
+                            size_t jn = _theElement->getPtrSide(j)->getDOF(l);
+                            if (in != jn)
+                               eMat(in,jn) = T_(0.);
+                         }
+                      }
+                   }
+                }
+             }
+          }
+       }
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Set Body Force
-    void setBodyForce(const Vect<T_>& f);
+    void setBodyForce(const Vect<T_>& f) { _BodyForce = &f; }
 
 /// \brief Calculate residue in element
-    void setResidue();
+    void setResidue() { eMat.Mult(ePrev,eRes); eRes -= eRHS; }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Localize Element Vector from a Vect instance.
@@ -220,7 +320,16 @@ class Equation : virtual public AbsEqua<T_>
  *  The resulting local vector can be accessed by attribute ePrev.
  *  This member function is to be used if a constructor with Element was invoked.
  */
-    void LocalNodeVector(Vect<T_>& b);
+    void LocalNodeVector(Vect<T_>& b)
+    {
+       size_t k = 0;
+       Node *nd;
+       for (size_t n=1; n<=NEN_; ++n) {
+          nd = (*_theElement)(n);
+          for (size_t j=1; j<=nd->getNbDOF(); j++)
+             ePrev[k++] = b(nd->n(),j);
+       }
+    }
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
@@ -228,7 +337,16 @@ class Equation : virtual public AbsEqua<T_>
  *  @remark All degrees of freedom are transferred to the local vector
  */
     void ElementNodeVector(const Vect<T_>&     b,
-                           LocalVect<T_,NEE_>& be);
+                           LocalVect<T_,NEE_>& be)
+    {
+       size_t k = 0;
+       Node *nd;
+       for (size_t n=1; n<=NEN_; ++n) {
+          nd = (*_theElement)(n);
+          for (size_t j=1; j<=nd->getNbDOF(); j++)
+             be[k++] = b(nd->getDOF(j));
+       }
+    }
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
@@ -236,7 +354,11 @@ class Equation : virtual public AbsEqua<T_>
  *  @remark Vector <tt>b</tt> is assumed to contain only one degree of freedom by node.
  */
     void ElementNodeVectorSingleDOF(const Vect<T_>&     b,
-                                    LocalVect<T_,NEN_>& be);
+                                    LocalVect<T_,NEN_>& be)
+    {
+       for (size_t n=1; n<=NEN_; ++n)
+          be(n) = b((*_theElement)(n)->n());
+    }
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
@@ -246,14 +368,34 @@ class Equation : virtual public AbsEqua<T_>
  */
     void ElementNodeVector(const Vect<T_>&     b,
                            LocalVect<T_,NEN_>& be,
-                           int                 dof);
+                           int                 dof)
+    {
+       size_t k = 0;
+       Node *nd;
+       for (size_t n=1; n<=NEN_; ++n) {
+          nd = (*_theElement)(n);
+          for (size_t j=1; j<=nd->getNbDOF(); j++)
+             if (j==dof)
+                be[k++] = b(nd->getDOF(j));
+       }
+    }
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
  *  @param [out] be Local vector, the length of which is 
  */
     void ElementSideVector(const Vect<T_>&     b,
-                           LocalVect<T_,NSE_>& be);
+                           LocalVect<T_,NSE_>& be)
+    {
+       size_t k = 0;
+       Side *sd;
+       for (size_t n=1; n<=NSE_; ++n) {
+          sd = _theElement->getPtrSide(n);
+          for (size_t j=1; j<=sd->getNbDOF(); j++)
+             if (sd->getDOF(j))
+                be[k++] = b(sd->getDOF(j));
+       }
+    }
 
 /** \brief Localize Element Vector.
  *  @param [in] b Global vector to be localized
@@ -274,7 +416,47 @@ class Equation : virtual public AbsEqua<T_>
  */
     void ElementVector(const Vect<T_>& b,
                        int             dof_type=NODE_FIELD,
-                       int             flag=0);
+                       int             flag=0)
+    {
+       size_t k=0;
+       switch (dof_type) {
+
+          case NODE_FIELD:
+             if (flag==0) {
+                for (size_t n=1; n<=NEN_; ++n) {
+                   Node *nd = (*_theElement)(n);
+                   for (size_t j=1; j<=nd->getNbDOF(); j++)
+                      if (nd->getDOF(j))
+                         ePrev[k++] = b(nd->getDOF(j));
+                }
+             }
+             else {
+                for (size_t n=1; n<=NEN_; ++n) {
+                   Node *nd = (*_theElement)(n);
+                   if (nd->getDOF(flag))
+                      ePrev[k++] = b(nd->getDOF(flag));
+                }
+             }
+             break;
+
+          case SIDE_FIELD:
+             if (flag==0) {
+                for (size_t n=1; n<=NEN_; n++) {
+                   Side *sd=_theElement->getPtrSide(n);
+                   for (size_t j=1; j<=sd->getNbDOF(); j++)
+                      if (sd->getDOF(j))
+                         ePrev[k++] = b(sd->getDOF(j));
+                }
+             }
+             else {
+                for (size_t n=1; n<=NEN_; n++) {
+                   Side *sd=_theElement->getPtrSide(n);
+                   if (sd->getDOF(flag))
+                      ePrev[k++] = b(sd->getDOF(flag));
+                }
+            }
+       }
+    }
 
 /** \brief Localize Side Vector.
  *  @param [in] b Global vector to be localized
@@ -287,21 +469,38 @@ class Equation : virtual public AbsEqua<T_>
  *  @remark This member function is to be used if a constructor with Side was invoked.
  *  It uses the Side pointer <tt>_theSide</tt>
  */
-    void SideVector(const Vect<T_>& b);
+    void SideVector(const Vect<T_>& b)
+    {
+       Node *nd;
+       size_t k=0;
+       for (size_t n=1; n<=NSN_; n++) {
+          nd = (*_theSide)(n);
+          for (size_t j=1; j<=nd->getNbDOF(); j++)
+             ePrev[k++] = b(nd->getDOF(j));
+       }
+    }
 
 /** \brief Localize coordinates of element nodes
  *  \details Coordinates are stored in array <tt>_x[0], _x[1], ...</tt> which
  *  are instances of class Point<real_t>
  *  @remark This member function uses the Side pointer <tt>_theSide</tt>
  */
-    void ElementNodeCoordinates();
+    void ElementNodeCoordinates()
+    {
+       for (size_t n=1; n<=NEN_; n++)
+          _x[n-1] = (*_theElement)(n)->getCoord();
+    }
 
 /** \brief Localize coordinates of side nodes
  *  \details Coordinates are stored in array <tt>_x[0], _x[1], ...</tt> which
  *  are instances of class Point<real_t>
  *  @remark This member function uses the Element pointer <tt>_theElement</tt>
  */
-    void SideNodeCoordinates();
+    void SideNodeCoordinates()
+    {
+       for (size_t n=1; n<=NSN_; n++)
+          _x[n-1] = (*_theSide)(n)->getCoord();
+    }
 
 /** \brief Assemble element matrix into global one
  *  @param A Pointer to global matrix (abstract class: can be any of classes SkSMatrix, SkMatrix, SpMatrix)
@@ -349,8 +548,29 @@ class Equation : virtual public AbsEqua<T_>
     void SideAssembly(Side& sd, SpMatrix<T_>& A) { A.Assembly(sd,sMat.get()); }
     void ElementAssembly(Element& el, Vect<T_>& v) { v.Assembly(el,eRHS.get()); }
     void SideAssembly(Side& sd, Vect<T_>& v) { v.Assembly(sd,sRHS.get()); }
+
 #if defined(USE_PETSC)
-    void updateBC(const Element& el, const PETScVect<T_>& bc);
+    void updateBC(const Element& el, const PETScVect<T_>& bc)
+    {
+       size_t in = 0;
+       for (size_t i=1; i<=NEN_; ++i) {
+          for (size_t k=1; k<=_nb_dof; ++k) {
+             in++;
+             size_t nn = el(i)->getFirstDOF() + k - 1;
+             if (el(i)->getDOF(k) == 0) {
+                size_t jn = 0;
+                for (size_t j=1; j<=NEN_; ++j) {
+                   for (size_t l=1; l<=_nb_dof; ++l) {
+                      jn++;
+                      if (el(j)->getDOF(l) > 0)
+                         eRHS(jn) -= eMat(jn,in) * bc(nn);
+                   }
+                }
+             }
+          }
+       }
+    }
+
     void updateBC(const PETScVect<T_>& bc) { updateBC(TheElement,bc); }
     void ElementAssembly(Element& el, PETScMatrix<T_>& A) { A.Assembly(el,eMat.get()); }
     void SideAssembly(Side& sd, PETScMatrix<T_>& A) { A.Assembly(sd,sMat.get()); }
@@ -462,7 +682,24 @@ class Equation : virtual public AbsEqua<T_>
  */
     void AxbAssembly(const Element&  el,
                      const Vect<T_>& x,
-                           Vect<T_>& b);
+                     Vect<T_>&       b)
+    {
+       size_t ii=0, jj=0, nb_dof=NEE_/NEN_, ik, jl;
+       for (size_t i=1; i<=NEN_; ++i) {
+          Node *ndi = el(i);
+          for (size_t k=1; k<=nb_dof; ++k) {
+             ii++, ik = ndi->getDOF(k);
+             for (size_t j=1; j<=NEN_; ++j) {
+                Node *ndj = el(j);
+                for (size_t l=1; l<=nb_dof; ++l) {
+                   jj++, jl = ndj->getDOF(l);
+                   if (ik)
+                      b(ik) += eMat(ii,jj)*x(jl);
+                }
+             }
+          }
+       }
+    }
 
 /** \brief Assemble product of side matrix by side vector into global vector
  *  @param [in] sd Reference to Side instance
@@ -471,13 +708,42 @@ class Equation : virtual public AbsEqua<T_>
  */
     void AxbAssembly(const Side&     sd,
                      const Vect<T_>& x,
-                           Vect<T_>& b);
+                     Vect<T_>&       b)
+    {
+       size_t ii=0, jj=0, nb_dof=NSE_/NSN_, ik, jl;
+       for (size_t i=1; i<=NSN_; ++i) {
+          Node *ndi = sd(i);
+          for (size_t k=1; k<=nb_dof; ++k) {
+             ii++, ik = ndi->getDOF(k);
+             for (size_t j=1; j<=NSN_; ++j) {
+                Node *ndj = sd(j);
+                for (size_t l=1; l<=nb_dof; ++l) {
+                   jj++, jl = ndj->getDOF(l);
+                   if (ik)
+                      b(ik) += sMat(ii,jj)*x(jl);
+                }
+             }
+          }
+       }
+    }
 
 /// \brief Return number of element nodes.
-    size_t getNbNodes() const;
+    size_t getNbNodes() const
+    {
+       if (_theElement)
+          return NEN_;
+       else
+          return NSN_;
+    }
 
 /// \brief Return number of element equations
-    size_t getNbEq() const;
+    size_t getNbEq() const
+    {
+       if (_theElement)
+          return NEE_;
+       else
+          return NSE_;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Set problem data
@@ -503,7 +769,21 @@ class Equation : virtual public AbsEqua<T_>
  *  </ul>
  */
     real_t setMaterialProperty(const string& exp,
-                               const string& prop);
+                               const string& prop)
+    {
+       int err;
+       real_t d[4], r;
+       theParser.Parse(exp,"x,y,z,t");
+       d[0] = _center.x;
+       d[1] = _center.y;
+       d[2] = _center.z;
+       d[3] = _time;
+       r = theParser.Eval(d);
+       if ((err=theParser.EvalError()))
+          throw OFELIException("In Equation::setMaterialProperty(string,string): "
+                               "Error in evaluation in expression " + prop);
+       return r;
+    }
 
 /// \brief LocalMatrix instance containing local matrix associated to current element
     LocalMatrix<T_,NEE_,NEE_> eMat, eA0, eA1, eA2;
@@ -528,10 +808,10 @@ class Equation : virtual public AbsEqua<T_>
  protected:
 
 /// Set element arrays to zero
-    void Init(const Element* el);
+    void Init(const Element* el) { _theElement = el; _theSide = NULL; }
 
 /// Set side arrays to zero
-    void Init(const Side* sd);
+    void Init(const Side* sd) { _theSide = sd; _theElement = NULL; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     size_t                        _nb_dof, _label;
@@ -545,462 +825,6 @@ class Equation : virtual public AbsEqua<T_>
     T_                            _body_source, _bound_source;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
-
-
-///////////////////////////////////////////////////////////////////////////////
-//                         I M P L E M E N T A T I O N                       //
-///////////////////////////////////////////////////////////////////////////////
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh& mesh)
-{
-   AbsEqua<T_>::setMesh(mesh);
-   _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
-   _time_step = 0.1;
-   initEquation(mesh,_time_step);
-   _time = 0.;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&     mesh,
-                                           Vect<T_>& b,
-                                           real_t&   t,
-                                           real_t&   ts)
-{
-   _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
-   initEquation(mesh,ts);
-   _time = t;
-   this->setInput(INITIAL_FIELD,b);
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Element* el)
-{
-   _label = el->n();
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Side* sd)
-{
-   _label = sd->n();
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Element*  el,
-                                           const Vect<T_>& u,
-                                           real_t          time)
-{
-   _label = el->n();
-   _time = time;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(const Side*     sd,
-                                           const Vect<T_>& u,
-                                           real_t          time)
-{
-   _label = sd->n();
-   _time = time;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::~Equation()
-{
-   if (_b)
-      delete _b, _b = NULL;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::initEquation(Mesh&  mesh,
-                                                    real_t ts)
-{
-   _theMesh = &mesh;
-   _theMesh->removeImposedDOF();
-   _time_step = ts;
-   _b = new Vect<T_>(_theMesh->getNbEq());
-   _uu.setSize(_theMesh->getNbEq());
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&  el,
-                                                const Vect<T_>& bc)
-{
-   _nb_dof = NEE_/NEN_;
-   size_t in=1;
-   for (size_t i=1; i<=NEN_; ++i) {
-      for (size_t k=1; k<=_nb_dof; ++k, ++in) {
-         size_t jn=1;
-         for (size_t j=1; j<=NEN_; ++j) {
-            for (size_t l=1; l<=_nb_dof; ++l, ++jn) {
-               if (el(j)->getCode(l) > 0)
-                  eRHS(in) -= eMat(in,jn) * bc(el(j)->getFirstDOF()+l-1);
-            }
-         }
-      }
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(int dof_type,
-                                              int dof)
-{
-   size_t in, jn;
-   _nb_dof = NEE_/NEN_;
-   if (dof_type==NODE_FIELD) {
-      if (dof) {
-         for (size_t i=1; i<=NEN_; i++) {
-            Node *nd1 = (*_theElement)(i);
-            if (nd1->getCode(dof)) {
-               for (size_t j=1; j<=NEN_; j++) {
-                  Node *nd2 = (*_theElement)(j);
-                  in = nd1->n(), jn = nd2->n();
-                  if (in != jn)
-                     eMat(in,jn) = T_(0.);
-               }
-            }
-         }
-      }
-      else {
-         size_t in=1;
-         for (size_t i=1; i<=NEN_; i++) {
-            for (size_t k=1; k<=_nb_dof; k++) {
-               size_t jn = 1;
-               for (size_t j=1; j<=NEN_; j++) {
-                  for (size_t l=1; l<=_nb_dof; l++) {
-                     if (in != jn && (*_theElement)(i)->getCode(k))
-                        eMat(in,jn) = T_(0.);
-                     jn++;
-                  }
-               }
-               in++;
-            }
-         }
-      }
-   }
-
-   else if (dof_type==SIDE_FIELD) {
-      if (dof) {
-         for (size_t i=1; i<=NEN_; i++) {
-            Side *sd1 = _theElement->getPtrSide(i);
-            if (sd1->getCode(dof))
-               for (size_t j=1; j<=NEN_; j++)
-                  if (i != j)
-                     eMat(i,j) = T_(0.);
-         }
-      }
-      else {
-         for (size_t i=1; i<=NEN_; i++) {
-            for (size_t k=1; k<=_nb_dof; k++) {
-               if (_theElement->getPtrSide(i)->getCode(k)) {
-                  size_t in = (*_theElement)(i)->getDOF(k);
-                  for (size_t j=1; j<=NEN_; j++) {
-                     for (size_t l=1; l<=_nb_dof; l++) {
-                        size_t jn = _theElement->getPtrSide(j)->getDOF(l);
-                        if (in != jn)
-                           eMat(in,jn) = T_(0.);
-                     }
-                  }
-               }
-            }
-         }
-      }
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::setBodyForce(const Vect<T_>& f)
-{
-   _BodyForce = &f;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::setResidue()
-{
-   eMat.Mult(ePrev,eRes);
-   eRes -= eRHS;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::LocalNodeVector(Vect<T_>& b)
-{
-   size_t k = 0;
-   Node *nd;
-   for (size_t n=1; n<=NEN_; ++n) {
-      nd = (*_theElement)(n);
-      for (size_t j=1; j<=nd->getNbDOF(); j++)
-         ePrev[k++] = b(nd->n(),j);
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&     b,
-                                                         LocalVect<T_,NEE_>& be)
-{
-   size_t k = 0;
-   Node *nd;
-   for (size_t n=1; n<=NEN_; ++n) {
-      nd = (*_theElement)(n);
-      for (size_t j=1; j<=nd->getNbDOF(); j++)
-         be[k++] = b(nd->getDOF(j));
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&     b,
-                                                         LocalVect<T_,NEN_>& be,
-                                                         int                 dof)
-{
-   size_t k = 0;
-   Node *nd;
-   for (size_t n=1; n<=NEN_; ++n) {
-      nd = (*_theElement)(n);
-      for (size_t j=1; j<=nd->getNbDOF(); j++)
-         if (j==dof)
-            be[k++] = b(nd->getDOF(j));
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVectorSingleDOF(const Vect<T_>&     b,
-                                                                  LocalVect<T_,NEN_>& be)
-{
-   for (size_t n=1; n<=NEN_; ++n)
-      be(n) = b((*_theElement)(n)->n());
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<T_>&     b,
-                                                         LocalVect<T_,NSE_>& be)
-{
-   size_t k = 0;
-   Side *sd;
-   for (size_t n=1; n<=NSE_; ++n) {
-      sd = _theElement->getPtrSide(n);
-      for (size_t j=1; j<=sd->getNbDOF(); j++)
-         if (sd->getDOF(j))
-            be[k++] = b(sd->getDOF(j));
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
-                                                     int             dof_type,
-                                                     int             flag)
-{
-   size_t k=0;
-   switch (dof_type) {
-
-      case NODE_FIELD:
-         if (flag==0) {
-            for (size_t n=1; n<=NEN_; ++n) {
-               Node *nd = (*_theElement)(n);
-               for (size_t j=1; j<=nd->getNbDOF(); j++)
-                  if (nd->getDOF(j))
-                     ePrev[k++] = b(nd->getDOF(j));
-            }
-         }
-         else {
-            for (size_t n=1; n<=NEN_; ++n) {
-               Node *nd = (*_theElement)(n);
-               if (nd->getDOF(flag))
-                  ePrev[k++] = b(nd->getDOF(flag));
-            }
-         }
-         break;
-
-      case SIDE_FIELD:
-         if (flag==0) {
-            for (size_t n=1; n<=NEN_; n++) {
-               Side *sd=_theElement->getPtrSide(n);
-               for (size_t j=1; j<=sd->getNbDOF(); j++)
-                  if (sd->getDOF(j))
-                     ePrev[k++] = b(sd->getDOF(j));
-            }
-         }
-         else {
-            for (size_t n=1; n<=NEN_; n++) {
-               Side *sd=_theElement->getPtrSide(n);
-               if (sd->getDOF(flag))
-                  ePrev[k++] = b(sd->getDOF(flag));
-            }
-         }
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<T_>& b)
-{
-   Node *nd;
-   size_t k=0;
-   for (size_t n=1; n<=NSN_; n++) {
-      nd = (*_theSide)(n);
-      for (size_t j=1; j<=nd->getNbDOF(); j++)
-         ePrev[k++] = b(nd->getDOF(j));
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeCoordinates()
-{
-   for (size_t n=1; n<=NEN_; n++)
-      _x[n-1] = (*_theElement)(n)->getCoord();
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideNodeCoordinates()
-{
-   for (size_t n=1; n<=NSN_; n++)
-      _x[n-1] = (*_theSide)(n)->getCoord();
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-size_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::getNbNodes() const
-{
-   if (_theElement)
-      return NEN_;
-   else
-      return NSN_;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-size_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::getNbEq() const
-{
-   if (_theElement)
-      return NEE_;
-   else
-      return NSE_;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Element&  el,
-                                                   const Vect<T_>& x,
-                                                   Vect<T_>&       b)
-{
-   size_t ii=0, jj=0, nb_dof=NEE_/NEN_, ik, jl;
-   for (size_t i=1; i<=NEN_; ++i) {
-      Node *ndi = el(i);
-      for (size_t k=1; k<=nb_dof; ++k) {
-         ii++, ik = ndi->getDOF(k);
-         for (size_t j=1; j<=NEN_; ++j) {
-            Node *ndj = el(j);
-            for (size_t l=1; l<=nb_dof; ++l) {
-               jj++, jl = ndj->getDOF(l);
-               if (ik)
-                  b(ik) += eMat(ii,jj)*x(jl);
-            }
-         }
-      }
-   }
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Side&     sd,
-                                                   const Vect<T_>& x,
-                                                   Vect<T_>&       b)
-{
-   size_t ii=0, jj=0, nb_dof=NSE_/NSN_, ik, jl;
-   for (size_t i=1; i<=NSN_; ++i) {
-      Node *ndi = sd(i);
-      for (size_t k=1; k<=nb_dof; ++k) {
-         ii++, ik = ndi->getDOF(k);
-         for (size_t j=1; j<=NSN_; ++j) {
-            Node *ndj = sd(j);
-            for (size_t l=1; l<=nb_dof; ++l) {
-               jj++, jl = ndj->getDOF(l);
-               if (ik)
-                  b(ik) += sMat(ii,jj)*x(jl);
-            }
-         }
-      }
-   }
-}
-
-
-#if defined (USE_PETSC)
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&       el,
-                                                const PETScVect<T_>& bc)
-{
-   size_t in = 0;
-   for (size_t i=1; i<=NEN_; ++i) {
-      for (size_t k=1; k<=_nb_dof; ++k) {
-         in++;
-         size_t nn = el(i)->getFirstDOF() + k - 1;
-         if (el(i)->getDOF(k) == 0) {
-            size_t jn = 0;
-            for (size_t j=1; j<=NEN_; ++j) {
-               for (size_t l=1; l<=_nb_dof; ++l) {
-                  jn++;
-                  if (el(j)->getDOF(l) > 0)
-                     eRHS(jn) -= eMat(jn,in) * bc(nn);
-               }
-            }
-         }
-      }
-   }
-}
-#endif
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-real_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty(const string& exp,
-                                                             const string& prop)
-{
-   int err;
-   real_t d[4], r;
-   theParser.Parse(exp,"x,y,z,t");
-   d[0] = _center.x;
-   d[1] = _center.y;
-   d[2] = _center.z;
-   d[3] = _time;
-   r = theParser.Eval(d);
-   if ((err=theParser.EvalError()))
-      throw OFELIException("In Equation::setMaterialProperty(string,string): "
-                           "Error in evaluation in expression " + prop);
-   return r;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::Init(const Element* el)
-{
-   _theElement = el;
-   _theSide = NULL;
-}
-
-
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::Init(const Side* sd)
-{
-   _theSide = sd;
-   _theElement = NULL;
-}
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

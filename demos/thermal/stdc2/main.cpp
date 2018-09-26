@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
       eq.setInput(VELOCITY_FIELD,v);
       eq.setTerms(DIFFUSION|CONVECTION);
       eq.setSolver(GMRES_SOLVER,DILU_PREC);
-      int it = eq.run();
+      eq.run();
 
 //    Output and save result
       if (data.getOutput() > 0)

@@ -109,6 +109,9 @@ class Laplace2DFVT : virtual public Equa_Laplace<real_t,3,3,2,2>
     void LHS(const Element* e1,
              const Element* e2);
 
+/// \brief Calculate left-hand side
+    void LHS(real_t coef=1.) { }
+
 /// \brief Add right-hand side Contribution
     void RHS(const Vect<real_t>& f);
 

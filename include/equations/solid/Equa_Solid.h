@@ -226,6 +226,8 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void build()
     {
        *_A = 0;
+       if (_b==NULL)
+          _b = new Vect<T_>(_theMesh->getNbEq());
        MESH_EL {
           set(theElement);
           this->ElementVector(_uu);

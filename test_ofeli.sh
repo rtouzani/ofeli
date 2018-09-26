@@ -178,6 +178,7 @@ echo "Test demo for an iterative solver (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
    ./ls_demo2 mesh.m
+   /bin/rm sol.pos
 fi
 
 echo "-----------------------------------------------------------------"

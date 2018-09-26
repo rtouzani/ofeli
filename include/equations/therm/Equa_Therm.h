@@ -94,6 +94,9 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA1;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eRHS;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sRHS;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf_given;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc_given;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf_given;
 
 
 /// \brief Default constructor.
@@ -245,6 +248,13 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           this->updateBC(*_bc);
           this->ElementAssembly(*_b);
        }
+       if (_sf_given) {
+          MESH_SD {
+             set(theSide);
+             BoundaryRHS(*_sf);
+             this->SideAssembly(*_b);
+          }
+       }
     }
 
 
@@ -339,7 +349,8 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     int run()
     {
        int ret=0;
-       _b = new Vect<T_>(_theMesh->getNbEq());
+       if (_b==NULL)
+          _b = new Vect<T_>(_theMesh->getNbEq());
        _uu.setSize(_theMesh->getNbEq());
        if (_analysis==STEADY_STATE) {
           build();
@@ -350,7 +361,6 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           for (; _time<=_final_time; _time+=_time_step)
              runOneTimeStep();
        }
-       delete _b;
        return ret;
     }
 
