@@ -64,7 +64,7 @@ size_t inv_diag(size_t      n,
                 vector<T_>& diag)
 {
    for (int i=1; i<=int(n); i++) {
-      if (A(i,i) == static_cast<T_>(0))
+      if (A(i,i)==static_cast<T_>(0))
          return i;
       if ((diag[i-1]=static_cast<T_>(1)/A(i,i)) == static_cast<T_>(0))
          return -i;
@@ -79,7 +79,7 @@ size_t inv_diag(size_t            n,
 {
    for (size_t i=1; i<=n; i++) {
       T_ d=(*A)(i,i);
-      if (d == static_cast<T_>(0))
+      if (d==static_cast<T_>(0))
          return i;
       diag[i-1] = static_cast<T_>(1)/d;
       if (diag[i-1] == static_cast<T_>(0))
@@ -106,7 +106,7 @@ template<class T_> class Prec
  public:
 
 /// \brief Default constructor.
-   Prec() { _type = -1; }
+    Prec() : _type(-1) { }
 
 /** \brief Constructor that chooses preconditioner.
  *  @param [in] type Preconditioner type:
@@ -118,7 +118,7 @@ template<class T_> class Prec
  *    <li><tt>SSOR_PREC</tt>: SSOR (Symmetric Successive Over Relaxation) preconditioner
  *  </ul>
  */
-    Prec(int type) { _type = type; }
+    Prec(int type) : _type(type) { }
 
 /** \brief Constructor using matrix of the linear system to precondition
  *  @param [in] A %Matrix to precondition
@@ -131,12 +131,8 @@ template<class T_> class Prec
  *    <li><tt>SSOR_PREC</tt>: SSOR (Symmetric Successive Over Relaxation) preconditioner
  *  </ul>
  */
-   Prec(const SpMatrix<T_>& A,
-        int                 type=DIAG_PREC) 
-    {
-       _type = type;
-       setMatrix(A);
-    }
+    Prec(const SpMatrix<T_>& A,
+         int                 type=DIAG_PREC) : _type(type) { setMatrix(A); }
 
 /** \brief Constructor using matrix of the linear system to precondition
  *  @param [in] A Pointer to abstract Matrix class to precondition
@@ -150,11 +146,7 @@ template<class T_> class Prec
  *  </ul>
  */
     Prec(const Matrix<T_>* A,
-         int               type=DIAG_PREC) 
-    {
-       _type = type;
-       setMatrix(A);
-    }
+         int               type=DIAG_PREC) : _type(type) { setMatrix(A); }
 
 /// \brief Destructor
     ~Prec() { }
@@ -189,10 +181,7 @@ template<class T_> class Prec
 
           case DIAG_PREC:
              _pivot.resize(_size);
-             int i;
-             if ((i=inv_diag()) != 0)
-                throw OFELIException("In Prec::setMatrix(Matrix<T_> *): Zero pivot detected in row "
-                                     + itos(i));
+             inv_diag();
              break;
 
           case DILU_PREC:
@@ -205,7 +194,7 @@ template<class T_> class Prec
 
           case SSOR_PREC:
              break;
-         }
+       }
     }
 
 /// \brief Define the matrix for preconditioning
@@ -226,10 +215,7 @@ template<class T_> class Prec
 
           case DIAG_PREC:
              _pivot.resize(_size);
-             size_t i;
-             if ((i=inv_diag()) != 0)
-                throw OFELIException("In Prec::setMatrix(SpMatrix<T_>): Zero pivot detected in row "
-                                     +itos(int(i)));
+	     inv_diag();
              break;
 
           case DILU_PREC:
@@ -357,9 +343,9 @@ template<class T_> class Prec
    {
       for (size_t i=1; i<=_a->getNbRows(); i++) {
          if ((*_a)(i,i) == static_cast<T_>(0))
-            return i;
+            throw OFELIException("In Prec::inv_diag(): null diagonal term: " + itos(i));
          if ((_pivot[i-1]=static_cast<T_>(1)/(*_a)(i,i)) == static_cast<T_>(0))
-            return -int(i);
+            return -i;
       }
       return 0;
    }

@@ -53,7 +53,7 @@ Node::Node()
 }
 
 
-Node::Node(      size_t         label,
+Node::Node(size_t               label,
            const Point<double>& x)
 {
    _nb_neig_el = _neig_i = 0;
@@ -87,9 +87,6 @@ Node::Node(const Node& node)
 }
 
 
-Node::~Node() { }
-
-
 void Node::setNbDOF(size_t n)
 {
    if (n<=0)
@@ -111,30 +108,9 @@ void Node::Add(Element* el)
 }
 
 
-void Node::setCode(size_t dof,
-                   int    code)
-{
-   _code[dof-1] = code;
-}
-
-
-void Node::setCode(const vector<int>& code)
-{
-   for (size_t i=0; i<_nb_dof; i++)
-      _code[i] = code[i];
-}
-
-
-void Node::setCode(int* code)
-{
-   for (size_t i=0; i<_nb_dof; i++)
-      _code[i] = code[i];
-}
-
-
 void Node::setCode(const string& exp,
-                         int     code,
-                         size_t  dof)
+                   int           code,
+                   size_t        dof)
 {
    PARSE(exp.c_str(),"x,y,z,t");
    double d[] = {_x.x,_x.y,_x.z};
@@ -153,8 +129,8 @@ void Node::setDOF(size_t& first_dof,
 }
 
 
-ostream& operator<<(      ostream& s,
-                    const Node&    nd)
+ostream& operator<<(ostream&    s,
+                    const Node& nd)
 {
    size_t i;
    s << "\n Node: " << setw(8) << nd.n() << "\n Coordinates: ";

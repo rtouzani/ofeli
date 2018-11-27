@@ -125,30 +125,6 @@ Element::Element(const Element& el)
 }
 
 
-size_t Element::getNodeLabel(size_t n) const
-{
-   return _node[n-1]->n();
-}
-
-
-size_t Element::getSideLabel(size_t n) const
-{
-   return _side[n-1]->n();
-}
-
-
-Node *Element::getPtrNode(size_t i) const
-{
-   return _node[i-1];
-}
-
-
-Side *Element::getPtrSide(size_t i) const
-{
-   return _side[i-1];
-}
-
-
 size_t Element::getNbDOF() const
 {
    size_t nb_dof = getPtrNode(1)->getNbDOF();
@@ -180,7 +156,7 @@ void Element::calculate_nb_sides()
 int Element::setSide(size_t  n,
                      size_t* nd)
 {
-   size_t nb_nodes = 0;
+   int nb_nodes = 0;
    if (_shape==TRIANGLE) {
       nb_nodes = 2;
       _shape = LINE;
@@ -219,7 +195,7 @@ int Element::setSide(size_t  n,
       else if (n==6)
          nd[0] = 3, nd[1] = 7, nd[2] = 8, nd[3] = 4;
    }
-   return int(nb_nodes);
+   return nb_nodes;
 }
 
 
@@ -330,12 +306,6 @@ void Element::Add(Side* sd,
 }
 
 
-void Element::Add(Element* el)
-{
-   _neig_el[_nb_neig_el++] = el;
-}
-
-
 void Element::set(Element* el,
                   int      n)
 {
@@ -379,13 +349,6 @@ int Element::Contains(const Side* sd) const
       if (_side[i]==sd)
          return int(i+1);
    return 0;
-}
-
-
-void Element::setNode(size_t i,
-                      Node*  node)
-{
-   _node[i-1] = node;
 }
 
 
@@ -565,8 +528,8 @@ real_t Element::getMeasure() const
                                     " is negative. Hexahedron is incorrectly oriented.");
             break;
          }
-      }
-      return fabs(m);
+   }
+   return fabs(m);
 }
 
 
@@ -651,6 +614,17 @@ bool Element::isActive() const
       return true;
    else
       return false;
+}
+
+size_t Element::getNodeLabel(size_t n) const
+{
+   return _node[n-1]->n();
+}
+
+
+size_t Element::getSideLabel(size_t n) const
+{
+   return _side[n-1]->n();
 }
 
 

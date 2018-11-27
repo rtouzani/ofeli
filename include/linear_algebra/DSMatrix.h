@@ -82,16 +82,34 @@ class DSMatrix : public Matrix<T_>
     using Matrix<T_>::operator();
 
 /// \brief Default constructor.
-    DSMatrix();
+    DSMatrix()
+    {
+       _nb_rows = _length = _size = 0;
+       _fact = false;
+       _is_diagonal = false;
+    }
 
 /** \brief Constructor that for a symmetric matrix with given number of r‡qows.
  *  @param [in] dim Number of rows
  */
-    DSMatrix(size_t dim);
+    DSMatrix(size_t dim)
+    {
+       _fact = false;
+       _is_diagonal = false;
+       setSize(dim);
+    }
 
 /// \brief Copy Constructor
 /// @param [in] m DSMatrix instance to copy
-    DSMatrix(const DSMatrix<T_>& m);
+    DSMatrix(const DSMatrix<T_>& m)
+    {
+       _size = _nb_rows = _nb_cols = m._size;
+       _length = m._length;
+       _fact = m._fact;
+       _is_diagonal = false;
+       _a.resize(_length);
+       _a = m._a;
+    }
 
 /** \brief Constructor using mesh to initialize matrix.
  *  @param [in] mesh Mesh instance for which matrix graph is determined.
@@ -103,17 +121,32 @@ class DSMatrix : public Matrix<T_>
  */
     DSMatrix(Mesh&  mesh,
              size_t dof=0,
-             int    is_diagonal=false);
+             int    is_diagonal=false)
+    {
+       _is_diagonal = is_diagonal;
+       _fact = false;
+       setMesh(mesh,dof);
+   }
 
 /// \brief Destructor
     ~DSMatrix() { }
 
 /// \brief Store diagonal entries in a separate internal vector
-    void setDiag();
+    void setDiag()
+    {
+       for (size_t i=0; i<_size; i++)
+          _diag[i] = _a[_nb_cols*i+i];
+    }
 
 /// \brief Set size (number of rows) of matrix.
 /// @param [in] dim Number of rows and columns.
-    void setSize(size_t dim);
+    void setSize(size_t dim)
+    {
+       _size = _nb_rows = _nb_cols = dim;
+       _length = _size*(_size+1)/2;
+       _a.resize(_length);
+       _diag.resize(_size);
+    }
 
 /** \brief Assign constant to entry <tt>(i,j)</tt> of the matrix.
  *  @param [in] i row index
@@ -122,17 +155,44 @@ class DSMatrix : public Matrix<T_>
  */
     void set(size_t    i,
              size_t    j,
-             const T_& val);
+             const T_& val)
+    {
+       if (i>=j)
+          _a[i*(i-1)/2+j-1] = val;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setMesh(Mesh&  mesh,
-                 size_t dof=0);
+                 size_t dof=0)
+    {
+       Matrix<T_>::init_set_mesh(mesh,dof);
+       _length = _size*_size;
+       _diag.resize(_size);
+       _a.resize(_length);
+       _zero = static_cast<T_>(0);
+       _fact = false;
+    }
+
     void setMesh(size_t dof,
                  Mesh&  mesh,
-                 int    code=0);
+                 int    code=0)
+    {
+//     This is just to avoid warning on unused variable
+       dof  = 0;
+       code = 0;
+       _theMesh = &mesh;
+       if (mesh.getDim()==0) { }
+    }
+
     void setMesh(size_t dof,
                  size_t nb_eq,
-                 Mesh&  mesh);
+                 Mesh&  mesh)
+    {
+//     This is just to avoid warning on unused variable
+       dof = 0;
+       nb_eq = 0;
+       if (mesh.getDim()==0) { }
+    }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Get <tt>j</tt>-th column vector
@@ -141,14 +201,29 @@ class DSMatrix : public Matrix<T_>
  *  @remark Vector v does not need to be sized before. It is resized in the function
  */
     void getColumn(size_t    j,
-                   Vect<T_>& v) const;
+                   Vect<T_>& v) const
+    {
+       v.setSize(_size);
+       for (size_t i=0; i<j-1; i++)
+          v[i] = _a[_size*(j-1)/2+i];
+       for (size_t i=j-1; i<_size; i++)
+          v[i] = _a[_size*i/2+j-1];
+    }
 
 /** \brief Get <tt>j</tt>-th column vector
  *  @param [in] j Index of column to extract
  *  @return Vect instance where the column is stored
  *  @remark Vector v does not need to be sized before. It is resized in the function
  */
-    Vect<T_> getColumn(size_t j) const;
+    Vect<T_> getColumn(size_t j) const
+    {
+       Vect<T_> v(_size);
+       for (size_t i=0; i<j-1; i++)
+          v[i] = _a[_size*(j-1)/2+i];
+       for (size_t i=j-1; i<_size; i++)
+          v[i] = _a[_size*i/2+j-1];
+       return v;
+    }
 
 /** \brief Get <tt>i</tt>-th row vector
  *  @param [in] i Index of row to extract
@@ -156,36 +231,77 @@ class DSMatrix : public Matrix<T_>
  *  @remark Vector v does not need to be sized before. It is resized in the function
  */
     void getRow(size_t    i,
-                Vect<T_>& v) const;
+                Vect<T_>& v) const
+    {
+       v.resize(_size);
+       for (size_t j=0; j<i; j++)
+          v[j] = _a[_size*(i-1)/2+j];
+       for (size_t j=i; j<_nb_cols; j++)
+          v[j] = _a[_size*j/2+i-1];
+    }
 
 /** \brief Get <tt>i</tt>-th row vector
  *  @param [in] i Index of row to extract
  *  @return Vect instance where the row is stored
  *  @remark Vector v does not need to be sized before. It is resized in the function
  */
-    Vect<T_> getRow(size_t i) const;
+    Vect<T_> getRow(size_t i) const
+    {
+       Vect<T_> v(_size);
+       for (size_t j=0; j<i; j++)
+          v[j] = _a[_size*(i-1)/2+j];
+       for (size_t j=i; j<_size; j++)
+          v[j] = _a[_size*j/2+i-1];
+       return v;
+    }
 
 /** \brief Copy a given vector to a prescribed row in the matrix.
  *  @param [in] i row index to be assigned
  *  @param [in] v Vect instance to copy
  */
     void setRow(size_t          i,
-                const Vect<T_>& v);
+                const Vect<T_>& v)
+    {
+       for (size_t j=0; j<i; j++)
+          _a[_size*(i-1)/2+j] = v[j];
+       for (size_t j=i; j<_size; j++)
+          _a[_size*j/2+i-1] = v[j];
+    }
 
 /** \brief Copy a given vector to a prescribed column in the matrix.
  *  @param [in] i column index to be assigned
  *  @param [in] v Vect instance to copy
  */
-    void setColumn(size_t          i,
-                   const Vect<T_>& v);
+    void setColumn(size_t          j,
+                   const Vect<T_>& v)
+    {
+       for (size_t i=0; i<j-1; i++)
+          _a[_size*(j-1)/2+i] = v[i];
+       for (size_t i=j-1; i<_size; i++)
+          _a[_size*i/2+j-1] = v[i];
+    }
 
 /// \brief Set matrix as diagonal and assign its diagonal entries as a constant
 /// @param [in] a Value to assign to all diagonal entries
-    void setDiag(const T_& a);
+    void setDiag(const T_& a)
+    {
+       _is_diagonal = true;
+       for (size_t i=0; i<_size; i++)
+          _diag.set(i+1,a);
+       for (size_t i=0; i<_nb_rows; i++)
+          _a[i*(i-1)/2+i-1] = a;
+    }
 
 /// \brief Set matrix as diagonal and assign its diagonal entries
 /// @param [in] d Vector entries to assign to matrix diagonal entries
-    void setDiag(const vector<T_>& d);
+    void setDiag(const vector<T_>& d)
+    {
+       _is_diagonal = true;
+       for (size_t i=0; i<_size; i++)
+          _diag.set(i+1,d[i]);
+       for (size_t i=0; i<_nb_rows; i++)
+          _a[i*(i-1)/2+i-1] = d[i];
+    }
 
 /** \brief Add constant to an entry ofthe matrix.
  *  @param [in] i row index
@@ -194,14 +310,24 @@ class DSMatrix : public Matrix<T_>
  */
     void add(size_t    i,
              size_t    j,
-             const T_& val);
+             const T_& val)
+    {
+       if (i>=j)
+          _a[i*(i-1)/2+j-1] += val;
+    }
 
 /** \brief Operator <tt>()</tt> (Constant version).
  *  @param [in] i Row index
  *  @param [in] j Column index
  */
     T_ operator()(size_t i,
-                  size_t j) const;
+                  size_t j) const
+    {
+       if (i<j)
+          return _a[j*(j-1)/2+i-1];
+       else
+          return _a[i*(i-1)/2+j-1];
+    }
 
 /** \brief Operator <tt>()</tt> (Non constant version).
  *  @param [in] i Row index
@@ -211,23 +337,52 @@ class DSMatrix : public Matrix<T_>
  *  assigned. If not sure, use the member functions set or add.
  */
     T_ & operator()(size_t i,
-                    size_t j);
+                    size_t j)
+    {
+       if (i>=j)
+          return _a[i*(i-1)/2+j-1];
+       else
+          return _a[j*(j-1)/2+i-1];
+    }
 
 /// \brief Operator <tt>=</tt>
 /// Copy matrix <tt>m</tt> to current matrix instance.
-    DSMatrix<T_> & operator=(const DSMatrix<T_>& m);
+    DSMatrix<T_> & operator=(const DSMatrix<T_>& m)
+    {
+       _a = m._a;
+       return *this;
+    }
 
 /// \brief Operator =
 /// Assign matrix to identity times <tt>x</tt>.
-    DSMatrix<T_> & operator=(const T_& x);
+    DSMatrix<T_> & operator=(const T_& x)
+    {
+       _fact = false;
+       Clear(_a);
+       for (size_t i=1; i<=_size; i++) {
+          _diag[i-1] = x;
+          set(i,i,x);
+       }
+       return *this;
+    }
 
 /// \brief Operator +=.
 /// \details Add constant value <tt>x</tt> to all matrix entries.
-    DSMatrix & operator+=(const T_& x);
+    DSMatrix & operator+=(const T_& x)
+    {
+       for (size_t i=1; i<=_length; ++i)
+          _a.add(i,x);
+       return *this;
+    }
 
 /// \brief Operator -=.
 /// \details Subtract constant value <tt>x</tt> from to all matrix entries.
-    DSMatrix & operator-=(const T_& x);
+    DSMatrix & operator-=(const T_& x)
+    {
+       for (size_t i=1; i<=_length; ++i)
+          _a.add(i,-x);
+       return *this;
+    }
 
 /** \brief Factorize matrix (<tt>LDL<sup>T</sup></tt>)
  *  @return
@@ -236,11 +391,39 @@ class DSMatrix : public Matrix<T_>
  *    <li><tt>n</tt>, if the <tt>n</tt>-th pivot is null.
  *  </ul>
  */
-    int setLDLt();
+    int setLDLt()
+    {
+       int err = 0;
+       T_ s, pivot;
+       for (size_t i=0; i<_size; i++) {
+          for (size_t j=0; j<i; j++)
+             for (size_t k=0; k<j; k++)
+                _a[(i+1)*i/2+j] -= _a[(i+1)*i/2+k]*_a[(j+1)*j/2+k];
+          pivot = _a[(i+1)*i/2+i];
+          for (size_t j=0; j<i; j++) {
+             s = _a[(i+1)*i/2+j]*_a[(j+1)*j/2+j];
+             pivot -= s*_a[(i+1)*i/2+j];
+             _a[(i+1)*i/2+j] = s;
+          }
+          if (Abs(pivot) < OFELI_EPSMCH)
+             throw OFELIException("In DSMatrix::setLDLt(): The " + itos(int(i)+1) + "-th pivot is null.");
+          _a[(i+1)*i/2+i] = 1./pivot;
+       }
+       _fact = true;
+       return err;
+    }
 
 /// \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>.
     void MultAdd(const Vect<T_>& x,
-                 Vect<T_>&       y) const;
+                 Vect<T_>&       y) const
+    {
+       for (size_t i=1; i<=_nb_rows; i++) {
+          for (size_t j=1; j<=i; j++)
+             y.add(i,_a[(i-1)*i/2+j-1]*x(j));
+          for (size_t k=i+1; k<=_nb_rows; k++)
+             y.add(i,_a[(k-1)*k/2+i-1]*x(k));
+       }
+    }
 
 /** \brief Multiply matrix by vector <tt>a*x</tt> and add to <tt>y</tt>.
  *  @param [in] a Constant to multiply by matrix
@@ -249,26 +432,44 @@ class DSMatrix : public Matrix<T_>
  */
     void MultAdd(T_              a,
                  const Vect<T_>& x,
-                 Vect<T_>&       y) const;
+                 Vect<T_>&       y) const
+    {
+       for (size_t i=1; i<=_nb_rows; i++) {
+          for (size_t j=1; j<=i; j++)
+             y.add(i,a*_a[(i-1)*i/2+j-1]*x(j));
+          for (size_t k=i+1; k<=_nb_rows; k++)
+             y.add(i,a*_a[(k-1)*k/2+i-1]*x(k));
+       }
+    }
 
 /// \brief Multiply matrix by vector <tt>x</tt> and save result in <tt>y</tt>.
     void Mult(const Vect<T_>& x,
-              Vect<T_>&       y) const;
+              Vect<T_>&       y) const
+    {
+       y = _zero;
+       MultAdd(x,y);
+    }
 
 /** \brief Multiply transpose of matrix by vector <tt>x</tt> and add result in <tt>y</tt>.
  *  @param [in] x Vector to add to <tt>y</tt>
  *  @param [in,out] y on input, vector to add to. On output, result.
  */
     void TMult(const Vect<T_>& x,
-               Vect<T_>&       y) const;
-   
+               Vect<T_>&       y) const
+    {
+       for (size_t i=1; i<=_nb_rows; i++)
+          for (size_t j=1; j<=_nb_cols; j++)
+             y.add(i,(*this)(i,j)*x(j));
+    }
+
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
     void Axpy(T_                  a,
-              const DSMatrix<T_>& m);
+              const DSMatrix<T_>& m) { _a += a * m._a; }
+
    
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
@@ -276,7 +477,11 @@ class DSMatrix : public Matrix<T_>
  *  to current instance
  */
     void Axpy(T_                a,
-              const Matrix<T_>* m);
+              const Matrix<T_>* m)
+    {
+       for (size_t i=0; i<_length; i++)
+          _a[i] += a * m->_a[i];
+    }
 
 /** \brief Solve linear system.
  *  \details The matrix is factorized using the LDLt (Crout) decomposition. If this one is already factorized,
@@ -289,7 +494,25 @@ class DSMatrix : public Matrix<T_>
  *     <li><tt>n</tt> if the <tt>n</tt>-th pivot is null.
  *  </ul>
  */
-    int solve(Vect<T_>& b);
+    int solve(Vect<T_>& b)
+    {
+       int ret = 0;
+       if (!_fact)
+          ret = setLDLt();
+       int i, j;
+       for (i=0; i<int(_size); i++) {
+          T_ s = 0;
+          for (j=0; j<i; j++)
+             s += _a[(i+1)*i/2+j] * b[j];
+          b.add(i+1,-s);
+       }
+       for (i=0; i<int(_size); i++)
+          b.set(i+1,b[i]*_a[(i+1)*i/2+i]);
+       for (i=int(_size)-1; i>-1; i--)
+          for (j=0; j<i; j++)
+             b.add(j+1,-b[i]*_a[(i+1)*i/2+j]);
+       return ret;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     int Solve(Vect<T_>& b) { return solve(b); }
@@ -310,7 +533,11 @@ class DSMatrix : public Matrix<T_>
  *  </ul>
  */
     int solve(const Vect<T_>& b,
-              Vect<T_>&       x);
+              Vect<T_>&       x)
+    {
+       x = b;
+       return solve(x);
+    }
 
 /** \brief Return matrix as C-Array.
  *  Matrix is stored row by row.
@@ -320,425 +547,23 @@ class DSMatrix : public Matrix<T_>
 
 /// \brief Return entry <tt>(i,j)</tt> of matrix
     T_ get(size_t i,
-           size_t j) const;
+           size_t j) const
+    {
+       if (i>=j)
+          return _a[i*(i-1)/2+j-1];
+       else
+          return _a[j*(j-1)/2+i-1];
+    }
 
  protected:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    void set_(size_t i,
              size_t j,
-             T_     x)
-      { _a[(i-1)*(i-2)/2+j-1] = x; }
+             T_     x) { _a[(i-1)*(i-2)/2+j-1] = x; }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 };
-
-///////////////////////////////////////////////////////////////////////////////
-//                         I M P L E M E N T A T I O N                       //
-///////////////////////////////////////////////////////////////////////////////
-
-
-template<class T_>
-DSMatrix<T_>::DSMatrix()
-{
-   _nb_rows = _length = _size = 0;
-   _fact = false;
-   _is_diagonal = false;
-}
-
-
-template<class T_>
-DSMatrix<T_>::DSMatrix(size_t dim)
-{
-   _fact = false;
-   _is_diagonal = false;
-   setSize(dim);
-}
-
-
-template<class T_>
-DSMatrix<T_>::DSMatrix(const DSMatrix<T_>& m)
-{
-   _size = _nb_rows = _nb_cols = m._size;
-   _length = m._length;
-   _fact = m._fact;
-   _is_diagonal = false;
-   _a.resize(_length);
-   _a = m._a;
-}
-
-
-template<class T_>
-DSMatrix<T_>::DSMatrix(Mesh&  mesh,
-                       size_t dof,
-                       int    is_diagonal)
-{
-   _is_diagonal = is_diagonal;
-   _fact = false;
-   setMesh(mesh,dof);
-}
-
-
-template<class T_>
-void DSMatrix<T_>::setMesh(Mesh&  mesh,
-                           size_t dof)
-{
-   Matrix<T_>::init_set_mesh(mesh,dof);
-   _length = _size*_size;
-   _diag.resize(_size);
-   _a.resize(_length);
-   _zero = static_cast<T_>(0);
-   _fact = false;
-}
-
-
-template<class T_>
-void DSMatrix<T_>::setDiag()
-{
-   for (size_t i=0; i<_size; i++)
-      _diag[i] = _a[_nb_cols*i+i];
-}
-
-
-template<class T_>
-void DSMatrix<T_>::setSize(size_t dim)
-{
-   _size = _nb_rows = _nb_cols = dim;
-   _length = _size*(_size+1)/2;
-   _a.resize(_length);
-   _diag.resize(_size);
-}
-
-
-template<class T_>
-void DSMatrix<T_>::set(size_t    i,
-                       size_t    j,
-                       const T_& val)
-{
-   if (i>=j)
-      _a[i*(i-1)/2+j-1] = val;
-}
-
-
-template<class T_>
-void DSMatrix<T_>::setDiag(const T_& a)
-{
-   _is_diagonal = true;
-   for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,a);
-   for (size_t i=0; i<_nb_rows; i++)
-      _a[i*(i-1)/2+i-1] = a;
-}
-
-
-template<class T_>
-void DSMatrix<T_>::setDiag(const vector<T_>& d)
-{
-   _is_diagonal = true;
-   for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,d[i]);
-   for (size_t i=0; i<_nb_rows; i++)
-      _a[i*(i-1)/2+i-1] = d[i];
-}
-
-
-template<class T_>
-void DSMatrix<T_>::add(size_t    i,
-                       size_t    j,
-                       const T_& val)
-{
-   if (i>=j)
-      _a[i*(i-1)/2+j-1] += val;
-}
-
-
-template<class T_>
-T_ DSMatrix<T_>::operator()(size_t i,
-                            size_t j) const
-{
-   if (i<j)
-      return _a[j*(j-1)/2+i-1];
-   else
-      return _a[i*(i-1)/2+j-1];
-}
-
-
-template<class T_>
-T_ & DSMatrix<T_>::operator()(size_t i,
-                              size_t j)
-{
-   if (i>=j)
-      return _a[i*(i-1)/2+j-1];
-   else
-      return _a[j*(j-1)/2+i-1];
-}
-
-
-template<class T_>
-DSMatrix<T_> & DSMatrix<T_>::operator+=(const T_& x)
-{
-   for (size_t i=1; i<=_length; ++i)
-      _a.add(i,x);
-   return *this;
-}
-
-
-template<class T_>
-DSMatrix<T_> & DSMatrix<T_>::operator-=(const T_& x)
-{
-   for (size_t i=1; i<=_length; ++i)
-      _a.add(i,-x);
-   return *this;
-}
-
-template<class T_>
-DSMatrix<T_> & DSMatrix<T_>::operator=(const DSMatrix<T_>& m)
-{
-   _a = m._a;
-   return *this;
-}
-
-
-template<class T_>
-DSMatrix<T_> & DSMatrix<T_>::operator=(const T_& x)
-{
-   _fact = false;
-   Clear(_a);
-   for (size_t i=1; i<=_size; i++) {
-      _diag[i-1] = x;
-      set(i,i,x);
-   }
-   return *this;
-}
-
-
-template<class T_>
-int DSMatrix<T_>::setLDLt()
-{
-   int err = 0;
-   T_ s, pivot;
-   for (size_t i=0; i<_size; i++) {
-      for (size_t j=0; j<i; j++)
-         for (size_t k=0; k<j; k++)
-            _a[(i+1)*i/2+j] -= _a[(i+1)*i/2+k]*_a[(j+1)*j/2+k];
-      pivot = _a[(i+1)*i/2+i];
-      for (size_t j=0; j<i; j++) {
-         s = _a[(i+1)*i/2+j]*_a[(j+1)*j/2+j];
-         pivot -= s*_a[(i+1)*i/2+j];
-         _a[(i+1)*i/2+j] = s;
-      }
-      if (Abs(pivot) < OFELI_EPSMCH)
-         throw OFELIException("In DSMatrix::setLDLt(): The " + itos(int(i)+1) + "-th pivot is null.");
-      _a[(i+1)*i/2+i] = 1./pivot;
-   }
-   _fact = true;
-   return err;
-}
-
-
-template<class T_>
-void DSMatrix<T_>::getColumn(size_t    j,
-                             Vect<T_>& v) const
-{
-   v.setSize(_size);
-   for (size_t i=0; i<j-1; i++)
-      v[i] = _a[_size*(j-1)/2+i];
-   for (size_t i=j-1; i<_size; i++)
-      v[i] = _a[_size*i/2+j-1];
-}
-
-
-template<class T_>
-Vect<T_> DSMatrix<T_>::getColumn(size_t j) const
-{
-   Vect<T_> v(_size);
-   for (size_t i=0; i<j-1; i++)
-      v[i] = _a[_size*(j-1)/2+i];
-   for (size_t i=j-1; i<_size; i++)
-      v[i] = _a[_size*i/2+j-1];
-   return v;
-}
-
-
-template<class T_>
-void DSMatrix<T_>::setColumn(size_t          j,
-                             const Vect<T_>& v)
-{
-   for (size_t i=0; i<j-1; i++)
-      _a[_size*(j-1)/2+i] = v[i];
-   for (size_t i=j-1; i<_size; i++)
-      _a[_size*i/2+j-1] = v[i];
-}
-
-
-template<class T_>
-void DSMatrix<T_>::getRow(size_t    i,
-                          Vect<T_>& v) const
-{
-   v.resize(_size);
-   for (size_t j=0; j<i; j++)
-      v[j] = _a[_size*(i-1)/2+j];
-   for (size_t j=i; j<_nb_cols; j++)
-      v[j] = _a[_size*j/2+i-1];
-}
-
-
-template<class T_>
-Vect<T_> DSMatrix<T_>::getRow(size_t i) const
-{
-   Vect<T_> v(_size);
-   for (size_t j=0; j<i; j++)
-      v[j] = _a[_size*(i-1)/2+j];
-   for (size_t j=i; j<_size; j++)
-      v[j] = _a[_size*j/2+i-1];
-   return v;
-}
-
-
-template<class T_>
-void DSMatrix<T_>::setRow(size_t          i,
-                          const Vect<T_>& v)
-{
-   for (size_t j=0; j<i; j++)
-      _a[_size*(i-1)/2+j] = v[j];
-   for (size_t j=i; j<_size; j++)
-      _a[_size*j/2+i-1] = v[j];
-}
-
-
-template<class T_>
-void DSMatrix<T_>::MultAdd(const Vect<T_>& x,
-                           Vect<T_>&       y) const
-{
-   for (size_t i=1; i<=_nb_rows; i++) {
-      for (size_t j=1; j<=i; j++)
-         y.add(i,_a[(i-1)*i/2+j-1]*x(j));
-      for (size_t k=i+1; k<=_nb_rows; k++)
-         y.add(i,_a[(k-1)*k/2+i-1]*x(k));
-   }
-}
-
-
-template<class T_>
-void DSMatrix<T_>::MultAdd(T_              a,
-                           const Vect<T_>& x,
-                           Vect<T_>&       y) const
-{
-   for (size_t i=1; i<=_nb_rows; i++) {
-      for (size_t j=1; j<=i; j++)
-         y.add(i,a*_a[(i-1)*i/2+j-1]*x(j));
-      for (size_t k=i+1; k<=_nb_rows; k++)
-         y.add(i,a*_a[(k-1)*k/2+i-1]*x(k));
-   }
-}
-
-
-template<class T_>
-void DSMatrix<T_>::Mult(const Vect<T_>& x,
-                        Vect<T_>&       y) const
-{
-   y = T_(0);
-   MultAdd(x,y);
-}
-
-
-template<class T_>
-void DSMatrix<T_>::TMult(const Vect<T_>& x,
-                         Vect<T_>&       y) const
-{
-   for (size_t i=1; i<=_nb_rows; i++)
-      for (size_t j=1; j<=_nb_cols; j++)
-         y.add(i,(*this)(i,j)*x(j));
-}
-
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<class T_>
-void DSMatrix<T_>::setMesh(size_t dof,
-                           Mesh&  mesh,
-                           int    code)
-{
-// This is just to avoid warning on unused variable
-   dof  = 0;
-   code = 0;
-   _theMesh = &mesh;
-   if (mesh.getDim()==0) { }
-}
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<class T_>
-void DSMatrix<T_>::setMesh(size_t dof,
-                           size_t nb_eq,
-                           Mesh&  mesh)
-{
-// This is just to avoid warning on unused variable
-   dof = 0;
-   nb_eq = 0;
-   if (mesh.getDim()==0) { }
-}
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-
-template<class T_>
-int DSMatrix<T_>::solve(Vect<T_>& b)
-{
-   int ret = 0;
-   if (!_fact)
-      ret = setLDLt();
-   int i, j;
-   for (i=0; i<int(_size); i++) {
-      T_ s = 0;
-      for (j=0; j<i; j++)
-         s += _a[(i+1)*i/2+j] * b[j];
-      b.add(i+1,-s);
-   }
-   for (i=0; i<int(_size); i++)
-      b.set(i+1,b[i]*_a[(i+1)*i/2+i]);
-   for (i=int(_size)-1; i>-1; i--)
-      for (j=0; j<i; j++)
-         b.add(j+1,-b[i]*_a[(i+1)*i/2+j]);
-   return ret;
-}
-
-
-template<class T_>
-int DSMatrix<T_>::solve(const Vect<T_>& b,
-                        Vect<T_>&       x)
-{
-   x = b;
-   return solve(x);
-}
-
-
-template<class T_>
-T_ DSMatrix<T_>::get(size_t i,
-                     size_t j) const
-{
-   if (i>=j)
-      return _a[i*(i-1)/2+j-1];
-   else
-      return _a[j*(j-1)/2+i-1];
-}
-   
-   
-template<class T_>
-void DSMatrix<T_>::Axpy(T_                  a,
-                        const DSMatrix<T_>& m)
-{
-   _a += a * m._a;
-}
-   
-   
-template<class T_>
-void DSMatrix<T_>::Axpy(T_                a,
-                        const Matrix<T_>* m)
-{
-   for (size_t i=0; i<_length; i++)
-      _a[i] += a * m->_a[i];
-}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //                 A S S O C I A T E D   F U N C T I O N S                   //

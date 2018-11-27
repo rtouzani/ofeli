@@ -45,6 +45,7 @@ using std::vector;
 #include <iostream>
 #include <fstream>
 #include <valarray>
+#include <map>
 using std::valarray;
 using std::ostream;
 using std::istream;
@@ -163,11 +164,38 @@ class Vect
 
 /// \brief Default Constructor.
 /// Initialize a zero-length vector
-    Vect();
+    Vect() :
+#if !defined (USE_EIGEN)
+          vector<T_>(),
+#endif
+          _size(0), _nx(0), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
+          _dg_degree(-1), _grid(true), _with_mesh(false),
+          _theMesh(NULL), _name("#"), _time(0)
+    {
+       for (size_t i=0; i<10; ++i)
+          _with_regex[i] = false;
+    }
 
 /// \brief Constructor setting vector size.
 /// @param [in] n Size of vector
-    Vect(size_t n);
+    Vect(size_t n) :
+#if !defined (USE_EIGEN)
+           vector<T_>(n),
+#endif
+           _size(n), _nx(n), _ny(1), _nz(1),
+           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+           _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
+    {
+#if defined (USE_EIGEN)
+       _v.conservativeResize(_size);
+       clear();
+#else
+       for (size_t i=0; i<_size; i++)
+          (*this)[i] = 0;
+#endif
+       for (size_t i=0; i<10; ++i)
+          _with_regex[i] = false;
+    }
 
 /** \brief Constructor of a 2-D index vector.
  *  \details This constructor can be used for instance for a 2-D grid vector
@@ -176,7 +204,24 @@ class Vect
  *  @remark The size of resulting vector is nx*ny
  */
     Vect(size_t nx,
-         size_t ny);
+         size_t ny) :
+#if !defined (USE_EIGEN)
+           vector<T_>(nx*ny),
+#endif
+           _size(nx*ny), _nx(nx), _ny(ny), _nz(1),
+           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+           _grid(false), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
+    {
+#if defined (USE_EIGEN)
+       _v.conservativeResize(_size);
+       clear();
+#else
+       for (size_t i=0; i<_size; i++)
+          (*this)[i] = 0;
+#endif
+       for (size_t i=0; i<10; ++i)
+          _with_regex[i] = false;
+    }
 
 /** \brief Constructor of a 3-D index vector.
  *  \details This constructor can be used for instance for a 3-D grid vector
@@ -187,7 +232,24 @@ class Vect
  */
     Vect(size_t nx,
          size_t ny,
-         size_t nz);
+         size_t nz) :
+#if !defined (USE_EIGEN)
+           vector<T_>(nx*ny*nz),
+#endif
+           _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz),
+           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+           _grid(false), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
+    {
+#if defined (USE_EIGEN)
+       _v.conservativeResize(_size);
+       clear();
+#else
+       for (size_t i=0; i<_size; i++)
+          (*this)[i] = 0;
+#endif
+       for (size_t i=0; i<10; ++i)
+          _with_regex[i] = false;
+    }
 
 /** \brief Create an instance of class Vect as an image of a C/C++ array.
  *  @param [in] n Dimension of vector to construct
@@ -306,17 +368,28 @@ class Vect
  *  with OFELI
  */
     Vect(const VectorX& v);
+         : _size(v.size()), _nx(_size), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
+           _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
+    {
+       for (size_t i=0; i<10; ++i)
+          _with_regex[i] = false;
+    }
 #endif
 
 /// \brief Destructor
-    ~Vect();
+    ~Vect() { }
 
 /** \brief Initialize vector with a c-array
  *  @param [in] v c-array (pointer) to initialize Vect
  *  @param [in] n size of array
  */
     void set(const T_* v,
-             size_t    n);
+             size_t    n)
+    {
+       setSize(n);
+       for (size_t i=1; i<=n; ++i)
+          set(i,v[i-1]);
+    }
 
 /** \brief Initialize vector with another Vect instance
  *  @param [in] v Vect instance to extract from
@@ -328,7 +401,15 @@ class Vect
  */
     void select(const Vect<T_>& v,
                 size_t          nb_dof=0,
-                size_t          first_dof=1);
+                size_t          first_dof=1)
+    {
+       _size = nb_dof*v._nb;
+       setSize(_size);
+       size_t i=1;
+       for (size_t n=1; n<=v._nb; ++n)
+          for (size_t j=first_dof; j<=nb_dof+first_dof-1; j++)
+             set(i++,v(n,j));
+    }
 
 /** \brief Initialize vector with an algebraic expression
  *  \details This function is to be used is a Mesh instance is associated to the vector
@@ -401,7 +482,16 @@ class Vect
  */
     void setSize(size_t nx,
                  size_t ny=1,
-                 size_t nz=1);
+                 size_t nz=1)
+    {
+       _nx = nx, _ny = ny, _nz = nz;
+       _size = _nx*_ny*_nz;
+#if defined (USE_EIGEN)
+       _v.conservativeResize(_size,1);
+#else
+       vector<T_>::resize(_size);
+#endif
+    }
 
 /** \brief Set vector size
  *  \details This function allocates memory for the vector but does not initialize its components
@@ -415,7 +505,18 @@ class Vect
  *  @param [in] v Value to assign to vector entries
  */
     void resize(size_t n,
-                T_     v);
+                T_     v)
+    {
+       _nx = n, _ny = 1, _nz = 1;
+       _size = _nx*_ny*_nz;
+#if defined (USE_EIGEN)
+       _v.conservativeResize(_size,1);
+       for (size_t i=1; i<=_size; i++)
+          set(i,v);
+#else
+       vector<T_>::resize(_size,v);
+#endif
+    }
 
 /** \brief Set DOF type of vector
  *  \details The DOF type combined with number of DOF per component enable
@@ -661,29 +762,25 @@ class Vect
                   const Vect<T_>& bc,
                   int             dof=0);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \brief Define a regular expression that initializes vector
- *  \details
- *  @param [in] r Regular expression as a function of <tt>x</tt>, <tt>y</tt>, <tt>z</tt> 
- *  (coordinates) and <tt>t</tt> (time)
+ *  \details This member function enables defininga regular expression to assign a value
+ *  to all vector entries
  *  @param [in] dof Label of dof for which expression is defined [Default: <tt>1</tt>] 
  */
-    void setRegex(string r,
-                  int    dof=1);
-
-/** \brief Evaluate vector entries from stored regular expression
- *  \details Vector entries can be evaluated from a given regular expression
- *  any time. This is useful when the vector depends on time. In this
- *  case, this function can be used at each time step, using a regular expression
- *  stored once for all.
- *  @param [in] dof Label of dof for which expression is set [Default: [Default: <tt>1</tt>] 
- */
-    void setFromRegex(int dof=1);
+    void setRegex(int dof=1)
+    {
+       if (_theMesh==NULL)
+          throw OFELIException("In Vect::setRegex(int): No mesh is defined");
+       _with_regex[dof-1] = true;
+    }
 
 /** \brief Returns <tt>true</tt> or <tt>false</tt> if a given dof is defined by 
  *  a regular expression
  *  @param [in] dof Label of dof which information is returned
  */
     bool withRegex(int dof) const { return _with_regex[dof-1]; }
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if defined(USE_PETSC)
@@ -1017,7 +1114,12 @@ class Vect
  */
     void setUniform(T_     vmin,
                     T_     vmax,
-                    size_t n);
+                    size_t n)
+    {
+       setSize(n);
+       for (size_t i=0; i<_nx; i++)
+          (*this)[i] = T_(i)*(vmax-vmin)/T_(_nx-1);
+    }
 
 /** \brief Operator <tt>=</tt>
  *  \details Assign a constant to vector entries
@@ -1060,7 +1162,15 @@ class Vect
  *  the parent class vector. It adjusts in addition some vector parameters
  *  @param [in] v Entry value to add
  */
-    void push_back(const T_& v);
+    void push_back(const T_& v)
+    {
+#if defined (USE_EIGEN)
+       (*this)[_nx] = v;
+#else
+       vector<T_>::push_back(v);
+#endif
+       _nx++; _size++;
+    }
 
 /// \brief Return reference to Mesh instance
     const Mesh &getMeshPtr() const { return *_theMesh; }
@@ -1070,7 +1180,13 @@ class Vect
  *  where <tt>v</tt> and <tt>w</tt> are 2 instances of <tt>Vect<double></tt>
  *  @param [in] v Vect instance by which the current instance is multiplied
  */
-    T_ operator,(const Vect<T_>& v) const;
+    T_ operator,(const Vect<T_>& v) const
+    {
+       T_ p = 0;
+       for (size_t i=0; i<_size; i++)
+          p += (*this)[i] * v[i];
+       return p;
+    }
 
 /** \brief Compute FFT transform of vector
  *  \details This member function computes the FFT (Fast Fourier Transform) of the vector
@@ -1110,7 +1226,13 @@ class Vect
     void dof_select(size_t d, vector<size_t> &dof_list);
     size_t ijk(size_t i, size_t j)           const { return _ny*(i-1)+j-1; }
     size_t ijk(size_t i, size_t j, size_t k) const { return _ny*_nz*(i-1)+_nz*(j-1)+k-1; }
-    void setGrid(Grid& g);
+    void setGrid(Grid& g)
+    {
+       _nx = g.getNx() + 1;
+       _ny = g.getNy() + 1;
+       _nz = g.getNz() + 1;
+       _size = _nx*_ny*_nz; 
+    }
 #if defined (USE_EIGEN)
     VectorX     _v;
 #endif
@@ -1123,86 +1245,6 @@ class Vect
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-template<class T_>
-Vect<T_>::Vect() :
-#if !defined (USE_EIGEN)
-          vector<T_>(),
-#endif
-          _size(0), _nx(0), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
-          _dg_degree(-1), _grid(true), _with_mesh(false),
-          _theMesh(NULL), _name("#"), _time(0)
-{
-   for (size_t i=0; i<10; ++i)
-      _with_regex[i] = false;
-}
-
-
-template<class T_>
-Vect<T_>::Vect(size_t n) :
-#if !defined (USE_EIGEN)
-           vector<T_>(n),
-#endif
-           _size(n), _nx(n), _ny(1), _nz(1),
-           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
-           _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
-{
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size);
-   clear();
-#else
-   for (size_t i=0; i<_size; i++)
-      (*this)[i] = 0;
-#endif
-   for (size_t i=0; i<10; ++i)
-      _with_regex[i] = false;
-}
-
-
-template<class T_>
-Vect<T_>::Vect(size_t nx, 
-               size_t ny) :
-#if !defined (USE_EIGEN)
-           vector<T_>(nx*ny),
-#endif
-           _size(nx*ny), _nx(nx), _ny(ny), _nz(1),
-           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
-           _grid(false), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
-{
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size);
-   clear();
-#else
-   for (size_t i=0; i<_size; i++)
-      (*this)[i] = 0;
-#endif
-   for (size_t i=0; i<10; ++i)
-      _with_regex[i] = false;
-}
-
-
-template<class T_>
-Vect<T_>::Vect(size_t nx,
-               size_t ny,
-               size_t nz) :
-#if !defined (USE_EIGEN)
-           vector<T_>(nx*ny*nz),
-#endif
-           _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz),
-           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
-           _grid(false), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
-{
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size);
-   clear();
-#else
-   for (size_t i=0; i<_size; i++)
-      (*this)[i] = 0;
-#endif
-   for (size_t i=0; i<10; ++i)
-      _with_regex[i] = false;
-}
-
 
 template<class T_>
 Vect<T_>::Vect(size_t n,
@@ -1354,8 +1396,6 @@ Vect<T_>::Vect(const Vect<T_>& v,
          set(i,j,v(i,j+first_dof-1));
    for (size_t i=0; i<10; ++i) {
       _with_regex[i] = v._with_regex[i];
-      if (_with_regex[i])
-         _regex[i] = v._regex[i];
    }
 }
 
@@ -1369,11 +1409,8 @@ Vect<T_>::Vect(const Vect<T_>& v)
    setSize(v._nx,v._ny,v._nz);
    for (size_t i=1; i<=_size; i++)
       set(i,v[i-1]);
-   for (size_t i=0; i<10; ++i) {
+   for (size_t i=0; i<10; ++i)
       _with_regex[i] = v._with_regex[i];
-      if (_with_regex[i])
-         _regex[i] = v._regex[i];
-   }
 }
 
 
@@ -1430,23 +1467,6 @@ Vect<T_>::Vect(size_t          d,
 }
 
 
-#if defined (USE_EIGEN)
-template<class T_>
-Vect<T_>::Vect(const VectorX& v)
-         : _size(v.size()), _nx(_size), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
-           _grid(true), _with_mesh(false), _theMesh(NULL), _name("#"), _time(0)
-{
-   for (size_t i=0; i<10; ++i)
-      _with_regex[i] = false;
-}
-#endif
-
-
-template<class T_>
-Vect<T_>::~Vect()
-{ }
-
-
 template<class T_>
 void Vect<T_>::setMesh(Mesh&  m,
                        size_t nb_dof,
@@ -1471,31 +1491,11 @@ void Vect<T_>::setMesh(Mesh&  m,
 
 
 template<class T_>
-void Vect<T_>::setGrid(Grid& g)
-{
-   _nx = g.getNx() + 1;
-   _ny = g.getNy() + 1;
-   _nz = g.getNz() + 1;
-   _size = _nx*_ny*_nz;
- 
-}
-
-
-template<class T_>
-void Vect<T_>::set(const T_* v,
-                   size_t    n)
-{
-   setSize(n);
-   for (size_t i=1; i<=n; ++i)
-      set(i,v[i-1]);
-}
-
-
-template<class T_>
 void Vect<T_>::setDG(int degree)
 {
    if (_with_mesh==false)
-      throw OFELIException("In Vect::setDG(int): To be used only if a Mesh instance is associated to the vector");
+      throw OFELIException("In Vect::setDG(int): To be used only if a Mesh instance "
+                           "is associated to the vector");
    _dg_degree = degree;
    if (degree<0)
       return;
@@ -1521,20 +1521,6 @@ void Vect<T_>::setDG(int degree)
               break;
    }
    setSize(_theMesh->getNbElements(),_nb_dof,1);
-}
-
-
-template<class T_>
-void Vect<T_>::select(const Vect<T_>& v,
-                      size_t          nb_dof,
-                      size_t          first_dof)
-{
-   _size = nb_dof*v._nb;
-   setSize(_size);
-   size_t i=1;
-   for (size_t n=1; n<=v._nb; ++n)
-      for (size_t j=first_dof; j<=nb_dof+first_dof-1; j++)
-         set(i++,v(n,j));
 }
 
 
@@ -1569,7 +1555,8 @@ void Vect<T_>::set(const string&       exp,
       d[0] = x[i];
       set(i+1,EVAL(d));
       if ((err=theParser.EvalError()))
-         throw OFELIException("In Vect::set(string,dof): Illegal regular expression. Error code: "+itos(err));
+         throw OFELIException("In Vect::set(string,dof): Illegal regular expression."
+                              "Error code: "+itos(err));
    }
 }
 
@@ -1622,11 +1609,13 @@ void Vect<T_>::set(Mesh&  ms,
          d[3] = _time;
          set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
          if ((err=theParser.EvalError()))
-            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. Error code: "+itos(err));
+            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
+                                 "Error code: "+itos(err));
       }
    }
    else
-      throw OFELIException("In Vect::set(string,size_t): This member function is for nodewise vectors only.");
+      throw OFELIException("In Vect::set(string,size_t): This member function is "
+                           "for nodewise vectors only.");
 }
 
 
@@ -1645,74 +1634,6 @@ void Vect<T_>::set(const Vect<real_t>& x,
       if ((err=theParser.EvalError()))
          throw OFELIException("In Vect::set(Vect,string): Illegal regular expression. Error code: "+itos(err));
    }
-}
-
- 
-template<class T_>
-void Vect<T_>::setRegex(string r,
-                        int    dof)
-{
-   if (_theMesh==NULL)
-      throw OFELIException("In Vect::setRegex(string): No mesh is defined");
-   _regex[dof-1] = r;
-   _with_regex[dof-1] = true;
-}
-
-
-template<class T_>
-void Vect<T_>::setFromRegex(int dof)
-{
-   if (_theMesh==NULL)
-      throw OFELIException("In Vect::setFromRegex(): No mesh is defined");
-   int err;
-   real_t d[4];
-   PARSE(_regex[dof-1].c_str(),"x,y,z,t");
-   if (_dof_type==NODE_FIELD) {
-      mesh_nodes(*_theMesh) {
-         d[0] = The_node.getCoord(1);
-         d[1] = The_node.getCoord(2);
-         d[2] = The_node.getCoord(3);
-         d[3] = _time;
-         set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
-         if ((err=theParser.EvalError()))
-            throw OFELIException("In Vect::setFromRegex(): Illegal regular expression. Error code: "+itos(err));
-      }
-   }
-   else if (_dof_type==ELEMENT_FIELD) {
-   }
-   else
-      throw OFELIException("In Vect::setFromRegex(): This member function is for nodewise vectors only.");
-}
-
-
-template<class T_>
-void Vect<T_>::resize(size_t n,
-                      T_     v)
-{
-   _nx = n, _ny = 1, _nz = 1;
-   _size = _nx*_ny*_nz;
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size,1);
-   for (size_t i=1; i<=_size; i++)
-      set(i,v);
-#else
-   vector<T_>::resize(_size,v);
-#endif
-}
-
-
-template<class T_>
-void Vect<T_>::setSize(size_t nx,
-                       size_t ny,
-                       size_t nz)
-{
-   _nx = nx, _ny = ny, _nz = nz;
-   _size = _nx*_ny*_nz;
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size,1);
-#else
-   vector<T_>::resize(_size);
-#endif
 }
 
 
@@ -1800,17 +1721,6 @@ inline void Vect<real_t>::operator=(string s)
    if (_theMesh==NULL)
       throw OFELIException("In Vect::operator=(string): No mesh is defined");
    set(s);
-}
-
-
-template<class T_>
-void Vect<T_>::setUniform(T_     vmin,
-                          T_     vmax,
-                          size_t n)
-{
-   setSize(n);
-   for (size_t i=0; i<_nx; i++)
-      (*this)[i] = T_(i)*(vmax-vmin)/T_(_nx-1);
 }
 
 
@@ -3272,28 +3182,6 @@ Vect<T_> &Vect<T_>::operator/=(const T_& a)
    for (size_t i=1; i<=_size; i++)
       set(i,(*this)(i)/a);
    return *this;
-}
-
-
-template<class T_>
-T_ Vect<T_>::operator,(const Vect<T_>& v) const
-{
-   T_ p = 0;
-   for (size_t i=0; i<_size; i++)
-      p += (*this)[i] * v[i];
-   return p;
-}
-
-
-template<class T_>
-void Vect<T_>::push_back(const T_& v)
-{
-#if defined (USE_EIGEN)
-   (*this)[_nx] = v;
-#else
-   vector<T_>::push_back(v);
-#endif
-   _nx++; _size++;
 }
 
 

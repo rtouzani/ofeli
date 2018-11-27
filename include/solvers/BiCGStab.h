@@ -91,7 +91,7 @@ int BiCGStab(const SpMatrix<T_>& A,
    if (verbose>0)
       cout << "Running preconditioned BiCGStab method ..." << endl;
    int it;
-   size_t size=x.size();
+   size_t size=b.size();
    T_ rho_1=0, rho_2=0, alpha=0, beta=0, omega=0;
    Vect<T_> p(size), pp(size), s(size), ss(size), t(size), v(size), r(size), rr(size);
    real_t res, nrm=b.getNorm2();
@@ -134,7 +134,6 @@ int BiCGStab(const SpMatrix<T_>& A,
       omega = (t,s)/(t,t);
       x += alpha*pp + omega*ss;
       r = s - omega*t;
-
       rho_2 = rho_1;
       if (verbose>1)
          cout << "Iteration: " << setw(4) << it << "  ... Residual: " << res << endl;
@@ -190,6 +189,21 @@ int BiCGStab(const SpMatrix<T_>& A,
 {
    return BiCGStab(A,Prec<T_>(A,prec),b,x,max_it,toler,verbose);
 }
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+template<class T_>
+int BiCGStab(const Matrix<T_>* A,
+             int               prec,
+             const Vect<T_>&   b,
+             Vect<T_>&         x,
+             int               max_it,
+             real_t            toler,
+             int               verbose)
+{
+   SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
+   return BiCGStab(AA,prec,b,x,max_it,toler,verbose);
+}
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 } /* namespace OFELI */
 

@@ -445,7 +445,7 @@ int cnvtst(real_t              alpha,
    real_t cmax=0.;
    int conv=0, imax=0;
    int ltest = flast - fnew <= gtpnew * -0.5;
-   for (int i=0; i<=g.size(); i++) {
+   for (size_t i=0; i<=g.size(); i++) {
       if (pivot[i] != 0 && pivot[i] != 2) {
          real_t t = -pivot[i] * g[i];
          if (t < 0.) {

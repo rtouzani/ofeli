@@ -645,7 +645,6 @@ am__nodep
 AMDEPBACKSLASH
 AMDEP_FALSE
 AMDEP_TRUE
-am__quote
 am__include
 DEPDIR
 OBJEXT
@@ -741,7 +740,8 @@ PACKAGE_NAME
 PATH_SEPARATOR
 SHELL
 RELEASE
-VERSION'
+VERSION
+am__quote'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
@@ -2246,7 +2246,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-am__api_version='1.15'
+am__api_version='1.16'
 
 ac_aux_dir=
 for ac_dir in "$srcdir" "$srcdir/.." "$srcdir/../.."; do
@@ -2791,8 +2791,8 @@ MAKEINFO=${MAKEINFO-"${am_missing_run}makeinfo"}
 
 # For better backward compatibility.  To be removed once Automake 1.9.x
 # dies out for good.  For more background, see:
-# <http://lists.gnu.org/archive/html/automake/2012-07/msg00001.html>
-# <http://lists.gnu.org/archive/html/automake/2012-07/msg00014.html>
+# <https://lists.gnu.org/archive/html/automake/2012-07/msg00001.html>
+# <https://lists.gnu.org/archive/html/automake/2012-07/msg00014.html>
 mkdir_p='$(MKDIR_P)'
 
 # We need awk for the "check" target (and possibly the TAP driver).  The
@@ -2843,7 +2843,7 @@ END
 Aborting the configuration process, to ensure you take notice of the issue.
 
 You can download and install GNU coreutils to get an 'rm' implementation
-that behaves properly: <http://www.gnu.org/software/coreutils/>.
+that behaves properly: <https://www.gnu.org/software/coreutils/>.
 
 If you want to complete the configuration process using your problematic
 'rm' anyway, export the environment variable ACCEPT_INFERIOR_RM_PROGRAM
@@ -3898,45 +3898,45 @@ DEPDIR="${am__leading_dot}deps"
 
 ac_config_commands="$ac_config_commands depfiles"
 
-
-am_make=${MAKE-make}
-cat > confinc << 'END'
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${MAKE-make} supports the include directive" >&5
+$as_echo_n "checking whether ${MAKE-make} supports the include directive... " >&6; }
+cat > confinc.mk << 'END'
 am__doit:
-	@echo this is the am__doit target
+	@echo this is the am__doit target >confinc.out
 .PHONY: am__doit
 END
-# If we don't find an include directive, just comment out the code.
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for style of include used by $am_make" >&5
-$as_echo_n "checking for style of include used by $am_make... " >&6; }
 am__include="#"
 am__quote=
-_am_result=none
-# First try GNU make style include.
-echo "include confinc" > confmf
-# Ignore all kinds of additional output from 'make'.
-case `$am_make -s -f confmf 2> /dev/null` in #(
-*the\ am__doit\ target*)
-  am__include=include
-  am__quote=
-  _am_result=GNU
-  ;;
-esac
-# Now try BSD make style include.
-if test "$am__include" = "#"; then
-   echo '.include "confinc"' > confmf
-   case `$am_make -s -f confmf 2> /dev/null` in #(
-   *the\ am__doit\ target*)
-     am__include=.include
-     am__quote="\""
-     _am_result=BSD
+# BSD make does it like this.
+echo '.include "confinc.mk" # ignored' > confmf.BSD
+# Other make implementations (GNU, Solaris 10, AIX) do it like this.
+echo 'include confinc.mk # ignored' > confmf.GNU
+_am_result=no
+for s in GNU BSD; do
+  { echo "$as_me:$LINENO: ${MAKE-make} -f confmf.$s && cat confinc.out" >&5
+   (${MAKE-make} -f confmf.$s && cat confinc.out) >&5 2>&5
+   ac_status=$?
+   echo "$as_me:$LINENO: \$? = $ac_status" >&5
+   (exit $ac_status); }
+  case $?:`cat confinc.out 2>/dev/null` in #(
+  '0:this is the am__doit target') :
+    case $s in #(
+  BSD) :
+    am__include='.include' am__quote='"' ;; #(
+  *) :
+    am__include='include' am__quote='' ;;
+esac ;; #(
+  *) :
      ;;
-   esac
-fi
-
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $_am_result" >&5
-$as_echo "$_am_result" >&6; }
-rm -f confinc confmf
+esac
+  if test "$am__include" != "#"; then
+    _am_result="yes ($s style)"
+    break
+  fi
+done
+rm -f confinc.* confmf.*
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ${_am_result}" >&5
+$as_echo "${_am_result}" >&6; }
 
 # Check whether --enable-dependency-tracking was given.
 if test "${enable_dependency_tracking+set}" = set; then :
@@ -5577,6 +5577,7 @@ if test "$ac_cv_decl_exit_success_and_failure" = yes ; then
 fi ;
 
 if test "${GXX}" = "yes" ; then
+#CPPFLAGS="${CPPFLAGS} -std=c++0x"
 CPPFLAGS="${CPPFLAGS} "
 fi
 
@@ -5746,7 +5747,7 @@ util_exes="g2m cmesh cfield vmesh "
 tutorial_exes="lesson1 lesson2 lesson3 lesson4 "
 demo_exes="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz ec2d1 ls_demo1 ls_demo2 "
 demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2 "
-demo_exes+="opt_demo1 opt_demo2"
+demo_exes+="opt_demo1 opt_demo2 nl_demo1 nl_demo2 nl_demo3 nl_demo4 "
 
 ac_config_files="$ac_config_files Makefile include/Makefile include/equations/Makefile include/equations/cl/Makefile include/equations/electromagnetics/Makefile include/equations/fluid/Makefile include/equations/interface/Makefile include/equations/laplace/Makefile include/equations/solid/Makefile include/equations/therm/Makefile include/equations/porous/Makefile include/io/Makefile include/io/fparser/Makefile include/io/tclap/Makefile include/io/xmlsp/Makefile include/linear_algebra/Makefile include/linear_algebra/petsc/Makefile include/mesh/Makefile include/mesh/bamg/Makefile include/mesh/metis/Makefile include/post/Makefile include/shape_functions/Makefile include/solvers/Makefile include/util/Makefile src/Makefile src/equations/Makefile src/equations/cl/Makefile src/equations/electromagnetics/Makefile src/equations/fluid/Makefile src/equations/interface/Makefile src/equations/laplace/Makefile src/equations/porous/Makefile src/equations/solid/Makefile src/equations/therm/Makefile src/io/Makefile src/io/fparser/Makefile src/io/xmlsp/Makefile src/linear_algebra/Makefile src/mesh/Makefile src/mesh/bamg/Makefile src/mesh/metis/Makefile src/post/Makefile src/shape_functions/Makefile src/solvers/Makefile src/util/Makefile material/Makefile util/Makefile util/g2m/Makefile util/g2m/src/Makefile util/g2m/examples/Makefile util/conv/Makefile util/conv/src/Makefile util/conv/examples/Makefile util/conv/matlab/Makefile util/vmesh/Makefile tutorial/Makefile tutorial/lesson1/Makefile tutorial/lesson2/Makefile tutorial/lesson3/Makefile tutorial/lesson4/Makefile demos/Makefile demos/thermal/Makefile demos/thermal/std3/Makefile demos/thermal/stdc2/Makefile demos/thermal/ttd2/Makefile demos/solid/Makefile demos/solid/beam/Makefile demos/solid/truss/Makefile demos/solid/contact/Makefile demos/solid/lelas2d/Makefile demos/solid/lelas3d/Makefile demos/fluid/Makefile demos/fluid/tiff2/Makefile demos/fluid/tins2/Makefile demos/fluid/lh2d/Makefile demos/fluid/euler-2d/Makefile demos/electromagnetics/Makefile demos/electromagnetics/Helmholtz/Makefile demos/electromagnetics/EddyCurrent2d-1/Makefile demos/solvers/Makefile demos/solvers/LS/Makefile demos/solvers/ODE/Makefile demos/solvers/EIGEN/Makefile demos/solvers/OPTIM/Makefile demos/solvers/NLAS/Makefile demos/adapt/Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/demos/Makefile doc/im/Makefile doc/css/Makefile doc/tutorial/Makefile doc/presentations/Makefile tools/Makefile tools/CodeBlocks/Makefile tools/msvcpp/Makefile tools/msvcpp/beam/Makefile tools/msvcpp/cfield/Makefile tools/msvcpp/contact/Makefile tools/msvcpp/ec2d1/Makefile tools/msvcpp/eigen_demo1/Makefile tools/msvcpp/eigen_demo2/Makefile tools/msvcpp/euler_2d/Makefile tools/msvcpp/g2m/Makefile tools/msvcpp/helmholtz/Makefile tools/msvcpp/lelas2d/Makefile tools/msvcpp/lelas3d/Makefile tools/msvcpp/lesson1/Makefile tools/msvcpp/lesson2/Makefile tools/msvcpp/lesson3/Makefile tools/msvcpp/lesson4/Makefile tools/msvcpp/lh2d/Makefile tools/msvcpp/ofeli/Makefile tools/msvcpp/std3/Makefile tools/msvcpp/stdc2/Makefile tools/msvcpp/tiff2/Makefile tools/msvcpp/tins2/Makefile tools/msvcpp/ttd2/Makefile tools/msvcpp/truss/Makefile tools/msvcpp/ls_demo1/Makefile tools/msvcpp/ls_demo2/Makefile tools/msvcpp/ode_demo1/Makefile tools/msvcpp/ode_demo2/Makefile tools/msvcpp/ode_demo3/Makefile tools/msvcpp/ode_demo4/Makefile tools/msvcpp/opt_demo1/Makefile tools/msvcpp/opt_demo2/Makefile tools/msvcpp/opt_demo3/Makefile tools/msvcpp/ts_demo1/Makefile tools/msvcpp/ts_demo2/Makefile tools/msvcpp/adapt_demo1/Makefile tools/msvcpp/adapt_demo2/Makefile ofeli-config test_ofeli.sh"
 
@@ -6388,7 +6389,7 @@ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
 #
 # INIT-COMMANDS
 #
-AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"
+AMDEP_TRUE="$AMDEP_TRUE" MAKE="${MAKE-make}"
 
 _ACEOF
 
@@ -7134,29 +7135,35 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
   # Older Autoconf quotes --file arguments for eval, but not when files
   # are listed without --file.  Let's play safe and only enable the eval
   # if we detect the quoting.
-  case $CONFIG_FILES in
-  *\'*) eval set x "$CONFIG_FILES" ;;
-  *)   set x $CONFIG_FILES ;;
-  esac
+  # TODO: see whether this extra hack can be removed once we start
+  # requiring Autoconf 2.70 or later.
+  case $CONFIG_FILES in #(
+  *\'*) :
+    eval set x "$CONFIG_FILES" ;; #(
+  *) :
+    set x $CONFIG_FILES ;; #(
+  *) :
+     ;;
+esac
   shift
-  for mf
+  # Used to flag and report bootstrapping failures.
+  am_rc=0
+  for am_mf
   do
     # Strip MF so we end up with the name of the file.
-    mf=`echo "$mf" | sed -e 's/:.*$//'`
-    # Check whether this is an Automake generated Makefile or not.
-    # We used to match only the files named 'Makefile.in', but
-    # some people rename them; so instead we look at the file content.
-    # Grep'ing the first line is not enough: some people post-process
-    # each Makefile.in and add a new line on top of each file to say so.
-    # Grep'ing the whole file is not good either: AIX grep has a line
+    am_mf=`$as_echo "$am_mf" | sed -e 's/:.*$//'`
+    # Check whether this is an Automake generated Makefile which includes
+    # dependency-tracking related rules and includes.
+    # Grep'ing the whole file directly is not great: AIX grep has a line
     # limit of 2048, but all sed's we know have understand at least 4000.
-    if sed -n 's,^#.*generated by automake.*,X,p' "$mf" | grep X >/dev/null 2>&1; then
-      dirpart=`$as_dirname -- "$mf" ||
-$as_expr X"$mf" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
-	 X"$mf" : 'X\(//\)[^/]' \| \
-	 X"$mf" : 'X\(//\)$' \| \
-	 X"$mf" : 'X\(/\)' \| . 2>/dev/null ||
-$as_echo X"$mf" |
+    sed -n 's,^am--depfiles:.*,X,p' "$am_mf" | grep X >/dev/null 2>&1 \
+      || continue
+    am_dirpart=`$as_dirname -- "$am_mf" ||
+$as_expr X"$am_mf" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+	 X"$am_mf" : 'X\(//\)[^/]' \| \
+	 X"$am_mf" : 'X\(//\)$' \| \
+	 X"$am_mf" : 'X\(/\)' \| . 2>/dev/null ||
+$as_echo X"$am_mf" |
     sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
 	    s//\1/
 	    q
@@ -7174,53 +7181,48 @@ $as_echo X"$mf" |
 	    q
 	  }
 	  s/.*/./; q'`
-    else
-      continue
-    fi
-    # Extract the definition of DEPDIR, am__include, and am__quote
-    # from the Makefile without running 'make'.
-    DEPDIR=`sed -n 's/^DEPDIR = //p' < "$mf"`
-    test -z "$DEPDIR" && continue
-    am__include=`sed -n 's/^am__include = //p' < "$mf"`
-    test -z "$am__include" && continue
-    am__quote=`sed -n 's/^am__quote = //p' < "$mf"`
-    # Find all dependency output files, they are included files with
-    # $(DEPDIR) in their names.  We invoke sed twice because it is the
-    # simplest approach to changing $(DEPDIR) to its actual value in the
-    # expansion.
-    for file in `sed -n "
-      s/^$am__include $am__quote\(.*(DEPDIR).*\)$am__quote"'$/\1/p' <"$mf" | \
-	 sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g'`; do
-      # Make sure the directory exists.
-      test -f "$dirpart/$file" && continue
-      fdir=`$as_dirname -- "$file" ||
-$as_expr X"$file" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
-	 X"$file" : 'X\(//\)[^/]' \| \
-	 X"$file" : 'X\(//\)$' \| \
-	 X"$file" : 'X\(/\)' \| . 2>/dev/null ||
-$as_echo X"$file" |
-    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
+    am_filepart=`$as_basename -- "$am_mf" ||
+$as_expr X/"$am_mf" : '.*/\([^/][^/]*\)/*$' \| \
+	 X"$am_mf" : 'X\(//\)$' \| \
+	 X"$am_mf" : 'X\(/\)' \| . 2>/dev/null ||
+$as_echo X/"$am_mf" |
+    sed '/^.*\/\([^/][^/]*\)\/*$/{
 	    s//\1/
 	    q
 	  }
-	  /^X\(\/\/\)[^/].*/{
+	  /^X\/\(\/\/\)$/{
 	    s//\1/
 	    q
 	  }
-	  /^X\(\/\/\)$/{
-	    s//\1/
-	    q
-	  }
-	  /^X\(\/\).*/{
+	  /^X\/\(\/\).*/{
 	    s//\1/
 	    q
 	  }
 	  s/.*/./; q'`
-      as_dir=$dirpart/$fdir; as_fn_mkdir_p
-      # echo "creating $dirpart/$file"
-      echo '# dummy' > "$dirpart/$file"
-    done
+    { echo "$as_me:$LINENO: cd "$am_dirpart" \
+      && sed -e '/# am--include-marker/d' "$am_filepart" \
+        | $MAKE -f - am--depfiles" >&5
+   (cd "$am_dirpart" \
+      && sed -e '/# am--include-marker/d' "$am_filepart" \
+        | $MAKE -f - am--depfiles) >&5 2>&5
+   ac_status=$?
+   echo "$as_me:$LINENO: \$? = $ac_status" >&5
+   (exit $ac_status); } || am_rc=$?
   done
+  if test $am_rc -ne 0; then
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "Something went wrong bootstrapping makefile fragments
+    for automatic dependency tracking.  Try re-running configure with the
+    '--disable-dependency-tracking' option to at least be able to build
+    the package (albeit without support for automatic dependency tracking).
+See \`config.log' for more details" "$LINENO" 5; }
+  fi
+  { am_dirpart=; unset am_dirpart;}
+  { am_filepart=; unset am_filepart;}
+  { am_mf=; unset am_mf;}
+  { am_rc=; unset am_rc;}
+  rm -f conftest-deps.mk
 }
  ;;
 

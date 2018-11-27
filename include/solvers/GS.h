@@ -143,6 +143,21 @@ int GS(const SpMatrix<T_>& A,
    return -it;
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+template<class T_>
+int GS(const Matrix<T_>* A,
+       const Vect<T_>&   b,
+       Vect<T_>&         x,
+       real_t            omega,
+       int               max_it,
+       real_t            toler,
+       int               verbose)
+{
+   SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
+   return GS(AA,b,x,omega,max_it,toler,verbose);
+}
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 

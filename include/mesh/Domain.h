@@ -320,6 +320,12 @@ typedef struct { size_t n1, n2, n3, n4; int code; } El;
                   int     c2,
                   int     c3,
                   int     c4);
+    int Rectangle(real_t* x,
+                  size_t  n1, 
+                  size_t  n2,
+                  real_t  r,
+                  int*    c,
+                  int*    cv);
     Mesh *getMesh() { return _theMesh; }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

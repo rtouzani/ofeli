@@ -101,7 +101,7 @@ class Node
     Node(const Node& node);
 
 /// \brief Destructor
-    ~Node();
+    ~Node() { }
 
 //-------------------------------   MODIFIERS  ---------------------------------
 
@@ -119,15 +119,23 @@ class Node
  *  @param [in] code Code to assign to DOF
  */
     void setCode(size_t dof,
-                 int    code);
+                 int    code) { _code[dof-1] = code; }
 
 /// \brief Define codes for all node DOFs.
 /// @param [in] code vector instance that contains code for each DOF of current node
-    void setCode(const vector<int>& code);
+    void setCode(const vector<int>& code)
+    {
+       for (size_t i=0; i<_nb_dof; i++)
+          _code[i] = code[i];
+    }
 
 /// \brief Define codes for all node DOFs.
 /// @param [in] code C-array that contains code for each DOF of current node
-    void setCode(int* code);
+    void setCode(int* code)
+    {
+       for (size_t i=0; i<_nb_dof; i++)
+          _code[i] = code[i];
+    }
 
 /** \brief Define code by a boolean algebraic expression invoking node coordinates
  *  @param [in] exp Boolean algebraic expression as required by <tt>fparser</tt>
@@ -143,16 +151,14 @@ class Node
  *  @param [in] x Coordinate value
  */
     void setCoord(size_t i,
-                  real_t x)
-    { _x[i-1] = x; }
+                  real_t x) { _x[i-1] = x; }
 
 /** \brief Define label of DOF.
  *  @param [in] i DOF index
  *  @param [in] dof Label of DOF
  */
     void DOF(size_t i,
-             size_t dof)
-    { _dof[i-1] = dof; }
+             size_t dof) { _dof[i-1] = dof; }
 
 /** \brief Define number of DOF.
  *  @param [in,out] first_dof Label of the first DOF in input that is actualized
@@ -249,8 +255,7 @@ class Node
 
  private:
 
-   size_t            _nb_dof, _first_dof, _label, _nb_neig_el, _neig_i;
-   size_t            _dof[MAX_NBDOF_NODE];
+   size_t            _nb_dof, _first_dof, _label, _nb_neig_el, _neig_i, _dof[MAX_NBDOF_NODE];
    int               _level, _code[MAX_NBDOF_NODE];
    Point<real_t>     _x;
    vector<Element *> _el;

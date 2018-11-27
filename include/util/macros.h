@@ -46,6 +46,7 @@ namespace OFELI {
 #define MESH_ELEMENTS for (topElement(); (theElement=getElement());)
 #define MESH_SIDES    for (topSide(); (theSide=getSide());)
 #define MESH_EDGES    for (topEdge(); (theEdge=getEdge());)
+#define MAT(M,A)      (M &)(*A)
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 

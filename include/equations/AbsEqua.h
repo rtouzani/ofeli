@@ -233,10 +233,8 @@ class AbsEqua
     AbsEqua() : _theMesh(NULL), _time_scheme(STATIONARY), _analysis(STEADY_STATE),
                 _solver(-1), _step(0), _nb_fields(1), _final_time(0.),
                 _A(NULL), _b(NULL), _bc(NULL), _bf(NULL), _sf(NULL), _u(NULL), _v(NULL),
-                _eigen(false), _sol_given(false), _bc_given(false),
-                _init_given(false), _bf_given(false), _sf_given(false), _set_matrix(false)
-    {
-    }
+                _eigen(false), _sol_given(false), _bc_given(false), _init_given(false),
+                _bf_given(false), _sf_given(false), _set_matrix(false) { }
 
 /// \brief Destructor
     virtual ~AbsEqua()
@@ -248,7 +246,11 @@ class AbsEqua
     }
 
 /// \brief Define mesh and renumber DOFs after removing imposed ones
-    void setMesh(Mesh &m) { _theMesh = &m; _theMesh->removeImposedDOF(); }
+    void setMesh(Mesh &m)
+    {
+       _theMesh = &m;
+       _theMesh->removeImposedDOF();
+    }
 
 /// \brief Return reference to Mesh instance
 /// @return Reference to Mesh instance
@@ -335,7 +337,6 @@ class AbsEqua
        if (!_set_matrix)
           setMatrixType(SPARSE);
        _ls.setSolver(ls,pc);
-       _set_matrix = true;
     }
 
 /** \brief Choose type of matrix
@@ -348,19 +349,19 @@ class AbsEqua
        _matrix_type = t;
        if (_A)
           delete _A, _A = NULL;
-       if (_matrix_type==SPARSE)
+       if (_matrix_type&SPARSE)
           _A = new SpMatrix<T_>(*_theMesh);
-       else if (_matrix_type==DENSE|SYMMETRIC)
+       else if (_matrix_type&(DENSE|SYMMETRIC))
           _A = new DSMatrix<T_>(*_theMesh);
-       else if (_matrix_type==DENSE)
+       else if (_matrix_type&DENSE)
           _A = new DMatrix<T_>(*_theMesh);
-       else if (_matrix_type==SKYLINE|SYMMETRIC)
+       else if (_matrix_type&(SKYLINE|SYMMETRIC))
           _A = new SkSMatrix<T_>(*_theMesh);
-       else if (_matrix_type==SKYLINE)
+       else if (_matrix_type&SKYLINE)
           _A = new SkMatrix<T_>(*_theMesh);
-       else if (_matrix_type==TRIDIAGONAL)
+       else if (_matrix_type&TRIDIAGONAL)
           _A = new TrMatrix<T_>(_theMesh->getNbEq());
-       else if (_matrix_type==BAND)
+       else if (_matrix_type&BAND)
           _A = new BMatrix<T_>;
        _ls.setMatrix(_A);
        _set_matrix = true;
@@ -384,14 +385,6 @@ class AbsEqua
        _ls.setMatrix(A);
        _ls.setRHS(b);
        _ls.setSolution(x);
-       if (_ls.getSolver()<0) {
-          if (_matrix_type==SKYLINE)
-             _ls.setSolver(DIRECT_SOLVER);
-          else if (_matrix_type==(SPARSE|SYMMETRIC))
-             _ls.setSolver(CG_SOLVER);
-           else if (_matrix_type==SPARSE)
-             _ls.setSolver(GMRES_SOLVER);
-       }
        return _ls.solve();
     }
 
@@ -404,17 +397,8 @@ class AbsEqua
     {
        _ls.setRHS(b);
        _ls.setSolution(x);
-       if (_ls.getSolver()<0) {
-          if (_matrix_type==SKYLINE)
-             _ls.setSolver(DIRECT_SOLVER);
-          else if (_matrix_type==(SPARSE|SYMMETRIC))
-             _ls.setSolver(CG_SOLVER);
-           else if (_matrix_type==SPARSE)
-             _ls.setSolver(GMRES_SOLVER);
-       }
        return _ls.solve();
     }
-
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Set Analysis Type
@@ -465,26 +449,16 @@ class AbsEqua
     virtual void setInput(EqDataType opt,
                           Vect<T_>&  u)
     {
-       if (opt==INITIAL_FIELD) {
-          _u = &u;
-          _init_given = true;
-       }
-       else if (opt==SOLUTION) {
-          _u = &u;
-          _sol_given = true;
-       }
-       else if (opt==BOUNDARY_CONDITION) {
-          _bc = &u;
-          _bc_given = true;
-       }
-       else if (opt==SOURCE || opt==BODY_FORCE) {
-          _bf = &u;
-          _bf_given = true;
-       }
-       else if (opt==FLUX || opt==TRACTION) {
-          _sf = &u;
-          _sf_given = true;
-       }
+       if (opt==INITIAL_FIELD)
+          _u = &u, _init_given = true;
+       else if (opt==SOLUTION)
+          _u = &u, _sol_given = true;
+       else if (opt==BOUNDARY_CONDITION)
+          _bc = &u, _bc_given = true;
+       else if (opt==SOURCE || opt==BODY_FORCE)
+          _bf = &u, _bf_given = true;
+       else if (opt==FLUX || opt==TRACTION)
+          _sf = &u, _sf_given = true;
        else
           ;
     }
@@ -508,7 +482,7 @@ class AbsEqua
    EigenProblemSolver _ev;
    Matrix<T_>         *_A, *_CM, *_Df;
    Vect<T_>           *_b, *_bc, *_bf, *_sf, *_u, *_v, *_w, *_LM, _uu;
-   bool               _eigen, _sol_given, _bc_given, _init_given, _bf_given, _sf_given; 
+   bool               _eigen, _sol_given, _bc_given, _init_given, _bf_given, _sf_given;
    bool               _constant_matrix, _constant_mesh, _set_matrix;
    int                _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
    string             _equation_name, _finite_element;

@@ -89,7 +89,7 @@ public :
 
 /// \brief Add finite element matrix to left hand side
 /// @param [in] coef Value to multiply by the added matrix
-    void Matrix(real_t coef=1.);
+    void LHS(real_t coef=1.);
 
 /// \brief Add Right-Hand %Side Contribution
 /// @param [in] f Vector containing the source given function at mesh nodes
@@ -121,8 +121,8 @@ public :
  private:
     real_t _lsf, _rsf, _lbc, _rbc;
     bool   _is_lbc, _is_rbc;
-    TrMatrix<real_t> _A;
     void set(const Element* el);
+    void set(const Side* sd) { }
 };
 
 /*! @} End of Doxygen Groups */

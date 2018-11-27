@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                       Class Laplace1DL2 : Laplace Equation
+                       Class Laplace1DL2: Laplace Equation
                   using 2-Node Line finite element in one dimension
 
   ==============================================================================*/
@@ -44,32 +44,32 @@ Laplace1DL2::Laplace1DL2()
 
 
 Laplace1DL2::Laplace1DL2(Mesh& ms)
-            : _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
+            : Equation<real_t,2,2,1,1>(ms),
+              _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
 {
    _theMesh = &ms;
-   _A.setSize(_theMesh->getNbDOF());
+   setMatrixType(TRIDIAGONAL);
+   setSolver(DIRECT_SOLVER);
    _bc_given = _bf_given = false;
 }
 
 
 Laplace1DL2::Laplace1DL2(Mesh&         ms,
                          Vect<real_t>& u)
-            : _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
+            : Equation<real_t,2,2,1,1>(ms),
+              _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
 {
    _u = &u;
    _theMesh = &ms;
-   _A.setSize(_theMesh->getNbDOF());
+   setMatrixType(TRIDIAGONAL);
+   setSolver(DIRECT_SOLVER);
    _bc_given = _bf_given = false;
 }
 
 
 Laplace1DL2::Laplace1DL2(Element* el)
 {
-   _theElement = el;
-   Line2 ln(el);
-   _length = ln.getLength();
-   eMat = 0;
-   eRHS = 0;
+   set(el);
 }
 
 
@@ -113,7 +113,7 @@ void Laplace1DL2::setTraction(real_t f,
 }
 
 
-void Laplace1DL2::Matrix(real_t coef)
+void Laplace1DL2::LHS(real_t coef)
 {
    eMat(1,1) += coef/_length;
    eMat(2,2) += coef/_length;

@@ -113,6 +113,7 @@ private:
    real_t _lsf, _rsf;
    BMatrix<real_t> _A;
    void set(const Element* el);
+   void set(const Side* sd) { }
 };
 
 /*! @} End of Doxygen Groups */

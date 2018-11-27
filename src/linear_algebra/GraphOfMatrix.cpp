@@ -340,14 +340,16 @@ size_t NodeGraph(const Mesh&     mesh,
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
          Node *nd1=The_element(in);
          for (size_t k=1; k<=nd1->getNbDOF(); k++) {
-            if (nd1->getDOF(k)!=0) {
+            size_t nk=nd1->getDOF(k);
+            if (nk) {
                for (size_t jn=1; jn<=The_element.getNbNodes(); jn++) {
                   Node *nd2=The_element(jn);
                   for (size_t l=1; l<=nd2->getNbDOF(); l++) {
-                     if (nd2->getDOF(l)!=0) {
-                        IJ.push_back(RC(nd1->getDOF(k)-1,nd2->getDOF(l)-1));
-                        if (nd1->getDOF(k)!=nd2->getDOF(l))
-                           IJ.push_back(RC(nd2->getDOF(l)-1,nd1->getDOF(k)-1));
+                     size_t nl=nd2->getDOF(l);
+                     if (nl) {
+                        IJ.push_back(RC(nk-1,nl-1));
+                        if (nk!=nl)
+                           IJ.push_back(RC(nl-1,nk-1));
                      }
                   }
                }

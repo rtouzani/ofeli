@@ -58,7 +58,7 @@ DC3DAT3::DC3DAT3(const Side* sd)
 
 DC3DAT3::DC3DAT3(const Element*      el,
                  const Vect<real_t>& u,
-                       real_t        time)
+                 real_t              time)
 {
    set(el);
    _time = time;
@@ -68,9 +68,9 @@ DC3DAT3::DC3DAT3(const Element*      el,
 
 DC3DAT3::DC3DAT3(const Element*      el,
                  const Vect<real_t>& u,
-                       real_t        time,
-                       real_t        deltat,
-                       int           scheme)
+                 real_t              time,
+                 real_t              deltat,
+                 int                 scheme)
 {
    set(el);
    _time = time;
@@ -80,9 +80,20 @@ DC3DAT3::DC3DAT3(const Element*      el,
 }
 
 
+DC3DAT3::DC3DAT3(Mesh& ms) 
+       : Equation<real_t,3,3,2,2>(ms)
+{
+   _equation_name = "Diffusion/Convection";
+   _finite_element = "2-D, 3-Node Axisymmetric Triangles (P1)";
+   _stab = false;
+   setMatrixType(SPARSE);
+   setSolver(GMRES_SOLVER,DILU_PREC);
+}
+
+
 DC3DAT3::DC3DAT3(const Side*         sd,
                  const Vect<real_t>& u,
-                       real_t        time)
+                 real_t              time)
 {
    set(sd);
    _time = time;
@@ -92,9 +103,9 @@ DC3DAT3::DC3DAT3(const Side*         sd,
 
 DC3DAT3::DC3DAT3(const Side*         sd,
                  const Vect<real_t>& u,
-                       real_t        time,
-                       real_t        deltat,
-                       int           scheme)
+                 real_t              time,
+                 real_t              deltat,
+                 int                 scheme)
 {
    set(sd);
    _time = time;

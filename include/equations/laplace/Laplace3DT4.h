@@ -106,10 +106,6 @@ class Laplace3DT4 : virtual public Equa_Laplace<real_t,4,4,3,3> {
 /// @param [in] h Vector containing the source given function at mesh nodes
     void BoundaryRHS(const Vect<real_t>& h);
 
-/// \brief Define Source right-hand side of the equation
-/// @param f [in] Vector containing source values at nodes
-    void setSource(const Vect<real_t>& f);
-
 /** \brief Build global matrix and right-hand side.
  *  \details The problem matrix and right-hand side are the ones used in the constructor.
  *  They are updated in this member function.

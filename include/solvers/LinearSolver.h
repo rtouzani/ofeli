@@ -50,18 +50,12 @@ using namespace Eigen;
 #else
 #include "util/util.h"
 #include "io/output.h"
+
 #include "solvers/CG.h"
 #include "solvers/CGS.h"
 #include "solvers/BiCG.h"
 #include "solvers/BiCGStab.h"
 #include "solvers/GMRes.h"
-#include "linear_algebra/SpMatrix.h"
-#include "linear_algebra/SkMatrix.h"
-#include "linear_algebra/SkSMatrix.h"
-#include "linear_algebra/TrMatrix.h"
-#include "linear_algebra/BMatrix.h"
-#include "linear_algebra/DMatrix.h"
-#include "linear_algebra/DSMatrix.h"
 #endif
 #include "OFELIException.h"
 
@@ -103,8 +97,7 @@ template<class T_> class LinearSolver
 /// \details Initializes default parameters and pointers to 0.
     LinearSolver() : _fact(0), _verbose(0), _max_it(1000), _matrix_set(0),
                      _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
-                     _x(NULL), _b(NULL), _A(NULL)
-    {  }
+                     _x(NULL), _b(NULL), _A(NULL) { }
 
 /** \brief Constructor with iteration parameters
  *  @param [in] max_it Maximal number of iterations
@@ -124,8 +117,7 @@ template<class T_> class LinearSolver
                  real_t tolerance,
                  int    verbose) : _fact(0), _verbose(verbose), _max_it(max_it),
                                    _matrix_set(0), _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                   _toler(tolerance), _x(NULL), _b(NULL), _A(NULL)
-    {  }
+                                   _toler(tolerance), _x(NULL), _b(NULL), _A(NULL) { }
 
 /** \brief Constructor using matrix, right-hand side and solution vector
  *  @param [in] A Reference to instance of class SpMatrix
@@ -136,8 +128,7 @@ template<class T_> class LinearSolver
                  const Vect<T_>& b,
                  Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                       _s(CG_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
-                                      _x(&x), _b(&b), _A(&A)
-    {  }
+                                      _x(&x), _b(&b), _A(&A) { }
 
 /** \brief Constructor using skyline-stored matrix, right-hand side and solution vector
  *  @param [in] A SkMatrix instance that contains matrix
@@ -148,8 +139,7 @@ template<class T_> class LinearSolver
                  const Vect<T_>& b,
                  Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                       _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
-                                      _x(&x), _b(&b), _A(&A)
-    {  }
+                                      _x(&x), _b(&b), _A(&A) { }
 
 /** \brief Constructor using a tridiagonal matrix, right-hand side and solution vector
  *  @param [in] A TrMatrix instance that contains matrix
@@ -160,8 +150,7 @@ template<class T_> class LinearSolver
                  const Vect<T_>& b,
                  Vect<T_>&      x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                     _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
-    {  }
+                                     _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
 
 /** \brief Constructor using a banded matrix, right-hand side and solution vector
  *  @param [in] A BMatrix instance that contains matrix
@@ -172,8 +161,7 @@ template<class T_> class LinearSolver
                  const Vect<T_>& b,
                  Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                       _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
-    {  }
+                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
 
 /** \brief Constructor using a dense matrix, right-hand side and solution vector
  *  @param [in] A DMatrix instance that contains matrix
@@ -184,8 +172,7 @@ template<class T_> class LinearSolver
                  const Vect<T_>& b,
                  Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                       _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
-    {  }
+                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
 
 /** \brief Constructor using a dense symmetric matrix, right-hand side and solution vector
  *  @param [in] A DSMatrix instance that contains matrix
@@ -196,8 +183,7 @@ template<class T_> class LinearSolver
                  const Vect<T_>& b,
                  Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                       _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
-    {  }
+                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
 
 /** \brief Constructor using skyline-stored symmetric matrix, right-hand side and solution vector
  *  @param [in] A SkMatrix instance that contains matrix
@@ -208,8 +194,7 @@ template<class T_> class LinearSolver
                  const Vect<T_>& b,
                  Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                       _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
-                                      _x(&x), _b(&b), _A(&A)
-    {  }
+                                      _x(&x), _b(&b), _A(&A) { }
 
 /** \brief Constructor using matrix, right-hand side
  *  @param [in] A SkMatrix instance that contains matrix
@@ -220,8 +205,7 @@ template<class T_> class LinearSolver
                  Vect<T_>&     b,
                  Vect<T_>&     x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
                                     _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                    _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A)
-    {  }
+                                    _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
 
 /// Destructor
     virtual ~LinearSolver() { }
@@ -238,16 +222,10 @@ template<class T_> class LinearSolver
     void setTolerance(real_t tol) { _toler = tol; }
 
 /// \brief Set solution vector
-    void setSolution(Vect<T_>& x)
-    {
-       _x = &x;
-    }
+    void setSolution(Vect<T_>& x) { _x = &x; }
 
 /// \brief Set right-hand side vector
-    void setRHS(Vect<T_>& b)
-    {
-       _b = &b;
-    }
+    void setRHS(Vect<T_>& b) { _b = &b; }
 
 /// \brief Set matrix in the case of a pointer to Matrix
 /// @param [in] A Pointer to abstract Matrix class
@@ -286,7 +264,6 @@ template<class T_> class LinearSolver
     {
        _A = &A;
        _matrix_set = 1;
-       _fact = 0;
        _b = &b;
        _x = &x;
     }
@@ -304,11 +281,10 @@ template<class T_> class LinearSolver
  *  @note The argument <tt>p</tt> has no effect if the solver is <tt>DIRECT_SOLVER</tt>
  */
     void setSolver(Iteration      s, 
-                   Preconditioner p=DIAG_PREC)
-    { _s = s; _p = p; }
+                   Preconditioner p=DIAG_PREC) { _s = s; _p = p; }
 
 /// \brief Return solver code
-    int getSolver() const { return _s; }
+    Iteration getSolver() const { return _s; }
 
 /** \brief Solve equations using system data, prescribed solver and preconditioner
  *  @param [in] A Reference to matrix as a SpMatrix instance
@@ -333,8 +309,8 @@ template<class T_> class LinearSolver
               Preconditioner  p=DIAG_PREC)
     {
        set(A,b,x);
-       int ret = solve(s,p);
-       return ret;
+       setSolver(s,p);
+       return solve();
     }
 
 /** \brief Solve equations using prescribed solver and preconditioner
@@ -349,13 +325,141 @@ template<class T_> class LinearSolver
  *  @note The argument <tt>p</tt> has no effect if the solver is <tt>DIRECT_SOLVER</tt>
  */
     int solve(Iteration      s,
-              Preconditioner p=DIAG_PREC);
+              Preconditioner p=DIAG_PREC)
+    {
+       setSolver(s,p);
+       return solve();
+    }
 
-/** \brief Solve equations all arguments must have given by other member functions
+/** \brief Solve equations all arguments must have been given by other member functions
  *  \details Solver and preconditioner parameters must have been set by function setSolver.
  *  Otherwise, default values are set.
  */
-    int solve() { return solve(_s,_p); }
+    int solve()
+    {
+       int ret=0;
+       if (!_matrix_set)
+          throw OFELIException("In LinearSolver::solve(): No matrix has been defined.");
+       if (_A->isDiagonal()) {
+          if (_x) {
+             for (size_t i=1; i<=_A->getNbRows(); i++)
+                (*_x)(i) = (*_b)(i)/(*_A)(i,i);
+          }
+          else {
+             for (size_t i=1; i<=_A->getNbRows(); i++)
+                (*_x)(i) /= (*_A)(i,i);
+          }
+          return ret;
+       }
+
+#if defined (USE_EIGEN)
+       SpMatrix<T_> &A = MAT(SpMatrix<T_>,_A);
+       VectorX x;
+       if (_s==CG_SOLVER) {
+          switch (_p) {
+
+             case IDENT_PREC:
+                {
+                   ConjugateGradient<SparseMatrix<T_>,Lower,IdentityPreconditioner> im;
+                   im.setTolerance(_toler);
+                   im.compute(A.getEigenMatrix());
+                   x = im.solve(VectorX(*_b));
+                   ret = im.iterations();
+                   break;
+                }
+
+             case DIAG_PREC:
+                {
+                   ConjugateGradient<SparseMatrix<T_>,Lower,DiagonalPreconditioner<T_> > im;
+                   im.setTolerance(_toler);
+                   im.compute(A.getEigenMatrix());
+                   x = im.solve(VectorX(*_b));
+                   ret = im.iterations();
+                   break;
+                }
+
+             case ILU_PREC:
+                {
+                   ConjugateGradient<SparseMatrix<T_>,Lower,IncompleteLUT<T_> > im;
+                   im.setTolerance(_toler);
+                   im.compute(A.getEigenMatrix());
+                   x = im.solve(VectorX(*_b));
+                   ret = im.iterations();
+                   break;
+                }
+
+             default:
+                throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
+                                     "This preconditioner is not available in the eigen library.");
+                break;
+          }
+       }
+       else if (_s==BICG_STAB_SOLVER) {
+          if (_p==IDENT_PREC) {
+             Eigen::BiCGSTAB<SparseMatrix<T_>,IdentityPreconditioner> im;
+             im.setTolerance(_toler);
+             im.compute(A.getEigenMatrix());
+             x = im.solve(VectorX(*_b));
+             ret = im.iterations();
+          }
+          else if (_p==DIAG_PREC) {
+             Eigen::BiCGSTAB<SparseMatrix<T_>,DiagonalPreconditioner<T_> > im;
+             im.setTolerance(_toler);
+             im.compute(A.getEigenMatrix());
+             x = im.solve(VectorX(*_b));
+             ret = im.iterations();
+          }
+          else if (_p==ILU_PREC) {
+             Eigen::BiCGSTAB<SparseMatrix<T_>,IncompleteLUT<T_> > im;
+             im.setTolerance(_toler);
+             im.compute(A.getEigenMatrix());
+             x = im.solve(VectorX(*_b));
+             ret = im.iterations();
+         }
+         else
+             throw OFELIException("In LinearSOlver::solve(Iteration,Preconditioner): "
+                                  "This preconditioner is not available in the eigen library.");
+       }
+       else
+          throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
+                               "This iterative solver is not available in the eigen library.");
+       _x->setSize(x.size(),1,1);
+       *_x = x;
+#else
+       if (_s==DIRECT_SOLVER) {
+          if (_fact)
+             _A->Factor();
+          return _A->solve(*_b,*_x);
+       }
+       int nb_it=0;
+       switch (_s) {
+
+          case DIRECT_SOLVER:
+             break;
+
+          case CG_SOLVER:
+             nb_it = CG(_A,_p,*_b,*_x,_max_it,_toler,1);
+             break; 
+
+          case BICG_SOLVER:
+             nb_it = BiCG(_A,_p,*_b,*_x,_max_it,_toler,1);
+             break;
+
+          case CGS_SOLVER:
+             nb_it = CGS(_A,_p,*_b,*_x,_max_it,_toler,1);
+             break;
+
+          case BICG_STAB_SOLVER:
+             nb_it = BiCGStab(_A,_p,*_b,*_x,_max_it,_toler,1);
+             break;
+
+          case GMRES_SOLVER:
+             nb_it = GMRes(_A,_p,*_b,*_x,_b->size()/5,_max_it,_toler,1);
+             break;
+       }
+#endif
+       return nb_it;
+    }
 
 /// Factorize matrix
     void setFact() { _fact = 1; }
@@ -373,118 +477,6 @@ template<class T_> class LinearSolver
    const Vect<T_> *_b;
    Matrix<T_>     *_A;
 };
-
-
-///////////////////////////////////////////////////////////////////////////////
-//                         I M P L E M E N T A T I O N                       //
-///////////////////////////////////////////////////////////////////////////////
-
-template<class T_>
-int LinearSolver<T_>::solve(Iteration      s,
-                            Preconditioner p)
-{
-   _s = s, _p = p;
-   int ret=0;
-   if (!_matrix_set)
-      throw OFELIException("In LinearSolver::solve(): No matrix has been defined.");
-
-   if (_A->isDiagonal()) {
-      if (_x) {
-         for (size_t i=1; i<=_A->getNbRows(); i++)
-            (*_x)(i) = (*_b)(i)/(*_A)(i,i);
-      }
-      else {
-         for (size_t i=1; i<=_A->getNbRows(); i++)
-            (*_x)(i) /= (*_A)(i,i);
-      }
-      return ret;
-   }
-
-#if defined (USE_EIGEN)
-   SpMatrix<T_> &A = (SpMatrix<T_> &)(*_A);
-   VectorX x;
-   if (_s==CG_SOLVER) {
-      if (_p==IDENT_PREC) {
-         ConjugateGradient<SparseMatrix<T_>,Lower,IdentityPreconditioner> im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else if (_p==DIAG_PREC) {
-         ConjugateGradient<SparseMatrix<T_>,Lower,DiagonalPreconditioner<T_> > im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else if (_p==ILU_PREC) {
-         ConjugateGradient<SparseMatrix<T_>,Lower,IncompleteLUT<T_> > im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else
-         throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
-                              "This preconditioner is not available in the eigen library.");
-   }
-   else if (_s==BICG_STAB_SOLVER) {
-      if (_p==IDENT_PREC) {
-         Eigen::BiCGSTAB<SparseMatrix<T_>,IdentityPreconditioner> im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else if (_p==DIAG_PREC) {
-         Eigen::BiCGSTAB<SparseMatrix<T_>,DiagonalPreconditioner<T_> > im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else if (_p==ILU_PREC) {
-         Eigen::BiCGSTAB<SparseMatrix<T_>,IncompleteLUT<T_> > im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else
-         throw OFELIException("In LinearSOlver::solve(Iteration,Preconditioner): "
-                              "This preconditioner is not available in the eigen library.");
-   }
-   else
-      throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
-                           "This iterative solver is not available in the eigen library.");
-   _x->setSize(x.size(),1,1);
-   *_x = x;
-#else
-   if (_s==DIRECT_SOLVER) {
-      if (_fact)
-         _A->Factor();
-      _A->solve(*_b,*_x);
-   }
-   else {
-      SpMatrix<T_> &A = (SpMatrix<T_> &)(*_A);
-      if (_s==CG_SOLVER)
-         ret = CG(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-      else if (_s==GMRES_SOLVER)
-         ret = GMRes(A,_p,*_b,*_x,10,_max_it,_toler,_verbose);
-      else if (_s==CGS_SOLVER)
-         ret = CGS(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-      else if (_s==BICG_SOLVER)
-         ret = BiCG(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-      else if (_s==BICG_STAB_SOLVER)
-         ret = BiCGStab(A,_p,*_b,*_x,_max_it,_toler,_verbose);
-      else
-         throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
-                              "This solver is not available.");
-   }
-#endif
-   return ret;
-}
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

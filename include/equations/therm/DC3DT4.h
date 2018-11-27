@@ -82,7 +82,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  */
     DC3DT4(const Element*      el,
            const Vect<real_t>& u,
-                 real_t        time=0.);
+           real_t              time=0.);
 
 /** \brief Constructor for a boundary side (transient case).
  *  @param [in] sd Pointer to side.
@@ -91,7 +91,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  */
     DC3DT4(const Side*         sd,
            const Vect<real_t>& u,
-                 real_t        time=0.);
+           real_t              time=0.);
 
 /** \brief Constructor for an element (transient case) with specification of time integration scheme.
  *  @param [in] el Pointer to element.
@@ -107,9 +107,9 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  */
     DC3DT4(const Element*      el,
            const Vect<real_t>& u,
-                 real_t        time,
-                 real_t        deltat,
-                 int           scheme);
+           real_t              time,
+           real_t              deltat,
+           int                 scheme);
 
 /** \brief Constructor for a side (transient case) with specification of time integration scheme.
  *  @param [in] sd Pointer to side.
@@ -125,9 +125,13 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  */
     DC3DT4(const Side*         sd,
            const Vect<real_t>& u,
-                 real_t        time,
-                 real_t        deltat,
-                 int           scheme);
+           real_t              time,
+           real_t              deltat,
+           int                 scheme);
+
+/// \brief Constructor using Mesh data
+/// @param [in] ms Mesh instance
+    DC3DT4(Mesh& ms);
 
 /// \brief Destructor
     ~DC3DT4();
@@ -181,7 +185,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
  */
     void Diffusion(const DMatrix<real_t>& diff,
-                         real_t           coef=1);
+                   real_t                 coef=1);
 
 /** \brief Add diffusion contribution to right hand side after multiplying it by coefficient 
  *  <tt>coef</tt>
@@ -203,7 +207,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
  */
     void Convection(const Point<real_t>& v,
-                          real_t         coef=1);
+                    real_t               coef=1);
 
 /** \brief Add convection matrix to left-hand side after multiplying it by coefficient
  *  <tt>coef</tt>
@@ -212,7 +216,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
  */
     void Convection(const Vect<Point<real_t> >& v,
-                          real_t                coef=1);
+                    real_t                      coef=1);
 
 /** \brief Add convection contribution to right-hand side after multiplying it by coefficient
  *  <tt>coef</tt>
@@ -221,7 +225,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
  */
     void RHS_Convection(const Point<real_t>& v,
-                              real_t         coef=1.);
+                        real_t               coef=1.);
 
 /** \brief Add body right-hand side term to right hand side after multiplying it by 
  *  coefficient <tt>coef</tt>
@@ -238,7 +242,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
  */
     void BodyRHS(const Vect<real_t>& b,
-                       int           opt=GLOBAL_ARRAY);
+                 int                 opt=GLOBAL_ARRAY);
 
 /** \brief Add boundary right-hand side term to right hand side after multiplying it by
  *  coefficient <tt>coef</tt>
@@ -257,7 +261,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
  */
     void BoundaryRHS(const Vect<real_t>& b,
-                           int           opt=GLOBAL_ARRAY);
+                     int                 opt=GLOBAL_ARRAY);
 
 /// \brief Add boundary right-hand side flux to right hand side.
 /// @param [in] flux Vector containing source at side nodes.

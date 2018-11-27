@@ -50,7 +50,6 @@ using std::string;
 #include "equations/AbsEqua.h"
 #include "linear_algebra/Vect.h"
 #include "linear_algebra/Assembly.h"
-#include "solvers/LinearSolver.h"
 
 #define MAX_NB_PDES  10
 
@@ -60,6 +59,7 @@ namespace OFELI {
  *  @{
  */
 
+template class LinearSolver<real_t>;
 
 /*! \file TimeStepping.h
  *  \brief Definition file for class TimeStepping.
@@ -138,6 +138,11 @@ class TimeStepping
     void set(TimeScheme s,
              real_t     time_step=theTimeStep,
              real_t     final_time=theFinalTime);
+
+/** \brief Set reference to LinearSolver instance
+ *  @param [in] ls Reference to LinearSolver instance
+ */
+    void setLinearSolver(LinearSolver<real_t>& ls) { _ls = &ls; }
 
 /** \brief Define partial differential equation to solve
  *  \details The used equation class must have been constructed using the Mesh instance
@@ -226,7 +231,7 @@ class TimeStepping
     void setLinearSolver(Iteration      s=DIRECT_SOLVER,
                          Preconditioner p=DIAG_PREC);
 
-/** \brief Set vectors defining a noninear first order system of ODEs
+/** \brief Set vectors defining a nonlinear first order system of ODEs
  *  \details The ODE system has the form
  *     a1(u)' + a0(u) = 0
  *  @param [in] a0 Vect instance defining the 0-th order term
@@ -298,7 +303,7 @@ class TimeStepping
 //-----------------------------   INSPECTORS  ----------------------------------
 
 /// \brief Return LinearSolver instance
-    LinearSolver<real_t> &getLSolver() { return _ls; }
+    LinearSolver<real_t> &getLSolver() { return *_ls; }
 
     friend ostream & operator<<(ostream&            s,
                                 const TimeStepping& ts);
@@ -322,7 +327,7 @@ class TimeStepping
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;
    real_t _beta, _gamma, _nl_toler;
    int _max_nl_it;
-   LinearSolver<real_t> _ls;
+   LinearSolver<real_t> *_ls;
 
    typedef void (TimeStepping::* TSPtr)();
    static TSPtr TS[11];

@@ -55,7 +55,7 @@ DC3DT4::DC3DT4(const Side* sd)
 
 DC3DT4::DC3DT4(const Element*      el,
                const Vect<real_t>& u,
-                     real_t        time)
+               real_t              time)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
@@ -67,9 +67,9 @@ DC3DT4::DC3DT4(const Element*      el,
 
 DC3DT4::DC3DT4(const Element*      el,
                const Vect<real_t>& u,
-                     real_t        time,
-                     real_t        deltat,
-                     int           scheme)
+               real_t              time,
+               real_t              deltat,
+               int                 scheme)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
@@ -83,7 +83,7 @@ DC3DT4::DC3DT4(const Element*      el,
 
 DC3DT4::DC3DT4(const Side*         sd,
                const Vect<real_t>& u,
-                     real_t        time)
+               real_t              time)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
@@ -95,9 +95,9 @@ DC3DT4::DC3DT4(const Side*         sd,
 
 DC3DT4::DC3DT4(const Side*         sd,
                const Vect<real_t>& u,
-                     real_t        time,
-                     real_t        deltat,
-                     int           scheme)
+               real_t              time,
+               real_t              deltat,
+               int                 scheme)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
@@ -106,6 +106,17 @@ DC3DT4::DC3DT4(const Side*         sd,
    SideVector(u);
    _time_step = deltat;
    setTimeIntegration(scheme);
+}
+
+
+DC3DT4::DC3DT4(Mesh& ms) 
+       : Equation<real_t,4,4,3,3>(ms)
+{
+   _equation_name = "Diffusion/Convection";
+   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
+   _stab = false;
+   setMatrixType(SPARSE);
+   setSolver(GMRES_SOLVER,DILU_PREC);
 }
 
 

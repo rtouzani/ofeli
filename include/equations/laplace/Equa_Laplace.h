@@ -89,10 +89,7 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
-    Equa_Laplace()
-    {
-       _terms = 0;
-    }
+    Equa_Laplace() { _terms = 0; }
 
 /// \brief Destructor
     virtual ~Equa_Laplace() {  }
@@ -109,10 +106,6 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
 /// @param [in] h Vector containing the source given function at mesh nodes
     virtual void BoundaryRHS(const Vect<real_t>& h) { }
 
-/// \brief Define Source right-hand side of the equation
-/// @param f [in] Vector containing source values at nodes
-    virtual void setSource(const Vect<real_t>& f) { }
-
 /** \brief Build and solve the linear system of equations using an iterative method.
  *  \details The matrix is preconditioned by the diagonal ILU method.
  *  The linear system is solved either by the Conjugate Gradient method if the matrix is symmetric
@@ -123,8 +116,10 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
  */
     int run()
     {
+       if (_b==NULL)
+          _b = new Vect<real_t>(_theMesh->getNbEq());
        build();
-       int ret = this->solveLinearSystem(*_b,_uu);
+       int ret = AbsEqua<real_t>::solveLinearSystem(_A,*_b,_uu);
        _u->insertBC(*_theMesh,_uu,*_bc);
        return ret;
     }
@@ -135,8 +130,7 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
  */
     void build()
     {
-       *_A = 0;
-       _b = new Vect<real_t>(_theMesh->getNbEq());
+       _A->clear();
        MESH_EL {
           set(theElement);
           LHS();

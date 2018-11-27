@@ -53,7 +53,7 @@ DC1DL2::DC1DL2(const Element* el)
 
 DC1DL2::DC1DL2(const Element*      el,
                const Vect<real_t>& u,
-                     real_t        time)
+               real_t              time)
 {
    set(el);
    _time = time;
@@ -66,9 +66,9 @@ DC1DL2::DC1DL2(const Element*      el,
 
 DC1DL2::DC1DL2(const Element*      el,
                const Vect<real_t>& u,
-                     real_t        time,
-                     real_t        deltat,
-                     int           scheme)
+               real_t              time,
+               real_t              deltat,
+               int                 scheme)
 {
    set(el);
    _time = time;
@@ -78,6 +78,15 @@ DC1DL2::DC1DL2(const Element*      el,
    setTimeIntegration(scheme);
    _equation_name = "Diffusion/Convection";
    _finite_element = "1-D, 2-Node Lines (P1)";
+}
+
+
+DC1DL2::DC1DL2(Mesh& ms)
+       : Equation<real_t,2,2,1,1>(ms)
+{
+   _theMesh = &ms;
+   setMatrixType(TRIDIAGONAL);
+   setSolver(DIRECT_SOLVER);
 }
 
 
@@ -160,7 +169,7 @@ void DC1DL2::DiffusionToRHS(real_t coef)
 
 
 void DC1DL2::Convection(const real_t& v,
-                              real_t  coef)
+                        real_t        coef)
 {
    eMat(1,1) += 0.5*_length*coef*v*_dSh[0].x;
    eMat(1,2) += 0.5*_length*coef*v*_dSh[1].x;
@@ -180,7 +189,7 @@ void DC1DL2::Convection(real_t coef)
 
 
 void DC1DL2::Convection(const Vect<real_t>& v,
-                              real_t        coef)
+                        real_t              coef)
 {
    real_t c = 0.25*_length*coef*(v((*_theElement)(1)->n()) + v((*_theElement)(2)->n()));
    eMat(1,1) += c*_dSh[0].x;
@@ -191,7 +200,7 @@ void DC1DL2::Convection(const Vect<real_t>& v,
 
 
 void DC1DL2::ConvectionToRHS(const real_t& v,
-                                   real_t  coef)
+                             real_t        coef)
 {
    real_t u = _dSh[0].x*ePrev(1) + _dSh[1].x*ePrev(2);
    eRHS(1) -= 0.5*_length*coef*v*u;

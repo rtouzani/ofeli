@@ -72,7 +72,11 @@ class BMatrix : public Matrix<T_>
 
 /// \brief Default constructor.
 /// \details Initialize a zero dimension band matrix
-    BMatrix();
+    BMatrix()
+    {
+       _size = _ld = _ud = 0;
+       _fact = false;
+    }
 
 /** \brief Constructor that for a band matrix with given size and bandwidth.
  *  \details Assign 0 to all matrix entries.
@@ -82,29 +86,66 @@ class BMatrix : public Matrix<T_>
  */
     BMatrix(size_t size,
             int    ld,
-            int    ud);
+            int    ud)
+    {
+       if (size<3 || ld<0 || ud<0 || ud+ld+1>int(size))
+          throw OFELIException("In BMatrix::BMatrix(size_t,int,int): Illegal arguments.");
+       _fact = false;
+       setSize(size,ld,ud);
+    }
 
 /// \brief Copy Constructor
-    BMatrix(const BMatrix& m);
+    BMatrix(const BMatrix& m)
+    {
+       _size = m._size;
+       _ld = m._ld;
+       _ud = m._ud;
+       _length = m._length;
+       _a = m._a;
+       _fact = m._fact;
+    }
 
 /// \brief Destructor
     ~BMatrix() { }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setMesh(Mesh&  mesh,
-                 size_t dof=0);
+                 size_t dof=0)
+    {
+       throw OFELIException("In BMatrix::setMesh(Mesh,size_t): "
+                            "This member function is not valid for class BMatrix");
+    }
+
     void setMesh(Mesh&  mesh,
-                 size_t dof=0,
-                 size_t type=0);
+                 size_t dof,
+                 size_t type=0)
+    {
+         throw OFELIException("In SkSMatrix::setMesh(Mesh,size_t,size_t): "
+                              "This member function is not valid for class BMatrix");
+    }
+
     void setMesh(size_t dof, 
                  Mesh&  mesh,
-                 int    code=0);
+                 int    code=0)
+    {
+       throw OFELIException("In BMatrix::setMesh(size_t,Mesh,int): "
+                            "This member function is not valid for class BMatrix");
+    }
+
     void setMesh(size_t dof,
                  size_t nb_eq,
-                 Mesh&  mesh);
+                 Mesh&  mesh)
+    {
+       throw OFELIException("In SkSMatrix::setMesh(size_t,size_t,Mesh): "
+                            "This member function is not valid for class BMatrix");
+    }
+
     void setDiag() { }
+
     int Factor() { return setLU(); }
+
     int Solve(Vect<T_>& b) { return solve(b); }
+
     int Solve(const Vect<T_>& b, Vect<T_>& x) { return solve(b,x); }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -115,24 +156,51 @@ class BMatrix : public Matrix<T_>
  */
     void setSize(size_t size,
                  int    ld,
-                 int    ud);
+                 int    ud)
+    {
+       _nb_rows = _nb_cols = _size = size;
+       _length = (ld+ud+1) * _nb_rows;
+       _ld = ld; _ud = ud;
+       _a.resize(_size);
+       for (int i=0; i<int(_size); i++)
+          _a[i].resize(_ld+_ud+1,static_cast<T_>(0));
+       _ch.resize(_size);
+       _ch[0] = 0;
+       for (int i=1; i<int(_size); i++)
+          _ch[i] = i+1;
+       _fact = false;
+    }
 
 /// \brief Multiply matrix by vector <tt>x</tt> and add result to <tt>y</tt>
     void MultAdd(const Vect<T_>& x,
-                 Vect<T_>&       y) const;
+                 Vect<T_>&       y) const
+    {
+       for (int i=0; i<int(_size); ++i)
+          for (int j=std::max(i-_ld,0); j<std::min(i+_ud+_ld,int(_size)); ++j)
+             y[i] += _a[i][j+_ld-i]*x[j];
+    }
 
 /// \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>
     void MultAdd(T_              a,
                  const Vect<T_>& x,
-                 Vect<T_>&       y) const;
+                 Vect<T_>&       y) const
+    {
+       for (int i=0; i<int(_size); ++i)
+          for (int j=std::max(i-_ld,0); j<std::min(i+_ud+_ld,int(_size)); ++j)
+             y[i] += a*_a[i][j+_ld-i]*x[j];
+    }
 
 /// \brief Multiply matrix by vector <tt>x</tt> and save result in <tt>y</tt>
     void Mult(const Vect<T_>& x,
-              Vect<T_>&       y) const;
+              Vect<T_>&       y) const
+    {
+       y = static_cast<T_>(0);
+       MultAdd(x,y);
+    }
 
 /// \brief Multiply transpose of matrix by vector <tt>x</tt> and save result in <tt>y</tt>
     void TMult(const Vect<T_>& x,
-               Vect<T_>&       y) const;
+               Vect<T_>&       y) const { }
    
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
@@ -140,7 +208,7 @@ class BMatrix : public Matrix<T_>
  *  to current instance
  */
     void Axpy(T_                 a,
-              const BMatrix<T_>& x);
+              const BMatrix<T_>& x) { }
    
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
@@ -148,47 +216,93 @@ class BMatrix : public Matrix<T_>
  *  to current instance
  */
     void Axpy(T_                a,
-              const Matrix<T_>* x);
+              const Matrix<T_>* x) { }
 
 /// \brief Add constant <tt>val</tt> to an entry <tt>(i,j)</tt> of the matrix.
     void set(size_t    i,
              size_t    j,
-             const T_& val);
+             const T_& val)
+    {
+       if (_ld+int(j)-int(i)>=0 && _ld+int(j-i)<=_ud+_ld)
+          _a[i-1][_ld+j-i] = val;
+    }
 
 /// \brief Add constant <tt>val</tt> value to an entry <tt>(i,j)</tt> of the matrix.
     void add(size_t    i,
              size_t    j,
-             const T_& val);
+             const T_& val)
+    {
+       if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
+          _a[i-1][_ld+j-i] += val;
+    }
 
 /** \brief Operator () (Constant version).
  *  @param [in] i Row index
  *  @param [in] j Column index
  */
     T_ operator()(size_t i,
-                  size_t j) const;
+                  size_t j) const
+    {
+       if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
+          return _a[i-1][_ld+j-i];
+       else
+          return _zero;
+    }
 
 /** \brief Operator () (Non constant version).
  *  @param [in] i Row index
  *  @param [in] j Column index
  */
     T_ & operator()(size_t i,
-                    size_t j);
+                    size_t j)
+    {
+       if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
+          return _a[i-1][_ld+j-i];
+       else
+          throw OFELIException("In BMatrix::operator(): Illegal pair of indices " +
+                               itos(int(i))+","+itos(int(j))+").");
+       return _zero;
+    }
 
 /// \brief Operator =.
 /// \details Copy matrix <tt>m</tt> to current matrix instance.
-    BMatrix<T_> & operator=(const BMatrix<T_>& m);
+    BMatrix<T_> & operator=(const BMatrix<T_>& m)
+    {
+       _a = m._a;
+       return *this;
+    }
 
 /// \brief Operator =
 /// Assign matrix to identity times <tt>x</tt>.
-    BMatrix<T_> & operator=(const T_& x);
+    BMatrix<T_> & operator=(const T_& x)
+    {
+       for (size_t i=0; i<_size; ++i)
+          for (int j=0; j<_ld+_ud+1; ++j)
+             _a[i][j] = 0;
+       for (size_t i=1; i<=_size; ++i)
+          (*this)(i,i) = x;
+       return *this;
+    }
 
 /// \brief Operator *=.
 /// \details Premultiply matrix entries by constant value <tt>x</tt>
-    BMatrix<T_> & operator*=(const T_& x);
+    BMatrix<T_> & operator*=(const T_& x)
+    {
+       for (size_t i=0; i<_size; ++i)
+          for (int j=0; j<_ld+_ud+1; ++j)
+             _a[i][j] *= x;
+       return *this;
+    }
 
 /// \brief Operator +=.
 /// \details Add constant <tt>x</tt> to matrix entries.
-    BMatrix<T_> & operator+=(const T_& x);
+    BMatrix<T_> & operator+=(const T_& x)
+    {
+       for (size_t i=0; i<_size; ++i)
+          for (int j=0; j<_ld+_ud+1; ++j)
+             _a[i][j] += x;
+       return *this;
+    }
 
 /** \brief Factorize the matrix (LU factorization)
  *  \details LU factorization of the matrix is realized. Note that since this
@@ -202,7 +316,21 @@ class BMatrix : public Matrix<T_>
  *  has been realized, so that, if the member function solve is called after this
  *  no further factorization is done.
  */
-    int setLU();
+    int setLU()
+    {
+       for (int i=0; i<int(_size)-1; i++) {
+          int kend=std::min(_ld+1,int(_size)-i), kjend=std::min(_ud+1,int(_size)-i);
+          if (Abs(_a[i][_ld]) < OFELI_EPSMCH)
+             throw OFELIException("In BMatrix::Factor(): The " + itos(int(i)+1) + "-th pivot is null.");
+          for (int k=1; k!=kend; k++) {
+             _a[k+i][_ld-k] /= _a[i][_ld];
+             for (int j=1; j!=kjend; j++)
+                _a[k+i][j+_ld-k] -= _a[k+i][_ld-k] * _a[i][j+_ld];
+          }
+       }
+       _fact = true;
+       return 0;
+    }
 
 /** \brief Solve linear system.
  *  \details The linear system having the current instance as a matrix is solved by using the LU decomposition.
@@ -219,7 +347,26 @@ class BMatrix : public Matrix<T_>
  *     <li><tt>n</tt> if the <tt>n</tt>-th pivot is null.
  *  </ul>
  */
-    int solve(Vect<T_>& b);
+    int solve(Vect<T_>& b)
+    {
+       int ret = 0;
+       if (_size<3 || _ld<0 || _ud<0 || _ud+_ld+1>int(_size))
+          throw OFELIException("In BMatrix::solve(Vect<double>): Illegal arguments.");
+       if (_fact == false)
+          ret = setLU();
+       for (int i=0; i<int(_size)-1; i++) {
+          int kend = std::min(_ld+1,int(_size)-i);
+          for (int k=1; k!=kend; k++)
+             b[k+i] -= _a[k+i][_ld-k] * b[i];
+       }
+       for (int i=int(_size)-1; i>=0; i--) {
+          int kend = std::min(_ud+1,int(_size)-i);
+          for (int k=1; k<kend; k++)
+             b[i] -= _a[i][k+_ld] * b[i+k];
+          b[i] /= _a[i][_ld];
+       }
+       return ret;
+    }
 
 /** \brief Solve linear system.
  *  \details The linear system having the current instance as a matrix is solved by using the LU decomposition.
@@ -238,13 +385,23 @@ class BMatrix : public Matrix<T_>
  *  </ul>
  */
     int solve(const Vect<T_>& b,
-              Vect<T_>&       x);
+              Vect<T_>&       x)
+    {
+       x = b;
+       return solve(x);
+    }
 
 /// \brief Return C-Array.
     T_* get() const { return _a; }
 
 /// \brief Return entry <tt>(i,j)</tt> of matrix
-    T_ get(size_t i, size_t j) const;
+    T_ get(size_t i, size_t j) const
+    {
+       if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ld+_ud)
+          return _a[i-1][_ld+j-i];
+       else
+          return _zero;
+    }
 
  private:
    int                 _ld, _ud;
@@ -260,298 +417,6 @@ class BMatrix : public Matrix<T_>
    using Matrix<T_>::_temp;
    using Matrix<T_>::_ch;
 };
-
-///////////////////////////////////////////////////////////////////////////////
-//                         I M P L E M E N T A T I O N                       //
-///////////////////////////////////////////////////////////////////////////////
-
-template<class T_>
-BMatrix<T_>::BMatrix()
-{
-   _size = _ld = _ud = 0;
-   _fact = false;
-}
-
-
-template<class T_>
-BMatrix<T_>::BMatrix(size_t size,
-                     int    ld,
-                     int    ud)
-{
-   if (size<3 || ld<0 || ud<0 || ud+ld+1>int(size))
-      throw OFELIException("In BMatrix::BMatrix(size_t,int,int): Illegal arguments.");
-   _fact = false;
-   setSize(size,ld,ud);
-}
-
-
-template<class T_>
-BMatrix<T_>::BMatrix(const BMatrix& m)
-{
-   _size = m._size;
-   _ld = m._ld;
-   _ud = m._ud;
-   _length = m._length;
-   _a = m._a;
-   _fact = m._fact;
-}
-
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<class T_>
-void BMatrix<T_>::setMesh(Mesh&  mesh,
-                          size_t dof)
-{
-   throw OFELIException("In BMatrix::setMesh(Mesh,size_t): This member function is not valid for class BMatrix");
-}
-
-
-template<class T_>
-void BMatrix<T_>::setMesh(Mesh&  mesh,
-                          size_t dof,
-                          size_t type)
-{
-         throw OFELIException("In SkSMatrix::setMesh(Mesh,size_t,size_t): "
-                              "This member function is not valid for class BMatrix");
-}
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<class T_>
-void BMatrix<T_>::setMesh(size_t dof,
-                          Mesh&  mesh,
-                          int    code)
-{
-   throw OFELIException("In BMatrix::setMesh(size_t,Mesh,int): This member function is not valid for class BMatrix");
-}
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<class T_>
-void BMatrix<T_>::setMesh(size_t dof,
-                          size_t nb_eq,
-                          Mesh&  mesh)
-{
-   throw OFELIException("In SkSMatrix::setMesh(size_t,size_t,Mesh): "
-                        "This member function is not valid for class BMatrix");
-}
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-template<class T_>
-void BMatrix<T_>::setSize(size_t size,
-                          int    ld,
-                          int    ud)
-{
-   _nb_rows = _nb_cols = _size = size;
-   _length = (ld+ud+1) * _nb_rows;
-   _ld = ld; _ud = ud;
-   _a.resize(_size);
-   for (int i=0; i<int(_size); i++)
-      _a[i].resize(_ld+_ud+1,static_cast<T_>(0));
-   _ch.resize(_size);
-   _ch[0] = 0;
-   for (int i=1; i<int(_size); i++)
-      _ch[i] = i+1;
-   _fact = false;
-}
-
-
-template<class T_>
-void BMatrix<T_>::MultAdd(const Vect<T_>& x,
-                          Vect<T_>&       y) const
-{
-  for (int i=0; i<int(_size); ++i)
-     for (int j=std::max(i-_ld,0); j<std::min(i+_ud+_ld,int(_size)); ++j)
-        y[i] += _a[i][j+_ld-i]*x[j];
-}
-
-
-template<class T_>
-void BMatrix<T_>::MultAdd(T_              a,
-                          const Vect<T_>& x,
-                          Vect<T_>&       y) const
-{
-  for (int i=0; i<int(_size); ++i)
-     for (int j=std::max(i-_ld,0); j<std::min(i+_ud+_ld,int(_size)); ++j)
-        y[i] += a*_a[i][j+_ld-i]*x[j];
-}
-
-
-template<class T_>
-void BMatrix<T_>::Mult(const Vect<T_>& x,
-                       Vect<T_>&       y) const
-{
-   y = static_cast<T_>(0);
-   MultAdd(x,y);
-}
-
-
-template<class T_>
-void BMatrix<T_>::TMult(const Vect<T_>& x,
-                        Vect<T_>&       y) const
-{
-}
-
-
-template<class T_>
-void BMatrix<T_>::Axpy(T_                 a,
-                       const BMatrix<T_>& x)
-{
-}
-
-
-template<class T_>
-void BMatrix<T_>::Axpy(T_                a,
-                       const Matrix<T_>* x)
-{
-}
-
-
-template<class T_>
-void BMatrix<T_>::set(size_t    i,
-                      size_t    j,
-                      const T_& val)
-{
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j-i)<=_ud+_ld)
-      _a[i-1][_ld+j-i] = val;
-}
-
-
-template<class T_>
-void BMatrix<T_>::add(size_t    i,
-                      size_t    j,
-                      const T_& val)
-{
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
-      _a[i-1][_ld+j-i] += val;
-}
-
-
-template<class T_>
-T_ BMatrix<T_>::operator()(size_t i,
-                           size_t j) const
-{
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
-      return _a[i-1][_ld+j-i];
-   else
-      return _zero;
-}
-
-
-template<class T_>
-T_ & BMatrix<T_>::operator()(size_t i,
-                             size_t j)
-{
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
-      return _a[i-1][_ld+j-i];
-   else
-      throw OFELIException("In BMatrix::operator(): Illegal pair of indices " +
-                           itos(int(i))+","+itos(int(j))+").");
-   return _zero;
-}
-
-
-template<class T_>
-BMatrix<T_> & BMatrix<T_>::operator=(const BMatrix<T_>& m)
-{
-   _a = m._a;
-   return *this;
-}
-
-
-template<class T_>
-BMatrix<T_> & BMatrix<T_>::operator=(const T_& x)
-{
-   for (size_t i=0; i<_size; ++i)
-      for (int j=0; j<_ld+_ud+1; ++j)
-         _a[i][j] = 0;
-   for (size_t i=1; i<=_size; ++i)
-      (*this)(i,i) = x;
-   return *this;
-}
-
-
-template<class T_>
-BMatrix<T_> & BMatrix<T_>::operator*=(const T_& x)
-{
-   for (size_t i=0; i<_size; ++i)
-      for (int j=0; j<_ld+_ud+1; ++j)
-         _a[i][j] *= x;
-   return *this;
-}
-
-
-template<class T_>
-BMatrix<T_> & BMatrix<T_>::operator+=(const T_& x)
-{
-   for (size_t i=0; i<_size; ++i)
-      for (int j=0; j<_ld+_ud+1; ++j)
-         _a[i][j] += x;
-   return *this;
-}
-
-
-template<class T_>
-int BMatrix<T_>::setLU()
-{
-   for (int i=0; i<int(_size)-1; i++) {
-      int kend=std::min(_ld+1,int(_size)-i), kjend=std::min(_ud+1,int(_size)-i);
-      if (Abs(_a[i][_ld]) < OFELI_EPSMCH)
-         throw OFELIException("In BMatrix::Factor(): The " + itos(int(i)+1) + "-th pivot is null.");
-      for (int k=1; k!=kend; k++) {
-         _a[k+i][_ld-k] /= _a[i][_ld];
-         for (int j=1; j!=kjend; j++)
-            _a[k+i][j+_ld-k] -= _a[k+i][_ld-k] * _a[i][j+_ld];
-      }
-   }
-   _fact = true;
-   return 0;
-}
-
-
-template<class T_>
-int BMatrix<T_>::solve(Vect<T_>& b)
-{
-   int ret = 0;
-   if (_size<3 || _ld<0 || _ud<0 || _ud+_ld+1>int(_size))
-      throw OFELIException("In BMatrix::solve(Vect<double>): Illegal arguments.");
-   if (_fact == false)
-      ret = setLU();
-
-   for (int i=0; i<int(_size)-1; i++) {
-      int kend = std::min(_ld+1,int(_size)-i);
-      for (int k=1; k!=kend; k++)
-         b[k+i] -= _a[k+i][_ld-k] * b[i];
-   }
-
-   for (int i=int(_size)-1; i>=0; i--) {
-      int kend = std::min(_ud+1,int(_size)-i);
-      for (int k=1; k<kend; k++)
-         b[i] -= _a[i][k+_ld] * b[i+k];
-      b[i] /= _a[i][_ld];
-  }
-  return ret;
-}
-
-
-template<class T_>
-int BMatrix<T_>::solve(const Vect<T_>& b,
-                       Vect<T_>&       x)
-{
-   x = b;
-   return solve(x);
-}
-
-
-template<class T_>
-T_ BMatrix<T_>::get(size_t i,
-                    size_t j) const
-{
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ld+_ud)
-      return _a[i-1][_ld+j-i];
-   else
-      return _zero;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 //                           ASSOCIATED  FUNCTIONS                           //

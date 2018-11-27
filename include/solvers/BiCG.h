@@ -191,6 +191,21 @@ int BiCG(const SpMatrix<T_>& A,
    return BiCG(A,Prec<T_>(A,prec),b,x,max_it,toler,verbose);
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+template<class T_>
+int BiCG(const Matrix<T_>* A,
+         int               prec,
+         const Vect<T_>&   b,
+         Vect<T_>&         x,
+         int               max_it,
+         real_t            toler,
+         int               verbose)
+{
+   SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
+   return BiCG(AA,prec,b,x,max_it,toler,verbose);
+}
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 

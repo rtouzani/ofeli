@@ -76,7 +76,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
 */
     DC1DL2(const Element*      el,
            const Vect<real_t>& u,
-                 real_t        time=0.);
+           real_t              time=0.);
 
 /** \brief Constructor for an element (transient case) with specification of time integration scheme.
  *  @param [in] el Pointer to element.
@@ -92,9 +92,13 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
  */
     DC1DL2(const Element*      el,
            const Vect<real_t>& u,
-                 real_t        time,
-                 real_t        deltat,
-                 int           scheme);
+           real_t              time,
+           real_t              deltat,
+           int                 scheme);
+
+/// Constructor using mesh instance
+/// @param [in] ms Mesh instance
+    DC1DL2(Mesh& ms);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// Constructors for a mesh
@@ -166,7 +170,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
  *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
  */
     void Convection(const real_t& v,
-                          real_t  coef=1);
+                    real_t        coef=1);
 
 /** \brief Add convection matrix to left-hand side after multiplying it by coefficient 
  *  <tt>coef</tt>
@@ -175,7 +179,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
  *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
  */
     void Convection(const Vect<real_t>& v,
-                          real_t        coef=1);
+                    real_t              coef=1);
 
 /** \brief Add convection matrix to left-hand side after multiplying it by coefficient 
  *  <tt>coef</tt>
@@ -191,7 +195,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
  *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
  */
     void ConvectionToRHS(const real_t& v,
-                               real_t  coef=1);
+                         real_t        coef=1);
 
 /** \brief Add convection contribution to right-hand side after multiplying it by coefficient
  *  <tt>coef</tt>
@@ -224,11 +228,11 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
  *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
  */
     void BoundaryRHS(UserData<real_t>& ud,
-                     real_t            coef=1);
+                     real_t            coef=1) { }
 
 /// \brief Add boundary right-hand side flux to right hand side.
 /// @param [in] flux Vector containing source at side nodes.
-    void BoundaryRHS(real_t flux);
+    void BoundaryRHS(real_t flux) { }
 
 /** \brief Add boundary right-hand side term to right hand side after multiplying it by 
  *  coefficient <tt>coef</tt>
@@ -237,7 +241,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
  *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
  */
     void BoundaryRHS(const Vect<real_t>& b,
-                           int           opt=GLOBAL_ARRAY);
+                     int                 opt=GLOBAL_ARRAY) { }
 
 /// \brief Return (constant) heat flux in element.
     real_t Flux() const;
@@ -260,6 +264,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
  private:
     TrMatrix<real_t> _A;
     void set(const Element* el);
+    void set(const Side* sd) { }
 };
 
 /*! @} End of Doxygen Groups */

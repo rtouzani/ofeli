@@ -86,26 +86,57 @@ class DMatrix : public Matrix<T_>
 
 /// \brief Default constructor.
 /// \details Initializes a zero-dimension matrix.
-    DMatrix();
+    DMatrix() : _qr_set(0)
+    {
+       _length = _size = _nb_rows = _nb_cols = 0;
+       _fact = false;
+       _is_diagonal = false;
+    }
 
 /// \brief Constructor for a matrix with <tt>nr</tt> rows and <tt>nr</tt> columns.
 /// \details %Matrix entries are set to <tt>0</tt>.
-    DMatrix(size_t nr);
+    DMatrix(size_t nr) : _qr_set(0)
+    {
+       setSize(nr);
+       _fact = false;
+       _is_diagonal = false;
+    }
 
 /// \brief Constructor for a matrix with <tt>nr</tt> rows and <tt>nc</tt> columns.
 /// \details Matrix entries are set to 0.
     DMatrix(size_t nr,
-            size_t nc);
+            size_t nc) : _qr_set(0)
+    {
+       setSize(nr,nc);
+       _fact = false;
+       _diag.resize(nr);
+       _is_diagonal = false;
+    }
 
 /** \brief Constructor that uses a Vect instance. The class uses the memory
  *  space occupied by this vector.
  *  @param [in] v Vector to copy
  */
-    DMatrix(Vect<T_>& v);
+    DMatrix(Vect<T_>& v) : _qr_set(0)
+    {
+       _fact = false;
+       _is_diagonal = true;
+       _length = v.size();
+       _nb_rows = _nb_cols = _size = sqrt(real_t(_length));
+       _a = v;
+    }
 
 /// \brief Copy Constructor.
 /// @param [in] m %Matrix to copy
-    DMatrix(const DMatrix<T_>& m);
+    DMatrix(const DMatrix<T_>& m)
+    {
+       setSize(m._nb_rows,m._nb_cols);
+       _a = m._a;
+       _diag = m._diag;
+       _fact = m._fact;
+       _is_diagonal = m._is_diagonal;
+       _qr_set = m._qr_set;
+    }
 
 /** \brief Constructor using mesh to initialize structure of matrix.
  *  @param [in] mesh Mesh instance for which matrix graph is determined.
@@ -117,49 +148,105 @@ class DMatrix : public Matrix<T_>
  */
     DMatrix(Mesh&  mesh,
             size_t dof=0,
-            int    is_diagonal=false);
+            int    is_diagonal=false)
+    {
+       _is_diagonal = is_diagonal;
+       _fact = false;
+       setMesh(mesh,dof);
+    }
 
 /// \brief Destructor.
     ~DMatrix() { }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setMesh(Mesh&  mesh,
-                 size_t dof=0);
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+                 size_t dof=0)
+    {
+       Matrix<T_>::init_set_mesh(mesh,dof);
+       _length = _size*_size;
+       _diag.resize(_size);
+       _a.resize(_length);
+       _zero = static_cast<T_>(0);
+       _fact = false;
+    }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setMesh(size_t dof,
                  Mesh&  mesh,
-                 int    code=0);
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+                 int    code=0)
+    {
+//     This is just to avoid warning on unused variable
+      dof = 0;
+      code = 0;
+      _theMesh = &mesh;
+      if (mesh.getDim()==0) { }
+    }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setMesh(size_t dof,
                  size_t nb_eq,
-                 Mesh&  mesh);
+                 Mesh&  mesh)
+    {
+//     This is just to avoid warning on unused variable
+      dof = 0;
+      nb_eq = 0;
+      if (mesh.getDim()==0) { }
+      _theMesh = &mesh;
+    }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Store diagonal entries in a separate internal vector
-    void setDiag();
+    void setDiag()
+    {
+       for (size_t i=0; i<_size; i++)
+          _diag.set(i+1,_a[_nb_cols*i+i]);
+    }
 
 /// \brief Set matrix as diagonal and assign its diagonal entries as a constant
 /// @param [in] a Value to assign to all diagonal entries
-    void setDiag(const T_& a);
+    void setDiag(const T_& a)
+    {
+       _is_diagonal = true;
+       for (size_t i=0; i<_size; i++)
+          _diag.set(i+1,a);
+       for (size_t i=0; i<_nb_rows; i++)
+          _a[_nb_cols*i+i] = a;
+    }
 
 /// \brief Set matrix as diagonal and assign its diagonal entries
 /// @param [in] d Vector entries to assign to matrix diagonal entries
-    void setDiag(const vector<T_>& d);
+    void setDiag(const vector<T_>& d)
+    {
+       _is_diagonal = true;
+       for (size_t i=0; i<_size; i++)
+          _diag.set(i+1,d[i]);
+       for (size_t i=0; i<_nb_rows; i++)
+          _a[_nb_cols*i+i] = d[i];
+    }
 
 /// \brief Set size (number of rows) of matrix.
 /// @param [in] size Number of rows and columns.
-    void setSize(size_t size);
+    void setSize(size_t size)
+    {
+       _nb_rows = _nb_cols = _size = size;
+       _length = _nb_rows*_nb_cols;
+       _a.resize(_length);
+       _diag.resize(_size);
+    }
 
 /** \brief Set size (number of rows and columns) of matrix.
  *  @param [in] nr Number of rows.
  *  @param [in] nc Number of columns.
  */
     void setSize(size_t nr,
-                 size_t nc);
+                 size_t nc)
+    {
+       _nb_rows = nr;
+       _nb_cols = nc;
+       _size = 0;
+       if (_nb_rows==_nb_cols)
+          _size = _nb_rows;
+       _length = lsize_t(_nb_rows*_nb_cols);
+      _a.resize(_length);
+    }
 
 /** \brief Get <tt>j</tt>-th column vector
  *  @param [in] j Index of column to extract
@@ -167,14 +254,25 @@ class DMatrix : public Matrix<T_>
  *  @remark Vector v does not need to be sized before. It is resized in the function
  */
     void getColumn(size_t    j,
-                   Vect<T_>& v) const;
+                   Vect<T_>& v) const
+    {
+       v.resize(_nb_rows);
+       for (size_t i=0; i<_nb_rows; i++)
+          v[i] = _a[_nb_cols*i+j-1];
+    }
 
 /** \brief Get <tt>j</tt>-th column vector
  *  @param [in] j Index of column to extract
  *  @return Vect instance where the column is stored
  *  @remark Vector v does not need to be sized before. It is resized in the function
  */
-    Vect<T_> getColumn(size_t j) const;
+    Vect<T_> getColumn(size_t j) const
+    {
+       Vect<T_> v(_nb_rows);
+       for (size_t i=0; i<_nb_rows; i++)
+          v[i] = _a[_nb_cols*i+j-1];
+       return v;
+    }
 
 /** \brief Get <tt>i</tt>-th row vector
  *  @param [in] i Index of row to extract
@@ -182,14 +280,25 @@ class DMatrix : public Matrix<T_>
  *  @remark Vector v does not need to be sized before. It is resized in the function
  */
     void getRow(size_t    i,
-                Vect<T_>& v) const;
+                Vect<T_>& v) const
+    {
+       v.resize(_nb_cols);
+       for (size_t j=0; j<_nb_cols; j++)
+          v[j] = _a[_nb_cols*(i-1)+j];
+    }
 
 /** \brief Get <tt>i</tt>-th row vector
  *  @param [in] i Index of row to extract
  *  @return Vect instance where the row is stored
  *  @remark Vector v does not need to be sized before. It is resized in the function
  */
-    Vect<T_> getRow(size_t i) const;
+    Vect<T_> getRow(size_t i) const
+    {
+       Vect<T_> v(_nb_cols);
+       for (size_t j=0; j<_nb_cols; j++)
+          v[j] = _a[_nb_cols*(i-1)+j];
+       return v;
+    }
 
 /** \brief Assign a constant value to an entry of the matrix.
  *  @param [in] i row index of matrix
@@ -205,21 +314,33 @@ class DMatrix : public Matrix<T_>
  *  @warning This function must be used if after a factorization, the matrix has
  *  modified
  */
-    void reset();
+    void reset()
+    {
+       Clear(_a);
+       _fact = false;
+    }
 
 /** \brief Copy a given vector to a prescribed row in the matrix.
  *  @param [in] i row index to be assigned
  *  @param [in] v Vect instance to copy
  */
     void setRow(size_t          i,
-                const Vect<T_>& v);
+                const Vect<T_>& v)
+    {
+       for (size_t j=0; j<_nb_cols; j++)
+          _a[_nb_cols*(i-1)+j] = v[j];
+    }
 
 /** \brief Copy a given vector to a prescribed column in the matrix.
  *  @param [in] i column index to be assigned
  *  @param [in] v Vect instance to copy
  */
-    void setColumn(size_t          i,
-                   const Vect<T_>& v);
+    void setColumn(size_t          j,
+                   const Vect<T_>& v)
+    {
+       for (size_t i=0; i<_nb_rows; i++)
+          _a[_nb_cols*i+j-1] = v[i];
+    }
 
 /** \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>.
  *  @param [in] a constant to multiply by
@@ -228,28 +349,51 @@ class DMatrix : public Matrix<T_>
  */
     void MultAdd(T_              a,
                  const Vect<T_>& x,
-                 Vect<T_>&       y) const;
+                 Vect<T_>&       y) const
+    {
+       for (size_t i=0; i<_nb_rows; i++)
+          for (size_t j=0; j<_nb_cols; j++)
+             y.add(i+1,a*_a[_nb_cols*i+j]*x[j]);
+    }
 
 /** \brief Multiply matrix by vector <tt>x</tt> and add result to <tt>y</tt>.
  *  @param [in] x Vector to add to <tt>y</tt>
  *  @param [in,out] y on input, vector to add to. On output, result.
  */
     void MultAdd(const Vect<T_>& x,
-                 Vect<T_>&       y) const;
+                 Vect<T_>&       y) const
+    {
+       T_ s;
+       for (size_t i=0; i<_nb_rows; i++) {
+          s = 0;
+          for (size_t j=0; j<_nb_cols; j++)
+             s += _a[_nb_cols*i+j] * x[j];
+          y.set(i+1,s);
+       }
+    }
 
 /** \brief Multiply matrix by vector <tt>x</tt> and save result in <tt>y</tt>.
  *  @param [in] x Vector to add to <tt>y</tt>
  *  @param [out] y Result.
  */
     void Mult(const Vect<T_>& x,
-              Vect<T_>&       y) const;
+              Vect<T_>&       y) const
+    {
+       y = T_(0);
+       MultAdd(x,y);
+    }
 
 /** \brief Multiply transpose of matrix by vector <tt>x</tt> and add result in <tt>y</tt>.
  *  @param [in] x Vector to add to <tt>y</tt>
  *  @param [in,out] y on input, vector to add to. On output, result.
  */
     void TMult(const Vect<T_>& x,
-               Vect<T_>&       y) const;
+               Vect<T_>&       y) const
+    {
+       for (size_t i=0; i<_nb_rows; i++)
+          for (size_t j=0; j<_nb_cols; j++)
+             y.add(i+1,_a[_nb_cols*(j-1)+i-1]*x[j]);
+    }
 
 /** \brief Add constant <tt>val</tt> to entry <tt>(i,j)</tt> of the matrix.
  *  @param [in] i row index
@@ -258,7 +402,10 @@ class DMatrix : public Matrix<T_>
  */
     void add(size_t    i,
              size_t    j,
-             const T_& val);
+             const T_& val)
+    {
+       _a[_nb_cols*(i-1)+j-1] += val;
+    }
 
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
@@ -266,7 +413,7 @@ class DMatrix : public Matrix<T_>
  *  to current instance
  */
     void Axpy(T_                 a,
-              const DMatrix<T_>& m);
+              const DMatrix<T_>& m) { Axpy(a,m._a,_a); }
 
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
@@ -274,7 +421,11 @@ class DMatrix : public Matrix<T_>
  *  to current instance
  */
     void Axpy(T_                a,
-              const Matrix<T_>* m);
+              const Matrix<T_>* m)
+    {
+       for (size_t i=0; i<_length; i++)
+          _a[i] += a * m->_a[i];
+    }
 
 /** \brief Construct a QR factorization of the matrix
  *  \details This function constructs the QR decomposition using the Householder method.
@@ -286,7 +437,7 @@ class DMatrix : public Matrix<T_>
  *  @return \c 0 if the decomposition was successful, \c k is the \c k-th row is singular
  *  @remark The matrix can be square or rectangle
  */
-    int setQR();
+    int setQR() { return -1; }
 
 /** \brief Construct a QR factorization of the transpose of the matrix
  *  \details This function constructs the QR decomposition using the Householder method.
@@ -308,7 +459,7 @@ class DMatrix : public Matrix<T_>
  *  @return The same value as returned by the function QR
  */
     int solveQR(const Vect<T_>& b,
-                Vect<T_>&       x);
+                Vect<T_>&       x) { return -1; }
 
 /** \brief Solve a transpose linear system by QR decomposition
  *  \details This function constructs the QR decomposition, if this was not already done
@@ -318,7 +469,7 @@ class DMatrix : public Matrix<T_>
  *  @return The same value as returned by the function QR
  */
     int solveTransQR(const Vect<T_>& b,
-                     Vect<T_>&       x);
+                     Vect<T_>&       x) { return -1; }
 
 /** \brief Operator () (Constant version).
  *  Return <tt>a(i,j)</tt>
@@ -326,7 +477,16 @@ class DMatrix : public Matrix<T_>
  *  @param [in] j column index
  */
     T_ operator()(size_t i,
-                  size_t j) const;
+                  size_t j) const
+    {
+#ifdef _BOUNDS
+       assert(i>0);
+       assert(i<=_nb_rows);
+       assert(j>0);
+       assert(j<=_nb_cols);
+#endif
+       return _a[_nb_cols*(i-1)+j-1];
+    }
 
 /** \brief Operator () (Non constant version).
  *  Return <tt>a(i,j)</tt>
@@ -334,7 +494,16 @@ class DMatrix : public Matrix<T_>
  *  @param [in] j column index
  */
     T_ & operator()(size_t i,
-                    size_t j);
+                    size_t j)
+    {
+#ifdef _BOUNDS
+       assert(i>0);
+       assert(i<=_nb_rows);
+       assert(j>0);
+       assert(j<=_nb_cols);
+#endif
+       return _a[_nb_cols*(i-1)+j-1];
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     int Factor() { return setLU(); }
@@ -352,7 +521,24 @@ class DMatrix : public Matrix<T_>
  *  has been realized, so that, if the member function solve is called after this
  *  no further factorization is done.
  */
-    int setLU();
+    int setLU()
+    {
+       for (size_t i=1; i<_size; i++) {
+          for (size_t j=1; j<=i; j++) {
+             if (Abs(_a[_nb_rows*(j-1)+j-1]) < OFELI_EPSMCH)
+                throw OFELIException("In DMatrix::setLU(): The " + itos(int(i))
+                                     + "-th pivot is null.");
+             _a[_nb_rows*i+j-1] /= _a[_nb_rows*(j-1)+j-1];
+             for (size_t k=0; k<j; k++)
+                _a[_nb_rows*i+j] -= _a[_nb_rows*i+k]*_a[_nb_rows*k+j];
+          }
+          for (size_t j=i+1; j<_size; j++)
+             for (size_t k=0; k<i; k++)
+                _a[_nb_rows*i+j] -= _a[_nb_rows*i+k]*_a[_nb_rows*k+j];
+       }
+       _fact = true;
+       return 0;
+    }
 
 /** \brief Factorize the transpose of the matrix (LU factorization)
  *  \details LU factorization of the transpose of the matrix is realized. Note that since this
@@ -366,7 +552,24 @@ class DMatrix : public Matrix<T_>
  *  has been realized, so that, if the member function solve is called after this
  *  no further factorization is done.
  */
-    int setTransLU();
+    int setTransLU()
+    {
+       for (size_t i=1; i<_size; i++) {
+          for (size_t j=1; j<=i; j++) {
+             if (Abs(_a[_nb_rows*(i-1)+i-1]) < OFELI_EPSMCH)
+                throw OFELIException("In DMatrix::setTLU(): The " + itos(int(i)) +
+                                     "-th pivot is null.");
+             _a[_nb_rows*j+i-1] /= _a[_nb_rows*(i-1)+i-1];
+             for (size_t k=0; k<j; k++)
+                _a[_nb_rows*j+i] -= _a[_nb_rows*k+i]*_a[_nb_rows*j+k];
+          }
+          for (size_t j=i+1; j<_size; j++)
+             for (size_t k=0; k<i; k++)
+                _a[_nb_rows*j+i] -= _a[_nb_rows*k+i]*_a[_nb_rows*j+k];
+       }
+       _fact = true;
+       return 0;
+    }
 
 /** \brief Solve linear system.
  *  \details The linear system having the current instance as a matrix is solved by using the LU decomposition.
@@ -383,7 +586,15 @@ class DMatrix : public Matrix<T_>
  *     <li><tt>n</tt> if the <tt>n</tt>-th pivot is null.
  *  </ul>
  */
-    int solve(Vect<T_>& b);
+    int solve(Vect<T_>& b)
+    {
+       int ret = 0;
+       Vect<T_> x(b.size());
+       ret = solve(b,x);
+       b = x;
+       return ret;
+    }
+
 
 /** \brief Solve the transpose linear system.
  *  \details The linear system having the current instance as a transpose matrix is solved by using the LU decomposition.
@@ -400,7 +611,14 @@ class DMatrix : public Matrix<T_>
  *     <li><tt>n</tt> if the <tt>n</tt>-th pivot is null.
  *  </ul>
  */
-    int solveTrans(Vect<T_>& b);
+    int solveTrans(Vect<T_>& b)
+    {
+       int ret = 0;
+       Vect<T_> x(b.size());
+       ret = solveTrans(b,x);
+       b = x;
+       return ret;
+    }
 
 /** \brief Solve linear system.
  *  \details The linear system having the current instance as a matrix is solved by using the LU decomposition.
@@ -419,14 +637,25 @@ class DMatrix : public Matrix<T_>
  *  </ul>
  */
     int solve(const Vect<T_>& b,
-              Vect<T_>&       x);
+              Vect<T_>&       x)
+    {
+       int ret = 0;
+       if (_nb_rows != _nb_cols)
+          ret = solveQR(b,x);
+       else
+          ret = solveLU(b,x);
+       return ret;
+    }
 
 /** \brief Solve the transpose linear system.
- *  \details The linear system having the current instance as a transpose matrix is solved by using the LU decomposition.
+ *  \details The linear system having the current instance as a transpose matrix is solved by 
+ *  using the LU decomposition.
  *  Solution is thus realized after a factorization step and a forward/backward substitution step.
  *  The factorization step is realized only if this was not already done.\n
- *  Note that this function modifies the matrix contents is a factorization is performed. Naturally, if the
- *  the matrix has been modified after using this function, the user has to refactorize it using the function setLU.
+ *  Note that this function modifies the matrix contents is a factorization is performed. 
+ *  Naturally, if the
+ *  the matrix has been modified after using this function, the user has to refactorize 
+ *  it using the function setLU.
  *  This is because the class has no non-expensive way to detect if the matrix has been modified.
  *  The function setLU realizes the factorization step only.
  *  @param [in] b Vect instance that contains right-hand side.
@@ -438,7 +667,15 @@ class DMatrix : public Matrix<T_>
  *  </ul>
  */
     int solveTrans(const Vect<T_>& b,
-                   Vect<T_>&       x);
+                   Vect<T_>&       x)
+    {
+       int ret = 0;
+       if (_nb_rows != _nb_cols)
+          ret = solveTransQR(b,x);
+       else
+          ret = solveTransLU(b,x);
+       return ret;
+    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     int Solve(Vect<T_>& b) { return solve(b); }
@@ -447,40 +684,132 @@ class DMatrix : public Matrix<T_>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     int solveLU(const Vect<T_>& b,
-                Vect<T_>&       x);
-    int solveLU(Vect<T_>& b);
+                Vect<T_>&       x)
+    {
+       x = b;
+       return solveLU(x);
+    }
+
+    int solveLU(Vect<T_>& b)
+    {
+       int ret = 0;
+       if (!_fact)
+          ret = setLU();
+       for (size_t i=0; i<_size; i++) {
+          T_ s=0;
+          for (size_t j=0; j<i; j++)
+             s += _a[_nb_cols*i+j] * b[j];
+          b[i] -= s;
+       }
+       for (int ii=int(_size)-1; ii>-1; ii--) {
+          if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
+             throw OFELIException("In DMatrix::solveLU(Vect<T_>): The " + itos(ii+1)
+			                         + "-th pivot is null.");
+          b[ii] /= _a[_nb_cols*ii+ii];
+          for (size_t j=0; j<size_t(ii); j++)
+             b[j] -= b[ii] * _a[_nb_cols*j+ii];
+       }
+       return ret;
+    }
+
     int solveTransLU(const Vect<T_>& b,
-                     Vect<T_>&       x);
-    int solveTransLU(Vect<T_>& b);
+                     Vect<T_>&       x)
+    {
+       x = b;
+       return solveTrans(x);
+    }
+
+    int solveTransLU(Vect<T_>& b)
+    {
+       int ret = 0;
+       if (!_fact)
+          ret = setTransLU();
+       for (size_t i=0; i<_size; i++) {
+          T_ s=0;
+          for (size_t j=0; j<i; j++)
+             s += _a[_nb_cols*j+i] * b[j];
+          b[i] -= s;
+       }
+       for (int ii=int(_size)-1; ii>-1; ii--) {
+          if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
+             throw OFELIException("In DMatrix::solveLU(Vect<real_t>): The " + itos(ii+1)
+			                         + "-th pivot is null.");
+          b[ii] /= _a[_nb_cols*ii+ii];
+          for (size_t j=0; j<size_t(ii); j++)
+             b[j] -= b[ii] * _a[_nb_cols*ii+j];
+       }
+       return ret;
+    }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Operator <tt>=</tt>
 /// \details Copy matrix <tt>m</tt> to current matrix instance.
-    DMatrix & operator=(DMatrix<T_>& m);
+    DMatrix & operator=(DMatrix<T_>& m)
+    {
+       _a = m._a;
+       return *this;
+    }
 
 /// \brief Operator +=
 /// \details Add matrix <tt>m</tt> to current matrix instance.
-    DMatrix & operator+=(const DMatrix<T_>& m);
+    DMatrix & operator+=(const DMatrix<T_>& m)
+    {
+       for (size_t i=0; i<_length; i++)
+          _a[i] += m._a[i];
+       return *this;
+    }
 
 /// \brief Operator -=
 /// \details Subtract matrix <tt>m</tt> from current matrix instance.
-    DMatrix & operator-=(const DMatrix<T_>& m);
+    DMatrix & operator-=(const DMatrix<T_>& m)
+    {
+       for (size_t i=0; i<_length; i++)
+          _a[i] -= -m._a[i];
+       return *this;
+    }
 
 /// \brief Operator <tt>=</tt>
 /// \details Assign matrix to identity times <tt>x</tt>
-    DMatrix & operator=(const T_& x);
+    DMatrix & operator=(const T_& x)
+    {
+       if (_nb_rows!=_nb_cols)
+          throw OFELIException("In DMatrix::operator=(T_): Operator is valid "
+			                      "for square matrices only.");
+       _fact = false;
+       Clear(_a);
+       for (size_t i=1; i<=_size; i++) {
+          set(i,i,x);
+          _diag[i-1] = x;
+       }
+       return *this;
+    }
 
 /// \brief Operator <tt>*=</tt>
 /// \details Premultiply matrix entries by constant value <tt>x</tt>.
-    DMatrix & operator*=(const T_& x);
+    DMatrix & operator*=(const T_& x)
+    {
+       for (size_t i=0; i<_length; i++)
+          _a[i] *= x;
+       return *this;
+    }
 
 /// \brief Operator <tt>+=</tt>
 /// \details Add constant value <tt>x</tt> to matrix entries
-    DMatrix & operator+=(const T_& x);
+    DMatrix & operator+=(const T_& x)
+    {
+       for (size_t i=0; i<_length; i++)
+          _a[i] += x;
+       return *this;
+    }
 
 /// \brief Operator <tt>-=</tt>
 /// \details Subtract constant value <tt>x</tt> from matrix entries.
-    DMatrix & operator-=(const T_& x);
+    DMatrix & operator-=(const T_& x)
+    {
+       for (size_t i=0; i<_length; i++)
+          _a[i] -= x;
+       return *this;
+    }
 
 /// \brief Return matrix as C-Array.
 /// \details %Matrix is stored row by row.
@@ -488,7 +817,7 @@ class DMatrix : public Matrix<T_>
 
 /// \brief Return entry <tt>(i,j)</tt> of matrix
     T_ get(size_t i,
-           size_t j) const;
+           size_t j) const { return _a[_nb_cols*(i-1)+j-1]; }
 
  private:
     vector<T_> _qr_c, _qr_d;
@@ -502,567 +831,6 @@ class DMatrix : public Matrix<T_>
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<class T_>
-DMatrix<T_>::DMatrix() : _qr_set(0)
-{
-   _length = _size = _nb_rows = _nb_cols = 0;
-   _fact = false;
-   _is_diagonal = false;
-}
-
-
-template<class T_>
-DMatrix<T_>::DMatrix(size_t nr) : _qr_set(0)
-{
-   setSize(nr);
-   _fact = false;
-   _is_diagonal = false;
-}
-
-
-template<class T_>
-DMatrix<T_>::DMatrix(size_t nr,
-                     size_t nc) : _qr_set(0)
-{
-   setSize(nr,nc);
-   _fact = false;
-   _diag.resize(nr);
-   _is_diagonal = false;
-}
-
-
-template<class T_>
-DMatrix<T_>::DMatrix(Vect<T_>& v) : _qr_set(0)
-{
-   _fact = false;
-   _is_diagonal = true;
-   _length = v.size();
-   _nb_rows = _nb_cols = _size = sqrt(real_t(_length));
-   _a = v;
-}
-
-
-template<class T_>
-DMatrix<T_>::DMatrix(const DMatrix<T_>& m)
-{
-   setSize(m._nb_rows,m._nb_cols);
-   _a = m._a;
-   _diag = m._diag;
-   _fact = m._fact;
-   _is_diagonal = m._is_diagonal;
-   _qr_set = m._qr_set;
-}
-
-
-template<class T_>
-DMatrix<T_>::DMatrix(Mesh&  mesh,
-                     size_t dof,
-                     int    is_diagonal)
-{
-   _is_diagonal = is_diagonal;
-   _fact = false;
-   setMesh(mesh,dof);
-}
-
-
-template<class T_>
-void DMatrix<T_>::setMesh(Mesh&  mesh,
-                          size_t dof)
-{
-   Matrix<T_>::init_set_mesh(mesh,dof);
-   _length = _size*_size;
-   _diag.resize(_size);
-   _a.resize(_length);
-   _zero = static_cast<T_>(0);
-   _fact = false;
-}
-
-
-template<class T_>
-void DMatrix<T_>::setMesh(size_t dof,
-                          Mesh&  mesh,
-                          int    code)
-{
-// This is just to avoid warning on unused variable
-   dof  = 0;
-   code = 0;
-   _theMesh = &mesh;
-   if (mesh.getDim()==0) { }
-}
-
-
-template<class T_>
-void DMatrix<T_>::setMesh(size_t dof,
-                          size_t nb_eq,
-                          Mesh&  mesh)
-{
-// This is just to avoid warning on unused variable
-   dof = 0;
-   nb_eq = 0;
-   if (mesh.getDim()==0) { }
-   _theMesh = &mesh;
-}
-
-
-template<class T_>
-void DMatrix<T_>::setDiag()
-{
-   for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,_a[_nb_cols*i+i]);
-}
-
-
-template<class T_>
-void DMatrix<T_>::setDiag(const T_& a)
-{
-   _is_diagonal = true;
-   for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,a);
-   for (size_t i=0; i<_nb_rows; i++)
-      _a[_nb_cols*i+i] = a;
-}
-
-
-template<class T_>
-void DMatrix<T_>::setDiag(const vector<T_>& d)
-{
-   _is_diagonal = true;
-   for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,d[i]);
-   for (size_t i=0; i<_nb_rows; i++)
-      _a[_nb_cols*i+i] = d[i];
-}
-
-
-template<class T_>
-void DMatrix<T_>::setSize(size_t size)
-{
-   _nb_rows = _nb_cols = _size = size;
-   _length = _nb_rows*_nb_cols;
-   _a.resize(_length);
-   _diag.resize(_size);
-}
-
-
-template<class T_>
-void DMatrix<T_>::setSize(size_t nr,
-                          size_t nc)
-{
-   _nb_rows = nr;
-   _nb_cols = nc;
-   _size = 0;
-   if (_nb_rows==_nb_cols)
-      _size = _nb_rows;
-   _length = lsize_t(_nb_rows*_nb_cols);
-   _a.resize(_length);
-}
-
-
-template<class T_>
-void DMatrix<T_>::getColumn(size_t    j,
-                            Vect<T_>& v) const
-{
-   v.resize(_nb_rows);
-   for (size_t i=0; i<_nb_rows; i++)
-      v[i] = _a[_nb_cols*i+j-1];
-}
-
-
-template<class T_>
-Vect<T_> DMatrix<T_>::getColumn(size_t j) const
-{
-   Vect<T_> v(_nb_rows);
-   for (size_t i=0; i<_nb_rows; i++)
-      v[i] = _a[_nb_cols*i+j-1];
-   return v;
-}
-
-
-template<class T_>
-void DMatrix<T_>::setColumn(size_t          j,
-                            const Vect<T_>& v)
-{
-   for (size_t i=0; i<_nb_rows; i++)
-      _a[_nb_cols*i+j-1] = v[i];
-}
-
-
-template<class T_>
-void DMatrix<T_>::getRow(size_t    i,
-                         Vect<T_>& v) const
-{
-   v.resize(_nb_cols);
-   for (size_t j=0; j<_nb_cols; j++)
-      v[j] = _a[_nb_cols*(i-1)+j];
-}
-
-
-template<class T_>
-Vect<T_> DMatrix<T_>::getRow(size_t i) const
-{
-   Vect<T_> v(_nb_cols);
-   for (size_t j=0; j<_nb_cols; j++)
-      v[j] = _a[_nb_cols*(i-1)+j];
-   return v;
-}
-
-
-template<class T_>
-void DMatrix<T_>::setRow(size_t          i,
-                         const Vect<T_>& v)
-{
-   for (size_t j=0; j<_nb_cols; j++)
-      _a[_nb_cols*(i-1)+j] = v[j];
-}
-
-
-template<class T_>
-void DMatrix<T_>::MultAdd(T_              a,
-                          const Vect<T_>& x,
-                          Vect<T_>&       y) const
-{
-  for (size_t i=0; i<_nb_rows; i++)
-     for (size_t j=0; j<_nb_cols; j++)
-        y.add(i+1,a*_a[_nb_cols*i+j]*x[j]);
-}
-
-
-template<class T_>
-void DMatrix<T_>::MultAdd(const Vect<T_>& x,
-                          Vect<T_>&       y) const
-{
-   T_ s;
-   for (size_t i=0; i<_nb_rows; i++) {
-      s = 0;
-      for (size_t j=0; j<_nb_cols; j++)
-         s += _a[_nb_cols*i+j] * x[j];
-      y.set(i+1,s);
-   }
-}
-
-
-template<class T_>
-void DMatrix<T_>::Mult(const Vect<T_>& x,
-                       Vect<T_>&       y) const
-{
-   y = T_(0);
-   MultAdd(x,y);
-}
-
-
-template<class T_>
-void DMatrix<T_>::TMult(const Vect<T_>& x,
-                        Vect<T_>&       y) const
-{
-   for (size_t i=0; i<_nb_rows; i++)
-      for (size_t j=0; j<_nb_cols; j++)
-         y.add(i+1,_a[_nb_cols*(j-1)+i-1]*x[j]);
-}
-
-
-template<class T_>
-void DMatrix<T_>::add(size_t    i,
-                      size_t    j,
-                      const T_& val)
-{
-   _a[_nb_cols*(i-1)+j-1] += val;
-}
-
-
-template<class T_>
-T_ DMatrix<T_>::operator()(size_t i,
-                           size_t j) const
-{
-#ifdef _BOUNDS
-   assert(i>0);
-   assert(i<=_nb_rows);
-   assert(j>0);
-   assert(j<=_nb_cols);
-#endif
-   return _a[_nb_cols*(i-1)+j-1];
-}
-
-
-template<class T_>
-T_ & DMatrix<T_>::operator()(size_t i,
-                             size_t j)
-{
-#ifdef _BOUNDS
-   assert(i>0);
-   assert(i<=_nb_rows);
-   assert(j>0);
-   assert(j<=_nb_cols);
-#endif
-   return _a[_nb_cols*(i-1)+j-1];
-}
-
-
-template<class T_>
-void DMatrix<T_>::reset()
-{
-   Clear(_a);
-   _fact = false;
-}
-
-
-template<class T_>
-int DMatrix<T_>::setLU()
-{
-   for (size_t i=1; i<_size; i++) {
-      for (size_t j=1; j<=i; j++) {
-         if (Abs(_a[_nb_rows*(j-1)+j-1]) < OFELI_EPSMCH)
-            throw OFELIException("In DMatrix::setLU(): The " + itos(int(i)) + "-th pivot is null.");
-         _a[_nb_rows*i+j-1] /= _a[_nb_rows*(j-1)+j-1];
-         for (size_t k=0; k<j; k++)
-            _a[_nb_rows*i+j] -= _a[_nb_rows*i+k]*_a[_nb_rows*k+j];
-      }
-      for (size_t j=i+1; j<_size; j++)
-         for (size_t k=0; k<i; k++)
-            _a[_nb_rows*i+j] -= _a[_nb_rows*i+k]*_a[_nb_rows*k+j];
-   }
-   _fact = true;
-   return 0;
-}
-
-
-template<class T_>
-int DMatrix<T_>::setTransLU()
-{
-   for (size_t i=1; i<_size; i++) {
-      for (size_t j=1; j<=i; j++) {
-         if (Abs(_a[_nb_rows*(i-1)+i-1]) < OFELI_EPSMCH)
-            throw OFELIException("In DMatrix::setTLU(): The " + itos(int(i)) + "-th pivot is null.");
-         _a[_nb_rows*j+i-1] /= _a[_nb_rows*(i-1)+i-1];
-         for (size_t k=0; k<j; k++)
-            _a[_nb_rows*j+i] -= _a[_nb_rows*k+i]*_a[_nb_rows*j+k];
-      }
-      for (size_t j=i+1; j<_size; j++)
-         for (size_t k=0; k<i; k++)
-            _a[_nb_rows*j+i] -= _a[_nb_rows*k+i]*_a[_nb_rows*j+k];
-   }
-   _fact = true;
-   return 0;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solveTrans(const Vect<T_>& b,
-                            Vect<T_>&       x)
-{
-   int ret = 0;
-   if (_nb_rows != _nb_cols)
-      ret = solveTransQR(b,x);
-   else
-      ret = solveTransLU(b,x);
-   return ret;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solve(const Vect<T_>& b,
-                       Vect<T_>&       x)
-{
-   int ret = 0;
-   if (_nb_rows != _nb_cols)
-      ret = solveQR(b,x);
-   else
-      ret = solveLU(b,x);
-   return ret;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solve(Vect<T_>& b)
-{
-   int ret = 0;
-   Vect<T_> x(b.size());
-   ret = solve(b,x);
-   b = x;
-   return ret;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solveTrans(Vect<T_>& b)
-{
-   int ret = 0;
-   Vect<T_> x(b.size());
-   ret = solveTrans(b,x);
-   b = x;
-   return ret;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solveLU(Vect<T_>& b)
-{
-   int ret = 0;
-   if (!_fact)
-      ret = setLU();
-   for (size_t i=0; i<_size; i++) {
-      T_ s=0;
-      for (size_t j=0; j<i; j++)
-         s += _a[_nb_cols*i+j] * b[j];
-      b[i] -= s;
-   }
-   for (int ii=int(_size)-1; ii>-1; ii--) {
-      if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
-         throw OFELIException("In DMatrix::solveLU(Vect<T_>): The " + itos(ii+1) + "-th pivot is null.");
-      b[ii] /= _a[_nb_cols*ii+ii];
-      for (size_t j=0; j<size_t(ii); j++)
-         b[j] -= b[ii] * _a[_nb_cols*j+ii];
-   }
-   return ret;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solveTransLU(Vect<T_>& b)
-{
-   int ret = 0;
-   if (!_fact)
-      ret = setTransLU();
-   for (size_t i=0; i<_size; i++) {
-      T_ s=0;
-      for (size_t j=0; j<i; j++)
-         s += _a[_nb_cols*j+i] * b[j];
-      b[i] -= s;
-   }
-   for (int ii=int(_size)-1; ii>-1; ii--) {
-      if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
-         throw OFELIException("In DMatrix::solveLU(Vect<real_t>): The " + itos(ii+1) + "-th pivot is null.");
-      b[ii] /= _a[_nb_cols*ii+ii];
-      for (size_t j=0; j<size_t(ii); j++)
-         b[j] -= b[ii] * _a[_nb_cols*ii+j];
-   }
-   return ret;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solveLU(const Vect<T_>& b,
-                         Vect<T_>&       x)
-{
-   x = b;
-   return solveLU(x);
-}
-
-
-template<class T_>
-int DMatrix<T_>::solveTransLU(const Vect<T_>& b,
-                              Vect<T_>&       x)
-{
-   x = b;
-   return solveTrans(x);
-}
-
-
-template<class T_>
-DMatrix<T_>& DMatrix<T_>::operator=(DMatrix<T_>& m)
-{
-   _a = m._a;
-   return *this;
-}
-
-
-template<class T_>
-DMatrix<T_>& DMatrix<T_>::operator+=(const DMatrix<T_>& m)
-{
-   for (size_t i=0; i<_length; i++)
-      _a[i] += m._a[i];
-   return *this;
-}
-
-
-template<class T_>
-DMatrix<T_>& DMatrix<T_>::operator-=(const DMatrix<T_>& m)
-{
-   for (size_t i=0; i<_length; i++)
-      _a[i] -= -m._a[i];
-   return *this;
-}
-
-
-template<class T_>
-DMatrix<T_>& DMatrix<T_>::operator=(const T_& x)
-{
-   if (_nb_rows!=_nb_cols)
-      throw OFELIException("In DMatrix::operator=(T_): Operator is valid for square matrices only.");
-   _fact = false;
-   Clear(_a);
-   for (size_t i=1; i<=_size; i++) {
-      set(i,i,x);
-      _diag[i-1] = x;
-   }
-   return *this;
-}
-
-
-template<class T_>
-DMatrix<T_> & DMatrix<T_>::operator*=(const T_& x)
-{
-   for (size_t i=0; i<_length; i++)
-      _a[i] *= x;
-   return *this;
-}
-
-
-template<class T_>
-DMatrix<T_> & DMatrix<T_>::operator+=(const T_& x)
-{
-   for (size_t i=0; i<_length; i++)
-      _a[i] += x;
-   return *this;
-}
-
-
-template<class T_>
-DMatrix<T_> & DMatrix<T_>::operator-=(const T_& x)
-{
-   for (size_t i=0; i<_length; i++)
-      _a[i] -= x;
-   return *this;
-}
-
-
-template<class T_>
-T_ DMatrix<T_>::get(size_t i,
-                    size_t j) const 
-{
-   return _a[_nb_cols*(i-1)+j-1]; 
-}
-
-
-template<class T_>
-void DMatrix<T_>::Axpy(T_                 a,
-                       const DMatrix<T_>& m)
-{
-   Axpy(a,m._a,_a);
-}
-
-
-template<class T_>
-void DMatrix<T_>::Axpy(T_                a,
-                       const Matrix<T_>* m)
-{
-   for (size_t i=0; i<_length; i++)
-      _a[i] += a * m->_a[i];
-}
-
-
-template<class T_>
-int DMatrix<T_>::setQR()
-{
-   return -1;
-}
-
-
-template<class T_>
-int DMatrix<T_>::setTransQR()
-{
-   return -1;
-}
-
 
 template<>
 inline int DMatrix<real_t>::setQR()
@@ -1143,22 +911,6 @@ inline int DMatrix<real_t>::setTransQR()
       return int(n);
    _qr_set = 1;
    return 0;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solveQR(const Vect<T_>& b,
-                         Vect<T_>&       x)
-{
-   return -1;
-}
-
-
-template<class T_>
-int DMatrix<T_>::solveTransQR(const Vect<T_>& b,
-                              Vect<T_>&      x)
-{
-   return -1;
 }
 
 

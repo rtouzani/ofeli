@@ -186,8 +186,8 @@ void NLASSolver::setf(string exp)
       _f_exp.resize(_nb_eq);
       _Df_exp.setSize(_nb_eq,_nb_eq);
       _var = "";
-      for (size_t i=1; i<_nb_eq; i++)
-         _var += "x" + itos(i) + ",";
+      for (int j=1; j<_nb_eq; ++j)
+         _var += "x" + itos(j) + ",";
       _var += "x" + itos(_nb_eq);
       if (_nb_eq==1)
          _var = "x";
@@ -470,9 +470,9 @@ void NLASSolver::solveNewton()
       Vect<real_t> b(_nb_eq);
       while (++_it < _max_it) {
          _Df->reset();
-         for (size_t i=1; i<=_nb_eq; i++) {
+         for (int i=1; i<=_nb_eq; ++i) {
             b(i) = -Function(*_u,i);
-            for (size_t j=1; j<=_nb_eq; j++)
+            for (int j=1; j<=_nb_eq; j++)
                Gradient(*_u,i,j);
          }
          _Df->solve(b,_v);

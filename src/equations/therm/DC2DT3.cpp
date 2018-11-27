@@ -130,6 +130,8 @@ DC2DT3::DC2DT3(Mesh& ms)
    _equation_name = "Diffusion/Convection";
    _finite_element = "2-D, 3-Node Triangles (P1)";
    _stab = false;
+   setMatrixType(SPARSE);
+   setSolver(BICG_STAB_SOLVER,DILU_PREC);
 }
 
 

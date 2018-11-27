@@ -297,6 +297,7 @@ void Domain::insertLine(size_t n1,
    _mark.push_back(dc);
    ll.nb = 2;
    ll.node.push_back(_v[n1-1]);
+   //   ll.node.push_back(0.5*(_v[n1-1]+_v[n2-1]));
    ll.node.push_back(_v[n2-1]);
    _l.push_back(ll);
    _nb_lines++;
@@ -318,10 +319,6 @@ int Domain::getLine()
    _mark.push_back(ll.Dcode);
    ll.nb = 2;
    ll.node.push_back(_v[n1-1]);
-   //   Vertex v;
-   //   v = 0.5*(_v[n1-1]+_v[n2-1]);
-   //   _v.push_back(v);
-   //   _nb_vertices++;
    ll.node.push_back(0.5*(_v[n1-1]+_v[n2-1]));
    ll.node.push_back(_v[n2-1]);
    _l.push_back(ll);
@@ -908,6 +905,142 @@ int Domain::Rectangle(real_t* x,
          The_side.Add((*_theMesh)[m1]);
          The_side.Add((*_theMesh)[m2]);
          dof_code(cs4,cd);
+         The_side.setNbDOF(_nb_dof);
+         for (size_t i=0; i<_nb_dof; i++)
+            The_side.setCode(i+1,cd[i]);
+        _theMesh->Add(the_side);
+      }
+      m1 = m2;
+   }
+   return 0;
+}
+
+
+int Domain::Rectangle(real_t* x,
+                      size_t  n1, 
+                      size_t  n2,
+                      real_t  r,
+                      int*    c,
+                      int*    cv)
+{
+   size_t m1, m2, m3, nn1, nn2, nn3;
+   vector<int> cd;
+   int cs[4] = { 0, 0, 0, 0 };
+   for (size_t i=0; i<4; ++i)
+      if (c[i]<0)
+         cs[i] = -c[i], c[i] = 0;
+
+// Nodes
+   _theMesh = new Mesh;
+   _theMesh->setDim(2);
+   size_t k=0;
+   real_t lx=x[2]-x[0], ly=x[3]-x[1];
+   real_t hx, hy=ly/real_t(n2);
+   if (r!=1 && r>0)
+      hy = ly*(r-1.)/(pow(r,real_t(n2))-1.);
+   real_t yy=x[1], css=1.75;
+   size_t first_dof = 1;
+   _nb_dof = 1;
+   for (size_t i=0; i<=n2; ++i) {
+      hx = lx/real_t(n1);
+      if (r != 1)
+         hx = lx*(r-1.)/(pow(r,int(n1))-1.);
+      real_t xx=x[0];
+      if (r < 0)
+         yy = x[1] + 0.5*ly*(1.+tanh(css*((2.*i)/n1-1.0))/tanh(css));
+
+      for (size_t j=0; j<=n1; ++j) {
+         if (r<0)
+            xx = x[0] + 0.5*lx*(1.+tanh(css*((2.*j)/n2-1.0))/tanh(css));
+         the_node = new Node(++k,Point<real_t>(xx,yy,0));
+         The_node.setNbDOF(_nb_dof);
+         dof_code(setCode(n1,n2,i,j,c[0],c[1],c[2],c[3]),cd);
+         The_node.setCode(&cd[0]);
+         The_node.setDOF(first_dof,_nb_dof);
+         _theMesh->Add(the_node);
+         xx += hx; hx *= r;
+      }
+      yy += hy; hy *= r;
+   }
+   (*_theMesh)[1]->setCode(1,cv[0]);
+   (*_theMesh)[n1+1]->setCode(1,cv[1]);
+   (*_theMesh)[(n1+1)*(n2+1)]->setCode(1,cv[2]);
+   (*_theMesh)[n1*n2+n2+1]->setCode(1,cv[3]);
+
+// Elements
+   k = 0;
+   size_t el=0;
+   for (size_t i=0; i<n2; i++) {
+      for (size_t j=0; j<n1; j++) {
+         nn1 = ++k; nn2 = nn1 + 1; nn3 = nn2 + n1 + 1;
+         the_element = new Element(el+1,TRIANGLE,1);
+         The_element.Add((*_theMesh)[nn1]);
+         The_element.Add((*_theMesh)[nn2]);
+         The_element.Add((*_theMesh)[nn3]);
+         _theMesh->Add(the_element);
+         el++; m1 = nn3; m2 = nn3 - 1; m3 = nn1;
+         the_element = new Element(el+1,TRIANGLE,1);
+         The_element.Add((*_theMesh)[m1]);
+         The_element.Add((*_theMesh)[m2]);
+         The_element.Add((*_theMesh)[m3]);
+         _theMesh->Add(the_element);
+         el++;
+      }
+      k++;
+   }
+
+// Sides
+   k = 0;
+   m1 = 1;
+   for (size_t i=0; i<n1; i++) {
+      m2 = m1 + 1;
+      if (cs[0]!=0) {
+         the_side = new Side(++k,LINE);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
+         dof_code(cs[0],cd);
+         The_side.setNbDOF(_nb_dof);
+         for (size_t i=0; i<_nb_dof; i++)
+            The_side.setCode(i+1,cd[i]);
+         _theMesh->Add(the_side);
+      }
+      m1 = m2;
+   }
+   for (size_t i=0; i<n2; i++) {
+      m2 = m1 + n1 + 1;
+      if (cs[1]!=0) {
+         the_side = new Side(++k,LINE);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
+         dof_code(cs[1],cd);
+         The_side.setNbDOF(_nb_dof);
+         for (size_t i=0; i<_nb_dof; i++)
+            The_side.setCode(i+1,cd[i]);
+         _theMesh->Add(the_side);
+      }
+      m1 = m2;
+   }
+   for (size_t i=0; i<n1; i++) {
+      m2 = m1 - 1;
+      if (cs[2]!=0) {
+         the_side = new Side(++k,LINE);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
+         dof_code(cs[2],cd);
+         The_side.setNbDOF(_nb_dof);
+         for (size_t i=0; i<_nb_dof; i++)
+            The_side.setCode(i+1,cd[i]);
+         _theMesh->Add(the_side);
+      }
+      m1 = m2;
+   }
+   for (size_t i=0; i<n2; i++) {
+      m2 = m1 - n1 - 1;
+      if (cs[3]!=0) {
+         the_side = new Side(++k,LINE);
+         The_side.Add((*_theMesh)[m1]);
+         The_side.Add((*_theMesh)[m2]);
+         dof_code(cs[3],cd);
          The_side.setNbDOF(_nb_dof);
          for (size_t i=0; i<_nb_dof; i++)
             The_side.setCode(i+1,cd[i]);
@@ -1589,8 +1722,8 @@ void Domain::removeUnusedNodes()
       for (size_t i=1; i<=TheElement.getNbNodes(); i++)
          used[TheElement(i)->n()-1]++;
    }
-   delete _theMesh;
 
+   delete _theMesh;
    _theMesh = new Mesh;
    _theMesh->setDim(ms.getDim());
    size_t n=0;
@@ -1603,16 +1736,17 @@ void Domain::removeUnusedNodes()
          _theMesh->Add(nd[in]);
       }
    }
+   int ne = 0;
    MeshElements(ms) {
-      Element *el = new Element(theElementLabel,TheElement.getShape(),TheElement.getCode());
+      Element *el = new Element(++ne,TheElement.getShape(),TheElement.getCode());
       for (size_t i=1; i<=TheElement.getNbNodes(); i++)
-         el->Add(nd[TheElement(i)->n()-1]);
+          el->Add(TheElement(i));
       _theMesh->Add(el);
    }
    MeshSides(ms) {
       Side *sd = new Side(theSideLabel,TheSide.getShape());
       for (size_t i=1; i<=TheSide.getNbNodes(); i++)
-         sd->Add(nd[TheSide(i)->n()-1]);
+         sd->Add(TheSide(i));
       sd->setNbDOF(TheSide.getNbDOF());
       for (size_t i=1; i<=sd->getNbDOF(); i++)
          sd->setCode(i,TheSide.getCode(i));

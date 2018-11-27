@@ -124,7 +124,7 @@ class Element
     Element(const Element& el);
 
 /// \brief Destructor
-    ~Element() { ; }
+    ~Element() { }
 
 //-------------------------------   MODIFIERS  ---------------------------------
 
@@ -177,7 +177,7 @@ class Element
 
 /// \brief Add a neighbor element.
 /// @param [in] el Pointer to Element instance
-    void Add(Element* el);
+    void Add(Element* el) { _neig_el[_nb_neig_el++] = el; }
 
 /// \brief Add a neighbor element and set its label.
 /// @param [in] el Pointer to Element instance
@@ -189,19 +189,17 @@ class Element
 /// @param [in] i Index of DOF.
 /// @param [in] dof Label of DOF to assign.
     void setDOF(size_t i,
-                size_t dof)
-    { _dof[i-1] = dof; }
+                size_t dof) { _dof[i-1] = dof; }
 
 /// \brief Assign code to a DOF.
 /// @param [in] dof Index of dof for assignment.
 /// @param [in] code Code to assign.
     void setCode(size_t dof,
-                 int    code)
-    { _dof_code[dof-1] = code; }
+                 int    code) { _dof_code[dof-1] = code; }
 
 /// \brief Assign a node given by its pointer as the i-th node of element
     void setNode(size_t i,
-                 Node*  node);
+                 Node*  node) { _node[i-1] = node; }
 
 /// \brief Set number of degrees of freedom of element
     void setNbDOF(size_t i) { _nb_dof = i; }
@@ -251,14 +249,14 @@ class Element
     size_t getSideLabel(size_t n) const;
 
 /// \brief Return pointer to node of label <tt>i</tt> (Local labelling).
-    Node *getPtrNode(size_t i) const;
+    Node *getPtrNode(size_t i) const { return _node[i-1]; }
    
 /// \brief Operator ().
 /// \details Return pointer to node of local label <tt>i</tt>.
     Node *operator()(size_t i) const { return getPtrNode(i); }
    
 /// \brief Return pointer to side of label <tt>i</tt> (Local labelling).
-    Side *getPtrSide(size_t i) const;
+    Side *getPtrSide(size_t i) const { return _side[i-1]; }
 
 /** \brief Say if element contains given node
  *  \details This function tests if the element contains a node with the same pointer at the sought one

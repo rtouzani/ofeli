@@ -44,8 +44,12 @@ Laplace2DT3::Laplace2DT3()
 Laplace2DT3::Laplace2DT3(Mesh&             ms,
                          SpMatrix<real_t>& A,
                          Vect<real_t>&     b)
-            : Equation<real_t,3,3,2,2>(ms)
 {
+   AbsEqua<real_t>::setMesh(ms);
+   _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
+   _time_step = 0.1;
+   _time = 0.;
+   initEquation(ms,_time_step);
    _u = &b;
    _A = &A;
 }
@@ -53,15 +57,26 @@ Laplace2DT3::Laplace2DT3(Mesh&             ms,
 
 Laplace2DT3::Laplace2DT3(Mesh&         ms,
                          Vect<real_t>& b)
-            : Equation<real_t,3,3,2,2>(ms)
 {
-   _u = &b;
+   AbsEqua<real_t>::setMesh(ms);
+   _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
+   _time_step = 0.1;
+   _time = 0.;
+   setMatrixType(SPARSE|SYMMETRIC);
+   setSolver(CG_SOLVER,DILU_PREC);
+    _u = &b;
 }
 
 
 Laplace2DT3::Laplace2DT3(Mesh& ms)
-            : Equation<real_t,3,3,2,2>(ms)
 {
+   AbsEqua<real_t>::setMesh(ms);
+   _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
+   _time_step = 0.1;
+   _time = 0.;
+   initEquation(ms,_time_step);
+   setMatrixType(SPARSE|SYMMETRIC);
+   setSolver(CG_SOLVER,DILU_PREC);
 } 
 
 
@@ -74,6 +89,8 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
 {
    _bf = &b;
    _u = &u;
+   setMatrixType(SPARSE|SYMMETRIC);
+   setSolver(CG_SOLVER,DILU_PREC);
    _bc_given = true;
    _bc = &Dbc;
    _sf = &Nbc;

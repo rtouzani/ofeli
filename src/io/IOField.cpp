@@ -167,7 +167,7 @@ void IOField::saveGMSH(string output_file,
                        string mesh_file)
 {
    if (_access!=OUT)
-      throw OFELIException("In IOField::saveGMSH(...): File must have been opened with the option OUT");
+      throw OFELIException("In IOField::saveGMSH(...): File must have been opened with option OUT");
    close();
    _is_closed = true;
    saveGmsh(_file,output_file,mesh_file);

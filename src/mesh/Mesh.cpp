@@ -105,7 +105,6 @@ Mesh::Mesh(const string& file,
        _n_view1(0), _n_view2(0), _e_view1(0), _e_view2(0), _s_view1(0), _s_view2(0),
        _ed_view1(0), _ed_view2(0)
 {
-   setNodesForDOF();
    string fs = file.substr(file.rfind(".")+1);
    int ff = 0;
    if (fs=="msh")
@@ -114,10 +113,10 @@ Mesh::Mesh(const string& file,
       ff = GNUPLOT;
    else
       ff = OFELI_FF;
+   _no_imposed_dof = bc;
+   _set_nodes = true;
+   _set_sides = _set_edges = _set_elements = false;
    get(file,ff,nb_dof);
-   setDOFSupport(opt);
-   if (bc)
-      removeImposedDOF();
    string mat = theMaterial.getName(1);
 }
 
@@ -866,12 +865,25 @@ Mesh::Mesh(const Mesh& ms)
    _nb_eq = _nb_dof;
 
 // Insert elements
-   mesh_elements(ms)
-      Add(new Element(The_element));
+   for (size_t n=1; n<=ms.getNbElements(); ++n) {
+      Element *el = ms(n);
+      the_element = new Element(el->n(),el->getShape(),el->getCode());
+      for (size_t i=1; i<=el->getNbNodes(); ++i)
+         The_element.Add(getPtrNode((*el)(i)->n()));
+      Add(the_element);
+   }
 
 // Insert sides
-   mesh_sides(ms)
-      Add(new Side(The_side));
+   for (size_t n=1; n<=ms.getNbSides(); ++n) {
+      Side *sd = ms.getPtrSide(n);
+      the_side = new Side(sd->n(),sd->getShape());
+      for (size_t i=1; i<=sd->getNbNodes(); ++i)
+         The_side.Add(getPtrNode((*sd)(i)->n()));
+      The_side.setNbDOF(sd->getNbDOF());
+      for (size_t i=1; i<=sd->getNbDOF(); ++i)
+         The_side.setCode(i,sd->getCode(i));
+      Add(the_side);
+   }
    
    if (ms._node_in_coarse_element.size()>0) {
       for (size_t i=0; i<_nb_nodes; i++)
@@ -1410,7 +1422,7 @@ size_t Mesh::NumberEquations(size_t dof,
       dof_type = ELEMENT_DOF;
    else if (_set_edges==true)
       dof_type = EDGE_DOF;
-
+   
 // Node supported d.o.f.
    if (dof_type == NODE_DOF) {
       if (_no_imposed_dof==true) {
@@ -1544,7 +1556,7 @@ size_t Mesh::NumberEquations(size_t dof)
       dof_type = ELEMENT_DOF;
    else if (_set_edges==true)
       dof_type = EDGE_DOF;
-
+   
 // Node supported d.o.f.
    if (dof_type == NODE_DOF) {
       if (_no_imposed_dof==true) {

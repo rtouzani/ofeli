@@ -495,7 +495,7 @@ void LocalMatrix<T_,NR_,NC_>::Symmetrize()
 template<class T_,size_t NR_,size_t NC_>
 int LocalMatrix<T_,NR_,NC_>::Factor()
 {
-   register size_t j, k;
+   size_t j, k;
    if (NR_!=NC_)
       throw OFELIException("In LocalMatrix::Factor(): Can't factor a rectangle matrix.");
    for (size_t i=1; i<NR_; ++i) {
@@ -517,7 +517,7 @@ int LocalMatrix<T_,NR_,NC_>::Factor()
 template<class T_,size_t NR_,size_t NC_>
 int LocalMatrix<T_,NR_,NC_>::Solve(LocalVect<T_,NR_>& b)
 {
-   register int i, j;
+   int i, j;
    if (NR_!=NC_)
       throw OFELIException("In LocalMatrix::Factor(): Can't solve with a rectangle matrix.");
    for (i=0; i<int(NR_); i++) {

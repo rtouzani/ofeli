@@ -107,6 +107,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        _analysis = STEADY_STATE;
        _time_scheme = STATIONARY;
        _rhocp_is_set = _conductivity_is_set = false;
+       _terms = LUMPED_CAPACITY|DIFFUSION;
     }
 
 /// \brief Destructor
@@ -224,7 +225,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build()
     {
-       *_A = 0;
+      *_A = 0;
        if (_time_scheme==FORWARD_EULER)
           _theta = 0;
        else if (_time_scheme==BACKWARD_EULER)
@@ -287,13 +288,15 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
              BodyRHS(*_bf,GLOBAL_ARRAY);
           s.Assembly(TheElement,eRHS.get(),eA0.get(),eA1.get());
        }
-       MESH_SD {
-          if (TheSide.isReferenced()) {
-             set(theSide);
-             this->SideVector(*_u);
-             if (_terms&FLUX && _sf)
-                BoundaryRHS(*_sf,GLOBAL_ARRAY);
-             s.SAssembly(TheSide,sRHS.get());
+       if (_sf_given) {
+          MESH_SD {
+             if (TheSide.isReferenced()) {
+                set(theSide);
+                this->SideVector(*_u);
+                if (_terms&FLUX && _sf)
+                   BoundaryRHS(*_sf,GLOBAL_ARRAY);
+                s.SAssembly(TheSide,sRHS.get());
+             }
           }
        }
     }
@@ -331,7 +334,6 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        _u->insertBC(*_theMesh,_uu,*_bc);
        return ret;
     }
-
 
 /** \brief Run one time step
  *  \details This function performs one time step in equation solving.

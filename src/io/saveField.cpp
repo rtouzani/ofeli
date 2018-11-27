@@ -994,10 +994,18 @@ void saveGnuplot(string input_file,
                  string mesh_file)
 {
    Mesh mesh(mesh_file);
+   saveGnuplot(mesh,input_file,output_file);
+}
+
+
+void saveGnuplot(Mesh&  mesh,
+                 string input_file,
+                 string output_file)
+{
    vector<real_t> tm;
    cout << "Converting file: " << input_file << " to Gnuplot format." << endl;
    {
-      IOField temp(mesh_file,input_file,mesh,IOField::IN);
+      IOField temp(input_file,mesh,IOField::IN);
       temp.scan(tm,NODE_FIELD);
    }
    size_t nb_time = tm.size();
@@ -1008,7 +1016,7 @@ void saveGnuplot(string input_file,
       cout << "No time step was found." << endl;
 
    Vect<real_t> v(mesh);
-   IOField io(mesh_file,input_file,mesh,IOField::IN);
+   IOField io(input_file,mesh,IOField::IN);
    io.get(v,tm[0]);
    size_t n, m;
    ofstream fp(output_file.c_str());
@@ -1039,11 +1047,19 @@ void saveTecplot(string input_file,
                  string output_file,
                  string mesh_file)
 {
-   cout << "Converting file: " << input_file << " to Tecplot format." << endl;
    Mesh mesh(mesh_file);
+   saveTecplot(mesh,input_file,output_file);
+}
+
+
+void saveTecplot(Mesh&  mesh,
+                 string input_file,
+                 string output_file)
+{
+   cout << "Converting file: " << input_file << " to Tecplot format." << endl;
    vector<real_t> tm;
    {
-      IOField temp(mesh_file,input_file,mesh,IOField::IN);
+      IOField temp(input_file,mesh,IOField::IN);
       temp.scan(tm,NODE_FIELD);
    }
    size_t nb_time = tm.size();
@@ -1051,7 +1067,7 @@ void saveTecplot(string input_file,
         << "time: " << tm[0] << " to time: " << tm[nb_time-1] << "." << endl;
 
    vector<vector<real_t> > field(nb_time);
-   IOField io(mesh_file,input_file,mesh,IOField::IN);
+   IOField io(input_file,mesh,IOField::IN);
    string name;
    io.get(mesh,field,name);
    size_t nb_dof = io.getNbDOF();
@@ -1127,6 +1143,14 @@ void saveVTK(string input_file,
              string mesh_file)
 {
    Mesh mesh(mesh_file);
+   saveVTK(mesh,input_file,output_file);
+}
+
+
+void saveVTK(Mesh&  mesh,
+             string input_file,
+             string output_file)
+{
    ofstream *pf=NULL;
    size_t m=0, k=0, nb_dof;
    string of;
@@ -1135,7 +1159,7 @@ void saveVTK(string input_file,
    string proj=output_file.substr(0,output_file.rfind("."));
    vector<real_t> tm;
    {
-      IOField temp(mesh_file,input_file,mesh,IOField::IN);
+      IOField temp(input_file,mesh,IOField::IN);
       temp.scan(tm,NODE_FIELD);
       nb_dof = temp.getNbDOF();
    }
@@ -1151,7 +1175,7 @@ void saveVTK(string input_file,
    vector<vector<real_t> > field(nb_time);
    for (size_t i=0; i<nb_time; i++)
       field[i].resize(nb_dof*mesh.getNbNodes());
-   IOField io(mesh_file,input_file,mesh,IOField::IN);
+   IOField io(input_file,mesh,IOField::IN);
    string name;
    io.get(mesh,field,name);
 
@@ -1250,8 +1274,15 @@ void saveGmsh(string input_file,
               string mesh_file)
 {
    Mesh mesh(mesh_file);
-   char tt;
-   size_t i, k, nb_dof=0, nb_en;
+   saveGmsh(mesh,input_file,output_file);
+}
+
+
+void saveGmsh(Mesh&  mesh,
+              string input_file,
+              string output_file)
+{
+   size_t i, k, nb_dof=0, nb_en=0;
    ofstream pf(output_file.c_str());
    pf << setprecision(16);
 
@@ -1272,11 +1303,11 @@ void saveGmsh(string input_file,
       return;
    }
 
-   IOField io(mesh_file,input_file,mesh,IOField::IN);
+   IOField io(input_file,mesh,IOField::IN);
    vector<vector<real_t> > field(nb_time);
    string name;
    io.get(mesh,field,name);
-   tt = 'S';
+   char tt = 'S';
    if (nb_dof == mesh.getDim())
       tt = 'V';
 

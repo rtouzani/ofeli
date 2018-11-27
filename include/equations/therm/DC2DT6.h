@@ -30,10 +30,8 @@
 
   ==============================================================================*/
 
-
 #ifndef __DC2DT6_H
 #define __DC2DT6_H
-
 
 #include "equations/therm/Equa_Therm.h"
 #include "io/UserData.h"
@@ -132,6 +130,10 @@ class DC2DT6 : virtual public Equa_Therm<real_t,6,6,3,3>
                  real_t        time,
                  real_t        deltat,
                  int           scheme);
+
+/// \brief Constructor using Mesh data
+/// @param [in] ms Mesh instance
+    DC2DT6(Mesh& ms);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Overall constructor

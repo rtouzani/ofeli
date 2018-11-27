@@ -45,8 +45,6 @@ using std::setprecision;
 
 
 #include "OFELI_Config.h"
-#include "linear_algebra/SpMatrix.h"
-#include "linear_algebra/Vect.h"
 #include "solvers/Prec.h"
 #include "util/util.h"
 #include "io/output.h"
@@ -67,6 +65,7 @@ namespace OFELI {
 
 template<class T_> class SpMatrix;
 template<class T_> class Prec;
+template<class T_> class Vect;
 
 /** \fn int CG(const SpMatrix<T_> &A, const Prec<T_> &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler, int verbose)
  *  \ingroup Solver
@@ -180,8 +179,25 @@ int CG(const SpMatrix<T_>& A,
        real_t              toler,
        int                 verbose)
 {
-   return CG(A,Prec<T_>(A,prec),b,x,max_it,toler,verbose);
+   Prec<T_> p(A,prec);
+   int nb_it = CG(A,p,b,x,max_it,toler,verbose);
+   return nb_it;
 }
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+template<class T_>
+int CG(const Matrix<T_>* A,
+       int               prec,
+       const Vect<T_>&   b,
+       Vect<T_>&         x,
+       int               max_it,
+       real_t            toler,
+       int               verbose)
+{
+   SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
+   return CG(AA,prec,b,x,max_it,toler,verbose);
+}
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

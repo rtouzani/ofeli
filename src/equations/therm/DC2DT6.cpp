@@ -80,7 +80,7 @@ DC2DT6::DC2DT6(const Side* sd)
 
 DC2DT6::DC2DT6(const Element*      el,
                const Vect<real_t>& u,
-                     real_t        time)
+               real_t              time)
 {
    _time = time;
    set(el);
@@ -92,9 +92,9 @@ DC2DT6::DC2DT6(const Element*      el,
 
 DC2DT6::DC2DT6(const Element*      el,
                const Vect<real_t>& u,
-                     real_t        time,
-                     real_t        deltat,
-                     int           scheme)
+               real_t              time,
+               real_t              deltat,
+               int                 scheme)
 {
    _time = time;
    set(el);
@@ -108,7 +108,7 @@ DC2DT6::DC2DT6(const Element*      el,
 
 DC2DT6::DC2DT6(const Side*         sd,
                const Vect<real_t>& u,
-                     real_t        time)
+               real_t              time)
 {
    _time = time;
    set(sd);
@@ -120,9 +120,9 @@ DC2DT6::DC2DT6(const Side*         sd,
 
 DC2DT6::DC2DT6(const Side*         sd,
                const Vect<real_t>& u,
-                     real_t        time,
-                     real_t        deltat,
-                     int           scheme)
+               real_t              time,
+               real_t              deltat,
+               int                 scheme)
 {
    set(sd);
    SideVector(u);
@@ -135,6 +135,17 @@ DC2DT6::DC2DT6(const Side*         sd,
 }
 
 
+DC2DT6::DC2DT6(Mesh& ms) 
+       : Equation<real_t,6,6,3,3>(ms)
+{
+   _equation_name = "Diffusion/Convection";
+   _finite_element = "2-D, 6-Node Triangles (P2)";
+   _stab = false;
+   setMatrixType(SPARSE);
+   setSolver(GMRES_SOLVER,DILU_PREC);
+}
+
+  
 DC2DT6::~DC2DT6()
 {
    if (_tr)

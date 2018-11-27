@@ -85,7 +85,7 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
  */
     DC3DAT3(const Element*      el,
             const Vect<real_t>& u,
-                  real_t        time=0.);
+            real_t              time=0.);
 
 /** \brief Constructor for an element (transient case) with specification of time 
  *  integration scheme.
@@ -102,9 +102,9 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
  */
     DC3DAT3(const Element*      el,
             const Vect<real_t>& u,
-                  real_t        time,
-                  real_t        deltat,
-                  int           scheme);
+            real_t              time,
+            real_t              deltat,
+            int                 scheme);
 
 /** \brief Constructor for a boundary side (transient case).
  *  @param [in] sd Pointer to side
@@ -113,7 +113,7 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
  */
     DC3DAT3(const Side*         sd,
             const Vect<real_t>& u,
-                  real_t        time=0.);
+            real_t              time=0.);
 
 /** \brief Constructor for a side (transient case) with specification of time integration scheme.
  *  @param [in] sd Pointer to side
@@ -129,9 +129,13 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
  */
     DC3DAT3(const Side*         sd,
             const Vect<real_t>& u,
-                  real_t        time,
-                  real_t        deltat,
-                  int           scheme);
+            real_t              time,
+            real_t              deltat,
+            int                 scheme);
+
+/// \brief Constructor using Mesh data
+/// @param [in] ms Mesh instance
+    DC3DAT3(Mesh& ms);
 
 /// \brief Destructor
     ~DC3DAT3();

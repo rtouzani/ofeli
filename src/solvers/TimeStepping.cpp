@@ -30,6 +30,7 @@
   ==============================================================================*/
 
 #include "solvers/TimeStepping.h"
+#include "solvers/LinearSolver.h"
 #include "OFELIException.h"
 using std::cout;
 
@@ -156,6 +157,8 @@ void TimeStepping::setPDE(AbsEqua<real_t>& eq,
                           bool             nl)
 {
    _theEqua[_nb_pdes] = &eq;
+   _ls = &(_theEqua[_nb_pdes]->getLinearSolver());
+   _s[_nb_pdes] = _ls->getSolver();
    _theMesh[_nb_pdes] = &(_theEqua[_nb_pdes]->getMesh());
    _nb_eq[_nb_pdes] = _theMesh[_nb_pdes]->getNbEq();
    _nl[_nb_pdes] = nl;
@@ -175,7 +178,7 @@ void TimeStepping::setPDE(AbsEqua<real_t>& eq,
       _k3[_nb_pdes].setSize(_theMesh[_nb_pdes]->getNbDOF());
    }
    _b[_nb_pdes].setSize(_nb_eq[_nb_pdes]);
-   _vv[_nb_pdes].setSize(_theMesh[_nb_pdes]->getNbDOF());
+   _vv[_nb_pdes].setSize(_theMesh[_nb_pdes]->getNbEq());
    _f[_nb_pdes].setSize(_theMesh[_nb_pdes]->getNbDOF());
    if (!_nl[_nb_pdes])
       _max_nl_it = 1;
@@ -323,39 +326,39 @@ real_t TimeStepping::runOneTimeStep()
          _theEqua[i]->setInput(BOUNDARY_CONDITION,*_bc[i]);
       if (_nl[i]) {
          for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
-         int it=1;
-         real_t err=1;
-         while (it<=_max_nl_it && err>_nl_toler) {
+            int it=1;
+            real_t err=1;
+            while (it<=_max_nl_it && err>_nl_toler) {
+               _theEqua[i]->setInput(SOURCE,(this->*_set_rhs)());
+               if (_explicit[i])
+                  _D[i] = 0;
+               else
+                  (*_A)[i] = 0;
+               _b[i] = 0;
+               if (_sc==int(RK4))
+                  _k1[i] = 0, _k2[i] = 0, _k3[i] = 0;
+               (this->*_presolve)();
+               _theEqua[i]->build(*this);
+               (this->*_solve)();
+               it++;
+            }
+         }
+      }
+      else {
+         for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
             _theEqua[i]->setInput(SOURCE,(this->*_set_rhs)());
             if (_explicit[i])
                _D[i] = 0;
             else
-               (*_A)[i] = 0;
+               *_A[i] = 0;
             _b[i] = 0;
             if (_sc==int(RK4))
                _k1[i] = 0, _k2[i] = 0, _k3[i] = 0;
             (this->*_presolve)();
             _theEqua[i]->build(*this);
             (this->*_solve)();
-            it++;
          }
       }
-   }
-   else {
-      for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
-         _theEqua[i]->setInput(SOURCE,(this->*_set_rhs)());
-         if (_explicit[i])
-            _D[i] = 0;
-         else
-            *_A[i] = 0;
-         _b[i] = 0;
-         if (_sc==int(RK4))
-            _k1[i] = 0, _k2[i] = 0, _k3[i] = 0;
-         (this->*_presolve)();
-         _theEqua[i]->build(*this);
-         (this->*_solve)();
-      }
-   }
    }
    theTimeStep = _time_step;
    return _time_step;
@@ -378,10 +381,10 @@ void TimeStepping::run(bool opt)
 void TimeStepping::solveStationary()
 {
    for (int i=0; i<_nb_pdes; ++i) {
-      _ls.setMatrix(_A[i]);
-      _ls.setRHS(_b[i]);
-      _ls.setSolution(_vv[i]);
-      _ls.solve(_s[i],_p[i]);
+      _ls->setMatrix(_A[i]);
+      _ls->setRHS(_b[i]);
+      _ls->setSolution(_vv[i]);
+      _ls->solve(_s[i],_p[i]);
       insertBC(_vv[i],_v[i]);
       *_w[i] = _u[i] = _v[i];
    }
@@ -408,10 +411,10 @@ void TimeStepping::solveBackwardEuler()
    if (_order==2)
       throw OFELIException("In TimeStepping::solveBackwardEuler(): Backward Euler "
                            "scheme is implemented for first order equations only.");
-   _ls.setMatrix(_A[_ind-1]);
-   _ls.setRHS(_b[_ind-1]);
-   _ls.setSolution(_vv[_ind-1]);
-   _ls.solve(_s[_ind-1],_p[_ind-1]);
+   _ls->setMatrix(_A[_ind-1]);
+   _ls->setRHS(_b[_ind-1]);
+   _ls->setSolution(_vv[_ind-1]);
+   _ls->solve(_s[_ind-1],_p[_ind-1]);
    insertBC(_vv[_ind-1],_v[_ind-1]);
    *_w[_ind-1] = _u[_ind-1] = _v[_ind-1];
 }
@@ -422,10 +425,10 @@ void TimeStepping::solveCrankNicolson()
    if (_order==2)
       throw OFELIException("In TimeStepping::solveCrankNicolson(): "
                            "Crank-Nicolson scheme is implemented for first order equations only.");
-   _ls.setMatrix(_A[_ind-1]);
-   _ls.setRHS(_b[_ind-1]);
-   _ls.setSolution(_vv[_ind-1]);
-   _ls.solve(_s[_ind-1],_p[_ind-1]);
+   _ls->setMatrix(_A[_ind-1]);
+   _ls->setRHS(_b[_ind-1]);
+   _ls->setSolution(_vv[_ind-1]);
+   _ls->solve(_s[_ind-1],_p[_ind-1]);
    insertBC(_vv[_ind-1],_v[_ind-1]);
    *_w[_ind-1] = _u[_ind-1] = _v[_ind-1];
    _f1[_ind-1] = *_f2[_ind-1];
@@ -526,10 +529,10 @@ void TimeStepping::solveNewmark()
       return;
    }
    if (_sstep>1) {
-      _ls.setMatrix(_A[_ind-1]);
-      _ls.setRHS(_b[_ind-1]);
-      _ls.setSolution(_vv[_ind-1]);
-      _ls.solve(_s[_ind-1],_p[_ind-1]);
+      _ls->setMatrix(_A[_ind-1]);
+      _ls->setRHS(_b[_ind-1]);
+      _ls->setSolution(_vv[_ind-1]);
+      _ls->solve(_s[_ind-1],_p[_ind-1]);
       insertBC(_vv[_ind-1],*_w[_ind-1]);
       _ddu[_ind-1] = (1./(_beta*_time_step*_time_step))*(*_w[_ind-1]-_v[_ind-1]);
       *_du[_ind-1] += (_time_step*_gamma)*_ddu[_ind-1];
@@ -543,10 +546,10 @@ void TimeStepping::solveBDF2()
   if (_order==2)
      throw OFELIException("In TimeStepping::solveBDF2(): BDF2 scheme is "
                           "implemented for first order equations only.");
-   _ls.setMatrix(_A[_ind-1]);
-   _ls.setRHS(_b[_ind-1]);
-   _ls.setSolution(_vv[_ind-1]);
-   _ls.solve(_s[_ind-1],_p[_ind-1]);
+   _ls->setMatrix(_A[_ind-1]);
+   _ls->setRHS(_b[_ind-1]);
+   _ls->setSolution(_vv[_ind-1]);
+   _ls->solve(_s[_ind-1],_p[_ind-1]);
    if (_step==1) {
       insertBC(_vv[_ind-1],_v[_ind-1]);
       *_w[_ind-1] = _v[_ind-1];

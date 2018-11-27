@@ -261,6 +261,22 @@ int GMRes(const SpMatrix<T_>& A,
    return GMRes(A,Prec<T_>(A,prec),b,x,m,max_it,toler,verbose);
 }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+template<class T_>
+int GMRes(const Matrix<T_>* A,
+          int               prec,
+          const Vect<T_>&   b,
+          Vect<T_>&         x,
+          size_t            m,
+          int               max_it,
+          real_t            toler,
+          int               verbose)
+{
+   SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
+   return GMRes(AA,prec,b,x,m,max_it,toler,verbose);
+}
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 

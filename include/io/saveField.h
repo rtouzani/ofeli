@@ -171,6 +171,24 @@ template<class T_> class Vect;
                      string output_file,
                      string mesh_file);
 
+/** \fn void saveGnuplot(Mesh& mesh, string input_file, string output_file)
+ *  \ingroup Util
+ *  \brief Save a vector to an input <a href="http://www.gnuplot.info/">Gnuplot</a> file.
+ *
+ *  \details Gnuplot is a command-line driven program for producing 2D and 3D plots. It is
+ *  under the GNU General Public License. Available information can be found in the site:\n
+ *  http://www.gnuplot.info/
+ *  @param [in] mesh Reference to Mesh instance
+ *  @param [in] input_file Input file (OFELI XML file containing a field).
+ *  @param [in] output_file Output file (gnuplot format file)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
+    void saveGnuplot(Mesh&  mesh,
+                     string input_file,
+                     string output_file);
+
 /**  \fn void saveTecplot(string input_file, string output_file, string mesh_file)
  *  \ingroup Util
  *  \brief Save a vector to an output file to an input <a href="http://www.tecplot.com">Tecplot</a> file.
@@ -187,6 +205,23 @@ template<class T_> class Vect;
     void saveTecplot(string input_file,
                      string output_file,
                      string mesh_file);
+
+/**  \fn void saveTecplot(Mesh& mesh, string input_file, string output_file)
+ *  \ingroup Util
+ *  \brief Save a vector to an output file to an input <a href="http://www.tecplot.com">Tecplot</a> file.
+ *
+ *  \details Tecplot is high quality post graphical commercial processing program developed
+ *  by \b Amtec. Available information can be found in the site: http://www.tecplot.com
+ *  @param [in] mesh Reference to Mesh instance
+ *  @param [in] input_file Input file (OFELI XML file containing a field).
+ *  @param [in] output_file Output file (gnuplot format file)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
+    void saveTecplot(Mesh&  mesh,
+                     string input_file,
+                     string output_file);
 
 /** \fn saveVTK(string input_file, string output_file, string mesh_file)
  *
@@ -207,12 +242,32 @@ template<class T_> class Vect;
                  string output_file,
                  string mesh_file);
 
+/** \fn saveVTK(Mesh& mesh, string input_file, string output_file)
+ *
+ *  \ingroup Util
+ *  \brief Save a vector to an output <a href="http://public.kitware.com/VTK/">VTK</a> file.
+ *
+ *  \details The Visualization ToolKit (VTK) is an open source, freely available software
+ *  system for 3D computer graphics. Available information can be found in the site:\n
+ *  http://public.kitware.com/VTK/
+ *  @param [in] mesh Reference to Mesh instance
+ *  @param [in] input_file Input file (OFELI XML file containing a field).
+ *  @param [in] output_file Output file (VTK format file)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
+    void saveVTK(Mesh&  mesh,
+                 string input_file,
+                 string output_file);
+
+
 /**  \fn void saveGmsh(string input_file, string output_file, string mesh_file)
  *
  *  \ingroup Util
  *  \brief Save a vector to an output <a href="http://www.geuz.org/gmsh/">Gmsh</a> file.
- *
- *  <a href="http://www.geuz.org/gmsh/">Gmsh</a> is a free mesh generator and postprocessor that can be downloaded from the site:\n
+ *  \details  <a href="http://www.geuz.org/gmsh/">Gmsh</a> is a free mesh generator and 
+ *  postprocessor that can be downloaded from the site:\n
  *  http://www.geuz.org/gmsh/
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (Gmsh format file)
@@ -224,6 +279,24 @@ template<class T_> class Vect;
     void saveGmsh(string input_file,
                   string output_file,
                   string mesh_file);
+
+/**  \fn void saveGmsh(Mesh& mesh, string input_file, string output_file)
+ *
+ *  \ingroup Util
+ *  \brief Save a vector to an output <a href="http://www.geuz.org/gmsh/">Gmsh</a> file.
+ *  \details  <a href="http://www.geuz.org/gmsh/">Gmsh</a> is a free mesh generator and 
+ *  postprocessor that can be downloaded from the site:\n
+ *  http://www.geuz.org/gmsh/
+ *  @param [in] mesh Reference to Mesh instance
+ *  @param [in] input_file Input file (OFELI XML file containing a field).
+ *  @param [in] output_file Output file (Gmsh format file)
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
+ */
+    void saveGmsh(Mesh&  mesh,
+                  string input_file,
+                  string output_file);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

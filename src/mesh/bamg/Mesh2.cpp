@@ -1090,7 +1090,7 @@ void Triangles::Add(Vertex&   s,
   --------------------------------------------*/
 
    Vertex *s0 = &(*t)[0], *s1 = &(*t)[1], *s2 = &(*t)[2];
-   Icoor2 det3local[3] = { double(0.), double(0.), double(0.) };
+   Icoor2 det3local[3] = { Icoor2(0.), Icoor2(0.), Icoor2(0.) };
 
 // The following lines are added to avoid a bug in the Mac Os compiler when
 // an optimization option is used
