@@ -495,7 +495,8 @@ Mesh::Mesh(real_t xmin,
            size_t ne,
            int    c1,
            int    c2,
-           int    p)
+           int    p,
+           size_t nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(1), _nb_dof(0), _nb_vertices(0),
        _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
@@ -511,8 +512,8 @@ Mesh::Mesh(real_t xmin,
    vector<Node *> nd;
    for (size_t n=1; n<=ne*p+1; n++) {
       the_node = new Node(n,Point<real_t>(x));
-      The_node.setNbDOF(1);
-      The_node.setDOF(_first_dof,1);
+      The_node.setNbDOF(nb_dof);
+      The_node.setDOF(_first_dof,nb_dof);
       The_node.setCode(1,0);
       if (n==1)
          The_node.setCode(1,c1);
@@ -563,7 +564,8 @@ Mesh::Mesh(real_t xmin,
            int    cxN,
            int    cy0,
            int    cyN,
-           int    opt)
+           int    opt,
+           size_t nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(2), _nb_dof(0), _nb_vertices(0),
        _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false), _is_structured(true),
        _all_sides_created(false), _boundary_sides_created(false), _all_edges_created(false),
@@ -583,7 +585,7 @@ Mesh::Mesh(real_t xmin,
       for (size_t j=0; j<=ny; j++) {
          n++;
          the_node = new Node(n,x);
-         The_node.setNbDOF(1);
+         The_node.setNbDOF(nb_dof);
          _code[0] = 0;
          if (j==0  && cy0>0)
             _code[0] = cy0;
@@ -593,7 +595,7 @@ Mesh::Mesh(real_t xmin,
             _code[0] = cx0;
          if (i==nx && cxN>0)
             _code[0] = cxN;
-         The_node.setDOF(_first_dof,1);
+         The_node.setDOF(_first_dof,nb_dof);
          The_node.setCode(_code);
          Add(the_node);
          x.y += hy;
@@ -637,7 +639,7 @@ Mesh::Mesh(real_t xmin,
          The_side.Add(getPtrNode(n));
          The_side.Add(getPtrNode(n+1));
          n++;
-         The_side.setNbDOF(1);
+         The_side.setNbDOF(nb_dof);
          The_side.setCode(1,-cx0);
          Add(the_side);
       }
@@ -649,7 +651,7 @@ Mesh::Mesh(real_t xmin,
          The_side.Add(getPtrNode(n));
          The_side.Add(getPtrNode(n+1));
          n++;
-         The_side.setNbDOF(1);
+         The_side.setNbDOF(nb_dof);
          The_side.setCode(1,-cxN);
          Add(the_side);
       }
@@ -661,7 +663,7 @@ Mesh::Mesh(real_t xmin,
          The_side.Add(getPtrNode(n));
          The_side.Add(getPtrNode(n+ny+1));
          n += ny + 1;
-         The_side.setNbDOF(1);
+         The_side.setNbDOF(nb_dof);
          The_side.setCode(1,-cy0);
          Add(the_side);
       }
@@ -673,7 +675,7 @@ Mesh::Mesh(real_t xmin,
          The_side.Add(getPtrNode(n));
          The_side.Add(getPtrNode(n+ny+1));
          n += ny + 1;
-         The_side.setNbDOF(1);
+         The_side.setNbDOF(nb_dof);
          The_side.setCode(1,-cyN);
          Add(the_side);
       }
@@ -699,7 +701,8 @@ Mesh::Mesh(real_t xmin,
            int    cyN,
            int    cz0,
            int    czN,
-           int    opt)
+           int    opt,
+           size_t nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_edges(0), _dim(3), _nb_dof(0), _nb_vertices(0),
        _first_dof(1), _nb_mat(1), _verb(0), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
@@ -720,7 +723,7 @@ Mesh::Mesh(real_t xmin,
          x.x = xmin;
          for (size_t i=0; i<=nx; i++) {
             the_node = new Node(++n,x);
-            The_node.setNbDOF(1);
+            The_node.setNbDOF(nb_dof);
             _code[0] = 0;
             if (j==0  && cy0>0) _code[0] = cy0;
             if (j==ny && cyN>0) _code[0] = cyN;
@@ -728,7 +731,7 @@ Mesh::Mesh(real_t xmin,
             if (i==nx && cxN>0) _code[0] = cxN;
             if (k==0  && cz0>0) _code[0] = cz0;
             if (k==nz && czN>0) _code[0] = czN;
-            The_node.setDOF(_first_dof,1);
+            The_node.setDOF(_first_dof,nb_dof);
             The_node.setCode(_code);
             Add(the_node);
             x.x += hx;
@@ -794,7 +797,7 @@ Mesh::Mesh(real_t xmin,
       The_side.Add(getPtrNode(n));
       The_side.Add(getPtrNode(n+1));
       n++;
-      the_side->setNbDOF(1);
+      the_side->setNbDOF(nb_dof);
       if (cy0<0) {
          The_side.setCode(1,-cy0);
          Add(the_side);
@@ -806,7 +809,7 @@ Mesh::Mesh(real_t xmin,
       The_side.Add(getPtrNode(n));
       The_side.Add(getPtrNode(n+1));
       n++;
-      The_side.setNbDOF(1);
+      The_side.setNbDOF(nb_dof);
       if (cyN<0) {
          The_side.setCode(1,-cyN);
          Add(the_side);
@@ -818,7 +821,7 @@ Mesh::Mesh(real_t xmin,
       The_side.Add(getPtrNode(n));
       The_side.Add(getPtrNode(n+ny+1));
       n += ny + 1;
-      The_side.setNbDOF(1);
+      The_side.setNbDOF(nb_dof);
       if (cx0<0) {
          The_side.setCode(1,-cx0);
          Add(the_side);
@@ -830,7 +833,7 @@ Mesh::Mesh(real_t xmin,
       The_side.Add(getPtrNode(n));
       The_side.Add(getPtrNode(n+ny+1));
       n += ny + 1;
-      The_side.setNbDOF(1);
+      The_side.setNbDOF(nb_dof);
       if (cxN<0) {
          The_side.setCode(1,-cxN);
          Add(the_side);

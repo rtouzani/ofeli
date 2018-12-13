@@ -130,8 +130,7 @@ class Mesh
  *  @param [in] opt Type of DOF support: To choose among enumerated values <tt>NODE_DOF</tt>, <tt>SIDE_DOF</tt> 
  *              or <tt>ELEMENT_DOF</tt>.\n
  *  Say if degrees of freedom (unknowns) are supported by nodes, sides or elements.
- *  @param [in] nb_dof Number of degrees of freedom per node [Default: <tt>1</tt>]. This value is meaningful only
- *  if other format than OFELI's one is used. Otherwise, the information is contained in the OFELI file format.
+ *  @param [in] nb_dof Number of degrees of freedom per node [Default: <tt>1</tt>].
  */
     Mesh(const string& file,
          bool          bc=false,
@@ -190,7 +189,8 @@ class Mesh
  *  @param [in] ne Number of elements
  *  @param [in] c1 Code for the first node (x=xmin)
  *  @param [in] c2 Code for the last node (x=xmax)
- *  @param [in] p Degree of approximation polynomial [Default: ].
+ *  @param [in] p Degree of approximation polynomial [Default: <tt>1</tt>].
+ *  @param [in] nb_dof Number of degrees of freedom per node [Default: <tt>1</tt>].
  *  @remark The option p can be set to 1 if the user intends to use finite differences.
  */
     Mesh(real_t xmin,
@@ -198,7 +198,8 @@ class Mesh
          size_t ne,
          int    c1,
          int    c2,
-         int    p=1);
+         int    p=1,
+         size_t nb_dof=1);
 
 /** \brief Constructor for a uniform 2-D structured finite element mesh.
  *  \details The domain is the rectangle (xmin,xmax)x(ymin,ymax)
@@ -215,6 +216,7 @@ class Mesh
  *  @param [in] opt Flag to generate elements as well (if not zero) [Default: 0]. 
  *  If the flag is not 0, it can take one of the enumerated values: TRIANGLE or QUADRILATERAL, 
  *  with obvious meaning.
+ *  @param [in] nb_dof Number of degrees of freedom per node [Default: <tt>1</tt>].
  *  @remark The option opt can be set to 0 if the user intends to use finite differences.
  */
     Mesh(real_t xmin,
@@ -227,7 +229,8 @@ class Mesh
          int    cxN,
          int    cy0,
          int    cyN,
-         int    opt=0);
+         int    opt=0,
+         size_t nb_dof=1);
 
 /** \brief Constructor for a uniform 3-D structured finite element mesh.
  *  \details The domain is the parallepiped (xmin,xmax)x(ymin,ymax)x(zmin,zmax)
@@ -249,6 +252,7 @@ class Mesh
  *  @param [in] opt Flag to generate elements as well (if not zero) [Default: 0]. 
  *  If the flag is not 0, it can take one of the enumerated values: HEXAHEDRON or TETRAHEDRON, 
  *  with obvious meaning.
+ *  @param [in] nb_dof Number of degrees of freedom per node [Default: <tt>1</tt>].
  *  @remark The option opt can be set to 0 if the user intends to use finite differences.
  */
     Mesh(real_t xmin,
@@ -266,7 +270,8 @@ class Mesh
          int    cyN,
          int    cz0,
          int    czN,
-         int    opt);
+         int    opt=0,
+         size_t nb_dof=1);
 
 /** \brief Constructor that extracts the mesh of a rectangular region from an initial mesh.
  *  \details This constructor is useful for zooming purposes for instance.

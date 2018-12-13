@@ -1016,21 +1016,31 @@ void saveGnuplot(Mesh&  mesh,
       cout << "No time step was found." << endl;
 
    Vect<real_t> v(mesh);
+   size_t dim = mesh.getDim();
    IOField io(input_file,mesh,IOField::IN);
    io.get(v,tm[0]);
-   size_t n, m;
    ofstream fp(output_file.c_str());
    fp.setf(ios::right|ios::scientific);
    mesh_elements(mesh) {
-      m = 0;
-      if (The_element.getShape()==QUADRILATERAL)
-         m = 4;
-      if (The_element.getShape()==TRIANGLE)
-         m = 3;
-      if (!m)
-         throw OFELIException("In saveGnuplot(string,string,string): "
-                              " Unknown element shape " + itos(element_label));
-      for (n=1; n<=m; n++) {
+      size_t m = 0;
+      switch (dim) {
+
+         case 1: if (The_element.getShape()==LINE)
+                    m = 2;
+                 if (!m)
+                    throw OFELIException("In saveGnuplot(string,string,string): "
+                                          " Unknown element shape " + itos(element_label));
+                 break;
+
+         case 2: if (The_element.getShape()==QUADRILATERAL)
+                    m = 4;
+                 if (The_element.getShape()==TRIANGLE)
+                    m = 3;
+                 if (!m)
+                    throw OFELIException("In saveGnuplot(string,string,string): "
+                                         " Unknown element shape " + itos(element_label));
+      }
+      for (size_t n=1; n<=m; n++) {
          the_node = The_element(n);
          fp << setprecision(4) << setw(18) << The_node.getX() << " "
             << setprecision(4) << setw(18) << The_node.getY();

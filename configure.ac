@@ -47,6 +47,7 @@ AC_CYGWIN()
 dnl Prevents setting flags.
 CPPFLAGS="-Wall "
 CXXFLAGS=" "
+CFLAGS="-Wall "
 
 if test "$OFELI_CFLAGS" == "" ; then
    OFELI_CFLAGS="-I$includedir/ofeli "
@@ -114,22 +115,22 @@ AH_TEMPLATE(HAVE_INLINE,0)
 AH_TEMPLATE(HIDE_INLINE_STATIC,0)
 AH_TEMPLATE(HAVE_CLOCKS_PER_SEC,0)
 AH_TEMPLATE(HAVE_EXIT_SUCCESS_AND_FAILURE,0)
-AH_TEMPLATE(HAVE_SPARCLINUX_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_M68KLINUX_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_PPCLINUX_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_X86LINUX_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_SUNOS4_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_SOLARIS_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_HPUX11_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_HPUX_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_TRU64_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_IRIX_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_AIX_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_FREEBSD_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_OS2EMX_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_NETBSD_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_OPENBSD_IEEE_INTERFACE,0)
-AH_TEMPLATE(HAVE_DARWIN_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_SPARCLINUX_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_M68KLINUX_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_PPCLINUX_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_X86LINUX_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_SUNOS4_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_SOLARIS_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_HPUX11_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_HPUX_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_TRU64_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_IRIX_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_AIX_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_FREEBSD_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_OS2EMX_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_NETBSD_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_OPENBSD_IEEE_INTERFACE,0)
+#AH_TEMPLATE(HAVE_DARWIN_IEEE_INTERFACE,0)
 AH_TEMPLATE(HAVE_GUESSED_CLOCKS_PER_SEC,0)
 
 dnl Check for "extern inline", using a modified version of the test
@@ -181,7 +182,7 @@ AC_MSG_CHECKING(whether CLOCKS_PER_SEC is known for $host_os)
 	dnl Nextstep3 defines CLK_TCK 64 in /usr/include/ansi/time.h,
 	dnl which seems to agree with observation of clock().
 	dnl
-        AC_DEFINE(HAVE_GUESSED_CLOCKS_PER_SEC,64)
+   AC_DEFINE(HAVE_GUESSED_CLOCKS_PER_SEC,64)
 	AC_MSG_RESULT([yes (15.625 milliseconds)])
         ;;
     *)
@@ -210,8 +211,10 @@ fi ;
 
 dnl Add copious amounts of debugging with gcc, egcs, etc
 if test "${GXX}" = "yes" ; then
-#CPPFLAGS="${CPPFLAGS} -std=c++0x"
-CPPFLAGS="${CPPFLAGS} "
+CPPFLAGS="${CPPFLAGS}"
+fi
+if test "${GCC}" = "yes" ; then
+CFLAGS="${CFLAGS}"
 fi
 
 AC_ARG_VAR([OFELI_CFLAGS], [OFELI Compilation flags.
@@ -239,6 +242,7 @@ AC_ARG_ENABLE(debug,[  --enable-debug          compile for debugging])
 AC_MSG_RESULT([$enable_debug])
 if test "x$enable_debug" = "xyes" ; then
 CPPFLAGS="${CPPFLAGS} -g -DDEBUG"
+CFLAGS="${CFLAGS} -g -DDEBUG"
 fi
 
 dnl Debugging and Tracing turned on
@@ -246,8 +250,10 @@ AC_MSG_CHECKING(for debugging and tracing)
 AC_ARG_ENABLE(debug,[  --enable-trace-debug    compile for debugging and tracing])
 AC_MSG_RESULT([$enable_trace_debug])
 CPPFLAGS="${CPPFLAGS}"
+CFLAGS="${CFLAGS}"
 if test "x$enable_trace_debug" = "xyes" ; then
 CPPFLAGS="${CPPFLAGS} -g -DDEBUG -D_OFELI_DEBUG"
+CFLAGS="${CFLAGS} -g -DDEBUG -D_OFELI_DEBUG"
 fi
 
 dnl Building for release
@@ -256,8 +262,10 @@ AC_ARG_ENABLE(release,[  --enable-release        compile for release])
 AC_MSG_RESULT([$enable_release])
 if test "x$enable_release" = "xyes" ; then
 CPPFLAGS="${CPPFLAGS} -O3 -DNDEBUG"
+CFLAGS="${CFLAGS} -O3 -DNDEBUG"
 if test "${GXX}" = "yes" ; then
 CPPFLAGS="${CPPFLAGS} -ffast-math -fstrict-aliasing"
+CFLAGS="${CFLAGS} -ffast-math -fstrict-aliasing"
 fi
 fi
  
@@ -267,8 +275,10 @@ AC_ARG_ENABLE(fast,[  --enable-fast           compile for fast configuration])
 AC_MSG_RESULT([$enable_fast])
 if test "x$enable_fast" = "xyes" ; then
 CPPFLAGS="${CPPFLAGS} -Ofast -DNDEBUG"
+CFLAGS="${CFLAGS} -Ofast -DNDEBUG"
 if test "${GXX}" = "yes" ; then
 CPPFLAGS="${CPPFLAGS} -ffast-math -fstrict-aliasing"
+CFLAGS="${CFLAGS} -ffast-math -fstrict-aliasing"
 fi
 fi
 
@@ -308,7 +318,7 @@ AC_SUBST(OFELI_FLAGS)
 
 # Now restore our (possibly augmented) CFLAGS, LIBS and CPPFLAGS.
 CFLAGS="$save_cflags"
-OFELI_CFLAGS="$OFELI_CFLAGS $CPPFLAGS"
+OFELI_CFLAGS="$OFELI_CFLAGS"
 if test "x$with_petsc" = "xyes" ; then
 OFELI_LIBS="$OFELI_LIBS $PETSC_LIBS $MPI_LIBS $OFELI_LDFLAGS $PETSC_LDFLAGS $MPI_LDFLAGS"
 fi
@@ -474,5 +484,5 @@ echo "            Type: 'make' to compile OFELI, utilities and examples."
 echo "            Then: 'make install' to install it."
 echo "            Tests are not installed."
 echo "            They can be run once installation is completed."
-echo "            For this, type: test_ofeli.sh"
+echo "            For this, type: make tests"
 echo ""

@@ -101,6 +101,7 @@
 #include "solvers/ODESolver.h"
 #include "solvers/OptSolver.h"
 #include "solvers/EigenProblemSolver.h"
+#include "solvers/NLASSolver.h"
 #include "equations/interface/FastMarching2D.h"
 
 #include "io/Tabulation.h"

@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = nl_demo1 nl_demo2 nl_demo3 nl_demo4
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 nl_demo1_SOURCES =	nl_demo1.cpp
 nl_demo2_SOURCES =	nl_demo2.cpp

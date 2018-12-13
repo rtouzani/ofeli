@@ -37,7 +37,6 @@
  ==============================================================================*/
 
 #include "OFELI.h"
-#include "solvers/NLASSolver.h"
 using namespace OFELI;
 
 double f(double x)

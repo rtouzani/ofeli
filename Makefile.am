@@ -3,19 +3,19 @@
 DDIR = $(datadir)/ofeli/doc \
        $(datadir)/ofeli/tools
 
-AUX_DIST =	config.guess \
-		config.sub \
-		install-sh \
-		ltconfig \
-		ltmain.sh \
-		mdate-sh \
-		missing \
-		mkinstalldirs \
-		ofeli.cbp
+AUX_DIST = config.guess \
+           config.sub \
+           install-sh \
+           ltconfig \
+           ltmain.sh \
+           mdate-sh \
+           missing \
+           mkinstalldirs \
+           ofeli.cbp
 
-AUX_DIST_EXTRA=	readline.m4 \
-		sys_errlist.m4 \
-		sys_siglist.m4
+AUX_DIST_EXTRA = readline.m4 \
+                 sys_errlist.m4 \
+                 sys_siglist.m4
 
 EXTRA_DIST = bootstrap ChangeLog
 AUTOMAKE_OPTIONS = foreign

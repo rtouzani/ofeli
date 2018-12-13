@@ -41,19 +41,18 @@
  ==============================================================================*/
 
 #include "OFELI.h"
-#include "solvers/NLASSolver.h"
 using namespace OFELI;
 
 
-Vect<double> f(Vect<double>& x)
+Vect<double> f(Vect<double> x)
 {
    Vect<double> y(2);
    y(1) = x(1)*x(1) - 2*x(1)*x(2) - 2;
-   y(2) = x(2)*x(2) + 1;
+   y(2) = x(1) + x(2)*x(2) + 1;
    return y;
 }
 
-Vect<double> g(Vect<double>& x)
+Vect<double> g(Vect<double> x)
 {
    Vect<double> y(2,2);
    y(1,1) = 2*x(1) - 2*x(2);

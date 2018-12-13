@@ -54,3 +54,4 @@ libmetis_a_SOURCES =	balance.c \
 			subdomains.c \
 			timing.c \
 			util.c
+

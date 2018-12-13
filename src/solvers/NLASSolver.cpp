@@ -56,7 +56,7 @@ NLASSolver::NLASSolver()
 
 NLASSolver::NLASSolver(NonLinearIter nl,
                        int           nb_eq)
-           : _cv(false), _f_given(false), _grad_given(false), _u_set(true),
+           : _cv(false), _f_given(false), _grad_given(false), _u_set(false),
              _ab_given(false), _theEqua(NULL), _nl(int(nl)), _verb(1), _max_it(100),
              _nb_eq(nb_eq), _fct_type(FUNCTION), _toler(1.e-8), _Df(NULL),
              _theMesh(NULL), _my_nlas(NULL)
@@ -66,12 +66,11 @@ NLASSolver::NLASSolver(NonLinearIter nl,
 
 NLASSolver::NLASSolver(real_t&       x,
                        NonLinearIter nl)
-           : _cv(false), _f_given(false), _grad_given(false), _u_set(true),
+           : _cv(false), _f_given(false), _grad_given(false), _u_set(false),
              _ab_given(false), _theEqua(NULL), _nl(int(nl)), _verb(1), _max_it(100),
-             _fct_type(FUNCTION), _toler(1.e-8), _x(&x), _Df(NULL),
+             _nb_eq(1), _fct_type(FUNCTION), _toler(1.e-8), _x(&x), _Df(NULL),
              _theMesh(NULL), _my_nlas(NULL)
 {
-   _nb_eq = 1;
    set(nl);
 }
 
@@ -80,10 +79,9 @@ NLASSolver::NLASSolver(Vect<real_t>& u,
                        NonLinearIter nl)
            : _cv(false), _f_given(false), _grad_given(false), _u_set(false),
              _ab_given(false), _theEqua(NULL), _nl(int(nl)), _verb(1), _max_it(100),
-             _fct_type(FUNCTION), _u(&u), _toler(1.e-8), _var(""),
+             _nb_eq(u.size()), _fct_type(FUNCTION), _u(&u), _toler(1.e-8), _var(""),
              _Df(NULL), _theMesh(NULL), _my_nlas(NULL)
 {
-   _nb_eq = u.size();
    _v.setSize(_nb_eq);
    set(nl);
 }
@@ -351,6 +349,7 @@ void NLASSolver::solveBisection()
    if (Function(_a)*Function(_b)>0.)
       throw OFELIException("In NLASSolver::solveBisection():\n"
                            "Values of a and b must give opposite sign for f.");
+   _it = 0;
    *_x = 0.5*(_a+_b);
    while (++_it < _max_it) {
       (Function(*_x)*Function(_a)<0.) ? _b = *_x : _a = *_x;
@@ -385,6 +384,7 @@ void NLASSolver::solveRegulaFalsi()
                            "Values of a and b must give opposite sign for f.");
    real_t fa=Function(_a), fb=Function(_b);
    *_x = (fa*_b-fb*_a)/(fa-fb);
+   _it = 0;
    while (++_it < _max_it) {
       (Function(*_x)*fa<0.) ? _b = *_x : _a = *_x;
       fa = Function(_a), fb = Function(_b);
@@ -421,6 +421,7 @@ void NLASSolver::solveSecant()
       if (_verb>1)
          cout << "Initial guess: " << *_x << endl;
       _g = Gradient(*_x);
+      _it = 0;
       while (++_it < _max_it) {
          _y = *_x - Function(*_x)/_g;
          if (_verb>1)

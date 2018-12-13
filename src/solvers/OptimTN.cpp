@@ -124,9 +124,9 @@ int lmqnbc(OptSolver&          opt,
 // Initialize variables
    nb_obj_eval = 0;
    int upd1=1, ireset=0, nmodif=0, nlincg=0, conv=0;
-   Vect<real_t> w[15];
+   Vect<real_t> w[14];
    size_t n=x.size();
-   for (size_t i=0; i<15; i++)
+   for (size_t i=0; i<14; i++)
       w[i].setSize(n);
 
 // Within this routine the array w(loldg) is shared by w(lhyr)
@@ -269,10 +269,9 @@ L40:
 
 //    Compute the change in the iterates and the corresponding change in the gradients
       if (!newcon) {
-         size_t isk=4*n, ipk=12*n, iyk=5*n, ioldg=9*n;
          for (size_t i=0; i<n; ++i) {
-            w[0][iyk++] = g[i] - w[0][ioldg++];
-            w[0][isk++] = alpha * w[0][ipk++];
+            w[5][i] = g[i] - w[9][i];
+            w[4][i] = alpha * w[12][i];
          }
 
 //       Set up parameters used in updating the preconditioning strategy

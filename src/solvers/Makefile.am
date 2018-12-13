@@ -1,6 +1,7 @@
 
 noinst_LIBRARIES = libsolvers.a
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 libsolvers_a_SOURCES = \
 	BSpline.cpp \
