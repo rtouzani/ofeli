@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2018 Rachid Touzani
+   Copyright (C) 1998 - 2019 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -136,7 +136,7 @@ void FFI::open(const string& file,
 
 void FFI::open(const string& file,
                const string& ident,
-                     int     c)
+               int           c)
 {
    _in = false;
    _is = new ifstream;

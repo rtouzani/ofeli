@@ -15,7 +15,6 @@ var classOFELI_1_1Laplace2DT3 =
     [ "Post", "classOFELI_1_1Laplace2DT3.html#a9ae33cd5527d05dd7b3085e121d60dd5", null ],
     [ "solve", "classOFELI_1_1Laplace2DT3.html#aaf08be7387628b3e58d2bbe2308b80ad", null ],
     [ "Axb", "classOFELI_1_1Laplace2DT3.html#a335d3f93476ec46ea3f591099398253e", null ],
-    [ "setSource", "classOFELI_1_1Laplace2DT3.html#ad022102645304eb3d190bc8a26df1213", null ],
     [ "run", "classOFELI_1_1Laplace2DT3.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
     [ "build", "classOFELI_1_1Laplace2DT3.html#a7740c7ab195c03ac140f1f75f633470f", null ],
     [ "build", "classOFELI_1_1Laplace2DT3.html#a707e4f7e7fe3140fd7a6fefe4774f03d", null ],

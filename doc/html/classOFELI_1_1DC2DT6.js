@@ -7,6 +7,7 @@ var classOFELI_1_1DC2DT6 =
     [ "DC2DT6", "classOFELI_1_1DC2DT6.html#ade7958eb85c20506fd14768e1add33fd", null ],
     [ "DC2DT6", "classOFELI_1_1DC2DT6.html#a68a5a404f543065368293519b51fa71d", null ],
     [ "DC2DT6", "classOFELI_1_1DC2DT6.html#ab794edf592c1fde9b6a6124091bcd61f", null ],
+    [ "DC2DT6", "classOFELI_1_1DC2DT6.html#a5a0433ffae1f4e34e03835a5d3c1bd58", null ],
     [ "~DC2DT6", "classOFELI_1_1DC2DT6.html#a2c80b413ff959bca09b053e7781ab478", null ],
     [ "Diffusion", "classOFELI_1_1DC2DT6.html#ac301bba6a75b942c88f797628c141e2c", null ],
     [ "Convection", "classOFELI_1_1DC2DT6.html#a53e87db15fc709b78df9142c77fd26c7", null ],

@@ -184,9 +184,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aef0e68c1876d30d52009f2da7b70bac4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DMatrix.html#aef0e68c1876d30d52009f2da7b70bac4">setRow</a> (size_t i, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v)</td></tr>
 <tr class="memdesc:aef0e68c1876d30d52009f2da7b70bac4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a given vector to a prescribed row in the matrix.  <a href="#aef0e68c1876d30d52009f2da7b70bac4">More...</a><br /></td></tr>
 <tr class="separator:aef0e68c1876d30d52009f2da7b70bac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f5e171a5c0a57927f402553d1ae64b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DMatrix.html#a6f5e171a5c0a57927f402553d1ae64b1">setColumn</a> (size_t i, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v)</td></tr>
-<tr class="memdesc:a6f5e171a5c0a57927f402553d1ae64b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a given vector to a prescribed column in the matrix.  <a href="#a6f5e171a5c0a57927f402553d1ae64b1">More...</a><br /></td></tr>
-<tr class="separator:a6f5e171a5c0a57927f402553d1ae64b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa6676c0ae519b1521591486fdfd798c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DMatrix.html#afa6676c0ae519b1521591486fdfd798c">setColumn</a> (size_t j, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v)</td></tr>
+<tr class="memdesc:afa6676c0ae519b1521591486fdfd798c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy a given vector to a prescribed column in the matrix.  <a href="#afa6676c0ae519b1521591486fdfd798c">More...</a><br /></td></tr>
+<tr class="separator:afa6676c0ae519b1521591486fdfd798c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a182aa2a623c3a9e200cc74350c173c9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DMatrix.html#a182aa2a623c3a9e200cc74350c173c9b">MultAdd</a> (T_ a, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;y) const </td></tr>
 <tr class="memdesc:a182aa2a623c3a9e200cc74350c173c9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply matrix by vector <code>a*x</code> and add result to <code>y</code>.  <a href="#a182aa2a623c3a9e200cc74350c173c9b">More...</a><br /></td></tr>
 <tr class="separator:a182aa2a623c3a9e200cc74350c173c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -298,6 +298,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#aac782da1f912bceb5d8ad00c8dc892ac">size</a> () const </td></tr>
 <tr class="memdesc:aac782da1f912bceb5d8ad00c8dc892ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return matrix dimension (Number of rows and columns). <br /></td></tr>
 <tr class="separator:aac782da1f912bceb5d8ad00c8dc892ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae048282c7011eedc2e0492f6421ea73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae048282c7011eedc2e0492f6421ea73"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#aae048282c7011eedc2e0492f6421ea73">clear</a> ()</td></tr>
+<tr class="memdesc:aae048282c7011eedc2e0492f6421ea73"><td class="mdescLeft">&#160;</td><td class="mdescRight">brief Set all matrix entries to zero <br /></td></tr>
+<tr class="separator:aae048282c7011eedc2e0492f6421ea73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae8f063011ae37198a6c96ad00da6188"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#aae8f063011ae37198a6c96ad00da6188">Assembly</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;el, T_ *a)</td></tr>
 <tr class="memdesc:aae8f063011ae37198a6c96ad00da6188"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assembly of element matrix into global matrix.  <a href="#aae8f063011ae37198a6c96ad00da6188">More...</a><br /></td></tr>
 <tr class="separator:aae8f063011ae37198a6c96ad00da6188"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -892,7 +896,7 @@ class OFELI::DMatrix&lt; T_ &gt;</h3>
 
 </div>
 </div>
-<a class="anchor" id="a6f5e171a5c0a57927f402553d1ae64b1"></a>
+<a class="anchor" id="afa6676c0ae519b1521591486fdfd798c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -900,7 +904,7 @@ class OFELI::DMatrix&lt; T_ &gt;</h3>
           <td class="memname">void setColumn </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>i</em>, </td>
+          <td class="paramname"><em>j</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1573,6 +1577,9 @@ Note that this function modifies the matrix contents is a factorization is perfo
 <a class="anchor" id="a4bd86b5d0fa2e28d0979772ab0e40b24"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">int solve </td>
@@ -1592,6 +1599,11 @@ Note that this function modifies the matrix contents is a factorization is perfo
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Solve linear system. </p>
@@ -1610,6 +1622,8 @@ Note that this function modifies the matrix contents is a factorization is perfo
 <code>n</code> if the <code>n</code>-th pivot is null. </li>
 </ul>
 </dd></dl>
+
+<p>Implements <a class="el" href="classOFELI_1_1Matrix.html#a539fdd4d07197b40c1caca838184c84a">Matrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -2678,7 +2692,7 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2018 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2019 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

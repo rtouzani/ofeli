@@ -21,9 +21,9 @@ var classOFELI_1_1LinearSolver =
     [ "setMatrix", "classOFELI_1_1LinearSolver.html#addc7f35fc3a68cba345a07ed92fa59b2", null ],
     [ "set", "classOFELI_1_1LinearSolver.html#ad56dc6dab838eee84f6d76995d555638", null ],
     [ "setSolver", "classOFELI_1_1LinearSolver.html#a0ce77dad890759d85412157e25b3afa4", null ],
-    [ "getSolver", "classOFELI_1_1LinearSolver.html#a1756e7c88b002c30206e61525917b855", null ],
+    [ "getSolver", "classOFELI_1_1LinearSolver.html#a9129625a6b2c52bb928da54e4ff92a19", null ],
     [ "solve", "classOFELI_1_1LinearSolver.html#a1bfcefd222a9c02f7254140fed80f26c", null ],
-    [ "solve", "group__OFELI.html#gaeccb35e1c449b861305d1765f86395f4", null ],
+    [ "solve", "classOFELI_1_1LinearSolver.html#aeccb35e1c449b861305d1765f86395f4", null ],
     [ "solve", "classOFELI_1_1LinearSolver.html#a7ca154b901ce7bb4d4ee1e2cdf7f8a85", null ],
     [ "setFact", "classOFELI_1_1LinearSolver.html#ae221a5369220070666177b57daf4cff2", null ],
     [ "setNoFact", "classOFELI_1_1LinearSolver.html#a524aa7001c68e0d79027f735f20e34de", null ]

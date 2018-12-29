@@ -150,6 +150,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae84bd94622fa61eeafea22b29788c49d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DC3DT4.html#ae84bd94622fa61eeafea22b29788c49d">DC3DT4</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> *sd, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> deltat, int scheme)</td></tr>
 <tr class="memdesc:ae84bd94622fa61eeafea22b29788c49d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a side (transient case) with specification of time integration scheme.  <a href="#ae84bd94622fa61eeafea22b29788c49d">More...</a><br /></td></tr>
 <tr class="separator:ae84bd94622fa61eeafea22b29788c49d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd5e512d523baa6c9fead68c661ed71a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DC3DT4.html#abd5e512d523baa6c9fead68c661ed71a">DC3DT4</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;ms)</td></tr>
+<tr class="memdesc:abd5e512d523baa6c9fead68c661ed71a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> data.  <a href="#abd5e512d523baa6c9fead68c661ed71a">More...</a><br /></td></tr>
+<tr class="separator:abd5e512d523baa6c9fead68c661ed71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a049e01987c2469c3b1fdc9ec6d603b1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a049e01987c2469c3b1fdc9ec6d603b1e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DC3DT4.html#a049e01987c2469c3b1fdc9ec6d603b1e">~DC3DT4</a> ()</td></tr>
 <tr class="memdesc:a049e01987c2469c3b1fdc9ec6d603b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -738,6 +741,30 @@ BACKWARD_EULER: for Backward Euler scheme </li>
 CRANK_NICOLSON: for Crank-Nicolson Euler scheme </li>
 </ul>
 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="abd5e512d523baa6c9fead68c661ed71a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1DC3DT4.html">DC3DT4</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td>
+          <td class="paramname"><em>ms</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor using <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ms</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
   </table>
   </dd>
 </dl>
@@ -3266,7 +3293,7 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2018 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2019 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

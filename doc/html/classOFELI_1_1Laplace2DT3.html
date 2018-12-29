@@ -178,9 +178,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a335d3f93476ec46ea3f591099398253e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Laplace2DT3.html#a335d3f93476ec46ea3f591099398253e">Axb</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
 <tr class="memdesc:a335d3f93476ec46ea3f591099398253e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the product of the stiffness matrix by a given vector.  <a href="#a335d3f93476ec46ea3f591099398253e">More...</a><br /></td></tr>
 <tr class="separator:a335d3f93476ec46ea3f591099398253e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad022102645304eb3d190bc8a26df1213"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Laplace.html#ad022102645304eb3d190bc8a26df1213">setSource</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;f)</td></tr>
-<tr class="memdesc:ad022102645304eb3d190bc8a26df1213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Source right-hand side of the equation.  <a href="#ad022102645304eb3d190bc8a26df1213">More...</a><br /></td></tr>
-<tr class="separator:ad022102645304eb3d190bc8a26df1213"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58e8be2db2660128e4e6456a9c981fb5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Laplace.html#a58e8be2db2660128e4e6456a9c981fb5">run</a> ()</td></tr>
 <tr class="memdesc:a58e8be2db2660128e4e6456a9c981fb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build and solve the linear system of equations using an iterative method.  <a href="#a58e8be2db2660128e4e6456a9c981fb5">More...</a><br /></td></tr>
 <tr class="separator:a58e8be2db2660128e4e6456a9c981fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -760,38 +757,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Vector by which the matrix is multiplied </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Product vector </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ad022102645304eb3d190bc8a26df1213"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void setSource </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>f</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Define Source right-hand side of the equation. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">f</td><td>[in] Vector containing source values at nodes </td></tr>
   </table>
   </dd>
 </dl>
@@ -2593,7 +2558,7 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2018 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2019 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

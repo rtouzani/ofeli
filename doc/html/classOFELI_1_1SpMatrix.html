@@ -138,17 +138,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aefd772ba6093ce0f83ab67955402352b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#aefd772ba6093ce0f83ab67955402352b">SpMatrix</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh, size_t dof=0, int is_diagonal=false)</td></tr>
 <tr class="memdesc:aefd772ba6093ce0f83ab67955402352b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance.  <a href="#aefd772ba6093ce0f83ab67955402352b">More...</a><br /></td></tr>
 <tr class="separator:aefd772ba6093ce0f83ab67955402352b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cf0a869cdde57597f040be0dc13a253"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a8cf0a869cdde57597f040be0dc13a253">SpMatrix</a> (size_t nr, size_t nc, const vector&lt; size_t &gt; &amp;row_ptr, const vector&lt; size_t &gt; &amp;col_ind, const vector&lt; T_ &gt; &amp;a)</td></tr>
-<tr class="memdesc:a8cf0a869cdde57597f040be0dc13a253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a rectangle matrix.  <a href="#a8cf0a869cdde57597f040be0dc13a253">More...</a><br /></td></tr>
-<tr class="separator:a8cf0a869cdde57597f040be0dc13a253"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42a459de96e7e110a3c31fc73df559cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42a459de96e7e110a3c31fc73df559cd"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a42a459de96e7e110a3c31fc73df559cd">SpMatrix</a> (const <a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a> &amp;m)</td></tr>
 <tr class="memdesc:a42a459de96e7e110a3c31fc73df559cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor. <br /></td></tr>
 <tr class="separator:a42a459de96e7e110a3c31fc73df559cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6728176ae1f020abb0faca824705011f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6728176ae1f020abb0faca824705011f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a6728176ae1f020abb0faca824705011f">~SpMatrix</a> (void)</td></tr>
-<tr class="memdesc:a6728176ae1f020abb0faca824705011f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a6728176ae1f020abb0faca824705011f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73db26aec81b831490a6b9bd06d8201e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73db26aec81b831490a6b9bd06d8201e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a73db26aec81b831490a6b9bd06d8201e">~SpMatrix</a> ()</td></tr>
+<tr class="memdesc:a73db26aec81b831490a6b9bd06d8201e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a73db26aec81b831490a6b9bd06d8201e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f380d4460b7d04a502b59bc28959d32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f380d4460b7d04a502b59bc28959d32"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a8f380d4460b7d04a502b59bc28959d32">Dense</a> ()</td></tr>
 <tr class="memdesc:a8f380d4460b7d04a502b59bc28959d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define matrix as a dense one. <br /></td></tr>
@@ -231,9 +228,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#ab50a62ca3636fe05fc9b8a2d346bd1b8">getMesh</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh)</td></tr>
 <tr class="memdesc:ab50a62ca3636fe05fc9b8a2d346bd1b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get mesh instance whose reference will be stored in current instance of <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>. <br /></td></tr>
 <tr class="separator:ab50a62ca3636fe05fc9b8a2d346bd1b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5527b952e4f2bf71246f8216fc925a3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a5527b952e4f2bf71246f8216fc925a3c">Mult</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;w) const </td></tr>
-<tr class="memdesc:a5527b952e4f2bf71246f8216fc925a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply matrix by vector and save in another one.  <a href="#a5527b952e4f2bf71246f8216fc925a3c">More...</a><br /></td></tr>
-<tr class="separator:a5527b952e4f2bf71246f8216fc925a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3a7c8856e21eb23fa804f0d2f6e893b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#af3a7c8856e21eb23fa804f0d2f6e893b">Mult</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;y) const </td></tr>
+<tr class="memdesc:af3a7c8856e21eb23fa804f0d2f6e893b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply matrix by vector and save in another one.  <a href="#af3a7c8856e21eb23fa804f0d2f6e893b">More...</a><br /></td></tr>
+<tr class="separator:af3a7c8856e21eb23fa804f0d2f6e893b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a891baacc01ccea53b33d0da6fd57d653"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a891baacc01ccea53b33d0da6fd57d653">MultAdd</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;y) const </td></tr>
 <tr class="memdesc:a891baacc01ccea53b33d0da6fd57d653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply matrix by vector <code>x</code> and add to <code>y</code>.  <a href="#a891baacc01ccea53b33d0da6fd57d653">More...</a><br /></td></tr>
 <tr class="separator:a891baacc01ccea53b33d0da6fd57d653"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -265,9 +262,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a3bc30f41e5950060558b06261cdf271d">getRowPtr</a> (size_t i) const </td></tr>
 <tr class="memdesc:a3bc30f41e5950060558b06261cdf271d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Row pointer at position <code>i</code>. <br /></td></tr>
 <tr class="separator:a3bc30f41e5950060558b06261cdf271d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29bca47b2c33a5f7eacae39b5db0f75e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">solve</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
-<tr class="memdesc:a29bca47b2c33a5f7eacae39b5db0f75e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system of equations.  <a href="#a29bca47b2c33a5f7eacae39b5db0f75e">More...</a><br /></td></tr>
-<tr class="separator:a29bca47b2c33a5f7eacae39b5db0f75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bd86b5d0fa2e28d0979772ab0e40b24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SpMatrix.html#a4bd86b5d0fa2e28d0979772ab0e40b24">solve</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
 <tr class="memdesc:a4bd86b5d0fa2e28d0979772ab0e40b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system of equations.  <a href="#a4bd86b5d0fa2e28d0979772ab0e40b24">More...</a><br /></td></tr>
 <tr class="separator:a4bd86b5d0fa2e28d0979772ab0e40b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -348,6 +342,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#ab9f6b1105cb4953c3f56b5c51ed4b046">Factor</a> ()=0</td></tr>
 <tr class="memdesc:ab9f6b1105cb4953c3f56b5c51ed4b046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factorize matrix. Available only if the storage class enables it. <br /></td></tr>
 <tr class="separator:ab9f6b1105cb4953c3f56b5c51ed4b046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6e338dd0baf5302b0d0c199402511b5"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#ac6e338dd0baf5302b0d0c199402511b5">solve</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)=0</td></tr>
+<tr class="memdesc:ac6e338dd0baf5302b0d0c199402511b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system.  <a href="#ac6e338dd0baf5302b0d0c199402511b5">More...</a><br /></td></tr>
+<tr class="separator:ac6e338dd0baf5302b0d0c199402511b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af70ebb919bf4d6e5e646c1c113392a79"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#af70ebb919bf4d6e5e646c1c113392a79">FactorAndSolve</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
 <tr class="memdesc:af70ebb919bf4d6e5e646c1c113392a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factorize matrix and solve the linear system.  <a href="#af70ebb919bf4d6e5e646c1c113392a79">More...</a><br /></td></tr>
 <tr class="separator:af70ebb919bf4d6e5e646c1c113392a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -535,63 +532,6 @@ class OFELI::SpMatrix&lt; T_ &gt;</h3>
     <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Option parameter, with default value <code>0</code>.<br />
 <code>dof=1</code> means that only one degree of freedom for each node (or element or side) is taken to determine matrix structure. The value <code>dof=0</code> means that matrix structure is determined using all DOFs. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">is_diagonal</td><td>Boolean argument to say is the matrix is actually a diagonal matrix or not. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a8cf0a869cdde57597f040be0dc13a253"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a> </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>nr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>nc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const vector&lt; size_t &gt; &amp;&#160;</td>
-          <td class="paramname"><em>row_ptr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const vector&lt; size_t &gt; &amp;&#160;</td>
-          <td class="paramname"><em>col_ind</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const vector&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>a</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor for a rectangle matrix. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">nr</td><td>Number of rows </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">nc</td><td>Number of columns </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">row_ptr</td><td>Vector of row pointers (See the above description of this class). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">col_ind</td><td>Vector of column indices (See the above description of this class).<br />
-</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>vector instance containing matrix entries stored columnwise </td></tr>
   </table>
   </dd>
 </dl>
@@ -1057,7 +997,7 @@ class OFELI::SpMatrix&lt; T_ &gt;</h3>
 
 </div>
 </div>
-<a class="anchor" id="a5527b952e4f2bf71246f8216fc925a3c"></a>
+<a class="anchor" id="af3a7c8856e21eb23fa804f0d2f6e893b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1068,13 +1008,13 @@ class OFELI::SpMatrix&lt; T_ &gt;</h3>
           <td class="memname">void Mult </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
+          <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>w</em>&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1092,8 +1032,8 @@ class OFELI::SpMatrix&lt; T_ &gt;</h3>
 <p>Multiply matrix by vector and save in another one. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Vector to multiply by matrix </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">w</td><td>Vector that contains on output the result. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Vector to multiply by matrix </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">y</td><td>Vector that contains on output the result. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1476,54 +1416,12 @@ class OFELI::SpMatrix&lt; T_ &gt;</h3>
 
 </div>
 </div>
-<a class="anchor" id="a29bca47b2c33a5f7eacae39b5db0f75e"></a>
+<a class="anchor" id="a4bd86b5d0fa2e28d0979772ab0e40b24"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int solve </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Solve the linear system of equations. </p>
-<p>The default parameters are: </p><ul>
-<li>
-<code>CG_SOLVER</code> for solver </li>
-<li>
-<code>DIAG_PREC</code> for preconditioner </li>
-<li>
-Max. Number of iterations is 1000 </li>
-<li>
-Tolerance is 1.e-8 </li>
-</ul>
-<p>To change these values, call function setSolver before this function </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">b</td><td>Vector that contains right-hand side on input and solution on output</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Number of actual performed iterations </dd></dl>
-
-<p>Implements <a class="el" href="classOFELI_1_1Matrix.html#ac6e338dd0baf5302b0d0c199402511b5">Matrix&lt; T_ &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4bd86b5d0fa2e28d0979772ab0e40b24"></a>
-<div class="memitem">
-<div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int solve </td>
@@ -1543,6 +1441,11 @@ Tolerance is 1.e-8 </li>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Solve the linear system of equations. </p>
@@ -1564,6 +1467,8 @@ Tolerance is <code>1.e-8</code> </li>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of actual performed iterations </dd></dl>
+
+<p>Implements <a class="el" href="classOFELI_1_1Matrix.html#a539fdd4d07197b40c1caca838184c84a">Matrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -2201,6 +2106,35 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
 
 </div>
 </div>
+<a class="anchor" id="ac6e338dd0baf5302b0d0c199402511b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual int solve </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Solve the linear system. </p>
+<p>If the inherited class is <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>, the function uses an iterative method once this one has been chosen. Otherwise, the method solves the linear system by factorization. </p>
+
+<p>Implemented in <a class="el" href="classOFELI_1_1SkSMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1TrMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">BMatrix&lt; T_ &gt;</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="af70ebb919bf4d6e5e646c1c113392a79"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2597,7 +2531,7 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2018 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2019 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

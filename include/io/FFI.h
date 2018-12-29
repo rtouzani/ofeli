@@ -185,13 +185,13 @@ class FFI
 
  private:
 
-   size_t            _msg, _string_nb;
-   string            _input_file, _token, _ident, _prompt;
-   char              _buffer[121];
-   bool              _in, _non_fatal, _comment, _eol;
-   vector<string>    _kw;
-   ifstream          *_is;
-   istringstream     *_iss;
+   size_t          _msg, _string_nb;
+   string          _input_file, _token, _ident, _prompt;
+   char            _buffer[121];
+   bool            _in, _non_fatal, _comment, _eol;
+   vector<string>  _kw;
+   ifstream        *_is;
+   istringstream   *_iss;
 
    int get_token();
 };

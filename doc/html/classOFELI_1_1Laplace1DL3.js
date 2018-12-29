@@ -9,7 +9,6 @@ var classOFELI_1_1Laplace1DL3 =
     [ "BoundaryRHS", "classOFELI_1_1Laplace1DL3.html#a735f7f78ccee2864d719a9aba4bea313", null ],
     [ "setTraction", "classOFELI_1_1Laplace1DL3.html#a3e1a15dfa223d5f15304da0aba78ee6d", null ],
     [ "LHS", "classOFELI_1_1Laplace1DL3.html#af200cfb67f370bb70c72247840c9318a", null ],
-    [ "setSource", "classOFELI_1_1Laplace1DL3.html#ad022102645304eb3d190bc8a26df1213", null ],
     [ "run", "classOFELI_1_1Laplace1DL3.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
     [ "build", "classOFELI_1_1Laplace1DL3.html#a7740c7ab195c03ac140f1f75f633470f", null ],
     [ "build", "classOFELI_1_1Laplace1DL3.html#a707e4f7e7fe3140fd7a6fefe4774f03d", null ],

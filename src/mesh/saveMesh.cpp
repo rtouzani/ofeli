@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 1998 - 2018 Rachid Touzani
+    Copyright (C) 1998 - 2019 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -87,7 +87,7 @@ void saveMesh(const string&      file,
 void saveGmsh(const string& file,
               const Mesh&   mesh)
 {
-   int type=0;
+  int type=0;
    size_t i;
    ofstream pf(file.c_str());
    if (pf.fail())

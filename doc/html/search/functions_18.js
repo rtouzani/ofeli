@@ -90,7 +90,7 @@ var searchData=
   ['_7esidelist',['~SideList',['../classOFELI_1_1SideList.html#aaf3f25087d632fadb1ccc1b1377b3cbd',1,'OFELI::SideList']]],
   ['_7eskmatrix',['~SkMatrix',['../classOFELI_1_1SkMatrix.html#adab7bac07980d8559413234bab7609d2',1,'OFELI::SkMatrix']]],
   ['_7esksmatrix',['~SkSMatrix',['../classOFELI_1_1SkSMatrix.html#af800dc68435bdd29c56403ee03a5e2f1',1,'OFELI::SkSMatrix']]],
-  ['_7espmatrix',['~SpMatrix',['../classOFELI_1_1SpMatrix.html#a6728176ae1f020abb0faca824705011f',1,'OFELI::SpMatrix']]],
+  ['_7espmatrix',['~SpMatrix',['../classOFELI_1_1SpMatrix.html#a73db26aec81b831490a6b9bd06d8201e',1,'OFELI::SpMatrix']]],
   ['_7esteklovpoincare2dbe',['~SteklovPoincare2DBE',['../classOFELI_1_1SteklovPoincare2DBE.html#a5bc602898b0a53cc28d215b5087d2fce',1,'OFELI::SteklovPoincare2DBE']]],
   ['_7etabulation',['~Tabulation',['../group__OFELI.html#ga0f5d1d2a63565d063de7b58cd86b44cd',1,'OFELI::Tabulation']]],
   ['_7etetra4',['~Tetra4',['../classOFELI_1_1Tetra4.html#acf0682cace284156dcbc3f9c45062241',1,'OFELI::Tetra4']]],

@@ -4,6 +4,7 @@ var classOFELI_1_1TimeStepping =
     [ "TimeStepping", "classOFELI_1_1TimeStepping.html#a335d4d37e68b7dc2cc5ae456bcb9eaf6", null ],
     [ "~TimeStepping", "classOFELI_1_1TimeStepping.html#a153397546fc84bd8fbb0bb428225dec6", null ],
     [ "set", "classOFELI_1_1TimeStepping.html#a584a3841c197ddb1ec0494389823d561", null ],
+    [ "setLinearSolver", "classOFELI_1_1TimeStepping.html#ae57f4d9db61b62a0b973ee0a543d4ae6", null ],
     [ "setPDE", "classOFELI_1_1TimeStepping.html#a84a0a64105a619ae4ee1158f6ac8492e", null ],
     [ "setRK4RHS", "classOFELI_1_1TimeStepping.html#aa7e53c44ddd0bfff4147278d5c15f3a3", null ],
     [ "setRK3_TVDRHS", "classOFELI_1_1TimeStepping.html#a1b036e819127321d9d992f5433e4369a", null ],

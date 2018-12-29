@@ -42,6 +42,7 @@ var classOFELI_1_1SkMatrix =
     [ "setDiagonal", "classOFELI_1_1SkMatrix.html#a196d9e08fa42335a41f8e67082215065", null ],
     [ "getDiag", "classOFELI_1_1SkMatrix.html#a06fae0c47b38f34c0c764b2b6109f9d5", null ],
     [ "size", "classOFELI_1_1SkMatrix.html#aac782da1f912bceb5d8ad00c8dc892ac", null ],
+    [ "clear", "classOFELI_1_1SkMatrix.html#aae048282c7011eedc2e0492f6421ea73", null ],
     [ "Assembly", "classOFELI_1_1SkMatrix.html#aae8f063011ae37198a6c96ad00da6188", null ],
     [ "Assembly", "classOFELI_1_1SkMatrix.html#a00a4ed257bee80fee3c9099a324e7168", null ],
     [ "Assembly", "classOFELI_1_1SkMatrix.html#a377c96d9edc5455d8b81d7f2e75a7437", null ],

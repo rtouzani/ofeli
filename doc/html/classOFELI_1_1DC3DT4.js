@@ -7,6 +7,7 @@ var classOFELI_1_1DC3DT4 =
     [ "DC3DT4", "classOFELI_1_1DC3DT4.html#a5518a7f721cdbe71094d457b26738d69", null ],
     [ "DC3DT4", "classOFELI_1_1DC3DT4.html#ad9533aeac57c9cce7d5ad598a98bfeb3", null ],
     [ "DC3DT4", "classOFELI_1_1DC3DT4.html#ae84bd94622fa61eeafea22b29788c49d", null ],
+    [ "DC3DT4", "classOFELI_1_1DC3DT4.html#abd5e512d523baa6c9fead68c661ed71a", null ],
     [ "~DC3DT4", "classOFELI_1_1DC3DT4.html#a049e01987c2469c3b1fdc9ec6d603b1e", null ],
     [ "build", "classOFELI_1_1DC3DT4.html#a7740c7ab195c03ac140f1f75f633470f", null ],
     [ "LCapacity", "classOFELI_1_1DC3DT4.html#a3202f7a0e3405d6dbed536494c79be7a", null ],

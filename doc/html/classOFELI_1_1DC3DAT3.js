@@ -7,6 +7,7 @@ var classOFELI_1_1DC3DAT3 =
     [ "DC3DAT3", "classOFELI_1_1DC3DAT3.html#afdda320c9c2c19fed64916c0601aed01", null ],
     [ "DC3DAT3", "classOFELI_1_1DC3DAT3.html#a67d3e458d5867cb49fb184c19066bbcb", null ],
     [ "DC3DAT3", "classOFELI_1_1DC3DAT3.html#a340e0ee58d0f1b2759a089804dcd0c26", null ],
+    [ "DC3DAT3", "classOFELI_1_1DC3DAT3.html#a76b586d89b4c7d05e5012948f16dbbef", null ],
     [ "~DC3DAT3", "classOFELI_1_1DC3DAT3.html#a8918357291806744880398cd54eab1f0", null ],
     [ "LCapacityToLHS", "classOFELI_1_1DC3DAT3.html#a390979fe002bed96fa8500a6ffc93554", null ],
     [ "LCapacityToRHS", "classOFELI_1_1DC3DAT3.html#a2206d405e312f9d742eff8a8db72faa0", null ],

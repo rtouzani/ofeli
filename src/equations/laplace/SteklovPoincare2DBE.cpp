@@ -8,7 +8,7 @@
 
    This file is part of the OFELI Library
 
-   Copyright (C) 1998 - 2018 Rachid Touzani
+   Copyright (C) 1998 - 2019 Rachid Touzani
 
    This file is part of OFELI.
 

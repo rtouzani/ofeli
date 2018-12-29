@@ -54,13 +54,13 @@ class Mesh;
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-struct El  {
-  size_t label, type, region, nb_nodes, node[30];
-  int code[6], cc;
+struct El {
+   size_t dim, n, region, nb_nodes, node[30];
+   int    shape, code, cc;
 };
 
 struct Nd {
-   size_t label;
+   size_t n;
    int code[6], cc;
    Point<real_t> x;
 };

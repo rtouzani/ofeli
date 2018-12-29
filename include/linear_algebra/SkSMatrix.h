@@ -231,25 +231,25 @@ public:
        for (i=0; i<n; i++) {
           _size = std::max(_size,I[i]);
           pp[i] = RC(I[i]-1,J[i]-1);
-    }
-    _ch.resize(_size,0);
-    _nb_rows = _nb_cols = _size;
-    if (opt==0) {
-      sort(pp.begin(),pp.end());
-      vector<RC>::iterator new_end = std::unique(pp.begin(),pp.end());
-      pp.erase(new_end,pp.end());
-   }
-   for (i=0; i<n; i++)
-      if (I[i]>J[i])
-         _ch[I[i]-1] = std::max(static_cast<unsigned>(abs(int(I[i])-int(J[i]))),_ch[I[i]-1]);
-   _ch[0] = 0;
-     for (i=1; i<_size; ++i)
-      _ch[i] += _ch[i-1] + 1;
-    _length = _ch[_size-1]+1;
-    _a.resize(_length);
-    size_t k=0;
-    for (i=0; i<n; i++)
-       set(I[i],J[i],a[k++]);
+       }
+       _ch.resize(_size,0);
+       _nb_rows = _nb_cols = _size;
+       if (opt==0) {
+          sort(pp.begin(),pp.end());
+          vector<RC>::iterator new_end = std::unique(pp.begin(),pp.end());
+          pp.erase(new_end,pp.end());
+       }
+       for (i=0; i<n; i++)
+          if (I[i]>J[i])
+             _ch[I[i]-1] = std::max(static_cast<unsigned>(abs(int(I[i])-int(J[i]))),_ch[I[i]-1]);
+       _ch[0] = 0;
+       for (i=1; i<_size; ++i)
+          _ch[i] += _ch[i-1] + 1;
+       _length = _ch[_size-1]+1;
+       _a.resize(_length);
+       size_t k=0;
+       for (i=0; i<n; i++)
+          set(I[i],J[i],a[k++]);
        _diag.resize(_size);
     }
 

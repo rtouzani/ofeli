@@ -290,13 +290,15 @@ enum DOFSupport {
  * \brief Enumerate list for element shapes
  */
 enum ElementShape {
-   POINT,            ///< Elements are single points
-   LINE,             ///< Elements are segment lines
-   TRIANGLE,         ///< Elements are triangles
-   QUADRILATERAL,    ///< Elements are quadrilaterals
-   TETRAHEDRON,      ///< Elements are tetrahedra
-   HEXAHEDRON,       ///< Elements are hexahedra (bricks)
-   PENTAHEDRON       ///< Elements are pentahedra (prisms)
+   POINT         = 1,            /*!< Elements are single points        */
+   LINE          = 2,            /*!< Elements are segment lines        */
+   TRIANGLE      = 3,            /*!< Elements are triangles            */
+   QUADRILATERAL = 4,            /*!< Elements are quadrilaterals       */
+   TETRAHEDRON   = 5,            /*!< Elements are tetrahedra           */
+   HEXAHEDRON    = 6,            /*!< Elements are hexahedra (bricks)   */
+   PENTAHEDRON   = 7,            /*!< Elements are pentahedra (prisms)  */
+   PRISM         = 8,            /*!< Elements are prisms               */
+   PYRAMID       = 9             /*!< Elements are pyramids             */
 };
 
 /*! \brief ExternalFileFormat

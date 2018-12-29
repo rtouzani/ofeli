@@ -5,7 +5,6 @@ var classOFELI_1_1Equa__Laplace =
     [ "LHS", "classOFELI_1_1Equa__Laplace.html#af200cfb67f370bb70c72247840c9318a", null ],
     [ "BodyRHS", "classOFELI_1_1Equa__Laplace.html#ac78bfd5e2f3f8dea4715b2e84653acec", null ],
     [ "BoundaryRHS", "classOFELI_1_1Equa__Laplace.html#a4898e17d7619a02fda1a011da624b3af", null ],
-    [ "setSource", "classOFELI_1_1Equa__Laplace.html#ad022102645304eb3d190bc8a26df1213", null ],
     [ "run", "classOFELI_1_1Equa__Laplace.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
     [ "build", "classOFELI_1_1Equa__Laplace.html#a7740c7ab195c03ac140f1f75f633470f", null ],
     [ "buildEigen", "classOFELI_1_1Equa__Laplace.html#a4d5573c96d55640c2dbd525966a0cf8d", null ],
