@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2018 Rachid Touzani
+   Copyright (C) 1998 - 2019 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,17 +52,15 @@ namespace OFELI {
 
 class Mesh;
 
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-struct El {
-   size_t dim, n, region, nb_nodes, node[30];
-   int    shape, code, cc;
-};
-
+void dof_code(size_t nb_dof, int mark, int* code);
+struct Entity { size_t nb; int type; std::vector<int> l; };
+struct El { size_t dim, n, region, nb_nodes, node[30]; int shape, code, cc; };
 struct Nd {
    size_t n;
    int code[6], cc;
    Point<real_t> x;
+   Nd() : cc(0) { }
 };
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

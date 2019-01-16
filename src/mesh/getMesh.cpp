@@ -536,351 +536,15 @@ void getGambit(string file,
    mf.close();
 }
 
-/*
-void getGmsh(string file,
-             Mesh&  mesh,
-             size_t nb_dof)
-{
-   string         kw, w;
-   size_t         nb_nodes, nb_elements, nb_el, n1, n2, n3, n4, n5, k, i, j, ln=0, dim=2;
-   real_t         x1, x2, x3, a=0;
-   Node           *nd;
-   Element        *el;
-   Side           *sd;
-   Point<real_t>  x[10];
-   int            code[MAX_NBDOF_NODE];
-   int            format=1;
-   vector<El>     elem;
-   vector<int>    tag(5);
-   vector<size_t> num, un;
-   vector<Nd>     nod;
-   vector<size_t> phys_d, phys_n;
-   vector<string> phys_name;
-   size_t nn[] = {0, 2, 3, 4, 4, 8, 6, 5, 3, 6, 9, 10, 27, 18, 14, 1, 8, 20, 15, 13};
-
-// Read in file
-   ifstream pf;
-   pf.open(file.c_str());
-   try {
-      if (pf.fail())
-         THROW_RT(" File " + file + " not found.");
-   }
-   CATCH("getGmsh(...):");
-
-   while (pf.eof()==0) {
-      pf >> kw, ln++;
-
-      if (kw=="$MeshFormat") {
-         pf >> w >> n1 >> n2, ln++;
-         pf >> kw, ln++;
-         format = 2;
-      }
-
-      else if (kw=="$PhysicalNames" && format==2) {
-         pf >> n1, ln++;
-         string s;
-         phys_d.resize(n1); phys_n.resize(n1);
-         phys_name.resize(n1);
-         for (size_t i=0; i<n1; i++) {
-            pf >> n2 >> n3 >> s, ln++;
-            phys_d[i] = n2;
-            phys_n[i] = n3;
-            phys_name[i] = s;
-            ln++;
-         }
-         pf >> kw, ln++;
-      }
-
-      else if (kw=="$NOD" || kw=="$Nodes") {
-         pf >> nb_nodes, ln++;
-         nod.resize(nb_nodes);
-         un.resize(nb_nodes);
-         un = 0;
-         num.resize(2*nb_nodes);
-         for (i=0; i<nb_nodes; i++) {
-            pf >> j >> x1 >> x2 >> x3, ln++;
-            if (i==0)
-               a = x3;
-            num[j-1] = i+1;
-            nod[i].label = j;
-            nod[i].x[0] = x1; nod[i].x[1] = x2; nod[i].x[2] = x3;
-            if (a != x3)
-               dim = 3;
-         }
-         pf >> kw, ln++;
-      }
-
-      else if (kw=="$ELEM" && format==1) {
-         pf >> nb_elements, ln++;
-         elem.resize(nb_elements);
-         for (j=0; j<nb_elements; j++) {
-            pf >> n1 >> n2 >> n3 >> n4 >> n5, ln++;
-            elem[j].label = n1;
-            elem[j].type = n2;
-            elem[j].region = n3;
-            elem[j].nb_nodes = n5;
-            for (k=0; k<n5; k++) {
-               pf >> elem[j].node[k], ln++;
-               if (elem[j].type != 15)
-                  un[elem[j].node[k]-1]++;
-            }
-         }
-      }
-
-      else if (kw=="$Elements" && format==2) {
-         pf >> nb_el, ln++;
-         nb_elements = 0;
-         elem.resize(nb_el);
-         for (j=0; j<nb_el; j++) {
-            bool ok = false;
-            pf >> n1 >> n2 >> n3, ln++;
-            for (k=0; k<n3; k++)
-               pf >> tag[k];
-            n4 = 0;
-            if (n2==1)
-               n3 = 2;
-            else if (n2==2)
-               n3 = 3;
-            else if (n3==2)
-               n3 = 3;
-            if (dim==1) {
-               if (n2==1)
-                  n3=2, nb_elements++, ok=true;
-            }
-            else if (dim==2) {
-               if (n2==2)
-                  n3=3, nb_elements++, ok=true;
-               else if (n2==3)
-                  n3=4, nb_elements++, ok=true;
-               else
-                  ;
-            }
-            else if (dim==3) {
-               if (n2==4)
-                  n3=4, nb_elements++, ok=true;
-               else if (n2==5)
-                  n3=8, nb_elements++, ok=true;
-               else if (n2==6)
-                  n3=6, nb_elements++, ok=true;
-               else
-                  ;
-            }
-            elem[j].label = n1; elem[j].type = n2; elem[j].region = tag[0];
-            for (k=0; k<nn[n2]; k++) {
-               pf >> n5, ln++;
-               elem[j].node[k] = n5;
-               if (n2 != 15)
-                 //                  un[n5-1]++;
-                  elem[j].node[k] = n5;
-            }
-         }
-         pf >> kw, ln++;
-      }
-   }
-
-   vector<size_t> NN(nb_nodes);
-   NN = 0;
-   size_t NbN = 0;
-   for (size_t i=0; i<nb_nodes; i++) {
-      size_t n = num[i];
-      if (un[n-1])
-         NN[n-1] = ++NbN;
-   }
-
-   vector<size_t> code_n;
-   for (i=0; i<phys_d.size(); i++) {
-      if (phys_name[i]=="\"NEUMANN\"")
-         code_n.push_back(phys_n[i]);
-   }
-
-   mesh.setDim(dim);
-   size_t first_dof = 1;
-   for (j=0; j<nb_nodes; j++) {
-      size_t n = NN[num[nod[j].label-1]-1];
-      if (n>0) {
-         nd = new Node(n,nod[j].x);
-         nd->setNbDOF(nb_dof);
-         nd->setDOF(first_dof,nb_dof);
-         for (i=0; i<nb_dof; i++)
-            code[i] = 0;
-         nd->setCode(code);
-         mesh.Add(nd);
-      }
-   }
-   size_t ks=1, ke=1;
-   for (j=0; j<nb_el; j++) {
-      int cd = elem[j].region;
-      for (i=0; i<code_n.size(); i++) {
-         if (cd==int(code_n[i]))
-            cd = 0;
-      }
-      if (dim==2) {
-         if (elem[j].type==1) {
-            sd = new Side(ks,LINE);
-            sd->Add(mesh[NN[num[elem[j].node[0]-1]-1]]);
-            sd->Add(mesh[NN[num[elem[j].node[1]-1]-1]]);
-            //            if (cd) {
-            //               for (i=0; i<sd->getNbNodes(); i++) {
-            //                  nd = (*sd)(i+1);
-            //                  DOFCode(cd,nb_dof,code);
-            //                  for (k=0; k<nb_dof; k++)
-            //                     nd->setCode(k+1,code[k]);
-            //               }
-//               }
-            if (cd < 1000) {
-               for (i=1; i<=sd->getNbNodes(); i++) {
-                  nd = sd->getPtrNode(i);
-                  DOFCode(cd,nb_dof,code);
-                  for (k=0; k<nb_dof; k++)
-                     nd->setCode(k+1,code[k]);
-               }
-               delete sd; sd = NULL;
-            }
-            else {
-               ks++;
-               sd->setNbDOF(nb_dof);
-               DOFCode(cd-1000,nb_dof,code);
-               for (k=0; k<nb_dof; k++)
-                  sd->setCode(k+1,code[k]);
-               mesh.Add(sd);
-            }
-            for (i=0; i<phys_d.size(); i++) {
-               if (phys_d[i]==1 && phys_name[i]=="\"NEUMANN\"" && phys_n[i]==elem[j].region) {
-                  ks++;
-                  sd->setNbDOF(nb_dof);
-                  DOFCode(phys_n[i],nb_dof,code);
-                  for (k=0; k<nb_dof; k++)
-                     sd->setCode(k+1,code[k]);
-                  mesh.Add(sd);
-               }
-               if (phys_d[i]==1 && phys_name[i]=="\"DIRICHLET\"" && phys_n[i]==elem[j].region) {
-                  DOFCode(phys_n[i],nb_dof,code);
-                  nd = (*sd)(1);
-                  for (k=0; k<nb_dof; k++) {
-                     (*sd)(1)->setCode(k+1,code[k]);
-                     (*sd)(2)->setCode(k+1,code[k]);
-                  }
-               }
-            }
-         }
-         else if (elem[j].type==2) {
-            el = new Element(ke++,TRIANGLE);
-            x[0] = mesh[NN[num[elem[j].node[0]-1]-1]]->getCoord();
-            x[1] = mesh[NN[num[elem[j].node[1]-1]-1]]->getCoord();
-            x[2] = mesh[NN[num[elem[j].node[2]-1]-1]]->getCoord();
-            el->Add(mesh[NN[num[elem[j].node[0]-1]-1]]);
-            if ((x[1].x-x[0].x)*(x[2].y-x[0].y) - (x[1].y-x[0].y)*(x[2].x-x[0].x) < 0) {
-               el->Add(mesh[NN[num[elem[j].node[2]-1]-1]]);
-               el->Add(mesh[NN[num[elem[j].node[1]-1]-1]]);
-            }
-            else {
-               el->Add(mesh[NN[num[elem[j].node[1]-1]-1]]);
-               el->Add(mesh[NN[num[elem[j].node[2]-1]-1]]);
-            }
-            el->setCode(elem[j].region);
-            mesh.Add(el);
-         }
-         else if (elem[j].type==3) {
-            el = new Element(ke++,QUADRILATERAL);
-            for (i=0; i<4; i++)
-               x[i] = mesh[NN[num[elem[j].node[i]-1]-1]]->getCoord();
-            for (i=0; i<4; i++)
-               el->Add(mesh[NN[num[elem[j].node[i]-1]-1]]);
-            for (i=0; i<phys_d.size(); i++)
-               if (phys_d[i]==2 && phys_n[i]==elem[j].region)
-                  el->setCode(elem[j].region);
-            mesh.Add(el);
-         }
-      }
-      else if (dim==3) {
-         if (elem[j].type==2) {
-            sd = new Side(ks++,TRIANGLE);
-            for (i=0; i<3; i++)
-               sd->Add(mesh[NN[num[elem[j].node[i]-1]-1]]);
-            if (cd) {
-               for (i=0; i<sd->getNbNodes(); i++) {
-                  nd = (*sd)(i+1);
-                  DOFCode(cd,nb_dof,code);
-                  for (k=0; k<nb_dof; k++)
-                     nd->setCode(k+1,code[k]);
-               }
-            }
-         }
-         if (elem[j].type==3) {
-            sd = new Side(ks++,QUADRILATERAL);
-            for (i=0; i<4; i++)
-               sd->Add(mesh.getPtrNode(NN[num[elem[j].node[i]-1]-1]));
-            if (cd) {
-               for (i=0; i<sd->getNbNodes(); i++) {
-                  nd = (*sd)(i+1);
-                  DOFCode(cd,nb_dof,code);
-                  for (k=0; k<nb_dof; k++)
-                     nd->setCode(k+1,code[k]);
-               }
-            }
-         }
-         else if (elem[j].type==4) {
-            el = new Element(ke++,TETRAHEDRON);
-            for (i=0; i<4; i++)
-               el->Add(mesh[NN[num[elem[j].node[i]-1]]]);
-            for (i=0; i<phys_d.size(); i++)
-               if (phys_d[i]==3 && phys_n[i]==elem[j].region)
-                  el->setCode(elem[j].region);
-            mesh.Add(el);
-         }
-         else if (elem[j].type==5) {
-            el = new Element(ke++,HEXAHEDRON);
-            for (i=0; i<8; i++)
-               el->Add(mesh[NN[num[elem[j].node[i]-1]-1]]);
-            for (i=0; i<phys_d.size(); i++)
-               if (phys_d[i]==3 && phys_n[i]==elem[j].region)
-                  el->setCode(elem[j].region);
-            mesh.Add(el);
-         }
-         else if (elem[j].type==6) {
-            el = new Element(ke++,PENTAHEDRON);
-            for (i=0; i<6; i++)
-               el->Add(mesh[NN[num[elem[j].node[i]-1]-1]]);
-            for (i=0; i<phys_d.size(); i++)
-               if (phys_d[i]==3 && phys_n[i]==elem[j].region)
-                  el->setCode(elem[j].region);
-            mesh.Add(el);
-         }
-         else if (elem[j].type==7) {
-            el = new Element(ke++,PENTAHEDRON);
-            for (i=0; i<5; i++)
-               el->Add(mesh[NN[num[elem[j].node[i]-1]-1]]);
-            for (i=0; i<phys_d.size(); i++)
-               if (phys_d[i]==3 && phys_n[i]==elem[j].region)
-                  el->setCode(elem[j].region);
-            mesh.Add(el);
-         }
-      }
-      if (elem[j].type==15) {
-         size_t n = num[elem[j].label-1];
-         if (NN[n-1]) {
-            nd = mesh[NN[num[elem[j].label-1]-1]];
-            for (size_t i=0; i<phys_d.size(); i++) {
-               if (phys_d[i]==1 && phys_name[i]=="\"DIRICHLET\"" && phys_n[i]==elem[j].region)
-                  DOFCode(phys_n[i],nb_dof,code);
-            }
-            for (k=0; k<nb_dof; k++)
-               nd->setCode(k+1,code[k]);
-         }
-      }
-   }
-   pf.close();
-}*/
-
 
 void getGmsh(string file,
              Mesh&  mesh,
              size_t nb_dof)
 {
    string        kw, w;
-   int           nb_nodes, nb_elements, k;
-   int           n1, n2, n3, n4, n5, n6, dim=0;
-   real_t        x1, x2, x3, d1, d2, d3, d4, d5, d6;
+   int           nb_nodes, nb_elements;
+   int           n1, n2, n3, n4, n5, n6, n7, dim=0;
+   real_t        d[100];
    Point<real_t> x[3];
    Node          *nd;
    Element       *el;
@@ -888,7 +552,7 @@ void getGmsh(string file,
    int           code[MAX_NBDOF_NODE];
    Vect<El>      elem;
    Vect<int>     sdim;
-   vector<int> nb_en(100), sh(100);
+   vector<int>   nb_en(100), sh(100);
    nb_en[ 0] =  2; nb_en[ 1] =  3; nb_en[ 2] =  4; nb_en[ 3] =  4; nb_en[ 4] =  8; nb_en[ 5] =  6;
    nb_en[ 6] =  5; nb_en[ 7] =  3; nb_en[ 8] =  6; nb_en[ 9] =  9; nb_en[10] = 10; nb_en[11] = 27;
    nb_en[12] = 18; nb_en[13] = 14; nb_en[14] =  1; nb_en[15] =  8; nb_en[16] = 20; nb_en[17] = 15;
@@ -913,60 +577,85 @@ void getGmsh(string file,
 
 // Physical name
    pf >> kw;
-   if (kw=="$PhysicalName") {
+   if (kw=="$PhysicalNames") {
       pf >> n1;
       for (int i=0; i<n1; ++i)
          pf >> n2 >> n3 >> w;
       pf >> kw;
-      if (kw!="$EndPhysicalName")
+      if (kw!="$EndPhysicalNames")
          throw OFELIException("getGmsh(...): Keyword EndPhysicalName not found.");
+      pf >> kw;
    }
 
 // Entities
+   vector<int> Pcode, Ccode, Scode, Vcode;
    if (kw=="$Entities") {
+      pf >> n1 >> n2 >> n3 >> n4;
+      Pcode.resize(n1), Ccode.resize(n2), Scode.resize(n3), Vcode.resize(n4);
+      for (size_t i=0; i<n1; ++i)
+         Pcode[i] = 0;
+      for (size_t i=0; i<n2; ++i)
+         Ccode[i] = 0;
+      for (size_t i=0; i<n3; ++i)
+         Scode[i] = 0;
+      for (size_t i=0; i<n4; ++i)
+         Vcode[i] = 0;
+      if (n4>0)
+         dim = 3;
+      else if (n3>0)
+         dim = 2;
+      else if (n2>0)
+         dim = 1;
+      for (size_t i=0; i<n1; ++i) {
+         pf >> n5 >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5] >> n6;
+         if (n6) {
+            for (size_t j=0; j<n6; ++j) {
+               pf >> d[j];
+               Pcode[n5-1] = d[j];
+            }
+         }
+      }
+      for (size_t i=0; i<n2; ++i) {
+         pf >> n5 >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5] >> n6;
+         if (n6) {
+            for (size_t j=0; j<n6; ++j) {
+               pf >> d[j];
+               Ccode[n5-1] = d[j];
+            }
+         }
+         pf >> n7;
+         for (size_t j=0; j<n7; ++j)
+            pf >> d[j];
+      }
+      for (size_t i=0; i<n3; ++i) {
+         pf >> n5 >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5] >> n6;
+         if (n6) {
+            for (size_t j=0; j<n6; ++j) {
+               pf >> d[j];
+               Scode[n5-1] = d[j];
+            }
+         }
+         pf >> n7;
+         for (size_t j=0; j<n7; ++j)
+            pf >> d[j];
+      }
+      for (size_t i=0; i<n4; ++i) {
+         pf >> n5 >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5] >> n6;
+         if (n6) {
+            dim = 3;
+            for (size_t j=0; j<n6; ++j) {
+               pf >> d[j];
+               Vcode[n5-1] = d[j];
+            }
+            pf >> n7;
+            for (size_t j=0; j<n7; ++j)
+               pf >> d[j];
+         }
+      }
       pf >> kw;
-      while (kw!="$EndEntities")
-         getline(pf,kw);
+      if (kw!="$EndEntities")
+         throw OFELIException("getGmsh(...): Keyword EndEntities not found.");
    }
-/*   if (kw!="$Entities")
-      throw OFELIException("getGmsh(...): Keyword Entities unfound.");
-   pf >> n1 >> n2 >> n3 >> n4;
-   for (int i=0; i<n1; ++i) {
-      pf >> n5 >> d1 >> d2 >> d3 >> d4 >> d5 >> d6;
-      pf >> n6;
-      for (size_t j=0; j<n6; ++j)
-         pf >> n6;
-   }
-   for (int i=0; i<n2; ++i) {
-      pf >> n5 >> d1 >> d2 >> d3 >> d4 >> d5 >> d6;
-      pf >> n6;
-      for (int j=0; j<n6; ++j)
-         pf >> n6;
-      pf >> n6;
-      for (int j=0; j<n6; ++j)
-         pf >> n6;
-   }
-   for (int i=0; i<n3; ++i) {
-      pf >> n5 >> d1 >> d2 >> d3 >> d4 >> d5 >> d6;
-      pf >> n6;
-      for (int j=0; j<n6; ++j)
-         pf >> n6;
-      pf >> n6;
-      for (int j=0; j<n6; ++j)
-         pf >> n6;
-   }
-   for (int i=0; i<n4; ++i) {
-      pf >> n5 >> d1 >> d2 >> d3 >> d4 >> d5 >> d6;
-      pf >> n6;
-      for (int j=0; j<n6; ++j)
-         pf >> n6;
-      pf >> n6;
-      for (int j=0; j<n6; ++j)
-         pf >> n6;
-   }
-   pf >> kw;
-   if (kw!="$EndEntities")
-      throw OFELIException("getGmsh(...): Keyword EndEntities unfound.");*/
 
 // Partitioned Entities
    pf >> kw;
@@ -977,27 +666,43 @@ void getGmsh(string file,
          pf >> n3 >> n4;
       pf >> n1 >> n2 >> n3 >> n4;
       for (int i=0; i<n1; ++i) {
-         pf >> n5 >> d1 >> d2 >> d3 >> d4 >> d5 >> d6;
+         pf >> n5 >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5];
          pf >> n6;
          for (int j=0; j<n6; ++j)
             pf >> n6;
       }
       if (kw!="$EndPartitionedEntities")
          throw OFELIException("getGmsh(...): Keyword EndEntities not found.");
+      pf >> kw;
    }
 
    if (kw!="$Nodes")
       throw OFELIException("getGmsh(...): Keyword Nodes not found.");
    pf >> n1 >> nb_nodes;
-   vector<Nd> nod(nb_nodes);
-   for (int i=1; i<=n1; ++i) {
+   int m=0, n=0, nm=0;
+   vector<Nd> nod, nnd;
+   Nd nn;
+   for (int i=0; i<n1; ++i) {
       pf >> n2 >> n3 >> n4 >> n5;
+      int cc = 0;
+      if (n3==0)
+         cc = Pcode[n2-1];
+      else if (n3==1)
+         cc = (Ccode[n2-1]<MY_RANDOM) ? Ccode[n2-1] : 0; 
+      else if (n3==2 && dim>2)
+         cc = (Scode[n2-1]<MY_RANDOM) ? Scode[n2-1] : 0; 
+      else if (n3==3 && dim>2)
+         cc = Vcode[n2-1];
       if (n4)
          throw OFELIException("getGmsh(...): parametric not implemented.");
       for (int j=0; j<n5; ++j) {
-         pf >> k >> x1 >> x2 >> x3;
-         nod[k-1].n = k;
-         nod[k-1].x[0] = x1, nod[k-1].x[1] = x2, nod[k-1].x[2] = x3;
+         pf >> n >> nn.x[0] >> nn.x[1] >> nn.x[2];
+         nn.n = ++nm, ++m;
+         nn.cc = cc;
+         while (n>m)
+            nod.push_back(nn), m++;
+         nnd.push_back(nn);
+         nod.push_back(nn);
       }
    }
    pf >> kw;
@@ -1008,58 +713,76 @@ void getGmsh(string file,
    if (kw!="$Elements")
       throw OFELIException("getGmsh(...): Keyword Elements not found.");
    pf >> n1 >> nb_elements;
-   vector<El> es, elements, sides;
+   vector<El> elements, sides;
    El ell;
-   ell.region = 1;
+   size_t nse=0, ne=0, ns=0;
    for (int i=0; i<n1; ++i) {
       pf >> n2 >> n3 >> n4 >> n5;
-      dim = std::max(dim,n3);
       ell.dim = n3;
-      for (int n=0; n<n5; ++n) {
-         pf >> ell.n;
+      for (int k=0; k<n5; ++k) {
+         pf >> n;
+         nse++;
          ell.shape = sh[n4-1];
          ell.nb_nodes = nb_en[n4-1];
-         for (int i=0; i<ell.nb_nodes; ++i)
-             pf >> ell.node[i];
-         es.push_back(ell);
+         for (int i=0; i<ell.nb_nodes; ++i) {
+            pf >> m;
+            ell.node[i] = nod[m-1].n;
+         }
+         if (ell.dim==dim) {
+            ++ne;
+            ell.region = 1;
+            if (dim==1)
+               ell.region = Ccode[n2-1];
+            else if (dim==2)
+               ell.region = Scode[n2-1];
+            else if (dim==3)
+               ell.region = Vcode[n2-1];
+            elements.push_back(ell);
+         }
+         if (ell.dim==dim-1) {
+            ++ns;
+            ell.region = 0;
+            if (dim==1)
+               ell.region = Pcode[n2-1];
+            else if (dim==2)
+               ell.region = (Ccode[n2-1]<MY_RANDOM) ? 0 : Ccode[n2-1]-MY_RANDOM; 
+            else if (dim==3)
+               ell.region = (Scode[n2-1]<MY_RANDOM) ? 0 : Scode[n2-1]-MY_RANDOM; 
+            sides.push_back(ell);
+         }
       }
    }
    pf >> kw;
    if (kw!="$EndElements")
-      throw OFELIException("getGmsh(...): Illegal file format");
-   for (size_t n=0; n<nb_elements; ++n) {
-      if (dim==es[n].dim)
-         elements.push_back(es[n]);
-      else if (dim==es[n].dim+1)
-         sides.push_back(es[n]);
-   }
-
+      throw OFELIException("getGmsh(...): Keywords EndElements not found.");
+   
 // Build a mesh instance
    mesh.setDim(dim);
    size_t first_dof = 1;
-   for (int j=0; j<nb_nodes; j++) {
-      nd = new Node(nod[j].n,nod[j].x);
+   for (int j=0; j<nb_nodes; ++j) {
+      nd = new Node(nnd[j].n,nnd[j].x);
       nd->setNbDOF(nb_dof);
       nd->setDOF(first_dof,nb_dof);
-      for (int i=0; i<nb_dof; i++)
-         code[i] = 0;
+      dof_code(nb_dof,nnd[j].cc,code);
       nd->setCode(code);
       mesh.Add(nd);
    }
-   for (int j=0; j<elements.size(); j++) {
+   size_t label = 0;
+   for (int j=0; j<ne; ++j) {
       ell = elements[j];
-      el = new Element(ell.n,ell.shape,ell.region);
+      el = new Element(++label,ell.shape,ell.region);
       for (int k=0; k<ell.nb_nodes; ++k)
          el->Add(mesh[ell.node[k]]);
-      mesh.Add(el);    
+      mesh.Add(el);
    }
+   label = 0;
    for (int j=0; j<sides.size(); j++) {
       ell = sides[j];
-      sd = new Side(ell.n,ell.shape);
+      sd = new Side(++label,ell.shape);
       for (int k=0; k<ell.nb_nodes; ++k)
          sd->Add(mesh[ell.node[k]]);
-      DOFCode(ell.region-1000,nb_dof,code);
-      for (int k=0; k<nb_dof; k++)
+      DOFCode(ell.region,nb_dof,code);
+      for (int k=0; k<nb_dof; ++k)
          sd->setCode(k+1,code[k]);
       mesh.Add(sd);    
    }
@@ -1657,5 +1380,23 @@ void getTriangle(string file,
       sf.close();
 }
 
+
+void dof_code(size_t nb_dof,
+              int    mark,
+              int*   code)
+{
+   int j = mark, m, kk;
+   int sign = 1;
+   if (mark < 0) {
+      sign = -1;
+      j *= sign;
+   }
+   for (size_t k=0; k<nb_dof; k++) {
+      kk = int(pow(10.,real_t(nb_dof-k-1)));
+      code[k] = m = j/kk;
+      code[k] *= sign;
+      j -= m*kk;
+   }
+}
 
 } /* namespace OFELI */

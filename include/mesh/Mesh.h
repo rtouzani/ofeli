@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2018 Rachid Touzani
+   Copyright (C) 1998 - 2019 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -213,7 +213,7 @@ class Mesh
  *  @param [in] cxN Code for nodes generated on the line x=xN if >0, for sides on this line if <0
  *  @param [in] cy0 Code for nodes generated on the line y=y0 if >0, for sides on this line if <0
  *  @param [in] cyN Code for nodes generated on the line y=yN if >0, for sides on this line if <0
- *  @param [in] opt Flag to generate elements as well (if not zero) [Default: 0]. 
+ *  @param [in] opt Flag to generate elements as well (if not zero) [Default: <tt>0</tt>]. 
  *  If the flag is not 0, it can take one of the enumerated values: TRIANGLE or QUADRILATERAL, 
  *  with obvious meaning.
  *  @param [in] nb_dof Number of degrees of freedom per node [Default: <tt>1</tt>].

@@ -2,7 +2,7 @@
                                     O  F  E  L  I
                            Object  Finite  Element  Library
   ==============================================================================
-   Copyright (C) 1998 - 2018 Rachid Touzani
+   Copyright (C) 1998 - 2019 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by

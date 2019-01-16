@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2018 Rachid Touzani
+   Copyright (C) 1998 - 2019 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -59,8 +59,9 @@
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of current release
  */
-#define OFELI_RELEASE_DATE            "9-2018"
+#define OFELI_RELEASE_DATE            "2-2019"
 
+#define MY_RANDOM             55085111
 
 /*! \typedef lsize_t
  *  \ingroup Util
@@ -290,6 +291,7 @@ enum DOFSupport {
  * \brief Enumerate list for element shapes
  */
 enum ElementShape {
+   NO_ELEMENT    = 0,            /*!< Mesh with no element              */
    POINT         = 1,            /*!< Elements are single points        */
    LINE          = 2,            /*!< Elements are segment lines        */
    TRIANGLE      = 3,            /*!< Elements are triangles            */

@@ -118,6 +118,7 @@ Mesh::Mesh(const string& file,
    _set_sides = _set_edges = _set_elements = false;
    get(file,ff,nb_dof);
    string mat = theMaterial.getName(1);
+cout<<file<<" "<<mat<<endl;
 }
 
 
@@ -2778,6 +2779,9 @@ void Mesh::get(const string& mesh_file,
       getTriangle(mesh_file,*this,nb_dof);
    else
       throw OFELIException("Mesh::get(string,int,int): Unknown file format "+itos(ff));
+   NumberEquations();
+   mesh_elements(*this)
+      theMaterial.check(the_element->getCode());
 }
 
 
@@ -2801,7 +2805,8 @@ void Mesh::put(const string& file) const
    size_t i, k;
    int sign, m;
 
-   string sh[11] = {"point",
+   string sh[11] = {"none",
+                    "point",
                     "line",
                     "triangle",
                     "quadrilateral",

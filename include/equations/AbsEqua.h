@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2018 Rachid Touzani
+   Copyright (C) 1998 - 2019 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -331,10 +331,10 @@ class AbsEqua
     void setSolver(Iteration      ls,
                    Preconditioner pc=IDENT_PREC)
     {
-       if (ls==DIRECT_SOLVER && _matrix_type==SPARSE)
+      if (ls==DIRECT_SOLVER && _matrix_type==SPARSE)
           throw OFELIException("In AbsEqua::setSolver(Iteration,Preconditioner): "
                                "Choices of solver and storage modes are incompatible.");
-       if (!_set_matrix)
+      if (!_set_matrix)
           setMatrixType(SPARSE);
        _ls.setSolver(ls,pc);
     }
