@@ -30,6 +30,8 @@
   ==============================================================================*/
 
 #include "equations/interface/Heap.h"
+#include "linear_algebra/Vect_impl.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 

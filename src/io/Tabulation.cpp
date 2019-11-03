@@ -180,7 +180,7 @@ real_t Tabulation::getDerivative(string funct,
 }
 
 
-ostream& operator<<(      ostream&    s,
+ostream& operator<<(ostream&          s,
                     const Tabulation& p)
 {
    size_t n = p._nb_funct;

@@ -40,7 +40,6 @@
 #include <iomanip>
 using std::ostream;
 using std::endl;
-using std::clog;
 using std::ifstream;
 using std::ofstream;
 using std::setw;

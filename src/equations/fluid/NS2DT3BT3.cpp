@@ -34,63 +34,26 @@
 #include "equations/fluid/NS2DT3BT3.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
-NS2DT3BT3::NS2DT3BT3(Element* el)
+NS2DT3BT3::NS2DT3BT3(Mesh& ms)
+          : Equation<real_t,3,9,2,6>(ms)
 {
    _equation_name = "Navier-Stokes";
    _finite_element = "2-D, P1+Bubble/P1";
-   set(el);
-   Misc();
+   _Re = 1.;
 }
 
 
-NS2DT3BT3::NS2DT3BT3(      Element*      el,
-                     const Vect<real_t>& u,
-                     const real_t&       time)
+NS2DT3BT3::NS2DT3BT3(Mesh&         ms,
+                     Vect<real_t>& u)
+          : Equation<real_t,3,9,2,6>(ms,u)
 {
    _equation_name = "Navier-Stokes";
    _finite_element = "2-D, P1+Bubble/P1";
-   set(el);
-   ePrev[0] = u(_theElement->getNodeLabel(1));
-   ePrev[1] = u(_theElement->getNodeLabel(2));
-   ePrev[2] = u(_theElement->getNodeLabel(3));
-   Misc();
-}
-
-
-NS2DT3BT3::NS2DT3BT3(Side* sd)
-{
-   _equation_name = "Navier-Stokes";
-   _finite_element = "2-D, P1+Bubble/P1";
-   set(sd);
-}
-
-
-NS2DT3BT3::NS2DT3BT3(Side*               sd,
-                     const Vect<real_t>& u,
-                     const real_t&       time)
-{
-   _equation_name = "Navier-Stokes";
-   _finite_element = "2-D, P1+Bubble/P1";
-   set(sd);
-   SideVector(u);
-}
-
-
-NS2DT3BT3::NS2DT3BT3(Mesh&         mesh,
-                     Vect<real_t>& u,
-                     real_t        Re)
-          : Equation<real_t,3,9,2,6>(mesh)
-{
-   _equation_name = "Navier-Stokes";
-   _finite_element = "2-D, P1+Bubble/P1";
-   _step = 1;
-   _u = &u;
-   _Re = Re;
-   setInput(SOLUTION,u);
-   _bc_given = _bf_given = _sf_given = false;
+   _Re = 1.;
 }
 
 
@@ -99,72 +62,66 @@ NS2DT3BT3::~NS2DT3BT3() { }
 
 void NS2DT3BT3::set(const Element* el)
 {
-   _nb_dof = 3;
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    setMaterial();
    Triang3 tr(_theElement);
-   _area = tr.getArea();
+   _el_geo.area = tr.getArea();
    ElementNodeCoordinates();
-   _dSh(1) = tr.DSh(1);
-   _dSh(2) = tr.DSh(2);
-   _dSh(3) = tr.DSh(3);
-   eMat = 0;
+   _dSh = tr.DSh();
+   eA0 = 0, eA1 = 0;
    eRHS = 0;
 }
 
 
 void NS2DT3BT3::set(const Side* sd)
 {
-   _nb_dof = 3;
-   Init(sd);
+   _theElement = nullptr, _theSide = sd;
    Line2 ln(_theSide);
-   _length = ln.getLength();
+   _el_geo.length = ln.getLength();
    SideNodeCoordinates();
-   _dSh(1) = ln.DSh(1);
-   _dSh(2) = ln.DSh(2);
-   sMat = 0;
+   _dSh = ln.DSh();
    sRHS = 0;
 }
 
 
-int NS2DT3BT3::run()
+void NS2DT3BT3::build()
 {
-   MESH_EL {
-      set(theElement);
+   mesh_elements(*_theMesh) {
+      set(the_element);
+      Misc();
       Viscous();
       PressureGradient();
-      updateBC(*_theElement,*_bc);
-      ElementAssembly(_A);
-      ElementAssembly(*_b);
+      if (AbsEqua<real_t>::_bc!=nullptr)
+         Equation<real_t,3,9,2,6>::updateBC(The_element,*AbsEqua<real_t>::_bc);
+      AbsEqua<real_t>::_A->Assembly(The_element,eA0.get());
+      AbsEqua<real_t>::_b->Assembly(The_element,eRHS.get());
    }
-   //   int ret = SolveLinearSystem(*_A,*_b,_uu);
-   _u->insertBC(*_theMesh,_uu,*_bc);
-   return 0;
 }
 
 
 void NS2DT3BT3::Misc()
 {
    Point<real_t> x32=_x[2]-_x[1], x13=_x[0]-_x[2], x21=_x[1]-_x[0];
-   real_t a = 0.25*_visc/_area;
+   real_t n13=(x13,x13), n21=(x21,x21), m32=(x13,x21);
+   real_t a = 0.25*_visc/_el_geo.area;
 
    _aa(1,1) = a*x32.NNorm();
-   _aa(2,1) = -a*(x13.NNorm() + x13*x21);
+   _aa(2,1) = -a*(n13 + m32);
    _aa(1,2) = _aa(1,2);
-   _aa(3,1) = -a*(x21.NNorm() + x13*x21);
+   _aa(3,1) = -a*(n13 + m32);
    _aa(1,3) = _aa(3,1);
-   _aa(2,2) = a*x13.NNorm();
-   _aa(3,2) = a*x13*x21;
+   _aa(2,2) = a*n13;
+   _aa(3,2) = a*m32;
    _aa(2,3) = _aa(3,2);
-   _aa(3,3) = a*x21.NNorm();
-   _aa(4,4) = a*(x13.NNorm() + x21.NNorm() + x13*x21)/90.;
+   _aa(3,3) = a*n21;
+   _aa(4,4) = a*(n13 + n21 + m32)/90.;
 
    _bb(1,1) = -OFELI_SIXTH*x32.y; 
    _bb(2,1) = _bb(1,1); 
    _bb(3,1) = _bb(1,1); 
    _bb(1,4) = 0.1*OFELI_TWELVETH*x32.y;
    _bb(1,2) = -OFELI_SIXTH*x13.y; 
-   _bb(2,2) = _bb(1,2); 
+   _bb(2,2) = _bb(1,2);
    _bb(3,2) = -OFELI_SIXTH*x13.y; 
    _bb(2,4) = 0.1*OFELI_TWELVETH*x13.y;
    _bb(1,3) = -OFELI_SIXTH*x21.y; 
@@ -189,14 +146,11 @@ void NS2DT3BT3::Misc()
 
 void NS2DT3BT3::LMass(real_t coef)
 {
-   real_t c = coef*_dens*OFELI_THIRD*_area;
+   real_t c = coef*_dens*OFELI_THIRD*_el_geo.area;
    for (size_t i=1; i<=3; i++) {
-      eMat(3*i-2,3*i-2) += c;
-      eMat(3*i-1,3*i-1) += c;
-      eMat(3*i  ,3*i  ) += c;
-      eRHS(3*i-2) += c*ePrev(3*i-2);
-      eRHS(3*i-1) += c*ePrev(3*i-1);
-      eRHS(3*i  ) += c*ePrev(3*i  );
+      eA1(3*i-2,3*i-2) += c;
+      eA1(3*i-1,3*i-1) += c;
+      eA1(3*i  ,3*i  ) += c;
    }
 }
 
@@ -204,12 +158,12 @@ void NS2DT3BT3::LMass(real_t coef)
 void NS2DT3BT3::Viscous(real_t coef)
 {
    for (size_t i=0; i<3; i++) {
-      eMat(3*i+1,1) = _aa(1,i+1)*coef;
-      eMat(3*i+2,2) = _aa(1,i+1)*coef;
-      eMat(3*i+1,4) = _aa(2,i+1)*coef;
-      eMat(3*i+2,5) = _aa(2,i+1)*coef;
-      eMat(3*i+1,7) = _aa(3,i+1)*coef;
-      eMat(3*i+2,8) = _aa(3,i+1)*coef;
+      eA0(3*i+1,1) = _aa(1,i+1)*coef;
+      eA0(3*i+2,2) = _aa(1,i+1)*coef;
+      eA0(3*i+1,4) = _aa(2,i+1)*coef;
+      eA0(3*i+2,5) = _aa(2,i+1)*coef;
+      eA0(3*i+1,7) = _aa(3,i+1)*coef;
+      eA0(3*i+2,8) = _aa(3,i+1)*coef;
    }
 }
 
@@ -217,72 +171,68 @@ void NS2DT3BT3::Viscous(real_t coef)
 void NS2DT3BT3::PressureGradient(real_t coef)
 {
    for (size_t i=0; i<3; i++) {
-      eMat(3*i+1,3) = -_bb(1,i+1);
-      eMat(3*i+1,6) = -_bb(2,i+1);
-      eMat(3*i+1,9) = -_bb(3,i+1);
-      eMat(3*i+2,3) = -_cc(1,i+1);
-      eMat(3*i+2,6) = -_cc(2,i+1);
-      eMat(3*i+2,9) = -_cc(3,i+1);
-      eMat(3*i+3,1) =  _bb(i+1,1);
-      eMat(3*i+3,2) =  _cc(i+1,1);
-      eMat(3*i+3,3) = (_bb(i+1,4)*_bb(1,4) + _cc(i+1,4)*_cc(1,4))/_aa(4,4);
-      eMat(3*i+3,4) =  _bb(i+1,2);
-      eMat(3*i+3,5) =  _cc(i+1,2);
-      eMat(3*i+3,6) = (_bb(i+1,4)*_bb(2,4) + _cc(i+1,4)*_cc(2,4))/_aa(4,4);
-      eMat(3*i+3,7) =  _bb(i+1,3);
-      eMat(3*i+3,8) =  _cc(i+1,3);
-      eMat(3*i+3,9) = (_bb(i+1,4)*_bb(3,4) + _cc(i+1,4)*_cc(3,4))/_aa(4,4);
+      eA0(3*i+1,3) = -_bb(1,i+1);
+      eA0(3*i+1,6) = -_bb(2,i+1);
+      eA0(3*i+1,9) = -_bb(3,i+1);
+      eA0(3*i+2,3) = -_cc(1,i+1);
+      eA0(3*i+2,6) = -_cc(2,i+1);
+      eA0(3*i+2,9) = -_cc(3,i+1);
+      eA0(3*i+3,1) =  _bb(i+1,1);
+      eA0(3*i+3,2) =  _cc(i+1,1);
+      eA0(3*i+3,3) = (_bb(i+1,4)*_bb(1,4) + _cc(i+1,4)*_cc(1,4))/_aa(4,4);
+      eA0(3*i+3,4) =  _bb(i+1,2);
+      eA0(3*i+3,5) =  _cc(i+1,2);
+      eA0(3*i+3,6) = (_bb(i+1,4)*_bb(2,4) + _cc(i+1,4)*_cc(2,4))/_aa(4,4);
+      eA0(3*i+3,7) =  _bb(i+1,3);
+      eA0(3*i+3,8) =  _cc(i+1,3);
+      eA0(3*i+3,9) = (_bb(i+1,4)*_bb(3,4) + _cc(i+1,4)*_cc(3,4))/_aa(4,4);
    }
    for (size_t i=0; i<3; i++) {
-      eMat(3*i+1,3) = -_bb(1,i+1);
-      eMat(3*i+1,6) = -_bb(2,i+1);
-      eMat(3*i+1,9) = -_bb(3,i+1);
-      eMat(3*i+2,3) = -_cc(1,i+1);
-      eMat(3*i+2,6) = -_cc(2,i+1);
-      eMat(3*i+2,9) = -_cc(3,i+1);
-      eMat(3*i+3,1) =  _bb(i+1,1);
-      eMat(3*i+3,2) =  _cc(i+1,1);
-      eMat(3*i+3,3) = (_bb(i+1,4)*_bb(1,4) + _cc(i+1,4)*_cc(1,4))/_aa(4,4);
-      eMat(3*i+3,4) =  _bb(i+1,2);
-      eMat(3*i+3,5) =  _cc(i+1,2);
-      eMat(3*i+3,6) = (_bb(i+1,4)*_bb(2,4) + _cc(i+1,4)*_cc(2,4))/_aa(4,4);
-      eMat(3*i+3,7) =  _bb(i+1,3);
-      eMat(3*i+3,8) =  _cc(i+1,3);
-      eMat(3*i+3,9) = (_bb(i+1,4)*_bb(3,4) + _cc(i+1,4)*_cc(3,4))/_aa(4,4);
+      eA0(3*i+1,3) = -_bb(1,i+1);
+      eA0(3*i+1,6) = -_bb(2,i+1);
+      eA0(3*i+1,9) = -_bb(3,i+1);
+      eA0(3*i+2,3) = -_cc(1,i+1);
+      eA0(3*i+2,6) = -_cc(2,i+1);
+      eA0(3*i+2,9) = -_cc(3,i+1);
+      eA0(3*i+3,1) =  _bb(i+1,1);
+      eA0(3*i+3,2) =  _cc(i+1,1);
+      eA0(3*i+3,3) = (_bb(i+1,4)*_bb(1,4) + _cc(i+1,4)*_cc(1,4))/_aa(4,4);
+      eA0(3*i+3,4) =  _bb(i+1,2);
+      eA0(3*i+3,5) =  _cc(i+1,2);
+      eA0(3*i+3,6) = (_bb(i+1,4)*_bb(2,4) + _cc(i+1,4)*_cc(2,4))/_aa(4,4);
+      eA0(3*i+3,7) =  _bb(i+1,3);
+      eA0(3*i+3,8) =  _cc(i+1,3);
+      eA0(3*i+3,9) = (_bb(i+1,4)*_bb(3,4) + _cc(i+1,4)*_cc(3,4))/_aa(4,4);
    }
 }
 
 
 void NS2DT3BT3::RHS_Convection(real_t coef)
 {
-   Point<real_t> du = ePrev(1)*_dSh(1) + ePrev(3)*_dSh(2) + ePrev(5)*_dSh(3);
-   Point<real_t> dv = ePrev(2)*_dSh(1) + ePrev(4)*_dSh(2) + ePrev(6)*_dSh(3);
-   real_t c = coef*OFELI_THIRD*_area;
+   Point<real_t> du = _eu(1)*_dSh[0] + _eu(3)*_dSh[1] + _eu(5)*_dSh[2];
+   Point<real_t> dv = _eu(2)*_dSh[0] + _eu(4)*_dSh[1] + _eu(6)*_dSh[2];
+   real_t c = coef*OFELI_THIRD*_el_geo.area;
    for (size_t i=1; i<=3; i++) {
-      eRHS(3*i-2) -= c*(ePrev(2*i-1)*du.x + ePrev(2*i)*du.y);
-      eRHS(3*i-1) -= c*(ePrev(2*i-1)*dv.x + ePrev(2*i)*dv.y);
+      eRHS(3*i-2) -= c*(_eu(2*i-1)*du.x + _eu(2*i)*du.y);
+      eRHS(3*i-1) -= c*(_eu(2*i-1)*dv.x + _eu(2*i)*dv.y);
    }
 }
 
 
-void NS2DT3BT3::BodyRHS(UserData<real_t>& ud)
+void NS2DT3BT3::BodyRHS(Vect<real_t>& f)
 {
    for (size_t i=1; i<=3; i++) {
-      real_t fx = ud.BodyForce(_x[i-1],_time,1);
-      real_t fy = ud.BodyForce(_x[i-1],_time,2);
-      eRHS(3*i-2) += OFELI_THIRD*_area*fx;
-      eRHS(3*i-1) += OFELI_THIRD*_area*fy;
+      eRHS(3*i-2) += OFELI_THIRD*_el_geo.area*f((*_theElement)(i)->n(),1);
+      eRHS(3*i-1) += OFELI_THIRD*_el_geo.area*f((*_theElement)(i)->n(),2);
    }
 }
 
 
-void NS2DT3BT3::BoundaryRHS(UserData<real_t>& ud)
+void NS2DT3BT3::BoundaryRHS(Vect<real_t>& f)
 {
    for (size_t i=1; i<=2; i++) {
-      real_t fx = ud.SurfaceForce(_x[i-1],_theSide->getCode(1),_time,1);
-      real_t fy = ud.SurfaceForce(_x[i-1],_theSide->getCode(2),_time,2);
-      sRHS(3*i-2) += 0.5*_length*fx;
-      sRHS(3*i-1) += 0.5*_length*fy;
+      sRHS(3*i-2) += 0.5*_el_geo.length*f((*_theSide)(i)->n(),1);
+      sRHS(3*i-1) += 0.5*_el_geo.length*f((*_theSide)(i)->n(),2);
    }
 }
 

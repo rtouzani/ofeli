@@ -33,8 +33,12 @@
   ==============================================================================*/
 
 
-#include "equations/cl/LCL1D.h"
 #include <algorithm>
+
+#include "mesh/Mesh.h"
+#include "equations/cl/LCL1D.h"
+#include "linear_algebra/Vect_impl.h"
+#include "OFELIException.h"
 
 using std::min;
 using std::max;
@@ -50,7 +54,8 @@ LCL1D::LCL1D(Mesh &m) : Muscl1D(m)
 }
 
 
-LCL1D::LCL1D(Mesh &m, Vect<double> &U) : Muscl1D(m)
+LCL1D::LCL1D(Mesh&         m,
+             Vect<double>& U) : Muscl1D(m)
 {
    _Init();
    _U = &U;
@@ -92,7 +97,7 @@ void LCL1D::setInitialCondition(double u)
 void LCL1D::setReconstruction()
 {
    if (Muscl1D::setReconstruction(*_U,_LU,_RU,1)) {
-      cerr << "ERROR: reconstruction of u failed" << endl;
+      throw OFELIException("LCL1D::setReconstruction(): reconstruction of u failed");
       exit(3);
    }
 };

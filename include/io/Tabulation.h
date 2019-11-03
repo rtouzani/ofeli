@@ -43,7 +43,7 @@ using std::string;
 #include <map>
 
 #include "OFELI_Config.h"
-#include "linear_algebra/Vect.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 /*!
@@ -161,8 +161,8 @@ class Tabulation
 /// \fn ostream & operator<<(ostream& s, const Tabulation &t)
 /// \brief Output Tabulated function data.
 /// \ingroup Util
-ostream& operator<<(ostream& s, const Tabulation &t);
-
+ostream& operator<<(ostream& s,
+                    const    Tabulation &t);
 
 } /* namespace OFELI */
 

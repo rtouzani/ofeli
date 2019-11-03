@@ -34,13 +34,15 @@
 #define __XML_PARSER_H
 
 #include <fstream>
+#include <string>
 #include <vector>
+using std::string;
+using std::vector;
 
 #include "OFELI_Config.h"
 #include "io/xmlsp/xmlsp.h"
 #include "io/Prescription.h"
-
-using namespace std;
+#include "linear_algebra/Vect.h"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -54,8 +56,6 @@ class Mesh;
 class IPF;
 class Domain;
 class Tabulation;
-
-template <class T_> class Vect;
 
 
 class XMLParser : public Parser
@@ -103,8 +103,6 @@ class XMLParser : public Parser
 
    void setFile(string file);
 
-   void setVerbose(int verb);
-
    void set(Mesh& ms,
             int   format=ASCII);
 
@@ -147,11 +145,11 @@ class XMLParser : public Parser
    size_t getNbDOF() const { return _nb_dof; }
 
  protected:
-   ifstream _is;
+   std::ifstream _is;
    bool _is_opened, _is_closed, _set_mesh, _set_field, _set_file, _set_prescription;
    bool _set_domain, _prescription_opened, _compact, _value;
    real_t _time, _sought_time, _scan_steps, _val;
-   int _access, _type, _verb, _cm, _format, _prescription_type, _var, _code;
+   int _access, _type, _cm, _format, _prescription_type, _var, _code;
    string _file, _mesh_file, _el_shape, _sd_shape, _name, _sought_name, _tag_name, _xml, _mat;
    size_t _dof, _label, _nb_dof, _dim, _nb_nodes, _nb_elements, _nb_sides, _nb_edges;
    size_t _scan, _nb_el_nodes, _nb_sd_nodes, _dof_support, _nb_mat, _all_steps, _nb_funct;

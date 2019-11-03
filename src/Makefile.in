@@ -401,9 +401,8 @@ LAPLACE_OBJS = \
 			equations/laplace/Laplace1DL2.o \
 			equations/laplace/Laplace1DL3.o \
 			equations/laplace/Laplace2DT3.o \
+			equations/laplace/Laplace2DT6.o \
 			equations/laplace/Laplace3DT4.o \
-			equations/laplace/Laplace2DMHRT0.o \
-			equations/laplace/Laplace2DFVT.o \
 			equations/laplace/LaplaceDG2DP1.o \
 			equations/laplace/SteklovPoincare2DBE.o
 
@@ -535,7 +534,6 @@ POST_OBJS = \
 SHAPE_FUNCTIONS_OBJS = \
 			shape_functions/Hexa8.o \
 			shape_functions/Line2.o \
-			shape_functions/Line2H.o \
 			shape_functions/Line3.o \
 			shape_functions/Penta6.o \
 			shape_functions/Quad4.o \

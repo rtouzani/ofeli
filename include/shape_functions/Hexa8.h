@@ -34,7 +34,14 @@
 #ifndef __HEXA8_H
 #define __HEXA8_H
 
+#include <vector>
+
 #include "shape_functions/FEShape.h"
+#include "mesh/Element.h"
+#include "mesh/Node.h"
+#include "linear_algebra/Point.h"
+#include "linear_algebra/LocalVect.h"
+
 
 namespace OFELI {
 /*!
@@ -45,12 +52,6 @@ namespace OFELI {
 /*! \file Hexa8.h
  *  \brief Definition file for class Hexa8.
  */
-
-template<class T_,size_t N_> class LocalVect;
-template<class T_,size_t NR_,size_t NC_> class LocalMatrix;
-class Element;
-class Side;
-
 
 /*! \class Hexa8
  *  \ingroup Shape
@@ -88,33 +89,43 @@ class Hexa8 : public FEShape
  */
     void setLocal(const Point<real_t>& s);
 
-/** \brief Return <tt>x</tt>, <tt>y</tt> and <tt>z</tt> partial derivatives of shape 
- *  function of node <tt>i</tt> at a given point.
- *  \details Member function \a setLocal must have been called before in order to 
- *  calculate relevant quantities.
- */
-    Point<real_t> DSh(size_t i) { return _dsh[i-1]; }
-
 /** \brief Calculate shape function derivatives and integration weights
- *  for 1-point Gauss rule
- *  @param [in] dsh Vector of shape function derivatives at the Gauss point
- *  @param [in] w Weight of integration formula at Gauss point
- */
-    void atGauss1(LocalVect<Point<real_t>,8>& dsh, real_t& w);
-
-/** \brief Calculate shape function derivatives and integration weights
- *  for 2x2x2-point Gauss rule
+ *  @param [in] n Number of Gauss-Legendre integration points in each direction
  *  @param [in] dsh Vector of shape function derivatives at the Gauss points
  *  @param [in] w Weights of integration formula at Gauss points
  */
-    void atGauss2(LocalMatrix<Point<real_t>,8,8>& dsh,
-                  LocalVect<real_t,8>&            w);
+    void atGauss(int                          n,
+                 std::vector<Point<real_t> >& dsh,
+                 std::vector<real_t>&         w);
+
+/** \brief Calculate shape functions and integration weights
+ *  @param [in] n Number of Gauss-Legendre integration points in each direction
+ *  @param [in] sh Vector of shape functions at the Gauss points
+ *  @param [in] w Weights of integration formula at Gauss points
+ */
+    void atGauss(int                  n,
+                 std::vector<real_t>& sh,
+                 std::vector<real_t>& w);
 
 /// \brief Return maximal edge length
     real_t getMaxEdgeLength() const;
 
 /// \brief Return minimal edge length
     real_t getMinEdgeLength() const;
+
+/** \brief Return gradient of a function defined at element nodes
+ *  @param [in] u Vector of values at nodes
+ *  @param [in] s Local coordinates (in <tt>[-1,1]*[-1,1]*[-1,1]</tt>) of point where
+ *  the gradient is evaluated
+ *  @return Value of gradient
+ *  @note If the derivatives of shape functions were not computed before calling
+ *  this function (by calling setLocal), this function will compute them
+ */
+    Point<real_t> Grad(const LocalVect<real_t,8>& u,
+                       const Point<real_t>&       s);
+
+ private:
+    std::vector<Point<real_t> > _dsh;
 
 };
 

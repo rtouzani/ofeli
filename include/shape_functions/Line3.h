@@ -36,6 +36,7 @@
 #include "shape_functions/FEShape.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
+#include "linear_algebra/LocalVect.h"
 #include "linear_algebra/Point.h"
 
 namespace OFELI {
@@ -89,12 +90,20 @@ class Line3 : public FEShape
 /// \brief Initialize local point coordinates in element.
     void setLocal(real_t s);
 
-/// \brief Return derivatives of shape function of node \a i at a given point
-    real_t DSh(size_t i) const { return _dsh[i-1].x; }
+/** \brief Return partial derivatives of shape functions of element nodes
+ *  @return LocalVect instance of partial derivatives of shape functions
+ *          <i>e.g.</i> \c dsh(i).x, \c dsh(i).y, are partial derivatives of the <i>i</i>-th
+ *          shape function. 
+ *  @note The local point at which the derivatives are computed must be chosen before by using the
+ *  member function setLocal
+ */
+     LocalVect<Point<real_t>,3> DSh() const;
 
 /// \brief Return actual coordinates of localized point
     Point<real_t> getLocalPoint() const { return (_sh[0]*_x[0] + _sh[1]*_x[1]); }
 
+ private:
+    LocalVect<Point<real_t>,3> _dsh;
 };
 
 /*! @} End of Doxygen Groups */

@@ -39,23 +39,24 @@ using namespace OFELI;
 int main(int argc, char *argv[])
 {
    if (argc <= 1) {
-      cout << " Usage: opt_demo3 <project_file>\n";
+      cout << "Usage: " << argv[0] << " <project_file>\n";
       exit(1);
    }
 
    try {
       IPF proj(argv[1]);
       Mesh ms(proj.getMeshFile(1));
-      int n = ms.getNbDOF();
 
 //    Declare solution and boundary condition vectors
-      Vect<double> x(n), bc(ms);
-      bc.setNodeBC(2,"1");
+      Vect<double> u(ms), bc(ms), f(ms);
+      bc.setNodeBC(1,"sin(pi*x)*cos(pi*y)");
+      f = "2*pi^2*sin(pi*x)*cos(pi*y)";
  
 //    Define the optimization problem and choose the optimization algorithm
       Opt opt(ms);
-      OptSolver os(opt,x);
-      os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
+      opt.getEquation()->setInput(SOURCE,f);
+      OptSolver os(opt,u);
+      os.setOptMethod(OptSolver::GRADIENT);
 
 //    Set Dirichlet boundary conditions as constraints for the optimization problem
       os.setBC(bc);
@@ -64,12 +65,13 @@ int main(int argc, char *argv[])
 //    Some parameters are retrieved from project file
       double toler = proj.getTolerance();
       int max_it = proj.getNbIter();
-      int verb = proj.getVerbose();
-      os.run(toler,max_it,verb);
+      os.run(toler,max_it);
 
-//    Output class information and solution
+//    Output class information and error
       cout << os;
-      cout << "\nSolution:\n" << x;
+      Vect<double> sol(ms);
+      sol = "sin(pi*x)*cos(pi*y)";
+      cout << "L2-Norm of solution: " << (u-sol).getWNorm2() << endl;
    } CATCH_EXCEPTION
 
    return 0;

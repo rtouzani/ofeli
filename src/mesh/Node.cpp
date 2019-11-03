@@ -41,13 +41,10 @@ extern FunctionParser theParser;
 namespace OFELI {
 
 Node::Node()
+     : _nb_dof(0), _label(0), _nb_neig_el(0), _neig_i(0), _level(0), _on_boundary(false)
 {
-   _nb_dof = 1;
-   _label = _nb_neig_el = _neig_i = 0;
    _code[0] = 0;
    _x = 0;
-   _on_boundary = false;
-   _level = 0;
    for (size_t i=0; i<MAX_NBDOF_NODE; i++)
       _dof[i] = 0;
 }
@@ -55,14 +52,10 @@ Node::Node()
 
 Node::Node(size_t               label,
            const Point<double>& x)
+     : _nb_dof(0), _label(label), _nb_neig_el(0), _neig_i(0), _level(0), _on_boundary(false)
 {
-   _nb_neig_el = _neig_i = 0;
    _x = x;
    _code[0] = 0;
-   _nb_dof = 0;
-   _label = label;
-   _on_boundary = false;
-   _level = 0;
    for (size_t i=0; i<MAX_NBDOF_NODE; i++)
       _dof[i] = 0;
 }

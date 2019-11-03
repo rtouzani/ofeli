@@ -329,6 +329,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LIBRARIES = libmesh.a
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 SUBDIRS = bamg metis
 libmesh_a_SOURCES = Domain.cpp \
 			Edge.cpp \

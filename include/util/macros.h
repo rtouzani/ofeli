@@ -42,11 +42,12 @@ namespace OFELI {
  */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#define MESH_NODES    for (topNode(); (theNode=getNode());)
-#define MESH_ELEMENTS for (topElement(); (theElement=getElement());)
-#define MESH_SIDES    for (topSide(); (theSide=getSide());)
-#define MESH_EDGES    for (topEdge(); (theEdge=getEdge());)
-#define MAT(M,A)      (M &)(*A)
+#define MESH_NODES          for (topNode(); (theNode=getNode());)
+#define MESH_ELEMENTS       for (topElement(); (theElement=getElement());)
+#define MESH_SIDES          for (topSide(); (theSide=getSide());)
+#define MESH_BOUNDARY_SIDES for (topBoundarySide(); (theSide=getBoundarySide());)
+#define MESH_EDGES          for (topEdge(); (theEdge=getEdge());)
+#define MAT(M,A)            (M &)(*A)
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 
@@ -130,6 +131,7 @@ namespace OFELI {
 #define mesh_nodes(mesh) for ((mesh).topNode(); ((the_node)=(mesh).getNode());)
 #define mesh_sides(mesh) for ((mesh).topSide(); ((the_side)=(mesh).getSide());)
 #define mesh_edges(mesh) for ((mesh).topEdge(); ((the_edge)=(mesh).getEdge());)
+#define mesh_boundary_sides(mesh) for ((mesh).topBoundarySide(); ((the_side)=(mesh).getBoundarySide());)
 #define The_element (*the_element)
 #define The_node (*the_node)
 #define The_side (*the_side)
@@ -293,6 +295,7 @@ namespace OFELI {
 #define MESH_EL MeshElements(*_theMesh)
 #define MESH_ND MeshNodes(*_theMesh)
 #define MESH_SD MeshSides(*_theMesh)
+#define MESH_BD_SD MeshBoundarySides(*_theMesh)
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 

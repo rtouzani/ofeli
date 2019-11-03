@@ -37,9 +37,6 @@
 
 
 #include "equations/electromagnetics/Equa_Electromagnetics.h"
-#include "shape_functions/Triang3.h"
-#include "shape_functions/Line2.h"
-#include "io/UserData.h"
 
 using std::complex;
 
@@ -71,32 +68,38 @@ class HelmholtzBT3 : virtual public Equa_Electromagnetics<complex_t,3,3,2,2>
  public:
 
 /// \brief Default Constructor
-    HelmholtzBT3()
-    {
-       _tr = NULL; _ln = NULL;
-    }
+    HelmholtzBT3() { }
 
-/// \brief Constructor using element data
-    HelmholtzBT3(Element* el);
+/** \brief Constructor using mesh data
+ *  @param [in] ms Mesh instance
+ */
+    HelmholtzBT3(Mesh& ms);
 
-/// \brief Constructor using side data
-    HelmholtzBT3(Side* sd);
+/** \brief Constructor using mesh and solution vector
+ *  @param [in] ms Mesh instance
+ *  @param [in,out] u Vect instance containing solution
+ */
+    HelmholtzBT3(Mesh&            ms,
+                 Vect<complex_t>& u);
 
 /// \brief Destructor
     ~HelmholtzBT3();
 
-/// \brief Add element Left-Hand Side
-    void LHS(real_t wave_nb);
+/// \brief
+    void build();
 
-/// \brief Add element Right-Hand Side using a UserData instance
-    void BoundaryRHS(UserData<complex_t>& ud);
+/// \brief Add element Left-Hand Side
+    void LHS();
+
+/// \brief Add element Right-Hand Side
+    void BodyRHS(Vect<complex_t>& f);
+
+/// \brief Add side Right-Hand Side
+    void BoundaryRHS(Vect<complex_t>& f);
 
  private:
-
-   Triang3      *_tr;
-   Line2        *_ln;
-   real_t        _lx[3], _ly[3];
-   Point<real_t> _x[3];
+   void set(const Element* el);
+   void set(const Side* sd);
 };
 
 /*! @} End of Doxygen Groups */

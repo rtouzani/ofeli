@@ -40,7 +40,7 @@ Edge::Edge()
    _nb_eq = _nb_nodes = 0;
    _label = 0;
    _neig_sd = 0;
-   _sd[0] = _sd[1] = NULL;
+   _sd[0] = _sd[1] = nullptr;
    _on_boundary = -1;
    _code.resize(MAX_NBDOF_EDGE);
    _dof.resize(MAX_NBDOF_EDGE);
@@ -54,7 +54,7 @@ Edge::Edge(size_t label)
    _label = label;
    _nb_eq = _nb_nodes = 0;
    _neig_sd = 0;
-   _sd[0] = _sd[1] = NULL;
+   _sd[0] = _sd[1] = nullptr;
    _on_boundary = 0;
    _code.resize(MAX_NBDOF_EDGE);
    _dof.resize(MAX_NBDOF_EDGE);
@@ -86,7 +86,7 @@ Edge::~Edge() { }
 
 void Edge::Add(Node* node)
 {
-   if (node==NULL)
+   if (node==nullptr)
       throw OFELIException("Edge::Add(Node *):  Trying to add an undefined node.");
    _node[_nb_nodes++] = node;
    _nb_eq += node->getNbDOF();
@@ -110,8 +110,8 @@ int Edge::isOnBoundary() const
 }
 
 
-ostream& operator<<(      ostream& s,
-                    const Edge&    ed)
+ostream& operator<<(ostream&    s,
+                    const Edge& ed)
 {
    size_t i;
    s << "\n Edge: " << setw(5) << ed.n();

@@ -31,9 +31,7 @@
 
 
 #include "shape_functions/Line2.h"
-#include "mesh/Element.h"
-#include "linear_algebra/Point.h"
-#include "linear_algebra/LocalVect.h"
+#include "linear_algebra/LocalVect_impl.h"
 #include "util/util.h"
 
 namespace OFELI {
@@ -41,12 +39,11 @@ namespace OFELI {
 Line2::Line2()
 {
    _sh.resize(2);
+   _dsh.resize(2);
    _node.resize(2);
    _x.resize(2);
-   _dsh.resize(2);
-   _dshl.resize(2);
-   _sd = NULL;
-   _el = NULL;
+   _sd = nullptr;
+   _el = nullptr;
 }
 
 
@@ -56,10 +53,9 @@ Line2::Line2(const Element* el)
       throw OFELIException("Line2::Line2(Element *): Illegal number of element nodes: " +
                            itos(el->getNbNodes()));
    _sh.resize(2);
+   _dsh.resize(2);
    _node.resize(2);
    _x.resize(2);
-   _dsh.resize(2);
-   _dshl.resize(2);
    for (size_t i=0; i<2; i++) {
       Node *node = el->getPtrNode(i+1);
       _x[i] = node->getCoord();
@@ -67,11 +63,13 @@ Line2::Line2(const Element* el)
    }
    _c = 0.5*(_x[0]+_x[1]);
    _el = el;
-   _sd = NULL;
+   _sd = nullptr;
    Point<real_t> dl = 0.5*(_x[1] - _x[0]);
    _det = dl.Norm();
    if (_det == 0.0)
       throw OFELIException("Line2::Line2(Element *): Determinant of jacobian is null");
+   _dsh[0].x = -0.5/_det;
+   _dsh[0].x =  0.5/_det;
    _length = 2*_det;
 }
 
@@ -82,10 +80,9 @@ Line2::Line2(const Side* side)
       throw OFELIException("Line2::Line2(Side *): Illegal number of side nodes: " +
                            itos(side->getNbNodes()));
    _sh.resize(2);
+   _dsh.resize(2);
    _node.resize(2);
    _x.resize(2);
-   _dsh.resize(2);
-   _dshl.resize(2);
    for (size_t i=0; i<2; i++) {
       Node *node = side->getPtrNode(i+1);
       _x[i] = node->getCoord();
@@ -93,11 +90,13 @@ Line2::Line2(const Side* side)
    }
    _c = 0.5*(_x[0] + _x[1]);
    _sd = side;
-   _el = NULL;
+   _el = nullptr;
    Point<real_t> dl = 0.5*(_x[1] - _x[0]);
    _det = dl.Norm();
    if (_det == 0.0)
       throw OFELIException("Line2::Line2(Side *): Determinant of jacobian is null");
+   _dsh[0].x = -0.5/_det;
+   _dsh[0].x =  0.5/_det;
    _length = 2*_det;
 }
    
@@ -106,9 +105,8 @@ Line2::Line2(const Edge* edge)
 {
    _sh.resize(2);
    _node.resize(2);
-   _x.resize(2);
    _dsh.resize(2);
-   _dshl.resize(2);
+   _x.resize(2);
    for (size_t i=0; i<2; i++) {
       Node *node = edge->getPtrNode(i+1);
       _x[i] = node->getCoord();
@@ -116,12 +114,14 @@ Line2::Line2(const Edge* edge)
    }
    _c = 0.5*(_x[0] + _x[1]);
    _ed = edge;
-   _sd = NULL;
-   _el = NULL;
+   _sd = nullptr;
+   _el = nullptr;
    Point<real_t> dl = 0.5*(_x[1] - _x[0]);
    _det = dl.Norm();
    if (_det == 0.0)
       throw OFELIException("Line2::Line2(Edge *): Determinant of jacobian is null");
+   _dsh[0].x = -0.5/_det;
+   _dsh[0].x =  0.5/_det;
    _length = 2*_det;
 }
    
@@ -152,19 +152,9 @@ real_t Line2::Sh(size_t i,
 }
 
 
-real_t Line2::DSh(size_t i) const
+std::vector<Point<real_t> > Line2::DSh() const
 {
-   real_t sh=0;
-   switch (i) {
-
-      case 1:
-          return (-0.5/_det);
-
-      case 2:
-          return ( 0.5/_det);
-
-   }
-   return sh;
+   return _dsh;
 }
 
 

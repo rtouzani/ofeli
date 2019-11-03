@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 // Read or set some data (Final time and time step)
    theFinalTime = 1.;
    if (argc<2) {
-      cout << "Usage: ode_demo1 <time step>" << endl;
+      cout << "Usage: " << argv[0] << " <time step>" << endl;
       return 0;
    }
    theTimeStep = atof(argv[1]);
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 // Declare equation, give initial solution and give coefficients defining the ode
 // Use the Runge-Kutta scheme (you can modify this)
    try {
-      ODESolver ode(RK4);
+      ODESolver ode(FORWARD_EULER);
 
 //    Give initial condition
       ode.setInitial(0.);

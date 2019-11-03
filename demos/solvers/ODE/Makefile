@@ -87,8 +87,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin18.2.0
-host_triplet = i386-apple-darwin18.2.0
+build_triplet = i386-apple-darwin19.0.0
+host_triplet = i386-apple-darwin19.0.0
 bin_PROGRAMS = ode_demo1$(EXEEXT) ode_demo2$(EXEEXT) \
 	ode_demo3$(EXEEXT) ode_demo4$(EXEEXT) ode_demo5$(EXEEXT) \
 	ode_demo6$(EXEEXT) ode_demo7$(EXEEXT) ts_demo1$(EXEEXT) \
@@ -295,10 +295,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 3.1.1
+PACKAGE_STRING = ofeli 4.0.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 3.1.1
+PACKAGE_VERSION = 4.0.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -308,7 +308,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 3.1.1
+VERSION = 4.0.0
 abs_builddir = /Users/touzani/ofeli/ofeli/demos/solvers/ODE
 abs_srcdir = /Users/touzani/ofeli/ofeli/demos/solvers/ODE
 abs_top_builddir = /Users/touzani/ofeli/ofeli
@@ -321,10 +321,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin18.2.0
+build = i386-apple-darwin19.0.0
 build_alias = 
 build_cpu = i386
-build_os = darwin18.2.0
+build_os = darwin19.0.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -332,10 +332,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin18.2.0
+host = i386-apple-darwin19.0.0
 host_alias = 
 host_cpu = i386
-host_os = darwin18.2.0
+host_os = darwin19.0.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -413,14 +413,14 @@ dist_ode_demo5_DATA = ode_demo5.cpp ode_demo5.cbp
 dist_ode_demo6_DATA = ode_demo6.cpp ode_demo6.cbp
 dist_ode_demo7_DATA = ode_demo7.cpp ode_demo7.cbp
 dist_ts_demo1_DATA = ts_demo1.cpp \
-							ts_demo1.cbp \
-							mesh1.m \
-							Makefile.standalone \
-							README
+			ts_demo1.cbp \
+			mesh1.m \
+			Makefile.standalone \
+			README
 
 dist_ts_demo2_DATA = ts_demo2.cpp \
-							ts_demo2.cbp \
-							mesh2.m
+			ts_demo2.cbp \
+			mesh2.m
 
 all: all-am
 

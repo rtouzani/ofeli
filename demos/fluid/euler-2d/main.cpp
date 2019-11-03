@@ -39,7 +39,7 @@ using namespace OFELI;
 int main(int argc, char *argv[])
 {
    if (argc < 2) {
-      cout << " Usage: euler2d <project file>" << endl;
+      cout << " Usage: " << argv[0] << " <project file>" << endl;
       exit(1);
    }
 

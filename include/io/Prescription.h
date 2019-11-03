@@ -25,35 +25,17 @@
 
   ==============================================================================
 
-           Definition of class 'Prescription ' to read various data files
+         Definition of class 'Prescription' to read data for prescription
 
   ==============================================================================*/
 
 #ifndef __PRESCRIPTION_H
 #define __PRESCRIPTION_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
-using std::ostream;
-using std::endl;
-
-#include <fstream>
-using std::ifstream;
-
-#include <iomanip>
-using std::setw;
-using std::ios;
-using std::setprecision;
-
 #include <string>
-using std::string;
-
+#include <fstream>
+#include <vector>
 #include "OFELI_Config.h"
-#include "equations/AbsEqua.h"
-#include "io/fparser/fparser.h"
-
-extern FunctionParser theParser;
 
 namespace OFELI {
 /*!
@@ -73,7 +55,7 @@ struct PrescriptionPar {
    size_t dof;
    int type, code;
    real_t x, y, z, t;
-   string fct;
+   std::string fct;
    bool bx, by, bz, bt;
 };
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
@@ -102,8 +84,8 @@ class Prescription
  *  @param [in] mesh Mesh instance
  *  @param [in] file Name of Prescription file
  */
-    Prescription(      Mesh&   mesh,
-                 const string& file);
+    Prescription(Mesh&              mesh,
+                 const std::string& file);
 
 /// Destructor
     ~Prescription();
@@ -119,7 +101,8 @@ class Prescription
  *       The value <tt>SOURCE</tt> has the same effect.
  *    <li><tt>POINT_FORCE</tt>: Read values for pointwise forces
  *    <li><tt>INITIAL_FIELD</tt>: Read values for initial solution
- *  @param [in,out] v Vect instance that is instantiatd on input and filled on output
+ *    <li><tt>SOLUTION</tt>: Read values for a solution vector
+ *  @param [in,out] v Vect instance that is instantiated on input and filled on output
  *  @param [in] time Value of time for which data is read [Default: <tt>0</tt>].
  *  @param [in] dof DOF to store (Default is <tt>0</tt>: All DOFs are chosen).
  */
@@ -130,23 +113,22 @@ class Prescription
 
  private:
 
-   ifstream *_if;
+   std::ifstream *_if;
    Mesh *_theMesh;
+   Vect<real_t> *_v;
    real_t _data[4];
    bool pforce, initial, bc, force, flux;
-   string _file;
-   vector<PrescriptionPar> _p;
+   std::string _file;
+   std::vector<PrescriptionPar> _p;
    int Type(int type);
-   void get_point_force(Vect<real_t> &v, size_t k);
-   void get_point_force(Vect<real_t> &v, size_t k, size_t dof);
-   void get_boundary_condition(Vect<real_t> &v, size_t k, size_t dof);
-   void get_boundary_condition(Vect<real_t> &v, size_t k);
-   void get_body_force(Vect<real_t> &v, size_t k, size_t dof);
-   void get_body_force(Vect<real_t> &v, size_t k);
-   void get_boundary_force(Vect<real_t> &v, size_t k, size_t dof);
-   void get_boundary_force(Vect<real_t> &v, size_t k);
-   void get_initial(Vect<real_t> &v, size_t k, size_t dof);
-   void get_initial(Vect<real_t> &v, size_t k);
+   void get_point_force(size_t k);
+   void get_point_force(size_t k, size_t dof);
+   void get_boundary_condition(size_t k, size_t dof);
+   void get_boundary_condition(size_t k);
+   void get_vector(size_t k, size_t dof);
+   void get_vector(size_t k);
+   void get_boundary_force(size_t k, size_t dof);
+   void get_boundary_force(size_t k);
 };
 
 /*! @} End of Doxygen Groups */

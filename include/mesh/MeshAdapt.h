@@ -50,7 +50,6 @@ using std::setw;
 using std::string;
 
 #include "OFELI_Config.h"
-#include "mesh/Mesh.h"
 #include "mesh/Domain.h"
 #include "linear_algebra/Vect.h"
 #include "mesh/MeshUtil.h"
@@ -124,9 +123,6 @@ class MeshAdapt
 
 /// \brief Set number of smoothing iterations
     void setSmooth(int n) { _nb_smooth = n; }
-
-/// \brief Set verbosity parameter
-    void setVerbosity(int verb) { _verb = verb; }
 
 /// \brief Metric is constructed with absolute error
     void AbsoluteError() { _abs_error = true; }
@@ -309,7 +305,7 @@ class MeshAdapt
    vector<Mesh *> _ms;
    Mesh _theMesh;
    const Vect<real_t> *_u;
-   int    _nb_Jacobi, _nb_smooth, _verb, _allquad;
+   int    _nb_Jacobi, _nb_smooth, _allquad;
    size_t _nb_nodes, _nb_elements, _max_nb_vertices, _iter, _nb_subdiv;
    bool   _abs_error, _anisotropic, _scaling, _keep_vertices;
    bool   _set_outm, _set_geo, _hessian, _set_bgm, _set_metric;

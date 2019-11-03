@@ -15,7 +15,6 @@
 @SET_MAKE@
 
 
-
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -97,13 +96,13 @@ am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(dist_tiff2_DATA) \
-	$(tiff2_HEADERS) $(am__DIST_COMMON)
+	$(am__DIST_COMMON)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/include/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(tiff2dir)" \
-	"$(DESTDIR)$(tiff2dir)" "$(DESTDIR)$(tiff2dir)"
+	"$(DESTDIR)$(tiff2dir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_tiff2_OBJECTS = main.$(OBJEXT)
 tiff2_OBJECTS = $(am_tiff2_OBJECTS)
@@ -171,7 +170,6 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 DATA = $(dist_tiff2_DATA) $(tiff2_DATA)
-HEADERS = $(tiff2_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -313,11 +311,9 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = no-dependencies
 tiff2_SOURCES = main.cpp
-tiff2_HEADERS = User.h
 tiff2_LDADD = $(top_builddir)/src/libofeli.a
 tiff2dir = $(datadir)/ofeli/demos/fluid/tiff2
 tiff2_DATA = main.cpp \
-		User.h \
 		cavity.dat \
 		cavity.m \
 		Makefile.standalone \
@@ -325,7 +321,6 @@ tiff2_DATA = main.cpp \
 		README
 
 dist_tiff2_DATA = main.cpp \
-			User.h \
 			cavity.dat \
 			cavity.m \
 			Makefile.standalone \
@@ -465,27 +460,6 @@ uninstall-tiff2DATA:
 	@list='$(tiff2_DATA)'; test -n "$(tiff2dir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(tiff2dir)'; $(am__uninstall_files_from_dir)
-install-tiff2HEADERS: $(tiff2_HEADERS)
-	@$(NORMAL_INSTALL)
-	@list='$(tiff2_HEADERS)'; test -n "$(tiff2dir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(tiff2dir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(tiff2dir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(tiff2dir)'"; \
-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(tiff2dir)" || exit $$?; \
-	done
-
-uninstall-tiff2HEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(tiff2_HEADERS)'; test -n "$(tiff2dir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(tiff2dir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -574,9 +548,9 @@ distdir-am: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
+all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(tiff2dir)" "$(DESTDIR)$(tiff2dir)" "$(DESTDIR)$(tiff2dir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(tiff2dir)" "$(DESTDIR)$(tiff2dir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -630,8 +604,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_tiff2DATA install-tiff2DATA \
-	install-tiff2HEADERS
+install-data-am: install-dist_tiff2DATA install-tiff2DATA
 
 install-dvi: install-dvi-am
 
@@ -676,7 +649,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-dist_tiff2DATA \
-	uninstall-tiff2DATA uninstall-tiff2HEADERS
+	uninstall-tiff2DATA
 
 .MAKE: install-am install-strip
 
@@ -689,12 +662,11 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_tiff2DATA \
 	install-exec-am install-html install-html-am install-info \
 	install-info-am install-man install-pdf install-pdf-am \
 	install-ps install-ps-am install-strip install-tiff2DATA \
-	install-tiff2HEADERS installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS \
-	uninstall-dist_tiff2DATA uninstall-tiff2DATA \
-	uninstall-tiff2HEADERS
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-binPROGRAMS uninstall-dist_tiff2DATA \
+	uninstall-tiff2DATA
 
 .PRECIOUS: Makefile
 

@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 // Read or set some data (Final time and time step)
    theFinalTime = 1.;
    if (argc<2) {
-      cout << "Usage: ode_demo2 <time step>" << endl;
+      cout << "Usage: " << argv[0] << " <time step>" << endl;
       return 0;
    }
    theTimeStep = atof(argv[1]);

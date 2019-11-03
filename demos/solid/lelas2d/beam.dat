@@ -13,6 +13,9 @@
    <init>1</init>
    <mesh_file>beam.m</mesh_file>
    <plot_file>beam.d</plot_file>
-   <prescription_file>beam.pr</prescription_file>
 </Project>
+<Prescription>
+   <BoundaryCondition code="1">0.0</BoundaryCondition>
+   <Traction code="1" dof="2">-1000.0</Traction>
+</Prescription>
 </OFELI_File>

@@ -36,7 +36,6 @@
 
 #include "OFELI_Config.h"
 #include "equations/Equation.h"
-//#include "mesh/Mesh.h"
 #include "linear_algebra/Vect.h"
 #include "linear_algebra/SpMatrix.h"
 
@@ -55,16 +54,34 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class DG {
+  class DG : public Equation<real_t,3,3,2,2> {
 
  public:
 
+   using Equation<real_t,3,3,2,2>::setMaterialProperty;
+   using Equation<real_t,3,3,2,2>::_theMesh;
+   using Equation<real_t,3,3,2,2>::_theElement;
+   using Equation<real_t,3,3,2,2>::_theSide;
+   using Equation<real_t,3,3,2,2>::_A;
+   using Equation<real_t,3,3,2,2>::_b;
+   using Equation<real_t,3,3,2,2>::_uu;
+   using Equation<real_t,3,3,2,2>::_u;
+   using Equation<real_t,3,3,2,2>::_bc;
+   using Equation<real_t,3,3,2,2>::_bf;
+   using Equation<real_t,3,3,2,2>::_sf;
+   using Equation<real_t,3,3,2,2>::_nb_nodes;
+   using Equation<real_t,3,3,2,2>::_nb_el;
+   using Equation<real_t,3,3,2,2>::_nb_eq;
+   using Equation<real_t,3,3,2,2>::_nb_dof_total;
+   using Equation<real_t,3,3,2,2>::_nb_dof;
+   using Equation<real_t,3,3,2,2>::_el_geo;
+   using Equation<real_t,3,3,2,2>::_dSh;
 
 /** \brief Constructor with mesh and degree of the method
  *  @param [in] ms Mesh instance
  *  @param [in] degree Polynomial degree of the DG method [Default: <tt>1</tt>]
  */
-    DG(Mesh &  ms,
+    DG(Mesh&  ms,
        size_t degree=1);
 
 /// \brief Destructor
@@ -76,14 +93,9 @@ class DG {
 
  protected:
 
-   Mesh                              *_theMesh;
-   Element                           *_theElement;
-   Side                              *_theSide;
-   size_t                            _nb_dof, _nb_sdof, _nb_eq, _ne, _nf;
-   real_t                            _volume, _area, _length;
+   size_t                            _nb_sdof, _ne, _nf;
    size_t                            _degree, _nb_el_dof, _nb_sd_dof, _neq;
-   SpMatrix<real_t>                  _A;
-   Vect<real_t>                      _b, _x, *_u, *_f, *_dbc, *_nbc;
+   Vect<real_t>                      _x;
    Vect<Point<real_t> >              _N;
    vector<std::map<size_t,size_t> >  _g2l;
    size_t II(size_t i) const { return _nb_el_dof*(_ne-1)+i; }

@@ -38,6 +38,7 @@
 #include "mesh/Element.h"
 #include "mesh/Side.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
@@ -89,9 +90,9 @@ void Muscl1D::Initialize()
 
 
 void Muscl1D::FirstOrder(const Vect<real_t>& U,
-                               Vect<real_t>& LU,
-                               Vect<real_t>& RU,
-                               size_t        dof)
+                         Vect<real_t>&       LU,
+                         Vect<real_t>&       RU,
+                         size_t              dof)
 {
    Element *Lel, *Rel;
    mesh_sides(*_theMesh) {
@@ -105,9 +106,9 @@ void Muscl1D::FirstOrder(const Vect<real_t>& U,
 
 
 void Muscl1D::SecondOrder(const Vect<real_t>& U,
-                                Vect<real_t>& LU,
-                                Vect<real_t>& RU,
-                                size_t        dof)
+                          Vect<real_t>&       LU,
+                          Vect<real_t>&       RU,
+                          size_t              dof)
 {
    mesh_elements(*_theMesh) {
       size_t n = element_label;

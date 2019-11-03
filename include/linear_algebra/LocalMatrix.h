@@ -33,13 +33,7 @@
 #ifndef __LOCAL_MATRIX_H
 #define __LOCAL_MATRIX_H
 
-
 #include "OFELI_Config.h"
-#include "linear_algebra/LocalVect.h"
-#include "linear_algebra/SkMatrix.h"
-#include "linear_algebra/SkSMatrix.h"
-#include "linear_algebra/SpMatrix.h"
-#include "OFELIException.h"
 
 namespace OFELI {
 /*!
@@ -67,8 +61,11 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-template<class T_, size_t NC_> class LocalVect;
 class Element;
+template<class T_> class SkMatrix;
+template<class T_> class SkSMatrix;
+template<class T_> class SpMatrix;
+ template<class T_,size_t N_> class LocalVect;
 
 template<class T_, size_t NR_, size_t NC_> class LocalMatrix
 {
@@ -104,23 +101,17 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
                 const SkSMatrix<T_>& a);
 
 /// Destructor
-    ~LocalMatrix() { }
+    ~LocalMatrix();
 
 /// \brief Operator <tt>()</tt> (Non constant version)
 /// \details Returns entry at row <tt>i</tt> and column <tt>j</tt>.
     T_& operator()(size_t i,
-                   size_t j)
-    {
-       return _a[(i-1)*NC_+j-1];
-    }
+                   size_t j);
 
 /// \brief Operator <tt>()</tt> (Constant version)
 /// \details Returns entry at row <tt>i</tt> and column <tt>j</tt>.
     T_ operator()(size_t i,
-                  size_t j) const
-    {
-       return _a[(i-1)*NC_+j-1];
-    }
+                  size_t j) const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void set(int opt);
@@ -232,7 +223,7 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
  *  </ul>
  *  @note %Matrix must have been factorized at first.
  */
-    int Solve(LocalVect<T_,NR_>& b);
+    int solve(LocalVect<T_,NR_>& b);
 
 /** \brief Factorize matrix and solve linear system.
  *  @param [in,out] b Right-hand side in input and solution vector in output.
@@ -257,322 +248,12 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
                        const LocalVect<T_,NR_>& y);
 
 /// \brief Return pointer to matrix as a C-array.
-    T_ *get() { return _a; }
+    T_ *get();
 
  private:
     size_t _length;
     T_ _a[NR_*NC_];
 };
-
-
-///////////////////////////////////////////////////////////////////////////////
-//                         I M P L E M E N T A T I O N                       //
-///////////////////////////////////////////////////////////////////////////////
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix()
-{
-   _length = NR_ * NC_;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix(const LocalMatrix<T_,NR_,NC_>& m)
-{
-   _length = m._length;
-   for (size_t k=0; k<_length; k++)
-      _a[k] = m._a[k];
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*            el,
-                                     const SpMatrix<T_>& a)
-{
-   Localize(el,a);
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*            el,
-                                     const SkMatrix<T_>& a)
-{
-   Localize(el,a);
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*             el,
-                                     const SkSMatrix<T_>& a)
-{
-   Localize(el,a);
-}
-
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::set(int opt)
-{
-   if (opt==IDENTITY) {
-      if (NR_!=NC_)
-         throw OFELIException("In LocalMatrix::set(opt): This argument is valid for square matrices only.");
-      for (size_t i=0; i<NR_*NC_; i++)
-         _a[i] = 0;
-      for (size_t j=0; j<NR_; j++)
-         _a[j*(NC_+1)] = 1;
-   }
-}
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Localize(Element*            el,
-                                       const SpMatrix<T_>& a)
-{
-   for (size_t n=1; n<=el->getNbNodes(); n++) {
-      Node *nd = (*el)(n);
-      for (size_t i=1; i<=nd->getNbDOF(); i++)
-         for (size_t j=1; j<=nd->getNbDOF(); j++)
-            (*this)(i,j) = a(nd->getDOF(i),nd->getDOF(j));
-   }
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Localize(Element*            el,
-                                       const SkMatrix<T_>& a)
-{
-   for (size_t n=1; n<=el->getNbNodes(); n++) {
-      Node *nd = (*el)(n);
-      for (size_t i=1; i<=nd->getNbDOF(); i++)
-         for (size_t j=1; j<=nd->getNbDOF(); j++)
-            (*this)(i,j) = a(nd->getDOF(i),nd->getDOF(j));
-   }
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Localize(Element*             el,
-                                       const SkSMatrix<T_>& a)
-{
-   for (size_t n=1; n<=el->getNbNodes(); n++) {
-      Node *nd = (*el)(n);
-      for (size_t i=1; i<=nd->getNbDOF(); i++)
-         for (size_t j=1; j<=nd->getNbDOF(); j++)
-            (*this)(i,j) = a(nd->getDOF(i),nd->getDOF(j));
-   }
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator=(const LocalMatrix<T_,NR_,NC_>& m)
-{
-   _length = m._length;
-   for (size_t k=0; k<_length; k++)
-      _a[k] = m._a[k];
-   return *this;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator=(const T_& x)
-{
-   for (size_t k=0; k<_length; k++)
-      _a[k] = 0;
-   for (size_t k=1; k<=NR_; k++)
-      (*this)(k,k) = x;
-   return *this;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator+=(const LocalMatrix<T_,NR_,NC_>& m)
-{
-   for (size_t k=0; k<_length; k++)
-      _a[k] += m._a[k];
-   return *this;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator-=(const LocalMatrix<T_,NR_,NC_>& m)
-{
-   for (size_t k=0; k<_length; k++)
-      _a[k] -= m._a[k];
-   return *this;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalVect<T_,NR_> LocalMatrix<T_,NR_,NC_>::operator*(LocalVect<T_,NC_>& x)
-{
-   LocalVect<T_,NR_> v;
-   size_t k=0;
-   for (size_t i=0; i<NR_; i++)
-      for (size_t j=0; j<NC_; j++)
-         v[i] += _a[k++]*x[j];
-   return v;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator+=(const T_& x)
-{
-   for (size_t k=0; k<_length; k++)
-      _a[k] += x;
-   return *this;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator-=(const T_& x)
-{
-   for (size_t k=0; k<_length; k++)
-      _a[k] -= x;
-   return *this;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator*=(const T_& x)
-{
-   for (size_t k=0; k<_length; k++)
-      _a[k] *= x;
-   return *this;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_> & LocalMatrix<T_,NR_,NC_>::operator/=(const T_& x)
-{
-   for (size_t k=0; k<_length; k++)
-      _a[k] /= x;
-   return *this;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::MultAdd(const LocalVect<T_,NC_>& x,
-                                      LocalVect<T_,NR_>&       y)
-{
-   size_t k=0;
-   for (size_t i=0; i<NR_; i++)
-      for (size_t j=0; j<NC_; j++)
-         y[i] += _a[k++] * x[j];
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::MultAddScal(const T_&                a,
-                                          const LocalVect<T_,NC_>& x,
-                                          LocalVect<T_,NR_>&       y)
-{
-   size_t k=0;
-   for (size_t i=0; i<NR_; i++)
-      for (size_t j=0; j<NC_; j++)
-         y[i] += a * _a[k++] * x[j];
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Mult(const LocalVect<T_,NC_>& x,
-                                   LocalVect<T_,NR_>&       y)
-{
-   y = 0;
-   MultAdd(x,y);
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Symmetrize()
-{
-   for (size_t i=0; i<NR_; i++)
-      for (size_t j=0; j<i; j++)
-         _a[i*NC_+j] = _a[j*NC_+i];
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-int LocalMatrix<T_,NR_,NC_>::Factor()
-{
-   size_t j, k;
-   if (NR_!=NC_)
-      throw OFELIException("In LocalMatrix::Factor(): Can't factor a rectangle matrix.");
-   for (size_t i=1; i<NR_; ++i) {
-      for (j=1; j<=i; j++) {
-         if (Abs(_a[NR_*(j-1)+j-1]) < OFELI_EPSMCH)
-            throw OFELIException("In LocalMatrix::Factor(): The "+itos(i)+"-th pivot is too small.");
-         _a[NR_*i+j-1] /= _a[NR_*(j-1)+j-1];
-         for (k=0; k<j; k++)
-            _a[NR_*i+j] -= _a[NR_*i+k]*_a[NR_*k+j];
-      }
-      for (j=i+1; j<NR_; ++j)
-         for (k=0; k<i; ++k)
-            _a[NR_*i+j] -= _a[NR_*i+k]*_a[NR_*k+j];
-   }
-   return 0;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-int LocalMatrix<T_,NR_,NC_>::Solve(LocalVect<T_,NR_>& b)
-{
-   int i, j;
-   if (NR_!=NC_)
-      throw OFELIException("In LocalMatrix::Factor(): Can't solve with a rectangle matrix.");
-   for (i=0; i<int(NR_); i++) {
-      T_ s = 0;
-      for (j=0; j<i; j++)
-         s += _a[NR_*i+j] * b[j];
-      b[i] -= s;
-   }
-   for (i=NR_-1; i>-1; i--) {
-      if (Abs(_a[NR_*i+i]) < OFELI_EPSMCH)
-         throw OFELIException("In LocalMatrix::Solve(b): The "+itos(i+1)+"-th diagonal entry is too small.");
-      b[i] /= _a[NR_*i+i];
-      for (j=0; j<i; j++)
-         b[j] -= b[i] * _a[NR_*j+i];
-   }
-   return 0;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-int LocalMatrix<T_,NR_,NC_>::FactorAndSolve(LocalVect<T_,NR_>& b)
-{
-   Factor();
-   Solve(b);
-   return 0;
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-void LocalMatrix<T_,NR_,NC_>::Invert(LocalMatrix<T_,NR_,NC_>& A)
-{
-   if (NR_!=NC_)
-      throw OFELIException("In LocalMatrix::Invert(A): This function is valid for square matrices only.");
-   LocalVect<T_,NR_> b;
-   Factor();
-   for (size_t i=1; i<=NR_; i++) {
-      b = 0;
-      b(i) = 1;
-      Solve(b);
-      for (size_t j=1; j<=NR_; j++)
-         A(j,i) = b(j);
-   }
-}
-
-
-template<class T_,size_t NR_,size_t NC_>
-T_ LocalMatrix<T_,NR_,NC_>::getInnerProduct(const LocalVect<T_,NC_>& x,
-                                            const LocalVect<T_,NR_>& y)
-{
-   double s = 0;
-   for (size_t i=1; i<=NC_; i++)
-      for (size_t j=1; i<=NR_; i++)
-         s += _a[(i-1)*NC_+j-1]*x(i)*y(j);
-   return s;
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -586,15 +267,7 @@ T_ LocalMatrix<T_,NR_,NC_>::getInnerProduct(const LocalVect<T_,NC_>& x,
  */
 template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_> operator*(T_                             a,
-                                  const LocalMatrix<T_,NR_,NC_>& x)
-{
-   LocalMatrix<T_,NR_,NC_> z;
-   for (size_t i=1; i<=NR_; ++i)
-      for (size_t j=1; j<=NC_; ++j)
-         z(i,j) = a*x(i,j);
-   return z;
-}
-
+                                  const LocalMatrix<T_,NR_,NC_>& x);
 
 /** \fn LocalMatrix<T_,NR_,NC_> operator*(const LocalVect<T_,NC_> &x, LocalVect<T_,NR_> &x)
     \brief Operator <tt>*</tt> (Multiply matrix <tt>A</tt> by vector <tt>x</tt>)
@@ -603,18 +276,7 @@ LocalMatrix<T_,NR_,NC_> operator*(T_                             a,
  */
 template<class T_,size_t NR_,size_t NC_>
 LocalVect<T_,NR_> operator*(const LocalMatrix<T_,NR_,NC_>& A,
-                            const LocalVect<T_,NC_>&       x)
-{
-   LocalVect<T_,NR_> b;
-   for (size_t i=1; i<=NR_; ++i) {
-      T_ s = T_(0);
-      for (size_t j=1; j<=NC_; ++j)
-        s += A(i,j)*x(j);
-      b(i) = s;
-   }
-   return b;
-}
-
+                            const LocalVect<T_,NC_>&       x);
 
 /** \fn LocalMatrix<T_,NR_,NC_> operator/(T_ a, const LocalMatrix<T_,NR_,NC_> &x)
     \brief Operator <tt>/</tt> (Divide matrix <tt>x</tt> by scalar <tt>a</tt>)
@@ -623,15 +285,7 @@ LocalVect<T_,NR_> operator*(const LocalMatrix<T_,NR_,NC_>& A,
  */
 template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_> operator/(T_                             a,
-                                  const LocalMatrix<T_,NR_,NC_>& x)
-{
-   LocalMatrix<T_,NR_,NC_> z;
-   for (size_t i=1; i<=NR_; ++i)
-      for (size_t j=1; j<=NC_; ++j)
-         z(i,j) = x(i,j)/a;
-   return z;
-}
-
+                                  const LocalMatrix<T_,NR_,NC_>& x);
 
 /** \fn LocalMatrix<T_,NR_,NC_> operator+(const LocalMatrix<T_,NR_,NC_> &x, const LocalMatrix<T_,NR_,NC_> &y)
     \brief Operator <tt>+</tt> (Add matrix x to y)
@@ -640,15 +294,7 @@ LocalMatrix<T_,NR_,NC_> operator/(T_                             a,
  */
 template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_> operator+(const LocalMatrix<T_,NR_,NC_>& x,
-                                  const LocalMatrix<T_,NR_,NC_>& y)
-{
-   LocalMatrix<T_,NR_,NC_> z;
-   for (size_t i=1; i<=NR_; ++i)
-      for (size_t j=1; j<=NC_; ++j)
-         z(i,j) = x(i,j) + y(i,j);
-   return z;
-}
-
+                                  const LocalMatrix<T_,NR_,NC_>& y);
 
 /** \fn LocalMatrix<T_,NR_,NC_> operator-(const LocalMatrix<T_,NR_,NC_> &x, const LocalMatrix<T_,NR_,NC_> &y)
     \brief Operator <tt>-</tt> (Subtract matrix y from x)
@@ -657,34 +303,14 @@ LocalMatrix<T_,NR_,NC_> operator+(const LocalMatrix<T_,NR_,NC_>& x,
  */
 template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_> operator-(const LocalMatrix<T_,NR_,NC_>& x,
-                                  const LocalMatrix<T_,NR_,NC_>& y)
-{
-   LocalMatrix<T_,NR_,NC_> z;
-   for (size_t i=0; i<NR_; ++i)
-      for (size_t j=1; j<=NC_; ++j)
-         z(i,j) = x(i,j) - y(i,j);
-   return z;
-}
+                                  const LocalMatrix<T_,NR_,NC_>& y);
 
-
-/// \fn ostream& operator<<(ostream &s, const LocalMatrix<T_,NR_,NC_> &a)
+/// \fn ostream& operator<<(ostream &s, const LocalMatrix<T_,NR_,NC_> &A)
 /// \brief Output vector in output stream
 /// \ingroup VectMat
 template<class T_, size_t NR_, size_t NC_>
 ostream& operator<<(ostream&                       s,
-                    const LocalMatrix<T_,NR_,NC_>& a)
-{
-   s.width(6);
-   s.setf(ios::right|ios::scientific);
-   s << endl;
-   for (size_t i=1; i<=NR_; i++) {
-      s << "\nRow  " << setw(6) << i << endl;
-      for (size_t j=1; j<=NC_; j++)
-         s << "  " << setprecision(8) << std::setfill(' ') << setw(18) << a(i,j);
-      s << endl;
-   }
-   return s;
-}
+                    const LocalMatrix<T_,NR_,NC_>& A);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

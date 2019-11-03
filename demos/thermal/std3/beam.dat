@@ -7,8 +7,7 @@
 </info>
 <Project name="beam">
    <mesh_file>beam.m</mesh_file>
-   <verbose>1</verbose>
-   <output>0</output>
+   <verbose>2</verbose>
    <save>1</save>
 </Project>
 <Prescription>

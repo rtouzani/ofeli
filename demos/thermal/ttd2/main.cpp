@@ -40,31 +40,29 @@ int main(int argc, char *argv[])
 
 // Expand arguments
    if (argc < 2) {
-      cout << "\nUsage:  ttd2  <parameter_file>\n";
+      cout << "\nUsage: " << argv[0] << " <parameter_file>\n";
       return 0;
    }
 
    IPF data("ttd2 - 1.2",argv[1]);
+   Verbosity = data.getVerbose();
    theFinalTime = data.getMaxTime();
    theTimeStep = data.getTimeStep();
    int save_flag = data.getSave();
-   int verbose = data.getVerbose();
    IOField pf(data.getPlotFile(),IOField::OUT);
 
-   if (verbose) {
-      cout << endl << endl;
-      cout << "    *******************************************************\n";
-      cout << "    *                        T  T  D  2                   *\n";
-      cout << "    *    Transient Thermal Diffusion in 2-D Geometries    *\n";
-      cout << "    *******************************************************\n\n\n";
-      cout << "=====================================================================\n\n";
-      cout << "                   A Finite Element Code for Transient\n";
-      cout << "       Analysis of Thermal Diffusion Problems in 2-D Geometries\n\n";
-      cout << "            ttd2 uses OFELI Library of Finite Element Classes\n\n";
-      cout << "                           V E R S I O N   1.0\n\n";
-      cout << "                     Copyright R. Touzani, 1998\n\n";
-      cout << "=====================================================================\n\n";
-   }
+   cout << endl << endl;
+   cout << "    *******************************************************\n";
+   cout << "    *                        T  T  D  2                   *\n";
+   cout << "    *    Transient Thermal Diffusion in 2-D Geometries    *\n";
+   cout << "    *******************************************************\n\n\n";
+   cout << "=====================================================================\n\n";
+   cout << "                   A Finite Element Code for Transient\n";
+   cout << "       Analysis of Thermal Diffusion Problems in 2-D Geometries\n\n";
+   cout << "            ttd2 uses OFELI Library of Finite Element Classes\n\n";
+   cout << "                           V E R S I O N   1.0\n\n";
+   cout << "                     Copyright R. Touzani, 1998\n\n";
+   cout << "=====================================================================\n\n";
 
 //-----------
 // Read data
@@ -72,80 +70,55 @@ int main(int argc, char *argv[])
 
 // Read Mesh data
    try {
-      if (verbose > 1)
+      if (Verbosity>1)
          cout << "Reading mesh data ...\n";
       Mesh ms(data.getMeshFile());
-      if (verbose > 1)
+      if (Verbosity > 1)
          cout << ms;
-
-//    Declare problem data (matrix, rhs, boundary conditions, body forces)
-      if (verbose > 1)
+      
+//    Declare problem data (boundary conditions, body forces)
+      if (Verbosity>1)
          cout << "Allocating memory for matrix and R.H.S. ...\n";
-      SkSMatrix<double> A(ms);
       Vect<double> b(ms), u(ms);
       u.setName("Temperature");
       Prescription pr(ms,data.getDataFile());
       pr.get(INITIAL_FIELD,u);
       Vect<double> bc(ms), body_f(ms), bound_f(ms);
 
-//    --------------------
+//    Instantiating equation
+      if (Verbosity>0)
+         cout << "Setting equation" << endl;
+      DC2DT3 eq(ms);
+      eq.setInput(INITIAL,u);
+
 //    Loop over time steps
 //    --------------------
-
       TimeLoop {
-
-         if (verbose > 0)
+      
+         if (Verbosity>2)
             cout << "Performing time step " << theStep << endl;
-         b = 0;
 
 //       Read boundary temperature and sources
          pr.get(BOUNDARY_CONDITION,bc,theTime);
          pr.get(SOURCE,body_f,theTime);
          pr.get(FLUX,bound_f,theTime);
 
-//       Loop over elements
-//       ------------------
+//       Prescribe boundary conditions, sources, fluxes
+         eq.setInput(BOUNDARY_CONDITION,bc);
+         eq.setInput(SOURCE,body_f);
+         eq.setInput(FLUX,bound_f);
+         eq.setTerms(LUMPED_CAPACITY|DIFFUSION);
 
-         if (verbose > 1)
-            cout << "Looping over elements ...\n";
-         MeshElements(ms) {
-            DC2DT3 eq(theElement,u,theTime);
-            eq.LCapacity(double(1./theTimeStep));
-            eq.Diffusion();
-            eq.BodyRHS(body_f);
-            if (theStep==1)
-               eq.ElementAssembly(A);
-            eq.ElementAssembly(b);
-         }
+//       Run one time step
+         eq.run(TRANSIENT_ONE_STEP);
 
-//       Loop over sides
-//       ---------------
-
-         if (verbose > 1)
-            cout << "Looping over sides ...\n";
-         MeshSides(ms) {
-            DC2DT3 eq(theSide,u,theTime);
-            eq.BoundaryRHS(Vect<double>(theSide,bound_f));
-            eq.SideAssembly(b);
-         }
-
-//       Take account for boundary conditions and solve system
-//       -----------------------------------------------------
-
-         if (verbose > 1)
-            cout << "Imposing boundary conditions ...\n";
-         A.Prescribe(b,bc,theStep-1);
-
-         if (verbose > 1)
-            cout << "Solving linear system ...\n";
-         A.solve(b);
-         u = b;
-
+//       Save solution in plot file if necessary
          u.setTime(theTime);
-         if (verbose > 2)
+         if (Verbosity>4)
             cout << "\nSolution at time: " << theTime << endl << u;
          if (theStep%save_flag == 0)
             pf.put(u);
+
       }
 
 //    Calculate error for the demo

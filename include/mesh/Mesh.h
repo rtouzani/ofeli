@@ -106,13 +106,6 @@ extern Edge    *the_edge;
 
 class Grid;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-typedef std::vector<Node *>    NodeSet;
-typedef std::vector<Element *> ElementSet;
-typedef std::vector<Side *>    SideSet;
-typedef std::vector<Edge *>    EdgeSet;
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
 class Mesh
 {
 
@@ -313,12 +306,6 @@ class Mesh
  */
     void setDim(size_t dim) { _dim = dim; }
 
-/** \brief Define Verbose Parameter.
- *  Controls output details
- *  @param [in] verb verbosity parameter (Must be between 0 and 10)
- */
-    void setVerbose(int verb) { _verb = verb; }
-
 /// \brief Add a node to mesh.
 /// @param [in] nd Pointer to Node to add
     void Add(Node* nd);
@@ -395,6 +382,12 @@ class Mesh
  *  to call getAllSides() after
  */
     void setSidesForDOF() { setDOFSupport(SIDE_DOF); }
+
+/** \brief Set boundary sides as supports for degrees of freedom
+ *  @note This member function creates boudary mesh sides. So it not necessary
+ *  to call getBoundarySides() after
+ */
+    void setBoundarySidesForDOF() { setDOFSupport(BOUNDARY_SIDE_DOF); }
 
 /// \brief Set edges as supports for degrees of freedom
     void setEdgesForDOF() { setDOFSupport(EDGE_DOF); }
@@ -615,34 +608,6 @@ class Mesh
     void RenumberEdge(size_t n1,
                       size_t n2);
 
-/** \brief Set viewing window for nodes
- *  @param [in] n1 First node to view
- *  @param [in] n2 last node to view
- */
-    void setNodeView(size_t n1,
-                     size_t n2);
-
-/** \brief Set viewing window for elements
- *  @param [in] n1 First element to view
- *  @param [in] n2 last element to view
- */
-    void setElementView(size_t n1,
-                        size_t n2);
-
-/** \brief Set viewing window for sides
- *  @param [in] n1 First side to view
- *  @param [in] n2 last side to view
- */
-    void setSideView(size_t n1,
-                     size_t n2);
-   
-/** \brief Set viewing window for edges
- *  @param [in] n1 First edge to view
- *  @param [in] n2 last edge to view
- */
-    void setEdgeView(size_t n1,
-                     size_t n2);
-
 /// \brief Initialize list of mesh nodes using the input vector
 /// @param [in] nl vector instance that contains the list of pointers to nodes
     void setList(const std::vector<Node *>& nl);
@@ -664,9 +629,6 @@ class Mesh
     void Rescale(real_t sx, real_t sy=0., real_t sz=0.);
 
 //-----------------------------   INSPECTORS  ----------------------------------
-
-/// \brief Return Verbose Parameter
-    int getVerbose() const { return _verb; }
 
 /// \brief Return space dimension
     size_t getDim() const { return _dim; }
@@ -817,44 +779,44 @@ class Mesh
 //---------------------------------  ITERATORS  --------------------------------
 
 /// \brief Return pointer to node with label <tt>i</tt>.
-    Node *getPtrNode(size_t i) const { return _nodes[i-1]; }
+    Node *getPtrNode(size_t i) const { return theNodes[i-1]; }
 
 /// \brief Return refenrece to node with label <tt>i</tt>
-    Node &getNode(size_t i) const { return *(_nodes[i-1]); }
+    Node &getNode(size_t i) const { return *(theNodes[i-1]); }
 
 /// \brief Return pointer to element with label <tt>i</tt>
-    Element *getPtrElement(size_t i) const { return _elements[i-1]; }
+    Element *getPtrElement(size_t i) const { return theElements[i-1]; }
 
 /// \brief Return reference to element with label <tt>i</tt>
-    Element &getElement(size_t i) const { return *(_elements[i-1]); }
+    Element &getElement(size_t i) const { return *(theElements[i-1]); }
 
 /// \brief Return pointer to side with label <tt>i</tt>
-    Side *getPtrSide(size_t i) const { return _sides[i-1]; }
+    Side *getPtrSide(size_t i) const { return theSides[i-1]; }
 
 /// \brief Return reference to side with label <tt>i</tt>
-    Side &getSide(size_t i) const { return *(_sides[i-1]); }
+    Side &getSide(size_t i) const { return *(theSides[i-1]); }
 
 /// \brief Return pointer to edge with label <tt>i</tt>
-    Edge *getPtrEdge(size_t i) const { return _edges[i-1]; }
+    Edge *getPtrEdge(size_t i) const { return theEdges[i-1]; }
 
 /// \brief Return reference to edge with label <tt>i</tt>
-    Edge &getEdge(size_t i) const { return *(_edges[i-1]); }
+    Edge &getEdge(size_t i) const { return *(theEdges[i-1]); }
 
 /// \brief Return label of <tt>i</tt>-th node
 /// @param [in] i Node index
-    size_t getNodeLabel(size_t i) const { return _nodes[i-1]->n(); }
+    size_t getNodeLabel(size_t i) const { return theNodes[i-1]->n(); }
 
 /// \brief Return label of <tt>i</tt>-th element
 /// @param [in] i Element index
-    size_t getElementLabel(size_t i) const { return _elements[i-1]->n(); }
+    size_t getElementLabel(size_t i) const { return theElements[i-1]->n(); }
 
 /// \brief Return label of <tt>i</tt>-th side
 /// @param [in] i Side index
-    size_t getSideLabel(size_t i) const { return _sides[i-1]->n(); }
+    size_t getSideLabel(size_t i) const { return theSides[i-1]->n(); }
 
 /// \brief Return label of <tt>i</tt>-th edge
 /// @param [in] i Edge index
-    size_t getEdgeLabel(size_t i) const { return _edges[i-1]->n(); }
+    size_t getEdgeLabel(size_t i) const { return theEdges[i-1]->n(); }
 
 /// \brief Reset list of nodes at its top position (Non constant version)
     void topNode() const { _node_it = 0; }
@@ -887,36 +849,36 @@ class Mesh
     Node *getNode() const
     {
        if (_node_it==_nb_nodes)
-          return NULL;
+          return nullptr;
        else
-          return _nodes[_node_it++];
+          return theNodes[_node_it++];
     }
 
 /// \brief Return pointer to current boundary node and move to next one (Non constant version)
     Node* getBoundaryNode() const
     {
        if (_node_it==_nb_boundary_nodes)
-          return NULL;
+          return nullptr;
        else
-          return _boundary_nodes[_node_it++];
+          return theBoundaryNodes[_node_it++];
     }
 
 /// \brief Return pointer to current marked node and move to next one (Non constant version)
     Node* getMarkedNode() const
     {
        if (_node_it==_nb_marked_nodes)
-          return NULL;
+          return nullptr;
        else
-          return _marked_nodes[_node_it++];
+          return theMarkedNodes[_node_it++];
     }
 
 /// \brief Return pointer to current element and move to next one (Non constant version)
     Element* getElement() const
     {
        if (_element_it==_nb_elements)
-          return NULL;
+          return nullptr;
        else
-          return _elements[_element_it++];
+          return theElements[_element_it++];
     }
 
 /** \brief Return pointer to current element and move to next one (Non constant version)
@@ -926,11 +888,11 @@ class Mesh
     Element* getActiveElement() const
     {
        if (_element_it==_nb_elements)
-          return NULL;
+          return nullptr;
        else {
-          while (_elements[_element_it]->isActive()==false)
+          while (theElements[_element_it]->isActive()==false)
              _element_it++;
-          return _elements[_element_it++];
+          return theElements[_element_it++];
        }
     }
 
@@ -938,50 +900,57 @@ class Mesh
     Side* getSide() const
     { 
        if (_side_it==_nb_sides)
-          return NULL;
+          return nullptr;
        else
-          return _sides[_side_it++];
+          return theSides[_side_it++];
     }
 
 /// \brief Return pointer to current boundary side and move to next one (Non constant version)
     Side* getBoundarySide() const
     {
        if (_side_it==_nb_boundary_sides)
-          return NULL;
+          return nullptr;
        else
-          return _boundary_sides[_side_it++];
+          return theBoundarySides[_side_it++];
     }
 
 /// \brief Return pointer to current internal side and move to next one (Non constant version)
     Side* getInternalSide() const
     {
        if (_side_it==_nb_internal_sides)
-          return NULL;
+          return nullptr;
        else
-          return _internal_sides[_side_it++];
+          return theInternalSides[_side_it++];
     }
 
 /// \brief Return pointer to current edge and move to next one (Non constant version)
     Edge* getEdge() const
     {
        if (_edge_it==_nb_edges)
-          return NULL;
+          return nullptr;
        else
-          return _edges[_edge_it++];
+          return theEdges[_edge_it++];
     }
 
 /// \brief Return pointer to current boundary edge and move to next one (Non constant version)
     Edge* getBoundaryEdge() const
     {
        if (_edge_it==_nb_boundary_edges)
-          return NULL;
+          return nullptr;
        else
-          return _boundary_edges[_edge_it++];
+          return theBoundaryEdges[_edge_it++];
     }
 
 /// \brief Determine shape of elements
 /// Return Shape index (see enum ElementShape) if all elements have the same shape, 0 if not.
     int getShape() const;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    std::vector<Node *>    theNodes, theBoundaryNodes, theMarkedNodes;
+    std::vector<Element *> theElements;
+    std::vector<Side *>    theSides, theBoundarySides, theInternalSides;
+    std::vector<Edge *>    theEdges, theBoundaryEdges;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
  
 //---------------------------------  OPERATORS  --------------------------------
 
@@ -1010,41 +979,40 @@ class Mesh
     friend ostream& operator<<(ostream& s, const Mesh& ms);
 
  private:
-   size_t            _nb_nodes, _nb_elements, _nb_sides, _nb_edges, _nb_side_nodes, _nb_element_nodes;
-   size_t            _dim, _nb_dof, _nb_vertices, _first_dof, _nb_mat;
-   size_t            _nb_boundary_nodes, _nb_boundary_sides, _nb_internal_sides, _nb_boundary_edges;
-   size_t            _nb_marked_nodes, _nb_eq;
-   size_t            _max_nb_nodes, _max_nb_elements, _max_nb_sides, _max_nb_edges;
-   mutable size_t    _node_it, _side_it, _element_it, _edge_it;
-   vector<size_t>    _node_old_label, _node_new_label, _element_old_label;
-   mutable size_t    _const_node_it, _const_side_it, _const_element_it, _const_edge_it;
-   int               _verb;
-   ElementSet        _elements;
-   SideSet           _sides, _boundary_sides, _internal_sides;
-   EdgeSet           _edges, _boundary_edges;
-   NodeSet           _nodes, _boundary_nodes, _marked_nodes;
-   int               _code[MAX_NBDOF_NODE], _dof_nbeq[MAX_NBDOF_NODE];
-   vector<Element *> _node_in_coarse_element, _node_in_fine_element;
-   bool              _set_nodes, _set_sides, _set_elements, _set_edges;
-   bool              _no_imposed_dof, _is_structured;
-   bool              _all_sides_created, _boundary_sides_created, _all_edges_created, _boundary_edges_created;
-   bool              _boundary_nodes_created;
-   bool              _node_neighbor_elements_created, _element_neighbor_elements_created;
-   int               _code_mat[MAX_NB_MATERIALS];
-   string            _mat[MAX_NB_MATERIALS];
-   unsigned long     _available_memory;
-   size_t            _n_view1, _n_view2, _e_view1, _e_view2, _s_view1, _s_view2, _ed_view1, _ed_view2;
+    size_t            _nb_nodes, _nb_boundary_nodes, _nb_elements, _nb_sides, _nb_internal_sides;
+    size_t            _nb_boundary_sides, _nb_edges, _nb_boundary_edges, _nb_side_nodes;
+    size_t            _nb_element_nodes, _dim, _nb_dof, _nb_vertices, _first_dof;
+    size_t            _nb_marked_nodes, _nb_eq, _nb_mat;
+    size_t            _max_nb_nodes, _max_nb_elements, _max_nb_sides, _max_nb_edges;
+    mutable size_t    _node_it, _side_it, _element_it, _edge_it;
+    vector<size_t>    _node_old_label, _node_new_label, _element_old_label;
+    mutable size_t    _const_node_it, _const_side_it, _const_element_it, _const_edge_it;
+    int               _code[MAX_NBDOF_NODE], _dof_nbeq[MAX_NBDOF_NODE];
+    vector<Element *> _node_in_coarse_element, _node_in_fine_element;
+    bool              _set_nodes, _set_sides, _set_elements, _set_edges;
+    bool              _no_imposed_dof, _is_structured;
+    bool              _all_sides_created, _boundary_sides_created, _all_edges_created;
+    bool              _boundary_edges_created, _boundary_nodes_created;
+    bool              _node_neighbor_elements_created, _element_neighbor_elements_created;
+    int               _code_mat[MAX_NB_MATERIALS];
+    string            _mat[MAX_NB_MATERIALS];
+    unsigned long     _available_memory;
 
-   void set1D(real_t xmin, real_t xmax, size_t nb_el, size_t p, size_t nb_dof);
-   void FindSideNeighbors();
-   void RenumberNodes(size_t m=GRAPH_MEMORY);
-   void RenumberNodes(vector<size_t> &perm, size_t m=GRAPH_MEMORY);
-   unsigned long FindGraph(vector<long> &xadj, vector<size_t> &adjncy);
-   void GenRCM(vector<long> &xadj, vector<size_t> &adjncy, size_t *perm,
-               vector<size_t> &mask, vector<size_t> &xls);
-   void checkNodeLabels();
-   void checkElementLabels();
-   void checkSideLabels();
+    void set1D(real_t xmin, real_t xmax, size_t nb_el, size_t p, size_t nb_dof);
+    void FindSideNeighbors();
+    void RenumberNodes(size_t m=GRAPH_MEMORY);
+    void RenumberNodes(vector<size_t> &perm, size_t m=GRAPH_MEMORY);
+    unsigned long FindGraph(vector<long> &xadj, vector<size_t> &adjncy);
+    void GenRCM(vector<long> &xadj, vector<size_t> &adjncy, size_t *perm,
+                vector<size_t> &mask, vector<size_t> &xls);
+    void checkNodeLabels();
+    void checkElementLabels();
+    void checkSideLabels();
+    void outputNodes(ostream& s) const;
+    void outputElements(ostream& s) const;
+    void outputSides(ostream& s) const;
+    void outputBoundarySides(ostream& s) const;
+    void outputEdges(ostream& s) const;
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -1060,6 +1028,16 @@ inline bool _side_compare(Side* const &a, Side* const &b) { return (a->n() < b->
 
 /** \fn ostream & operator<<(ostream& s, const Mesh &ms)
  *  \brief Output mesh data.
+ *  \details Level of mesh output depends on the global variable \c Verbosity
+ *  <ul>
+ *     <li> If Verbosity=0 or Verbosity=1, this function outputs only principal mesh parameters:
+ *          number of nodes, number of elements, ...
+ *     <li> If Verbosity>1, this function outputs in addition the list of 10 first nodes,
+ *          elements and sides
+ *     <li> If Verbosity>2, this function outputs in addition the list of 50 first nodes,
+ *          elements and sides
+ *     <li> If Verbosity>3, this function outputs all mesh data
+ *  </ul>
  *  \ingroup Mesh
  */
     ostream& operator<<(ostream&    s,

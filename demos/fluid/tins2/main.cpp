@@ -36,17 +36,18 @@ using namespace OFELI;
 int main(int argc, char *argv[])
 {
    if (argc < 2) {
-      cout << " Usage: tins2 <project_file>" << endl;
+      cout << " Usage: " << argv[0] << " <project_file>" << endl;
       exit(1);
    }
 
    try {
       IPF proj(argv[1]);
+      Verbosity = proj.getVerbose();
       Mesh mesh(proj.getMeshFile());
       theTimeStep = proj.getTimeStep();
       theFinalTime = proj.getMaxTime();
-      int plot_flag=proj.getPlot();
-      double Re=proj.getDouble("Reynolds");
+      int plot_flag = proj.getPlot();
+      double Re = proj.getDouble("Reynolds");
       cout << endl;
       cout << "=================================================================================\n\n";
       cout << "                                   tins2\n\n";
@@ -61,16 +62,17 @@ int main(int argc, char *argv[])
 
       Vect<double> u(mesh,"Velocity",0), p(mesh,"Pressure",0,1);
       Vect<double> bc(mesh), bf(mesh), sf(mesh);
-      TINS2DT3S eq(mesh,u,p,theTimeStep,Re);
-      eq.setVerbose(proj.getVerbose());
+      TINS2DT3S eq(mesh);
+      eq.Reynolds(Re);
       eq.setTolerance(proj.getTolerance());
       Prescription pr(mesh,proj.getDataFile());
       pr.get(INITIAL_FIELD,u);
       eq.setInput(INITIAL_FIELD,u);
+      eq.setInput(PRESSURE_FIELD,p);
 
 //    Loop on time steps
       TimeLoop {
-         if (proj.getVerbose()>0)
+         if (Verbosity)
             cout << "\nPerforming step: " << theStep << ", time: " << theTime << endl;
          pr.get(BOUNDARY_CONDITION,bc,theTime);
          eq.setInput(BOUNDARY_CONDITION,bc);

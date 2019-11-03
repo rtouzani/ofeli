@@ -32,80 +32,21 @@
 
 
 #include "equations/therm/DC3DT4.h"
-#include "shape_functions/Triang3.h"
 #include "shape_functions/Tetra4.h"
+#include "shape_functions/Triang3.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/LocalMatrix_impl.h"
+#include "linear_algebra/LocalVect_impl.h"
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
+
 
 namespace OFELI {
 
-DC3DT4::DC3DT4(const Element* el)
+DC3DT4::DC3DT4()
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
-   set(el);
-}
-
-
-DC3DT4::DC3DT4(const Side* sd)
-{
-   _equation_name = "Diffusion/Convection";
-   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
-   set(sd);
-}
-
-
-DC3DT4::DC3DT4(const Element*      el,
-               const Vect<real_t>& u,
-               real_t              time)
-{
-   _equation_name = "Diffusion/Convection";
-   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
-   set(el);
-   _time = time;
-   ElementVector(u);
-}
-
-
-DC3DT4::DC3DT4(const Element*      el,
-               const Vect<real_t>& u,
-               real_t              time,
-               real_t              deltat,
-               int                 scheme)
-{
-   _equation_name = "Diffusion/Convection";
-   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
-   set(el);
-   _time = time;
-   ElementVector(u);
-   _time_step = deltat;
-   setTimeIntegration(scheme);
-}
-
-
-DC3DT4::DC3DT4(const Side*         sd,
-               const Vect<real_t>& u,
-               real_t              time)
-{
-   _equation_name = "Diffusion/Convection";
-   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
-   set(sd);
-   _time = time;
-   SideVector(u);
-}
-
-
-DC3DT4::DC3DT4(const Side*         sd,
-               const Vect<real_t>& u,
-               real_t              time,
-               real_t              deltat,
-               int                 scheme)
-{
-   _equation_name = "Diffusion/Convection";
-   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
-   set(sd);
-   _time = time;
-   SideVector(u);
-   _time_step = deltat;
-   setTimeIntegration(scheme);
 }
 
 
@@ -114,9 +55,19 @@ DC3DT4::DC3DT4(Mesh& ms)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
-   _stab = false;
    setMatrixType(SPARSE);
-   setSolver(GMRES_SOLVER,DILU_PREC);
+   setSolver(CG_SOLVER,DILU_PREC);
+}
+
+
+DC3DT4::DC3DT4(Mesh&         ms,
+               Vect<real_t>& u)
+       : Equation<real_t,4,4,3,3>(ms,u)
+{
+   _equation_name = "Diffusion/Convection";
+   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
+   setMatrixType(SPARSE);
+   setSolver(CG_SOLVER,DILU_PREC);
 }
 
 
@@ -125,132 +76,91 @@ DC3DT4::~DC3DT4() { }
 
 void DC3DT4::set(const Element* el)
 {
-   _nb_dof = 1;
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    setMaterial();
-   Tetra4 tetra(_theElement);
-   _center = tetra.getCenter();
-   _volume = tetra.getVolume();
-   _det = tetra.getDet();
-   _dSh(1) = tetra.DSh(1);
-   _dSh(2) = tetra.DSh(2);
-   _dSh(3) = tetra.DSh(3);
-   _dSh(4) = tetra.DSh(4);
+   Tetra4 t(_theElement);
+   _el_geo.volume = t.getVolume();
+   _el_geo.det = t.getDet();
+   _dSh = t.DSh();
    ElementNodeCoordinates();
-   eMat = 0;
+   ElementVector(*_u);
+   eA0 = 0, eA1 = 0, eMat = 0;
    eRHS = 0;
 }
 
 
 void DC3DT4::set(const Side* sd)
 {
-   _nb_dof = 1;
-   Init(sd);
-   Triang3 triang(sd);
-   _area = triang.getArea();
-   _center = triang.getCenter();
+   _theElement = nullptr, _theSide = sd;
+   Triang3 t(sd);
+   _el_geo.area = t.getArea();
    SideNodeCoordinates();
-   _center = triang.getCenter();
-   sMat = 0;
+   sA0 = 0;
    sRHS = 0;
 }
 
 
-void DC3DT4::build()
+void DC3DT4::LCapacity(real_t coef)
 {
-   Equa_Therm<real_t,4,4,3,3>::build();
-}
-
-
-void DC3DT4::LCapacityToLHS(real_t coef)
-{
-   real_t c = coef*0.25*_volume*_rhocp;
+   real_t c = coef*0.25*_el_geo.volume*_rhocp;
    for (size_t i=1; i<=4; i++)
-      eMat(i,i) += c;
+      eA1(i,i) += c;
 }
 
 
-void DC3DT4::LCapacityToRHS(real_t coef)
+void DC3DT4::Capacity(real_t coef)
 {
-   real_t c = coef*0.25*_volume*_rhocp;
-   eRHS(1) += c*ePrev(1);
-   eRHS(2) += c*ePrev(2);
-   eRHS(3) += c*ePrev(3);
-   eRHS(4) += c*ePrev(4);
-}
-
-
-void DC3DT4::CapacityToLHS(real_t coef)
-{
-   real_t c = 0.1*_volume*_rhocp*coef;
+   real_t c = 0.1*_el_geo.volume*_rhocp*coef;
    real_t d = 0.5*c;
-   eMat(1,1) += c; eMat(2,2) += c; eMat(3,3) += c; eMat(4,4) += c;
-   eMat(1,2) += d; eMat(2,1) += d; eMat(1,3) += d; eMat(1,4) += d;
-   eMat(3,1) += d; eMat(2,3) += d; eMat(3,2) += d; eMat(2,4) += d;
-   eMat(4,1) += d; eMat(4,2) += d; eMat(4,3) += d; eMat(3,4) += d;
-}
-
-
-void DC3DT4::CapacityToRHS(real_t coef)
-{
-   real_t c = 0.1*_volume*_rhocp*coef;
-   real_t d = 0.5*c;
-   eRHS(1) += c*ePrev(1) + d*(ePrev(2) + ePrev(3)+ ePrev(4));
-   eRHS(2) += c*ePrev(2) + d*(ePrev(1) + ePrev(3)+ ePrev(4));
-   eRHS(3) += c*ePrev(3) + d*(ePrev(1) + ePrev(2)+ ePrev(4));
-   eRHS(4) += c*ePrev(4) + d*(ePrev(1) + ePrev(2)+ ePrev(3));
+   eA1(1,1) += c; eA1(2,2) += c; eA1(3,3) += c; eA1(4,4) += c;
+   eA1(1,2) += d; eA1(2,1) += d; eA1(1,3) += d; eA1(1,4) += d;
+   eA1(3,1) += d; eA1(2,3) += d; eA1(3,2) += d; eA1(2,4) += d;
+   eA1(4,1) += d; eA1(4,2) += d; eA1(4,3) += d; eA1(3,4) += d;
 }
 
 
 void DC3DT4::Diffusion(real_t coef)
 {
-   real_t c = coef*_diff*_volume;
+   real_t c = coef*_diff*_el_geo.volume;
    for (size_t i=1; i<=4; i++)
       for (size_t j=1; j<=4; j++)
-         eMat(i,j) += c*(_dSh(i)*_dSh(j));
+         eA0(i,j) += c*(_dSh[i-1],_dSh[j-1]);
+   eMat += eA0;
 }
 
 
 void DC3DT4::Diffusion(const DMatrix<real_t>& diff,
-                             real_t           coef)
+                       real_t                 coef)
 {
-   real_t c = coef*_volume;
+   real_t c = coef*_el_geo.volume;
    for (size_t i=1; i<=4; i++)
        for (size_t j=1; j<=4; j++)
-          eMat(i,j) += c*(diff(1,1)*_dSh(i).x*_dSh(j).x + diff(1,2)*_dSh(i).y*_dSh(j).x
-                        + diff(1,3)*_dSh(i).z*_dSh(j).x + diff(2,1)*_dSh(i).x*_dSh(j).y
-                        + diff(2,2)*_dSh(i).y*_dSh(j).y + diff(2,3)*_dSh(i).z*_dSh(j).y
-                        + diff(3,1)*_dSh(i).x*_dSh(j).z + diff(3,2)*_dSh(i).y*_dSh(j).z
-                        + diff(3,3)*_dSh(i).z*_dSh(j).z);
-}
-
-
-void DC3DT4::DiffusionToRHS(real_t coef)
-{
-   Point<real_t> u = _dSh(1)*ePrev(1) + _dSh(2)*ePrev(2) + _dSh(3)*ePrev(3) + _dSh(4)*ePrev(4);
-   eRHS(1) -= coef*_diff*OFELI_SIXTH*_det*(_dSh(1)*u);
-   eRHS(2) -= coef*_diff*OFELI_SIXTH*_det*(_dSh(2)*u);
-   eRHS(3) -= coef*_diff*OFELI_SIXTH*_det*(_dSh(3)*u);
-   eRHS(4) -= coef*_diff*OFELI_SIXTH*_det*(_dSh(4)*u);
+          eA0(i,j) += c*(diff(1,1)*_dSh[i-1].x*_dSh[j-1].x + diff(1,2)*_dSh[i-1].y*_dSh[j-1].x
+                       + diff(1,3)*_dSh[i-1].z*_dSh[j-1].x + diff(2,1)*_dSh[i-1].x*_dSh[j-1].y
+                       + diff(2,2)*_dSh[i-1].y*_dSh[j-1].y + diff(2,3)*_dSh[i-1].z*_dSh[j-1].y
+                       + diff(3,1)*_dSh[i-1].x*_dSh[j-1].z + diff(3,2)*_dSh[i-1].y*_dSh[j-1].z
+                       + diff(3,3)*_dSh[i-1].z*_dSh[j-1].z);
+   eMat += eA0;
 }
 
 
 void DC3DT4::Convection(const Point<real_t>& v,
-                              real_t         coef)
+                        real_t               coef)
 {
    for (size_t i=1; i<=4; i++)
       for (size_t j=1; j<=4; j++)
-         eMat(i,j) += coef*0.25*_volume*(v*_dSh(i));
+         eA0(i,j) += coef*0.25*_el_geo.volume*(v,_dSh[i-1]);
+   eMat += eA0;
 }
 
 
 void DC3DT4::Convection(const Vect<Point<real_t> >& v,
-                              real_t                coef)
+                        real_t                      coef)
 {
    size_t i;
    LocalMatrix<real_t,4,3> ve;
    for (i=1; i<=4; i++) {
-      size_t n = _theElement->getNodeLabel(i);
+      size_t n = (*_theElement)(i)->n();
       ve(i,1) = v(n).x;
       ve(i,2) = v(n).y;
       ve(i,3) = v(n).z;
@@ -261,7 +171,8 @@ void DC3DT4::Convection(const Vect<Point<real_t> >& v,
    w.z = 0.25*(ve(1,3)+ve(2,3)+ve(3,3)+ve(4,3));
    for (i=1; i<=4; i++)
       for (size_t j=1; j<=4; j++)
-         eMat(i,j) += coef*0.25*_volume*(w*_dSh(i));
+         eA0(i,j) += coef*0.25*_el_geo.volume*(w,_dSh[i-1]);
+   eMat += eA0;
 }
 
 
@@ -270,7 +181,7 @@ void DC3DT4::Convection(real_t coef)
    LocalMatrix<real_t,4,3> ve;
    size_t i;
    for (i=1; i<=4; i++) {
-      size_t n = _theElement->getNodeLabel(i);
+      size_t n = (*_theElement)(i)->n();
       ve(i,1) = (*_vel)(3*n-2);
       ve(i,2) = (*_vel)(3*n-1);
       ve(i,3) = (*_vel)(3*n  );
@@ -279,115 +190,62 @@ void DC3DT4::Convection(real_t coef)
    v.x = 0.25*(ve(1,1) + ve(2,1) + ve(3,1) + ve(4,1));
    v.y = 0.25*(ve(1,2) + ve(2,2) + ve(3,2) + ve(4,2));
    v.z = 0.25*(ve(1,3) + ve(2,3) + ve(3,3) + ve(4,3));
-   real_t c = 0.25*_volume*coef;
+   real_t c = 0.25*_el_geo.volume*coef;
    for (i=1; i<=4; i++)
       for (size_t j=1; j<=4; j++)
-         eMat(i,j) += c*(v*_dSh(j));
+         eA0(i,j) += c*(v,_dSh[j-1]);
+   eMat += eA0;
 }
 
 
-void DC3DT4::RHS_Convection(const Point<real_t>& v,
-                                  real_t         coef)
+void DC3DT4::BodyRHS(const Vect<real_t>& f)
 {
-   Point<real_t> u = _dSh(1)*ePrev(1) + _dSh(2)*ePrev(2) + _dSh(3)*ePrev(3) + _dSh(4)*ePrev(4);
-   eRHS(1) += coef*0.25*_volume*(v*u);
-   eRHS(2) += coef*0.25*_volume*(v*u);
-   eRHS(3) += coef*0.25*_volume*(v*u);
-   eRHS(4) += coef*0.25*_volume*(v*u);
-}
-
-
-void DC3DT4::BodyRHS(UserData<real_t>& ud,
-                     real_t            coef)
-{
-   real_t c = coef*0.25*_volume*ud.BodyForce(_center,_time);
-   eRHS(1) += c;
-   eRHS(2) += c;
-   eRHS(3) += c;
-   eRHS(4) += c;
-}
-
-
-void DC3DT4::BodyRHS(const Vect<real_t>& bf,
-                           int           opt)
-{
-   if (opt==LOCAL_ARRAY) {
-      eRHS(1) += bf(1)*0.25*_volume;
-      eRHS(2) += bf(2)*0.25*_volume;
-      eRHS(3) += bf(3)*0.25*_volume;
-      eRHS(4) += bf(4)*0.25*_volume;
-   }
-   else {
-      eRHS(1) += bf(_theElement->getNodeLabel(1))*0.25*_volume;
-      eRHS(2) += bf(_theElement->getNodeLabel(2))*0.25*_volume;
-      eRHS(3) += bf(_theElement->getNodeLabel(3))*0.25*_volume;
-      eRHS(4) += bf(_theElement->getNodeLabel(4))*0.25*_volume;
-   }
-}
-
-
-void DC3DT4::BoundaryRHS(UserData<real_t>& ud,
-                         real_t            coef)
-{
-   if (_theSide->getCode(1)>0) {
-      real_t c = OFELI_THIRD*coef*_area*ud.SurfaceForce(_center,_theSide->getCode(1),_time);
-      sRHS(1) += c;
-      sRHS(2) += c;
-      sRHS(3) += c;
-   }
+   for (size_t i=1; i<=4; ++i)
+      eRHS(i) += f((*_theElement)(i)->n())*0.25*_el_geo.volume;
 }
 
 
 void DC3DT4::BoundaryRHS(real_t flux)
 {
-   real_t c = flux*_area*OFELI_THIRD;
+   real_t c = flux*_el_geo.area*OFELI_THIRD;
    sRHS(1) += c;
    sRHS(2) += c;
    sRHS(3) += c;
 }
 
 
-void DC3DT4::BoundaryRHS(const Vect<real_t>& sf,
-                               int           opt)
+void DC3DT4::BoundaryRHS(const Vect<real_t>& f)
 {
-   if (opt==LOCAL_ARRAY) {
-      sRHS(1) += sf(1)*_area*OFELI_THIRD;
-      sRHS(2) += sf(2)*_area*OFELI_THIRD;
-      sRHS(3) += sf(3)*_area*OFELI_THIRD;
-   }
-   else {
-      sRHS(1) += sf((*_theSide)(1)->n()) * _area*OFELI_THIRD;
-      sRHS(2) += sf((*_theSide)(2)->n()) * _area*OFELI_THIRD;
-      sRHS(3) += sf((*_theSide)(3)->n()) * _area*OFELI_THIRD;
-   }
+   for (size_t i=1; i<=3; ++i)
+      sRHS(i) += f((*_theSide)(i)->n())*_el_geo.area*OFELI_THIRD;
 }
 
 
 Point<real_t> DC3DT4::Flux() const
 {
    Point<real_t> f;
-   f = _diff*(ePrev(1)*_dSh(1) + ePrev(2)*_dSh(2) +
-              ePrev(3)*_dSh(3) + ePrev(4)*_dSh(4));
+   f = _diff*(_eu(1)*_dSh[0] + _eu(2)*_dSh[1] +
+              _eu(3)*_dSh[2] + _eu(4)*_dSh[3]);
    return f;
 }
 
 
-Point<real_t> DC3DT4::Grad(const Vect<real_t>& u) const
+void DC3DT4::Grad(Vect<Point<real_t> >& g)
 {
-   Point<real_t> grad;
-   grad = u[0]*_dSh(1) + u[1]*_dSh(2) + u[2]*_dSh(3) + u[3]*_dSh(4);
-   return grad;
+   mesh_elements(*_theMesh) {
+      set(the_element);
+      g(element_label) = _eu(1)*_dSh[0] + _eu(2)*_dSh[1] + _eu(3)*_dSh[2] + _eu(4)*_dSh[3];
+   }
 }
-
 
 void DC3DT4::Periodic(real_t coef)
 {
    for (size_t i=1; i<=3; i++) {
-      real_t c = OFELI_THIRD*_area*coef;
+      real_t c = OFELI_THIRD*_el_geo.area*coef;
       if (_theSide->getCode(1) == PERIODIC_A)
-         eMat(i,i) += c;
+         eA0(i,i) += c;
       else if (_theSide->getCode(1) == PERIODIC_B)
-         eMat(i,i) -= c;
+         eA0(i,i) -= c;
    }
 }
 

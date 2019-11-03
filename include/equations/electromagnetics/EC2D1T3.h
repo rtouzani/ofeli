@@ -68,44 +68,65 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
 
  public :
 
+   using Equation<complex_t,3,3,2,2>::_A;
+   using Equation<complex_t,3,3,2,2>::_b;
+
 /// \brief Default constructor
     EC2D1T3();
 
-/// \brief Constructor using element data
-/// @param [in] el Pointer to Element instance
-    EC2D1T3(const Element* el);
-
-/// \brief Constructor using side data
-/// @param [in] side Pointer to Side instance
-    EC2D1T3(const Side* side);
-
-/** \brief Constructor using element and previous time data
- *  @param [in] el Pointer to Element instance
- *  @param [in] u Solution at previous iteration
- *  @param [in] time Time value [Default: <tt>0</tt>]
+/** \brief Constructor using mesh
+ *  @param [in] ms Mesh instance
  */
-    EC2D1T3(const Element*         el,
-            const Vect<complex_t>& u,
-            const real_t&          time=0.);
+    EC2D1T3(Mesh& ms);
 
-/** \brief Constructor using side and previous time data
- *  @param [in] sd Pointer to Side instance
- *  @param [in] u Solution at previous iteration
- *  @param [in] time Time value [Default: <tt>0</tt>]
+/** \brief Constructor using mesh and solution vector
+ *  @param [in,out] u Reference to solution vector instance
  */
-    EC2D1T3(const Side*            sd,
-            const Vect<complex_t>& u,
-            const real_t&          time=0.);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
     EC2D1T3(Mesh&            ms,
-            Vect<complex_t>& u,
-            real_t           omega,
-            real_t           volt);
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+            Vect<complex_t>& u);
 
 /// \brief Destructor
     ~EC2D1T3();
+
+/** \brief Define data for equation
+ *  @param [in] omega Angular frequency
+ *  @param [in] volt Voltage
+ */
+    void setData(real_t omega,
+                 real_t volt);
+
+/** \brief Build the linear system of equations
+ *  \details Before using this function, one must have properly selected 
+ *  appropriate options for:
+ *  <ul>
+ *     <li>The choice of a steady state or transient analysis. By default, the analysis is stationary
+ *     <li>In the case of transient analysis, the choice of a time integration scheme
+ *         and a lumped or consistent capacity matrix. If transient analysis is chosen, the lumped
+ *         capacity matrix option is chosen by default, and the implicit Euler scheme is used
+ *         by default for time integration.
+ *  </ul>
+ */
+    void build()
+    {
+       mesh_elements(*_theMesh) {
+          set(the_element);
+          Magnetic(_omega,1.);
+          Electric();
+          AbsEqua<complex_t>::_A->Assembly(The_element,eMat.get());
+       }
+
+       mesh_nodes(*_theMesh) {
+          int m = the_node->getDOF(1);
+          if (the_node->getCode(1)==1) {
+             _A->set(m,m,(*_A)(m,m)*VLG);
+             (*_b)[m-1] = (*_A)(m,m)*_current;
+          }
+          if (the_node->getCode(1)==2) {
+             _A->set(m,m,(*_A)(m,m)*VLG);
+             (*_b)[m-1] = 0;
+          }
+       }
+    }
 
 /** \brief Add magnetic contribution to matrix
  *  @param [in] omega Angular frequency
@@ -125,15 +146,11 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
     complex_t IntegMF();
 
 /** \brief Compute integral of normal derivative on edge
- *  @param [in] h Vect instance containing magnetic field at element nodes
- *  @param [in] opt Vector <tt>h</tt> is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> 
- *  or global (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes
- *  [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] h Vect instance containing magnetic field at nodes
  *  @note This member function is to be called within each element, it detects
  *  boundary sides as the ones with nonzero code
  */
-    complex_t IntegND(const Vect<complex_t>& h,
-                            int              opt=GLOBAL_ARRAY);
+    complex_t IntegND(const Vect<complex_t>& h);
 
 /// \brief Add contribution to vacuum area calculation
     real_t VacuumArea();
@@ -144,7 +161,7 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
     void set(const Side* el);
 
  private:
-    real_t _omega, _volt;
+    real_t _omega, _volt, _current;
 
 };
 

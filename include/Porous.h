@@ -33,6 +33,8 @@
 #ifndef __THERM_H
 #define __THERM_H
 
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
 #include "equations/porous/WaterPorous2D.h"
 
 /*! \file Porous.h

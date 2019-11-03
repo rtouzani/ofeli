@@ -23,6 +23,7 @@ ss_HEADERS = \
 		Optim.h \
 		OptSolver.h \
 		Prec.h \
+		Prec_impl.h \
 		Richardson.h \
 		Schur.h \
 		SSOR.h \

@@ -33,91 +33,135 @@
 
 
 #include "equations/laplace/SteklovPoincare2DBE.h"
+#include "solvers/GMRes.h"
+#include "equations/AbsEqua_impl.h"
+#include "shape_functions/Triang3.h"
+#include "equations/AbsEqua_impl.h"
+#include "linear_algebra/Vect_impl.h"
+
 
 namespace OFELI {
 
-SteklovPoincare2DBE::SteklovPoincare2DBE(const Mesh& mesh,
-                                         bool        ext)
+SteklovPoincare2DBE::SteklovPoincare2DBE()
+                    : AbsEqua<real_t>(), _ext(1)
 {
-   setMesh(mesh,ext);
+   _A = nullptr;
+   _b = nullptr;
 }
 
 
-SteklovPoincare2DBE::SteklovPoincare2DBE(const Mesh&         mesh,
-                                         const Vect<real_t>& g, 
-                                         Vect<real_t>&       b,
-                                         bool                ext)
+SteklovPoincare2DBE::SteklovPoincare2DBE(Mesh& ms)
+                    : AbsEqua<real_t>(), _ext(1)
 {
-   setMesh(mesh,ext);
-   Solve(b,g);
+   setMesh(ms);
 }
 
 
-void SteklovPoincare2DBE::setMesh(const Mesh& mesh,
-                                        bool  ext)
+SteklovPoincare2DBE::SteklovPoincare2DBE(Mesh&         ms,
+                                         Vect<real_t>& u)
+                    : AbsEqua<real_t>(), _ext(1)
 {
-   _theMesh = &mesh;
-   _nn.setSize(_theMesh->getNbSides());
-   _length.setSize(_theMesh->getNbSides());
-   _center.setSize(_theMesh->getNbSides());
-   _ttg.setSize(_theMesh->getNbSides());
+   setMesh(ms);
+   _u = &u;
+}
+
+
+SteklovPoincare2DBE::~SteklovPoincare2DBE()
+{
+}
+
+
+void SteklovPoincare2DBE::setExterior()
+{
    _ext = -1;
-   if (ext)
-      _ext = 1; 
-   _util();
-   _nb_eq = _theMesh->getNbSides();
-   _A.setSize(_nb_eq);
 }
 
 
-int SteklovPoincare2DBE::Solve(Vect<real_t>&       b,
-                               const Vect<real_t>& g)
+real_t SteklovPoincare2DBE::single_layer(size_t               j,
+                                         const Point<real_t>& z) const
 {
-   b = 0;
-   _A = 0;
-   for (size_t i=1; i<=_theMesh->getNbSides(); i++) {
-      b(i) -= 0.5*g(i);
-      for (size_t j=1; j<=_theMesh->getNbSides(); j++) {
-         _h = _length(j);
-         Point<real_t> z = _center(j) - _center(i);
-         real_t s = single_layer(j,z);
-         real_t d = double_layer(j,z);
-         _A.add(i,j,_ext*s);
-         b.add(i,_ext*g(j)*d);
+   return -0.125/OFELI_PI*_h*I2(0.25*_h*_h,z*_ttg[j],z.NNorm());
+}
+
+
+real_t SteklovPoincare2DBE::double_layer(size_t               j,
+                                         const Point<real_t>& z) const
+{
+   real_t t = _nn[j]*z;
+   return -0.25/OFELI_PI*t*I3(0.25*_h*_h,z*_ttg[j],z.NNorm()); 
+}
+
+
+void SteklovPoincare2DBE::setMesh(Mesh& ms)
+{
+   _theMesh = &ms;
+   _nb_eq = _nb_boundary_sides = _theMesh->getNbBoundarySides();
+   if (_nb_sides==0)
+      throw OFELIException("SteklovPoincare2DBE::setMesh(ms): No boundary sides extracted.");
+   _nn.setSize(_nb_eq);
+   _length.setSize(_nb_eq);
+   _center.setSize(_nb_eq);
+   _ttg.setSize(_nb_eq);
+   util();
+   if (_A!=nullptr)
+      delete _A;
+   _A = new SpMatrix<real_t>(_nb_eq,_nb_eq);
+   _ls.setMatrix(_A);
+   _set_matrix = true;
+   setSolver(GMRES_SOLVER,DIAG_PREC);
+   if (_b!=nullptr)
+      delete _b;
+   _b = new Vect<real_t>(_nb_eq);
+}
+
+
+int SteklovPoincare2DBE::run()
+{
+   Side *sd1, *sd2;
+   if (_bc==nullptr)
+      throw OFELIException("SteklovPoincare2DBE::run(): No Dirichlet boundary condition given.");
+   if (_u==nullptr)
+      throw OFELIException("SteklovPoincare2DBE::run(): No solution vector given.");
+   _u->clear();
+   _A->clear();
+   for (size_t s=0; s<_nb_boundary_sides; ++s) {
+      sd1 = _theMesh->theBoundarySides[s];
+      (*_b)[s] = -0.25*((*_bc)((*sd1)(1)->n())+(*_bc)((*sd1)(2)->n()));
+      for (size_t t=0; t<_nb_boundary_sides; ++t) {
+         sd2 = _theMesh->theBoundarySides[t];
+         _h = _length[t];
+         real_t g = 0.5*((*_bc)((*sd2)(1)->n())+(*_bc)((*sd2)(2)->n()));
+         Point<real_t> z = _center[t] - _center[s];
+         if (s==t)
+            _A->add(s+1,s+1,0.25/OFELI_PI*_ext*_h*I1(0.5*_h));
+         else {
+            _A->add(s+1,t+1,-_ext*single_layer(t,z));
+            _b->add(s+1,-_ext*g*double_layer(t,z));
+         }
       }
    }
-   Vect<real_t> x(b.size());
-   Prec<real_t> p(_A,IDENT_PREC);
-   real_t toler = 1.e-8;
-   int nb_it = GMRes(_A,p,b,x,_nb_eq/4,1000,toler,0);
-   b = x;
-   return nb_it;
+   int ret = solveLinearSystem(_A,*_b,*_u);
+   return ret;
 }
 
 
-void SteklovPoincare2DBE::_util()
+void SteklovPoincare2DBE::util()
 {
-   Point<real_t> N, x1, x2, T, c;
-   for (size_t s=1; s<=_theMesh->getNbSides(); s++) {
-      const Side *sd = _theMesh->getPtrSide(s);
-      const Element *el = sd->getNeighborElement(1);
-      if (el->getShape()!=TRIANGLE)
-         throw OFELIException("SteklovPoincare2DBE::_util(): This class is valid for triangles only.");
-      Triang3 tr(el);
-      x1 = sd->getPtrNode(1)->getCoord();
-      x2 = sd->getPtrNode(2)->getCoord();
-      T = x2 - x1;
-      _center(s) = 0.5*(x1+x2);
-      c = _center(s) - tr.getCenter();
-      N.x =  T.y;
-      N.y = -T.x;
-      if (c*N<0) {
-         N.x = -N.x;
-         N.y = -N.y;
-      }
-      _nn(s) = N;
-      _ttg(s) = T;
-      _length(s) = T.Norm();
+   for (size_t s=0; s<_nb_boundary_sides; ++s) {
+      the_side = _theMesh->theBoundarySides[s];
+      the_element = the_side->getNeighborElement(1);
+      if (the_element->getShape()!=TRIANGLE)
+         throw OFELIException("SteklovPoincare2DBE::util(): This class is valid for triangles only.");
+      Triang3 tr(the_element);
+      Point<real_t> x1 = The_side(1)->getCoord(), x2 = The_side(2)->getCoord();
+      _ttg[s] = x2 - x1;
+      _center[s] = 0.5*(x1+x2);
+      Point<real_t> c = _center[s] - tr.getCenter();
+      Point<real_t> N(_ttg[s].y,-_ttg[s].x);
+      if (c*N<0)
+         N.x = -N.x, N.y = -N.y;
+      _nn[s] = N;
+      _length[s] = _ttg[s].Norm();
    }
 }
 

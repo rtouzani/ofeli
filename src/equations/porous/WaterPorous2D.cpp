@@ -32,6 +32,7 @@
 #include "equations/porous/WaterPorous2D.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 /*!
@@ -40,7 +41,6 @@ namespace OFELI {
  */
 
 WaterPorous2D::WaterPorous2D()
-              : _nb_nodes(0), _nb_elements(0), _verb(1)
 {
    _nb_dof = 1;
    _cw = 1.e-6;
@@ -49,10 +49,8 @@ WaterPorous2D::WaterPorous2D()
 }
 
 
-WaterPorous2D::WaterPorous2D(Mesh&  ms,
-                             size_t verb)
-              : _nb_nodes(ms.getNbNodes()), _nb_elements(ms.getNbElements()),
-                _verb(verb)
+WaterPorous2D::WaterPorous2D(Mesh&  ms)
+              : Equation<real_t,3,3,2,2>(ms)
 {
    _theMesh = &ms;
    _nb_dof = 1;
@@ -61,7 +59,7 @@ WaterPorous2D::WaterPorous2D(Mesh&  ms,
    _phi = 1.;
    _Kx = _Ky = 1.;
    _mu = 1.;
-   if (_verb > 3) {
+   if (Verbosity>3) {
       cout << "Number of nodes:\t\t" << _nb_nodes << endl;
       cout << "Number of equations:\t\t" << _theMesh->getNbEq() << endl;
    }
@@ -83,8 +81,8 @@ void WaterPorous2D::setCoef(real_t cw,
    _phi = phi;
    _density = rho;
    _Mw = 1./mu;
-   _Kx.setSize(_nb_elements);
-   _Ky.setSize(_nb_elements);
+   _Kx.setSize(_nb_el);
+   _Ky.setSize(_nb_el);
    _Kx = Kx;
    _Ky = Ky;
 }
@@ -92,28 +90,28 @@ void WaterPorous2D::setCoef(real_t cw,
 
 void WaterPorous2D::set(const Element *el)
 {
-   Init(el);
+  _theElement = el, _theSide = nullptr;
    eA0 = 0;
    eA1 = 0;
    eRHS = 0;
    Triang3 tr(el);
-   _area = tr.getArea();
+   _el_geo.area = tr.getArea();
    _Kxe = _Kx(el->n()), _Kye = _Ky(el->n());
-   _dSh(1) = tr.DSh(1), _dSh(2) = tr.DSh(2), _dSh(3) = tr.DSh(3);
+   _dSh = tr.DSh();
 }
 
 
 void WaterPorous2D::set(const Side *sd)
 {
-   Init(sd);
+   _theSide = sd, _theElement = nullptr;
    sRHS = 0;
-   _length = Line2(sd).getLength();
+   _el_geo.length = Line2(sd).getLength();
 }
 
 
 void WaterPorous2D::Mass()
 {
-   real_t c=OFELI_THIRD*_area*_cw*_density;
+   real_t c=OFELI_THIRD*_el_geo.area*_cw*_density;
    for (size_t i=1; i<=3; i++)
       eA1(i,i) = c*_phi(i);
 }
@@ -121,43 +119,27 @@ void WaterPorous2D::Mass()
 
 void WaterPorous2D::Mobility()
 {
-   real_t c=_area*_Mw*_density;
+   real_t c=_el_geo.area*_Mw*_density;
    for (size_t i=1; i<=3; i++) {
       for (size_t j=1; j<=3; j++) {
-         eA0(i,j) += c*(_Kxe*_dSh(i).x*_dSh(j).x +
-                        _Kye*_dSh(i).y*_dSh(j).y);
+         eA0(i,j) += c*(_Kxe*_dSh[i-1].x*_dSh[j-1].x +
+                        _Kye*_dSh[i-1].y*_dSh[j-1].y);
       }
    }
 }
 
 
-void WaterPorous2D::BodyRHS(const Vect<real_t>& bf,
-                            int                 opt)
+void WaterPorous2D::BodyRHS(const Vect<real_t>& bf)
 {
-   real_t c=OFELI_THIRD*_area;
-   if (opt==GLOBAL_ARRAY) {
-      for (size_t i=1; i<=3; i++)
-         eRHS(i) += c*bf((*_theElement)(i)->n());
-   }
-   else {
-      for (size_t i=1; i<=3; i++)
-         eRHS(i) += c*bf(i);
-   }
+   for (size_t i=1; i<=3; i++)
+      eRHS(i) += OFELI_THIRD*_el_geo.area*bf((*_theElement)(i)->n());
 }
 
 
-void WaterPorous2D::BoundaryRHS(const Vect<real_t>& sf,
-                                int                 opt)
+void WaterPorous2D::BoundaryRHS(const Vect<real_t>& sf)
 {
-   real_t c=0.5*_length;
-   if (opt==GLOBAL_ARRAY) {
-      sRHS(1) += c*sf((*_theSide)(1)->n());
-      sRHS(2) += c*sf((*_theSide)(2)->n());
-   }
-   else {
-      sRHS(1) += c*sf(1);
-      sRHS(2) += c*sf(2);
-   }
+   sRHS(1) += 0.5*_el_geo.length*sf((*_theSide)(1)->n());
+   sRHS(2) += 0.5*_el_geo.length*sf((*_theSide)(2)->n());
 }
 
 /*! @} End of Doxygen Groups */

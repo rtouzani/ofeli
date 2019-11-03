@@ -35,6 +35,7 @@
 #define __TRIANG6S_H
 
 #include "shape_functions/FEShape.h"
+#include "linear_algebra/LocalVect.h"
 
 namespace OFELI {
 /*!
@@ -80,31 +81,17 @@ class Triang6S : public triangle
 /// \brief Destructor
     ~Triang6S() { }
 
-/** \brief Calculate shape function of a node
- *  @param [in] i Local label of the node <tt>1&le;i&le;6</tt>
- *  @param [in] s Local coordinates of the point where the shape function is evaluated
+/** \brief Calculate shape functions
+ *  @param [in] s Local first coordinate of the point where the gradient of the shape functions are evaluated
+ *  @param [in] t Local second coordinate of the point where the gradient of the shape functions are evaluated
+ *  @param [out] sh Array of of shape functions at \c (s,t)
  */
-    real_t Sh(      size_t         i,
-              const Point<real_t>& s) const;
-
-/** \brief Calculate derivatives of shape function of a node
- *  @param [in] i Local label of node
- *  @param [in] s Local coordinates of the point where the gradient of the shape function 
- *                is evaluated
- */
-    Point<real_t> DSh(      size_t         i,
-                      const Point<real_t>& s) const;
+    void Sh(real_t  s,
+            real_t  t,
+            real_t* sh) const;
 
 /// \brief Return coordinates of center of element.
     Point<real_t> getCenter() const { return _c; }
-
-/** \brief Return gradient vector in triangle at a given point
- *  @param [in] s Local coordinates of the point where the gradient of the shape function 
- *                is evaluated
- *  @param [in] u Local vector for which the gradient is evaluated
- */
-    Point<real_t> Grad(const LocalVect<real_t,6>& u,
-                       const Point<real_t>&       s) const;
 
 /// \brief Return maximal edge length of triangle
     real_t getMaxEdgeLength() const;
@@ -112,8 +99,33 @@ class Triang6S : public triangle
 /// \brief Return minimal edge length of triangle
     real_t getMinEdgeLength() const;
 
+/** \brief Initialize local point coordinates in element.
+ *  @param [in] s Local first coordinate of the point where the gradient of the shape functions are evaluated
+ *  @param [in] t Local second coordinate of the point where the gradient of the shape functions are evaluated
+ */
+    void setLocal(real_t s,
+                  real_t t);
+
+/** \brief Compute partial derivatives of shape functions at mid edges of triangles
+ *  \details This member function can be called for integrations using partial derivatives
+ *  of shape functions and approximated by midedge integration formula
+ *  @param [out] dsh Vector containing partial derivatives of shape functions 
+ *  @param [out] w Vector containing weights for the integration formula
+ */
+    void atMidEdges(std::vector<Point<real_t> >& dsh,
+                    std::vector<real_t>&         w);
+
+/** \brief Return partial derivatives of shape functions of element nodes
+ *  @return LocalVect instance of partial derivatives of shape functions
+ *          <i>e.g.</i> \c dsh(i).x, \c dsh(i).y, are partial derivatives of the <i>i</i>-th
+ *          shape function. 
+ *  @note The local point at which the derivatives are computed must be chosen before by using the
+ *  member function setLocal
+ */
+    std::vector<Point<real_t> > DSh() const;
+
  private:
-   Point<real_t> _x21, _x31, _x32;
+    Point<real_t> _x21, _x31, _x32;
 };
 
 /*! @} End of Doxygen Groups */

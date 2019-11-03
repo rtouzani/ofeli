@@ -1,0 +1,6 @@
+# Iris configuration file
+# 2019-08-29  07:17:04
+#
+verbosity 1
+history-file iris.his
+log-file iris.log

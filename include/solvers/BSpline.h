@@ -38,7 +38,7 @@
 
 #include "OFELI_Config.h"
 #include "linear_algebra/Point.h"
-#include "linear_algebra/Vect.h"
+#include "linear_algebra/Vect_impl.h"
 
 
 namespace OFELI {

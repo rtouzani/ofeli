@@ -49,14 +49,14 @@ Side::Side()
    _label = 0;
    _nb_nodes = _nb_edges = 0;
    _neig_el = 0;
-   _el[0] = _el[1] = NULL;
+   _el[0] = _el[1] = nullptr;
    _on_boundary = -1;
    _code.resize(MAX_NBDOF_SIDE);
-   Clear(_code);
+   clear(_code);
    _dof.resize(MAX_NBDOF_SIDE);
    _nb_dof = 1;
    _nb_childs = 0;
-   _parent = NULL;
+   _parent = nullptr;
    _level = 0;
    _active = true;
 }
@@ -71,14 +71,14 @@ Side::Side(size_t        label,
    _label = label;
    _nb_nodes = _nb_edges = _nb_eq = 0;
    _neig_el = 0;
-   _el[0] = _el[1] = NULL;
+   _el[0] = _el[1] = nullptr;
    _on_boundary = 0;
    _code.resize(MAX_NBDOF_SIDE);
-   Clear(_code);
+   clear(_code);
    _dof.resize(MAX_NBDOF_SIDE);
    _nb_childs = 0;
    _level = 0;
-   _parent = NULL;
+   _parent = nullptr;
    _active = true;
 }
 
@@ -92,13 +92,13 @@ Side::Side(size_t label,
    _label = label;
    _nb_nodes = _nb_edges = _nb_eq = 0;
    _neig_el = 0;
-   _el[0] = _el[1] = NULL;
+   _el[0] = _el[1] = nullptr;
    _on_boundary = 0;
    _code.resize(MAX_NBDOF_SIDE);
-   Clear(_code);
+   clear(_code);
    _dof.resize(MAX_NBDOF_SIDE);
    _nb_childs = 0;
-   _parent = NULL;
+   _parent = nullptr;
    _level = 0;
    _active = true;
 }
@@ -168,7 +168,7 @@ void Side::Add(Node* node)
    
 void Side::Add(Edge* edge)
 {
-   if (edge==NULL)
+   if (edge==nullptr)
       throw OFELIException("Side::Add(Edge): Trying to add an undefined edge");
    _ed[_nb_edges++] = edge;
 }
@@ -351,7 +351,7 @@ Element *Side::getOtherNeighborElement(Element* el) const
       return _el[1];
    if (_el[1]==el)
       return _el[0];
-   return NULL; 
+   return nullptr; 
 }
 
 

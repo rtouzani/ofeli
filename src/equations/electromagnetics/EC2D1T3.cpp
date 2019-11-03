@@ -33,6 +33,7 @@
 #include "equations/electromagnetics/EC2D1T3.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
@@ -44,66 +45,41 @@ EC2D1T3::EC2D1T3()
 }
 
 
+EC2D1T3::EC2D1T3(Mesh& ms)
+        : Equation<complex_t,3,3,2,2>(ms)
+{
+   _omega = 1.;
+   _volt = 1.;
+}
+
+
 EC2D1T3::EC2D1T3(Mesh&            ms,
-                 Vect<complex_t>& u,
-                 real_t           omega,
-                 real_t           volt)
-               : Equation<complex_t,3,3,2,2>(ms)
-{
-   setInput(SOLUTION,u);
-   _omega = omega;
-   _volt = volt;
-}
-
-
-EC2D1T3::EC2D1T3(const Element* el)
-{
-   set(el);
-   _label = _theElement->n();
-}
-
-
-EC2D1T3::EC2D1T3(const Side* sd)
-{
-   set(sd);
-}
-
-
-EC2D1T3::EC2D1T3(const Element*         el,
-                 const Vect<complex_t>& u,
-                 const real_t&          time)
-{
-   set(el);
-   _time = time;
-   ElementVector(u);
-}
-
-
-EC2D1T3::EC2D1T3(const Side*            sd,
-                 const Vect<complex_t>& u,
-                 const real_t&          time)
-{
-   set(sd);
-   _time = time;
-   SideVector(u);
-}
+                 Vect<complex_t>& u)
+        : Equation<complex_t,3,3,2,2>(ms,u)
+{ }
 
 
 EC2D1T3::~EC2D1T3() { }
 
 
+void EC2D1T3::setData(real_t omega,
+                      real_t volt)
+{
+   _omega = omega;
+   _volt = volt;
+}
+
+
 void EC2D1T3::set(const Element* el)
 {
-   _nb_dof = 1;
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    setMaterial();
    Triang3 tr(_theElement);
-   _area = tr.getArea();
-   _center = tr.getCenter();
+   _el_geo.area = tr.getArea();
+   _el_geo.center = tr.getCenter();
    ElementNodeCoordinates();
-   _dSh(1) = tr.DSh(1);
-   _dSh(2) = tr.DSh(2);
-   _dSh(3) = tr.DSh(3);
+   _dSh = tr.DSh();
+   ElementNodeVector(*_u,_eu);
    eMat = complex_t(0.);
    eRHS = complex_t(0.);
 }
@@ -111,12 +87,11 @@ void EC2D1T3::set(const Element* el)
 
 void EC2D1T3::set(const Side* sd)
 {
-   _nb_dof = 1;
-   Init(sd);
+   _theElement = nullptr, _theSide = sd;
    Line2 ln(sd);
    SideNodeCoordinates();
-   _center = ln.getCenter();
-   _length = ln.getLength();
+   _el_geo.center = ln.getCenter();
+   _el_geo.length = ln.getLength();
    sMat = complex_t(0.);
    sRHS = complex_t(0.);
 }
@@ -146,8 +121,8 @@ int EC2D1T3::run()
 void EC2D1T3::Magnetic(real_t coef,
                        real_t omega)
 {
-   complex_t c = 0.5*coef*_mu*omega*_area*OFELI_SIXTH*OFELI_IMAG;
-   complex_t d = coef*_mu*omega*_area*OFELI_SIXTH*OFELI_IMAG;
+   complex_t c = 0.5*coef*_mu*omega*_el_geo.area*OFELI_SIXTH*OFELI_IMAG;
+   complex_t d = coef*_mu*omega*_el_geo.area*OFELI_SIXTH*OFELI_IMAG;
    eMat(1,1) += d; eMat(2,2) += d; eMat(3,3) += d;
    eMat(1,2) += c; eMat(2,1) += c; eMat(1,3) += c;
    eMat(3,1) += c; eMat(2,3) += c; eMat(3,2) += c;
@@ -156,33 +131,32 @@ void EC2D1T3::Magnetic(real_t coef,
 
 void EC2D1T3::Electric(real_t coef)
 {
-   static real_t d = coef*_rho*_area;
+   static real_t d = coef*_rho*_el_geo.area;
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
-         eMat(i,j) += d*(_dSh(i)*_dSh(j));
+         eMat(i,j) += d*(_dSh[i-1],_dSh[j-1]);
 }
 
 
 complex_t EC2D1T3::IntegMF()
 {
-   static real_t c = _mu*_area*OFELI_SIXTH;
+   static real_t c = _mu*_el_geo.area*OFELI_SIXTH;
    complex_t x=0;
    for (size_t i=1; i<=3; i++)
-      x += ePrev(i)*c;
+      x += _eu(i)*c;
    return x;
 }
 
 
-complex_t EC2D1T3::IntegND(const Vect<complex_t>& h,
-                                 int              opt)
+complex_t EC2D1T3::IntegND(const Vect<complex_t>& h)
 {
-   int c1 = _theElement->getPtrNode(1)->getCode(1);
-   int c2 = _theElement->getPtrNode(2)->getCode(1);
-   int c3 = _theElement->getPtrNode(3)->getCode(1);
-   complex_t dhx, dhy, h1, h2, h3, xx=0;
-   h1 = h(_theElement->getNodeLabel(1));
-   h2 = h(_theElement->getNodeLabel(2));
-   h3 = h(_theElement->getNodeLabel(3));
+   int c1 = (*_theElement)(1)->getCode(1),
+       c2 = (*_theElement)(2)->getCode(1),
+       c3 = (*_theElement)(3)->getCode(1);
+   complex_t dhx, dhy, xx=0;
+   complex_t h1 = h((*_theElement)(1)->n()),
+             h2 = h((*_theElement)(2)->n()),
+             h3 = h((*_theElement)(3)->n());
    size_t j=0, i1[2], i2[2];
    if (c1==1 && c2==1)
       i1[j] = 1, i2[j] = 2;
@@ -191,8 +165,8 @@ complex_t EC2D1T3::IntegND(const Vect<complex_t>& h,
    if (c3==1 && c1==1)
       i1[j] = 3, i2[j] = 1;
    if (j) {
-      dhx = h1*_dSh(1).x + h2*_dSh(2).x + h3*_dSh(3).x;
-      dhy = h1*_dSh(1).y + h2*_dSh(2).y + h3*_dSh(3).y;
+      dhx = h1*_dSh[0].x + h2*_dSh[1].x + h3*_dSh[2].x;
+      dhy = h1*_dSh[0].y + h2*_dSh[1].y + h3*_dSh[2].y;
       for (size_t i=0; i<j; i++) {
          real_t n1 = _x[i2[i]-1].y - _x[i1[i]-1].y;
          real_t n2 = _x[i1[i]-1].x - _x[i2[i]-1].x;
@@ -245,9 +219,8 @@ void EC2D1T3::UpdateMF()
 
 real_t EC2D1T3::Joule()
 {
-   Point<real_t> dhr, dhi;
-   dhr = ePrev(1).real()*_dSh(1) + ePrev(2).real()*_dSh(2) + ePrev(3).real()*_dSh(3); 
-   dhi = ePrev(1).imag()*_dSh(1) + ePrev(2).imag()*_dSh(2) + ePrev(3).imag()*_dSh(3);
+   Point<real_t> dhr = _eu(1).real()*_dSh[0] + _eu(2).real()*_dSh[1] + _eu(3).real()*_dSh[2], 
+                 dhi = _eu(1).imag()*_dSh[0] + _eu(2).imag()*_dSh[1] + _eu(3).imag()*_dSh[2];
    return 0.5*_rho/(dhr*dhr+dhi*dhi);
 }
 

@@ -35,7 +35,6 @@
 #define __NS2DT3BT3_H
 
 #include "equations/fluid/Equa_Fluid.h"
-#include "io/UserData.h"
 
 namespace OFELI {
 /*!
@@ -66,36 +65,17 @@ class NS2DT3BT3 : virtual public Equa_Fluid<real_t,3,9,2,6> {
 /// \details Builds an empty equation
     NS2DT3BT3() { }
 
+/** \brief Constructor for a given mesh
+ *  @param [in] ms Mesh instance
+ */
+    NS2DT3BT3(Mesh& ms);
+
 /** \brief Constructor for a given mesh and initial solution
- *  @param [in] mesh Mesh instance
- *  @param [out] u Vector that contains velocity at nodes this one is obtained
- *  @param [in] Re Reynolds number. This is used if no viscosity is provided
+ *  @param [in] ms Mesh instance
+ *  @param [in,out] u Vector that contains velocity at nodes this one is obtained
  */
-    NS2DT3BT3(Mesh&         mesh,
-              Vect<real_t>& u,
-              real_t        Re=1.0);
-
-/// \brief Constructor using element data
-/// @param [in] el Pointer to Element instance
-    NS2DT3BT3(Element* el);
-
-/// \brief Constructor using side data
-/// @param [in] sd Pointer to Side instance
-    NS2DT3BT3(Side* sd);
-
-/** \brief Constructor using element and previous time data
- *  @param [in] el Pointer to Element instance
- *  @param [in,out] u Velocity vector. Will be updated with solution once this one is obtained
- *  @param [in,out] time Time value. Updated by time step value after this call
- */
-    NS2DT3BT3(      Element*      el,
-              const Vect<real_t>& u,
-              const real_t&       time=0.);
-
-/// \brief Constructor using side and previous time data
-    NS2DT3BT3(      Side*         sd,
-              const Vect<real_t>& u,
-              const real_t&       time=0.);
+    NS2DT3BT3(Mesh&         ms,
+              Vect<real_t>& u);
 
 /// \brief Destructor
     ~NS2DT3BT3();
@@ -126,27 +106,24 @@ class NS2DT3BT3 : virtual public Equa_Fluid<real_t,3,9,2,6> {
 /// [Default: <tt>1</tt>]
     void RHS_Convection(real_t coef=1.);
 
-/// \brief Add body right-hand side term to right hand-side
-/// @param [in] ud UserData instance that defines data 
-    void BodyRHS(UserData<real_t>& ud);
+/// \brief Add body force term to right hand-side
+/// @param [in] f Vector containing body force at nodes
+    void BodyRHS(Vect<real_t>& f);
 
-/// \brief Add boundary right-hand side term to right-hand side
-/// @param [in] ud UserData instance that defines data 
-    void BoundaryRHS(UserData<real_t>& ud);
+/// \brief Add boundary traction  term to right-hand side
+/// @param [in] f Vector containing body force at nodes
+    void BoundaryRHS(Vect<real_t>& f);
 
-/// \brief Solve the problem
-    int run();
-
-protected :
+ protected:
 
    void set(const Element *el);
    void set(const Side *sd);
 
-private :
+ private:
 
-   real_t _Re;
    LocalMatrix<real_t,4,4> _bb, _cc, _aa;
    void Misc();
+   void build();
 };
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

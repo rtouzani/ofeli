@@ -29,9 +29,9 @@
                      Case of a multi-variable problem
 
       The objective function is 
-      f(x1,x2,x3) = x1^2 + (x1-x2)^2 + (x2-x3)^2 + x3^2 - 8*x3
+      f(x1,x2,x3) = x1^2 + (x1-x2)^2 + (x2-x3)^2 + (x3-x4)^2 + x4^2 - 10*x4
 
-      The minimum is achieved for x1 = 1, x2 = 2, x3 = 3
+      The minimum is achieved for x1 = 1, x2 = 2, x3 = 3, x4 = 4
 
  ==============================================================================*/
 
@@ -43,19 +43,21 @@ int main()
 {
    try {
 //    Instantiate solution vector (Initialized to 0)
-      Vect<double> x(3);
+      Vect<double> x(4);
 
 //    Instantiate optimization solver class using solution vector
+      Verbosity = 1;
       OptSolver os(x);
 
 //    Select optimization algorithm
-      os.setOptMethod(OptSolver::GRADIENT);
+      os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
 
 //    Set objective function and its gradient 
-      os.setObjective("x1^2+(x1-x2)^2+(x2-x3)^2+x3^2-8*x3");
+      os.setObjective("x1^2+(x1-x2)^2+(x2-x3)^2+(x3-x4)^2+x4^2-10*x4");
       os.setGradient("4*x1-2*x2",1);
       os.setGradient("-2*x1+4*x2-2*x3",2);
-      os.setGradient("-2*x2+4*x3-8",3);
+      os.setGradient("-2*x2+4*x3-2*x4",3);
+      os.setGradient("-2*x3+4*x4-10",4);
 
 //    Run the optimization procedure
       os.run();

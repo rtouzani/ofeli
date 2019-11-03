@@ -29,28 +29,12 @@
 
   ==============================================================================*/
 
-
 #ifndef __ABS_EQUA_H
 #define __ABS_EQUA_H
 
-#include <float.h>
-#include <stdlib.h>
-#include <math.h>
-#include <iostream>
-
-#ifdef USE_PETSC
-#include "linear_algebra/petsc/PETScMatrix.h"
-#endif
-
-#include "OFELI_Config.h"
-#include "mesh/Mesh.h"
-#include "mesh/Element.h"
-#include "mesh/Side.h"
-
 #if defined (USE_PETSC)
 #include "linear_algebra/petsc/PETScMatrix.h"
-#endif
-
+#else
 #include "linear_algebra/DMatrix.h"
 #include "linear_algebra/DSMatrix.h"
 #include "linear_algebra/SpMatrix.h"
@@ -58,14 +42,13 @@
 #include "linear_algebra/SkSMatrix.h"
 #include "linear_algebra/BMatrix.h"
 #include "linear_algebra/TrMatrix.h"
+#endif
 
+#include "mesh/Mesh.h"
+#include "io/Prescription.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "linear_algebra/LocalVect.h"
-#include "mesh/Material.h"
-#include "io/UserData.h"
 #include "solvers/LinearSolver.h"
-#include "util/Gauss.h"
-#include "io/Prescription.h"
 #include "solvers/EigenProblemSolver.h"
 
 namespace OFELI {
@@ -77,12 +60,6 @@ namespace OFELI {
 /*! \defgroup Equation General Purpose Equations
  *  \brief Gathers equation related classes
  */
-
-extern Material theMaterial;
-class TimeStepping;
-class Mesh;
-class EigenProblemSolver;
-class Prescription;
 
 /*! \file AbsEqua.h
  *  \brief Definition file for abstract class AbsEqua.
@@ -121,6 +98,7 @@ enum PDE_Terms {
  * Enumerate variable that selects equation data type
  */
 enum EqDataType {
+   INITIAL                      =    1,    /*!< Initial condition                      */
    INITIAL_FIELD                =    1,    /*!< Initial condition                      */
    SOLUTION                     =    1,    /*!< Solution vector (same as Initial)      */
    INITIAL_AUX_1                =    2,    /*!< Initial auxiliary field                */
@@ -136,44 +114,50 @@ enum EqDataType {
    TRACTION                     =    9,    /*!< Traction data (same as Boundary force) */
    AUX_INPUT_FIELD_1            =   10,    /*!< Auxiliary input field 1                */
    AUX_INPUT_FIELD_2            =   11,    /*!< Auxiliary input field 2                */
-   AUX_INPUT_FIELD_3            =   12,    /*!< Auxiliary input field 3                */
-   AUX_INPUT_FIELD_4            =   13,    /*!< Auxiliary input field 4                */
-   DISPLACEMENT_FIELD           =   14,    /*!< A displacement field                   */
-   VELOCITY_FIELD               =   15,    /*!< A velocity field                       */
-   TEMPERATURE_FIELD            =   16     /*!< A temperature field                    */
+   AUX_INPUT_FIELD_3            =   11,    /*!< Auxiliary input field 3                */
+   AUX_INPUT_FIELD_4            =   12,    /*!< Auxiliary input field 4                */
+   DISPLACEMENT_FIELD           =   13,    /*!< A displacement field                   */
+   VELOCITY_FIELD               =   14,    /*!< A velocity field                       */
+   PRESSURE_FIELD               =   15,    /*!< A pressure field                       */
+   TEMPERATURE_FIELD            =   16,    /*!< A temperature field                    */
+   CONTACT_DISTANCE             =   17     /*!< Contact distance                       */
 };
 
 
-/*! \enum ArrayType
- * Selects local or global option for array as argument.
+/*! \enum Analysis
+ * Selects Analysis type
  */
-enum ArrayType {
-   LOCAL_ARRAY  = 0,   /*!< For a local array labeled with local numbering */
-   GLOBAL_ARRAY = 1    /*!< For a local array labeled with global numbering */
+enum Analysis {
+   STATIONARY         =  0,    /*!< Steady State analysis                         */
+   STEADY_STATE       =  0,    /*!< Steady state analysis                         */
+   TRANSIENT          =  1,    /*!< Transient problem                             */
+   TRANSIENT_ONE_STEP =  2,    /*!< Transient problem, perform only one time step */
+   OPTIMIZATION       =  3,    /*!< Optimization problem                          */
+   EIGEN              =  4     /*!< Eigenvalue problem                            */
 };
 
 
 /*! \enum TimeScheme
- * Selects time integration scheme
+ * Selects Time integration scheme
  */
 enum TimeScheme {
-   STATIONARY      =  0,    /*!< No time scheme: stationary                */
-   FORWARD_EULER   =  1,    /*!< Forward Euler scheme (Explicit)           */
-   BACKWARD_EULER  =  2,    /*!< Backward Euler scheme (Implicit)          */
-   CRANK_NICOLSON  =  3,    /*!< Crank-Nicolson scheme                     */
-   HEUN            =  4,    /*!< Heun scheme                               */
-   NEWMARK         =  5,    /*!< Newmark scheme                            */
-   LEAP_FROG       =  6,    /*!< Leap Frog scheme                          */
-   ADAMS_BASHFORTH =  7,    /*!< Adams-Bashforth scheme (2nd Order)        */
-   AB2             =  7,    /*!< Adams-Bashforth scheme (2nd Order)        */
-   RUNGE_KUTTA     =  8,    /*!< 4-th Order Runge-Kutta scheme (4th Order) */
-   RK4             =  8,    /*!< 4-th Order Runge-Kutta scheme             */
-   RK3_TVD         =  9,    /*!< 3-rd Order Runge-Kutta TVD scheme         */
-   BDF2            = 10     /*!< Backward Difference Formula (2nd Order)   */
+   NONE               =  0,    /*!< No time integration scheme                    */ 
+   FORWARD_EULER      =  1,    /*!< Forward Euler scheme (Explicit)               */
+   BACKWARD_EULER     =  2,    /*!< Backward Euler scheme (Implicit)              */
+   CRANK_NICOLSON     =  3,    /*!< Crank-Nicolson scheme                         */
+   HEUN               =  4,    /*!< Heun scheme                                   */
+   NEWMARK            =  5,    /*!< Newmark scheme                                */
+   LEAP_FROG          =  6,    /*!< Leap Frog scheme                              */
+   ADAMS_BASHFORTH    =  7,    /*!< Adams-Bashforth scheme (2nd Order)            */
+   AB2                =  7,    /*!< Adams-Bashforth scheme (2nd Order)            */
+   RUNGE_KUTTA        =  8,    /*!< 4-th Order Runge-Kutta scheme (4th Order)     */
+   RK4                =  8,    /*!< 4-th Order Runge-Kutta scheme                 */
+   RK3_TVD            =  9,    /*!< 3-rd Order Runge-Kutta TVD scheme             */
+   BDF2               = 10     /*!< Backward Difference Formula (2nd Order)       */
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-/*! \enum PDE
+/*! \enum PDE_Name
  * Choose partial differential equation to `
  */
 enum PDE_Name {
@@ -199,15 +183,27 @@ enum FEType {
    FE_3D_8N                      /*!< 3-D elements, 8-Nodes (Q1)              */
 };
 
-/*! \enum AnalysisType
- * Choose analysis type
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+/*! \struct TimeIntegration
+ *  Structure for time sequencing
  */
-enum AnalysisType {
-   STEADY_STATE,                 /*!< Steady state analysis                   */
-   TRANSIENT,                    /*!< Transient analysis                      */
-   OPTIMIZATION                  /*!< Optimization analysis                   */
+struct TimeIntegration {
+TimeIntegration() : step(0), init(0.), final(1.), delta(0.1), scheme(FORWARD_EULER) { }
+   int step;
+   real_t time, init, final, delta;
+   real_t theta, alpha, beta, time_parameter1, time_parameter2, time_parameter3;
+   TimeScheme scheme;
 };
 
+/*! \struct ElementGeom
+ *  Structure Element geometry data
+ */
+struct ElementGeom {
+   real_t volume, area, length, size, det;
+   Point<real_t> center, circumcenter;
+};
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \class AbsEqua
  * \ingroup Equation
@@ -219,9 +215,8 @@ enum AnalysisType {
  * \copyright GNU Lesser Public License
  */
 
-template<class T_> class SkMatrix;
-template<class T_> class SkSMatrix;
-template<class T_> class SpMatrix;
+class TimeStepping;
+
 
 template<class T_>
 class AbsEqua
@@ -230,81 +225,68 @@ class AbsEqua
  public:
 
 /// \brief Default constructor
-    AbsEqua() : _theMesh(NULL), _time_scheme(STATIONARY), _analysis(STEADY_STATE),
-                _solver(-1), _step(0), _nb_fields(1), _final_time(0.),
-                _A(NULL), _b(NULL), _bc(NULL), _bf(NULL), _sf(NULL), _u(NULL), _v(NULL),
-                _eigen(false), _sol_given(false), _bc_given(false), _init_given(false),
-                _bf_given(false), _sf_given(false), _set_matrix(false) { }
+    AbsEqua();
 
 /// \brief Destructor
-    virtual ~AbsEqua()
-    {
-       if (_A)
-          delete _A;
-       if (_b)
-          delete _b;
-    }
+    virtual ~AbsEqua();
 
 /// \brief Define mesh and renumber DOFs after removing imposed ones
-    void setMesh(Mesh &m)
-    {
-       _theMesh = &m;
-       _theMesh->removeImposedDOF();
-    }
+    void setMesh(Mesh &m);
 
 /// \brief Return reference to Mesh instance
 /// @return Reference to Mesh instance
-    Mesh &getMesh() const { return *_theMesh; }
+    Mesh &getMesh() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \brief Build equation.
  *  This member function is to be used if one wants to use a class that inherits
  *  from AbsEqua that handles the whole solution process (including assembly).
  */
-    virtual void build() { }
-    virtual void build(EigenProblemSolver& e) { }
-    virtual void build(TimeStepping& s) { }
-    virtual int runOneTimeStep() { return 0; }
-    virtual int run() { return 0; }
-    virtual int runSteadyState() { return run(); }
-    virtual int runTransient() { return 0; }
+    virtual void build() = 0;
+    virtual void build(EigenProblemSolver& e);
+    virtual void build(TimeStepping& s);
+    virtual int runOneTimeStep();
+    virtual int runSteadyState();
+    virtual int runTransient();
+
+ /** \brief Solve the equation
+ *  \details This function solves the thermal problem according to the argument
+ *  @param [in] pa Problem type: must be chosen among enumerated values:
+ *  <li>STATIONARY: For a stationary problem (Default value)
+ *  <li>TRANSIENT: For a transient (time dependent) problem.
+ *  <li>TRANSIENT_ONE_STEP: For a one time step in the transient problem
+ */
+    int run(Analysis   a=STATIONARY,
+            TimeScheme s=NONE);
+
+/** \brief 
+ *  \details 
+ *  @param [in] Df
+ */
+    void getTangent(Matrix<T_>* Df);
 
 /** \brief Set transient analysis settings
  *  \details Define a set of parameters for time integration
- *  @param [in] s Scheme
- *  @param [in] p1
- *  @param [in] p2
- *  @param [in] p3
+ *  @param [in] s Time inegration scheme
+ *  @param [in] p1 First parameter for the scheme
+ *  @param [in] p2 Second parameter for the scheme
+ *  @param [in] p3 Third parameter for the scheme
  */
-    void getTangent(Matrix<T_>* Df) { _Df = Df; }
-
-/** \brief Set transient analysis settings
- *  \details Define a set of parameters for time integration
- *  @param [in] s Scheme
- *  @param [in] p1
- *  @param [in] p2
- *  @param [in] p3
- */
-    void setTransient(int    s,
-                      real_t p1=1,
-                      real_t p2=1,
-                      real_t p3=1)
-    {
-       _time_scheme = s;
-       _time_parameter1 = p1;
-       _time_parameter2 = p2;
-       _time_parameter3 = p3;
-       if (s==FORWARD_EULER)
-          _theta = 0;
-       else if (s==BACKWARD_EULER)
-          _theta = 1;
-       else if (s==CRANK_NICOLSON)
-          _theta = 0.5;
-   }
+    void setTransient(TimeScheme s,
+                      real_t     p1=1,
+                      real_t     p2=1,
+                      real_t     p3=1);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Return reference to linear solver instance
-    LinearSolver<T_> &getLinearSolver() { return _ls; }
+    LinearSolver<T_> &getLinearSolver();
+
+/// \brief Return pointer to matrix
+#if defined (USE_PETSC)
+    PETScMatrix<T_> *getMatrix() const;
+#else
+    Matrix<T_> *getMatrix() const;
+#endif
 
 /** \brief Choose solver for the linear system
  *  @param [in] ls Solver of the linear system.
@@ -329,48 +311,44 @@ class AbsEqua
  *  </ul>
  */
     void setSolver(Iteration      ls,
-                   Preconditioner pc=IDENT_PREC)
-    {
-      if (ls==DIRECT_SOLVER && _matrix_type==SPARSE)
-          throw OFELIException("In AbsEqua::setSolver(Iteration,Preconditioner): "
-                               "Choices of solver and storage modes are incompatible.");
-      if (!_set_matrix)
-          setMatrixType(SPARSE);
-       _ls.setSolver(ls,pc);
-    }
+                   Preconditioner pc=IDENT_PREC);
+
+/** \brief Choose solver for the linear system
+ *  @param [in] ls Solver of the linear system.
+ *  To choose among the enumerated values: <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>,
+ *  <tt>GMRES_SOLVER</tt>
+ *  <ul>
+ *    <li> <tt>DIRECT_SOLVER</tt>, Use a facorization solver [default]
+ *    <li> <tt>CG_SOLVER</tt>, Conjugate Gradient iterative solver
+ *    <li> <tt>CGS_SOLVER</tt>, Squared Conjugate Gradient iterative solver
+ *    <li> <tt>BICG_SOLVER</tt>, BiConjugate Gradient iterative solver
+ *    <li> <tt>BICG_STAB_SOLVER</tt>, BiConjugate Gradient Stabilized iterative solver
+ *    <li> <tt>GMRES_SOLVER</tt>, GMRES iterative solver
+ *    <li> <tt>QMR_SOLVER</tt>, QMR iterative solver
+ *  </ul>
+ *  @param [in] pc Preconditioner to associate to the iterative solver.
+ *  If the direct solver was chosen for the first argument this argument is not used.
+ *  Otherwise choose among the enumerated values:
+ *  <ul> 
+ *    <li> <tt>IDENT_PREC</tt>, Identity preconditioner (no preconditioning [default])
+ *    <li> <tt>DIAG_PREC</tt>, Diagonal preconditioner
+ *    <li> <tt>ILU_PREC</tt>, Incomplete LU factorization preconditioner
+ *  </ul>
+ */
+    void setLinearSolver(Iteration      ls,
+                         Preconditioner pc=IDENT_PREC);
 
 /** \brief Choose type of matrix
  *  @param [in] t Type of the used matrix.
  *  To choose among the enumerated values: <tt>SKYLINE</tt>, <tt>SPARSE</tt>, <tt>DIAGONAL</tt>
  *  <tt>TRIDIAGONAL</tt>, <tt>SYMMETRIC</tt>, <tt>UNSYMMETRIC</tt>, <tt>IDENTITY</tt>
  */
-    void setMatrixType(int t)
-    {
-       _matrix_type = t;
-       if (_A)
-          delete _A, _A = NULL;
-       if (_matrix_type&SPARSE)
-          _A = new SpMatrix<T_>(*_theMesh);
-       else if (_matrix_type&(DENSE|SYMMETRIC))
-          _A = new DSMatrix<T_>(*_theMesh);
-       else if (_matrix_type&DENSE)
-          _A = new DMatrix<T_>(*_theMesh);
-       else if (_matrix_type&(SKYLINE|SYMMETRIC))
-          _A = new SkSMatrix<T_>(*_theMesh);
-       else if (_matrix_type&SKYLINE)
-          _A = new SkMatrix<T_>(*_theMesh);
-       else if (_matrix_type&TRIDIAGONAL)
-          _A = new TrMatrix<T_>(_theMesh->getNbEq());
-       else if (_matrix_type&BAND)
-          _A = new BMatrix<T_>;
-       _ls.setMatrix(_A);
-       _set_matrix = true;
-    }
+    void setMatrixType(int t);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Set terms in equations
-    virtual void setWithConvection(int f) { f = 0; }
-    void setTerms(PDE_Terms t) { _terms = t; }
+    virtual void setWithConvection(int f);
+    void setTerms(PDE_Terms t);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Solve the linear system with given matrix and right-hand side
@@ -378,66 +356,67 @@ class AbsEqua
  *  @param [in] b Vector containing right-hand side
  *  @param [in,out] x Vector containing initial guess of solution on input, actual solution on output
  */
+#if defined(USE_PETSC)
+    int solveLinearSystem(PETScMatrix<T_>* A,
+                          PETScVect<T_>&   b,
+                          PETScVect<T_>&   x);
+#else
     int solveLinearSystem(Matrix<T_>* A,
                           Vect<T_>&   b,
-                          Vect<T_>&   x)
-    {
-       _ls.setMatrix(A);
-       _ls.setRHS(b);
-       _ls.setSolution(x);
-       return _ls.solve();
-    }
+                          Vect<T_>&   x);
+#endif
 
 /** \brief Solve the linear system with given right-hand side
  *  @param [in] b Vector containing right-hand side
  *  @param [in,out] x Vector containing initial guess of solution on input, actual solution on output
  */
+#if defined(USE_PETSC)
+    int solveLinearSystem(PETScVect<T_>& b,
+                          PETScVect<T_>& x);
+#else
     int solveLinearSystem(Vect<T_>& b,
-                          Vect<T_>& x)
-    {
-       _ls.setRHS(b);
-       _ls.setSolution(x);
-       return _ls.solve();
-    }
+                          Vect<T_>& x);
+#endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Set Analysis Type
-    void setAnalysis(int a) { _analysis = a; }
+    void setAnalysis(Analysis a);
 
 /// \brief Set time iteration index
-    void setTimeIndex(size_t step) { _step = step; }
+    void setTimeIndex(size_t step);
 
-/// \brief Set time step duration
-    void setTimeStep(real_t t) { _time_step = t; }
+/// \brief Set initial time
+    void setInitTime(real_t t);
+
+/// \brief Set time step value
+    void setTimeStep(real_t t);
 
 /// \brief Return time step
-    real_t getTimeStep() const { return _time_step; }
+    real_t getTimeStep() const;
 
 /// \brief Set current time
-    void setTime(real_t t) { _time = t; }
+    void setTime(real_t t);
 
 /// \brief Set final time
-    void setFinalTime(real_t t) { _final_time = t; }
-
-/// \brief Set verbose parameter
-    void setVerbose(int v) { _verbose = v; }
+    void setFinalTime(real_t t);
 
 /// \brief Return number of fields
-    size_t getNbFields() const { return _nb_fields; }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+    size_t getNbFields() const;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void setTimeIntegration(int scheme) { _time_scheme = scheme; }
-    int getTimeIntegration() const { return _time_scheme; }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+/// \brief Set time integration scheme
+    void setTimeIntegration(TimeScheme s);
+
+/// \brief Set time integration parameters
+    void setTimeIntegrationParam();
+
+/// \brief Return time integration scheme
+    TimeScheme getTimeIntegration() const;
     
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 /// \brief Return equation name
-    string getEquationName() const { return _equation_name; }
+    string getEquationName() const;
 
 /// \brief Return Finite Element Type
-    string getFiniteElementType() const { return _finite_element; }
+    string getFiniteElementType() const;
 
 /** \brief Set equation input data
  *  @param [in] opt Parameter that selects data type for input. This parameter
@@ -446,79 +425,67 @@ class AbsEqua
  *  List of data types contains <tt>INITIAL_FIELD</tt>, <tt>BOUNDARY_CONDITION_DATA</tt>, 
  *  <tt>SOURCE_DATA</tt> or <tt>FLUX</tt> with obvious meaning
  */
+#if defined(USE_PETSC)
+    virtual void setInput(EqDataType      opt,
+                          PETScVect<T_>&  u);
+#else
     virtual void setInput(EqDataType opt,
-                          Vect<T_>&  u)
-    {
-       if (opt==INITIAL_FIELD)
-          _u = &u, _init_given = true;
-       else if (opt==SOLUTION)
-          _u = &u, _sol_given = true;
-       else if (opt==BOUNDARY_CONDITION)
-          _bc = &u, _bc_given = true;
-       else if (opt==SOURCE || opt==BODY_FORCE)
-          _bf = &u, _bf_given = true;
-       else if (opt==FLUX || opt==TRACTION)
-          _sf = &u, _sf_given = true;
-       else
-          ;
-    }
+                          Vect<T_>&  u);
+#endif
 
 /// \brief Set prescription
 /// @param [in] p Prescription instance
-    void set(Prescription& p) { _prescription = &p; }
+    void set(Prescription& p);
 
 /// \brief Choose tolerance value
-    void setTolerance(real_t toler) { _toler = toler; }
+    void setTolerance(real_t toler);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
    
  protected:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   Mesh               *_theMesh;
-   int                _field_type, _time_scheme, _analysis, _verbose, _terms;
-   int                _matrix_type, _solver, _max_it;
-   size_t             _step, _nb_fields, _nb_eigv;
-   real_t             _theta, _alpha, _beta, _time_step, _time, _final_time;
-   real_t             _time_parameter1, _time_parameter2, _time_parameter3;
-   EigenProblemSolver _ev;
-   Matrix<T_>         *_A, *_CM, *_Df;
-   Vect<T_>           *_b, *_bc, *_bf, *_sf, *_u, *_v, *_w, *_LM, _uu;
-   bool               _eigen, _sol_given, _bc_given, _init_given, _bf_given, _sf_given;
-   bool               _constant_matrix, _constant_mesh, _set_matrix;
-   int                _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
-   string             _equation_name, _finite_element;
-   LinearSolver<T_>   _ls;
-   real_t             _toler;
-   Prescription       *_prescription;
+   Mesh                   *_theMesh;
+   size_t                 _nb_nodes, _nb_sides, _nb_boundary_sides, _nb_el, _nb_eq, _nb_dof, _nb_dof_total;
+   int                    _field_type, _terms;
+   int                    _matrix_type, _solver, _max_it;
+   size_t                 _nb_fields, _nb_eigv;
+   EigenProblemSolver     _ev;
+   bool                   _eigen;
+   bool                   _constant_matrix, _constant_mesh, _set_matrix;
+   int                    _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
+   string                 _equation_name, _finite_element;
+   LinearSolver<T_>       _ls;
+   real_t                 _toler;
+   Prescription           *_prescription;
+   TimeIntegration        _TimeInt;
+   Analysis               _analysis;
+   vector<Point<real_t> > _dSh;
+   vector<real_t>         _sh, _wg;
+   T_                     _body_source, _bound_source;
+#if defined(USE_PETSC)
+   PETScMatrix<T_>        *_A, *_CM, *_Df;
+   PETScVect<T_>          *_b, *_u, *_bc, *_bf, *_sf, *_pf, *_v, *_w, *_LM, _uu;
+#else
+   Matrix<T_>             *_A, *_CM, *_Df;
+   Vect<T_>               *_b, *_u, *_bc, *_bf, *_sf, *_pf, *_v, *_w, *_LM, _uu;
+#endif
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  public:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   void setMatrix(SkSMatrix<T_> &A)
-   {
-      _A = &A;
-      _matrix_type = SKYLINE|SYMMETRIC;
-      _A->setMesh(*_theMesh);
-   }
+#if defined(USE_PETSC)
+   void setMatrix(PETScMatrix<T_> &A);
+#else
+   void setMatrix(SkSMatrix<T_> &A);
+   void setMatrix(SkMatrix<T_> &A);
+   void setMatrix(SpMatrix<T_> &A);
+#endif
 
-   void setMatrix(SkMatrix<T_> &A)
-   {
-      _A = &A;
-      _matrix_type = SKYLINE;
-      _A->setMesh(*_theMesh);
-   }
-
-   void setMatrix(SpMatrix<T_> &A)
-   {
-      _A = &A;
-      _matrix_type = SPARSE;
-      _A->setMesh(*_theMesh);
-   }
-   bool isConstantMatrix() const { return _constant_matrix; }
-   bool isConstantMesh() const { return _constant_mesh; }
-   void setConstantMatrix() { _constant_matrix = true; }
-   void setConstantMesh() { _constant_mesh = true; }
-   virtual void setTerms(int opt) { _terms = opt; }
+   bool isConstantMatrix() const;
+   bool isConstantMesh() const;
+   void setConstantMatrix();
+   void setConstantMesh();
+   virtual void setTerms(int opt);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

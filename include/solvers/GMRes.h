@@ -45,9 +45,7 @@ using std::ios;
 using std::setprecision;
 
 #include "OFELI_Config.h"
-#include "linear_algebra/SpMatrix.h"
-#include "linear_algebra/Vect.h"
-#include "solvers/Prec.h"
+#include "solvers/Prec_impl.h"
 #include "util/util.h"
 #include "io/output.h"
 
@@ -118,9 +116,20 @@ void set_rotation(T_& dx,
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/** \fn int GMRes(const SpMatrix<T_>& A, const Prec<T_>& P, const Vect<T_>& b, Vect<T_>& x, size_t m, int max_it, real_t toler, int verbose)
+/** \fn int GMRes(const SpMatrix<T_>& A, const Prec<T_>& P, const Vect<T_>& b, Vect<T_>& x, size_t m, int max_it, real_t toler)
  *  \ingroup Solver
  *  \brief GMRes solver function.
+ *  \details This function uses the preconditioned GMRES algorithm to solve a
+ *  linear system with a sparse matrix.\n
+ *  The global variable Verbosity enables choosing output message level
+ *  <ul>
+ *    <li> Verbosity < 2 : No output message
+ *    <li> Verbosity > 1 : Notify executing the function CG
+ *    <li> Verbosity > 2 : Notify convergence with number of performed iterations or divergence
+ *    <li> Verbosity > 3 : Output each iteration number and residual
+ *    <li> Verbosity > 6 : Print final solution if convergence
+ *    <li> Verbosity > 10 : Print obtained solution at each iteration
+ *  </ul>
  *  @param [in] A Problem matrix (Instance of class SpMatrix).
  *  @param [in] P Preconditioner (Instance of class Prec).
  *  @param [in] b Right-hand side vector (class Vect)
@@ -129,8 +138,6 @@ void set_rotation(T_& dx,
  *  @param [in] m Number of subspaces to generate for iterations.
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter (0: No output, 1: Output iteration information,
- *  2 and greater: Output iteration information and solution at each iteration.
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (double, float, complex<double>, ...)
@@ -145,10 +152,9 @@ int GMRes(const SpMatrix<T_>& A,
           Vect<T_>&           x,
           size_t              m,
           int                 max_it,
-          real_t              toler,
-          int                 verbose)
+          real_t              toler)
 {
-   if (verbose>0)
+   if (Verbosity>2)
       cout << "Running preconditioned GMRes method ..." << endl;
    real_t res;
    int it=1;
@@ -166,8 +172,10 @@ int GMRes(const SpMatrix<T_>& A,
    if ((res=r.getNorm2()/normb) <= toler) {
       toler = res;
       max_it = 0;
-      if (verbose)
+      if (Verbosity>2)
          cout << "Convergence of the GMRes method after " << it << " iterations." << endl;
+      if (Verbosity>6)
+         cout << "Solution:\n" << x;
       return it;
    }
    Vect<T_> *v = new Vect<T_> [m+1];
@@ -195,14 +203,18 @@ int GMRes(const SpMatrix<T_>& A,
          set_rotation(H(i+1,i+1), H(i+2,i+1), cs[i], sn[i]);
          rotate(H(i+1,i+1), H(i+2,i+1), cs[i], sn[i]);
          rotate(s[i], s[i+1], cs[i], sn[i]);
-         if (verbose>1)
+         if (Verbosity>3)
             cout << "Iteration: " << setw(4) << it << ",  ... Residual: " << res << endl;
+         if (Verbosity>10)
+            cout << "Solution at iteration " << it << ": \n" << x;
          if ((res = Abs(s[i+1])/normb) < toler) {
             update(x,int(i),H,s,v);
             toler = res;
             delete [] v;
-            if (verbose)
+            if (Verbosity>2)
                cout << "Convergence of the GMRes method after " << it << " iterations." << endl;
+            if (Verbosity>6)
+               cout << "Solution:\n" << x;
             return it;
          }
       }
@@ -214,22 +226,35 @@ int GMRes(const SpMatrix<T_>& A,
       if ((res = beta/normb)< toler) {
          toler = res;
          delete [] v;
-         if (verbose)
+         if (Verbosity>2)
             cout << "Convergence of the GMRes method after " << it << " iterations." << endl;
+         if (Verbosity>6)
+            cout << "Solution:\n" << x;
          return it;
       }
    }
    toler = res;
    delete [] v;
-   if (verbose)
-      cout << "No Convergence of the GMRes method after " << it << " iterations." << endl;
+   if (Verbosity>2)
+      cout << "No Convergence after " << it << " iterations." << endl;
    return -it;
 }
 
 
-/** \fn int GMRes(const SpMatrix<T_>& A, int prec, const Vect<T_>& b, Vect<T_>& x, size_t m, int max_it, real_t toler, int verbose)
+/** \fn int GMRes(const SpMatrix<T_>& A, int prec, const Vect<T_>& b, Vect<T_>& x, size_t m, int max_it, real_t toler)
  *  \ingroup Solver
  *  \brief GMRes solver function.
+ *  \details This function uses the preconditioned GMRES algorithm to solve a
+ *  linear system with a sparse matrix.\n
+ *  The global variable Verbosity enables choosing output message level
+ *  <ul>
+ *    <li> Verbosity < 2 : No output message
+ *    <li> Verbosity > 1 : Notify executing the function CG
+ *    <li> Verbosity > 2 : Notify convergence with number of performed iterations or divergence
+ *    <li> Verbosity > 3 : Output each iteration number and residual
+ *    <li> Verbosity > 6 : Print final solution if convergence
+ *    <li> Verbosity > 10 : Print obtained solution at each iteration
+ *  </ul>
  *  @param [in] A Problem matrix (Instance of class SpMatrix).
  *  @param [in] prec Enum variable selecting a preconditioner, among the values <tt>IDENT_PREC</tt>,
  *  <tt>DIAG_PREC</tt>, <tt>ILU_PREC</tt> or <tt>SSOR_PREC</tt>
@@ -239,8 +264,6 @@ int GMRes(const SpMatrix<T_>& A,
  *  @param [in] m Number of subspaces to generate for iterations.
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter (0: No output, 1: Output iteration information,
- *  2 and greater: Output iteration information and solution at each iteration.
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (double, float, complex<double>, ...)
@@ -255,10 +278,9 @@ int GMRes(const SpMatrix<T_>& A,
           Vect<T_>&           x,
           size_t              m,
           int                 max_it,
-          real_t              toler,
-          int                 verbose)
+          real_t              toler)
 {
-   return GMRes(A,Prec<T_>(A,prec),b,x,m,max_it,toler,verbose);
+   return GMRes(A,Prec<T_>(A,prec),b,x,m,max_it,toler);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -269,11 +291,10 @@ int GMRes(const Matrix<T_>* A,
           Vect<T_>&         x,
           size_t            m,
           int               max_it,
-          real_t            toler,
-          int               verbose)
+          real_t            toler)
 {
    SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
-   return GMRes(AA,prec,b,x,m,max_it,toler,verbose);
+   return GMRes(AA,prec,b,x,m,max_it,toler);
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

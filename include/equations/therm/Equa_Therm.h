@@ -36,6 +36,7 @@
 #include "equations/Equation.h"
 #include "equations/therm/PhaseChange.h"
 #include "solvers/TimeStepping.h"
+#include "mesh/Material.h"
 
 namespace OFELI {
 /*!
@@ -54,6 +55,7 @@ namespace OFELI {
 
 class Element;
 class Side;
+extern Material theMaterial;
 
 /*! \class Equa_Therm
  *  \ingroup Therm
@@ -72,31 +74,30 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 
  public:
 
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theta;
+   using AbsEqua<T_>::setInput;
+   using AbsEqua<T_>::setTerms;
+   using AbsEqua<T_>::_u;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theMesh;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theElement;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_scheme;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_step;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_final_time;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_A;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_b;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_uu;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_u;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_eu;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA0;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA1;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sA0;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eMat;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eRHS;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sRHS;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf_given;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc_given;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf_given;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_sides;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
 
 
 /// \brief Default constructor.
@@ -105,9 +106,9 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     {
        _terms = DIFFUSION;
        _analysis = STEADY_STATE;
-       _time_scheme = STATIONARY;
+       _TimeInt.scheme = NONE;
        _rhocp_is_set = _conductivity_is_set = false;
-       _terms = LUMPED_CAPACITY|DIFFUSION;
+       _terms = DIFFUSION;
     }
 
 /// \brief Destructor
@@ -120,97 +121,29 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     virtual void setStab() { _stab = true; }
 
-/// \brief Add lumped capacity contribution to left-hand side
+/// \brief Add lumped capacity contribution to element matrix
 /// @param [in] coef coefficient to multiply by the matrix before adding [Default: <tt>1</tt>]
-    virtual void LCapacityToLHS(real_t coef=1) { _coef = coef; }
-
-/// \brief Add lumped capacity contribution to right-hand side
-/// @param [in] coef coefficient to multiply by the vector before adding [Default: <tt>1</tt>]
-    virtual void LCapacityToRHS(real_t coef=1) { _coef = coef; }
+    virtual void LCapacity(real_t coef=1) { _coef = coef; }
 
 /// \brief Add consistent capacity contribution to left-hand side
 /// @param [in] coef coefficient to multiply by the matrix before adding [Default: <tt>1</tt>]
-    virtual void CapacityToLHS(real_t coef=1) { _coef = coef; }
+    virtual void Capacity(real_t coef=1) { _coef = coef; }
 
-/// \brief Add consistent capacity contribution to right-hand side
-/// @param [in] coef coefficient to multiply by the vector before adding [Default: <tt>1</tt>]
-    virtual void CapacityToRHS(real_t coef=1) { _coef = coef; }
-
-/// \brief Add lumped capacity contribution to left and right-hand sides taking into
-/// account time integration scheme.
-    void setLumpedCapacity() 
-    {
-       LCapacityToLHS(1./AbsEqua<T_>::_time_step);
-       LCapacityToRHS(1./AbsEqua<T_>::_time_step);
-    }
-
-/// \brief Add consistent capacity contribution to left and right-hand sides taking
-/// into account time integration scheme.
-    void setCapacity() 
-    {
-       CapacityToLHS(1./AbsEqua<T_>::_time_step);
-       CapacityToRHS(1./AbsEqua<T_>::_time_step);
-    }
-
-/// \brief Add diffusion term to left-hand side
+/// \brief Add diffusion term to element matrix
     virtual void Diffusion(real_t coef=1.) { _coef = coef; }
 
-/// \brief Add diffusion term to right-hand side
-    virtual void DiffusionToRHS(real_t coef=1.) { _coef = coef; }
-
-/// \brief Add diffusion contribution to left and/or right-hand side taking into
-/// account time integration scheme.
-    void setDiffusion()
-    {
-       if (AbsEqua<T_>::_analysis==STEADY_STATE || AbsEqua<T_>::_time_scheme==BACKWARD_EULER)
-          Diffusion(1.);
-       else if (AbsEqua<T_>::_time_scheme==CRANK_NICOLSON)
-          Diffusion(0.5);
-       if (AbsEqua<T_>::_time_scheme==CRANK_NICOLSON)
-          DiffusionToRHS(0.5);
-       else if (AbsEqua<T_>::_time_scheme==FORWARD_EULER)
-          DiffusionToRHS();
-       else
-          ;
-    }
-
-/// \brief Add convection term to left-hand side
+/// \brief Add convection term to element matrix
     virtual void Convection(real_t coef=1.) { _coef = coef; }
 
-/// \brief Add convection term to right-hand side
-    virtual void ConvectionToRHS(real_t coef=1.) { _coef = coef; }
-
-/// \brief Add convection contribution to left and/or right-hand side taking into
-/// account time integration scheme.
-    void setConvection()
-    {
-       if (AbsEqua<T_>::_time_scheme==STEADY_STATE || 
-           AbsEqua<T_>::_time_scheme==BACKWARD_EULER)
-          Convection(1.);
-       else if (AbsEqua<T_>::_time_scheme==CRANK_NICOLSON)
-          Convection(0.5);
-       if (AbsEqua<T_>::_time_scheme==CRANK_NICOLSON)
-          ConvectionToRHS(0.5);
-       else if (AbsEqua<T_>::_time_scheme==FORWARD_EULER)
-          ConvectionToRHS();
-       else;
-    }
-
 /** \brief Add body right-hand side term to right-hand side.
- *  @param [in] bf Vector containing source at element nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] f Vector containing source at nodes.
  */
-    virtual void BodyRHS(const Vect<real_t>& bf,
-                         int                 opt=GLOBAL_ARRAY) { }
+    virtual void BodyRHS(const Vect<real_t>& f) { }
 
 /** \brief Add boundary right-hand side term to right-hand side.
- *  @param [in] sf Vector containing source at side nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] f Vector containing source at nodes.
  */
-    virtual void BoundaryRHS(const Vect<real_t>& sf,
-                             int                 opt=GLOBAL_ARRAY) { }
+    virtual void BoundaryRHS(const Vect<real_t>& f) { }
 
 /** \brief Build the linear system of equations
  *  \details Before using this function, one must have properly selected 
@@ -225,39 +158,61 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build()
     {
-      *_A = 0;
-       if (_time_scheme==FORWARD_EULER)
-          _theta = 0;
-       else if (_time_scheme==BACKWARD_EULER)
-          _theta = 1;
-       else if (_time_scheme==CRANK_NICOLSON)
-          _theta = 0.5;
-       MESH_EL {
-          set(theElement);
-          this->ElementVector(_uu);
-          if (_terms&CAPACITY)
-             setCapacity();
-          if (_terms&LUMPED_CAPACITY)
-             setLumpedCapacity();
-          if (_terms&DIFFUSION)
-             setDiffusion();
+       static bool matrix_set = false;
+       real_t dti = 1./AbsEqua<T_>::_TimeInt.delta;
+       if (AbsEqua<T_>::_A==nullptr && !matrix_set) {
+          AbsEqua<T_>::setMatrixType(SPARSE);
           if (_terms&CONVECTION)
-             setConvection();
-          this->ElementAssembly(_A);
-          if (_terms&SOURCE)
-             BodyRHS(*_bf,GLOBAL_ARRAY);
-          this->updateBC(*_bc);
-          this->ElementAssembly(*_b);
+             AbsEqua<real_t>::setSolver(BICG_STAB_SOLVER,DILU_PREC);
+          else
+             AbsEqua<T_>::setSolver(CG_SOLVER,DILU_PREC);
+          matrix_set = true;
        }
-       if (_sf_given) {
-          MESH_SD {
-             set(theSide);
-             BoundaryRHS(*_sf);
-             this->SideAssembly(*_b);
+       AbsEqua<T_>::_A->clear();
+       _TimeInt.theta = 1;
+       if (_TimeInt.scheme==FORWARD_EULER)
+          _TimeInt.theta = 0;
+       else if (_TimeInt.scheme==CRANK_NICOLSON)
+          _TimeInt.theta = 0.5;
+
+       mesh_elements(*_theMesh) {
+          set(the_element);
+          if (_terms&CAPACITY)
+             Capacity();
+          if (_terms&LUMPED_CAPACITY)
+             LCapacity();
+          if (_terms&DIFFUSION)
+             Diffusion();
+          if (_terms&CONVECTION)
+             Convection();
+          if (_TimeInt.scheme==BACKWARD_EULER)
+             eMat = dti*eA1 + eA0;
+          else if (_TimeInt.scheme==FORWARD_EULER)
+             eMat = dti*eA1;
+          else if (_TimeInt.scheme==CRANK_NICOLSON)
+             eMat = dti*eA1 + 0.5*eA0;
+          AbsEqua<T_>::_A->Assembly(The_element,eMat.get());
+          if (AbsEqua<T_>::_bf!=nullptr)
+             BodyRHS(*AbsEqua<T_>::_bf);
+          if (AbsEqua<T_>::_bc!=nullptr)
+             this->updateBC(The_element,*AbsEqua<T_>::_bc);
+          if (_TimeInt.scheme==BACKWARD_EULER)
+             eRHS += dti*eA1*_eu;
+          else if (_TimeInt.scheme==FORWARD_EULER)
+             eRHS += (dti*eA1-eA0)*_eu;
+          else if (_TimeInt.scheme==CRANK_NICOLSON)
+             eRHS += (dti*eA1-0.5*eA0)*_eu;
+          AbsEqua<T_>::_b->Assembly(The_element,eRHS.get());
+       }
+       if (AbsEqua<T_>::_sf!=nullptr) {
+          mesh_boundary_sides(*_theMesh) {
+             set(the_side);
+             BoundaryRHS(*AbsEqua<T_>::_sf);
+             AbsEqua<T_>::_A->Assembly(The_side,sA0.get());
+             AbsEqua<T_>::_b->Assembly(The_side,sRHS.get());
           }
        }
     }
-
 
 /** \brief Build the linear system of equations
  *  \details Before using this function, one must have properly selected 
@@ -273,97 +228,52 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build(TimeStepping& s)
     {
-       MESH_EL {
-          set(theElement);
-          this->ElementVector(*_u);
+      if (_u==nullptr)
+         throw OFELIException("In Equa_Therm::build: No solution vector given.");
+       mesh_elements(*_theMesh) {
+          set(the_element);
           if (_terms&CAPACITY)
-             CapacityToLHS(1.);
+             Capacity(1.);
           if (_terms&LUMPED_CAPACITY)
-             LCapacityToLHS(1.);
+             LCapacity();
           if (_terms&DIFFUSION)
              Diffusion();
           if (_terms&CONVECTION)
              Convection();
-          if (_terms&SOURCE && _bf)
-             BodyRHS(*_bf,GLOBAL_ARRAY);
-          s.Assembly(TheElement,eRHS.get(),eA0.get(),eA1.get());
+          if (_terms&SOURCE && AbsEqua<T_>::_bf!=nullptr)
+             BodyRHS(*AbsEqua<T_>::_bf);
+          s.Assembly(*_theElement,eRHS.get(),eA0.get(),eA1.get());
        }
-       if (_sf_given) {
-          MESH_SD {
-             if (TheSide.isReferenced()) {
-                set(theSide);
-                this->SideVector(*_u);
-                if (_terms&FLUX && _sf)
-                   BoundaryRHS(*_sf,GLOBAL_ARRAY);
-                s.SAssembly(TheSide,sRHS.get());
+       if (AbsEqua<T_>::_sf!=nullptr) {
+          mesh_sides(*_theMesh) {
+             if (The_side.isReferenced()) {
+                set(the_side);
+                this->SideVector(*AbsEqua<T_>::_u);
+                if (_terms&FLUX && AbsEqua<T_>::_sf!=nullptr)
+                   BoundaryRHS(*AbsEqua<T_>::_sf);
+                s.SAssembly(*_theSide,sRHS.get());
              }
           }
        }
     }
-
 
 /** \brief Build the linear system for an eigenvalue problem
  *  @param [in] e Reference to used EigenProblemSolver instance
  */
     void build(EigenProblemSolver& e)
     {
-       MESH_EL {
-          set(theElement);
-          this->ElementVector(*_u);
+       mesh_elements(*_theMesh) {
+          set(the_element);
+          this->ElementVector(*AbsEqua<T_>::_u);
           if (_terms&CAPACITY)
-             CapacityToLHS(1.);
+             Capacity(1.);
           if (_terms&LUMPED_CAPACITY)
-             LCapacityToLHS(1.);
+             LCapacity(1.);
           Diffusion();
           if (_terms&CONVECTION)
              Convection();
-          e.Assembly(TheElement,eA0.get(),eA1.get());
+          e.Assembly(*_theElement,eA0.get(),eA1.get());
        }
-    }
-
-/** \brief Run one time step
- *  \details This function performs one time step in equation solving.
- *  It is to be used only if a \a TRANSIENT analysis is required.
- *  @return Return error from the linear system solver
- */
-    int runTransient()
-    {
-       *_b = 0;
-       build();
-       int ret=AbsEqua<T_>::solveLinearSystem(*_b,_uu);
-       _u->insertBC(*_theMesh,_uu,*_bc);
-       return ret;
-    }
-
-/** \brief Run one time step
- *  \details This function performs one time step in equation solving.
- *  It is identical to the function runTransient.
- *  @return Return error from the linear system solver
- */
-    int runOneTimeStep() { return runTransient(); }
-
-/** \brief Run the equation
- *  \details If the analysis (see function setAnalysis) is <tt>STEADY_STATE</tt>, then
- *  the function solves the stationary equation.\n
- *  If the analysis is <tt>TRANSIENT</tt>, then the function performs time stepping
- *  until the final time is reached.
- */
-    int run()
-    {
-       int ret=0;
-       if (_b==NULL)
-          _b = new Vect<T_>(_theMesh->getNbEq());
-       _uu.setSize(_theMesh->getNbEq());
-       if (_analysis==STEADY_STATE) {
-          build();
-          ret = AbsEqua<T_>::solveLinearSystem(*_b,_uu);
-          _u->insertBC(*_theMesh,_uu,*_bc);
-       }
-       else {
-          for (; _time<=_final_time; _time+=_time_step)
-             runOneTimeStep();
-       }
-       return ret;
     }
 
 /// \brief Set product of Density by Specific heat (constants)

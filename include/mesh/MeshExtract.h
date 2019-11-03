@@ -108,7 +108,7 @@ class NodeList {
     Node *get()
     {
        if (_it==_nb_nodes)
-          return NULL;
+          return nullptr;
        else
           return _theList[_it++];
     }
@@ -117,7 +117,7 @@ class NodeList {
     Node *get() const
     {
        if (_const_it==_nb_nodes)
-          return NULL;
+          return nullptr;
        else
           return _theList[_const_it++];
     }
@@ -125,7 +125,7 @@ class NodeList {
  private:
 
    Mesh *_ms;
-   NodeSet _theList;
+   std::vector<Node *> _theList;
    size_t _it, _nb_nodes, _nbn;
    mutable size_t _const_it;
 };
@@ -194,7 +194,7 @@ class ElementList {
     Element *get()
     {
        if (_it==_nb_elements)
-          return NULL;
+          return nullptr;
        else
           return _theList[_it++];
     }
@@ -203,7 +203,7 @@ class ElementList {
     Element *get() const
     {
        if (_const_it==_nb_elements)
-          return NULL;
+          return nullptr;
        else
           return _theList[_const_it++];
     }
@@ -211,7 +211,7 @@ class ElementList {
  private:
 
    Mesh *_ms;
-   ElementSet _theList;
+   std::vector<Element *> _theList;
    size_t _it, _nb_elements, _nbn;
    mutable size_t _const_it;
 };
@@ -265,7 +265,7 @@ class SideList {
     Side *get()
     {
        if (_it==_nb_sides)
-          return NULL;
+          return nullptr;
        else
           return _theList[_it++];
     }
@@ -274,7 +274,7 @@ class SideList {
     Side *get() const
     {
        if (_const_it==_nb_sides)
-          return NULL;
+          return nullptr;
        else
           return _theList[_const_it++];
     }
@@ -282,7 +282,7 @@ class SideList {
  private:
 
    Mesh *_ms;
-   SideSet _theList;
+   std::vector<Side *> _theList;
    size_t _it, _nb_sides, _nbn;
    mutable size_t _const_it;
 };
@@ -336,7 +336,7 @@ class EdgeList {
     Edge *get()
     {
        if (_it==_nb_edges)
-          return NULL;
+          return nullptr;
        else
           return _theList[_it++];
     }
@@ -345,7 +345,7 @@ class EdgeList {
     Edge *get() const
     {
        if (_const_it==_nb_edges)
-          return NULL;
+          return nullptr;
        else
           return _theList[_const_it++];
     }
@@ -353,7 +353,7 @@ class EdgeList {
  private:
 
     Mesh *_ms;
-    EdgeSet _theList;
+    std::vector<Edge *> _theList;
     size_t _it, _nb_edges, _nbn;
     mutable size_t _const_it;
 };

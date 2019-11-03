@@ -1,0 +1,10 @@
+transport:
+
+A demo program to solve a 1D linear transport equation using a simple finite differnce upwind scheme
+in space and the Backward Euler scheme in time
+To execute the program, type
+
+          transport <nx> <dt>
+
+where nx is the number of space discretization points and dt is the time step.
+

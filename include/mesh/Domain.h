@@ -36,22 +36,16 @@
 #include <iomanip>
 #include <vector>
 #include <string>
-
+#include <fstream>
 
 #include "OFELI_Config.h"
-#include "util/util.h"
-#include "io/FFI.h"
-#include "io/fparser/fparser.h"
-#include "mesh/getMesh.h"
-#include "mesh/saveMesh.h"
-#include "mesh/bamg/Mesh2.h"
-#include "mesh/bamg/Meshio.h"
-#include "mesh/bamg/QuadTree.h"
-#include "mesh/bamg/R2.h"
 #include "linear_algebra/Point.h"
+#include "mesh/Mesh.h"
+#include "io/FFI.h"
 
 using std::string;
-extern FunctionParser theParser;
+using std::vector;
+using std::ofstream;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 int bamg1(string emfile, string outfile);

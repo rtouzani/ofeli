@@ -68,7 +68,10 @@ public :
 
     using AbsEqua<real_t>::setInput;
 
-/// Constructor using mesh instance
+/// \brief Default constructor. Initializes an empty equation
+    Laplace1DL3();
+
+/// \brief Constructor using mesh instance
 /// @param [in] ms Mesh instance
     Laplace1DL3(Mesh& ms);
 
@@ -79,15 +82,11 @@ public :
     Laplace1DL3(Mesh&         ms,
                 Vect<real_t>& u);
 
-/// \brief Constructor for an element
-    Laplace1DL3(Element* el);
-
 /// \brief Destructor
     ~Laplace1DL3();
 
-/// \brief Add finite element matrix to left hand side
-/// @param [in] coef Value to multiply by the added matrix
-    void Matrix(real_t coef=1.);
+/// \brief Compute element matrix
+    void LHS();
 
 /// \brief Add Right-hand side contribution
 /// @param [in] f Vector of right-hand side of the Poisson equation at nodes
@@ -109,7 +108,7 @@ public :
                      int    lr);
 
 private:
-   LocalMatrix<real_t,3,3> _dSh;
+   LocalVect<Point<real_t>,3> _dSh[3];
    real_t _lsf, _rsf;
    BMatrix<real_t> _A;
    void set(const Element* el);

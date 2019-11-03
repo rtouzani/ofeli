@@ -411,21 +411,6 @@ int OptimNM(OptSolver&    opt,
 /*                                    OptimPG                                   */
 /*==============================================================================*/
 
-void ProjActiveSet(const Vect<real_t>& x,
-                   const Vect<real_t>& lb,
-                   const Vect<real_t>& ub,
-                   Vect<real_t>&       px);
-
-// Projection onto epsilon-inactive set
-void ProjEpsInactive(const Vect<real_t>& x,
-                     const vector<int>&  alist,
-                     Vect<real_t>&       px);
-
-//  projection onto epsilon-active set
-void ProjEpsActive(const Vect<real_t>& x,
-                   const vector<int>&  alist,
-                   Vect<real_t>&       px);
-
 int OptimPG(OptSolver&          opt,
             Vect<real_t>&       x,
             const Vect<real_t>& lb,

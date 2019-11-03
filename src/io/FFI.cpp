@@ -30,47 +30,41 @@
   ==============================================================================*/
 
 #include "io/FFI.h"
+#include "util/util.h"
+#include "io/fparser/fparser.h"
 #include "OFELIException.h"
+
+using std::ifstream;
+using std::istringstream;
 
 namespace OFELI {
 
 FFI::FFI()
+    : _msg(1), _string_nb(0), _ident(" "), _in(true), _non_fatal(false), _eol(true),
+      _is(nullptr), _iss(nullptr)
 {
-   _is = NULL;
-   _iss = NULL;
-   _in = true;
-   _string_nb = 0;
-   _msg = 1;
-   _non_fatal = false;
-   _eol = true;
-   _ident = " ";
 }
 
 
 FFI::FFI(const string& file)
+    : _msg(2), _string_nb(0), _input_file(file), _ident(" "), _in(false), _non_fatal(false),
+      _eol(true), _iss(nullptr)
 {
    _in = false;
    _is = new ifstream;
-   _string_nb = 0;
    _is->open(file.c_str());
    if (_is->fail())
       throw OFELIException("In FFI::FFI(string): Trying to open file " + file + ". File not found.");
-   _input_file = file;
    *_is >> _ident;
-   _msg = 2;
-   _non_fatal = false;
-   _iss = NULL;
-   _eol = true;
 }
 
 
 FFI::FFI(const string& file,
          const string& ident)
+    : _msg(1), _string_nb(1), _non_fatal(false), _eol(true)
 {
-   int c = 1;
    _in = false;
    _is = new ifstream;
-   _string_nb = 1;
    _is->open(file.c_str());
    if (_is->fail())
       throw OFELIException("FFI::FFI(string,string): Trying to open file " + file + ". File not found.");
@@ -84,17 +78,13 @@ FFI::FFI(const string& file,
       throw OFELIException("In FFI::FFI(string,string): Trying to read file " + file +
                            ". File must start with string: " + ident);
    delete _iss;
-   _iss = NULL;
-   _eol = true;
-   _msg = c;
-   _non_fatal = false;
+   _iss = nullptr;
 }
 
 
 FFI::FFI(const FFI& ff)
+    : _is(ff._is), _iss(ff._iss)
 {
-   _is = ff._is;
-   _iss = ff._iss;
 }
 
 
@@ -130,7 +120,7 @@ void FFI::open(const string& file,
    _msg = 1;
    _non_fatal = false;
    delete _iss;
-   _iss = NULL;
+   _iss = nullptr;
 }
 
 
@@ -158,7 +148,7 @@ void FFI::open(const string& file,
    _msg = c;
    _non_fatal = false;
    delete _iss;
-   _iss = NULL;
+   _iss = nullptr;
 }
 
 
@@ -173,7 +163,7 @@ void FFI::open(const string& file)
    _input_file = file;
    *_is >> _ident;
    _msg = 1;
-   _iss = NULL;
+   _iss = nullptr;
 }
 
 

@@ -59,10 +59,11 @@ int main(int argc, char *argv[])
 {
    theFinalTime = 1.;
    if (argc<2) {
-      cout << "Usage: ode_demo4 <time step>" << endl;
+      cout << "Usage: " << argv[0] << " <time step>" << endl;
       return 0;
    }
    theTimeStep = atof(argv[1]);
+   Verbosity = 4;
 
 // Solution as a system of second-order ODEs
    try {
@@ -80,8 +81,8 @@ int main(int argc, char *argv[])
 
 //    Loop on time steps to run the time integration scheme
       TimeLoop {
-//       We have to provide the matrices at each time step
-//       since in the case of a direct solver, these matrices are modified after runOneTimeStep()
+//       We have to provide the matrices at each time step since in the case
+//       of a direct solver, these matrices are modified after runOneTimeStep()
          A0(1,1) =  2.; A0(1,2) = -1.; A0(2,1) = -1.; A0(2,2) =  2.;
          A1(1,1) = -2.; A1(1,2) =  0.; A1(2,1) =  0.; A1(2,2) =  1.;
          A2(1,1) =  2.; A2(1,2) =  0.; A2(2,1) =  0.; A2(2,2) =  1.;

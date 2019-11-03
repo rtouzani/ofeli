@@ -31,11 +31,7 @@
 
 
 #include "shape_functions/Line3.h"
-#include "util/macros.h"
-#include "util/util.h"
-#include "mesh/Element.h"
-#include "mesh/Side.h"
-#include "linear_algebra/Point.h"
+#include "linear_algebra/LocalVect_impl.h"
 
 namespace OFELI {
 
@@ -46,10 +42,9 @@ Line3::Line3()
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);
-   _dsh.resize(3);
    _dshl.resize(3);
-   _el = NULL;
-   _sd = NULL;
+   _el = nullptr;
+   _sd = nullptr;
 }
 
 
@@ -61,7 +56,6 @@ Line3::Line3(const Element* el)
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);
-   _dsh.resize(3);
    _dshl.resize(3);
    _label = el->n();
    for (size_t i=0; i<3; i++) {
@@ -74,7 +68,7 @@ Line3::Line3(const Element* el)
    if (_det == 0.0)
       throw OFELIException("Line3::Line3(Element *): Determinant of jacobian is null");
    _el = el;
-   _sd = NULL;
+   _sd = nullptr;
 }
 
 
@@ -86,7 +80,6 @@ Line3::Line3(const Side *sd)
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);
-   _dsh.resize(3);
    _dshl.resize(3);
    _label = sd->n();
    for (size_t i=0; i<3; i++) {
@@ -101,6 +94,12 @@ Line3::Line3(const Side *sd)
 }
 
 
+LocalVect<Point<real_t>,3> Line3::DSh() const
+{
+   return _dsh;
+}
+
+
 void Line3::setLocal(real_t s)
 {
    _sh[0] = -0.5*(1.-s)*s;
@@ -111,8 +110,9 @@ void Line3::setLocal(real_t s)
    _dshl[2].x =  0.5 + s;
    Point<real_t> dxdl = (_x[2] - _x[0]);
    _det = 0.5*dxdl.Norm();
-   for (size_t i=0; i<3; i++)
-      _dsh[i] = _dshl[i]/_det;
+   _dsh(1).x = _dshl[0].x/_det;
+   _dsh(2).x = _dshl[1].x/_det;
+   _dsh(3).x = _dshl[2].x/_det;
 }
 
 } /* namespace OFELI */

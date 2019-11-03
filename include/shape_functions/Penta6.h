@@ -34,6 +34,10 @@
 #define __PENTA6_H
 
 #include "shape_functions/FEShape.h"
+#include "mesh/Element.h"
+#include "mesh/Node.h"
+#include "linear_algebra/Point.h"
+#include "linear_algebra/LocalVect.h"
 
 namespace OFELI {
 /*!
@@ -44,8 +48,6 @@ namespace OFELI {
 /*! \file Penta6.h
  *  \brief Definition file for class Penta6.
  */
-
-class Element;
 
 /*! \class Penta6
  *  \ingroup Shape
@@ -97,17 +99,21 @@ class Penta6 : public FEShape
  */
     void setLocal(const Point<real_t>& s);
 
-/** \brief Return derivatives of shape function of node <tt>i</tt> at a given point.
- *  \details Member function \b setLocal() must have been called before in order to 
- * calculate relevant quantities.
+/** \brief Return partial derivatives of shape functions of element nodes
+ *  @return LocalVect instance of partial derivatives of shape functions
+ *          <i>e.g.</i> \c dsh(i).x, \c dsh(i).y, are partial derivatives of the <i>i</i>-th
+ *          shape function. 
+ *  @note The local point at which the derivatives are computed must be chosen before by using the
+ *  member function setLocal
  */
-    Point<real_t> DSh(size_t i) const { return _dsh[i-1]; }
+    vector<Point<real_t> > DSh() const;
 
 /// \brief Return Maximum length of pentahedron edges
     real_t getMaxEdgeLength() const;
 
 /// \brief Return Mimimum length of pentahedron edges
     real_t getMinEdgeLength() const;
+
 };
 
 /*! @} End of Doxygen Groups */

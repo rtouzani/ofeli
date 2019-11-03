@@ -19,7 +19,7 @@ AUX_DIST_EXTRA = readline.m4 \
 
 EXTRA_DIST = bootstrap ChangeLog
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = doc include src util tools material tutorial demos
+SUBDIRS = doc include src util tools material demos
 bin_SCRIPTS = ofeli-config test_ofeli.sh
 
 MAINTAINERCLEANFILES = aclocal.m4 configure $(AUX_DIST)

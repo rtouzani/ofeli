@@ -10,7 +10,7 @@
    <plot_file>proj.pl</plot_file>
    <time_step>0.01</time_step>
    <max_time>1.0</max_time>
-   <verbose>1</verbose>
+   <verbose>3</verbose>
    <output>0</output>
    <save>1</save>
 </Project>

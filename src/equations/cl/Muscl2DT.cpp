@@ -37,8 +37,9 @@
 #include "mesh/Mesh.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
-#include "linear_algebra/LocalVect.h"
-#include "linear_algebra/LocalMatrix.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/LocalVect_impl.h"
+#include "linear_algebra/LocalMatrix_impl.h"
 #include "shape_functions/Line2.h"
 #include "shape_functions/Triang3.h"
 #include <fstream>

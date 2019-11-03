@@ -46,8 +46,12 @@ using std::setprecision;
 
 #include "OFELI_Config.h"
 #include "mesh/MeshUtil.h"
+#include "mesh/Mesh.h"
 #include "io/saveField.h"
 #include "io/IOField.h"
+#include "linear_algebra/Vect_impl.h"
+#include "util/util.h"
+#include "OFELIException.h"
 
 namespace OFELI {
 
@@ -56,7 +60,7 @@ void saveField(Vect<real_t>& v,
                int           opt)
 {
    const Mesh *mesh = &(v.getMesh());
-   if (mesh==NULL)
+   if (mesh==nullptr)
       throw OFELIException("In saveField(v,*mesh,output_file,opt): "
                            " Vector does not contain mesh information.\n"
                            "Try the function saveField(Vect<real_t>,Mesh,string,int)");
@@ -1161,7 +1165,7 @@ void saveVTK(Mesh&  mesh,
              string input_file,
              string output_file)
 {
-   ofstream *pf=NULL;
+   ofstream *pf=nullptr;
    size_t m=0, k=0, nb_dof;
    string of;
 
@@ -1216,7 +1220,7 @@ void saveVTK(Mesh&  mesh,
          of = proj + "-" + zeros(n) + ".vtk";
       cout << "   Storing time step " << n+1 << " in file " << of << endl;
       pf = new ofstream(of.c_str());
-      *pf << setprecision(16) << scientific;
+      *pf << setprecision(16) << std::scientific;
       *pf << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
       *pf << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
       mesh_nodes(mesh)

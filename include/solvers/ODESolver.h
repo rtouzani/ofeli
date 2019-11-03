@@ -109,7 +109,7 @@ class ODESolver
 
 /** \brief Constructor using time discretization data
  *  @param [in] s Choice of the scheme: To be chosen in the enumerated variable
- *  \a TimeScheme (see the presentation of the class)
+ *  \a Scheme (see the presentation of the class)
  *  @param [in] time_step Value of the time step. This value will be modified
  *  if an adaptive method is used. The default value for this parameter
  *  if the value given by the global variable \c theTimeStep
@@ -130,7 +130,7 @@ class ODESolver
 
 /** \brief Define data of the differential equation or system
  *  @param [in] s Choice of the scheme: To be chosen in the enumerated variable
- *  \a TimeScheme (see the presentation of the class)
+ *  \a Scheme (see the presentation of the class)
  *  @param [in] time_step Value of the time step. This value will be modified
  *  if an adaptive method is used. The default value for this parameter
  *  if the value given by the global variable \c theTimeStep
@@ -179,10 +179,23 @@ class ODESolver
  *  y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))\n
  *  In the case of a system of ODEs, this function can be called once for each equation, 
  *  given in the order of the unknowns
+ *  @param [in] f Expression of the function
  */
     void setF(string f);
 
-/** \brief Set derivative with respect to the unknown of the function defining the ODE
+/** \brief Set time derivative, given as an algebraic expression, for a nonlinear ODE
+ *  \details This function enables prescribing the value of the 1-st derivative
+ *  for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be
+ *  used for nonlinear ODEs of the form 
+ *  y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))\n
+ *  This function is to be used for the <tt>i</tt>-th equation of a system of ODEs
+ *  @param [in] f Expression of the function
+ *  @param [in] i Index of equation. Must be not larger than the number of equations
+ */
+    void setF(string f,
+              int    i);
+
+/** \brief Set time derivative of the function defining the ODE
  *  \details This function enables prescribing the value of the 1-st derivative
  *  for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be
  *  used for nonlinear ODEs of the form 
@@ -192,8 +205,20 @@ class ODESolver
  */
     void setDF(string df);
 
+/** \brief Set time derivative with respect to the unknown of the function defining the ODE
+ *  \details This function enables prescribing the value of the 1-st derivative
+ *  for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be
+ *  used for nonlinear ODEs of the form 
+ *  y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))\n
+ *  This function is to be used for the <tt>i</tt>-th equation of a system of ODEs
+ *  @param [in] f Expression of time derivative of the function
+ *  @param [in] i Index of equation. Must be not larger than the number of equations
+ */
+    void setDF(string df,
+               int    i);
+
 /** \brief Set intermediate right-hand side vector for the Runge-Kutta method
- *  @param [in] f
+ *  @param [in] f Value of right-hand side
  */
     void setRK4RHS(real_t f) { _d01 = f; }
 
@@ -206,6 +231,13 @@ class ODESolver
  *  @param [in] u Vector containing initial condition for the unknown
  */
     void setInitial(Vect<real_t>& u);
+
+/** \brief Set initial condition for a first-oder system of differential equations
+ *  @param [in] u Initial condition for an unknown
+ *  @param [in] i Index of the unknown
+ */
+    void setInitial(real_t u,
+                    int    i);
 
 /** \brief Set initial condition for a second-order system of differential equations
  *  \details Giving the right-hand side at initial time is somtimes required
@@ -331,16 +363,6 @@ class ODESolver
                          Preconditioner p=DIAG_PREC)
    { _s = s; _p = p; }
 
-/** \brief Set verbosity parameter:
- *  \details
- *  <ul>
- *     <li> = 0, No output
- *     <li> = 1, Print step label and time value
- *     <li> = 2, Print step label, time value, time step and integration scheme
- *  </ul>
- */
-    void setVerbose(int v=0) { _verb = v; }
-
 /** \brief Set maximal number of iterations
  *  \details This function is useful for a non linear ODE (or system of ODEs)
  *  if an implicit scheme is used
@@ -367,6 +389,9 @@ class ODESolver
     void run(bool opt=false);
 
 //-----------------------------   INSPECTORS  ----------------------------------
+
+/// \brief Return number of equations
+    size_t getNbEq() const { return _nb_eq; }
 
 /// \brief Return LinearSolver instance
     LinearSolver<real_t> &getLSolver() { return _ls; }
@@ -404,11 +429,11 @@ class ODESolver
 
    AbsEqua<real_t> *_theEqua;
    size_t _order, _nb_eq, _nb_ssteps, _step, _sstep;
-   int _verb, _sc;
+   int _sc;
    Iteration _s;
    Preconditioner _p;
    bool _a0, _a1, _a2, _constant_matrix, _regex, _explicit, _init, _lhs, _rhs, _rhsF;
-   Vect<real_t> _u, _v, *_w, _f0, _f1, *_f2, _b, *_f01, _f, *_bc, _bb, _vv, _dudt;
+   Vect<real_t> _u, _v, *_w, _f0, _f1, _f2, _b, _f01, _f, *_bc, _bb, _vv, _dudt;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _vF1, _vF2, _vF, _vDF1, _D, _k1, _k2, _k3, _k4;
    DMatrix<real_t> *_A0, *_A1, *_A2;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2;
@@ -418,7 +443,7 @@ class ODESolver
    real_t _beta, _gamma;
    LinearSolver<real_t> _ls;
    DEType _type;
-   bool _alloc_f2, _alloc_f01, _setF_called, _setDF1_called;
+   bool _RK4_rhs, _setF_called, _setDF1_called;
    Iter<real_t> _iter;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -429,6 +454,9 @@ class ODESolver
    typedef Vect<real_t>& (ODESolver::* FPtr)();
    static FPtr F[11];
    FPtr _set_f;
+
+   std::map<TimeScheme,int> _sch;
+   void setScheme();
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
    void solveForwardEuler();

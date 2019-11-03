@@ -34,6 +34,11 @@
 #define __LINE2_H
 
 #include "shape_functions/FEShape.h"
+#include "mesh/Element.h"
+#include "mesh/Side.h"
+#include "mesh/Node.h"
+#include "linear_algebra/LocalVect.h"
+#include "linear_algebra/Point.h"
 
 namespace OFELI {
 /*!
@@ -48,11 +53,6 @@ namespace OFELI {
 /*! \file Line2.h
  *  \brief Definition file for class Line2.
  */
-
-template<class T_,size_t N_> class LocalVect;
-class Element;
-class Side;
-class Edge;
 
 /*! \class Line2 Line2.h "Line2.h"
  *  \brief To describe a 2-Node planar line finite element.
@@ -112,9 +112,12 @@ class Line2 : public FEShape
     real_t Sh(size_t i, Point<real_t> s) const { return Sh(i,s.x); }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/// \brief Calculate partial derivative of shape function of a node.
-/// @param [in] i Node number (1 or 2).
-    real_t DSh(size_t i) const;
+/** \brief Return partial derivatives of shape functions of element nodes
+ *  @return LocalVect instance of partial derivatives of shape functions
+ *          <i>e.g.</i> \c dsh(i).x, \c dsh(i).y, are partial derivatives of the <i>i</i>-th
+ *          shape function. 
+ */
+    std::vector<Point<real_t> > DSh() const;
 
 /// \brief Return reference coordinates of a point <tt>x</tt> in element
 /// \details Only the x-coordinate of the returned value has a meaning
@@ -132,7 +135,6 @@ class Line2 : public FEShape
 
  private:
     real_t _length;
-
 };
 
 /*! @} End of Doxygen Groups */

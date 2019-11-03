@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 {
 // Expand arguments
    if (argc < 2) {
-      cout << "Usage: eigen_demo2 <param_file>" << endl;
+      cout << "Usage: " << argv[0] << " <project_file>" << endl;
       return 0;
    }
 

@@ -26,7 +26,7 @@
   ==============================================================================
 
                 Definition of abstract class 'Equa_Solid' to
-                to solve Solid and Structural Mechanicsr problems
+                to solve Solid and Structural Mechanics problems
 
   ==============================================================================*/
 
@@ -34,8 +34,11 @@
 #ifndef __EQUA_SOLID_H
 #define __EQUA_SOLID_H
 
-#include "equations/Equation.h"
 #include "solvers/TimeStepping.h"
+#include "mesh/Material.h"
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
+
 
 namespace OFELI {
 /*!
@@ -62,8 +65,10 @@ namespace OFELI {
  * \tparam <NSE_> Number of side equations
  */
 
+class Element;
+class Side;
+extern Material theMaterial;
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_> class Equa_Solid;
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
@@ -77,68 +82,37 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_scheme;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_final_time;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_step;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_A;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_b;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_uu;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_u;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA0;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA1;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA2;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sA0;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eMat;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sMat;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eRHS;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sRHS;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_sides;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
-    Equa_Solid() { }
+    Equa_Solid() : _cd(nullptr) { }
 
 /// \brief Destructor
     virtual ~Equa_Solid() { }
 
 /// \brief Add lumped mass contribution to left-hand side
 /// @param [in] coef coefficient to multiply by the matrix before adding [Default: <tt>1</tt>]
-    virtual void LMassToLHS(real_t coef=1) { _coef = coef; }
-
-/// \brief Add lumped mass contribution to right-hand side
-/// @param [in] coef coefficient to multiply by the vector before adding [Default: <tt>1</tt>]
-    virtual void LMassToRHS(real_t coef=1) { _coef = coef; }
+    virtual void LMass(real_t coef=1) { _coef = coef; }
 
 /// \brief Add consistent mass contribution to left-hand side
 /// @param [in] coef coefficient to multiply by the matrix before adding [Default: <tt>1</tt>]
-    virtual void MassToLHS(real_t coef=1) { _coef = coef; }
-
-/// \brief Add consistent mass contribution to right-hand side
-/// @param [in] coef coefficient to multiply by the vector before adding [Default: <tt>1</tt>]
-    virtual void MassToRHS(real_t coef=1) { _coef = coef; }
-
-/// \brief Add lumped mass contribution to left and right-hand sides taking into account 
-/// time integration scheme.
-    void setLumpedMass() 
-    {
-       LMassToLHS(1./_time_step);
-       LMassToRHS(1./_time_step);
-    }
-
-/// \brief Add consistent mass contribution to left and right-hand sides taking into account 
-/// time integration scheme.
-    void setMass() 
-    {
-       MassToLHS(1./_time_step);
-       MassToRHS(1./_time_step);
-    }
-
-/// \brief Add consistent mass matrix to left-hand side after multiplication by <tt>coef</tt>
-/// [Default: <tt>1</tt>]
-    virtual void Mass(real_t coef=1) { coef=1; }
-
-/// \brief Add lumped mass matrix to left-hand side after multiplication by <tt>coef</tt>
-/// [Default: <tt>1</tt>]
-    virtual void LMass(real_t coef=1) { coef=1; }
+    virtual void Mass(real_t coef=1) { _coef = coef; }
 
 /// \brief Add deviator matrix to left-hand side taking into account time integration scheme,
 /// after multiplication by <tt>coef</tt> [Default: <tt>1</tt>]
@@ -148,70 +122,25 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 /// after multiplication by <tt>coef</tt> [Default: <tt>1</tt>]
     virtual void Dilatation(real_t coef=1) { coef=1; }
 
-/// \brief Add dilatation vector to right-hand side taking into account time integration scheme,
-///  after multiplication by <tt>coef</tt> [Default: <tt>1</tt>]
-    virtual void DilatationToRHS(real_t coef=1) { coef=1; }
-
-/// \brief Add deviator vector to right-hand side taking into account time integration scheme,
-/// after multiplication by <tt>coef</tt> [Default: <tt>1</tt>]
-    virtual void DeviatorToRHS(real_t coef=1) { coef=1; }
-
 /// \brief Add stiffness matrix to left-hand side taking into account time integration scheme,
 /// after multiplication by <tt>coef</tt> [Default: <tt>1</tt>]
     virtual void Stiffness(real_t coef=1) { coef=1; }
 
-/// \brief Add stiffness matrix to right-hand side taking into account time integration scheme,
-/// after multiplication by <tt>coef</tt> [Default: <tt>1</tt>]
-    virtual void StiffnessToRHS(real_t coef=1) { coef=1; }
-
-/// \brief Add dilatation matrix to left and/or right-hand side taking into account time 
-//  integration scheme
-    void setDilatation()
+/// \brief Set specific input data to solid mechanics
+    void setInput(EqDataType    opt,
+                  Vect<real_t>& u)
     {
-       if (_time_scheme==STEADY_STATE || 
-           _time_scheme==FORWARD_EULER || 
-           _time_scheme==BACKWARD_EULER)
-          Dilatation(1.);
-       else if (_time_scheme==CRANK_NICOLSON)
-          Dilatation(0.5);
-       if (_time_scheme==CRANK_NICOLSON)
-          DilatationToRHS(0.5);
-    }
-
-/// \brief Add deviator matrix to left and/or right-hand side taking into account time
-/// integration scheme.
-    void setDeviator()
-    {
-       if (_time_scheme==STEADY_STATE || 
-           _time_scheme==FORWARD_EULER || 
-           _time_scheme==BACKWARD_EULER)
-          Deviator(1.);
-       else if (_time_scheme==CRANK_NICOLSON)
-          Deviator(0.5);
-       if (_time_scheme==CRANK_NICOLSON)
-          DeviatorToRHS(0.5);
-    }
-
-/// \brief Add convection contribution to left and/or right-hand side taking into account 
-/// time integration scheme.
-    void setStiffness()
-    {
-       if (_time_scheme==STEADY_STATE || _time_scheme==BACKWARD_EULER)
-          Stiffness(1.);
-       else if (_time_scheme==FORWARD_EULER)
-          StiffnessToRHS();
-       else
-          ;
+       AbsEqua<real_t>::setInput(opt,u);
+       if (opt==CONTACT_DISTANCE)
+          _cd = &u;
     }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    virtual void BodyRHS(UserData<T_> &ud)  { }
-    virtual void BodyRHS(const Vect<T_>& f, int opt=GLOBAL_ARRAY)  { }
+    virtual void BodyRHS(const Vect<T_>& f) { }
     virtual void BoundaryRHS(const Vect<T_>& f) { }
-    virtual void BoundaryRHS(UserData<T_>& ud) { }
     virtual void Periodic(real_t coef=1) { }
-    int SignoriniContact(UserData<T_>& ud, real_t coef=1.e07) { return 0; }
-    int SignoriniContact(Vect<T_>& f, real_t coef=1.e07) { return 0; }
+    virtual int Contact(real_t coef=1.e07) { return 0; }
+
 /** \brief Build the linear system of equations
  *  \details Before using this function, one must have properly selected 
  *  appropriate options for:
@@ -225,28 +154,38 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build()
     {
-       *_A = 0;
-       if (_b==NULL)
-          _b = new Vect<T_>(_theMesh->getNbEq());
-       MESH_EL {
-          set(theElement);
-          this->ElementVector(_uu);
+       if (AbsEqua<T_>::_u==nullptr)
+          throw OFELIException("In Equa_Solid::build: No solution vector given.");
+       AbsEqua<T_>::_A->clear();
+       mesh_elements(*_theMesh) {
+          set(the_element);
           if (_terms&MASS)
-             setMass();
+             Mass();
           if (_terms&LUMPED_MASS)
-             setLumpedMass();
+             LMass();
           if (_terms&DEVIATORIC)
-             setDeviator();
+             Deviator();
           if (_terms&DILATATION)
-             setDilatation();
-          this->ElementAssembly(_A);
-          if (_terms&SOURCE)
-             BodyRHS(*_bf,GLOBAL_ARRAY);
-          this->updateBC(*_bc);
-          this->ElementAssembly(*_b);
+             Dilatation();
+          eMat = eA0;
+          AbsEqua<T_>::_A->Assembly(*_theElement,eMat.get());
+          if (AbsEqua<T_>::_bf!=nullptr)
+             BodyRHS(*AbsEqua<T_>::_bf);
+          if (AbsEqua<T_>::_bc!=nullptr)
+             this->updateBC(*_theElement,*AbsEqua<T_>::_bc);
+          AbsEqua<T_>::_b->Assembly(*_theElement,eRHS.get());
+       }
+       if (AbsEqua<T_>::_sf!=nullptr) {
+          mesh_sides(*_theMesh) {
+             set(the_side);
+             if (_terms&CONTACT)
+                Contact(1.e07);
+             BoundaryRHS();
+             AbsEqua<T_>::_A->Assembly(The_side,sMat.get());
+             AbsEqua<T_>::_b->Assembly(The_side,sRHS.get());
+          }
        }
     }
-
 
 /** \brief Build the linear system of equations
  *  \details Before using this function, one must have properly selected 
@@ -262,39 +201,47 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build(TimeStepping& s)
     {
-       MESH_EL {
-          set(theElement);
-          this->ElementVector(*_u);
+       mesh_elements(*_theMesh) {
+          set(the_element);
+          this->ElementVector(*AbsEqua<T_>::_u);
           if (_terms&MASS)
-             MassToLHS(1.);
+             Mass();
           if (_terms&LUMPED_MASS)
-             LMassToLHS(1.);
+             LMass();
           if (_terms&DEVIATORIC)
-             Deviator(1.);
+             Deviator();
           if (_terms&DILATATION)
-             Dilatation(1.);
-          if (_terms&LOAD && _bf)
-             BodyRHS(*_bf,GLOBAL_ARRAY);
-          s.Assembly(TheElement,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
+             Dilatation();
+          if (_terms&CONTACT)
+             Contact(1.e07);
+          if ((_terms&LOAD) && (AbsEqua<T_>::_bf!=nullptr))
+             BodyRHS();
+          s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
+       }
+       mesh_sides(*_theMesh) {
+          set(the_side);
+          this->SideVector(*AbsEqua<T_>::_u);
+          if (_terms&CONTACT)
+             Contact(1.e07);
+          s.SAssembly(The_side,sRHS.get(),sA0.get());
        }
     }
-
 
 /** \brief Build the linear system for an eigenvalue problem
  *  @param [in] e Reference to used EigenProblemSolver instance
  */
     void build(EigenProblemSolver& e)
     {
-       MESH_EL {
-          set(theElement);
-          this->ElementVector(*_u);
+       mesh_elements(*_theMesh) {
+          set(the_element);
+          this->ElementVector(*AbsEqua<T_>::_u);
           if (_terms&MASS)
-             MassToLHS();
+             Mass();
           if (_terms&LUMPED_MASS)
-             LMassToLHS();
+             LMass();
           Deviator();
           Dilatation();
-          e.Assembly(TheElement,eA0.get(),eA2.get());
+          e.Assembly(The_element,eA0.get(),eA2.get());
        }
     }
 
@@ -318,6 +265,20 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           M.Assembly(theElement,eRHS.get());
        }
        }*/
+
+/** \brief Run one time step
+ *  \details This function performs one time step in equation solving.
+ *  It is to be used only if a \a TRANSIENT analysis is required.
+ *  @return Return error from the linear system solver
+ */
+    int runTransient()
+    {
+       *AbsEqua<T_>::_b = 0;
+       build();
+       int ret=AbsEqua<T_>::solveLinearSystem(*AbsEqua<T_>::_b,AbsEqua<T_>::_uu);
+       AbsEqua<T_>::_u->insertBC(*_theMesh,AbsEqua<T_>::_uu,*AbsEqua<T_>::_bc);
+       return ret;
+    }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  protected:
@@ -348,11 +309,14 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        _nu  = theMaterial.PoissonRatio();
        _E   = theMaterial.YoungModulus();
     }
-    virtual void set(const Element* el) { }
-    virtual void set(const Side* sd) { }
+    virtual void set(const Element* el) = 0;
+    virtual void set(const Side* sd) = 0;
+    void BodyRHS() { BodyRHS(*AbsEqua<T_>::_bf); }
+    void BoundaryRHS() { BoundaryRHS(*AbsEqua<T_>::_sf); }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   real_t  _E, _nu, _lambda, _G, _rho, _coef;
+    real_t _E, _nu, _lambda, _G, _rho, _coef;
+    Vect<real_t> *_cd;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

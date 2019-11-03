@@ -33,79 +33,76 @@
 
 
 #include "equations/solid/Elas2DQ4.h"
+#include "util/Gauss.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
-Elas2DQ4::Elas2DQ4(const Element* el)
+Elas2DQ4::Elas2DQ4(Mesh& ms)
+         : Equation<real_t,4,8,2,4>(ms), _quad(nullptr), _ln(nullptr)
 {
-   set(el);
+   _equation_name = "Linearized elasticity";
+   _finite_element = "2-D, 4-Node quadrilaterals (Q1)";
+   setMatrixType(SPARSE|SYMMETRIC);
+   setSolver(CG_SOLVER,DILU_PREC);
+   _terms = DEVIATORIC|DILATATION|BODY_FORCE;
 }
 
 
-Elas2DQ4::Elas2DQ4(const Side* sd)
+Elas2DQ4::Elas2DQ4(Mesh&         ms,
+                   Vect<real_t>& u)
+         : Equation<real_t,4,8,2,4>(ms,u), _quad(nullptr), _ln(nullptr)
 {
-   set(sd);
-}
-
-
-Elas2DQ4::Elas2DQ4(const Element*      el,
-                   const Vect<real_t>& u,
-                   const real_t&       time)
-{
-   set(el);
-   _time = time;
-   ElementVector(u);
-}
-
-
-Elas2DQ4::Elas2DQ4(const Side*         sd,
-                   const Vect<real_t>& u,
-                   const real_t&       time)
-{
-   set(sd);
-   _time = time;
-   SideVector(u);
+   _equation_name = "Linearized elasticity";
+   _finite_element = "2-D, 4-Node quadrilaterals (Q1)";
+   setMatrixType(SPARSE|SYMMETRIC);
+   setSolver(CG_SOLVER,DILU_PREC);
+   _terms = DEVIATORIC|DILATATION|BODY_FORCE;
 }
 
 
 Elas2DQ4::~Elas2DQ4()
 {
-   if (_quad) { delete _quad; _quad = NULL; }
-   if (_ln) { delete _ln; _ln = NULL; }
+   if (_quad != nullptr)
+      delete _quad;
+   if (_ln != nullptr)
+      delete _ln;
 }
 
 
 void Elas2DQ4::set(const Element* el)
 {
-   _nb_dof = 2;
-   Init(el);
+   _theSide = nullptr, _theElement = el;
    setMaterial();
+   if (_quad != nullptr)
+      delete _quad, _quad = nullptr;
+   if (_ln != nullptr)
+      delete _ln, _ln = nullptr;
    _quad = new Quad4(el);
-   _ln = NULL;
-   Gauss g(2);
-   _g[0] = g.x(1); _g[1] = g.x(2);
-   _w[0] = g.w(1); _w[1] = g.w(2);
-   _cg = 0.;
    _xl[0] = _yl[0] = _yl[1] = _xl[3] = -1.;
    _xl[1] = _xl[2] = _yl[2] = _yl[3] =  0.;
+   _quad->atGauss(2,_sh,_dSh,_wg);
    PlaneStrain();
    ElementNodeCoordinates();
-   eMat = 0; eA0 = 0; eA1 = 0; eA2 = 0;
+   ElementNodeVector(*_u,_eu);
+   eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }
 
 
 void Elas2DQ4::set(const Side* sd)
 {
-   _nb_dof = 2;
-   Init(sd);
+   _theSide = sd, _theElement = nullptr;
+   if (_quad != nullptr)
+      delete _quad, _quad = nullptr;
+   if (_ln != nullptr)
+      delete _ln, _ln = nullptr;
    _ln = new Line2(sd);
-   _quad = NULL;
    Gauss g(2);
    _g[0] = g.x(1); _g[1] = g.x(2);
-   _w[0] = g.w(1); _w[1] = g.w(2);
-   _cg = 0.;
+   _ww[0] = g.w(1); _ww[1] = g.w(2);
    SideNodeCoordinates();
+   SideNodeVector(*_u,_su);
    sMat = 0;
    sRHS = 0;
 }
@@ -158,67 +155,29 @@ void Elas2DQ4::PlaneStress()
 }
 
 
-void Elas2DQ4::LMassToLHS(real_t coef)
-{
-   for (size_t i=1; i<=4; i++) {
-      _quad->setLocal(Point<real_t> (_xl[i-1],_yl[i-1]));
-      real_t c = _rho*coef*_quad->getDet();
-      eA2(2*i-1,2*i-1) += c;
-      eA2(2*i,2*i) += c;
-   }
-}
-
-
-void Elas2DQ4::LMassToRHS(real_t coef)
+void Elas2DQ4::LMass(real_t coef)
 {
    for (size_t i=1; i<=4; i++) {
       _quad->setLocal(Point<real_t>(_xl[i-1],_yl[i-1]));
       real_t c = _rho*coef*_quad->getDet();
-      eRHS(2*i-1) += c*ePrev(2*i-1);
-      eRHS(2*i  ) += c*ePrev(2*i  );
+      eA2(2*i-1,2*i-1) += c;
+      eA2(2*i  ,2*i  ) += c;
    }
 }
 
 
 void Elas2DQ4::Deviator(real_t coef)
 {
-   for (size_t k=0; k<2; k++) {
-      for (size_t l=0; l<2; l++) {
-         Point<real_t> g(_g[k],_g[l]);
-         real_t w = _w[k]*_w[l];
-         _quad->setLocal(g);
-         real_t c = _G*w*_quad->getDet()*coef;
-         for (size_t i=1; i<=4; i++) {
-            Point<real_t>  a = c*_quad->DSh(i);
-            for (size_t j=1; j<=4; j++) {
-               eA0(2*i-1,2*j-1) += 2*a.x*_quad->DSh(j).x + a.y*_quad->DSh(j).y;
-               eA0(2*i-1,2*j  ) += a.y*_quad->DSh(j).x;
-               eA0(2*i  ,2*j-1) += a.x*_quad->DSh(j).y;
-               eA0(2*i  ,2*j  ) += 2*a.y*_quad->DSh(j).y + a.x*_quad->DSh(j).x;
-            }
-         }
-      }
-   }
-   eMat = eA0;
-}
-
-
-void Elas2DQ4::DeviatorToRHS(real_t coef)
-{
-   for (size_t k=0; k<2; k++) {
-      for (size_t l=0; l<2; l++) {
-         Point<real_t> g(_g[k],_g[l]);
-         real_t w = _w[k]*_w[l];
-         _quad->setLocal(g);
-         real_t c = _G*w*_quad->getDet()*coef;
-         for (size_t i=1; i<=4; i++) {
-            Point<real_t> a = c*_quad->DSh(i);
-            for (size_t j=1; j<=4; j++) {
-               eRHS(2*i-1) -= (2*a.x*_quad->DSh(j).x + a.y*_quad->DSh(j).y)*ePrev(2*j-1)
-                            + (a.y*_quad->DSh(j).x)*ePrev(2*j  );
-               eRHS(2*i  ) -= (a.x*_quad->DSh(j).y)*ePrev(2*j-1)
-                            + (2*a.y*_quad->DSh(j).y+a.x*_quad->DSh(j).x)*ePrev(2*j  );
-            }
+   for (size_t k=0; k<4; ++k) {
+      real_t c = _G*_wg[k]*coef;
+      for (size_t i=0; i<4; i++) {
+         Point<real_t> a = c*_dSh[4*i+k];
+         for (size_t j=0; j<4; j++) {
+            Point<real_t> b = _dSh[4*j+k];
+            eA0(2*i+1,2*j+1) += 2*a.x*b.x + a.y*b.y;
+            eA0(2*i+1,2*j+2) += a.y*b.x;
+            eA0(2*i+2,2*j+1) += a.x*b.y;
+            eA0(2*i+2,2*j+2) += 2*a.y*b.y + a.x*b.x;
          }
       }
    }
@@ -227,110 +186,33 @@ void Elas2DQ4::DeviatorToRHS(real_t coef)
 
 void Elas2DQ4::Dilatation(real_t coef)
 {
-   for (size_t k=0; k<2; k++) {
-      for (size_t l=0; l<2; l++) {
-         Point<real_t> g(_g[k],_g[l]);
-         real_t w = _w[k]*_w[l];
-         _quad->setLocal(g);
-         real_t c = _lambda*w*_quad->getDet()*coef;
-         for (size_t i=1; i<=4; i++) {
-            Point<real_t> a = c*_quad->DSh(i);
-            for (size_t j=1; j<=4; j++) {
-               eA0(2*i-1,2*j-1) += a.x*_quad->DSh(j).x;
-               eA0(2*i-1,2*j  ) += a.x*_quad->DSh(j).y;
-               eA0(2*i  ,2*j-1) += a.y*_quad->DSh(j).x;
-               eA0(2*i  ,2*j  ) += a.y*_quad->DSh(j).y;
-            }
-         }
-      }
-   }
-   eMat = eA0;
-}
-
-
-void Elas2DQ4::DilatationToRHS(real_t coef)
-{
-   for (size_t k=0; k<2; k++) {
-      for (size_t l=0; l<2; l++) {
-         Point<real_t> g(_g[k],_g[l]);
-         real_t w=_w[k]*_w[l];
-         _quad->setLocal(g);
-         real_t c=_lambda*w*_quad->getDet()*coef;
-         for (size_t i=1; i<=4; i++) {
-            Point<real_t> a=c*_quad->DSh(i);
-            for (size_t j=1; j<=4; j++) {
-               eRHS(2*i-1) -= a.x*_quad->DSh(j).x * ePrev(2*j-1)
-                            + a.x*_quad->DSh(j).y * ePrev(2*j  );
-               eRHS(2*i  ) -= a.y*_quad->DSh(j).x * ePrev(2*j-1)
-                            + a.y*_quad->DSh(j).y * ePrev(2*j  );
-            }
+   for (size_t k=1; k<=4; ++k) {
+      real_t c = _lambda*_wg[k]*coef;
+      for (size_t i=0; i<4; i++) {
+         Point<real_t> a = c*_dSh[4*i+k];
+         for (size_t j=0; j<4; j++) {
+            Point<real_t> b = _dSh[4*j+k];
+            eA0(2*i+1,2*j+1) += a.x*b.x;
+            eA0(2*i+1,2*j+2) += a.x*b.y;
+            eA0(2*i+2,2*j+1) += a.y*b.x;
+            eA0(2*i+2,2*j+2) += a.y*b.y;
          }
       }
    }
 }
 
 
-void Elas2DQ4::BodyRHS(UserData<real_t>& ud)
+void Elas2DQ4::BodyRHS(const Vect<real_t>& f)
 {
-   for (size_t k=0; k<2; k++)
-      for (size_t l=0; l<2; l++) {
-         Point<real_t> g(_g[k],_g[l]);
-         real_t w = _w[k]*_w[l];
-         _quad->setLocal(g);
-         Point<real_t> x=_quad->getLocalPoint();
-         real_t fx=ud.BodyForce(x, _time, 1);
-         real_t fy=ud.BodyForce(x, _time, 2);
-         real_t c=w*_quad->getDet();
-         for (size_t i=1; i<=2; i++) {
-            eRHS(2*i-1) += c*fx*_quad->Sh(i);
-            eRHS(2*i  ) += c*fy*_quad->Sh(i);
-         }
+   for (size_t k=0; k<4; ++k) {
+      real_t fx=0., fy=0.;
+      for (size_t j=0; j<4; ++j) {
+         fx += _sh[4*j+k]*f((*_theElement)(j+1)->n(),1);
+         fy += _sh[4*j+k]*f((*_theElement)(j+1)->n(),2);
       }
-}
-
-
-void Elas2DQ4::BodyRHS(const Vect<real_t>& bf,
-                             int           opt)
-{
-   for (size_t k=0; k<2; k++)
-      for (size_t l=0; l<2; l++) {
-         Point<real_t> g(_g[k],_g[l]);
-         real_t w=_w[k]*_w[l];
-         _quad->setLocal(g);
-         real_t c=w*_quad->getDet();
-         real_t fx=0., fy=0.;
-         if (opt==LOCAL_ARRAY) {
-            for (size_t j=1; j<=4; j++) {
-               fx += _quad->Sh(j)*bf(2*j-1);
-               fy += _quad->Sh(j)*bf(2*j  );
-            }
-         }
-         else {
-            for (size_t j=1; j<=4; j++) {
-               fx += _quad->Sh(j)*bf(2*(*_theElement)(j)->n()-1);
-               fy += _quad->Sh(j)*bf(2*(*_theElement)(j)->n()  );
-            }
-         }
-         for (size_t i=1; i<=4; i++) {
-            eRHS(2*i-1) += c*fx*_quad->Sh(i);
-            eRHS(2*i  ) += c*fy*_quad->Sh(i);
-         }
-      }
-}
-
-
-void Elas2DQ4::BoundaryRHS(UserData<real_t>& ud)
-{
-   for (size_t k=0; k<2; k++) {
-      Point<real_t> x=_ln->getLocalPoint(_g[k]);
-      real_t fx=ud.SurfaceForce(x, _theSide->getCode(1), _time, 1);
-      real_t fy=ud.SurfaceForce(x, _theSide->getCode(2), _time, 2);
-      real_t c=0.5*_w[k]*_ln->getLength();
-      for (size_t i=1; i<=2; i++) {
-         if (_theSide->getCode(1) > 0)
-            sRHS(2*i-1) += c*fx*_ln->Sh(i,_g[k]);
-         if (_theSide->getCode(2) > 0)
-            sRHS(2*i  ) += c*fy*_ln->Sh(i,_g[k]);
+      for (size_t i=0; i<4; ++i) {
+         eRHS(2*i+1) += _wg[k]*fx*_sh[4*i+k];
+         eRHS(2*i+2) += _wg[k]*fy*_sh[4*i+k];
       }
    }
 }
@@ -340,11 +222,11 @@ void Elas2DQ4::BoundaryRHS(const Vect<real_t>& sf)
 {
    for (size_t k=0; k<2; k++) {
       real_t fx=0., fy=0.;
-      for (size_t j=1; j<=2; j++) {
-         fx += _ln->Sh(j,_g[k])*sf(2*_theSide->n()-1);
-         fy += _ln->Sh(j,_g[k])*sf(2*_theSide->n()  );
+      for (size_t i=1; i<=2; i++) {
+         fx += _ln->Sh(i,_g[k])*sf(2*_theSide->n()-1);
+         fy += _ln->Sh(i,_g[k])*sf(2*_theSide->n()  );
       }
-      real_t c=0.5*_w[k]*_ln->getLength();
+      real_t c=0.5*_ww[k]*_ln->getLength();
       for (size_t i=1; i<=2; i++) {
          sRHS(2*i-1) += c*fx*_ln->Sh(i,_g[k]);
          sRHS(2*i  ) += c*fy*_ln->Sh(i,_g[k]);
@@ -353,120 +235,92 @@ void Elas2DQ4::BoundaryRHS(const Vect<real_t>& sf)
 }
 
 
-int Elas2DQ4::SignoriniContact(UserData<real_t>& ud,
-                               real_t            coef)
+void Elas2DQ4::Strain(Vect<real_t>& eps)
 {
-   int ret = 0;
-   real_t g;
-   real_t c=0.5*coef*_ln->getLength();
-   (*_theSide)(1)->setCode(1,0); (*_theSide)(1)->setCode(2,0);
-   (*_theSide)(2)->setCode(1,0); (*_theSide)(2)->setCode(2,0);
-   int c1=_theSide->getCode(1), c2=_theSide->getCode(2);
-   if (c1<0) {
-      g = ud.SurfaceForce(_x[0], c1, _time, 1);
-      if (g>ePrev(1)) {
-         ret = 1;
-         sMat(1,1) += c;
-         sRHS(1) += c*g;
-         (*_theSide)(1)->setCode(1,-1);
-      }
-      g = ud.SurfaceForce(_x[1], c1, _time, 1);
-      if (g>ePrev(3)) {
-         ret = 1;
-         (*_theSide)(2)->setCode(1,-1);
-         sMat(3,3) += c;
-         sRHS(3) += c*g;
-      }
-    }
-    if (c2<0) {
-      g = ud.SurfaceForce(_x[0], c2, _time, 2);
-      if (g>ePrev(2)) {
-         ret = 1;
-         (*_theSide)(1)->setCode(2,-1);
-         sMat(2,2) += c;
-         sRHS(2) += c*g;
-      }
-      g = ud.SurfaceForce(_x[1], c2, _time, 2);
-      if (g>ePrev(4)) {
-         ret = 1;
-         (*_theSide)(2)->setCode(2,-1);
-         sMat(4,4) += c;
-         sRHS(4) += c*g;
-      }
+   eps.setSize(_nb_el,3);
+   mesh_elements(*_theMesh) {
+      size_t ne = The_element.n();
+      size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
+             n3=The_element(3)->n(), n4=The_element(4)->n();
+      Quad4 q(the_element);
+      q.setLocal(Point<real_t>(0.,0.));
+      q.atGauss(1,_sh,_dSh,_wg);
+      eps(ne,1) = (*_u)(n1,1)*_dSh[0].x + (*_u)(n2,1)*_dSh[1].x +
+                  (*_u)(n3,1)*_dSh[2].x + (*_u)(n4,1)*_dSh[3].x;
+      eps(ne,2) = (*_u)(n1,2)*_dSh[0].y + (*_u)(n2,2)*_dSh[1].y +
+                  (*_u)(n3,2)*_dSh[2].y + (*_u)(n4,2)*_dSh[3].y;
+      eps(ne,3) = (*_u)(n1,1)*_dSh[0].y + (*_u)(n2,1)*_dSh[1].y +
+                  (*_u)(n3,1)*_dSh[2].y + (*_u)(n4,1)*_dSh[3].y +
+                  (*_u)(n1,2)*_dSh[0].x + (*_u)(n2,2)*_dSh[1].x +
+                  (*_u)(n3,2)*_dSh[2].x + (*_u)(n4,2)*_dSh[3].x;
    }
-   return ret;
 }
 
 
-void Elas2DQ4::Strain(LocalVect<real_t,3>& eps)
+void Elas2DQ4::Stress(Vect<real_t>& s,
+                      Vect<real_t>& vm)
 {
-    _quad->setLocal(Point<real_t> (0.,0.));
-    eps[0] = ePrev[0]*_quad->DSh(1).x + ePrev[2]*_quad->DSh(2).x +
-             ePrev[4]*_quad->DSh(3).x + ePrev[6]*_quad->DSh(4).x;
-    eps[1] = ePrev[1]*_quad->DSh(1).y + ePrev[3]*_quad->DSh(2).y +
-             ePrev[5]*_quad->DSh(3).y + ePrev[7]*_quad->DSh(4).y;
-    eps[2] = ePrev[0]*_quad->DSh(1).y + ePrev[2]*_quad->DSh(2).y +
-             ePrev[4]*_quad->DSh(3).y + ePrev[6]*_quad->DSh(4).y +
-             ePrev[1]*_quad->DSh(1).x + ePrev[3]*_quad->DSh(2).x +
-             ePrev[5]*_quad->DSh(3).x + ePrev[7]*_quad->DSh(4).x;
+   vm.setSize(_nb_el);
+   s.setSize(_nb_el,3);
+   mesh_elements(*_theMesh) {
+      size_t ne = The_element.n();
+      size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
+             n3=The_element(3)->n(), n4=The_element(4)->n();
+      Quad4 q(the_element);
+      q.setLocal(Point<real_t>(0.,0.));
+      q.atGauss(1,_sh,_dSh,_wg);
+      real_t e, sx, sy, txy, delta;
+      Point<real_t> Du = (*_u)(n1,1)*_dSh[0] + (*_u)(n2,1)*_dSh[1] + (*_u)(n3,1)*_dSh[2] + (*_u)(n4,1)*_dSh[3];
+      Point<real_t> Dv = (*_u)(n1,2)*_dSh[0] + (*_u)(n2,2)*_dSh[1] + (*_u)(n3,2)*_dSh[2] + (*_u)(n4,2)*_dSh[3];
+      e = (*_u)(n1,1)*_dSh[0].y + (*_u)(n2,1)*_dSh[0].y + (*_u)(n3,1)*_dSh[2].y + (*_u)(n4,1)*_dSh[3].y +
+          (*_u)(n1,2)*_dSh[0].x + (*_u)(n2,2)*_dSh[1].x + (*_u)(n3,2)*_dSh[2].x + (*_u)(n4,2)*_dSh[3].x;
+      sx = _E1*Du.x + _E2*Dv.y;
+      sy = _E2*Dv.y + _E3*e;
+      txy = _E6*e;
+      delta = sqrt((sx+sy)*(sx+sy) + 4*(txy*txy-sx*sy));
+      s(ne,1) = 0.5*(sx+sy-delta);
+      s(ne,2) = 0.5*(sx+sy+delta);
+      s(ne,3) = _nu*(sx+sy);
+      vm(ne) = sqrt(0.5*((s(ne,1)-s(ne,2))*(s(ne,1)-s(ne,2)) +
+                         (s(ne,2)-s(ne,3))*(s(ne,2)-s(ne,3)) +
+                         (s(ne,3)-s(ne,1))*(s(ne,3)-s(ne,1))));
+   }
 }
 
 
-void Elas2DQ4::Stress(LocalVect<real_t,3>& s,
-                      real_t&              vm)
+void Elas2DQ4::Stress(Vect<real_t>& sigma,
+                      Vect<real_t>& s,
+                      Vect<real_t>& st)
 {
-    real_t dudx, dvdy, e, sx, sy, txy, delta;
-    _quad->setLocal(Point<real_t> (0.,0.));
-    dudx = ePrev[0]*_quad->DSh(1).x + ePrev[2]*_quad->DSh(2).x +
-           ePrev[4]*_quad->DSh(3).x + ePrev[6]*_quad->DSh(4).x;
-    dvdy = ePrev[1]*_quad->DSh(1).y + ePrev[3]*_quad->DSh(2).y +
-           ePrev[5]*_quad->DSh(3).y + ePrev[7]*_quad->DSh(4).y;
-    e = ePrev[0]*_quad->DSh(1).y + ePrev[2]*_quad->DSh(2).y +
-        ePrev[4]*_quad->DSh(3).y + ePrev[6]*_quad->DSh(4).y +
-        ePrev[1]*_quad->DSh(1).x + ePrev[3]*_quad->DSh(2).x +
-        ePrev[5]*_quad->DSh(3).x + ePrev[7]*_quad->DSh(4).x;
-    sx = _E1*dudx + _E2*dvdy;
-    sy = _E2*dvdy + _E3*e;
-    txy = _E6*e;
-    delta = sqrt((sx+sy)*(sx+sy) + 4*(txy*txy-sx*sy));
-    s[0] = 0.5*(sx+sy-delta);
-    s[1] = 0.5*(sx+sy+delta);
-    s[2] = _nu*(sx+sy);
-    vm = (s[0]-s[1])*(s[0]-s[1]) + (s[1]-s[2])*(s[1]-s[2]) + (s[2]-s[0])*(s[2]-s[0]);
-    vm = sqrt(0.5*vm);
-}
-
-
-void Elas2DQ4::Stress(LocalVect<real_t,3>& sigma,
-                      LocalVect<real_t,3>& s,
-                      real_t&              vm)
-{
-    real_t dudx, dvdy, e, sx, sy, txy, delta;
-    _quad->setLocal(Point<real_t> (0.,0.));
-    dudx = ePrev[0]*_quad->DSh(1).x + ePrev[2]*_quad->DSh(2).x +
-           ePrev[4]*_quad->DSh(3).x + ePrev[6]*_quad->DSh(4).x;
-    dvdy = ePrev[1]*_quad->DSh(1).y + ePrev[3]*_quad->DSh(2).y +
-           ePrev[5]*_quad->DSh(3).y + ePrev[7]*_quad->DSh(4).y;
-    e = ePrev[0]*_quad->DSh(1).y + ePrev[2]*_quad->DSh(2).y +
-        ePrev[4]*_quad->DSh(3).y + ePrev[6]*_quad->DSh(4).y +
-        ePrev[1]*_quad->DSh(1).x + ePrev[3]*_quad->DSh(2).x +
-        ePrev[5]*_quad->DSh(3).x + ePrev[7]*_quad->DSh(4).x;
-    sx = _E1*dudx + _E2*dvdy;
-    sy = _E2*dvdy + _E3*e;
-    txy = _E6*e;
-    delta = sqrt((sx+sy)*(sx+sy) + 4*(txy*txy-sx*sy));
-    s[0] = 0.5*(sx+sy-delta);
-    s[1] = 0.5*(sx+sy+delta);
-    s[2] = _nu*(sx+sy);
-    vm = (s[0]-s[1])*(s[0]-s[1]) + (s[1]-s[2])*(s[1]-s[2]) + (s[2]-s[0])*(s[2]-s[0]);
-    vm = sqrt(0.5*vm);
-    real_t dudy = ePrev[0]*_quad->DSh(1).y + ePrev[2]*_quad->DSh(2).y +
-                  ePrev[4]*_quad->DSh(3).y + ePrev[6]*_quad->DSh(4).y;
-    real_t dvdx = ePrev[1]*_quad->DSh(1).x + ePrev[3]*_quad->DSh(2).x +
-                  ePrev[5]*_quad->DSh(3).x + ePrev[7]*_quad->DSh(4).x;
-    sigma[0] = _lambda*(dudx + dvdy) + _G*dudx;
-    sigma[1] = _lambda*(dudx + dvdy) + _G*dvdy;
-    sigma[2] = 0.5*_G*(dudy + dvdx);
+   sigma.setSize(_nb_el,3);
+   s.setSize(_nb_el,3);
+   st.setSize(_nb_el);
+   mesh_elements(*_theMesh) {
+      size_t ne = The_element.n();
+      size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
+             n3=The_element(3)->n(), n4=The_element(4)->n();
+      Quad4 q(the_element);
+      q.setLocal(Point<real_t>(0.,0.));
+      q.atGauss(1,_sh,_dSh,_wg);
+      Point<real_t> Du = (*_u)(n1,1)*_dSh[0] + (*_u)(n2,1)*_dSh[1] + (*_u)(n3,1)*_dSh[2] + (*_u)(n4,1)*_dSh[3];
+      Point<real_t> Dv = (*_u)(n1,2)*_dSh[0] + (*_u)(n2,2)*_dSh[1] + (*_u)(n3,2)*_dSh[2] + (*_u)(n4,2)*_dSh[3];
+      real_t e = (*_u)(n1,1)*_dSh[0].y + (*_u)(n2,1)*_dSh[1].y +
+                 (*_u)(n3,1)*_dSh[2].y + (*_u)(n4,1)*_dSh[3].y +
+                 (*_u)(n1,2)*_dSh[0].x + (*_u)(n2,2)*_dSh[1].x +
+                 (*_u)(n3,2)*_dSh[2].x + (*_u)(n4,2)*_dSh[3].x;
+      real_t sx = _E1*Du.x+_E2*Dv.y, sy = _E2*Dv.y + _E3*e;
+      real_t txy = _E6*e;
+      real_t delta = sqrt((sx+sy)*(sx+sy) + 4*(txy*txy-sx*sy));
+      s(ne,1) = 0.5*(sx+sy-delta);
+      s(ne,2) = 0.5*(sx+sy+delta);
+      s(ne,3) = _nu*(sx+sy);
+      st(ne) = sqrt(0.5*(s(ne,1)-s(ne,2))*(s(ne,1)-s(ne,2)) +
+                        (s(ne,2)-s(ne,3))*(s(ne,2)-s(ne,3)) +
+                        (s(ne,3)-s(ne,1))*(s(ne,3)-s(ne,1)));
+      sigma(ne,1) = _lambda*(Du.x + Dv.y) + _G*Du.x;
+      sigma(ne,2) = _lambda*(Du.x + Dv.y) + _G*Dv.y;
+      sigma(ne,3) = 0.5*_G*(Du.y + Dv.x);
+   }
 }
 
 } /* namespace OFELI */

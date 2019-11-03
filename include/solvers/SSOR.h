@@ -39,7 +39,7 @@ using std::setw;
 
 
 #include "OFELI_Config.h"
-#include "linear_algebra/Vect.h"
+#include "linear_algebra/Vect_impl.h"
 #include "util/util.h"
 #include "io/output.h"
 
@@ -55,7 +55,7 @@ namespace OFELI {
  *
  */
 
-/** \fn int SSOR(const M_ &A, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler, int verbose)
+/** \fn int SSOR(const M_ &A, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler)
  *  \ingroup Solver
  *  \brief SSOR solver function.
  *  @param [in] A Problem matrix (Instance of abstract class \b M_).
@@ -64,8 +64,6 @@ namespace OFELI {
  *  of the linear system in output (If iterations have succeeded).
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter (0: No output, 1: Output iteration information,
- *  2 and greater : Output iteration information and solution at each iteration.
  *  @return Number of performed iterations,
  *
  * \b Template \b Arguments:
@@ -81,8 +79,7 @@ int SSOR(const M_&       A,
          const Vect<T_>& b,
          Vect<T_>&       x,
          int             max_it,
-         real_t          toler,
-         int             verbose)
+         real_t          toler)
 {
    size_t i, l, k;
    int it;
@@ -117,19 +114,19 @@ int SSOR(const M_&       A,
       err = sqrt(err/size)/nrm;
       x = y;
 
-      if (verbose > 1)
+      if (Verbosity > 1)
          cout << "Iteration: " << setw(4) << it << "  ... Error: " << err << endl;
 
       nrm = x.Norm2();
-      if (verbose > 2)
+      if (Verbosity > 2)
          cout << x;
       if (err < toler) {
-         if (verbose)
+         if (Verbosity)
             cout << "Convergence of the SSOR method after " << it << " iterations." << endl;
          return it;
       }
    }
-   if (verbose)
+   if (Verbosity)
       cout << "No Convergence of the SSOR method after " << it << " iterations." << endl;
    return -it;
 }

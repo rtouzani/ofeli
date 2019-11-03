@@ -36,11 +36,8 @@
 #define __STEKLOV_POINCARE_2DBE_H
 
 #include "mesh/Mesh.h"
-#include "linear_algebra/DMatrix.h"
-#include "solvers/Prec.h"
-#include "solvers/GMRes.h"
 #include "linear_algebra/Vect.h"
-#include "shape_functions/Triang3.h"
+#include "equations/AbsEqua.h"
 
 namespace OFELI {
 /*!
@@ -72,96 +69,69 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class SteklovPoincare2DBE {
+class SteklovPoincare2DBE : virtual public AbsEqua<real_t> {
 
  public:
 
+    using AbsEqua<real_t>::_A;
+    using AbsEqua<real_t>::_u;
+    using AbsEqua<real_t>::_b;
+    using AbsEqua<real_t>::_uu;
+    using AbsEqua<real_t>::_sf;
+
 /// \brief Default Constructor
-/// @param [in] ext Boolean variable to say if the domain is external (true) or internal (false: Default value).
-    SteklovPoincare2DBE(bool ext=false)
-   { 
-      _ext = -1;
-      if (ext)
-         _ext = 1; 
-   }
+/// @param [in] ext Boolean variable to say if the domain is external (true) or internal (false: Default v,alue).
+    SteklovPoincare2DBE();
 
 /** \brief Constructor using mesh data.
- *  \details This constructor calls member function setMesh.
- *  @param [in] mesh Reference to mesh instance.
- *  @param [in] ext Boolean variable to say if the domain is external (true) or internal (false: Default value).
+ *  @param [in] ms Reference to Mesh instance.
  */
-    SteklovPoincare2DBE(const Mesh& mesh,
-                              bool  ext=false);
+    SteklovPoincare2DBE(Mesh& ms);
 
 /** \brief Constructor that solves the Steklov Poincare problem.
  *  \details This constructor calls member function setMesh and Solve.
  *  @param [in] mesh Reference to mesh instance.
- *  @param [in] g Vect instance that contains imposed solution on the boundary
+ *  @param [in] u Vect instance that contains imposed solution on the boundary
  *  @param [in] b Vect instance that contains the left hand side in input and the solution in output
  *  @param [in] ext Boolean variable to say if the domain is external (true) or internal (false: Default value).
  */
-    SteklovPoincare2DBE(const Mesh&         mesh,
-                        const Vect<real_t>& g,
-                              Vect<real_t>& b,
-                              bool          ext=false);
+    SteklovPoincare2DBE(Mesh&         ms,
+                        Vect<real_t>& u);
 
 /// \brief Destructor
-    ~SteklovPoincare2DBE() { }
+    ~SteklovPoincare2DBE();
 
 /// \brief set Mesh instance
-/// @param [in] mesh Mesh instance
-/// @param [in] ext Boolean variable to say if the domain is external (true) or internal (false: Default value).
-    void setMesh(const Mesh& mesh,
-                       bool  ext=false);
+/// @param [in] ms Mesh instance
+    void setMesh(Mesh& ms);
 
-/** \brief Build equation left and right-hand sides for <tt>P<sub>0</sub></tt> (piecewise
- *  constant) approximation.
- *  \details This member function is to be used if the constructor using <tt>mesh</tt>,
- *  <tt>b</tt> and <tt>g</tt> has been used.
+/** \brief Choose domain of the Laplace equation as exterior one
+ *  \details By default the domain where the Laplace equation is considered is 
+ *  the interior domain, <i>i.e.</i> bounded. This function chooses 
+ *  the exterior of a bounded domain
  */
-    void Solve();
+    void setExterior();
 
-/** \brief Build equation left and right-hand sides for <tt>P<sub>0</sub></tt>
- *  (piecewise constant) approximation
- *  \details This member function is to be used if the constructor using \c mesh has been used.
- *  It concerns cases where the imposed boundary condition is given by sides
- *  @param [in] g Vector that contains imposed solution on the boundary
- *  @param [in] b Vector that contains the left hand side in input and the solution in output
+/** \brief Solve Setklov-Poincare problem
+ *  \details This member function builds and solves the Steklov-Poincare equation.
  */
-    int Solve(      Vect<real_t>& b,
-              const Vect<real_t>& g);
+    int run();
+
 
  private:
 
-   int                        _ext;
-   const Mesh                 *_theMesh;
-   size_t                     _nb_eq;
-   Vect<Point<real_t> >       _nn, _ttg, _center;
-   Vect<real_t>               _length;
-   real_t                     _h;
-   SpMatrix<real_t>           _A;
+   int                  _ext;
+   Vect<Point<real_t> > _nn, _ttg, _center;
+   Vect<real_t>         _length;
+   real_t               _h;
 
 // Return integral of the Green function over the side sd at point x 
-   inline real_t single_layer(      size_t         j,
-                               const Point<real_t>& z) const
-   {
-      real_t t = z.NNorm();
-      if (t < OFELI_EPSMCH)
-         return -0.25/OFELI_PI*_h*I1(0.5*_h);
-      else
-         return -0.125/OFELI_PI*_h*I2(0.25*_h*_h,z*_ttg(j),t);
-   }
+   real_t single_layer(size_t               j,
+                       const Point<real_t>& z) const;
 
 // Return integral of the normal derivative of the Green function over the side sd at point x
-   inline real_t double_layer(      size_t         j,
-                               const Point<real_t>& z) const
-   {
-      real_t t = _nn(j)*z;
-      if (fabs(t) < OFELI_EPSMCH)
-         return 0;
-      else
-         return -0.25/OFELI_PI*t*I3(0.25*_h*_h,z*_ttg(j),z.NNorm()); 
-   }
+   real_t double_layer(size_t               j,
+                       const Point<real_t>& z) const;
 
 // Return integral of log|a*t| over (-1,1)
    inline real_t I1(real_t a) const { return 2*log(a)-2; }
@@ -185,7 +155,9 @@ class SteklovPoincare2DBE {
    }
 
 // Calculate the normal to sides and their lengths
-   void _util();
+   void util();
+
+   void build() { }
 };
 
 /*! @} End of Doxygen Groups */

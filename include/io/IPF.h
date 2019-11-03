@@ -33,11 +33,7 @@
 #define __IPF_H
 
 #include "OFELI_Config.h"
-#include <iostream>
-#include <iomanip>
-#include <string>
 #include <complex>
-using std::string;
 using std::complex;
 
 namespace OFELI {
@@ -101,8 +97,8 @@ class IPF {
 /// \brief Display acquired parameters
     real_t getDisplay();
 
-/// \brief Return parameter read using keyword \b Verbose.
-    int getVerbose() const { return _verbose; }
+/// \brief Return parameter read using keyword \b Verbose
+    int getVerbose() { return _verbose; }
 
 /// \brief Return parameter read using keyword \b Output.
 /// \details This parameter can be used to control output behavior in a program.
@@ -219,7 +215,7 @@ class IPF {
  *  @param [in] def Default value: Value to assign if the sought parameter is not found
  */
     real_t getDouble(const string& label,
-                           real_t  def) const;
+                     real_t        def) const;
 
 /// \brief Return parameter corresponding to a given label, when its value is a complex number
 /// @param [in] label Label that identifies the complex number (read from input file)
@@ -232,7 +228,7 @@ class IPF {
  *  @param [in] def Default value: Value to assign if the sought parameter is not found
  */
     complex_t getComplex(const string&   label,
-                               complex_t def) const;
+                         complex_t       def) const;
 
 /** \brief check if the project file contains a given parameter
  *  @param [in] label Label that identifies the label to seek in file
@@ -247,8 +243,8 @@ class IPF {
  *  @param [in] a Vector that contain the array. The vector is properly resized before filling.
  *  @remark If this label is not found an error message is displayed.
  */
-    void get(const string&       label,
-                   Vect<real_t>& a) const;
+    void get(const string& label,
+             Vect<real_t>& a) const;
 
 /** \brief Return an array entry for a given label
  *  @param [in] label Label that identifies the array (read from input file).
@@ -256,7 +252,7 @@ class IPF {
  *  @remark If this label is not found an error message is displayed and program stops.
  */
     real_t getArraySize(const string& label,
-                              size_t  j) const;
+                        size_t        j) const;
 
 /** \brief Return integer parameter corresponding to a given label
  *  @param [in] label Label that identifies the integer number (read from input file).
@@ -265,7 +261,7 @@ class IPF {
  *  Note: This member function can be used instead of getInteger
  */
     void get(const string& label,
-                   int&    a)    const;
+             int&          a)    const;
 
 /** \brief Return real parameter corresponding to a given label
  *  @param [in] label Label that identifies the real (real_t) number (read from input file).
@@ -274,15 +270,15 @@ class IPF {
  *  Note: This member function can be used instead of getReal_T
  */
     void get(const string& label,
-                   real_t& a) const;
+             real_t&       a) const;
 
 /** \brief Return complex parameter corresponding to a given label
  *  @param [in] label Label that identifies the complex number (read from input file).
  *  @param [out] a Returned value.
  *  If this label is not found an error message is displayed and program stops.
  */
-    void get(const string&    label,
-                   complex_t& a) const;
+    void get(const string& label,
+             complex_t&    a) const;
 
 /** \brief Return string parameter corresponding to a given label
  *  @param [in] label Label that identifies the atring (read from input file).
@@ -292,7 +288,7 @@ class IPF {
  *  Note: This member function can be used instead of getString
  */
     void get(const string& label,
-                   string& a) const;
+             string&       a) const;
 
 /// \brief Return parameter read using keyword \b Project.
 /// \details This parameter can be used to read a project's name.

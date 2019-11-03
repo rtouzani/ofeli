@@ -35,6 +35,7 @@
 #include "equations/solid/Elas2DT3.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
@@ -43,71 +44,22 @@ Elas2DT3::Elas2DT3()
 }
 
 
-Elas2DT3::Elas2DT3(const Element* el)
-{
-   set(el);
-}
-
-
-Elas2DT3::Elas2DT3(const Side* sd)
-{
-   set(sd);
-}
-
-
-Elas2DT3::Elas2DT3(const Element*      el,
-                   const Vect<real_t>& u,
-                         real_t        time)
-{
-   _time  = time;
-   set(el);
-   ElementVector(u);
-}
-
-
-Elas2DT3::Elas2DT3(const Element*      el,
-                   const Vect<real_t>& u,
-                         real_t        time,
-                         real_t        deltat,
-                         int           scheme)
-{
-   _time  = time;
-   set(el);
-   ElementVector(u);
-   _time_step = deltat;
-   setTimeIntegration(scheme);
-}
-
-
-Elas2DT3::Elas2DT3(const Side*         sd,
-                   const Vect<real_t>& u,
-                         real_t        time)
-{
-   _time  = time;
-   set(sd);
-   SideVector(u);
-}
-
-
-Elas2DT3::Elas2DT3(const Side*         sd,
-                   const Vect<real_t>& u,
-                   real_t              time,
-                   real_t              deltat,
-                   int                 scheme)
-{
-   _time  = time;
-   set(sd);
-   SideVector(u);
-   _time_step = deltat;
-   setTimeIntegration(scheme);
-}
-
-
 Elas2DT3::Elas2DT3(Mesh& ms) 
          : Equation<real_t,3,6,2,4>(ms)
 {
    _equation_name = "Linearized Elasticity";
    _finite_element = "2-D, 3-Node Triangles (P1)";
+   _terms = DEVIATORIC|DILATATION|BODY_FORCE;
+}
+
+
+Elas2DT3::Elas2DT3(Mesh&         ms,
+                   Vect<real_t>& u) 
+         : Equation<real_t,3,6,2,4>(ms,u)
+{
+   _equation_name = "Linearized Elasticity";
+   _finite_element = "2-D, 3-Node Triangles (P1)";
+   _terms = DEVIATORIC|DILATATION|BODY_FORCE;
 }
 
 
@@ -116,29 +68,27 @@ Elas2DT3::~Elas2DT3() { }
 
 void Elas2DT3::set(const Element* el)
 {
-   _nb_dof = 2;
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    setMaterial();
    PlaneStrain();
    Triang3 tr(el);
-   _area = tr.getArea();
-   _dSh(1) = tr.DSh(1);
-   _dSh(2) = tr.DSh(2);
-   _dSh(3) = tr.DSh(3);
+   _el_geo.area = tr.getArea();
+   _dSh = tr.DSh();
    ElementNodeCoordinates();
-   eMat = 0; eA0 = 0; eA1 = 0; eA2 = 0;
+   ElementNodeVector(*_u,_eu);
+   eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }
 
 
 void Elas2DT3::set(const Side* sd)
 {
-   _nb_dof = 2;
-   Init(sd);
+   _theElement = nullptr, _theSide = sd;
    Line2 ln(sd);
-   _length = ln.getLength();
+   _el_geo.length = ln.getLength();
    SideNodeCoordinates();
-   sMat = 0;
+   SideNodeVector(*_u,_su);
+   sA0 = 0;
    sRHS = 0;
 }
 
@@ -202,9 +152,9 @@ void Elas2DT3::PlaneStress()
 }
 
 
-void Elas2DT3::LMassToLHS(real_t coef)
+void Elas2DT3::LMass(real_t coef)
 {
-   real_t c=_rho*coef*_area*OFELI_THIRD;
+   real_t c=_rho*coef*_el_geo.area*OFELI_THIRD;
    for (size_t i=1; i<=3; i++) {
       eA2(2*i-1,2*i-1) += c;
       eA2(2*i  ,2*i  ) += c;
@@ -212,19 +162,9 @@ void Elas2DT3::LMassToLHS(real_t coef)
 }
 
 
-void Elas2DT3::LMassToRHS(real_t coef)
+void Elas2DT3::Mass(real_t coef)
 {
-   real_t c=_rho*coef*_area*OFELI_THIRD;
-   for (size_t i=1; i<=3; i++) {
-      eRHS(2*i-1) += c*ePrev(2*i-1);
-      eRHS(2*i  ) += c*ePrev(2*i  );
-   }
-}
-
-
-void Elas2DT3::MassToLHS(real_t coef)
-{
-   real_t c=0.5*OFELI_SIXTH*_area*_rho*coef;
+   real_t c=0.5*OFELI_SIXTH*_el_geo.area*_rho*coef;
    for (size_t i=1; i<=3; i++) {
       for (size_t j=1; j<=3; j++) {
          eA2(2*i-1,2*j-1) += c;
@@ -236,54 +176,16 @@ void Elas2DT3::MassToLHS(real_t coef)
 }
 
 
-void Elas2DT3::MassToRHS(real_t coef)
-{
-   real_t c=_rho*coef*_area*OFELI_THIRD;
-   real_t d=0.5*c;
-   eRHS(1) += c*ePrev(1) + d*(ePrev(3) + ePrev(5));
-   eRHS(2) += c*ePrev(2) + d*(ePrev(4) + ePrev(6));
-   eRHS(3) += c*ePrev(3) + d*(ePrev(1) + ePrev(5));
-   eRHS(4) += c*ePrev(4) + d*(ePrev(2) + ePrev(6));
-   eRHS(5) += c*ePrev(5) + d*(ePrev(1) + ePrev(3));
-   eRHS(6) += c*ePrev(6) + d*(ePrev(2) + ePrev(4));
-}
-
-
 void Elas2DT3::Deviator(real_t coef)
 {
-_G = 1.;
-   real_t c=_G*_area*coef;
+   real_t c=_G*_el_geo.area*coef;
    for (size_t i=1; i<=3; i++) {
-      Point<real_t> a=c*_dSh(i);
+      Point<real_t> a=c*_dSh[i-1];
       for (size_t j=1; j<=3; j++) {
-         eA0(2*i-1,2*j-1) += 2*a.x*_dSh(j).x + a.y*_dSh(j).y;
-         eA0(2*i-1,2*j  ) += a.y*_dSh(j).x;
-         eA0(2*i  ,2*j-1) += a.x*_dSh(j).y;
-         eA0(2*i  ,2*j  ) += 2*a.y*_dSh(j).y + a.x*_dSh(j).x;
-      }
-   }
-   /*
-   for (size_t i=1; i<=3; i++) {
-      for (size_t j=1; j<=3; j++) {
-         eA0(2*i-1,2*j-1) += _area*_dSh(i)*_dSh(j);
-         eA0(2*i  ,2*j  ) += _area*_dSh(i)*_dSh(j);
-      }
-      }*/
-   eMat = eA0;
-//cout<<eMat;
-}
-
-
-void Elas2DT3::DeviatorToRHS(real_t coef)
-{
-   real_t c = _G*_area*coef;
-   for (size_t i=1; i<=3; i++) {
-      Point<real_t> a=c*_dSh(i);
-      for (size_t j=1; j<=3; j++) {
-         eRHS(2*i-1) -= (2*a.x*_dSh(j).x + a.y*_dSh(j).y)*ePrev(2*j-1)
-                      + (a.y*_dSh(j).x)*ePrev(2*j);
-         eRHS(2*i  ) -= (a.x*_dSh(j).y)*ePrev(2*j-1)
-                      + (2*a.y*_dSh(j).y + a.x*_dSh(j).x)*ePrev(2*j);
+         eA0(2*i-1,2*j-1) += 2*a.x*_dSh[j-1].x + a.y*_dSh[j-1].y;
+         eA0(2*i-1,2*j  ) += a.y*_dSh[j-1].x;
+         eA0(2*i  ,2*j-1) += a.x*_dSh[j-1].y;
+         eA0(2*i  ,2*j  ) += 2*a.y*_dSh[j-1].y + a.x*_dSh[j-1].x;
       }
    }
 }
@@ -291,77 +193,31 @@ void Elas2DT3::DeviatorToRHS(real_t coef)
 
 void Elas2DT3::Dilatation(real_t coef)
 {
-   real_t c=_lambda*_area*coef;
+   real_t c=_lambda*_el_geo.area*coef;
    for (size_t i=1; i<=3; i++) {
-      Point<real_t> a=c*_dSh(i);
+      Point<real_t> a=c*_dSh[i-1];
       for (size_t j=1; j<=3; j++) {
-         eA0(2*i-1,2*j-1) += a.x*_dSh(j).x;
-         eA0(2*i-1,2*j  ) += a.x*_dSh(j).y;
-         eA0(2*i  ,2*j-1) += a.y*_dSh(j).x;
-         eA0(2*i  ,2*j  ) += a.y*_dSh(j).y;
-      }
-   }
-   eMat = eA0;
-}
-
-
-void Elas2DT3::DilatationToRHS(real_t coef)
-{
-   real_t c=_lambda*_area*coef;
-   for (size_t i=1; i<=3; i++) {
-      Point<real_t> a = c*_dSh(i);
-      for (size_t j=1; j<=3; j++) {
-         eRHS(2*i-1) -= a.x*_dSh(j).x * ePrev(2*j-1) + a.x*_dSh(j).y * ePrev(2*j);
-         eRHS(2*i  ) -= a.y*_dSh(j).x * ePrev(2*j-1) + a.y*_dSh(j).y * ePrev(2*j);
+         eA0(2*i-1,2*j-1) += a.x*_dSh[j-1].x;
+         eA0(2*i-1,2*j  ) += a.x*_dSh[j-1].y;
+         eA0(2*i  ,2*j-1) += a.y*_dSh[j-1].x;
+         eA0(2*i  ,2*j  ) += a.y*_dSh[j-1].y;
       }
    }
 }
 
 
-void Elas2DT3::BodyRHS(UserData<real_t>& ud)
+void Elas2DT3::BodyRHS(const Vect<real_t>& f)
 {
    for (size_t k=1; k<=3; k++) {
-      real_t fx = ud.BodyForce(_x[k-1], _time, 1),
-             fy = ud.BodyForce(_x[k-1], _time, 2);
-      eRHS(2*k-1) += OFELI_THIRD*_area*fx;
-      eRHS(2*k  ) += OFELI_THIRD*_area*fy;
-   }
-}
-
-
-void Elas2DT3::BodyRHS(const Vect<real_t>& f,
-                             int           opt)
-{
-   if (opt==LOCAL_ARRAY) {
-     for (size_t k=1; k<=3; k++) {
-        eRHS(2*k-1) += OFELI_THIRD*_area*f((*_theElement)(k)->n(),1);
-        eRHS(2*k  ) += OFELI_THIRD*_area*f((*_theElement)(k)->n(),2);
-     }
-   }
-   else {
-     for (size_t k=1; k<=3; k++) {
-        eRHS(2*k-1) += OFELI_THIRD*_area*f(k,1);
-        eRHS(2*k  ) += OFELI_THIRD*_area*f(k,2);
-     }
-   }
-}
-
-
-void Elas2DT3::BoundaryRHS(UserData<real_t>& ud)
-{
-   real_t c = 0.5*_length;
-   for (size_t k=1; k<=2; k++) {
-      if (_theSide->getCode(1) != CONTACT)
-         sRHS(2*k-1) += c*ud.SurfaceForce(_x[k-1],_theSide->getCode(1),_time,1);
-      if (_theSide->getCode(2) != CONTACT)
-         sRHS(2*k  ) += c*ud.SurfaceForce(_x[k-1],_theSide->getCode(2),_time,2);
+      eRHS(2*k-1) += OFELI_THIRD*_el_geo.area*f(k,1);
+      eRHS(2*k  ) += OFELI_THIRD*_el_geo.area*f(k,2);
    }
 }
 
 
 void Elas2DT3::BoundaryRHS(const Vect<real_t>& f)
 {
-   real_t c = 0.5*_length;
+   real_t c = 0.5*_el_geo.length;
    real_t fx = c*f(_theSide->n(),1);
    real_t fy = c*f(_theSide->n(),2);
    if (_theSide->getCode(1) != CONTACT) {
@@ -378,93 +234,49 @@ void Elas2DT3::BoundaryRHS(const Vect<real_t>& f)
 void Elas2DT3::Periodic(real_t coef)
 {
    for (size_t i=1; i<=2; i++) {
-      real_t c = 0.5*_length*coef;
+      real_t c = 0.5*_el_geo.length*coef;
       if (_theSide->getCode(1) == PERIODIC_A)
-         sMat(2*i-1,2*i-1) += c;
+         sA0(2*i-1,2*i-1) += c;
       else if (_theSide->getCode(1) == PERIODIC_B)
-         sMat(2*i-1,2*i-1) -= c;
+         sA0(2*i-1,2*i-1) -= c;
       if (_theSide->getCode(2) == PERIODIC_A)
-         sMat(2*i  ,2*i  ) += c;
+         sA0(2*i  ,2*i  ) += c;
       else if (_theSide->getCode(2) == PERIODIC_B)
-         sMat(2*i  ,2*i  ) -= c;
+         sA0(2*i  ,2*i  ) -= c;
    }
 }
 
 
-int Elas2DT3::SignoriniContact(UserData<real_t>& ud,
-                               real_t            coef)
-{
-    int ret = 0;
-    real_t g, c=0.5*coef*_length;
-    (*_theSide)(1)->setCode(1,0); (*_theSide)(1)->setCode(2,0);
-    (*_theSide)(2)->setCode(1,0); (*_theSide)(2)->setCode(2,0);
-    int c1=_theSide->getCode(1);
-    if (c1<0) {
-       g = ud.SurfaceForce(_x[0], c1, _time, 1);
-       if (g>ePrev(1)) {
-          ret = 1;
-          sMat(1,1) += c;
-          sRHS(1) += c*g;
-          (*_theSide)(1)->setCode(1,-1);
-      }
-      g = ud.SurfaceForce(_x[1], c1, _time, 1);
-      if (g > ePrev(3)) {
-         ret = 1;
-         (*_theSide)(2)->setCode(1,-1);
-         sMat(3,3) += c;
-         sRHS(3) += c*g;
-      }
-    }
-    int c2=_theSide->getCode(2);
-    if (c2<0) {
-       g = ud.SurfaceForce(_x[0], c2, _time, 2);
-       if (g>ePrev(2)) {
-          ret = 1;
-          (*_theSide)(1)->setCode(2,-1);
-          sMat(2,2) += c;
-          sRHS(2) += c*g;
-      }
-      g = ud.SurfaceForce(_x[1], c2, _time, 2);
-      if (g>ePrev(4)) {
-         ret = 1;
-         (*_theSide)(2)->setCode(2,-1);
-         sMat(4,4) += c;
-         sRHS(4) += c*g;
-      }
-    }
-    return ret;
-}
-
-
-int Elas2DT3::SignoriniContact(Vect<real_t>& f,
-                               real_t        coef)
+int Elas2DT3::Contact(real_t coef)
 {
    int ret = 0;
-   real_t c=0.5*coef*_length;
-   real_t fx=f(_theSide->n(),1), fy=f(_theSide->n(),2);
-   if (_theSide->getCode(1) == CONTACT) {
-      if (fx > ePrev(1)) {
+   real_t c=0.5*coef*_el_geo.length;
+   if (_cd==nullptr)
+      throw OFELIException("In Elas2DT3::Contact(coef): No contact distance provided.");
+   real_t dx=(*_cd)(_theSide->n(),1), dy=(*_cd)(_theSide->n(),2);
+   if (_theSide->getCode(1) == CONTACT_BC) {
+      if (dx > (*_u)((*_theSide)(1)->n(),1)) {
          ret = 1;
-         sMat(1,1) += c;
-         sRHS(1) += c*fx;
+         sA0(1,1) += c;
+         sRHS(1) += c*dx;
       }
-      if (fx > ePrev(3)) {
+      if (dx > (*_u)((*_theSide)(2)->n(),1)) {
          ret = 1;
-         sMat(3,3) += c;
-         sRHS(3) += c*fx;
+         sA0(3,3) += c;
+         sRHS(3) += c*dx;
       }
    }
 
-   if (_theSide->getCode(2) == CONTACT) {
-      if (fy > ePrev(2)) {
+   if (_theSide->getCode(2) == CONTACT_BC) {
+      if (dy > (*_u)((*_theSide)(1)->n(),2)) {
          ret = 1;
-         sMat(2,2) += c;
-         sRHS(2) += c*fy;
+         sA0(2,2) += c;
+         sRHS(2) += c*dy;
       }
-      if (fy > ePrev(4)) {
+      if (dy > (*_u)((*_theSide)(2)->n(),2)) {
          ret = 1;
-         sMat(4,4) += c;
-         sRHS(4) += c*fy;
+         sA0(4,4) += c;
+         sRHS(4) += c*dy;
      }
    }
    return ret;
@@ -473,69 +285,90 @@ int Elas2DT3::SignoriniContact(Vect<real_t>& f,
 
 void Elas2DT3::Reaction(Vect<real_t>& r)
 {
+   r.setSize(_nb_sides,2);
    size_t n1, n2;
-   Deviator();
-   Dilatation();
-   for (size_t s=1; s<=3; s++) {
-      Side *sd = _theElement->getPtrSide(s);
-      size_t t = (s+1)%3;
-      if (sd) {
-	 n1 = sd->getNodeLabel(1);
-         n2 = sd->getNodeLabel(2);
-         if (sd->getCode(1)==CONTACT) {
-            r(n1,1) += eMat(2*s-1,2*s-1)*ePrev(2*s-1) +  eMat(2*s-1,2*t-1)*ePrev(2*t-1);
-            r(n2,1) += eMat(2*t-1,2*s-1)*ePrev(2*s-1) +  eMat(2*t-1,2*t-1)*ePrev(2*t-1);
-         }
-         if (sd->getCode(2)==CONTACT) {
-            r(n1,2) += eMat(2*s  ,2*s  )*ePrev(2*s  ) +  eMat(2*s  ,2*t  )*ePrev(2*t  );
-            r(n2,2) += eMat(2*t  ,2*s  )*ePrev(2*s  ) +  eMat(2*t  ,2*t  )*ePrev(2*t  );
+   mesh_elements(*_theMesh) {
+      set(the_element);
+      Deviator();
+      Dilatation();
+      for (size_t s=1; s<=3; s++) {
+         Side *sd = _theElement->getPtrSide(s);
+         size_t t = (s+1)%3;
+         if (sd) {
+            n1 = (*sd)(1)->n(), n2 = (*sd)(2)->n();
+            real_t u1 = (*_u)((*_theSide)(1)->n(),1), u2 = (*_u)((*_theSide)(2)->n(),1);
+            real_t v1 = (*_u)((*_theSide)(1)->n(),2), v2 = (*_u)((*_theSide)(2)->n(),2);
+            if (sd->getCode(1)==CONTACT) {
+               r((*sd)(1)->n(),1) += eA0(2*s-1,2*s-1)*u1 + eA0(2*s-1,2*t-1)*u2;
+               r((*sd)(2)->n(),1) += eA0(2*t-1,2*s-1)*u1 + eA0(2*t-1,2*t-1)*u2;
+            }
+            if (sd->getCode(2)==CONTACT) {
+               r((*sd)(1)->n(),2) += eA0(2*s  ,2*s  )*v1 + eA0(2*s  ,2*t  )*v2;
+               r((*sd)(2)->n(),2) += eA0(2*t  ,2*s  )*v1 + eA0(2*t  ,2*t  )*v2;
+            }
          }
       }
    }
 }
 
 
-void Elas2DT3::ContactPressure(const Vect<real_t>&  f,
-                                     real_t         penal,
-                                     Point<real_t>& p)
+void Elas2DT3::ContactPressure(const Vect<real_t>& f,
+                               real_t              penal,
+                               Point<real_t>&      p)
 {
    p = 0;
    real_t ff = f(_theSide->n(),1);
    if (_theSide->getCode(1)==CONTACT) {
-      if (ff>=ePrev(1) && ff>=ePrev(3))
-         p.x = penal*(f(_theSide->n(),1)-0.5*(ePrev(1)+ePrev(3)));
+      if (ff>=_eu(1) && ff>=_eu(3))
+         p.x = penal*(f(_theSide->n(),1)-0.5*(_eu(1)+_eu(3)));
    }
    ff = f(_theSide->n(),2);
    if (_theSide->getCode(2)==CONTACT) {
-      if (ff>=ePrev(2) && ff>=ePrev(4))
-         p.y = penal*(f(_theSide->n(),2)-0.5*(ePrev(2)+ePrev(4)));
+     if (ff>=_su(2) && ff>=_su(4))
+         p.y = penal*(f(_theSide->n(),2)-0.5*(_su(2)+_su(4)));
    }
 }
 
 
 void Elas2DT3::Strain(Vect<real_t>& eps)
 {
-    eps[0] = ePrev[0]*_dSh(1).x + ePrev[2]*_dSh(2).x + ePrev[4]*_dSh(3).x;
-    eps[1] = ePrev[1]*_dSh(1).y + ePrev[3]*_dSh(2).y + ePrev[5]*_dSh(3).y;
-    eps[2] = ePrev[0]*_dSh(1).y + ePrev[2]*_dSh(2).y + ePrev[4]*_dSh(3).y +
-             ePrev[1]*_dSh(1).x + ePrev[3]*_dSh(2).x + ePrev[5]*_dSh(3).x;
+   eps.setSize(_nb_el,3);
+   mesh_elements(*_theMesh) {
+     size_t ne = The_element.n();
+      size_t n1=The_element(1)->n(), n2=The_element(2)->n(), n3=The_element(3)->n();
+      Triang3 tr(the_element);
+      _dSh = tr.DSh();
+      eps(ne,1) = (*_u)(n1,1)*_dSh[0].x + (*_u)(n2,1)*_dSh[1].x + (*_u)(n3,1)*_dSh[2].x;
+      eps(ne,2) = (*_u)(n1,2)*_dSh[0].y + (*_u)(n2,2)*_dSh[1].y + (*_u)(n3,2)*_dSh[2].y;
+      eps(ne,3) = (*_u)(n1,1)*_dSh[0].y + (*_u)(n2,1)*_dSh[1].y + (*_u)(n3,1)*_dSh[2].y +
+                  (*_u)(n1,2)*_dSh[0].x + (*_u)(n2,2)*_dSh[1].x + (*_u)(n3,2)*_dSh[2].x;
+   }
 }
 
 
 void Elas2DT3::Stress(Vect<real_t>& s,
-                      real_t&       vm)
+                      Vect<real_t>& vm)
 {
-    real_t e1 = ePrev[0]*_dSh(1).x + ePrev[2]*_dSh(2).x + ePrev[4]*_dSh(3).x,
-           e2 = ePrev[1]*_dSh(1).y + ePrev[3]*_dSh(2).y + ePrev[5]*_dSh(3).y,
-           e3 = ePrev[0]*_dSh(1).y + ePrev[2]*_dSh(2).y + ePrev[4]*_dSh(3).y +
-                ePrev[1]*_dSh(1).x + ePrev[3]*_dSh(2).x + ePrev[5]*_dSh(3).x;
-    real_t sx=_E1*e1+_E2*e2, sy=_E2*e2+_E3*e3;
-    real_t txy=_E6*e3;
-    real_t delta=sqrt((sx+sy)*(sx+sy)+4*(txy*txy-sx*sy));
-    s[0] = 0.5*(sx+sy-delta);
-    s[1] = 0.5*(sx+sy+delta);
-    vm = (s[0]-s[1])*(s[0]-s[1]) + (s[1]-s[2])*(s[1]-s[2]) + (s[2]-s[0])*(s[2]-s[0]);
-    vm = sqrt(0.5*vm);
+   s.setSize(_nb_el,2);
+   vm.setSize(_nb_el);
+   mesh_elements(*_theMesh) {
+      size_t ne = The_element.n();
+      size_t n1=The_element(1)->n(), n2=The_element(2)->n(), n3=The_element(3)->n();
+      Triang3 tr(the_element);
+      _dSh = tr.DSh();
+      real_t e1 = (*_u)(n1,1)*_dSh[0].x + (*_u)(n2,1)*_dSh[1].x + (*_u)(n3,1)*_dSh[2].x;
+      real_t e2 = (*_u)(n1,2)*_dSh[0].y + (*_u)(n2,2)*_dSh[1].y + (*_u)(n3,2)*_dSh[2].y;
+      real_t e3 = (*_u)(n1,1)*_dSh[0].y + (*_u)(n2,1)*_dSh[1].y + (*_u)(n3,1)*_dSh[2].y +
+                  (*_u)(n1,2)*_dSh[0].x + (*_u)(n2,2)*_dSh[1].x + (*_u)(n3,2)*_dSh[2].x;
+      real_t sx=_E1*e1+_E2*e2, sy=_E2*e2+_E3*e3;
+      real_t txy=_E6*e3;
+      real_t delta=sqrt((sx+sy)*(sx+sy)+4*(txy*txy-sx*sy));
+      real_t s1=0.5*(sx+sy-delta), s2=0.5*(sx+sy-delta);
+      //      real_t s3=0.5*(sx+sy-delta);
+      s(ne,1) = s1;
+      s(ne,2) = s2;
+      vm(ne) = sqrt(0.5*((s1-s2)*(s1-s2) + s2*s2 + s1*s2));
+   }
 }
 
 } /* namespace OFELI */

@@ -5,11 +5,9 @@
    <date></date>
    <author></author>
 </info>
-<Project name="proj-10">
-   <verbose value="1"/>
-   <output value="1"/>
-   <plot value="1"/>
-   <parameter label="wave_nb" value="7.024814731"/>
-   <mesh_file value="proj-10.m"/>
+<Project name="proj">
+   <verbose value="3"/>
+   <parameter label="wave_nb" value="2.23606798"/>
+   <mesh_file value="proj.m"/>
 </Project>
 </OFELI_File>

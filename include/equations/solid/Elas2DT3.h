@@ -35,7 +35,6 @@
 #ifndef __ELAS2DT3_H
 #define __ELAS2DT3_H
 
-
 #include "equations/solid/Equa_Solid.h"
 
 namespace OFELI {
@@ -64,7 +63,9 @@ namespace OFELI {
 class Elas2DT3 : public Equa_Solid<real_t,3,6,2,4>
 {
 
- public :
+ public:
+
+    using Equa_Solid<real_t,3,6,2,4>::run;
 
 /// \brief Default Constructor.
 /// \details Constructs an empty equation.
@@ -74,77 +75,12 @@ class Elas2DT3 : public Equa_Solid<real_t,3,6,2,4>
 /// @param [in] ms Mesh instance
     Elas2DT3(Mesh& ms);
 
-/// \brief Constructor using element data
-/// @param el Pointer to Element instance
-    Elas2DT3(const Element* el);
-
-/// \brief Constructor using side data
-/// @param sd Pointer to Side instance
-    Elas2DT3(const Side* sd);
-
-/** \brief Constructor using element, previous time solution <tt>u</tt> and time value
- *  @param [in] el Pointer to element.
- *  @param [in] u Vect instance that contains solution at previous time step.
- *  @param [in] time Current time value [Default: <tt>0</tt>].
- */
-    Elas2DT3(const Element*      el,
-             const Vect<real_t>& u,
-                   real_t        time=0.);
-
-/** \brief Constructor for an element (transient case) with specification of time integration scheme.
- *  @param [in] el Pointer to element.
- *  @param [in] u Vect instance that contains solution at previous time step.
- *  @param [in] time Current time value.
- *  @param [in] deltat Time step.
- *  @param [in] scheme Time Integration Scheme: To be chosen among the enumerated values:
- *  <ul>
- *     <li><tt>FORWARD_EULER</tt>: Forward Euler scheme
- *     <li><tt>BACKWARD_EULER</tt>: Backward Euler scheme,
- *     <li><tt>CRANK_NICOLSON</tt>: Crank-Nicolson Euler scheme.
- *  </ul>
- */
-    Elas2DT3(const Element*      el,
-             const Vect<real_t>& u,
-                   real_t        time,
-                   real_t        deltat,
-                   int           scheme);
-
-/** \brief Constructor using side, previous time solution <tt>u</tt> and time value.
- *  @param [in] sd Pointer to side.
- *  @param [in] u Vect instance that contains solution at previous time step.
- *  @param [in] time Current time value [Default: <tt>0</tt>].
- */
-    Elas2DT3(const Side*         sd,
-             const Vect<real_t>& u,
-                   real_t        time=0.);
-
-/** \brief Constructor for a side (transient case) with specification of time integration scheme.
- *  @param [in] sd Pointer to side.
- *  @param [in] u Vect instance that contains solution at previous time step.
- *  @param [in] time Current time value [Default: <tt>0</tt>].
- *  @param [in] deltat Time step.
- *  @param [in] scheme Time Integration Scheme
- */
-    Elas2DT3(const Side*         sd,
-             const Vect<real_t>& u,
-                   real_t        time,
-                   real_t        deltat,
-                   int           scheme);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-/// \brief Constructors for a mesh, matrix and right-hand side
-/*    Elas2DT3(Mesh &mesh, SkSMatrix<real_t> &A, Vect<real_t> &b) : Equation<real_t,3,6,2,4>(mesh, A, b) { }
-    Elas2DT3(Mesh &mesh, SkMatrix<real_t>  &A, Vect<real_t> &b) : Equation<real_t,3,6,2,4>(mesh, A, b) { }
-    Elas2DT3(Mesh &mesh, SpMatrix<real_t>  &A, Vect<real_t> &b) : Equation<real_t,3,6,2,4>(mesh, A, b) { }*/
-
-// Constructors for a mesh, matrix, right-hand side and previous solution
-/*   Elas2DT3(Mesh &mesh, SkSMatrix<real_t> &A, Vect<real_t> &b, Vect<real_t> &u) :
-            Equation<real_t,3,6,2,4>(mesh, A, b, u) { }
-            Elas2DT3(Mesh &mesh, SkMatrix<real_t>  &A, Vect<real_t> &b, Vect<real_t> &u) :
-            Equation<real_t,3,6,2,4>(mesh, A, b, u) { }
-   Elas2DT3(Mesh &mesh, SpMatrix<real_t>  &A, Vect<real_t> &b, Vect<real_t> &u) :
-            Equation<real_t,3,6,2,4>(mesh, A, b, u) { }*/
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+/** \brief Constructor using Mesh data and solution vector
+ *  @param [in] ms Mesh instance
+ *  @param [in,out] u Reference to solution vector
+ */ 
+    Elas2DT3(Mesh&         ms,
+             Vect<real_t>& u);
 
 /// Destructor
     ~Elas2DT3();
@@ -171,91 +107,38 @@ class Elas2DT3 : public Equa_Solid<real_t,3,6,2,4>
     void PlaneStress(real_t E,
                      real_t nu);
 
-/// \brief Add element lumped mass contribution to matrix after multiplication by <tt>coef</tt>
+/// \brief Add element lumped mass contribution to element matrix after multiplication by <tt>coef</tt>
 /// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void LMassToLHS(real_t coef=1.);
+    void LMass(real_t coef=1.);
 
-/// \brief Add element lumped mass contribution to right-hand side after multiplication by
-/// <tt>coef</tt>
+/// \brief Add element consistent mass contribution to element matrix after multiplication by <tt>coef</tt>
 /// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void LMassToRHS(real_t coef=1.);
+    void Mass(real_t coef=1.);
 
-/// \brief Add element lumped mass contribution to matrix and right-hand side after
-/// multiplication by <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void LMass(real_t coef=1.) { LMassToLHS(coef); LMassToRHS(coef); };
-
-/// \brief Add element consistent mass contribution to matrix after multiplication by <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void MassToLHS(real_t coef=1.);
-
-/// \brief Add element consistent mass contribution to right-hand side after multiplication
-/// by <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void MassToRHS(real_t coef=1.);
-
-/// \brief Add element consistent mass contribution to matrix and right-hand side after
-/// multiplication by <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void Mass(real_t coef=1.) { MassToLHS(coef); MassToRHS(coef); };
-
-/// \brief Add element deviatoric matrix to left-hand side after multiplication by <tt>coef</tt>
+/// \brief Add element deviatoric matrix to element matrix after multiplication by <tt>coef</tt>
 /// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
     void Deviator(real_t coef=1.);
 
-/// \brief Add element deviatoric contribution to right-hand side after multiplication by 
-/// <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void DeviatorToRHS(real_t coef=1.);
-
-/// \brief Add element dilatational contribution to left-hand side after multiplication by 
+/// \brief Add element dilatational contribution to element matrix after multiplication by 
 /// <tt>coef</tt>
 /// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
     void Dilatation(real_t coef=1.);
 
-/** \brief Add element dilatational contribution to right-hand side after multiplication by 
- *  <tt>coef</tt>
- *  \details To use for explicit formulations
- *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>]
- */
-    void DilatationToRHS(real_t coef=1.);
-
-/// \brief Add body right-hand side term to right-hand side after multiplication by <tt>coef</tt>
-/// \details Body forces are deduced from UserData instance <tt>ud</tt>
-    void BodyRHS(UserData<real_t>& ud);
-
 /** \brief Add body right-hand side term to right hand side
- *  @param [in] f Vector containing source at element nodes (DOF by DOF)
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>6</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of element DOF [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] f Vector containing source at nodes (DOF by DOF)
  */
-    void BodyRHS(const Vect<real_t>& f,
-                       int           opt=GLOBAL_ARRAY);
-
-/// \brief Add boundary right-hand side term to right hand side after multiplication by 
-/// <tt>coef</tt>
-/// @param [in] ud UserData instance defining boundary forces
-    void BoundaryRHS(UserData<real_t>& ud);
+    void BodyRHS(const Vect<real_t>& f);
 
 /// \brief Add boundary right-hand side term to right hand side.
 /// @param [in] f Vect instance that contains constant traction to impose to side.
     void BoundaryRHS(const Vect<real_t>& f);
 
 /** \brief Penalty Signorini contact side contribution to matrix and right-hand side.
- *  @param [in] ud UserData instance defining contact data
- *  @param [in] coef Penalty value by which the added term is multiplied [Default: <tt>1.e07</tt>]
+ *  @param [in] coef Penalty value by which the added term is multiplied
+ *              [Default: <tt>1.e07</tt>]
  *  @return = <tt>0</tt> if no contact is achieved on this side, <tt>1</tt> otherwise
  */
-    int SignoriniContact(UserData<real_t>& ud,
-                         real_t            coef=1.e07);
-
-/** \brief Penalty Signorini contact side contribution to matrix and right-hand side.
- *  @param [in] f Vect instance that contains contact data
- *  @param [in] coef Penalty value by which the added term is multiplied [Default: <tt>1.e07</tt>]
- *  @return = <tt>0</tt> if no contact is achieved on this side, <tt>1</tt> otherwise
- */
-    int SignoriniContact(Vect<real_t>& f,
-                         real_t        coef=1.e07);
+    int Contact(real_t coef=1.e07);
 
 /** \brief Calculate reactions
  *  \details This function can be invoked in postprocessing
@@ -269,21 +152,23 @@ class Elas2DT3 : public Equa_Solid<real_t,3,6,2,4>
  *  @param [in] penal Penalty parameter that was used to impose contact condition
  *  @param [out] p Contact pressure
  */
-    void ContactPressure(const Vect<real_t>&  f,
-                               real_t         penal,
-                               Point<real_t>& p);
+    void ContactPressure(const Vect<real_t>& f,
+                         real_t              penal,
+                         Point<real_t>&      p);
 
-/// \brief Calculate strains in element.
-/// \details This function can be invoked in postprocessing.
+/** \brief Calculate strains in element.
+ *  \details This function can be invoked in postprocessing.
+ *  @param [out] s vector of strains in elements
+ */
     void Strain(Vect<real_t>& eps);
 
 /** \brief Calculate principal stresses and Von-Mises stress in element.
- *  @param [in] s vector of principal stresses
- *  @param [in] vm Von-Mises stress.
+ *  @param [out] s vector of principal stresses in elements
+ *  @param [out] vm Von-Mises stresses in elements
  *  This function can be invoked in postprocessing.
  */
     void Stress(Vect<real_t>& s,
-                real_t&       vm);
+                Vect<real_t>& vm);
 
 /** \brief Add contribution of periodic boundary condition (by a penalty technique).
  *  \details Boundary nodes where periodic boundary conditions are to be imposed must

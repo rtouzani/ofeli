@@ -32,52 +32,55 @@
 
 
 #include "equations/laplace/Laplace2DT3.h"
+#include "shape_functions/Triang3.h"
+#include "shape_functions/Line2.h"
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
 Laplace2DT3::Laplace2DT3()
             : Equation<real_t,3,3,2,2>()
 {
-}
-
-
-Laplace2DT3::Laplace2DT3(Mesh&             ms,
-                         SpMatrix<real_t>& A,
-                         Vect<real_t>&     b)
-{
-   AbsEqua<real_t>::setMesh(ms);
-   _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
-   _time_step = 0.1;
-   _time = 0.;
-   initEquation(ms,_time_step);
-   _u = &b;
-   _A = &A;
-}
-
-
-Laplace2DT3::Laplace2DT3(Mesh&         ms,
-                         Vect<real_t>& b)
-{
-   AbsEqua<real_t>::setMesh(ms);
-   _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
-   _time_step = 0.1;
-   _time = 0.;
-   setMatrixType(SPARSE|SYMMETRIC);
-   setSolver(CG_SOLVER,DILU_PREC);
-    _u = &b;
+   _equation_name = "Laplace";
+   _finite_element = "2-D, 3-Node Triangles (P1)";
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 2D using P1 finite element triangle." << endl;
 }
 
 
 Laplace2DT3::Laplace2DT3(Mesh& ms)
+            : Equation<real_t,3,3,2,2>(ms)
 {
-   AbsEqua<real_t>::setMesh(ms);
-   _sol_given = _bc_given = _init_given = _bf_given = _sf_given = false; 
-   _time_step = 0.1;
-   _time = 0.;
-   initEquation(ms,_time_step);
+   _equation_name = "Laplace";
+   _finite_element = "2-D, 3-Node Triangles (P1)";
+   setMatrixType(SPARSE);
+   setSolver(CG_SOLVER,DILU_PREC);
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 2D using P1 finite element triangle." << endl;
+   if (Verbosity>1) {
+      cout << "Matrix is stored in sparse format." << endl;
+      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
+   }
+}
+
+
+Laplace2DT3::Laplace2DT3(Mesh&         ms,
+                         Vect<real_t>& u)
+            : Equation<real_t,3,3,2,2>(ms,u)
+{
    setMatrixType(SPARSE|SYMMETRIC);
    setSolver(CG_SOLVER,DILU_PREC);
-} 
+   _equation_name = "Laplace";
+   _finite_element = "2-D, 3-Node Triangles (P1)";
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 2D using P1 finite element triangle." << endl;
+   if (Verbosity>1) {
+      cout << "Matrix is stored in sparse format." << endl;
+      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
+   }
+}
 
 
 Laplace2DT3::Laplace2DT3(Mesh&         ms,
@@ -91,120 +94,69 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
    _u = &u;
    setMatrixType(SPARSE|SYMMETRIC);
    setSolver(CG_SOLVER,DILU_PREC);
-   _bc_given = true;
    _bc = &Dbc;
    _sf = &Nbc;
 }
 
 
-Laplace2DT3::Laplace2DT3(Element* el)
-{
-   set(el);
-}
-
-
-Laplace2DT3::Laplace2DT3(Side* sd)
-{
-   set(sd);
-}
-
-
 void Laplace2DT3::set(const Element* el)
 {
-   _nb_dof = 1;
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    Triang3 tr(_theElement);
-   _area = tr.getArea();
-   _dSh(1) = tr.DSh(1); _dSh(2) = tr.DSh(2); _dSh(3) = tr.DSh(3);
-   eMat = 0;
+   _el_geo.area = tr.getArea();
+   _dSh = tr.DSh();
+   eMat = 0, eA0 = 0, eA1 = 0;
    eRHS = 0;
-   eA0 = 0;
-   eA1 = 0;
 }
 
 
 void Laplace2DT3::set(const Side* sd)
 {
-   _nb_dof = 1;
-   Init(sd);
+   _theElement = nullptr, _theSide = sd;
    Line2 ln(_theSide);
-   _length = ln.getLength();
-   sMat = 0;
+   _el_geo.length = ln.getLength();
    sRHS = 0;
 }
 
 
 void Laplace2DT3::buildEigen(int opt)
  {
-   set(theElement);
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
-         eA0(i,j) += _area*(_dSh(i),_dSh(j));
+         eA0(i,j) += _el_geo.area*(_dSh[i-1],_dSh[j-1]);
    if (opt==0) {
-      real_t c = 0.5*OFELI_SIXTH*_area;
+      real_t c = 0.5*OFELI_SIXTH*_el_geo.area;
       eA1(1,1) += 2*c; eA1(2,2) += 2*c; eA1(3,3) += 2*c;
       eA1(1,2) +=   c; eA1(2,1) +=   c; eA1(1,3) +=   c;
       eA1(3,1) +=   c; eA1(2,3) +=   c; eA1(3,2) +=   c;
    }
    else {
-      real_t c = OFELI_THIRD*_area;
+      real_t c = OFELI_THIRD*_el_geo.area;
       eA1(1,1) += c; eA1(2,2) += c; eA1(3,3) += c;
    }
 }
 
 
-int Laplace2DT3::solve(Vect<real_t>& u)
-{
-   Vect<real_t> x(_b->size());
-   LinearSolver<real_t> ls(*_A,*_b,x);
-   ls.setTolerance(1.e-7);
-   int nb_it = ls.solve(CG_SOLVER,DILU_PREC);
-   u.insertBC(*_theMesh,x,*_bc);
-   delete _b;
-   return nb_it;
-}
-
-
-void Laplace2DT3::LHS(real_t coef)
+void Laplace2DT3::LHS()
 {
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
-         eMat(i,j) += coef*_area*(_dSh(i),_dSh(j));
+         eMat(i,j) += _el_geo.area*(_dSh[i-1],_dSh[j-1]);
 }
 
 
 void Laplace2DT3::BodyRHS(const Vect<real_t>& f)
 {
-   eRHS(1) += f((*_theElement)(1)->n())*_area*OFELI_THIRD;
-   eRHS(2) += f((*_theElement)(2)->n())*_area*OFELI_THIRD;
-   eRHS(3) += f((*_theElement)(3)->n())*_area*OFELI_THIRD;
+   for (size_t i=1; i<=3; i++)
+      eRHS(i) += f((*_theElement)(i)->n())*_el_geo.area*OFELI_THIRD;
 }
 
 
 void Laplace2DT3::BoundaryRHS(const Vect<real_t>& h)
 {
    if (_theSide->getCode(1)>0) {
-      sRHS(1) += 0.5*_length*h((*_theSide)(1)->n());
-      sRHS(2) += 0.5*_length*h((*_theSide)(2)->n());
-   }
-}
-
-
-void Laplace2DT3::Axb(const Vect<real_t>& x,
-                            Vect<real_t>& b)
-{
-   MESH_EL {
-      set(theElement);
-      LHS();
-      BodyRHS(*_bf);
-      ElementAssembly(*_u);
-      AxbAssembly(TheElement,x,b);
-   }
-   MESH_SD {
-      set(theSide);
-      BoundaryRHS(*_sf);
-      SideAssembly(*_u);
-      AxbAssembly(TheElement,x,b);
+      sRHS(1) += 0.5*_el_geo.length*h((*_theSide)(1)->n());
+      sRHS(2) += 0.5*_el_geo.length*h((*_theSide)(2)->n());
    }
 }
 

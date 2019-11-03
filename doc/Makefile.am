@@ -1,7 +1,7 @@
 
 MAINTAINERCLEANFILES = Makefile.in
 
-SUBDIRS = html css im tutorial demos presentations
+SUBDIRS = html css im demos presentations
 
 docdir   =	$(datadir)/ofeli/doc
 
@@ -20,7 +20,6 @@ dist_doc_DATA =	COPYING \
 		refguide.pdf \
 		userguide.pdf \
 		overview.html \
-		tutorial.html \
 		doxygen.css \
 		tabs.css \
 		head.css
@@ -39,7 +38,6 @@ doc_DATA =	COPYING \
 		ofeli.pdf \
 		refguide.pdf \
 		overview.html \
-		tutorial.html \
 		doxygen.css \
 		tabs.css \
 		head.css

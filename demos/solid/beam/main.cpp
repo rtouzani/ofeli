@@ -38,12 +38,11 @@ using namespace OFELI;
 int main(int argc, char *argv[])
 {
    if (argc < 2) {
-     cout << "\nUsage:  beam  <parameter_file>\n";
+     cout << "\nUsage: " << argv[0] << " <parameter_file>\n";
      return 0;
    }
 
    IPF data("beam 1.0",argv[1]);
-   int verbose = data.getVerbose();
    int output_flag = data.getOutput();
 
    if (output_flag) {
@@ -69,39 +68,32 @@ int main(int argc, char *argv[])
          cout << ms;
       Prescription p(ms,data.getDataFile());
 
-//    Declare problem data (matrix, rhs, boundary conditions, body forces)
-      SkSMatrix<double> A(ms);
-      if (verbose > 1)
+//    Declare problem data
+      if (Verbosity > 1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
-      Vect<double> b(ms), bc(ms), bf(ms);
+      Vect<double> u(ms), bc(ms), bf(ms);
       p.get(BOUNDARY_CONDITION,bc,0);
       p.get(POINT_FORCE,bf);
 
-//    Build matrix and R.H.S.
-      MeshElements(ms) {
-         Beam3DL2 eq(theElement,0.1,0.1,0.1);
-         eq.Stiffness();
-         eq.ElementAssembly(A);
-      }
-      b = bf;
-      A.Prescribe(b,bc);
-      A.solve(b);
+//    Run
+      Beam3DL2 eq(ms,u);
+      eq.set(0.1,0.1,0.1);
+      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setInput(POINT_FORCE,bf);
+      eq.run();
 
 //    Output solution
-      if (output_flag > 0)
-         cout << b;
-      Vect<double> u(ms,3);
-      Beam3DL2 eq(ms,b,u);
-      ms.setVerbose(10);
+      cout << u;
 
+      Vect<double> af, bm, tm, sf;
+      eq.AxialForce(af);
+      eq.BendingMoment(bm);
+      eq.TwistingMoment(tm);
+      eq.ShearForce(sf);
       cout << "Element     Axial Force       Bending Moment    Twisting Moment   Shear Force" << endl;
       MeshElements(ms) {
-         Beam3DL2 eq(theElement,0.1,0.1,0.1,b);
-         cout << setw(8) << theElementLabel;
-         cout << " " << eq.AxialForce();
-         cout << " " << eq.BendingMoment();
-         cout << " " << eq.TwistingMoment();
-         cout << " " << eq.ShearForce() << endl;
+         size_t n = theElementLabel;
+         cout << setw(8) << n << " " << af(n) << " " << bm(n) << " " << tm(n) << " " << sf(n) << endl;
       }
 
 //    Transform mesh to deformed one

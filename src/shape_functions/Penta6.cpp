@@ -31,10 +31,8 @@
 
 
 #include "shape_functions/Penta6.h"
-#include "mesh/Element.h"
-#include "linear_algebra/LocalMatrix.h"
-#include "linear_algebra/Point.h"
 #include "util/util.h"
+#include "linear_algebra/LocalMatrix_impl.h"
 
 namespace OFELI {
 
@@ -43,8 +41,8 @@ Penta6::Penta6()
    _sh.resize(6);
    _node.resize(6);
    _x.resize(6);
-   _dsh.resize(6);
    _dshl.resize(6);
+   _dsh.resize(6);
    _localized = false;
 }
 
@@ -57,8 +55,8 @@ Penta6::Penta6(const Element* el)
    _sh.resize(6);
    _node.resize(6);
    _x.resize(6);
-   _dsh.resize(6);
    _dshl.resize(6);
+   _dsh.resize(6);
    for (size_t i=0; i<6; i++) {
       Node *node = (*el)(i+1);
       _x[i] = node->getCoord();
@@ -105,7 +103,7 @@ void Penta6::setLocal(const Point<real_t>& s)
    _dshl[5] = Point<real_t>(-s.z,-s.z,1.-s.x-s.y);
 
 // Jacobian matrix (dxds(i,j) := dx(i)/ds(j))
-   LocalMatrix<real_t,3,3> dsdx, dxds;
+   LocalMatrix<real_t,3,3> dxds, dsdx;
    dxds = 0;
    for (size_t i=0; i<6; i++) {
       dxds(1,1) += _dshl[i].x*_x[i].x;
@@ -130,15 +128,19 @@ void Penta6::setLocal(const Point<real_t>& s)
    _det = dxds(1,1)*dsdx(1,1) + dxds(1,2)*dsdx(2,1) + dxds(1,3)*dsdx(3,1);
    if (_det == 0.0)
       throw OFELIException("Penta6::setLocal(Point<real_t>): Determinant of jacobian is null");
-
-// Global derivatives
+   _det = fabs(_det);
    real_t c = 1./_det;
    for (size_t i=0; i<6; i++) {
       _dsh[i].x = c*(dsdx(1,1)*_dshl[i].x + dsdx(1,2)*_dshl[i].y + dsdx(1,3)*_dshl[i].z);
       _dsh[i].y = c*(dsdx(2,1)*_dshl[i].x + dsdx(2,2)*_dshl[i].y + dsdx(2,3)*_dshl[i].z);
       _dsh[i].z = c*(dsdx(3,1)*_dshl[i].x + dsdx(3,2)*_dshl[i].y + dsdx(3,3)*_dshl[i].z);
    }
-   _det = fabs(_det);
+}
+
+
+vector<Point<real_t> > Penta6::DSh() const
+{
+   return _dsh;
 }
 
 

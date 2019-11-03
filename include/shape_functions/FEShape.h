@@ -41,7 +41,7 @@
 #include <vector>
 
 #include "OFELI_Config.h"
-#include "linear_algebra/LocalVect.h"
+#include "OFELIException.h"
 #include <algorithm>
 using std::vector;
 
@@ -104,14 +104,6 @@ class FEShape
               Point<real_t> s) const
        { s = 0; return _sh[i-1]; }
 
-/** \brief Return derivatives of shape function of node <tt>i</tt> at a given point.
- *  \details If the transformation (Reference element -> Actual element) is not affine, 
- *  member function <tt>setLocal()</tt>
- *  must have been called before in order to calcuate relevant quantities.
- *  @param [in] i Partial derivative index (1, 2 or 3) 
- */
-    Point<real_t> DSh(size_t i) const { return _dsh[i-1]; }
-
 /** \brief Return determinant of jacobian.
  *  \details If the transformation (Reference element -> Actual element) is not affine, member function \b setLocal()
  *  must have been called before in order to calcuate relevant quantities.
@@ -154,7 +146,7 @@ class FEShape
    const Edge*            _ed;
    vector<real_t>         _sh;
    vector<size_t>         _node;
-   vector<Point<real_t> > _x, _dsh, _dshl;
+   vector<Point<real_t> > _x, _dshl, _dsh;
    Point<real_t>          _c;
    size_t                 _label;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
@@ -174,16 +166,12 @@ class triangle : public FEShape
 
  public:
 
-    using FEShape::_dsh;
-
 /// \brief Default Constructor
     triangle()
     {
       _sh.resize(3);
       _node.resize(3);
       _x.resize(3);
-      _dsh.resize(3);
-      _dshl.resize(3);
     }
 
 /// \brief Constructor for an element.

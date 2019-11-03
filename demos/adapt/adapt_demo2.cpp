@@ -44,10 +44,10 @@ int main(int argc, char *argv[])
                Vect<double>& bc,
                Vect<double>& f);
 
-   int solve(Mesh&               ms,
-             const Vect<double>& f,
-             const Vect<double>& bc,
-             Vect<double>&       u);
+   void solve(Mesh&         ms,
+              Vect<double>& f,
+              Vect<double>& bc,
+              Vect<double>& u);
 
 // Read and output mesh data
    if (argc <= 1) {
@@ -73,8 +73,7 @@ int main(int argc, char *argv[])
 
 //    Output solution
       Vect<double> u(ms);
-      int nb_it = solve(ms,f,bc,u);
-      cout << "Number of iterations: " << nb_it << endl;
+      solve(ms,f,bc,u);
       saveField(u,"u.pos",GMSH);
       ms.put("mesh1.m");
 
@@ -96,29 +95,15 @@ int main(int argc, char *argv[])
 }
 
 
-int solve(Mesh&               ms,
-          const Vect<double>& f,
-          const Vect<double>& bc,
-          Vect<double>&       u)
+void solve(Mesh&         ms,
+           Vect<double>& f,
+           Vect<double>& bc,
+           Vect<double>& u)
 {
-   ms.removeImposedDOF();
-   SpMatrix<double> A(ms);
-   Vect<double> b(ms.getNbEq()), x(ms.getNbEq());
-
-   MeshElements(ms) {
-      DC2DT3 eq(theElement);
-      eq.Diffusion();
-      eq.BodyRHS(f);
-      eq.updateBC(bc);
-      eq.ElementAssembly(A);
-      eq.ElementAssembly(b);
-   }
-
-// Solve the linear system of equations by an iterative method
-   LinearSolver<double> ls(1000,1.e-8,0);
-   int nb_it = ls.solve(A,b,x,CG_SOLVER,DILU_PREC);
-   u.insertBC(ms,x,bc);
-   return nb_it;
+   DC2DT3 eq(ms,u);
+   eq.setInput(BOUNDARY_CONDITION,bc);
+   eq.setInput(SOURCE,f);
+   eq.run();
 }
 
 
@@ -134,8 +119,8 @@ void BC_RHS(int           opt,
    else {
       MeshNodes(ms) {
          double x = TheNode.getX(), y = TheNode.getY();
-	 double rr = pow(x*x+y*y,OFELI_THIRD);
-	 double t = 2*OFELI_THIRD*atan2(y,x);
+         double rr = pow(x*x+y*y,OFELI_THIRD);
+         double t = 2*OFELI_THIRD*atan2(y,x);
          bc(theNodeLabel) = rr*sin(t);
          f(theNodeLabel) = 0;
       }

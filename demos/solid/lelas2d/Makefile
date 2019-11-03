@@ -87,8 +87,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin18.2.0
-host_triplet = i386-apple-darwin18.2.0
+build_triplet = i386-apple-darwin19.0.0
+host_triplet = i386-apple-darwin19.0.0
 bin_PROGRAMS = lelas2d$(EXEEXT)
 subdir = demos/solid/lelas2d
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -244,10 +244,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 3.1.1
+PACKAGE_STRING = ofeli 4.0.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 3.1.1
+PACKAGE_VERSION = 4.0.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -257,7 +257,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 3.1.1
+VERSION = 4.0.0
 abs_builddir = /Users/touzani/ofeli/ofeli/demos/solid/lelas2d
 abs_srcdir = /Users/touzani/ofeli/ofeli/demos/solid/lelas2d
 abs_top_builddir = /Users/touzani/ofeli/ofeli
@@ -270,10 +270,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin18.2.0
+build = i386-apple-darwin19.0.0
 build_alias = 
 build_cpu = i386
-build_os = darwin18.2.0
+build_os = darwin19.0.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -281,10 +281,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin18.2.0
+host = i386-apple-darwin19.0.0
 host_alias = 
 host_cpu = i386
-host_os = darwin18.2.0
+host_os = darwin19.0.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -314,24 +314,22 @@ lelas2d_SOURCES = main.cpp
 lelas2d_LDADD = $(top_builddir)/src/libofeli.a
 lelas2ddir = $(datadir)/ofeli/demos/solid/lelas2d
 lelas2d_DATA = main.cpp \
-		beam.dat \
-		beam.pr \
-		beam-10x5.m \
-		beam-20x10.m \
-		beam.m \
-		Makefile.standalone \
-		lelas2d.cbp \
-		README
+               beam.dat \
+               beam-10x5.m \
+               beam-20x10.m \
+               beam.m \
+               Makefile.standalone \
+               lelas2d.cbp \
+               README
 
 dist_lelas2d_DATA = main.cpp \
-			beam.dat \
-			beam.pr \
-			beam-10x5.m \
-			beam-20x10.m \
-			beam.m \
-			Makefile.standalone \
-			lelas2d.cbp \
-			README
+                    beam.dat \
+                    beam-10x5.m \
+                    beam-20x10.m \
+                    beam.m \
+                    Makefile.standalone \
+                    lelas2d.cbp \
+                    README
 
 all: all-am
 

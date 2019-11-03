@@ -132,6 +132,14 @@ namespace OFELI {
  */
 #define OFELI_TOLERANCE OFELI_EPSMCH*10000
 
+/*! \def VLG
+ *  \ingroup Util
+ * Very large number: A real number for penalty
+ */
+#ifndef VLG
+#define VLG  1.e10
+#endif
+
 /*! \def OFELI_IMAG
  *  \ingroup Util
  * = Unit imaginary number (\c i)

@@ -34,7 +34,10 @@
 #ifndef __EQUA_FLUID_H
 #define __EQUA_FLUID_H
 
-#include "equations/Equation.h"
+#include "solvers/TimeStepping.h"
+#include "mesh/Material.h"
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
 
 namespace OFELI {
 /*!
@@ -50,6 +53,8 @@ namespace OFELI {
  *  \brief Definition file for class Equa_Fluid.
  */
 
+extern Material theMaterial;
+
 /*! \class Equa_Fluid
  *  \ingroup Fluid
  * \brief Abstract class for Fluid Dynamics Equation classes.
@@ -64,12 +69,10 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_> class Equa_Fluid;
-
-template<class T_=real_t, size_t NEN_=3, size_t NEE_=3, size_t NSN_=2, size_t NSE_=2>
+template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 class Equa_Fluid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
 
-public:
+ public:
 
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theMesh;
@@ -77,23 +80,20 @@ public:
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_scheme;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_verbose;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_final_time;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_step;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_A;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_b;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_uu;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_u;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_sides;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC;
 
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
-    Equa_Fluid()
+    Equa_Fluid() : Equation<T_,NEN_,NEE_,NSN_,NSE_>()
     {
        _terms = 0;
     }
@@ -102,41 +102,12 @@ public:
     virtual ~Equa_Fluid() { }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-/*
-/// \brief Run one time step
-    int runOneTimeStep()
-    {
-       build();
-       int ret = SolveLinearSystem(_A,*_b,_uu);
-       _u->insertBC(*_theMesh,_uu,*_bc);
-       return ret;
-       }*/
-
-/** \brief Solve the equation
- *  \details If the analysis (see function setAnalysis) is \a STEADY_STATE, then
- *  the function solves the stationary equation.\n
- *  If the analysis is \a TRANSIENT, then the function performs time stepping
- *  until the final time is reached.
- */
-/*    int run()
-    {
-       int ret=0;
-       _b = new Vect<T_>(_theMesh->getNbEq());
-      if (_analysis==STEADY_STATE) {
-          build();
-          ret = SolveLinearSystem(_A,*_b,_uu);
-          _u->insertBC(*_theMesh,_uu,*_bc);
-       }
-       else {
-          for (real_t t=0.; t<=_final_time; t+=_time_step)
-             _time_step = runOneTimeStep();
-       }
-       delete _b;
-       return ret;
-    }*/
+    void build() { }
+    int runOneTimeStep() { return 0; }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-protected:
+/// \brief Set Reynolds number
+    void Reynolds(const real_t& Re) { _Re = Re; }
 
 /// \brief Set (constant) Viscosity
     void Viscosity(const real_t& visc) { _visc = visc; }
@@ -164,7 +135,7 @@ protected:
        _dens = theMaterial.Density();
     }
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    real_t _visc, _dens, _beta;
+    real_t _visc, _dens, _beta, _Re, _cfl;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 };

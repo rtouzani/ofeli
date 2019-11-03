@@ -30,11 +30,13 @@
   ==============================================================================*/
 
 
+#include "post/Reconstruction.h"
 #include "shape_functions/Line2.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Quad4.h"
 #include "shape_functions/Tetra4.h"
-#include "post/Reconstruction.h"
+#include "linear_algebra/Vect_impl.h"
+#include "util/util.h"
 
 namespace OFELI {
 

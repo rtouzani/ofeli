@@ -29,12 +29,22 @@
 
   ==============================================================================*/
 
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+using std::string;
+
 #include "io/XMLParser.h"
 #include "util/banner.h"
 #include "io/IPF.h"
+#include "util/util.h"
+#include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 
 namespace OFELI {
+
+int Verbosity = 0;
 
 IPF::IPF()
 {
@@ -45,7 +55,7 @@ IPF::IPF(const string& prog,
          const string& file)
 {
    _file = file;
-   ifstream inf(file.c_str());
+   std::ifstream inf(file.c_str());
    string cc;
    inf >> cc;
    inf.close();
@@ -62,13 +72,14 @@ IPF::IPF(const string& prog,
          _plot_file[i] += itos(i+1) + ".pl";
       }
    }
+   Verbosity = getVerbose();
 }
 
 
 IPF::IPF(const string& file)
 {
    _file = file;
-   ifstream inf(file.c_str());
+   std::ifstream inf(file.c_str());
    string cc;
    inf >> cc;
    inf.close();
@@ -86,6 +97,7 @@ IPF::IPF(const string& file)
          _plot_file[i] += itos(i+1) + ".pl";
       }
    }
+   Verbosity = getVerbose();
 }
 
 
@@ -94,7 +106,7 @@ IPF::~IPF() { }
 
 void IPF::init()
 {
-   _verbose = 1; 
+   _verbose = 0;
    _save = _plot = 0;
    _output = 1;
    _nb_iter = 100;
@@ -143,7 +155,7 @@ string IPF::getString(const string& label) const
 
 
 string IPF::getString(const string& label,
-                            string  def) const
+                      string        def) const
 {
    int i=contains(label);
    if (i>0)
@@ -163,7 +175,7 @@ int IPF::getInteger(const string& label) const
    
    
 int IPF::getInteger(const string& label,
-                          int     def) const
+                    int           def) const
 {
    int i=contains(label);
    if (i>0)
@@ -183,7 +195,7 @@ real_t IPF::getDouble(const string& label) const
    
    
 real_t IPF::getDouble(const string& label,
-                            real_t  def) const
+                      real_t        def) const
 {
    int i=contains(label);
    if (i>0)
@@ -208,8 +220,8 @@ complex_t IPF::getComplex(const string& label) const
 }
    
    
-complex_t IPF::getComplex(const string&   label,
-                                complex_t def) const
+complex_t IPF::getComplex(const string& label,
+                          complex_t     def) const
 {
    real_t ar, ai;
    complex_t a;
@@ -224,8 +236,8 @@ complex_t IPF::getComplex(const string&   label,
 }
 
 
-void IPF::get(const string&       label,
-                    Vect<real_t>& a) const
+void IPF::get(const string& label,
+              Vect<real_t>& a) const
 {
    for (size_t i=0; i<_array_label.size(); i++) {
       if (_array_label[i]==label) {
@@ -240,28 +252,28 @@ void IPF::get(const string&       label,
 
 
 void IPF::get(const string& label,
-                    int&    a) const
+              int&          a) const
 {
    a = getInteger(label);
 }
 
 
 void IPF::get(const string& label,
-                    real_t &a) const
+              real_t&       a) const
 {
    a = getDouble(label);
 }
 
 
-void IPF::get(const string&    label,
-                    complex_t& a) const
+void IPF::get(const string& label,
+              complex_t&    a) const
 {
    a = getComplex(label);
 }
 
 
 void IPF::get(const string& label,
-                    string& a) const
+              string&       a) const
 {
    a = getString(label);
 }

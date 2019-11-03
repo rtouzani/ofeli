@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin18.2.0
-host_triplet = i386-apple-darwin18.2.0
+build_triplet = i386-apple-darwin19.0.0
+host_triplet = i386-apple-darwin19.0.0
 subdir = include/linear_algebra
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -263,10 +263,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 3.1.1
+PACKAGE_STRING = ofeli 4.0.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 3.1.1
+PACKAGE_VERSION = 4.0.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -276,7 +276,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 3.1.1
+VERSION = 4.0.0
 abs_builddir = /Users/touzani/ofeli/ofeli/include/linear_algebra
 abs_srcdir = /Users/touzani/ofeli/ofeli/include/linear_algebra
 abs_top_builddir = /Users/touzani/ofeli/ofeli
@@ -289,10 +289,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin18.2.0
+build = i386-apple-darwin19.0.0
 build_alias = 
 build_cpu = i386
-build_os = darwin18.2.0
+build_os = darwin19.0.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -300,10 +300,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin18.2.0
+host = i386-apple-darwin19.0.0
 host_alias = 
 host_cpu = i386
-host_os = darwin18.2.0
+host_os = darwin19.0.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -331,21 +331,34 @@ top_srcdir = ../..
 AUTOMAKE_OPTIONS = no-dependencies
 SUBDIRS = petsc
 ssdir = $(pkgincludedir)/linear_algebra
-ss_HEADERS = Assembly.h \
+ss_HEADERS = \
+		Assembly.h \
+		Assembly_impl.h \
 		BMatrix.h \
+		BMatrix_impl.h \
 		DMatrix.h \
+		DMatrix_impl.h \
 		DSMatrix.h \
+		DSMatrix_impl.h \
 		GraphOfMatrix.h \
 		LocalMatrix.h \
+		LocalMatrix_impl.h \
 		LocalVect.h \
+		LocalVect_impl.h \
 		Matrix.h \
+		Matrix_impl.h \
 		Point.h \
 		Point2D.h \
 		SkMatrix.h \
+		SkMatrix_impl.h \
 		SkSMatrix.h \
+		SkSMatrix_impl.h \
 		SpMatrix.h \
+		SpMatrix_impl.h \
 		TrMatrix.h \
-		Vect.h
+		TrMatrix_impl.h \
+		Vect.h \
+		Vect_impl.h
 
 all: all-recursive
 

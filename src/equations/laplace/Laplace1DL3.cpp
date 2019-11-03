@@ -33,30 +33,47 @@
 
 #include "equations/laplace/Laplace1DL3.h"
 #include "shape_functions/Line3.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
+
+Laplace1DL3::Laplace1DL3()
+            : Equation<real_t,3,3,1,1>()
+{
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 1D using P2 finite element." << endl;
+}
+
 
 Laplace1DL3::Laplace1DL3(Mesh& ms)
             : Equation<real_t,3,3,1,1>(ms)
 {
    _lsf = _rsf = 0;
-   _A.setSize(ms.getNbDOF(),2,2);
+   setMatrixType(SPARSE|SYMMETRIC);
+   setSolver(CG_SOLVER,DILU_PREC);
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 1D using P2 finite element." << endl;
+   if (Verbosity>1) {
+      cout << "Matrix is stored in sparse format." << endl;
+      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
+   }
 }
 
 
 Laplace1DL3::Laplace1DL3(Mesh&         ms,
                          Vect<real_t>& u)
-            : Equation<real_t,3,3,1,1>(ms)
+            : Equation<real_t,3,3,1,1>(ms,u)
 {
    _u = &u;
    _lsf = _rsf = 0;
-   _A.setSize(ms.getNbDOF(),2,2);
-}
-
-
-Laplace1DL3::Laplace1DL3(Element* el)
-{
-   set(el);
+   setMatrixType(SPARSE|SYMMETRIC);
+   setSolver(CG_SOLVER,DILU_PREC);
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 1D using P1 finite element." << endl;
+   if (Verbosity>1) {
+      cout << "Matrix is stored in sparse format." << endl;
+      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
+   }
 }
 
 
@@ -67,16 +84,15 @@ Laplace1DL3::~Laplace1DL3()
 
 void Laplace1DL3::set(const Element* el)
 {
-   static real_t s[3]={-1,0,1};
-   _theElement = el;
+   static real_t s[3] = {-1,0,1};
+   _theElement = el, _theSide = nullptr;
    Line3 ln(_theElement);
-   _det = ln.getDet();
+   _el_geo.det = ln.getDet();
    for (size_t k=0; k<3; k++) {
       ln.setLocal(s[k]);
-      for (size_t i=1; i<=3; i++)
-         _dSh(i,k+1) = ln.DSh(i);
+      _dSh[k] = ln.DSh();
    }
-   eMat = 0;
+   eA0 = 0, eA1 = 0;
    eRHS = 0;
 }
 
@@ -88,33 +104,32 @@ void Laplace1DL3::setTraction(real_t f,
       _lsf = f;
    if (lr==1)
       _rsf = f;
-   _sf_given = true;
 }
 
 
-void Laplace1DL3::Matrix(real_t coef)
+void Laplace1DL3::LHS()
 {
-   real_t c = coef*OFELI_THIRD*_det;
+   real_t c = OFELI_THIRD*_el_geo.det;
    for (size_t i=1; i<=3; i++) {
       for (size_t j=1; j<=3; j++)
-         eMat(i,j) += c*(_dSh(i,1)*_dSh(j,1)+4*_dSh(i,2)*_dSh(j,2)+_dSh(i,3)*_dSh(j,3));
+         eA0(i,j) += c*((_dSh[0](i),_dSh[0](j))+4*(_dSh[1](i),_dSh[1](j))+(_dSh[2](i),_dSh[2](j)));
    }
 }
 
 
 void Laplace1DL3::BodyRHS(const Vect<real_t>& f)
 {
-   real_t c = OFELI_THIRD*_det;
-   eRHS(1) +=   c*f(_theElement->getNodeLabel(1));
-   eRHS(2) += 4*c*f(_theElement->getNodeLabel(2));
-   eRHS(3) +=   c*f(_theElement->getNodeLabel(3));
+   real_t c = OFELI_THIRD*_el_geo.det;
+   eRHS(1) += c*f((*_theElement)(1)->n());
+   eRHS(2) += c*f((*_theElement)(2)->n());
+   eRHS(3) += c*f((*_theElement)(3)->n());
 }
 
 
 void Laplace1DL3::BoundaryRHS(const Vect<real_t>& h)
 {
    eRHS(1) -= h(1);
-   eRHS(3) += h(_theMesh->getNbNodes());
+   eRHS(3) += h(_nb_nodes);
 }
 
 } /* namespace OFELI */

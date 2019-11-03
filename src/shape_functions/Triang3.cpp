@@ -32,9 +32,8 @@
 #include "shape_functions/Triang3.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
-#include "linear_algebra/Point.h"
-#include "linear_algebra/LocalVect.h"
 #include "util/util.h"
+#include "linear_algebra/LocalVect_impl.h"
 
 namespace OFELI {
 
@@ -44,7 +43,6 @@ Triang3::Triang3()
    _node.resize(3);
    _x.resize(3);
    _dsh.resize(3);
-   _dshl.resize(3);
 }
 
    
@@ -53,7 +51,8 @@ Triang3::Triang3(const Element* el)
    if (el->getNbNodes() != 3)
       throw OFELIException("Triang3::Triang3(Element *): Illegal number of element nodes: " +
                            itos(el->getNbNodes()));
-   _el = el; _sd = NULL;
+   _el = el; _sd = nullptr;
+   _dsh.resize(3);
    set(el);
 }
 
@@ -63,7 +62,8 @@ Triang3::Triang3(const Side* sd)
    if (sd->getNbNodes() != 3)
       throw OFELIException("Triang3::Triang3(Side *): Illegal number of side nodes: " +
                            itos(sd->getNbNodes()));
-   _el = NULL; _sd = sd;
+   _el = nullptr; _sd = sd;
+   _dsh.resize(3);
    set(sd);
 }
 
@@ -76,8 +76,6 @@ void Triang3::set(const Element* el)
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);
-   _dsh.resize(3);
-   _dshl.resize(3);
    for (size_t i=0; i<3; i++) {
       Node *node = (*el)(i+1);
       _x[i] = node->getCoord();
@@ -107,14 +105,12 @@ void Triang3::set(const Side* sd)
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);
-   _dsh.resize(3);
-   _dshl.resize(3);
    _x[0] = (*sd)(1)->getCoord();
    _x[1] = (*sd)(2)->getCoord();
    _x[2] = (*sd)(3)->getCoord();
-   _node[0] = sd->getNodeLabel(1);
-   _node[1] = sd->getNodeLabel(2);
-   _node[2] = sd->getNodeLabel(3);
+   _node[0] = (*sd)(1)->n();
+   _node[1] = (*sd)(2)->n();
+   _node[2] = (*sd)(3)->n();
    _h1 = Distance(_x[0],_x[1]),
    _h2 = Distance(_x[1],_x[2]),
    _h3 = Distance(_x[2],_x[0]);
@@ -124,10 +120,19 @@ void Triang3::set(const Side* sd)
    _det = sqrt(a*a + b*b + c*c);
    _area = 0.5*_det;
    _c = (_x[0]+_x[1]+_x[2])*OFELI_THIRD;
+   _dsh[0].x = (_x[1].y - _x[2].y)/_det, _dsh[0].y = (_x[2].x - _x[1].x)/_det;
+   _dsh[1].x = (_x[2].y - _x[0].y)/_det, _dsh[1].y = (_x[0].x - _x[2].x)/_det;
+   _dsh[2].x = (_x[0].y - _x[1].y)/_det, _dsh[2].y = (_x[1].x - _x[0].x)/_det;
    if (_det<0.0)
       throw OFELIException("Triang3::set(Side *): Negative determinant of jacobian");
    if (_det==0.0)
       throw OFELIException("Triang3::set(Side *): Determinant of jacobian is null");
+}
+
+
+std::vector<Point<real_t> > Triang3::DSh() const
+{
+   return _dsh;
 }
 
 
@@ -141,7 +146,7 @@ double Triang3::getInterpolate(const Point<real_t>&       x,
 
 Point<real_t> Triang3::Grad(const LocalVect<real_t,3>& u) const
 {
-   return u[0]*_dsh[0] + u[1]*_dsh[1] + u[2]*_dsh[2]; 
+   return u[0]*_dsh[1] + u[1]*_dsh[2] + u[2]*_dsh[3];
 }
 
 

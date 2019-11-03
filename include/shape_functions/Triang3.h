@@ -34,7 +34,9 @@
 #ifndef __TRIANG3_H
 #define __TRIANG3_H
 
+#include <vector>
 #include "shape_functions/FEShape.h"
+#include "linear_algebra/LocalVect.h"
 
 namespace OFELI {
 /*!
@@ -47,7 +49,6 @@ namespace OFELI {
  */
 
 template<class T_,size_t N_> class LocalVect;
-template<class T_,size_t NR_,size_t NC_> class LocalMatrix;
 class Element;
 class Side;
 
@@ -104,11 +105,12 @@ public:
        return 0;
     }
 
-/// \brief Calculate derivatives of shape function of node <tt>i</tt>
-    Point<real_t> DSh(size_t i) const
-    {
-       return _dsh[i-1];
-    }
+/** \brief Return partial derivatives of shape functions of element nodes
+ *  @return LocalVect instance of partial derivatives of shape functions
+ *          <i>e.g.</i> \c dsh(i).x, \c dsh(i).y, are partial derivatives of the <i>i</i>-th
+ *          shape function. 
+ */
+    std::vector<Point<real_t> > DSh() const;
 
 /// \brief Return interpolated value at point of coordinate <tt>x</tt>
     real_t getInterpolate(const Point<real_t>&       x,

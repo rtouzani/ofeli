@@ -34,9 +34,7 @@
 #ifndef __BAR2DL2_H
 #define __BAR2DL2_H
 
-
 #include "equations/solid/Equa_Solid.h"
-#include "io/UserData.h"
 
 namespace OFELI {
 /*!
@@ -68,72 +66,43 @@ class Bar2DL2 : public Equa_Solid<real_t,2,4,1,2>
 /// \details Constructs an empty equation.
     Bar2DL2() { }
 
-/** \brief Constructor using element data.
- *  @param [in] el Pointer to Element
- *  @param [in] section Section of bar at present element
+/** \brief Constructor using a Mesh instance.
+ *  @param [in] ms Reference Mesh instance
  */
-    Bar2DL2(Element* el,
-            real_t   section);
+    Bar2DL2(Mesh& ms);
+
+/** \brief Constructor using a Mesh instance and a solution vector instance.
+ *  @param [in] ms Reference Mesh instance
+ *  @param [in,out] Reference to solution vector
+ */
+    Bar2DL2(Mesh&         ms,
+            Vect<real_t>& u);
 
 /// \brief Destructor
     ~Bar2DL2() { }
 
-/// \brief Add element consistent mass contribution to matrix and right-hand side after multiplication by <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void Mass(real_t coef=1.) { MassToLHS(coef); MassToRHS(coef); }
+/// \brief Define bar section
+    void setSection(real_t A);
 
-/// \brief Add element lumped mass contribution to matrix ans right-hand side after multiplication by <tt>coef</tt>
+/// \brief Add lumped mass matrix to element matrix after multiplying it by coefficient <tt>coef</tt>
 /// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void LMass(real_t coef=1.) { LMassToLHS(coef); LMassToRHS(coef); }
+    void LMass(real_t coef=1);
 
-/// \brief Add lumped mass matrix to left-hand side after multiplying it by coefficient <tt>coef</tt>
+/// \brief Add consistent mass matrix to element matrix after multiplying it by coefficient <tt>coef</tt>
 /// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void LMassToLHS(real_t coef=1);
-
-/// \brief Add lumped mass contribution to right-hand side after multiplying it by coefficient <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void LMassToRHS(real_t coef=1); 
-
-/// \brief Add consistent mass matrix to left-hand side after multiplying it by coefficient <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void MassToLHS(real_t coef=1);
-
-/// \brief Add consistent mass contribution to right-hand side after multiplying it by coefficient <tt>coef</tt>
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void MassToRHS(real_t coef=1); 
+    void Mass(real_t coef=1);
 
 /// \brief Add element stiffness to left hand side.
 /// @param [in] coef Coefficient to multuply by added term [Default: <tt>1</tt>].
     void Stiffness(real_t coef=1.);
 
-/// \brief Add body right-hand side term to right hand side.
-/// @param [in] ud instance containing user data with prescribes loads
-    void BodyRHS(UserData<real_t>& ud);
-
 /// \brief Return stresses in bar.
     real_t Stress() const;
 
 /** \brief Return stresses in the truss structure (elementwise)
- *  @param [in] u Vect instance containing displacements at nodes
  *  @param [in] s Vect instance containing axial stresses in elements
  */
-    void getStresses(const Vect<real_t>& u,
-                           Vect<real_t>& s);
-
-/** \brief Run one time step
- *  \details This function performs one time step in equation solving.
- *  It is to be used only if a <tt>TRANSIENT</tt> analysis is required.
- *  @return Return error from the linear system solver
- */
-    int runOneTimeStep();
-
-/** \brief Solve the equation
- *  \details If the analysis (see function \b setAnalysis) is <tt>STEADY_STATE</tt>, then
- *  the function solves the stationary equation.\n
- *  If the analysis is <tt>TRANSIENT</tt>, then the function performs time stepping
- *  until the final time is reached.
- */
-    int run();
+    void getStresses(Vect<real_t>& s);
 
 /** \brief Build the linear system of equations
  *  \details Before using this function, one must have properly selected 
@@ -147,34 +116,18 @@ class Bar2DL2 : public Equa_Solid<real_t,2,4,1,2>
  */
     void build();
 
-/** \brief Build global stiffness and mass matrices for the eigen system
- *  \details Case where the mass matrix is consistent
- *  @param [in] K Stiffness matrix
- *  @param [in] M Consistent mass matrix
- */
-    void buildEigen(SkSMatrix<real_t>& K,
-                    SkSMatrix<real_t>& M);
-
-/** \brief Build global stiffness and mass matrices for the eigen system
- *  \details Case where the mass matrix is lumped
- *  @param [in] K Stiffness matrix
- *  @param [in] M Vector containing diagonal mass matrix
- */
-    void buildEigen(SkSMatrix<real_t>& K,
-                    Vect<real_t>&      M);
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void BodyRHS(const Vect<real_t> &f, int opt=GLOBAL_ARRAY) { }
+    void BodyRHS(const Vect<real_t> &f);
     void BoundaryRHS(const Vect<real_t> &f) { }
-    void BoundaryRHS(UserData<real_t> &ud) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  protected:
    void set(const Element *el);
+   void set(const Side *sd) { }
 
  private:
-   real_t  _section, _cc, _ss, _sc;
-   SkSMatrix<real_t> _A;
+   real_t _section, _cc, _ss, _sc;
+   void Load();
 };
 
 /*! @} End of Doxygen Groups */

@@ -31,6 +31,7 @@
 
 
 #include "linear_algebra/GraphOfMatrix.h"
+#include "mesh/Mesh.h"
 #include <algorithm>
 
 using std::min;
@@ -215,9 +216,9 @@ size_t SideSkyline(const Mesh&     m,
 }
 
 
-size_t SideSkyline(const Mesh&           m,
-                         vector<size_t>& ch,
-                         size_t          dof)
+size_t SideSkyline(const Mesh&     m,
+                   vector<size_t>& ch,
+                   size_t          dof)
 {
    dof = 0;
    int label_eq;

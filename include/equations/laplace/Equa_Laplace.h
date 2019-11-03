@@ -34,6 +34,7 @@
 #define __EQUA_LAPLACE_H
 
 #include "equations/Equation.h"
+#include "util/macros.h"
 
 namespace OFELI {
 /*!
@@ -63,8 +64,6 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_> class Equa_Laplace;
-
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
 
@@ -72,31 +71,31 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theMesh;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theElement;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_A;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_b;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_uu;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_u;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eMat;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA0;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA1;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eRHS;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bf_given;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc_given;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_sf_given;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sRHS;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
-    Equa_Laplace() { _terms = 0; }
+    Equa_Laplace() { }
 
 /// \brief Destructor
-    virtual ~Equa_Laplace() {  }
+    virtual ~Equa_Laplace() { }
 
 /// \brief Add finite element matrix to left-hand side
-/// @param [in] coef Value to multiply by the added matrix
-    virtual void LHS(real_t coef=1.) { }
+    virtual void LHS() { }
 
 /// \brief Add body source term to right-hand side
 /// @param [in] f Vector containing the source given function at mesh nodes
@@ -106,46 +105,31 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
 /// @param [in] h Vector containing the source given function at mesh nodes
     virtual void BoundaryRHS(const Vect<real_t>& h) { }
 
-/** \brief Build and solve the linear system of equations using an iterative method.
- *  \details The matrix is preconditioned by the diagonal ILU method.
- *  The linear system is solved either by the Conjugate Gradient method if the matrix is symmetric
- *  positive definite (<tt>eps=-1</tt>) or the GMRES method if not. The solution is stored in the vector
- *  <tt>u</tt> given in the constructor.
- *  @return Number of performed iterations. Note that the maximal number
- *  is 1000 and the tolerance is 1.e-8
- */
-    int run()
-    {
-       if (_b==NULL)
-          _b = new Vect<real_t>(_theMesh->getNbEq());
-       build();
-       int ret = AbsEqua<real_t>::solveLinearSystem(_A,*_b,_uu);
-       _u->insertBC(*_theMesh,_uu,*_bc);
-       return ret;
-    }
-
 /** \brief Build global matrix and right-hand side.
  *  \details The problem matrix and right-hand side are the ones used in the constructor.
  *  They are updated in this member function.
  */
     void build()
     {
+      if (_u==nullptr)
+         throw OFELIException("In Equa_Therm::build: No solution vector given.");
        _A->clear();
-       MESH_EL {
-          set(theElement);
+       mesh_elements(*_theMesh) {
+          set(the_element);
           LHS();
-          if (_bf_given)
+          if (_bf!=nullptr)
              BodyRHS(*_bf);
-          if (_bc_given)
-             this->updateBC(*_bc);
-          this->ElementAssembly(_A);
-          this->ElementAssembly(*_b);
+          if (_bc!=nullptr)
+             this->updateBC(*_theElement,*_bc);
+          AbsEqua<T_>::_A->Assembly(*_theElement,eMat.get());
+          AbsEqua<T_>::_b->Assembly(*_theElement,eRHS.get());
        }
-       if (_sf_given) {
-          MESH_SD {
-             set(theSide);
+cout<<*_b<<endl;
+       if (_sf!=nullptr) {
+          mesh_sides(*_theMesh) {
+             set(the_side);
              BoundaryRHS(*_sf);
-             this->SideAssembly(*_b);
+             AbsEqua<T_>::_b->Assembly(*_theSide,sRHS.get());
           }
        }
     }
@@ -158,10 +142,10 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
  */
     void build(EigenProblemSolver& e)
     {
-       MESH_EL {
-          set(theElement);
+       mesh_elements(*_theMesh) {
+          set(the_element);
           buildEigen();
-          e.Assembly(TheElement,eA0.get(),eA1.get());
+          e.Assembly(The_element,eA0.get(),eA1.get());
        }
     }
 

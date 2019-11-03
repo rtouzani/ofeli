@@ -31,6 +31,7 @@
 
 #include "equations/interface/FMM.h"
 #include "mesh/Grid.h"
+#include "linear_algebra/Vect_impl.h"
 #include <algorithm>
 
 namespace OFELI {

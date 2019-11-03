@@ -87,7 +87,7 @@ void saveMesh(const string&      file,
 void saveGmsh(const string& file,
               const Mesh&   mesh)
 {
-  int type=0;
+  static vector<int> type = { 0, 0, 1, 2, 3, 4, 5, 6 };
    size_t i;
    ofstream pf(file.c_str());
    if (pf.fail())
@@ -100,36 +100,14 @@ void saveGmsh(const string& file,
    pf << "$ENDNOD" << endl;
    pf << "$ELM\n" << mesh.getNbElements() << endl;
    mesh_elements(mesh) {
-      if (The_element.getShape()==LINE)
-         type = 1;
-      else if (The_element.getShape()==TRIANGLE)
-         type = 2;
-      else if (The_element.getShape()==QUADRILATERAL)
-         type = 3;
-      else if (The_element.getShape()==TETRAHEDRON)
-         type = 4;
-      else if (The_element.getShape()==HEXAHEDRON)
-         type = 5;
-      else if (The_element.getShape()==PENTAHEDRON)
-         type = 6;
-      else
-         throw OFELIException("saveGmsh(string,Mesh): Element shape not recognized.");
-      pf << element_label << "  " << type << "  " << The_element.getCode() << "  0  "
+      pf << element_label << "  " << type[The_element.getShape()] << "  " << The_element.getCode() << "  0  "
          << The_element.getNbNodes();
       for (i=1; i<=The_element.getNbNodes(); i++)
          pf << "  " << The_element.getNodeLabel(i);
       pf << endl;
    }
    mesh_sides(mesh) {
-      if (The_side.getShape()==LINE)
-         type = 1;
-      else if (The_side.getShape()==TRIANGLE)
-         type = 2;
-      else if (The_side.getShape()==QUADRILATERAL)
-         type = 3;
-      else
-         type = 0;
-      pf << side_label << "  " << type << "  " << The_side.getCode(1) << "  0  "
+      pf << side_label << "  " << type[The_side.getShape()]-1 << "  " << The_side.getCode(1) << "  0  "
          << The_side.getNbNodes();
       for (i=1; i<=The_side.getNbNodes(); i++)
          pf << "  " << The_side.getNodeLabel(i);
@@ -202,13 +180,8 @@ void saveMatlab(const string& file,
 void saveTecplot(const string& file,
                  const Mesh&   mesh)
 {
-   string shape, sh[10];
-   sh[LINE] = "line";
-   sh[TRIANGLE] = "tria";
-   sh[QUADRILATERAL] = "quad";
-   sh[TETRAHEDRON] = "tetra";
-   sh[HEXAHEDRON] = "hexa";
-   sh[PENTAHEDRON] = "penta";
+   string shape;
+   static vector<string> sh = { "", "point", "line", "tria", "quad", "tetra", "hexa", "penta" };
    ofstream pf(file.c_str());
    if (pf.fail())
       throw OFELIException("saveTecplot(string,Mesh): Cannot open file " + file);
@@ -283,11 +256,13 @@ void saveVTK(const string& file,
 {
    size_t m=0, size, i;
    ofstream pf(file.c_str());
+   static vector<int> nnd = { 0, 1, 2, 3, 4, 4, 8, 6 };
+   static vector<int> etype = { 0, 3, 5, 9, 10, 12, 13 };
    if (pf.fail())
       throw OFELIException("saveVTK(string,Mesh): Cannot open file " + file);
 
    pf << "# vtk DataFile Version 2.0\n";
-   pf << "Imported from XML (OFELI) file" << endl;
+   pf << "Imported from OFELI file" << endl;
    pf << "ASCII" << endl;
    pf << "DATASET UNSTRUCTURED_GRID\n";
    pf << "POINTS " << mesh.getNbNodes() << " float" << endl;
@@ -299,39 +274,11 @@ void saveVTK(const string& file,
    }
 
    size = 0;
-   mesh_elements(mesh) {
-      if (The_element.getShape()==LINE)
-         m = 2;
-      else if (The_element.getShape()==TRIANGLE)
-         m = 3;
-      else if (The_element.getShape()==QUADRILATERAL)
-         m = 4;
-      else if (The_element.getShape()==TETRAHEDRON)
-         m = 4;
-      else if (The_element.getShape()==HEXAHEDRON)
-         m = 8;
-      else if (The_element.getShape()==PENTAHEDRON)
-         m = 6;
-      else
-         throw OFELIException("saveVTK(string,Mesh): Illegal element Geometry.");
-      size += m+1;
-   }
+   mesh_elements(mesh)
+      size += nnd[The_element.getShape()] + 1;
    pf << "CELLS " << mesh.getNbElements() << " " << size << endl;
    mesh_elements(mesh) {
-      if (The_element.getShape()==LINE)
-         m = 2;
-      else if (The_element.getShape()==TRIANGLE)
-         m = 3;
-      else if (The_element.getShape()==QUADRILATERAL)
-         m = 4;
-      else if (The_element.getShape()==TETRAHEDRON)
-         m = 4;
-      else if (The_element.getShape()==HEXAHEDRON)
-         m = 8;
-      else if (The_element.getShape()==PENTAHEDRON)
-         m = 6;
-      else ;
-      pf << m;
+      pf << nnd[The_element.getShape()];
       for (i=1; i<=m; i++)
          pf << "  " << The_element(i)->n()-1;
       pf << endl;
@@ -339,20 +286,7 @@ void saveVTK(const string& file,
    pf << "CELL_TYPES  " << mesh.getNbElements() << endl;
    size_t k = 0;
    mesh_elements(mesh) {
-      if (The_element.getShape()==LINE)
-         m = 3;
-      else if (The_element.getShape()==TRIANGLE)
-         m = 5;
-      else if (The_element.getShape()==QUADRILATERAL)
-         m = 9;
-      else if (The_element.getShape()==TETRAHEDRON)
-         m = 10;
-      else if (The_element.getShape()==HEXAHEDRON)
-         m = 12;
-      else if (The_element.getShape()==PENTAHEDRON)
-         m = 13;
-      else ;
-      pf << "  " << m;
+      pf << "  " << etype[The_element.getShape()];
       if (++k%15 == 0)
          pf << endl;
    }

@@ -38,7 +38,6 @@ int main(int argc, char *argv[])
 {
    ifstream mf, bcf, bodyf, boundf;
    ofstream dmf;
-   double   penal = 1.e07;
 
    cout << "\n\n";
    cout << "contact, version 1.1, Copyright (c) 1998 - 2008 by Rachid Touzani\n";
@@ -47,13 +46,12 @@ int main(int argc, char *argv[])
    cout << "under certain conditions. Details are distributed with the software." << endl;
 
    if (argc < 2) {
-      cout << "\nUsage:  contact  <parameter_file>\n";
+      cout << "\nUsage: " << argv[0] << " <parameter_file>\n";
       return 0;
    }
    IPF data("contact - 1.0",argv[1]);
-   int verbose = data.getVerbose();
 
-   if (verbose) {
+   if (Verbosity) {
       cout << endl << endl;
       cout << "    *********************************************************\n";
       cout << "    *                     C o n t a c t                     *\n";
@@ -74,66 +72,37 @@ int main(int argc, char *argv[])
 
 // Read parameters and mesh data
    try {
-      int output_flag = data.getOutput();
+      Verbosity = data.getOutput();
       int save_flag = data.getSave();
       MaxNbIterations = data.getNbIter();
       theTolerance = data.getTolerance();
       Mesh ms(data.getMeshFile(1));
 
       Prescription p(ms,data.getDataFile());
-      if (verbose > 1)
+      if (Verbosity > 1)
          cout << "Reading mesh data ...\n";
-      if (verbose > 1)
-         cout << ms;
+      cout << ms;
 
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
-      if (verbose > 1)
-         cout << "Allocating memory for matrix and R.H.S. ...\n";
-      SkSMatrix<double> A(ms);
-      Vect<double> u(ms), v(ms);
 
 //    Read boundary conditions, body and boundary forces
-      if (verbose > 1)
+      if (Verbosity > 1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
-      Vect<double> bc(ms), body_f(ms), bound_f(ms);
+      Vect<double> u(ms), bc(ms), d(ms), bf(ms), sf(ms);
       p.get(BOUNDARY_CONDITION,bc,0);
-      p.get(BODY_FORCE,body_f,0);
-      p.get(BOUNDARY_FORCE,bound_f,0);
+      p.get(CONTACT_DISTANCE,d,0);
+      p.get(BODY_FORCE,bf,0);
+      p.get(BOUNDARY_FORCE,sf,0);
 
-//    ---------------
-//    Iteration Loop
-//    ---------------
+      Elas2DT3 eq(ms,u);
+      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setInput(CONTACT_DISTANCE,d);
+      eq.setInput(BODY_FORCE,bf);
+      eq.setInput(TRACTION,sf);
+      eq.setTerms(DEVIATORIC|DILATATION|CONTACT|BODY_FORCE);
+      eq.run();
 
-      Converged = false;
-      IterationLoop {
-         v = 0.; A = 0.;
-         MeshElements(ms) {
-            Elas2DT3 eq(theElement);
-            eq.Deviator();
-            eq.Dilatation();
-            eq.BodyRHS(body_f);
-            eq.ElementAssembly(A);
-            eq.ElementAssembly(v);
-         }
-         MeshSides(ms) {
-            Elas2DT3 eq(theSide,u);
-            eq.BoundaryRHS(bound_f);
-            eq.SignoriniContact(bound_f,penal);
-            eq.SideAssembly(A);
-            eq.SideAssembly(v);
-         }
-         A.Prescribe(v,bc);
-         A.solve(v);
-
-         theDiscrepancy = Discrepancy(u,v,2);
-         if (theDiscrepancy < theTolerance)
-            Converged = true;
-         if (verbose > 0)
-            cout << "Iteration: " << theIteration << ", Discrepancy: " << theDiscrepancy << endl;
-      }
-
-      if (output_flag > 1)
-         cout << u;
+      cout << u;
       if (save_flag) {
          IOField pl_file(data.getMeshFile(),data.getString("output_file"),ms,IOField::OUT);
          pl_file.put(u);

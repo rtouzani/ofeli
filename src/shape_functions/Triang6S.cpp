@@ -25,7 +25,7 @@
     
   ==============================================================================
 
-  Implementation of class 'Triang6' for straight 6-Node Triangle Finite Element
+                         Implementation of class Triang6S
 
   ==============================================================================*/
 
@@ -46,19 +46,19 @@ Triang6S::Triang6S()
    _sh.resize(6);
    _node.resize(6);
    _x.resize(6);
-   _dsh.resize(6);
    _dshl.resize(6);
 }
 
 
 Triang6S::Triang6S(const Element* el)
 {
-   if (el->getNbNodes() != 6)
+   _el = el;
+   if (_el->getNbNodes() != 6)
       throw OFELIException("Triang6S::Triang6S(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
    _sh.resize(6);
+   _dsh.resize(6);
    _node.resize(6);
    _x.resize(6);
-   _dsh.resize(6);
    _dshl.resize(6);
    for (size_t i=0; i<6; i++) {
       Node *node = (*el)(i+1);
@@ -68,67 +68,65 @@ Triang6S::Triang6S(const Element* el)
    _x21 = _x[1] - _x[0];
    _x31 = _x[2] - _x[0];
    _x32 = _x[2] - _x[1];
-   _det = _x21.x*_x31.y-_x21.y*_x31.x;
+   _det = _x21.x*_x31.y - _x21.y*_x31.x;
    _area = 0.5*_det;
    if (_det < 0.0)
-      throw OFELIException("Triang6S::set(Element *): Negative determinant of jacobian");
+      throw OFELIException("Triang6S::Triang6S(Element *): Negative determinant of jacobian");
    if (_det == 0.0)
-      throw OFELIException("Triang6S::set(Element *): Determinant of jacobian is null");
+      throw OFELIException("Triang6S::Triang6S(Element *): Determinant of jacobian is null");
    _c =(_x[0] + _x[1] + _x[2])*OFELI_THIRD;
-   _el = el;
 }
 
 
-real_t Triang6S::Sh(size_t               i,
-                    const Point<real_t>& s) const
+void Triang6S::Sh(real_t s,
+                  real_t t,
+                  real_t *sh) const
 {
-   switch (i) {
-      case 1: return (1.-s.x-s.y)*(2*(1.-s.x-s.y)-1.);
-      case 2: return s.x*(2*s.x-1.);
-      case 3: return s.y*(2*s.y-1.);
-      case 4: return 4*s.x*(1.-s.x-s.y);
-      case 5: return 4*s.x*s.y;
-      case 6: return 4*s.y*(1.-s.x-s.y);
+   sh[0] = (1.-s-t)*(2*(1.-s-t)-1.);
+   sh[1] = s*(2*s-1.);
+   sh[2] = t*(2*t-1.);
+   sh[3] = 4*s*(1.-s-t);
+   sh[4] = 4*s*t;
+   sh[5] = 4*t*(1.-s-t);
+}
+
+
+void Triang6S::setLocal(real_t s,
+                        real_t t)
+{
+   _dsh[0].x = (4*s+4*t-3.)*_x32.y/_det;
+   _dsh[0].y = (3.-4*s-4*t)*_x32.x/_det;
+   _dsh[1].x = (4*s-1.)*_x31.y/_det;
+   _dsh[1].y = (1.-4*s)*_x31.x/_det;
+   _dsh[2].x = (1.-4*t)*_x21.y/_det;
+   _dsh[2].y = (4*t-1.)*_x21.x/_det;
+   _dsh[3].x = 4*(_x31.y*(1-t-2*s)+_x21.y*s)/_det;
+   _dsh[3].y = 4*(_x31.x*(2*s+t-1)-_x21.x*s)/_det;
+   _dsh[4].x = 4*(t*_x31.y-s*_x21.y)/_det;
+   _dsh[4].y = 4*(s*_x21.x-t*_x31.x)/_det;
+   _dsh[5].x = 4*(_x21.y*(2*t+s-1)-_x31.y*t)/_det;
+   _dsh[5].y = 4*(_x31.x*t+_x21.x*(1-s-2*t))/_det;
+}
+
+
+void Triang6S::atMidEdges(std::vector<Point<real_t> >& dsh,
+                          std::vector<real_t>&         w)
+{
+   dsh.resize(18);
+   w.resize(3);
+   w[0] = w[1] = w[2] = OFELI_THIRD*_area;
+   real_t s[3] = { 0.5,0.5,0.0 }, t[3] = { 0.0, 0.5,0.5 };
+   for (size_t k=0; k<3; ++k) {
+      setLocal(s[k],t[k]);
+      for (size_t i=0; i<6; ++i)
+         dsh[3*i+k] = _dsh[i];
    }
-   return 0;
 }
 
 
-Point<real_t> Triang6S::DSh(size_t               i,
-                            const Point<real_t>& s) const
+vector<Point<real_t> > Triang6S::DSh() const
 {
-   Point<real_t> dsh;
-   switch (i) {
-      case 1: dsh.x = (4*s.x+4*s.y-3.)*_x32.y/_det;
-              dsh.y = (3.-4*s.x-4*s.y)*_x32.x/_det;
-              return dsh;
-      case 2: dsh.x = (4*s.x-1.)*_x31.y/_det;
-              dsh.y = (1.-4*s.x)*_x31.x/_det;
-              return dsh;
-      case 3: dsh.x = (1.-4*s.y)*_x21.y/_det;
-              dsh.y = (4*s.y-1.)*_x21.x/_det;
-              return dsh;
-      case 4: dsh.x = 4./_det*(_x31.y*(1-s.y-2*s.x)+_x21.y*s.x);
-              dsh.y = 4./_det*(_x31.x*(2*s.x+s.y-1)-_x21.x*s.x);
-              return dsh;
-      case 5: dsh.x = 4./_det*(s.y*_x31.y-s.x*_x21.y);
-              dsh.y = 4./_det*(s.x*_x21.x-s.y*_x31.x);
-              return dsh;
-      case 6: dsh.x = 4./_det*(_x21.y*(2*s.y+s.x-1)-_x31.y*s.y);
-              dsh.y = 4./_det*(_x31.x*s.y+_x21.x*(1-s.x-2*s.y));
-              return dsh;
-   }
-   return Point<real_t>(0.);
-}
-
-
-  Point<real_t> Triang6S::Grad(const LocalVect<real_t,6>& u,
-                               const Point<real_t>&       s) const
-{
-   Point<real_t> g(0.,0.,0.);
-   for (size_t i=1; i<=6; i++)
-      g += u(i)*DSh(i,s);
-   return g;
+  return _dsh;
 }
 
 

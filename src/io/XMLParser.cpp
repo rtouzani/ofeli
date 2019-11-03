@@ -44,6 +44,8 @@
 #include "shape_functions/Hexa8.h"
 #include "shape_functions/Penta6.h"
 #include "io/Tabulation.h"
+#include "equations/AbsEqua.h"
+#include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 
 namespace OFELI {
@@ -54,19 +56,19 @@ extern Material theMaterial;
 XMLParser::XMLParser()
           : _is_opened(false), _set_mesh(false), _set_field(false),
             _set_file(false), _set_prescription(false), _set_domain(false),
-            _prescription_opened(false), _verb(0), _nb_dof(1), _dim(2), _nb_nodes(0),
+            _prescription_opened(false), _nb_dof(1), _dim(2), _nb_nodes(0),
             _nb_elements(0), _nb_sides(0), _nb_edges(0), _scan(0), _dof_support(NODE_FIELD),
-            _nb_mat(0), _theMesh(NULL), _v(NULL), _parser(NULL), _ipf(NULL)
+            _nb_mat(0), _theMesh(nullptr), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 { }
 
 
 XMLParser::XMLParser(string file,
                      int    type)
           : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
-            _set_domain(false), _prescription_opened(false), _type(type), _verb(0),
+            _set_domain(false), _prescription_opened(false), _type(type),
             _file(file), _nb_dof(1), _dim(2), _nb_nodes(0), _nb_elements(0), _nb_sides(0),
-            _nb_edges(0), _scan(0), _dof_support(NODE_FIELD), _nb_mat(0), _theMesh(NULL),
-            _v(NULL), _parser(NULL), _ipf(NULL)
+            _nb_edges(0), _scan(0), _dof_support(NODE_FIELD), _nb_mat(0), _theMesh(nullptr),
+            _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    open();
 }
@@ -77,9 +79,9 @@ XMLParser::XMLParser(string file,
                      int    type,
                      int    format)
           : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
-            _set_domain(false), _prescription_opened(false), _type(type), _verb(0),
+            _set_domain(false), _prescription_opened(false), _type(type),
             _format(format), _file(file), _nb_dof(1), _scan(0), _dof_support(NODE_FIELD),
-            _nb_mat(0), _theMesh(&ms), _v(NULL), _parser(NULL), _ipf(NULL)
+            _nb_mat(0), _theMesh(&ms), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    _nb_nodes = _theMesh->getNbNodes();
    _nb_elements = _theMesh->getNbElements();
@@ -95,7 +97,7 @@ XMLParser::XMLParser(string file,
 XMLParser::XMLParser(const XMLParser& p)
           : _is_opened(p._is_opened), _is_closed(p._is_closed), _set_mesh(p._set_mesh),
             _set_field(p._set_field), _set_file(p._set_file), _set_domain(p._set_domain),
-            _time(p._time), _sought_time(p._sought_time), _type(p._type), _verb(p._verb),
+            _time(p._time), _sought_time(p._sought_time), _type(p._type),
             _format(p._format), _file(p._file), _mesh_file(p._mesh_file),
             _sought_name(p._sought_name), _tag_name(p._tag_name), _xml(p._xml), _mat(p._mat),
             _nb_dof(p._nb_dof), _dim(p._dim), _nb_nodes(p._nb_nodes), _nb_elements(p._nb_elements),
@@ -157,14 +159,14 @@ void XMLParser::open()
 
 int XMLParser::scan(size_t ind)
 {
-   if (_verb>1 || _scan>1) {
+   if (Verbosity>10 || _scan>1) {
       cout << "Scanning xml file: " << _file << endl;
       cout << "----------------------------------------------------------------------" << endl;
    }
    _scan = ind;
    _set_mesh = _set_field = true;
    if (parse(_xml)) {
-      if (_verb>0 || _scan>1)
+      if (Verbosity>10 || _scan>1)
          cout << "Parse done" << endl;
       _scan = false;
       cout << "----------------------------------------------------------------------" << endl;
@@ -189,9 +191,8 @@ int XMLParser::scan(vector<real_t>& t,
    _rtype = type;
    _compact = true;
    if (parse(_xml)) {
-      if (_verb>0 || _scan>1)
+      if (Verbosity>10 || _scan>1) {
          cout << "Parse done" << endl;
-      if (_verb>1 || _scan>1) {
          cout << "----------------------------------------------------------------------" << endl;
          cout << "Scanning complete." << endl;
       }
@@ -209,12 +210,12 @@ int XMLParser::get(Domain& dm)
    _set_mesh = _set_field = false;
    _set_domain = true;
    _scan = 0;
-   _theMesh = NULL;
+   _theMesh = nullptr;
    _type = DOMAIN_;
    _theDomain->_nb_dof = 1;
    _theDomain->_dim = 2;
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done." << endl;
       return 0;
    }
@@ -229,10 +230,10 @@ int XMLParser::get(Tabulation& t)
    _theTabulation = &t;
    _set_mesh = _set_field = _set_domain = false;
    _scan = 0;
-   _theMesh = NULL;
+   _theMesh = nullptr;
    _type = FUNCTION;
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done." << endl;
       return 0;
    }
@@ -248,9 +249,9 @@ int XMLParser::get(IPF& ipf)
    _ipf = &ipf;
    _set_mesh = _set_field = false;
    _scan = 0;
-   _theMesh = NULL;
+   _theMesh = nullptr;
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done." << endl;
       return 0;
    }
@@ -264,9 +265,9 @@ int XMLParser::getMaterial()
 {
    _set_mesh = _set_field = false;
    _scan = 0;
-   _theMesh = NULL;
+   _theMesh = nullptr;
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done." << endl;
       return 0;
    }
@@ -286,7 +287,7 @@ int XMLParser::get(int                      type,
    _scan = 0;
    _compact = true;
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done." << endl;
       return 0;
    }
@@ -309,7 +310,7 @@ int XMLParser::get(Mesh& ms,
    _nb_edges = _theMesh->getNbEdges();
    _format = format;
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done." << endl;
       return 0;
    }
@@ -331,14 +332,14 @@ int XMLParser::get(Vect<real_t>& v,
    _v = &v;
    _all_steps = 0;
    _name = _sought_name;
-   _theMesh = NULL;
+   _theMesh = nullptr;
    if (_v->WithMesh())
       _theMesh = &(_v->getMesh());
    _nb_dof = 1;
    _v->setName(_name);
    _nx = v.getNx(), _ny = v.getNy(), _nz = v.getNz();
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done" << endl;
       return 0;
    }
@@ -359,7 +360,7 @@ int XMLParser::get(Vect<real_t>& v,
    _sought_name = name;
    _scan = 0;
    _v = &v;
-   _theMesh = NULL;
+   _theMesh = nullptr;
    if (_v->WithMesh())
       _theMesh = &(_v->getMesh());
    _dof_support = v.getDOFType();
@@ -370,7 +371,7 @@ int XMLParser::get(Vect<real_t>& v,
    _all_steps = 0;
    _nx = 0, _ny = _nz = 1;
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done" << endl;
       return 0;
    }
@@ -407,7 +408,7 @@ int XMLParser::get(Mesh&         ms,
    _v->setMesh(*_theMesh,_nb_dof,_dof_support);
    _v->setName(_name);
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done" << endl;
       return 0;
    }
@@ -433,7 +434,7 @@ int XMLParser::get(Mesh&                    ms,
    _compact = true;
    _type = FIELD;
    if (parse(_xml)) {
-      if (_verb>0)
+      if (Verbosity>10)
          cout << "Parse done" << endl;
       name = _name;
       return 0;
@@ -448,12 +449,6 @@ void XMLParser::setFile(string file)
 {
    _file = file;
    _set_file = true;
-}
-
-
-void XMLParser::setVerbose(int verb)
-{
-   _verb = verb;
 }
 
 
@@ -482,6 +477,13 @@ bool XMLParser::on_tag_open(string     tag_name,
          _par.dof = 1;
          _par.bx = _par.by = _par.bz = _par.bt = false;
       }
+   }
+
+   else if (_tag_name=="Solution") {
+      if (_scan>2)
+         cout << "-> Prescription of exact solution" << endl;
+      else
+         _par.type = SOLUTION;
    }
 
    else if (_tag_name=="BoundaryCondition") {
@@ -1258,7 +1260,7 @@ bool XMLParser::on_cdata(string cdata)
    vector<string> tokens;
    {
       string buf;
-      stringstream ss(cdata);
+      std::stringstream ss(cdata);
       while (ss >> buf)
          tokens.push_back(buf);
    }
@@ -1406,7 +1408,7 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
                               *it++;
                         }
                      }
-	               }
+                  }
                   else {
                      vector<real_t> V;
                      _time = atof((*it++).c_str());
@@ -2105,7 +2107,7 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
 
 bool XMLParser::on_tag_close(string tag_name)
 {
-   if (_verb==10)
+   if (Verbosity>10)
       cout << "CLOSING TAG: " << tag_name << endl;
    if (tag_name=="Constant" || tag_name=="Const") {
       read_const_field_data();
@@ -2118,7 +2120,7 @@ bool XMLParser::on_tag_close(string tag_name)
 
 bool XMLParser::on_comment(string comment)
 {
-   if (_verb==10)
+   if (Verbosity>10)
       cout << "Parsing document: COMMENT: " << comment << endl;
    return true;
 }
@@ -2132,7 +2134,7 @@ bool XMLParser::on_processing(string value)
 
 bool XMLParser::on_doctype(string value)
 {
-   if (_verb > 5)
+   if (Verbosity > 10)
       cout << "Parsing document: Doctype: " << value << endl;
    return true;
 }
@@ -2140,7 +2142,7 @@ bool XMLParser::on_doctype(string value)
 
 bool XMLParser::on_document_begin()
 {
-   if (_verb > 5)
+   if (Verbosity > 10)
       cout << "Parsing document: Begin" << endl;
    return true;
 }
@@ -2148,7 +2150,7 @@ bool XMLParser::on_document_begin()
 
 bool XMLParser::on_document_end()
 {
-   if (_verb > 5)
+   if (Verbosity > 10)
       cout << "Parsing document: End" << endl;
    return true;
 }

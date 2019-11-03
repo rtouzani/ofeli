@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 // Read and set problem data
    theFinalTime = 1.;
    if (argc<2) {
-      cout << "ts_demo1 <mesh_file> [dt]" << endl;
+      cout << "Usage: " << argv[0] << " <mesh_file> [dt]" << endl;
       exit(1);
    }
    Mesh ms(argv[1],true);
@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
    TimeStepping ts(BACKWARD_EULER,theTimeStep,theFinalTime);
    ts.setPDE(eq);
    ts.setInitial(u);
+
 // Set solver of the linear system (See class LinearSolver for other choices)
    ts.setLinearSolver(CG_SOLVER,DILU_PREC);
 

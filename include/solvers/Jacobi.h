@@ -40,8 +40,8 @@ using std::endl;
 using std::setw;
 
 #include "OFELI_Config.h"
-#include "linear_algebra/SpMatrix.h"
-#include "linear_algebra/Vect.h"
+#include "linear_algebra/SpMatrix_impl.h"
+#include "linear_algebra/Vect_impl.h"
 #include "util/util.h"
 #include "io/output.h"
 
@@ -55,7 +55,7 @@ namespace OFELI {
  *  \brief Function to solve a linear system of equations using the Jacobi method.
  */
 
-/** \fn int Jacobi(const SpMatrix<T_>& A, const Vect<T_> &b, Vect<T_> &x, real_t omega, int max_it, real_t toler, int verbose)
+/** \fn int Jacobi(const SpMatrix<T_>& A, const Vect<T_> &b, Vect<T_> &x, real_t omega, int max_it, real_t toler)
  *  \ingroup Solver
  *  \brief Jacobi solver function.
  *  @param [in] A Problem matrix (Instance of class SpMatrix).
@@ -65,8 +65,6 @@ namespace OFELI {
  *  @param [in] omega Relaxation parameter.
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in,out] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter (0: No output, 1: Output iteration information,
- *  2 and greater: Output iteration information and solution at each iteration.
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)
@@ -81,14 +79,16 @@ int Jacobi(const SpMatrix<T_>& A,
            Vect<T_>&           x,
            real_t              omega,
            int                 max_it,
-           real_t              toler,
-           int                 verbose)
+           real_t              toler)
 {
-   if (verbose>0)
+   if (Verbosity)
       cout << "Running Jacobi method ..." << endl;
+   size_t size = x.Size();
+   for (size_t i=1; i<=size; i++)
+      if (std::abs(A(i,i)) < OFELI_EPSMCH)
+         throw OFELIException("In Jacobi(A,b,x,omega,max_it,toler): null diagonal term: " + itos(i));
    size_t j;
    int it;
-   size_t size = x.Size();
    real_t nrm = x.Norm2();
    if (nrm == 0)
       nrm = 1;
@@ -99,13 +99,8 @@ int Jacobi(const SpMatrix<T_>& A,
 
    for (it=1; it<=max_it; it++) {
       for (size_t i=1; i<=size; i++) {
-         if (std::abs(A(i,i)) < OFELI_EPSMCH) {
-            cerr << "Error in function Jacobi : " << i << "-th Diagonal";
-            cerr << " entry is zero." << endl;
-            exit(1);
-         }
          T_ s = 0;
-         for (j=1; j<i; j++)
+         for (size_t j=1; j<i; j++)
             s += A(i,j)*x(j);
          for (j=i+1; j<=size; j++)
             s += A(i,j)*x(j);
@@ -113,20 +108,22 @@ int Jacobi(const SpMatrix<T_>& A,
       }
       real_t err = y.Norm2()/nrm;
 
-      if (verbose > 1)
+      if (Verbosity > 1)
          cout << "Iteration: " << setw(4) << it << "  ... Error: " << err << endl;
 
       x += y;
       nrm = x.Norm2();
-      if (verbose > 2)
+      if (Verbosity>10)
          cout << x;
       if (err < toler) {
-         if (verbose)
+         if (Verbosity>2)
             cout << "Convergence of the Jacobi method after " << it << " iterations." << endl;
+         if (Verbosity>6)
+         cout << "Solution at iteration " << it << ": \n" << x;
          return it;
       }
    }
-   if (verbose)
+   if (Verbosity>2)
       cout << "No Convergence of the Jacobi method after " << it << " iterations." << endl;
    return -it;
 }
@@ -138,11 +135,10 @@ int Jacobi(const Matrix<T_>* A,
            Vect<T_>&         x,
            real_t            omega,
            int               max_it,
-           real_t            toler,
-           int               verbose)
+           real_t            toler)
 {
    SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
-   return Jacobi(AA,b,x,omega,max_it,toler,verbose);
+   return Jacobi(AA,b,x,omega,max_it,toler);
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

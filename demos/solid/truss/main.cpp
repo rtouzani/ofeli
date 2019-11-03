@@ -37,9 +37,11 @@ using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
-   if (argc) { }
+   if (argc < 2) {
+      cout << "\nUsage: " << argv[0] << " <project_file>\n";
+      return 0;
+   }
    IPF data("truss",argv[1]);
-   int verbose = data.getVerbose();
    int output_flag = data.getOutput();
 
    if (output_flag) {
@@ -65,48 +67,30 @@ int main(int argc, char *argv[])
          cout << ms;
       Prescription p(ms,data.getDataFile());
 
-//    Declare problem data (matrix, rhs, boundary conditions, body forces)
-      SkSMatrix<double> A(ms);
-
-      if (verbose > 1)
-         cout << "Reading boundary conditions, body and boundary forces ...\n";
-      Vect<double> bc(ms), bf(ms);
+//    Declare problem data (boundary conditions, loads)
+      if (Verbosity > 1)
+         cout << "Reading boundary conditions and loads ...\n";
+      Vect<double> u(ms), bc(ms), f(ms);
       p.get(BOUNDARY_CONDITION,bc);
-      p.get(POINT_FORCE,bf);
-      Vect<double> b(bf);
+      p.get(POINT_FORCE,f);
       double section = data.getDouble("section");
 
-//    Loop over elements
-      if (verbose > 1)
+//    Solve problem
+      if (Verbosity > 1)
          cout << "Calculating and assembling element arrays ..." << endl;
-      MeshElements(ms) {
-
-//       Declare an instance of class Bar2DL2
-         Bar2DL2 eq(theElement,section);
-
-//       Stiffness matrix
-         eq.Stiffness();
-
-//       Assemble element matrix
-         eq.ElementAssembly(A);
-      }
-
-//    Impose a concentrated vertical load at node 2
-      A.Prescribe(b);
-
-//    Solve the linear system of equations
-      if (verbose > 1)
-         cout << "Solving the linear system ...\n";
-      A.solve(b);
+      Bar2DL2 eq(ms,u);
+      eq.setSection(section);
+      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setInput(POINT_FORCE,f);
+      eq.run(); 
 
 //    Output solution
-      if (verbose > 1)
-         cout << "\nSolution:\n" << b;
+      cout << "\nSolution:\n" << u;
 
 //    Transform mesh to deformed one
       IOField pf(data.getMeshFile(),data.getPlotFile(),ms,IOField::OUT);
-      pf.put(b);
-      DeformMesh(ms,b,40);
+      pf.put(u);
+      DeformMesh(ms,u,40);
       ms.put(data.getProject()+"-1.m");
    } CATCH_EXCEPTION
    return 0;

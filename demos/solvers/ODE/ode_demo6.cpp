@@ -42,7 +42,7 @@ using namespace OFELI;
 int main(int argc, char *argv[])
 {
    if (argc<4) {
-      cout << "Usage: ode_demo6 <time step> <final time> <output file>" << endl;
+      cout << "Usage: " << argv[0] << " <time step> <final time> <output file>" << endl;
       return 0;
    }
    theTimeStep = atof(argv[1]);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
    ofstream oph(ff.c_str());
 
    try {
-      ODESolver ode(FORWARD_EULER,theTimeStep,theFinalTime,2);
+      ODESolver ode(RK4,theTimeStep,theFinalTime,2);
 
 //    Set differential equation system
       ode.setF("y2");

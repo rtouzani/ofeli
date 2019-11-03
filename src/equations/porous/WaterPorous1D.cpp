@@ -31,6 +31,7 @@
 
 #include "equations/porous/WaterPorous1D.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 /*!
@@ -39,7 +40,6 @@ namespace OFELI {
  */
 
 WaterPorous1D::WaterPorous1D()
-              : _nb_nodes(0), _nb_elements(0), _verb(1)
 {
    _nb_dof = 1;
    _cw = 1.e-6;
@@ -48,19 +48,16 @@ WaterPorous1D::WaterPorous1D()
 }
 
 
-WaterPorous1D::WaterPorous1D(Mesh&  ms,
-                             size_t verb)
-              : _nb_nodes(ms.getNbNodes()), _nb_elements(ms.getNbElements()),
-                _verb(verb)
+WaterPorous1D::WaterPorous1D(Mesh&  ms)
+              : Equation<real_t,2,2,1,1>(ms)
 {
-   _theMesh = &ms;
    _nb_dof = 1;
    _cw = 1.e-6;
    _phi.setSize(_nb_nodes);
    _phi = 1.;
    _Kx = 1.;
    _mu = 1.;
-   if (_verb > 3) {
+   if (Verbosity>3) {
       cout << "Number of nodes:\t\t" << _nb_nodes << endl;
       cout << "Number of equations:\t\t" << _theMesh->getNbEq() << endl;
    }
@@ -81,27 +78,27 @@ void WaterPorous1D::setCoef(real_t cw,
    _phi = phi;
    _density = rho;
    _Mw = 1./mu;
-   _Kx.setSize(_nb_elements);
+   _Kx.setSize(_nb_el);
    _Kx = K;
 }
 
 
 void WaterPorous1D::set(const Element *el)
 {
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    eA0 = 0;
    eA1 = 0;
    eRHS = 0;
    Line2 ln(el);
-   _length = ln.getLength();
+   _el_geo.length = ln.getLength();
    _Ke = _Kx(el->n());
-   _dSh(1) = ln.DSh(1), _dSh(2) = ln.DSh(2);
+   _dSh = ln.DSh();
 }
 
 
 void WaterPorous1D::Mass()
 {
-   real_t c=0.5*_length*_cw*_density;
+   real_t c=0.5*_el_geo.length*_cw*_density;
    eA1(1,1) = c*_phi(1);
    eA1(2,2) = c*_phi(1);
 }
@@ -109,26 +106,18 @@ void WaterPorous1D::Mass()
 
 void WaterPorous1D::Mobility()
 {
-   real_t c=_length*_Mw*_density;
+   real_t c=_el_geo.length*_Mw*_density;
    for (size_t i=1; i<=2; i++) {
       for (size_t j=1; j<=2; j++)
-         eA0(i,j) += c*(_Ke*_dSh(i).x*_dSh(j).x);
+         eA0(i,j) += c*(_Ke*_dSh[i-1].x*_dSh[j-1].x);
    }
 }
 
 
-void WaterPorous1D::BodyRHS(const Vect<real_t>& bf,
-                            int                 opt)
+void WaterPorous1D::BodyRHS(const Vect<real_t>& bf)
 {
-   real_t c=0.5*_length;
-   if (opt==GLOBAL_ARRAY) {
-      eRHS(1) += c*bf((*_theElement)(1)->n());
-      eRHS(2) += c*bf((*_theElement)(2)->n());
-   }
-   else {
-      eRHS(1) += c*bf(1);
-      eRHS(2) += c*bf(2);
-   }
+   eRHS(1) += 0.5*_el_geo.length*bf((*_theElement)(1)->n());
+   eRHS(2) += 0.5*_el_geo.length*bf((*_theElement)(2)->n());
 }
 
 /*! @} End of Doxygen Groups */

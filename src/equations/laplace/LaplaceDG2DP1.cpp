@@ -35,25 +35,25 @@
 #include "solvers/LinearSolver.h"
 #include "post/Reconstruction.h"
 #include "equations/laplace/LaplaceDG2DP1.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/LocalMatrix_impl.h"
 
 namespace OFELI {
 
 LaplaceDG2DP1::LaplaceDG2DP1(Mesh&         ms,
-                             Vect<real_t>& f,
-                             Vect<real_t>& Dbc,
-                             Vect<real_t>& Nbc,
+                             Vect<real_t>& bf,
+                             Vect<real_t>& bc,
+                             Vect<real_t>& sf,
                              Vect<real_t>& u)
               : DG(ms,1)
 {
+   setMatrixType(SPARSE);
+   setSolver(CG_SOLVER,DILU_PREC);
    _u = &u;
-   _f = &f;
-   _dbc = &Dbc;
-   _nbc = &Nbc;
+   _bf = &bf;
+   _bc = &bc;
+   _sf = &sf;
    _K = 1;
-   _nb_dof = 1;
-   _nb_eq *= _nb_dof;
-   _theMesh = &ms;
-   _b.setSize(ms.getNbElements(),3);
    _sigma = 100.;
    _eps = -1.;
 }
@@ -81,21 +81,21 @@ void LaplaceDG2DP1::set(const LocalMatrix<real_t,2,2>& K)
 void LaplaceDG2DP1::set(Element& el)
 {
    _theElement = &el;
-   Triang3 tr(_theElement);
-   _area = tr.getArea();
-   _dSh(1) = tr.DSh(1), _dSh(2) = tr.DSh(2), _dSh(3) = tr.DSh(3);
+   Triang3 t(_theElement);
+   _el_geo.area = t.getArea();
+   _dSh = t.DSh();
    _ne = _theElement->n();
 }
 
-
+  /*
 void LaplaceDG2DP1::setSide(size_t k)
 {
    _theSide = _theElement->getPtrSide(k);
    Point<real_t> N = _theElement->getUnitNormal(k);
-   _length = Line2(_theSide).getLength();
+   _el_geo.length = Line2(_theSide).getLength();
    _is(1) = (*_theSide)(1)->n(), _is(2) = (*_theSide)(2)->n();
    Triang3 T(_theElement);
-   _area = T.getArea();
+   _el_geo.area = T.getArea();
    LocalVect<size_t,2> ls;
    _ls1(1) = _g2l[_ne-1][_is(1)-1];
    _ls1(2) = _g2l[_ne-1][_is(2)-1];
@@ -125,49 +125,49 @@ void LaplaceDG2DP1::setSide(size_t k)
 
 void LaplaceDG2DP1::build()
 {
-   _A = 0;
-   _b = 0;
+   *_A = 0;
+   *_b = 0;
    MESH_EL {
       set(TheElement);
       for (size_t i=1; i<=3; i++) {
          for (size_t j=1; j<=3; j++) {
-            _A(II(i),II(j)) += _area*(_K(1,1)*_dSh(i).x*_dSh(j).x +
-                                      _K(1,2)*_dSh(i).x*_dSh(j).y +
-                                      _K(2,1)*_dSh(i).y*_dSh(j).x +
-                                      _K(2,2)*_dSh(i).y*_dSh(j).y);
+            (*_A)(II(i),II(j)) += _el_geo.area*(_K(1,1)*_dSh(i).x*_dSh(j).x +
+                                                _K(1,2)*_dSh(i).x*_dSh(j).y +
+                                                _K(2,1)*_dSh(i).y*_dSh(j).x +
+                                                _K(2,2)*_dSh(i).y*_dSh(j).y);
          }
-         _b(II(i)) += OFELI_THIRD*_area*(*_f)((*_theElement)(i)->n());
+         (*_b)(II(i)) += OFELI_THIRD*_el_geo.area*(*_bf)((*_theElement)(i)->n());
       }
 
 //    Loop on element sides
       for (size_t k=1; k<=3; k++) {
          setSide(k);
-         real_t c = 0.5*_length;
+         real_t c = 0.5*_el_geo.length;
 
 //       Internal sides
          if (_theSide->isOnBoundary()==false) {
             for (size_t i=1; i<=3; i++) {
                size_t ii = _ls1(i);
-               _A(II(ii),II(ii)) += 0.5*_sigma*_z(ii);
-               _A(II(ii),IJ(_ls2(i))) -= 0.5*_sigma*_z(ii);
+               (*_A)(II(ii),II(ii)) += 0.5*_sigma*_z(ii);
+               (*_A)(II(ii),IJ(_ls2(i))) -= 0.5*_sigma*_z(ii);
                for (size_t j=1; j<=3; j++) {
                   size_t jj = _ls1(j), kk = _ls2(j);
-                  _A(II(ii),II(jj)) -= 0.5*c*(_F1(jj)*_z(ii) - _eps*_F1(ii)*_z(jj));
-                  _A(II(ii),IJ(kk)) -= 0.5*c*(_F2(kk)*_z(ii) + _eps*_F1(ii)*_z(jj));
+                  (*_A)(II(ii),II(jj)) -= 0.5*c*(_F1(jj)*_z(ii) - _eps*_F1(ii)*_z(jj));
+                  (*_A)(II(ii),IJ(kk)) -= 0.5*c*(_F2(kk)*_z(ii) + _eps*_F1(ii)*_z(jj));
                }
             }
          }
 
 //       Dirichlet boundary condition sides
          if ((*_theSide)(1)->getCode(1)>0 && (*_theSide)(2)->getCode(1)>0) {
-            real_t g = c*((*_dbc)(_is(1))+(*_dbc)(_is(2)));
+            real_t g = c*((*_bc)(_is(1))+(*_bc)(_is(2)));
             for (size_t i=1; i<=2; i++) {
                size_t ii = _ls1(i);
-               _b(II(ii)) += _eps*_F1(ii)*g + 0.5*_z(ii)*_sigma*(*_dbc)(_is(i));
-               _A(II(ii),II(ii)) += 0.5*_sigma*_z(ii);
+               (*_b)(II(ii)) += _eps*_F1(ii)*g + 0.5*_z(ii)*_sigma*(*_bc)(_is(i));
+               (*_A)(II(ii),II(ii)) += 0.5*_sigma*_z(ii);
                for (size_t j=1; j<=2; j++) {
                   size_t jj = _ls1(j);
-                  _A(II(ii),II(jj)) -= c*(_F1(jj)*_z(ii)-_eps*_F1(ii)*_z(jj));
+                  (*_A)(II(ii),II(jj)) -= c*(_F1(jj)*_z(ii)-_eps*_F1(ii)*_z(jj));
                }
             }
          }
@@ -175,7 +175,7 @@ void LaplaceDG2DP1::build()
 //       Neumann boundary condition sides
          if (_theSide->getCode(1)>0) {
             for (size_t i=1; i<=3; i++)
-               _b(II(_ls1(i))) += c*(*_nbc)(_theSide->n());
+               (*_b)(II(_ls1(i))) += c*(*_sf)(_theSide->n());
          }
       }
    }
@@ -191,12 +191,12 @@ int LaplaceDG2DP1::run()
 
 int LaplaceDG2DP1::solve()
 {
-   LinearSolver<double> ls(1000,1.e-6,1);
+   LinearSolver<double> ls(1000,1.e-6);
    int nb_it = 0;
    if (_eps==-1)
-      nb_it = ls.solve(_A,_b,*_u,CG_SOLVER,DILU_PREC);
+      nb_it = ls.solve(*_A,*_b,*_u,CG_SOLVER,DILU_PREC);
    else
-      nb_it = ls.solve(_A,_b,*_u,GMRES_SOLVER,DILU_PREC);
+      nb_it = ls.solve(*_A,*_b,*_u,GMRES_SOLVER,DILU_PREC);
    return nb_it;
 }
 
@@ -206,5 +206,5 @@ void LaplaceDG2DP1::Smooth(Vect<real_t>& u)
    Reconstruction r(*_theMesh);
    r.DP1toP1(*_u,u);
 }
-
+  */
 } /* namespace OFELI */

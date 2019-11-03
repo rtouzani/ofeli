@@ -50,6 +50,7 @@ using std::string;
 #include "linear_algebra/Assembly.h"
 #include "linear_algebra/Vect.h"
 #include "linear_algebra/DSMatrix.h"
+#include "linear_algebra/SkSMatrix.h"
 
 namespace OFELI {
 /*!

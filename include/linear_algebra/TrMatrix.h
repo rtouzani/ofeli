@@ -45,7 +45,6 @@ namespace OFELI {
  *  \brief Definition file for class TrMatrix.
  */
 
-template<class T_> class TrMatrix;
 class Mesh;
 
 
@@ -81,147 +80,72 @@ class TrMatrix : public Matrix<T_>
    using Matrix<T_>::_nb_rows;
    using Matrix<T_>::_length;
    using Matrix<T_>::_a;
-   using Matrix<T_>::_fact;
    using Matrix<T_>::_zero;
    using Matrix<T_>::_temp;
 
 /// \brief Default constructor.
 /// \details Initialize a zero dimension tridiagonal matrix
-    TrMatrix() { _size = 0; }
+   TrMatrix();
 
 /// \brief Constructor for a tridiagonal matrix with <tt>size</tt> rows.
-    TrMatrix(size_t size)
-    {
-       _size = _nb_rows = _nb_cols = size;
-       _length = 3*_size;
-       _a.resize(_length,static_cast<T_>(0));
-    }
+    TrMatrix(size_t size);
 
 /// \brief Copy Constructor
-    TrMatrix(const TrMatrix& m)
-    {
-       _size = m._size;
-       _length = m._length;
-       _a.resize(_length);
-       _a = m._a;
-    }
+    TrMatrix(const TrMatrix& m);
 
 /// \brief Destructor
-    ~TrMatrix() { }
+    ~TrMatrix();
 
 /// \brief Define matrix as identity matrix
-    void Identity() { Diagonal(1); }
+    void Identity();
 
 /// \brief Define matrix as a diagonal one
-    void Diagonal()
-    {
-       for (size_t i=1; i<=_size; i++)
-          _a[3*i-2] = static_cast<T_>(0);
-    }
+    void Diagonal();
 
-/// \brief Define matrix as a diagonal one
-/// with diagonal entries equal to <tt>a</tt>
-    void Diagonal(const T_& a)
-    {
-       _length = _nb_rows;
-       for (size_t i=1; i<=_nb_rows; ++i) {
-          _a[3*i-3] = static_cast<T_>(0);
-          _a[3*i-2] = a;
-          _a[3*i-1] = static_cast<T_>(0);
-       }
-    }
+    void Diagonal(const T_& a);
 
-/** \brief Sets the matrix as the one for the Laplace equation in 1-D
- *  \details The matrix is initialized as the one resulting from P<sub>1</sub>
- *  finite element discretization of the classical elliptic operator
- *     -u'' = f
- *  with homogeneous Dirichlet boundary conditions
- *  \remark This function is available for real valued matrices only.
- *  @param [in] h %Mesh size (assumed constant)
- */
     void Laplace1D(real_t h);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void setGraph(const Vect<RC>& I,
+                  int             opt=1);
+
     void setMesh(Mesh&  mesh,
-                 size_t dof=0)
-    {
-       throw OFELIException("In TrMatrix::setMesh(Mesh,size_t): This member "
-                            "function is not valid for class TrMatrix");
-    }
+                 size_t dof=0);
 
     void setMesh(Mesh&  mesh,
                  size_t dof,
-                 size_t type)
-    {
-       throw OFELIException("In TrMatrix::setMesh(Mesh,size_t,size_t): "
-                            "This member function is not valid for class TrMatrix");
-    }
+                 size_t type);
 
     virtual void setMesh(size_t dof,
                          Mesh&  mesh,
-                         int    code=0)
-    {
-       throw OFELIException("In TrMatrix::setMesh(Mesh,Mesh,int): "
-                            "This member function is not valid for class TrMatrix");
-    }
+                         int    code=0);
 
     virtual void setMesh(size_t dof,
                          size_t nb_eq,
-                         Mesh&  mesh)
-    {
-       dof = 0;
-       nb_eq = 0;
-       if (mesh.getDim()==0) { }
-    }
+                         Mesh&  mesh);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Set size (number of rows) of matrix.
 /// @param [in] size Number of rows and columns.
-    void setSize(size_t size)
-    {
-       _nb_rows = _nb_cols = _size = size;
-       _length = 3*_nb_rows;
-       _a.resize(_length);
-    }
+    void setSize(size_t size);
 
 
 /// \brief Multiply matrix by vector <tt>x</tt> and add result to <tt>y</tt>.
-    void MultAdd(const Vect<T_>& x, Vect<T_>& y) const
-    {
-       y(1) += _a[1]*x(1) + _a[2]*x(2);
-       for (size_t i=2; i<_size; ++i)
-          y(i) += _a[3*i-3]*x(i-1) + _a[3*i-2]*x(i) + _a[3*i-1]*x(i+1);
-       y(_size) += _a[3*_size-3]*x(_size-1) + _a[3*_size-2]*x(_size);
-    }
+    void MultAdd(const Vect<T_>& x, Vect<T_>& y) const;
 
 /// \brief Multiply matrix by vector <tt>a*x</tt> and add result to <tt>y</tt>.
     void MultAdd(T_              a,
                  const Vect<T_>& x,
-                 Vect<T_>&       y) const
-    {
-       y(1) += a*(_a[1]*x(1) + _a[2]*x(2));
-       for (size_t i=2; i<_size; ++i)
-          y(i) += a * (_a[3*i-3]*x(i-1) + _a[3*i-2]*x(i) + _a[3*i-1]*x(i+1));
-       y(_size) += a * (_a[3*_size-3]*x(_size-1) + _a[3*_size-2]*x(_size));
-    }
+                 Vect<T_>&       y) const;
 
 /// \brief Multiply matrix by vector <tt>x</tt> and save result in <tt>y</tt>.
     void Mult(const Vect<T_>& x,
-              Vect<T_>&       y) const
-    {
-       y = static_cast<T_>(0);
-       MultAdd(x,y);
-    }
+              Vect<T_>&       y) const;
 
 /// \brief Multiply transpose of matrix by vector <tt>x</tt> and save result in <tt>y</tt>.
     void TMult(const Vect<T_>& x,
-               Vect<T_>&       y) const
-    {
-       y(1) = _a[1]*x(1) + _a[3]*x(2);
-       for (size_t i=2; i<_size; ++i)
-          y(i) = _a[3*i-4]*x(i-1) + _a[3*i-2]*x(i) + _a[3*i]*x(i+1);
-       y(_size) = _a[3*_size-4]*x(_size-1) + _a[3*_size-2]*x(_size);
-    }
+               Vect<T_>&       y) const;
 
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
@@ -229,10 +153,7 @@ class TrMatrix : public Matrix<T_>
  *  to current instance
  */
     void Axpy(T_                  a,
-              const TrMatrix<T_>& m)
-    {
-       _a += a * m._a;
-    }
+              const TrMatrix<T_>& m);
    
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
@@ -240,116 +161,51 @@ class TrMatrix : public Matrix<T_>
  *  to current instance
  */
     void Axpy(T_                a,
-              const Matrix<T_>* m)
-    {
-       for (size_t i=0; i<_length; i++)
-          _a[i] += a * m->_a[i];
-    }
+              const Matrix<T_>* m);
 
 /// \brief Assign constant <tt>val</tt> to an entry <tt>(i,j)</tt> of the matrix.
     void set(size_t    i,
              size_t    j,
-             const T_& val)
-    {
-       if (i==j)
-          _a[3*i-2] = val;
-       else if (i==j+1)
-          _a[3*i-3] = val;
-       else if (i==j-1)
-          _a[3*i-1] = val;
-}
+             const T_& val);
 
 /// \brief Add constant <tt>val</tt> value to an entry <tt>(i,j)</tt> of the matrix.
     void add(size_t    i,
              size_t    j,
-             const T_& val)
-    {
-       if (i==j)
-          _a[3*i-2] += val;
-       else if (i==j+1)
-          _a[3*i-3] += val;
-       else if (i==j-1)
-          _a[3*i-1] += val;
-}
+             const T_& val);
 
 /** \brief Operator () (Constant version).
  *  @param [in] i Row index
  *  @param [in] j Column index
  */
     T_ operator()(size_t i,
-                  size_t j) const
-    {
-       if (i==j)
-          return _a[3*i-2];
-       else if (i==j+1)
-          return _a[3*i-3];
-       else if (i==j-1)
-          return _a[3*i-1];
-       else
-          return _zero;
-}
+                  size_t j) const;
 
 /** \brief Operator () (Non constant version).
  *  @param [in] i Row index
  *  @param [in] j Column index
  */
     T_ & operator()(size_t i,
-                    size_t j)
-    {
-       if (i==j)
-          return _a[3*i-2];
-       else if (i==j+1)
-          return _a[3*i-3];
-       else if (i==j-1)
-          return _a[3*i-1];
-       else {
-          throw OFELIException("In TrMatrix::Operator(): Index pair (" +
-                               itos(int(i)) + "," + itos(int(j)) +
-                               ") is not compatible with tridiagonal structure.");
-       }
-       return _zero;
-}
+                    size_t j);
 
 /// \brief Operator =.
 /// \details Copy matrix <tt>m</tt> to current matrix instance.
-    TrMatrix<T_> & operator=(const TrMatrix<T_>& m)
-    {
-       _a = m._a;
-       return *this;
-    }
+    TrMatrix<T_> & operator=(const TrMatrix<T_>& m);
 
 /// \brief Operator =
 /// Assign matrix to identity times <tt>x</tt>.
-    TrMatrix<T_> & operator=(const T_& x)
-    {
-       Clear(_a);
-       for (size_t i=1; i<=_size; ++i)
-          _a[3*i-2] = x;
-       return *this;
-    }
+    TrMatrix<T_> & operator=(const T_& x);
 
 /// \brief Operator *=.
 /// \details Premultiply matrix entries by constant value <tt>x</tt>.
-    TrMatrix<T_> & operator*=(const T_& x)
-    {
-       for (size_t i=1; i<=_length; i++)
-          _a[i-1] *= x;
-       return *this;
-    }
+    TrMatrix<T_> & operator*=(const T_& x);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    int Factor()
-    {
-       throw OFELIException("In TrMatrix::Factor(): Matrix cannot be fatorized separately "
-                            "Call Solve(b) directly.");
-       return 1;
-    }
-
-    int Solve(Vect<T_>& b) { return solve(b); }
+    int Factor();
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Solve a linear system with current matrix (forward and back substitution).
  *  @param [in,out] b Vect instance that contains right-hand side on input and solution on output.
+ *  @param [in] fact Ununsed argument
  *  @return
  *  <ul>
  *     <li><tt>0</tt> if solution was normally performed,
@@ -358,33 +214,13 @@ class TrMatrix : public Matrix<T_>
  * 
  *  \b Warning: %Matrix is modified after this function.
  */
-    int solve(Vect<T_>& b)
-    {
-       int ret = 0;
-       T_ p=0;
-       for (size_t i=1; i<_size; ++i) {
-          ret = int(i);
-          if (Abs(_a[3*i-2]) < OFELI_EPSMCH)
-             throw OFELIException("In TrMatrix::solve(Vect<T_>): The " + itos(int(i))
-                                  + "-th pivot is null."); 
-          else
-             p = _a[3*i]/_a [3*i-2];
-          _a[3*i+1] -= p*_a[3*i-1];
-          b.add(i+1,-p*b(i));
-       }
-       if (Abs(_a[3*_size-2]) < OFELI_EPSMCH)
-          throw OFELIException("In TrMatrix::solve(Vect<T_>): The " + itos(_size)
-                               + "-th pivot is null.");
-       else
-          b(_size) /= _a[3*_size-2];
-       for (int j=int(_size)-1; j>0; j--)
-          b(j) = (b(j)-_a[3*j-1]*b(j+1))/_a[3*j-2];
-       return ret;
-    }
+    int solve(Vect<T_>& b,
+              bool      fact=true);
 
 /** \brief Solve a linear system with current matrix (forward and back substitution).
  *  @param [in] b Vect instance that contains right-hand side.
  *  @param [out] x Vect instance that contains solution.
+ *  @param [in] fact Unused argument
  *  @return
  *  <ul>
  *     <li><tt>0</tt> if solution was normally performed,
@@ -394,27 +230,14 @@ class TrMatrix : public Matrix<T_>
  *  \b Warning: %Matrix is modified after this function.
  */
     int solve(const Vect<T_>& b,
-              Vect<T_>&       x)
-    {
-       x = b;
-       return solve(x);
-    }
+              Vect<T_>&       x,
+              bool            fact=false);
 
 /// \brief Return C-Array.
-    T_ *get() const { return &_a[0]; }
+    T_ *get() const;
 
 /// \brief Return entry <tt>(i,j)</tt> of matrix
-    T_ get(size_t i, size_t j) const
-    {
-       if (i==j)
-          return _a[3*i-2];
-       else if (i==j+1)
-          return _a[3*i-3];
-       else if (i==j-1)
-          return _a[3*i-1];
-       else
-          return _zero;
-    }
+    T_ get(size_t i, size_t j) const;
 
 };
 
@@ -423,14 +246,8 @@ class TrMatrix : public Matrix<T_>
 ///////////////////////////////////////////////////////////////////////////////
 
 template<>
-inline void TrMatrix<real_t>::Laplace1D(real_t h)
-{
-   for (size_t i=1; i<=_nb_rows; ++i) {
-      _a[3*i-3] = -1.0/h;
-      _a[3*i-2] =  2.0/h;
-      _a[3*i-1] = -1.0/h;
-   }
-}
+inline void TrMatrix<real_t>::Laplace1D(real_t h);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //                           ASSOCIATED  FUNCTIONS                           //
@@ -448,21 +265,7 @@ inline void TrMatrix<real_t>::Laplace1D(real_t h)
  */
 template<class T_>
 Vect<T_> operator*(const TrMatrix<T_>& A,
-                   const Vect<T_>&     b)
-{
-#if defined (USE_EIGEN)
-   return Vect<T_>(Matrix<T_,Eigen::Dynamic,1>(x)*b);
-#else
-   size_t n = A.getSize();
-   Vect<T_> v(n);
-   v(1) = A(1,1)*b(1) + A(1,2)*b(2);
-   for (size_t i=2; i<n; ++i)
-      v(i) = A(i,i-1)*b(i-1) + A(i,i)*b(i) + A(i,i+1)*b(i+1);
-   v(n) = A(n,n-1)*b(n-1) + A(n,n)*b(n);
-   return v;
-#endif
-}
-
+                   const Vect<T_>&     b);
 
 /** \fn TrMatrix<T_> operator*(T_ a, const TrMatrix<T_> &A)
  *  \brief Operator * (Premultiplication of matrix by constant)
@@ -474,13 +277,7 @@ Vect<T_> operator*(const TrMatrix<T_>& A,
  */
 template<class T_>
 TrMatrix<T_> operator*(T_                  a,
-                       const TrMatrix<T_>& A)
-{
-   TrMatrix<T_> v(A);
-   for (size_t i=0; i<A.getLength(); ++i)
-      v[i] *= a;
-   return v;
-}
+                       const TrMatrix<T_>& A);
 
 
 /** \fn ostream& operator<<(ostream& s, const TrMatrix<T_>& a)
@@ -492,20 +289,8 @@ TrMatrix<T_> operator*(T_                  a,
  */
 template<class T_>
 ostream& operator<<(ostream&            s,
-                    const TrMatrix<T_>& A)
-{
-   s.setf(ios::right|ios::scientific);
-   s << endl;
-   for (size_t i=1; i<=A.getNbRows(); i++) {
-      s << "\nRow  " << setw(6) << i << endl;
-      for (size_t j=1; j<=A.getNbRows(); j++)
-         s << "  " << setprecision(8) << std::setfill(' ') << setw(18) << A(i,j);
-      s << endl;
-   }
-   return s;
-}
+                    const TrMatrix<T_>& A);
 
-/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 
 #endif

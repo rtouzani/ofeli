@@ -41,7 +41,6 @@ using std::vector;
 using std::string;
 
 #include "mesh/MeshUtil.h"
-#include "linear_algebra/Vect.h"
 #include "mesh/Mesh.h"
 #include "mesh/Grid.h"
 #include "shape_functions/Line2.h"
@@ -50,11 +49,70 @@ using std::string;
 #include "shape_functions/Tetra4.h"
 #include "shape_functions/Hexa8.h"
 #include "shape_functions/Penta6.h"
-#include "linear_algebra/LocalVect.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/LocalVect_impl.h"
 #include "post/Reconstruction.h"
+#include "util/util.h"
 #include "OFELIException.h"
 
 namespace OFELI {
+
+size_t Label(const Node& nd) { return nd.n(); }
+
+size_t Label(const Element& el) { return el.n(); }
+
+size_t Label(const Side& sd) { return sd.n(); }
+
+size_t Label(const Edge& ed) { return ed.n(); }
+
+size_t NodeLabel(const Element& el, size_t n) { return el.getNodeLabel(n); }
+
+size_t NodeLabel(const Side& sd, size_t n) { return sd.getNodeLabel(n); }
+
+Point<real_t> Coord(const Node& nd) { return nd.getCoord(); }
+
+int Code(const Node& nd, size_t i) { return nd.getCode(i); }
+
+int Code(const Element& el) { return el.getCode(); }
+
+int Code(const Side& sd, size_t i) { return sd.getCode(i); }
+
+
+ostream& operator<<(ostream& s,
+                    ND&      d)
+{
+   s << d.nd[0] << " " << d.nd[1] << " " << d.n << " " << d.e1 << " " << d.e2 << endl;
+   return s;
+}
+
+
+bool operator==(const ND& n1,
+                const ND& n2)
+{
+   if ((n1.nd[0]==n2.nd[0]) && (n1.nd[1]==n2.nd[1]) &&
+       (n1.nd[2]==n2.nd[2]) && (n1.nd[3]==n2.nd[3]))
+      return true;
+   else
+      return false;
+}
+
+
+void DOFCode(int    mark,
+             size_t nb_dof,
+             int*   code)
+{
+   int m, kk, j=mark, sign=1;
+   if (mark < 0) {
+      sign = -1;
+      mark *= sign;
+   }
+   for (int k=0; k<int(nb_dof); k++) {
+      kk = int(pow(10.,real_t(nb_dof-k-1)));
+      code[k] = m = j/kk;
+      code[k] *= sign;
+      j -= m*kk;
+   }
+}
 
 
 bool operator==(const Element& el1,
@@ -231,7 +289,6 @@ void Refine(Mesh& in_mesh,
    out_mesh._nb_dof = 0;
    out_mesh._nb_nodes = out_mesh._nb_elements = out_mesh._nb_sides = out_mesh._nb_vertices = 0;
    out_mesh._dim = in_mesh._dim;
-   out_mesh._verb = in_mesh._verb;
 
 // Copy nodes
    size_t first_dof = 1;
@@ -271,7 +328,7 @@ void Refine(Mesh& in_mesh,
    mesh_elements(in_mesh) {
       if (The_element.getShape() != TRIANGLE)
          throw OFELIException("Refine(...): Element " + itos(element_label) + " is not a triangle.");
-      Node *nd[6]={NULL,NULL,NULL,NULL,NULL,NULL};
+      Node *nd[6]={nullptr,nullptr,nullptr,nullptr,nullptr,nullptr};
       nd[0] = The_element(1); 
       nd[1] = The_element(2); 
       nd[2] = The_element(3);

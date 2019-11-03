@@ -36,6 +36,7 @@
 
 #include "OFELI_Config.h"
 #include "linear_algebra/Vect.h"
+#include "util/util.h"
 
 namespace OFELI {
 /*!
@@ -170,7 +171,7 @@ class Muscl {
 /// @param [in] l Limiter to choose
     void setLimiter(Limiter l) {
          if (l>=2)
-            myLimiter = NULL;
+            myLimiter = nullptr;
          else
             myLimiter = flimiter[int(l)];
     }

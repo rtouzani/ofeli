@@ -55,9 +55,8 @@ namespace OFELI {
 
 Partition::Partition(Mesh&        mesh,
                      int          n,
-                     vector<int>& epart,
-                     int          verb)
-          : _theMesh(&mesh), _nb_submesh(n), _verbose(verb)
+                     vector<int>& epart)
+          : _theMesh(&mesh), _nb_submesh(n)
 {
    _theMesh->getAllSides();
    Init();
@@ -66,9 +65,8 @@ Partition::Partition(Mesh&        mesh,
 
 
 Partition::Partition(Mesh&  mesh,
-                     size_t n,
-                     int    verb)
-          : _theMesh(&mesh), _nb_submesh(n), _verbose(verb)
+                     size_t n)
+          : _theMesh(&mesh), _nb_submesh(n)
 {
    Prepare();
    NodeNeighborList();
@@ -99,7 +97,6 @@ void Partition::set(Mesh&  mesh,
 {
    _theMesh = &mesh;
    _nb_submesh = n;
-   _verbose = 0;
    Prepare();
 }
 
@@ -111,7 +108,7 @@ void Partition::Prepare()
    vector<size_t> type(ne);
 
 // Prepare data for Metis
-   if (_verbose>0)
+   if (Verbosity)
       cout << "Preparing data for Metis ..." << endl;
    int i=0, esize=0;
    mesh_elements(*_theMesh) {
@@ -171,7 +168,7 @@ void Partition::Prepare()
    }
 
 // Mesh partitioning by Metis
-   if (_verbose>0)
+   if (Verbosity)
       cout << "Mesh partitioning by Metis ..." << endl;
    _npart.resize(nn), _epart.resize(ne);
    int etype=type[0], numflag=0, edgecut;
@@ -183,7 +180,7 @@ void Partition::Prepare()
 void Partition::Init()
 {
    size_t ne=_theMesh->getNbElements(), nn=_theMesh->getNbNodes();
-   if (_verbose>0)
+   if (Verbosity)
       cout << "Creating submesh data ..." << endl;
    _sm2m_element = new size_t *[_nb_submesh];
    _m2sm_element = new size_t *[_nb_submesh];
@@ -243,7 +240,7 @@ void Partition::Init()
    }
 
 // Create Interface Information
-   if (_verbose>0)
+   if (Verbosity)
       cout << "Creating interface information ..." << endl;
    _interface_side = new Interface *[_nb_submesh];
    for (int i=0; i<_nb_submesh; i++)
@@ -277,25 +274,25 @@ void Partition::NodeNeighborList()
 {
    _node_neig.resize(_theMesh->getNbNodes());
    _nnz.resize(_theMesh->getNbNodes());
-   MESH_ND {
-      _nnz[theNodeLabel-1].resize(_nb_submesh+1);
-      Clear(_nnz[theNodeLabel-1]);
+   mesh_nodes(*_theMesh) {
+      _nnz[node_label-1].resize(_nb_submesh+1);
+      clear(_nnz[node_label-1]);
    }
-   MESH_SD {
-      for (size_t i=1; i<=TheSide.getNbNodes(); i++) {
-         theNode = TheSide(i);
-         size_t n=theNodeLabel-1;
-         for (size_t j=1; j<=TheSide.getNbNodes(); j++) {
+   mesh_sides(*_theMesh) {
+      for (size_t i=1; i<=The_side.getNbNodes(); i++) {
+         the_node = The_side(i);
+         size_t n=The_node.n()-1;
+         for (size_t j=1; j<=The_side.getNbNodes(); j++) {
             if (i!=j) {
-               size_t ns=TheSide(j)->n();
+               size_t ns=The_side(j)->n();
                _node_neig[n].push_back(ns);
                _nnz[n][_npart[ns-1]]++;
             }
          }
       }
    }
-   MESH_ND {
-      size_t n=theNodeLabel-1;
+   mesh_nodes(*_theMesh) {
+      size_t n=node_label-1;
       for (int s=0; s<_nb_submesh; s++)
          if (s!=_npart[n])
             _nnz[n][_nb_submesh] += _nnz[n][s];
@@ -322,7 +319,7 @@ int Partition::getNbConnectOutSubMesh(int n,
 
 
 
-ostream& operator<<(      ostream&   s,
+ostream& operator<<(ostream&         s,
                     const Partition& p)
 {
    s << "\nM E S H   P A R T I T I O N   I N F O R M A T I O N" << endl << endl;
@@ -332,7 +329,7 @@ ostream& operator<<(      ostream&   s,
       s << "Nb. of nodes:           " << setw(6) << p.getNbNodes(i) << endl;
       s << "Nb. of elements:        " << setw(6) << p.getNbElements(i) << endl;
       s << "Nb. of interface sides: " << setw(6) << p.getNbInterfaceSides(i) << endl;
-      if (p._verbose > 1) {
+      if (Verbosity > 1) {
         s << "Side label   Opposite submesh   Opposite Side" << endl;
         for (size_t j=1; j<=p._nb_interface_sides[i]; j++)
            s << setw(8)  << p._interface_side[i][j-1].side1

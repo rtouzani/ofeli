@@ -31,11 +31,20 @@
 
 #include "equations/AbsEqua.h"
 #include "solvers/EigenProblemSolver.h"
+#include "io/fparser/fparser.h"
+#include "linear_algebra/DMatrix_impl.h"
+#include "linear_algebra/DSMatrix_impl.h"
+#include "linear_algebra/SkSMatrix_impl.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/Assembly_impl.h"
+#include "equations/AbsEqua_impl.h"
+
+extern FunctionParser theParser;
 
 namespace OFELI {
 
 EigenProblemSolver::EigenProblemSolver()
-                   : _theEqua(NULL), _theMesh(NULL), _K(NULL), _M(NULL),
+                   : _theEqua(nullptr), _theMesh(nullptr), _K(nullptr), _M(nullptr),
                      _K_alloc(false), _M_alloc(false), _lM_alloc(false), _diag(false),
                      _max_it(100), _dim(1), _nb_eq(0), _nb_eigv(1), _opt(1),
                      _epsv(1.e-8), _epsj(1.e-10)
@@ -44,7 +53,7 @@ EigenProblemSolver::EigenProblemSolver()
 
 EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
                                        int               n)
-                   : _theEqua(NULL), _theMesh(NULL), _K(&A), _M(NULL),
+                   : _theEqua(nullptr), _theMesh(nullptr), _K(&A), _M(nullptr),
                      _K_alloc(false), _M_alloc(false), _lM_alloc(true), _diag(true),
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
@@ -60,7 +69,7 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
 EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
                                        Vect<real_t>&     ev,
                                        int               n)
-                   : _theEqua(NULL), _theMesh(NULL), _K(&A), _M(NULL),
+                   : _theEqua(nullptr), _theMesh(nullptr), _K(&A), _M(nullptr),
                      _K_alloc(false), _M_alloc(false), _lM_alloc(true), _diag(true),
                      _max_it(100), _dim(1), _opt(1), _epsv(1.e-8), _epsj(1.e-10)
 {
@@ -78,7 +87,7 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
 
 EigenProblemSolver::EigenProblemSolver(AbsEqua<real_t>& eq,
                                        bool             lumped)
-                   : _K(NULL), _M(NULL),
+                   : _K(nullptr), _M(nullptr),
                      _K_alloc(true), _M_alloc(false), _lM_alloc(true), _diag(true),
                      _max_it(100), _dim(1), _nb_eq(0), _nb_eigv(1), _opt(1),
                      _epsv(1.e-8), _epsj(1.e-10)
@@ -240,7 +249,7 @@ int EigenProblemSolver::runSubSpace(size_t nb_eigv,
 
 //    Find projection of *_K and store in _pK
       for (size_t i=1; i<=_dim; i++) {
-         _K->solve(_ev.getRow(i),wv);
+         _K->solve(_ev.getRow(i),wv,false);
          for (size_t j=i; j<=_dim; j++)
             _pK(i,j) = (_ev.getRow(j),wv);
          _ev.setRow(i,wv);

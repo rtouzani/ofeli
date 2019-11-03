@@ -6,7 +6,7 @@
    <author></author>
 </info>
 <Project name="beam">
-   <verbose>1</verbose>
+   <verbose>2</verbose>
    <output>0</output>
    <save>1</save>
    <plot>1</plot>

@@ -35,7 +35,6 @@
   ==============================================================================*/
 
 #include "OFELI_Config.h"
-#include "linear_algebra/Vect.h"
 #include "solvers/OptSolver.h"
 #include "util/util.h"
 
@@ -44,18 +43,14 @@ using std::cout;
 
 namespace OFELI {
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-// projection onto active set
-void ProjActiveSet(const Vect<real_t>& x,
+void ProjActiveSet(Vect<real_t>&       x,
                    const Vect<real_t>& lb,
                    const Vect<real_t>& ub,
                    Vect<real_t>&       px)
 {
-   for (size_t i=0; i<x.size(); i++) {
-      px[i] = fmin(ub[i],x[i]);
-      px[i] = fmax(lb[i],px[i]);
-   }
+   for (size_t i=0; i<x.size(); ++i)
+      px[i] = fmax(lb[i],fmin(ub[i],x[i]));
 }
 
 
@@ -69,62 +64,64 @@ int OptimPG(OptSolver&          opt,
             real_t              toler,
             int                 verb)
 {
-   size_t n=x.size();
-   Vect<real_t> xc(n), xt(n), gc(n), pgc(n), pl(n);
+   size_t n = x.size();
+   Vect<real_t> px(n), xc(n), xt(n), gc(n), pgc(n), pl(n), xcc(n);
 
 // put initial iterate in feasible set
-   Vect<real_t> px(n);
+   xc = x;
    ProjActiveSet(xc,lb,ub,px);
    if ((xc-px).getNorm2()>0) {
       cout << "Warning in OptimPG(..): Initial iterate not feasible." << endl;
       ProjActiveSet(xc,lb,ub,xc);
    }
-   real_t alp=1.e-4;
+   real_t alp = 1.e-4;
    real_t fc = opt.Objective(xc);
    opt.Gradient(xc,gc);
    nb_obj_eval = nb_grad_eval = 1;
-   ProjActiveSet(xc-gc,lb,ub,xt);
-   ProjActiveSet(xc-gc,lb,ub,pgc);
+   xcc = xc - gc;
+   ProjActiveSet(xcc,lb,ub,xt);
+   ProjActiveSet(xcc,lb,ub,pgc);
    pgc = xc - pgc;
 
    int it=1;
    real_t lambda=0.;
    while ((pgc.getWNorm2()>toler) & (it<=max_it)) {
       lambda = 1;
-      ProjActiveSet(xc-lambda*gc,lb,ub,xt);
+      xcc = xc - lambda*gc;
+      ProjActiveSet(xcc,lb,ub,xt);
       real_t ft = opt.Objective(xt);
-      nb_obj_eval++; it++;
+      nb_obj_eval++, it++;
       size_t iarm=0;
       pl = xc - xt;
-      real_t fgoal = fc - (pl*pl)*(alp/lambda);
+      real_t fgoal = fc - (pl,pl)*(alp/lambda);
 
 //    Simple line search
       while (ft > fgoal) {
          lambda *= 0.1;
          iarm++;
-         ProjActiveSet(xc-lambda*gc,lb,ub,xt);
+         xcc = xc - lambda*gc;
+         ProjActiveSet(xcc,lb,ub,xt);
          pl = xc - xt;
          ft = opt.Objective(xt);
-         nb_obj_eval++, nb_grad_eval++;
+         nb_obj_eval++;
          if (iarm>10) {
             cout << "OptimPG: Armijo error in gradient projection" << endl;
             max_it = it;
             return 1;
          }
-         fgoal = fc - (pl*pl)*(alp/lambda);
+         fgoal = fc - (pl,pl)*(alp/lambda);
       }
       xc = xt;
       fc = opt.Objective(xc);
       opt.Gradient(xc,gc);
       nb_obj_eval++, nb_grad_eval++;
-      ProjActiveSet(xc-gc,lb,ub,pgc);
+      xcc = xc - gc;
+      ProjActiveSet(xcc,lb,ub,pgc);
       pgc = xc - pgc;
       x = xc;
    }
    max_it = it;
    return 0;
 }
-
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 } /* namespace OFELI */

@@ -34,7 +34,11 @@
 #ifndef __FE_ELECTROMAGNETICS_H
 #define __FE_ELECTROMAGNETICS_H
 
-#include "equations/Equation.h"
+#include "solvers/TimeStepping.h"
+#include "mesh/Material.h"
+
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
 using std::complex;
 using std::abs;
 
@@ -51,6 +55,8 @@ namespace OFELI {
 /*! \file Equa_Electromagnetics.h
  *  \brief Definition file for class FE_Electromagnetics.
  */
+
+extern Material theMaterial;
 
 /*! \class Equa_Electromagnetics
  *  \ingroup Electromagnetics
@@ -75,52 +81,44 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  public:
 
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theMesh;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theElement;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_scheme;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_step;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_final_time;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_A;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_b;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_uu;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_u;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_bc;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_dSh;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_sides;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-/// \brief Run one time step
-/*    int runOneTimeStep()
-    {
-       build();
-       int ret = SolveLinearSystem(_A,*_b,_uu);
-       _u->insertBC(*_theMesh,_uu,*_bc);
-       return ret;
-       }*/
 
-/** \brief Solve the equation
- *  \details If the analysis (see function setAnalysis) is \a STEADY_STATE, then
- *  the function solves the stationary equation.\n
- *  If the analysis is \a TRANSIENT, then the function performs time stepping
- *  until the final time is reached.
- */
-/*    int run()
+/// \brief Set wave number
+/// \details Provide wave number if necessary. By default, this value is <tt>1</tt>
+    void setWaveNumber(real_t w)
     {
-       int ret=0;
-       _b = new Vect<T_>(_theMesh->getNbEq());
-      if (_analysis==STEADY_STATE) {
-          build();
-          ret = SolveLinearSystem(_A,*_b,_uu);
-          _u->insertBC(*_theMesh,_uu,*_bc);
-       }
-       else {
-          for (real_t t=0.; t<=_final_time; t+=_time_step)
-             _time_step = runOneTimeStep();
-       }
-       delete _b;
+       _wave_nb = w;
+    }
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void build() { }
+    int runOneTimeStep() { return 0; }
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
+    int runTransient()
+    {
+       AbsEqua<T_>::_b->clear();
+       cout<<"RT 0"<<endl;
+       build();
+       int ret=AbsEqua<T_>::solveLinearSystem(*AbsEqua<T_>::_b,AbsEqua<T_>::_uu);
+       AbsEqua<T_>::_u->insertBC(*_theMesh,AbsEqua<T_>::_uu,*AbsEqua<T_>::_bc);
        return ret;
     }
-*/
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  protected:
@@ -153,7 +151,7 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     }
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    Point<real_t> _x[NEN_];
-   real_t        _mu, _sigma, _rho, _body_source, _bound_source;
+   real_t        _mu, _sigma, _rho, _body_source, _bound_source, _wave_nb;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 };

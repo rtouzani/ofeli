@@ -42,24 +42,24 @@ using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
-   if (argc<4) {
-      cout << "Usage: ode_demo5 <time step> <final time> <output file>" << endl;
+   if (argc<3) {
+      cout << "Usage: " << argv[0] << " <time step> <output file> [Phase portrait file]" << endl;
       return 0;
    }
    theTimeStep = atof(argv[1]);
-   theFinalTime = atoi(argv[2]);
-   ofstream outf(argv[3]);
+   theFinalTime = 100.;
+   ofstream outf(argv[2]);
    string ff = "phase.dat";
    if (argc>4)
-      ff = argv[4];
+      ff = argv[3];
    ofstream oph(ff.c_str());
 
 // Solution is stored in file given by the fourth argument
-// The phase portrait is solved in a file whose name can be given as a fifth argument,
+// The phase portrait is solved in a file whose name can be given as a fourth argument,
 // The default file name is 'phase.dat'
 
    try {
-      ODESolver ode(FORWARD_EULER,theTimeStep,theFinalTime,2);
+      ODESolver ode(RK4,theTimeStep,theFinalTime,2);
 
 //    Set differential equation system
       ode.setF("y2");

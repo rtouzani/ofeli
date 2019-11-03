@@ -43,9 +43,7 @@ using std::ios;
 using std::setprecision;
 
 #include "OFELI_Config.h"
-#include "linear_algebra/SpMatrix.h"
-#include "linear_algebra/Vect.h"
-#include "solvers/Prec.h"
+#include "solvers/Prec_impl.h"
 #include "util/util.h"
 #include "io/output.h"
 
@@ -58,9 +56,20 @@ namespace OFELI {
  *
  */
 
-/** \fn int BiCGStab(const SpMatrix<T_> &A, const Prec<T_> &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler, int verbose)
+/** \fn int BiCGStab(const SpMatrix<T_> &A, const Prec<T_> &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler)
  *  \ingroup Solver
  *  \brief Biconjugate gradient stabilized solver function.
+ *  \details This function uses the preconditioned Conjugate Gradient Stabilized algorithm to solve a
+ *  linear system with a sparse matrix.\n
+ *  The global variable Verbosity enables choosing output message level
+ *  <ul>
+ *    <li> Verbosity < 2 : No output message
+ *    <li> Verbosity > 1 : Notify executing the function CG
+ *    <li> Verbosity > 2 : Notify convergence with number of performed iterations or divergence
+ *    <li> Verbosity > 3 : Output each iteration number and residual
+ *    <li> Verbosity > 6 : Print final solution if convergence
+ *    <li> Verbosity > 10 : Print obtained solution at each iteration
+ *  </ul>
  *  @param [in] A Problem matrix (Instance of class SpMatrix).
  *  @param [in] P Preconditioner (Instance of class Prec).
  *  @param [in] b Right-hand side vector (class Vect)
@@ -68,10 +77,6 @@ namespace OFELI {
  *  of the linear system on output (If iterations have succeeded).
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter
- *    - 0: No output
- *    - 1: Output iteration information,
- *    - 2 and greater: Output iteration information and solution at each iteration.
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (double, float, complex<double>, ...)
@@ -85,10 +90,9 @@ int BiCGStab(const SpMatrix<T_>& A,
              const Vect<T_>&     b,
              Vect<T_>&           x,
              int                 max_it,
-             real_t              toler,
-             int                 verbose)
+             real_t              toler)
 {
-   if (verbose>0)
+   if (Verbosity>2)
       cout << "Running preconditioned BiCGStab method ..." << endl;
    int it;
    size_t size=b.size();
@@ -101,8 +105,10 @@ int BiCGStab(const SpMatrix<T_>& A,
    if (nrm==0.0)
       nrm = 1;
    if ((res=r.getNorm2()/nrm)<=toler) {
-      if (verbose>1)
+      if (Verbosity>2)
          cout << "Convergence of the BiCGStab method after 0 iterations." << endl;
+      if (Verbosity>6)
+         cout << "Solution\n" << x;
       return 0;
    }
 
@@ -124,7 +130,7 @@ int BiCGStab(const SpMatrix<T_>& A,
       s = r - alpha*v;
       if ((res=s.getNorm2()/nrm)<toler) {
          x += alpha*pp;
-         if (verbose>1)
+         if (Verbosity>3)
             cout << "Iteration: " << setw(4) << it << "  ... Residual: " << res << endl;
          toler = res;
          return it;
@@ -135,13 +141,13 @@ int BiCGStab(const SpMatrix<T_>& A,
       x += alpha*pp + omega*ss;
       r = s - omega*t;
       rho_2 = rho_1;
-      if (verbose>1)
+      if (Verbosity>3)
          cout << "Iteration: " << setw(4) << it << "  ... Residual: " << res << endl;
-      if (verbose>2)
-         cout << x;
+      if (Verbosity>10)
+         cout << "Solution at iteration " << it << ": \n" << x;
       if ((res=r.getNorm2()/nrm)<toler) {
          toler = res;
-         if (verbose)
+         if (Verbosity>2)
             cout << "Convergence of the BiCGStab method after " << it << " iterations." << endl;
          return it;
       }
@@ -150,15 +156,26 @@ int BiCGStab(const SpMatrix<T_>& A,
          return 3;
       }
    }
-   if (verbose)
-      cout << "Convergence after " << it << " iterations." << endl;
+   if (Verbosity>2)
+      cout << "No Convergence after " << it << " iterations." << endl;
    return -it;
 }
 
 
-/** \fn int BiCGStab(const SpMatrix<T_> &A, int prec, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler, int verbose)
+/** \fn int BiCGStab(const SpMatrix<T_> &A, int prec, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler)
  *  \ingroup Solver
  *  \brief Biconjugate gradient stabilized solver function.
+ *  \details This function uses the preconditioned Conjugate Gradient Stabilized algorithm to solve a
+ *  linear system with a sparse matrix.\n
+ *  The global variable Verbosity enables choosing output message level
+ *  <ul>
+ *    <li> Verbosity < 2 : No output message
+ *    <li> Verbosity > 1 : Notify executing the function CG
+ *    <li> Verbosity > 2 : Notify convergence with number of performed iterations or divergence
+ *    <li> Verbosity > 3 : Output each iteration number and residual
+ *    <li> Verbosity > 6 : Print final solution if convergence
+ *    <li> Verbosity > 10 : Print obtained solution at each iteration
+ *  </ul>
  *  @param [in] A Problem matrix (Instance of class SpMatrix).
  *  @param [in] prec Enum variable selecting a preconditioner, among the values <tt>IDENT_PREC</tt>,
  *  <tt>DIAG_PREC</tt>, <tt>ILU_PREC</tt> or <tt>SSOR_PREC</tt>
@@ -167,10 +184,6 @@ int BiCGStab(const SpMatrix<T_>& A,
  *  of the linear system in output (If iterations have succeeded).
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter
- *    - 0: No output
- *    - 1: Output iteration information,
- *    - 2 and greater: Output iteration information and solution at each iteration.
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (double, float, complex<double>, ...)
@@ -184,10 +197,9 @@ int BiCGStab(const SpMatrix<T_>& A,
              const Vect<T_>&     b,
              Vect<T_>&           x,
              int                 max_it,
-             real_t              toler,
-             int                 verbose)
+             real_t              toler)
 {
-   return BiCGStab(A,Prec<T_>(A,prec),b,x,max_it,toler,verbose);
+   return BiCGStab(A,Prec<T_>(A,prec),b,x,max_it,toler);
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -197,11 +209,10 @@ int BiCGStab(const Matrix<T_>* A,
              const Vect<T_>&   b,
              Vect<T_>&         x,
              int               max_it,
-             real_t            toler,
-             int               verbose)
+             real_t            toler)
 {
    SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
-   return BiCGStab(AA,prec,b,x,max_it,toler,verbose);
+   return BiCGStab(AA,prec,b,x,max_it,toler);
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

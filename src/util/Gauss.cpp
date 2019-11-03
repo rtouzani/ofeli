@@ -28,6 +28,7 @@
  ==============================================================================*/
 
 #include "util/Gauss.h"
+#include "linear_algebra/LocalVect_impl.h"
 
 namespace OFELI {
 
@@ -35,10 +36,10 @@ Gauss::Gauss(size_t np)
       : _np(np)
 {
    _triang = false;
-   real_t p, dp, r, z=1;
+   real_t p, dp, r;
    for (size_t i=0; i<=(_np-1)/2; i++) {
       r = cos(OFELI_PI*(i+0.75)/(np+0.5));
-      while (z==1) {
+      while (1) {
          legendre(r, p, dp);
          if (fabs(p) <= 2.0*DBL_EPSILON*fabs(r*dp))
             break;

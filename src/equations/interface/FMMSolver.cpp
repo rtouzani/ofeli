@@ -30,6 +30,7 @@
   ==============================================================================*/
 
 #include "equations/interface/FMMSolver.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 

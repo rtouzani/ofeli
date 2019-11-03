@@ -33,8 +33,9 @@
 #include "mesh/Element.h"
 #include "mesh/Side.h"
 #include "mesh/Node.h"
-#include "linear_algebra/LocalMatrix.h"
+#include "linear_algebra/LocalMatrix_impl.h"
 #include "io/fparser/fparser.h"
+#include "util/util.h"
 #include "OFELIException.h"
 
 extern FunctionParser theParser;
@@ -44,11 +45,11 @@ namespace OFELI {
 Element::Element()
         : _active(true), _nb_nodes(0), _nb_eq(0), _nb_sides(0), _label(0),
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
-          _code(1), _shape(0), _parent(NULL)
+          _code(1), _shape(0), _parent(nullptr)
 {
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
-      _neig_el[i] = NULL;
-   _parent = NULL;
+      _neig_el[i] = nullptr;
+   _parent = nullptr;
 }
 
 
@@ -56,14 +57,14 @@ Element::Element(size_t        label,
                  const string& shape)
         : _active(true), _nb_nodes(0), _nb_eq(0), _nb_sides(0), _label(label),
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
-          _code(1), _parent(NULL)
+          _code(1), _parent(nullptr)
 {
    if (label<1)
       throw OFELIException("Element::Element(size_t,string): Illegal element label "+itos(label));
    shape_index(shape);
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
-      _neig_el[i] = NULL;
+      _neig_el[i] = nullptr;
 }
 
 
@@ -71,13 +72,13 @@ Element::Element(size_t label,
                  int    shape)
         : _active(true), _nb_nodes(0), _nb_eq(0), _nb_sides(0), _label(label),
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
-          _code(1), _shape(shape), _parent(NULL)
+          _code(1), _shape(shape), _parent(nullptr)
 {
    if (label<1)
       throw OFELIException("Element::Element(size_t,int): Illegal element label "+itos(label));
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
-      _neig_el[i] = NULL;
+      _neig_el[i] = nullptr;
 }
 
 
@@ -86,14 +87,14 @@ Element::Element(size_t        label,
                  int           c)
         : _active(true), _nb_nodes(0), _nb_eq(0), _nb_sides(0), _label(label),
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
-          _code(c), _parent(NULL)
+          _code(c), _parent(nullptr)
 {
    if (label<1)
       throw OFELIException("Element::Element(size_t,string,int): Illegal element label "+itos(label));
    shape_index(shape);
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
-      _neig_el[i] = NULL;
+      _neig_el[i] = nullptr;
 }
 
 
@@ -102,13 +103,13 @@ Element::Element(size_t label,
                  int    c)
         : _active(true), _nb_nodes(0), _nb_eq(0), _nb_sides(0), _label(label),
           _nbs(0), _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
-          _code(c), _shape(shape), _parent(NULL)
+          _code(c), _shape(shape), _parent(nullptr)
 {
    if (label<1)
       throw OFELIException("Element::Element(size_t,int,int): Illegal element label " + itos(label));
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
-      _neig_el[i] = NULL;
+      _neig_el[i] = nullptr;
 }
 
 

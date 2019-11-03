@@ -31,7 +31,9 @@
 
 #include "mesh/MeshAdapt.h"
 #include "mesh/getMesh.h"
-
+#include "mesh/saveMesh.h"
+#include "linear_algebra/Vect_impl.h"
+#include "util/util.h"
 
 namespace OFELI {
 
@@ -62,7 +64,6 @@ void MeshAdapt::setDefault()
    _abs_error = true;
    _err = 0.004;
    _geo_err = 0.1;
-   _verb = 0;
    _omega = 1.8;
    _hmin = 1.e-100;
    _hmax = 1.e17;
@@ -87,7 +88,7 @@ void MeshAdapt::setDefault()
    _set_meshr = _set_ometric = false;
    _allquad = 0;
    _iter = 0;
-   _domain = NULL;
+   _domain = nullptr;
    _nb_subdiv = 300;
 }
 
@@ -171,16 +172,15 @@ int MeshAdapt::run(const Vect<real_t>& u,
 
 int MeshAdapt::run()
 {
-   verbosity = _verb;
    MeshIstreamErrorHandler = MeshErrorIO;
    hinterpole = 1;
    int fileout=0, NoMeshReconstruction=0;
    real_t costheta=2;
    real_t *solMbb=0, *solMBB=0;
-   int *typesolsBB=NULL;
+   int *typesolsBB=nullptr;
    long nbsolbb=0, lsolbb=0, nbsolBB=0, lsolBB=0;
    int rbbeqMbb=0, rBBeqMBB=0;
-   Triangles *Thr=NULL, *Thb=NULL;
+   Triangles *Thr=nullptr, *Thb=nullptr;
 
    if (_iter>0) {
       setBackgroundMesh(_output_mesh_file);
@@ -212,23 +212,23 @@ int MeshAdapt::run()
       rbbeqMbb = _rbb_file==_mbb_file;
    if (_set_mBB && _set_rBB)
       rBBeqMBB = _rBB_file==_mBB_file;
-   if (_verb) {
-      if (_set_geo && fileout && _verb)
+   if (Verbosity) {
+      if (_set_geo && fileout)
          cout << "Construction of mesh from the geometry file " << _geo_file << endl;
-      else if (_set_bgm && fileout && _verb) {
+      else if (_set_bgm && fileout) {
          if (NoMeshReconstruction)
             cout << "Modification of adapted mesh file " << _background_mesh_file << endl;
          else
             cout << "Construction of adapted mesh from background mesh file "
                  << _background_mesh_file << endl;
       }
-      else if (_set_bgm && _set_ometric && _verb)
+      else if (_set_bgm && _set_ometric)
          cout << "Construction of metric file on background mesh "
               << _background_mesh_file << endl;
    }
 
    if (_set_geo && fileout) {
-      if (_verb)
+      if (Verbosity)
          cout << "Construction of mesh from the geometry file " << _geo_file << endl;
       Geometry Gh(_geo_file.c_str());
       _hmin = max(_hmin,Gh.MinimalHmin());
@@ -252,15 +252,15 @@ int MeshAdapt::run()
       if (_splitbedge)
          Th.SplitInternalEdgeWithBorderVertices();
       Th.ReNumberingTheTriangleBySubDomain();
-      if (_verb>3)
+      if (Verbosity>3)
          Th.ShowHistogram();
       if (_nb_smooth>0)
          Th.SmoothingVertex(_nb_smooth,_omega);
-      if (_verb>3 && _nb_smooth>0)
+      if (Verbosity>3 && _nb_smooth>0)
          Th.ShowHistogram();
       if (_set_outm)
          Th.Write(_output_mesh_file.c_str(),Triangles::BDMesh);
-      if (_verb>0) {
+      if (Verbosity) {
          cout << "Number of vertices: " << Th.nbv;
          if (Th.nbt-Th.NbOutT-Th.NbOfQuad*2) 
             cout << "Number of Triangles: " << (Th.nbt-Th.NbOutT-Th.NbOfQuad*2);
@@ -294,7 +294,7 @@ int MeshAdapt::run()
          BTh.IntersectConsMetric(solMbb,nbsolbb,0,_hmin,_hmax,sqrt(_err)*_coef,1e30,
                                  _abs_error?0.0:_cut_off,_nb_Jacobi,_scaling,_power,_hessian);
          if (!rbbeqMbb)
-            delete [] solMbb, solMbb = NULL;
+            delete [] solMbb, solMbb = nullptr;
       }
       if (_set_mBB) {
          solMBB = ReadBBFile(_mbb_file.c_str(),nbsolBB,lsolBB,typesolsBB,2,2);
@@ -307,7 +307,7 @@ int MeshAdapt::run()
          BTh.IntersectConsMetric(solMBB,nbsolBB,0,_hmin,_hmax,sqrt(_err)*_coef,1e30,
                                  _abs_error?0.0:_cut_off,_nb_Jacobi,_scaling,_hessian);
          if (!rBBeqMBB)
-            delete [] solMBB, solMBB = NULL;
+            delete [] solMBB, solMBB = nullptr;
       }
       BTh.IntersectGeomMetric(_geo_err,!_anisotropic);
       if (_ratio)
@@ -336,24 +336,24 @@ int MeshAdapt::run()
          if (_splitbedge)
             Th.SplitInternalEdgeWithBorderVertices();
          Th.ReNumberingTheTriangleBySubDomain();
-         if (_verb>3)
+         if (Verbosity>3)
             Th.ShowHistogram();
          if (_nb_smooth>0)
             Th.SmoothingVertex(_nb_smooth,_omega);
-         if (_verb>3 && _nb_smooth>0)
+         if (Verbosity>3 && _nb_smooth>0)
             Th.ShowHistogram();
          Th.BTh.ReMakeTriangleContainingTheVertex();
          if (_set_outm)
             Th.Write(_output_mesh_file.c_str(),Triangles::BDMesh);
          if ((_set_rbb&&_set_wbb) || (_set_rBB&&_set_wBB)) {
-            if (_verb>1) {
+            if (Verbosity>1) {
                if (_set_rbb)
                   cout << "Interpolation P1 files: " << _rbb_file << ", " << _wbb_file << endl;
                if (_set_rBB)
                   cout << "Interpolation P1 files: " << _rBB_file << ", " << _wBB_file << endl;
             }
             const int dim = 2;
-            real_t *solbb=NULL, *solBB=NULL;
+            real_t *solbb=nullptr, *solBB=nullptr;
             if (_set_rbb)
                solbb = rbbeqMbb ? solMbb : ReadbbFile(_rbb_file.c_str(),nbsolbb,lsolbb,2,2);
             if (_set_rBB)
@@ -362,8 +362,8 @@ int MeshAdapt::run()
                cerr << "Fatal Error " << "solBB = " << solBB << " solbb = " << solbb << endl;
                exit(2);
             }
-            ofstream *fbb = _set_wbb ? new ofstream(_wbb_file.c_str()) : NULL;
-            ofstream *fBB = _set_wBB ? new ofstream(_wBB_file.c_str()) : NULL;
+            ofstream *fbb = _set_wbb ? new ofstream(_wbb_file.c_str()) : nullptr;
+            ofstream *fBB = _set_wBB ? new ofstream(_wBB_file.c_str()) : nullptr;
             long nbfieldBB=0, nbfieldbb=nbsolbb;
             if (fbb)
                *fbb << dim << " " << nbsolbb << " " << Th.nbv << " " << 2 << endl;
@@ -376,7 +376,7 @@ int MeshAdapt::run()
                for (int i=0; i<nbsolBB; i++)
                   nbfieldBB += typesolsBB ? typesolsBB[i]+1 : 1;
             }
-            if (_verb)
+            if (Verbosity)
                cout << "nb of fields BB: " << nbfieldBB << endl;
             for (int i=0; i<Th.nbv; i++) {
                long i0, i1, i2;

@@ -68,12 +68,9 @@ template<class T_> class Iter
 /** \brief Constructor with iteration parameters
  *  @param [in] max_it Maximum number of iterations
  *  @param [in] toler Tolerance value for convergence
- *  @param [in] verbose Verbosity parameter [default: 0]
- *  <tt>0</tt>: No message output, <tt> > 0</tt>: message output with increasing display.
  */
     Iter(int    max_it,
-         real_t toler,
-         int    verbose=0);
+         real_t toler);
 
 /// \brief Destructor
     ~Iter() { }
@@ -130,14 +127,13 @@ Iter<T_>::Iter()
 
 template<class T_>
 Iter<T_>::Iter(int    max_it,
-               real_t toler,
-               int    verbose)
+               real_t toler)
 {
    _it = 1;
    _max_it = max_it;
    _toler = toler;
    _conv = false;
-   _verbose = verbose;
+   _verbose = Verbosity;
 }
 
 

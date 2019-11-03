@@ -60,7 +60,6 @@ namespace OFELI {
  *
  */
 
-
 class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
 {
 
@@ -70,107 +69,29 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
 /// \details Constructs an empty equation.
     DC3DAT3();
 
-/// \brief Constructor for an element.
-/// @param [in] el Pointer to element.
-    DC3DAT3(const Element* el);
-
-/// \brief Constructor for a boundary side.
-/// @param [in] sd Pointer to side.
-    DC3DAT3(const Side* sd);
-
-/** \brief Constructor for an element (transient case).
- *  @param [in] el Pointer to element
- *  @param [in] u Vect instance that contains solution at previous time step
- *  @param [in] time Current time value [Default: <tt>0</tt>]
- */
-    DC3DAT3(const Element*      el,
-            const Vect<real_t>& u,
-            real_t              time=0.);
-
-/** \brief Constructor for an element (transient case) with specification of time 
- *  integration scheme.
- *  @param [in] el Pointer to element.
- *  @param [in] u Vect instance that contains solution at previous time step.
- *  @param [in] time Current time value.
- *  @param [in] deltat Value of time step
- *  @param [in] scheme Time Integration Scheme ():
- *  <ul>
- *     <li><tt>FORWARD_EULER</tt> for Forward Euler scheme, <tt>BACKWARD_EULER</tt> for
- *         Backward Euler scheme,
- *     <li><tt>CRANK_NICOLSON</tt> for Crank-Nicolson Euler scheme.
- *  </ul>
- */
-    DC3DAT3(const Element*      el,
-            const Vect<real_t>& u,
-            real_t              time,
-            real_t              deltat,
-            int                 scheme);
-
-/** \brief Constructor for a boundary side (transient case).
- *  @param [in] sd Pointer to side
- *  @param [in] u Vect instance that contains solution at previous time step
- *  @param [in] time Current time value [Default: <tt>0</tt>]
- */
-    DC3DAT3(const Side*         sd,
-            const Vect<real_t>& u,
-            real_t              time=0.);
-
-/** \brief Constructor for a side (transient case) with specification of time integration scheme.
- *  @param [in] sd Pointer to side
- *  @param [in] u Vect instance that contains solution at previous time step.
- *  @param [in] time Current time value.
- *  @param [in] deltat Value of time step
- *  @param [in] scheme Time Integration Scheme (enumerated values) :
- *  <ul>
- *     <li><tt>FORWARD_EULER</tt>: Forward Euler scheme
- *     <li><tt>BACKWARD_EULER</tt>: Backward Euler scheme
- *     <li><tt>CRANK_NICOLSON</tt>: Crank-Nicolson Euler scheme
- *  </ul>
- */
-    DC3DAT3(const Side*         sd,
-            const Vect<real_t>& u,
-            real_t              time,
-            real_t              deltat,
-            int                 scheme);
-
 /// \brief Constructor using Mesh data
 /// @param [in] ms Mesh instance
     DC3DAT3(Mesh& ms);
 
+/** \brief Constructor using Mesh data and solution vector
+ *  @param [in] ms Mesh instance
+ *  @param [in,out] u Vect instance containing solution vector
+ */
+    DC3DAT3(Mesh&         ms,
+            Vect<real_t>& u);
+
 /// \brief Destructor
     ~DC3DAT3();
 
-/// \brief Add lumped capacity matrix to left-hand side after multiplying it by coefficient \c coef.
+/// \brief Add lumped capacity matrix to element matrix after multiplying it by coefficient \c coef.
 /// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void LCapacityToLHS(real_t coef=1);
+    void LCapacity(real_t coef=1);
 
-/// \brief Add lumped capacity contribution to right-hand side after multiplying it by coefficient \c coef.
-/// @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
-    void LCapacityToRHS(real_t coef=1);
-
-/** \brief Add lumped capacity contribution to left and right-hand sides after multiplying
- *  it by coefficient <tt>coef</tt>
- *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
- */
-    void LCapacity(real_t coef=1) { LCapacityToLHS(coef); LCapacityToRHS(coef); }
-
-/** \brief Add Consistent capacity matrix to left-hand side after multiplying it by
+/** \brief Add Consistent capacity matrix to element matrix after multiplying it by
  *  coefficient<tt>coef</tt>
  *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
  */
-    void CapacityToLHS(real_t coef=1);
-
-/** \brief Add Consistent capacity contribution to right-hand side after multiplying it
- *  by coefficient <tt>coef</tt>.
- *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
- */
-    void CapacityToRHS(real_t coef=1);
-
-/** \brief Add Consistent capacity contribution to left and right-hand sides after 
- *  multiplying it by coefficient <tt>coef</tt>.
- *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>].
- */
-    void Capacity(real_t coef=1) { CapacityToLHS(coef); CapacityToRHS(coef); }
+    void Capacity(real_t coef=1);
 
 /** \brief Add diffusion matrix to left-hand side after multiplying it by coefficient 
  *  <tt>coef</tt>
@@ -184,29 +105,12 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
  *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>]
  */
     void Diffusion(const LocalMatrix<real_t,2,2>& diff,
-                         real_t                   coef=1);
-
-/** \brief Add diffusion contribution to right-hand side after multiplying it by
- *  coefficient <tt>coef</tt>
- *  \details To be used for explicit diffusion term
- *  @param [in] coef Coefficient to multiply by added term [Default: <tt>1</tt>]
- */
-   void DiffusionToRHS(real_t coef=1);
-
-/** \brief Add body right-hand side term to right-hand side after multiplying it by 
- *  coefficient <tt>coef</tt>
- *  @param [in] ud Instance of UserData or of an inherited class. Contains
- *  a member function that provides body source.
- */
-    void BodyRHS(UserData<real_t>& ud);
+                   real_t                         coef=1);
 
 /** \brief Add body right-hand side term to right hand side.
- *  @param [in] b Local vector (of size <tt>3</tt>) containing source at element nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] b Local vector (of size <tt>3</tt>) containing source at odes.
  */
-    void BodyRHS(const Vect<real_t>& b,
-                       int           opt=GLOBAL_ARRAY);
+    void BodyRHS(const Vect<real_t>& f);
 
 /// \brief Add boundary right-hand side term to right hand side.
 /// @param [in] flux Value of flux to impose on the side
@@ -214,26 +118,20 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
 
 /** \brief Add boundary right-hand side term to right hand side after multiplying it by
  *  coefficient <tt>coef</tt>
- *  @param [in] sf Vector containing source at side nodes
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size 2 or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] f Vector containing source at nodes
  */
-    void BoundaryRHS(const Vect<real_t>& sf,
-                           int           opt=GLOBAL_ARRAY);
+    void BoundaryRHS(const Vect<real_t>& f);
 
 /// \brief Return gradient of a vector in element.
 /// @param [in] u Vector for which gradient is computed.
     Point<real_t> & Grad(const Vect<real_t>& u);
-
-/// \brief Build the linear system without solving
-    void build();
 
  protected:
     void set(const Element *el);
     void set(const Side *sd);
 
  private:
-    real_t        _r[3], _h;
+    real_t        _r[3];
     Point<real_t> _grad;
 };
 
@@ -241,3 +139,4 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
 } /* namespace OFELI */
 
 #endif
+

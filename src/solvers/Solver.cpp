@@ -31,9 +31,9 @@
 
 namespace OFELI {
 
-int     theStep=1, theIteration=1, NbTimeSteps, MaxNbIterations=1000, Verbosity=1;
-real_t  theTimeStep, theTime=0, theFinalTime;
-real_t  theTolerance=1.e-8, theDiscrepancy=1.0;
-bool     Converged=false;
+int    theStep=1, theIteration=1, NbTimeSteps, MaxNbIterations=1000;
+real_t theTimeStep, theTime=0, theFinalTime;
+real_t theTolerance=1.e-8, theDiscrepancy=1.0;
+bool   Converged=false;
 
 } /* namespace OFELI */

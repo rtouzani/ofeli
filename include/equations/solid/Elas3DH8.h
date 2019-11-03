@@ -70,59 +70,27 @@ public :
 
 /// \brief Default Constructor.
 /// \details Constructs an empty equation.
-    Elas3DH8()
-    {
-       _hexa = NULL;
-       _quad = NULL;
-    }
+    Elas3DH8() : _hexa(nullptr), _quad(nullptr)
+    { }
 
-/// \brief Constructor using element data.
-    Elas3DH8(const Element *el);
-
-/// \brief Constructor using side data
-    Elas3DH8(const Side *sd);
-
-/// \brief Constructor using element, previous time solution \a u and time value.
-    Elas3DH8(const Element*      element,
-             const Vect<real_t>& u,
-             const real_t&       time=0.);
-
-/// \brief Constructor using side, previous time solution \a u and time value.
-    Elas3DH8(const Side*         side,
-             const Vect<real_t>& u,
-             const real_t&       time=0.);
+/// \brief Constructor using Mesh instance
+/// @param [in] ms Reference to Mesh instance
+    Elas3DH8(Mesh& ms);
 
 /// \brief Destructor
     ~Elas3DH8();
 
-/// \brief Add element lumped mass contribution to matrix after multiplication by \a coef.
-    void LMassToLHS(real_t coef=1.);
+/// \brief Add element lumped mass contribution to element matrix after multiplication by \a coef.
+    void LMass(real_t coef=1.);
 
-/// \brief Add element lumped mass contribution to right-hand side after multiplication by \a coef.
-    void LMassToRHS(real_t coef=1.);
-
-/// \brief Add element lumped mass contribution to right-hand and left-hand sides after multiplication by \a coef.
-    void LMass(real_t coef) { LMassToLHS(coef); LMassToRHS(coef); }
-
-/// \brief Add element lumped mass contribution to matrix and right-hand side after multiplication by \a coef.
+/// \brief Add element lumped mass contribution to element matrix and right-hand side after multiplication by \a coef.
     void Mass(real_t coef=1.) { coef=1; std::cerr << "Sorry, consistent mass matrix is not implemented !\n"; }
 
-/// \brief Add element deviatoric matrix to left-hand side after multiplication by \a coef
+/// \brief Add element deviatoric matrix to element matrix after multiplication by \a coef
     void Deviator(real_t coef=1.);
 
-/// \brief Add element deviatoric matrix to right-hand side after multiplication by \a coef
-    void DeviatorToRHS(real_t coef=1.);
-
-/// \brief Add element dilatational contribution to left hand-side after multiplication by \a coef.
+/// \brief Add element dilatational contribution to element matrix after multiplication by \a coef.
     void Dilatation(real_t coef=1.);
-
-/// \brief Add element dilatational contribution to right hand-side after multiplication by \a coef.
-    void DilatationToRHS(real_t coef=1.);
-
-/** \brief Add body right-hand side term to right hand side.
- *  \details Body forces are deduced from UserData instance \a ud.
- */
-    void BodyRHS(UserData<real_t> &ud);
 
 /** \brief Add boundary right-hand side term to right hand side
  *  @param [in] f Vector containing traction (boundary force) at sides
@@ -130,21 +98,15 @@ public :
     void BoundaryRHS(const Vect<real_t> &f);
 
 /** \brief Add body right-hand side term to right hand side.
-    @param [in] bf Vector containing source at element nodes (DOF by DOF).
-    @param [in] opt Vector is local (\a LOCAL_ARRAY) with size 24 or global
-    (\a GLOBAL_ARRAY) with size = Number of element DOF.
+    @param [in] f Vector containing source at nodes (DOF by DOF).
  */
-    void BodyRHS(const Vect<real_t>& bf,
-                       int           opt=LOCAL_ARRAY);
+    void BodyRHS(const Vect<real_t>& f);
 
-private :
+ private :
 
-   Hexa8                           *_hexa;
-   Quad4                           *_quad;
-   LocalVect<real_t,8>             _w;
-   real_t                          _xg[2], _wg[2];
-   Point<real_t>                   _cg, _xl[8];
-   LocalMatrix<Point<real_t> ,8,8> _dsh;
+   Hexa8         *_hexa;
+   Quad4         *_quad;
+   Point<real_t> _xl[8];
    void set(const Element *el);
    void set(const Side *sd);
 };

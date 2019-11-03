@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+    <title>An example for the Laplace equation</title>
+    <date>June 1, 2019</date>
+    <author>R. Touzani</author>
+</info>
+<Project name="proj">
+  <mesh_file>cube.m</mesh_file>
+    <verbose>3</verbose>
+</Project>
+<Prescription>
+<!--    <BoundaryCondition code="1">exp(x+y)*cos(sqrt(2)*z)</BoundaryCondition>-->
+    <BoundaryCondition code="1">x^2-z^2</BoundaryCondition>
+    <Source>0</Source>
+<!--    <Solution>exp(x+y)*cos(sqrt(2)*z)</Solution>-->
+    <Solution>x^2-z^2</Solution>
+</Prescription>
+</OFELI_File>

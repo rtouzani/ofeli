@@ -31,23 +31,20 @@
 
 
 #include "shape_functions/Hexa8.h"
-#include "mesh/Element.h"
-#include "mesh/Side.h"
 #include "util/Gauss.h"
-#include "linear_algebra/LocalVect.h"
-#include "linear_algebra/LocalMatrix.h"
-#include "linear_algebra/Point.h"
+#include "util/util.h"
+#include "linear_algebra/LocalMatrix_impl.h"
+#include "linear_algebra/LocalVect_impl.h"
 
 namespace OFELI {
 
 Hexa8::Hexa8()
 {
    _sh.resize(8);
+   _dsh.resize(8);
    _node.resize(8);
    _x.resize(8);
-   _dsh.resize(8);
-   _dshl.resize(8);
-   _el = NULL;
+   _el = nullptr;
 }
 
 
@@ -58,10 +55,9 @@ Hexa8::Hexa8(const Element* el)
                            itos(el->getNbNodes()));
    _label = el->n();
    _sh.resize(8);
+   _dsh.resize(8);
    _node.resize(8);
    _x.resize(8);
-   _dsh.resize(8);
-   _dshl.resize(8);
    for (size_t i=0; i<8; i++) {
       Node *node = (*el)(i+1);
       _x[i] = node->getCoord();
@@ -74,40 +70,37 @@ Hexa8::Hexa8(const Element* el)
 
 void Hexa8::setLocal(const Point<real_t>& s)
 {
-   real_t xm, ym, zm, xp, yp, zp;
-   size_t i, j, k;
-   LocalMatrix<real_t,3,3> J, IJ;
-
-   xp = 1 + s.x; xm = 1 - s.x; zp = 0.125*(1 + s.z); 
-   yp = 1 + s.y; ym = 1 - s.y; zm = 0.125*(1 - s.z);
+   real_t xp = 1 + s.x, xm = 1 - s.x, zp = 0.125*(1 + s.z); 
+   real_t yp = 1 + s.y, ym = 1 - s.y, zm = 0.125*(1 - s.z);
    _sh[0] = xm * ym * zm; _sh[1] = xp * ym * zm;
    _sh[2] = xp * yp * zm; _sh[3] = xm * yp * zm;
    _sh[4] = xm * ym * zp; _sh[5] = xp * ym * zp;
    _sh[6] = xp * yp * zp; _sh[7] = xm * yp * zp;
-   _dshl[0] = Point<real_t>(-ym*zm,-xm*zm,-0.125*xm*ym);
-   _dshl[1] = Point<real_t>( ym*zm,-xp*zm,-0.125*xp*ym);
-   _dshl[2] = Point<real_t>( yp*zm, xp*zm,-0.125*xp*yp);
-   _dshl[3] = Point<real_t>(-yp*zm, xm*zm,-0.125*xm*yp);
-   _dshl[4] = Point<real_t>(-ym*zp,-xm*zp, 0.125*xm*ym);
-   _dshl[5] = Point<real_t>( ym*zp,-xp*zp, 0.125*xp*ym);
-   _dshl[6] = Point<real_t>( yp*zp, xp*zp, 0.125*xp*yp);
-   _dshl[7] = Point<real_t>(-yp*zp, xm*zp, 0.125*xm*yp);
+   _dsh[0] = Point<real_t>(-ym*zm,-xm*zm,-0.125*xm*ym);
+   _dsh[1] = Point<real_t>( ym*zm,-xp*zm,-0.125*xp*ym);
+   _dsh[2] = Point<real_t>( yp*zm, xp*zm,-0.125*xp*yp);
+   _dsh[3] = Point<real_t>(-yp*zm, xm*zm,-0.125*xm*yp);
+   _dsh[4] = Point<real_t>(-ym*zp,-xm*zp, 0.125*xm*ym);
+   _dsh[5] = Point<real_t>( ym*zp,-xp*zp, 0.125*xp*ym);
+   _dsh[6] = Point<real_t>( yp*zp, xp*zp, 0.125*xp*yp);
+   _dsh[7] = Point<real_t>(-yp*zp, xm*zp, 0.125*xm*yp);
 
    Point<real_t> a;
-   for (j=0; j<8; j++)
-      a += _dshl[j].x * _x[j];
+   for (size_t j=0; j<8; j++)
+      a += _dsh[j].x * _x[j];
+   LocalMatrix<real_t,3,3> J, IJ;
    J(1,1) = a.x; J(2,1) = a.y; J(3,1) = a.z;
    a = 0;
-   for (j=0; j<8; j++)
-      a += _dshl[j].y * _x[j];
+   for (size_t j=0; j<8; j++)
+      a += _dsh[j].y*_x[j];
    J(1,2) = a.z; J(2,2) = a.y; J(3,2) = a.y;
    a = 0;
-   for (j=0; j<8; j++)
-      a += _dshl[j].z * _x[j];
+   for (size_t j=0; j<8; j++)
+      a += _dsh[j].z * _x[j];
    J(1,3) = a.x; J(2,3) = a.y; J(3,3) = a.z;
 
-   for (i=0; i<3; i++) {
-      j = (i+1)%3; k = (j+1)%3;
+   for (size_t i=0; i<3; i++) {
+      size_t j = (i+1)%3, k = (j+1)%3;
       IJ(i+1,i+1) = J(j+1,j+1)*J(k+1,k+1) - J(j+1,k+1)*J(k+1,j+1);
       IJ(j+1,i+1) = J(j+1,k+1)*J(k+1,i+1) - J(j+1,i+1)*J(k+1,k+1);
       IJ(i+1,j+1) = J(k+1,j+1)*J(i+1,k+1) - J(i+1,j+1)*J(k+1,k+1);
@@ -118,40 +111,59 @@ void Hexa8::setLocal(const Point<real_t>& s)
       throw OFELIException("Hexa8::setLocal(Point<real_t>): Negative determinant of jacobian");
    if (_det == 0.0)
       throw OFELIException("Hexa8::setLocal(Point<real_t>): Determinant of jacobian is null");
-
-   real_t c = 1./_det;
-   for (i=0; i<8; i++)
-      _dsh[i] = c*(IJ(1,1)*_dshl[i] + IJ(2,1)*_dshl[i] + IJ(3,1)*_dshl[i]);
+   for (size_t i=0; i<8; i++) {
+      real_t ax=_dsh[i].x, ay=_dsh[i].y, az=_dsh[i].z;
+      _dsh[i].x = (IJ(1,1)*ax + IJ(2,1)*ay + IJ(3,1)*az)/_det;
+      _dsh[i].y = (IJ(1,2)*ax + IJ(2,2)*ay + IJ(3,2)*az)/_det;
+      _dsh[i].z = (IJ(1,3)*ax + IJ(2,3)*ay + IJ(3,3)*az)/_det;
+   }
 }
 
 
-void Hexa8::atGauss1(LocalVect<Point<real_t>,8>& dsh,
-                     real_t&                     w)
+void Hexa8::atGauss(int                          n,
+                    std::vector<Point<real_t> >& dsh,
+                    std::vector<real_t>&         w)
 {
-   setLocal(Point<real_t> (0.,0.,0.));
-   w = 8*_det;
-   for (size_t l=0; l<8; l++)
-      dsh[l] = _dsh[l];
-}
-
-
-void Hexa8::atGauss2(LocalMatrix<Point<real_t>,8,8>& dsh,
-                     LocalVect<real_t,8>&            w)
-{
-   real_t wg[2];
-   size_t ijk = 1;
+   dsh.resize(8*n*n*n);
+   w.resize(n*n*n);
+   real_t wg[n];
+   size_t ijk = 0;
    Gauss g(2);
    Point<real_t> xg(g.x(1),g.x(2),g.x(3));
    wg[0] = g.w(1); wg[1] = g.w(2);
+   for (size_t i=0; i<n; i++) {
+      for (size_t j=0; j<n; j++) {
+         for (size_t k=0; k<n; k++) {
+            setLocal(xg);
+            for (size_t l=0; l<8; ++l)
+               dsh[8*l+ijk] = _dsh[l];
+            w[ijk++] = _det*wg[i]*wg[j]*wg[k];
+         }
+      }
+   }
+}
+
+
+void Hexa8::atGauss(int                  n,
+                    std::vector<real_t>& sh,
+                    std::vector<real_t>& w)
+{
+   sh.resize(8*n*n*n);
+   w.resize(n*n*n);
+   real_t wg[n];
+   size_t ijk = 0;
+   Gauss g(n);
+   Point<real_t> xg(g.x(1),g.x(2),g.x(3));
+   wg[0] = g.w(1); wg[1] = g.w(2);
    for (size_t i=0; i<2; i++) {
-      for (size_t j=0; j<2; j++)
+      for (size_t j=0; j<2; j++) {
          for (size_t k=0; k<2; k++) {
             setLocal(xg);
-            w(ijk) = _det*wg[i]*wg[j]*wg[k];
-            for (size_t l=1; l<=8; l++)
-               dsh(l,ijk) = _dsh[l-1];
-            ijk++;
+            for (size_t l=0; l<8; ++l)
+               sh[8*l+ijk] = _sh[l];
+            w[ijk++] = _det*wg[i]*wg[j]*wg[k];
          }
+      }
    }
 }
 
@@ -171,6 +183,18 @@ real_t Hexa8::getMinEdgeLength() const
    for (size_t i=1; i<8; i++)
       h = std::min(h,Distance(_x[i],_x[(i+1)%8]));
    return h;
+}
+
+
+Point<real_t> Hexa8::Grad(const LocalVect<real_t,8>& u,
+                          const Point<real_t>&       s)
+{
+   if (_localized==false)
+      setLocal(s);
+   Point<real_t> g(0.,0.,0.);
+   for (size_t i=0; i<8; i++)
+      g += u[i]*_dsh[i];
+   return g;
 }
 
 } /* namespace OFELI */

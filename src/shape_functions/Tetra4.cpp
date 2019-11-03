@@ -33,9 +33,9 @@
 #include "shape_functions/Tetra4.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
-#include "linear_algebra/Point.h"
-#include "linear_algebra/LocalMatrix.h"
-#include "linear_algebra/LocalVect.h"
+#include "linear_algebra/LocalVect_impl.h"
+#include "linear_algebra/LocalMatrix_impl.h"
+#include "util/util.h"
 
 namespace OFELI {
 
@@ -46,7 +46,7 @@ Tetra4::Tetra4()
    _x.resize(4);
    _dsh.resize(4);
    _dshl.resize(4);
-   _el = NULL;
+   _el = nullptr;
 }
 
     
@@ -63,8 +63,8 @@ void Tetra4::set(const Element* el)
    _label = el->n();
    _node.resize(4);
    _sh.resize(4);
-   _x.resize(4);
    _dsh.resize(4);
+   _x.resize(4);
    _dshl.resize(4);
    for (size_t i=0; i<4; i++) {
       Node *node = (*el)(i+1);
@@ -79,14 +79,13 @@ void Tetra4::set(const Element* el)
 
 void Tetra4::CalculateShape()
 {
-   size_t i, j, k;
    LocalMatrix<real_t,3,3> J, IJ;
    J = 0;
    _dshl[0].x = _dshl[0].y = _dshl[0].z = -1.0;
    _dshl[1].x = _dshl[2].y = _dshl[3].z =  1.0;
    _dshl[1].y = _dshl[1].z = _dshl[2].x =  0.0;
    _dshl[2].z = _dshl[3].x = _dshl[3].y =  0.0;
-   for (k=0; k<4; k++) {
+   for (size_t k=0; k<4; k++) {
       J(1,1) += _dshl[k].x*_x[k].x;
       J(1,2) += _dshl[k].y*_x[k].x;
       J(1,3) += _dshl[k].z*_x[k].x;
@@ -97,24 +96,31 @@ void Tetra4::CalculateShape()
       J(3,2) += _dshl[k].y*_x[k].z;
       J(3,3) += _dshl[k].z*_x[k].z;
    }
-   for (i=0; i<3; i++) {
-      j = (i+1)%3, k = (j+1)%3;
-      IJ(i+1,i+1) = J(j+1,j+1)*J(k+1,k+1) - J(j+1,k+1)*J(k+1,j+1);
-      IJ(j+1,i+1) = J(j+1,k+1)*J(k+1,i+1) - J(j+1,i+1)*J(k+1,k+1);
-      IJ(i+1,j+1) = J(k+1,j+1)*J(i+1,k+1) - J(i+1,j+1)*J(k+1,k+1);
+   for (size_t i=1; i<=3; ++i) {
+      size_t j = i%3 + 1;
+      size_t k = j%3 + 1;
+      IJ(i,i) = J(j,j)*J(k,k) - J(j,k)*J(k,j);
+      IJ(j,i) = J(j,k)*J(k,i) - J(j,i)*J(k,k);
+      IJ(i,j) = J(k,j)*J(i,k) - J(i,j)*J(k,k);
    }
 
-   _det = J(1,1)*IJ(1,1)+J(2,1)*IJ(1,2)+J(3,1)*IJ(1,3);
+   _det = J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3);
    if (_det < 0.0)
       throw OFELIException("Tetra4::set(Element *): Negative determinant of jacobian");
    if (_det == 0.0)
       throw OFELIException("Tetra4::set(Element *): Determinant of jacobian is null");
    real_t c = 1./_det;
-   for (i=0; i<4; i++) {
+   for (size_t i=0; i<4; ++i) {
       _dsh[i].x = c*(IJ(1,1)*_dshl[i].x + IJ(2,1)*_dshl[i].y + IJ(3,1)*_dshl[i].z);
       _dsh[i].y = c*(IJ(1,2)*_dshl[i].x + IJ(2,2)*_dshl[i].y + IJ(3,2)*_dshl[i].z);
       _dsh[i].z = c*(IJ(1,3)*_dshl[i].x + IJ(2,3)*_dshl[i].y + IJ(3,3)*_dshl[i].z);
    }
+}
+
+
+vector<Point<real_t> > Tetra4::DSh() const
+{
+   return _dsh;
 }
 
 
@@ -194,16 +200,16 @@ Point<real_t> Tetra4::EdgeSh(size_t        k,
                              Point<real_t> s)
 {
    size_t i=k, j=k%4+1;
-   return Sh(j,s)*DSh(i)-Sh(i,s)*DSh(j);
+   return Sh(j,s)*_dsh[i-1]-Sh(i,s)*_dsh[j-1];
 }
 
 
 Point<real_t> Tetra4::CurlEdgeSh(size_t k)
 {
    size_t i=k, j=k%3+1;
-   real_t x = 2*(DSh(j).y*DSh(i).z - DSh(j).z*DSh(i).y);
-   real_t y = 2*(DSh(j).z*DSh(i).x - DSh(j).x*DSh(i).z);
-   real_t z = 2*(DSh(j).x*DSh(i).y - DSh(j).y*DSh(i).x);
+   real_t x = 2*(_dsh[j-1].y*_dsh[i-1].z - _dsh[j-1].z*_dsh[i-1].y);
+   real_t y = 2*(_dsh[j-1].z*_dsh[i-1].x - _dsh[j-1].x*_dsh[i-1].z);
+   real_t z = 2*(_dsh[j-1].x*_dsh[i-1].y - _dsh[j-1].y*_dsh[i-1].x);
    return Point<real_t>(x,y,z);
 }
 

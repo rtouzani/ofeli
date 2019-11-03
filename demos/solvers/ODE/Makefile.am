@@ -56,10 +56,10 @@ dist_ode_demo5_DATA =	ode_demo5.cpp ode_demo5.cbp
 dist_ode_demo6_DATA =	ode_demo6.cpp ode_demo6.cbp
 dist_ode_demo7_DATA =	ode_demo7.cpp ode_demo7.cbp
 dist_ts_demo1_DATA =	ts_demo1.cpp \
-							ts_demo1.cbp \
-							mesh1.m \
-							Makefile.standalone \
-							README
+			ts_demo1.cbp \
+			mesh1.m \
+			Makefile.standalone \
+			README
 dist_ts_demo2_DATA =	ts_demo2.cpp \
-							ts_demo2.cbp \
-							mesh2.m
+			ts_demo2.cbp \
+			mesh2.m

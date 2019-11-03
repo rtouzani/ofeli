@@ -99,10 +99,10 @@ class OptSolver
 /** \brief Constructor using vector of optimization variables
  *  @param [in] opt Reference to instance of user defined optimization class.
  *  This class inherits from abstract class MyOpt. It must contain the member function
- *      \c double \c Objective(const Vect<double> &x)
+ *      \c double \c Objective(Vect<double> &x)
  *  which returns the value of the objective for a given solution vector \c x. The user
  *  defined class must contain, if the optimization algorithm requires it the member function
- *      \c Gradient(const Vect<double> &x, Vect<double> &g)
+ *      \c Gradient(Vect<double> &x, Vect<double> &g)
  *  which stores the gradient of the objective in the vector \c g for a given optimization 
  *  vector \c x.
  *  The user defined class must also contain, if the optimization algorithm requires it the
@@ -281,11 +281,9 @@ class OptSolver
 /** \brief Run the optimization algorithm
  *  @param [in] toler Tolerance value for convergence testing
  *  @param [in] max_it Maximal number of iterations to achieve convergence
- *  @param [in] verb Verbosity parameter (to choose between 0 and 10)
  */
     int run(real_t toler,
-            int    max_it,
-            int    verb);
+            int    max_it);
 
 /** \brief Return solution in the case of a one variable optimization
  *  \details In the case of a one variable problem, the solution value is 
@@ -350,8 +348,8 @@ class OptSolver
    real_t *obj_function(const Vect<real_t>& x);
    void *obj_gradient(const Vect<real_t>& x, Vect<real_t>& g);
 
-   real_t Objective(const Vect<real_t>& x);
-   void Gradient(const Vect<real_t>& x, Vect<real_t>& g);
+   real_t Objective(Vect<real_t>& x);
+   void Gradient(Vect<real_t>& x, Vect<real_t>& g);
 
 };
 

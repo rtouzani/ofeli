@@ -73,10 +73,8 @@ class WaterPorous1D : public Equa_Porous<real_t,2,2,1,1>
 /** \brief Constructor
  *  \details This constructor uses mesh and reservoir information
  *  @param [in] ms Mesh instance
- *  @param [in] verb Verbosity parameter
  */
-    WaterPorous1D(Mesh&  ms,
-                  size_t verb=1);
+    WaterPorous1D(Mesh& ms);
 
 /// \brief Destructor
     ~WaterPorous1D();
@@ -101,17 +99,13 @@ class WaterPorous1D : public Equa_Porous<real_t,2,2,1,1>
     void Mobility();
 
 /** \brief Add source right-hand side term to right-hand side.
- *  @param [in] bf Vector containing source at element nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] bf Vector containing source at nodes.
  */
-    void BodyRHS(const Vect<real_t>& bf,
-                 int                 opt=GLOBAL_ARRAY);
+    void BodyRHS(const Vect<real_t>& bf);
 
  private:
     void set(const Element *el);
-    size_t _nb_nodes, _nb_elements, _verb;
-    real_t _Ke, _length;
+    real_t _Ke;
 };
 
 /*! @} End of Doxygen Groups */

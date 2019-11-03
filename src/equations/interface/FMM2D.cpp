@@ -32,6 +32,7 @@
 
 #include "equations/interface/FMM2D.h"
 #include "mesh/Grid.h"
+#include "linear_algebra/Vect_impl.h"
 #include <cmath>
 
 

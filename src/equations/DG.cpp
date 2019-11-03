@@ -37,9 +37,11 @@ namespace OFELI {
 DG::DG(Mesh&  ms,
        size_t degree)
 {
+   _theMesh = &ms;
+   _nb_nodes = _theMesh->getNbNodes();
+   _nb_el = _theMesh->getNbElements();
    _degree = degree;
    _nb_el_dof = _nb_sd_dof = 0;
-   _theMesh = &ms;
    switch (_theMesh->getDim()) {
 
       case 1: _nb_el_dof = _degree + 1;
@@ -68,15 +70,20 @@ DG::DG(Mesh&  ms,
               break;
    }
    _theMesh->getAllSides();
-   _nb_eq = _nb_el_dof*_theMesh->getNbElements();
+   _nb_eq = _nb_el_dof*_nb_el;
    setDGLabel();
    setGraph();
-   _b.setSize(_nb_eq);
+   _b = new Vect<real_t>(_nb_eq);
+   _A = new SpMatrix<real_t>;
 }
 
 
 DG::~DG()
 {
+   if (_b != nullptr)
+      delete _b, _b = nullptr;
+   if (_A != nullptr)
+      delete _A, _A = nullptr;
 }
 
 
@@ -100,7 +107,7 @@ int DG::setGraph()
          }
       }
    }
-   _A.setGraph(ij,0);
+   _A->setGraph(ij,0);
    return ij.size();
 }
 

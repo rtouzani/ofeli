@@ -33,6 +33,8 @@
 #ifndef __THERM_H
 #define __THERM_H
 
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
 #include "equations/therm/DC1DL2.h"
 #include "equations/therm/DC2DT3.h"
 #include "equations/therm/DC3DAT3.h"

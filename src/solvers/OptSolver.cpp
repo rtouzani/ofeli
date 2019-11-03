@@ -31,14 +31,17 @@
 
 #include "solvers/OptSolver.h"
 #include "solvers/Optim.h"
+#include "linear_algebra/Vect_impl.h"
 #include <limits>
 #include <algorithm>
 #include "OFELIException.h"
+#include "io/fparser/fparser.h"
+extern FunctionParser theParser;
 
 namespace OFELI {
 
 OptSolver::OptSolver()
-          : _size(1), _verb(1), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
+          : _size(1), _verb(Verbosity), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
             _max_it(1000), _toler(1.e-10), _exp(true), _sa_opt(false), _tn_opt(false),
             _obj_type(0), _x_set(true), _method_set(false), _var("")
 {
@@ -51,7 +54,7 @@ OptSolver::OptSolver()
 
 
 OptSolver::OptSolver(Vect<real_t>& x)
-          : _size(x.size()), _verb(1), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
+          : _size(x.size()), _verb(Verbosity), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
             _max_it(1000), _x(&x), _toler(1.e-10), _exp(true), _sa_opt(false), _tn_opt(false),
             _obj_type(0), _x_set(false), _method_set(false)
 {
@@ -64,7 +67,7 @@ OptSolver::OptSolver(Vect<real_t>& x)
 
 OptSolver::OptSolver(MyOpt&        opt,
                      Vect<real_t>& x)
-          : _size(x.size()), _verb(1), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
+          : _size(x.size()), _verb(Verbosity), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
             _max_it(1000), _x(&x), _toler(1.e-10), _opt(&opt), _exp(false), _sa_opt(false),
             _tn_opt(false), _obj_type(0), _x_set(false), _method_set(false)
 {
@@ -121,7 +124,7 @@ void OptSolver::setLowerBounds(Vect<real_t>& lb)
 }
 
 
-real_t OptSolver::Objective(const Vect<real_t>& x)
+real_t OptSolver::Objective(Vect<real_t>& x)
 {
    if (_exp) {
       int err;
@@ -136,8 +139,8 @@ real_t OptSolver::Objective(const Vect<real_t>& x)
 }
 
 
-void OptSolver::Gradient(const Vect<real_t>& x,
-                         Vect<real_t>&       g)
+void OptSolver::Gradient(Vect<real_t>& x,
+                         Vect<real_t>& g)
 {
    if (_exp) {
       int err;
@@ -178,7 +181,7 @@ void OptSolver::setGradient(string exp,
 
 void OptSolver::setTNDefaults()
 {
-   _verb = 1;
+   _verb = Verbosity;
    _max_it = 200;
    _toler = OFELI_EPSMCH;
 }
@@ -194,7 +197,7 @@ void OptSolver::setPGDefaults()
 
 void OptSolver::setNMDefaults()
 {
-   _verb = 1;
+   _verb = Verbosity;
    _max_it = 100;
    _toler = OFELI_EPSMCH;
    _reqmin = 0.,
@@ -249,11 +252,11 @@ void OptSolver::setBC(const Vect<real_t>& bc)
 {
    _lb = -std::numeric_limits<real_t>::max();
    _ub =  std::numeric_limits<real_t>::max();
+   size_t k = 0;
    mesh_nodes(bc.getMesh()) {
-      for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-          size_t k = The_node.getDOF(i) - 1;
-          if (The_node.getCode(i)>0)
-             _lb[k] = _ub[k] = bc[k];
+     for (size_t i=1; i<=The_node.getNbDOF(); i++, k++) {
+         if (The_node.getCode(i)>0)
+            _lb[k] = _ub[k] = bc[k];
       }
    }
 }
@@ -283,12 +286,10 @@ int OptSolver::run()
 
 
 int OptSolver::run(real_t toler,
-                   int    max_it,
-                   int    verb)
+                   int    max_it)
 {
    _toler = toler;
    _max_it = max_it;
-   _verb = verb;
    return run();
 }
 

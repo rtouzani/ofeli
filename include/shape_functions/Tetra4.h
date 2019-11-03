@@ -34,6 +34,8 @@
 #define __TETRA4_H
 
 #include "shape_functions/FEShape.h"
+#include "linear_algebra/LocalVect.h"
+
 
 namespace OFELI {
 /*!
@@ -45,7 +47,6 @@ namespace OFELI {
  *  \brief Definition file for class Tetra4.
  */
 
-template<class T_,size_t N_> class LocalVect;
 class Element;
 class Side;
 
@@ -82,11 +83,6 @@ public :
     real_t Sh(size_t        i,
               Point<real_t> s) const;
 
-/// \brief Return <tt>x</tt>, <tt>y</tt> and <tt>z</tt> partial derivatives of shape 
-/// function associated to node <tt>i</tt>.
-/// \details Note that these are constant in element.
-    Point<real_t> DSh(size_t i) const { return _dsh[i-1]; }
-
 /// \brief Return volume of element
     real_t getVolume() const { return OFELI_SIXTH*_det; }
 
@@ -122,9 +118,15 @@ public :
 /// \brief Return minimal edge length of tetrahedron
     real_t getMinEdgeLength() const;
 
+/** \brief Calculate partial derivatives of shape functions at element nodes
+ *  @param [out] dsh LocalVect instance of partial derivatives of shape functions
+ *               <i>e.g.</i> \c dsh(i).x, \c dsh(i).y, are partial derivatives of the <i>i</i>-th shape function
+ *               at node \c i. 
+ */
+    std::vector<Point<real_t> > DSh() const;
+
  private:
    void CalculateShape();
-
 };
 
 /*! @} End of Doxygen Groups */

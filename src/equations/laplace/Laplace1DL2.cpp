@@ -33,13 +33,19 @@
 
 #include "equations/laplace/Laplace1DL2.h"
 #include "shape_functions/Line2.h"
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
 Laplace1DL2::Laplace1DL2()
             : _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
 {
-   _bc_given = _bf_given = false;
+   _equation_name = "Laplace";
+   _finite_element = "1-D, 2-Node Lines (P1)";
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 1D using P1 finite element." << endl;
 }
 
 
@@ -50,40 +56,42 @@ Laplace1DL2::Laplace1DL2(Mesh& ms)
    _theMesh = &ms;
    setMatrixType(TRIDIAGONAL);
    setSolver(DIRECT_SOLVER);
-   _bc_given = _bf_given = false;
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 1D using P1 finite element." << endl;
+   if (Verbosity>1) {
+      cout << "Matrix is stored in tridiagonal storage." << endl;
+      cout << "Linear system is solved by direct solver." << endl;
+   }
 }
 
 
 Laplace1DL2::Laplace1DL2(Mesh&         ms,
                          Vect<real_t>& u)
-            : Equation<real_t,2,2,1,1>(ms),
+            : Equation<real_t,2,2,1,1>(ms,u),
               _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
 {
    _u = &u;
    _theMesh = &ms;
    setMatrixType(TRIDIAGONAL);
    setSolver(DIRECT_SOLVER);
-   _bc_given = _bf_given = false;
-}
-
-
-Laplace1DL2::Laplace1DL2(Element* el)
-{
-   set(el);
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 1D using P1 finite element." << endl;
+   if (Verbosity>1) {
+      cout << "Matrix is stored in tridiagonal storage." << endl;
+      cout << "Linear system is solved by direct solver." << endl;
+   }
 }
 
 
 void Laplace1DL2::set(const Element* el)
 {
-   _nb_dof = 1;
-   _theElement = theElement;
+   _theElement = el, _theSide = nullptr;
    Line2 ln(_theElement);
-   _length = ln.getLength();
-   _dSh(1) = ln.DSh(1); _dSh(2) = ln.DSh(2);
-   eMat = 0;
+   _el_geo.length = ln.getLength();
+   _el_geo.det = ln.getDet();
+   _dSh = ln.DSh();
    eRHS = 0;
-   eA0 = 0;
-   eA1 = 0;
+   eA0 = 0, eA1 = 0;
 }
 
 
@@ -98,7 +106,6 @@ void Laplace1DL2::setBoundaryCondition(real_t f,
       _is_rbc = true;
       _rbc = f;
    }
-   _bc_given = true;
 }
 
 
@@ -109,30 +116,29 @@ void Laplace1DL2::setTraction(real_t f,
       _lsf = f;
    if (lr==1)
       _rsf = f;
-   _sf_given = true;
 }
 
 
-void Laplace1DL2::LHS(real_t coef)
+void Laplace1DL2::LHS()
 {
-   eMat(1,1) += coef/_length;
-   eMat(2,2) += coef/_length;
-   eMat(1,2) -= coef/_length;
-   eMat(2,1) -= coef/_length;
+   eA0(1,1) += 1./_el_geo.length;
+   eA0(2,2) += 1./_el_geo.length;
+   eA0(1,2) -= 1./_el_geo.length;
+   eA0(2,1) -= 1./_el_geo.length;
 }
 
 
 void Laplace1DL2::BodyRHS(const Vect<real_t>& f)
 {
-   eRHS(1) += 0.5*_length*f((*_theElement)(1)->n());
-   eRHS(2) += 0.5*_length*f((*_theElement)(2)->n());
+   eRHS(1) += 0.5*_el_geo.length*f((*_theElement)(1)->n());
+   eRHS(2) += 0.5*_el_geo.length*f((*_theElement)(2)->n());
 }
 
 
 void Laplace1DL2::BoundaryRHS(const Vect<real_t>& h)
 {
    eRHS(1) -= h(1);
-   eRHS(2) += h(_theMesh->getNbNodes());
+   eRHS(2) += h(_nb_nodes);
 }
 
 } /* namespace OFELI */

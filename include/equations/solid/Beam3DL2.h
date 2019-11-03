@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                              Definition of class Beam3DL2
+                             Definition of class Beam3DL2
                        for Beam element with 6 d.o.f. per node
                            using Mindlin - Reissner Theory
 
@@ -35,9 +35,7 @@
 #ifndef __BEAM3DL2_H
 #define __BEAM3DL2_H
 
-
 #include "equations/solid/Equa_Solid.h"
-#include "io/UserData.h"
 
 namespace OFELI {
 /*!
@@ -57,77 +55,78 @@ namespace OFELI {
  *  6 degrees of freedom per node and 2-Node line elements.
  */
 
-class Beam3DL2 : virtual public Equa_Solid<real_t,2,12,1,1> {
+class Beam3DL2 : virtual public Equa_Solid<real_t,2,12,1,6> {
 
 public :
 
+   using Equation<real_t,2,12,1,6>::_x;
+
 /// \brief Default Constructor
     Beam3DL2() {
-      _bending = _axial = _torsion = _shear = true;
-      _reduced_integration = false;
+       _bending = _axial = _torsion = _shear = true;
+       _reduced_integration = false;
     }
 
-/** \brief Constructor using element data
-    @param [in] el Pointer to Element
+/** \brief Constructor using mesh and constant beam properties
+    @param [in] ms Mesh instance
     @param [in] A Section area of the beam
     @param [in] I1 first (x) momentum of inertia
     @param [in] I2 second (y) momentum of inertia
  */
-    Beam3DL2(Element* el,
-             real_t   A,
-             real_t   I1,
-             real_t   I2);
+    Beam3DL2(Mesh&  ms,
+             real_t A,
+             real_t I1,
+             real_t I2);
 
-/** \brief Constructor for dynamic problems
-    @param [in] el Pointer to Element
-    @param [in] A Section area of the beam
-    @param [in] I1 first (x) momentum of inertia
-    @param [in] I2 second (y) momentum of inertia
-    @param [in] u Vector containing previous solution (at previous time step)
-    @param [in] time Current time value
+/** \brief Constructor using a Mesh instance
+ *  @param [in] ms Reference to Mesh instance
  */
-    Beam3DL2(      Element*      el,
-                   real_t        A,
-                   real_t        I1,
-                   real_t        I2,
-             const Vect<real_t>& u,
-             const real_t&       time=0);
+    Beam3DL2(Mesh& ms);
 
-/** \brief Constructor to determine displacements
- *  \details The unknowns consist in planar and rotational degrees of freedom.
- *  This member function construct a 3-D node vector that gives the displacement vector
- *  at each node.
- *  @param [in] ms Mesh instance
- *  @param [in] u Vector containing the solution vector
- *  @param [out] d Vector containing three components for each node that are <tt>x</tt>,
- *  <tt>y</tt> and <tt>z</tt> displacements.
+/** \brief Constructor using a Mesh instance and solution vector
+ *  @param [in] ms Reference to Mesh instance
+ *  @param [in,out] u Solution vector
  */
-    Beam3DL2(      Mesh& ms,
-             const Vect<real_t>& u,
-                   Vect<real_t>& d);
+    Beam3DL2(Mesh&         ms,
+             Vect<real_t>& u);
 
 /// \brief Destructor
     ~Beam3DL2() { }
 
-/// \brief Add element lumped Mass contribution to matrix after multiplication by <tt>coef</tt>
-    void LMassToLHS(real_t coef=1.);
+/** \brief Set constant beam properties
+    @param [in] A Section area of the beam
+    @param [in] I1 first (x) momentum of inertia
+    @param [in] I2 second (y) momentum of inertia
+ */
+    void set(real_t A,
+             real_t I1,
+             real_t I2);
 
-/// \brief Add element lumped Mass contribution to RHS after multiplication by <tt>coef</tt>
-    void LMassToRHS(real_t coef=1.);
+/** \brief Set nonconstant beam properties
+ *  @param [in] ms Mesh instance
+ *  @param [in] A Vector containing section areas of the beam (for each element)
+ *  @param [in] I1 Vector containing first (x) momentum of inertia (for each element)
+ *  @param [in] I2 Vector containing second (y) momentum of inertia (for each element)
+ */
+    void set(const Vect<real_t>& A,
+             const Vect<real_t>& I1,
+             const Vect<real_t>& I2);
 
-/// \brief Add element consistent Mass contribution to matrix after multiplication by 
-/// <tt>coef</tt> (not implemented)
-    void MassToLHS(real_t coef=1.) { coef = 0; cerr << "Error: Beam3DL2::Mass2LHS not implemented" << endl; }
+/** \brief Get vector of displacements at nodes
+ *  @param [out] d Vector containing three components for each node that are <tt>x</tt>,
+ *  <tt>y</tt> and <tt>z</tt> displacements.
+ */
+    void getDisp(Vect<real_t>& d);
+
+/// \brief Add element lumped Mass contribution to element matrix after multiplication by <tt>coef</tt>
+    void LMass(real_t coef=1.);
 
 /// \brief Add element consistent Mass contribution to RHS after multiplication by 
 /// <tt>coef</tt> (not implemented)
-    void MassToRHS(real_t coef=1.) { coef = 0; cerr << "Error: Beam3DL2::Mass2RHS not implemented" << endl; }
+    void Mass(real_t coef=1.) { cerr << "Error: Beam3DL2::Mass not implemented" << endl; }
 
-/// \brief Add element stiffness to left hand side
+/// \brief Add element stiffness to element matrix
     void Stiffness(real_t coef=1.);
-
-// Add body right-hand side term to right hand side
-//    void BodyRHS(UserData<real_t> &ud);
 
 /// \brief Add contributions for loads
     void Load(const Vect<real_t>& f);
@@ -162,17 +161,32 @@ public :
 /// \brief Set reduced integration
     void setReducedIntegration() { _reduced_integration = true; }
 
-/// \brief Return axial force in element
-    real_t AxialForce() const;
+/** \brief Return axial force in element
+ *  @param [out] f Vector containing axial force in each element. This vector is
+ *                 resized in the function
+ */
+    void AxialForce(Vect<real_t>& f);
 
-/// \brief Return shear force in element
-    Point<real_t> ShearForce() const;
+/** \brief Return shear force in element
+ *  @param [out] sh Vector containing shear forces (2 components) in each element. This vector is
+ *               resized in the function
+ */
+    void ShearForce(Vect<real_t>& sh);
 
-/// \brief Return bending moment in element
-    Point<real_t> BendingMoment() const;
+/** \brief Return bending moment in element
+ *  @param [out] m Vector containing bending moments (2 components) in each element. This vector is
+ *                 resized in the function
+ */
+    void BendingMoment(Vect<real_t>& m);
 
-/// \brief Return twisting moment in element
-    real_t TwistingMoment() const;
+/** \brief Return twisting moments
+ *  @param [out] m Vector containing twisting moment in each element. This vector is
+ *                 resized in the function
+ */
+    void TwistingMoment(Vect<real_t>& m);
+
+/// \brief Build the linear system of equations
+    void build();
 
 /** \brief Build global stiffness and mass matrices for the eigen system
  *  \details Case where the mass matrix is lumped
@@ -183,17 +197,17 @@ public :
                     Vect<real_t>&      M);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   void BodyRHS(const Vect<real_t> &f, int opt=GLOBAL_ARRAY) { }
+   void BodyRHS(const Vect<real_t> &f) { }
    void BoundaryRHS(const Vect<real_t>& f) { }
-   void BoundaryRHS(UserData<real_t>& ud) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
    
-private:
+ private:
 
-   real_t        _section, _I1, _I2, _h, _mu;
-   Point<real_t> _x[2];
-   bool          _bending, _axial, _torsion, _shear, _reduced_integration;
+   real_t       _ae, _I1e, _I2e, _h, _mu;
+   Vect<real_t> _section, _I1, _I2;
+   bool         _bending, _axial, _torsion, _shear, _reduced_integration;
    void set(const Element *el);
+   void set(const Side *sd) { }
 };
 
 /*! @} End of Doxygen Groups */

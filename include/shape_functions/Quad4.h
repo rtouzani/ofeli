@@ -33,7 +33,10 @@
 #ifndef __QUAD4_H
 #define __QUAD4_H
 
+#include <vector>
+
 #include "shape_functions/FEShape.h"
+#include "linear_algebra/LocalVect.h"
 
 namespace OFELI {
 /*!
@@ -44,9 +47,6 @@ namespace OFELI {
 /*! \file Quad4.h
  *  \brief Definition file for class Quad4.
  */
-
-class Element;
-class Side;
 
 /*! \class Quad4
  *  \ingroup Shape
@@ -95,15 +95,20 @@ class Quad4 : public FEShape
  */
     void setLocal(const Point<real_t>& s);
 
-/** \brief Return derivatives of shape function of node <tt>i</tt> at a given point.
- *  \details Member function \b setLocal() must have been called before in order to 
- * calculate relevant quantities.
+/** \brief Calculate shape functions and their partial derivatives and integration weights
+ *  @param [in] n Number of Gauss-Legendre integration points in each direction
+ *  @param [in] sh Vector of shape functions at Gauss points
+ *  @param [in] dsh Vector of shape function derivatives at Gauss points
+ *  @param [in] w Weights of integration formula at Gauss points
  */
-    Point<real_t> DSh(size_t i) const { return _dsh[i-1]; }
+    void atGauss(int                          n,
+                 std::vector<real_t>&         sh,
+                 std::vector<Point<real_t> >& dsh,
+                 std::vector<real_t>&         w);
 
 /** \brief Return gradient of a function defined at element nodes
  *  @param [in] u Vector of values at nodes
- *  @param [in] s Local coordinates (in <tt>[-1,1]</tt>) of point where
+ *  @param [in] s Local coordinates (in <tt>[-1,1]*[-1,1]</tt>) of point where
  *  the gradient is evaluated
  *  @return Value of gradient
  *  @note If the derivatives of shape functions were not computed before calling

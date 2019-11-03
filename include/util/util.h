@@ -1,19 +1,15 @@
 /*==============================================================================
 
    Copyright (C) 1998 - 2019 Rachid Touzani
-
    This file is part of OFELI.
-
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-
    OFELI is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU Lesser General Public License for more details.
-
    You should have received a copy of the GNU Lesser General Public License
    along with OFELI. If not, see <http://www.gnu.org/licenses/>.
 
@@ -26,17 +22,16 @@
 #ifndef __UTIL_H
 #define __UTIL_H
 
-#include <stdio.h>
 #include <complex>
 #include <string>
-
-#include "OFELI_Config.h"
-#include "linear_algebra/Point.h"
-#include "linear_algebra/Vect.h"
-#include <algorithm>
+#include <algorithm> 
 #include <functional> 
 #include <cctype>
 #include <locale>
+
+#include "OFELI_Config.h"
+#include "linear_algebra/Vect.h"
+#include "linear_algebra/Point.h"
 using std::string;
 
 namespace OFELI {
@@ -48,6 +43,7 @@ namespace OFELI {
 /*! \file util.h
  *  \brief File that contains various utility functions.
  */
+
 
 /** \fn real_t Sgn(real_t a)
  * \ingroup Util
@@ -120,10 +116,7 @@ inline real_t Max(real_t a,
  */
 inline int Max(int a,
                int b,
-               int c)
-{
-   return std::max(std::max(a,b),c);
-}
+               int c) { return std::max(std::max(a,b),c); }
 
 /** \fn real_t Min(real_t a, real_t b, real_t c)
  *  \ingroup Util
@@ -131,21 +124,15 @@ inline int Max(int a,
  */
 inline real_t Min(real_t a,
                   real_t b,
-                  real_t c)
-{
-   return std::min(std::min(a,b),c);
-}
+                  real_t c) { return std::min(std::min(a,b),c); }
 
 /** \fn Min(int a, int b, int c)
  *  \ingroup Util
  *  \brief Return minimum value of integer numbers <tt>a</tt>, <tt>b</tt> and <tt>c</tt>
  */
-inline int  Min(int a,
-                int b,
-                int c)
-{
-   return std::min(std::min(a,b),c);
-}
+inline int Min(int a,
+               int b,
+               int c) { return std::min(std::min(a,b),c); }
 
 /** \fn real_t Max(real_t a, real_t b, real_t c, real_t d)
  *  \ingroup Util
@@ -155,10 +142,7 @@ inline int  Min(int a,
 inline real_t Max(real_t a,
                   real_t b,
                   real_t c,
-                  real_t d)
-{
-   return std::max(Max(a,b,c),d);
-}
+                  real_t d) { return std::max(Max(a,b,c),d); }
 
 /** \fn int Max(int a, int b, int  c, int d)
  *  \ingroup Util
@@ -168,10 +152,7 @@ inline real_t Max(real_t a,
 inline int Max(int a,
                int b,
                int c,
-               int d)
-{
-   return std::max(Max(a,b,c),d);
-}
+               int d) { return std::max(Max(a,b,c),d); }
 
 /** \fn real_t Min(real_t a, real_t b, real_t c, real_t d)
  *  \ingroup Util
@@ -181,10 +162,7 @@ inline int Max(int a,
 inline real_t Min(real_t a,
                   real_t b,
                   real_t c,
-                  real_t d)
-{
-   return std::min(Min(a,b,c),d);
-}
+                  real_t d) { return std::min(Min(a,b,c),d); }
 
 /// \fn int Min(int a, int b, int c, int d)
 /// \ingroup Util
@@ -192,10 +170,7 @@ inline real_t Min(real_t a,
 inline int Min(int a,
                int b,
                int c,
-               int d)
-{
-   return std::min(Min(a,b,c),d);
-}
+               int d) { return std::min(Min(a,b,c),d); }
 
 /// \fn real_t Arg(complex_t x)
 /// \ingroup Util
@@ -215,20 +190,14 @@ inline real_t Arg(complex_t x)
  *  \ingroup Util
  *  \brief Return principal determination of logarithm of complex number <tt>x</tt>
  */
-inline complex_t Log(complex_t x)
-{
-  return complex_t(log(Abs(x)),Arg(x));
-}
+inline complex_t Log(complex_t x) { return complex_t(log(Abs(x)),Arg(x)); }
 
 
 /// \fn T_ Sqr(T_ x)
 /// \ingroup Util
 /// \brief Return square of value <tt>x</tt>
 template<class T_>
-inline T_ Sqr(T_ x)
-{
-   return x*x;
-}
+inline T_ Sqr(T_ x) { return x*x; }
 
 
 /** \fn void Scale(T_ a, const vector<T_>& x, vector<T_>& y)
@@ -468,21 +437,6 @@ inline real_t operator*(const vector<real_t>& x,
 }
 
 
-/** \fn real_t Dot(const Vect<real_t>& x, const Vect<real_t>& y)
- *  \ingroup Util
- *  \brief Return dot product of vectors <tt>x</tt> and <tt>y</tt>
- *  \details <tt>x</tt> and <tt>y</tt> are instances of class Vect<T_>
- */
-inline real_t Dot(const Vect<real_t>& x,
-                  const Vect<real_t>& y)
-{
-   real_t d = 0.;
-   for (size_t i=0; i<x.size(); ++i)
-      d += x[i] * y[i];
-   return d;
-}
-
-
 /** \fn T_ Dot(const Point<T_>& x, const Point<T_>& y)
  *  \ingroup Util
  *  \brief Return dot product of <tt>x</tt> and <tt>y</tt>
@@ -525,30 +479,31 @@ inline void Assign(vector<T_>& v,
 }
 
 
-/** \fn void Clear(vector<T_>& v)
+/** \fn void clear(vector<T_>& v)
  *  \ingroup Util
  *  \brief Assign <tt>0</tt> to all entries of a vector
  *  @param [in] v Vector to clear
  */
 template<class T_>
-inline void Clear(vector<T_>& v)
+inline void clear(vector<T_>& v)
 { 
    for (size_t i=0; i<v.size(); i++)
       v[i] = 0;
 }
 
 
-/** \fn void Clear(Vect<T_>& v)
+/** \fn void clear(Vect<T_>& v)
  *  \ingroup Util
  *  \brief Assign <tt>0</tt> to all entries of a vector
  *  @param [in] v Vector to clear
  */
 template<class T_>
-inline void Clear(Vect<T_>& v)
+inline void clear(Vect<T_>& v)
 {
    for (size_t i=1; i<=v.size(); i++)
       v.set(i,0);
 }
+
 
 
 /** \fn real_t Nrm2(size_t n, real_t* x)
@@ -558,20 +513,14 @@ inline void Clear(Vect<T_>& v)
  *  @param [in] x Array to treat
  */
 inline real_t Nrm2(size_t  n,
-                   real_t* x)
-{
-   return sqrt(Dot(n,x,x));
-}
+                   real_t* x) { return sqrt(Dot(n,x,x)); }
 
 
 /** \fn real_t Nrm2(const vector<real_t>& x)
  *  \ingroup Util
  *  \brief Return 2-norm of vector <tt>x</tt>
  */
-inline real_t Nrm2(const vector<real_t>& x)
-{
-   return sqrt(Dot(x,x));
-}
+inline real_t Nrm2(const vector<real_t>& x) { return sqrt(Dot(x,x)); }
 
 
 /** \fn real_t Nrm2(const Point<T_>& a)
@@ -579,10 +528,7 @@ inline real_t Nrm2(const vector<real_t>& x)
  *  \brief Return 2-norm of <tt>a</tt>
  */
 template<class T_>
-inline real_t Nrm2(const Point<T_>& a)
-{
-   return sqrt(Dot(a,a));
-}
+inline real_t Nrm2(const Point<T_>& a) { return sqrt(Dot(a,a)); }
 
 
 /** \fn bool Equal(real_t x, real_t y, real_t toler=OFELI_EPSMCH)
@@ -733,23 +679,24 @@ inline std::string zeros(size_t m,
    return s+itos(int(m));
 }
 
-static inline std::string &ltrim(std::string &s)
+
+static inline std::string& ltrim(std::string& str, const std::string& chars = "\t\n\v\f\r ")
 {
-   s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-           std::not1(std::ptr_fun<int, int>(std::isspace))));
-   return s;
+   str.erase(0, str.find_first_not_of(chars));
+   return str;
 }
 
-static inline std::string &rtrim(std::string &s)
+
+static inline std::string& rtrim(std::string& str, const std::string& chars = "\t\n\v\f\r ")
 {
-   s.erase(std::find_if(s.rbegin(), s.rend(),
-           std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-   return s;
+   str.erase(str.find_last_not_of(chars) + 1);
+   return str;
 }
 
-static inline std::string &trim(std::string &s)
+
+static inline std::string& trim(std::string& str, const std::string& chars = "\t\n\v\f\r ")
 {
-   return ltrim(rtrim(s));
+   return ltrim(rtrim(str, chars), chars);
 }
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

@@ -34,29 +34,33 @@
 #include "equations/electromagnetics/EC2D2T3.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
 
 
 namespace OFELI {
 
 
-EC2D2T3::EC2D2T3(const Element* el)
-{
-   set(el);
-}
+EC2D2T3::EC2D2T3()
+        : Equation<real_t,3,6,2,4>()
+{ }
 
 
-EC2D2T3::EC2D2T3(const Side* sd)
-{
-   set(sd);
-}
+EC2D2T3::EC2D2T3(Mesh& ms)
+        : Equation<real_t,3,6,2,4>(ms)
+{ }
+
+
+EC2D2T3::EC2D2T3(Mesh&         ms,
+                 Vect<real_t>& u)
+        : Equation<real_t,3,6,2,4>(ms,u)
+{ }
 
 
 EC2D2T3::EC2D2T3(const Side* sd1,
                  const Side* sd2)
 {
    _ns = sd1->n(); _nt = sd2->n();
-   _nb_dof = 2;
-   Init(sd1);
+   _theSide = sd1, _theElement = nullptr;
    Node *nd1 = sd1->getPtrNode(1), *nd2 = sd1->getPtrNode(2);
    _i1 = nd1->n(); _j1 = nd2->n();
    _N1 = nd1->getCoord(); _N2 = nd2->getCoord();
@@ -70,19 +74,15 @@ EC2D2T3::EC2D2T3(const Side* sd1,
 
 void EC2D2T3::set(const Element* el)
 {
-   _nb_dof = 2;
+   _theElement = el, _theSide = nullptr;
    _label = el->n();
-   Init(el);
    setMaterial();
    Triang3 tr(el);
-   _area = tr.getArea();
-   _a3 = OFELI_THIRD*_area;
-   _x[0] = _theElement->getPtrNode(1)->getCoord();
-   _x[1] = _theElement->getPtrNode(2)->getCoord();
-   _x[2] = _theElement->getPtrNode(3)->getCoord();
-   _dSh(1) = tr.DSh(1);
-   _dSh(2) = tr.DSh(2);
-   _dSh(3) = tr.DSh(3);
+   _el_geo.area = tr.getArea();
+   _x[0] = (*_theElement)(1)->getCoord();
+   _x[1] = (*_theElement)(2)->getCoord();
+   _x[2] = (*_theElement)(3)->getCoord();
+   _dSh = tr.DSh();
    eMat = 0;
    eRHS = 0;
 }
@@ -90,17 +90,15 @@ void EC2D2T3::set(const Element* el)
 
 void EC2D2T3::set(const Side* sd)
 {
-   _nb_dof = 2;
-   Init(sd);
-   Node *nd1 = sd->getPtrNode(1), *nd2 = sd->getPtrNode(2);
+   _theElement = nullptr, _theSide = sd;
+   Node *nd1 = (*_theSide)(1), *nd2 = (*_theSide)(2);
    _i1 = nd1->n(); _j1 = nd2->n();
    _N1 = nd1->getCoord(); _N2 = nd2->getCoord();
    _ll1 = sqrt((_N1.x-_N2.x)*(_N1.x-_N2.x) + (_N1.y-_N2.y)*(_N1.y-_N2.y));
-   _x[0] = _theSide->getPtrNode(1)->getCoord();
-   _x[1] = _theSide->getPtrNode(2)->getCoord();
+   _x[0] = (*_theSide)(1)->getCoord();
+   _x[1] = (*_theSide)(2)->getCoord();
    Line2 ln(sd);
-   _dSh(1) = ln.DSh(1);
-   _dSh(2) = ln.DSh(2);
+   _dSh = ln.DSh();
    _ns = sd->n();
    sMat = 0;
    sRHS = 0;
@@ -109,19 +107,19 @@ void EC2D2T3::set(const Side* sd)
 
 void EC2D2T3::RHS(real_t coef)
 {
-   eRHS(1) = eRHS(3) = eRHS(5) = coef*OFELI_THIRD*_area/_rho;
+   eRHS(1) = eRHS(3) = eRHS(5) = coef*OFELI_THIRD*_el_geo.area/_rho;
    eRHS(2) = eRHS(4) = eRHS(6) = 0;
 }
 
 
 void EC2D2T3::FEBlock(real_t omega)
 {
-   real_t c = 0.25*_mu*omega*OFELI_THIRD*_area/_rho;
+   real_t c = 0.25*_mu*omega*OFELI_THIRD*_el_geo.area/_rho;
    for (size_t i=1; i<=3; i++) {
       eMat(2*i-1,2*i  ) -= c;
       eMat(2*i  ,2*i-1) += c;
       for (size_t j=1; j<=3; j++) {
-         real_t e = OFELI_THIRD*_area*(_N[i-1]*_N[j-1]);
+         real_t e = OFELI_THIRD*_el_geo.area*(_dSh[i-1],_dSh[j-1]);
          eMat(2*i-1,2*j-1) += e; eMat(2*i  ,2*j  ) += e;
          eMat(2*i-1,2*j  ) -= c; eMat(2*i  ,2*j-1) += c;
       }
@@ -160,27 +158,27 @@ void EC2D2T3::BEBlocks(size_t            n1,
 }
 
 
-complex_t EC2D2T3::Constant(      real_t        omega,
+complex_t EC2D2T3::Constant(real_t              omega,
                             const Vect<real_t>& u,
-                                  complex_t&    I)
+                            complex_t&          I)
 {
-   real_t ur = _a3*(u(1)+u(3)+u(5));
-   real_t ui = _a3*(u(2)+u(4)+u(6));
-   real_t c1 = _rho*(I.real() - omega*ui/_rho)/_area;
-   real_t c2 = _rho*(I.imag() + omega*ur/_rho)/_area;
+   real_t ur = OFELI_THIRD*_el_geo.area*(u(1)+u(3)+u(5));
+   real_t ui = OFELI_THIRD*_el_geo.area*(u(2)+u(4)+u(6));
+   real_t c1 = _rho*(I.real() - omega*ui/_rho)/_el_geo.area;
+   real_t c2 = _rho*(I.imag() + omega*ur/_rho)/_el_geo.area;
    return std::complex<real_t> (c1,c2);
 }
 
 
 real_t EC2D2T3::MagneticPressure(const Vect<real_t>& u)
 {
-   real_t c = 0.5*_mu*_area;
+   real_t c = 0.5*_mu*_el_geo.area;
    real_t dxr=0, dxi=0, dyr=0, dyi=0;
    for (size_t i=1; i<=3; i++) {
-      dxr += _N[i-1].x*u(2*i-1);
-      dxi += _N[i-1].x*u(2*i  );
-      dyr += _N[i-1].y*u(2*i-1);
-      dyi += _N[i-1].y*u(2*i  );
+      dxr += _dSh[i-1].x*u(2*i-1);
+      dxi += _dSh[i-1].x*u(2*i  );
+      dyr += _dSh[i-1].y*u(2*i-1);
+      dyi += _dSh[i-1].y*u(2*i  );
    }
    return (c*(dxr*dxr+dxi*dxi+dyr*dyr+dyi*dyi));
 }
@@ -239,8 +237,8 @@ void EC2D2T3::_Lkl(const Point<real_t>& uk,
                    const Point<real_t>& vk,
                    const Point<real_t>& ul,
                    const Point<real_t>& vl,
-                         real_t&        d1,
-                         real_t&        d2)
+                   real_t&              d1,
+                   real_t&              d2)
 /*-----------------------------------------------------------------------
      Coefficients of matrix L
 
@@ -295,7 +293,7 @@ void EC2D2T3::_Dkl(const Point<real_t>& uk,
                    const Point<real_t>& vk,
                    const Point<real_t>& ul,
                    const Point<real_t>& vl,
-                         real_t&        d)
+                   real_t&              d)
 /*-----------------------------------------------------------------------
      Coefficient of matrix D
 

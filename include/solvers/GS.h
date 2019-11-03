@@ -41,8 +41,8 @@ using std::setw;
 
 
 #include "OFELI_Config.h"
-#include "linear_algebra/SpMatrix.h"
-#include "linear_algebra/Vect.h"
+#include "linear_algebra/SpMatrix_impl.h"
+#include "linear_algebra/Vect_impl.h"
 #include "util/util.h"
 #include "io/output.h"
 
@@ -58,8 +58,19 @@ namespace OFELI {
  *
  */
 
-/** \fn int GS(const SpMatrix<T_>& A, const Vect<T_> &b, Vect<T_> &x, real_t omega, int max_it, real_t toler, int verbose)
+/** \fn int GS(const SpMatrix<T_>& A, const Vect<T_> &b, Vect<T_> &x, real_t omega, int max_it, real_t toler)
  *  \ingroup Solver
+ *  \details This function uses the relaxed Gauss-Seidel algorithm to solve a
+ *  linear system with a sparse matrix.\n
+ *  The global variable Verbosity enables choosing output message level
+ *  <ul>
+ *    <li> Verbosity < 2 : No output message
+ *    <li> Verbosity > 1 : Notify executing the function GS
+ *    <li> Verbosity > 2 : Notify convergence with number of performed iterations or divergence
+ *    <li> Verbosity > 3 : Output each iteration number and residual
+ *    <li> Verbosity > 6 : Print final solution if convergence
+ *    <li> Verbosity > 10 : Print obtained solution at each iteration
+ *  </ul>
  *  \brief Gauss-Seidel solver function.
  *  @param [in] A Problem matrix (Instance of class SpMatrix).
  *  @param [in] b Right-hand side vector (class Vect)
@@ -68,10 +79,6 @@ namespace OFELI {
  *  @param [in] omega Relaxation parameter.
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter
- *    - 0: No output
- *    - 1: Output iteration information
- *    - 2 and greater: Output iteration information and solution at each iteration.
  *  @return Number of performed iterations
  *
  * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)
@@ -85,11 +92,13 @@ int GS(const SpMatrix<T_>& A,
        Vect<T_>&           x,
        real_t              omega,
        int                 max_it,
-       real_t              toler,
-       int                 verbose)
+       real_t              toler)
 {
-   if (verbose>0)
+   if (Verbosity>2)
       cout << "Running Gauss-Seidel method ..." << endl;
+   for (i=1; i<=size; i++)
+      if (Abs(A(i,i)) < OFELI_EPSMCH)
+            throw OFELIException("In GS(A,b,x,omega,max_it,toler): null diagonal term: " + itos(i));
    size_t i, j, l;
    int it;
    size_t size = A.getNbRows();
@@ -97,14 +106,6 @@ int GS(const SpMatrix<T_>& A,
    if (nrm == 0)
       nrm = 1;
    Vect<T_> y(x);
-
-   for (i=1; i<=size; i++) {
-      if (Abs(A(i,i)) < OFELI_EPSMCH) {
-         cerr << "Error in function GS : " << i << "-th Diagonal";
-         cerr << " entry is zero." << endl;
-         exit(1);
-      }
-   }
 
    for (it=1; it<=max_it; it++) {
       l = 1;
@@ -125,20 +126,22 @@ int GS(const SpMatrix<T_>& A,
       err = sqrt(err/size)/nrm;
       x = y;
 
-      if (verbose > 1)
+      if (Verbosity>3)
          cout << "Iteration: " << setw(4) << it << "  ... Error: " << err << endl;
 
       nrm = x.getNorm2();
-      if (verbose > 2)
-         cout << x;
+      if (Verbosity>10)
+         cout << "Solution at iteration " << it << ": \n" << x;
       if (err < toler) {
          toler = err;
-         if (verbose)
+         if (Verbosity>2)
             cout << "Convergence of the GS method after " << it << " iterations." << endl;
+         if (Verbosity>6)
+            cout << "Solution:\n" << x;
          return it;
       }
    }
-   if (verbose)
+   if (Verbosity>2)
       cout << "No Convergence after " << it << " iterations." << endl;
    return -it;
 }
@@ -150,11 +153,10 @@ int GS(const Matrix<T_>* A,
        Vect<T_>&         x,
        real_t            omega,
        int               max_it,
-       real_t            toler,
-       int               verbose)
+       real_t            toler)
 {
    SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
-   return GS(AA,b,x,omega,max_it,toler,verbose);
+   return GS(AA,b,x,omega,max_it,toler);
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

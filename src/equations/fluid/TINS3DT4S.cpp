@@ -32,45 +32,50 @@
 #include "equations/fluid/TINS3DT4S.h"
 #include "shape_functions/Tetra4.h"
 #include "shape_functions/Triang3.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/LocalVect_impl.h"
+#include "linear_algebra/SpMatrix_impl.h"
 #include <algorithm>
 
 using std::cout;
 
 namespace OFELI {
 
-TINS3DT4S::TINS3DT4S() : _Re(0.)
+TINS3DT4S::TINS3DT4S()
 {
+   _Re = 0.;
 }
 
 
-TINS3DT4S::TINS3DT4S(Mesh&         mesh,
-                     Vect<real_t>& u,
-                     Vect<real_t>& p,
-                     real_t&       ts,
-                     real_t        Re)
-          :  _constant_matrix(true), _Re(Re), _p(&p)
+TINS3DT4S::TINS3DT4S(Mesh& ms)
+          : Equation<real_t,4,12,3,9>(ms), _constant_matrix(true)
 {
-   _step = 0;
-   _u = &u;
-   init(mesh,ts);
-   _bc_given = _bf_given = _sf_given = false;
+   init();
    _dens = 0.;
+   _Re = 0.;
+}
+
+
+TINS3DT4S::TINS3DT4S(Mesh&         ms,
+                     Vect<real_t>& u)
+          : Equation<real_t,4,12,3,9>(ms,u), _constant_matrix(true)
+{
+   init();
+   _dens = 0.;
+   _Re = 0.;
 }
 
 
 TINS3DT4S::~TINS3DT4S() { }
 
 
-void TINS3DT4S::init(Mesh&  mesh,
-                     real_t ts)
+void TINS3DT4S::init()
 {
-   if (_verbose>2)
+   if (Verbosity>2)
       cout << "Initializing Navier-Stokes equations settings ..." << endl;
-   _theMesh = &mesh;
-   _time_step = ts;
    _theMesh->removeImposedDOF();
    _VM.setMesh(*_theMesh);
-   _MM.setSize(_theMesh->getNbNodes());
+   _MM.setSize(_nb_nodes);
    _PM.setExtendedGraph();
    _PM.setMesh(*_theMesh,1);
    for (size_t i=0; i<=_PM.size(); i++)
@@ -82,10 +87,8 @@ void TINS3DT4S::init(Mesh&  mesh,
    _PP.setType(DILU_PREC);
    _PP.setMatrix(_PM);
 #endif
-   _uu.setSize(_theMesh->getNbEq());
-   _b.setSize(_theMesh->getNbEq());
-   _q.setSize(_theMesh->getNbNodes());
-   _c.setSize(_theMesh->getNbNodes(),2);
+   _q.setSize(_nb_nodes);
+   _c.setSize(_nb_nodes,2);
    _cfl = 0;
 }
 
@@ -94,8 +97,8 @@ void TINS3DT4S::setInput(EqDataType    opt,
                          Vect<real_t>& u)
 {
    AbsEqua<real_t>::setInput(opt,u);
-   if (opt==INITIAL_FIELD) {
-      _u = &u;
+   if (opt==PRESSURE_FIELD) {
+      _p = &u;
       getPressure();
       updateVelocity();
    }
@@ -104,7 +107,7 @@ void TINS3DT4S::setInput(EqDataType    opt,
 
 void TINS3DT4S::set(Element* el)
 {
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    _visc = _dens = 1.;
    if (_Re==0.) {
       setMaterial();
@@ -112,32 +115,23 @@ void TINS3DT4S::set(Element* el)
    }
    _ne = element_label;
    Tetra4 te(el);
-   _center = te.getCenter();
-   _det = te.getDet();
+   _el_geo.det = te.getDet();
    _cr = te.getMaxEdgeLength();
-   _c24 = _det/24.;
-   _vol = _det/6.;
-  for (size_t i=0; i<4; ++i) {
-      _dSh[i] = te.DSh(i+1);
+   _c24 = _el_geo.det/24.;
+   _vol = _el_geo.det/6.;
+   _dSh = te.DSh();
+   for (size_t i=0; i<4; ++i)
       _en[i] = (*el)(i+1)->n();
-   }
    eMat = 0; eRHS = 0;
 }
 
 
 void TINS3DT4S::build()
 {
-   _step++;
+   _TimeInt.step++;
    getMomentum();
    getPressure();
    updateVelocity();
-}
-
-
-int TINS3DT4S::runOneTimeStep()
-{
-   build();
-   return 0;
 }
 
 
@@ -145,17 +139,18 @@ void TINS3DT4S::ElementVelocityMatrix()
 {
    real_t c=_vol*_visc/_Re;
    for (size_t j=1; j<=4; j++) {
-      Point<real_t> db=c*_dSh(j);
+      Point<real_t> db=c*_dSh[j-1];
       for (size_t i=1; i<=4; i++) {
-         eMat(3*i-2,3*j-2) += 2*_dSh(i).x*db.x + _dSh(i).z*db.z + _dSh(i).y*db.y;
-         eMat(3*i-2,3*j-1) += _dSh(i).y*db.x;
-         eMat(3*i-2,3*j  ) += _dSh(i).z*db.x;
-         eMat(3*i-1,3*j-2) += _dSh(i).x*db.y;
-         eMat(3*i-1,3*j-1) += 2*_dSh(i).y*db.y + _dSh(i).z*db.z + _dSh(i).x*db.x;
-         eMat(3*i-1,3*j  ) += _dSh(i).z*db.y;
-         eMat(3*i  ,3*j-2) += _dSh(i).x*db.z;
-         eMat(3*i  ,3*j-1) += _dSh(i).y*db.z;
-         eMat(3*i  ,3*j  ) += 2*_dSh(i).z*db.z + _dSh(i).y*db.y + _dSh(i).x*db.x;
+         Point<real_t> a=_dSh[i-1];
+         eMat(3*i-2,3*j-2) += 2*a.x*db.x + a.z*db.z + a.y*db.y;
+         eMat(3*i-2,3*j-1) += a.y*db.x;
+         eMat(3*i-2,3*j  ) += a.z*db.x;
+         eMat(3*i-1,3*j-2) += a.x*db.y;
+         eMat(3*i-1,3*j-1) += 2*a.y*db.y + a.z*db.z + a.x*db.x;
+         eMat(3*i-1,3*j  ) += a.z*db.y;
+         eMat(3*i  ,3*j-2) += a.x*db.z;
+         eMat(3*i  ,3*j-1) += a.y*db.z;
+         eMat(3*i  ,3*j  ) += 2*a.z*db.z + a.y*db.y + a.x*db.x;
       }
    }
    c = _c24*_dens;
@@ -169,18 +164,18 @@ void TINS3DT4S::ElementVelocityMatrix()
 
 void TINS3DT4S::PressureMatrix()
 {
-   if (_verbose>2)
+   if (Verbosity>2)
       cout << "Calculating pressure matrix ..." << endl;
    SpMatrix<real_t> Dx(1,*_theMesh,0), Dy(1,*_theMesh,0);
    mesh_elements(*_theMesh) {
       set(the_element);
-      real_t z=_c24/_time_step, a=_vol*_time_step;
+      real_t z=_c24/_TimeInt.delta, a=_vol*_TimeInt.delta;
       for (size_t i=0; i<4; i++) {
          _MM(_en[i]) += z;
          for (size_t j=0; j<4; j++) {
             _PM.add(_en[i],_en[j],a*(_dSh[i]*_dSh[j]));
-            Dx.add(_en[i],_en[j],_dSh[j].x*_det);
-            Dy.add(_en[i],_en[j],_dSh[j].y*_det);
+            Dx.add(_en[i],_en[j],_dSh[j].x*_el_geo.det);
+            Dy.add(_en[i],_en[j],_dSh[j].y*_el_geo.det);
          }
       }
    }
@@ -204,10 +199,10 @@ void TINS3DT4S::PressureMatrix()
 
 void TINS3DT4S::getMomentum()
 {
-   if (_verbose>2)
+   if (Verbosity>2)
       cout << "Solving momentum equations ..." << endl;
    LocalVect<real_t,12> ce;
-   if (_step==1 || _constant_matrix==false)
+   if (_TimeInt.step==1 || _constant_matrix==false)
       _VM = 0;
    _b = 0;
    size_t j=0;
@@ -229,14 +224,14 @@ void TINS3DT4S::getMomentum()
       real_t d1=0.25*(ue[0]+ue[3]+ue[6]+ue[ 9]),
              d2=0.25*(ue[1]+ue[4]+ue[7]+ue[10]),
              d3=0.25*(ue[2]+ue[5]+ue[8]+ue[11]);
-      _cfl = std::max(_cfl,_time_step*sqrt(d1*d1+d2*d2+d3*d3)/_cr);
+      _cfl = std::max(_cfl,_TimeInt.delta*sqrt(d1*d1+d2*d2+d3*d3)/_cr);
 
 //    Element matrix
-      if (_step==1 || _constant_matrix==false)
+      if (_TimeInt.step==1 || _constant_matrix==false)
          ElementVelocityMatrix();
 
 //    Mass (R.H.S.)
-      real_t cc=_c24*_dens/_time_step;
+      real_t cc=_c24*_dens/_TimeInt.delta;
       for (size_t i=0; i<3; ++i) {
          eRHS(2*i+1) = cc*ue[2*i  ];
          eRHS(2*i+2) = cc*ue[2*i+1];
@@ -273,7 +268,7 @@ void TINS3DT4S::getMomentum()
       }
 
 //    Body Force
-      if (_bf_given) {
+      if (_bf!=nullptr) {
          for (size_t i=0; i<4; ++i) {
             eRHS(3*i+1) += (*_bf)(3*_en[i]+1)*_c24;
             eRHS(3*i+2) += (*_bf)(3*_en[i]+2)*_c24;
@@ -285,7 +280,7 @@ void TINS3DT4S::getMomentum()
       Equa_Fluid<real_t,4,12,3,9>::updateBC(The_element,*_bc);
 
 //    Assembly of matrix and R.H.S.
-      if (_step==1 || _constant_matrix==false)
+      if (_TimeInt.step==1 || _constant_matrix==false)
          Assembly(The_element,eMat,_VM);
       Assembly(The_element,eRHS,_b);
    }
@@ -299,9 +294,9 @@ void TINS3DT4S::getMomentum()
    ls.setTolerance(_toler);
    int nb_it = ls.solve(CG_SOLVER,DILU_PREC);
 #endif
-   if (_bc_given)
+   if (_bc!=nullptr)
       _u->insertBC(_uu,*_bc);
-   if (_verbose>1)
+   if (Verbosity>1)
       cout << "Nb. of CG iterations for Momentum: " << nb_it << endl;
 }
 
@@ -309,7 +304,7 @@ void TINS3DT4S::getMomentum()
 int TINS3DT4S::getPressure()
 {
    Vect<real_t> b(_theMesh->getNbNodes());
-   if (_verbose>2)
+   if (Verbosity>2)
       cout << "Solving pressure equation ..." << endl;
    mesh_elements(*_theMesh) {
       set(the_element);
@@ -325,9 +320,9 @@ int TINS3DT4S::getPressure()
    LinearSolver<double> ls(1000,toler,1);
    int nb_it = ls.solve(_PM,b,_q,CG_SOLVER,ILU_PREC);
 #else
-   int nb_it = CG(_PM,_PP,b,_q,1000,toler,0);
+   int nb_it = CG(_PM,_PP,b,_q,1000,toler);
 #endif
-   if (_verbose>1)
+   if (Verbosity>1)
       cout << "Nb. of CG iterations for pressure: " << nb_it << endl;
    *_p += 2.*_q;
    return nb_it;
@@ -336,7 +331,7 @@ int TINS3DT4S::getPressure()
 
 void TINS3DT4S::updateVelocity()
 {
-   if (_verbose>2)
+   if (Verbosity>2)
       cout << "Updating velocity ..." << endl;
    mesh_elements(*_theMesh) {
       set(the_element);

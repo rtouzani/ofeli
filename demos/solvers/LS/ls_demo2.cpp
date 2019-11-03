@@ -43,9 +43,10 @@ int main(int argc, char *argv[])
 {
 // Read and output mesh data
    if (argc<=1) {
-      cout << "Usage: ls_demo2 <mesh_file>" << endl;
+      cout << "Usage: " << argv[0] << " <mesh_file>" << endl;
       exit(1);
    }
+   Verbosity = 4;
 
    try {
       Mesh ms(argv[1],true);
@@ -59,6 +60,7 @@ int main(int argc, char *argv[])
       eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setSolver(CG_SOLVER,DILU_PREC);
       eq.run();
+      cout<<u;
       saveField(u,"sol.pos",GMSH);
       cout << "Solution is stored in file 'sol.pos'" << endl;
       cout << "You can plot this using GMSH" << endl;

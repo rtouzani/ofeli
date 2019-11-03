@@ -50,9 +50,7 @@ using std::setprecision;
 
 
 #include "OFELI_Config.h"
-#include "mesh/Mesh.h"
 #include "mesh/MeshUtil.h"
-#include "linear_algebra/Point.h"
 #include "util/util.h"
 #include "linear_algebra/DMatrix.h"
 

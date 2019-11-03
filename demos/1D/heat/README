@@ -1,0 +1,10 @@
+heat:
+
+A demo program to solve the 1D heat equation using a 3-stencil finite difference scheme in space
+and the Backward Euler scheme in time.
+To execute the program, type
+
+          heat <nx> <dt>
+
+where n is the number of finite elements and dt is the time step.
+

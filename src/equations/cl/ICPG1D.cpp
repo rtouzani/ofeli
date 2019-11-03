@@ -43,7 +43,9 @@ using std::cout;
 #include "mesh/Mesh.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
-#include "linear_algebra/LocalVect.h"
+#include "linear_algebra/LocalVect_impl.h"
+#include "linear_algebra/Vect_impl.h"
+#include "shape_functions/Triang3.h"
 
 namespace OFELI {
 

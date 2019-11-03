@@ -30,6 +30,9 @@
  ==============================================================================*/
 
 #include "equations/interface/FastMarching2D.h"
+#include "mesh/Mesh.h"
+#include "linear_algebra/Vect_impl.h"
+#include "OFELIException.h"
 #include <algorithm>
 
 namespace OFELI {

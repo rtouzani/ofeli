@@ -1,6 +1,8 @@
 
 noinst_LIBRARIES = libmesh.a
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
+
 SUBDIRS = bamg metis
 
 libmesh_a_SOURCES =	Domain.cpp \

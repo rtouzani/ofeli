@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 {
    void set_init(Vect<double> &u);
    if (argc == 1) {
-      cout << "Usage: lh2d <parameter file>" << endl;
+      cout << "Usage: " << argv[0] << " <parameter file>" << endl;
       exit(1);
    }
 

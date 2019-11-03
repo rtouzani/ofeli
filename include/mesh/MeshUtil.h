@@ -51,7 +51,6 @@ namespace OFELI {
  *  \brief Definitions of utility functions for meshes.
  */
 
-template<class T_> class Vect;
 #ifdef USE_PETSC
 template<class T_> class PETScVect;
 #endif
@@ -60,6 +59,7 @@ class Mesh;
 class Node;
 class Element;
 class Side;
+class Edge;
 class Grid;
 
 
@@ -77,7 +77,7 @@ enum { MIN_X, MAX_X, MIN_Y, MAX_Y, MIN_Z, MAX_Z };
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline size_t Label(const Node& nd) { return nd.n(); }
+size_t Label(const Node& nd);
 
 /** \fn size_t Label(const Element& el)
  *  \ingroup Mesh
@@ -88,7 +88,7 @@ inline size_t Label(const Node& nd) { return nd.n(); }
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline size_t Label(const Element& el) { return el.n(); }
+size_t Label(const Element& el);
 
 /** \fn size_t Label(const Side& sd)
  *  \ingroup Mesh
@@ -99,7 +99,7 @@ inline size_t Label(const Element& el) { return el.n(); }
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline size_t Label(const Side& sd) { return sd.n(); }
+size_t Label(const Side& sd);
 
 /** \fn size_t Label(const Edge& ed)
  *  \ingroup Mesh
@@ -110,7 +110,7 @@ inline size_t Label(const Side& sd) { return sd.n(); }
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline size_t Label(const Edge& ed) { return ed.n(); }
+size_t Label(const Edge& ed);
 
 /** \fn size_t NodeLabel(const Element& el, size_t n)
  *  \ingroup Mesh
@@ -122,7 +122,7 @@ inline size_t Label(const Edge& ed) { return ed.n(); }
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline size_t NodeLabel(const Element& el, size_t n) { return el.getNodeLabel(n); }
+size_t NodeLabel(const Element& el, size_t n);
 
 /** \fn size_t NodeLabel(const Side& sd, size_t n)
  *  \ingroup Mesh
@@ -134,7 +134,7 @@ inline size_t NodeLabel(const Element& el, size_t n) { return el.getNodeLabel(n)
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline size_t NodeLabel(const Side& sd, size_t n) { return sd.getNodeLabel(n); }
+size_t NodeLabel(const Side& sd, size_t n);
 
 /** \fn Point<real_t> Coord(const Node& nd)
  *  \ingroup Mesh
@@ -145,7 +145,7 @@ inline size_t NodeLabel(const Side& sd, size_t n) { return sd.getNodeLabel(n); }
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline Point<real_t> Coord(const Node& nd) { return nd.getCoord(); }
+Point<real_t> Coord(const Node& nd);
 
 /** \fn int Code(const Node& nd, size_t i=1)
  *  \ingroup Mesh
@@ -157,7 +157,7 @@ inline Point<real_t> Coord(const Node& nd) { return nd.getCoord(); }
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline int Code(const Node& nd, size_t i=1) { return nd.getCode(i); }
+int Code(const Node& nd, size_t i=1);
 
 /** \fn int Code(const Element& el)
  *  \ingroup Mesh
@@ -168,7 +168,7 @@ inline int Code(const Node& nd, size_t i=1) { return nd.getCode(i); }
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline int Code(const Element& el) { return el.getCode(); }
+int Code(const Element& el);
 
 /** \fn int Code(const Side& sd, size_t i=1)
  *  \ingroup Mesh
@@ -180,7 +180,7 @@ inline int Code(const Element& el) { return el.getCode(); }
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-inline int Code(const Side& sd, size_t i=1) { return sd.getCode(i); }
+int Code(const Side& sd, size_t i=1);
 
 /** \fn operator==(const Element& el1, const Element& el2)
  *  \ingroup Mesh
@@ -245,7 +245,7 @@ void DeformMesh(Mesh&                    mesh,
 #endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-struct ND {
+struct ND { 
    ND() : e1(0), e2(0) { nd[0]=nd[1]=nd[2]=nd[3]=0; }
    ND(size_t n1, size_t n2, size_t n3=0, size_t n4=0) : e1(0), e2(0)
    { 
@@ -254,40 +254,13 @@ struct ND {
    size_t n, e1, e2, nd[4];
 };
 
-inline ostream& operator<<(ostream& s,
-                           ND&      d)
-{
-   s << d.nd[0] << " " << d.nd[1] << " " << d.n << " " << d.e1 << " " << d.e2 << endl;
-   return s;
-}
-
-inline bool operator==(const ND& n1,
-                       const ND& n2)
-{
-   if ((n1.nd[0]==n2.nd[0]) && (n1.nd[1]==n2.nd[1]) &&
-       (n1.nd[2]==n2.nd[2]) && (n1.nd[3]==n2.nd[3]))
-      return true;
-   else
-      return false;
-}
-
-inline void DOFCode(int    mark,
-                    size_t nb_dof,
-                    int*   code)
-{
-   int m, kk, j=mark, sign=1;
-   if (mark < 0) {
-      sign = -1;
-      mark *= sign;
-   }
-   for (int k=0; k<int(nb_dof); k++) {
-      kk = int(pow(10.,real_t(nb_dof-k-1)));
-      code[k] = m = j/kk;
-      code[k] *= sign;
-      j -= m*kk;
-   }
-}
-
+ostream& operator<<(ostream& s,
+                    ND&      d);
+bool operator==(const ND& n1,
+                const ND& n2);
+void DOFCode(int    mark,
+             size_t nb_dof,
+             int*   code);
 int isReferencedSide(const Side& sd);
 void HexahedraToTetrahedra(Mesh &m1, Mesh &m2);
 void QuadrilateralsToTriangles(Mesh &m1, Mesh &m2);

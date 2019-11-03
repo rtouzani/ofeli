@@ -36,7 +36,7 @@ using namespace OFELI;
 int main(int argc, char *argv[])
 {
    if (argc < 2) {
-      cout << "\nUsage:  lelas2d  <parameter_file>\n";
+      cout << "\nUsage: " << argv[0] << " <parameter_file>\n";
       return 0;
    }
 
@@ -72,82 +72,38 @@ int main(int argc, char *argv[])
       if (output_flag > 1)
          cout << ms;
 
-//    Declare problem data (matrix, rhs, boundary conditions, body forces)
-      if (output_flag > 1)
-         cout << "Allocating memory for matrix and R.H.S. ...\n";
-      SkSMatrix<double> A(ms);
-      Vect<double> b(ms);
-
 //    Read boundary conditions, body and boundary forces
-      if (output_flag > 1)
-         cout << "Reading boundary conditions ..." << endl;
-      Vect<double> bc(ms);
+      Vect<double> u(ms), bc(ms), body_f(ms), bound_f(ms,2,SIDE_DOF);
       p.get(BOUNDARY_CONDITION,bc,0);
       if (output_flag > 1)
          cout << "Reading body forces ..." << endl;
-      Vect<double> body_f(ms);
       p.get(BODY_FORCE,body_f);
       if (output_flag > 1)
          cout << "Reading Boundary Tractions ..." << endl;
-      Vect<double> bound_f(ms,2,SIDE_DOF);
       p.get(TRACTION,bound_f,0);
 
-//    Loop over elements
-//    ------------------
-
+//    Declare equation instance and solve
       if (output_flag > 1)
-         cout << "Looping over elements ...\n";
-      MeshElements(ms) {
-         Elas2DQ4 eq(theElement);
-         eq.Deviator();
-         eq.Dilatation();
-         eq.BodyRHS(body_f);
-         eq.ElementAssembly(A);
-         eq.ElementAssembly(b);
-      }
+         cout << "Setting and solving equation ...\n";
+      Elas2DQ4 eq(ms,u);
+      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setInput(BODY_FORCE,body_f);
+      eq.setInput(TRACTION,bound_f);
+      eq.run();
 
-//    Loop over sides
-//    ---------------
-
-      if (output_flag > 1)
-         cout << "Looping over sides ...\n";
-      MeshSides(ms) {
-         Elas2DQ4 eq(theSide);
-         eq.BoundaryRHS(bound_f);
-         eq.SideAssembly(b);
-      }
-
-//    Take account for boundary conditions and solve system
-//    -----------------------------------------------------
-
-      if (output_flag > 1)
-         cout << "Imposing boundary conditions ...\n";
-      A.Prescribe(b,bc);
-      A.solve(b);
-
+//    Output and save solution
       if (output_flag > 0)
-         cout << b;
-
+         cout << u;
       if (save_flag) {
          IOField pl_file(data.getPlotFile(),IOField::OUT);
-         pl_file.put(b);
+         pl_file.put(u);
       }
 
 //    Calculate principal and Von-Mises stresses
-//    ------------------------------------------
-
       if (output_flag > 1)
          cout << "Calculating stresses ...\n";
-      Vect<double> st(ms,"Principal Stress",0.0,3,ELEMENT_FIELD);
-      Vect<double> vm(ms,"Von-Mises Stress",0.0,3,ELEMENT_FIELD);
-      MeshElements(ms) {
-         LocalVect<double,3> ste;
-         Elas2DQ4 eq(theElement,b);
-         eq.Stress(ste,vm(theElementLabel));
-         st(theElementLabel,1) = ste(1);
-         st(theElementLabel,2) = ste(2);
-         st(theElementLabel,3) = ste(3);
-      }
+      Vect<double> st, vm;
+      eq.Stress(st,vm);
    } CATCH_EXCEPTION
    return 0;
 }

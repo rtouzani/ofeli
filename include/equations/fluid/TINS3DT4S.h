@@ -70,22 +70,17 @@ class TINS3DT4S : virtual public Equa_Fluid<real_t,4,12,3,9> {
     TINS3DT4S();
 
 /** \brief Constructor using mesh
- *  @param [in] mesh Mesh instance
+ *  @param [in] ms Mesh instance
+ */
+    TINS3DT4S(Mesh& ms);
+
+/** \brief Constructor using mesh and velocity
+ *  @param [in] ms Mesh instance
  *  @param [in,out] u Vect instance containing initial velocity. This vector is updated
  *  during computations and will therefore contain velocity at each time step
- *  @param [out] p Vect instance that will contain pressure at nodes. This vector is updated
- *  during computations and will therefore contain pressure at each time step
- *  @param [in] ts Time step
- *  @param [in] Re Reynolds number. The default value (<tt>0</tt>) means that no Reynolds number
- *  is given and problem data are supplied by material properties. If Re has any other
- *  value, then nondimensional form of the equations is assumed and material properties
- *  are ignored.
  */
-    TINS3DT4S(Mesh&         mesh,
-              Vect<real_t>& u,
-              Vect<real_t>& p,
-              real_t&       ts,
-              real_t        Re=0.);
+    TINS3DT4S(Mesh&         ms,
+              Vect<real_t>& u);
 
 /// \brief Destructor
     ~TINS3DT4S();
@@ -107,13 +102,10 @@ class TINS3DT4S : virtual public Equa_Fluid<real_t,4,12,3,9> {
 /// \brief Run one time step
     int runOneTimeStep();
 
-/// \brief Run (in the case of one step run)
-    int run() { return runOneTimeStep(); }
-
 private:
 
    bool             _constant_matrix;
-   real_t           _cr, _c24, _vol, _cfl, _Re;
+   real_t           _cr, _c24, _vol, _cfl;
    size_t           _ne, _en[4];
    Vect<real_t>     _b, *_p, _MM, _c, _q;
    vector<size_t>   _col_ind, _row_ptr;
@@ -126,7 +118,7 @@ private:
    void build();
    void set(Element *el);
    void set(Side *sd);
-   void init(Mesh& mesh, real_t ts);
+   void init();
    void PressureMatrix();
    int getPressure();
    void getMomentum();

@@ -32,97 +32,84 @@
 
 
 #include "equations/laplace/Laplace3DT4.h"
+#include "shape_functions/Tetra4.h"
+#include "shape_functions/Triang3.h"
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
-Laplace3DT4::Laplace3DT4(Mesh&             ms,
-                         SpMatrix<real_t>& A,
-                         Vect<real_t>&     b)
-            : Equation<real_t,4,4,3,3>(ms)
+Laplace3DT4::Laplace3DT4()
+            : Equation<real_t,4,4,3,3>()
 {
-   _u = &b;
-}
-
-
-Laplace3DT4::Laplace3DT4(Mesh&         ms,
-                         Vect<real_t>& b)
-            : Equation<real_t,4,4,3,3>(ms)
-{
-   _u = &b;
+   _equation_name = "Laplace";
+   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 3D using P1 finite element tetrahedron." << endl;
 }
 
 
 Laplace3DT4::Laplace3DT4(Mesh& ms)
             : Equation<real_t,4,4,3,3>(ms)
-{  }
-
-
-Laplace3DT4::Laplace3DT4(Element* el)
 {
-   set(el);
+   _equation_name = "Laplace";
+   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
+   setMatrixType(SPARSE);
+   setSolver(CG_SOLVER,DILU_PREC);
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 3D using P1 finite element tetrahedron." << endl;
+   if (Verbosity>1) {
+      cout << "Matrix stored in sparse format." << endl;
+      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
+   }
 }
 
-
-Laplace3DT4::Laplace3DT4(Side* sd)
+Laplace3DT4::Laplace3DT4(Mesh&         ms,
+                         Vect<real_t>& u)
+            : Equation<real_t,4,4,3,3>(ms,u)
 {
-   set(sd);
+   _equation_name = "Laplace";
+   _finite_element = "3-D, 4-Node Tetrahedra (P1)";
+   setMatrixType(SPARSE);
+   setSolver(CG_SOLVER,DILU_PREC);
+   if (Verbosity>0)
+      cout << "Solving the Laplace equation in 3D using P1 finite element tetrahedron." << endl;
+   if (Verbosity>1) {
+      cout << "Matrix stored in sparse format." << endl;
+      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
+   }
 }
 
 
 void Laplace3DT4::set(const Element* el)
 {
-   _nb_dof = 1;
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    Tetra4 t(_theElement);
-   _volume = t.getVolume();
-   _det = t.getDet();
-   for (size_t i=1; i<=4; i++)
-      _dSh(i) = t.DSh(i);
-   eMat = 0;
+   _el_geo.volume = t.getVolume();
+   _el_geo.det = t.getDet();
+   _dSh = t.DSh();
    eRHS = 0;
-   eA0 = 0;
-   eA1 = 0;
+   eMat = 0, eA0 = 0, eA1 = 0;
 }
 
 
 void Laplace3DT4::set(const Side* sd)
 {
-   _nb_dof = 1;
-   Init(sd);
+   _theElement = nullptr, _theSide = sd;
    Triang3 t(_theSide);
-   _area = t.getArea();
-   sMat = 0;
+   _el_geo.area = t.getArea();
    sRHS = 0;
-}
-
-
-void Laplace3DT4::build()
-{
-   MESH_EL {
-      set(theElement);
-      LHS();
-      BodyRHS(*_bf);
-      if (_bc_given)
-         updateBC(*_bc);
-      element_assembly(*theElement,eMat,_A);
-      ElementAssembly(*_u);
-   }
-   MESH_SD {
-      set(theSide);
-      BoundaryRHS(*_sf);
-      SideAssembly(*_u);
-   }
 }
 
 
 void Laplace3DT4::buildEigen(int opt)
 {
-   set(theElement);
-   for (size_t i=1; i<=4; i++)
-      for (size_t j=1; j<=4; j++)
-         eA0(i,j) += _area*_dSh(i)*_dSh(j);
+   for (size_t i=1; i<=4; ++i)
+      for (size_t j=1; j<=4; ++j)
+         eA0(i,j) += _el_geo.volume*(_dSh[i-1],_dSh[j-1]);
    if (opt==0) {
-      real_t c = 0.1*_volume;
+      real_t c = 0.1*_el_geo.volume;
       real_t d = 0.5*c;
       eA1(1,1) += c; eA1(2,2) += c; eA1(3,3) += c; eA1(4,4) += c;
       eA1(1,2) += d; eA1(2,1) += d; eA1(1,3) += d; eA1(1,4) += d;
@@ -130,66 +117,35 @@ void Laplace3DT4::buildEigen(int opt)
       eA1(4,1) += d; eA1(4,2) += d; eA1(4,3) += d; eA1(3,4) += d;
    }
    else {
-      real_t c = 0.25*_volume;
+      real_t c = 0.25*_el_geo.volume;
       for (size_t i=1; i<=4; i++)
          eA1(i,i) += c;
    }
 }
 
 
-int Laplace3DT4::solve(Vect<real_t>& u)
+void Laplace3DT4::LHS()
 {
-   Vect<real_t> x(_A.size());
-   LinearSolver<real_t> ls(_A,*_u,x);
-   ls.setTolerance(1.e-7);
-   int nb_it = ls.solve(CG_SOLVER,ILU_PREC);
-   u.insertBC(*_theMesh,x,*_bc);
-   return nb_it;
-}
-
-
-void Laplace3DT4::LHS(real_t coef)
-{
-   for (size_t i=1; i<=4; i++)
-      for (size_t j=1; j<=4; j++)
-         eMat(i,j) += coef*_volume*_dSh(i)*_dSh(j);
+   for (size_t i=1; i<=4; ++i)
+      for (size_t j=1; j<=4; ++j)
+         eMat(i,j) = _el_geo.volume*(_dSh[i-1],_dSh[j-1]);
 }
 
 
 void Laplace3DT4::BodyRHS(const Vect<real_t>& f)
 {
-   real_t c = 0.25*_volume;
-   for (size_t i=1; i<=4; i++)
-      eRHS(i) += f((*_theElement)(i)->n())*c;
+   for (size_t i=1; i<=4; ++i)
+      eRHS(i) += 0.25*_el_geo.volume*f((*_theElement)(i)->n());
 }
 
 
 void Laplace3DT4::BoundaryRHS(const Vect<real_t>& h)
 {
    if (_theSide->getCode(1)>0) {
-      real_t c = OFELI_THIRD*_area;
+      real_t c = OFELI_THIRD*_el_geo.area;
       sRHS(1) += c*h((*_theSide)(1)->n());
       sRHS(2) += c*h((*_theSide)(2)->n());
       sRHS(3) += c*h((*_theSide)(3)->n());
-   }
-}
-
-
-void Laplace3DT4::Axb(const Vect<real_t>& x,
-                      Vect<real_t>&       b)
-{
-   MESH_EL {
-      set(theElement);
-      LHS();
-      BodyRHS(*_bf);
-      ElementAssembly(*_u);
-      AxbAssembly(TheElement,x,b);
-   }
-   MESH_SD {
-      set(theSide);
-      BoundaryRHS(*_sf);
-      SideAssembly(*_u);
-      AxbAssembly(TheElement,x,b);
    }
 }
 

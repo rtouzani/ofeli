@@ -33,6 +33,8 @@
 #ifndef __SOLID_H
 #define __SOLID_H
 
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
 #include "equations/solid/Bar2DL2.h"
 #include "equations/solid/Beam3DL2.h"
 #include "equations/solid/Elas2DT3.h"

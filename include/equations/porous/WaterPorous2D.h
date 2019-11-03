@@ -73,10 +73,8 @@ class WaterPorous2D : public Equa_Porous<real_t,3,3,2,2>
 /** \brief Constructor
  *  \details This constructor uses mesh and reservoir information
  *  @param [in] ms Mesh instance
- *  @param [in] verb Verbosity parameter
  */
-    WaterPorous2D(Mesh&  ms,
-                  size_t verb=1);
+    WaterPorous2D(Mesh& ms);
 
 /// \brief Destructor
     ~WaterPorous2D();
@@ -103,26 +101,19 @@ class WaterPorous2D : public Equa_Porous<real_t,3,3,2,2>
     void Mobility();
 
 /** \brief Add source right-hand side term to right-hand side.
- *  @param [in] bf Vector containing source at element nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] bf Vector containing source at nodes.
  */
-    void BodyRHS(const Vect<real_t>& bf,
-                 int                 opt=GLOBAL_ARRAY);
+    void BodyRHS(const Vect<real_t>& bf);
 
 /** \brief Add boundary right-hand side term to right-hand side.
- *  @param [in] sf Vector containing source at side nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] sf Vector containing source at nodes.
  */
-    void BoundaryRHS(const Vect<real_t>& sf,
-                     int                 opt=GLOBAL_ARRAY);
+    void BoundaryRHS(const Vect<real_t>& sf);
 
  private:
     void set(const Element *el);
     void set(const Side *sd);
-    size_t _nb_nodes, _nb_elements, _verb;
-    real_t _Kxe, _Kye, _area, _length;
+    real_t _Kxe, _Kye;
 };
 
 /*! @} End of Doxygen Groups */

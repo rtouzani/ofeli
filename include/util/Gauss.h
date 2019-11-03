@@ -89,13 +89,11 @@ class Gauss
     real_t w(size_t i) const { return _w[i-1]; }
 
  private:
-    void legendre(real_t  y,
-                  real_t& p,
-                  real_t& dp);
-    size_t _np;
-    real_t _x[10], _w[10];
+    size_t        _np;
+    real_t        _x[10], _w[10];
     Point<real_t> _xx[10];
     bool _triang;
+    void legendre(real_t y, real_t& p, real_t& dp);
 };
 
 /*! @} End of Doxygen Groups */

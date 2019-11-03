@@ -29,8 +29,7 @@
 
   ==============================================================================*/
 
-#ifndef __OFELI_CONFIG_H
-#define __OFELI_CONFIG_H
+#pragma once
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -53,13 +52,13 @@
  * \def OFELI_VERSION
  * gives the current version of the library
  */
-#define OFELI_VERSION                 "3.2.0"
+#define OFELI_VERSION                 "4.0.0"
 
 /*!
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of current release
  */
-#define OFELI_RELEASE_DATE            "2-2019"
+#define OFELI_RELEASE_DATE            "12-2019"
 
 #define MY_RANDOM             55085111
 
@@ -269,21 +268,23 @@ enum FieldName {
  * \brief Enumerate variable that selects field type
  */
  enum FieldType {
-    NONE          =  0,     ///< No support information
-    NODE_FIELD    =  1,     ///< DOFs are supported by nodes
-    ELEMENT_FIELD =  2,     ///< DOFs are supported by elements
-    SIDE_FIELD    =  3,     ///< DOFs are supported by sides (faces in 3-D, edges in 2-D)
-    EDGE_FIELD    =  4      ///< DOFs are supported by edges
+    NONE                = 0, ///< No support information
+    NODE_FIELD          = 1, ///< DOFs are supported by nodes
+    ELEMENT_FIELD       = 2, ///< DOFs are supported by elements
+    SIDE_FIELD          = 3, ///< DOFs are supported by sides (faces in 3-D, edges in 2-D)
+    BOUNDARY_SIDE_FIELD = 4, ///< DOFs are supported by boundary sides (faces in 3-D, edges in 2-D)
+    EDGE_FIELD          = 5  ///< DOFs are supported by edges
  };
 
 /*! \enum DOFSupport
  * \brief Choose Support of degrees of freedom
  */
 enum DOFSupport {
-   NODE_DOF    =  1,            /*!< DOFs are supported by nodes */
-   ELEMENT_DOF =  2,            /*!< DOFs are supported by elements */
-   SIDE_DOF    =  3,            /*!< DOFs are supported by sides */
-   EDGE_DOF    =  4             /*!< DOFs are supported by edges */
+    NODE_DOF          = 1,   ///< DOFs are supported by nodes
+    ELEMENT_DOF       = 2,   ///< DOFs are supported by elements
+    SIDE_DOF          = 3,   ///< DOFs are supported by sides
+    BOUNDARY_SIDE_DOF = 4,   ///< DOFs are supported by sides
+    EDGE_DOF          = 5    ///< DOFs are supported by edges
 };
 
 
@@ -386,6 +387,16 @@ namespace OFELI {
 
 /**
  *  \ingroup Global
+ *  \brief Verbosity parameter
+ *  \details The value of Verbosity can be modified anywhere in the calling programs.
+ *  It allows outputting messages in function of the used class or function.
+ *  To see how this parameter is used in any class, the OFELI user has to read
+ *  corresponding documentation. 
+ */
+    extern int Verbosity;
+
+/**
+ *  \ingroup Global
  *  \brief Time step counter
  *  \details This counter must be initialized by the user if the
  *  macro timeLoop is not used
@@ -480,5 +491,3 @@ namespace OFELI {
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */
-
-#endif

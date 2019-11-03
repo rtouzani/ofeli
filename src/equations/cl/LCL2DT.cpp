@@ -1,6 +1,7 @@
 /*==============================================================================
 
-                                    O  F  E  L  I
+
+                                     O  F  E  L  I
 
                            Object  Finite  Element  Library
 
@@ -37,8 +38,8 @@
 #include "mesh/Mesh.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
-#include "linear_algebra/LocalVect.h"
-#include "linear_algebra/LocalMatrix.h"
+#include "linear_algebra/LocalVect_impl.h"
+#include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/Point.h"
 #include <algorithm>
 

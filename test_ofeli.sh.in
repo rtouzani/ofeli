@@ -3,56 +3,72 @@
 # test_ofeli.sh 
 # A script to test OFELI
 
-echo "Testing OFELI Examples, Demos and Utilities ..."
-
-echo "================================================================="
-echo "Testing OFELI Examples ..."
-echo "-----------------------------------------------------------------"
-cd tutorial/lesson1
-echo "Test tutorial example 1 (y/n) ? \c"
-read ans
-if test "$ans" = "y" ; then
-   ./lesson1
-fi
-
-cd ../lesson2
-echo "Test tutorial example 2 (y/n) ? \c"
-read ans
-if test "$ans" = "y" ; then
-   ./lesson2 test.m
-fi
-
-cd ../lesson3
-echo "Test tutorial example 3 (y/n) ? \c"
-read ans
-if test "$ans" = "y" ; then
-   ./lesson3 test.m
-fi
-
-cd ../lesson4
-echo "Test tutorial example 4 (y/n) ? \c"
-read ans
-if test "$ans" = "y" ; then
-   ./lesson4 test.dat
-fi
-
-cd ../../demos
-
+echo "Testing OFELI Demos and Utilities ..."
 
 echo "================================================================="
 echo "Testing OFELI Demos ..."
+echo "================================================================="
+cd demos/1D
+echo
+echo "-----------------------------------------------------------------"
+echo "Test 1-D demo programs"
+echo "-----------------------------------------------------------------"
+echo "Test elliptic equation (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   cd elliptic
+   ./elliptic
+fi
+echo "Test heat equation (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   cd ../heat
+   ./heat 10 0.1
+fi
+echo "Test transport equation (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   cd ../transport
+   ./transport 10 0.1
+   /bin/rm output.dat
+fi
+
+cd ../../laplace
+echo "-----------------------------------------------------------------"
+echo "Test Laplace equation programs"
+echo "-----------------------------------------------------------------"
+echo "Test the 2-D Laplace equation using P1 finite elements (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   ./laplace_demo1 proj2.dat
+   /bin/rm u.pos
+fi
+echo "Test the 2-D Laplace equation using P2 finite elements (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   ./laplace_demo2 proj2.dat
+fi
+echo "Test the 3-D Laplace equation using P1 finite elements (y/n) ? \c"
+if test "$ans" = "y" ; then
+   ./laplace_demo3 proj3.dat
+   /bin/rm u.pos
+fi
+echo "Test the 2-D Steklov-Poincaré problem using P0 boundary elements (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+   ./laplace_demo4 proj.dat
+fi
 
 echo "-----------------------------------------------------------------"
 echo "Testing Heat Transfer Demos ..."
-
-cd thermal/stdc2
+echo "-----------------------------------------------------------------"
+cd ../thermal/stdc2
 echo "Test demo for 2-D steady state thermal computation (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
    ./stdc2 proj.dat
    /bin/rm proj.pos
 fi
-
 cd ../ttd2
 echo "Test demo for 2-D transient thermal computation (y/n) ? \c"
 read ans
@@ -60,13 +76,12 @@ if test "$ans" = "y" ; then
    ./ttd2 proj.dat
    /bin/rm proj.pl
 fi
-
 cd ../std3
 echo "Test demo for 3-D steady state thermal computation (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
    ./std3 beam.dat
-   /bin/rm beam.sav
+   /bin/rm beam.pos
 fi
 
 echo "-----------------------------------------------------------------"
@@ -97,7 +112,7 @@ if test "$ans" = "y" ; then
 fi
 
 cd ../contact
-echo "Test demo for 2-D linear elasticity with contact computation (y/n) ? \c"
+echo "Test demo for 2-D linear elasticity with contact (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
    ./contact beam.dat
@@ -155,13 +170,6 @@ echo "Test demo for Helmholtz equation in bounded media (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
    ./helmholtz proj.dat
-fi
-
-cd ../EddyCurrent2d-1
-echo "Test demo for 2-D Eddy Current computation in bounded media (y/n) ? \c"
-read ans
-if test "$ans" = "y" ; then
-   ./ec2d1 proj.dat
 fi
 
 echo "-----------------------------------------------------------------"
@@ -327,11 +335,11 @@ if test "$ans" = "y" ; then
    /bin/rm cavity.pos
 fi
 
-cd ../../g2m/examples
+cd ../../g2m
 echo "Test mesh generation utility (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
-   ../src/g2m -d test.dom -o test.m
+   ./g2m -d test.dom -o test.m
    /bin/rm test.m
 fi
 

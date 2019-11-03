@@ -6,9 +6,9 @@
    <author></author>
 </info>
 <Project name="Step">
-   <time_step value="0.01"/>
-   <max_time value="4.0"/>
-   <verbose value="5"/>
+   <time_step value="0.05"/>
+   <max_time value="50.0"/>
+   <verbose value="1"/>
    <plot value="10"/>
    <mesh_file value="step.m"/>
    <parameter label="Reynolds" value="1"/>

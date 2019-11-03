@@ -43,14 +43,15 @@ using std::setw;
 
 #include "OFELI_Config.h"
 
-#if defined (USE_EIGEN)
+#if defined (USE_PETSC)
+#include "linear_algebra/petsc/PETScMatrix.h"
+#elif defined (USE_EIGEN)
 #include "linear_algebra/Matrix.h"
 #include <Eigen/IterativeLinearSolvers>
 using namespace Eigen;
 #else
 #include "util/util.h"
 #include "io/output.h"
-
 #include "solvers/CG.h"
 #include "solvers/CGS.h"
 #include "solvers/BiCG.h"
@@ -65,6 +66,9 @@ namespace OFELI {
  *  @{
  */
 
+#if defined(USE_PETSC)
+template<class T_> class PETScMatrix;
+#else
 template<class T_> class Matrix;
 template<class T_> class SpMatrix;
 template<class T_> class SkMatrix;
@@ -73,7 +77,7 @@ template<class T_> class TrMatrix;
 template<class T_> class BMatrix;
 template<class T_> class DMatrix;
 template<class T_> class DSMatrix;
-
+#endif
 
 //-----------------------------------------------------------------------------
 // Class LinearSolver
@@ -95,29 +99,24 @@ template<class T_> class LinearSolver
 
 /// \brief Default Constructor.
 /// \details Initializes default parameters and pointers to 0.
-    LinearSolver() : _fact(0), _verbose(0), _max_it(1000), _matrix_set(0),
+    LinearSolver() : _fact(0), _max_it(1000), _matrix_set(0),
                      _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
-                     _x(NULL), _b(NULL), _A(NULL) { }
+                     _x(nullptr), _b(nullptr), _A(nullptr)
+    { }
 
 /** \brief Constructor with iteration parameters
  *  @param [in] max_it Maximal number of iterations
  *  @param [in] tolerance Tolerance for convergence (measured in relative weighted 2-Norm) in input,
  *  effective discrepancy in output.
- *  @param [in] verbose Information output parameter
- *  <ul>
- *    <li><tt>0</tt>: No output
- *    <li><tt>1</tt>: Output iteration information,
- *    <li><tt>2</tt> and greater: Output iteration information and solution at each iteration.
- *  </ul>
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     LinearSolver(int    max_it,
-                 real_t tolerance,
-                 int    verbose) : _fact(0), _verbose(verbose), _max_it(max_it),
-                                   _matrix_set(0), _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                   _toler(tolerance), _x(NULL), _b(NULL), _A(NULL) { }
+                 real_t tolerance) : _fact(0), _max_it(max_it),
+                                     _matrix_set(0), _s(DIRECT_SOLVER), _p(DIAG_PREC),
+                                     _toler(tolerance), _x(nullptr), _b(nullptr), _A(nullptr)
+    { }
 
 /** \brief Constructor using matrix, right-hand side and solution vector
  *  @param [in] A Reference to instance of class SpMatrix
@@ -126,9 +125,10 @@ template<class T_> class LinearSolver
  */
     LinearSolver(SpMatrix<T_>&   A,
                  const Vect<T_>& b,
-                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                 Vect<T_>&       x) : _fact(0), _max_it(1000), _matrix_set(1),
                                       _s(CG_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
-                                      _x(&x), _b(&b), _A(&A) { }
+                                      _x(&x), _b(&b), _A(&A)
+    { }
 
 /** \brief Constructor using skyline-stored matrix, right-hand side and solution vector
  *  @param [in] A SkMatrix instance that contains matrix
@@ -137,9 +137,10 @@ template<class T_> class LinearSolver
  */
     LinearSolver(SkMatrix<T_>&   A,
                  const Vect<T_>& b,
-                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                 Vect<T_>&       x) : _fact(0), _max_it(1000), _matrix_set(1),
                                       _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
-                                      _x(&x), _b(&b), _A(&A) { }
+                                      _x(&x), _b(&b), _A(&A)
+    { }
 
 /** \brief Constructor using a tridiagonal matrix, right-hand side and solution vector
  *  @param [in] A TrMatrix instance that contains matrix
@@ -148,9 +149,10 @@ template<class T_> class LinearSolver
  */
     LinearSolver(TrMatrix<T_>&   A,
                  const Vect<T_>& b,
-                 Vect<T_>&      x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                     _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                     _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
+                 Vect<T_>&       x) : _fact(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
+                                      _x(&x), _b(&b), _A(&A)
+    { }
 
 /** \brief Constructor using a banded matrix, right-hand side and solution vector
  *  @param [in] A BMatrix instance that contains matrix
@@ -159,9 +161,10 @@ template<class T_> class LinearSolver
  */
     LinearSolver(BMatrix<T_>&    A,
                  const Vect<T_>& b,
-                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
+                 Vect<T_>&       x) : _fact(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
+                                      _x(&x), _b(&b), _A(&A)
+    { }
 
 /** \brief Constructor using a dense matrix, right-hand side and solution vector
  *  @param [in] A DMatrix instance that contains matrix
@@ -170,9 +173,10 @@ template<class T_> class LinearSolver
  */
     LinearSolver(DMatrix<T_>&    A,
                  const Vect<T_>& b,
-                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
+                 Vect<T_>&       x) : _fact(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
+                                      _x(&x), _b(&b), _A(&A)
+    { }
 
 /** \brief Constructor using a dense symmetric matrix, right-hand side and solution vector
  *  @param [in] A DSMatrix instance that contains matrix
@@ -181,9 +185,10 @@ template<class T_> class LinearSolver
  */
     LinearSolver(DSMatrix<T_>&   A,
                  const Vect<T_>& b,
-                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                      _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                      _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
+                 Vect<T_>&       x) : _fact(0), _max_it(1000), _matrix_set(1),
+                                      _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
+                                      _x(&x), _b(&b), _A(&A)
+    { }
 
 /** \brief Constructor using skyline-stored symmetric matrix, right-hand side and solution vector
  *  @param [in] A SkMatrix instance that contains matrix
@@ -192,9 +197,10 @@ template<class T_> class LinearSolver
  */
     LinearSolver(SkSMatrix<T_>&  A,
                  const Vect<T_>& b,
-                 Vect<T_>&       x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
+                 Vect<T_>&       x) : _fact(0), _max_it(1000), _matrix_set(1),
                                       _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
-                                      _x(&x), _b(&b), _A(&A) { }
+                                      _x(&x), _b(&b), _A(&A)
+    { }
 
 /** \brief Constructor using matrix, right-hand side
  *  @param [in] A SkMatrix instance that contains matrix
@@ -203,16 +209,13 @@ template<class T_> class LinearSolver
  */
     LinearSolver(SkMatrix<T_>& A,
                  Vect<T_>&     b,
-                 Vect<T_>&     x) : _fact(0), _verbose(0), _max_it(1000), _matrix_set(1),
-                                    _s(DIRECT_SOLVER), _p(DIAG_PREC),
-                                    _toler(sqrt(OFELI_EPSMCH)), _x(&x), _b(&b), _A(&A) { }
+                 Vect<T_>&     x) : _fact(0), _max_it(1000), _matrix_set(1),
+                                    _s(DIRECT_SOLVER), _p(DIAG_PREC), _toler(sqrt(OFELI_EPSMCH)),
+                                    _x(&x), _b(&b), _A(&A)
+    { }
 
 /// Destructor
     virtual ~LinearSolver() { }
-
-/// \brief Set message level
-/// \details Default value is 0
-    void setVerbose(int verb) { _verbose = verb; }
 
 /// \brief Set Maximum number of iterations
 /// \details Default value is 1000
@@ -286,6 +289,9 @@ template<class T_> class LinearSolver
 /// \brief Return solver code
     Iteration getSolver() const { return _s; }
 
+/// \brief Return solver preconditioner
+    Preconditioner getPreconditioner() const { return _p; }
+
 /** \brief Solve equations using system data, prescribed solver and preconditioner
  *  @param [in] A Reference to matrix as a SpMatrix instance
  *  @param [in] b Vector containing right-hand side
@@ -338,6 +344,7 @@ template<class T_> class LinearSolver
     int solve()
     {
        int ret=0;
+       _nb_it = 0;
        if (!_matrix_set)
           throw OFELIException("In LinearSolver::solve(): No matrix has been defined.");
        if (_A->isDiagonal()) {
@@ -431,34 +438,33 @@ template<class T_> class LinearSolver
              _A->Factor();
           return _A->solve(*_b,*_x);
        }
-       int nb_it=0;
        switch (_s) {
 
           case DIRECT_SOLVER:
              break;
 
           case CG_SOLVER:
-             nb_it = CG(_A,_p,*_b,*_x,_max_it,_toler,1);
+             _nb_it = CG(_A,_p,*_b,*_x,_max_it,_toler);
              break; 
 
           case BICG_SOLVER:
-             nb_it = BiCG(_A,_p,*_b,*_x,_max_it,_toler,1);
+             _nb_it = BiCG(_A,_p,*_b,*_x,_max_it,_toler);
              break;
 
           case CGS_SOLVER:
-             nb_it = CGS(_A,_p,*_b,*_x,_max_it,_toler,1);
+             _nb_it = CGS(_A,_p,*_b,*_x,_max_it,_toler);
              break;
 
           case BICG_STAB_SOLVER:
-             nb_it = BiCGStab(_A,_p,*_b,*_x,_max_it,_toler,1);
+             _nb_it = BiCGStab(_A,_p,*_b,*_x,_max_it,_toler);
              break;
 
           case GMRES_SOLVER:
-             nb_it = GMRes(_A,_p,*_b,*_x,_b->size()/5,_max_it,_toler,1);
+             _nb_it = GMRes(_A,_p,*_b,*_x,_b->size()/5,_max_it,_toler);
              break;
        }
 #endif
-       return nb_it;
+       return _nb_it;
     }
 
 /// Factorize matrix
@@ -467,9 +473,12 @@ template<class T_> class LinearSolver
 /// Do not factorize matrix
     void setNoFact() { _fact = 0; }
 
+/// Get number of performed iterations
+    int getNbIter() const { return _nb_it; }
+
  private:
 
-   int            _fact, _verbose, _max_it, _matrix_set;
+   int            _fact, _max_it, _nb_it, _matrix_set;
    Iteration      _s;
    Preconditioner _p;
    real_t         _toler;

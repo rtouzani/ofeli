@@ -28,14 +28,20 @@
                        Implementation of class 'ODESolver'
 
   ==============================================================================*/
+
 #include "solvers/ODESolver.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/DMatrix_impl.h"
 #include "OFELIException.h"
+#include "io/fparser/fparser.h"
+extern FunctionParser theParser;
+
 using std::cout;
 
 namespace OFELI {
 
 ODESolver::TSPtr ODESolver::TS [] = {
-   NULL,                                 // Stationary problem (not used)
+   nullptr,                              // Stationary problem (not used)
    &ODESolver::solveForwardEuler,        // Forward Euler
    &ODESolver::solveBackwardEuler,       // Backward Euler
    &ODESolver::solveCrankNicolson,       // Crank-Nicolson
@@ -50,7 +56,7 @@ ODESolver::TSPtr ODESolver::TS [] = {
 
 
 ODESolver::FPtr ODESolver::F [] = {
-   NULL,
+   nullptr,
    &ODESolver::setF_ForwardEuler,
    &ODESolver::setF_BackwardEuler,
    &ODESolver::setF_CrankNicolson,
@@ -65,44 +71,65 @@ ODESolver::FPtr ODESolver::F [] = {
 
 
 ODESolver::ODESolver() :
-           _order(0), _nb_eq(1), _step(0), _verb(1),
-           _s(DIRECT_SOLVER), _p(DIAG_PREC), _a0(false), _a1(false), _a2(false),
-           _constant_matrix(false), _regex(false), _explicit(false), _init(false),
-           _lhs(false), _rhs(false), _time(0.), _beta(0.25), _gamma(0.5),
-           _alloc_f2(false), _alloc_f01(false), _setF_called(false),
-           _setDF1_called(false)
-{ }
+           _order(0), _nb_eq(1), _step(0), _s(DIRECT_SOLVER), _p(DIAG_PREC), _a0(false),
+           _a1(false), _a2(false), _constant_matrix(false), _regex(false), _explicit(false),
+           _init(false), _lhs(false), _rhs(false), _time(0.), _beta(0.25), _gamma(0.5),
+           _RK4_rhs(false), _setF_called(false), _setDF1_called(false)
+{
+   setScheme();
+}
 
 
 ODESolver::ODESolver(TimeScheme s,
                      real_t     time_step,
                      real_t     final_time,
                      size_t     nb_eq) :
-           _order(0), _nb_eq(nb_eq), _step(0), _verb(1),
-           _s(DIRECT_SOLVER), _p(DIAG_PREC), _a0(false), _a1(false), _a2(false),
-           _constant_matrix(false), _regex(false), _explicit(false), _init(false),
-           _lhs(false), _rhs(false), _time_step(time_step), _time(0.),
-           _final_time(final_time), _beta(0.25), _gamma(0.5), _alloc_f2(false),
-           _alloc_f01(false), _setF_called(false), _setDF1_called(false)
+           _order(0), _nb_eq(nb_eq), _step(0), _s(DIRECT_SOLVER), _p(DIAG_PREC),
+           _a0(false), _a1(false), _a2(false), _constant_matrix(false), _regex(false),
+           _explicit(false), _init(false), _lhs(false), _rhs(false), _time_step(time_step),
+           _time(0.), _final_time(final_time), _beta(0.25), _gamma(0.5),
+           _RK4_rhs(false), _setF_called(false), _setDF1_called(false)
 {
+   setScheme();
    set(s,time_step,final_time);
    _u.setSize(_nb_eq);
    _v.setSize(_nb_eq);
    _b.setSize(_nb_eq);
    _f0.setSize(_nb_eq);
+   _f1.setSize(_nb_eq);
+   _f01.setSize(_nb_eq);
+   _f2.setSize(_nb_eq);
    _vF2.setSize(_nb_eq);
    _ddu.setSize(_nb_eq);
    _dudt.setSize(_nb_eq);
+   _expF.resize(_nb_eq);
+   _vF1.setSize(_nb_eq);
+   _expDF.resize(_nb_eq);
+   _vDF1.resize(_nb_eq);
+   _f1.clear();
+   _f2.clear();
+   _f01.clear();
 }
 
 
 ODESolver::~ODESolver()
 {
-   if (_alloc_f2)
-      delete _f2;
-  if (_alloc_f01)
-     delete _f01;
- }
+}
+
+
+void ODESolver::setScheme()
+{
+   _sch[FORWARD_EULER] = 1;
+   _sch[BACKWARD_EULER] = 2;
+   _sch[CRANK_NICOLSON] = 3;
+   _sch[HEUN] = 4;
+   _sch[NEWMARK] = 5;
+   _sch[LEAP_FROG] = 6;
+   _sch[AB2] = _sch[ADAMS_BASHFORTH] = 7;
+   _sch[RK4] = _sch[RUNGE_KUTTA] = 8;
+   _sch[RK3_TVD] = 9;
+   _sch[BDF2] = 10;
+}
 
 
 void ODESolver::setCoef(real_t a0,
@@ -171,6 +198,10 @@ void ODESolver::setF(string f)
    static size_t nb_eq=0;
    if (_step==1)
       nb_eq = 0;
+   if (nb_eq==0) {
+      _expF.clear();
+      _vF1.clear();
+   }
    nb_eq++;
    if (_nb_eq > 10)
       throw OFELIException("In ODESolver::setF(string): This function cannot be used for systems"
@@ -182,8 +213,28 @@ void ODESolver::setF(string f)
    if (nb_eq>1)
       _type = VECTOR_NL;
    _regex = true;
-   _expF.push_back(f);
-   _vF1.push_back(0.);
+   _expF[nb_eq-1] = f;
+   _vF1[nb_eq-1] = 0.;
+   if (_nb_eq==1)
+      _y0 = _u[0];
+   _lhs = _rhs = true;
+   _setF_called = true;
+}
+
+
+void ODESolver::setF(string f,
+                     int    i)
+{
+   if (i<=0)
+      throw OFELIException("In ODESolver::setF(string,int): Illegal equation index.");
+   if (i>_nb_eq)
+      throw OFELIException("In ODESolver::setF(string,int): Equation index is larger than system size.");
+   _type = SCALAR_NL;
+   if (_nb_eq>1)
+      _type = VECTOR_NL;
+   _regex = true;
+   _expF[i-1] = f;
+   _vF1[i-1] = 0.;
    if (_nb_eq==1)
       _y0 = _u[0];
    _lhs = _rhs = true;
@@ -197,14 +248,17 @@ void ODESolver::setDF(string df)
       throw OFELIException("In ODESolver::setDF(string): Function setF must be called before this one.");
    if (_nb_eq>1)
       throw OFELIException("In ODESolver::setDF(string): Function to be used in the case of a "
-                           "scalar ODE. Use member function setDF(string,int)");
+                           "scalar ODE. Use member function setDF(string,int,int)");
    static size_t nb=0;
    if (_step==1)
       nb = 0;
+   if (nb==0) {
+      _expDF.clear();
+      _vDF1.clear();
+   }
    nb++;
    if (nb>_nb_eq && _step>1)
-      throw OFELIException("In ODESolver::setDF(string): Number of calls is larger "
-                           "than system size.");
+      throw OFELIException("In ODESolver::setDF(string): Number of calls is larger than system size.");
    _type = SCALAR_NL;
    if (nb>1)
       _type = VECTOR_NL;
@@ -217,9 +271,41 @@ void ODESolver::setDF(string df)
 }
 
 
+void ODESolver::setDF(string df,
+                      int    i)
+{
+   if (_setF_called==false)
+      throw OFELIException("In ODESolver::setDF(string,int): Function setF must be called before this one.");
+   if (_nb_eq>1)
+      throw OFELIException("In ODESolver::setDF(string,int): Function to be used in the case of a "
+                           "scalar ODE. Use member function setDF(string,int,int)");
+   if (i<=0)
+      throw OFELIException("In ODESolver::setDF(string,int): Illegal equation index.");
+   if (i>_nb_eq)
+      throw OFELIException("In ODESolver::setDF(string,int): Equation index is larger than system size.");
+   static size_t nb=0;
+   if (_step==1)
+      nb = 0;
+   nb++;
+   if (nb>_nb_eq && _step>1)
+      throw OFELIException("In ODESolver::setDF(string): Number of calls is larger than system size.");
+   _type = SCALAR_NL;
+   if (_nb_eq>1)
+      _type = VECTOR_NL;
+   
+   _regex = true;
+   _expDF[i-1] = df;
+   _vDF1[i-1] = eval(df,_time,_u);
+   _y0 = _u[0];
+   _lhs = _rhs = true;
+   _setDF1_called = true;
+}
+
+
 void ODESolver::setRK4RHS(Vect<real_t>& f)
 {
-   _f01 = &f;
+   _f01 = f;
+   _RK4_rhs = true;
 }
 
 
@@ -279,15 +365,15 @@ void ODESolver::set(TimeScheme s,
    _time_step = _time_step0 = time_step;
    _nb_ssteps = 1;
    _explicit = false;
-   if (s==FORWARD_EULER || s==HEUN || s==RK4 || s==LEAP_FROG || s==AB2)
+   if (s&FORWARD_EULER || s&HEUN || s&RK4 || s&LEAP_FROG || s&AB2)
       _explicit = true;
-   if (s==HEUN)
+   if (s&HEUN)
       _nb_ssteps = 2;
-   if (s==RK4)
+   if (s&RK4)
       _nb_ssteps = 4;
    _sc = int(s);
-   if (s<0 || s>10) {
-      _solve = NULL;
+   if (s<1 || s>10) {
+      _solve = nullptr;
       throw OFELIException("In ODESolver::set(...): Time integration scheme not available.");
    }
    else
@@ -300,6 +386,15 @@ void ODESolver::setInitial(real_t u)
 {
    _y0 = u;
    _nb_eq = 1;
+   _init = true;
+}
+
+
+void ODESolver::setInitial(real_t u,
+                           int    i)
+{
+   _u[i-1] = u;
+   _order = 1;
    _init = true;
 }
 
@@ -347,7 +442,6 @@ void ODESolver::setInitial(Vect<real_t>& u,
 
 void ODESolver::setInitialRHS(Vect<real_t>& f)
 {
-   _f1.setSize(_nb_eq);
    _f0 = _f1 = f;
 }
 
@@ -371,8 +465,8 @@ void ODESolver::setRHS(string f)
    _type = SCALAR_LINEAR;
    if (nb_eq>1)
       _type = VECTOR_LINEAR;
-   _expF.push_back(f);
-   _f1.push_back(eval(f,_time));
+   _expF[nb_eq-1] = f;
+   _f1(nb_eq) = eval(f,_time);
    _regex = true;
    _rhs = true;
 }
@@ -383,9 +477,7 @@ void ODESolver::setRHS(Vect<real_t>& f)
    if (f.size()!=_nb_eq)
       throw OFELIException("In ODESolver::setRHS(Vect<real_t>): Vector size is "
                            "different from system size");
-   _f2 = &f;
-   if (_step==0 && _f1.size()==0)
-      _f1.setSize(_nb_eq);
+   _f2 = f;
    _rhs = true;
 }
 
@@ -423,7 +515,7 @@ real_t ODESolver::runOneTimeStep()
    }
    _step++;
    _time = theTime;
-   if (_verb>0)
+   if (Verbosity>0)
       cout << "Running time step: " << _step << ", time: " << _time << " ..." << endl;
    if (_regex) {
       if (_type==SCALAR_LINEAR) {
@@ -437,20 +529,11 @@ real_t ODESolver::runOneTimeStep()
             _order = 1;
       }
       else if (_type==VECTOR_LINEAR || _type==VECTOR_NL) {
-         if (_step==1) {
-            _f2 = new Vect<real_t>(_nb_eq);
-            _f01 = new Vect<real_t>(_nb_eq);
-         }
-         if (_setF_called==true) {
-            _f1.setSize(_nb_eq);
-            for (size_t i=0; i<_nb_eq; i++)
-               _f1[i] = (*_f2)[i] = (*_f01)[i] = 0;
-         }
-         else {
-            for (size_t i=0; i<_nb_eq; i++) {
+         if (_setF_called==false) {
+            for (size_t i=0; i<_nb_eq; ++i) {
                _f1[i] = eval(_expF[i],_time-_time_step);
-               (*_f2)[i] = eval(_expF[i],_time);
-               (*_f01)[i] = eval(_expF[i],_time-0.5*_time_step);
+               _f2[i] = eval(_expF[i],_time);
+               _f01[i] = eval(_expF[i],_time-0.5*_time_step);
             }
          }
       }
@@ -463,7 +546,7 @@ real_t ODESolver::runOneTimeStep()
 
 void ODESolver::run(bool opt)
 {
-   if (_verb>0)
+   if (Verbosity>0)
       cout << "Running time integration ..." << endl;
    _constant_matrix = opt;
    TimeLoop {
@@ -507,15 +590,11 @@ void ODESolver::solveForwardEuler()
    _ls.setRHS(_b);
    _ls.setSolution(_v);
    _ls.setSolver(_s,_p);
-   if (_step==1 || !_constant_matrix)
-      _ls.setFact();
    _ls.solve();
-   if (_constant_matrix)
-      _ls.setNoFact();
    _dudt = (1./_time_step)*(_v - _u);
    _v += _u;
    *_w = _u = _v;
-   _f1 = *_f2;
+   _f1 = _f2;
 }
 
 
@@ -542,25 +621,22 @@ void ODESolver::solveBackwardEuler()
             df = eval(_expDF[0],_time,y);
          }
          _y1 = (_y0 + _time_step*(f-df*y))/(1. - _time_step*df);
+         _y2 = _y0 = _y1;
          Converged = _iter.check(y,_y1);
       }
       _dydt = (_y1 - _y0)/_time_step;
-      _y2 = _y0 = _y1;
+      _y0 = _y1;
+      _y1 = _y2;
       return;
    }
-   _b = (*_f2);
+   _b = _f2;
    _A1->MultAdd(1./_time_step,_u,_b);
    _ls.setMatrix(_A0);
    _ls.setRHS(_b);
    _ls.setSolution(_v);
    _ls.setSolver(_s,_p);
-   if (_step==1 || !_constant_matrix) {
-      _A0->Axpy(1./_time_step,_A1);
-      _ls.setFact();
-   }
+   _A0->Axpy(1./_time_step,_A1);
    _ls.solve();
-   if (_constant_matrix)
-      _ls.setNoFact();
    _dudt = (1./_time_step)*(_v - _u);
    *_w = _u = _v;
 }
@@ -598,23 +674,21 @@ void ODESolver::solveCrankNicolson()
       _y2 = _y0 = _y1;
       return;
    }
-   _b = 0.5*(_f1+(*_f2));
+   _b = 0.5*(_f1+_f2);
    _ls.setMatrix(_A0);
    _ls.setRHS(_b);
    _ls.setSolution(_v);
    _A1->MultAdd(2./_time_step,_u,_b);
    _ls.setSolver(_s,_p);
-   if (_step==1 || !_constant_matrix) {
+   if (_step==1 || !_constant_matrix)
       _A0->Axpy(2./_time_step,_A1);
-      _ls.setFact();
-   }
    _ls.solve();
    if (_constant_matrix)
       _ls.setNoFact();
    _v = 2.*_v - _u;
    _dudt = (1./_time_step)*(_v-_u);
    *_w = _u = _v;
-   _f1 = (*_f2);
+   _f1 = _f2;
 }
 
 
@@ -658,19 +732,17 @@ void ODESolver::solveHeun()
    _b = _f1;
    _A0->MultAdd(-1.,_u,_b);
    _ls.setSolution(_v);
-   if (_step==1 || !_constant_matrix)
-      _ls.setFact();
    _ls.solve();
    if (_constant_matrix)
       _ls.setNoFact();
-   _b = (*_f2);
+   _b = _f2;
    _A0->MultAdd(-1.,_u+_time_step*_v,_b);
    _ls.setSolution(*_w);
    _ls.solve();
    _u += 0.5*_time_step*((*_w)+_v);
    _dudt = (1./_time_step)*(_v-_u);
    *_w = _v = _u;
-   _f1 = (*_f2);
+   _f1 = _f2;
 }
 
 
@@ -726,23 +798,18 @@ void ODESolver::solveLeapFrog()
       _ls.setSolution(_v);
       _b = _time_step*_f1;
       _A0->MultAdd(-_time_step,_u,_b);
-      _ls.setFact();
       _ls.solve();
       _v += _u;
-      _f1 = (*_f2);
+      _f1 = _f2;
    }
    else {
       _b = 2.*_time_step*_f1;
       _A0->MultAdd(-2.*_time_step,_v,_b);
       _ls.setSolution(*_w);
-      if (!_constant_matrix)
-         _ls.setFact();
-      else
-         _ls.setNoFact();
       _ls.solve();
       *_w += _u;
       _u = _v; _v = *_w;
-      _f0 = _f1; _f1 = (*_f2);
+      _f0 = _f1; _f1 = _f2;
    }
 }
 
@@ -804,13 +871,12 @@ void ODESolver::solveAB2()
       _b = _time_step*_f0;
       _A0->MultAdd(-_time_step,_u,_b);
       _ls.setSolution(_v);
-      _ls.setFact();
       _ls.solve();
       if (_constant_matrix)
          _ls.setNoFact();
       _dudt = (1./_time_step)*(_v-_u);
       _v += _u;
-      _f1 = (*_f2);
+      _f1 = _f2;
    }
    else {
       _b = 0.5*_time_step*(3.*_f1-_f0);
@@ -820,7 +886,7 @@ void ODESolver::solveAB2()
       _dudt = (1./_time_step)*(*_w-_v);
       *_w += _v;
       _u = _v; _v = *_w;
-      _f0 = _f1; _f1 = (*_f2);
+      _f0 = _f1; _f1 = _f2;
    }
 }
 
@@ -869,11 +935,11 @@ void ODESolver::solveRK4()
    }
    _k1.resize(_nb_eq), _k2.resize(_nb_eq);
    _k3.resize(_nb_eq), _k4.resize(_nb_eq);
-   _k1 = _f1; _k4 = (*_f2);
-   if (_f01)
-      _k3 = _k2 = (*_f01);
+   _k1 = _f1; _k4 = _f2;
+   if (_RK4_rhs)
+      _k3 = _k2 = _f01;
    else
-      _k3 = _k2 = 0.5*(_f1 + (*_f2));
+      _k3 = _k2 = 0.5*(_f1 + _f2);
    _A0->MultAdd(-1.,_u,_k1);
    _A0->MultAdd(-1.,_u+0.5*_time_step*_k1,_k2);
    _A0->MultAdd(-1.,_u+0.5*_time_step*_k2,_k3);
@@ -883,15 +949,11 @@ void ODESolver::solveRK4()
    _ls.setRHS(_b);
    _ls.setSolver(_s,_p);
    _ls.setSolution(_v);
-   if (_step==1 || !_constant_matrix)
-      _ls.setFact();
    _ls.solve();
-   if (_constant_matrix)
-      _ls.setNoFact();
    _dudt = (1./_time_step)*(_v-_u);
    _v += _u;
    *_w = _u = _v;
-   _f0 = _f1; _f1 = (*_f2);
+   _f0 = _f1; _f1 = _f2;
 }
 
 
@@ -934,10 +996,10 @@ void ODESolver::solveRK3_TVD()
    }
    _k1.resize(_nb_eq), _k2.resize(_nb_eq);
    _k1 = _f1;
-   if (_f01)
-      _k2 = (*_f01);
+   if (_RK4_rhs)
+      _k2 = _f01;
    else
-      _k3 = _k2 = 0.5*(_f1 + (*_f2));
+      _k3 = _k2 = 0.5*(_f1 + _f2);
    _A0->MultAdd(-1.,_u,_k1);
    _A0->MultAdd(-1.,_u+0.5*_time_step*_k1,_k2);
    _A0->MultAdd(-1.,_u+0.5*_time_step*_k2,_k3);
@@ -946,15 +1008,11 @@ void ODESolver::solveRK3_TVD()
    _ls.setRHS(_b);
    _ls.setSolver(_s,_p);
    _ls.setSolution(_v);
-   if (_step==1 || !_constant_matrix)
-      _ls.setFact();
    _ls.solve();
-   if (_constant_matrix)
-      _ls.setNoFact();
    _dudt = 0;
    _v += _u;
    *_w = _u = _v;
-   _f0 = _f1; _f1 = (*_f2);
+   _f0 = _f1; _f1 = _f2;
 }
 
 
@@ -988,14 +1046,13 @@ void ODESolver::solveNewmark()
       ls0.setSolution(_ddu);
       ls0.setRHS(_b);
       ls0.setSolver(_s,_p);
-      ls0.setFact();
       ls0.solve();
       _dudt = 0.;
    }
    real_t a=1./(_beta*_time_step*_time_step), b=_gamma/(_beta*_time_step);
    _v = _u + _time_step*(*_du) + (_time_step*_time_step*(0.5-_beta))*_ddu;
    *_du += ((1.-_gamma)*_time_step)*_ddu;
-   _b = (*_f2);
+   _b = _f2;
    for (size_t i=1; i<=_nb_eq; i++) {
       for (size_t j=1; j<=_nb_eq; j++) {
          real_t z = a*(*_A2)(i,j) + b*(*_A1)(i,j);
@@ -1007,13 +1064,12 @@ void ODESolver::solveNewmark()
    _ls.setRHS(_b);
    _ls.setSolver(_s,_p);
    _ls.setSolution(*_w);
-   _ls.setFact();
    _ls.solve();
    _ddu = a*(*_w-_v);
    *_du += (_time_step*_gamma)*_ddu;
    _dudt = 0.;
    _u = *_w;
-   _f1 = (*_f2);
+   _f1 = _f2;
 }
 
 
@@ -1064,15 +1120,14 @@ void ODESolver::solveBDF2()
       }
       return;
    }
-   _b = (*_f2);
    _ls.setMatrix(_A0);
+   _b = _f2;
    _ls.setRHS(_b);
    _ls.setSolver(_s,_p);
    if (_step==1) {
       _A1->MultAdd(1./_time_step,_u,_b);
       _ls.setSolution(_v);
       _A0->Axpy(1./_time_step,_A1);
-      _ls.setFact();
       _ls.solve();
       _dudt = (1./_time_step)*(_v-_u);
       *_w = _v;
@@ -1081,11 +1136,7 @@ void ODESolver::solveBDF2()
       _A1->MultAdd(1./_time_step,2.*_v-0.5*_u,_b);
       _A0->Axpy(1.5/_time_step,_A1);
       _ls.setSolution(*_w);
-      if (_step==2 || !_constant_matrix)
-         _ls.setFact();
       _ls.solve();
-      if (_constant_matrix)
-         _ls.setNoFact();
       _dudt = (0.5/_time_step)*(3.*(*_w)-4.*_v+_u);
       _u = _v; _v = *_w;
    }

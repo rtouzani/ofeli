@@ -69,35 +69,19 @@ class Elas2DQ4 : virtual public Equa_Solid<real_t,4,8,2,4>
 
 /// \brief Default Constructor
 /// \details Constructs an empty equation.
-    Elas2DQ4()
-    {
-       _quad = NULL;
-       _ln = NULL;
-    }
+    Elas2DQ4() : _quad(nullptr), _ln(nullptr)
+    { }
 
-/// \brief Constructor using element data
-    Elas2DQ4(const Element* el);
+/// \brief Constructor using Mesh instance
+/// @param [in] ms Reference to Mesh instance
+    Elas2DQ4(Mesh& ms);
 
-/// \brief Constructor using side data
-    Elas2DQ4(const Side* sd);
-
-/** \brief Constructor using element and previous time data
- *  @param [in] element Pointer to element
- *  @param [in] u Vect instance containing solution at previous time step
- *  @param [in] time Current time value [Default: <tt>0</tt>]
+/** \brief Constructor using Mesh instance and solution vector
+ *  @param [in] ms Reference to Mesh instance
+ *  @param [in,out] u Solution vector
  */
-    Elas2DQ4(const Element*      element,
-             const Vect<real_t>& u,
-             const real_t&       time=0.);
-
-/** \brief Constructor using side and previous time data
- *  @param [in] side Pointer to side
- *  @param [in] u Vect instance containing solution at previous time step
- *  @param [in] time Current time value [Default: <tt>0</tt>]
- */
-    Elas2DQ4(const Side*         side,
-             const Vect<real_t>& u,
-             const real_t&       time=0.);
+    Elas2DQ4(Mesh&         ms,
+             Vect<real_t>& u);
 
 /// \brief Destructor
     ~Elas2DQ4();
@@ -122,99 +106,65 @@ class Elas2DQ4 : virtual public Equa_Solid<real_t,4,8,2,4>
     void PlaneStress(real_t E,
                      real_t nu);
 
-/// \brief Add element lumped mass contribution to matrix after multiplication by <tt>coef</tt>
+/// \brief Add element lumped mass contribution to element matrix after multiplication by <tt>coef</tt>
 /// [Default: <tt>1</tt>]
-    void LMassToLHS(real_t coef=1.);
-
-/// \brief Add element lumped mass contribution to right-hand side after multiplication by 
-/// <tt>coef</tt> [Default: <tt>1</tt>]
-    void LMassToRHS(real_t coef=1.);
-
-/// \brief Add element lumped mass contribution to matrix and right-hand side after
-/// multiplication by <tt>coef</tt> [Default: <tt>1</tt>]
-    void LMass(real_t coef=1.) { LMassToLHS(coef); LMassToRHS(coef); }
+    void LMass(real_t coef=1.);
 
 /// \brief Add element consistent mass contribution to matrix and right-hand side after 
 /// multiplication by <tt>coef</tt> [Default: <tt>1</tt>]
     void Mass(real_t coef=1.) { coef=1; std::cerr << "Sorry, consistent mass matrix is not implemented !\n"; }
 
-/// \brief Add element deviatoric matrix to left-hand side after multiplication by 
+/// \brief Add element deviatoric matrix to element matrix after multiplication by 
 /// <tt>coef</tt> [Default: <tt>1</tt>]
     void Deviator(real_t coef=1.);
 
-/// \brief Add element deviatoric contribution to right-hand side after multiplication by 
-/// <tt>coef</tt> [Default: <tt>1</tt>]
-//  \details To use for explicit formulations
-    void DeviatorToRHS(real_t coef=1.);
-
-/// \brief Add element dilatational contribution to left-hand side after multiplication by 
+/// \brief Add element dilatational contribution to element matrix after multiplication by 
 /// <tt>coef</tt> [Default: <tt>1</tt>]
     void Dilatation(real_t coef=1.);
 
-/// \brief Add element dilatational contribution to right hand side after multiplication by
-/// <tt>coef</tt> [Default: <tt>1</tt>]
-/// \details To use for explicit formulations
-    void DilatationToRHS(real_t coef=1.);
-
-/// \brief Add body right-hand side term to right hand side after multiplication by <tt>coef</tt>
-/// \details Body forces are deduced from UserData instance <tt>ud</tt>
-    void BodyRHS(UserData<real_t>& ud);
-
 /** \brief Add body right-hand side term to right hand side.
- *  @param [in] bf Vector containing source at element nodes (DOF by DOF).
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size 8 or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Total number of DOF [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] bf Vector containing source at nodes (DOF by DOF).
  */
-    void BodyRHS(const Vect<real_t>& bf,
-                       int           opt=GLOBAL_ARRAY);
-
-/// \brief Add boundary right-hand side term to right hand side after multiplication by
-/// <tt>coef</tt>
-/// \details Boundary forces are deduced from UserData instance <tt>ud</tt>
-    void BoundaryRHS(UserData<real_t>& ud);
+    void BodyRHS(const Vect<real_t>& f);
 
 /** \brief Add boundary right-hand side term to right hand side.
- *  @param [in] sf Vector containing source at element nodes (DOF by DOF).
- *  @warning The vector <tt>sf</tt> is sidewise constant, <i>i.e.</i> its size
- *  is twice the number of sides.
+ *  @param [in] sf Vector containing source at nodes (DOF by DOF).
  */
-    void BoundaryRHS(const Vect<real_t>& sf);
+    void BoundaryRHS(const Vect<real_t>& f);
 
-/** \brief Penalty Signorini contact side contribution to matrix and right-hand side.
- *  @param [in] ud UserData instance defining contact data
- *  @param [in] coef Penalty value by which the added term is multiplied [Default: <tt>1.e07</tt>]
- *  @return <tt>0</tt> if no contact was realized on this side, <tt>1</tt> otherwise
+/** \brief Calculate strains at element barycenters
+ *  @param [out] eps Vector containing strains in elements
+ *  @remark The instance of Elas2DQ4 must have been constructed using the constructor
+ *  with Mesh instance and solution vector
  */
-    int SignoriniContact(UserData<real_t>& ud,
-                         real_t            coef=1.e07);
-
-/// \brief Calculate strains at element barycenter
-/// @param [out] eps Vector containing strains in element
-    void Strain(LocalVect<real_t,3>& eps);
+    void Strain(Vect<real_t>& eps);
 
 /** \brief Calculate principal stresses and Von-Mises stress at element barycenter.
- *  @param [out] s LocalVect containing principal stresses in element
- *  @param [out] vm Value of Von-Mises stress in element
+ *  @param [out] st Vector containing principal stresses in elements
+ *  @param [out] vm Vector containing Von-Mises stresses in elements
+ *  @remark The instance of Elas2DQ4 must have been constructed using the constructor
+ *  with Mesh instance and solution vector
  */
-    void Stress(LocalVect<real_t,3>& s,
-                real_t&              vm);
+    void Stress(Vect<real_t>& st,
+                Vect<real_t>& vm);
 
 /** \brief Calculate principal stresses and Von-Mises stress at element barycenter.
- *  @param [out] sigma Vector containing principal stresses in element
- *  @param [out] s Vector containing principal stresses in element
- *  @param [out] vm Value of Von-Mises stress in element
+ *  @param [out] sigma Vector containing principal stresses in elements
+ *  @param [out] s Vector containing principal stresses in elements
+ *  @param [out] st Value of Von-Mises stress in elements
+ *  @remark The instance of Elas2DQ4 must have been constructed using the constructor
+ *  with Mesh instance and solution vector
  */
-    void Stress(LocalVect<real_t,3>& sigma,
-                LocalVect<real_t,3>& s,
-                real_t&              vm);
+    void Stress(Vect<real_t>& sigma,
+                Vect<real_t>& s,
+                Vect<real_t>& st);
 
  private:
 
-   real_t        _E1, _E2, _E3, _E6;
-   Quad4         *_quad;
-   Line2         *_ln;
-   real_t        _g[2], _w[2], _xl[4], _yl[4];
-   Point<real_t> _cg;
+   real_t _E1, _E2, _E3, _E6;
+   Quad4  *_quad;
+   Line2  *_ln;
+   real_t _xl[4], _yl[4], _g[2], _ww[2];
    void set(const Element *el);
    void set(const Side *sd);
 };

@@ -107,9 +107,8 @@ am__v_AR_1 =
 libshape_functions_a_AR = $(AR) $(ARFLAGS)
 libshape_functions_a_LIBADD =
 am_libshape_functions_a_OBJECTS = Hexa8.$(OBJEXT) Line2.$(OBJEXT) \
-	Line2H.$(OBJEXT) Line3.$(OBJEXT) Penta6.$(OBJEXT) \
-	Quad4.$(OBJEXT) Tetra4.$(OBJEXT) Triang3.$(OBJEXT) \
-	Triang6S.$(OBJEXT)
+	Line3.$(OBJEXT) Penta6.$(OBJEXT) Quad4.$(OBJEXT) \
+	Tetra4.$(OBJEXT) Triang3.$(OBJEXT) Triang6S.$(OBJEXT)
 libshape_functions_a_OBJECTS = $(am_libshape_functions_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -286,9 +285,9 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LIBRARIES = libshape_functions.a
 AUTOMAKE_OPTIONS = no-dependencies
-libshape_functions_a_SOURCES = Hexa8.cpp \
+libshape_functions_a_SOURCES = \
+				Hexa8.cpp \
 				Line2.cpp \
-				Line2H.cpp \
 				Line3.cpp \
 				Penta6.cpp \
 				Quad4.cpp \

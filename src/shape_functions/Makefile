@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin18.2.0
-host_triplet = i386-apple-darwin18.2.0
+build_triplet = i386-apple-darwin19.0.0
+host_triplet = i386-apple-darwin19.0.0
 subdir = src/shape_functions
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -107,9 +107,8 @@ am__v_AR_1 =
 libshape_functions_a_AR = $(AR) $(ARFLAGS)
 libshape_functions_a_LIBADD =
 am_libshape_functions_a_OBJECTS = Hexa8.$(OBJEXT) Line2.$(OBJEXT) \
-	Line2H.$(OBJEXT) Line3.$(OBJEXT) Penta6.$(OBJEXT) \
-	Quad4.$(OBJEXT) Tetra4.$(OBJEXT) Triang3.$(OBJEXT) \
-	Triang6S.$(OBJEXT)
+	Line3.$(OBJEXT) Penta6.$(OBJEXT) Quad4.$(OBJEXT) \
+	Tetra4.$(OBJEXT) Triang3.$(OBJEXT) Triang6S.$(OBJEXT)
 libshape_functions_a_OBJECTS = $(am_libshape_functions_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -219,10 +218,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 3.1.1
+PACKAGE_STRING = ofeli 4.0.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 3.1.1
+PACKAGE_VERSION = 4.0.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -232,7 +231,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 3.1.1
+VERSION = 4.0.0
 abs_builddir = /Users/touzani/ofeli/ofeli/src/shape_functions
 abs_srcdir = /Users/touzani/ofeli/ofeli/src/shape_functions
 abs_top_builddir = /Users/touzani/ofeli/ofeli
@@ -245,10 +244,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin18.2.0
+build = i386-apple-darwin19.0.0
 build_alias = 
 build_cpu = i386
-build_os = darwin18.2.0
+build_os = darwin19.0.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -256,10 +255,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin18.2.0
+host = i386-apple-darwin19.0.0
 host_alias = 
 host_cpu = i386
-host_os = darwin18.2.0
+host_os = darwin19.0.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -286,9 +285,9 @@ top_builddir = ../..
 top_srcdir = ../..
 noinst_LIBRARIES = libshape_functions.a
 AUTOMAKE_OPTIONS = no-dependencies
-libshape_functions_a_SOURCES = Hexa8.cpp \
+libshape_functions_a_SOURCES = \
+				Hexa8.cpp \
 				Line2.cpp \
-				Line2H.cpp \
 				Line3.cpp \
 				Penta6.cpp \
 				Quad4.cpp \

@@ -30,6 +30,7 @@
   ==============================================================================*/
 
 #include "mesh/MeshExtract.h"
+#include "linear_algebra/Vect_impl.h"
 #include "util/util.h"
 
 namespace OFELI {
@@ -184,7 +185,7 @@ void ElementList::selectActive()
 
 
 void ElementList::selectMarked(const Vect<real_t>& e,
-                                     real_t        threshold)
+                               real_t              threshold)
 {
    _nbn = _nb_elements;
    mesh_elements(*_ms) {
@@ -287,7 +288,7 @@ void EdgeList::unselectCode(int code, int dof)
 }
 
 
-ostream& operator<<(      ostream&  s,
+ostream& operator<<(ostream&        s,
                     const NodeList& nl)
 {
    s << "\n\nLIST OF SELECTED NODES:\n";
@@ -299,7 +300,7 @@ ostream& operator<<(      ostream&  s,
 }
 
 
-ostream& operator<<(      ostream&     s,
+ostream& operator<<(ostream&           s,
                     const ElementList& el)
 {
    s << "\n\nLIST OF SELECTED ELEMENTS:\n";
@@ -311,7 +312,7 @@ ostream& operator<<(      ostream&     s,
 }
 
 
-ostream& operator<<(      ostream&  s,
+ostream& operator<<(ostream&        s,
                     const SideList& sl)
 {
    s << "\n\nLIST OF SELECTED SIDES:\n";
@@ -323,7 +324,7 @@ ostream& operator<<(      ostream&  s,
 }
 
 
-ostream& operator<<(      ostream&  s,
+ostream& operator<<(ostream&        s,
                     const EdgeList& el)
 {
    s << "\n\nLIST OF SELECTED EDGES:\n";

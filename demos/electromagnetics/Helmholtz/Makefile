@@ -16,7 +16,6 @@
 
 
 
-
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
     false; \
@@ -88,8 +87,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin18.2.0
-host_triplet = i386-apple-darwin18.2.0
+build_triplet = i386-apple-darwin19.0.0
+host_triplet = i386-apple-darwin19.0.0
 bin_PROGRAMS = helmholtz$(EXEEXT)
 subdir = demos/electromagnetics/Helmholtz
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -97,15 +96,15 @@ am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(dist_helmholtz_DATA) \
-	$(helmholtz_HEADERS) $(am__DIST_COMMON)
+	$(am__DIST_COMMON)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/include/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(helmholtzdir)" \
-	"$(DESTDIR)$(helmholtzdir)" "$(DESTDIR)$(helmholtzdir)"
+	"$(DESTDIR)$(helmholtzdir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_helmholtz_OBJECTS = main.$(OBJEXT) error.$(OBJEXT) User.$(OBJEXT)
+am_helmholtz_OBJECTS = main.$(OBJEXT)
 helmholtz_OBJECTS = $(am_helmholtz_OBJECTS)
 helmholtz_DEPENDENCIES = $(top_builddir)/src/libofeli.a
 AM_V_P = $(am__v_P_$(V))
@@ -171,7 +170,6 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 DATA = $(dist_helmholtz_DATA) $(helmholtz_DATA)
-HEADERS = $(helmholtz_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -246,10 +244,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 3.1.1
+PACKAGE_STRING = ofeli 4.0.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 3.1.1
+PACKAGE_VERSION = 4.0.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -259,7 +257,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 3.1.1
+VERSION = 4.0.0
 abs_builddir = /Users/touzani/ofeli/ofeli/demos/electromagnetics/Helmholtz
 abs_srcdir = /Users/touzani/ofeli/ofeli/demos/electromagnetics/Helmholtz
 abs_top_builddir = /Users/touzani/ofeli/ofeli
@@ -272,10 +270,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin18.2.0
+build = i386-apple-darwin19.0.0
 build_alias = 
 build_cpu = i386
-build_os = darwin18.2.0
+build_os = darwin19.0.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -283,10 +281,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin18.2.0
+host = i386-apple-darwin19.0.0
 host_alias = 
 host_cpu = i386
-host_os = darwin18.2.0
+host_os = darwin19.0.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -312,35 +310,22 @@ top_build_prefix = ../../../
 top_builddir = ../../..
 top_srcdir = ../../..
 AUTOMAKE_OPTIONS = no-dependencies
-helmholtz_SOURCES = main.cpp error.cpp User.cpp
-helmholtz_HEADERS = User.h
+helmholtz_SOURCES = main.cpp
 helmholtz_LDADD = $(top_builddir)/src/libofeli.a
 helmholtzdir = $(datadir)/ofeli/demos/electromagnetics/helmholtz
 helmholtz_DATA = main.cpp \
-			error.cpp \
-			User.cpp \
-			User.h \
-			proj-10.m \
-			proj-20.m \
-			proj-40.m \
-			proj-80.m \
-			proj.dat \
-			Makefile.standalone \
-			Helmholtz.cbp \
-			README
+						proj.m \
+						proj.dat \
+						Makefile.standalone \
+						Helmholtz.cbp \
+						README
 
 dist_helmholtz_DATA = main.cpp \
-			error.cpp \
-			User.cpp \
-			User.h \
-			proj-10.m \
-			proj-20.m \
-			proj-40.m \
-			proj-80.m \
-			proj.dat \
-			Makefile.standalone \
-			Helmholtz.cbp \
-			README
+								proj.m \
+								proj.dat \
+								Makefile.standalone \
+								Helmholtz.cbp \
+								README
 
 all: all-am
 
@@ -475,27 +460,6 @@ uninstall-helmholtzDATA:
 	@list='$(helmholtz_DATA)'; test -n "$(helmholtzdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(helmholtzdir)'; $(am__uninstall_files_from_dir)
-install-helmholtzHEADERS: $(helmholtz_HEADERS)
-	@$(NORMAL_INSTALL)
-	@list='$(helmholtz_HEADERS)'; test -n "$(helmholtzdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(helmholtzdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(helmholtzdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(helmholtzdir)'"; \
-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(helmholtzdir)" || exit $$?; \
-	done
-
-uninstall-helmholtzHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(helmholtz_HEADERS)'; test -n "$(helmholtzdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(helmholtzdir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -584,9 +548,9 @@ distdir-am: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
+all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(helmholtzdir)" "$(DESTDIR)$(helmholtzdir)" "$(DESTDIR)$(helmholtzdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(helmholtzdir)" "$(DESTDIR)$(helmholtzdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -640,8 +604,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_helmholtzDATA install-helmholtzDATA \
-	install-helmholtzHEADERS
+install-data-am: install-dist_helmholtzDATA install-helmholtzDATA
 
 install-dvi: install-dvi-am
 
@@ -686,7 +649,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-dist_helmholtzDATA \
-	uninstall-helmholtzDATA uninstall-helmholtzHEADERS
+	uninstall-helmholtzDATA
 
 .MAKE: install-am install-strip
 
@@ -697,15 +660,14 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_helmholtzDATA \
 	install-am install-binPROGRAMS install-data install-data-am \
 	install-dist_helmholtzDATA install-dvi install-dvi-am \
 	install-exec install-exec-am install-helmholtzDATA \
-	install-helmholtzHEADERS install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS \
-	uninstall-dist_helmholtzDATA uninstall-helmholtzDATA \
-	uninstall-helmholtzHEADERS
+	install-html install-html-am install-info install-info-am \
+	install-man install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic pdf pdf-am \
+	ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-binPROGRAMS uninstall-dist_helmholtzDATA \
+	uninstall-helmholtzDATA
 
 .PRECIOUS: Makefile
 

@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin18.2.0
-host_triplet = i386-apple-darwin18.2.0
+build_triplet = i386-apple-darwin19.0.0
+host_triplet = i386-apple-darwin19.0.0
 subdir = doc
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -263,10 +263,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 3.1.1
+PACKAGE_STRING = ofeli 4.0.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 3.1.1
+PACKAGE_VERSION = 4.0.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -276,7 +276,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 3.1.1
+VERSION = 4.0.0
 abs_builddir = /Users/touzani/ofeli/ofeli/doc
 abs_srcdir = /Users/touzani/ofeli/ofeli/doc
 abs_top_builddir = /Users/touzani/ofeli/ofeli
@@ -289,10 +289,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin18.2.0
+build = i386-apple-darwin19.0.0
 build_alias = 
 build_cpu = i386
-build_os = darwin18.2.0
+build_os = darwin19.0.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -300,10 +300,10 @@ datarootdir = ${prefix}/share
 docdir = $(datadir)/ofeli/doc
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin18.2.0
+host = i386-apple-darwin19.0.0
 host_alias = 
 host_cpu = i386
-host_os = darwin18.2.0
+host_os = darwin19.0.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -329,7 +329,7 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = html css im tutorial demos presentations
+SUBDIRS = html css im demos presentations
 dist_doc_DATA = COPYING \
 		citing.html \
 		copyright.html \
@@ -345,7 +345,6 @@ dist_doc_DATA = COPYING \
 		refguide.pdf \
 		userguide.pdf \
 		overview.html \
-		tutorial.html \
 		doxygen.css \
 		tabs.css \
 		head.css
@@ -364,7 +363,6 @@ doc_DATA = COPYING \
 		ofeli.pdf \
 		refguide.pdf \
 		overview.html \
-		tutorial.html \
 		doxygen.css \
 		tabs.css \
 		head.css

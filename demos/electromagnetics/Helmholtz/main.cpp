@@ -26,23 +26,24 @@
 
 #include "OFELI.h"
 #include "Electromagnetics.h"
-#include "User.h"
 using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
+   void setBC(Vect<complex_t>& bc);
+   void error(const Vect<complex_t>& u);
+
    ifstream mf, bcf;
    if (argc < 2) {
-     cout << "\nUsage:  helmholtz <parameter_file>\n";
+     cout << "\nUsage: " << argv[0] << " <parameter_file>\n";
      return 0;
    }
 
    IPF data("Helmholtz - 1.0",argv[1]);
-   int output_flag = data.getOutput();
-   int bc_flag = data.getBC();
+   Verbosity = data.getVerbose();
    double wave_nb = data.getDoublePar(1);
 
-   if (output_flag) {
+   if (Verbosity) {
       cout << endl << endl;
       cout << "    *******************************************************\n";
       cout << "    *                      H e l m h o l t z              *\n";
@@ -61,59 +62,57 @@ int main(int argc, char *argv[])
 // Read data
 // ---------
 
-// Read Mesh data
    try {
-      if (output_flag > 1)
+      if (Verbosity > 3)
          cout << "Reading mesh data ...\n";
+
+//    Read Mesh data
       Mesh ms(data.getMeshFile());
       wave_nb = data.getDouble("wave_nb");
-
-      if (output_flag > 1)
+      if (Verbosity > 5)
          cout << ms;
-      User ud(ms);
 
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
-      if (output_flag > 1)
+      if (Verbosity > 3)
          cout << "Allocating memory for matrix and R.H.S. ...\n";
-      SkMatrix<complex_t> A(ms);
-      Vect<complex_t> b(ms.getNbDOF());
+      Vect<complex_t> u(ms), bc(ms);
 
 //    Read boundary conditions, body and boundary forces
-      if (output_flag > 1)
+      if (Verbosity > 3)
          cout << "Reading boundary conditions ...\n";
-      Vect<complex_t> bc(ms.getNbDOF());
-      if (!bc_flag)
-         ud.setDBC(bc);
+      setBC(bc);
 
-//    Read in boundary conditions and body forces
-      ud.setDBC(bc);
+      HelmholtzBT3 eq(ms,u);
+      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setWaveNumber(wave_nb);
+      eq.run();
 
-//    Loop over elements
-//    ------------------
-
-      MeshElements(ms) {
-         HelmholtzBT3 eq(theElement);
-         eq.LHS(wave_nb);
-         eq.ElementAssembly(A);
-      }
-
-//    Loop over sides
-//    ---------------
-
-      MeshSides(ms) {
-         HelmholtzBT3 eq(theSide);
-         eq.BoundaryRHS(ud);
-         eq.SideAssembly(b);
-      }
-
-      A.Prescribe(b,bc);
-      A.solve(b);
-
-      if (output_flag > 0)
-         cout << b;
-
-      void error(const Mesh &ms, User &ud, const Vect<complex<double> > &u);
-      error(ms,ud,b);
+      if (Verbosity > 4)
+         cout << u;
+ 
+      error(u);
    } CATCH_EXCEPTION
    return 0;
+}
+
+
+void setBC(Vect<complex_t>& bc)
+{
+   MeshNodes(bc.getMesh()) {
+      double x = TheNode.getX(), y = TheNode.getY();
+      if (TheNode.getCode(1)==1)
+         bc(theNodeLabel) = cos(y)*complex_t(cos(2*x),sin(2*x));
+   }
+}
+
+
+void error(const Vect<complex_t>& u)
+{
+   double ee=0, e;
+   MeshNodes(u.getMesh()) {
+      double x = TheNode.getX(), y = TheNode.getY();
+      e = Abs(cos(y)*complex_t(cos(2*x),sin(2*x)) - u(theNodeLabel));
+      ee += e*e;
+   }
+   cout << "Discrete L2 error = " << sqrt(ee/u.size()) << endl;
 }

@@ -36,8 +36,10 @@
 #include "mesh/Mesh.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
-#include "linear_algebra/LocalVect.h"
+#include "linear_algebra/LocalVect_impl.h"
+#include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/Point.h"
+#include "shape_functions/Triang3.h"
 #include <algorithm>
 
 using std::min;
@@ -114,7 +116,7 @@ ICPG2DT::~ICPG2DT()
 void ICPG2DT::setSolver(SolverType s)
 {
    if (s > 6)
-      mySolver = NULL;
+      mySolver = nullptr;
    else
       mySolver = fsolver[int(s)];
 }
@@ -122,7 +124,7 @@ void ICPG2DT::setSolver(SolverType s)
 
 void ICPG2DT::setInitialConditionShockTube(const LocalVect<real_t,4>& BcL,
                                            const LocalVect<real_t,4>& BcR,
-                                                 real_t               x0)
+                                           real_t                     x0)
 {
 // Two differents zones (for shock tube purpose)
    mesh_elements(*_theMesh) {
@@ -759,7 +761,7 @@ real_t ICPG2DT::getFlux()
 
 
 void ICPG2DT::setBC(const Side&  sd,
-                          real_t a)
+                    real_t       a)
 {
    size_t s = sd.n();
    _Rr(s) = _Lr(s);
@@ -798,7 +800,7 @@ void ICPG2DT::setBC(const Side&                sd,
 }
 
 
-void ICPG2DT::setBC(      int                  code,
+void ICPG2DT::setBC(int                        code,
                     const LocalVect<real_t,4>& u)
 {
    mesh_sides(*_theMesh)
@@ -827,7 +829,7 @@ void ICPG2DT::setInOutFlowBC(const Side&                sd,
 
       case 0:                          // GU.n < 0 and Gc < 1: subsonic inflow
          _Rr.set(s,_Lr(s));            // getting from interior
-         _Rv.set(s,1,u[1]);              // because exterior normal
+         _Rv.set(s,1,u[1]);   
          _Rv.set(s,2,u[2]);
          _Rp.set(s,u[3]);
          break;
@@ -860,7 +862,7 @@ void ICPG2DT::setInOutFlowBC(const Side&                sd,
 }
 
 
-void ICPG2DT::setInOutFlowBC(      int                  code,
+void ICPG2DT::setInOutFlowBC(int                        code,
                              const LocalVect<real_t,4>& u)
 {
    mesh_sides(*_theMesh)
@@ -939,7 +941,7 @@ void ICPG2DT::forward()
 
 
 void ICPG2DT::Forward(const Vect<real_t>& Flux,
-                            Vect<real_t>& Field)
+                      Vect<real_t>&       Field)
 {
   mesh_sides(*_theMesh) {
       size_t ns = side_label;

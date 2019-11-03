@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 // Read and set problem data
    theFinalTime = 1.;
    if (argc<2) {
-      cout << "ts_demo2 <mesh_file> [time step]" << endl;
+      cout << "Usage: " << argv[0] << " <mesh_file> [time step]" << endl;
       exit(1);
    }
    Mesh ms(argv[1],true);

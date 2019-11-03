@@ -31,12 +31,14 @@
 
 #include "io/IOField.h"
 #include "io/saveField.h"
+#include "mesh/Mesh.h"
+#include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 
 namespace OFELI {
 
 IOField::IOField()
-        : _of(NULL)
+        : _of(nullptr)
 {
    _is_closed = false;
    _field_opened = false;
@@ -48,10 +50,11 @@ IOField::IOField()
 IOField::IOField(const string& file,
                  AccessType    access,
                  bool          compact)
-        : _of(NULL), _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(NULL)
+        : _of(nullptr), _field_opened(false), _compact(compact), _no_mesh_file(true),
+          _theMesh(nullptr)
 {
    _is_opened = false;
-   _ipf = NULL;
+   _ipf = nullptr;
    _set_mesh = false;
    _set_field = true;
    _set_file = true;
@@ -59,10 +62,9 @@ IOField::IOField(const string& file,
    _nb_dof = 1;
    _dof_support = 0;
    _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
-   _v = NULL;
+   _v = nullptr;
    _file = file;
-   _parser = NULL;
-   _verb = 0;
+   _parser = nullptr;
    _is_closed = false;
    open(file,access);
    XMLParser::open();
@@ -72,11 +74,11 @@ IOField::IOField(const string& file,
 IOField::IOField(const string& file,
                  AccessType    access,
                  const string& name)
-        : _of(NULL), _field_name(name), _field_opened(false), _compact(true),
-          _no_mesh_file(true), _theMesh(NULL)
+        : _of(nullptr), _field_name(name), _field_opened(false), _compact(true),
+          _no_mesh_file(true), _theMesh(nullptr)
 {
    _is_opened = false;
-   _ipf = NULL;
+   _ipf = nullptr;
    _set_mesh = false;
    _set_field = true;
    _set_file = true;
@@ -84,10 +86,9 @@ IOField::IOField(const string& file,
    _nb_dof = 1;
    _dof_support = 0;
    _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
-   _v = NULL;
+   _v = nullptr;
    _file = file;
-   _parser = NULL;
-   _verb = 0;
+   _parser = nullptr;
    _is_closed = false;
    open(file,access);
    XMLParser::open();
@@ -99,10 +100,10 @@ IOField::IOField(const string& mesh_file,
                  Mesh&         ms,
                  AccessType    access,
                  bool          compact)
-        : _of(NULL), _field_opened(false), _compact(compact), _no_mesh_file(false), _theMesh(&ms)
+        : _of(nullptr), _field_opened(false), _compact(compact), _no_mesh_file(false), _theMesh(&ms)
 {
    _is_opened = false;
-   _ipf = NULL;
+   _ipf = nullptr;
    _set_mesh = true;
    _set_field = true;
    _set_file = true;
@@ -113,10 +114,9 @@ IOField::IOField(const string& mesh_file,
    _nb_elements = _theMesh->getNbElements();
    _nb_sides = _theMesh->getNbSides();
    _nb_edges = _theMesh->getNbEdges();
-   _v = NULL;
+   _v = nullptr;
    _file = file;
-   _parser = NULL;
-   _verb = 0;
+   _parser = nullptr;
    _is_closed = false;
    open(file,access);
    setMeshFile(mesh_file);
@@ -129,10 +129,10 @@ IOField::IOField(const string& file,
                  Mesh&         ms,
                  AccessType    access,
                  bool          compact)
-        : _of(NULL), _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(&ms)
+        : _of(nullptr), _field_opened(false), _compact(compact), _no_mesh_file(true), _theMesh(&ms)
 {
    _is_opened = false;
-   _ipf = NULL;
+   _ipf = nullptr;
    _set_mesh = true;
    _set_field = true;
    _set_file = true;
@@ -143,10 +143,9 @@ IOField::IOField(const string& file,
    _nb_elements = _theMesh->getNbElements();
    _nb_sides = _theMesh->getNbSides();
    _nb_edges = _theMesh->getNbEdges();
-   _v = NULL;
+   _v = nullptr;
    _file = file;
-   _parser = NULL;
-   _verb = 0;
+   _parser = nullptr;
    _is_closed = false;
    open(file,access);
    set(ms);
@@ -190,7 +189,7 @@ void IOField::open()
       ;
    _state = 0;
    _of->setf(ios::right);
-   *_of << setprecision(16) << scientific;
+   *_of << setprecision(16) << std::scientific;
    XMLParser::open();
 }
 

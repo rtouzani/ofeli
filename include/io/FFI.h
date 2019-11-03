@@ -43,9 +43,6 @@ using std::ostream;
 using std::endl;
 
 #include <fstream>
-using std::ifstream;
-using std::istringstream;
-
 #include <iomanip>
 using std::setw;
 using std::ios;
@@ -58,8 +55,6 @@ using std::string;
 using std::vector;
 
 #include "OFELI_Config.h"
-#include "util/util.h"
-#include "io/fparser/fparser.h"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -185,14 +180,13 @@ class FFI
 
  private:
 
-   size_t          _msg, _string_nb;
-   string          _input_file, _token, _ident, _prompt;
-   char            _buffer[121];
-   bool            _in, _non_fatal, _comment, _eol;
-   vector<string>  _kw;
-   ifstream        *_is;
-   istringstream   *_iss;
-
+   size_t              _msg, _string_nb;
+   string              _input_file, _token, _ident, _prompt;
+   char                _buffer[121];
+   bool                _in, _non_fatal, _comment, _eol;
+   vector<string>      _kw;
+   std::ifstream       *_is;
+   std::istringstream  *_iss;
    int get_token();
 };
 

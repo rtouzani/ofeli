@@ -111,7 +111,7 @@ public:
     void setSolver(SolverType solver)
     {
        if (solver>=6)
-          mySolver = NULL;
+          mySolver = nullptr;
        else 
           mySolver = fsolver[int(solver)];
 	}

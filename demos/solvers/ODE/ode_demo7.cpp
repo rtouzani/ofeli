@@ -44,7 +44,7 @@ using namespace OFELI;
 int main(int argc, char *argv[])
 {
    if (argc<4) {
-      cout << "Usage: ode_demo7 <time step> <final time> <output file>" << endl;
+      cout << "Usage: " << argv[0] << " <time step> <final time> <output file>" << endl;
       return 0;
    }
    theTimeStep = atof(argv[1]);

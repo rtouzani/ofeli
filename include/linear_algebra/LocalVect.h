@@ -34,10 +34,7 @@
 #define __LOCAL_VECT_H
 
 #include "OFELI_Config.h"
-#include "mesh/Element.h"
-#include "mesh/Side.h"
-#include "mesh/Node.h"
-#include "OFELIException.h"
+#include "linear_algebra/Vect.h"
 
 namespace OFELI {
 /*!
@@ -76,9 +73,9 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-template<class T_> class Vect;
 class Element;
 class Side;
+class Node;
 
 
 template<class T_,size_t N_>
@@ -124,8 +121,7 @@ public:
  */
     LocalVect(const Element&  el,
               const Vect<T_>& v,
-              int             opt=0)
-    { LocalVect<T_,N_>(&el,v,opt); }
+              int             opt=0);
 
 /** \brief Constructor of a side vector from a global Vect instance.
  *  \details The constructed vector has local numbering of nodes
@@ -140,7 +136,7 @@ public:
               int             opt=0);
 
 /// \brief Destructor
-    ~LocalVect() { }
+    ~LocalVect();
 
 /** \brief Localize an element vector from a global Vect instance.
  *  \details The constructed vector has local numbering of nodes
@@ -183,31 +179,31 @@ public:
 
 /// \brief Operator <tt>[]</tt> (Non constant version).
 /// \details <tt>v[i]</tt> starts at <tt>v[0]</tt> to <tt>v[size()-1]</tt>
-    T_ &operator[](size_t i) { return _v[i]; }
+    T_ &operator[](size_t i);
 
 /// \brief Operator <tt>[]</tt> (Constant version).
 /// \details <tt>v[i]</tt> starts at <tt>v[0]</tt> to <tt>v[size()-1]</tt>
-    T_ operator[](size_t i) const { return _v[i]; }
+    T_ operator[](size_t i) const;
 
 /** \brief Operator <tt>()</tt> (Non constant version).
  *  \details <tt>v(i)</tt> starts at <tt>v(1)</tt> to <tt>v(size())</tt>.
  *  <tt>v(i)</tt> is the same element as <tt>v[i-1]</tt>
  */
-    T_ &operator()(size_t i) { return _v[i-1]; }
+    T_ &operator()(size_t i);
 
 /** \brief Operator <tt>()</tt> (Constant version).
  *  \details <tt>v(i)</tt> starts at <tt>v(1)</tt> to <tt>v(size())</tt>
  *  <tt>v(i)</tt> is the same element as <tt>v[i-1]</tt>
  */
-    T_ operator()(size_t i) const { return _v[i-1]; }
+    T_ operator()(size_t i) const;
 
 /// \brief Return pointer to Element if vector was constructed
-/// using an element and <tt>NULL</tt> otherwise
-    Element *El() { return _el; }
+/// using an element and <tt>nullptr</tt> otherwise
+    Element *El();
 
 /// \brief Return pointer to Side if vector was constructed
-/// using a side and <tt>NULL</tt> otherwise
-    Side *Sd() { return _sd; }
+/// using a side and <tt>nullptr</tt> otherwise
+    Side *Sd();
 
 /// \brief Operator <tt>=</tt>
 /// \details Copy a LocalVect instance to the current one
@@ -242,7 +238,7 @@ public:
     LocalVect<T_,N_> & operator/=(const T_& a);
 
 /// \brief Return pointer to vector as a C-Array
-    T_ *get() { return _v; }
+    T_ *get();
     
 /** \brief Return Dot (scalar) product of two vectors
  *  \details A typical use of this operator is <tt>double a = (v,w)</tt>
@@ -253,270 +249,11 @@ public:
 
  private:
 
-   T_      _v[N_];
-   Element *_el;
-   Side    *_sd;
+   T_            _v[N_];
+   const Element *_el;
+   const Side    *_sd;
 };
 
-///////////////////////////////////////////////////////////////////////////////
-//                         I M P L E M E N T A T I O N                       //
-///////////////////////////////////////////////////////////////////////////////
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_>::LocalVect()
-{
-   _el = NULL;
-   _sd = NULL;
-   for (size_t i=0; i<N_; ++i)
-      _v[i] = 0;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_>::LocalVect(const T_* a)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] = a[i];
-   _el = NULL;
-   _sd = NULL;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_>::LocalVect(const Element* el)
-{
-   _el = el;
-   _sd = NULL;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_>::LocalVect(const Side* sd)
-{
-   _el = NULL;
-   _sd = sd;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_>::LocalVect(const LocalVect<T_,N_>& v)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] = v[i];
-   _el = v._el;
-   _sd = v._sd;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_>::LocalVect(const Element*  el,
-                            const Vect<T_>& v,
-                            int             opt)
-{
-   if (opt==0)
-      Localize(el,v);
-   else {
-      size_t i = 0;
-      for (size_t n=1; n<=el->getNbNodes(); ++n)
-         _v[i++] = v((*el)(n)->n());
-   }
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_>::LocalVect(const Side*     sd,
-                            const Vect<T_>& v,
-                            int             opt)
-{
-   if (opt==0)
-      Localize(sd,v);
-   else {
-      size_t i = 0;
-      for (size_t n=1; n<=sd->getNbNodes(); ++n)
-         _v[i++] = v(sd->getNodeLabel(n));
-   }
-}
-
-
-template<class T_,size_t N_>
-void LocalVect<T_,N_>::getLocal(const Element&  el,
-                                const Vect<T_>& v,
-                                int             type)
-{
-   size_t i=0;
-   if (type==LINE2) {
-      for (size_t n=1; n<=2; ++n) {
-         Node *nd = el(n);
-         size_t k = nd->getFirstDOF();
-         for (size_t j=1; j<=nd->getNbDOF(); ++j)
-            _v[i++] = v(k++);
-      }
-   }
-   else if (type==TRIANG3) {
-      for (size_t n=1; n<=3; ++n) {
-         Node *nd = el(n);
-         size_t k = nd->getFirstDOF();
-         for (size_t j=1; j<=nd->getNbDOF(); ++j)
-            _v[i++] = v(k++);
-      }
-   }
-   else if (type==QUAD4) {
-      for (size_t n=1; n<=4; ++n) {
-         Node *nd = el(n);
-         size_t k = nd->getFirstDOF();
-         for (size_t j=1; j<=nd->getNbDOF(); ++j)
-            _v[i++] = v(k++);
-      }
-   }
-   else if (type==TETRA4) {
-      for (size_t n=1; n<=4; ++n) {
-         Node *nd = el(n);
-         size_t k = nd->getFirstDOF();
-         for (size_t j=1; j<=nd->getNbDOF(); ++j)
-            _v[i++] = v(k++);
-      }
-   }
-   else if (type==HEXA8) {
-      for (size_t n=1; n<=8; ++n) {
-         Node *nd = el(n);
-         size_t k = nd->getFirstDOF();
-         for (size_t j=1; j<=nd->getNbDOF(); ++j)
-            _v[i++] = v(k++);
-      }
-   }
-   else if (type==PENTA6) {
-      for (size_t n=1; n<=6; ++n) {
-         Node *nd = el(n);
-         size_t k = nd->getFirstDOF();
-         for (size_t j=1; j<=nd->getNbDOF(); ++j)
-            _v[i++] = v(k++);
-      }
-   }
-}
-
-
-template<class T_,size_t N_>
-void LocalVect<T_,N_>::Localize(const Element*  el,
-                                const Vect<T_>& v,
-                                size_t          k)
-{
-   size_t i=0;
-   if (k==0) {
-      for (size_t n=1; n<=el->getNbNodes(); ++n) {
-         Node *nd = (*el)(n);
-         for (size_t j=1; j<=nd->getNbDOF(); ++j)
-            _v[i++] = v(nd->getFirstDOF()+j-1);
-      }
-   }
-   else {
-     for (size_t n=1; n<=el->getNbNodes(); ++n)
-        _v[i++] = v((*el)(n)->getFirstDOF()+k-1);
-   }
-}
-
-
-template<class T_,size_t N_>
-void LocalVect<T_,N_>::Localize(const Side*     sd,
-                                const Vect<T_>& v,
-                                size_t          k)
-{
-   size_t i = 0;
-   if (k==0) {
-      for (size_t n=1; n<=sd->getNbNodes(); ++n) {
-         for (size_t j=1; j<=sd->getNbDOF(); ++j)
-            _v[i++] = v(sd->getDOF(j));
-      }
-   }
-   else {
-      for (size_t n=1; n<=sd->getNbNodes(); ++n)
-         _v[i++] = v((*sd)(n)->getDOF(k));
-   }
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_> & LocalVect<T_,N_>::operator=(const LocalVect<T_,N_>& v)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] = v._v[i];
-   return *this;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_> & LocalVect<T_,N_>::operator=(const T_& x)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] = x;
-   return *this;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_> & LocalVect<T_,N_>::operator+=(const LocalVect<T_,N_>& v)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] += v[i];
-   return *this;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_> & LocalVect<T_,N_>::operator+=(const T_& a)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] += a;
-   return *this;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_> & LocalVect<T_,N_>::operator-=(const LocalVect<T_,N_>& v)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] -= v[i];
-   return *this;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_> & LocalVect<T_,N_>::operator-=(const T_& a)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] -= a;
-   return *this;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_> & LocalVect<T_,N_>::operator*=(const T_& a)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] *= a;
-   return *this;
-}
-
-
-template<class T_,size_t N_>
-LocalVect<T_,N_> & LocalVect<T_,N_>::operator/=(const T_& a)
-{
-   for (size_t i=0; i<N_; ++i)
-      _v[i] /= a;
-   return *this;
-}
-    
-    
-template<class T_,size_t N_>
-T_ LocalVect<T_,N_>::operator,(const LocalVect<T_,N_>& v) const
-{
-   T_ p = 0;
-   for (size_t i=0; i<N_; i++)
-      p += _v[i] * v[i];
-   return p;
-}
-
-	
 ///////////////////////////////////////////////////////////////////////////////
 //                A S S O C I A T E D    F U N C T I O N S                   //
 ///////////////////////////////////////////////////////////////////////////////
@@ -528,13 +265,7 @@ T_ LocalVect<T_,N_>::operator,(const LocalVect<T_,N_>& v) const
  */
 template<class T_,size_t N_>
 LocalVect<T_,N_> operator+(const LocalVect<T_,N_>& x,
-                           const LocalVect<T_,N_>& y)
-{
-   LocalVect<T_,N_> z(x);
-   for (size_t i=0; i<N_; ++i)
-      z[i] += y[i];
-   return z;
-}
+                           const LocalVect<T_,N_>& y);
 
 /** \fn LocalVect<T_,N_> operator-(const LocalVect<T_,N_> &x, const LocalVect<T_,N_> &y)
  *  \brief Operator - (Subtract two vectors)
@@ -543,14 +274,7 @@ LocalVect<T_,N_> operator+(const LocalVect<T_,N_>& x,
  */
 template<class T_,size_t N_>
 LocalVect<T_,N_> operator-(const LocalVect<T_,N_>& x,
-                           const LocalVect<T_,N_>& y)
-{
-   LocalVect<T_,N_> z(x);
-   for (size_t i=0; i<N_; ++i)
-      z[i] -= y[i];
-   return z;
-}
-
+                           const LocalVect<T_,N_>& y);
 
 /** \fn LocalVect<T_,N_> operator*(T_ a, const LocalVect<T_,N_> &x)
  *  \brief Operator * (Premultiplication of vector by constant)
@@ -559,14 +283,7 @@ LocalVect<T_,N_> operator-(const LocalVect<T_,N_>& x,
  */
 template<class T_,size_t N_>
 LocalVect<T_,N_> operator*(T_                      a,
-                           const LocalVect<T_,N_>& x)
-{
-   LocalVect<T_,N_> v(x);
-   for (size_t i=0; i<N_; ++i)
-      v[i] *= a;
-   return v;
-}
-
+                           const LocalVect<T_,N_>& x);
 
 /** \fn LocalVect<T_,N_> operator/(T_ a, const LocalVect<T_,N_> &x)
  *  \brief Operator / (Division of vector by constant)
@@ -575,13 +292,7 @@ LocalVect<T_,N_> operator*(T_                      a,
  */
 template<class T_,size_t N_>
 LocalVect<T_,N_> operator/(T_                      a,
-                           const LocalVect<T_,N_>& x)
-{
-   LocalVect<T_,N_> v(x);
-   for (size_t i=0; i<N_; ++i)
-      v[i] /= a;
-   return v;
-}
+                           const LocalVect<T_,N_>& x);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -660,13 +371,9 @@ struct _meta_scale<0>
  *  \brief Multiply vector <tt>x</tt> by constant <tt>a</tt> and store result in <tt>y</tt>.
  */
 template<class T_, size_t N_>
-inline void Scale(T_                      a,
-                  const LocalVect<T_,N_>& x,
-                  LocalVect<T_,N_>&       y)
-{
-   _meta_scale<N_-1>::_scale(a,x,y);
-}
-
+void Scale(T_                      a,
+           const LocalVect<T_,N_>& x,
+           LocalVect<T_,N_>&       y);
 
 // scale (in place)
 
@@ -694,11 +401,8 @@ struct _meta_scale1<0>
 /// \ingroup VectMat
 /// \brief Multiply vector <tt>x</tt> by constant <tt>a</tt> and store result in <tt>x</tt>.
 template<class T_, size_t N_>
-inline void Scale(T_                a,
-                  LocalVect<T_,N_>& x)
-{
-   _meta_scale1<N_-1>::_scale(a,x);
-}
+void Scale(T_                a,
+           LocalVect<T_,N_>& x);
 
 // axpy
 
@@ -735,13 +439,9 @@ struct _meta_axpy<0>
  * \brief Add <tt>a*x</tt> to vector <tt>y</tt>.
  */
 template<class T_, size_t N_>
-inline void Axpy(T_                      a,
-                 const LocalVect<T_,N_>& x,
-                 LocalVect<T_,N_>&       y)
-{
-   _meta_axpy<N_-1>::_axpy(a,x,y);
-}
-
+void Axpy(T_                      a,
+          const LocalVect<T_,N_>& x,
+          LocalVect<T_,N_>&       y);
 
 // xpy
 
@@ -776,11 +476,8 @@ struct _meta_xpy<0>
  *  Add <tt>x</tt> to vector <tt>y</tt>.
  */
 template<class T_, size_t N_>
-inline void Xpy(const LocalVect<T_,N_>& x,
-                LocalVect<T_,N_>&       y)
-{
-   _meta_xpy<N_-1>::_xpy(x,y);
-}
+void Xpy(const LocalVect<T_,N_>& x,
+         LocalVect<T_,N_>&       y);
 
 // copy
 
@@ -813,12 +510,8 @@ struct _meta_copy<0>
  *  \brief Copy vector \a x into vector \a y.
  */
 template<class T_, size_t N_>
-inline void Copy(const LocalVect<T_,N_>& x,
-                 LocalVect<T_,N_>&       y)
-{
-   _meta_copy<N_-1>::_copy(x,y);
-}
-
+void Copy(const LocalVect<T_,N_>& x,
+          LocalVect<T_,N_>&       y);
 
 /** \fn ostream& operator<<(ostream& s, const LocalVect<T_,N_> & v)
  *  \brief Output vector in output stream
@@ -826,13 +519,7 @@ inline void Copy(const LocalVect<T_,N_>& x,
  */
 template<class T_,size_t N_>
 ostream& operator<<(ostream&                s,
-                    const LocalVect<T_,N_>& v)
-{
-   s.setf(ios::scientific);
-   for (size_t i=1; i<=N_; i++)
-      s << setw(6) << i << "  " << std::setprecision(8) << std::setw(18) << v(i) << std::endl;
-   return s;
-}
+                    const LocalVect<T_,N_>& v);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

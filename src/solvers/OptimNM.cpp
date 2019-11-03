@@ -30,7 +30,6 @@
   ==============================================================================*/
 
 #include "OFELI_Config.h"
-#include "linear_algebra/Vect.h"
 #include "solvers/OptSolver.h"
 #include "util/util.h"
 

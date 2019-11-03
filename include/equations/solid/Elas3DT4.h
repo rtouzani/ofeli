@@ -65,21 +65,16 @@ class Elas3DT4 : virtual public Equa_Solid<real_t,4,12,3,9>
 /// \brief Default Constructor
     Elas3DT4() { }
 
-/// \brief Constructor using element data
-    Elas3DT4(const Element *el);
+/// \brief Constructor using a Mesh instance
+/// @param [in] ms Reference to Mesh instance
+    Elas3DT4(Mesh& ms);
 
-/// \brief Constructor using side data
-    Elas3DT4(const Side *sd);
-
-/// \brief Constructor using element and previous time data
-    Elas3DT4(const Element*      element,
-             const Vect<real_t>& u,
-	     const real_t&       time=0.);
-
-/// \brief Constructor using side and previous time data
-    Elas3DT4(const Side*         side,
-	     const Vect<real_t>& u,
-	     const real_t&       time=0.);
+/** \brief Constructor using a Mesh instance and solution vector
+ *  @param [in] ms Reference to Mesh instance
+ *  @param [in,out] u Reference to solution vector
+ */ 
+    Elas3DT4(Mesh&         ms,
+             Vect<real_t>& u);
 
 /// \brief Destructor
     ~Elas3DT4();
@@ -90,60 +85,34 @@ class Elas3DT4 : virtual public Equa_Solid<real_t,4,12,3,9>
  *  @param [in] rho Density
  */
     void Media(real_t E,
-	       real_t nu,
-	       real_t rho);
+               real_t nu,
+               real_t rho);
 
-/// \brief Add element lumped mass contribution to matrix after multiplication by \a coef
-    void LMassToLHS(real_t coef=1);
-
-/// \brief Add element lumped mass contribution to right-hand side after multiplication by \a coef
-    void LMassToRHS(real_t coef=1);
-
-/// \brief Add element lumped mass contribution to matrix and right-hand side after multiplication by \a coef
-    void LMass(real_t coef) { LMassToLHS(coef); LMassToRHS(coef); }
+/// \brief Add element lumped mass contribution to element matrix after multiplication by \a coef
+    void LMass(real_t coef=1);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Add element consistent Mass contribution to matrix after multiplication by coef
     void Mass(real_t coef=1.) { coef=1; std::cerr << "Sorry, consistent mass matrix is not implemented !\n"; }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/// \brief Add element deviatoric matrix to left hand-side after multiplication by \a coef.
+/// \brief Add element deviatoric matrix to element matrix after multiplication by \a coef.
     void Deviator(real_t coef=1.);
-
-/// \brief Add element deviatoric matrix to right hand-side after multiplication by \a coef.
-    void DeviatorToRHS(real_t coef=1.);
 
 /// \brief Add element dilatational contribution to left-hand side after multiplication by \a coef.
     void Dilatation(real_t coef=1.);
 
-/// \brief Add element dilatational contribution to right-hand side after multiplication by \a coef.
-    void DilatationToRHS(real_t coef=1.);
-
-/// \brief Add body right-hand side term to right hand side after multiplication by \a coef.
-/// \details Body forces are deduced from UserData instance \a ud.
-    void BodyRHS(UserData<real_t> &ud);
-
 /** \brief Add body right-hand side term to right hand side.
- *  @param [in] f Vect instance containing source at element nodes (DOF by DOF).
- *  @param [in] opt Vector is local (LOCAL_ARRAY) with size 12 or global
- * (GLOBAL_ARRAY) with size = Number of element DOF.
+ *  @param [in] f Vect instance containing source at nodes (DOF by DOF).
  */
-    void BodyRHS(const Vect<real_t>& f,
-		       int           opt=LOCAL_ARRAY);
+    void BodyRHS(const Vect<real_t>& f);
 
 /// \brief Add boundary right-hand side term to right hand side.
 /// @param [in] f Vect instance that contains constant traction to impose to side.
     void BoundaryRHS(const Vect<real_t>& f);
 
-/** \brief Build global stiffness and mass matrices for the eigen system
- *  \details Case where the mass matrix is lumped
- *  @param [in] K Stiffness matrix
- *  @param [in] M Vector containing diagonal mass matrix
- */
-    void buildEigen(SkSMatrix<real_t>& K,
-		    Vect<real_t>&      M);
-
  private:
+
    void set(const Element *el);
    void set(const Side *sd);
 };

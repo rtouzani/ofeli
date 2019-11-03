@@ -30,11 +30,16 @@
   ==============================================================================*/
 
 #include "solvers/NLASSolver.h"
+#include "io/fparser/fparser.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/DMatrix_impl.h"
+#include "equations/AbsEqua_impl.h"
+extern FunctionParser theParser;
 
 namespace OFELI {
 
 NLASSolver::NLPtr NLASSolver::NL [] = {
-   NULL,                             // Not used
+   nullptr,                          // Not used
    &NLASSolver::solveBisection,      // Bisection method
    &NLASSolver::solveRegulaFalsi,    // Regula Falsi method
    &NLASSolver::solvePicard,         // Picard iteration method
@@ -45,11 +50,11 @@ NLASSolver::NLPtr NLASSolver::NL [] = {
 
 NLASSolver::NLASSolver()
            : _cv(false), _f_given(false), _grad_given(false), _u_set(true),
-             _ab_given(false), _theEqua(NULL), _nl(int(NEWTON)), _verb(1), _max_it(100),
-             _nb_eq(0), _fct_type(FUNCTION), _toler(1.e-8), _var(""), _Df(NULL),
-             _theMesh(NULL), _my_nlas(NULL)
+             _ab_given(false), _theEqua(nullptr), _nl(int(NEWTON)), _verb(Verbosity), _max_it(100),
+             _nb_eq(0), _fct_type(FUNCTION), _toler(1.e-8), _var(""), _Df(nullptr),
+             _theMesh(nullptr), _my_nlas(nullptr)
 {
-   _Df = NULL;
+   _Df = nullptr;
    _u = new Vect<real_t>(1);
 }
 
@@ -57,9 +62,9 @@ NLASSolver::NLASSolver()
 NLASSolver::NLASSolver(NonLinearIter nl,
                        int           nb_eq)
            : _cv(false), _f_given(false), _grad_given(false), _u_set(false),
-             _ab_given(false), _theEqua(NULL), _nl(int(nl)), _verb(1), _max_it(100),
-             _nb_eq(nb_eq), _fct_type(FUNCTION), _toler(1.e-8), _Df(NULL),
-             _theMesh(NULL), _my_nlas(NULL)
+             _ab_given(false), _theEqua(nullptr), _nl(int(nl)), _verb(Verbosity), _max_it(100),
+             _nb_eq(nb_eq), _fct_type(FUNCTION), _toler(1.e-8), _Df(nullptr),
+             _theMesh(nullptr), _my_nlas(nullptr)
 {
 }
 
@@ -67,9 +72,9 @@ NLASSolver::NLASSolver(NonLinearIter nl,
 NLASSolver::NLASSolver(real_t&       x,
                        NonLinearIter nl)
            : _cv(false), _f_given(false), _grad_given(false), _u_set(false),
-             _ab_given(false), _theEqua(NULL), _nl(int(nl)), _verb(1), _max_it(100),
-             _nb_eq(1), _fct_type(FUNCTION), _toler(1.e-8), _x(&x), _Df(NULL),
-             _theMesh(NULL), _my_nlas(NULL)
+             _ab_given(false), _theEqua(nullptr), _nl(int(nl)), _verb(Verbosity), _max_it(100),
+             _nb_eq(1), _fct_type(FUNCTION), _toler(1.e-8), _x(&x), _Df(nullptr),
+             _theMesh(nullptr), _my_nlas(nullptr)
 {
    set(nl);
 }
@@ -78,9 +83,9 @@ NLASSolver::NLASSolver(real_t&       x,
 NLASSolver::NLASSolver(Vect<real_t>& u,
                        NonLinearIter nl)
            : _cv(false), _f_given(false), _grad_given(false), _u_set(false),
-             _ab_given(false), _theEqua(NULL), _nl(int(nl)), _verb(1), _max_it(100),
+             _ab_given(false), _theEqua(nullptr), _nl(int(nl)), _verb(Verbosity), _max_it(100),
              _nb_eq(u.size()), _fct_type(FUNCTION), _u(&u), _toler(1.e-8), _var(""),
-             _Df(NULL), _theMesh(NULL), _my_nlas(NULL)
+             _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr)
 {
    _v.setSize(_nb_eq);
    set(nl);
@@ -90,9 +95,9 @@ NLASSolver::NLASSolver(Vect<real_t>& u,
 NLASSolver::NLASSolver(MyNLAS&       my_nlas,
                        NonLinearIter nl)
            : _cv(false), _f_given(false), _grad_given(false), _u_set(false),
-             _ab_given(false), _theEqua(NULL), _nl(int(nl)), _verb(1), _max_it(100),
-             _nb_eq(0), _fct_type(FUNCTION), _toler(1.e-8), _var(""), _Df(NULL),
-             _theMesh(NULL), _my_nlas(NULL)
+             _ab_given(false), _theEqua(nullptr), _nl(int(nl)), _verb(Verbosity), _max_it(100),
+             _nb_eq(0), _fct_type(FUNCTION), _toler(1.e-8), _var(""), _Df(nullptr),
+             _theMesh(nullptr), _my_nlas(nullptr)
 {
    set(nl);
 }
@@ -158,8 +163,7 @@ void NLASSolver::setFunction(function<Vect<real_t>(Vect<real_t>)> f)
 void NLASSolver::setGradient(function<real_t(real_t)> g)
 {
    if (_f_given==false)
-      throw OFELIException("In NLASSolver::setGradient(g):\n"
-                           "Function must be given first.");
+      throw OFELIException("In NLASSolver::setGradient(g):\nFunction must be given first.");
    _grad_given = true;
    _grad1 = g;
 }
@@ -168,8 +172,7 @@ void NLASSolver::setGradient(function<real_t(real_t)> g)
 void NLASSolver::setGradient(function<Vect<real_t>(Vect<real_t>)> g)
 {
    if (_f_given==false)
-      throw OFELIException("In NLASSolver::setGradient(g):\n"
-                           "Function must be given first.");
+      throw OFELIException("In NLASSolver::setGradient(g):\nFunction must be given first.");
    _grad_given = true;
    _grad = g;
 }
@@ -199,8 +202,7 @@ void NLASSolver::setDf(string exp,
                        int    j)
 {
    if (_f_given==false)
-      throw OFELIException("In NLASSolver::setDf(exp,i,j):\n"
-                           "Function must be given first.");
+      throw OFELIException("In NLASSolver::setDf(exp,i,j):\nFunction must be given first.");
    if (_nl!=NEWTON && _nl!=SECANT)
       throw OFELIException("In NLASSolver::setDf(exp,i,j):\n"
                            "Providing the gradient is useless for the chosen algorithm.");
@@ -216,7 +218,7 @@ void NLASSolver::set(NonLinearIter nl)
 {
    _nl_it = int(nl);
    if (_nl_it<0 || _nl_it>6) {
-      _nlp = NULL;
+      _nlp = nullptr;
       throw OFELIException("In NLASSolver::set(NonLinearIter):\n"
                            "Iterative method not available.");
    }

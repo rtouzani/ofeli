@@ -61,17 +61,14 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class Laplace1DL2 : virtual public Equa_Laplace<real_t,2,2,1,1> {
+class Laplace1DL2 : public Equa_Laplace<real_t,2,2,1,1> {
 
-public :
+ public :
 
     using AbsEqua<real_t>::setInput;
 
 /// \brief Default constructor
     Laplace1DL2();
-
-/// \brief Constructor for an element
-    Laplace1DL2(Element* el);
 
 /** Constructor using mesh instance and solution vector
  *  @param [in] ms Mesh instance
@@ -88,8 +85,7 @@ public :
     ~Laplace1DL2() { }
 
 /// \brief Add finite element matrix to left hand side
-/// @param [in] coef Value to multiply by the added matrix
-    void LHS(real_t coef=1.);
+    void LHS();
 
 /// \brief Add Right-Hand %Side Contribution
 /// @param [in] f Vector containing the source given function at mesh nodes

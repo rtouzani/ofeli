@@ -32,6 +32,7 @@
 
 #include "post/Estimator.h"
 #include "shape_functions/Triang3.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
@@ -125,11 +126,13 @@ void Estimator::elementT3_ND_JUMP(const Vect<real_t>& u)
               *el2 = The_side.getNeighborElement(2);
       real_t u1 = u((*el1)(1)->n()), u2 = u((*el1)(2)->n()), u3 = u((*el1)(3)->n());
       Triang3 tr(el1);
-      real_t dudn1 = (_N(side_label),u1*tr.DSh(1)+u2*tr.DSh(2)+u3*tr.DSh(3));
+      std::vector<Point<real_t> > dsh = tr.DSh();
+      real_t dudn1 = (_N(side_label),u1*dsh[0]+u2*dsh[1]+u3*dsh[1]);
       if (el2) {
          Triang3 tr(el2);
+         std::vector<Point<real_t> > dsh = tr.DSh();
          u1 = u((*el2)(1)->n()), u2 = u((*el2)(2)->n()), u3 = u((*el2)(3)->n());
-         real_t dudn2 = (_N(side_label),u1*tr.DSh(1)+u2*tr.DSh(2)+u3*tr.DSh(3));
+         real_t dudn2 = (_N(side_label),u1*dsh[0]+u2*dsh[1]+u3*dsh[2]);
          _sd_I(side_label) = fabs(dudn1 - dudn2);
       }
    }
@@ -149,11 +152,12 @@ void Estimator::elementT3_ZZ(const Vect<real_t>&   u,
                               " non constant nb of DOF per node.");
    mesh_elements(*_mesh) {
       Triang3 tr(the_element);
+      std::vector<Point<real_t> > dsh = tr.DSh();
       real_t c = tr.getArea()*OFELI_THIRD;
       for (size_t k=1; k<=_nb_dof; k++) {
-         Du(element_label,k) =  tr.DSh(1)*u(The_element(1)->n(),k)
-                              + tr.DSh(2)*u(The_element(2)->n(),k)
-                              + tr.DSh(3)*u(The_element(3)->n(),k);
+        Du(element_label,k) =  dsh[0]*u(The_element(1)->n(),k)
+                             + dsh[1]*u(The_element(2)->n(),k)
+                             + dsh[2]*u(The_element(3)->n(),k);
       }
       for (size_t i=1; i<=3; i++) {
          M(The_element(i)->n()) += c;

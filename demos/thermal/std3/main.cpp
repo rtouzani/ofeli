@@ -41,20 +41,20 @@ int main(int argc, char *argv[])
 {
 // Expand arguments
    if (argc < 2) {
-      cout << "\nUsage:  std3  <param_file>\n";
+      cout << "\nUsage: " << argv[0] << " <param_file>\n";
       return 0;
    }
 
    IPF data("std3 - 1.0",argv[1]);
-   int output_flag = data.getOutput();
+   Verbosity = data.getVerbose();
    int save_flag = data.getSave();
 
-   if (output_flag) {
+   if (Verbosity) {
       cout << endl << endl;
       cout << "    *******************************************************\n";
-      cout << "    *                         S  T  D  3                  *\n";
-      cout << "    *               Steady State Thermal Diffusion     *\n";
-      cout << "    *                 in 3-D Geometries                   *\n";
+      cout << "    *                      S  T  D  3                     *\n";
+      cout << "    *             Steady State Thermal Diffusion          *\n";
+      cout << "    *                   in 3-D Geometries                 *\n";
       cout << "    *******************************************************\n\n\n";
       cout << "=====================================================================\n\n";
       cout << "               A Finite Element Code for Steady-State\n";
@@ -70,65 +70,50 @@ int main(int argc, char *argv[])
 // Read data
 //---------------------------------
 
-// Read Mesh data
    try {
-      if (output_flag > 1)
+
+// Read Mesh data
+      if (Verbosity>2)
          cout << "Reading mesh data ...\n";
-      Mesh ms(data.getMeshFile(),true);
+      Mesh ms(data.getMeshFile());
       Prescription p(ms,data.getDataFile());
-      if (output_flag > 1)
+      if (Verbosity>3)
          cout << ms;
 
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
-      if (output_flag > 1)
-         cout << "Allocating memory for matrix and R.H.S. ...\n";
-      SpMatrix<double> A(ms);
-      Vect<double> u(ms.getNbEq()), b(ms.getNbEq());
+      Vect<double> u(ms);
 
 //    Read boundary conditions, body and boundary forces
-      if (output_flag > 1)
+      if (Verbosity>1)
          cout << "Reading boundary conditions, body and boundary sources ...\n";
-      Vect<double> bc(ms), body_f(ms), bound_f(ms,1,SIDE_FIELD);
+      Vect<double> bc(ms), bf(ms), sf(ms,1,BOUNDARY_SIDE_FIELD);
       p.get(BOUNDARY_CONDITION,bc);
-      p.get(BODY_FORCE,body_f);
-      p.get(BOUNDARY_FORCE,bound_f,0);
+      p.get(BODY_FORCE,bf);
+      p.get(BOUNDARY_FORCE,sf,0);
 
-//    Loop over elements
-      if (output_flag > 1)
-         cout << "Looping over elements ...\n";
-      MeshElements(ms) {
-         DC3DT4 eq(theElement);
-         eq.Diffusion();
-         eq.BodyRHS(body_f);
-         eq.updateBC(bc);
-         eq.ElementAssembly(A);
-         eq.ElementAssembly(b);
-      }
+//    Instantiating equation
+      if (Verbosity>1)
+         cout << "Setting equation" << endl;
+      DC3DT4 eq(ms,u);
+      if (Verbosity>1)
+         cout << "Setting equation data ..." << endl;
+      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setInput(SOURCE,bf);
+      eq.setInput(FLUX,sf);
+      eq.setTerms(DIFFUSION);
+      eq.setSolver(CG_SOLVER,DILU_PREC);
 
-//    Loop over sides
-      if (output_flag > 1)
-         cout << "Looping over sides ...\n";
-      MeshSides(ms) {
-         DC3DT4 eq(theSide);
-         eq.BoundaryRHS(bound_f);
-         eq.SideAssembly(b);
-      }
-
-      if (output_flag > 1)
-         cout << "Solving linear system ...\n";
-      LinearSolver<double> ls(1000,1.e-8,0);
-      int nb_it = ls.solve(A,b,u,CG_SOLVER,SSOR_PREC);
-      cout << "Number of iterations: " << nb_it << endl;
-
-//    Output solution
-      Vect<double> v(ms);
-      v.insertBC(ms,u,bc);
-      if (output_flag > 0)
+//    Run solution
+      if (Verbosity>1)
+         cout << "Solving equation" << endl;
+      eq.run();
+      if (Verbosity>4)
          cout << u;
 
       if (save_flag) {
-         IOField pf(data.getSaveFile(),IOField::OUT);
-         pf.put(v);
+         if (Verbosity>1)
+            cout << "Saving solution" << endl;
+         saveField(u,"beam.pos",GMSH);
       }
    } CATCH_EXCEPTION
    return 0;

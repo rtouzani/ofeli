@@ -29,10 +29,15 @@
 
   ==============================================================================*/
 
+#include <iostream>
+#include <fstream>
 #include "mesh/Material.h"
 #include "io/XMLParser.h"
 #include "linear_algebra/Point.h"
 #include "OFELIException.h"
+
+using std::cout;
+using std::ifstream;
 
 namespace OFELI {
 
@@ -41,13 +46,12 @@ Material::Material()
    for (size_t i=0; i<MAX_NB_MATERIALS; i++)
       _code[i] = MY_RANDOM;
    _nb_mat = 0;
-   if (getenv("OFELI_PATH_MATERIAL")==NULL)
+   if (getenv("OFELI_PATH_MATERIAL")==nullptr)
       _path = PATH_MATERIAL;
    else
       _path = getenv("OFELI_PATH_MATERIAL");
    string mat_file = _path + PATH_SEP;
    mat_file += "Generic.md";
-cout<<"here "<<_path<<" "<<mat_file<<endl;
    if (!ifstream(mat_file.c_str())) {
       cout << "Error in class Material: Material directory not found." << endl;
       cout << "Edit the file include/OFELI_Config.h and modify the line with PATH_MATERIAL," << endl;

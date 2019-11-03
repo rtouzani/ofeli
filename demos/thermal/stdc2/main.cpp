@@ -38,41 +38,39 @@ int main(int argc, char *argv[])
 {
 // Expand arguments
    if (argc < 2) {
-      cout << "\nUsage:  stdc2 <param_file>\n";
+      cout << "\nUsage: " << argv[0] << " <param_file>\n";
       return 0;
    }
    IPF data("stdc2 - 2.0",argv[1]); 
-   if (data.getVerbose()) {
-      cout << endl << endl;
-      cout << "    *******************************************************\n";
-      cout << "    *                      S  T  D  C  2                  *\n";
-      cout << "    *     Steady State Thermal Diffusion - Convection     *\n";
-      cout << "    *                 in 2-D Geometries                   *\n";
-      cout << "    *******************************************************\n\n\n";
-      cout << "=====================================================================\n\n";
-      cout << "               A Finite Element Code for Steady-State\n";
-      cout << "           Analysis of Thermal Diffusion - Convection Problems\n";
-      cout << "                             in 2-D Geometries\n\n";
-      cout << "            STDC2 uses OFELI Library of Finite Element Classes\n\n";
-      cout << "                           V E R S I O N   2.0\n\n";
-      cout << "                     Copyright R. Touzani, 2008\n\n";
-      cout << "=====================================================================\n\n";
-   }
+   cout << endl << endl;
+   cout << "    *******************************************************\n";
+   cout << "    *                      S  T  D  C  2                  *\n";
+   cout << "    *     Steady State Thermal Diffusion - Convection     *\n";
+   cout << "    *                 in 2-D Geometries                   *\n";
+   cout << "    *******************************************************\n\n\n";
+   cout << "=====================================================================\n\n";
+   cout << "               A Finite Element Code for Steady-State\n";
+   cout << "           Analysis of Thermal Diffusion - Convection Problems\n";
+   cout << "                             in 2-D Geometries\n\n";
+   cout << "            STDC2 uses OFELI Library of Finite Element Classes\n\n";
+   cout << "                           V E R S I O N   2.0\n\n";
+   cout << "                     Copyright R. Touzani, 2008\n\n";
+   cout << "=====================================================================\n\n";
 
 // Read Mesh data and options
    try {
-      if (data.getVerbose()>1)
+      if (Verbosity>1)
          cout << "Reading mesh data ...\n";
       Mesh ms(data.getMeshFile(),true);
       Prescription p(ms,data.getPrescriptionFile());
-      if (data.getVerbose()>2)
+      if (Verbosity>2)
          cout << ms;
 
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
-      if (data.getVerbose()>1)
+      if (Verbosity>1)
          cout << "Allocating memory for matrix and R.H.S. ...\n";
       Vect<double> u(ms,"Temperature");
-      if (data.getVerbose()>1)
+      if (Verbosity>1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
 
       Vect<double> bc(ms), body_f(ms), bound_f(ms);
@@ -83,7 +81,7 @@ int main(int argc, char *argv[])
 //    Read velocity for convection
       Vect<double> v(ms,2);
       if (data.getInteger("v_flag")) {
-         if (data.getVerbose()>1)
+         if (Verbosity>1)
             cout << "Reading Velocity in file ...\n";
          IOField ff(data.getMeshFile(),data.getString("v_file"),ms,IOField::IN);
          ff.get(v);

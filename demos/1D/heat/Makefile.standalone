@@ -1,0 +1,15 @@
+
+all:	heat
+
+heat:	main.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o heat main.o `ofeli-config --libs`
+
+clean:
+	/bin/rm -f main.o heat
+
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

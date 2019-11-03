@@ -45,7 +45,7 @@ using std::setprecision;
 
 
 #include "OFELI_Config.h"
-#include "solvers/Prec.h"
+#include "solvers/Prec_impl.h"
 #include "util/util.h"
 #include "io/output.h"
 
@@ -67,9 +67,20 @@ template<class T_> class SpMatrix;
 template<class T_> class Prec;
 template<class T_> class Vect;
 
-/** \fn int CG(const SpMatrix<T_> &A, const Prec<T_> &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler, int verbose)
+/** \fn int CG(const SpMatrix<T_> &A, const Prec<T_> &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler)
  *  \ingroup Solver
  *  \brief Conjugate gradient solver function.
+ *  \details This function uses the preconditioned Conjugate Gradient algorithm to solve a
+ *  linear system with a sparse matrix.\n
+ *  The global variable Verbosity enables choosing output message level
+ *  <ul>
+ *    <li> Verbosity < 2 : No output message
+ *    <li> Verbosity > 1 : Notify executing the function CG
+ *    <li> Verbosity > 2 : Notify convergence with number of performed iterations or divergence
+ *    <li> Verbosity > 3 : Output each iteration number and residual
+ *    <li> Verbosity > 6 : Print final solution if convergence
+ *    <li> Verbosity > 10 : Print obtained solution at each iteration
+ *  </ul>
  *  @param [in] A Problem matrix (Instance of class SpMatrix).
  *  @param [in] P Preconditioner (Instance of class Prec).
  *  @param [in] b Right-hand side vector (class Vect)
@@ -77,13 +88,10 @@ template<class T_> class Vect;
  *  of the linear system in output (If iterations have succeeded).
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter
- *    - 0: No output
- *    - 1: Output iteration information,
- *    - 2 and greater: Output iteration information and solution at each iteration.
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (double, float, complex<double>, ...)
+ *
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
@@ -94,10 +102,9 @@ int CG(const SpMatrix<T_>& A,
        const Vect<T_>&     b,
        Vect<T_>&           x,
        int                 max_it,
-       real_t              toler,
-       int                 verbose)
+       real_t              toler)
 {
-   if (verbose>0)
+   if (Verbosity>2)
       cout << "Running preconditioned CG method ..." << endl;
    size_t size=x.size();
    real_t res, nrm=b.getNorm2();
@@ -107,8 +114,10 @@ int CG(const SpMatrix<T_>& A,
    Vect<T_> r(size), p(size), q(size), z(size);
    r = b - A*x;
    if ((res=r.getNorm2()/nrm) <= toler) {
-      if (verbose>1)
+      if (Verbosity>2)
          cout << "Convergence after 0 iterations." << endl;
+      if (Verbosity>6)
+         cout << "Solution:\n" << x;
       return 0;
    }
 
@@ -128,29 +137,40 @@ int CG(const SpMatrix<T_>& A,
       r -= alpha * q;
       res = r.getNorm2()/nrm;
 
-      if (verbose>1) {
-         cout << "Iteration: " << setw(4) << it;
-         cout << "  ... Residual: " << res << endl;
-      }
-      if (verbose>2)
-         cout << x;
+      if (Verbosity>3)
+         cout << "Iteration: " << setw(4) << it << ", ... Residual: " << res << endl;
+      if (Verbosity>10)
+         cout << "Solution at iteration " << it << ": \n" << x;
       if (res<=toler) {
          toler = res;
-         if (verbose)
+         if (Verbosity>2)
             cout << "Convergence after " << it << " iterations." << endl;
+         if (Verbosity>6)
+            cout << "Solution:\n" << x;
          return it;
       }
       rho_1 = rho;
    }
-   if (verbose)
+   if (Verbosity>2)
       cout << "No Convergence after " << it << " iterations." << endl;
    return -it;
 }
 
 
-/** \fn int CG(const SpMatrix<T_> &A, int prec, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler, int verbose)
+/** \fn int CG(const SpMatrix<T_> &A, int prec, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler)
  *  \ingroup Solver
  *  \brief Conjugate gradient solver function.
+ *  \details This function uses the preconditioned Conjugate Gradient algorithm to solve a
+ *  linear system with a sparse matrix.\n
+ *  The global variable Verbosity enables choosing output message level
+ *  <ul>
+ *    <li> Verbosity < 2 : No output message
+ *    <li> Verbosity > 1 : Notify executing the function CG
+ *    <li> Verbosity > 2 : Notify convergence with number of performed iterations or divergence
+ *    <li> Verbosity > 3 : Output each iteration number and residual
+ *    <li> Verbosity > 6 : Print final solution if convergence
+ *    <li> Verbosity > 10 : Print obtained solution at each iteration
+ *  </ul>
  *  @param [in] A Problem matrix (Instance of abstract class SpMatrix).
  *  @param [in] prec Enum variable selecting a preconditioner, among the values <tt>IDENT_PREC</tt>,
  *  <tt>DIAG_PREC</tt>, <tt>ILU_PREC</tt> or <tt>SSOR_PREC</tt>
@@ -159,10 +179,6 @@ int CG(const SpMatrix<T_>& A,
  *  of the linear system in output (If iterations have succeeded).
  *  @param [in] max_it Maximum number of iterations.
  *  @param [in] toler Tolerance for convergence (measured in relative weighted 2-Norm).
- *  @param [in] verbose Information output parameter
- *    - 0: No output
- *    - 1: Output iteration information,
- *    - 2 and greater: Output iteration information and solution at each iteration.
  *  @return Number of performed iterations,
  *
  * \tparam <T_> Data type (double, float, complex<double>, ...)
@@ -176,11 +192,10 @@ int CG(const SpMatrix<T_>& A,
        const Vect<T_>&     b,
        Vect<T_>&           x,
        int                 max_it,
-       real_t              toler,
-       int                 verbose)
+       real_t              toler)
 {
    Prec<T_> p(A,prec);
-   int nb_it = CG(A,p,b,x,max_it,toler,verbose);
+   int nb_it = CG(A,p,b,x,max_it,toler);
    return nb_it;
 }
 
@@ -191,11 +206,10 @@ int CG(const Matrix<T_>* A,
        const Vect<T_>&   b,
        Vect<T_>&         x,
        int               max_it,
-       real_t            toler,
-       int               verbose)
+       real_t            toler)
 {
    SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
-   return CG(AA,prec,b,x,max_it,toler,verbose);
+   return CG(AA,prec,b,x,max_it,toler);
 }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

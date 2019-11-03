@@ -69,10 +69,7 @@ class MyOpt
 
 /// \brief Constructor using mesh instance
 /// @param mesh Reference to Mesh instance
-    MyOpt(const Mesh& mesh)
-    {
-       _theMesh = &mesh;
-    }
+    MyOpt(Mesh& mesh) : _theMesh(&mesh) { }
 
 /// \brief Destructor
     virtual ~MyOpt() { }
@@ -81,20 +78,38 @@ class MyOpt
  *  @param [in] x Vector of optimization variables
  *  @return Value of objective
  */
-    virtual real_t Objective(const Vect<real_t>& x) = 0;
+    virtual real_t Objective(Vect<real_t>& x) = 0;
 
 /** \brief Virtual member function to define gradient vector of objective
  *  @param [in] x Vector of optimization variables
  *  @param [out] g Gradient vector
  */
-    virtual void Gradient(const Vect<real_t>& x,
-                          Vect<real_t>&       g)
+    virtual void Gradient(Vect<real_t>& x,
+                          Vect<real_t>& g)
     { }
+
+/** \brief Define equation instance
+ *  @param [in] eq Pointer to equation instance
+ *  @remark This member function is to be invoked in the user class defining the optimization problem
+ */
+    void setEquation(AbsEqua<real_t>* eq)
+    {
+       _theEqua = eq;
+    }
+
+/** \brief Get pointer to equation instance
+ *  @return Pointer to equation instance
+ */
+    AbsEqua<real_t>* getEquation() const
+    {
+       return _theEqua;
+    }
 
  protected:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   const Mesh *_theMesh;
+   Mesh            *_theMesh;
+   AbsEqua<real_t> *_theEqua;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

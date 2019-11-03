@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin18.2.0
-host_triplet = i386-apple-darwin18.2.0
+build_triplet = i386-apple-darwin19.0.0
+host_triplet = i386-apple-darwin19.0.0
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -291,10 +291,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 3.1.1
+PACKAGE_STRING = ofeli 4.0.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 3.1.1
+PACKAGE_VERSION = 4.0.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -304,7 +304,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 3.1.1
+VERSION = 4.0.0
 abs_builddir = /Users/touzani/ofeli/ofeli/src
 abs_srcdir = /Users/touzani/ofeli/ofeli/src
 abs_top_builddir = /Users/touzani/ofeli/ofeli
@@ -317,10 +317,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin18.2.0
+build = i386-apple-darwin19.0.0
 build_alias = 
 build_cpu = i386
-build_os = darwin18.2.0
+build_os = darwin19.0.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -328,10 +328,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin18.2.0
+host = i386-apple-darwin19.0.0
 host_alias = 
 host_cpu = i386
-host_os = darwin18.2.0
+host_os = darwin19.0.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -401,9 +401,8 @@ LAPLACE_OBJS = \
 			equations/laplace/Laplace1DL2.o \
 			equations/laplace/Laplace1DL3.o \
 			equations/laplace/Laplace2DT3.o \
+			equations/laplace/Laplace2DT6.o \
 			equations/laplace/Laplace3DT4.o \
-			equations/laplace/Laplace2DMHRT0.o \
-			equations/laplace/Laplace2DFVT.o \
 			equations/laplace/LaplaceDG2DP1.o \
 			equations/laplace/SteklovPoincare2DBE.o
 
@@ -535,7 +534,6 @@ POST_OBJS = \
 SHAPE_FUNCTIONS_OBJS = \
 			shape_functions/Hexa8.o \
 			shape_functions/Line2.o \
-			shape_functions/Line2H.o \
 			shape_functions/Line3.o \
 			shape_functions/Penta6.o \
 			shape_functions/Quad4.o \

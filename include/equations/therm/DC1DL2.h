@@ -66,105 +66,49 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
 /// \details Constructs an empty equation.
     DC1DL2();
 
-/// \brief Constructor for an element.
-    DC1DL2(const Element* el);
-
-/** \brief Constructor for an element (transient case).
-    @param el [in] Pointer to element
-    @param u [in] Vect instance that contains solution at previous time step
-    @param time [in] Current time value (Default value is <tt>0</tt>)
-*/
-    DC1DL2(const Element*      el,
-           const Vect<real_t>& u,
-           real_t              time=0.);
-
-/** \brief Constructor for an element (transient case) with specification of time integration scheme.
- *  @param [in] el Pointer to element.
- *  @param [in] u Vect instance that contains solution at previous time step.
- *  @param [in] time Current time value (Default value is <tt>0</tt>).
- *  @param [in] deltat Value of time step
- *  @param [in] scheme Time Integration Scheme:
- *  <ul>
- *    <li> <tt>FORWARD_EULER</tt> for Forward Euler scheme
- *    <li> <tt>BACKWARD_EULER</tt> for Backward Euler scheme
- *    <li> <tt>CRANK_NICOLSON</tt> for Crank-Nicolson Euler scheme
- *  </ul>
- */
-    DC1DL2(const Element*      el,
-           const Vect<real_t>& u,
-           real_t              time,
-           real_t              deltat,
-           int                 scheme);
-
 /// Constructor using mesh instance
 /// @param [in] ms Mesh instance
     DC1DL2(Mesh& ms);
+
+/** Constructor using mesh instance and solution vector
+ *  @param [in] ms Mesh instance
+ *  @param [in,out] u Vect instance containing solution vector
+ */ 
+    DC1DL2(Mesh&         ms,
+           Vect<real_t>& u);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// Constructors for a mesh
     DC1DL2(Mesh&         mesh,
            Vect<real_t>& b,
-           real_t&       t,
-           real_t&       ts)
-          : Equation<real_t,2,2,1,1>(mesh,b,t,ts) { }
+           real_t&       init_time,
+           real_t&       final_time,
+           real_t&       time_step)
+    : Equation<real_t,2,2,1,1>(mesh,b,init_time,final_time,time_step) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Destructor
     ~DC1DL2();
 
-/// \brief Build the linear system without solving
-    void build();
-
-/** \brief Add lumped capacity matrix to left-hand side after multiplying it by coefficient
+/** \brief Add lumped capacity matrix to element matrix after multiplying it by coefficient
  *  <tt>coef</tt>
  *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
  */
-    void LCapacityToLHS(real_t coef=1);
+    void LCapacity(real_t coef=1);
 
-/** \brief Add lumped capacity contribution to right-hand side after multiplying it by
- *  coefficient <tt>coef</tt>
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
-    void LCapacityToRHS(real_t coef=1);
-
-/** \brief Add lumped capacity contribution to left and right-hand sides after multiplying 
- *  it by coefficient <tt>coef</tt>
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
-    void LCapacity(real_t coef) { LCapacityToLHS(coef); LCapacityToRHS(coef); }
-
-/** \brief Add Consistent capacity matrix to left-hand side after multiplying it by 
+/** \brief Add Consistent capacity matrix to element matrix after multiplying it by 
  *  coefficient \c coef.
  *  @param [in] coef Coefficient to multiply by added term [default: 1]
  */
-    void CapacityToLHS(real_t coef=1);
-
-/** \brief Add Consistent capacity contribution to right-hand side after multiplying it 
- *  by coefficient <tt>coef</tt>
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
-    void CapacityToRHS(real_t coef=1);
-
-/** \brief Add Consistent capacity contribution to left and right-hand sides after 
- *  multiplying it by coefficient <tt>coef</tt>
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
     void Capacity(real_t coef=1);
 
-/** \brief Add diffusion matrix to left hand side after multiplying it by coefficient 
+/** \brief Add diffusion matrix to element matrix after multiplying it by coefficient 
  *  <tt>coef</tt>
  *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
  */
     void Diffusion(real_t coef=1);
 
-/** \brief Add diffusion contribution to right hand side after multiplying it by 
- *  coefficient <tt>coef</tt>
- *  \details To be used for explicit diffusion term
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
-    void DiffusionToRHS(real_t coef=1);
-
-/** \brief Add convection matrix to left-hand side after multiplying it by coefficient
+/** \brief Add convection matrix to element matrix after multiplying it by coefficient
  *  <tt>coef</tt>
  *  @param [in] v Constant velocity vector
  *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
@@ -172,7 +116,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
     void Convection(const real_t& v,
                     real_t        coef=1);
 
-/** \brief Add convection matrix to left-hand side after multiplying it by coefficient 
+/** \brief Add convection matrix to element matrix after multiplying it by coefficient 
  *  <tt>coef</tt>
  *  \details Case where velocity field is given by a vector <tt>v</tt>
  *  @param [in] v Velocity vector
@@ -181,54 +125,17 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
     void Convection(const Vect<real_t>& v,
                     real_t              coef=1);
 
-/** \brief Add convection matrix to left-hand side after multiplying it by coefficient 
+/** \brief Add convection matrix to element matrix after multiplying it by coefficient 
  *  <tt>coef</tt>
  *  \details Case where velocity field has been previouly defined
  *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
  */
     void Convection(real_t coef=1);
 
-/** \brief Add convection contribution to right-hand side after multiplying it by
- *  coefficient <tt>coef</tt>
- *  \details To be used for explicit convection term.
- *  @param [in] v Velocity vector
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
-    void ConvectionToRHS(const real_t& v,
-                         real_t        coef=1);
-
-/** \brief Add convection contribution to right-hand side after multiplying it by coefficient
- *  <tt>coef</tt>
- *  \details Case where velocity field has been previouly defined 
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
-    void ConvectionToRHS(real_t coef=1);
-
-/** \brief Add body right-hand side term to right hand side after multiplying it by 
- *  coefficient <tt>coef</tt>
- *  @param [in] ud Instance of UserData or of a derived class. Contains
- *  a member function that provides body source.
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
-    void BodyRHS(UserData<real_t>& ud,
-                 real_t            coef=1);
-
 /** \brief Add body right-hand side term to right hand side.
- *  @param [in] b Vector containing source at element nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] f Vector containing source at nodes.
  */
-    void BodyRHS(const Vect<real_t>& b,
-                       int           opt=GLOBAL_ARRAY);
-
-/** \brief Add boundary right-hand side term to right hand side after multiplying it by
- *  coefficient <tt>coef</tt>
- *  @param [in] ud Instance of \b UserData or of an inherited class. Contains
- *  a member function that provides body source.
- *  @param [in] coef Coefficient to multiply by added term [default: <tt>1</tt>]
- */
-    void BoundaryRHS(UserData<real_t>& ud,
-                     real_t            coef=1) { }
+    void BodyRHS(const Vect<real_t>& f);
 
 /// \brief Add boundary right-hand side flux to right hand side.
 /// @param [in] flux Vector containing source at side nodes.
@@ -236,12 +143,11 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
 
 /** \brief Add boundary right-hand side term to right hand side after multiplying it by 
  *  coefficient <tt>coef</tt>
- *  @param [in] b Vector containing source at side nodes.
+ *  @param [in] b Vector containing source at nodes.
  *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
  *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
  */
-    void BoundaryRHS(const Vect<real_t>& b,
-                     int                 opt=GLOBAL_ARRAY) { }
+    void BoundaryRHS(const Vect<real_t>& f) { }
 
 /// \brief Return (constant) heat flux in element.
     real_t Flux() const;
@@ -262,7 +168,6 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
                   Vect<real_t>& u);
 
  private:
-    TrMatrix<real_t> _A;
     void set(const Element* el);
     void set(const Side* sd) { }
 };

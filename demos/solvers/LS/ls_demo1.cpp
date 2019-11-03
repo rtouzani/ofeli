@@ -40,10 +40,11 @@ int main(int argc, char *argv[])
 {
 // Read system size
    if (argc<2) {
-      cout << "Usage: ls_demo1 <size>" << endl;
+      cout << "Usage: " << argv[0] << " <size>" << endl;
       return 0;
    }
    size_t n=atoi(argv[1]);
+   Verbosity = 4;
 
 // Initialize matrix and right-hand side vector
    try {

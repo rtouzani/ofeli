@@ -37,21 +37,14 @@
 
 #include <iostream>
 using std::ostream;
-using std::endl;
-using std::cerr;
-
-#include <iomanip>
-using std::setw;
 
 #include <string>
-using std::string;
 
 #include "OFELI_Config.h"
-#include "equations/AbsEqua.h"
 #include "linear_algebra/Vect.h"
-#include "linear_algebra/Assembly.h"
+#include "equations/AbsEqua.h"
 
-#define MAX_NB_PDES  10
+#define MAX_NB_DES  10
 
 namespace OFELI {
 /*!
@@ -60,6 +53,7 @@ namespace OFELI {
  */
 
 template class LinearSolver<real_t>;
+template class AbsEqua<real_t>;
 
 /*! \file TimeStepping.h
  *  \brief Definition file for class TimeStepping.
@@ -210,13 +204,13 @@ class TimeStepping
  *  \details This is useful if the linear system is solved by
  *  a factorization method but has no effect otherwise
  */
-    void setConstantMatrix() { _constant_matrix[_nb_pdes-1] = true; }
+    void setConstantMatrix() { _de[_nb_des-1].constant_matrix = true; }
 
 /** \brief Say that matrix problem is variable
  *  \details This is useful if the linear system is solved by
  *  a factorization method but has no effect otherwise
  */
-    void setNonConstantMatrix() { _constant_matrix[_nb_pdes-1] = false; }
+    void setNonConstantMatrix() { _de[_nb_des-1].constant_matrix = false; }
 
 /** \brief Set linear solver data
  *  @param [in] s Solver identification parameter.
@@ -234,8 +228,8 @@ class TimeStepping
 /** \brief Set vectors defining a nonlinear first order system of ODEs
  *  \details The ODE system has the form
  *     a1(u)' + a0(u) = 0
- *  @param [in] a0 Vect instance defining the 0-th order term
- *  @param [in] A0 Matrix instance
+ *  @param [in] a0 Reference to Vect instance defining the 0-th order term
+ *  @param [in] A0 Reference to Matrix instance
  */
     void setNLTerm0(Vect<real_t>&   a0,
                     Matrix<real_t>& A0);
@@ -243,9 +237,9 @@ class TimeStepping
 /** \brief Set vectors defining a nonlinear second order system of ODEs
  *  \details The ODE system has the form
  *     a2(u)'' + a1(u)' + a0(u) = 0
- *  @param [in] a0 Vect instance defining the 0-th order term
- *  @param [in] a1 Vect instance defining the first order term
- *  @param [in] a2 Vect instance defining the second order term
+ *  @param [in] a0 Reference to Vect instance defining the 0-th order term
+ *  @param [in] a1 Reference to Vect instance defining the first order term
+ *  @param [in] a2 Reference to Vect instance defining the second order term
  */
     void setNLTerm(Vect<real_t>& a0,
                    Vect<real_t>& a1,
@@ -280,50 +274,55 @@ class TimeStepping
  *  @param [in] A0 Pointer to matrix of 0-th order term (involving no time derivative)
  *  @param [in] A1 Pointer to matrix of first order term (involving time first derivative)
  *  @param [in] A2 Pointer to matrix of second order term (involving time second derivative)
- *  [Default: <tt>NULL</tt>]
+ *  [Default: <tt>nullptr</tt>]
 
  */
     void Assembly(const Element& el,
                   real_t*        b,
                   real_t*        A0,
                   real_t*        A1,
-                  real_t*        A2=NULL);
+                  real_t*        A2=nullptr);
 
 /** \brief Assemble side arrays into global matrix and right-hand side
  *  \details This member function is to be called from finite element equation
  *  classes
  *  @param [in] sd Reference to Side class
  *  @param [in] b Pointer to side right-hand side
- *  @param [in] A Pointer to matrix [Default: <tt>NULL</tt>]
+ *  @param [in] A Pointer to matrix [Default: <tt>nullptr</tt>]
  */
     void SAssembly(const Side& sd,
                    real_t*     b,
-                   real_t*     A=NULL);
+                   real_t*     A=nullptr);
 
 //-----------------------------   INSPECTORS  ----------------------------------
 
 /// \brief Return LinearSolver instance
     LinearSolver<real_t> &getLSolver() { return *_ls; }
 
-    friend ostream & operator<<(ostream&            s,
-                                const TimeStepping& ts);
+    friend std::ostream & operator<<(std::ostream& s,
+                                     TimeStepping& ts);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    struct DE {
+       AbsEqua<real_t> *eq;
+       Mesh *mesh;
+       int  nb_eq, nb_dof;
+       Iteration itsolver;
+       Preconditioner prec;
+       Vect<real_t> u, v, *w, f0, f1, *f2, b, *f01, f, *bc, bb, vv;
+       Vect<real_t> *du, ddu, dv, ddv, D, k1, k2, k3, k4;
+       Matrix<real_t> *A;
+       bool constant_matrix, expl, set_bc, nl;
+    };
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
 
-   AbsEqua<real_t> *_theEqua[MAX_NB_PDES];
-   Mesh *_theMesh[MAX_NB_PDES];
-   size_t _order, _nb_eq[MAX_NB_PDES], _nb_dof[MAX_NB_PDES], _nb_ssteps, _step, _sstep;
-   int _nb_pdes, _ind, _verb, _sc, _non_linear, _max_it;
-   Iteration _s[MAX_NB_PDES];
-   Preconditioner _p[MAX_NB_PDES];
-   bool _constant_matrix[MAX_NB_PDES], _regex, _explicit[MAX_NB_PDES], _set_bc[MAX_NB_PDES], _nl[MAX_NB_PDES];
-   Vect<real_t> _u[MAX_NB_PDES], _v[MAX_NB_PDES], *_w[MAX_NB_PDES], _f0[MAX_NB_PDES], _f1[MAX_NB_PDES];
-   Vect<real_t> *_f2[MAX_NB_PDES], _b[MAX_NB_PDES], *_f01[MAX_NB_PDES], _f[MAX_NB_PDES], *_bc[MAX_NB_PDES];
-   Vect<real_t> _bb[MAX_NB_PDES], _vv[MAX_NB_PDES];
-   Vect<real_t> *_du[MAX_NB_PDES], _ddu[MAX_NB_PDES], _dv[MAX_NB_PDES], _ddv[MAX_NB_PDES], _D[MAX_NB_PDES];
-   Vect<real_t> _k1[MAX_NB_PDES], _k2[MAX_NB_PDES], _k3[MAX_NB_PDES], _k4[MAX_NB_PDES];
+   vector<DE> _de;
+   size_t _order, _nb_ssteps, _step, _sstep;
+   int _nb_des, _ind, _verb, _sc, _non_linear, _max_it;
+   bool _regex;
    Vect<real_t> *_a0, *_a1, *_a2;
-   Matrix<real_t> *_A[MAX_NB_PDES];
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;
    real_t _beta, _gamma, _nl_toler;
    int _max_nl_it;
@@ -367,94 +366,28 @@ class TimeStepping
    void solveBDF2();
 
 // Functions to assemble the linear system for time integration schemes
-   void AssembleStationary(const Element& el,
-                           real_t*        eb,
-                           real_t*        eA0,
-                           real_t*        eA1,
-                           real_t*        eA2=NULL);
-   void SAssembleStationary(const Side& sd,
-                            real_t*     sb,
-                            real_t*     sA=NULL);
-   void AssembleForwardEuler(const Element& el,
-                             real_t*        eb,
-                             real_t*        eA0,
-                             real_t*        eA1,
-                             real_t*        eA2=NULL);
-   void SAssembleForwardEuler(const Side& sd,
-                              real_t*     sb,
-                              real_t*     sA=NULL);
-   void AssembleBackwardEuler(const Element& el,
-                              real_t*        eb,
-                              real_t*        eA0,
-                              real_t*        eA1,
-                              real_t*        eA2=NULL);
-   void SAssembleBackwardEuler(const Side& sd,
-                               real_t*     sb,
-                               real_t*     sA=NULL);
-   void AssembleCrankNicolson(const Element& el,
-                              real_t*        eb,
-                              real_t*        eA0,
-                              real_t*        eA1,
-                              real_t*        eA2=NULL);
-   void SAssembleCrankNicolson(const Side& sd,
-                               real_t*     sb,
-                               real_t*     sA=NULL);
-   void AssembleHeun(const Element& el,
-                     real_t*        eb,
-                     real_t*        eA0,
-                     real_t*        eA1,
-                     real_t*        eA2=NULL);
-   void SAssembleHeun(const Side& sd,
-                      real_t*     sb,
-                      real_t*     sA=NULL);
-   void AssembleAB2(const Element& el,
-                    real_t*        eb,
-                    real_t*        eA0,
-                    real_t*        eA1,
-                    real_t*        eA2=NULL);
-   void SAssembleAB2(const Side& sd,
-                     real_t*     sb,
-                     real_t*     sA=NULL);
-   void AssembleLeapFrog(const Element& el,
-                         real_t*        eb,
-                         real_t*        eA0,
-                         real_t*        eA1,
-                         real_t*        eA2=NULL);
-   void SAssembleLeapFrog(const Side& d,
-                          real_t*     sb,
-                          real_t*     sA=NULL);
-   void AssembleRK4(const Element& el,
-                    real_t*        eb,
-                    real_t*        eA0,
-                    real_t*        eA1,
-                    real_t*        eA2=NULL);
-   void AssembleRK3_TVD(const Element& el,
-                        real_t*        eb,
-                        real_t*        eA0,
-                        real_t*        eA1,
-                        real_t*        eA2=NULL);
-   void SAssembleRK4(const Side& sd,
-                     real_t*     sb,
-                     real_t*     sA=NULL);
-   void SAssembleRK3_TVD(const Side& sd,
-                         real_t*     sb,
-                         real_t*     sA=NULL);
-   void AssembleNewmark(const Element& el,
-                        real_t*        eb,
-                        real_t*        eA0,
-                        real_t*        eA1,
-                        real_t*        eA2=NULL);
-   void SAssembleNewmark(const Side& sd,
-                         real_t*     sb,
-                         real_t*     eA=NULL);
-   void AssembleBDF2(const Element& el,
-                     real_t*        eb,
-                     real_t*        eA0,
-                     real_t*        eA1,
-                     real_t*        eA2=NULL);
-   void SAssembleBDF2(const Side& sd,
-                      real_t*     sb,
-                      real_t*     sA=NULL);
+   void AssembleStationary(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleStationary(const Side& sd, real_t* sb, real_t* sA=nullptr);
+   void AssembleForwardEuler(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleForwardEuler(const Side& sd, real_t* sb, real_t* sA=nullptr);
+   void AssembleBackwardEuler(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleBackwardEuler(const Side& sd, real_t* sb, real_t* sA=nullptr);
+   void AssembleCrankNicolson(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleCrankNicolson(const Side& sd, real_t* sb, real_t* sA=nullptr);
+   void AssembleHeun(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleHeun(const Side& sd, real_t* sb, real_t* sA=nullptr);
+   void AssembleAB2(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleAB2(const Side& sd, real_t* sb, real_t* sA=nullptr);
+   void AssembleLeapFrog(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleLeapFrog(const Side& d, real_t* sb, real_t* sA=nullptr);
+   void AssembleRK4(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void AssembleRK3_TVD(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleRK4(const Side& sd, real_t* sb, real_t* sA=nullptr);
+   void SAssembleRK3_TVD(const Side& sd, real_t* sb, real_t* sA=nullptr);
+   void AssembleNewmark(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleNewmark(const Side& sd, real_t* sb, real_t* eA=nullptr);
+   void AssembleBDF2(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);
+   void SAssembleBDF2(const Side& sd, real_t* sb, real_t* sA=nullptr);
 
 // Functions to return the right-hand side for each time integration scheme
    Vect<real_t>& setRHS_Stationary();
@@ -485,6 +418,10 @@ class TimeStepping
    void eval(real_t t);
    void insertBC(const Vect<real_t>& b, Vect<real_t>& v);
    void insertBC0(const Vect<real_t>& b, Vect<real_t>& v);
+   map<int,std::string> _scs;
+
+   std::map<TimeScheme,int> _sch;
+   void setScheme();
 };
 
 /** \fn ostream & operator<<(ostream& s, const TimeStepping &ts)
@@ -494,8 +431,8 @@ class TimeStepping
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
-    ostream & operator<<(ostream&            s,
-                         const TimeStepping& ts);
+    ostream& operator<<(ostream&      s,
+                        TimeStepping& ts);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

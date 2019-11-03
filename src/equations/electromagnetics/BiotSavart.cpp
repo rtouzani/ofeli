@@ -33,6 +33,7 @@
 #include "shape_functions/Tetra4.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
@@ -43,8 +44,8 @@ BiotSavart::BiotSavart()
    _C = false;
    _bound = false;
    _code = 0;
-   _theEdgeList = NULL;
-   _theSideList = NULL;
+   _theEdgeList = nullptr;
+   _theSideList = nullptr;
 }
 
 
@@ -54,12 +55,15 @@ BiotSavart::BiotSavart(Mesh &ms)
    _C = false;
    _bound = false;
    _code = 0;
-   _theEdgeList = NULL;
-   _theSideList = NULL;
+   _theEdgeList = nullptr;
+   _theSideList = nullptr;
 }
 
 
-BiotSavart::BiotSavart(Mesh &ms, const Vect<real_t> &J, Vect<real_t> &B, int code)
+BiotSavart::BiotSavart(Mesh&               ms,
+                       const Vect<real_t>& J,
+                       Vect<real_t>&       B,
+                       int                 code)
 {
    _mu = 4*OFELI_PI*1.e-7;
    _theMesh = &ms;
@@ -69,8 +73,8 @@ BiotSavart::BiotSavart(Mesh &ms, const Vect<real_t> &J, Vect<real_t> &B, int cod
    _C = false;
    _bound = false;
    _type = J.getDOFType();
-   _theEdgeList = NULL;
-   _theSideList = NULL;
+   _theEdgeList = nullptr;
+   _theSideList = nullptr;
    _J = &J;
    if (_type==SIDE_FIELD)
       _theSideList = new SideList(*_theMesh);
@@ -79,7 +83,10 @@ BiotSavart::BiotSavart(Mesh &ms, const Vect<real_t> &J, Vect<real_t> &B, int cod
 }
 
 
-BiotSavart::BiotSavart(Mesh &ms, const Vect<complex_t> &J, Vect<complex_t> &B, int code)
+BiotSavart::BiotSavart(Mesh&                  ms,
+                       const Vect<complex_t>& J,
+                       Vect<complex_t>&       B,
+                       int                    code)
 {
    _mu = 4*OFELI_PI*1.e-7;
    _theMesh = &ms;
@@ -89,8 +96,8 @@ BiotSavart::BiotSavart(Mesh &ms, const Vect<complex_t> &J, Vect<complex_t> &B, i
    _C = true;
    _bound = false;
    _type = J.getDOFType();
-   _theEdgeList = NULL;
-   _theSideList = NULL;
+   _theEdgeList = nullptr;
+   _theSideList = nullptr;
    _JC = &J;
    if (_type==SIDE_FIELD)
       _theSideList = new SideList(*_theMesh);

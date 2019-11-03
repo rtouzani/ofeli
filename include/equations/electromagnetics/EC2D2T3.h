@@ -40,8 +40,6 @@
 #include "linear_algebra/SpMatrix.h"
 #include "linear_algebra/SkMatrix.h"
 
-#define GAUSS2 0.577350269189625764509148780501957
-
 namespace OFELI {
 /*!
  *  \addtogroup OFELI
@@ -72,14 +70,19 @@ class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
  public :
 
 /// \brief Default Constructor
-    EC2D2T3() {
-    }
+    EC2D2T3();
 
-/// \brief Constructor using element data
-    EC2D2T3(const Element* el);
+/** \brief Constructor using mesh
+ *  @param [in] ms Mesh instance
+ */
+    EC2D2T3(Mesh& ms);
 
-/// \brief Constructor using one side data
-    EC2D2T3(const Side* sd);
+/** \brief Constructor using mesh and solution vector
+ *  @param [in] ms Mesh instance
+ *  @param [in,out] u Vect instance containing solution
+ */
+    EC2D2T3(Mesh&         ms,
+            Vect<real_t>& u);
 
 /// \brief Constructor using two side data
     EC2D2T3(const Side* sd1,
@@ -112,11 +115,9 @@ class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
 
  private:
 
-   real_t        _ll1, _ll2, _a3, _area;
-   LocalVect<Point<real_t>,3> _N;
+   real_t        _ll1, _ll2;
    Point<real_t> _N1, _N2, _M1, _M2;
    size_t        _ns, _nt, _i1, _j1, _i2, _j2;
-   Triang3       _tr;
    size_t _log_det(const Point<real_t> &ck, const Point<real_t> &cl);
    complex_t _ablog(size_t det, complex_t a, complex_t b, real_t t);
    void _Lkl(const Point<real_t> &uk, const Point<real_t> &vk,

@@ -33,6 +33,7 @@
 #ifndef __EQUA_POROUS_H
 #define __EQUA_POROUS_H
 
+#include "mesh/Material.h"
 #include "equations/Equation.h"
 #include "solvers/TimeStepping.h"
 
@@ -51,6 +52,7 @@ namespace OFELI {
  */
 
 
+extern Material theMaterial;
 class Element;
 class Side;
 
@@ -77,10 +79,7 @@ class Equa_Porous : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_scheme;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time_step;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_time;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_final_time;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_A;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_b;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_uu;
@@ -92,7 +91,12 @@ class Equa_Porous : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA1;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eRHS;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sRHS;
-
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
@@ -100,7 +104,7 @@ class Equa_Porous : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     {
        _terms = MASS|MOBILITY;
        _analysis = STEADY_STATE;
-       _time_scheme = STATIONARY;
+       _TimeInt.scheme = NONE;
        _phi_is_set = _permeability_is_set = false;
     }
 
@@ -114,20 +118,14 @@ class Equa_Porous : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     virtual void Mass() { }
 
 /** \brief Add source right-hand side term to right-hand side.
- *  @param [in] bf Vector containing source at element nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] bf Vector containing source at nodes.
  */
-    virtual void BodyRHS(const Vect<real_t>& bf,
-                         int                 opt=GLOBAL_ARRAY) { }
+    virtual void BodyRHS(const Vect<real_t>& bf) { }
 
 /** \brief Add boundary right-hand side term to right-hand side.
- *  @param [in] sf Vector containing source at side nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] sf Vector containing source at nodes.
  */
-    virtual void BoundaryRHS(const Vect<real_t>& sf,
-                             int                 opt=GLOBAL_ARRAY) { }
+    virtual void BoundaryRHS(const Vect<real_t>& sf) { }
 
 /** \brief Build the linear system of equations
  *  \details Before using this function, one must have properly selected 
@@ -165,7 +163,7 @@ class Equa_Porous : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           if (_terms&MOBILITY)
              Mobility();
           if (_terms&SOURCE && _bf)
-             BodyRHS(*_bf,GLOBAL_ARRAY);
+             BodyRHS(*_bf);
           s.Assembly(TheElement,eRHS.get(),eA0.get(),eA1.get());
        }
        MESH_SD {
@@ -173,7 +171,7 @@ class Equa_Porous : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
              set(theSide);
              this->SideVector(*_u);
              if (_terms&FLUX && _bf)
-                BoundaryRHS(*_bf,GLOBAL_ARRAY);
+                BoundaryRHS(*_bf);
              s.SAssembly(TheSide,sRHS.get());
           }
        }

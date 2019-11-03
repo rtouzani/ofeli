@@ -126,7 +126,6 @@ class LaplaceDG2DP1 : public DG {
 
    LocalMatrix<real_t,2,2> _K;
    LocalVect<real_t,3> _F1, _F2, _z;
-   LocalVect<Point<real_t>,3> _dSh;
    LocalVect<size_t,2> _is;
    LocalVect<size_t,3> _ls1, _ls2;
    real_t _sigma, _eps;

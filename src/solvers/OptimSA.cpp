@@ -271,7 +271,7 @@ int OptimSA(OptSolver&          opt,
 
    real_t ranmar(void);
    
-   srand((unsigned)time(NULL));
+   srand((unsigned)time(nullptr));
    nacc = nobds = nb_obj_eval = 0;
    nacp = 0;
    fstar = 1.e20;

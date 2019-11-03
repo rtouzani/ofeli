@@ -72,28 +72,24 @@ class Partition
 //----------------------------   BASIC OPERATIONS   -----------------------------
 
 /// \brief Default constructor
-    Partition() : _theMesh(NULL), _nb_submesh(1), _verbose(0) { }
+    Partition() : _theMesh(nullptr), _nb_submesh(1) { }
 
 /** \brief Constructor to partition a mesh into submeshes
  *  @param [in] mesh Mesh instance
  *  @param [in] n Number of submeshes
- *  @param [in] verb Verbosity parameter [Default: <tt>0</tt>]
  */
     Partition(Mesh&  mesh,
-              size_t n,
-              int    verb=0);
+              size_t n);
 
 /** \brief Constructor using already created submeshes
  *  @param [in] mesh Mesh instance
  *  @param [in] n Number of submeshes
  *  @param [in] epart Vector containing for each element its submesh label
  *  (Running from 0 to <tt>n-1</tt>
- *  @param [in] verb Verbosity parameter [Default: <tt>0</tt>]
  */
     Partition(Mesh&        mesh,
               int          n,
-              vector<int>& epart,
-              int          verb=0);
+              vector<int>& epart);
 
 /// \brief Destructor
     ~Partition();
@@ -199,9 +195,6 @@ class Partition
 
 //-----------------------------   MODIFIERS  -----------------------------------
 
-/// \brief Set Message Level
-    void setVerbose(int verb) { _verbose = verb; }
-
 /// \brief Set Mesh instance
     void set(Mesh&  mesh,
              size_t n);
@@ -218,7 +211,7 @@ class Partition
    vector<Mesh *> _theSubMesh;
    vector<size_t> _nb_interface_sides;
    size_t         **_sm2m_node, **_m2sm_node, **_sm2m_element, **_m2sm_element;
-   int            _nb_submesh, _verbose;
+   int            _nb_submesh;
    Interface      **_interface_side;
    vector<int>    _npart, _epart;
    vector<vector<size_t> > _node_neig, _nnz;

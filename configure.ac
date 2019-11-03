@@ -29,7 +29,7 @@ sinclude([VERSION])
 AC_SUBST(VERSION)
 AC_SUBST(RELEASE)
 
-AC_INIT([ofeli], 3.1.1)
+AC_INIT([ofeli], 4.0.0)
 AC_CONFIG_SRCDIR([src/mesh/Mesh.cpp])
 AM_INIT_AUTOMAKE
 
@@ -325,8 +325,9 @@ fi
 
 # List of executables
 util_exes="g2m cmesh cfield vmesh "
-tutorial_exes="lesson1 lesson2 lesson3 lesson4 "
-demo_exes="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz ec2d1 ls_demo1 ls_demo2 "
+demo_exes="elliptic heat transport "
+demo_exes+="laplace_demo1 laplace_demo2 laplace_demo3 laplace_demo4 "
+demo_exes+="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz ls_demo1 ls_demo2 "
 demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2 "
 demo_exes+="opt_demo1 opt_demo2 nl_demo1 nl_demo2 nl_demo3 nl_demo4 "
 
@@ -379,19 +380,17 @@ AC_OUTPUT(
    material/Makefile
    util/Makefile
    util/g2m/Makefile
-   util/g2m/src/Makefile
-   util/g2m/examples/Makefile
    util/conv/Makefile
    util/conv/src/Makefile
    util/conv/examples/Makefile
    util/conv/matlab/Makefile
    util/vmesh/Makefile
-   tutorial/Makefile
-   tutorial/lesson1/Makefile
-   tutorial/lesson2/Makefile
-   tutorial/lesson3/Makefile
-   tutorial/lesson4/Makefile
    demos/Makefile
+   demos/1D/Makefile
+   demos/1D/elliptic/Makefile
+   demos/1D/heat/Makefile
+   demos/1D/transport/Makefile
+   demos/laplace/Makefile
    demos/thermal/Makefile
    demos/thermal/std3/Makefile
    demos/thermal/stdc2/Makefile
@@ -409,7 +408,6 @@ AC_OUTPUT(
    demos/fluid/euler-2d/Makefile
    demos/electromagnetics/Makefile
    demos/electromagnetics/Helmholtz/Makefile
-   demos/electromagnetics/EddyCurrent2d-1/Makefile
    demos/solvers/Makefile
    demos/solvers/LS/Makefile
    demos/solvers/ODE/Makefile
@@ -423,7 +421,6 @@ AC_OUTPUT(
    doc/demos/Makefile
    doc/im/Makefile
    doc/css/Makefile
-   doc/tutorial/Makefile
    doc/presentations/Makefile
    tools/Makefile
    tools/CodeBlocks/Makefile
@@ -431,7 +428,6 @@ AC_OUTPUT(
    tools/msvcpp/beam/Makefile
    tools/msvcpp/cfield/Makefile
    tools/msvcpp/contact/Makefile
-   tools/msvcpp/ec2d1/Makefile
    tools/msvcpp/eigen_demo1/Makefile
    tools/msvcpp/eigen_demo2/Makefile
    tools/msvcpp/euler_2d/Makefile
@@ -439,10 +435,6 @@ AC_OUTPUT(
    tools/msvcpp/helmholtz/Makefile
    tools/msvcpp/lelas2d/Makefile
    tools/msvcpp/lelas3d/Makefile
-   tools/msvcpp/lesson1/Makefile
-   tools/msvcpp/lesson2/Makefile
-   tools/msvcpp/lesson3/Makefile
-   tools/msvcpp/lesson4/Makefile
    tools/msvcpp/lh2d/Makefile
    tools/msvcpp/ofeli/Makefile
    tools/msvcpp/std3/Makefile
@@ -475,7 +467,6 @@ echo "  - C++ compiler        : ${CXX}"
 echo "  - Exe linker          : ${CXX}"
 echo "  - C++ flags           : ${CPPFLAGS}"
 echo "  - Utility executables : ${util_exes}"
-echo "  - Tutorial executables: ${tutorial_exes}"
 echo "  - Demo executables    : ${demo_exes}"
 echo "********************************************************************"
 echo ""

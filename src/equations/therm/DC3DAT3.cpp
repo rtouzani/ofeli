@@ -35,48 +35,14 @@
 #include "equations/therm/DC3DAT3.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
+#include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/LocalMatrix_impl.h"
 
 namespace OFELI {
 
 
 DC3DAT3::DC3DAT3()
 {
-}
-
-
-DC3DAT3::DC3DAT3(const Element* el)
-{
-   set(el);
-}
-
-
-DC3DAT3::DC3DAT3(const Side* sd)
-{
-   set(sd);
-}
-
-
-DC3DAT3::DC3DAT3(const Element*      el,
-                 const Vect<real_t>& u,
-                 real_t              time)
-{
-   set(el);
-   _time = time;
-   ElementVector(u);
-}
-
-
-DC3DAT3::DC3DAT3(const Element*      el,
-                 const Vect<real_t>& u,
-                 real_t              time,
-                 real_t              deltat,
-                 int                 scheme)
-{
-   set(el);
-   _time = time;
-   ElementVector(u);
-   _time_step = deltat;
-   setTimeIntegration(scheme);
 }
 
 
@@ -91,27 +57,15 @@ DC3DAT3::DC3DAT3(Mesh& ms)
 }
 
 
-DC3DAT3::DC3DAT3(const Side*         sd,
-                 const Vect<real_t>& u,
-                 real_t              time)
+DC3DAT3::DC3DAT3(Mesh&         ms,
+                 Vect<real_t>& u)
+        : Equation<real_t,3,3,2,2>(ms,u)
 {
-   set(sd);
-   _time = time;
-   SideVector(u);
-}
-
-
-DC3DAT3::DC3DAT3(const Side*         sd,
-                 const Vect<real_t>& u,
-                 real_t              time,
-                 real_t              deltat,
-                 int                 scheme)
-{
-   set(sd);
-   _time = time;
-   SideVector(u);
-   _time_step = deltat;
-   setTimeIntegration(scheme);
+   _equation_name = "Diffusion/Convection";
+   _finite_element = "2-D, 3-Node Axisymmetric Triangles (P1)";
+   _stab = false;
+   setMatrixType(SPARSE);
+   setSolver(GMRES_SOLVER,DILU_PREC);
 }
 
 
@@ -120,172 +74,100 @@ DC3DAT3::~DC3DAT3() { }
 
 void DC3DAT3::set(const Element* el)
 {
-   _nb_dof = 1;
-   Init(el);
+   _theElement = el, _theSide = nullptr;
    setMaterial();
    Triang3 tr(_theElement);
-   _area = tr.getArea();
-   _center = tr.getCenter();
-   _dSh(1) = tr.DSh(1);
-   _dSh(2) = tr.DSh(2);
-   _dSh(3) = tr.DSh(3);
-   _h = 2*tr.getCircumRadius();
+   _el_geo.area = tr.getArea();
+   _dSh = tr.DSh();
    ElementNodeCoordinates();
-   eMat = 0;
+   ElementVector(*_u);
+   eA0 = 0, eA1 = 0;
    eRHS = 0;
 }
 
 
 void DC3DAT3::set(const Side* sd)
 {
-   _nb_dof = 1;
-   Init(sd);
+   _theElement = nullptr, _theSide = sd;
    Line2 ln(sd);
    SideNodeCoordinates();
-   _center = ln.getCenter();
-   _length = ln.getLength();
+   _el_geo.length = ln.getLength();
    _r[0] = _x[0].x; _r[1] = _x[1].x;
    sMat = 0;
    sRHS = 0;
 }
 
 
-void DC3DAT3::build()
+void DC3DAT3::LCapacity(real_t coef)
 {
-   Equa_Therm<real_t,3,3,2,2>::build();
+   real_t c = OFELI_THIRD*_el_geo.area*_rhocp*coef;
+   eA1(1,1) += c*_r[0];
+   eA1(2,2) += c*_r[1];
+   eA1(3,3) += c*_r[2];
 }
 
 
-void DC3DAT3::LCapacityToLHS(real_t coef)
+void DC3DAT3::Capacity(real_t coef)
 {
-   real_t c = OFELI_THIRD*_area*_rhocp*coef;
-   eMat(1,1) += c*_r[0];
-   eMat(2,2) += c*_r[1];
-   eMat(3,3) += c*_r[2];
-}
-
-
-void DC3DAT3::CapacityToLHS(real_t coef)
-{
-   real_t c = 0.5*OFELI_TWELVETH*_area*_rhocp*coef;
-   eMat(1,1) += c*(2*_r[0] + _r[1] + _r[2]);
-   eMat(2,2) += c*(_r[0] + 2*_r[1] + _r[2]);
-   eMat(3,3) += c*(_r[0] + _r[1] + 2*_r[2]);
-   eMat(1,2) += c*(_r[0]+_r[1]); eMat(2,1) += c*(_r[0]+_r[1]);
-   eMat(2,3) += c*(_r[1]+_r[2]); eMat(3,2) += c*(_r[1]+_r[2]);
-   eMat(1,3) += c*(_r[0]+_r[2]); eMat(3,1) += c*(_r[0]+_r[2]);
-}
-
-
-void DC3DAT3::LCapacityToRHS(real_t coef)
-{
-   real_t c = OFELI_THIRD*_area*_rhocp*coef;
-   eRHS(1) += c*_r[0]*ePrev(1);
-   eRHS(2) += c*_r[1]*ePrev(2);
-   eRHS(3) += c*_r[2]*ePrev(3);
-}
-
-
-void DC3DAT3::CapacityToRHS(real_t coef)
-{
-   real_t m11, m22, m33, m12, m23, m13;
-   real_t c = 0.5*OFELI_TWELVETH*_area*_rhocp*coef;
-   m11 = c*(2*_r[0] + _r[1] + _r[2]);
-   m22 = c*(_r[0] + 2*_r[1] + _r[2]);
-   m33 = c*(_r[0] + _r[1] + 2*_r[2]);
-   m12 = c*(_r[0]+_r[1]);
-   m23 = c*(_r[1]+_r[2]);
-   m13 = c*(_r[0]+_r[2]);
-   eRHS(1) += m11*ePrev(1) + m12*ePrev(2) + m13*ePrev(3);
-   eRHS(2) += m12*ePrev(1) + m22*ePrev(2) + m23*ePrev(3);
-   eRHS(3) += m13*ePrev(1) + m23*ePrev(2) + m33*ePrev(3);
+   real_t c = 0.5*OFELI_TWELVETH*_el_geo.area*_rhocp*coef;
+   eA1(1,1) += c*(2*_r[0] + _r[1] + _r[2]);
+   eA1(2,2) += c*(_r[0] + 2*_r[1] + _r[2]);
+   eA1(3,3) += c*(_r[0] + _r[1] + 2*_r[2]);
+   eA1(1,2) += c*(_r[0]+_r[1]); eA1(2,1) += c*(_r[0]+_r[1]);
+   eA1(2,3) += c*(_r[1]+_r[2]); eA1(3,2) += c*(_r[1]+_r[2]);
+   eA1(1,3) += c*(_r[0]+_r[2]); eA1(3,1) += c*(_r[0]+_r[2]);
 }
 
 
 void DC3DAT3::Diffusion(real_t coef)
 {
-   real_t c = coef*OFELI_THIRD*_area*_diff*(_r[0]+_r[1]+_r[2]);
+   real_t c = coef*OFELI_THIRD*_el_geo.area*_diff*(_r[0]+_r[1]+_r[2]);
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
-         eMat(i,j) += c*(_dSh(i)*_dSh(j));
-}
-
-
-void DC3DAT3::DiffusionToRHS(real_t coef)
-{
-   real_t c = coef*OFELI_THIRD*_area*_diff*(_r[0]+_r[1]+_r[2]);
-   for (size_t i=1; i<=3; i++) {
-      Point<real_t> z = c*_dSh(i);
-      eRHS(i) += z*(ePrev(1)*_dSh(1) + ePrev(2)*_dSh(2) + ePrev(3)*_dSh(3));
-   }
+         eA0(i,j) += c*(_dSh[i-1],_dSh[j-1]);
 }
 
 
 void DC3DAT3::Diffusion(const LocalMatrix<real_t,2,2>& diff,
-                              real_t                   coef)
+                        real_t                         coef)
 {
-   real_t c = coef*OFELI_THIRD*_area*(_r[0]+_r[1]+_r[2]);
+   real_t c = coef*OFELI_THIRD*_el_geo.area*(_r[0]+_r[1]+_r[2]);
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
-         eMat(i,j) += c*(diff(1,1)*_dSh(i).x*_dSh(j).x + diff(2,2)*_dSh(i).y*_dSh(j).y
-                       + diff(1,2)*_dSh(i).y*_dSh(j).x + diff(2,1)*_dSh(i).x*_dSh(j).y);
+         eA0(i,j) += c*(diff(1,1)*_dSh[i-1].x*_dSh[j-1].x + diff(2,2)*_dSh[i-1].y*_dSh[j-1].y
+                      + diff(1,2)*_dSh[i-1].y*_dSh[j-1].x + diff(2,1)*_dSh[i-1].x*_dSh[j-1].y);
 }
 
 
-void DC3DAT3::BodyRHS(UserData<real_t>& ud)
+void DC3DAT3::BodyRHS(const Vect<real_t>& f)
 {
-   real_t c = OFELI_SIXTH*_area;
-   Point<real_t> x = 0.5*(_x[0]+_x[1]);
-   Point<real_t> y = 0.5*(_x[1]+_x[2]);
-   Point<real_t> z = 0.5*(_x[0]+_x[2]);
-   eRHS(1) += c*(ud.BodyForce(z,_time)*(_r[0]+_r[2]) + ud.BodyForce(x,_time)*(_r[0]+_r[1]));
-   eRHS(2) += c*(ud.BodyForce(x,_time)*(_r[0]+_r[1]) + ud.BodyForce(y,_time)*(_r[2]+_r[1]));
-   eRHS(3) += c*(ud.BodyForce(z,_time)*(_r[0]+_r[2]) + ud.BodyForce(y,_time)*(_r[1]+_r[2]));
-}
-
-
-void DC3DAT3::BodyRHS(const Vect<real_t>& bf,
-                            int           opt)
-{
-   real_t c = 0.125*OFELI_THIRD*_area;
-   if (opt==LOCAL_ARRAY) {
-      eRHS(1) += c*((bf[0]+bf[2])*(_r[0]+_r[2]) + (bf[0]+bf[1])*(_r[0]+_r[1]));
-      eRHS(2) += c*((bf[0]+bf[1])*(_r[0]+_r[1]) + (bf[1]+bf[2])*(_r[1]+_r[2]));
-      eRHS(3) += c*((bf[0]+bf[2])*(_r[0]+_r[2]) + (bf[1]+bf[2])*(_r[1]+_r[2]));
-   }
-   else {
-      real_t f1 = bf(_theElement->getNodeLabel(1)) + bf(_theElement->getNodeLabel(3));
-      real_t f2 = bf(_theElement->getNodeLabel(1)) + bf(_theElement->getNodeLabel(2));
-      real_t f3 = bf(_theElement->getNodeLabel(2)) + bf(_theElement->getNodeLabel(3));
-      eRHS(1) += c*(f1*(_r[0]+_r[2]) + f2*(_r[0]+_r[1]));
-      eRHS(2) += c*(f2*(_r[0]+_r[1]) + f3*(_r[1]+_r[2]));
-      eRHS(3) += c*(f1*(_r[0]+_r[2]) + f3*(_r[1]+_r[2]));
-   }
+   real_t c = 0.125*OFELI_THIRD*_el_geo.area;
+   real_t f1 = f((*_theElement)(1)->n()) + f((*_theElement)(3)->n());
+   real_t f2 = f((*_theElement)(1)->n()) + f((*_theElement)(2)->n());
+   real_t f3 = f((*_theElement)(2)->n()) + f((*_theElement)(3)->n());
+   eRHS(1) += c*(f1*(_r[0]+_r[2]) + f2*(_r[0]+_r[1]));
+   eRHS(2) += c*(f2*(_r[0]+_r[1]) + f3*(_r[1]+_r[2]));
+   eRHS(3) += c*(f1*(_r[0]+_r[2]) + f3*(_r[1]+_r[2]));
 }
 
 
 void DC3DAT3::BoundaryRHS(real_t flux)
 {
-   sRHS(1) += 0.5*flux*_length*_r[0];
-   sRHS(2) += 0.5*flux*_length*_r[1];
+   sRHS(1) += 0.5*flux*_el_geo.length*_r[0];
+   sRHS(2) += 0.5*flux*_el_geo.length*_r[1];
 }
 
 
-void DC3DAT3::BoundaryRHS(const Vect<real_t>& sf,
-                                int           opt)
+void DC3DAT3::BoundaryRHS(const Vect<real_t>& f)
 {
-  if (opt==LOCAL_ARRAY)
-      for (size_t i=1; i<=2; i++)
-         sRHS(i) += sf(i)*0.5*_length*_r[0];
-   else
-      for (size_t i=1; i<=2; i++)
-         sRHS(i) += sf((*_theSide)(i)->n())*0.5*_length*_r[1];
+   for (size_t i=1; i<=2; i++)
+      sRHS(i) += f((*_theSide)(i)->n())*0.5*_el_geo.length*_r[1];
 }
 
 
 Point<real_t> &DC3DAT3::Grad(const Vect<real_t>& u)
 {
-   _grad = u[0]*_dSh(1) + u[1]*_dSh(2) + u[2]*_dSh(3);
+   _grad = u[0]*_dSh[0] + u[1]*_dSh[1] + u[2]*_dSh[2];
    return _grad;
 }
 

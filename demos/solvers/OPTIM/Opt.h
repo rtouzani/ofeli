@@ -25,8 +25,8 @@
 
   ==============================================================================
 
-        User defined class to define the objective for an optimization
-                      problem associated to a PDE
+          User defined class to define the objective for an optimization
+                         problem associated to a PDE
 
   ==============================================================================*/
 
@@ -36,6 +36,7 @@
 #include "OFELI.h"
 #include "solvers/MyOpt.h"
 #include "Therm.h"
+
 using namespace OFELI;
 
 class Opt : public MyOpt
@@ -46,40 +47,32 @@ class Opt : public MyOpt
 /* Constructor using the Mesh instance
  * mesh (in) Mesh instance
  */
-   Opt(const Mesh& mesh) : MyOpt(mesh)
-   { }
-
+   Opt(Mesh& mesh) : MyOpt(mesh)
+   {
+      setEquation(&eq);
+      eq.setMesh(*_theMesh);
+   }
 
 /* Function to define the objective
  * x (in) Vector of optimization variables
  * Return value: Objective
  */
-   double Objective(const Vect<double>& x)
+   double Objective(Vect<double>& x)
    {
-      double f = 0.;
-      MeshElements(*_theMesh) {
-         DC2DT3 eq(theElement);
-         f += eq.Energy(Vect<double>(theElement,x));
-      }
-      return f;
+      return eq.Energy(x);
    }
 
 /* Function to define the gradient
  * x (in) Vector of optimization variables
  * g (out) Vector of gradient
  */
-   void Gradient(const Vect<double>& x,
-                 Vect<double>&       g)
+   void Gradient(Vect<double>& x,
+                 Vect<double>& g)
    {
-      g = 0.;
-//    The gradient is assembled element by element
-      MeshElements(*_theMesh) {
-         DC2DT3 eq(theElement);
-         eq.EnerGrad(Vect<double>(theElement,x));
-         eq.ElementAssembly(g);
-      }
+      eq.EnergyGrad(x,g);
    }
 
+   DC2DT3 eq;
 };
 
 #endif

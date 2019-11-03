@@ -56,9 +56,10 @@ int main(int argc, char *argv[])
 {
    theFinalTime = 1.;
    if (argc<2) {
-      cout << "Usage: ode_demo3 <time step>" << endl;
+      cout << "Usage: " << argv[0] << " <time step>" << endl;
       return 0;
    }
+   Verbosity = 4;
    theTimeStep = atof(argv[1]);
 
 // Solution as a system of 2 first-order ODEs

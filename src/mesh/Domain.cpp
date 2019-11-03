@@ -1,7 +1,11 @@
 /*==============================================================================
+
                                     O  F  E  L  I
+
                           Object  Finite  Element  Library
+
   ==============================================================================
+
    Copyright (C) 1998 - 2019 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
@@ -14,21 +18,33 @@
    GNU Lesser General Public License for more details.
    You should have received a copy of the GNU Lesser General Public License
    along with OFELI. If not, see <http://www.gnu.org/licenses/>.
+
   ==============================================================================
+
                          Implementation of class 'Domain'
+
   ==============================================================================*/
+
+#include <algorithm>
 
 #include "mesh/Domain.h"
 #include "mesh/saveMesh.h"
-#include "mesh/Mesh.h"
+#include "mesh/getMesh.h"
 #include "io/XMLParser.h"
-#include <algorithm>
+#include "util/util.h"
+#include "io/fparser/fparser.h"
+#include "linear_algebra/Vect_impl.h"
+#include "mesh/bamg/Mesh2.h"
+#include "mesh/bamg/Meshio.h"
+#include "mesh/bamg/QuadTree.h"
+#include "mesh/bamg/R2.h"
 #include "OFELIException.h"
+extern FunctionParser theParser;
 
 namespace OFELI {
 
 Domain::Domain()
-       : _ff(NULL), _theMesh(NULL), _output_file("out.m"), _nb_vertices(0), _nb_lines(0),
+       : _ff(nullptr), _theMesh(nullptr), _output_file("out.m"), _nb_vertices(0), _nb_lines(0),
          _nb_contours(0), _nb_holes(0), _sub_domain(0), _nb_required_vertices(0),
          _nb_required_edges(0), _nb_sub_domains(0), _ret_cont(1), _ret_save(1), _ret_sd(1)
 {
@@ -37,7 +53,7 @@ Domain::Domain()
 
 
 Domain::Domain(const string& file)
-       : _ff(NULL), _theMesh(NULL), _domain_file(file), _output_file("out.m"),
+       : _ff(nullptr), _theMesh(nullptr), _domain_file(file), _output_file("out.m"),
          _nb_vertices(0), _nb_lines(0), _nb_contours(0), _nb_holes(0), _sub_domain(0),
          _nb_required_vertices(0), _nb_required_edges(0), _nb_sub_domains(0), _ret_cont(1),
          _ret_save(1), _ret_sd(1)
@@ -49,9 +65,9 @@ Domain::Domain(const string& file)
 
 Domain::~Domain()
 {
-   if (_ff)
+   if (_ff!=nullptr)
       delete _ff;
-   if (_theMesh)
+   if (_theMesh!=nullptr)
       delete _theMesh;
 }
 
@@ -1717,7 +1733,7 @@ void Domain::removeUnusedNodes()
    Mesh ms(*_theMesh);
    vector<int> used(_theMesh->getNbNodes());
    vector<Node *> nd(_theMesh->getNbNodes());
-   Clear(used);
+   clear(used);
    MESH_EL {
       for (size_t i=1; i<=TheElement.getNbNodes(); i++)
          used[TheElement(i)->n()-1]++;
@@ -1729,7 +1745,7 @@ void Domain::removeUnusedNodes()
    size_t n=0;
    for (size_t i=1; i<=ms.getNbNodes(); i++) {
       size_t in=ms[i]->n()-1;
-      nd[in] = NULL;
+      nd[in] = nullptr;
       if (used[in]>0) {
          nd[in] = ms[in+1];
          nd[in]->setLabel(++n);
