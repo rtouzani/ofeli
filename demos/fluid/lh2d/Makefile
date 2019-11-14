@@ -206,7 +206,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -317,20 +317,18 @@ lh2d_HEADERS =
 lh2d_LDADD = $(top_builddir)/src/libofeli.a
 lh2ddir = $(datadir)/ofeli/demos/cl/lh2d
 lh2d_DATA = main.cpp \
-		proj.dat \
-		rectangle.m \
-		rectangle.v \
-		Makefile.standalone \
-		lh2d.cbp \
-		README
+            proj.dat \
+            rectangle.m \
+            rectangle.v \
+            Makefile.standalone \
+            README
 
 dist_lh2d_DATA = main.cpp \
-			proj.dat \
-			rectangle.m \
-			rectangle.v \
-			Makefile.standalone \
-			lh2d.cbp \
-			README
+                 proj.dat \
+                 rectangle.m \
+                 rectangle.v \
+                 Makefile.standalone \
+                 README
 
 all: all-am
 

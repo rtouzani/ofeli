@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -145,10 +144,9 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Line3.html#a19b4776d30b04b5fa427b8e8ce732122">setLocal</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> s)</td></tr>
 <tr class="memdesc:a19b4776d30b04b5fa427b8e8ce732122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize local point coordinates in element. <br /></td></tr>
 <tr class="separator:a19b4776d30b04b5fa427b8e8ce732122"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07d869cd53fa1489bb2fbc7ee3f346ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07d869cd53fa1489bb2fbc7ee3f346ea"></a>
-<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Line3.html#a07d869cd53fa1489bb2fbc7ee3f346ea">DSh</a> (size_t i) const </td></tr>
-<tr class="memdesc:a07d869cd53fa1489bb2fbc7ee3f346ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return derivatives of shape function of node <em>i</em> at a given point. <br /></td></tr>
-<tr class="separator:a07d869cd53fa1489bb2fbc7ee3f346ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bca61134358cac278c05031b7afb0b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt; <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Line3.html#a4bca61134358cac278c05031b7afb0b9">DSh</a> () const </td></tr>
+<tr class="memdesc:a4bca61134358cac278c05031b7afb0b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return partial derivatives of shape functions of element nodes.  <a href="#a4bca61134358cac278c05031b7afb0b9">More...</a><br /></td></tr>
+<tr class="separator:a4bca61134358cac278c05031b7afb0b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5af4f17aea53c0ab1e8ce2494f23234"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5af4f17aea53c0ab1e8ce2494f23234"></a>
 <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Line3.html#ad5af4f17aea53c0ab1e8ce2494f23234">getLocalPoint</a> () const </td></tr>
 <tr class="memdesc:ad5af4f17aea53c0ab1e8ce2494f23234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return actual coordinates of localized point. <br /></td></tr>
@@ -178,6 +176,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a4bca61134358cac278c05031b7afb0b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt;<a class="el" href="structOFELI_1_1Point.html">Point</a>&lt;<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt;,3&gt; DSh </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return partial derivatives of shape functions of element nodes. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classOFELI_1_1LocalVect.html" title="Handles small size vectors like element vectors. ">LocalVect</a> instance of partial derivatives of shape functions <em>e.g.</em> <code>dsh(i)</code>.x, <code>dsh(i)</code>.y, are partial derivatives of the <em>i</em>-th shape function. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The local point at which the derivatives are computed must be chosen before by using the member function setLocal </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a4fc79aaeb587148410021052f410d4dc"></a>
 <div class="memitem">
 <div class="memproto">

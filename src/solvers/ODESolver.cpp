@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -227,7 +227,7 @@ void ODESolver::setF(string f,
 {
    if (i<=0)
       throw OFELIException("In ODESolver::setF(string,int): Illegal equation index.");
-   if (i>_nb_eq)
+   if (i>int(_nb_eq))
       throw OFELIException("In ODESolver::setF(string,int): Equation index is larger than system size.");
    _type = SCALAR_NL;
    if (_nb_eq>1)
@@ -281,7 +281,7 @@ void ODESolver::setDF(string df,
                            "scalar ODE. Use member function setDF(string,int,int)");
    if (i<=0)
       throw OFELIException("In ODESolver::setDF(string,int): Illegal equation index.");
-   if (i>_nb_eq)
+   if (i>int(_nb_eq))
       throw OFELIException("In ODESolver::setDF(string,int): Equation index is larger than system size.");
    static size_t nb=0;
    if (_step==1)

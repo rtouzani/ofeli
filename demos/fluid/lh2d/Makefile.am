@@ -8,18 +8,16 @@ lh2d_HEADERS =
 lh2d_LDADD  = $(top_builddir)/src/libofeli.a
 
 lh2ddir   =	$(datadir)/ofeli/demos/cl/lh2d
-lh2d_DATA =	main.cpp \
-		proj.dat \
-		rectangle.m \
-		rectangle.v \
-		Makefile.standalone \
-		lh2d.cbp \
-		README
-dist_lh2d_DATA =	main.cpp \
-			proj.dat \
-			rectangle.m \
-			rectangle.v \
-			Makefile.standalone \
-			lh2d.cbp \
-			README
+lh2d_DATA = main.cpp \
+            proj.dat \
+            rectangle.m \
+            rectangle.v \
+            Makefile.standalone \
+            README
+dist_lh2d_DATA = main.cpp \
+                 proj.dat \
+                 rectangle.m \
+                 rectangle.v \
+                 Makefile.standalone \
+                 README
 

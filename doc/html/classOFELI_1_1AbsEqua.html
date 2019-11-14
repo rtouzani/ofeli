@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -150,18 +149,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a>&lt; T_ &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a2907b96cfd97e563fe4afcae104897e7">getLinearSolver</a> ()</td></tr>
 <tr class="memdesc:a2907b96cfd97e563fe4afcae104897e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to linear solver instance. <br /></td></tr>
 <tr class="separator:a2907b96cfd97e563fe4afcae104897e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af9c590a2bbfa944af9dece2a8e3dec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0af9c590a2bbfa944af9dece2a8e3dec"></a>
+<a class="el" href="classOFELI_1_1PETScMatrix.html">PETScMatrix</a>&lt; T_ &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a0af9c590a2bbfa944af9dece2a8e3dec">getMatrix</a> () const </td></tr>
+<tr class="memdesc:a0af9c590a2bbfa944af9dece2a8e3dec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to matrix. <br /></td></tr>
+<tr class="separator:a0af9c590a2bbfa944af9dece2a8e3dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa76ba7a5ad0412484df8aeaa34df03a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#aa76ba7a5ad0412484df8aeaa34df03a3">setSolver</a> (<a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> ls, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> pc=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38abee1df09df17f316a75a98ad36679bf6">IDENT_PREC</a>)</td></tr>
 <tr class="memdesc:aa76ba7a5ad0412484df8aeaa34df03a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose solver for the linear system.  <a href="#aa76ba7a5ad0412484df8aeaa34df03a3">More...</a><br /></td></tr>
 <tr class="separator:aa76ba7a5ad0412484df8aeaa34df03a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93bf9d28a75fab8e6f5a3c3d1e6bd415"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a93bf9d28a75fab8e6f5a3c3d1e6bd415">setLinearSolver</a> (<a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> ls, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> pc=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38abee1df09df17f316a75a98ad36679bf6">IDENT_PREC</a>)</td></tr>
+<tr class="memdesc:a93bf9d28a75fab8e6f5a3c3d1e6bd415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose solver for the linear system.  <a href="#a93bf9d28a75fab8e6f5a3c3d1e6bd415">More...</a><br /></td></tr>
+<tr class="separator:a93bf9d28a75fab8e6f5a3c3d1e6bd415"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28dc6e37b3582dfaf59b23135fb06682"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a28dc6e37b3582dfaf59b23135fb06682">setMatrixType</a> (int t)</td></tr>
 <tr class="memdesc:a28dc6e37b3582dfaf59b23135fb06682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose type of matrix.  <a href="#a28dc6e37b3582dfaf59b23135fb06682">More...</a><br /></td></tr>
 <tr class="separator:a28dc6e37b3582dfaf59b23135fb06682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82009d8ac9cf2704c73e7a21df585432"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a82009d8ac9cf2704c73e7a21df585432">solveLinearSystem</a> (<a class="el" href="classOFELI_1_1Matrix.html">Matrix</a>&lt; T_ &gt; *<a class="el" href="group__OFELI.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a82009d8ac9cf2704c73e7a21df585432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given matrix and right-hand side.  <a href="#a82009d8ac9cf2704c73e7a21df585432">More...</a><br /></td></tr>
-<tr class="separator:a82009d8ac9cf2704c73e7a21df585432"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad899acb6e502894b296641d95c2efa2a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#ad899acb6e502894b296641d95c2efa2a">solveLinearSystem</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:ad899acb6e502894b296641d95c2efa2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given right-hand side.  <a href="#ad899acb6e502894b296641d95c2efa2a">More...</a><br /></td></tr>
-<tr class="separator:ad899acb6e502894b296641d95c2efa2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05a11942d676096bf343f9f734030d7f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a05a11942d676096bf343f9f734030d7f">solveLinearSystem</a> (<a class="el" href="classOFELI_1_1PETScMatrix.html">PETScMatrix</a>&lt; T_ &gt; *<a class="el" href="group__OFELI.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, <a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;x)</td></tr>
+<tr class="memdesc:a05a11942d676096bf343f9f734030d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given matrix and right-hand side.  <a href="#a05a11942d676096bf343f9f734030d7f">More...</a><br /></td></tr>
+<tr class="separator:a05a11942d676096bf343f9f734030d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d3039f33683a4c022db6868f668d889"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a8d3039f33683a4c022db6868f668d889">solveLinearSystem</a> (<a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;x)</td></tr>
+<tr class="memdesc:a8d3039f33683a4c022db6868f668d889"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given right-hand side.  <a href="#a8d3039f33683a4c022db6868f668d889">More...</a><br /></td></tr>
+<tr class="separator:a8d3039f33683a4c022db6868f668d889"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;class T_&gt;<br />
@@ -254,6 +260,65 @@ class OFELI::AbsEqua&lt; T_ &gt;</h3>
 
 </div>
 </div>
+<a class="anchor" id="a93bf9d28a75fab8e6f5a3c3d1e6bd415"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setLinearSolver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a>&#160;</td>
+          <td class="paramname"><em>ls</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a>&#160;</td>
+          <td class="paramname"><em>pc</em> = <code><a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38abee1df09df17f316a75a98ad36679bf6">IDENT_PREC</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Choose solver for the linear system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ls</td><td>Solver of the linear system. To choose among the enumerated values: <code>DIRECT_SOLVER</code>, <code>CG_SOLVER</code>, <code>GMRES_SOLVER</code> <ul>
+<li>
+<code>DIRECT_SOLVER</code>, Use a facorization solver [default] </li>
+<li>
+<code>CG_SOLVER</code>, Conjugate Gradient iterative solver </li>
+<li>
+<code>CGS_SOLVER</code>, Squared Conjugate Gradient iterative solver </li>
+<li>
+<code>BICG_SOLVER</code>, BiConjugate Gradient iterative solver </li>
+<li>
+<code>BICG_STAB_SOLVER</code>, BiConjugate Gradient Stabilized iterative solver </li>
+<li>
+<code>GMRES_SOLVER</code>, GMRES iterative solver </li>
+<li>
+<code>QMR_SOLVER</code>, QMR iterative solver </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pc</td><td>Preconditioner to associate to the iterative solver. If the direct solver was chosen for the first argument this argument is not used. Otherwise choose among the enumerated values: <ul>
+<li>
+<code>IDENT_PREC</code>, Identity preconditioner (no preconditioning [default]) </li>
+<li>
+<code>DIAG_PREC</code>, Diagonal preconditioner </li>
+<li>
+<code>ILU_PREC</code>, Incomplete LU factorization preconditioner </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a28dc6e37b3582dfaf59b23135fb06682"></a>
 <div class="memitem">
 <div class="memproto">
@@ -278,26 +343,26 @@ class OFELI::AbsEqua&lt; T_ &gt;</h3>
 
 </div>
 </div>
-<a class="anchor" id="a82009d8ac9cf2704c73e7a21df585432"></a>
+<a class="anchor" id="a05a11942d676096bf343f9f734030d7f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int solveLinearSystem </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Matrix.html">Matrix</a>&lt; T_ &gt; *&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScMatrix.html">PETScMatrix</a>&lt; T_ &gt; *&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -320,20 +385,20 @@ class OFELI::AbsEqua&lt; T_ &gt;</h3>
 
 </div>
 </div>
-<a class="anchor" id="ad899acb6e502894b296641d95c2efa2a"></a>
+<a class="anchor" id="a8d3039f33683a4c022db6868f668d889"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int solveLinearSystem </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>

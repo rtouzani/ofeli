@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -78,10 +78,10 @@ class Integration
     Integration();
 
 /** \brief Constructor 
- *  @param [in] low
- *  @param [in] high
- *  @param [in] f
- *  @param [in] s
+ *  @param [in] low Lower value of integration interval
+ *  @param [in] high Upper value of integration interval
+ *  @param [in] f Function to integrate
+ *  @param [in] s Integration scheme. To choose among enumerated values:
  *  <ul>
  *    <li><tt>LEFT_RECTANGLE</tt>: 
  *    <li><tt>RIGHT_RECTANGLE</tt>: 
@@ -101,23 +101,33 @@ class Integration
 /// \brief Destructor
     ~Integration() { }
 
-/** \brief
- * 
+/** \brief Define function to integrate numerically
+ *  @param [in] f Function to integrate
  */
     void setFunction(function<real_t(real_t)> const& f);
 
-/** \brief 
- *  @param [in] s‡
-    <ul>
-       <li> <tt>IDENT_PREC</tt>: Identity preconditioner (No preconditioning)
-       <li> <tt>DIAG_PREC</tt>: Diagonal preconditioner
-       <li> <tt>DILU_PREC</tt>: Diagonal Incomplete factorization preconditioner
-       <li> <tt>ILU_PREC</tt>: Incomplete factorization preconditioner
-       <li> <tt>SSOR_PREC</tt>: SSOR (Symmetric Successive Over Relaxation) preconditioner
-    </ul>
+/** \brief Set time inegration scheme
+ *  @param [in] s Scheme to choose among enumerated values:
+ *  <ul>
+ *    <li><tt>LEFT_RECTANGLE</tt>: 
+ *    <li><tt>RIGHT_RECTANGLE</tt>: 
+ *    <li><tt>MID_RECTANGLE</tt>: 
+ *    <li><tt>TRAPEZOIDAL</tt>: 
+ *    <li><tt>SIMPSON</tt>: 
+ *    <li><tt>GAUSS_LEGENDRE</tt>: 
+ *  </ul>
  */
     void setScheme(IntegrationScheme s) { _scheme = s; }
 
+/** \brief Define integration domain as a quadrilateral
+ *  \details
+ *  @param [in] x1 x-coordinate of first vertex of triangle
+ *  @param [in] y1 y-coordinate of first vertex of triangle
+ *  @param [in] x2 x-coordinate of second vertex of triangle
+ *  @param [in] y2 y-coordinate of second vertex of triangle
+ *  @param [in] x3 x-coordinate of third vertex of triangle
+ *  @param [in] y3 y-coordinate of third vertex of triangle
+ */
     void setTriangle(real_t x1,
                      real_t y1,
                      real_t x2,

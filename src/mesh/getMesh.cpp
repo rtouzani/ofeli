@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -597,47 +597,47 @@ void getGmsh(string file,
          dim = 1;
 
 //    Points
-      for (size_t i=0; i<n[0]; ++i) {
+      for (int i=0; i<n[0]; ++i) {
         pf >> n[4] >> d[0] >> d[1] >> d[2] >> n[5];
-         for (size_t j=0; j<n[5]; ++j) {
+         for (int j=0; j<n[5]; ++j) {
             pf >> d[j];
             Pcode[n[4]] = d[j];
          }
       }
 
 //    Curves
-      for (size_t i=0; i<n[1]; ++i) {
+      for (int i=0; i<n[1]; ++i) {
          pf >> n[4] >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5] >> n[5];
-         for (size_t j=0; j<n[5]; ++j) {
+         for (int j=0; j<n[5]; ++j) {
             pf >> d[j];
             Ccode[n[4]] = d[j];
          }
          pf >> n[5];
-         for (size_t j=0; j<n[5]; ++j)
+         for (int j=0; j<n[5]; ++j)
             pf >> d[j];
       }
 
 //    Surfaces
-      for (size_t i=0; i<n[2]; ++i) {
+      for (int i=0; i<n[2]; ++i) {
          pf >> n[4] >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5] >> n[5];
-         for (size_t j=0; j<n[5]; ++j) {
+         for (int j=0; j<n[5]; ++j) {
             pf >> d[j];
             Scode[n[4]] = d[j];
          }
          pf >> n[5];
-         for (size_t j=0; j<n[5]; ++j)
+         for (int j=0; j<n[5]; ++j)
             pf >> d[j];
       }
 
 //    Volumes
-      for (size_t i=0; i<n[3]; ++i) {
+      for (int i=0; i<n[3]; ++i) {
          pf >> n[4] >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5] >> n[5];
-         for (size_t j=0; j<n[5]; ++j) {
+         for (int j=0; j<n[5]; ++j) {
             pf >> d[j];
             Vcode[n[4]] = d[j];
          }
          pf >> n[5];
-         for (size_t j=0; j<n[5]; ++j)
+         for (int j=0; j<n[5]; ++j)
             pf >> d[j];
       }
       pf >> kw;

@@ -12,7 +12,6 @@ ss_HEADERS =	FFI.h \
 		IPF.h \
 		Prescription.h \
 		Tabulation.h \
-		UserData.h \
 		XMLParser.h \
 		output.h \
 		saveField.h

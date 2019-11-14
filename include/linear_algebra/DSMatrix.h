@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -176,7 +176,7 @@ class DSMatrix : public Matrix<T_>
                 const Vect<T_>& v);
 
 /** \brief Copy a given vector to a prescribed column in the matrix.
- *  @param [in] i column index to be assigned
+ *  @param [in] j column index to be assigned
  *  @param [in] v Vect instance to copy
  */
     void setColumn(size_t          j,

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -131,9 +131,9 @@ void Hexa8::atGauss(int                          n,
    Gauss g(2);
    Point<real_t> xg(g.x(1),g.x(2),g.x(3));
    wg[0] = g.w(1); wg[1] = g.w(2);
-   for (size_t i=0; i<n; i++) {
-      for (size_t j=0; j<n; j++) {
-         for (size_t k=0; k<n; k++) {
+   for (int i=0; i<n; i++) {
+      for (int j=0; j<n; j++) {
+         for (int k=0; k<n; k++) {
             setLocal(xg);
             for (size_t l=0; l<8; ++l)
                dsh[8*l+ijk] = _dsh[l];

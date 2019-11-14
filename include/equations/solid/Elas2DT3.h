@@ -158,7 +158,7 @@ class Elas2DT3 : public Equa_Solid<real_t,3,6,2,4>
 
 /** \brief Calculate strains in element.
  *  \details This function can be invoked in postprocessing.
- *  @param [out] s vector of strains in elements
+ *  @param [out] eps vector of strains in elements
  */
     void Strain(Vect<real_t>& eps);
 

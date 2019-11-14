@@ -223,7 +223,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -337,7 +337,6 @@ ss_HEADERS = FFI.h \
 		IPF.h \
 		Prescription.h \
 		Tabulation.h \
-		UserData.h \
 		XMLParser.h \
 		output.h \
 		saveField.h

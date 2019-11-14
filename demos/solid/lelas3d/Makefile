@@ -204,7 +204,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -314,18 +314,16 @@ lelas3d_SOURCES = main.cpp
 lelas3d_LDADD = $(top_builddir)/src/libofeli.a
 lelas3ddir = $(datadir)/ofeli/demos/solid/lelas3d
 lelas3d_DATA = main.cpp \
-		beam.dat \
-		beam.m \
-		Makefile.standalone \
-		lelas3d.cbp \
-		README
+               beam.dat \
+               beam.m \
+               Makefile.standalone \
+               README
 
 dist_lelas3d_DATA = main.cpp \
-			beam.dat \
-			beam.m \
-			Makefile.standalone \
-			lelas3d.cbp \
-			README
+                    beam.dat \
+                    beam.m \
+                    Makefile.standalone \
+                    README
 
 all: all-am
 

@@ -204,7 +204,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -314,30 +314,28 @@ truss_SOURCES = main.cpp
 truss_LDADD = $(top_builddir)/src/libofeli.a
 trussdir = $(datadir)/ofeli/demos/solid/truss
 truss_DATA = main.cpp \
-		truss.dat \
-		truss.m \
-		tower1.m \
-		tower1.dat \
-		tower2.m \
-		tower2.dat \
-		HoweBridge.m \
-		PrattBridge.m \
-		Makefile.standalone \
-		truss.cbp \
-		README
+             truss.dat \
+             truss.m \
+             tower1.m \
+             tower1.dat \
+             tower2.m \
+             tower2.dat \
+             HoweBridge.m \
+             PrattBridge.m \
+             Makefile.standalone \
+             README
 
 dist_truss_DATA = main.cpp \
-			truss.dat \
-			truss.m \
-			tower1.m \
-			tower1.dat \
-			tower2.m \
-			tower2.dat \
-			HoweBridge.m \
-			PrattBridge.m \
-			Makefile.standalone \
-			truss.cbp \
-			README
+                  truss.dat \
+                  truss.m \
+                  tower1.m \
+                  tower1.dat \
+                  tower2.m \
+                  tower2.dat \
+                  HoweBridge.m \
+                  PrattBridge.m \
+                  Makefile.standalone \
+                  README
 
 all: all-am
 

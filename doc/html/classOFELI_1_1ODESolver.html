@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -140,9 +139,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8e734c537232e7be6f58fd92ce129bd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a8e734c537232e7be6f58fd92ce129bd8">setF</a> (string f)</td></tr>
 <tr class="memdesc:a8e734c537232e7be6f58fd92ce129bd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time derivative, given as an algebraic expression, for a nonlinear ODE.  <a href="#a8e734c537232e7be6f58fd92ce129bd8">More...</a><br /></td></tr>
 <tr class="separator:a8e734c537232e7be6f58fd92ce129bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3132b0abb0f9bf21aeeb616c3a4743df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a3132b0abb0f9bf21aeeb616c3a4743df">setF</a> (string f, int i)</td></tr>
+<tr class="memdesc:a3132b0abb0f9bf21aeeb616c3a4743df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time derivative, given as an algebraic expression, for a nonlinear ODE.  <a href="#a3132b0abb0f9bf21aeeb616c3a4743df">More...</a><br /></td></tr>
+<tr class="separator:a3132b0abb0f9bf21aeeb616c3a4743df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9b2376f06f314b038b0b77860f84d2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#ab9b2376f06f314b038b0b77860f84d2b">setDF</a> (string df)</td></tr>
-<tr class="memdesc:ab9b2376f06f314b038b0b77860f84d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set derivative with respect to the unknown of the function defining the ODE.  <a href="#ab9b2376f06f314b038b0b77860f84d2b">More...</a><br /></td></tr>
+<tr class="memdesc:ab9b2376f06f314b038b0b77860f84d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time derivative of the function defining the ODE.  <a href="#ab9b2376f06f314b038b0b77860f84d2b">More...</a><br /></td></tr>
 <tr class="separator:ab9b2376f06f314b038b0b77860f84d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05ef2e656e2311f91765fb4a7a07ac41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a05ef2e656e2311f91765fb4a7a07ac41">setDF</a> (string df, int i)</td></tr>
+<tr class="memdesc:a05ef2e656e2311f91765fb4a7a07ac41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time derivative with respect to the unknown of the function defining the ODE.  <a href="#a05ef2e656e2311f91765fb4a7a07ac41">More...</a><br /></td></tr>
+<tr class="separator:a05ef2e656e2311f91765fb4a7a07ac41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8af5428b41cbdbd33226187aefbcd40c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a8af5428b41cbdbd33226187aefbcd40c">setRK4RHS</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> f)</td></tr>
 <tr class="memdesc:a8af5428b41cbdbd33226187aefbcd40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set intermediate right-hand side vector for the Runge-Kutta method.  <a href="#a8af5428b41cbdbd33226187aefbcd40c">More...</a><br /></td></tr>
 <tr class="separator:a8af5428b41cbdbd33226187aefbcd40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +157,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af1cd58fec176472be29a4dfb1be829e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#af1cd58fec176472be29a4dfb1be829e3">setInitial</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
 <tr class="memdesc:af1cd58fec176472be29a4dfb1be829e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for a first-oder system of differential equations.  <a href="#af1cd58fec176472be29a4dfb1be829e3">More...</a><br /></td></tr>
 <tr class="separator:af1cd58fec176472be29a4dfb1be829e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cc9327aca93f0f3c2ac403d63c6c40c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a8cc9327aca93f0f3c2ac403d63c6c40c">setInitial</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u, int i)</td></tr>
+<tr class="memdesc:a8cc9327aca93f0f3c2ac403d63c6c40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for a first-oder system of differential equations.  <a href="#a8cc9327aca93f0f3c2ac403d63c6c40c">More...</a><br /></td></tr>
+<tr class="separator:a8cc9327aca93f0f3c2ac403d63c6c40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7c3734ad9c03eadfe2287c18de39945"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#ac7c3734ad9c03eadfe2287c18de39945">setInitial</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v)</td></tr>
 <tr class="memdesc:ac7c3734ad9c03eadfe2287c18de39945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for a second-order system of differential equations.  <a href="#ac7c3734ad9c03eadfe2287c18de39945">More...</a><br /></td></tr>
 <tr class="separator:ac7c3734ad9c03eadfe2287c18de39945"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -201,9 +209,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a03025e97482684280a54df4817908825"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a03025e97482684280a54df4817908825">setLinearSolver</a> (<a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s=<a class="el" href="group__OFELI.html#ggad0624a8576d3ca1d4af97479546930eaa8b17dcef7858d58588a474eac2a062b6">DIRECT_SOLVER</a>, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
 <tr class="memdesc:a03025e97482684280a54df4817908825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set linear solver data.  <a href="#a03025e97482684280a54df4817908825">More...</a><br /></td></tr>
 <tr class="separator:a03025e97482684280a54df4817908825"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0dff7ac814d61fe684767c7d33b1c1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#ab0dff7ac814d61fe684767c7d33b1c1a">setVerbose</a> (int v=0)</td></tr>
-<tr class="memdesc:ab0dff7ac814d61fe684767c7d33b1c1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set verbosity parameter:  <a href="#ab0dff7ac814d61fe684767c7d33b1c1a">More...</a><br /></td></tr>
-<tr class="separator:ab0dff7ac814d61fe684767c7d33b1c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e6d15777f4c9d95999313bafae5e5e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a9e6d15777f4c9d95999313bafae5e5e7">setMaxIter</a> (int max_it)</td></tr>
 <tr class="memdesc:a9e6d15777f4c9d95999313bafae5e5e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set maximal number of iterations.  <a href="#a9e6d15777f4c9d95999313bafae5e5e7">More...</a><br /></td></tr>
 <tr class="separator:a9e6d15777f4c9d95999313bafae5e5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,6 +221,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ab174fb4127d2dfb1b5e0d57b9e40b617"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#ab174fb4127d2dfb1b5e0d57b9e40b617">run</a> (bool opt=false)</td></tr>
 <tr class="memdesc:ab174fb4127d2dfb1b5e0d57b9e40b617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the time stepping procedure.  <a href="#ab174fb4127d2dfb1b5e0d57b9e40b617">More...</a><br /></td></tr>
 <tr class="separator:ab174fb4127d2dfb1b5e0d57b9e40b617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640c09169976d8e21447b2b2150f7fb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a640c09169976d8e21447b2b2150f7fb9"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a640c09169976d8e21447b2b2150f7fb9">getNbEq</a> () const </td></tr>
+<tr class="memdesc:a640c09169976d8e21447b2b2150f7fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of equations. <br /></td></tr>
+<tr class="separator:a640c09169976d8e21447b2b2150f7fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a799a12990da0e52bb134bf40ee4159e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a799a12990da0e52bb134bf40ee4159e2"></a>
 <a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a799a12990da0e52bb134bf40ee4159e2">getLSolver</a> ()</td></tr>
 <tr class="memdesc:a799a12990da0e52bb134bf40ee4159e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by iterative methods. ">LinearSolver</a> instance. <br /></td></tr>
@@ -304,7 +313,7 @@ Newmark (value: <em>NEWMARK</em>) for linear second-order systems with constant 
 <p>Constructor using time discretization data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Choice of the scheme: To be chosen in the enumerated variable <em>TimeScheme</em> (see the presentation of the class) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Choice of the scheme: To be chosen in the enumerated variable <em>Scheme</em> (see the presentation of the class) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">time_step</td><td>Value of the time step. This value will be modified if an adaptive method is used. The default value for this parameter if the value given by the global variable <code>theTimeStep</code> </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">final_time</td><td>Value of the final time (time starts at 0). The default value for this parameter is the value given by the global variable <code>theFinalTime</code> </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nb_eq</td><td>Number of differential equations (size of the system) [Default: <code>1</code>] </td></tr>
@@ -348,7 +357,7 @@ Newmark (value: <em>NEWMARK</em>) for linear second-order systems with constant 
 <p>Define data of the differential equation or system. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Choice of the scheme: To be chosen in the enumerated variable <em>TimeScheme</em> (see the presentation of the class) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Choice of the scheme: To be chosen in the enumerated variable <em>Scheme</em> (see the presentation of the class) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">time_step</td><td>Value of the time step. This value will be modified if an adaptive method is used. The default value for this parameter if the value given by the global variable <code>theTimeStep</code> </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">final_time</td><td>Value of the final time (time starts at 0). The default value for this parameter is the value given by the global variable <code>theFinalTime</code> </td></tr>
   </table>
@@ -492,7 +501,48 @@ Newmark (value: <em>NEWMARK</em>) for linear second-order systems with constant 
 
 <p>Set time derivative, given as an algebraic expression, for a nonlinear ODE. </p>
 <p>This function enables prescribing the value of the 1-st derivative for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be used for nonlinear ODEs of the form y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))<br />
-In the case of a system of ODEs, this function can be called once for each equation, given in the order of the unknowns </p>
+In the case of a system of ODEs, this function can be called once for each equation, given in the order of the unknowns </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Expression of the function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3132b0abb0f9bf21aeeb616c3a4743df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setF </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set time derivative, given as an algebraic expression, for a nonlinear ODE. </p>
+<p>This function enables prescribing the value of the 1-st derivative for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be used for nonlinear ODEs of the form y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))<br />
+This function is to be used for the <code>i</code>-th equation of a system of ODEs </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Expression of the function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of equation. Must be not larger than the number of equations </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -510,9 +560,45 @@ In the case of a system of ODEs, this function can be called once for each equat
       </table>
 </div><div class="memdoc">
 
-<p>Set derivative with respect to the unknown of the function defining the ODE. </p>
+<p>Set time derivative of the function defining the ODE. </p>
 <p>This function enables prescribing the value of the 1-st derivative for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be used for nonlinear ODEs of the form y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))<br />
 In the case of a system of ODEs, this function can be called once for each equation, given in the order of the unknowns </p>
+
+</div>
+</div>
+<a class="anchor" id="a05ef2e656e2311f91765fb4a7a07ac41"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setDF </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>df</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set time derivative with respect to the unknown of the function defining the ODE. </p>
+<p>This function enables prescribing the value of the 1-st derivative for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be used for nonlinear ODEs of the form y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))<br />
+This function is to be used for the <code>i</code>-th equation of a system of ODEs </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">df</td><td>Expression of time derivative of the function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of equation. Must be not larger than the number of equations </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -533,7 +619,7 @@ In the case of a system of ODEs, this function can be called once for each equat
 <p>Set intermediate right-hand side vector for the Runge-Kutta method. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Value of right-hand side </td></tr>
   </table>
   </dd>
 </dl>
@@ -582,6 +668,41 @@ In the case of a system of ODEs, this function can be called once for each equat
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Vector containing initial condition for the unknown </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8cc9327aca93f0f3c2ac403d63c6c40c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial condition for a first-oder system of differential equations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Initial condition for an unknown </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of the unknown </td></tr>
   </table>
   </dd>
 </dl>
@@ -1042,32 +1163,6 @@ IDENT_PREC, DIAG_PREC, ILU_PREC [Default: <code>DIAG_PREC</code>] </td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The argument <em>p</em> has no effect if the solver is DIRECT_SOLVER </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ab0dff7ac814d61fe684767c7d33b1c1a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setVerbose </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>v</em> = <code>0</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set verbosity parameter: </p>
-<ul>
-<li>
-= 0, No output </li>
-<li>
-= 1, Print step label and time value </li>
-<li>
-= 2, Print step label, time value, time step and integration scheme </li>
-</ul>
 
 </div>
 </div>

@@ -1,7 +1,7 @@
 var classOFELI_1_1LinearSolver =
 [
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html#a2ffc285126a28fba1fa2d1c681f261cf", null ],
-    [ "LinearSolver", "classOFELI_1_1LinearSolver.html#ac656810dba619068115c975a6beb07a1", null ],
+    [ "LinearSolver", "classOFELI_1_1LinearSolver.html#aa05c2275c2c8ce808d096b6692c3435d", null ],
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html#af8b2b6e83de93a53ea4196be5e161e31", null ],
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html#a910f0be2f1614e1c069abcd40ec56dd0", null ],
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html#a98105cac171bf2a1e24c8b5e5a7ff07a", null ],
@@ -11,7 +11,6 @@ var classOFELI_1_1LinearSolver =
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html#a3229c9a3116a4b6125ddf3f72e01e0a8", null ],
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html#adec04ce22558fc7d208803adc611540f", null ],
     [ "~LinearSolver", "classOFELI_1_1LinearSolver.html#a4377168b38ead79c941f43a676aef1a6", null ],
-    [ "setVerbose", "classOFELI_1_1LinearSolver.html#aec36c78a753f6370a283f7ee60020fa3", null ],
     [ "setMaxIter", "classOFELI_1_1LinearSolver.html#a041af43820d8499c23302b9f8907b45e", null ],
     [ "setTolerance", "classOFELI_1_1LinearSolver.html#acb146173a62d5f456421cb22265a536f", null ],
     [ "setSolution", "classOFELI_1_1LinearSolver.html#a070f299c5c83c3d05f3888128fdc6b63", null ],
@@ -22,9 +21,11 @@ var classOFELI_1_1LinearSolver =
     [ "set", "classOFELI_1_1LinearSolver.html#ad56dc6dab838eee84f6d76995d555638", null ],
     [ "setSolver", "classOFELI_1_1LinearSolver.html#a0ce77dad890759d85412157e25b3afa4", null ],
     [ "getSolver", "classOFELI_1_1LinearSolver.html#a9129625a6b2c52bb928da54e4ff92a19", null ],
+    [ "getPreconditioner", "classOFELI_1_1LinearSolver.html#aa411ac7d20e0b21fb5be0baaf6d33c2d", null ],
     [ "solve", "classOFELI_1_1LinearSolver.html#a1bfcefd222a9c02f7254140fed80f26c", null ],
     [ "solve", "classOFELI_1_1LinearSolver.html#aeccb35e1c449b861305d1765f86395f4", null ],
     [ "solve", "classOFELI_1_1LinearSolver.html#a7ca154b901ce7bb4d4ee1e2cdf7f8a85", null ],
     [ "setFact", "classOFELI_1_1LinearSolver.html#ae221a5369220070666177b57daf4cff2", null ],
-    [ "setNoFact", "classOFELI_1_1LinearSolver.html#a524aa7001c68e0d79027f735f20e34de", null ]
+    [ "setNoFact", "classOFELI_1_1LinearSolver.html#a524aa7001c68e0d79027f735f20e34de", null ],
+    [ "getNbIter", "classOFELI_1_1LinearSolver.html#a4b90d074dab10cd5272e6f7b8c6cbb0e", null ]
 ];

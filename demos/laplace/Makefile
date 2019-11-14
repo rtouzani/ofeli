@@ -227,7 +227,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -356,12 +356,11 @@ laplace_demo1_DATA = laplace_demo1.cpp \
                      annulus.geo \
                      annulus.m \
                      Makefile.standalone \
-                     laplace_demo1.cbp \
                      README
 
-laplace_demo2_DATA = laplace_demo2.cpp laplace_demo2.cbp
-laplace_demo3_DATA = laplace_demo3.cpp laplace_demo3.cbp
-laplace_demo4_DATA = laplace_demo4.cpp laplace_demo4.cbp
+laplace_demo2_DATA = laplace_demo2.cpp
+laplace_demo3_DATA = laplace_demo3.cpp
+laplace_demo4_DATA = laplace_demo4.cpp
 dist_laplace_demo1_DATA = laplace_demo1.cpp \
                           proj2.dat \
                           proj3.dat \
@@ -373,12 +372,11 @@ dist_laplace_demo1_DATA = laplace_demo1.cpp \
                           annulus.geo \
                           annulus.m \
                           Makefile.standalone \
-                          laplace_demo1.cbp \
                           README
 
-dist_laplace_demo2_DATA = laplace_demo2.cpp laplace_demo2.cbp
-dist_laplace_demo3_DATA = laplace_demo3.cpp laplace_demo3.cbp
-dist_laplace_demo4_DATA = laplace_demo4.cpp laplace_demo4.cbp
+dist_laplace_demo2_DATA = laplace_demo2.cpp
+dist_laplace_demo3_DATA = laplace_demo3.cpp
+dist_laplace_demo4_DATA = laplace_demo4.cpp
 all: all-am
 
 .SUFFIXES:

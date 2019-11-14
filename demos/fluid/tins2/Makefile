@@ -204,7 +204,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -314,26 +314,24 @@ tins2_SOURCES = main.cpp
 tins2_LDADD = $(top_builddir)/src/libofeli.a
 tins2dir = $(datadir)/ofeli/demos/fluid/tins2
 tins2_DATA = main.cpp \
-		tins2.cbp \
-		cavity.dat \
-		cavity-60.dat \
-		cavity-30.m \
-		cavity-60.m \
-		step.dom \
-		step.dat \
-		Makefile.standalone \
-		README
+             cavity.dat \
+             cavity-60.dat \
+             cavity-30.m \
+             cavity-60.m \
+             step.dom \
+             step.dat \
+             Makefile.standalone \
+             README
 
 dist_tins2_DATA = main.cpp \
-			tins2.cbp \
-			cavity.dat \
-			cavity-60.dat \
-			cavity-30.m \
-			cavity-60.m \
-			step.dom \
-			step.dat \
-			Makefile.standalone \
-			README
+                  cavity.dat \
+                  cavity-60.dat \
+                  cavity-30.m \
+                  cavity-60.m \
+                  step.dom \
+                  step.dat \
+                  Makefile.standalone \
+                  README
 
 all: all-am
 

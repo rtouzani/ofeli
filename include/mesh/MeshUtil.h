@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -332,7 +332,7 @@ void MeshToMesh(Mesh&               m1,
                 size_t              dof=1);
 
 
-/** \fn void MeshToMesh(Mesh &m1, Mesh &m2, const Vect<real_t> &u1, Vect<real_t> &u2, 
+/** \fn void MeshToMesh(const Vect<real_t> &u1, Vect<real_t> &u2, 
  *                      size_t nx, size_t ny=1, size_t nz=1, size_t dof=1)
  * \ingroup Mesh
  * \brief Function to redefine a vector defined on a mesh to a new mesh

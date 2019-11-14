@@ -13,7 +13,6 @@ lelas2d_DATA = main.cpp \
                beam-20x10.m \
                beam.m \
                Makefile.standalone \
-               lelas2d.cbp \
                README
 dist_lelas2d_DATA = main.cpp \
                     beam.dat \
@@ -21,5 +20,4 @@ dist_lelas2d_DATA = main.cpp \
                     beam-20x10.m \
                     beam.m \
                     Makefile.standalone \
-                    lelas2d.cbp \
                     README

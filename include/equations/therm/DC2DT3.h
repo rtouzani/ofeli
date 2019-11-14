@@ -162,7 +162,7 @@ class DC2DT3 : public Equa_Therm<real_t,3,3,2,2>
 
 /** \brief Add body right-hand side term to right hand side.
  *  \details Case where the body right-hand side is piecewise constant.
- *  @param [in] bf Value of thermal source (Constant in element).
+ *  @param [in] f Value of thermal source (Constant in element).
  */
     void BodyRHS(real_t f);
 

@@ -108,7 +108,7 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
                    real_t                         coef=1);
 
 /** \brief Add body right-hand side term to right hand side.
- *  @param [in] b Local vector (of size <tt>3</tt>) containing source at odes.
+ *  @param [in] f Local vector (of size <tt>3</tt>) containing source at odes.
  */
     void BodyRHS(const Vect<real_t>& f);
 

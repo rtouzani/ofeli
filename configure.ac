@@ -1,5 +1,5 @@
 dnl ------------------------------------------------------------------------------
-dnl OFELI - Copyright (C) 1998-2019 Rachid Touzani
+dnl OFELI - Copyright (C) 1998-2020 Rachid Touzani
 
 dnl This file is part of OFELI.
 
@@ -387,9 +387,6 @@ AC_OUTPUT(
    util/vmesh/Makefile
    demos/Makefile
    demos/1D/Makefile
-   demos/1D/elliptic/Makefile
-   demos/1D/heat/Makefile
-   demos/1D/transport/Makefile
    demos/laplace/Makefile
    demos/thermal/Makefile
    demos/thermal/std3/Makefile
@@ -423,39 +420,6 @@ AC_OUTPUT(
    doc/css/Makefile
    doc/presentations/Makefile
    tools/Makefile
-   tools/CodeBlocks/Makefile
-   tools/msvcpp/Makefile
-   tools/msvcpp/beam/Makefile
-   tools/msvcpp/cfield/Makefile
-   tools/msvcpp/contact/Makefile
-   tools/msvcpp/eigen_demo1/Makefile
-   tools/msvcpp/eigen_demo2/Makefile
-   tools/msvcpp/euler_2d/Makefile
-   tools/msvcpp/g2m/Makefile
-   tools/msvcpp/helmholtz/Makefile
-   tools/msvcpp/lelas2d/Makefile
-   tools/msvcpp/lelas3d/Makefile
-   tools/msvcpp/lh2d/Makefile
-   tools/msvcpp/ofeli/Makefile
-   tools/msvcpp/std3/Makefile
-   tools/msvcpp/stdc2/Makefile
-   tools/msvcpp/tiff2/Makefile
-   tools/msvcpp/tins2/Makefile
-   tools/msvcpp/ttd2/Makefile
-   tools/msvcpp/truss/Makefile
-   tools/msvcpp/ls_demo1/Makefile
-   tools/msvcpp/ls_demo2/Makefile
-   tools/msvcpp/ode_demo1/Makefile
-   tools/msvcpp/ode_demo2/Makefile
-   tools/msvcpp/ode_demo3/Makefile
-   tools/msvcpp/ode_demo4/Makefile
-   tools/msvcpp/opt_demo1/Makefile
-   tools/msvcpp/opt_demo2/Makefile
-   tools/msvcpp/opt_demo3/Makefile
-   tools/msvcpp/ts_demo1/Makefile
-   tools/msvcpp/ts_demo2/Makefile
-   tools/msvcpp/adapt_demo1/Makefile
-   tools/msvcpp/adapt_demo2/Makefile
    ofeli-config
    test_ofeli.sh
 )

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -213,7 +213,7 @@ struct Point {
  */
     T_ operator,(const Point<T_>& p) const
     {
-       return x*p.x + y*p.y;
+       return (x*p.x + y*p.y + z*p.z);
     }
 
 /// \brief First coordinate

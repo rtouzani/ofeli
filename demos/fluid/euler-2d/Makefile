@@ -206,7 +206,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -317,18 +317,16 @@ euler2d_HEADERS =
 euler2d_LDADD = $(top_builddir)/src/libofeli.a
 euler2ddir = $(datadir)/ofeli/demos/cl/euler-2d
 euler2d_DATA = main.cpp \
-		proj.dat \
-		rectangle.m \
-		Makefile.standalone \
-		euler-2d.cbp \
-		README
+               proj.dat \
+               rectangle.m \
+               Makefile.standalone \
+               README
 
 dist_euler2d_DATA = main.cpp \
-			proj.dat \
-			rectangle.m \
-			Makefile.standalone \
-			euler-2d.cbp \
-			README
+                    proj.dat \
+                    rectangle.m \
+                    Makefile.standalone \
+                    README
 
 all: all-am
 

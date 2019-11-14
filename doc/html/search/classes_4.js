@@ -24,12 +24,13 @@ var searchData=
   ['equa_5flaplace_3c_20real_5ft_2c_203_2c_203_2c_201_2c_201_20_3e',['Equa_Laplace&lt; real_t, 3, 3, 1, 1 &gt;',['../classOFELI_1_1Equa__Laplace.html',1,'OFELI']]],
   ['equa_5flaplace_3c_20real_5ft_2c_203_2c_203_2c_202_2c_202_20_3e',['Equa_Laplace&lt; real_t, 3, 3, 2, 2 &gt;',['../classOFELI_1_1Equa__Laplace.html',1,'OFELI']]],
   ['equa_5flaplace_3c_20real_5ft_2c_204_2c_204_2c_203_2c_203_20_3e',['Equa_Laplace&lt; real_t, 4, 4, 3, 3 &gt;',['../classOFELI_1_1Equa__Laplace.html',1,'OFELI']]],
+  ['equa_5flaplace_3c_20real_5ft_2c_206_2c_206_2c_203_2c_203_20_3e',['Equa_Laplace&lt; real_t, 6, 6, 3, 3 &gt;',['../classOFELI_1_1Equa__Laplace.html',1,'OFELI']]],
   ['equa_5fporous',['Equa_Porous',['../classOFELI_1_1Equa__Porous.html',1,'OFELI']]],
   ['equa_5fporous_3c_20real_5ft_2c_202_2c_202_2c_201_2c_201_20_3e',['Equa_Porous&lt; real_t, 2, 2, 1, 1 &gt;',['../classOFELI_1_1Equa__Porous.html',1,'OFELI']]],
   ['equa_5fporous_3c_20real_5ft_2c_203_2c_203_2c_202_2c_202_20_3e',['Equa_Porous&lt; real_t, 3, 3, 2, 2 &gt;',['../classOFELI_1_1Equa__Porous.html',1,'OFELI']]],
   ['equa_5fsolid',['Equa_Solid',['../classOFELI_1_1Equa__Solid.html',1,'OFELI']]],
   ['equa_5fsolid_3c_20double_2c_208_2c_2024_2c_204_2c_2012_20_3e',['Equa_Solid&lt; double, 8, 24, 4, 12 &gt;',['../classOFELI_1_1Equa__Solid.html',1,'OFELI']]],
-  ['equa_5fsolid_3c_20real_5ft_2c_202_2c_2012_2c_201_2c_201_20_3e',['Equa_Solid&lt; real_t, 2, 12, 1, 1 &gt;',['../classOFELI_1_1Equa__Solid.html',1,'OFELI']]],
+  ['equa_5fsolid_3c_20real_5ft_2c_202_2c_2012_2c_201_2c_206_20_3e',['Equa_Solid&lt; real_t, 2, 12, 1, 6 &gt;',['../classOFELI_1_1Equa__Solid.html',1,'OFELI']]],
   ['equa_5fsolid_3c_20real_5ft_2c_202_2c_204_2c_201_2c_202_20_3e',['Equa_Solid&lt; real_t, 2, 4, 1, 2 &gt;',['../classOFELI_1_1Equa__Solid.html',1,'OFELI']]],
   ['equa_5fsolid_3c_20real_5ft_2c_203_2c_206_2c_202_2c_204_20_3e',['Equa_Solid&lt; real_t, 3, 6, 2, 4 &gt;',['../classOFELI_1_1Equa__Solid.html',1,'OFELI']]],
   ['equa_5fsolid_3c_20real_5ft_2c_204_2c_2012_2c_203_2c_209_20_3e',['Equa_Solid&lt; real_t, 4, 12, 3, 9 &gt;',['../classOFELI_1_1Equa__Solid.html',1,'OFELI']]],
@@ -42,6 +43,7 @@ var searchData=
   ['equation',['Equation',['../classOFELI_1_1Equation.html',1,'OFELI']]],
   ['equation_3c_20complex_5ft_2c_20nen_5f_2c_20nee_5f_2c_20nsn_5f_2c_20nse_5f_20_3e',['Equation&lt; complex_t, NEN_, NEE_, NSN_, NSE_ &gt;',['../classOFELI_1_1Equation.html',1,'OFELI']]],
   ['equation_3c_20double_2c_20nen_5f_2c_20nee_5f_2c_20nsn_5f_2c_20nse_5f_20_3e',['Equation&lt; double, NEN_, NEE_, NSN_, NSE_ &gt;',['../classOFELI_1_1Equation.html',1,'OFELI']]],
+  ['equation_3c_20real_5ft_2c_203_2c_203_2c_202_2c_202_20_3e',['Equation&lt; real_t, 3, 3, 2, 2 &gt;',['../classOFELI_1_1Equation.html',1,'OFELI']]],
   ['equation_3c_20real_5ft_2c_20nen_5f_2c_20nee_5f_2c_20nsn_5f_2c_20nse_5f_20_3e',['Equation&lt; real_t, NEN_, NEE_, NSN_, NSE_ &gt;',['../classOFELI_1_1Equation.html',1,'OFELI']]],
   ['estimator',['Estimator',['../classOFELI_1_1Estimator.html',1,'OFELI']]]
 ];

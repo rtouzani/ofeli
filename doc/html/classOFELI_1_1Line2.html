@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -157,9 +156,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a90f6be43c1fed28e514d4d3e309b7e2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Line2.html#a90f6be43c1fed28e514d4d3e309b7e2c">Sh</a> (size_t i, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> s) const </td></tr>
 <tr class="memdesc:a90f6be43c1fed28e514d4d3e309b7e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shape function of a given node at a given point.  <a href="#a90f6be43c1fed28e514d4d3e309b7e2c">More...</a><br /></td></tr>
 <tr class="separator:a90f6be43c1fed28e514d4d3e309b7e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07d869cd53fa1489bb2fbc7ee3f346ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Line2.html#a07d869cd53fa1489bb2fbc7ee3f346ea">DSh</a> (size_t i) const </td></tr>
-<tr class="memdesc:a07d869cd53fa1489bb2fbc7ee3f346ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate partial derivative of shape function of a node.  <a href="#a07d869cd53fa1489bb2fbc7ee3f346ea">More...</a><br /></td></tr>
-<tr class="separator:a07d869cd53fa1489bb2fbc7ee3f346ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7d706a44a4e55358fd7941724ef55b7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Line2.html#aa7d706a44a4e55358fd7941724ef55b7">DSh</a> () const </td></tr>
+<tr class="memdesc:aa7d706a44a4e55358fd7941724ef55b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return partial derivatives of shape functions of element nodes.  <a href="#aa7d706a44a4e55358fd7941724ef55b7">More...</a><br /></td></tr>
+<tr class="separator:aa7d706a44a4e55358fd7941724ef55b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c5c981ca8d081bd20f7a892b79a9cbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Line2.html#a0c5c981ca8d081bd20f7a892b79a9cbe">getRefCoord</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
 <tr class="memdesc:a0c5c981ca8d081bd20f7a892b79a9cbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference coordinates of a point <code>x</code> in element.  <a href="#a0c5c981ca8d081bd20f7a892b79a9cbe">More...</a><br /></td></tr>
 <tr class="separator:a0c5c981ca8d081bd20f7a892b79a9cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -305,27 +304,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="a07d869cd53fa1489bb2fbc7ee3f346ea"></a>
+<a class="anchor" id="aa7d706a44a4e55358fd7941724ef55b7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> DSh </td>
+          <td class="memname">std::vector&lt;<a class="el" href="structOFELI_1_1Point.html">Point</a>&lt;<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt; &gt; DSh </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>i</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculate partial derivative of shape function of a node. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td><a class="el" href="classOFELI_1_1Node.html" title="To describe a node. ">Node</a> number (1 or 2). </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Return partial derivatives of shape functions of element nodes. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classOFELI_1_1LocalVect.html" title="Handles small size vectors like element vectors. ">LocalVect</a> instance of partial derivatives of shape functions <em>e.g.</em> <code>dsh(i)</code>.x, <code>dsh(i)</code>.y, are partial derivatives of the <em>i</em>-th shape function. </dd></dl>
 
 </div>
 </div>

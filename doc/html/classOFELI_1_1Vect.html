@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -196,8 +195,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a723a4909afd8c708bdb928f8c291421d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a723a4909afd8c708bdb928f8c291421d">setMesh</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;m, size_t nb_dof=0, size_t dof_type=NODE_FIELD)</td></tr>
 <tr class="memdesc:a723a4909afd8c708bdb928f8c291421d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define mesh class to size vector.  <a href="#a723a4909afd8c708bdb928f8c291421d">More...</a><br /></td></tr>
 <tr class="separator:a723a4909afd8c708bdb928f8c291421d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac782da1f912bceb5d8ad00c8dc892ac"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#aac782da1f912bceb5d8ad00c8dc892ac">size</a> () const </td></tr>
-<tr class="memdesc:aac782da1f912bceb5d8ad00c8dc892ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return vector (global) size.  <a href="#aac782da1f912bceb5d8ad00c8dc892ac">More...</a><br /></td></tr>
+<tr class="memitem:aac782da1f912bceb5d8ad00c8dc892ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac782da1f912bceb5d8ad00c8dc892ac"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#aac782da1f912bceb5d8ad00c8dc892ac">size</a> () const </td></tr>
+<tr class="memdesc:aac782da1f912bceb5d8ad00c8dc892ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return vector (global) size. <br /></td></tr>
 <tr class="separator:aac782da1f912bceb5d8ad00c8dc892ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4feaf36f311d79c34f18e44866e51313"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a4feaf36f311d79c34f18e44866e51313">setSize</a> (size_t nx, size_t ny=1, size_t nz=1)</td></tr>
 <tr class="memdesc:a4feaf36f311d79c34f18e44866e51313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set vector size (for 1-D, 2-D or 3-D cases)  <a href="#a4feaf36f311d79c34f18e44866e51313">More...</a><br /></td></tr>
@@ -250,6 +250,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a5e164ba33b1dfc211559756aa5d486c0">getName</a> () const </td></tr>
 <tr class="memdesc:a5e164ba33b1dfc211559756aa5d486c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get name of vector. <br /></td></tr>
 <tr class="separator:a5e164ba33b1dfc211559756aa5d486c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38c93783f1891c401e9bb5d377d6fe6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a38c93783f1891c401e9bb5d377d6fe6e">Norm</a> (<a class="el" href="namespaceOFELI.html#ad4bb8dabdbf8ad75e34220cc666b59ca">NormType</a> t) const </td></tr>
+<tr class="memdesc:a38c93783f1891c401e9bb5d377d6fe6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute a norm of vector.  <a href="#a38c93783f1891c401e9bb5d377d6fe6e">More...</a><br /></td></tr>
+<tr class="separator:a38c93783f1891c401e9bb5d377d6fe6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac34865e47b204a61618a9c74275e303c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#ac34865e47b204a61618a9c74275e303c">getNorm1</a> () const </td></tr>
 <tr class="memdesc:ac34865e47b204a61618a9c74275e303c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate 1-norm of vector.  <a href="#ac34865e47b204a61618a9c74275e303c">More...</a><br /></td></tr>
 <tr class="separator:ac34865e47b204a61618a9c74275e303c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -308,7 +311,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="memdesc:a893a5e670bce299f952ebf54999b05eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a given function (given by an interpretable algebraic expression) to components of vector with given code.  <a href="#a893a5e670bce299f952ebf54999b05eb">More...</a><br /></td></tr>
 <tr class="separator:a893a5e670bce299f952ebf54999b05eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accb79e9496e94b44ff3b51cf0c976766"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#accb79e9496e94b44ff3b51cf0c976766">setSideBC</a> (int code, const string &amp;exp, size_t dof=1)</td></tr>
-<tr class="memdesc:accb79e9496e94b44ff3b51cf0c976766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a given function (given by an interpretable algebraic expression) to components of vector with given code.  <a href="#accb79e9496e94b44ff3b51cf0c976766">More...</a><br /></td></tr>
+<tr class="memdesc:accb79e9496e94b44ff3b51cf0c976766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a given function (given by an interpre&lt;table algebraic expression) to components of vector with given code.  <a href="#accb79e9496e94b44ff3b51cf0c976766">More...</a><br /></td></tr>
 <tr class="separator:accb79e9496e94b44ff3b51cf0c976766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9283c2e38feaee2215eec6414c27ebc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a9283c2e38feaee2215eec6414c27ebc0">setSideBC</a> (int code, T_ val, size_t dof=1)</td></tr>
 <tr class="memdesc:a9283c2e38feaee2215eec6414c27ebc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a given value to components of vector with given code.  <a href="#a9283c2e38feaee2215eec6414c27ebc0">More...</a><br /></td></tr>
@@ -343,9 +346,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="memitem:aa9db35a0146daf1f325ffba340ee68bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#aa9db35a0146daf1f325ffba340ee68bb">Assembly</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> &amp;sd, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
 <tr class="memdesc:aa9db35a0146daf1f325ffba340ee68bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assembly of side vector into <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="#aa9db35a0146daf1f325ffba340ee68bb">More...</a><br /></td></tr>
 <tr class="separator:aa9db35a0146daf1f325ffba340ee68bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ce5dcee073f10d998f7fa284169716d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a6ce5dcee073f10d998f7fa284169716d">Assembly</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> &amp;sd, T_ *<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
-<tr class="memdesc:a6ce5dcee073f10d998f7fa284169716d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assembly of side vector (as C-array) into <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="#a6ce5dcee073f10d998f7fa284169716d">More...</a><br /></td></tr>
-<tr class="separator:a6ce5dcee073f10d998f7fa284169716d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe3ce8dd975970f9d42fc8b7a374cb56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#abe3ce8dd975970f9d42fc8b7a374cb56">Assembly</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> &amp;sd, const T_ *<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
+<tr class="memdesc:abe3ce8dd975970f9d42fc8b7a374cb56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assembly of side vector (as C-array) into <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="#abe3ce8dd975970f9d42fc8b7a374cb56">More...</a><br /></td></tr>
+<tr class="separator:abe3ce8dd975970f9d42fc8b7a374cb56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4371b03bc62514d6bb86d61372c54aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#ab4371b03bc62514d6bb86d61372c54aa">getGradient</a> (class <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v)</td></tr>
 <tr class="memdesc:ab4371b03bc62514d6bb86d61372c54aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the discrete Gradient vector of the current vector.  <a href="#ab4371b03bc62514d6bb86d61372c54aa">More...</a><br /></td></tr>
 <tr class="separator:ab4371b03bc62514d6bb86d61372c54aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1154,7 +1157,13 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
 <p>This function can be used for instance in 1-D </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">exp</td><td>Regular algebraic expression that defines a function of <code>x</code> which are values of vector. This expression must use the variable <code>x</code> as coordinate of vector. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Vector that defined coordinates </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>If the time variable <code>t</code> is involved in the expression, the time value associated to the vector instance must be defined (Default value is 0) either by using the appropriate constructor or by the member function setTime. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Vector that defines coordinates </td></tr>
   </table>
   </dd>
 </dl>
@@ -1277,24 +1286,6 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="aac782da1f912bceb5d8ad00c8dc892ac"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t size </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return vector (global) size. </p>
-<dl class="section warning"><dt>Warning</dt><dd>This constructor is available only if the library <code>eigen</code> is used in conjunction with <a class="el" href="namespaceOFELI.html" title="A namespace to group all library classes, functions, ... ">OFELI</a> </dd></dl>
 
 </div>
 </div>
@@ -1496,6 +1487,32 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
       </table>
 </div><div class="memdoc">
 <p>Return DOF type of vector </p><dl class="section return"><dt>Returns</dt><dd>dof_type Type of degrees of freedom. Value among the enumerated values: <code>NODE_FIELD</code>, <code>ELEMENT_FIELD</code>, <code>SIDE_FIELD</code> or <code>EDGE_FIELD</code> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a38c93783f1891c401e9bb5d377d6fe6e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Norm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceOFELI.html#ad4bb8dabdbf8ad75e34220cc666b59ca">NormType</a>&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute a norm of vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">t</td><td>Norm type to compute: To choose among enumerate values: NORM1: 1-norm WNORM1: Weighted 1-norm (Discrete L1-norm) NORM2: 2-norm WNORM2: Weighted 2-norm (Discrete L2-norm) NORM_MAX: max norm (Infinity norm) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value of norm </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function is available for real valued vectors only </dd></dl>
 
 </div>
 </div>
@@ -1906,7 +1923,7 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
       </table>
 </div><div class="memdoc">
 
-<p>Assign a given function (given by an interpretable algebraic expression) to components of vector with given code. </p>
+<p>Assign a given function (given by an interpre&lt;table algebraic expression) to components of vector with given code. </p>
 <p>Vector components are assumed nodewise </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>Code for which nodes will be assigned prescribed value </td></tr>
@@ -2349,7 +2366,7 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
 
 </div>
 </div>
-<a class="anchor" id="a6ce5dcee073f10d998f7fa284169716d"></a>
+<a class="anchor" id="abe3ce8dd975970f9d42fc8b7a374cb56"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -2362,7 +2379,7 @@ A vector associate to a finite element mesh. In this case, a constructor uses a 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">T_ *&#160;</td>
+          <td class="paramtype">const T_ *&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>

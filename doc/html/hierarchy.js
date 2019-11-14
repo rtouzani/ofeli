@@ -16,6 +16,11 @@ var hierarchy =
       ] ]
     ] ],
     [ "AbsEqua< real_t >", "classOFELI_1_1AbsEqua.html", [
+      [ "Equation< real_t, 3, 3, 2, 2 >", "classOFELI_1_1Equation.html", [
+        [ "DG", "classOFELI_1_1DG.html", [
+          [ "LaplaceDG2DP1", "classOFELI_1_1LaplaceDG2DP1.html", null ]
+        ] ]
+      ] ],
       [ "Equation< real_t, NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equation.html", [
         [ "Equa_Electromagnetics< real_t, 3, 6, 2, 4 >", "classOFELI_1_1Equa__Electromagnetics.html", [
           [ "EC2D2T3", "classOFELI_1_1EC2D2T3.html", null ]
@@ -36,16 +41,17 @@ var hierarchy =
           [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html", null ]
         ] ],
         [ "Equa_Laplace< real_t, 3, 3, 2, 2 >", "classOFELI_1_1Equa__Laplace.html", [
-          [ "Laplace2DFVT", "classOFELI_1_1Laplace2DFVT.html", null ],
-          [ "Laplace2DMHRT0", "classOFELI_1_1Laplace2DMHRT0.html", null ],
           [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html", null ]
         ] ],
         [ "Equa_Laplace< real_t, 4, 4, 3, 3 >", "classOFELI_1_1Equa__Laplace.html", null ],
+        [ "Equa_Laplace< real_t, 6, 6, 3, 3 >", "classOFELI_1_1Equa__Laplace.html", [
+          [ "Laplace2DT6", "classOFELI_1_1Laplace2DT6.html", null ]
+        ] ],
         [ "Equa_Porous< real_t, 2, 2, 1, 1 >", "classOFELI_1_1Equa__Porous.html", null ],
         [ "Equa_Porous< real_t, 3, 3, 2, 2 >", "classOFELI_1_1Equa__Porous.html", [
           [ "WaterPorous2D", "classOFELI_1_1WaterPorous2D.html", null ]
         ] ],
-        [ "Equa_Solid< real_t, 2, 12, 1, 1 >", "classOFELI_1_1Equa__Solid.html", [
+        [ "Equa_Solid< real_t, 2, 12, 1, 6 >", "classOFELI_1_1Equa__Solid.html", [
           [ "Beam3DL2", "classOFELI_1_1Beam3DL2.html", null ]
         ] ],
         [ "Equa_Solid< real_t, 2, 4, 1, 2 >", "classOFELI_1_1Equa__Solid.html", [
@@ -73,7 +79,8 @@ var hierarchy =
         [ "Equa_Therm< real_t, 6, 6, 3, 3 >", "classOFELI_1_1Equa__Therm.html", [
           [ "DC2DT6", "classOFELI_1_1DC2DT6.html", null ]
         ] ]
-      ] ]
+      ] ],
+      [ "SteklovPoincare2DBE", "classOFELI_1_1SteklovPoincare2DBE.html", null ]
     ] ],
     [ "LocalMatrix< complex_t, NEE_, NEE_ >", "classOFELI_1_1LocalMatrix.html", null ],
     [ "LocalMatrix< complex_t, NSE_, NSE_ >", "classOFELI_1_1LocalMatrix.html", null ],
@@ -102,9 +109,6 @@ var hierarchy =
       ] ]
     ] ],
     [ "BiotSavart", "classOFELI_1_1BiotSavart.html", null ],
-    [ "DG", "classOFELI_1_1DG.html", [
-      [ "LaplaceDG2DP1", "classOFELI_1_1LaplaceDG2DP1.html", null ]
-    ] ],
     [ "Domain", "classOFELI_1_1Domain.html", null ],
     [ "Edge", "classOFELI_1_1Edge.html", null ],
     [ "EdgeList", "classOFELI_1_1EdgeList.html", null ],
@@ -116,7 +120,6 @@ var hierarchy =
     [ "FEShape", "classOFELI_1_1FEShape.html", [
       [ "Hexa8", "classOFELI_1_1Hexa8.html", null ],
       [ "Line2", "classOFELI_1_1Line2.html", null ],
-      [ "Line2H", "classOFELI_1_1Line2H.html", null ],
       [ "Line3", "classOFELI_1_1Line3.html", null ],
       [ "Penta6", "classOFELI_1_1Penta6.html", null ],
       [ "Quad4", "classOFELI_1_1Quad4.html", null ],
@@ -141,6 +144,7 @@ var hierarchy =
     [ "Funct", "classOFELI_1_1Funct.html", null ],
     [ "Gauss", "classOFELI_1_1Gauss.html", null ],
     [ "Grid", "classOFELI_1_1Grid.html", null ],
+    [ "Integration", "classOFELI_1_1Integration.html", null ],
     [ "IOField", "classOFELI_1_1IOField.html", null ],
     [ "IPF", "classOFELI_1_1IPF.html", null ],
     [ "Iter< T_ >", "classOFELI_1_1Iter.html", null ],
@@ -193,11 +197,9 @@ var hierarchy =
     [ "Reconstruction", "classOFELI_1_1Reconstruction.html", null ],
     [ "Side", "classOFELI_1_1Side.html", null ],
     [ "SideList", "classOFELI_1_1SideList.html", null ],
-    [ "SteklovPoincare2DBE", "classOFELI_1_1SteklovPoincare2DBE.html", null ],
     [ "Tabulation", "classOFELI_1_1Tabulation.html", null ],
     [ "Timer", "classOFELI_1_1Timer.html", null ],
     [ "TimeStepping", "classOFELI_1_1TimeStepping.html", null ],
-    [ "UserData< T_ >", "classOFELI_1_1UserData.html", null ],
     [ "Vect< T_ >", "classOFELI_1_1Vect.html", null ],
     [ "Point< real_t >", "structOFELI_1_1Point.html", null ]
 ];

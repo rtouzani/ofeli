@@ -11,7 +11,6 @@ var classOFELI_1_1MeshAdapt =
     [ "setSolution", "classOFELI_1_1MeshAdapt.html#af6fe5bb0ec25b8e2fec7331f7ea33afb", null ],
     [ "setJacobi", "classOFELI_1_1MeshAdapt.html#a92054e84cf1692e60014e1e70f9bc639", null ],
     [ "setSmooth", "classOFELI_1_1MeshAdapt.html#ac87a4eda9e424bc16dcbb9bbd2251612", null ],
-    [ "setVerbosity", "classOFELI_1_1MeshAdapt.html#a9b1861597bdad1a898f7b68beacc141c", null ],
     [ "AbsoluteError", "classOFELI_1_1MeshAdapt.html#a48a31f67db0088385e2ea13880427cdb", null ],
     [ "RelativeError", "classOFELI_1_1MeshAdapt.html#a394b306c90e4573de2d0d00005647007", null ],
     [ "setError", "classOFELI_1_1MeshAdapt.html#ac3f9e1528d7591a88b29bc73eb0bae58", null ],

@@ -5,7 +5,7 @@ var classOFELI_1_1Penta6 =
     [ "~Penta6", "classOFELI_1_1Penta6.html#afa54f9300b57eb271cc9a62c79f73055", null ],
     [ "set", "classOFELI_1_1Penta6.html#a578b9f2f623966f955548e89ccce995a", null ],
     [ "setLocal", "classOFELI_1_1Penta6.html#a3686dcc363945fc9705485b9200fa17e", null ],
-    [ "DSh", "classOFELI_1_1Penta6.html#a5a81c330921ff7fb6286ae927b30b7a9", null ],
+    [ "DSh", "classOFELI_1_1Penta6.html#a815bb7e10ee537cb656357481ae00ff9", null ],
     [ "getMaxEdgeLength", "classOFELI_1_1Penta6.html#aef875a901767a614557a4aca5e6d08f9", null ],
     [ "getMinEdgeLength", "classOFELI_1_1Penta6.html#a9b14e7e0ca32bd24f27519ed8ed0d0c8", null ],
     [ "Sh", "classOFELI_1_1Penta6.html#abf13023b750b4a215814cfb805b145da", null ],

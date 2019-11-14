@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['sidetype',['SideType',['../classOFELI_1_1Side.html#a1ee4b3b0c0d87990a374f7ef5b551fcf',1,'OFELI::Side']]],
-  ['solvertype',['SolverType',['../classOFELI_1_1Muscl.html#a8b06041d7c1fb05f379714f4312306ec',1,'OFELI::Muscl']]]
+  ['pde_5fterms',['PDE_Terms',['../group__OFELI.html#ga3757febaa4d0638468a11bb96593f8da',1,'OFELI']]],
+  ['preconditioner',['Preconditioner',['../group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38',1,'OFELI']]]
 ];

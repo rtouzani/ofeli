@@ -3,6 +3,7 @@ var searchData=
   ['ident_5fprec',['IDENT_PREC',['../group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38abee1df09df17f316a75a98ad36679bf6',1,'OFELI']]],
   ['identity',['IDENTITY',['../group__OFELI.html#ggacc6ad8472c2abfd2f63e100474b977f9af235bf7b95ec64961eab8529ec59311d',1,'OFELI']]],
   ['ilu_5fprec',['ILU_PREC',['../group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a4a328187223e216450bbcecbc37b2701',1,'OFELI']]],
+  ['initial',['INITIAL',['../group__OFELI.html#gga42582cc9e68e05cf30ccad02e4ba8ff6a7116db6906963fd0720c4a85be250cf4',1,'OFELI']]],
   ['initial_5faux_5f1',['INITIAL_AUX_1',['../group__OFELI.html#gga42582cc9e68e05cf30ccad02e4ba8ff6ad44d739c9448e43b2bfed35735dc06bf',1,'OFELI']]],
   ['initial_5faux_5f2',['INITIAL_AUX_2',['../group__OFELI.html#gga42582cc9e68e05cf30ccad02e4ba8ff6aeef4912faf6d08b6af41bf8eca8e56ba',1,'OFELI']]],
   ['initial_5faux_5f3',['INITIAL_AUX_3',['../group__OFELI.html#gga42582cc9e68e05cf30ccad02e4ba8ff6a607a5770d29e88a43b7afd329213dffc',1,'OFELI']]],

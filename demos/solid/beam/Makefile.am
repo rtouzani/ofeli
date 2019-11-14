@@ -8,13 +8,11 @@ beam_LDADD  = $(top_builddir)/src/libofeli.a
 
 beamdir   =	$(datadir)/ofeli/demos/solid/beam
 beam_DATA =	main.cpp \
-		beam.dat \
-		Makefile.standalone \
-                README \
-		beam.cbp
-dist_beam_DATA =	main.cpp \
-			beam.dat \
-			Makefile.standalone \
-	                README \
-			beam.cbp
+            beam.dat \
+            Makefile.standalone \
+            README
+dist_beam_DATA = main.cpp \
+                 beam.dat \
+                 Makefile.standalone \
+	              README
 

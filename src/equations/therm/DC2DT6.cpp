@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -32,6 +32,8 @@
 
 
 #include "equations/therm/DC2DT6.h"
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {

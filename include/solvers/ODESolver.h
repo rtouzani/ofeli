@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -211,7 +211,7 @@ class ODESolver
  *  used for nonlinear ODEs of the form 
  *  y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))\n
  *  This function is to be used for the <tt>i</tt>-th equation of a system of ODEs
- *  @param [in] f Expression of time derivative of the function
+ *  @param [in] df Expression of time derivative of the function
  *  @param [in] i Index of equation. Must be not larger than the number of equations
  */
     void setDF(string df,

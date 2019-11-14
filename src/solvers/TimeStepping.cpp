@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -418,7 +418,7 @@ void TimeStepping::solveForwardEuler()
                            "scheme is implemented for first order equations only.");
    for (int e=0; e<_nb_des; ++e) {
       DE &de = _de[e];
-      for (size_t i=1; i<=de.nb_eq; ++i)
+      for (int i=1; i<=de.nb_eq; ++i)
          de.b(i) /= de.D(i);
       insertBC(de.b,de.v);
       *de.w = de.u = de.v;
@@ -464,7 +464,7 @@ void TimeStepping::solveHeun()
       throw OFELIException("In TimeStepping::solveHeun(): Heun scheme is "
                            "implemented for first order equations only.");
    DE &de = _de[_ind-1];
-   for (size_t i=1; i<=de.nb_eq; i++)
+   for (int i=1; i<=de.nb_eq; i++)
       de.b(i) /= de.D(i);
    if (_sstep==1)
       insertBC(de.b,de.v);
@@ -483,7 +483,7 @@ void TimeStepping::solveLeapFrog()
       throw OFELIException("In TimeStepping::solveLeapFrog(): Leap Frog "
                            "scheme is implemented for first order equations only.");
    DE &de = _de[_ind-1];
-   for (size_t i=1; i<=de.nb_eq; i++)
+   for (int i=1; i<=de.nb_eq; i++)
       de.b(i) /= de.D(i);
    if (_step==1) {
       insertBC(de.b,de.v);
@@ -505,7 +505,7 @@ void TimeStepping::solveAB2()
       throw OFELIException("In TimeStepping::solveAB2(): Adams-Bashforth "
                            "scheme is implemented for first order equations only.");
    DE &de = _de[_ind-1];
-   for (size_t i=1; i<=de.nb_eq; i++)
+   for (int i=1; i<=de.nb_eq; i++)
       de.b(i) /= de.D(i);
    if (_step==1) {
       insertBC(de.b,de.v);
@@ -527,7 +527,7 @@ void TimeStepping::solveRK4()
                            "is valid for first order equations only.");
    DE &de = _de[_ind-1];
    if (_sstep==4) {
-      for (size_t i=1; i<=de.nb_eq; i++)
+      for (int i=1; i<=de.nb_eq; i++)
          de.b(i) /= de.D(i);
       insertBC(de.b,de.v);
       *de.w = de.u = de.v;
@@ -552,7 +552,7 @@ void TimeStepping::solveNewmark()
                            "is valid for second order equations only.");
    DE &de = _de[_ind-1];
    if (_step==1 && _sstep==1) {
-      for (size_t i=1; i<=de.nb_eq; ++i)
+      for (int i=1; i<=de.nb_eq; ++i)
          de.b(i) /= de.D(i);
       insertBC0(de.b,de.ddu);
       return;

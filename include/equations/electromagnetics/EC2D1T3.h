@@ -80,6 +80,7 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
     EC2D1T3(Mesh& ms);
 
 /** \brief Constructor using mesh and solution vector
+ *  @param [in] ms Mesh instance
  *  @param [in,out] u Reference to solution vector instance
  */
     EC2D1T3(Mesh&            ms,

@@ -255,7 +255,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -388,39 +388,35 @@ ode_demo6dir = $(datadir)/ofeli/demos/solvers/ODE
 ode_demo7dir = $(datadir)/ofeli/demos/solvers/ODE
 ts_demo1dir = $(datadir)/ofeli/demos/solvers/ODE
 ts_demo2dir = $(datadir)/ofeli/demos/solvers/ODE
-ode_demo1_DATA = ode_demo1.cpp ode_demo1.cbp
-ode_demo2_DATA = ode_demo2.cpp ode_demo2.cbp
-ode_demo3_DATA = ode_demo3.cpp ode_demo3.cbp
-ode_demo4_DATA = ode_demo4.cpp ode_demo4.cbp
-ode_demo5_DATA = ode_demo5.cpp ode_demo5.cbp
-ode_demo6_DATA = ode_demo6.cpp ode_demo6.cbp
-ode_demo7_DATA = ode_demo7.cpp ode_demo7.cbp
+ode_demo1_DATA = ode_demo1.cpp
+ode_demo2_DATA = ode_demo2.cpp
+ode_demo3_DATA = ode_demo3.cpp
+ode_demo4_DATA = ode_demo4.cpp
+ode_demo5_DATA = ode_demo5.cpp
+ode_demo6_DATA = ode_demo6.cpp
+ode_demo7_DATA = ode_demo7.cpp
 ts_demo1_DATA = ts_demo1.cpp \
-						ts_demo1.cbp \
-						mesh1.m \
-						Makefile.standalone \
-						README
+                mesh1.m \
+                Makefile.standalone \
+                README
 
 ts_demo2_DATA = ts_demo2.cpp \
-						ts_demo2.cbp \
-						mesh2.m
+                mesh2.m
 
-dist_ode_demo1_DATA = ode_demo1.cpp ode_demo1.cbp
-dist_ode_demo2_DATA = ode_demo2.cpp ode_demo2.cbp
-dist_ode_demo3_DATA = ode_demo3.cpp ode_demo3.cbp
-dist_ode_demo4_DATA = ode_demo4.cpp ode_demo4.cbp
-dist_ode_demo5_DATA = ode_demo5.cpp ode_demo5.cbp
-dist_ode_demo6_DATA = ode_demo6.cpp ode_demo6.cbp
-dist_ode_demo7_DATA = ode_demo7.cpp ode_demo7.cbp
+dist_ode_demo1_DATA = ode_demo1.cpp
+dist_ode_demo2_DATA = ode_demo2.cpp
+dist_ode_demo3_DATA = ode_demo3.cpp
+dist_ode_demo4_DATA = ode_demo4.cpp
+dist_ode_demo5_DATA = ode_demo5.cpp
+dist_ode_demo6_DATA = ode_demo6.cpp
+dist_ode_demo7_DATA = ode_demo7.cpp
 dist_ts_demo1_DATA = ts_demo1.cpp \
-			ts_demo1.cbp \
-			mesh1.m \
-			Makefile.standalone \
-			README
+                     mesh1.m \
+                     Makefile.standalone \
+                     README
 
 dist_ts_demo2_DATA = ts_demo2.cpp \
-			ts_demo2.cbp \
-			mesh2.m
+                      mesh2.m
 
 all: all-am
 

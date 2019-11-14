@@ -28,7 +28,7 @@ var group__IO =
       [ "IPF", "classOFELI_1_1IPF.html#a120fbf0a8630ca29c7adc2e578ef58e5", null ],
       [ "~IPF", "classOFELI_1_1IPF.html#a0569447015d3a4768d5d81adb05b8a35", null ],
       [ "getDisplay", "classOFELI_1_1IPF.html#a8c8b312b367b066c0e09545023bc7a0f", null ],
-      [ "getVerbose", "classOFELI_1_1IPF.html#acace4272799e056d4839c6bbb7c9ab96", null ],
+      [ "getVerbose", "classOFELI_1_1IPF.html#a5513ede228fa96a2bf6341906f66e759", null ],
       [ "getOutput", "classOFELI_1_1IPF.html#a1046611895afc3c7ba3c75cef41b00ab", null ],
       [ "getSave", "classOFELI_1_1IPF.html#a8fe11e94d2c0941877ada70630c42978", null ],
       [ "getPlot", "classOFELI_1_1IPF.html#a4ba90ce3bb174d96547dff01cc1e7db6", null ],
@@ -86,7 +86,7 @@ var group__IO =
     ] ],
     [ "Prescription", "classOFELI_1_1Prescription.html", [
       [ "Prescription", "classOFELI_1_1Prescription.html#a8b0e88c4b2a26e6651cd0a26af580e86", null ],
-      [ "Prescription", "classOFELI_1_1Prescription.html#a729b1e5dbc77119240896102a237a1b9", null ],
+      [ "Prescription", "classOFELI_1_1Prescription.html#ad58136c7aa1df4884d968ee61ce49999", null ],
       [ "~Prescription", "classOFELI_1_1Prescription.html#abc32cb0d2029c7e0ee3eeee426c9b61d", null ],
       [ "get", "classOFELI_1_1Prescription.html#a0451c16459746e708da6293cfe733ad3", null ]
     ] ],

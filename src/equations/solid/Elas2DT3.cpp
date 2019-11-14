@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -286,7 +286,6 @@ int Elas2DT3::Contact(real_t coef)
 void Elas2DT3::Reaction(Vect<real_t>& r)
 {
    r.setSize(_nb_sides,2);
-   size_t n1, n2;
    mesh_elements(*_theMesh) {
       set(the_element);
       Deviator();
@@ -295,16 +294,16 @@ void Elas2DT3::Reaction(Vect<real_t>& r)
          Side *sd = _theElement->getPtrSide(s);
          size_t t = (s+1)%3;
          if (sd) {
-            n1 = (*sd)(1)->n(), n2 = (*sd)(2)->n();
-            real_t u1 = (*_u)((*_theSide)(1)->n(),1), u2 = (*_u)((*_theSide)(2)->n(),1);
-            real_t v1 = (*_u)((*_theSide)(1)->n(),2), v2 = (*_u)((*_theSide)(2)->n(),2);
+            size_t n1 = (*sd)(1)->n(), n2 = (*sd)(2)->n();
+            real_t u1 = (*_u)(n1,1), u2 = (*_u)(n2,1);
+            real_t v1 = (*_u)(n1,2), v2 = (*_u)(n2,2);
             if (sd->getCode(1)==CONTACT) {
-               r((*sd)(1)->n(),1) += eA0(2*s-1,2*s-1)*u1 + eA0(2*s-1,2*t-1)*u2;
-               r((*sd)(2)->n(),1) += eA0(2*t-1,2*s-1)*u1 + eA0(2*t-1,2*t-1)*u2;
+               r(n1,1) += eA0(2*s-1,2*s-1)*u1 + eA0(2*s-1,2*t-1)*u2;
+               r(n2,1) += eA0(2*t-1,2*s-1)*u1 + eA0(2*t-1,2*t-1)*u2;
             }
             if (sd->getCode(2)==CONTACT) {
-               r((*sd)(1)->n(),2) += eA0(2*s  ,2*s  )*v1 + eA0(2*s  ,2*t  )*v2;
-               r((*sd)(2)->n(),2) += eA0(2*t  ,2*s  )*v1 + eA0(2*t  ,2*t  )*v2;
+               r(n1,2) += eA0(2*s  ,2*s  )*v1 + eA0(2*s  ,2*t  )*v2;
+               r(n2,2) += eA0(2*t  ,2*s  )*v1 + eA0(2*t  ,2*t  )*v2;
             }
          }
       }

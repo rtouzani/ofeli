@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -189,9 +189,7 @@ void Prescription::get_boundary_condition(size_t k)
    size_t l=0;
    int err;
    mesh_nodes(*_theMesh) {
-      _data[0] = the_node->getX();
-      _data[1] = the_node->getY();
-      _data[2] = the_node->getZ();
+      _data[0] = the_node->getX(), _data[1] = the_node->getY(), _data[2] = the_node->getZ();
       for (size_t i=1; i<=the_node->getNbDOF(); i++) {
          l++;
          if (the_node->getCode(_p[k].dof)==_p[k].code && i==_p[k].dof) {

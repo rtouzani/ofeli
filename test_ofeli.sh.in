@@ -16,24 +16,21 @@ echo "-----------------------------------------------------------------"
 echo "Test elliptic equation (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
-   cd elliptic
    ./elliptic
 fi
 echo "Test heat equation (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
-   cd ../heat
    ./heat 10 0.1
 fi
 echo "Test transport equation (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
-   cd ../transport
    ./transport 10 0.1
    /bin/rm output.dat
 fi
 
-cd ../../laplace
+cd ../laplace
 echo "-----------------------------------------------------------------"
 echo "Test Laplace equation programs"
 echo "-----------------------------------------------------------------"

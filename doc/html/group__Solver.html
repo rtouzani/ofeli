@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -113,6 +112,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1EigenProblemSolver.html">EigenProblemSolver</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to find eigenvalues and corresponding eigenvectors of a given matrix in a generalized eigenproblem, <em>i.e.</em> Find scalars l and non-null vectors v such that [K]{v} = l[M]{v} where [K] and [M] are symmetric matrices. The eigenproblem can be originated from a PDE. For this, we will refer to the matrices K and M as <em>Stiffness</em> and <em>Mass</em> matrices respectively.  <a href="classOFELI_1_1EigenProblemSolver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Integration.html">Integration</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for numerical integration methods.  <a href="classOFELI_1_1Integration.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Iter.html">Iter&lt; T_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to drive an iterative process.  <a href="classOFELI_1_1Iter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,46 +171,46 @@ Functions</h2></td></tr>
 ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga0e680bb7c5a6e6a0583ced44a9d51325">operator&lt;&lt;</a> (ostream &amp;s, const Muscl3DT &amp;m)</td></tr>
 <tr class="memdesc:ga0e680bb7c5a6e6a0583ced44a9d51325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output mesh data as calculated in class <a class="el" href="classOFELI_1_1Muscl3DT.html" title="Class for 3-D hyperbolic solvers with Muscl scheme using tetrahedra. ">Muscl3DT</a>. <br /></td></tr>
 <tr class="separator:ga0e680bb7c5a6e6a0583ced44a9d51325"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga126b9467c758bedaec136ce49587b92f"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga126b9467c758bedaec136ce49587b92f"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga126b9467c758bedaec136ce49587b92f">BiCG</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga126b9467c758bedaec136ce49587b92f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Biconjugate gradient solver function.  <a href="group__Solver.html#ga126b9467c758bedaec136ce49587b92f">More...</a><br /></td></tr>
-<tr class="separator:ga126b9467c758bedaec136ce49587b92f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5903af9c6d4f9161ca40ec7c179d611e"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga5903af9c6d4f9161ca40ec7c179d611e"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga5903af9c6d4f9161ca40ec7c179d611e">BiCGStab</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Prec&lt; T_ &gt; &amp;P, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga5903af9c6d4f9161ca40ec7c179d611e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Biconjugate gradient stabilized solver function.  <a href="group__Solver.html#ga5903af9c6d4f9161ca40ec7c179d611e">More...</a><br /></td></tr>
-<tr class="separator:ga5903af9c6d4f9161ca40ec7c179d611e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36cba080442b5783391502f98696ec18"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga36cba080442b5783391502f98696ec18"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga36cba080442b5783391502f98696ec18">BiCGStab</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga36cba080442b5783391502f98696ec18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Biconjugate gradient stabilized solver function.  <a href="group__Solver.html#ga36cba080442b5783391502f98696ec18">More...</a><br /></td></tr>
-<tr class="separator:ga36cba080442b5783391502f98696ec18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacf04a1553cd8d1f16d4095ddb10c99a2"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:gacf04a1553cd8d1f16d4095ddb10c99a2"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#gacf04a1553cd8d1f16d4095ddb10c99a2">CG</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Prec&lt; T_ &gt; &amp;P, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:gacf04a1553cd8d1f16d4095ddb10c99a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conjugate gradient solver function.  <a href="group__Solver.html#gacf04a1553cd8d1f16d4095ddb10c99a2">More...</a><br /></td></tr>
-<tr class="separator:gacf04a1553cd8d1f16d4095ddb10c99a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b441664ad13ed9ed2fde21271ae0ca5"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga1b441664ad13ed9ed2fde21271ae0ca5"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga1b441664ad13ed9ed2fde21271ae0ca5">CG</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga1b441664ad13ed9ed2fde21271ae0ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conjugate gradient solver function.  <a href="group__Solver.html#ga1b441664ad13ed9ed2fde21271ae0ca5">More...</a><br /></td></tr>
-<tr class="separator:ga1b441664ad13ed9ed2fde21271ae0ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dabd884d8847c99a9ba8e4e926cce92"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga5dabd884d8847c99a9ba8e4e926cce92"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga5dabd884d8847c99a9ba8e4e926cce92">CGS</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga5dabd884d8847c99a9ba8e4e926cce92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conjugate Gradient Squared solver function.  <a href="group__Solver.html#ga5dabd884d8847c99a9ba8e4e926cce92">More...</a><br /></td></tr>
-<tr class="separator:ga5dabd884d8847c99a9ba8e4e926cce92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab555b7625c0ba554da8b92b5d0291c67"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:gab555b7625c0ba554da8b92b5d0291c67"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#gab555b7625c0ba554da8b92b5d0291c67">GMRes</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Prec&lt; T_ &gt; &amp;P, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, size_t m, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:gab555b7625c0ba554da8b92b5d0291c67"><td class="mdescLeft">&#160;</td><td class="mdescRight">GMRes solver function.  <a href="group__Solver.html#gab555b7625c0ba554da8b92b5d0291c67">More...</a><br /></td></tr>
-<tr class="separator:gab555b7625c0ba554da8b92b5d0291c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09f27d5e80a346625e5ff7e54f1f45df"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga09f27d5e80a346625e5ff7e54f1f45df"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga09f27d5e80a346625e5ff7e54f1f45df">GMRes</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, size_t m, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga09f27d5e80a346625e5ff7e54f1f45df"><td class="mdescLeft">&#160;</td><td class="mdescRight">GMRes solver function.  <a href="group__Solver.html#ga09f27d5e80a346625e5ff7e54f1f45df">More...</a><br /></td></tr>
-<tr class="separator:ga09f27d5e80a346625e5ff7e54f1f45df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8dcd7991586a9eb1badcff25e0f291d2"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga8dcd7991586a9eb1badcff25e0f291d2"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga8dcd7991586a9eb1badcff25e0f291d2">GS</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> omega, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga8dcd7991586a9eb1badcff25e0f291d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gauss-Seidel solver function.  <a href="group__Solver.html#ga8dcd7991586a9eb1badcff25e0f291d2">More...</a><br /></td></tr>
-<tr class="separator:ga8dcd7991586a9eb1badcff25e0f291d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga83b733ffbcdaae10616574956ac2bb24"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga83b733ffbcdaae10616574956ac2bb24"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24">Jacobi</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> omega, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga83b733ffbcdaae10616574956ac2bb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Jacobi solver function.  <a href="group__Solver.html#ga83b733ffbcdaae10616574956ac2bb24">More...</a><br /></td></tr>
-<tr class="separator:ga83b733ffbcdaae10616574956ac2bb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba5d7c89c2832ad701cc3f0c750928fb"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:gaba5d7c89c2832ad701cc3f0c750928fb"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#gaba5d7c89c2832ad701cc3f0c750928fb">BiCG</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:gaba5d7c89c2832ad701cc3f0c750928fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Biconjugate gradient solver function.  <a href="group__Solver.html#gaba5d7c89c2832ad701cc3f0c750928fb">More...</a><br /></td></tr>
+<tr class="separator:gaba5d7c89c2832ad701cc3f0c750928fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe8cd86a83c560836c717808d06decb5"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:gabe8cd86a83c560836c717808d06decb5"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#gabe8cd86a83c560836c717808d06decb5">BiCGStab</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Prec&lt; T_ &gt; &amp;P, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:gabe8cd86a83c560836c717808d06decb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Biconjugate gradient stabilized solver function.  <a href="group__Solver.html#gabe8cd86a83c560836c717808d06decb5">More...</a><br /></td></tr>
+<tr class="separator:gabe8cd86a83c560836c717808d06decb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9355fc4014139252d5f939ae295893a5"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga9355fc4014139252d5f939ae295893a5"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga9355fc4014139252d5f939ae295893a5">BiCGStab</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:ga9355fc4014139252d5f939ae295893a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Biconjugate gradient stabilized solver function.  <a href="group__Solver.html#ga9355fc4014139252d5f939ae295893a5">More...</a><br /></td></tr>
+<tr class="separator:ga9355fc4014139252d5f939ae295893a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9eb542b51d6a2ac952e2b2bbd5f21138"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga9eb542b51d6a2ac952e2b2bbd5f21138"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga9eb542b51d6a2ac952e2b2bbd5f21138">CG</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Prec&lt; T_ &gt; &amp;P, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:ga9eb542b51d6a2ac952e2b2bbd5f21138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conjugate gradient solver function.  <a href="group__Solver.html#ga9eb542b51d6a2ac952e2b2bbd5f21138">More...</a><br /></td></tr>
+<tr class="separator:ga9eb542b51d6a2ac952e2b2bbd5f21138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga554b9f066a4a2a36773eff4c3f9a4d71"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga554b9f066a4a2a36773eff4c3f9a4d71"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga554b9f066a4a2a36773eff4c3f9a4d71">CG</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:ga554b9f066a4a2a36773eff4c3f9a4d71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conjugate gradient solver function.  <a href="group__Solver.html#ga554b9f066a4a2a36773eff4c3f9a4d71">More...</a><br /></td></tr>
+<tr class="separator:ga554b9f066a4a2a36773eff4c3f9a4d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa2aac234cefc34242a77a8c846741c5"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:gafa2aac234cefc34242a77a8c846741c5"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#gafa2aac234cefc34242a77a8c846741c5">CGS</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:gafa2aac234cefc34242a77a8c846741c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conjugate Gradient Squared solver function.  <a href="group__Solver.html#gafa2aac234cefc34242a77a8c846741c5">More...</a><br /></td></tr>
+<tr class="separator:gafa2aac234cefc34242a77a8c846741c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga570d4a25d1945a14819ddd01bc640aef"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga570d4a25d1945a14819ddd01bc640aef"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga570d4a25d1945a14819ddd01bc640aef">GMRes</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Prec&lt; T_ &gt; &amp;P, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, size_t m, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:ga570d4a25d1945a14819ddd01bc640aef"><td class="mdescLeft">&#160;</td><td class="mdescRight">GMRes solver function.  <a href="group__Solver.html#ga570d4a25d1945a14819ddd01bc640aef">More...</a><br /></td></tr>
+<tr class="separator:ga570d4a25d1945a14819ddd01bc640aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f3f9683290c78a85df05aadeeef1cdf"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga5f3f9683290c78a85df05aadeeef1cdf"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga5f3f9683290c78a85df05aadeeef1cdf">GMRes</a> (const SpMatrix&lt; T_ &gt; &amp;A, int prec, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, size_t m, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:ga5f3f9683290c78a85df05aadeeef1cdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">GMRes solver function.  <a href="group__Solver.html#ga5f3f9683290c78a85df05aadeeef1cdf">More...</a><br /></td></tr>
+<tr class="separator:ga5f3f9683290c78a85df05aadeeef1cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36eb96776e21d95d9ca9bd46dbe6172a"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga36eb96776e21d95d9ca9bd46dbe6172a"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga36eb96776e21d95d9ca9bd46dbe6172a">GS</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> omega, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:ga36eb96776e21d95d9ca9bd46dbe6172a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gauss-Seidel solver function.  <a href="group__Solver.html#ga36eb96776e21d95d9ca9bd46dbe6172a">More...</a><br /></td></tr>
+<tr class="separator:ga36eb96776e21d95d9ca9bd46dbe6172a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65b2c70702a6ba24616a93c1188a0d9d"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga65b2c70702a6ba24616a93c1188a0d9d"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga65b2c70702a6ba24616a93c1188a0d9d">Jacobi</a> (const SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> omega, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:ga65b2c70702a6ba24616a93c1188a0d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Jacobi solver function.  <a href="group__Solver.html#ga65b2c70702a6ba24616a93c1188a0d9d">More...</a><br /></td></tr>
+<tr class="separator:ga65b2c70702a6ba24616a93c1188a0d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab27d0cc4ff53840022eb049867af87c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab27d0cc4ff53840022eb049867af87c6"></a>
 ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#gab27d0cc4ff53840022eb049867af87c6">operator&lt;&lt;</a> (ostream &amp;s, const NLASSolver &amp;nl)</td></tr>
 <tr class="memdesc:gab27d0cc4ff53840022eb049867af87c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output nonlinear system information. <br /></td></tr>
@@ -233,13 +235,10 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memitem:ga2174acbbdde7226a6b31ecf14abcfe4e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga2174acbbdde7226a6b31ecf14abcfe4e">Schur</a> (PETScMatrix&lt; T_ &gt; &amp;A, PETScMatrix&lt; T_ &gt; &amp;U, PETScMatrix&lt; T_ &gt; &amp;L, PETScMatrix&lt; T_ &gt; &amp;D, PETScVect&lt; T_ &gt; &amp;b, PETScVect&lt; T_ &gt; &amp;c)</td></tr>
 <tr class="memdesc:ga2174acbbdde7226a6b31ecf14abcfe4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system of equations with a 2x2-block matrix.  <a href="group__Solver.html#ga2174acbbdde7226a6b31ecf14abcfe4e">More...</a><br /></td></tr>
 <tr class="separator:ga2174acbbdde7226a6b31ecf14abcfe4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ab21c45e14e75380265991cdea49f0d"><td class="memTemplParams" colspan="2">template&lt;class T_ , class M_ &gt; </td></tr>
-<tr class="memitem:ga5ab21c45e14e75380265991cdea49f0d"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga5ab21c45e14e75380265991cdea49f0d">SSOR</a> (const M_ &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int verbose)</td></tr>
-<tr class="memdesc:ga5ab21c45e14e75380265991cdea49f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SSOR solver function.  <a href="group__Solver.html#ga5ab21c45e14e75380265991cdea49f0d">More...</a><br /></td></tr>
-<tr class="separator:ga5ab21c45e14e75380265991cdea49f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c960863c356db735b89e989a7376c6d"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga6c960863c356db735b89e989a7376c6d">operator&lt;&lt;</a> (ostream &amp;s, const TimeStepping &amp;ts)</td></tr>
-<tr class="memdesc:ga6c960863c356db735b89e989a7376c6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output differential system information.  <a href="group__Solver.html#ga6c960863c356db735b89e989a7376c6d">More...</a><br /></td></tr>
-<tr class="separator:ga6c960863c356db735b89e989a7376c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga427b162d903d81fad84633c855c87b1f"><td class="memTemplParams" colspan="2">template&lt;class T_ , class M_ &gt; </td></tr>
+<tr class="memitem:ga427b162d903d81fad84633c855c87b1f"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Solver.html#ga427b162d903d81fad84633c855c87b1f">SSOR</a> (const M_ &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:ga427b162d903d81fad84633c855c87b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SSOR solver function.  <a href="group__Solver.html#ga427b162d903d81fad84633c855c87b1f">More...</a><br /></td></tr>
+<tr class="separator:ga427b162d903d81fad84633c855c87b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Solver functions and classes. </p>
@@ -325,7 +324,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga126b9467c758bedaec136ce49587b92f"></a>
+<a class="anchor" id="gaba5d7c89c2832ad701cc3f0c750928fb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -363,13 +362,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -380,6 +373,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>Biconjugate gradient solver function. </p>
+<p>This function uses the preconditioned Biconjugate Conjugate Gradient algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function CG </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -388,12 +396,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial solution guess in input and solution of the linear system in output (If iterations have succeeded). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">toler</td><td>[in] Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">verbose</td><td>[in] Information output parameter<ul>
-<li>0: No output</li>
-<li>1: Output iteration information,</li>
-<li>2 and greater: Output iteration information and solution at each iteration. </li>
-</ul>
-</td></tr>
   </table>
   </dd>
 </dl>
@@ -409,7 +411,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga5903af9c6d4f9161ca40ec7c179d611e"></a>
+<a class="anchor" id="gabe8cd86a83c560836c717808d06decb5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -447,13 +449,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -464,6 +460,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>Biconjugate gradient stabilized solver function. </p>
+<p>This function uses the preconditioned Conjugate Gradient Stabilized algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function CG </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -472,12 +483,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial solution guess on input and solution of the linear system on output (If iterations have succeeded). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter<ul>
-<li>0: No output</li>
-<li>1: Output iteration information,</li>
-<li>2 and greater: Output iteration information and solution at each iteration. </li>
-</ul>
-</td></tr>
   </table>
   </dd>
 </dl>
@@ -493,7 +498,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga36cba080442b5783391502f98696ec18"></a>
+<a class="anchor" id="ga9355fc4014139252d5f939ae295893a5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -531,13 +536,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -548,6 +547,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>Biconjugate gradient stabilized solver function. </p>
+<p>This function uses the preconditioned Conjugate Gradient Stabilized algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function CG </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -556,12 +570,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial solution guess in input and solution of the linear system in output (If iterations have succeeded). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter<ul>
-<li>0: No output</li>
-<li>1: Output iteration information,</li>
-<li>2 and greater: Output iteration information and solution at each iteration. </li>
-</ul>
-</td></tr>
   </table>
   </dd>
 </dl>
@@ -577,7 +585,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="gacf04a1553cd8d1f16d4095ddb10c99a2"></a>
+<a class="anchor" id="ga9eb542b51d6a2ac952e2b2bbd5f21138"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -615,13 +623,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -632,6 +634,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>Conjugate gradient solver function. </p>
+<p>This function uses the preconditioned Conjugate Gradient algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function CG </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -640,12 +657,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial solution guess in input and solution of the linear system in output (If iterations have succeeded). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter<ul>
-<li>0: No output</li>
-<li>1: Output iteration information,</li>
-<li>2 and greater: Output iteration information and solution at each iteration. </li>
-</ul>
-</td></tr>
   </table>
   </dd>
 </dl>
@@ -661,7 +672,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga1b441664ad13ed9ed2fde21271ae0ca5"></a>
+<a class="anchor" id="ga554b9f066a4a2a36773eff4c3f9a4d71"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -699,13 +710,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -716,6 +721,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>Conjugate gradient solver function. </p>
+<p>This function uses the preconditioned Conjugate Gradient algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function CG </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of abstract class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -724,12 +744,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial solution guess in input and solution of the linear system in output (If iterations have succeeded). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter<ul>
-<li>0: No output</li>
-<li>1: Output iteration information,</li>
-<li>2 and greater: Output iteration information and solution at each iteration. </li>
-</ul>
-</td></tr>
   </table>
   </dd>
 </dl>
@@ -745,7 +759,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga5dabd884d8847c99a9ba8e4e926cce92"></a>
+<a class="anchor" id="gafa2aac234cefc34242a77a8c846741c5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -783,13 +797,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -800,6 +808,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>Conjugate Gradient Squared solver function. </p>
+<p>This function uses the preconditioned Conjugate Gradient Squared algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function CG </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -808,15 +831,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial solution guess in input and solution of the linear system in output (If iterations have succeeded). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter <ul>
-<li>
-<code>0</code>: No output </li>
-<li>
-<code>1</code>: Output iteration information, </li>
-<li>
-<code>2</code> and greater: Output iteration information and solution at each iteration. </li>
-</ul>
-</td></tr>
   </table>
   </dd>
 </dl>
@@ -832,7 +846,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="gab555b7625c0ba554da8b92b5d0291c67"></a>
+<a class="anchor" id="ga570d4a25d1945a14819ddd01bc640aef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -876,13 +890,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -893,6 +901,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>GMRes solver function. </p>
+<p>This function uses the preconditioned GMRES algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function CG </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -902,7 +925,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>Number of subspaces to generate for iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter (0: No output, 1: Output iteration information, 2 and greater: Output iteration information and solution at each iteration. </td></tr>
   </table>
   </dd>
 </dl>
@@ -918,7 +940,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga09f27d5e80a346625e5ff7e54f1f45df"></a>
+<a class="anchor" id="ga5f3f9683290c78a85df05aadeeef1cdf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -962,13 +984,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -979,6 +995,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>GMRes solver function. </p>
+<p>This function uses the preconditioned GMRES algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function CG </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -988,7 +1019,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>Number of subspaces to generate for iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter (0: No output, 1: Output iteration information, 2 and greater: Output iteration information and solution at each iteration. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1004,7 +1034,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga8dcd7991586a9eb1badcff25e0f291d2"></a>
+<a class="anchor" id="ga36eb96776e21d95d9ca9bd46dbe6172a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1042,13 +1072,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1059,6 +1083,21 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>Gauss-Seidel solver function. </p>
+<p>This function uses the relaxed Gauss-Seidel algorithm to solve a linear system with a sparse matrix.<br />
+ The global variable Verbosity enables choosing output message level </p><ul>
+<li>
+Verbosity &lt; 2 : No output message </li>
+<li>
+Verbosity &gt; 1 : Notify executing the function GS </li>
+<li>
+Verbosity &gt; 2 : Notify convergence with number of performed iterations or divergence </li>
+<li>
+Verbosity &gt; 3 : Output each iteration number and residual </li>
+<li>
+Verbosity &gt; 6 : Print final solution if convergence </li>
+<li>
+Verbosity &gt; 10 : Print obtained solution at each iteration </li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Problem matrix (Instance of class <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>). </td></tr>
@@ -1067,12 +1106,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in]</td><td class="paramname">omega</td><td>Relaxation parameter. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter<ul>
-<li>0: No output</li>
-<li>1: Output iteration information</li>
-<li>2 and greater: Output iteration information and solution at each iteration. </li>
-</ul>
-</td></tr>
   </table>
   </dd>
 </dl>
@@ -1088,7 +1121,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga83b733ffbcdaae10616574956ac2bb24"></a>
+<a class="anchor" id="ga65b2c70702a6ba24616a93c1188a0d9d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1126,13 +1159,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1151,7 +1178,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in]</td><td class="paramname">omega</td><td>Relaxation parameter. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter (0: No output, 1: Output iteration information, 2 and greater: Output iteration information and solution at each iteration. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1396,7 +1422,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga5ab21c45e14e75380265991cdea49f0d"></a>
+<a class="anchor" id="ga427b162d903d81fad84633c855c87b1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1428,13 +1454,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>toler</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verbose</em>&#160;</td>
+          <td class="paramname"><em>toler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1452,7 +1472,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial solution guess in input and solution of the linear system in output (If iterations have succeeded). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximum number of iterations. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance for convergence (measured in relative weighted 2-Norm). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verbose</td><td>Information output parameter (0: No output, 1: Output iteration information, 2 and greater : Output iteration information and solution at each iteration. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1466,36 +1485,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </li>
 </ul>
-
-</div>
-</div>
-<a class="anchor" id="ga6c960863c356db735b89e989a7376c6d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ostream &amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">ostream &amp;&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1TimeStepping.html">TimeStepping</a> &amp;&#160;</td>
-          <td class="paramname"><em>ts</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Output differential system information. </p>
-<dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 
 </div>
 </div>

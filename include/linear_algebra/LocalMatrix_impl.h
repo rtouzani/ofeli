@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -120,7 +120,7 @@ void LocalMatrix<T_,NR_,NC_>::Localize(Element*            el,
       Node *nd = (*el)(n);
       for (size_t i=1; i<=nd->getNbDOF(); i++)
          for (size_t j=1; j<=nd->getNbDOF(); j++)
-            (*this)(i,j) = a(nd->getDOF(i),nd->getDOF(j));
+            _a[(i-1)*NC_+j-1] = a(nd->getDOF(i),nd->getDOF(j));
    }
 }
 
@@ -133,7 +133,7 @@ void LocalMatrix<T_,NR_,NC_>::Localize(Element*            el,
       Node *nd = (*el)(n);
       for (size_t i=1; i<=nd->getNbDOF(); i++)
          for (size_t j=1; j<=nd->getNbDOF(); j++)
-            (*this)(i,j) = a(nd->getDOF(i),nd->getDOF(j));
+            _a[(i-1)*NC_+j-1] = a(nd->getDOF(i),nd->getDOF(j));
    }
 }
 
@@ -146,7 +146,7 @@ void LocalMatrix<T_,NR_,NC_>::Localize(Element*             el,
       Node *nd = (*el)(n);
       for (size_t i=1; i<=nd->getNbDOF(); i++)
          for (size_t j=1; j<=nd->getNbDOF(); j++)
-            (*this)(i,j) = a(nd->getDOF(i),nd->getDOF(j));
+            _a[(i-1)*NC_+j-1] = a(nd->getDOF(i),nd->getDOF(j));
    }
 }
 
@@ -167,7 +167,7 @@ LocalMatrix<T_,NR_,NC_>& LocalMatrix<T_,NR_,NC_>::operator=(const T_& x)
    for (size_t k=0; k<_length; k++)
       _a[k] = 0;
    for (size_t k=1; k<=NR_; k++)
-      (*this)(k,k) = x;
+      _a[(k-1)*NC_+k-1] = x;
    return *this;
 }
 

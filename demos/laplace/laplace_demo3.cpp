@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
 //    Declare problem data
       Vect<double> bc(ms), f(ms);
-      Prescription p(ms,data.getPrescriptionFile());
+      Prescription p(ms,data.getDataFile());
       p.get(BOUNDARY_CONDITION,bc);
       p.get(SOURCE,f);
 
@@ -66,15 +66,16 @@ int main(int argc, char *argv[])
 //    Prescribe data
       eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(SOURCE,f);
+      //      eq.getLinearSolver().setTolerance(1.e-8);
 
 //    Solve problem
       eq.run();
       saveField(u,"u.pos",GMSH);
 
 //    Get analytical solution and compute error
-      Vect<double> sol(ms);
-      p.get(SOLUTION,sol);
-      cout << "L2-Error: " << (u-sol).Norm(WNORM2) << endl;
+      Vect<double> v(ms);
+      p.get(SOLUTION,v);
+      cout << "L2-Error: " << (u-v).Norm(WNORM2) << endl;
 
    } CATCH_EXCEPTION
    return 0;

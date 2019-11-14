@@ -73,7 +73,7 @@ class Bar2DL2 : public Equa_Solid<real_t,2,4,1,2>
 
 /** \brief Constructor using a Mesh instance and a solution vector instance.
  *  @param [in] ms Reference Mesh instance
- *  @param [in,out] Reference to solution vector
+ *  @param [in,out] u Reference to solution vector
  */
     Bar2DL2(Mesh&         ms,
             Vect<real_t>& u);

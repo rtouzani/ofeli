@@ -112,7 +112,7 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
     void build()
     {
       if (_u==nullptr)
-         throw OFELIException("In Equa_Therm::build: No solution vector given.");
+         throw OFELIException("In Equa_Therm::build(): No solution vector given.");
        _A->clear();
        mesh_elements(*_theMesh) {
           set(the_element);
@@ -124,11 +124,11 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
           AbsEqua<T_>::_A->Assembly(*_theElement,eMat.get());
           AbsEqua<T_>::_b->Assembly(*_theElement,eRHS.get());
        }
-cout<<*_b<<endl;
        if (_sf!=nullptr) {
-          mesh_sides(*_theMesh) {
+          mesh_boundary_sides(*_theMesh) {
              set(the_side);
-             BoundaryRHS(*_sf);
+             if (_sf!=nullptr)
+                BoundaryRHS(*_sf);
              AbsEqua<T_>::_b->Assembly(*_theSide,sRHS.get());
           }
        }

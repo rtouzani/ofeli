@@ -1,8 +1,8 @@
 var classOFELI_1_1Partition =
 [
     [ "Partition", "classOFELI_1_1Partition.html#aeb0b54c7a8921893997dcef564301d2e", null ],
-    [ "Partition", "classOFELI_1_1Partition.html#aaa986c9c358ce34c7b3fae61b0cdc172", null ],
-    [ "Partition", "classOFELI_1_1Partition.html#a5f59a69d02cd71ea050f3f7b14748f8d", null ],
+    [ "Partition", "classOFELI_1_1Partition.html#a454c8dbfaa205cd813063f03cb0b5134", null ],
+    [ "Partition", "classOFELI_1_1Partition.html#aad9beb9f6293a70bcdafd85d2f374a57", null ],
     [ "~Partition", "classOFELI_1_1Partition.html#a06a424fc9f39cdf17053789970c8ed76", null ],
     [ "getNbSubMeshes", "classOFELI_1_1Partition.html#a99f3bd369f199669b81a864026110bd2", null ],
     [ "getNbNodes", "classOFELI_1_1Partition.html#a90c6c013728c2fdeacc5861c6e8a68f2", null ],
@@ -21,7 +21,6 @@ var classOFELI_1_1Partition =
     [ "getNbConnectInSubMesh", "classOFELI_1_1Partition.html#af7d9b0d7d23b3134d92f10b682a346c3", null ],
     [ "getNbConnectOutSubMesh", "classOFELI_1_1Partition.html#a6b2b998b6e1b098c1147c79e98efbd1a", null ],
     [ "put", "classOFELI_1_1Partition.html#ad1a4ccf74ace2f858a4a972f96959401", null ],
-    [ "setVerbose", "classOFELI_1_1Partition.html#aec36c78a753f6370a283f7ee60020fa3", null ],
     [ "set", "classOFELI_1_1Partition.html#a8b1dccfc12683d2bbc3891a331753c42", null ],
     [ "operator<<", "classOFELI_1_1Partition.html#a1eb137ef19932ec2569f8c9904694a53", null ]
 ];

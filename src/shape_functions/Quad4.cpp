@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -174,10 +174,10 @@ void Quad4::atGauss(int                          n,
    dsh.resize(4*n*n);
    w.resize(n*n);
    Gauss g(n);
-   for (size_t k=0; k<4; ++k) {
+   for (int k=0; k<4; ++k) {
       size_t ij = 0;
-      for (size_t i=0; i<n; i++) {
-         for (size_t j=0; j<n; j++) {
+      for (int i=0; i<n; i++) {
+         for (int j=0; j<n; j++) {
             setLocal(Point<real_t>(g.x(i+1),g.x(j+1)));
             sh[n*n*k+ij] = _sh[k];
             dsh[n*n*k+ij] = _dsh[k];

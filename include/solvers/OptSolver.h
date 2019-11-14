@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -207,8 +207,6 @@ class OptSolver
  *  @remark This member function is useful only if simulated annealing is used.
  *  @param [in] rt The temperature reduction factor. The value suggested by
  *  Corana et al. is \a .85. See Goffe et al. for more advice.
- *  @param maxevl [in] The maximum number of function evaluations. If it is
- *  exceeded, the return \a code=1.
  *  @param [in] ns Number of cycles. After \a ns*nb_var function evaluations, each
  *  element of \a vm is adjusted so that approximately half of all function evaluations
  *  are accepted. The suggested value is 20.
@@ -218,7 +216,8 @@ class OptSolver
  *  \a max(100,5*nb_var). See Goffe et al. for further advice.
  *  @param [in] neps Number of final function values used to decide upon termination.
  *  See \c eps. Suggested value is \a 4
- *  @param [in] maxevl
+ *  @param [in] maxevl The maximum number of function evaluations. If it is
+ *  exceeded, the return \a code=1.
  *  @param [in] t The initial temperature. See Goffe et al. for advice.
  *  @param [in] vm The step length vector. On input it should encompass the
  *  region of interest given the starting value \a x. For point
@@ -227,8 +226,8 @@ class OptSolver
  *  of all points are accepted, the input value is not very
  *  important (i.e. is the value is off, \a OptimSA adjusts \a vm to the
  *  correct value).
- *  @param [in] xopt
- *  @param [in] fopt
+ *  @param [out] xopt optimal values of optimization variables
+ *  @param [out] fopt Optimal value of objective
  */
     void setSAOpt(real_t        rt,
                   int           ns,

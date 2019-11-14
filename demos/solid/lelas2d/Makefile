@@ -204,7 +204,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -319,7 +319,6 @@ lelas2d_DATA = main.cpp \
                beam-20x10.m \
                beam.m \
                Makefile.standalone \
-               lelas2d.cbp \
                README
 
 dist_lelas2d_DATA = main.cpp \
@@ -328,7 +327,6 @@ dist_lelas2d_DATA = main.cpp \
                     beam-20x10.m \
                     beam.m \
                     Makefile.standalone \
-                    lelas2d.cbp \
                     README
 
 all: all-am

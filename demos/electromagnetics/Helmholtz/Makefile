@@ -204,7 +204,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -314,18 +314,16 @@ helmholtz_SOURCES = main.cpp
 helmholtz_LDADD = $(top_builddir)/src/libofeli.a
 helmholtzdir = $(datadir)/ofeli/demos/electromagnetics/helmholtz
 helmholtz_DATA = main.cpp \
-						proj.m \
-						proj.dat \
-						Makefile.standalone \
-						Helmholtz.cbp \
-						README
+                 proj.m \
+                 proj.dat \
+                 Makefile.standalone \
+                 README
 
 dist_helmholtz_DATA = main.cpp \
-								proj.m \
-								proj.dat \
-								Makefile.standalone \
-								Helmholtz.cbp \
-								README
+                      proj.m \
+                      proj.dat \
+                      Makefile.standalone \
+                      README
 
 all: all-am
 

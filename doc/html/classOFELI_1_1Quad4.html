@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -150,9 +149,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a3686dcc363945fc9705485b9200fa17e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Quad4.html#a3686dcc363945fc9705485b9200fa17e">setLocal</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;s)</td></tr>
 <tr class="memdesc:a3686dcc363945fc9705485b9200fa17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize local point coordinates in element.  <a href="#a3686dcc363945fc9705485b9200fa17e">More...</a><br /></td></tr>
 <tr class="separator:a3686dcc363945fc9705485b9200fa17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a81c330921ff7fb6286ae927b30b7a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Quad4.html#a5a81c330921ff7fb6286ae927b30b7a9">DSh</a> (size_t i) const </td></tr>
-<tr class="memdesc:a5a81c330921ff7fb6286ae927b30b7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return derivatives of shape function of node <code>i</code> at a given point.  <a href="#a5a81c330921ff7fb6286ae927b30b7a9">More...</a><br /></td></tr>
-<tr class="separator:a5a81c330921ff7fb6286ae927b30b7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8d5209b5c172d4a687adffe9c2d44d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Quad4.html#ace8d5209b5c172d4a687adffe9c2d44d">atGauss</a> (int n, std::vector&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;sh, std::vector&lt; <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt; &amp;dsh, std::vector&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;w)</td></tr>
+<tr class="memdesc:ace8d5209b5c172d4a687adffe9c2d44d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shape functions and their partial derivatives and integration weights.  <a href="#ace8d5209b5c172d4a687adffe9c2d44d">More...</a><br /></td></tr>
+<tr class="separator:ace8d5209b5c172d4a687adffe9c2d44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a415b01e4f9aa429c2c828d2fd7f0db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Quad4.html#a0a415b01e4f9aa429c2c828d2fd7f0db">Grad</a> (const <a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 4 &gt; &amp;u, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;s)</td></tr>
 <tr class="memdesc:a0a415b01e4f9aa429c2c828d2fd7f0db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return gradient of a function defined at element nodes.  <a href="#a0a415b01e4f9aa429c2c828d2fd7f0db">More...</a><br /></td></tr>
 <tr class="separator:a0a415b01e4f9aa429c2c828d2fd7f0db"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -264,22 +263,52 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="a5a81c330921ff7fb6286ae927b30b7a9"></a>
+<a class="anchor" id="ace8d5209b5c172d4a687adffe9c2d44d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt;<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt; DSh </td>
+          <td class="memname">void atGauss </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>i</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>dsh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>w</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Return derivatives of shape function of node <code>i</code> at a given point. </p>
-<p>Member function <b><a class="el" href="classOFELI_1_1Quad4.html#a3686dcc363945fc9705485b9200fa17e" title="Initialize local point coordinates in element. ">setLocal()</a></b> must have been called before in order to calculate relevant quantities. </p>
+<p>Calculate shape functions and their partial derivatives and integration weights. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Number of Gauss-Legendre integration points in each direction </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sh</td><td>Vector of shape functions at <a class="el" href="classOFELI_1_1Gauss.html" title="Calculate data for Gauss integration. ">Gauss</a> points </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dsh</td><td>Vector of shape function derivatives at <a class="el" href="classOFELI_1_1Gauss.html" title="Calculate data for Gauss integration. ">Gauss</a> points </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">w</td><td>Weights of integration formula at <a class="el" href="classOFELI_1_1Gauss.html" title="Calculate data for Gauss integration. ">Gauss</a> points </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -311,7 +340,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Vector of values at nodes </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Local coordinates (in <code>[-1,1]</code>) of point where the gradient is evaluated </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Local coordinates (in <code>[-1,1]*[-1,1]</code>) of point where the gradient is evaluated </td></tr>
   </table>
   </dd>
 </dl>

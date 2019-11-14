@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -127,9 +126,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Tabulation.html">Tabulation</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To read and manipulate tabulated functions.  <a href="classOFELI_1_1Tabulation.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1UserData.html">UserData&lt; T_ &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class to define by user various problem data.  <a href="classOFELI_1_1UserData.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOFELI_1_1Point.html">Point&lt; T_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a point with arbitrary type coordinates.  <a href="structOFELI_1_1Point.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,6 +166,8 @@ Macros</h2></td></tr>
 <tr class="separator:ga7909ce3190d0028c9d0b1848f4eeeb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafdb762bd8a6d2684026764bf68a48bd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#gafdb762bd8a6d2684026764bf68a48bd5">OFELI_TOLERANCE</a>&#160;&#160;&#160;<a class="el" href="group__Util.html#ga7909ce3190d0028c9d0b1848f4eeeb5f">OFELI_EPSMCH</a>*10000</td></tr>
 <tr class="separator:gafdb762bd8a6d2684026764bf68a48bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e837274c3efc8f41f0eb0519aaeb6b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga1e837274c3efc8f41f0eb0519aaeb6b2">VLG</a>&#160;&#160;&#160;1.e10</td></tr>
+<tr class="separator:ga1e837274c3efc8f41f0eb0519aaeb6b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc62695fed9872c4959b89dd05367568"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#gabc62695fed9872c4959b89dd05367568">OFELI_IMAG</a>&#160;&#160;&#160;std::complex&lt;double&gt;(0.,1.);</td></tr>
 <tr class="separator:gabc62695fed9872c4959b89dd05367568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga10e74cbd505845fdc4d183cbe9743f2e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga10e74cbd505845fdc4d183cbe9743f2e">PARSE</a>(exp,  var)&#160;&#160;&#160;theParser.Parse(exp,var)</td></tr>
@@ -372,6 +370,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:gaf8b0bdf9b36caa8f787962c6894b4033"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#gaf8b0bdf9b36caa8f787962c6894b4033">operator&lt;&lt;</a> (std::ostream &amp;s, const Point2D&lt; T_ &gt; &amp;a)</td></tr>
 <tr class="memdesc:gaf8b0bdf9b36caa8f787962c6894b4033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output point coordinates.  <a href="group__Util.html#gaf8b0bdf9b36caa8f787962c6894b4033">More...</a><br /></td></tr>
 <tr class="separator:gaf8b0bdf9b36caa8f787962c6894b4033"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac04603e34a1bc5b8a632041df151b6cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#gac04603e34a1bc5b8a632041df151b6cb">Discrepancy</a> (Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, const Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;y, int n, int type=1)</td></tr>
+<tr class="memdesc:gac04603e34a1bc5b8a632041df151b6cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return discrepancy between 2 vectors <code>x</code> and <code>y</code>  <a href="group__Util.html#gac04603e34a1bc5b8a632041df151b6cb">More...</a><br /></td></tr>
+<tr class="separator:gac04603e34a1bc5b8a632041df151b6cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71f50821958f3c80ba19dc2689f4811f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga71f50821958f3c80ba19dc2689f4811f">Discrepancy</a> (Vect&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;x, const Vect&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;y, int n, int type=1)</td></tr>
+<tr class="memdesc:ga71f50821958f3c80ba19dc2689f4811f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return discrepancy between 2 vectors <code>x</code> and <code>y</code>  <a href="group__Util.html#ga71f50821958f3c80ba19dc2689f4811f">More...</a><br /></td></tr>
+<tr class="separator:ga71f50821958f3c80ba19dc2689f4811f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4df8f4860ce8e1d3480cd8b4be385699"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga4df8f4860ce8e1d3480cd8b4be385699">getMesh</a> (string file, ExternalFileFormat form, Mesh &amp;mesh, size_t nb_dof=1)</td></tr>
 <tr class="memdesc:ga4df8f4860ce8e1d3480cd8b4be385699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an instance of class <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> from a mesh file stored in an external file format.  <a href="group__Util.html#ga4df8f4860ce8e1d3480cd8b4be385699">More...</a><br /></td></tr>
 <tr class="separator:ga4df8f4860ce8e1d3480cd8b4be385699"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -576,9 +580,6 @@ template&lt;class T_ &gt; </td></tr>
 <tr class="memitem:gabf958d091d1d938bb714e296b0895237"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#gabf958d091d1d938bb714e296b0895237">Dot</a> (const vector&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, const vector&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;y)</td></tr>
 <tr class="memdesc:gabf958d091d1d938bb714e296b0895237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return dot product of vectors <code>x</code> and <code>y</code>.  <a href="group__Util.html#gabf958d091d1d938bb714e296b0895237">More...</a><br /></td></tr>
 <tr class="separator:gabf958d091d1d938bb714e296b0895237"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34568b34b56830083fb67b1fa24356d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga34568b34b56830083fb67b1fa24356d6">Dot</a> (const Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, const Vect&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;y)</td></tr>
-<tr class="memdesc:ga34568b34b56830083fb67b1fa24356d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return dot product of vectors <code>x</code> and <code>y</code>  <a href="group__Util.html#ga34568b34b56830083fb67b1fa24356d6">More...</a><br /></td></tr>
-<tr class="separator:ga34568b34b56830083fb67b1fa24356d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga40e3a890d86d09f82f0fe3c1f4dcd886"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga40e3a890d86d09f82f0fe3c1f4dcd886"></a>
 template&lt;class T_ &gt; </td></tr>
 <tr class="memitem:ga40e3a890d86d09f82f0fe3c1f4dcd886"><td class="memTemplItemLeft" align="right" valign="top">T_&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga40e3a890d86d09f82f0fe3c1f4dcd886">Dot</a> (const Point&lt; T_ &gt; &amp;x, const Point&lt; T_ &gt; &amp;y)</td></tr>
@@ -593,14 +594,14 @@ template&lt;class T_ &gt; </td></tr>
 <tr class="memitem:ga95c3924a3fe4285f2cb621e078972ffb"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga95c3924a3fe4285f2cb621e078972ffb">Assign</a> (vector&lt; T_ &gt; &amp;v, const T_ &amp;a)</td></tr>
 <tr class="memdesc:ga95c3924a3fe4285f2cb621e078972ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign the value <code>a</code> to all entries of a vector <code>v</code> <br /></td></tr>
 <tr class="separator:ga95c3924a3fe4285f2cb621e078972ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabfacec3331ff08b7886dc681e1adf816"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:gabfacec3331ff08b7886dc681e1adf816"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#gabfacec3331ff08b7886dc681e1adf816">Clear</a> (vector&lt; T_ &gt; &amp;v)</td></tr>
-<tr class="memdesc:gabfacec3331ff08b7886dc681e1adf816"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign <code>0</code> to all entries of a vector.  <a href="group__Util.html#gabfacec3331ff08b7886dc681e1adf816">More...</a><br /></td></tr>
-<tr class="separator:gabfacec3331ff08b7886dc681e1adf816"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7808353adb143c4fe7564aecda624f47"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:ga7808353adb143c4fe7564aecda624f47"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga7808353adb143c4fe7564aecda624f47">Clear</a> (Vect&lt; T_ &gt; &amp;v)</td></tr>
-<tr class="memdesc:ga7808353adb143c4fe7564aecda624f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign <code>0</code> to all entries of a vector.  <a href="group__Util.html#ga7808353adb143c4fe7564aecda624f47">More...</a><br /></td></tr>
-<tr class="separator:ga7808353adb143c4fe7564aecda624f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga114f756d953a75cd724709142c58af43"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga114f756d953a75cd724709142c58af43"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga114f756d953a75cd724709142c58af43">clear</a> (vector&lt; T_ &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga114f756d953a75cd724709142c58af43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign <code>0</code> to all entries of a vector.  <a href="group__Util.html#ga114f756d953a75cd724709142c58af43">More...</a><br /></td></tr>
+<tr class="separator:ga114f756d953a75cd724709142c58af43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e68d121dc7952ec9a54c7a18f8d0d2d"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:ga4e68d121dc7952ec9a54c7a18f8d0d2d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga4e68d121dc7952ec9a54c7a18f8d0d2d">clear</a> (Vect&lt; T_ &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga4e68d121dc7952ec9a54c7a18f8d0d2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign <code>0</code> to all entries of a vector.  <a href="group__Util.html#ga4e68d121dc7952ec9a54c7a18f8d0d2d">More...</a><br /></td></tr>
+<tr class="separator:ga4e68d121dc7952ec9a54c7a18f8d0d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7da94570b300315a5309b69269f16a84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga7da94570b300315a5309b69269f16a84">Nrm2</a> (size_t n, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> *x)</td></tr>
 <tr class="memdesc:ga7da94570b300315a5309b69269f16a84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return 2-norm of array <code>x</code>  <a href="group__Util.html#ga7da94570b300315a5309b69269f16a84">More...</a><br /></td></tr>
 <tr class="separator:ga7da94570b300315a5309b69269f16a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -781,6 +782,19 @@ template&lt;class T_ &gt; </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Default tolerance for an iterative process = OFELI_EPSMCH * 10000 </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1e837274c3efc8f41f0eb0519aaeb6b2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VLG&#160;&#160;&#160;1.e10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Very large number: A real number for penalty </p>
 
 </div>
 </div>
@@ -2460,6 +2474,116 @@ template&lt;class T_ &gt; </td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gac04603e34a1bc5b8a632041df151b6cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Discrepancy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return discrepancy between 2 vectors <code>x</code> and <code>y</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>First vector (Instance of class <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a>). On output, <code>x</code> is assigned the vector <code>y</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y</td><td>Second vector (Instance of class <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Type of norm<ul>
+<li>1: Weighted 1-Norm</li>
+<li>2: Weighted 2-Norm</li>
+<li>0: Max-Norm </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Discrepancy type (0: Absolute, 1: Relative [Default]) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Computed discrepancy value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga71f50821958f3c80ba19dc2689f4811f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Discrepancy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return discrepancy between 2 vectors <code>x</code> and <code>y</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>First vector (Instance of class <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a>). On output, <code>x</code> is assigned the vector <code>y</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y</td><td>Second vector (Instance of class <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Type of norm<ul>
+<li>1: Weighted 1-Norm</li>
+<li>2: Weighted 2-Norm</li>
+<li>0: Max-Norm </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Discrepancy type (0: Absolute, 1: Relative [Default]) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Computed discrepancy value </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ga4df8f4860ce8e1d3480cd8b4be385699"></a>
 <div class="memitem">
 <div class="memproto">
@@ -3739,41 +3863,12 @@ template&lt;class T_ &gt; </td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga34568b34b56830083fb67b1fa24356d6"></a>
+<a class="anchor" id="ga114f756d953a75cd724709142c58af43"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Dot </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return dot product of vectors <code>x</code> and <code>y</code> </p>
-<p><code>x</code> and <code>y</code> are instances of class Vect&lt;T_&gt; </p>
-
-</div>
-</div>
-<a class="anchor" id="gabfacec3331ff08b7886dc681e1adf816"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Clear </td>
+          <td class="memname">void clear </td>
           <td>(</td>
           <td class="paramtype">vector&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
@@ -3792,12 +3887,12 @@ template&lt;class T_ &gt; </td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga7808353adb143c4fe7564aecda624f47"></a>
+<a class="anchor" id="ga4e68d121dc7952ec9a54c7a18f8d0d2d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Clear </td>
+          <td class="memname">void clear </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>

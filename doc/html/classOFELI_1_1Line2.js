@@ -9,7 +9,7 @@ var classOFELI_1_1Line2 =
     [ "getNormal", "classOFELI_1_1Line2.html#ab828c4890bc9c486d105cc557b275fe8", null ],
     [ "getTangent", "classOFELI_1_1Line2.html#a9511c2821f5b88cc6e2e6c75f342ea56", null ],
     [ "Sh", "classOFELI_1_1Line2.html#a90f6be43c1fed28e514d4d3e309b7e2c", null ],
-    [ "DSh", "classOFELI_1_1Line2.html#a07d869cd53fa1489bb2fbc7ee3f346ea", null ],
+    [ "DSh", "classOFELI_1_1Line2.html#aa7d706a44a4e55358fd7941724ef55b7", null ],
     [ "getRefCoord", "classOFELI_1_1Line2.html#a0c5c981ca8d081bd20f7a892b79a9cbe", null ],
     [ "isIn", "classOFELI_1_1Line2.html#a497b1ac36e44c874a349867507206f25", null ],
     [ "getInterpolate", "classOFELI_1_1Line2.html#a62cfe153d8391102633200e317bdc91d", null ],

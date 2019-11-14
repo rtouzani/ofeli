@@ -208,7 +208,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -323,22 +323,18 @@ ad2dir = $(datadir)/ofeli/demos/adapt
 ad1_DATA = adapt_demo1.cpp \
 		rect.dom \
 		Makefile.standalone \
-		adapt_demo1.cbp \
 		README
 
 dist_ad1_DATA = adapt_demo1.cpp \
 		rect.dom \
 		Makefile.standalone \
-		adapt_demo1.cbp \
 		README
 
 ad2_DATA = adapt_demo2.cpp \
-		L.dom \
-		adapt_demo2.cbp
+		L.dom
 
 dist_ad2_DATA = adapt_demo2.cpp \
-		L.dom \
-		adapt_demo2.cbp
+		L.dom
 
 all: all-am
 

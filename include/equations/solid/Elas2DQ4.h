@@ -123,12 +123,12 @@ class Elas2DQ4 : virtual public Equa_Solid<real_t,4,8,2,4>
     void Dilatation(real_t coef=1.);
 
 /** \brief Add body right-hand side term to right hand side.
- *  @param [in] bf Vector containing source at nodes (DOF by DOF).
+ *  @param [in] f Vector containing source at nodes (DOF by DOF).
  */
     void BodyRHS(const Vect<real_t>& f);
 
 /** \brief Add boundary right-hand side term to right hand side.
- *  @param [in] sf Vector containing source at nodes (DOF by DOF).
+ *  @param [in] f Vector containing source at nodes (DOF by DOF).
  */
     void BoundaryRHS(const Vect<real_t>& f);
 

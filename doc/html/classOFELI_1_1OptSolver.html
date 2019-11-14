@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -197,9 +196,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr class="memitem:a58e8be2db2660128e4e6456a9c981fb5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1OptSolver.html#a58e8be2db2660128e4e6456a9c981fb5">run</a> ()</td></tr>
 <tr class="memdesc:a58e8be2db2660128e4e6456a9c981fb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the optimization algorithm.  <a href="#a58e8be2db2660128e4e6456a9c981fb5">More...</a><br /></td></tr>
 <tr class="separator:a58e8be2db2660128e4e6456a9c981fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1a41c4112442e3a6e515afe4e53acad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1OptSolver.html#ad1a41c4112442e3a6e515afe4e53acad">run</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int max_it, int verb)</td></tr>
-<tr class="memdesc:ad1a41c4112442e3a6e515afe4e53acad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the optimization algorithm.  <a href="#ad1a41c4112442e3a6e515afe4e53acad">More...</a><br /></td></tr>
-<tr class="separator:ad1a41c4112442e3a6e515afe4e53acad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab14a01de29b97eb32c805905ae0c6e31"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1OptSolver.html#ab14a01de29b97eb32c805905ae0c6e31">run</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler, int max_it)</td></tr>
+<tr class="memdesc:ab14a01de29b97eb32c805905ae0c6e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the optimization algorithm.  <a href="#ab14a01de29b97eb32c805905ae0c6e31">More...</a><br /></td></tr>
+<tr class="separator:ab14a01de29b97eb32c805905ae0c6e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafd90aa9d1ea0131af706209461cdc4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1OptSolver.html#aafd90aa9d1ea0131af706209461cdc4d">getSolution</a> () const </td></tr>
 <tr class="memdesc:aafd90aa9d1ea0131af706209461cdc4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solution in the case of a one variable optimization.  <a href="#aafd90aa9d1ea0131af706209461cdc4d">More...</a><br /></td></tr>
 <tr class="separator:aafd90aa9d1ea0131af706209461cdc4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -300,7 +299,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <p>Constructor using vector of optimization variables. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Reference to instance of user defined optimization class. This class inherits from abstract class <a class="el" href="classOFELI_1_1MyOpt.html" title="Abstract class to define by user specified optimization function. ">MyOpt</a>. It must contain the member function <code>double</code> <code>Objective(const Vect&lt;double&gt; &amp;x)</code> which returns the value of the objective for a given solution vector <code>x</code>. The user defined class must contain, if the optimization algorithm requires it the member function <code>Gradient(const Vect&lt;double&gt; &amp;x, Vect&lt;double&gt; &amp;g)</code> which stores the gradient of the objective in the vector <code>g</code> for a given optimization vector <code>x</code>. The user defined class must also contain, if the optimization algorithm requires it the member function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Reference to instance of user defined optimization class. This class inherits from abstract class <a class="el" href="classOFELI_1_1MyOpt.html" title="Abstract class to define by user specified optimization function. ">MyOpt</a>. It must contain the member function <code>double</code> <code>Objective(Vect&lt;double&gt; &amp;x)</code> which returns the value of the objective for a given solution vector <code>x</code>. The user defined class must contain, if the optimization algorithm requires it the member function <code>Gradient(Vect&lt;double&gt; &amp;x, Vect&lt;double&gt; &amp;g)</code> which stores the gradient of the objective in the vector <code>g</code> for a given optimization vector <code>x</code>. The user defined class must also contain, if the optimization algorithm requires it the member function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Vector having as size the number of optimization variables. It contains the initial guess for the optimization algorithm. </td></tr>
   </table>
   </dd>
@@ -644,15 +643,14 @@ NELDER_MEAD: Global optimization Nelder-Mead method due to John Nelder, Roger Me
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">rt</td><td>The temperature reduction factor. The value suggested by Corana et al. is <em></em>.85. See Goffe et al. for more advice. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">maxevl</td><td>[in] The maximum number of function evaluations. If it is exceeded, the return <em>code=1</em>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ns</td><td>Number of cycles. After <em>ns*nb_var</em> function evaluations, each element of <em>vm</em> is adjusted so that approximately half of all function evaluations are accepted. The suggested value is 20. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nt</td><td>Number of iterations before temperature reduction. After <em>nt*ns*n</em> function evaluations, temperature <em></em>(t) is changed by the factor <em>rt</em>. Value suggested by Corana et al. is <em>max(100,5*nb_var)</em>. See Goffe et al. for further advice. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">neps</td><td>Number of final function values used to decide upon termination. See <code>eps</code>. Suggested value is <em>4</em> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">maxevl</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxevl</td><td>The maximum number of function evaluations. If it is exceeded, the return <em>code=1</em>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">t</td><td>The initial temperature. See Goffe et al. for advice. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>The step length vector. On input it should encompass the region of interest given the starting value <em>x</em>. For point x[i], the next trial point is selected is from <em>x</em>[i]-vm[i] to <em>x</em>[i]+vm[i]. Since <em>vm</em> is adjusted so that about half of all points are accepted, the input value is not very important (i.e. is the value is off, <em>OptimSA</em> adjusts <em>vm</em> to the correct value). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">xopt</td><td></td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">fopt</td><td></td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">xopt</td><td>optimal values of optimization variables </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">fopt</td><td>Optimal value of objective </td></tr>
   </table>
   </dd>
 </dl>
@@ -755,7 +753,7 @@ NELDER_MEAD: Global optimization Nelder-Mead method due to John Nelder, Roger Me
 
 </div>
 </div>
-<a class="anchor" id="ad1a41c4112442e3a6e515afe4e53acad"></a>
+<a class="anchor" id="ab14a01de29b97eb32c805905ae0c6e31"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -769,13 +767,7 @@ NELDER_MEAD: Global optimization Nelder-Mead method due to John Nelder, Roger Me
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>max_it</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>verb</em>&#160;</td>
+          <td class="paramname"><em>max_it</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -790,7 +782,6 @@ NELDER_MEAD: Global optimization Nelder-Mead method due to John Nelder, Roger Me
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance value for convergence testing </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximal number of iterations to achieve convergence </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">verb</td><td>Verbosity parameter (to choose between 0 and 10) </td></tr>
   </table>
   </dd>
 </dl>

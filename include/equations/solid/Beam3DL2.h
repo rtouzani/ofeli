@@ -103,7 +103,6 @@ public :
              real_t I2);
 
 /** \brief Set nonconstant beam properties
- *  @param [in] ms Mesh instance
  *  @param [in] A Vector containing section areas of the beam (for each element)
  *  @param [in] I1 Vector containing first (x) momentum of inertia (for each element)
  *  @param [in] I2 Vector containing second (y) momentum of inertia (for each element)

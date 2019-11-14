@@ -14,10 +14,10 @@ opt_demo1dir   =	$(datadir)/ofeli/demos/solvers/OPTIM
 opt_demo2dir   =	$(datadir)/ofeli/demos/solvers/OPTIM
 opt_demo3dir   =	$(datadir)/ofeli/demos/solvers/OPTIM
 
-opt_demo1_DATA =	opt_demo1.cpp opt_demo1.cbp
-opt_demo2_DATA =	opt_demo2.cpp opt_demo2.cbp
-opt_demo3_DATA =	opt_demo3.cpp opt_demo3.cbp Opt.h test.dat test.m Makefile.standalone README
+opt_demo1_DATA =	opt_demo1.cpp
+opt_demo2_DATA =	opt_demo2.cpp
+opt_demo3_DATA =	opt_demo3.cpp Opt.h test.dat test.m Makefile.standalone README
 
-dist_opt_demo1_DATA =	opt_demo1.cpp opt_demo1.cbp
-dist_opt_demo2_DATA =	opt_demo2.cpp opt_demo2.cbp
-dist_opt_demo3_DATA =	opt_demo3.cpp opt_demo3.cbp Opt.h test.dat test.m Makefile.standalone README
+dist_opt_demo1_DATA = opt_demo1.cpp
+dist_opt_demo2_DATA = opt_demo2.cpp
+dist_opt_demo3_DATA = opt_demo3.cpp Opt.h test.dat test.m Makefile.standalone README

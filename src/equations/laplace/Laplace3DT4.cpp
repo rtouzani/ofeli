@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -87,7 +87,6 @@ void Laplace3DT4::set(const Element* el)
    _theElement = el, _theSide = nullptr;
    Tetra4 t(_theElement);
    _el_geo.volume = t.getVolume();
-   _el_geo.det = t.getDet();
    _dSh = t.DSh();
    eRHS = 0;
    eMat = 0, eA0 = 0, eA1 = 0;
@@ -111,10 +110,10 @@ void Laplace3DT4::buildEigen(int opt)
    if (opt==0) {
       real_t c = 0.1*_el_geo.volume;
       real_t d = 0.5*c;
-      eA1(1,1) += c; eA1(2,2) += c; eA1(3,3) += c; eA1(4,4) += c;
-      eA1(1,2) += d; eA1(2,1) += d; eA1(1,3) += d; eA1(1,4) += d;
-      eA1(3,1) += d; eA1(2,3) += d; eA1(3,2) += d; eA1(2,4) += d;
-      eA1(4,1) += d; eA1(4,2) += d; eA1(4,3) += d; eA1(3,4) += d;
+      eA1(1,1) += c; eA1(1,2) += d; eA1(1,3) += d; eA1(1,4) += d;
+      eA1(2,1) += d; eA1(2,2) += c; eA1(2,3) += d; eA1(2,4) += d;
+      eA1(3,1) += d; eA1(3,2) += d; eA1(3,3) += c; eA1(3,4) += d;
+      eA1(4,1) += d; eA1(4,2) += d; eA1(4,3) += d; eA1(4,4) += c; 
    }
    else {
       real_t c = 0.25*_el_geo.volume;

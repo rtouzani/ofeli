@@ -7,7 +7,7 @@ var classOFELI_1_1Triang3 =
     [ "set", "classOFELI_1_1Triang3.html#a578b9f2f623966f955548e89ccce995a", null ],
     [ "set", "classOFELI_1_1Triang3.html#afef83babf0e3aeb65caca62d7995aaf5", null ],
     [ "Sh", "classOFELI_1_1Triang3.html#a4fc79aaeb587148410021052f410d4dc", null ],
-    [ "DSh", "classOFELI_1_1Triang3.html#a5a81c330921ff7fb6286ae927b30b7a9", null ],
+    [ "DSh", "classOFELI_1_1Triang3.html#aa7d706a44a4e55358fd7941724ef55b7", null ],
     [ "getInterpolate", "classOFELI_1_1Triang3.html#a3203c9e7be1f986b70b8d3db9e8e9154", null ],
     [ "check", "classOFELI_1_1Triang3.html#a8efa3c3eaf60703efdda5fe3df1fccdb", null ],
     [ "Grad", "classOFELI_1_1Triang3.html#ac9432a955941986c3b76007387d1d09e", null ],

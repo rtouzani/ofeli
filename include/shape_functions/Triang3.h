@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -106,9 +106,9 @@ public:
     }
 
 /** \brief Return partial derivatives of shape functions of element nodes
- *  @return LocalVect instance of partial derivatives of shape functions
- *          <i>e.g.</i> \c dsh(i).x, \c dsh(i).y, are partial derivatives of the <i>i</i>-th
- *          shape function. 
+ *  @return Vector of partial derivatives of shape functions
+ *  <i>e.g.</i> \c dsh[i-1].x, \c dsh[i-1].y, are partial derivatives of the <i>i</i>-th
+ *  shape function. 
  */
     std::vector<Point<real_t> > DSh() const;
 

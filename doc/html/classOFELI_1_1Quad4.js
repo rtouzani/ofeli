@@ -7,7 +7,7 @@ var classOFELI_1_1Quad4 =
     [ "set", "classOFELI_1_1Quad4.html#a578b9f2f623966f955548e89ccce995a", null ],
     [ "set", "classOFELI_1_1Quad4.html#afef83babf0e3aeb65caca62d7995aaf5", null ],
     [ "setLocal", "classOFELI_1_1Quad4.html#a3686dcc363945fc9705485b9200fa17e", null ],
-    [ "DSh", "classOFELI_1_1Quad4.html#a5a81c330921ff7fb6286ae927b30b7a9", null ],
+    [ "atGauss", "classOFELI_1_1Quad4.html#ace8d5209b5c172d4a687adffe9c2d44d", null ],
     [ "Grad", "classOFELI_1_1Quad4.html#a0a415b01e4f9aa429c2c828d2fd7f0db", null ],
     [ "getMaxEdgeLength", "classOFELI_1_1Quad4.html#aef875a901767a614557a4aca5e6d08f9", null ],
     [ "getMinEdgeLength", "classOFELI_1_1Quad4.html#a9b14e7e0ca32bd24f27519ed8ed0d0c8", null ],

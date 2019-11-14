@@ -5,7 +5,7 @@ var classOFELI_1_1IPF =
     [ "IPF", "classOFELI_1_1IPF.html#a120fbf0a8630ca29c7adc2e578ef58e5", null ],
     [ "~IPF", "classOFELI_1_1IPF.html#a0569447015d3a4768d5d81adb05b8a35", null ],
     [ "getDisplay", "classOFELI_1_1IPF.html#a8c8b312b367b066c0e09545023bc7a0f", null ],
-    [ "getVerbose", "classOFELI_1_1IPF.html#acace4272799e056d4839c6bbb7c9ab96", null ],
+    [ "getVerbose", "classOFELI_1_1IPF.html#a5513ede228fa96a2bf6341906f66e759", null ],
     [ "getOutput", "classOFELI_1_1IPF.html#a1046611895afc3c7ba3c75cef41b00ab", null ],
     [ "getSave", "classOFELI_1_1IPF.html#a8fe11e94d2c0941877ada70630c42978", null ],
     [ "getPlot", "classOFELI_1_1IPF.html#a4ba90ce3bb174d96547dff01cc1e7db6", null ],

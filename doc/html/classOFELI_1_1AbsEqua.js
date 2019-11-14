@@ -5,8 +5,10 @@ var classOFELI_1_1AbsEqua =
     [ "setMesh", "classOFELI_1_1AbsEqua.html#a82708ffcc31d4d630863187f3f137ee3", null ],
     [ "getMesh", "classOFELI_1_1AbsEqua.html#a913c6c03741d94f86d65690fd7d5902a", null ],
     [ "getLinearSolver", "classOFELI_1_1AbsEqua.html#a2907b96cfd97e563fe4afcae104897e7", null ],
+    [ "getMatrix", "classOFELI_1_1AbsEqua.html#a0af9c590a2bbfa944af9dece2a8e3dec", null ],
     [ "setSolver", "classOFELI_1_1AbsEqua.html#aa76ba7a5ad0412484df8aeaa34df03a3", null ],
+    [ "setLinearSolver", "classOFELI_1_1AbsEqua.html#a93bf9d28a75fab8e6f5a3c3d1e6bd415", null ],
     [ "setMatrixType", "classOFELI_1_1AbsEqua.html#a28dc6e37b3582dfaf59b23135fb06682", null ],
-    [ "solveLinearSystem", "classOFELI_1_1AbsEqua.html#a82009d8ac9cf2704c73e7a21df585432", null ],
-    [ "solveLinearSystem", "classOFELI_1_1AbsEqua.html#ad899acb6e502894b296641d95c2efa2a", null ]
+    [ "solveLinearSystem", "classOFELI_1_1AbsEqua.html#a05a11942d676096bf343f9f734030d7f", null ],
+    [ "solveLinearSystem", "classOFELI_1_1AbsEqua.html#a8d3039f33683a4c022db6868f668d889", null ]
 ];

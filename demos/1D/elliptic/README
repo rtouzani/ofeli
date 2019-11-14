@@ -1,9 +1,0 @@
-elliptic:
-
-A demo program to solve a 1D elliptic equation and compute discretization error.
-To execute the program, type
-
-          elliptic <n>
-
-where n is the number of finite elements. Its default value is 10
-

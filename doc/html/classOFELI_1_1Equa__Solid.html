@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -107,7 +106,7 @@ $(document).ready(function(){initNavTree('classOFELI_1_1Equa__Solid.html','');})
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classOFELI_1_1Equa__Solid-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a><a class="el" href="group__OFELI.html">OFELI</a> &raquo;  &#124; <a class="el" href="group__Solid.html">Solid Mechanics</a></div></div>  </div>
+<div class="title">Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span><div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a><a class="el" href="group__OFELI.html">OFELI</a> &raquo;  &#124; <a class="el" href="group__Solid.html">Solid Mechanics</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -135,34 +134,12 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a6127bf940f0fa23ece97ceb12c2de86e">~Equa_Solid</a> ()</td></tr>
 <tr class="memdesc:a6127bf940f0fa23ece97ceb12c2de86e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
 <tr class="separator:a6127bf940f0fa23ece97ceb12c2de86e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d774043628f7055cac608ca64be2f63"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a0d774043628f7055cac608ca64be2f63">LMassToLHS</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:a0d774043628f7055cac608ca64be2f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add lumped mass contribution to left-hand side.  <a href="#a0d774043628f7055cac608ca64be2f63">More...</a><br /></td></tr>
-<tr class="separator:a0d774043628f7055cac608ca64be2f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d2c790ebad54fea5821d64db598544c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a5d2c790ebad54fea5821d64db598544c">LMassToRHS</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:a5d2c790ebad54fea5821d64db598544c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add lumped mass contribution to right-hand side.  <a href="#a5d2c790ebad54fea5821d64db598544c">More...</a><br /></td></tr>
-<tr class="separator:a5d2c790ebad54fea5821d64db598544c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a409bd9548d19c3738f56680ebac01c8b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a409bd9548d19c3738f56680ebac01c8b">MassToLHS</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:a409bd9548d19c3738f56680ebac01c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add consistent mass contribution to left-hand side.  <a href="#a409bd9548d19c3738f56680ebac01c8b">More...</a><br /></td></tr>
-<tr class="separator:a409bd9548d19c3738f56680ebac01c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae640da51dfdc76b43c5f0a5b9c9a5a9f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#ae640da51dfdc76b43c5f0a5b9c9a5a9f">MassToRHS</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:ae640da51dfdc76b43c5f0a5b9c9a5a9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add consistent mass contribution to right-hand side.  <a href="#ae640da51dfdc76b43c5f0a5b9c9a5a9f">More...</a><br /></td></tr>
-<tr class="separator:ae640da51dfdc76b43c5f0a5b9c9a5a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81b1bdca0b76ccdd8fca378143dfe96c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81b1bdca0b76ccdd8fca378143dfe96c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a81b1bdca0b76ccdd8fca378143dfe96c">setLumpedMass</a> ()</td></tr>
-<tr class="memdesc:a81b1bdca0b76ccdd8fca378143dfe96c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add lumped mass contribution to left and right-hand sides taking into account time integration scheme. <br /></td></tr>
-<tr class="separator:a81b1bdca0b76ccdd8fca378143dfe96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c9a132b132f7050c7be569d6af921f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c9a132b132f7050c7be569d6af921f4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a4c9a132b132f7050c7be569d6af921f4">setMass</a> ()</td></tr>
-<tr class="memdesc:a4c9a132b132f7050c7be569d6af921f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add consistent mass contribution to left and right-hand sides taking into account time integration scheme. <br /></td></tr>
-<tr class="separator:a4c9a132b132f7050c7be569d6af921f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d344362c30ab9e83665623bb793e0d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d344362c30ab9e83665623bb793e0d6"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a6d344362c30ab9e83665623bb793e0d6">Mass</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:a6d344362c30ab9e83665623bb793e0d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add consistent mass matrix to left-hand side after multiplication by <code>coef</code> [Default: <code>1</code>]. <br /></td></tr>
-<tr class="separator:a6d344362c30ab9e83665623bb793e0d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d56db04c7afd40bd62fbbbcaafe6559"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d56db04c7afd40bd62fbbbcaafe6559"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a5d56db04c7afd40bd62fbbbcaafe6559">LMass</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:a5d56db04c7afd40bd62fbbbcaafe6559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add lumped mass matrix to left-hand side after multiplication by <code>coef</code> [Default: <code>1</code>]. <br /></td></tr>
+<tr class="memitem:a5d56db04c7afd40bd62fbbbcaafe6559"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a5d56db04c7afd40bd62fbbbcaafe6559">LMass</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
+<tr class="memdesc:a5d56db04c7afd40bd62fbbbcaafe6559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add lumped mass contribution to left-hand side.  <a href="#a5d56db04c7afd40bd62fbbbcaafe6559">More...</a><br /></td></tr>
 <tr class="separator:a5d56db04c7afd40bd62fbbbcaafe6559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d344362c30ab9e83665623bb793e0d6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a6d344362c30ab9e83665623bb793e0d6">Mass</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
+<tr class="memdesc:a6d344362c30ab9e83665623bb793e0d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add consistent mass contribution to left-hand side.  <a href="#a6d344362c30ab9e83665623bb793e0d6">More...</a><br /></td></tr>
+<tr class="separator:a6d344362c30ab9e83665623bb793e0d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dcb20f3e614aa7ad26a6bfb91b582e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9dcb20f3e614aa7ad26a6bfb91b582e5"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a9dcb20f3e614aa7ad26a6bfb91b582e5">Deviator</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
 <tr class="memdesc:a9dcb20f3e614aa7ad26a6bfb91b582e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add deviator matrix to left-hand side taking into account time integration scheme, after multiplication by <code>coef</code> [Default: <code>1</code>]. <br /></td></tr>
@@ -171,40 +148,17 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a4799435ca241f5711959671d5851f719">Dilatation</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
 <tr class="memdesc:a4799435ca241f5711959671d5851f719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add dilatation matrix to left-hand side taking into account time integration scheme, after multiplication by <code>coef</code> [Default: <code>1</code>]. <br /></td></tr>
 <tr class="separator:a4799435ca241f5711959671d5851f719"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb1b1ba9fec391ebf292b573f6bacc4b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb1b1ba9fec391ebf292b573f6bacc4b"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#aeb1b1ba9fec391ebf292b573f6bacc4b">DilatationToRHS</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:aeb1b1ba9fec391ebf292b573f6bacc4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add dilatation vector to right-hand side taking into account time integration scheme, after multiplication by <code>coef</code> [Default: <code>1</code>]. <br /></td></tr>
-<tr class="separator:aeb1b1ba9fec391ebf292b573f6bacc4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a821dcadf0f64295c1d4793dcaf31dec6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a821dcadf0f64295c1d4793dcaf31dec6"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a821dcadf0f64295c1d4793dcaf31dec6">DeviatorToRHS</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:a821dcadf0f64295c1d4793dcaf31dec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add deviator vector to right-hand side taking into account time integration scheme, after multiplication by <code>coef</code> [Default: <code>1</code>]. <br /></td></tr>
-<tr class="separator:a821dcadf0f64295c1d4793dcaf31dec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b1bb6dc8310a0a1bbeec64bddcae4cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b1bb6dc8310a0a1bbeec64bddcae4cd"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a5b1bb6dc8310a0a1bbeec64bddcae4cd">Stiffness</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
 <tr class="memdesc:a5b1bb6dc8310a0a1bbeec64bddcae4cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add stiffness matrix to left-hand side taking into account time integration scheme, after multiplication by <code>coef</code> [Default: <code>1</code>]. <br /></td></tr>
 <tr class="separator:a5b1bb6dc8310a0a1bbeec64bddcae4cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f3c144b3450edef22b36ee54122ef87"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f3c144b3450edef22b36ee54122ef87"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a5f3c144b3450edef22b36ee54122ef87">StiffnessToRHS</a> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> coef=1)</td></tr>
-<tr class="memdesc:a5f3c144b3450edef22b36ee54122ef87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add stiffness matrix to right-hand side taking into account time integration scheme, after multiplication by <code>coef</code> [Default: <code>1</code>]. <br /></td></tr>
-<tr class="separator:a5f3c144b3450edef22b36ee54122ef87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d1be02676aaab0fe0f22bf0d74e9968"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d1be02676aaab0fe0f22bf0d74e9968"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a1d1be02676aaab0fe0f22bf0d74e9968">setDilatation</a> ()</td></tr>
-<tr class="memdesc:a1d1be02676aaab0fe0f22bf0d74e9968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add dilatation matrix to left and/or right-hand side taking into account time. <br /></td></tr>
-<tr class="separator:a1d1be02676aaab0fe0f22bf0d74e9968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afebceb2fca18c5f2d0d2fc13f03aaed6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afebceb2fca18c5f2d0d2fc13f03aaed6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#afebceb2fca18c5f2d0d2fc13f03aaed6">setDeviator</a> ()</td></tr>
-<tr class="memdesc:afebceb2fca18c5f2d0d2fc13f03aaed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add deviator matrix to left and/or right-hand side taking into account time integration scheme. <br /></td></tr>
-<tr class="separator:afebceb2fca18c5f2d0d2fc13f03aaed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a208ce85d5d0f94000c7fa02c660ae393"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a208ce85d5d0f94000c7fa02c660ae393"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a208ce85d5d0f94000c7fa02c660ae393">setStiffness</a> ()</td></tr>
-<tr class="memdesc:a208ce85d5d0f94000c7fa02c660ae393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add convection contribution to left and/or right-hand side taking into account time integration scheme. <br /></td></tr>
-<tr class="separator:a208ce85d5d0f94000c7fa02c660ae393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af84606c2cecfcef03d6820a323ffbdcc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af84606c2cecfcef03d6820a323ffbdcc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#af84606c2cecfcef03d6820a323ffbdcc">setInput</a> (<a class="el" href="group__OFELI.html#ga42582cc9e68e05cf30ccad02e4ba8ff6">EqDataType</a> opt, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
+<tr class="memdesc:af84606c2cecfcef03d6820a323ffbdcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set specific input data to solid mechanics. <br /></td></tr>
+<tr class="separator:af84606c2cecfcef03d6820a323ffbdcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a4ac833b4b2f78ec8581d1d7e9a0c6b6e">updateBC</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;el, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;bc)</td></tr>
 <tr class="memdesc:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update Right-Hand side by taking into account essential boundary conditions.  <a href="#a4ac833b4b2f78ec8581d1d7e9a0c6b6e">More...</a><br /></td></tr>
 <tr class="separator:a4ac833b4b2f78ec8581d1d7e9a0c6b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43d3a73fe5f0bad77d57203cd70c38d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a43d3a73fe5f0bad77d57203cd70c38d9">updateBC</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;bc)</td></tr>
-<tr class="memdesc:a43d3a73fe5f0bad77d57203cd70c38d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update Right-Hand side by taking into account essential boundary conditions.  <a href="#a43d3a73fe5f0bad77d57203cd70c38d9">More...</a><br /></td></tr>
-<tr class="separator:a43d3a73fe5f0bad77d57203cd70c38d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba283a1d4bdd0780188088c082e79db0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#aba283a1d4bdd0780188088c082e79db0">DiagBC</a> (int dof_type=NODE_DOF, int dof=0)</td></tr>
 <tr class="memdesc:aba283a1d4bdd0780188088c082e79db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update element matrix to impose bc by diagonalization technique.  <a href="#aba283a1d4bdd0780188088c082e79db0">More...</a><br /></td></tr>
 <tr class="separator:aba283a1d4bdd0780188088c082e79db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,6 +171,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a38ba4251e26bd6e01c2c3ed4b4261752"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a38ba4251e26bd6e01c2c3ed4b4261752">ElementNodeVector</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt; T_, NEN_ &gt; &amp;be, int dof)</td></tr>
 <tr class="memdesc:a38ba4251e26bd6e01c2c3ed4b4261752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize <a class="el" href="classOFELI_1_1Element.html" title="To store and treat finite element geometric information. ">Element</a> Vector from a <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="#a38ba4251e26bd6e01c2c3ed4b4261752">More...</a><br /></td></tr>
 <tr class="separator:a38ba4251e26bd6e01c2c3ed4b4261752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f6c0c4fff3dd3367bb54bd926b40872"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a6f6c0c4fff3dd3367bb54bd926b40872">SideNodeVector</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt; T_, NSE_ &gt; &amp;bs)</td></tr>
+<tr class="memdesc:a6f6c0c4fff3dd3367bb54bd926b40872"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize <a class="el" href="classOFELI_1_1Side.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> Vector from a <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="#a6f6c0c4fff3dd3367bb54bd926b40872">More...</a><br /></td></tr>
+<tr class="separator:a6f6c0c4fff3dd3367bb54bd926b40872"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a933fc319fca5524536f5ff84e081455f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a933fc319fca5524536f5ff84e081455f">ElementNodeVectorSingleDOF</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt; T_, NEN_ &gt; &amp;be)</td></tr>
 <tr class="memdesc:a933fc319fca5524536f5ff84e081455f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize <a class="el" href="classOFELI_1_1Element.html" title="To store and treat finite element geometric information. ">Element</a> Vector from a <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance.  <a href="#a933fc319fca5524536f5ff84e081455f">More...</a><br /></td></tr>
 <tr class="separator:a933fc319fca5524536f5ff84e081455f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -312,10 +269,6 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a640c09169976d8e21447b2b2150f7fb9">getNbEq</a> () const </td></tr>
 <tr class="memdesc:a640c09169976d8e21447b2b2150f7fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of element equations. <br /></td></tr>
 <tr class="separator:a640c09169976d8e21447b2b2150f7fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14e4067129a8fd4baa97d92ef8b807f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14e4067129a8fd4baa97d92ef8b807f0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a14e4067129a8fd4baa97d92ef8b807f0">setInitialSolution</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;u)</td></tr>
-<tr class="memdesc:a14e4067129a8fd4baa97d92ef8b807f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial solution (previous time step) <br /></td></tr>
-<tr class="separator:a14e4067129a8fd4baa97d92ef8b807f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a7bad963394968d24bff5dda9dd51ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a5a7bad963394968d24bff5dda9dd51ee">setMaterialProperty</a> (const string &amp;exp, const string &amp;prop)</td></tr>
 <tr class="memdesc:a5a7bad963394968d24bff5dda9dd51ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a material property by an algebraic expression.  <a href="#a5a7bad963394968d24bff5dda9dd51ee">More...</a><br /></td></tr>
 <tr class="separator:a5a7bad963394968d24bff5dda9dd51ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -330,18 +283,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a>&lt; T_ &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a2907b96cfd97e563fe4afcae104897e7">getLinearSolver</a> ()</td></tr>
 <tr class="memdesc:a2907b96cfd97e563fe4afcae104897e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to linear solver instance. <br /></td></tr>
 <tr class="separator:a2907b96cfd97e563fe4afcae104897e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af9c590a2bbfa944af9dece2a8e3dec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0af9c590a2bbfa944af9dece2a8e3dec"></a>
+<a class="el" href="classOFELI_1_1PETScMatrix.html">PETScMatrix</a>&lt; T_ &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a0af9c590a2bbfa944af9dece2a8e3dec">getMatrix</a> () const </td></tr>
+<tr class="memdesc:a0af9c590a2bbfa944af9dece2a8e3dec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to matrix. <br /></td></tr>
+<tr class="separator:a0af9c590a2bbfa944af9dece2a8e3dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa76ba7a5ad0412484df8aeaa34df03a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#aa76ba7a5ad0412484df8aeaa34df03a3">setSolver</a> (<a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> ls, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> pc=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38abee1df09df17f316a75a98ad36679bf6">IDENT_PREC</a>)</td></tr>
 <tr class="memdesc:aa76ba7a5ad0412484df8aeaa34df03a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose solver for the linear system.  <a href="#aa76ba7a5ad0412484df8aeaa34df03a3">More...</a><br /></td></tr>
 <tr class="separator:aa76ba7a5ad0412484df8aeaa34df03a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93bf9d28a75fab8e6f5a3c3d1e6bd415"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a93bf9d28a75fab8e6f5a3c3d1e6bd415">setLinearSolver</a> (<a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> ls, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> pc=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38abee1df09df17f316a75a98ad36679bf6">IDENT_PREC</a>)</td></tr>
+<tr class="memdesc:a93bf9d28a75fab8e6f5a3c3d1e6bd415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose solver for the linear system.  <a href="#a93bf9d28a75fab8e6f5a3c3d1e6bd415">More...</a><br /></td></tr>
+<tr class="separator:a93bf9d28a75fab8e6f5a3c3d1e6bd415"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28dc6e37b3582dfaf59b23135fb06682"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a28dc6e37b3582dfaf59b23135fb06682">setMatrixType</a> (int t)</td></tr>
 <tr class="memdesc:a28dc6e37b3582dfaf59b23135fb06682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose type of matrix.  <a href="#a28dc6e37b3582dfaf59b23135fb06682">More...</a><br /></td></tr>
 <tr class="separator:a28dc6e37b3582dfaf59b23135fb06682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82009d8ac9cf2704c73e7a21df585432"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a82009d8ac9cf2704c73e7a21df585432">solveLinearSystem</a> (<a class="el" href="classOFELI_1_1Matrix.html">Matrix</a>&lt; T_ &gt; *<a class="el" href="group__OFELI.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a82009d8ac9cf2704c73e7a21df585432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given matrix and right-hand side.  <a href="#a82009d8ac9cf2704c73e7a21df585432">More...</a><br /></td></tr>
-<tr class="separator:a82009d8ac9cf2704c73e7a21df585432"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad899acb6e502894b296641d95c2efa2a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#ad899acb6e502894b296641d95c2efa2a">solveLinearSystem</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:ad899acb6e502894b296641d95c2efa2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given right-hand side.  <a href="#ad899acb6e502894b296641d95c2efa2a">More...</a><br /></td></tr>
-<tr class="separator:ad899acb6e502894b296641d95c2efa2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05a11942d676096bf343f9f734030d7f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a05a11942d676096bf343f9f734030d7f">solveLinearSystem</a> (<a class="el" href="classOFELI_1_1PETScMatrix.html">PETScMatrix</a>&lt; T_ &gt; *<a class="el" href="group__OFELI.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, <a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;x)</td></tr>
+<tr class="memdesc:a05a11942d676096bf343f9f734030d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given matrix and right-hand side.  <a href="#a05a11942d676096bf343f9f734030d7f">More...</a><br /></td></tr>
+<tr class="separator:a05a11942d676096bf343f9f734030d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d3039f33683a4c022db6868f668d889"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1AbsEqua.html#a8d3039f33683a4c022db6868f668d889">solveLinearSystem</a> (<a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;x)</td></tr>
+<tr class="memdesc:a8d3039f33683a4c022db6868f668d889"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given right-hand side.  <a href="#a8d3039f33683a4c022db6868f668d889">More...</a><br /></td></tr>
+<tr class="separator:a8d3039f33683a4c022db6868f668d889"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -353,9 +313,6 @@ Public Attributes</h2></td></tr>
 <a class="el" href="classOFELI_1_1LocalMatrix.html">LocalMatrix</a>&lt; T_, NSE_, NSE_ &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a5db52e4a58d9ea6437f046bb3237bc99">sMat</a></td></tr>
 <tr class="memdesc:a5db52e4a58d9ea6437f046bb3237bc99"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOFELI_1_1LocalMatrix.html" title="Handles small size matrices like element matrices, with a priori known size. ">LocalMatrix</a> instance containing local matrix associated to current side. <br /></td></tr>
 <tr class="separator:a5db52e4a58d9ea6437f046bb3237bc99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45d84f97a0026fb56e1eaad367b6f050"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt; T_, NEE_ &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#a45d84f97a0026fb56e1eaad367b6f050">ePrev</a></td></tr>
-<tr class="memdesc:a45d84f97a0026fb56e1eaad367b6f050"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOFELI_1_1LocalVect.html" title="Handles small size vectors like element vectors. ">LocalVect</a> instance containing local vector associated to current element.  <a href="#a45d84f97a0026fb56e1eaad367b6f050">More...</a><br /></td></tr>
-<tr class="separator:a45d84f97a0026fb56e1eaad367b6f050"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcc60b1ce1fc1e1fac565ee33dbd0275"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcc60b1ce1fc1e1fac565ee33dbd0275"></a>
 <a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt; T_, NEE_ &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#adcc60b1ce1fc1e1fac565ee33dbd0275">eRHS</a></td></tr>
 <tr class="memdesc:adcc60b1ce1fc1e1fac565ee33dbd0275"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOFELI_1_1LocalVect.html" title="Handles small size vectors like element vectors. ">LocalVect</a> instance containing local right-hand side vector associated to current element. <br /></td></tr>
@@ -399,14 +356,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equa__Solid.html#a381ccce0928fbad840a57b054e7eb9b0">setMaterial</a> ()</td></tr>
 <tr class="memdesc:a381ccce0928fbad840a57b054e7eb9b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set material properties. <br /></td></tr>
 <tr class="separator:a381ccce0928fbad840a57b054e7eb9b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acda4272ebab795110493d7ea482d942f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acda4272ebab795110493d7ea482d942f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#acda4272ebab795110493d7ea482d942f">Init</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> *el)</td></tr>
-<tr class="memdesc:acda4272ebab795110493d7ea482d942f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set element arrays to zero. <br /></td></tr>
-<tr class="separator:acda4272ebab795110493d7ea482d942f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab022e77aaebf225fd38c136a6cf98921"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab022e77aaebf225fd38c136a6cf98921"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Equation.html#ab022e77aaebf225fd38c136a6cf98921">Init</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> *sd)</td></tr>
-<tr class="memdesc:ab022e77aaebf225fd38c136a6cf98921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set side arrays to zero. <br /></td></tr>
-<tr class="separator:ab022e77aaebf225fd38c136a6cf98921"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_&gt;<br />
@@ -443,7 +392,7 @@ class OFELI::Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</h3>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a0d774043628f7055cac608ca64be2f63"></a>
+<a class="anchor" id="a5d56db04c7afd40bd62fbbbcaafe6559"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -451,7 +400,7 @@ class OFELI::Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</h3>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void LMassToLHS </td>
+          <td class="memname">virtual void LMass </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
           <td class="paramname"><em>coef</em> = <code>1</code></td><td>)</td>
@@ -473,11 +422,11 @@ class OFELI::Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</h3>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classOFELI_1_1Elas2DT3.html#ab055722e5ba95d1e55dc99499b50aa82">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Elas2DQ4.html#ab055722e5ba95d1e55dc99499b50aa82">Elas2DQ4</a>, <a class="el" href="classOFELI_1_1Beam3DL2.html#ab055722e5ba95d1e55dc99499b50aa82">Beam3DL2</a>, <a class="el" href="classOFELI_1_1Elas3DH8.html#ab055722e5ba95d1e55dc99499b50aa82">Elas3DH8</a>, <a class="el" href="classOFELI_1_1Elas3DT4.html#ad71721116987902a8c69b3e6aab47712">Elas3DT4</a>, and <a class="el" href="classOFELI_1_1Bar2DL2.html#ad71721116987902a8c69b3e6aab47712">Bar2DL2</a>.</p>
+<p>Reimplemented in <a class="el" href="classOFELI_1_1Beam3DL2.html#acd59f2981fe99c4e2b59fcc5f35e6e2e">Beam3DL2</a>, <a class="el" href="classOFELI_1_1Elas2DT3.html#acd59f2981fe99c4e2b59fcc5f35e6e2e">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Elas2DQ4.html#acd59f2981fe99c4e2b59fcc5f35e6e2e">Elas2DQ4</a>, <a class="el" href="classOFELI_1_1Elas3DT4.html#a8085a436c0055d8554baaa8cb3835922">Elas3DT4</a>, <a class="el" href="classOFELI_1_1Bar2DL2.html#a8085a436c0055d8554baaa8cb3835922">Bar2DL2</a>, and <a class="el" href="classOFELI_1_1Elas3DH8.html#acd59f2981fe99c4e2b59fcc5f35e6e2e">Elas3DH8</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5d2c790ebad54fea5821d64db598544c"></a>
+<a class="anchor" id="a6d344362c30ab9e83665623bb793e0d6"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -485,41 +434,7 @@ class OFELI::Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</h3>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void LMassToRHS </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>coef</em> = <code>1</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add lumped mass contribution to right-hand side. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">coef</td><td>coefficient to multiply by the vector before adding [Default: <code>1</code>] </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Reimplemented in <a class="el" href="classOFELI_1_1Elas2DT3.html#a52fd7890d65c0bbd7aa1992813423d2e">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Elas2DQ4.html#a52fd7890d65c0bbd7aa1992813423d2e">Elas2DQ4</a>, <a class="el" href="classOFELI_1_1Beam3DL2.html#a52fd7890d65c0bbd7aa1992813423d2e">Beam3DL2</a>, <a class="el" href="classOFELI_1_1Elas3DH8.html#a52fd7890d65c0bbd7aa1992813423d2e">Elas3DH8</a>, <a class="el" href="classOFELI_1_1Elas3DT4.html#adab8ee35bc2d780ff1694b49c6b91af3">Elas3DT4</a>, and <a class="el" href="classOFELI_1_1Bar2DL2.html#adab8ee35bc2d780ff1694b49c6b91af3">Bar2DL2</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a409bd9548d19c3738f56680ebac01c8b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void MassToLHS </td>
+          <td class="memname">virtual void Mass </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
           <td class="paramname"><em>coef</em> = <code>1</code></td><td>)</td>
@@ -541,41 +456,7 @@ class OFELI::Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</h3>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classOFELI_1_1Elas2DT3.html#a1276e8467bf727babe683a339df6f761">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Beam3DL2.html#a1276e8467bf727babe683a339df6f761">Beam3DL2</a>, and <a class="el" href="classOFELI_1_1Bar2DL2.html#ae17e4bc90c711198dda8d4dffbde4719">Bar2DL2</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ae640da51dfdc76b43c5f0a5b9c9a5a9f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void MassToRHS </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>coef</em> = <code>1</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add consistent mass contribution to right-hand side. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">coef</td><td>coefficient to multiply by the vector before adding [Default: <code>1</code>] </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Reimplemented in <a class="el" href="classOFELI_1_1Elas2DT3.html#a02bf86b5a9fa39f47c6d8089076859cb">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Beam3DL2.html#a02bf86b5a9fa39f47c6d8089076859cb">Beam3DL2</a>, and <a class="el" href="classOFELI_1_1Bar2DL2.html#afb7b9525ece01b8504977acdfb4a3b50">Bar2DL2</a>.</p>
+<p>Reimplemented in <a class="el" href="classOFELI_1_1Beam3DL2.html#a6973a1f3ad79ae2b5211c3ec81c6f678">Beam3DL2</a>, <a class="el" href="classOFELI_1_1Elas2DT3.html#a6973a1f3ad79ae2b5211c3ec81c6f678">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Elas2DQ4.html#a6973a1f3ad79ae2b5211c3ec81c6f678">Elas2DQ4</a>, <a class="el" href="classOFELI_1_1Bar2DL2.html#a1b558ae9bc1c76a4344c24bc78f80f44">Bar2DL2</a>, and <a class="el" href="classOFELI_1_1Elas3DH8.html#a6973a1f3ad79ae2b5211c3ec81c6f678">Elas3DH8</a>.</p>
 
 </div>
 </div>
@@ -619,39 +500,6 @@ class OFELI::Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</h3>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="a43d3a73fe5f0bad77d57203cd70c38d9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void updateBC </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>bc</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Update Right-Hand side by taking into account essential boundary conditions. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bc</td><td>Vector that contains imposed values at all DOFs </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section remark"><dt>Remarks</dt><dd>The current element is pointed by <code>_theElement</code> </dd></dl>
 
 </div>
 </div>
@@ -836,6 +684,50 @@ class OFELI::Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</h3>
   </dd>
 </dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Only yhe dega dof is transferred to the local vector </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6f6c0c4fff3dd3367bb54bd926b40872"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SideNodeVector </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt; T_, NSE_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>bs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Localize <a class="el" href="classOFELI_1_1Side.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> Vector from a <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Global vector to be localized. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">bs</td><td>Local vector, the length of which is the total number of side equations. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>All degrees of freedom are transferred to the local vector </dd></dl>
 
 </div>
 </div>
@@ -2020,6 +1912,73 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
 
 </div>
 </div>
+<a class="anchor" id="a93bf9d28a75fab8e6f5a3c3d1e6bd415"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setLinearSolver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a>&#160;</td>
+          <td class="paramname"><em>ls</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a>&#160;</td>
+          <td class="paramname"><em>pc</em> = <code><a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38abee1df09df17f316a75a98ad36679bf6">IDENT_PREC</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Choose solver for the linear system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ls</td><td>Solver of the linear system. To choose among the enumerated values: <code>DIRECT_SOLVER</code>, <code>CG_SOLVER</code>, <code>GMRES_SOLVER</code> <ul>
+<li>
+<code>DIRECT_SOLVER</code>, Use a facorization solver [default] </li>
+<li>
+<code>CG_SOLVER</code>, Conjugate Gradient iterative solver </li>
+<li>
+<code>CGS_SOLVER</code>, Squared Conjugate Gradient iterative solver </li>
+<li>
+<code>BICG_SOLVER</code>, BiConjugate Gradient iterative solver </li>
+<li>
+<code>BICG_STAB_SOLVER</code>, BiConjugate Gradient Stabilized iterative solver </li>
+<li>
+<code>GMRES_SOLVER</code>, GMRES iterative solver </li>
+<li>
+<code>QMR_SOLVER</code>, QMR iterative solver </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pc</td><td>Preconditioner to associate to the iterative solver. If the direct solver was chosen for the first argument this argument is not used. Otherwise choose among the enumerated values: <ul>
+<li>
+<code>IDENT_PREC</code>, Identity preconditioner (no preconditioning [default]) </li>
+<li>
+<code>DIAG_PREC</code>, Diagonal preconditioner </li>
+<li>
+<code>ILU_PREC</code>, Incomplete LU factorization preconditioner </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a28dc6e37b3582dfaf59b23135fb06682"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2052,7 +2011,7 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
 
 </div>
 </div>
-<a class="anchor" id="a82009d8ac9cf2704c73e7a21df585432"></a>
+<a class="anchor" id="a05a11942d676096bf343f9f734030d7f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2062,19 +2021,19 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
         <tr>
           <td class="memname">int solveLinearSystem </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Matrix.html">Matrix</a>&lt; T_ &gt; *&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScMatrix.html">PETScMatrix</a>&lt; T_ &gt; *&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -2102,7 +2061,7 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
 
 </div>
 </div>
-<a class="anchor" id="ad899acb6e502894b296641d95c2efa2a"></a>
+<a class="anchor" id="a8d3039f33683a4c022db6868f668d889"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2112,13 +2071,13 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
         <tr>
           <td class="memname">int solveLinearSystem </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1PETScVect.html">PETScVect</a>&lt; T_ &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -2142,30 +2101,6 @@ The resulting local vector can be accessed by attribute <code>ePrev</code>. </td
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a45d84f97a0026fb56e1eaad367b6f050"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classOFELI_1_1LocalVect.html">LocalVect</a>&lt;T_,NEE_&gt; ePrev</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p><a class="el" href="classOFELI_1_1LocalVect.html" title="Handles small size vectors like element vectors. ">LocalVect</a> instance containing local vector associated to current element. </p>
-<p>This vector has been stored as the one at previous iteration or previous time step </p>
 
 </div>
 </div>

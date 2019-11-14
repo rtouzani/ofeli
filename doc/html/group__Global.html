@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -117,6 +116,9 @@ Variables</h2></td></tr>
 <tr class="memitem:ga5a8d24695c6d5aed37431999548a6dde"><td class="memItemLeft" align="right" valign="top">Edge *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Global.html#ga5a8d24695c6d5aed37431999548a6dde">theEdge</a></td></tr>
 <tr class="memdesc:ga5a8d24695c6d5aed37431999548a6dde"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to <a class="el" href="classOFELI_1_1Edge.html" title="To describe an edge. ">Edge</a>.  <a href="group__Global.html#ga5a8d24695c6d5aed37431999548a6dde">More...</a><br /></td></tr>
 <tr class="separator:ga5a8d24695c6d5aed37431999548a6dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab00944552a5ef41ef0c18de744dd8207"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Global.html#gab00944552a5ef41ef0c18de744dd8207">Verbosity</a></td></tr>
+<tr class="memdesc:gab00944552a5ef41ef0c18de744dd8207"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verbosity parameter.  <a href="group__Global.html#gab00944552a5ef41ef0c18de744dd8207">More...</a><br /></td></tr>
+<tr class="separator:gab00944552a5ef41ef0c18de744dd8207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga38d2fb1712228d1c76ac3f54b1d5872b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Global.html#ga38d2fb1712228d1c76ac3f54b1d5872b">theStep</a></td></tr>
 <tr class="memdesc:ga38d2fb1712228d1c76ac3f54b1d5872b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time step counter.  <a href="group__Global.html#ga38d2fb1712228d1c76ac3f54b1d5872b">More...</a><br /></td></tr>
 <tr class="separator:ga38d2fb1712228d1c76ac3f54b1d5872b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,9 +131,6 @@ Variables</h2></td></tr>
 <tr class="memitem:ga534f6e466357af135f45bb1ce6f517c9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Global.html#ga534f6e466357af135f45bb1ce6f517c9">MaxNbIterations</a></td></tr>
 <tr class="memdesc:ga534f6e466357af135f45bb1ce6f517c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximal number of iterations.  <a href="group__Global.html#ga534f6e466357af135f45bb1ce6f517c9">More...</a><br /></td></tr>
 <tr class="separator:ga534f6e466357af135f45bb1ce6f517c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab00944552a5ef41ef0c18de744dd8207"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Global.html#gab00944552a5ef41ef0c18de744dd8207">Verbosity</a></td></tr>
-<tr class="memdesc:gab00944552a5ef41ef0c18de744dd8207"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter for verbosity of message outputting.  <a href="group__Global.html#gab00944552a5ef41ef0c18de744dd8207">More...</a><br /></td></tr>
-<tr class="separator:gab00944552a5ef41ef0c18de744dd8207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafe343e984bb2022a960c0285c90ba97d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Global.html#gafe343e984bb2022a960c0285c90ba97d">theTimeStep</a></td></tr>
 <tr class="memdesc:gafe343e984bb2022a960c0285c90ba97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time step label.  <a href="group__Global.html#gafe343e984bb2022a960c0285c90ba97d">More...</a><br /></td></tr>
 <tr class="separator:gafe343e984bb2022a960c0285c90ba97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,6 +216,23 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gab00944552a5ef41ef0c18de744dd8207"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Verbosity</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Verbosity parameter. </p>
+<p>Parameter for verbosity of message outputting.</p>
+<p>The value of Verbosity can be modified anywhere in the calling programs. It allows outputting messages in function of the used class or function. To see how this parameter is used in any class, the <a class="el" href="namespaceOFELI.html" title="A namespace to group all library classes, functions, ... ">OFELI</a> user has to read corresponding documentation.</p>
+<p>Its default value is 1 </p>
+
+</div>
+</div>
 <a class="anchor" id="ga38d2fb1712228d1c76ac3f54b1d5872b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -274,21 +290,6 @@ Variables</h2></td></tr>
 
 <p>Maximal number of iterations. </p>
 <dl class="section remark"><dt>Remarks</dt><dd>May be used in conjunction with the macro IterationLoop. Its default value is 1000 </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab00944552a5ef41ef0c18de744dd8207"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Verbosity</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Parameter for verbosity of message outputting. </p>
-<p>Its default value is 1 </p>
 
 </div>
 </div>

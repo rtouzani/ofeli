@@ -80,7 +80,6 @@ class SteklovPoincare2DBE : virtual public AbsEqua<real_t> {
     using AbsEqua<real_t>::_sf;
 
 /// \brief Default Constructor
-/// @param [in] ext Boolean variable to say if the domain is external (true) or internal (false: Default v,alue).
     SteklovPoincare2DBE();
 
 /** \brief Constructor using mesh data.
@@ -90,10 +89,9 @@ class SteklovPoincare2DBE : virtual public AbsEqua<real_t> {
 
 /** \brief Constructor that solves the Steklov Poincare problem.
  *  \details This constructor calls member function setMesh and Solve.
- *  @param [in] mesh Reference to mesh instance.
- *  @param [in] u Vect instance that contains imposed solution on the boundary
- *  @param [in] b Vect instance that contains the left hand side in input and the solution in output
- *  @param [in] ext Boolean variable to say if the domain is external (true) or internal (false: Default value).
+ *  @param [in] ms Reference to mesh instance.
+ *  @param [in] u Reference to solution vector. It contains the solution (normal derivative on 
+ *  boundary, once problem is solved
  */
     SteklovPoincare2DBE(Mesh&         ms,
                         Vect<real_t>& u);

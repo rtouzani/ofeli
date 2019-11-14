@@ -22,7 +22,7 @@ var classOFELI_1_1TimeStepping =
     [ "setVerbose", "classOFELI_1_1TimeStepping.html#ab0dff7ac814d61fe684767c7d33b1c1a", null ],
     [ "runOneTimeStep", "classOFELI_1_1TimeStepping.html#af8c8f582bd6836d2145e823ce5ed5ef4", null ],
     [ "run", "classOFELI_1_1TimeStepping.html#ab174fb4127d2dfb1b5e0d57b9e40b617", null ],
-    [ "Assembly", "classOFELI_1_1TimeStepping.html#a4214ce5bd427d046eacf3adda195072e", null ],
-    [ "SAssembly", "classOFELI_1_1TimeStepping.html#a78092172a143fa41af09c9f7f61210a6", null ],
+    [ "Assembly", "classOFELI_1_1TimeStepping.html#ab858796571d89a61c76ee2083477dbd7", null ],
+    [ "SAssembly", "classOFELI_1_1TimeStepping.html#a109a9cc4bff9dfa026d796527fd050d0", null ],
     [ "getLSolver", "classOFELI_1_1TimeStepping.html#a799a12990da0e52bb134bf40ee4159e2", null ]
 ];

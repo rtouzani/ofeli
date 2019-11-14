@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -418,12 +418,14 @@ class Matrix
  *  by factorization.
  *  @param [in] b Vect instance that contains right-hand side
  *  @param [out] x Vect instance that contains solution
- *  @return - \a 
+ *  @param [in] fact Set to \c true if factorization is to be performed, \c false if not.
+ *  [Default: <tt>true</tt>]
+ *  @return
  *    <ul>
  *       <li><tt>0</tt> if solution was normally performed
  *       <li><tt>n</tt> if the <tt>n</tt>-th pivot is null\n
  *                      Solution is performed only is factorization has previouly been invoked.
- *    </uL>
+ *    </ul>
  */
     virtual int solve(const Vect<T_>& b,
                       Vect<T_>&       x,

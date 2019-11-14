@@ -137,17 +137,17 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
  */
     void BodyRHS(const Vect<real_t>& f);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Add boundary right-hand side flux to right hand side.
 /// @param [in] flux Vector containing source at side nodes.
     void BoundaryRHS(real_t flux) { }
 
 /** \brief Add boundary right-hand side term to right hand side after multiplying it by 
  *  coefficient <tt>coef</tt>
- *  @param [in] b Vector containing source at nodes.
- *  @param [in] opt Vector is local (<tt>LOCAL_ARRAY</tt>) with size <tt>3</tt> or global
- *  (<tt>GLOBAL_ARRAY</tt>) with size = Number of nodes [Default: <tt>GLOBAL_ARRAY</tt>].
+ *  @param [in] f Vector containing source at nodes.
  */
     void BoundaryRHS(const Vect<real_t>& f) { }
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Return (constant) heat flux in element.
     real_t Flux() const;

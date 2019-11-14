@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -119,14 +118,15 @@ $(document).ready(function(){initNavTree('classOFELI_1_1FEShape.html','');});
  <div class="center">
   <img src="classOFELI_1_1FEShape.png" usemap="#FEShape_map" alt=""/>
   <map id="FEShape_map" name="FEShape_map">
-<area href="classOFELI_1_1Hexa8.html" title="Defines a three-dimensional 8-node hexahedral finite element using Q1-isoparametric interpolation..." alt="Hexa8" shape="rect" coords="74,56,138,80"/>
-<area href="classOFELI_1_1Line2.html" title="To describe a 2-Node planar line finite element. " alt="Line2" shape="rect" coords="74,112,138,136"/>
-<area href="classOFELI_1_1Line2H.html" title="To describe a 2-Node Hermite planar line finite element. " alt="Line2H" shape="rect" coords="74,168,138,192"/>
-<area href="classOFELI_1_1Line3.html" title="To describe a 3-Node quadratic planar line finite element. " alt="Line3" shape="rect" coords="74,224,138,248"/>
-<area href="classOFELI_1_1Penta6.html" title="Defines a 6-node pentahedral finite element using P1 interpolation in local coordinates (s..." alt="Penta6" shape="rect" coords="74,280,138,304"/>
-<area href="classOFELI_1_1Quad4.html" title="Defines a 4-node quadrilateral finite element using Q1 isoparametric interpolation. " alt="Quad4" shape="rect" coords="74,336,138,360"/>
-<area href="classOFELI_1_1Tetra4.html" title="Defines a three-dimensional 4-node tetrahedral finite element using P1 interpolation. " alt="Tetra4" shape="rect" coords="74,392,138,416"/>
-<area href="classOFELI_1_1triangle.html" title="Defines a triangle. The reference element is the rectangle triangle with two unit edges..." alt="triangle" shape="rect" coords="74,448,138,472"/>
+<area href="classOFELI_1_1Hexa8.html" title="Defines a three-dimensional 8-node hexahedral finite element using Q1-isoparametric interpolation..." alt="Hexa8" shape="rect" coords="0,56,64,80"/>
+<area href="classOFELI_1_1Line2.html" title="To describe a 2-Node planar line finite element. " alt="Line2" shape="rect" coords="74,56,138,80"/>
+<area href="classOFELI_1_1Line3.html" title="To describe a 3-Node quadratic planar line finite element. " alt="Line3" shape="rect" coords="148,56,212,80"/>
+<area href="classOFELI_1_1Penta6.html" title="Defines a 6-node pentahedral finite element using P1 interpolation in local coordinates (s..." alt="Penta6" shape="rect" coords="222,56,286,80"/>
+<area href="classOFELI_1_1Quad4.html" title="Defines a 4-node quadrilateral finite element using Q1 isoparametric interpolation. " alt="Quad4" shape="rect" coords="296,56,360,80"/>
+<area href="classOFELI_1_1Tetra4.html" title="Defines a three-dimensional 4-node tetrahedral finite element using P1 interpolation. " alt="Tetra4" shape="rect" coords="370,56,434,80"/>
+<area href="classOFELI_1_1triangle.html" title="Defines a triangle. The reference element is the rectangle triangle with two unit edges..." alt="triangle" shape="rect" coords="444,56,508,80"/>
+<area href="classOFELI_1_1Triang3.html" title="Defines a 3-Node (P1) triangle. " alt="Triang3" shape="rect" coords="407,112,471,136"/>
+<area href="classOFELI_1_1Triang6S.html" title="Defines a 6-Node straight triangular finite element using P2 interpolation. " alt="Triang6S" shape="rect" coords="481,112,545,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -153,9 +153,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a4fc79aaeb587148410021052f410d4dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#a4fc79aaeb587148410021052f410d4dc">Sh</a> (size_t i, <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; s) const </td></tr>
 <tr class="memdesc:a4fc79aaeb587148410021052f410d4dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shape function of node <code>i</code> at a given point <code>s</code>.  <a href="#a4fc79aaeb587148410021052f410d4dc">More...</a><br /></td></tr>
 <tr class="separator:a4fc79aaeb587148410021052f410d4dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a81c330921ff7fb6286ae927b30b7a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#a5a81c330921ff7fb6286ae927b30b7a9">DSh</a> (size_t i) const </td></tr>
-<tr class="memdesc:a5a81c330921ff7fb6286ae927b30b7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return derivatives of shape function of node <code>i</code> at a given point.  <a href="#a5a81c330921ff7fb6286ae927b30b7a9">More...</a><br /></td></tr>
-<tr class="separator:a5a81c330921ff7fb6286ae927b30b7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f35cc59cf2218efd06b13c2487f31cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#a0f35cc59cf2218efd06b13c2487f31cc">getDet</a> () const </td></tr>
 <tr class="memdesc:a0f35cc59cf2218efd06b13c2487f31cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return determinant of jacobian.  <a href="#a0f35cc59cf2218efd06b13c2487f31cc">More...</a><br /></td></tr>
 <tr class="separator:a0f35cc59cf2218efd06b13c2487f31cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,30 +250,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Local node label </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td><a class="el" href="structOFELI_1_1Point.html" title="Defines a point with arbitrary type coordinates. ">Point</a> in the reference triangle where the shape function is evaluated </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a5a81c330921ff7fb6286ae927b30b7a9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt;<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt; DSh </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>i</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return derivatives of shape function of node <code>i</code> at a given point. </p>
-<p>If the transformation (Reference element -&gt; Actual element) is not affine, member function <code>setLocal()</code> must have been called before in order to calcuate relevant quantities. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Partial derivative index (1, 2 or 3) </td></tr>
   </table>
   </dd>
 </dl>

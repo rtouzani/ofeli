@@ -1,2 +1,2 @@
 
-SUBDIRS = CodeBlocks msvcpp
+SUBDIRS = 

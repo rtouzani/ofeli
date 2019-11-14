@@ -31,7 +31,6 @@
     <li><a href="../extlib.html"><span>External Libraries</span></a>
     <li><a href="../citing.html"><span>Citing OFELI</span></a>
     <li><a href="../fformats.html"><span>File Formats</span></a>
-    <li><a href="../tutorial.html"><span>Tutorial</span></a>
     <li><a href="../demos.html"><span>Demo Codes</span></a>
   </ul>
  </div>
@@ -197,15 +196,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:aae8f063011ae37198a6c96ad00da6188"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#aae8f063011ae37198a6c96ad00da6188">Assembly</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;el, T_ *a)</td></tr>
 <tr class="memdesc:aae8f063011ae37198a6c96ad00da6188"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assembly of element matrix into global matrix.  <a href="#aae8f063011ae37198a6c96ad00da6188">More...</a><br /></td></tr>
 <tr class="separator:aae8f063011ae37198a6c96ad00da6188"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00a4ed257bee80fee3c9099a324e7168"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#a00a4ed257bee80fee3c9099a324e7168">Assembly</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;el, const <a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; T_ &gt; &amp;a)</td></tr>
-<tr class="memdesc:a00a4ed257bee80fee3c9099a324e7168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assembly of element matrix into global matrix.  <a href="#a00a4ed257bee80fee3c9099a324e7168">More...</a><br /></td></tr>
-<tr class="separator:a00a4ed257bee80fee3c9099a324e7168"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a377c96d9edc5455d8b81d7f2e75a7437"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#a377c96d9edc5455d8b81d7f2e75a7437">Assembly</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> &amp;sd, T_ *a)</td></tr>
 <tr class="memdesc:a377c96d9edc5455d8b81d7f2e75a7437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assembly of side matrix into global matrix.  <a href="#a377c96d9edc5455d8b81d7f2e75a7437">More...</a><br /></td></tr>
 <tr class="separator:a377c96d9edc5455d8b81d7f2e75a7437"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31dcd388c8df06f332e06d8c64746de5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#a31dcd388c8df06f332e06d8c64746de5">Assembly</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> &amp;sd, const <a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; T_ &gt; &amp;a)</td></tr>
-<tr class="memdesc:a31dcd388c8df06f332e06d8c64746de5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assembly of side matrix into global matrix.  <a href="#a31dcd388c8df06f332e06d8c64746de5">More...</a><br /></td></tr>
-<tr class="separator:a31dcd388c8df06f332e06d8c64746de5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1775cd968f5d809fed17f111c852a8f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#a1775cd968f5d809fed17f111c852a8f4">Prescribe</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;u, int flag=0)</td></tr>
 <tr class="memdesc:a1775cd968f5d809fed17f111c852a8f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Impose by a penalty method an essential boundary condition, using the <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance provided by the constructor.  <a href="#a1775cd968f5d809fed17f111c852a8f4">More...</a><br /></td></tr>
 <tr class="separator:a1775cd968f5d809fed17f111c852a8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,12 +222,12 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#ab9f6b1105cb4953c3f56b5c51ed4b046">Factor</a> ()=0</td></tr>
 <tr class="memdesc:ab9f6b1105cb4953c3f56b5c51ed4b046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factorize matrix. Available only if the storage class enables it. <br /></td></tr>
 <tr class="separator:ab9f6b1105cb4953c3f56b5c51ed4b046"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6e338dd0baf5302b0d0c199402511b5"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#ac6e338dd0baf5302b0d0c199402511b5">solve</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)=0</td></tr>
-<tr class="memdesc:ac6e338dd0baf5302b0d0c199402511b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system.  <a href="#ac6e338dd0baf5302b0d0c199402511b5">More...</a><br /></td></tr>
-<tr class="separator:ac6e338dd0baf5302b0d0c199402511b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a539fdd4d07197b40c1caca838184c84a"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#a539fdd4d07197b40c1caca838184c84a">solve</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)=0</td></tr>
-<tr class="memdesc:a539fdd4d07197b40c1caca838184c84a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system.  <a href="#a539fdd4d07197b40c1caca838184c84a">More...</a><br /></td></tr>
-<tr class="separator:a539fdd4d07197b40c1caca838184c84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31a4417e8d251ece6decd21307049dbf"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#a31a4417e8d251ece6decd21307049dbf">solve</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, bool fact=true)=0</td></tr>
+<tr class="memdesc:a31a4417e8d251ece6decd21307049dbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system.  <a href="#a31a4417e8d251ece6decd21307049dbf">More...</a><br /></td></tr>
+<tr class="separator:a31a4417e8d251ece6decd21307049dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fe82250a093bea1e2d5514748574d80"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#a4fe82250a093bea1e2d5514748574d80">solve</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, bool fact=true)=0</td></tr>
+<tr class="memdesc:a4fe82250a093bea1e2d5514748574d80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system.  <a href="#a4fe82250a093bea1e2d5514748574d80">More...</a><br /></td></tr>
+<tr class="separator:a4fe82250a093bea1e2d5514748574d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af70ebb919bf4d6e5e646c1c113392a79"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Matrix.html#af70ebb919bf4d6e5e646c1c113392a79">FactorAndSolve</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
 <tr class="memdesc:af70ebb919bf4d6e5e646c1c113392a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factorize matrix and solve the linear system.  <a href="#af70ebb919bf4d6e5e646c1c113392a79">More...</a><br /></td></tr>
 <tr class="separator:af70ebb919bf4d6e5e646c1c113392a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -429,7 +422,7 @@ class OFELI::Matrix&lt; T_ &gt;</h3>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOFELI_1_1SpMatrix.html#ac7ecd57722b088d883cdb26ac2887270">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#ac7ecd57722b088d883cdb26ac2887270">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#ac7ecd57722b088d883cdb26ac2887270">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#ac7ecd57722b088d883cdb26ac2887270">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#ac7ecd57722b088d883cdb26ac2887270">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1TrMatrix.html#ac7ecd57722b088d883cdb26ac2887270">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#a8c474f5353d595009b1f4328cebaaebe">BMatrix&lt; T_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="group__OFELI.html#gac7ecd57722b088d883cdb26ac2887270">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#ac7ecd57722b088d883cdb26ac2887270">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#ac7ecd57722b088d883cdb26ac2887270">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#ac7ecd57722b088d883cdb26ac2887270">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#ac7ecd57722b088d883cdb26ac2887270">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="group__OFELI.html#gac7ecd57722b088d883cdb26ac2887270">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#a8c474f5353d595009b1f4328cebaaebe">BMatrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -487,41 +480,6 @@ class OFELI::Matrix&lt; T_ &gt;</h3>
 
 </div>
 </div>
-<a class="anchor" id="a00a4ed257bee80fee3c9099a324e7168"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Assembly </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Element.html">Element</a> &amp;&#160;</td>
-          <td class="paramname"><em>el</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>a</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Assembly of element matrix into global matrix. </p>
-<p>Case where element matrix is given by a <a class="el" href="classOFELI_1_1DMatrix.html" title="To handle dense matrices. ">DMatrix</a> instance. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">el</td><td>Pointer to element instance </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td><a class="el" href="classOFELI_1_1Element.html" title="To store and treat finite element geometric information. ">Element</a> matrix as a <a class="el" href="classOFELI_1_1DMatrix.html" title="To handle dense matrices. ">DMatrix</a> instance </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a class="anchor" id="a377c96d9edc5455d8b81d7f2e75a7437"></a>
 <div class="memitem">
 <div class="memproto">
@@ -551,41 +509,6 @@ class OFELI::Matrix&lt; T_ &gt;</h3>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">sd</td><td>Pointer to side instance </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td><a class="el" href="classOFELI_1_1Side.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> matrix as a C-array instance </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a31dcd388c8df06f332e06d8c64746de5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Assembly </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Side.html">Side</a> &amp;&#160;</td>
-          <td class="paramname"><em>sd</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>a</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Assembly of side matrix into global matrix. </p>
-<p>Case where side matrix is given by a <a class="el" href="classOFELI_1_1DMatrix.html" title="To handle dense matrices. ">DMatrix</a> instance. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">sd</td><td>Pointer to side instance </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td><a class="el" href="classOFELI_1_1Side.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> matrix as a <a class="el" href="classOFELI_1_1DMatrix.html" title="To handle dense matrices. ">DMatrix</a> instance </td></tr>
   </table>
   </dd>
 </dl>
@@ -796,7 +719,7 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
 
 </div>
 </div>
-<a class="anchor" id="ac6e338dd0baf5302b0d0c199402511b5"></a>
+<a class="anchor" id="a31a4417e8d251ece6decd21307049dbf"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -807,8 +730,18 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
           <td class="memname">virtual int solve </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em></td><td>)</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fact</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -821,11 +754,11 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
 <p>Solve the linear system. </p>
 <p>If the inherited class is <a class="el" href="classOFELI_1_1SpMatrix.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>, the function uses an iterative method once this one has been chosen. Otherwise, the method solves the linear system by factorization. </p>
 
-<p>Implemented in <a class="el" href="classOFELI_1_1SkSMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1TrMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#a29bca47b2c33a5f7eacae39b5db0f75e">BMatrix&lt; T_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classOFELI_1_1DMatrix.html#a85abe8e904adb7fd09103d7b3e8e362d">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#a85abe8e904adb7fd09103d7b3e8e362d">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a85abe8e904adb7fd09103d7b3e8e362d">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#a85abe8e904adb7fd09103d7b3e8e362d">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1BMatrix.html#abf3df464c1118a2063447c9765725a2e">BMatrix&lt; T_ &gt;</a>, and <a class="el" href="group__OFELI.html#ga85abe8e904adb7fd09103d7b3e8e362d">TrMatrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a539fdd4d07197b40c1caca838184c84a"></a>
+<a class="anchor" id="a4fe82250a093bea1e2d5514748574d80"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -842,7 +775,13 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fact</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -862,10 +801,11 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance that contains right-hand side </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors. ">Vect</a> instance that contains solution </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fact</td><td>Set to <code>true</code> if factorization is to be performed, <code>false</code> if not. [Default: <code>true</code>] </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>- <em></em> <ul>
+<dl class="section return"><dt>Returns</dt><dd><ul>
 <li>
 <code>0</code> if solution was normally performed </li>
 <li>
@@ -874,7 +814,7 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
 </ul>
 </dd></dl>
 
-<p>Implemented in <a class="el" href="classOFELI_1_1SpMatrix.html#a4bd86b5d0fa2e28d0979772ab0e40b24">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#a4bd86b5d0fa2e28d0979772ab0e40b24">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a4bd86b5d0fa2e28d0979772ab0e40b24">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#a4bd86b5d0fa2e28d0979772ab0e40b24">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#a4bd86b5d0fa2e28d0979772ab0e40b24">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1TrMatrix.html#a4bd86b5d0fa2e28d0979772ab0e40b24">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#a4bd86b5d0fa2e28d0979772ab0e40b24">BMatrix&lt; T_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="group__OFELI.html#ga60abf009c8cdb7ca5f86cf266752cb97">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#a27c662f32ce66be2efa47871358fcf10">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#a27c662f32ce66be2efa47871358fcf10">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a27c662f32ce66be2efa47871358fcf10">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#a27c662f32ce66be2efa47871358fcf10">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1BMatrix.html#a60abf009c8cdb7ca5f86cf266752cb97">BMatrix&lt; T_ &gt;</a>, and <a class="el" href="group__OFELI.html#ga60abf009c8cdb7ca5f86cf266752cb97">TrMatrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -1010,7 +950,7 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOFELI_1_1SpMatrix.html#a61cf373a94a5fedbca306e016bc489c9">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#a61cf373a94a5fedbca306e016bc489c9">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a61cf373a94a5fedbca306e016bc489c9">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#a61cf373a94a5fedbca306e016bc489c9">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1TrMatrix.html#a61cf373a94a5fedbca306e016bc489c9">TrMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1BMatrix.html#a61cf373a94a5fedbca306e016bc489c9">BMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1DSMatrix.html#a61cf373a94a5fedbca306e016bc489c9">DSMatrix&lt; T_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="group__OFELI.html#ga61cf373a94a5fedbca306e016bc489c9">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#a61cf373a94a5fedbca306e016bc489c9">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#a61cf373a94a5fedbca306e016bc489c9">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a61cf373a94a5fedbca306e016bc489c9">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="group__OFELI.html#ga61cf373a94a5fedbca306e016bc489c9">TrMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1BMatrix.html#a61cf373a94a5fedbca306e016bc489c9">BMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1DSMatrix.html#a61cf373a94a5fedbca306e016bc489c9">DSMatrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -1055,7 +995,7 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOFELI_1_1SpMatrix.html#a906d09665a54a68d6333925dc83c57c8">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#a906d09665a54a68d6333925dc83c57c8">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#a906d09665a54a68d6333925dc83c57c8">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a906d09665a54a68d6333925dc83c57c8">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#a906d09665a54a68d6333925dc83c57c8">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1TrMatrix.html#a906d09665a54a68d6333925dc83c57c8">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#a906d09665a54a68d6333925dc83c57c8">BMatrix&lt; T_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="group__OFELI.html#ga906d09665a54a68d6333925dc83c57c8">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#a906d09665a54a68d6333925dc83c57c8">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#a906d09665a54a68d6333925dc83c57c8">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#a906d09665a54a68d6333925dc83c57c8">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#a906d09665a54a68d6333925dc83c57c8">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="group__OFELI.html#ga906d09665a54a68d6333925dc83c57c8">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#a906d09665a54a68d6333925dc83c57c8">BMatrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -1100,7 +1040,7 @@ or both matrix and right-hand side (<code>dof=0</code>, default value). </td></t
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOFELI_1_1SpMatrix.html#af4d11677b77c61b1c2530c0295d9a966">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#af4d11677b77c61b1c2530c0295d9a966">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#af4d11677b77c61b1c2530c0295d9a966">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#af4d11677b77c61b1c2530c0295d9a966">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#af4d11677b77c61b1c2530c0295d9a966">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1TrMatrix.html#af4d11677b77c61b1c2530c0295d9a966">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#af4d11677b77c61b1c2530c0295d9a966">BMatrix&lt; T_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="group__OFELI.html#gaf4d11677b77c61b1c2530c0295d9a966">SpMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DMatrix.html#af4d11677b77c61b1c2530c0295d9a966">DMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkSMatrix.html#af4d11677b77c61b1c2530c0295d9a966">SkSMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1SkMatrix.html#af4d11677b77c61b1c2530c0295d9a966">SkMatrix&lt; T_ &gt;</a>, <a class="el" href="classOFELI_1_1DSMatrix.html#af4d11677b77c61b1c2530c0295d9a966">DSMatrix&lt; T_ &gt;</a>, <a class="el" href="group__OFELI.html#gaf4d11677b77c61b1c2530c0295d9a966">TrMatrix&lt; T_ &gt;</a>, and <a class="el" href="classOFELI_1_1BMatrix.html#af4d11677b77c61b1c2530c0295d9a966">BMatrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>

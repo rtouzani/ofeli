@@ -1,4 +1,4 @@
-// Gmsh Geometry file for meshing a unit cube
+// Gmsh Geometry file for meshing the unit cube
 
 Point(1) = {0, 0, 0, 0.5};
 Point(2) = {1, 0, 0, 0.5};

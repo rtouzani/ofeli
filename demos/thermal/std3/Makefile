@@ -204,7 +204,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -314,18 +314,16 @@ std3_SOURCES = main.cpp
 std3_LDADD = $(top_builddir)/src/libofeli.a
 std3dir = $(datadir)/ofeli/demos/thermal/std3
 std3_DATA = main.cpp \
-		beam.dat \
-		beam.m \
-		Makefile.standalone \
-		std3.cbp \
-		README
+            beam.dat \
+            beam.m \
+            Makefile.standalone \
+            README
 
 dist_std3_DATA = main.cpp \
-			beam.dat \
-			beam.m \
-			Makefile.standalone \
-			std3.cbp \
-			README
+                 beam.dat \
+                 beam.m \
+                 Makefile.standalone \
+                 README
 
 all: all-am
 
