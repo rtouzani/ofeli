@@ -415,20 +415,11 @@ template<class T_>
 ostream& operator<<(ostream&            s,
                     const TrMatrix<T_>& A)
 {
-   size_t nr=A.getNbRows();
-   if (Verbosity<=1) {
-      s << "Matrix dimension: " << nr << endl;
-      return s;
-   }
-   if (Verbosity==2)
-      nr = !(10<nr)?nr:10;
-   else if (Verbosity==3)
-      nr = !(50<nr)?nr:50;
    s.setf(ios::right|ios::scientific);
    s << endl;
-   for (size_t i=1; i<=nr; i++) {
+   for (size_t i=1; i<=A.getNbRows(); i++) {
       s << "\nRow  " << setw(6) << i << endl;
-      for (size_t j=1; j<=nr; j++)
+      for (size_t j=1; j<=A.getNbRows(); j++)
          s << "  " << setprecision(8) << std::setfill(' ') << setw(18) << A(i,j);
       s << endl;
    }

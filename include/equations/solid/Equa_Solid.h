@@ -154,8 +154,6 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build()
     {
-       if (AbsEqua<T_>::_u==nullptr)
-          throw OFELIException("In Equa_Solid::build: No solution vector given.");
        AbsEqua<T_>::_A->clear();
        mesh_elements(*_theMesh) {
           set(the_element);

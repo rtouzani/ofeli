@@ -36,7 +36,7 @@ using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
-   double L = 1;
+   const double L = 1;
    int N = 10;
 
 /// Read and output mesh data
@@ -55,12 +55,12 @@ int main(int argc, char *argv[])
 
 //    Build matrix and R.H.S.
       double h = L/double(N);
-      b *= h;
       for (int i=2; i<NbN; i++) {
          A(i,i  ) =  2./h;
          A(i,i+1) = -1./h;
          A(i,i-1) = -1./h;
       }
+      b *= h;
 
 //    Impose boundary conditions
       A(1,1) = 1.; A(1,2) = 0.; b(1) = 0;
@@ -70,11 +70,10 @@ int main(int argc, char *argv[])
       A.solve(b);
 
 //    Output solution and error
-      Verbosity = 3;
       cout << "\nSolution:\n" << b;
       Vect<double> sol(ms);
       sol.set("sin(4*pi*x)");
-      cout << "Error: " << (b-sol).Norm(NORM_MAX) << endl;
+      cout << "Max-Norm error: " << (b-sol).Norm(NORM_MAX) << endl;
    } CATCH_EXCEPTION
 
    return 0;

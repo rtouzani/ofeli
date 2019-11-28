@@ -50,22 +50,20 @@ int main(int argc, char *argv[])
 // Declare problem data (matrix, rhs, boundary conditions, body forces)
    try {
       size_t nx = atoi(argv[1]);
-      double h = L/double(nx), err=0.;
+      double h = L/double(nx);
       theTimeStep = atof(argv[2]);
       theFinalTime = 1.;
       TrMatrix<double> A(nx+1);
       Vect<double> x, f(nx+1), u(nx+1), v(nx+1), sol(nx+1);
       x.setUniform(0.,L,nx+1);
-      u = 0.;
-      Verbosity=3;
-//    Time loop
+      u.set("sin(pi*x)",x);
 
+//    Time loop
       TimeLoop {
 
 //       Build linear system
          f.setTime(theTime);
-         f.set("(exp(t)+4*pi^2*(exp(t)-1))*sin(2*pi*x)",x);
-         A = 0.;
+         f.set("exp(t)*sin(pi*x)*(1+pi^2)",x);
          for (int i=2; i<=nx; i++) {
             A(i,i  ) =  1./theTimeStep + 2./(h*h);
             A(i,i+1) = -1./(h*h);
@@ -73,24 +71,24 @@ int main(int argc, char *argv[])
             v(i) = u(i)/theTimeStep + f(i);
          }
 
-//       Impose Dirichlet boundary conditions
-         A(1,1) = 1./theTimeStep; A(1,2) = 0.; v(1) = 0.;
-         A(nx+1,nx+1) = 1./theTimeStep; A(nx+1,nx) = 0.; v(nx+1) = 0.;
+//       Impose Dirichlet boundary conditions at both ends
+         A(1,1) = 1./theTimeStep;
+         A(1,2) = 0.;
+         v(1) = 0.;
+         A(nx+1,nx+1) = 1./theTimeStep;
+         A(nx+1,nx) = 0.;
+         v(nx+1) = 0.;
 
 //       Solve
          A.solve(v);
          u = v;
-
-//       Output solution
-         Verbosity = 3;
       }
 
-      sol.setTime(theTime);
-      sol.set("(exp(t)-1)*sin(2*pi*x)",x);
-      err = (u-sol).getWNorm2();
+      sol.setTime(theFinalTime);
+      sol.set("exp(t)*sin(pi*x)",x);
       cout << "Number of grid points: " << nx << endl;
       cout << "Time step:             " << theTimeStep << endl;
-      cout << "Error =                " << err << endl;
+      cout << "L2-Norm Error =        " << (u-sol).getWNorm2() << endl;
    } CATCH_EXCEPTION
 
    return 0;

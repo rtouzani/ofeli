@@ -73,23 +73,23 @@ enum MatrixType {
  * \brief Choose iterative solver for the linear system
  */
 enum Iteration {
-   DIRECT_SOLVER    = 0,          /*!< Direct solver           */
-   CG_SOLVER        = 1,          /*!< CG Method               */
-   CGS_SOLVER       = 2,          /*!< CGS Metod               */
-   BICG_SOLVER      = 3,          /*!< BiCG Method             */
-   BICG_STAB_SOLVER = 4,          /*!< BiCGStab Method         */
-   GMRES_SOLVER     = 5           /*!< GMRes Method            */ 
+   DIRECT_SOLVER    = 0,   /*!< Direct solver           */
+   CG_SOLVER        = 1,   /*!< CG Method               */
+   CGS_SOLVER       = 2,   /*!< CGS Metod               */
+   BICG_SOLVER      = 3,   /*!< BiCG Method             */
+   BICG_STAB_SOLVER = 4,   /*!< BiCGStab Method         */
+   GMRES_SOLVER     = 5    /*!< GMRes Method            */ 
 };
 
 /*! \enum Preconditioner
  * \brief Choose preconditioner for the linear system
  */
 enum Preconditioner {
-   IDENT_PREC       = 0,          /*!< Identity (No preconditioning)                           */
-   DIAG_PREC        = 1,          /*!< Diagonal preconditioner                                 */
-   DILU_PREC        = 2,          /*!< ILU (Incomplete factorization) preconditioner           */
-   ILU_PREC         = 3,          /*!< DILU (Diagonal Incomplete factorization) preconditioner */
-   SSOR_PREC        = 4           /*!< SSOR preconditioner                                     */
+   IDENT_PREC       = 0,   /*!< Identity (No preconditioning)                           */
+   DIAG_PREC        = 1,   /*!< Diagonal preconditioner                                 */
+   DILU_PREC        = 2,   /*!< ILU (Incomplete factorization) preconditioner           */
+   ILU_PREC         = 3,   /*!< DILU (Diagonal Incomplete factorization) preconditioner */
+   SSOR_PREC        = 4    /*!< SSOR preconditioner                                     */
 };
 
 

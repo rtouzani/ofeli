@@ -450,7 +450,7 @@ class AbsEqua
    size_t                 _nb_fields, _nb_eigv;
    EigenProblemSolver     _ev;
    bool                   _eigen;
-   bool                   _constant_matrix, _constant_mesh, _set_matrix;
+   bool                   _constant_matrix, _constant_mesh, _set_matrix, _set_solver;
    int                    _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
    string                 _equation_name, _finite_element;
    LinearSolver<T_>       _ls;
@@ -481,6 +481,7 @@ class AbsEqua
    void setMatrix(SpMatrix<T_> &A);
 #endif
 
+   bool SolverIsSet() const;
    bool isConstantMatrix() const;
    bool isConstantMesh() const;
    void setConstantMatrix();

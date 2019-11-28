@@ -1344,19 +1344,10 @@ ostream& operator<<(ostream&            s,
 #ifdef USE_EIGEN
    s << endl << A._A << endl;
 #else
-   size_t nr=A.getNbRows();
-   if (Verbosity<=1) {
-      s << "Matrix dimension: " << nr << endl;
-      return s;
-   }
-   if (Verbosity==2)
-      nr = !(10<nr)?nr:10;
-   else if (Verbosity==3)
-      nr = !(50<nr)?nr:50;
    s.setf(ios::right|ios::scientific);
    s << endl;
    size_t k = 0;
-   for (size_t i=0; i<nr; ++i) {
+   for (size_t i=0; i<A.getNbRows(); ++i) {
       for (size_t j=A._row_ptr[i]; j<A._row_ptr[i+1]; ++j)
          s << "(" << setw(6) << i+1 << "," << setw(6) << A._col_ind[j] << "): "
            << setprecision(8) << std::setfill(' ') << setw(18) << A._a[k++] << endl;

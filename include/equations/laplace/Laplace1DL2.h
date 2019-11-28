@@ -87,6 +87,11 @@ class Laplace1DL2 : public Equa_Laplace<real_t,2,2,1,1> {
 /// \brief Add finite element matrix to left hand side
     void LHS();
 
+/** \brief Build global stiffness and mass matrices for the eigen system
+ *  @param [in] opt Flag to choose a lumped mass matrix (0) or consistent (1) [Default: <tt>0</tt>]
+ */
+    void buildEigen(int opt=0);
+
 /// \brief Add Right-Hand %Side Contribution
 /// @param [in] f Vector containing the source given function at mesh nodes
     void BodyRHS(const Vect<real_t>& f);

@@ -65,7 +65,8 @@ extern Material theMaterial;
 template<class T_>
 AbsEqua<T_>::AbsEqua()
             : _theMesh(nullptr), _solver(-1), _nb_fields(1), _eigen(false),
-              _set_matrix(false), _analysis(STATIONARY), _A(nullptr), _b(nullptr), _u(nullptr),
+              _set_matrix(false), _set_solver(false), _analysis(STATIONARY),
+              _A(nullptr), _b(nullptr), _u(nullptr),
               _bc(nullptr), _bf(nullptr), _sf(nullptr), _pf(nullptr), _v(nullptr)
 {
    setTimeIntegrationParam();
@@ -79,6 +80,13 @@ AbsEqua<T_>::~AbsEqua()
       delete _A;
    if (_b!=nullptr)
       delete _b;
+}
+
+
+template<class T_>
+bool AbsEqua<T_>::SolverIsSet() const
+{
+   return _set_solver;
 }
 
 
@@ -238,6 +246,7 @@ void AbsEqua<T_>::setSolver(Iteration      ls,
    if (!_set_matrix)
       setMatrixType(SPARSE);
    _ls.setSolver(ls,pc);
+   _set_solver = true;
 }
 
 

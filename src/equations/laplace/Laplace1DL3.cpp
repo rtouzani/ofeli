@@ -94,7 +94,7 @@ void Laplace1DL3::set(const Element* el)
       ln.setLocal(s[k]);
       _dSh[k] = ln.DSh();
    }
-   eA0 = 0, eA1 = 0;
+   eMat = 0, eA0 = 0, eA1 = 0;
    eRHS = 0;
 }
 
@@ -114,7 +114,8 @@ void Laplace1DL3::LHS()
    real_t c = OFELI_THIRD*_el_geo.det;
    for (size_t i=1; i<=3; i++) {
       for (size_t j=1; j<=3; j++)
-         eA0(i,j) += c*((_dSh[0](i),_dSh[0](j))+4*(_dSh[1](i),_dSh[1](j))+(_dSh[2](i),_dSh[2](j)));
+         eMat(i,j) += c*(_dSh[0](i).x*_dSh[0](j).x + 4*(_dSh[1](i).x*_dSh[1](j).x
+                                                        + _dSh[2](i).x*_dSh[2](j).x));
    }
 }
 

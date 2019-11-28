@@ -111,8 +111,6 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
  */
     void build()
     {
-      if (_u==nullptr)
-         throw OFELIException("In Equa_Therm::build(): No solution vector given.");
        _A->clear();
        mesh_elements(*_theMesh) {
           set(the_element);

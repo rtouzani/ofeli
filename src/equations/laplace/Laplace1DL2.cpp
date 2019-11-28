@@ -91,7 +91,7 @@ void Laplace1DL2::set(const Element* el)
    _el_geo.det = ln.getDet();
    _dSh = ln.DSh();
    eRHS = 0;
-   eA0 = 0, eA1 = 0;
+   eMat = 0, eA0 = 0, eA1 = 0;
 }
 
 
@@ -121,10 +121,28 @@ void Laplace1DL2::setTraction(real_t f,
 
 void Laplace1DL2::LHS()
 {
+   eMat(1,1) += 1./_el_geo.length;
+   eMat(2,2) += 1./_el_geo.length;
+   eMat(1,2) -= 1./_el_geo.length;
+   eMat(2,1) -= 1./_el_geo.length;
+}
+
+
+void Laplace1DL2::buildEigen(int opt)
+{
    eA0(1,1) += 1./_el_geo.length;
    eA0(2,2) += 1./_el_geo.length;
    eA0(1,2) -= 1./_el_geo.length;
    eA0(2,1) -= 1./_el_geo.length;
+   if (opt==0) {
+      real_t c = OFELI_SIXTH*_el_geo.length;
+      eA1(1,1) += 2*c; eA1(2,2) += 2*c;
+      eA1(1,2) +=   c; eA1(2,1) +=   c;
+   }
+   else {
+      real_t c = 0.5*_el_geo.length;
+      eA1(1,1) += c; eA1(2,2) += c;
+   }
 }
 
 

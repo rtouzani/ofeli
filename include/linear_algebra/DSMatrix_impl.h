@@ -476,24 +476,13 @@ Vect<T_> operator*(const DSMatrix<T_>& A,
 
 template<class T_>
 ostream& operator<<(ostream&            s,
-                    const DSMatrix<T_>& a)
+                    const DSMatrix<T_>& A)
 {
-    size_t nr=a.getNbRows(), nc=a.getNbColumns();
-   if (Verbosity<=1) {
-      s << "Matrix dimensions: " << nr << "x" << nc << endl;
-      return s;
-   }
-   if (Verbosity==2)
-      nr = !(10<nr)?nr:10, nc = !(10<nc)?nc:10;
-   else if (Verbosity==3)
-      nr = !(50<nr)?nr:50, nc = !(50<nc)?nc:50;
-  s.setf(ios::right|ios::scientific);
-   s << endl;
-   for (size_t i=1; i<=nr; i++) {
+   for (size_t i=1; i<=A.getNbRows(); i++) {
       s << "\nRow  " << setw(6) << i << endl;
-      for (size_t j=1; j<=nc; j++)
+      for (size_t j=1; j<=A.getNbColumns(); j++)
          s << "  " << setprecision(8) << std::setfill(' ')
-           << setw(18) << a(i,j);
+           << setw(18) << A(i,j);
       s << endl;
    }
    return s;

@@ -228,8 +228,6 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build(TimeStepping& s)
     {
-      if (_u==nullptr)
-         throw OFELIException("In Equa_Therm::build: No solution vector given.");
        mesh_elements(*_theMesh) {
           set(the_element);
           if (_terms&CAPACITY)
