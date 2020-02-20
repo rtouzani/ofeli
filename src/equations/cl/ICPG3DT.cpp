@@ -65,9 +65,9 @@ ICPG3DT::ICPG3DT(Mesh& ms) : Muscl3DT(ms)
 {
    Init();
    _init_alloc = true;
-   _r = new Vect<real_t>(*_theMesh,1,ELEMENT_DOF);
-   _v = new Vect<real_t>(*_theMesh,3,ELEMENT_DOF);
-   _p = new Vect<real_t>(*_theMesh,1,ELEMENT_DOF);
+   _r = new Vect<real_t>(*_theMesh,ELEMENT_DOF,1);
+   _v = new Vect<real_t>(*_theMesh,ELEMENT_DOF,3);
+   _p = new Vect<real_t>(*_theMesh,ELEMENT_DOF,1);
    _min_density = 1.e-9;
 }
 
@@ -89,17 +89,17 @@ ICPG3DT::ICPG3DT(Mesh&         ms,
 
 void ICPG3DT::Init()
 {
-   _Gr.setMesh(*_theMesh,1,SIDE_DOF);
-   _Gv.setMesh(*_theMesh,3,SIDE_DOF);
-   _Gp.setMesh(*_theMesh,1,SIDE_DOF);
+   _Gr.setMesh(*_theMesh,SIDE_DOF,1);
+   _Gv.setMesh(*_theMesh,SIDE_DOF,3);
+   _Gp.setMesh(*_theMesh,SIDE_DOF,1);
 
-   _Dr.setMesh(*_theMesh,1,SIDE_DOF);
-   _Dv.setMesh(*_theMesh,3,SIDE_DOF);
-   _Dp.setMesh(*_theMesh,1,SIDE_DOF);
+   _Dr.setMesh(*_theMesh,SIDE_DOF,1);
+   _Dv.setMesh(*_theMesh,SIDE_DOF,3);
+   _Dp.setMesh(*_theMesh,SIDE_DOF,1);
 
-   _Fr.setMesh(*_theMesh,1,SIDE_DOF);
-   _Frv.setMesh(*_theMesh,3,SIDE_DOF);
-   _FE.setMesh(*_theMesh,1,SIDE_DOF);
+   _Fr.setMesh(*_theMesh,SIDE_DOF,1);
+   _Frv.setMesh(*_theMesh,SIDE_DOF,3);
+   _FE.setMesh(*_theMesh,SIDE_DOF,1);
 
    setGamma(1.4);
    _ReferenceLength = _MinimumEdgeLength;
@@ -121,10 +121,10 @@ ICPG3DT::~ICPG3DT()
 
 void ICPG3DT::setInitialConditionShockTube(const LocalVect<real_t,5>& BcG,
                                            const LocalVect<real_t,5>& BcD,
-                                                 real_t               x0)
+                                           real_t                     x0)
 {
 // Two differents zones (for shock tube purpose)
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
 //    defining two zones
       if (Tetra4(the_element).getCenter().x<x0){
@@ -147,7 +147,7 @@ void ICPG3DT::setInitialConditionShockTube(const LocalVect<real_t,5>& BcG,
 
 void ICPG3DT::setInitialCondition(const LocalVect<real_t,5>& u)
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       (*_r)(n)   = u[0];
       (*_v)(n,1) = u[1];
@@ -536,7 +536,7 @@ real_t ICPG3DT::RiemannSolver_LF(int s)
 
 real_t ICPG3DT::RiemannSolver_RUSANOV(int s)
 {
-    real_t one_over_rho_G=1./_Gr(s), one_over_rho_D=1./_Dr(s), Splus;
+   real_t one_over_rho_G=1./_Gr(s), one_over_rho_D=1./_Dr(s), Splus;
    if (_Gr(s)<_min_density) {
       if (_verbose)
          cerr << "WARNING: Left minimum density rho = " << _Gr(s) << endl;
@@ -805,7 +805,7 @@ real_t ICPG3DT::getFlux()
    Point<real_t> A, M, t, r, n, B, Pt;
    LocalMatrix<real_t,3,3> b;
 
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t s = side_label;
       A = The_side(1)->getCoord();
       B = The_side(2)->getCoord();
@@ -857,8 +857,8 @@ real_t ICPG3DT::getFlux()
 }
 
 
-void ICPG3DT::setBC(const Side&  sd,
-                          real_t u)
+void ICPG3DT::setBC(const Side& sd,
+                    real_t      u)
 {
    size_t s = sd.n();
    _Dr(s) = _Gr(s);
@@ -874,7 +874,7 @@ void ICPG3DT::setBC(const Side&  sd,
 void ICPG3DT::setBC(int    code,
                     real_t u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       if (The_side.getCode()==code)
          setBC(The_side,u);
 }
@@ -882,7 +882,7 @@ void ICPG3DT::setBC(int    code,
 
 void ICPG3DT::setBC(real_t u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       setBC(The_side,u);
 }
 
@@ -899,10 +899,10 @@ void ICPG3DT::setBC(const Side&                sd,
 }
 
 
-void ICPG3DT::setBC(      int                  code,
+void ICPG3DT::setBC(int                        code,
                     const LocalVect<real_t,5>& u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       if (The_side.getCode()==code)
          setBC(The_side,u);
 }
@@ -910,7 +910,7 @@ void ICPG3DT::setBC(      int                  code,
 
 void ICPG3DT::setBC(const LocalVect<real_t,5>& u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       setBC(The_side,u);
 }
 
@@ -964,10 +964,10 @@ void ICPG3DT::setInOutFlowBC(const Side&                sd,
 }
 
 
-void ICPG3DT::setInOutFlowBC(      int                  code,
+void ICPG3DT::setInOutFlowBC(int                        code,
                              const LocalVect<real_t,5>& u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       if (The_side.getCode()==code)
          setInOutFlowBC(The_side,u);
 }
@@ -975,7 +975,7 @@ void ICPG3DT::setInOutFlowBC(      int                  code,
 
 void ICPG3DT::setInOutFlowBC(const LocalVect<real_t,5>& u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       setInOutFlowBC(The_side,u);
 }
 
@@ -993,7 +993,7 @@ void ICPG3DT::setInOutFlowBC(const LocalVect<real_t,5>& u)
 void ICPG3DT::fromPrimalToConservative()
 {
    real_t G = 1./(_Gamma-1.);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       real_t rho = (*_r)(n);
       (*_p)(n) = (*_p)(n)*G + 0.5*rho*((*_v)(n,1)*(*_v)(n,1) +
@@ -1009,7 +1009,7 @@ void ICPG3DT::fromPrimalToConservative()
 void ICPG3DT::fromConservativeToPrimal()
 {
    real_t G = _Gamma-1.;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       real_t invrho = 1./(*_r)(n);
       (*_v)(n,1) *= invrho;
@@ -1030,7 +1030,7 @@ void ICPG3DT::forward()
 
    fromPrimalToConservative();
 // Be careful, v is now r*v and p is now E
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       ns = side_label;
       elg = The_side.getNeighborElement(1);
       ng = elg->n();
@@ -1058,12 +1058,12 @@ void ICPG3DT::forward()
 
 
 void ICPG3DT::Forward(const Vect<real_t>& flux,
-                            Vect<real_t>& field)
+                      Vect<real_t>&       field)
 {
    Element *elg, *eld;
    size_t ns, ng, nd;
    real_t rate;
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       ns = side_label;
       elg = The_side.getNeighborElement(1);
       ng = elg->n();
@@ -1081,8 +1081,8 @@ void ICPG3DT::Forward(const Vect<real_t>& flux,
 
 void ICPG3DT::getMomentum(Vect<real_t>& m) const
 {
-   m.setMesh(*_theMesh,3,ELEMENT_FIELD);
-   mesh_elements(*_theMesh) {
+   m.setMesh(*_theMesh,ELEMENT_DOF,3);
+   MESH_EL {
       size_t n = element_label;
       m(n,1) = (*_r)(n)*(*_v)(n,1);
       m(n,2) = (*_r)(n)*(*_v)(n,2);
@@ -1093,18 +1093,18 @@ void ICPG3DT::getMomentum(Vect<real_t>& m) const
 
 void ICPG3DT::getInternalEnergy(Vect<real_t>& e) const
 {
-   e.setMesh(*_theMesh,1,ELEMENT_FIELD);
-   mesh_elements(*_theMesh)
+   e.setMesh(*_theMesh,ELEMENT_DOF,1);
+   MESH_EL
       e(element_label) = (*_p)(element_label)*(_Gamma -1.);
 }
 
 
 void ICPG3DT::getTotalEnergy(Vect<real_t>& e) const
 {
-   e.setMesh(*_theMesh,1,ELEMENT_FIELD);
+   e.setMesh(*_theMesh,ELEMENT_DOF,1);
    Vect<real_t> tmp;
    getInternalEnergy(tmp);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       e(n) = tmp(n) + 0.5*(*_r)(n)*(*_v)(n,1)*(*_v)(n,1) +
                                    (*_v)(n,2)*(*_v)(n,2) +
@@ -1115,8 +1115,8 @@ void ICPG3DT::getTotalEnergy(Vect<real_t>& e) const
 
 void ICPG3DT::getSoundSpeed(Vect<real_t>& s) const
 {
-   s.setMesh(*_theMesh,1,ELEMENT_FIELD);
-   mesh_elements(*_theMesh) {
+   s.setMesh(*_theMesh,ELEMENT_DOF,1);
+   MESH_EL {
       size_t n = element_label;
       s(n) = sqrt(_Gamma*(*_p)(n)/(*_r)(n));
    }
@@ -1125,10 +1125,10 @@ void ICPG3DT::getSoundSpeed(Vect<real_t>& s) const
 
 void ICPG3DT::getMach(Vect<real_t>& m) const
 {
-   m.setMesh(*_theMesh,3,ELEMENT_FIELD);
+   m.setMesh(*_theMesh,ELEMENT_DOF,3);
    Vect<real_t> tmp;
    getSoundSpeed(tmp);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       real_t inv = 1./tmp(n);
       m(n,1) = (*_v)(n,1)*inv;

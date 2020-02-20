@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 
 void setBC(Vect<complex_t>& bc)
 {
-   MeshNodes(bc.getMesh()) {
+   NodeLoop(bc.getMesh()) {
       double x = TheNode.getX(), y = TheNode.getY();
       if (TheNode.getCode(1)==1)
          bc(theNodeLabel) = cos(y)*complex_t(cos(2*x),sin(2*x));
@@ -109,7 +109,7 @@ void setBC(Vect<complex_t>& bc)
 void error(const Vect<complex_t>& u)
 {
    double ee=0, e;
-   MeshNodes(u.getMesh()) {
+   NodeLoop(u.getMesh()) {
       double x = TheNode.getX(), y = TheNode.getY();
       e = Abs(cos(y)*complex_t(cos(2*x),sin(2*x)) - u(theNodeLabel));
       ee += e*e;

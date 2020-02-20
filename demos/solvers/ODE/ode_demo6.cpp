@@ -41,17 +41,14 @@ using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
-   if (argc<4) {
-      cout << "Usage: " << argv[0] << " <time step> <final time> <output file>" << endl;
+   if (argc<3) {
+      cout << "Usage: " << argv[0] << " <time step> <final time>" << endl;
       return 0;
    }
    theTimeStep = atof(argv[1]);
    theFinalTime = atoi(argv[2]);
-   ofstream outf(argv[3]);
-   string ff = "phase.dat";
-   if (argc>4)
-      ff = argv[4];
-   ofstream oph(ff.c_str());
+   ofstream outf("output.dat");
+   ofstream oph("phase.dat");
 
    try {
       ODESolver ode(RK4,theTimeStep,theFinalTime,2);

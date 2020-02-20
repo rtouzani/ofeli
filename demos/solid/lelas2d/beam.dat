@@ -7,14 +7,12 @@
 </info>
 <Project name="beam">
    <verbose>1</verbose>
-   <output>1</output>
    <save>1</save>
-   <plot>1</plot>
-   <init>1</init>
    <mesh_file>beam.m</mesh_file>
    <plot_file>beam.d</plot_file>
 </Project>
 <Prescription>
+   <BodyForce dof="2">-10.0</BodyForce>
    <BoundaryCondition code="1">0.0</BoundaryCondition>
    <Traction code="1" dof="2">-1000.0</Traction>
 </Prescription>

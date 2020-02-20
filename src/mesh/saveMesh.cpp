@@ -94,19 +94,19 @@ void saveGmsh(const string& file,
       throw OFELIException("saveGmsh(string,Mesh): cannot open file " + file);
 
    pf << "$NOD\n" << mesh.getNbNodes() << endl;
-   mesh_nodes(mesh)
+   node_loop(&mesh)
       pf << node_label << "  " << the_node->getX() << "  "
          << the_node->getY() << "  " << the_node->getZ() << endl;
    pf << "$ENDNOD" << endl;
    pf << "$ELM\n" << mesh.getNbElements() << endl;
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       pf << element_label << "  " << type[The_element.getShape()] << "  " << The_element.getCode() << "  0  "
          << The_element.getNbNodes();
       for (i=1; i<=The_element.getNbNodes(); i++)
          pf << "  " << The_element.getNodeLabel(i);
       pf << endl;
    }
-   mesh_sides(mesh) {
+   side_loop(&mesh) {
       pf << side_label << "  " << type[The_side.getShape()]-1 << "  " << The_side.getCode(1) << "  0  "
          << The_side.getNbNodes();
       for (i=1; i<=The_side.getNbNodes(); i++)
@@ -129,7 +129,7 @@ void saveGnuplot(const string& file,
    size_t n, m;
 
    const Node *nd;
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       m = 0;
       if (The_element.getShape()==LINE)
          m = 2;
@@ -162,7 +162,7 @@ void saveMatlab(const string& file,
    if (pf.fail())
       throw OFELIException("saveMatlab(string,Mesh): Cannot open file " + file);
 
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       pf << "x = [ ";
       for (size_t n=1; n<=The_element.getNbNodes(); n++)
          pf << std::setprecision(5) << setw(18) << The_element(n)->getX() << " ";
@@ -223,13 +223,13 @@ void saveTecplot(const string& file,
    }
    pf << "ZONE N=" << mesh.getNbNodes() << ", E=" << mesh.getNbElements() 
       << ", F=FEPOINT, ET=" << shape << endl;
-   mesh_nodes(mesh) {
+   node_loop(&mesh) {
       for (size_t i=1; i<=mesh.getDim(); i++)
          pf << std::setprecision(5) << setw(18) << The_node.getCoord(i) << " ";
       pf << endl;
    }
 
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       m = 0;
       if (The_element.getShape()==QUADRILATERAL)
          m = 4;
@@ -266,7 +266,7 @@ void saveVTK(const string& file,
    pf << "ASCII" << endl;
    pf << "DATASET UNSTRUCTURED_GRID\n";
    pf << "POINTS " << mesh.getNbNodes() << " float" << endl;
-   mesh_nodes(mesh) {
+   node_loop(&mesh) {
       pf << std::setprecision(4) << setw(18) << The_node.getX()
          << std::setprecision(4) << setw(18) << The_node.getY()
          << std::setprecision(4) << setw(18) << The_node.getZ();
@@ -274,10 +274,10 @@ void saveVTK(const string& file,
    }
 
    size = 0;
-   mesh_elements(mesh)
+   element_loop(&mesh)
       size += nnd[The_element.getShape()] + 1;
    pf << "CELLS " << mesh.getNbElements() << " " << size << endl;
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       pf << nnd[The_element.getShape()];
       for (i=1; i<=m; i++)
          pf << "  " << The_element(i)->n()-1;
@@ -285,7 +285,7 @@ void saveVTK(const string& file,
    }
    pf << "CELL_TYPES  " << mesh.getNbElements() << endl;
    size_t k = 0;
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       pf << "  " << etype[The_element.getShape()];
       if (++k%15 == 0)
          pf << endl;
@@ -293,7 +293,7 @@ void saveVTK(const string& file,
    pf << endl;
    pf.close();
 }
-   
+
 
 void saveBamg(const string& file,
               Mesh&         mesh)
@@ -303,21 +303,21 @@ void saveBamg(const string& file,
    of << "MeshVersionFormatted  0\n\nDimension\n2\n" << endl;
    of << "Vertices\n" << mesh.getNbNodes() << endl;
    
-   mesh_nodes(mesh)
+   node_loop(&mesh)
       of << The_node.getX() << "  " << The_node.getY() << "  " << The_node.getCode(1) << endl;
 
    size_t nbs = 0;
-   mesh_sides(mesh)
+   side_loop(&mesh)
       if (The_side.isOnBoundary())
          nbs++;
    of << "\nEdges\n" << nbs << endl;
-   mesh_sides(mesh) {
+   side_loop(&mesh) {
       if (The_side.isOnBoundary())
       of << The_side(1)->n() << "  " << The_side(2)->n() << "  " << The_side.getCode(1) << endl;
    }
    
    of << "\nTriangles\n" << mesh.getNbElements() << endl;
-   mesh_elements(mesh)
+   element_loop(&mesh)
       of << The_element(1)->n() << "  " << The_element(2)->n() << "  "
          << The_element(3)->n() << "  " << The_element.getCode() << endl;
    of << "\nSubdomainFromMesh\n1" << endl;

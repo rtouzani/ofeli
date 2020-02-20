@@ -146,9 +146,11 @@ class Figure
        }
     }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend Figure operator&&(const Figure& f1, const Figure& f2);
     friend Figure operator||(const Figure& f1, const Figure& f2);
     friend Figure operator-(const Figure& f1, const Figure& f2);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Compute signed distance from a line
  *  @param [in] p Point for which distance is computed
@@ -183,11 +185,14 @@ class Figure
     }
 
  protected:
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
    Point<real_t> _v[10];
    int _code;
    size_t _nb_figs;
    const Figure *_fig[20];
    int _oper[20];
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
 

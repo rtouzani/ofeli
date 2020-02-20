@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = laplace_demo1 laplace_demo2 laplace_demo3 laplace_demo4
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 laplace_demo1_SOURCES = laplace_demo1.cpp
 laplace_demo2_SOURCES = laplace_demo2.cpp
@@ -48,3 +49,6 @@ dist_laplace_demo1_DATA = laplace_demo1.cpp \
 dist_laplace_demo2_DATA =	laplace_demo2.cpp
 dist_laplace_demo3_DATA =	laplace_demo3.cpp
 dist_laplace_demo4_DATA =	laplace_demo4.cpp
+
+clean-local:
+	-rm -rf u.pos mesh-P2.m 

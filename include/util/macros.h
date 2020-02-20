@@ -48,6 +48,12 @@ namespace OFELI {
 #define MESH_BOUNDARY_SIDES for (topBoundarySide(); (theSide=getBoundarySide());)
 #define MESH_EDGES          for (topEdge(); (theEdge=getEdge());)
 #define MAT(M,A)            (M &)(*A)
+#define EVAL(d)             theParser.Eval(d)
+#define EVAL_XY(x,y)        theParser.Eval(x,y)
+#define EVAL_XYZ(x,y,z)     theParser.Eval(x,y,z)
+#define EVAL_X(x)           theParser.Eval(x)
+#define EVAL_XT(x,t)        theParser.Eval(x,t)
+#define EVAL_XYZT(x,y,z,t)  theParser.Eval(x,y,z,t)
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 
@@ -60,16 +66,6 @@ namespace OFELI {
  */
 #define PARSE(exp,var) theParser.Parse(exp,var)
 
-/*! \def EVAL(d)
- *  \ingroup Util
- * A macro that evaluates a parsed regular expression
- * For instance, with a declaration \a PARSE("sin(x+y)","x,y")
- * the data \a x=1 and \a y=2 using this function must
- * be evaluated as follows: \a EVAL(d) with \a d[0]=1,
- * \a d[1]=2
- */
-#define EVAL(d)    theParser.Eval(d)
-
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define EVAL_ERR theParser.EvalError()
@@ -80,18 +76,18 @@ namespace OFELI {
  *  This macro can be inserted after a <tt>try</tt> loop to catch a thrown 
  *  exception.
  */
-#define CATCH_EXCEPTION                                      \
-   catch(OFELIException &e) {                                \
-      std::cout << "OFELI exception: " << e.what() << endl;  \
-      return 1;                                              \
-   }                                                         \
-   catch(runtime_error &e) {                                 \
-      std::cout << "Runtime exception: " << e.what() << endl;\
-      return 1;                                              \
-   }                                                         \
-   catch( ... ) {                                            \
-      std::cout << "Unexpected Exception: " << endl;         \
-      return 1;                                              \
+#define CATCH_EXCEPTION                                   \
+   catch(OFELIException &e) {                             \
+      std::cout << "OFELI error: " << e.what() << endl;   \
+      return 1;                                           \
+   }                                                      \
+   catch(runtime_error &e) {                              \
+      std::cout << "Runtime error: " << e.what() << endl; \
+      return 1;                                           \
+   }                                                      \
+   catch( ... ) {                                         \
+      std::cout << "Unexpected error: " << endl;          \
+      return 1;                                           \
    }
 
 /*! \def TheNode
@@ -119,137 +115,90 @@ namespace OFELI {
 #define TheEdge (*theEdge)
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-/*! \def MeshElementLoop(mesh,element)
- *  \ingroup Mesh
- * A macro to loop on mesh elements
- * \a mesh : Instance of Mesh
- * \a element : Pointer to pointed element
- */
-#define MeshElementLoop(mesh,element) for ((mesh).topElement(); ((element)=(mesh).getElement());)
 
-#define mesh_elements(mesh) for ((mesh).topElement(); ((the_element)=(mesh).getElement());)
-#define mesh_nodes(mesh) for ((mesh).topNode(); ((the_node)=(mesh).getNode());)
-#define mesh_sides(mesh) for ((mesh).topSide(); ((the_side)=(mesh).getSide());)
-#define mesh_edges(mesh) for ((mesh).topEdge(); ((the_edge)=(mesh).getEdge());)
-#define mesh_boundary_sides(mesh) for ((mesh).topBoundarySide(); ((the_side)=(mesh).getBoundarySide());)
+#define node_loop(m) for ((m)->topNode(); (the_node=(m)->getNode());)
+#define boundary_node_loop(m) for ((m)->topBoundaryNode(); (the_node=(m)->getBoundaryNode());)
+#define element_loop(m) for ((m)->topElement(); (the_element=(m)->getElement());)
+#define side_loop(m) for ((m)->topSide(); (the_side=(m)->getSide());)
+#define boundary_side_loop(m) for ((m)->topBoundarySide(); (the_side=(m)->getBoundarySide());)
+#define edge_loop(m) for ((m)->topEdge(); (the_edge=(m)->getEdge());)
+
+#define MESH_EL element_loop(_theMesh)
+#define MESH_ND node_loop(_theMesh)
+#define MESH_SD side_loop(_theMesh)
+#define MESH_BD_SD boundary_side_loop(_theMesh)
+#define MESH_BD_ND boundary_node_loop(_theMesh)
+#define MESH_ED edge_loop(_theMesh)
+
 #define The_element (*the_element)
 #define The_node (*the_node)
 #define The_side (*the_side)
 #define The_edge (*the_edge)
+
 #define element_label (the_element->n())
 #define node_label (the_node->n())
 #define side_label (the_side->n())
 #define edge_label (the_edge->n())
+
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/*! \def MeshElements(mesh)
+/*! \def ElementLoop(m)
  *  \ingroup Mesh
  * A macro to loop on mesh elements
- * <tt>mesh</tt>: Instance of Mesh
+ * \a m : Instance of Mesh
  * @note: Each iteration updates the pointer <tt>theElement</tt> to current Element
  */
-#define MeshElements(mesh) for ((mesh).topElement(); (theElement=(mesh).getElement());)
+#define ElementLoop(m) for ((m).topElement(); (theElement=(m).getElement());)
 
-/*! \def MeshActiveElements(mesh)
+/*! \def ActiveElementLoop(m)
  *  \ingroup Mesh
  * A macro to loop on mesh active elements
- * \a mesh : Instance of Mesh
+ * \a m : Instance of Mesh
  * @note: Each iteration updates the pointer <tt>theElement</tt> to current Element
  * @note: This macro is necessary only if adaptive meshing is used
  */
-#define MeshActiveElements(mesh) for ((mesh).topElement(); (theElement=(mesh).getActiveElement());)
+#define ActiveElementLoop(m) for ((m).topElement(); (theElement=(m).getActiveElement());)
 
-/*! \def MeshNodeLoop(mesh,node)
- *  \ingroup Mesh
- * A macro to loop on mesh nodes
- * <tt>mesh</tt>: Instance of Mesh
- * <tt>node</tt>: Pointer to pointed node
- */
-#define MeshNodeLoop(mesh,node) for ((mesh).topNode(); ((node)=(mesh).getNode());)
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-/*! \def MeshBoundaryNodeLoop(mesh,node)
- *  \ingroup Mesh
- * A macro to loop on mesh nodes
- * <tt>mesh</tt>: Instance of Mesh
- * \a node</tt>: Pointer to pointed node
- *
- * @note: Boundary node list must has been created by Mesh::getBoundaryNodes
- */
-#define MeshBoundaryNodeLoop(mesh,node) for ((mesh).topBoundaryNode(); ((node)=(mesh).getBoundaryNode());)
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-/*! \def MeshNodes(mesh)
- *  \ingroup Mesh
- * A macro to loop on mesh nodes
- * \a mesh : Instance of Mesh
- * @note: Each iteration updates the pointer \a theNode to current Node
- */
-#define MeshNodes(mesh) for ((mesh).topNode(); (theNode=(mesh).getNode());)
-
-/*! \def MeshBoundaryNodes(mesh)
- *  \ingroup Mesh
- * A macro to loop on mesh nodes
- * <tt>mesh</tt>: Instance of Mesh
- * @note: Each iteration updates the pointer <tt>theNode</tt> to current Node
- */
-#define MeshBoundaryNodes(mesh) for ((mesh).topBoundaryNode(); (theNode=(mesh).getBoundaryNode());)
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-/*! \def MeshSideLoop(mesh,side)
+/*! \def SideLoop(m)
  *  \ingroup Mesh
  * A macro to loop on mesh sides
- * <tt>mesh</tt>: Instance of Mesh
- * <tt>side</tt>: Pointer to pointed side
+ * \a m : Instance of Mesh
+ * @note: Each iteration updates the pointer <tt>theSide</tt> to current Element
  */
-#define MeshSideLoop(mesh,side) for ((mesh).topSide(); ((side)=(mesh).getSide());)
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+#define SideLoop(m) for ((m).topSide(); (theSide=(m).getSide());)
 
-/*! \def MeshSides(mesh)
- *  \ingroup Mesh
- * A macro to loop on mesh sides
- * <tt>mesh</tt>: Instance of Mesh
- * @note: Each iteration updates the pointer <tt>theSide</tt> to current Side
- */
-#define MeshSides(mesh) for ((mesh).topSide(); (theSide=(mesh).getSide());)
-
-/*! \def MeshSideSet(mesh)
- *  \ingroup Mesh
- * A macro to loop on a subset of mesh sides
- * <tt>sl</tt>: Instance of SideList class
- * @note: Each iteration updates the pointer <tt>theSide</tt> to current Side
- */
-#define MeshSideSet(sl) for ((sl).top(); (theSide=(sl).get());)
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-/*! \def MeshBoundarySideLoop(mesh,side)
- *  \ingroup Mesh
- * A macro to loop on mesh boundary sides
- * \a mesh : Instance of Mesh
- * \a side : Pointer to pointed boundary side
- * Important: List of boundary sides must have been previously created by using class SideList
- */
-#define MeshBoundarySideLoop(mesh,side) for ((mesh).topBoundarySide(); ((side)=(mesh).getBoundarySide());)
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-/*! \def MeshBoundarySides(mesh)
- *  \ingroup Mesh
- * A macro to loop on mesh boundary sides
- * <tt>mesh</tt>: Instance of Mesh
- *
- * Notes:
- *   - List of boundary sides must have been previously created by using class SideList
- *   - Each iteration updates the pointer <tt>theSide</tt> to current Side
- */
-#define MeshBoundarySides(mesh) for ((mesh).topBoundarySide(); (theSide=(mesh).getBoundarySide());)
-
-/*! \def MeshEdges(mesh)
+/*! \def EdgeLoop(m)
  *  \ingroup Mesh
  * A macro to loop on mesh edges
- * <tt>mesh</tt>: Instance of Mesh
+ * \a m : Instance of Mesh
  * @note: Each iteration updates the pointer <tt>theEdge</tt> to current Edge
  */
-#define MeshEdges(mesh) for ((mesh).topEdge(); (theEdge=(mesh).getEdge());)
+#define EdgeLoop(m) for ((m).topEdge(); (theEdge=(m).getEdge());)
+
+/*! \def NodeLoop(m)
+ *  \ingroup Mesh
+ * A macro to loop on mesh nodes
+ * \a m : Instance of Mesh
+ * @note: Each iteration updates the pointer \a theNode to current Node
+ */
+#define NodeLoop(m) for ((m).topNode(); (theNode=(m).getNode());)
+
+/*! \def BoundaryNodeLoop(m)
+ *  \ingroup Mesh
+ * A macro to loop on mesh nodes
+ * <tt>m</tt>: Instance of Mesh
+ * @note: Each iteration updates the pointer <tt>theNode</tt> to current Node
+ */
+#define BoundaryNodeLoop(m) for ((m).topBoundaryNode(); (theNode=(m).getBoundaryNode());)
+
+/*! \def BoundarySideLoop(m)
+ *  \ingroup Mesh
+ * A macro to loop on mesh boundary sides
+ * <tt>m</tt>: Instance of Mesh
+ * @note: Each iteration updates the pointer <tt>theSide</tt> to current Node
+ */
+#define BoundarySideLoop(m) for ((m).topBoundarySide(); (theSide=(m).getBoundarySide());)
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /*! \def ElementNodeLoop
@@ -291,13 +240,6 @@ namespace OFELI {
  */
 #define theElementNodeLabel(i) theElement->getNodeLabel(i)
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#define MESH_EL MeshElements(*_theMesh)
-#define MESH_ND MeshNodes(*_theMesh)
-#define MESH_SD MeshSides(*_theMesh)
-#define MESH_BD_SD MeshBoundarySides(*_theMesh)
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
 
 /*! \def TIME_LOOP
  *  \ingroup Solver
@@ -319,8 +261,10 @@ namespace OFELI {
  * <tt>theStep, theTime, theTimeStep, theFinalTime</tt>
  */
 #define TimeLoop \
-          NbTimeSteps = int(theFinalTime/theTimeStep); \
-          for (theTime=theTimeStep, theStep=1; theTime<theFinalTime+0.001*theTimeStep; theTime+=theTimeStep, ++theStep)
+          OFELI::NbTimeSteps = int(OFELI::theFinalTime/OFELI::theTimeStep);   \
+          for (OFELI::theTime=OFELI::theTimeStep, theStep=1;                  \
+               theTime<OFELI::theFinalTime+0.001*OFELI::theTimeStep;          \
+               OFELI::theTime+=OFELI::theTimeStep, ++OFELI::theStep)
 
 /*! \def IterationLoop
  *  \ingroup Solver

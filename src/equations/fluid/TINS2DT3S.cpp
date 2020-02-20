@@ -203,7 +203,7 @@ void TINS2DT3S::PressureMatrix()
    if (Verbosity>2)
       cout << "Calculating pressure matrix ..." << endl;
    SpMatrix<real_t> Dx(1,*_theMesh,0), Dy(1,*_theMesh,0);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       real_t z=_el_geo.det/(6*_TimeInt.delta), a=0.5*_TimeInt.delta*_el_geo.det;
       for (size_t i=0; i<3; i++) {
@@ -242,7 +242,7 @@ void TINS2DT3S::getMomentum()
    _b->clear();
    size_t j=0;
    _c = 0;
-   mesh_nodes(*_theMesh) {
+   MESH_ND {
       if (The_node.getCode(1)==0)
          (*_b)[j++] = 0.5*_c(node_label,1);
       if (The_node.getCode(2)==0)
@@ -250,7 +250,7 @@ void TINS2DT3S::getMomentum()
    }
 
 // Loop over elements
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       ElementNodeVector(*_u,_eu);
 
@@ -330,7 +330,7 @@ int TINS2DT3S::getPressure()
    Vect<real_t> b(_theMesh->getNbNodes());
    if (Verbosity>2)
       cout << "Solving pressure equation ..." << endl;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       ElementNodeVector(*_u,_eu);
       real_t d = _el_geo.det/6.*(_dSh[0].x*_eu[0] + _dSh[0].y*_eu[1] +
@@ -357,7 +357,7 @@ void TINS2DT3S::updateVelocity()
 {
    if (Verbosity>2)
       cout << "Updating velocity ..." << endl;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       ElementNodeVector(*_u,_eu);
       LocalVect<real_t,3> qe(the_element,_q,1);

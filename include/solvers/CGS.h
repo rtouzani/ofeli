@@ -60,7 +60,7 @@ namespace OFELI {
  *  Preconditioning is possible using a preconditioning class.
  */
 
-/** \fn int CGS(const SpMatrix<T_> &A, const P_ &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler)
+/** \fn int CGS(const SpMatrix<T_> &A, const Prec<T_> &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler)
  * \ingroup Solver
  * \brief Conjugate Gradient Squared solver function.
  *  \details This function uses the preconditioned Conjugate Gradient Squared algorithm to solve a

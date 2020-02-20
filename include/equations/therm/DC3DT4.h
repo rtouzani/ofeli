@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -169,11 +169,9 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
  */
     void Periodic(real_t coef=1.e20);
 
- protected:
-   void set(const Element *el);
-   void set(const Side *sd);
-
  private:
+   void set(const Element* el);
+   void set(const Side* sd);
    Point<real_t> _grad;
 };
 

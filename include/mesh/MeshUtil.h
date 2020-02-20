@@ -216,15 +216,15 @@ bool operator==(const Side& sd1,
  *  @param [in,out] mesh Mesh instance. On output, node coordinates are modified to take into
  *  account the displacement
  *  @param [in] u Displacement field at nodes
- *  @param [in] a Amplification factor [Default: <tt>1</tt>].
- *  The displacement is multiplied by <tt>a</tt> before to be added to node coordinates
+ *  @param [in] rate Maximal deformation rate. [Default: <tt>1</tt>]. A typical value is
+ *  0.2 (<i>i.e.</i> 20%).
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
 void DeformMesh(Mesh&               mesh,
                 const Vect<real_t>& u,
-                real_t              a=1);
+                real_t              rate=0.2);
 
 #ifdef USE_PETSC
 /** \fn void DeformMesh(Mesh& mesh, const PETScVect<real_t>& u, real_t a=1)
@@ -233,8 +233,7 @@ void DeformMesh(Mesh&               mesh,
  *  @param [in,out] mesh Mesh instance. On output, node coordinates are modified to take into
  *  account the displacement
  *  @param [in] u Displacement field at nodes
- *  @param [in] a Amplification factor [Default: <tt>1</tt>].
- *  The displacement is multiplied by <tt>a</tt> before to be added to node coordinates
+ *  @param [in] a Amplification factor [Default: <tt>0.2</tt>].
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
@@ -444,7 +443,7 @@ real_t getMinSize(const Mesh& m);
  */
 real_t getMinElementMeasure(const Mesh& m);
 
-/** \fn real_t getMinElementMeasure(const Mesh& m)
+/** \fn real_t getMaxElementMeasure(const Mesh& m)
  *  \ingroup Mesh
  *  \brief Return maximal measure (length, area or volume) of elements of given mesh
  *  @param [in] m Reference to mesh instance

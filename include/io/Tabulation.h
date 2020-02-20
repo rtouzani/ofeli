@@ -145,8 +145,10 @@ class Tabulation
                     real_t v2,
                     real_t v3);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream& operator<<(ostream& s, const Tabulation &t);
     friend class XMLParser;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
 
@@ -161,8 +163,8 @@ class Tabulation
 /// \fn ostream & operator<<(ostream& s, const Tabulation &t)
 /// \brief Output Tabulated function data.
 /// \ingroup Util
-ostream& operator<<(ostream& s,
-                    const    Tabulation &t);
+ostream& operator<<(ostream&          s,
+                    const Tabulation& t);
 
 } /* namespace OFELI */
 

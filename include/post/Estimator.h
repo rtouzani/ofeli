@@ -98,7 +98,17 @@ enum EstimatorType {
  *  a posteriori estimator at each element
  */
     void getElementWiseIndex(Vect<real_t>& e);
+
+/** \brief Get vector containing nodewise error index
+ *  @param [in,out] e Vector that contains once the member function setError is invoked
+ *  a posteriori estimator at each node
+ */
     void getNodeWiseIndex(Vect<real_t>& e);
+
+/** \brief Get vector containing sidewise error index
+ *  @param [in,out] e Vector that contains once the member function setError is invoked
+ *  a posteriori estimator at each side
+ */
     void getSideWiseIndex(Vect<real_t>& e);
 
 /// \brief Return averaged error.
@@ -107,7 +117,9 @@ enum EstimatorType {
 /// \brief Return a reference to the finite element mesh.
     Mesh& getMesh() const { return *_mesh; }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream& operator<<(ostream& s, const Estimator& r);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 private:
 

@@ -63,13 +63,14 @@ int main(int argc, char *argv[])
          cout << "Reading mesh data ...\n";
       Mesh ms(data.getMeshFile(),true);
       Prescription p(ms,data.getPrescriptionFile());
-      if (Verbosity>2)
+      if (Verbosity>4)
          cout << ms;
 
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
       if (Verbosity>1)
          cout << "Allocating memory for matrix and R.H.S. ...\n";
-      Vect<double> u(ms,"Temperature");
+      Vect<double> u(ms);
+      u.setName("Temperature");
       if (Verbosity>1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
 
@@ -79,7 +80,7 @@ int main(int argc, char *argv[])
       p.get(FLUX,bound_f);
 
 //    Read velocity for convection
-      Vect<double> v(ms,2);
+      Vect<double> v(ms,NODE_DOF,2);
       if (data.getInteger("v_flag")) {
          if (Verbosity>1)
             cout << "Reading Velocity in file ...\n";

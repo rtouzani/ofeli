@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['maxnbiterations',['MaxNbIterations',['../group__Global.html#ga534f6e466357af135f45bb1ce6f517c9',1,'OFELI']]]
+  ['nbtimesteps',['NbTimeSteps',['../a00337.html#ga564656b52180eab7d5f9abb58eb90fcf',1,'OFELI']]]
 ];

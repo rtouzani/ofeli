@@ -63,8 +63,6 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-template<class T_> class Vect;
-
 class Reconstruction
 {
 
@@ -76,13 +74,13 @@ class Reconstruction
     Reconstruction() { }
 
 /// \brief Constructor using a refrence to a Mesh instance
-    Reconstruction(const Mesh& ms) { _theMesh = &ms; }
+    Reconstruction(const Mesh& ms);
 
 /// \brief Destructor
     ~Reconstruction() { }
 
 /// Provide Mesh instance
-    void setMesh(Mesh& ms) { _theMesh = &ms; }
+    void setMesh(const Mesh& ms);
 
 /** \brief Smooth an elementwise field to obtain a nodewise field by L<sup>2</sup> projection
  *  @param [in] u Vect instance that contains field to smooth

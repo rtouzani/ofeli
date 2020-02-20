@@ -38,9 +38,10 @@ int main(int argc, char *argv[])
       return 0;
    }
    IPF data("lelas3d - 1.2",argv[1]);
-   int output_flag=data.getOutput(), save_flag=data.getSave();
+   int save_flag=data.getSave();
+   Verbosity = data.getVerbose();
 
-   if (output_flag) {
+   if (Verbosity) {
       cout << endl << endl;
       cout << "    *******************************************************\n";
       cout << "    *                      L E L A S 3 D                  *\n";
@@ -61,16 +62,13 @@ int main(int argc, char *argv[])
 
 // Read Mesh data
    try {
-      if (output_flag > 1)
+      if (Verbosity > 1)
          cout << "Reading mesh data ...\n";
       Mesh ms(data.getMeshFile(),true);
-      if (output_flag > 1)
+      if (Verbosity > 5)
          cout << ms;
       Prescription p(ms,data.getDataFile());
-      
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
-      if (output_flag > 1)
-         cout << "Allocating memory for matrix and R.H.S. ...\n";
+
 #if defined(USE_PETSC)
       PETScWrapper<double> w(argc-1,argv);
       PETScMatrix<double> A(ms);
@@ -79,19 +77,20 @@ int main(int argc, char *argv[])
 
       if (Verbosity > 1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
-      Vect<double> u(ms), bc(ms), body_f(ms), bound_f(ms,3,SIDE_DOF);
+      Vect<double> u(ms), bc(ms), body_f(ms), bound_f(ms,3,BOUNDARY_SIDE_DOF);
       p.get(BOUNDARY_CONDITION,bc);
-      p.get(BODY_FORCE,body_f,0.);
-      p.get(BOUNDARY_FORCE,bound_f,0.);
+      p.get(BODY_FORCE,body_f,0);
+      p.get(TRACTION,bound_f,0);
 
 //    Solve equation
+      if (Verbosity > 1)
+         cout << "Setting and solving equation ...\n";
       Elas3DT4 eq(ms,u);
       eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(BODY_FORCE,body_f);
       eq.setInput(TRACTION,bound_f);
       eq.run();
 
-// Solve system
 #if defined(USE_PETSC)
       w.setLinearSystem(A,b,KSPCG,PCILU,1.e-8);
       w.solve(u);
@@ -102,13 +101,13 @@ int main(int argc, char *argv[])
 #if defined(USE_PETSC)
       PETScVect<double> uf(ms);
 #endif
-      if (output_flag > 0)
+      if (Verbosity > 3)
          cout << u;
 
       if (save_flag) {
          IOField pf(data.getPlotFile(),IOField::OUT);
          pf.put(u);
-         DeformMesh(ms,u,1.e-3);
+         ms.Deform(u);
          ms.put(data.getProject()+"-1.m");
       }
    } CATCH_EXCEPTION

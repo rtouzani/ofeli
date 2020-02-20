@@ -71,7 +71,7 @@ ODESolver::FPtr ODESolver::F [] = {
 
 
 ODESolver::ODESolver() :
-           _order(0), _nb_eq(1), _step(0), _s(DIRECT_SOLVER), _p(DIAG_PREC), _a0(false),
+           _order(0), _nb_eq(1), _step(0), _s(DIRECT_SOLVER), _p(DIAG_PREC), _linear(false), _a0(false),
            _a1(false), _a2(false), _constant_matrix(false), _regex(false), _explicit(false),
            _init(false), _lhs(false), _rhs(false), _time(0.), _beta(0.25), _gamma(0.5),
            _RK4_rhs(false), _setF_called(false), _setDF1_called(false)
@@ -84,7 +84,7 @@ ODESolver::ODESolver(TimeScheme s,
                      real_t     time_step,
                      real_t     final_time,
                      size_t     nb_eq) :
-           _order(0), _nb_eq(nb_eq), _step(0), _s(DIRECT_SOLVER), _p(DIAG_PREC),
+  _order(0), _nb_eq(nb_eq), _step(0), _s(DIRECT_SOLVER), _p(DIAG_PREC), _linear(false),
            _a0(false), _a1(false), _a2(false), _constant_matrix(false), _regex(false),
            _explicit(false), _init(false), _lhs(false), _rhs(false), _time_step(time_step),
            _time(0.), _final_time(final_time), _beta(0.25), _gamma(0.5),
@@ -193,6 +193,12 @@ void ODESolver::setMatrices(DMatrix<real_t>& A0,
 }
 
 
+void ODESolver::setLinear()
+{
+   _linear = true;
+}
+
+
 void ODESolver::setF(string f)
 {
    static size_t nb_eq=0;
@@ -204,14 +210,19 @@ void ODESolver::setF(string f)
    }
    nb_eq++;
    if (_nb_eq > 10)
-      throw OFELIException("In ODESolver::setF(string): This function cannot be used for systems"
-			   " with size exceeding 10.");
+      throw OFELIException("In ODESolver::setF(string): This function cannot be used"
+                           " for systems with size exceeding 10.");
    if (nb_eq>_nb_eq && _step>1)
       throw OFELIException("In ODESolver::setF(string): Number of calls is larger "
                            "than system size.");
    _type = SCALAR_NL;
-   if (nb_eq>1)
+   if (_linear)
+      _type = SCALAR_LINEAR;
+   if (nb_eq>1) {
       _type = VECTOR_NL;
+      if (_linear)
+         _type = VECTOR_LINEAR;
+   }
    _regex = true;
    _expF[nb_eq-1] = f;
    _vF1[nb_eq-1] = 0.;
@@ -618,11 +629,14 @@ void ODESolver::solveBackwardEuler()
       IterationLoop {
          if (_regex) {
             f = eval(_expF[0],_time,y);
-            df = eval(_expDF[0],_time,y);
+            if (_setDF1_called)
+               df = eval(_expDF[0],_time,y);
          }
          _y1 = (_y0 + _time_step*(f-df*y))/(1. - _time_step*df);
          _y2 = _y0 = _y1;
          Converged = _iter.check(y,_y1);
+         if (_setDF1_called==false)
+            Converged = true;
       }
       _dydt = (_y1 - _y0)/_time_step;
       _y0 = _y1;
@@ -665,7 +679,8 @@ void ODESolver::solveCrankNicolson()
          if (_regex) {
             f0 = eval(_expF[0], _time-_time_step,_y0);
             f1 = eval(_expF[0], _time,y);
-            df = eval(_expDF[0],_time,y);
+            if (_setDF1_called)
+               df = eval(_expDF[0],_time,y);
          }
          _y1 = (_y0 + 0.5*_time_step*(f0+f1-df*y))/(1. - 0.5*_time_step*df);
          Converged = _iter.check(y,_y1);
@@ -1097,7 +1112,8 @@ void ODESolver::solveBDF2()
          IterationLoop {
             if (_regex) {
                f = eval(_expF[0],_time,y);
-               df = eval(_expDF[0],_time,y);
+               if (_setDF1_called)
+                  df = eval(_expDF[0],_time,y);
             }
             _y1 = (_y0 + _time_step*(f-df*y))/(1. - _time_step*df);
             Converged = _iter.check(y,_y1);
@@ -1110,7 +1126,8 @@ void ODESolver::solveBDF2()
          IterationLoop {
             if (_regex) {
                f = eval(_expF[0],_time,y);
-               df = eval(_expDF[0],_time,y);
+               if (_setDF1_called)
+                  df = eval(_expDF[0],_time,y);
             }
             _y2 = (4*_y1-_y0+2*_time_step*(f-df*y))/(3-2*_time_step*df);
             Converged = _iter.check(y,_y1);

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -191,7 +191,7 @@ class Muscl {
     Mesh    *_theMesh;
     real_t  _TimeStep, _CFL, _ReferenceLength;
     int     _verbose, _solid_zone_code;
-    size_t  _nb_sides, _nb_elements;
+    size_t  _nb_sides, _nb_elements, _nb_nodes;
 
 //  this is the main function here, compute all geometric stuff. Could take a while
     virtual void Initialize() = 0;

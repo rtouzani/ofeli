@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -109,20 +109,20 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
  */
     void build()
     {
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
           Magnetic(_omega,1.);
           Electric();
           AbsEqua<complex_t>::_A->Assembly(The_element,eMat.get());
        }
 
-       mesh_nodes(*_theMesh) {
-          int m = the_node->getDOF(1);
-          if (the_node->getCode(1)==1) {
+       MESH_ND {
+          int m = The_node.getDOF(1);
+          if (The_node.getCode(1)==1) {
              _A->set(m,m,(*_A)(m,m)*VLG);
              (*_b)[m-1] = (*_A)(m,m)*_current;
           }
-          if (the_node->getCode(1)==2) {
+          if (The_node.getCode(1)==2) {
              _A->set(m,m,(*_A)(m,m)*VLG);
              (*_b)[m-1] = 0;
           }
@@ -156,13 +156,10 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
 /// \brief Add contribution to vacuum area calculation
     real_t VacuumArea();
 
- protected:
-
-    void set(const Element* el);
-    void set(const Side* el);
-
  private:
     real_t _omega, _volt, _current;
+    void set(const Element* el);
+    void set(const Side* el);
 
 };
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -108,6 +108,7 @@ public:
     e_fptr mySolver; // function pointer on solver is used to get rid of an embarrassing "if"
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/// \brief Choose solver
     void setSolver(SolverType solver)
     {
        if (solver>=6)
@@ -179,10 +180,12 @@ public:
 /// \brief Return elementwise Mach number
     void getMach(Vect<real_t>& m) const;
 
-//  some initial conditions
+/// \brief Set initial condition for the schock tube problem
     void setInitialConditionShockTube(const LocalVect<real_t,5>& BcG,
                                       const LocalVect<real_t,5>& BcD,
-                                            real_t               x0);
+                                      real_t                     x0);
+
+/// \brief Set initial condition
     void setInitialCondition(const LocalVect<real_t,5>& u);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = ttd2
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 ttd2_SOURCES = main.cpp error.cpp
 
@@ -16,6 +17,7 @@ ttd2_DATA = main.cpp \
             proj-5x80.m \
             Makefile.standalone \
             README
+
 dist_ttd2_DATA = main.cpp \
                  error.cpp \
                  proj.dat \
@@ -25,3 +27,6 @@ dist_ttd2_DATA = main.cpp \
                  proj-5x80.m \
                  Makefile.standalone \
                  README
+
+clean-local:
+	-rm -rf proj.pl

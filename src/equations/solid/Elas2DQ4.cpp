@@ -44,8 +44,8 @@ Elas2DQ4::Elas2DQ4(Mesh& ms)
    _equation_name = "Linearized elasticity";
    _finite_element = "2-D, 4-Node quadrilaterals (Q1)";
    setMatrixType(SPARSE|SYMMETRIC);
-   setSolver(CG_SOLVER,DILU_PREC);
-   _terms = DEVIATORIC|DILATATION|BODY_FORCE;
+   setSolver(CG_SOLVER,DIAG_PREC);
+   _terms = DEVIATORIC|DILATATION|BODY_FORCE|TRACTION;
 }
 
 
@@ -56,8 +56,8 @@ Elas2DQ4::Elas2DQ4(Mesh&         ms,
    _equation_name = "Linearized elasticity";
    _finite_element = "2-D, 4-Node quadrilaterals (Q1)";
    setMatrixType(SPARSE|SYMMETRIC);
-   setSolver(CG_SOLVER,DILU_PREC);
-   _terms = DEVIATORIC|DILATATION|BODY_FORCE;
+   setSolver(CG_SOLVER,DIAG_PREC);
+   _terms = DEVIATORIC|DILATATION|BODY_FORCE|TRACTION;
 }
 
 
@@ -84,7 +84,10 @@ void Elas2DQ4::set(const Element* el)
    _quad->atGauss(2,_sh,_dSh,_wg);
    PlaneStrain();
    ElementNodeCoordinates();
-   ElementNodeVector(*_u,_eu);
+   if (AbsEqua<real_t>::_u!=nullptr)
+      ElementNodeVector(*_u,_eu);
+   if (AbsEqua<real_t>::_bf!=nullptr)
+      ElementNodeVector(*_bf,_ebf);
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }
@@ -102,7 +105,10 @@ void Elas2DQ4::set(const Side* sd)
    _g[0] = g.x(1); _g[1] = g.x(2);
    _ww[0] = g.w(1); _ww[1] = g.w(2);
    SideNodeCoordinates();
-   SideNodeVector(*_u,_su);
+   if (AbsEqua<real_t>::_u!=nullptr)
+      SideNodeVector(*_u,_su);
+   if (AbsEqua<real_t>::_sf!=nullptr)
+      SideVector(*_sf,_ssf);
    sMat = 0;
    sRHS = 0;
 }
@@ -202,6 +208,22 @@ void Elas2DQ4::Dilatation(real_t coef)
 }
 
 
+void Elas2DQ4::BodyRHS()
+{
+   for (size_t k=0; k<4; ++k) {
+      real_t fx=0., fy=0.;
+      for (size_t j=1; j<=4; ++j) {
+         fx += _sh[4*j+k]*_ebf(2*j-1);
+         fy += _sh[4*j+k]*_ebf(2*j  );
+      }
+      for (size_t i=0; i<4; ++i) {
+         eRHS(2*i+1) += _wg[k]*fx*_sh[4*i+k];
+         eRHS(2*i+2) += _wg[k]*fy*_sh[4*i+k];
+      }
+   }
+}
+
+
 void Elas2DQ4::BodyRHS(const Vect<real_t>& f)
 {
    for (size_t k=0; k<4; ++k) {
@@ -213,6 +235,18 @@ void Elas2DQ4::BodyRHS(const Vect<real_t>& f)
       for (size_t i=0; i<4; ++i) {
          eRHS(2*i+1) += _wg[k]*fx*_sh[4*i+k];
          eRHS(2*i+2) += _wg[k]*fy*_sh[4*i+k];
+      }
+   }
+}
+
+
+void Elas2DQ4::BoundaryRHS()
+{
+   for (size_t k=0; k<2; k++) {
+      real_t c=0.5*_ww[k]*_ln->getLength();
+      for (size_t i=1; i<=2; i++) {
+         sRHS(2*i-1) += c*_ssf[0]*_ln->Sh(i,_g[k]);
+         sRHS(2*i  ) += c*_ssf[1]*_ln->Sh(i,_g[k]);
       }
    }
 }
@@ -238,7 +272,7 @@ void Elas2DQ4::BoundaryRHS(const Vect<real_t>& sf)
 void Elas2DQ4::Strain(Vect<real_t>& eps)
 {
    eps.setSize(_nb_el,3);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t ne = The_element.n();
       size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
              n3=The_element(3)->n(), n4=The_element(4)->n();
@@ -262,7 +296,7 @@ void Elas2DQ4::Stress(Vect<real_t>& s,
 {
    vm.setSize(_nb_el);
    s.setSize(_nb_el,3);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t ne = The_element.n();
       size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
              n3=The_element(3)->n(), n4=The_element(4)->n();
@@ -295,7 +329,7 @@ void Elas2DQ4::Stress(Vect<real_t>& sigma,
    sigma.setSize(_nb_el,3);
    s.setSize(_nb_el,3);
    st.setSize(_nb_el);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t ne = The_element.n();
       size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
              n3=The_element(3)->n(), n4=The_element(4)->n();

@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
       IOField vff(proj.getMeshFile(),proj.getString("v_file"),mesh,IOField::OUT);
       IOField pff(proj.getMeshFile(),proj.getString("p_file"),mesh,IOField::OUT);
 
-      Vect<double> u(mesh,"Velocity",0), p(mesh,"Pressure",0,1);
+      Vect<double> u(mesh,NODE_DOF,"Velocity"), p(mesh,NODE_DOF,"Pressure",1);
       Vect<double> bc(mesh), bf(mesh), sf(mesh);
       TINS2DT3S eq(mesh);
       eq.Reynolds(Re);

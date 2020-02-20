@@ -50,6 +50,15 @@ Elas2DT3::Elas2DT3(Mesh& ms)
    _equation_name = "Linearized Elasticity";
    _finite_element = "2-D, 3-Node Triangles (P1)";
    _terms = DEVIATORIC|DILATATION|BODY_FORCE;
+   bool contact = false;
+   MESH_SD {
+      if (The_side.getGlobalCode() == CONTACT_BC) {
+         contact = true;
+         break;
+      }
+   }
+   if (contact)
+      _terms = DEVIATORIC|DILATATION|BODY_FORCE|CONTACT;
 }
 
 
@@ -60,6 +69,15 @@ Elas2DT3::Elas2DT3(Mesh&         ms,
    _equation_name = "Linearized Elasticity";
    _finite_element = "2-D, 3-Node Triangles (P1)";
    _terms = DEVIATORIC|DILATATION|BODY_FORCE;
+   bool contact = false;
+   MESH_SD {
+      if (The_side.getGlobalCode() == CONTACT_BC) {
+         contact = true;
+         break;
+      }
+   }
+   if (contact)
+      _terms = DEVIATORIC|DILATATION|BODY_FORCE|CONTACT;
 }
 
 
@@ -76,6 +94,8 @@ void Elas2DT3::set(const Element* el)
    _dSh = tr.DSh();
    ElementNodeCoordinates();
    ElementNodeVector(*_u,_eu);
+   if (AbsEqua<real_t>::_bf!=nullptr)
+      ElementNodeVector(*_bf,_ebf);
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }
@@ -88,6 +108,8 @@ void Elas2DT3::set(const Side* sd)
    _el_geo.length = ln.getLength();
    SideNodeCoordinates();
    SideNodeVector(*_u,_su);
+   if (AbsEqua<real_t>::_sf!=nullptr)
+      SideVector(*_sf,_ssf);
    sA0 = 0;
    sRHS = 0;
 }
@@ -206,6 +228,15 @@ void Elas2DT3::Dilatation(real_t coef)
 }
 
 
+void Elas2DT3::BodyRHS()
+{
+   for (size_t k=1; k<=3; k++) {
+      eRHS(2*k-1) += OFELI_THIRD*_el_geo.area*_ebf(2*k-1);
+      eRHS(2*k  ) += OFELI_THIRD*_el_geo.area*_ebf(2*k  );
+   }
+}
+
+
 void Elas2DT3::BodyRHS(const Vect<real_t>& f)
 {
    for (size_t k=1; k<=3; k++) {
@@ -231,6 +262,20 @@ void Elas2DT3::BoundaryRHS(const Vect<real_t>& f)
 }
 
 
+void Elas2DT3::BoundaryRHS()
+{
+   real_t c = 0.5*_el_geo.length;
+   if (_theSide->getCode(1) != CONTACT_BC) {
+      sRHS(1) += c*_ssf[0];
+      sRHS(3) += c*_ssf[0];
+   }
+   if (_theSide->getCode(2) != CONTACT_BC) {
+      sRHS(2) += c*_ssf[1];
+      sRHS(4) += c*_ssf[1];
+   }
+}
+
+
 void Elas2DT3::Periodic(real_t coef)
 {
    for (size_t i=1; i<=2; i++) {
@@ -249,35 +294,32 @@ void Elas2DT3::Periodic(real_t coef)
 
 int Elas2DT3::Contact(real_t coef)
 {
-   int ret = 0;
-   real_t c=0.5*coef*_el_geo.length;
-   if (_cd==nullptr)
+   if (_sf==nullptr)
       throw OFELIException("In Elas2DT3::Contact(coef): No contact distance provided.");
-   real_t dx=(*_cd)(_theSide->n(),1), dy=(*_cd)(_theSide->n(),2);
-   if (_theSide->getCode(1) == CONTACT_BC) {
-      if (dx > (*_u)((*_theSide)(1)->n(),1)) {
-         ret = 1;
-         sA0(1,1) += c;
-         sRHS(1) += c*dx;
-      }
-      if (dx > (*_u)((*_theSide)(2)->n(),1)) {
-         ret = 1;
-         sA0(3,3) += c;
-         sRHS(3) += c*dx;
-      }
+   int ret = 0;
+   if (_theSide->getGlobalCode() != CONTACT_BC)
+      return ret;
+   real_t c=0.5*coef*_el_geo.length;
+   real_t d1 = (*_sf)(_theSide->n(),1), d2 = (*_sf)(_theSide->n(),2);
+   if (d1 > (*_u)((*_theSide)(1)->n(),1) && (*_theSide)(1)->getCode(1)==0) {
+      ret = 1;
+      sA0(1,1) += c;
+      sRHS(1) += c*d1;
    }
-
-   if (_theSide->getCode(2) == CONTACT_BC) {
-      if (dy > (*_u)((*_theSide)(1)->n(),2)) {
-         ret = 1;
-         sA0(2,2) += c;
-         sRHS(2) += c*dy;
-      }
-      if (dy > (*_u)((*_theSide)(2)->n(),2)) {
-         ret = 1;
-         sA0(4,4) += c;
-         sRHS(4) += c*dy;
-     }
+   if (d1 > (*_u)((*_theSide)(2)->n(),1) && (*_theSide)(2)->getCode(1)==0) {
+      ret = 1;
+      sA0(3,3) += c;
+      sRHS(3) += c*d1;
+   }
+   if (d2 > (*_u)((*_theSide)(1)->n(),2) && (*_theSide)(1)->getCode(2)==0) {
+      ret = 1;
+      sA0(2,2) += c;
+      sRHS(2) += c*d2;
+   }
+   if (d2 > (*_u)((*_theSide)(2)->n(),2) && (*_theSide)(2)->getCode(2)==0) {
+      ret = 1;
+      sA0(4,4) += c;
+      sRHS(4) += c*d2;
    }
    return ret;
 }
@@ -286,7 +328,7 @@ int Elas2DT3::Contact(real_t coef)
 void Elas2DT3::Reaction(Vect<real_t>& r)
 {
    r.setSize(_nb_sides,2);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       Deviator();
       Dilatation();
@@ -332,8 +374,8 @@ void Elas2DT3::ContactPressure(const Vect<real_t>& f,
 void Elas2DT3::Strain(Vect<real_t>& eps)
 {
    eps.setSize(_nb_el,3);
-   mesh_elements(*_theMesh) {
-     size_t ne = The_element.n();
+   MESH_EL {
+      size_t ne = element_label;
       size_t n1=The_element(1)->n(), n2=The_element(2)->n(), n3=The_element(3)->n();
       Triang3 tr(the_element);
       _dSh = tr.DSh();
@@ -350,8 +392,8 @@ void Elas2DT3::Stress(Vect<real_t>& s,
 {
    s.setSize(_nb_el,2);
    vm.setSize(_nb_el);
-   mesh_elements(*_theMesh) {
-      size_t ne = The_element.n();
+   MESH_EL {
+      size_t ne = element_label;
       size_t n1=The_element(1)->n(), n2=The_element(2)->n(), n3=The_element(3)->n();
       Triang3 tr(the_element);
       _dSh = tr.DSh();

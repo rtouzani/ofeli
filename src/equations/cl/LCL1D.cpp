@@ -111,24 +111,24 @@ void LCL1D::setBC(const Side &sd, double v)
 
 void LCL1D::setBC(int code, double u)
 {
-   MeshBoundarySides(*_theMesh) {
-      if ((TheSide.getCode()==code))
-         _RU(theSideLabel) = u;
+   MESH_BD_SD {
+      if ((The_side.getCode()==code))
+         _RU(side_label) = u;
    }
 }
 
 
 void LCL1D::setBC(double u)
 {
-   MeshBoundarySides(*_theMesh)
-      _RU(theSideLabel) = u;
+   MESH_BD_SD
+      _RU(side_label) = u;
 }
 
 
 void LCL1D::setVelocity(double v)
 {
    MESH_SD
-      _v(theSideLabel) = v;
+      _v(side_label) = v;
 }
 
 

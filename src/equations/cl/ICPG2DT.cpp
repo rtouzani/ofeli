@@ -48,13 +48,13 @@ using std::max;
 namespace OFELI {
 
 ICPG2DT::e_fptr ICPG2DT::fsolver [] = {
-                   &ICPG2DT::RiemannSolver_ROE,
-                   &ICPG2DT::RiemannSolver_VFROE,
-                   &ICPG2DT::RiemannSolver_LF,
-                   &ICPG2DT::RiemannSolver_RUSANOV,
-                   &ICPG2DT::RiemannSolver_HLL,
-                   &ICPG2DT::RiemannSolver_HLLC
-                 };
+                                       &ICPG2DT::RiemannSolver_ROE,
+                                       &ICPG2DT::RiemannSolver_VFROE,
+                                       &ICPG2DT::RiemannSolver_LF,
+                                       &ICPG2DT::RiemannSolver_RUSANOV,
+                                       &ICPG2DT::RiemannSolver_HLL,
+                                       &ICPG2DT::RiemannSolver_HLLC
+                                      };
 
 
 ICPG2DT::ICPG2DT(Mesh& ms)
@@ -62,9 +62,9 @@ ICPG2DT::ICPG2DT(Mesh& ms)
 {
    init();
    _init_alloc = true;
-   _r = new Vect<real_t>(*_theMesh,1,ELEMENT_DOF);
-   _v = new Vect<real_t>(*_theMesh,2,ELEMENT_DOF);
-   _p = new Vect<real_t>(*_theMesh,1,ELEMENT_DOF);
+   _r = new Vect<real_t>(*_theMesh,ELEMENT_DOF,1);
+   _v = new Vect<real_t>(*_theMesh,ELEMENT_DOF,2);
+   _p = new Vect<real_t>(*_theMesh,ELEMENT_DOF,1);
    _min_density = 1.e-9;
 }
 
@@ -127,7 +127,7 @@ void ICPG2DT::setInitialConditionShockTube(const LocalVect<real_t,4>& BcL,
                                            real_t                     x0)
 {
 // Two differents zones (for shock tube purpose)
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
 //    Defining two zones
       if (Triang3(the_element).getCenter().x<x0) {
@@ -148,7 +148,7 @@ void ICPG2DT::setInitialConditionShockTube(const LocalVect<real_t,4>& BcL,
 
 void ICPG2DT::setInitialCondition(const LocalVect<real_t,4>& u)
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       _r->set(n,u(1));
       _v->set(n,1,u(2));
@@ -160,22 +160,14 @@ void ICPG2DT::setInitialCondition(const LocalVect<real_t,4>& u)
 
 void ICPG2DT::setReconstruction()
 {
-   if (Muscl2DT::setReconstruction(*_r,_Lr,_Rr,1)) {
-      cerr << "ERROR: reconstruction of rho failed" << endl;
-      exit(3);
-   }
-   if (Muscl2DT::setReconstruction(*_v,_Lv,_Rv,1)) {
-      cerr << "ERROR: reconstruction of u failed" << endl;
-      exit(3);
-   }
-   if (Muscl2DT::setReconstruction(*_v,_Lv,_Rv,2)) {
-      cerr << "ERROR: reconstruction of v failed" << endl;
-      exit(3);
-   }
-   if (Muscl2DT::setReconstruction(*_p,_Lp,_Rp,1)) {
-      cerr << "ERROR: reconstruction of p failed" << endl;
-      exit(3);
-   }
+   if (Muscl2DT::setReconstruction(*_r,_Lr,_Rr,1))
+      throw OFELIException("ICPG2DT::setReconstruction(): Reconstruction of rho failed");
+   if (Muscl2DT::setReconstruction(*_v,_Lv,_Rv,1))
+      throw OFELIException("ICPG2DT::setReconstruction(): Reconstruction of u failed");
+   if (Muscl2DT::setReconstruction(*_v,_Lv,_Rv,2))
+      throw OFELIException("ICPG2DT::setReconstruction(): Reconstruction of v failed");
+   if (Muscl2DT::setReconstruction(*_p,_Lp,_Rp,1))
+      throw OFELIException("ICPG2DT::setReconstruction(): Reconstruction of p failed");
 }
 
 
@@ -192,14 +184,10 @@ real_t ICPG2DT::RiemannSolver_ROE(int s)
    sqrt_rho_R *= one_over_sqrt;                               // same !
 
 // Averages are hence normalized !!
-   if (_Lr(s)<_min_density) {
-      cerr << "ERROR: left minimum density rho = " << _Lr(s) << endl;
-      exit(2);
-   }
-   if (_Rr(s)<_min_density) {
-      cerr << "ERROR: right minimum density rho = " << _Rr(s) << endl;
-      exit(2);
-   }
+   if (_Lr(s)<_min_density)
+      throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): Left minimum density rho = " + dtos(_Lr(s)));
+   if (_Rr(s)<_min_density)
+      throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): Right minimum density rho = " + dtos(_Rr(s)));
 
 // get data
    _tLr = _Lr(s); _tRr = _Rr(s);
@@ -225,20 +213,16 @@ real_t ICPG2DT::RiemannSolver_ROE(int s)
                        sqrt_rho_L*_tLv[1] + sqrt_rho_R*_tRv[1]);
    real_t Roe_H = sqrt_rho_L*_LH + sqrt_rho_R*_RH;
    real_t Roe_c = (_Gamma-1.)*(Roe_H-0.5*Roe_u.NNorm());   //  c*c !!!!
-   if (Roe_c<0) {
-      cerr << "ERROR: Roe sound speed negative " << Roe_c << endl
-           << "       in point with label " << s << ", on boundary (0/1) " 
-           << _theMesh->getPtrSide(s)->isOnBoundary()
-           << ": " << Triang3(_theMesh->getPtrSide(s)).getCenter().x << "  " 
-           << Triang3(_theMesh->getPtrSide(s)).getCenter().y << endl;
-      exit(2);
-   }
+   if (Roe_c<0)
+      throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): Roe sound speed negative in point "
+                           + itos(s) + ", on boundary (0/1) "
+                           + itos(_theMesh->getPtrSide(s)->isOnBoundary())
+                           + ": "+ dtos(Triang3(_theMesh->getPtrSide(s)).getCenter().x) + "  " 
+                           + dtos(Triang3(_theMesh->getPtrSide(s)).getCenter().y));
    Roe_c = sqrt(Roe_c);
 
 // compute eigenvalues
-   real_t lambda1 = Roe_u.x - Roe_c,
-          lambda2 = Roe_u.x,
-          lambda4 = Roe_u.x + Roe_c;
+   real_t lambda1 = Roe_u.x - Roe_c, lambda2 = Roe_u.x, lambda4 = Roe_u.x + Roe_c;
 
 // calculate flux
    if (lambda1>0.) {
@@ -261,10 +245,9 @@ real_t ICPG2DT::RiemannSolver_ROE(int s)
       rho_star = _tLr + alpha1;
       u_star = (_Lrv[0]+alpha1*(Roe_u.y-Roe_c))/rho_star;
       p_star = (_Gamma-1)*(_Le+alpha1*(Roe_H-Roe_u.x*Roe_c)-0.5*rho_star*u_star*u_star);
-      if (p_star<0) {
-         cerr << "ERROR: negative pressure in left entropy fix method" << endl;
-         exit(2);
-      }
+      if (p_star<0)
+         throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): ERROR: negative pressure"
+                              " in left entropy fix method");
       c_star = sqrt(_Gamma*p_star/rho_star);
       lambda_entropy_right = u_star - c_star;
       if (lambda_entropy_left<0. && 0.<lambda_entropy_right) //we have to fix the entropy
@@ -409,10 +392,9 @@ real_t ICPG2DT::RiemannSolver_VFROE(int s)
       rho_star = _tRr - alpha4;
       u_star = (_Rrv[0]-alpha4*(Roe_u.x+Roe_c))/rho_star;
       p_star = (_Gamma-1)*(_Re-alpha4*(Roe_H+Roe_u.x*Roe_c)-0.5*rho_star*u_star*u_star);
-      if (p_star<0) {
-         cerr << "ERROR: negative pressure in right entropy fix method" << endl;
-         exit(2);
-      }
+      if (p_star<0)
+         throw OFELIException("ICPG2DT::RiemannSolver_VFROE(int): Negative pressure in right "
+                              "entropy fix method");
       c_star = sqrt(_Gamma*p_star/rho_star);
       lambda_entropy_left = u_star + c_star;
       if (lambda_entropy_left<0. && 0.<lambda_entropy_right) // we have to fix the entropy
@@ -726,7 +708,7 @@ real_t ICPG2DT::getFlux()
 // The solver assumes that boundary condition
 // i.e. _Lv at boundary, has already been defined  !!!
    real_t lambda_max=1.e-10, lambda, fu, fv;
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t s = side_label;
       Point<real_t> n = _n(s);
       _tLv[0] = _Lv(s,1); _tLv[1] = _Lv(s,2);
@@ -775,7 +757,7 @@ void ICPG2DT::setBC(const Side&  sd,
 void ICPG2DT::setBC(int    code,
                     real_t a)
 {
-   mesh_sides(*_theMesh) 
+   MESH_SD 
       if (The_side.isOnBoundary() && The_side.getCode(1)==code)
          setBC(The_side,a);
 }
@@ -783,7 +765,7 @@ void ICPG2DT::setBC(int    code,
 
 void ICPG2DT::setBC(real_t a)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       if (The_side.isOnBoundary())
          setBC(The_side,a);
 }
@@ -803,7 +785,7 @@ void ICPG2DT::setBC(const Side&                sd,
 void ICPG2DT::setBC(int                        code,
                     const LocalVect<real_t,4>& u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       if (The_side.isOnBoundary() && The_side.getCode()==code)
          setBC(The_side,u);
 }
@@ -811,7 +793,7 @@ void ICPG2DT::setBC(int                        code,
 
 void ICPG2DT::setBC(const LocalVect<real_t,4>& u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       if (The_side.isOnBoundary())
          setBC(The_side,u);
 }
@@ -865,7 +847,7 @@ void ICPG2DT::setInOutFlowBC(const Side&                sd,
 void ICPG2DT::setInOutFlowBC(int                        code,
                              const LocalVect<real_t,4>& u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
      if (The_side.isOnBoundary() && The_side.getCode()==code)
          setInOutFlowBC(The_side,u);
 }
@@ -873,7 +855,7 @@ void ICPG2DT::setInOutFlowBC(int                        code,
 
 void ICPG2DT::setInOutFlowBC(const LocalVect<real_t,4>& u)
 {
-   mesh_sides(*_theMesh)
+   MESH_SD
       if (The_side.isOnBoundary())
          setInOutFlowBC(The_side,u);
 }
@@ -887,7 +869,7 @@ void ICPG2DT::setInOutFlowBC(const LocalVect<real_t,4>& u)
 void ICPG2DT::fromPrimalToConservative()
 {
    real_t G = 1./(_Gamma-1.);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       real_t rho = (*_r)(n);
       _p->set(n,(*_p)(n)*G + 0.5*rho*((*_v)(n,1)*(*_v)(n,1)+(*_v)(n,2)*(*_v)(n,2)));
@@ -899,7 +881,7 @@ void ICPG2DT::fromPrimalToConservative()
 
 void ICPG2DT::fromConservativeToPrimal()
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       _v->set(n,1,(*_v)(n,1)/(*_r)(n));
       _v->set(n,2,(*_v)(n,2)/(*_r)(n));
@@ -913,7 +895,7 @@ void ICPG2DT::forward()
    fromPrimalToConservative();
 
 // WARNING: u is now r*u and p is now e
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t s = side_label;
       Element *el = The_side.getNeighborElement(1), 
               *er = The_side.getNeighborElement(2);
@@ -943,7 +925,7 @@ void ICPG2DT::forward()
 void ICPG2DT::Forward(const Vect<real_t>& Flux,
                       Vect<real_t>&       Field)
 {
-  mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t ns = side_label;
       Field.add(The_side.getNeighborElement(1)->n(),-_Lrate(ns)*_TimeStep*Flux(ns));
       if (The_side.isOnBoundary()==0)
@@ -954,8 +936,8 @@ void ICPG2DT::Forward(const Vect<real_t>& Flux,
 
 void ICPG2DT::getMomentum(Vect<real_t>& m) const
 {
-   m.setMesh(*_theMesh,2,ELEMENT_FIELD);
-   mesh_elements(*_theMesh) {
+   m.setMesh(*_theMesh,ELEMENT_DOF,2);
+   MESH_EL {
       size_t n = element_label;
       m.set(n,1,(*_r)(n)*(*_v)(n,1));
       m.set(n,2,(*_r)(n)*(*_v)(n,2));
@@ -965,20 +947,18 @@ void ICPG2DT::getMomentum(Vect<real_t>& m) const
 
 void ICPG2DT::getInternalEnergy(Vect<real_t>& e) const
 {
-   e.setMesh(*_theMesh,1,ELEMENT_FIELD);
-   mesh_elements(*_theMesh) {
-      size_t n = element_label;
-      e.set(n,(*_p)(n)*(_Gamma-1.));
-   }
+   e.setMesh(*_theMesh,ELEMENT_DOF,1);
+   MESH_EL
+      e.set(element_label,(*_p)(element_label)*(_Gamma-1.));
 }
 
 
 void ICPG2DT::getTotalEnergy(Vect<real_t>& e) const
 {
-  e.setMesh(*_theMesh,1,ELEMENT_FIELD);
+   e.setMesh(*_theMesh,ELEMENT_DOF,1);
    Vect<real_t> tmp_e;
    getInternalEnergy(tmp_e);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       e.set(n,tmp_e(n) + 0.5*(*_r)(n)*(*_v)(n,1)*(*_v)(n,1) + (*_v)(n,2)*(*_v)(n,2));
    }
@@ -987,20 +967,20 @@ void ICPG2DT::getTotalEnergy(Vect<real_t>& e) const
 
 void ICPG2DT::getSoundSpeed(Vect<real_t>& s) const
 {
-   s.setMesh(*_theMesh,1,ELEMENT_FIELD);
-   mesh_elements(*_theMesh) {
-     size_t n = element_label;
-     s.set(n,sqrt(_Gamma*(*_p)(n)/(*_r)(n)));
+   s.setMesh(*_theMesh,ELEMENT_DOF,1);
+   MESH_EL {
+      size_t n = element_label;
+      s.set(n,sqrt(_Gamma*(*_p)(n)/(*_r)(n)));
    }
 }
 
 
 void ICPG2DT::getMach(Vect<real_t>& m) const
 {
-   m.setMesh(*_theMesh,2,ELEMENT_FIELD);
+   m.setMesh(*_theMesh,ELEMENT_DOF,2);
    Vect<real_t> tmp;
    getSoundSpeed(tmp);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       m.set(n,1,(*_v)(n,1)/tmp(n));
       m.set(n,2,(*_v)(n,2)/tmp(n));

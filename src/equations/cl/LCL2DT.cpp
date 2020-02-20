@@ -54,7 +54,7 @@ LCL2DT::LCL2DT(Mesh& m)
 {
    init();
    _init_alloc = true;
-   _U = new Vect<real_t>(*_theMesh,1,ELEMENT_DOF);
+   _U = new Vect<real_t>(*_theMesh,ELEMENT_DOF,1);
 }
 
 
@@ -108,8 +108,8 @@ void LCL2DT::setReconstruction()
 };
 
 
-void LCL2DT::setBC(const Side&  sd,
-                         real_t u)
+void LCL2DT::setBC(const Side& sd,
+                   real_t      u)
 {
    _RU.set(sd.n(),u);
 }
@@ -118,7 +118,7 @@ void LCL2DT::setBC(const Side&  sd,
 void LCL2DT::setBC(int    code,
                    real_t u)
 {
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       if (The_side.isOnBoundary() && The_side.getCode()==code)
          _RU.set(side_label,u);
    }
@@ -127,7 +127,7 @@ void LCL2DT::setBC(int    code,
 
 void LCL2DT::setBC(real_t u)
 {
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       if (The_side.isOnBoundary())
          _RU.set(side_label,u);
    }
@@ -137,10 +137,9 @@ void LCL2DT::setBC(real_t u)
 void LCL2DT::setVelocity(const LocalVect<real_t,2>& v)
 {
    _v.setSize(_nb_sides,2);
-   mesh_sides(*_theMesh) {
-      size_t n = side_label;
-      _v.set(n,1,v(1));
-      _v.set(n,2,v(2));
+   MESH_SD {
+      _v.set(side_label,1,v(1));
+      _v.set(side_label,2,v(2));
    }
 }
 
@@ -148,7 +147,7 @@ void LCL2DT::setVelocity(const LocalVect<real_t,2>& v)
 void LCL2DT::setVelocity(const Vect<real_t>& v)
 {
    _v.setSize(_nb_sides,2);
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t n = side_label;
       _v.set(n,1,v(n,1));
       _v.set(n,2,v(n,2));
@@ -167,7 +166,7 @@ real_t LCL2DT::getRiemannUpwind(size_t s)
 real_t LCL2DT::getFluxUpwind()
 {
    real_t lambda=1.e-10;
-   mesh_sides(*_theMesh)
+   MESH_SD
       lambda = max(getRiemannUpwind(side_label),lambda);
    return lambda;
 }
@@ -175,7 +174,7 @@ real_t LCL2DT::getFluxUpwind()
 
 void LCL2DT::forward()
 {
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t n = side_label;
       _U->add(The_side.getNeighborElement(1)->n(),-_FU(n)*_Lrate(n)*_TimeStep);
       if (The_side.isOnBoundary()==false)
@@ -187,7 +186,7 @@ void LCL2DT::forward()
 void LCL2DT::Forward(const Vect<real_t>& Flux,
                            Vect<real_t>& Field)
 {
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t n = side_label;
       Field.add(The_side.getNeighborElement(1)->n(),-Flux(n)*_Lrate(n)*_TimeStep);
       if (The_side.isOnBoundary()==false)

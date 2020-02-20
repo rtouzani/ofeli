@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = helmholtz
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 helmholtz_SOURCES = main.cpp
 helmholtz_LDADD  = $(top_builddir)/src/libofeli.a

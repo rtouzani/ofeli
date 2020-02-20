@@ -306,6 +306,9 @@ class Element
  */
     real_t getMeasure() const;
 
+/// \brief Return coordinates of center of element.
+    Point<real_t> getCenter() const;
+
 /// \brief Return outward unit normal to i-th side of element.
 /// \details Sides are ordered [node_1,node_2], [node_2,node_3], ...
     Point<real_t> getUnitNormal(size_t i) const;
@@ -365,11 +368,11 @@ class Element
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setGlobalToLocal();
     size_t getLocal(size_t i) { return _g2l[i]; }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
     friend class Mesh;
     friend void Refine(Mesh &in_mesh, Mesh &out_mesh);
     friend ostream& operator<<(ostream& s, const Mesh& ms);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private :
 

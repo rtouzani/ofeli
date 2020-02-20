@@ -46,14 +46,14 @@ void NodeList::selectCode(int code,
                           int dof)
 {
    _nbn = _nb_nodes;
-   mesh_nodes(*_ms) {
-      if (the_node->getCode(dof)==code)
+   node_loop(_ms) {
+      if (The_node.getCode(dof)==code)
          _nb_nodes++;
    }
    _theList.resize(_nb_nodes);
    size_t i=_nbn;
-   mesh_nodes(*_ms) {
-      if (the_node->getCode(dof)==code)
+   node_loop(_ms) {
+      if (The_node.getCode(dof)==code)
          _theList[i++] = the_node;
    }
 }
@@ -63,14 +63,14 @@ void NodeList::unselectCode(int code,
                             int dof)
 {
    _nbn = _nb_nodes;
-   mesh_nodes(*_ms) {
-      if (the_node->getCode(dof)!=code)
+   node_loop(_ms) {
+      if (The_node.getCode(dof)!=code)
          _nb_nodes++;
    }
    _theList.resize(_nb_nodes);
    size_t i=_nbn;
-   mesh_nodes(*_ms) {
-      if (the_node->getCode(dof)!=code)
+   node_loop(_ms) {
+      if (The_node.getCode(dof)!=code)
          _theList[i++] = the_node;
    }
 }
@@ -81,7 +81,7 @@ void NodeList::selectCoordinate(real_t x,
                                 real_t z)
 {
    _nbn = _nb_nodes;
-   mesh_nodes(*_ms) {
+   node_loop(_ms) {
 //    Any
       if (x==ANY && y==ANY && z==ANY)
          _nb_nodes++;
@@ -111,7 +111,7 @@ void NodeList::selectCoordinate(real_t x,
    }
    _theList.resize(_nb_nodes);
    size_t i=_nbn;
-   mesh_nodes(*_ms) {
+   node_loop(_ms) {
       if (x==ANY && y==ANY && z==ANY)
          _theList[i++] = the_node;
       if (Equal(the_node->getX(),x))
@@ -142,13 +142,13 @@ ElementList::ElementList(Mesh& ms)
 void ElementList::selectCode(int code)
 {
    _nbn = _nb_elements;
-   mesh_elements(*_ms) {
+   element_loop(_ms) {
       if (The_element.getCode()==code)
          _nb_elements++;
    }
    _theList.resize(_nb_elements);
    size_t i=_nbn;
-   mesh_elements(*_ms)
+   element_loop(_ms)
       if (The_element.getCode()==code)
          _theList[i++] = the_element;
 }
@@ -157,13 +157,13 @@ void ElementList::selectCode(int code)
 void ElementList::selectLevel(int level)
 {
    _nbn = _nb_elements;
-   mesh_elements(*_ms) {
+   element_loop(_ms) {
       if (The_element.getLevel()==level)
          _nb_elements++;
    }
    _theList.resize(_nb_elements);
    size_t i=_nbn;
-   mesh_elements(*_ms)
+   element_loop(_ms)
       if (The_element.getLevel()==level)
          _theList[i++] = the_element;
 }
@@ -172,13 +172,13 @@ void ElementList::selectLevel(int level)
 void ElementList::selectActive()
 {
    _nbn = _nb_elements;
-   mesh_elements(*_ms) {
+   element_loop(_ms) {
       if (The_element.isActive())
          _nb_elements++;
    }
    _theList.resize(_nb_elements);
    size_t i=_nbn;
-   mesh_elements(*_ms)
+   element_loop(_ms)
       if (The_element.isActive())
          _theList[i++] = the_element;
 }
@@ -188,13 +188,13 @@ void ElementList::selectMarked(const Vect<real_t>& e,
                                real_t              threshold)
 {
    _nbn = _nb_elements;
-   mesh_elements(*_ms) {
+   element_loop(_ms) {
       if (The_element.isActive() && e(element_label)>threshold)
          _nb_elements++;
    }
    _theList.resize(_nb_elements);
    size_t i=_nbn;
-   mesh_elements(*_ms)
+   element_loop(_ms)
       if (The_element.isActive() && e(element_label)>threshold)
          _theList[i++] = the_element;
 }
@@ -203,13 +203,13 @@ void ElementList::selectMarked(const Vect<real_t>& e,
 void ElementList::unselectCode(int code)
 {
    _nbn = _nb_elements;
-   mesh_elements(*_ms) {
+   element_loop(_ms) {
       if (The_element.getCode() != code)
          _nb_elements++;
    }
    _theList.resize(_nb_elements);
    size_t i=_nbn;
-   mesh_elements(*_ms)
+   element_loop(_ms)
       if (The_element.getCode() != code)
          _theList[i++] = the_element;
 }
@@ -226,12 +226,12 @@ void SideList::selectCode(int code,
                           int dof)
 {
    _nbn = _nb_sides;
-   mesh_sides(*_ms)
+   side_loop(_ms)
       if (The_side.getCode(dof)==code)
          _nb_sides++;
    _theList.resize(_nb_sides);
    size_t i=_nbn;
-   mesh_sides(*_ms)
+   side_loop(_ms)
       if (The_side.getCode(dof)==code)
          _theList[i++] = the_side;
 }
@@ -241,12 +241,12 @@ void SideList::unselectCode(int code,
                             int dof)
 {
    _nbn = _nb_sides;
-   mesh_sides(*_ms)
+   side_loop(_ms)
       if (The_side.getCode(dof) != code)
          _nb_sides++;
    _theList.resize(_nb_sides);
    size_t i=_nbn;
-   mesh_sides(*_ms)
+   side_loop(_ms)
       if (The_side.getCode(dof) != code)
          _theList[i++] = the_side;
 }
@@ -263,12 +263,12 @@ void EdgeList::selectCode(int code,
                           int dof)
 {
    _nbn = _nb_edges;
-   mesh_edges(*_ms)
+   edge_loop(_ms)
       if (The_edge.getCode(dof)==code)
          _nb_edges++;
    _theList.resize(_nb_edges);
    size_t i=_nbn;
-   mesh_edges(*_ms)
+   edge_loop(_ms)
       if (The_edge.getCode(dof)==code)
          _theList[i++] = the_edge;
 }
@@ -277,12 +277,12 @@ void EdgeList::selectCode(int code,
 void EdgeList::unselectCode(int code, int dof)
 {
    _nbn = _nb_edges;
-   mesh_edges(*_ms)
+   edge_loop(_ms)
       if (The_edge.getCode(dof)!=code)
          _nb_edges++;
    _theList.resize(_nb_edges);
    size_t i=_nbn;
-   mesh_edges(*_ms)
+   edge_loop(_ms)
       if (The_edge.getCode(dof)!=code)
          _theList[i++] = the_edge;
 }

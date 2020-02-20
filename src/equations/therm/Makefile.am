@@ -1,6 +1,7 @@
 
 noinst_LIBRARIES = libtherm.a
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 libtherm_a_SOURCES =	DC1DL2.cpp \
 			DC2DT3.cpp \

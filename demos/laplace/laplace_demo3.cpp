@@ -66,7 +66,6 @@ int main(int argc, char *argv[])
 //    Prescribe data
       eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(SOURCE,f);
-      //      eq.getLinearSolver().setTolerance(1.e-8);
 
 //    Solve problem
       eq.run();

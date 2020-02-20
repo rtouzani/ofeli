@@ -44,12 +44,14 @@ void parse(int     argc,
            string& mesh_file,
            string& input,
            string& output,
-           string& output_format);
+           string& output_format,
+           int&    freq);
 
 
 int main(int argc, char **argv)
 {
    string mesh_file, input_file, output_file, output_format, inp;
+   int    freq;
    cout << "\n\n";
    cout << "cfield, A Program to convert an XML OFELI file to other field file formats.\n";
    cout << "cfield, version 2.0, Copyright (c) 1998 - 2020 Rachid Touzani\n\n";
@@ -64,7 +66,7 @@ int main(int argc, char **argv)
    cout << "You should have received a copy of the GNU Lesser General Public License\n";
    cout << "along with this program.  If not, see <http://www.gnu.org/licenses/>.\n";
 
-   parse(argc, argv, mesh_file, input_file, output_file, output_format);
+   parse(argc, argv, mesh_file, input_file, output_file, output_format, freq);
    ifstream inf(input_file.c_str());
    string cc;
    inf >> cc;
@@ -74,25 +76,25 @@ int main(int argc, char **argv)
 // Gnuplot File
    if (output_format=="gpl") {
       cout << "Saving gnuplot file: " << output_file << " ...\n";
-      saveGnuplot(input_file,output_file,mesh_file);
+      saveGnuplot(input_file,output_file,mesh_file,freq);
    }
 
 // Tecplot File
    else if (output_format=="tec" || output_format=="tecplot") {
       cout << "Saving Tecplot file: " << output_file << " ...\n";
-      saveTecplot(input_file,output_file,mesh_file);
+      saveTecplot(input_file,output_file,mesh_file,freq);
    }
 
 // vtk File
    else if (output_format=="vtk" || output_format=="paraview") {
       cout << "Saving vtk file: " << output_file << " ..." << endl;
-      saveVTK(input_file,output_file,mesh_file);
+      saveVTK(input_file,output_file,mesh_file,freq);
    }
 
 // Gmsh File
    else if (output_format=="gmsh") {
       cout << "Saving Gmsh file: " << output_file << " ..." << endl;
-      saveGmsh(input_file,output_file,mesh_file);
+      saveGmsh(input_file,output_file,mesh_file,freq);
    }
    cout << "done." << endl;
    return 0;
@@ -104,7 +106,8 @@ void parse(int     argc,
            string& mesh_file,
            string& input_file, 
            string& output_file,
-           string& output_format)
+           string& output_format,
+           int&    freq)
 {
    const char help[]=
         "Available output formats:"
@@ -134,6 +137,8 @@ void parse(int     argc,
       ValuesConstraint<string> allowedOutVals(allowed_out);
       ValueArg<string> format("f","format",help,true,"gmsh",&allowedOutVals);
       cmd.add(format);
+      ValueArg<string> fr("s","saving_frequency","Saving frequency",false,"1","string");
+      cmd.add(fr);
 
 //    Parse the command line.
       cmd.parse(argc,argv);
@@ -142,6 +147,7 @@ void parse(int     argc,
       output_format = format.getValue();
       mesh_file = mesh.getValue();
       input_file = input.getValue();
+      freq = stringTo<int>(fr.getValue());
       string project = mesh_file.substr(0,mesh_file.rfind("."));
       if (mesh_file.substr(mesh_file.rfind(".")+1)=="xml")
          project = mesh_file.substr(0,mesh_file.rfind(".m"));

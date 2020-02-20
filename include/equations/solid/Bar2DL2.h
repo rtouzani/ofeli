@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -121,13 +121,11 @@ class Bar2DL2 : public Equa_Solid<real_t,2,4,1,2>
     void BoundaryRHS(const Vect<real_t> &f) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
- protected:
-   void set(const Element *el);
-   void set(const Side *sd) { }
-
  private:
    real_t _section, _cc, _ss, _sc;
    void Load();
+   void set(const Element *el);
+   void set(const Side *sd) { }
 };
 
 /*! @} End of Doxygen Groups */

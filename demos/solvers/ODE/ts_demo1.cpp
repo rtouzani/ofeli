@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
    cout << ts;
 
 // Compute error
-   Vect<double> U(ms,"u_ex",theFinalTime);
+   Vect<double> U(ms,NODE_DOF,"u_ex",1,theFinalTime);
    U.set("exp(-1)*exp(x+y)");
    cout << "Solution L2-Norm: " << u.getWNorm2() << endl;
    cout << "Error in L2-Norm: " << (u-U).getWNorm2() << endl;

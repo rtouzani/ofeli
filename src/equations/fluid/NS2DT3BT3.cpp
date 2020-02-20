@@ -86,7 +86,7 @@ void NS2DT3BT3::set(const Side* sd)
 
 void NS2DT3BT3::build()
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       Misc();
       Viscous();

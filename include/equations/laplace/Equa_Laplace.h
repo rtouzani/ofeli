@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -112,7 +112,7 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
     void build()
     {
        _A->clear();
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
           LHS();
           if (_bf!=nullptr)
@@ -123,7 +123,7 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
           AbsEqua<T_>::_b->Assembly(*_theElement,eRHS.get());
        }
        if (_sf!=nullptr) {
-          mesh_boundary_sides(*_theMesh) {
+          MESH_BD_SD {
              set(the_side);
              if (_sf!=nullptr)
                 BoundaryRHS(*_sf);
@@ -140,7 +140,7 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
  */
     void build(EigenProblemSolver& e)
     {
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
           buildEigen();
           e.Assembly(The_element,eA0.get(),eA1.get());

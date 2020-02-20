@@ -38,6 +38,7 @@ using std::vector;
 #include "OFELI_Config.h"
 #include "util/macros.h"
 #include "linear_algebra/Point.h"
+#include "linear_algebra/Vect.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
 #include "mesh/Edge.h"
@@ -730,7 +731,18 @@ class Mesh
  *  SIDE_DOF
  */
     int getDOFSupport() const;
- 
+
+/** \brief Deform mesh according to a displacement vector
+ *  \details This function modifies node coordinates according to given displacement
+ *  vector and given rate
+ *  @param [in] u Displacement vector
+ *  @param [in] rate Maximal rate of deformation of resulting mesh. Its default value
+ *  is 0.2, <i>i.e.</i> The resulting mesh has a maximum of deformation rate of
+ *  20%
+ */
+    void Deform(const Vect<real_t>& u,
+                real_t              rate=0.2);
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Return pointer to an element (in an imbedded mesh) to which node <tt>*nd</tt> belongs.
 /// This information is valid if utility function has been used.
@@ -975,8 +987,10 @@ class Mesh
     friend void Refine(Mesh& in_mesh,
                        Mesh& out_mesh);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend class XMLParser;
     friend ostream& operator<<(ostream& s, const Mesh& ms);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
     size_t            _nb_nodes, _nb_boundary_nodes, _nb_elements, _nb_sides, _nb_internal_sides;

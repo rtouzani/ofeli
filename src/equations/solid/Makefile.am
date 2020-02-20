@@ -1,6 +1,7 @@
 
 noinst_LIBRARIES = libsolid.a
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 libsolid_a_SOURCES =	Bar2DL2.cpp \
 			Beam3DL2.cpp \

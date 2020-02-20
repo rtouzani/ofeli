@@ -102,8 +102,14 @@ class TrMatrix : public Matrix<T_>
 /// \brief Define matrix as a diagonal one
     void Diagonal();
 
+/// \brief Define matrix as a diagona one and assign value \c a to all
+/// diagonal entries
     void Diagonal(const T_& a);
 
+/** \brief Define matrix as the one of 3-point finite difference discretization
+ *  of the second derivative
+ *  @param [in] h mesh size
+ */    
     void Laplace1D(real_t h);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -245,8 +251,10 @@ class TrMatrix : public Matrix<T_>
 //                         I M P L E M E N T A T I O N                       //
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<>
 inline void TrMatrix<real_t>::Laplace1D(real_t h);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 
 ///////////////////////////////////////////////////////////////////////////////

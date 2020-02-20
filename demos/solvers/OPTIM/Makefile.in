@@ -324,6 +324,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 opt_demo1_SOURCES = opt_demo1.cpp
 opt_demo2_SOURCES = opt_demo2.cpp
 opt_demo3_SOURCES = opt_demo3.cpp

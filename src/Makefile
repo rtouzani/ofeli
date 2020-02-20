@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin19.0.0
-host_triplet = i386-apple-darwin19.0.0
+build_triplet = i386-apple-darwin19.2.0
+host_triplet = i386-apple-darwin19.2.0
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -239,14 +239,14 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
-ACLOCAL = ${SHELL} /Users/touzani/ofeli/ofeli/missing aclocal-1.16
+ACLOCAL = ${SHELL} /Users/touzani/ofeli/missing aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoconf
-AUTOHEADER = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoheader
-AUTOMAKE = ${SHELL} /Users/touzani/ofeli/ofeli/missing automake-1.16
-AWK = gawk
+AUTOCONF = ${SHELL} /Users/touzani/ofeli/missing autoconf
+AUTOHEADER = ${SHELL} /Users/touzani/ofeli/missing autoheader
+AUTOMAKE = ${SHELL} /Users/touzani/ofeli/missing automake-1.16
+AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
@@ -267,7 +267,7 @@ EIGEN_CFLAGS = -I${prefix}/include/eigen3
 EXEEXT = 
 GREP = /usr/bin/grep
 HAVE_INLINE = 
-INSTALL = /opt/local/bin/ginstall -c
+INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
@@ -277,8 +277,8 @@ LIBOBJS =
 LIBS = 
 LTLIBOBJS = 
 MAINT = #
-MAKEINFO = ${SHELL} /Users/touzani/ofeli/ofeli/missing makeinfo
-MKDIR_P = /opt/local/bin/gmkdir -p
+MAKEINFO = ${SHELL} /Users/touzani/ofeli/missing makeinfo
+MKDIR_P = .././install-sh -c -d
 MPI_CFLAGS = -I${prefix}/include/mpi 
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
@@ -305,10 +305,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 4.0.0
-abs_builddir = /Users/touzani/ofeli/ofeli/src
-abs_srcdir = /Users/touzani/ofeli/ofeli/src
-abs_top_builddir = /Users/touzani/ofeli/ofeli
-abs_top_srcdir = /Users/touzani/ofeli/ofeli
+abs_builddir = /Users/touzani/ofeli/src
+abs_srcdir = /Users/touzani/ofeli/src
+abs_top_builddir = /Users/touzani/ofeli
+abs_top_srcdir = /Users/touzani/ofeli
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -317,10 +317,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin19.0.0
+build = i386-apple-darwin19.2.0
 build_alias = 
 build_cpu = i386
-build_os = darwin19.0.0
+build_os = darwin19.2.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -328,15 +328,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin19.0.0
+host = i386-apple-darwin19.2.0
 host_alias = 
 host_cpu = i386
-host_os = darwin19.0.0
+host_os = darwin19.2.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/touzani/ofeli/ofeli/install-sh
+install_sh = ${SHELL} /Users/touzani/ofeli/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -358,226 +358,201 @@ top_builddir = ..
 top_srcdir = ..
 lib_LIBRARIES = libofeli.a
 AUTOMAKE_OPTIONS = no-dependencies
-SUBDIRS = equations io linear_algebra mesh post shape_functions solvers util
+SUBDIRS = linear_algebra mesh io post shape_functions solvers util equations
 libofeli_a_SOURCES = 
-EQUATIONS_OBJS = \
-			equations/DG.o
+EQUATIONS_OBJS = equations/DG.o
+CL_OBJS = equations/cl/Muscl.o \
+          equations/cl/Muscl1D.o \
+          equations/cl/Muscl2DT.o \
+          equations/cl/Muscl3DT.o \
+          equations/cl/LCL1D.o \
+          equations/cl/LCL2DT.o \
+          equations/cl/LCL3DT.o \
+          equations/cl/ICPG1D.o \
+          equations/cl/ICPG2DT.o \
+          equations/cl/ICPG3DT.o
 
-CL_OBJS = \
-			equations/cl/Muscl.o \
-			equations/cl/Muscl1D.o \
-			equations/cl/Muscl2DT.o \
-			equations/cl/Muscl3DT.o \
-			equations/cl/LCL1D.o \
-			equations/cl/LCL2DT.o \
-			equations/cl/LCL3DT.o \
-			equations/cl/ICPG1D.o \
-			equations/cl/ICPG2DT.o \
-			equations/cl/ICPG3DT.o
+ELECTROMAGNETICS_OBJS = equations/electromagnetics/BiotSavart.o \
+                        equations/electromagnetics/EC2D1T3.o \
+                        equations/electromagnetics/EC2D2T3.o \
+                        equations/electromagnetics/EC2DB2T3.o \
+                        equations/electromagnetics/HelmholtzBT3.o
 
-ELECTROMAGNETICS_OBJS = \
-			equations/electromagnetics/BiotSavart.o \
-			equations/electromagnetics/EC2D1T3.o \
-			equations/electromagnetics/EC2D2T3.o \
-			equations/electromagnetics/EC2DB2T3.o \
-			equations/electromagnetics/HelmholtzBT3.o
+FLUID_OBJS = equations/fluid/NSP2DQ41.o \
+             equations/fluid/TINS2DT3S.o \
+             equations/fluid/TINS3DT4S.o \
+             equations/fluid/NS2DT3BT3.o
 
-FLUID_OBJS = \
-			equations/fluid/NSP2DQ41.o \
-			equations/fluid/TINS2DT3S.o \
-			equations/fluid/TINS3DT4S.o \
-			equations/fluid/NS2DT3BT3.o
+INTERFACE_OBJS = equations/interface/FastMarching2D.o \
+                 equations/interface/FMM.o \
+                 equations/interface/FMM2D.o \
+                 equations/interface/FMM3D.o \
+                 equations/interface/FMMSolver.o \
+                 equations/interface/Heap.o \
+                 equations/interface/IPoint.o
 
-INTERFACE_OBJS = \
-			equations/interface/FastMarching2D.o \
-			equations/interface/FMM.o \
-			equations/interface/FMM2D.o \
-			equations/interface/FMM3D.o \
-			equations/interface/FMMSolver.o \
-			equations/interface/Heap.o \
-			equations/interface/IPoint.o
+LAPLACE_OBJS = equations/laplace/Laplace1DL2.o \
+               equations/laplace/Laplace1DL3.o \
+               equations/laplace/Laplace2DT3.o \
+               equations/laplace/Laplace2DT6.o \
+               equations/laplace/Laplace3DT4.o \
+               equations/laplace/LaplaceDG2DP1.o \
+               equations/laplace/SteklovPoincare2DBE.o
 
-LAPLACE_OBJS = \
-			equations/laplace/Laplace1DL2.o \
-			equations/laplace/Laplace1DL3.o \
-			equations/laplace/Laplace2DT3.o \
-			equations/laplace/Laplace2DT6.o \
-			equations/laplace/Laplace3DT4.o \
-			equations/laplace/LaplaceDG2DP1.o \
-			equations/laplace/SteklovPoincare2DBE.o
+POROUS_OBJS = equations/porous/WaterPorous1D.o \
+              equations/porous/WaterPorous2D.o
 
-POROUS_OBJS = \
-			equations/porous/WaterPorous1D.o \
-			equations/porous/WaterPorous2D.o
+SOLID_OBJS = equations/solid/Bar2DL2.o \
+             equations/solid/Beam3DL2.o \
+             equations/solid/Elas2DT3.o \
+             equations/solid/Elas2DQ4.o \
+             equations/solid/Elas3DH8.o \
+             equations/solid/Elas3DT4.o
 
-SOLID_OBJS = \
-			equations/solid/Bar2DL2.o \
-			equations/solid/Beam3DL2.o \
-			equations/solid/Elas2DT3.o \
-			equations/solid/Elas2DQ4.o \
-			equations/solid/Elas3DH8.o \
-			equations/solid/Elas3DT4.o
+THERM_OBJS = equations/therm/DC1DL2.o \
+             equations/therm/DC2DT3.o \
+             equations/therm/DC2DT6.o \
+             equations/therm/DC3DAT3.o \
+             equations/therm/DC3DT4.o \
+             equations/therm/PhaseChange.o
 
-THERM_OBJS = \
-			equations/therm/DC1DL2.o \
-			equations/therm/DC2DT3.o \
-			equations/therm/DC2DT6.o \
-			equations/therm/DC3DAT3.o \
-			equations/therm/DC3DT4.o \
-			equations/therm/PhaseChange.o
+IO_OBJS = io/FFI.o \
+          io/IOField.o \
+          io/IPF.o \
+          io/Prescription.o \
+          io/Tabulation.o \
+          io/XMLParser.o \
+          io/saveField.o
 
-IO_OBJS = \
-			io/FFI.o \
-			io/IOField.o \
-			io/IPF.o \
-			io/Prescription.o \
-			io/Tabulation.o \
-			io/XMLParser.o \
-			io/saveField.o
+FPARSER_OBJS = io/fparser/fparser.o \
+               io/fparser/fpoptimizer.o
 
-FPARSER_OBJS = \
-			io/fparser/fparser.o \
-			io/fparser/fpoptimizer.o
+XMLSP_OBJS = io/xmlsp/xmlsp.o
+LINEAR_ALGEBRA_OBJS = linear_algebra/GraphOfMatrix.o
+MESH_OBJS = mesh/Domain.o \
+            mesh/Edge.o \
+            mesh/Element.o \
+            mesh/getMesh.o \
+            mesh/Grid.o \
+            mesh/Material.o \
+            mesh/Mesh.o \
+            mesh/MeshAdapt.o \
+            mesh/MeshExtract.o \
+            mesh/MeshUtil.o \
+            mesh/Node.o \
+            mesh/Partition.o \
+            mesh/saveMesh.o \
+            mesh/Side.o
 
-XMLSP_OBJS = \
-			io/xmlsp/xmlsp.o
+BAMG_OBJS = mesh/bamg/bamg.o \
+            mesh/bamg/Mesh2.o \
+            mesh/bamg/MeshGeom.o \
+            mesh/bamg/MeshQuad.o \
+            mesh/bamg/MeshRead.o \
+            mesh/bamg/MeshWrite.o \
+            mesh/bamg/Meshio.o \
+            mesh/bamg/Metric.o \
+            mesh/bamg/QuadTree.o \
+            mesh/bamg/SetOfE4.o
 
-LINEAR_ALGEBRA_OBJS = \
-			linear_algebra/GraphOfMatrix.o
+METIS_OBJS = mesh/metis/coarsen.o \
+             mesh/metis/fm.o \
+             mesh/metis/initpart.o \
+             mesh/metis/match.o \
+             mesh/metis/ccgraph.o \
+             mesh/metis/memory.o \
+             mesh/metis/pmetis.o \
+             mesh/metis/pqueue.o \
+             mesh/metis/refine.o \
+             mesh/metis/util.o \
+             mesh/metis/timing.o \
+             mesh/metis/debug.o \
+             mesh/metis/bucketsort.o \
+             mesh/metis/graph.o \
+             mesh/metis/stat.o \
+             mesh/metis/kmetis.o \
+             mesh/metis/kwayrefine.o \
+             mesh/metis/kwayfm.o \
+             mesh/metis/balance.o \
+             mesh/metis/ometis.o \
+             mesh/metis/srefine.o \
+             mesh/metis/sfm.o \
+             mesh/metis/separator.o \
+             mesh/metis/mincover.o \
+             mesh/metis/mmd.o \
+             mesh/metis/mesh_metis.o \
+             mesh/metis/meshpart.o \
+             mesh/metis/frename.o \
+             mesh/metis/fortran.o \
+             mesh/metis/myqsort.o \
+             mesh/metis/compress.o \
+             mesh/metis/parmetis.o \
+             mesh/metis/estmem.o \
+             mesh/metis/mpmetis.o \
+             mesh/metis/mcoarsen.o \
+             mesh/metis/mmatch.o \
+             mesh/metis/minitpart.o \
+             mesh/metis/mbalance.o \
+             mesh/metis/mrefine.o \
+             mesh/metis/mutil.o \
+             mesh/metis/mfm.o \
+             mesh/metis/mkmetis.o \
+             mesh/metis/mkwayrefine.o \
+             mesh/metis/mkwayfmh.o \
+             mesh/metis/mrefine2.o \
+             mesh/metis/minitpart2.o \
+             mesh/metis/mbalance2.o \
+             mesh/metis/mfm2.o \
+             mesh/metis/kvmetis.o \
+             mesh/metis/kwayvolrefine.o \
+             mesh/metis/kwayvolfm.o \
+             mesh/metis/subdomains.o
 
-MESH_OBJS = \
-			mesh/Domain.o \
-			mesh/Edge.o \
-			mesh/Element.o \
-			mesh/getMesh.o \
-			mesh/Grid.o \
-			mesh/Material.o \
-			mesh/Mesh.o \
-			mesh/MeshAdapt.o \
-			mesh/MeshExtract.o \
-			mesh/MeshUtil.o \
-			mesh/Node.o \
-			mesh/Partition.o \
-			mesh/saveMesh.o \
-			mesh/Side.o
+POST_OBJS = post/Estimator.o \
+            post/Reconstruction.o
 
-BAMG_OBJS = \
-			mesh/bamg/bamg.o \
-			mesh/bamg/Mesh2.o \
-			mesh/bamg/MeshGeom.o \
-			mesh/bamg/MeshQuad.o \
-			mesh/bamg/MeshRead.o \
-			mesh/bamg/MeshWrite.o \
-			mesh/bamg/Meshio.o \
-			mesh/bamg/Metric.o \
-			mesh/bamg/QuadTree.o \
-			mesh/bamg/SetOfE4.o
+SHAPE_FUNCTIONS_OBJS = shape_functions/Hexa8.o \
+                       shape_functions/Line2.o \
+                       shape_functions/Line3.o \
+                       shape_functions/Penta6.o \
+                       shape_functions/Quad4.o \
+                       shape_functions/Tetra4.o \
+                       shape_functions/Triang3.o \
+                       shape_functions/Triang6S.o
 
-METIS_OBJS = \
-			mesh/metis/coarsen.o \
-			mesh/metis/fm.o \
-			mesh/metis/initpart.o \
-			mesh/metis/match.o \
-			mesh/metis/ccgraph.o \
-			mesh/metis/memory.o \
-			mesh/metis/pmetis.o \
-			mesh/metis/pqueue.o \
-			mesh/metis/refine.o \
-			mesh/metis/util.o \
-			mesh/metis/timing.o \
-			mesh/metis/debug.o \
-			mesh/metis/bucketsort.o \
-			mesh/metis/graph.o \
-			mesh/metis/stat.o \
-			mesh/metis/kmetis.o \
-			mesh/metis/kwayrefine.o \
-			mesh/metis/kwayfm.o \
-			mesh/metis/balance.o \
-			mesh/metis/ometis.o \
-			mesh/metis/srefine.o \
-			mesh/metis/sfm.o \
-			mesh/metis/separator.o \
-			mesh/metis/mincover.o \
-			mesh/metis/mmd.o \
-			mesh/metis/mesh_metis.o \
-			mesh/metis/meshpart.o \
-			mesh/metis/frename.o \
-			mesh/metis/fortran.o \
-			mesh/metis/myqsort.o \
-			mesh/metis/compress.o \
-			mesh/metis/parmetis.o \
-			mesh/metis/estmem.o \
-			mesh/metis/mpmetis.o \
-			mesh/metis/mcoarsen.o \
-			mesh/metis/mmatch.o \
-			mesh/metis/minitpart.o \
-			mesh/metis/mbalance.o \
-			mesh/metis/mrefine.o \
-			mesh/metis/mutil.o \
-			mesh/metis/mfm.o \
-			mesh/metis/mkmetis.o \
-			mesh/metis/mkwayrefine.o \
-			mesh/metis/mkwayfmh.o \
-			mesh/metis/mrefine2.o \
-			mesh/metis/minitpart2.o \
-			mesh/metis/mbalance2.o \
-			mesh/metis/mfm2.o \
-			mesh/metis/kvmetis.o \
-			mesh/metis/kwayvolrefine.o \
-			mesh/metis/kwayvolfm.o \
-			mesh/metis/subdomains.o
+SOLVERS_OBJS = solvers/BSpline.o \
+               solvers/EigenProblemSolver.o \
+               solvers/NLASSolver.o \
+               solvers/ODESolver.o \
+               solvers/OptimNM.o \
+               solvers/OptimSA.o \
+               solvers/OptimTN.o \
+               solvers/OptimPG.o \
+               solvers/OptSolver.o \
+               solvers/Solver.o \
+               solvers/TimeStepping.o
 
-POST_OBJS = \
-			post/Estimator.o \
-			post/Reconstruction.o
-
-SHAPE_FUNCTIONS_OBJS = \
-			shape_functions/Hexa8.o \
-			shape_functions/Line2.o \
-			shape_functions/Line3.o \
-			shape_functions/Penta6.o \
-			shape_functions/Quad4.o \
-			shape_functions/Tetra4.o \
-			shape_functions/Triang3.o \
-			shape_functions/Triang6S.o
-
-SOLVERS_OBJS = \
-			solvers/BSpline.o \
-			solvers/EigenProblemSolver.o \
-			solvers/NLASSolver.o \
-			solvers/ODESolver.o \
-			solvers/OptimNM.o \
-			solvers/OptimSA.o \
-			solvers/OptimTN.o \
-			solvers/OptimPG.o \
-			solvers/OptSolver.o \
-			solvers/Solver.o \
-			solvers/TimeStepping.o
-
-UTIL_OBJS = \
-			util/Gauss.o
-
-libofeli_a_LIBADD = \
-			$(EQUATIONS_OBJS) \
-			$(CL_OBJS) \
-			$(ELECTROMAGNETICS_OBJS) \
-			$(FLUID_OBJS) \
-			$(INTERFACE_OBJS) \
-			$(LAPLACE_OBJS) \
-			$(POROUS_OBJS) \
-			$(SOLID_OBJS) \
-			$(THERM_OBJS) \
-			$(IO_OBJS) \
-			$(FPARSER_OBJS) \
-			$(XMLSP_OBJS) \
-			$(LINEAR_ALGEBRA_OBJS) \
-			$(MESH_OBJS) \
-			$(BAMG_OBJS) \
-			$(METIS_OBJS) \
-			$(POST_OBJS) \
-			$(SHAPE_FUNCTIONS_OBJS) \
-			$(SOLVERS_OBJS) \
-			$(UTIL_OBJS)
+UTIL_OBJS = util/Gauss.o
+libofeli_a_LIBADD = $(EQUATIONS_OBJS) \
+                    $(CL_OBJS) \
+                    $(ELECTROMAGNETICS_OBJS) \
+                    $(FLUID_OBJS) \
+                    $(INTERFACE_OBJS) \
+                    $(LAPLACE_OBJS) \
+                    $(POROUS_OBJS) \
+                    $(SOLID_OBJS) \
+                    $(THERM_OBJS) \
+                    $(IO_OBJS) \
+                    $(FPARSER_OBJS) \
+                    $(XMLSP_OBJS) \
+                    $(LINEAR_ALGEBRA_OBJS) \
+                    $(MESH_OBJS) \
+                    $(BAMG_OBJS) \
+                    $(METIS_OBJS) \
+                    $(POST_OBJS) \
+                    $(SHAPE_FUNCTIONS_OBJS) \
+                    $(SOLVERS_OBJS) \
+                    $(UTIL_OBJS)
 
 all: all-recursive
 

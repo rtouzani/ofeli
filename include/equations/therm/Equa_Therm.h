@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,7 +55,10 @@ namespace OFELI {
 
 class Element;
 class Side;
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 extern Material theMaterial;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \class Equa_Therm
  *  \ingroup Therm
@@ -175,7 +178,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        else if (_TimeInt.scheme==CRANK_NICOLSON)
           _TimeInt.theta = 0.5;
 
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
           if (_terms&CAPACITY)
              Capacity();
@@ -205,7 +208,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           AbsEqua<T_>::_b->Assembly(The_element,eRHS.get());
        }
        if (AbsEqua<T_>::_sf!=nullptr) {
-          mesh_boundary_sides(*_theMesh) {
+          MESH_BD_SD {
              set(the_side);
              BoundaryRHS(*AbsEqua<T_>::_sf);
              AbsEqua<T_>::_A->Assembly(The_side,sA0.get());
@@ -228,7 +231,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build(TimeStepping& s)
     {
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
           if (_terms&CAPACITY)
              Capacity(1.);
@@ -240,16 +243,15 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
              Convection();
           if (_terms&SOURCE && AbsEqua<T_>::_bf!=nullptr)
              BodyRHS(*AbsEqua<T_>::_bf);
-          s.Assembly(*_theElement,eRHS.get(),eA0.get(),eA1.get());
+          s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get());
        }
        if (AbsEqua<T_>::_sf!=nullptr) {
-          mesh_sides(*_theMesh) {
+          MESH_SD {
              if (The_side.isReferenced()) {
                 set(the_side);
-                this->SideVector(*AbsEqua<T_>::_u);
                 if (_terms&FLUX && AbsEqua<T_>::_sf!=nullptr)
                    BoundaryRHS(*AbsEqua<T_>::_sf);
-                s.SAssembly(*_theSide,sRHS.get());
+                s.SAssembly(The_side,sRHS.get());
              }
           }
        }
@@ -260,7 +262,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build(EigenProblemSolver& e)
     {
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
           this->ElementVector(*AbsEqua<T_>::_u);
           if (_terms&CAPACITY)

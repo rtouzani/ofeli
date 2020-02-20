@@ -25,7 +25,8 @@ ts_demo2:	ts_demo2.o
 
 
 clean:
-	/bin/rm -f *.o ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2
+	/bin/rm -f *.o ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 output.dat phase.dat *.vtk mm*.m output.dat
+
 
 .cpp.o:
 	`ofeli-config --cxx` `ofeli-config --cflags` -c $<

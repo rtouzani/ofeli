@@ -5,7 +5,7 @@ truss:	main.o
 	`ofeli-config --cxx` `ofeli-config --cflags` -o truss main.o `ofeli-config --libs`
 
 clean:
-	/bin/rm -f main.o truss`ofeli-config --exe_ext`
+	/bin/rm -f main.o truss`ofeli-config --exe_ext` truss-1.m *.d
 
 .cpp.o:
 	`ofeli-config --cxx` `ofeli-config --cflags` -c $<

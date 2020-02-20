@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -80,6 +80,7 @@ class Muscl2DT : public Muscl {
 
    using Muscl::_nb_sides;
    using Muscl::_nb_elements;
+   using Muscl::_nb_nodes;
 
 /// \brief Constructor using mesh
     Muscl2DT(Mesh &m);
@@ -94,9 +95,9 @@ class Muscl2DT : public Muscl {
  *  @param [in] dof Label of dof to reconstruct
  */
     bool setReconstruction(const Vect<real_t>& U,
-                                 Vect<real_t>& LU,
-                                 Vect<real_t>& RU,
-                                 size_t        dof);
+                           Vect<real_t>&       LU,
+                           Vect<real_t>&       RU,
+                           size_t              dof);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     real_t getMinimumFaceArea() const { return _MinimumFaceArea; }

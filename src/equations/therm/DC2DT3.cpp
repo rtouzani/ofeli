@@ -275,7 +275,7 @@ real_t DC2DT3::Energy(Vect<real_t>& u)
 {
    _u = &u;
    real_t E = 0.;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       Point<real_t> du = _eu[0]*_dSh[0] + _eu[1]*_dSh[1] + _eu[2]*_dSh[2];
       E += 0.5*_diff*_el_geo.area*(du,du);
@@ -294,7 +294,7 @@ void DC2DT3::EnergyGrad(Vect<real_t>& u,
    real_t f = 0.;
    g.clear();
    _u = &u;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       Diffusion();
       for (size_t i=1; i<=3; ++i) {
@@ -308,7 +308,7 @@ void DC2DT3::EnergyGrad(Vect<real_t>& u,
 
 void DC2DT3::Grad(Vect<Point<real_t> >& g)
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       g(element_label) = _eu(1)*_dSh[0] + _eu(2)*_dSh[1] + _eu(3)*_dSh[2];
    }

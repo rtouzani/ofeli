@@ -41,6 +41,7 @@
 #include "linear_algebra/LocalVect.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "mesh/Mesh.h"
+#include "mesh/MeshUtil.h"
 #include "mesh/Grid.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Tetra4.h"
@@ -68,7 +69,7 @@ Vect<T_>::Vect() :
 #if !defined (USE_EIGEN)
           vector<T_>(),
 #endif
-          _size(0), _nx(0), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
+          _dof_type(NODE_DOF), _size(0), _nx(0), _ny(1), _nz(1), _nb_dof(1),
           _dg_degree(-1), _grid(true), _with_mesh(false), _theMesh(nullptr),
           _name("#"), _time(0)
 {
@@ -82,8 +83,7 @@ Vect<T_>:: Vect(size_t n) :
 #if !defined (USE_EIGEN)
            vector<T_>(n),
 #endif
-           _size(n), _nx(n), _ny(1), _nz(1),
-           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nb_dof(1), _dg_degree(-1),
            _grid(true), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -104,8 +104,7 @@ Vect<T_>::Vect(size_t nx,
 #if !defined (USE_EIGEN)
           vector<T_>(nx*ny),
 #endif
-          _size(nx*ny), _nx(nx), _ny(ny), _nz(1),
-          _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+          _dof_type(NODE_DOF), _size(nx*ny), _nx(nx), _ny(ny), _nz(1), _nb_dof(1), _dg_degree(-1),
           _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -127,8 +126,8 @@ Vect<T_>::Vect(size_t nx,
 #if !defined (USE_EIGEN)
           vector<T_>(nx*ny*nz),
 #endif
-          _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz),
-          _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+          _dof_type(NODE_DOF), _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz),
+          _nb_dof(1), _dg_degree(-1),
           _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -149,8 +148,8 @@ Vect<T_>::Vect(size_t n,
 #if !defined (USE_EIGEN)
            vector<T_>(n),
 #endif
-           _size(n), _nx(n), _ny(1), _nz(1),
-           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1),
+           _nb_dof(1), _dg_degree(-1),
            _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -168,7 +167,7 @@ Vect<T_>::Vect(Grid& g) :
 #if !defined (USE_EIGEN)
            vector<T_>((g.getNx()+1)*(g.getNy()+1)*(g.getNz()+1)),
 #endif
-           _dof_type(NONE), _nb_dof(1), _dg_degree(-1),
+           _dof_type(NODE_DOF), _nb_dof(1), _dg_degree(-1),
            _grid(true), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
    setGrid(g);
@@ -178,29 +177,29 @@ Vect<T_>::Vect(Grid& g) :
 
 
 template<class T_>
-Vect<T_>::Vect(Mesh& m,
-               int   nb_dof,
-               int   dof_type)
+Vect<T_>::Vect(Mesh&      m,
+               DOFSupport dof_type,
+               int        nb_dof)
          : _dg_degree(-1), _grid(false), _with_mesh(true), _name("#"), _time(0)
 {
-   setMesh(m,nb_dof,dof_type);
+   setMesh(m,dof_type,nb_dof);
    for (size_t i=0; i<10; ++i)
       _with_regex[i] = false;
 }
 
 
 template<class T_>
-Vect<T_>::Vect(Mesh&  m,
-               string name,
-               real_t t,
-               int    nb_dof,
-               int    dof_type) :
+Vect<T_>::Vect(Mesh&      m,
+               DOFSupport dof_type,
+               string     name,
+               int        nb_dof,
+               real_t     t) :
 #if !defined (USE_EIGEN)
           vector<T_>(),
 #endif
-          _dg_degree(-1), _grid(false), _with_mesh(true), _name("#"), _time(t)
+          _dg_degree(-1), _grid(false), _with_mesh(true), _name(name), _time(t)
 {
-   setMesh(m,nb_dof,dof_type);
+   setMesh(m,dof_type,nb_dof);
    for (size_t i=0; i<10; ++i)
       _with_regex[i] = false;
 }
@@ -256,8 +255,8 @@ Vect<T_>::Vect(const Vect<T_>& v,
 #if !defined (USE_EIGEN)
            vector<T_>(bc.size()),
 #endif
-           _size(v._nb*v._nb), _nx(v._nb), _ny(v._nb_dof), _nz(1),
-           _nb(v._nb), _dof_type(v._dof_type), _nb_dof(v._nb_dof),
+           _dof_type(v._dof_type), _size(v._nb*v._nb), _nx(v._nb), _ny(v._nb_dof), _nz(1),
+           _nb(v._nb), _nb_dof(v._nb_dof),
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
@@ -265,7 +264,7 @@ Vect<T_>::Vect(const Vect<T_>& v,
 #if defined (USE_EIGEN)
    resize(bc.size());
 #endif
-   mesh_nodes(*_theMesh) {
+   MESH_ND {
       for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
          set(i,bc[n++]);
          if (The_node.getCode(k) == 0)
@@ -282,8 +281,8 @@ template<class T_>
 Vect<T_>::Vect(const Vect<T_>& v,
                size_t          nb_dof,
                size_t          first_dof)
-         : _size(v._size), _nx(v._nx), _ny(v._ny), _nz(v._nz),
-           _nb(v._nb), _dof_type(v._dof_type), _nb_dof(v._nb_dof),
+         : _dof_type(v._dof_type), _size(v._size), _nx(v._nx), _ny(v._ny), _nz(v._nz),
+           _nb(v._nb), _nb_dof(v._nb_dof),
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
@@ -299,7 +298,7 @@ Vect<T_>::Vect(const Vect<T_>& v,
 
 template<class T_>
 Vect<T_>::Vect(const Vect<T_>& v)
-         : _nb(v._nb), _dof_type(v._dof_type), _nb_dof(v._nb_dof),
+         : _dof_type(v._dof_type), _nb(v._nb), _nb_dof(v._nb_dof),
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
@@ -341,7 +340,7 @@ template<class T_>
 Vect<T_>::Vect(size_t          d,
                const Vect<T_>& v,
                const string&   name)
-         : _nb(v._nb), _dof_type(v._dof_type), _with_mesh(v._with_mesh),
+         : _dof_type(v._dof_type), _nb(v._nb), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(name), _time(v._time)
 {
    if (d<=0)
@@ -429,25 +428,44 @@ void Vect<T_>::set(const string& exp,
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::set(string,dof): No mesh defined");
    int err;
-   real_t d[4];
    PARSE(exp.c_str(),"x,y,z,t");
-   if (_dof_type==NODE_FIELD) {
-      mesh_nodes(*_theMesh) {
-         d[0] = The_node.getCoord(1);
-         d[1] = The_node.getCoord(2);
-         d[2] = The_node.getCoord(3);
-         d[3] = _time;
-         set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
+   if (_dof_type==NODE_DOF) {
+      MESH_ND {
+	set(The_node.getNbDOF()*(node_label-1)+dof,EVAL_XT(The_node.getCoord(),_time));
          if ((err=theParser.EvalError()))
             throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
                                  "Error code: "+itos(err));
       }
    }
-   else if (_dof_type==ELEMENT_FIELD) {
+   else if (_dof_type==SIDE_DOF) {
+      MESH_SD {
+         Point<real_t> x = The_side.getCenter();
+         set(The_side.getNbDOF()*(side_label-1)+dof,EVAL_XT(x,_time));
+         if ((err=theParser.EvalError()))
+            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
+                                 "Error code: "+itos(err));
+      }
+   }
+   else if (_dof_type==BOUNDARY_SIDE_DOF) {
+      MESH_BD_SD {
+         Point<real_t> x = The_side.getCenter();
+         set(The_side.getNbDOF()*(side_label-1)+dof,EVAL_XT(x,_time));
+         if ((err=theParser.EvalError()))
+            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
+                                 "Error code: "+itos(err));
+      }
+   }
+   else if (_dof_type==ELEMENT_DOF) {
+      MESH_EL {
+         Point<real_t> x = The_element.getCenter();
+         set(element_label,EVAL_XT(x,_time));
+         if ((err=theParser.EvalError()))
+            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
+                                 "Error code: "+itos(err));
+      }
    }
    else
-      throw OFELIException("In Vect::set(string,size_t): This member function is for "
-                           "nodewise vectors only.");
+      throw OFELIException("In Vect::set(string,size_t): Unknown vector type.");
 }
 
 
@@ -456,9 +474,8 @@ void Vect<T_>::set(const string&       exp,
                    const Vect<real_t>& x)
 {
    int err;
-   real_t d[2];
+   real_t d[] = {0., _time};
    PARSE(exp.c_str(),"x,t");
-   d[1] = _time;
    for (size_t i=0; i<x.size(); i++) {
       d[0] = x[i];
       set(i+1,EVAL(d));
@@ -478,15 +495,10 @@ void Vect<T_>::set(Mesh&  ms,
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::set(ms,string,dof): No mesh defined");
    int err;
-   real_t d[4];
    PARSE(exp.c_str(),"x,y,z,t");
-   if (_dof_type==NODE_FIELD) {
-      mesh_nodes(*_theMesh) {
-         d[0] = The_node.getCoord(1);
-         d[1] = The_node.getCoord(2);
-         d[2] = The_node.getCoord(3);
-         d[3] = _time;
-         set(The_node.getNbDOF()*(node_label-1)+dof,EVAL(d));
+   if (_dof_type==NODE_DOF) {
+      MESH_ND {
+         set(The_node.getNbDOF()*(node_label-1)+dof,EVAL_XT(The_node.getCoord(1),_time));
          if ((err=theParser.EvalError()))
             throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
                                  "Error code: "+itos(err));
@@ -504,7 +516,7 @@ void Vect<T_>::set(const Vect<real_t>& x,
 {
    int err;
    setSize(x._nx,x._ny,x._nz);
-   real_t d[2];
+   real_t d[] = {0., 0.};
    theParser.Parse(exp.c_str(),"x,i");
    for (size_t i=0; i<_size; i++) {
       d[0] = x[i];
@@ -517,29 +529,29 @@ void Vect<T_>::set(const Vect<real_t>& x,
 
 
 template<class T_>
-void Vect<T_>::setMesh(Mesh&  m,
-                       size_t nb_dof,
-                       size_t dof_type)
+void Vect<T_>::setMesh(Mesh&      m,
+                       DOFSupport dof_type,
+                       size_t     nb_dof)
 {
    _theMesh = &m;
    _with_mesh = true;
    size_t n=_theMesh->getNbDOF();
    _nb_dof = nb_dof;
+   if (nb_dof==0)
+      _nb_dof = n/_theMesh->getNbNodes();
    _dof_type = dof_type;
-   if (dof_type==NODE_FIELD || dof_type==NODE_DOF)
+   if (dof_type==NODE_DOF)
       _nb = _theMesh->getNbNodes();
-   else if (dof_type==SIDE_FIELD || dof_type==SIDE_DOF) {
+   else if (dof_type==SIDE_DOF) {
       _theMesh->getAllSides();
       _nb = _theMesh->getNbSides();
    }
-   else if (dof_type==BOUNDARY_SIDE_FIELD || dof_type==SIDE_DOF) {
-      _theMesh->getBoundarySides();
-      _nb = _theMesh->getNbBoundarySides();
+   else if (dof_type==BOUNDARY_SIDE_DOF) {
+      _theMesh->getAllSides();
+      _nb = _theMesh->getNbSides();
    }
-   else if (dof_type==ELEMENT_FIELD || dof_type==ELEMENT_DOF)
+   else if (dof_type==ELEMENT_DOF)
       _nb = _theMesh->getNbElements();
-   if (nb_dof==0)
-      _nb_dof = n/_theMesh->getNbNodes();
    setSize(_nb,_nb_dof,1);
    clear();
 }
@@ -585,7 +597,7 @@ void Vect<T_>::resize(size_t n,
 
 
 template<class T_>
-void Vect<T_>::setDOFType(int dof_type) { _dof_type = dof_type; }
+void Vect<T_>::setDOFType(DOFSupport dof_type) { _dof_type = dof_type; }
 
 
 template<class T_>
@@ -598,7 +610,7 @@ void Vect<T_>::setDG(int degree)
    if (degree<0)
       return;
    _nb_dof = 0;
-   _dof_type = ELEMENT_FIELD;
+   _dof_type = ELEMENT_DOF;
    switch (_theMesh->getDim()) {
 
       case 1: _nb_dof = _dg_degree+1;
@@ -643,7 +655,7 @@ bool Vect<T_>::WithMesh() const { return _with_mesh; }
 
 
 template<class T_>
-int Vect<T_>::getDOFType() const { return int(_dof_type); }
+DOFSupport Vect<T_>::getDOFType() const { return _dof_type; }
 
 
 template<class T_>
@@ -781,13 +793,11 @@ template <class T_>
 void Vect<T_>::setIJK(const string& exp)
 {
    int err;
-   real_t d[3];
    PARSE(exp.c_str(),"i,j,k");
    for (size_t i=1; i<=_nx; ++i) {
       for (size_t j=1; j<=_ny; ++j) {
          for (size_t k=1; k<=_nz; ++k) {
-            d[0] = i, d[1] = j, d[2] = k;
-            set(i,j,k,EVAL(d));
+            set(i,j,k,EVAL_XYZ(i,j,k));
             if ((err=theParser.EvalError()))
                throw OFELIException("In Vect::setIJK(string,dof): Illegal regular expression."
                                     " Error code: "+itos(err));
@@ -803,19 +813,46 @@ void Vect<T_>::setNodeBC(Mesh&  m,
                          T_     val,
                          size_t dof)
 {
-   if (m.getDOFSupport()==NODE_FIELD) {
-      mesh_nodes(m) {
+   if (m.getDOFSupport()==NODE_DOF) {
+      node_loop(&m) {
          for (size_t i=1; i<=The_node.getNbDOF(); i++) {
             if (The_node.getCode(dof)==code)
                set(node_label,dof,val);
          }
       }
    }
-   if (m.getDOFSupport()==SIDE_FIELD) {
-      MeshBoundarySides(m) {
-         for (size_t i=1; i<=theSide->getNbDOF(); i++) {
-            if (theSide->getCode(dof)==code)
+   if (m.getDOFSupport()==SIDE_DOF) {
+      boundary_side_loop(&m) {
+         for (size_t i=1; i<=The_side.getNbDOF(); i++) {
+            if (The_side.getCode(dof)==code)
                set(side_label,dof,val);
+         }
+      }
+   }
+}
+
+
+template<class T_>
+void Vect<T_>::setNodeBC(Mesh& m,
+                         int   code,
+                         T_    val)
+{
+   int c[10];
+   if (m.getDOFSupport()==NODE_DOF) {
+      node_loop(&m) {
+         DOFCode(code,The_node.getNbDOF(),c);
+         for (size_t i=1; i<=The_node.getNbDOF(); i++) {
+            if (The_node.getCode(i)==c[i-1])
+               set(node_label,i,val);
+         }
+      }
+   }
+   if (m.getDOFSupport()==SIDE_DOF) {
+      boundary_side_loop(&m) {
+         DOFCode(code,The_side.getNbDOF(),c);
+         for (size_t i=1; i<=The_side.getNbDOF(); i++) {
+            if (The_side.getCode(i)==c[i-1])
+               set(side_label,i,val);
          }
       }
    }
@@ -833,16 +870,24 @@ void Vect<T_>::setSideBC(Mesh&  m,
 
 
 template<class T_>
+void Vect<T_>::setSideBC(Mesh& m,
+                         int   code,
+                         T_    val)
+{
+   setSideBC(*_theMesh,code,val);
+}
+
+
+template<class T_>
 void Vect<T_>::setNodeBC(Mesh&         m,
                          int           code,
                          const string& exp,
                          size_t        dof)
 {
-   int err;
-   real_t d[4];
    theParser.Parse(exp.c_str(),"x,y,z,t");
-   d[3] = _time;
-   mesh_nodes(m) {
+   int err;
+   real_t d[] = {0., 0., 0., _time};
+   node_loop(&m) {
       d[0] = The_node.getCoord(1);
       d[1] = The_node.getCoord(2);
       d[2] = The_node.getCoord(3);
@@ -859,17 +904,42 @@ void Vect<T_>::setNodeBC(Mesh&         m,
 
 
 template<class T_>
+void Vect<T_>::setNodeBC(Mesh&         m,
+                         int           code,
+                         const string& exp)
+{
+   theParser.Parse(exp.c_str(),"x,y,z,t");
+   int err;
+   int c[6];
+   real_t d[] = {0., 0., 0., _time};
+   node_loop(&m) {
+      d[0] = The_node.getCoord(1);
+      d[1] = The_node.getCoord(2);
+      d[2] = The_node.getCoord(3);
+      DOFCode(code,The_node.getNbDOF(),c);
+      for (size_t i=1; i<=The_node.getNbDOF(); i++) {
+         if (The_node.getCode(i)==c[i-1]) {
+            set(node_label,i,theParser.Eval(d));
+            if ((err=theParser.EvalError()))
+               throw OFELIException("In Vect::setNodeBC(Mesh,int,string): "
+                                    "Illegal regular expression. Error code: "+itos(err));
+         }
+      }
+   }
+}
+
+
+template<class T_>
 void Vect<T_>::setSideBC(Mesh&         m,
                          int           code,
                          const string& exp,
                          size_t        dof)
 {
-   int err;
-   real_t d[4];
    theParser.Parse(exp.c_str(),"x,y,z,t");
-   d[3] = _time;
-   mesh_sides(m) {
-     if (The_side.getCode(dof)==code) {
+   int err;
+   real_t d[] = {0., 0., 0., _time};
+   side_loop(&m) {
+      if (The_side.getCode(dof)==code) {
          for (size_t n=1; n<=The_side.getNbNodes(); n++) {
             the_node = The_side(n);
             d[0] = The_node.getCoord(1);
@@ -888,11 +958,48 @@ void Vect<T_>::setSideBC(Mesh&         m,
 
 
 template<class T_>
+void Vect<T_>::setSideBC(Mesh&         m,
+                         int           code,
+                         const string& exp)
+{
+   theParser.Parse(exp.c_str(),"x,y,z,t");
+   int err;
+   real_t d[] = {0., 0., 0., _time};
+   int c[6];
+   side_loop(&m) {
+      DOFCode(code,The_side.getNbDOF(),c);
+      for (size_t i=1; i<=The_side.getNbDOF(); ++i) {
+         if (The_side.getCode(i)==c[i-1]) {
+            for (size_t n=1; n<=The_side.getNbNodes(); ++n) {
+               the_node = The_side(n);
+               d[0] = The_node.getCoord(1);
+               d[1] = The_node.getCoord(2);
+               d[2] = The_node.getCoord(3);
+               set(node_label,i,theParser.Eval(d));
+               if ((err=theParser.EvalError()))
+                  throw OFELIException("In Vect::setSideBC(Mesh,int,string): "
+                                       "Illegal regular expression. Error code: "+itos(err));
+            }
+         }
+      }
+   }
+}
+
+
+template<class T_>
 void Vect<T_>::setNodeBC(int    code,
                          T_     val,
                          size_t dof)
 {
    setNodeBC(*_theMesh,code,val,dof);
+}
+
+
+template<class T_>
+void Vect<T_>::setNodeBC(int code,
+                         T_  val)
+{
+   setNodeBC(*_theMesh,code,val);
 }
 
 
@@ -906,11 +1013,27 @@ void Vect<T_>::setNodeBC(int           code,
 
 
 template<class T_>
+void Vect<T_>::setNodeBC(int           code,
+                         const string& exp)
+{
+   setNodeBC(*_theMesh,code,exp);
+}
+
+
+template<class T_>
 void Vect<T_>::setSideBC(int           code,
                          const string& exp,
                          size_t        dof)
 {
    setSideBC(*_theMesh,code,exp,dof);
+}
+
+
+template<class T_>
+void Vect<T_>::setSideBC(int           code,
+                         const string& exp)
+{
+   setSideBC(*_theMesh,code,exp);
 }
 
 
@@ -930,7 +1053,7 @@ void Vect<T_>::removeBC(const Mesh&     ms,
 {
    if (dof==0) {
       size_t n = 1;
-      mesh_nodes(ms) {
+      node_loop(&ms) {
          for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
             if (The_node.getCode(k) == 0)
                set(The_node.getDOF(k),v(n));
@@ -939,7 +1062,7 @@ void Vect<T_>::removeBC(const Mesh&     ms,
       }
    }
    else {
-      mesh_nodes(ms) {
+      node_loop(&ms) {
          if (The_node.getCode(dof) == 0)
             set(The_node.getDOF(dof),v(node_label));
       }
@@ -953,7 +1076,7 @@ void Vect<T_>::removeBC(const Vect<T_>& v,
 {
    if (dof==0) {
       size_t n = 1;
-      mesh_nodes(*_theMesh) {
+      MESH_ND {
          for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
             if (The_node.getCode(k) == 0)
                set(The_node.getDOF(k),v(n));
@@ -962,7 +1085,7 @@ void Vect<T_>::removeBC(const Vect<T_>& v,
       }
    }
    else {
-      mesh_nodes(*_theMesh) {
+      MESH_ND {
          if (The_node.getCode(dof) == 0)
             set(The_node.getDOF(dof),v(node_label));
       }
@@ -977,7 +1100,7 @@ void Vect<T_>::transferBC(const Vect<T_>& bc,
    size_t i=1, k=1;
    if (dof==0) {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                if (The_node.getCode(k)>0)
                   set(i,bc(i));
@@ -986,9 +1109,9 @@ void Vect<T_>::transferBC(const Vect<T_>& bc,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_nodes(*_theMesh) {
-            for (size_t k=1; k<=TheSide.getNbDOF(); ++k) {
-               if (TheSide.getCode(k)>0)
+         MESH_SD {
+            for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
+               if (The_side.getCode(k)>0)
                   set(i,bc(i));
                i++;
             }
@@ -999,7 +1122,7 @@ void Vect<T_>::transferBC(const Vect<T_>& bc,
    }
    else {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             if (The_node.getCode(dof)>0)
                set(i,bc(k));
             i++;
@@ -1007,10 +1130,10 @@ void Vect<T_>::transferBC(const Vect<T_>& bc,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_nodes(*_theMesh) {
-            if (TheSide.getCode(dof)>0)
+         MESH_SD {
+            if (The_side.getCode(dof)>0)
                set(i,bc(k));
-            i++, k += The_node.getNbDOF();
+            i++, k += The_side.getNbDOF();
          }
       }
       else
@@ -1028,7 +1151,7 @@ void Vect<T_>::insertBC(Mesh&           m,
    size_t i=1, j=1;
    if (dof==0) {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
            for (size_t k=1; k<=The_node.getNbDOF(); ++k, i++) {
                if (The_node.getCode(k)==0)
                   set(i,v(j++));
@@ -1038,7 +1161,7 @@ void Vect<T_>::insertBC(Mesh&           m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
            for (size_t k=1; k<=The_side.getNbDOF(); ++k, i++) {
                if (The_side.getCode(k)>=0)
                   set(i,v(j++));
@@ -1053,7 +1176,7 @@ void Vect<T_>::insertBC(Mesh&           m,
    else {
       if (m.NodesAreDOF()) {
          size_t k=dof;
-         mesh_nodes(m) {
+         node_loop(&m) {
             if (The_node.getCode(dof)==0)
                set(i,v(The_node.getDOF(dof)));
             else
@@ -1063,7 +1186,7 @@ void Vect<T_>::insertBC(Mesh&           m,
       }
       else if (m.SidesAreDOF()) {
          size_t k=dof;
-         mesh_sides(m) {
+         side_loop(&m) {
             if (The_side.getCode(dof)>=0)
                set(i,v(The_side.getDOF(dof)));
             else
@@ -1101,7 +1224,7 @@ void Vect<T_>::insertBC(Mesh&           m,
    size_t i=1;
    if (dof==0) {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                set(i,0);
                if (The_node.getCode(k)==0)
@@ -1111,7 +1234,7 @@ void Vect<T_>::insertBC(Mesh&           m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                set(i,0);
                if (The_side.getCode(k)==0)
@@ -1125,7 +1248,7 @@ void Vect<T_>::insertBC(Mesh&           m,
    }
    else {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             set(i,0);
             if (The_node.getCode(dof)==0)
                set(i,v(The_node.getDOF(dof)));
@@ -1133,7 +1256,7 @@ void Vect<T_>::insertBC(Mesh&           m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             set(i,0);
             if (The_side.getCode(dof)==0)
                set(i,v(The_side.getDOF(dof)));
@@ -1154,7 +1277,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
    size_t i = 1;
    if (dof==0) {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                if (The_node.getCode(k)==0)
                   set(i,v(The_node.getDOF(k)));
@@ -1165,7 +1288,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                if (The_side.getCode(k)>=0)
                   set(i,v(The_side.getDOF(k)));
@@ -1181,7 +1304,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
    else {
       if (_theMesh->NodesAreDOF()) {
          size_t k=dof;
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             if (The_node.getCode(dof)==0)
                set(i,v(The_node.getDOF(dof)));
             else
@@ -1191,7 +1314,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
       }
       else if (_theMesh->SidesAreDOF()) {
          size_t k=dof;
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             if (The_side.getCode(dof)>=0)
                set(i,v(The_side.getDOF(dof)));
             else
@@ -1212,7 +1335,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
    size_t i=1;
    if (dof==0) {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
            for (size_t k=1; k<=The_node.getNbDOF(); ++k, i++) {
                set(i,0);
                if (The_node.getCode(k)==0)
@@ -1221,7 +1344,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_sides(*_theMesh) {
+         MESH_SD {
            for (size_t k=1; k<=The_side.getNbDOF(); ++k, i++) {
                set(i,0);
                if (The_side.getCode(k)==0)
@@ -1234,7 +1357,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
    }
    else {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             set(i,0);
             if (The_node.getCode(dof)==0)
                set(i,v(The_node.getDOF(dof)));
@@ -1242,7 +1365,7 @@ void Vect<T_>::insertBC(const Vect<T_>& v,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             set(i,0);
             if (The_side.getCode(dof)==0)
                set(i,v(The_side.getDOF(dof)));
@@ -1265,7 +1388,7 @@ void Vect<T_>::insertBC(Mesh&                m,
    size_t i=1;
    if (dof==0) {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                if (The_node.getCode(k)==0)
                   set(i,v(The_node.getDOF(k)));
@@ -1276,7 +1399,7 @@ void Vect<T_>::insertBC(Mesh&                m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                if (The_side.getCode(k)>=0)
                   set(i,v(The_side.getDOF(k)));
@@ -1292,7 +1415,7 @@ void Vect<T_>::insertBC(Mesh&                m,
    else {
       if (m.NodesAreDOF()) {
          size_t k=dof;
-         mesh_nodes(m) {
+         node_loop(&m) {
             if (The_node.getCode(dof)==0)
                set(i,v(The_node.getDOF(dof)));
             else
@@ -1302,7 +1425,7 @@ void Vect<T_>::insertBC(Mesh&                m,
       }
       else if (m.SidesAreDOF()) {
          size_t k=dof;
-         mesh_sides(m) {
+         side_loop(&m) {
             if (The_side.getCode(dof)>=0)
                set(i,v(The_side.getDOF(dof)));
             else
@@ -1324,7 +1447,7 @@ void Vect<T_>::insertBC(Mesh&                m,
    size_t i=1;
    if (dof==0) {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                set(i,0);
                if (The_node.getCode(k)==0)
@@ -1334,7 +1457,7 @@ void Vect<T_>::insertBC(Mesh&                m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                set(i,0);
                if (The_side.getCode(k)==0)
@@ -1348,7 +1471,7 @@ void Vect<T_>::insertBC(Mesh&                m,
    }
    else {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             set(i,0);
             if (The_node.getCode(dof)==0)
                set(i,v(The_node.getDOF(dof)));
@@ -1356,7 +1479,7 @@ void Vect<T_>::insertBC(Mesh&                m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             set(i,0);
             if (The_side.getCode(dof)==0)
                set(i,v(The_side.getDOF(dof)));
@@ -1377,7 +1500,7 @@ void Vect<T_>::insertBC(const PETScVect<T_>& v,
    size_t i = 1;
    if (dof==0) {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                if (The_node.getCode(k)==0)
                   set(i,v(The_node.getDOF(k)));
@@ -1388,7 +1511,7 @@ void Vect<T_>::insertBC(const PETScVect<T_>& v,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                if (The_side.getCode(k)>=0)
                   set(i,v(The_side.getDOF(k)));
@@ -1404,7 +1527,7 @@ void Vect<T_>::insertBC(const PETScVect<T_>& v,
    else {
       if (_theMesh->NodesAreDOF()) {
          size_t k=dof;
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             if (The_node.getCode(dof)==0)
                set(i,v(The_node.getDOF(dof)));
             else
@@ -1414,7 +1537,7 @@ void Vect<T_>::insertBC(const PETScVect<T_>& v,
       }
       else if (_theMesh->SidesAreDOF()) {
          size_t k=dof;
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             if (The_side.getCode(dof)>=0)
                set(i,v(The_side.getDOF(dof)));
             else
@@ -1514,12 +1637,14 @@ void Vect<T_>::DGAssembly(const Side&                          sd,
 template <class T_>
 void Vect<T_>::getGradient(Vect<T_>& v)
 {
+   if (_theMesh==nullptr)
+     throw OFELIException("In Vect::getGradient(Vect<>): No mesh defined for this vector.");
    T_ a;
    real_t b;
    Point<T_> aa;
-   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
+   v.setMesh(*_theMesh,ELEMENT_DOF,_theMesh->getDim());
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       if (The_element.getShape()==LINE) {
          a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
          b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
@@ -1554,12 +1679,14 @@ void Vect<T_>::getGradient(Vect<T_>& v)
 template <class T_>
 void Vect<T_>::getGradient(Vect<Point<T_> >& v)
 {
+   if (_theMesh==nullptr)
+      throw OFELIException("In Vect::getGradient(Vect<>): No mesh defined for this vector.");
    T_ a;
    real_t b;
    Point<T_> aa;
-   v.setMesh(*_theMesh,_theMesh->getDim());
+   v.setMesh(*_theMesh,ELEMENT_DOF,_theMesh->getDim());
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       if (The_element.getShape()==LINE) {
          a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
          b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
@@ -1591,12 +1718,14 @@ void Vect<T_>::getGradient(Vect<Point<T_> >& v)
 template <class T_>
 void Vect<T_>::getCurl(Vect<T_>& v)
 {
+   if (_theMesh==nullptr)
+      throw OFELIException("In Vect::getCurl(Vect<>): No mesh defined for this vector.");
    T_ a;
    real_t b;
    Point<T_> du, dv, dw;
-   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
+   v.setMesh(*_theMesh,ELEMENT_DOF,_theMesh->getDim());
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       if (The_element.getShape()==LINE) {
          a = (*this)(The_element(2)) - (*this)(The_element(1));
          b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
@@ -1639,12 +1768,14 @@ void Vect<T_>::getCurl(Vect<T_>& v)
 template <class T_>
 void Vect<T_>::getCurl(Vect<Point<T_> >& v)
 {
+   if (_theMesh==nullptr)
+      throw OFELIException("In Vect::getCurl(Vect<>): No mesh defined for this vector.");
    T_ a;
    real_t b;
    Point<T_> du, dv, dw;
-   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
+   v.setMesh(*_theMesh,ELEMENT_DOF,_theMesh->getDim());
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       if (The_element.getShape()==LINE) {
          a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
          b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
@@ -1679,12 +1810,14 @@ void Vect<T_>::getCurl(Vect<Point<T_> >& v)
 template <class T_>
 void Vect<T_>::getSCurl(Vect<T_>& v)
 {
+   if (_theMesh==nullptr)
+      throw OFELIException("In Vect::getSCurl(Vect<>): No mesh defined for this vector.");
    if (_theMesh->getDim()==1 || _theMesh->getDim()==3)
       throw OFELIException("In Vect::getSCurl(): This function is valid for 2-D only.");
    Point<T_> du, dv;
-   v.setMesh(*_theMesh,1);
+   v.setMesh(*_theMesh,ELEMENT_DOF,1);
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       if (The_element.getShape()==TRIANGLE) {
          Triang3 t(the_element);
          vector<Point<real_t> > dsh = t.DSh();
@@ -1703,12 +1836,14 @@ void Vect<T_>::getSCurl(Vect<T_>& v)
 template <class T_>
 void Vect<T_>::getDivergence(Vect<T_>& v)
 {
+   if (_theMesh==nullptr)
+      throw OFELIException("In Vect::getDivergence(Vect<>): No mesh defined for this vector.");
    T_ a;
    real_t b;
    Point<T_> du, dv, dw;
-   v.setMesh(*_theMesh,1);
+   v.setMesh(*_theMesh,ELEMENT_DOF,1);
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       if (The_element.getShape()==LINE) {
          a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
          b = The_element(2)->getX() - The_element(1)->getX();

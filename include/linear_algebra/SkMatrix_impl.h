@@ -414,10 +414,10 @@ void SkMatrix<T_>::DiagPrescribe(Mesh&           mesh,
    real_t p=0;
    for (size_t l=0; l<_size; l++)
       p = std::max(p,_aU[_ch[l]]);
-   MeshNodes(mesh) {
-      for (size_t i=1; i<=TheNode.getNbDOF(); ++i) {
-         if (TheNode.getCode(i)>0) {
-            size_t ii = TheNode.getDOF(i)-1;
+   node_loop(&mesh) {
+      for (size_t i=1; i<=The_node.getNbDOF(); ++i) {
+         if (The_node.getCode(i)>0) {
+            size_t ii = The_node.getDOF(i)-1;
             for (size_t j=ii+1+_ch[ii-1]-_ch[ii]; j<=ii; j++) {
                b[ii] = p*u[ii];
                _a[_ch[ii]+j-ii] = _aU[_ch[ii]+j-ii] = 0;
@@ -438,9 +438,9 @@ void SkMatrix<T_>::DiagPrescribe(Vect<T_>&       b,
    for (size_t l=0; l<_size; l++)
       p = std::max(p,_aU[_ch[l]]);
    MESH_ND {
-      for (size_t i=1; i<=TheNode.getNbDOF(); ++i) {
-         if (TheNode.getCode(i)>0) {
-            size_t ii = TheNode.getDOF(i)-1;
+      for (size_t i=1; i<=The_node.getNbDOF(); ++i) {
+         if (The_node.getCode(i)>0) {
+            size_t ii = The_node.getDOF(i)-1;
             for (size_t j=ii+1+_ch[ii-1]-_ch[ii]; j<=ii; j++) {
                b[ii] = p*u[ii];
                _a[_ch[ii]+j-ii] = _aU[_ch[ii]+j-ii] = 0;
@@ -663,7 +663,6 @@ ostream& operator<<(ostream&            s,
    return s;
 }
 
-/*! @} End of Doxygen Groups */
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 } /* namespace OFELI */

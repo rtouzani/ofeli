@@ -165,12 +165,12 @@ void QuadrilateralsToTriangles(Mesh& m1,
       exit(0);
    }
    m2.setDim(2);
-   mesh_nodes(m1)
+   node_loop(&m1)
       m2.Add(the_node);
    int code;
    size_t nn[4], n=1;
-   mesh_elements(m1) {
-      if (the_element->getShape()==QUADRILATERAL) {
+   element_loop(&m1) {
+      if (The_element.getShape()==QUADRILATERAL) {
          for (size_t k=0; k<4; k++)
             nn[k] = The_element(k+1)->n();
          code = The_element.getCode();
@@ -199,13 +199,13 @@ void HexahedraToTetrahedra(Mesh& m1,
       exit(0);
    }
    m2.setDim(3);
-   mesh_nodes(m1)
+   node_loop(&m1)
       m2.Add(the_node);
 
    int code;
    size_t nn[8], n=1;
-   mesh_elements(m1) {
-      if (the_element->getShape()==HEXAHEDRON) {
+   element_loop(&m1) {
+      if (The_element.getShape()==HEXAHEDRON) {
          for (size_t k=0; k<8; k++)
             nn[k] = The_element(k+1)->n();
          code = the_element->getCode();
@@ -254,12 +254,18 @@ void HexahedraToTetrahedra(Mesh& m1,
 
 void DeformMesh(Mesh&               mesh,
                 const Vect<real_t>& u,
-                real_t              a)
+                real_t              rate)
 {
-   mesh_nodes(mesh) {
-      size_t n=node_label;
-      for (size_t m=1; m<=mesh.getDim(); m++)
-         The_node.setCoord(m,The_node.getCoord(m)+a*u(n,m));
+   real_t a = 0.;
+   node_loop(&mesh) {
+      for (size_t i=1; i<=mesh.getDim(); ++i) {
+         if (The_node.getCode(i)==0)
+            a = rate/(1.-rate)*max(a,The_node.getCoord(i)/u(node_label,i));
+      }
+   }
+   node_loop(&mesh) {
+      for (size_t i=1; i<=mesh.getDim(); ++i)
+         The_node.setCoord(i,The_node.getCoord(i)+a*u(node_label,i));
    }
 }
 
@@ -269,7 +275,7 @@ void DeformMesh(Mesh&                    mesh,
                 const PETScVect<real_t>& u,
                 real_t                   a)
 {
-   mesh_nodes(mesh) {
+   node_loop(&mesh) {
       size_t n=node_label, m=The_node.getNbDOF();
       The_node.setCoord(1,The_node.getX()+a*u(n,1));
       The_node.setCoord(2,The_node.getY()+a*u(n,2));
@@ -292,7 +298,7 @@ void Refine(Mesh& in_mesh,
 
 // Copy nodes
    size_t first_dof = 1;
-   mesh_nodes(in_mesh) {
+   node_loop(&in_mesh) {
       Node *nd = new Node(the_node->n(),the_node->getCoord());
       size_t nb_dof = the_node->getNbDOF();
       nd->setNbDOF(nb_dof);
@@ -305,7 +311,7 @@ void Refine(Mesh& in_mesh,
 
 // Create midside nodes
    size_t nd_label = in_mesh.getNbNodes();
-   mesh_sides(in_mesh) {
+   side_loop(&in_mesh) {
       Node *nd1 = The_side(1), *nd2 = The_side(2);
       Point<real_t> x = 0.5*(nd1->getCoord() + nd2->getCoord());
       the_node = new Node(++nd_label,x);
@@ -317,15 +323,15 @@ void Refine(Mesh& in_mesh,
          if (c2==0)
             code[i] = c2;
       }
-      the_node->setDOF(in_mesh._first_dof,nb_dof);
-      the_node->setCode(code);
+      The_node.setDOF(in_mesh._first_dof,nb_dof);
+      The_node.setCode(code);
       out_mesh.Add(the_node);
       The_side.Add(the_node);
    }
 
 // Divide elements
    size_t el_label=0;
-   mesh_elements(in_mesh) {
+   element_loop(&in_mesh) {
       if (The_element.getShape() != TRIANGLE)
          throw OFELIException("Refine(...): Element " + itos(element_label) + " is not a triangle.");
       Node *nd[6]={nullptr,nullptr,nullptr,nullptr,nullptr,nullptr};
@@ -888,7 +894,7 @@ void MeshToGrid(Mesh&               m,
    Point<real_t> h = Point<real_t>(g.getHx(),g.getHy(),g.getHz());
    size_t dim = m.getDim();
 
-   mesh_elements(m) {
+   element_loop(&m) {
       if (dim==1 && The_element.getShape() != LINE)
          throw OFELIException("MeshToGrid(...): Element "+itos(element_label)+" is not a line.");
       if (dim==2 && The_element.getShape() != TRIANGLE)
@@ -984,7 +990,7 @@ void GridToMesh(Grid&               g,
    int i, j, k;
    Point<real_t> h = Point<real_t>(g.getHx(),g.getHy(),g.getHz());
 
-   mesh_nodes(m) {
+   node_loop(&m) {
       size_t n = node_label;
       Point<real_t> x = The_node.getCoord();
       i = std::min(1+int((x.x-g.getXMin().x)/h.x),nx+1);
@@ -1081,18 +1087,18 @@ void MeshToMesh(Mesh&                m1,
       //   Vect<real_t> ug((nx+1)*(ny+1)*(nz+1)*u1.getNbDOF());
    Vect<real_t> ug(nx+1,ny+1,nz+1);
 
-   if (u1.getDOFType()==NODE_FIELD) {
+   if (u1.getDOFType()==NODE_DOF) {
       MeshToGrid(m1,g,u1,ug);
       GridToMesh(g,m2,ug,u2);
    }
-   else if (u1.getDOFType()==ELEMENT_FIELD) {
+   else if (u1.getDOFType()==ELEMENT_DOF) {
       int nb_dof = u1.getNbDOF();
-      Vect<real_t> nu1(m1,nb_dof,NODE_FIELD), nu2(m2,nb_dof,NODE_FIELD);
+      Vect<real_t> nu1(m1,NODE_DOF,nb_dof), nu2(m2,NODE_DOF,nb_dof);
       Reconstruction r(m1);
       r.P0toP1(u1,nu1);
       MeshToGrid(m1,g,nu1,ug);
       GridToMesh(g,m2,ug,nu2);
-      mesh_elements(m2) {
+      element_loop(&m2) {
          real_t w = 0;
          for (size_t i=1; i<=The_element.getNbNodes(); i++)
             w += nu2(The_element(i)->n(),dof);
@@ -1137,7 +1143,7 @@ int SideInElement(const Side*    sd,
 real_t getMinElementMeasure(const Mesh& m)
 {
    real_t a = 1./OFELI_EPSMCH;
-   mesh_elements(m)
+   element_loop(&m)
       a = std::min(a,The_element.getMeasure());
    return a;
 }
@@ -1146,7 +1152,7 @@ real_t getMinElementMeasure(const Mesh& m)
 real_t getMaxElementMeasure(const Mesh& m)
 {
    real_t a = 0;
-   mesh_elements(m)
+   element_loop(&m)
       a = std::max(a,The_element.getMeasure());
    return a;
 }
@@ -1155,7 +1161,7 @@ real_t getMaxElementMeasure(const Mesh& m)
 real_t getMinSideMeasure(const Mesh& m)
 {
    real_t a = 1./OFELI_EPSMCH;
-   mesh_sides(m)
+   side_loop(&m)
       a = std::min(a,The_side.getMeasure());
    return a;
 }
@@ -1164,7 +1170,7 @@ real_t getMinSideMeasure(const Mesh& m)
 real_t getMaxSize(const Mesh& m)
 {
    real_t a=0, b=0;
-   mesh_elements(m) {
+   element_loop(&m) {
       if (The_element.getShape()==LINE)
          b = Line2(the_element).getLength();
       else if (The_element.getShape()==TRIANGLE)
@@ -1188,7 +1194,7 @@ real_t getMaxSize(const Mesh& m)
 real_t getMinSize(const Mesh& m)
 {
    real_t a=1./OFELI_EPSMCH, b=0;
-   mesh_elements(m) {
+   element_loop(&m) {
       if (The_element.getShape()==LINE)
          b = Line2(the_element).getLength();
       else if (The_element.getShape()==TRIANGLE)
@@ -1212,7 +1218,7 @@ real_t getMinSize(const Mesh& m)
 real_t getMaxSideMeasure(const Mesh& m)
 {
    real_t a = 0;
-   mesh_sides(m)
+   side_loop(&m)
       a = max(a,The_side.getMeasure());
    return a;
 }
@@ -1221,7 +1227,7 @@ real_t getMaxSideMeasure(const Mesh& m)
 real_t getMeanElementMeasure(const Mesh& m)
 {
    real_t a = 0;
-   mesh_elements(m)
+   element_loop(&m)
       a += The_element.getMeasure();
    return a/m.getNbElements();
 }
@@ -1230,7 +1236,7 @@ real_t getMeanElementMeasure(const Mesh& m)
 real_t getMeanSideMeasure(const Mesh& m)
 {
    real_t a = 0;
-   mesh_sides(m)
+   side_loop(&m)
       a += The_side.getMeasure();
    return a/m.getNbSides();
 }
@@ -1241,7 +1247,7 @@ void setNodeCodes(Mesh&         m,
                   int           code,
                   size_t        dof)
 {
-   mesh_nodes(m)
+   node_loop(&m)
       The_node.setCode(exp,code,dof);
 }
 
@@ -1251,8 +1257,8 @@ void setBoundaryNodeCodes(Mesh&         m,
                           int           code,
                           size_t        dof)
 {
-   MeshBoundaryNodes(m)
-      theNode->setCode(exp,code,dof);
+   boundary_node_loop(&m)
+      The_node.setCode(exp,code,dof);
 }
 
 
@@ -1261,7 +1267,7 @@ void setSideCodes(Mesh&         m,
                   int           code,
                   size_t        dof)
 {
-   mesh_sides(m)
+   side_loop(&m)
       The_side.setCode(exp,code,dof);
 }
 
@@ -1271,8 +1277,8 @@ void setBoundarySideCodes(Mesh&         m,
                           int           code,
                           size_t        dof)
 {
-   MeshBoundarySides(m)
-      theSide->setCode(exp,code,dof);
+   boundary_side_loop(&m)
+      The_side.setCode(exp,code,dof);
 }
 
 
@@ -1280,7 +1286,7 @@ void setElementCodes(Mesh&         m,
                      const string& exp,
                      int           code)
 {
-   mesh_elements(m)
+   element_loop(&m)
       The_element.setCode(exp,code);
 }
 

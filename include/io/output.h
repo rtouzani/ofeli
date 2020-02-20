@@ -105,7 +105,7 @@ ostream&operator<<(ostream&          s,
 }
 
 
-/** \fn ostream & operator<<(ostream& s, const list<T_> &l)
+/** \fn ostream & operator<<(ostream& s, const std::list<T_> &l)
  *  \brief Output a vector instance.
  *  \ingroup Util
  *

@@ -310,6 +310,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 beam_SOURCES = main.cpp
 beam_LDADD = $(top_builddir)/src/libofeli.a
 beamdir = $(datadir)/ofeli/demos/solid/beam
@@ -321,7 +322,7 @@ beam_DATA = main.cpp \
 dist_beam_DATA = main.cpp \
                  beam.dat \
                  Makefile.standalone \
-	              README
+	         README
 
 all: all-am
 
@@ -581,7 +582,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-local mostlyclean-am
 
 distclean: distclean-am
 	-rm -f Makefile
@@ -650,11 +651,11 @@ uninstall-am: uninstall-beamDATA uninstall-binPROGRAMS \
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
-	clean-binPROGRAMS clean-generic cscopelist-am ctags ctags-am \
-	distclean distclean-compile distclean-generic distclean-tags \
-	distdir dvi dvi-am html html-am info info-am install \
-	install-am install-beamDATA install-binPROGRAMS install-data \
-	install-data-am install-dist_beamDATA install-dvi \
+	clean-binPROGRAMS clean-generic clean-local cscopelist-am \
+	ctags ctags-am distclean distclean-compile distclean-generic \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-beamDATA install-binPROGRAMS \
+	install-data install-data-am install-dist_beamDATA install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
 	install-pdf install-pdf-am install-ps install-ps-am \
@@ -666,6 +667,9 @@ uninstall-am: uninstall-beamDATA uninstall-binPROGRAMS \
 
 .PRECIOUS: Makefile
 
+
+clean-local:
+	-rm -rf beam_tecplot.dat deformed_beam.m
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

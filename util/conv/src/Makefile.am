@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = cmesh cfield
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 cmesh_SOURCES = cmesh.cpp
 cfield_SOURCES = cfield.cpp

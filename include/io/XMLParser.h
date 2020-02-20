@@ -106,7 +106,7 @@ class XMLParser : public Parser
    void set(Mesh& ms,
             int   format=ASCII);
 
-   int get(int                      type,
+   int get(EqDataType               type,
            vector<PrescriptionPar>& p);
 
    int get(Mesh& ms,
@@ -149,11 +149,13 @@ class XMLParser : public Parser
    bool _is_opened, _is_closed, _set_mesh, _set_field, _set_file, _set_prescription;
    bool _set_domain, _prescription_opened, _compact, _value;
    real_t _time, _sought_time, _scan_steps, _val;
-   int _access, _type, _cm, _format, _prescription_type, _var, _code;
+   int _access, _type, _cm, _format, _var, _code;
+   EqDataType _prescription_type;
    string _file, _mesh_file, _el_shape, _sd_shape, _name, _sought_name, _tag_name, _xml, _mat;
    size_t _dof, _label, _nb_dof, _dim, _nb_nodes, _nb_elements, _nb_sides, _nb_edges;
-   size_t _scan, _nb_el_nodes, _nb_sd_nodes, _dof_support, _nb_mat, _all_steps, _nb_funct;
+   size_t _scan, _nb_el_nodes, _nb_sd_nodes, _nb_mat, _all_steps, _nb_funct;
    size_t _ik1, _ik2, _dk1, _dk2, _ck, _mk, _pk, _dk, _nb_var, _nx, _ny, _nz;
+   DOFSupport _dof_support;
    mutable Mesh *_theMesh;
    Vect<real_t> *_v;
    XMLParser *_parser;

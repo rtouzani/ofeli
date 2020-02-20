@@ -232,7 +232,7 @@ Point<real_t> DC3DT4::Flux() const
 
 void DC3DT4::Grad(Vect<Point<real_t> >& g)
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       g(element_label) = _eu(1)*_dSh[0] + _eu(2)*_dSh[1] + _eu(3)*_dSh[2] + _eu(4)*_dSh[3];
    }

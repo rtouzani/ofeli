@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -110,11 +110,13 @@ class PhaseChange
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<class C_>
 void setPhaseChangeLaw(C_&     c,
                        real_t& H,
                        real_t& T,
                        real_t& gamma);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

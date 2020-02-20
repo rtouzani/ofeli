@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = ode_demo1 ode_demo2 ode_demo3 ode_demo4 ode_demo5 ode_demo6 ode_demo7 ts_demo1 ts_demo2
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 ode_demo1_SOURCES =	ode_demo1.cpp
 ode_demo2_SOURCES =	ode_demo2.cpp
@@ -53,9 +54,12 @@ dist_ode_demo4_DATA = ode_demo4.cpp
 dist_ode_demo5_DATA = ode_demo5.cpp
 dist_ode_demo6_DATA = ode_demo6.cpp
 dist_ode_demo7_DATA = ode_demo7.cpp
-dist_ts_demo1_DATA =	ts_demo1.cpp \
+dist_ts_demo1_DATA = ts_demo1.cpp \
                      mesh1.m \
                      Makefile.standalone \
                      README
 dist_ts_demo2_DATA = ts_demo2.cpp \
-                      mesh2.m
+                     mesh2.m
+
+clean-local:
+	-rm -rf output.dat phase.dat *.vtk mm*.m output.dat

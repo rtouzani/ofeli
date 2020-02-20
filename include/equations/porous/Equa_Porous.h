@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,7 +52,10 @@ namespace OFELI {
  */
 
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 extern Material theMaterial;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+ 
 class Element;
 class Side;
 
@@ -156,23 +159,21 @@ class Equa_Porous : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void build(TimeStepping& s)
     {
        MESH_EL {
-          set(theElement);
-          this->ElementVector(*_u);
+          set(the_element);
           if (_terms&MASS)
              Mass();
           if (_terms&MOBILITY)
              Mobility();
           if (_terms&SOURCE && _bf)
              BodyRHS(*_bf);
-          s.Assembly(TheElement,eRHS.get(),eA0.get(),eA1.get());
+          s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get());
        }
        MESH_SD {
-          if (TheSide.isReferenced()) {
-             set(theSide);
-             this->SideVector(*_u);
+          if (The_side.isReferenced()) {
+             set(the_side);
              if (_terms&FLUX && _bf)
                 BoundaryRHS(*_bf);
-             s.SAssembly(TheSide,sRHS.get());
+             s.SAssembly(The_side,sRHS.get());
           }
        }
     }
@@ -184,12 +185,11 @@ class Equa_Porous : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void build(EigenProblemSolver& e)
     {
        MESH_EL {
-          set(theElement);
-          this->ElementVector(*_u);
+          set(the_element);
           if (_terms&MASS)
              Mass();
           Mobility();
-          e.Assembly(TheElement,eA0.get(),eA1.get());
+          e.Assembly(The_element,eA0.get(),eA1.get());
        }
     }
 

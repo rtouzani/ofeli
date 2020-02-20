@@ -76,7 +76,7 @@ void LCL3DT::init()
    _LU.setMesh(*_theMesh);
    _RU.setMesh(*_theMesh);
    _FU.setMesh(*_theMesh);
-   _v.setMesh(*_theMesh,3);
+   _v.setMesh(*_theMesh,NODE_DOF,3);
    setReferenceLength(getMinimumEdgeLength());
    setCFL(0.2);
 }
@@ -103,8 +103,8 @@ void LCL3DT::setReconstruction()
 }
 
 
-void LCL3DT::setBC(const Side&  sd,
-                         real_t u)
+void LCL3DT::setBC(const Side& sd,
+                   real_t      u)
 {
    _RU(sd.n()) = u;
 }
@@ -113,23 +113,23 @@ void LCL3DT::setBC(const Side&  sd,
 void LCL3DT::setBC(int    code,
                    real_t u)
 {
-   MeshBoundarySides(*_theMesh)
-      if (theSide->getCode()==code)
-         _RU(theSideLabel) = u;
+   MESH_BD_SD
+      if (The_side.getCode()==code)
+         _RU(side_label) = u;
 }
 
 
 void LCL3DT::setBC(real_t u)
 {
-   MeshBoundarySides(*_theMesh)
-      _RU(theSideLabel) = u;
+   MESH_BD_SD
+      _RU(side_label) = u;
 }
 
 
 void LCL3DT::setVelocity(const LocalVect<real_t,3>& v)
 {
    MESH_SD {
-      size_t s = theSideLabel;
+      size_t s = side_label;
       _v(s,1) = v[0];
       _v(s,2) = v[1];
       _v(s,3) = v[2];
@@ -158,7 +158,7 @@ real_t LCL3DT::getFluxUpwind()
 {
    real_t lambda=1.e-10;
    MESH_SD
-      lambda = max(lambda,getRiemannUpwind(theSideLabel));
+      lambda = max(lambda,getRiemannUpwind(side_label));
    return lambda;
 }
 
@@ -167,9 +167,9 @@ void LCL3DT::forward()
 {
    MESH_SD {
       size_t n = theSideLabel;
-      (*_U)(theSide->getNeighborElement(1)->n()) -= _FU(n)*_Lrate(n)*_TimeStep;
-      if (!theSide->isOnBoundary())
-         (*_U)(theSide->getNeighborElement(2)->n()) += _FU(n)*_Rrate(n)*_TimeStep;
+      (*_U)(The_side.getNeighborElement(1)->n()) -= _FU(n)*_Lrate(n)*_TimeStep;
+      if (!The_side.isOnBoundary())
+         (*_U)(The_side.getNeighborElement(2)->n()) += _FU(n)*_Rrate(n)*_TimeStep;
    }
 }
 
@@ -178,10 +178,10 @@ void LCL3DT::Forward(const Vect<real_t>& Flux,
                            Vect<real_t>& Field)
 {
    MESH_SD {
-      size_t n = theSideLabel;
-      Field(theSide->getNeighborElement(1)->n()) -= Flux(n)*_Lrate(n)*_TimeStep;
-      if (!theSide->isOnBoundary())
-         Field(theSide->getNeighborElement(2)->n()) += Flux(n)*_Rrate(n)*_TimeStep;
+      size_t n = side_label;
+      Field(The_side.getNeighborElement(1)->n()) -= Flux(n)*_Lrate(n)*_TimeStep;
+      if (!The_side.isOnBoundary())
+         Field(The_side.getNeighborElement(2)->n()) += Flux(n)*_Rrate(n)*_TimeStep;
    }
 }
 

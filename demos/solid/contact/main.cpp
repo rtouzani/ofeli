@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
       return 0;
    }
    IPF data("contact - 1.0",argv[1]);
+   Verbosity = data.getVerbose();
 
    if (Verbosity) {
       cout << endl << endl;
@@ -72,41 +73,38 @@ int main(int argc, char *argv[])
 
 // Read parameters and mesh data
    try {
-      Verbosity = data.getOutput();
-      int save_flag = data.getSave();
-      MaxNbIterations = data.getNbIter();
-      theTolerance = data.getTolerance();
       Mesh ms(data.getMeshFile(1));
-
       Prescription p(ms,data.getDataFile());
       if (Verbosity > 1)
          cout << "Reading mesh data ...\n";
-      cout << ms;
+      if (Verbosity > 4)
+         cout << ms;
 
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
 
 //    Read boundary conditions, body and boundary forces
       if (Verbosity > 1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
-      Vect<double> u(ms), bc(ms), d(ms), bf(ms), sf(ms);
-      p.get(BOUNDARY_CONDITION,bc,0);
-      p.get(CONTACT_DISTANCE,d,0);
-      p.get(BODY_FORCE,bf,0);
-      p.get(BOUNDARY_FORCE,sf,0);
+      Vect<double> u(ms), bc(ms), bf(ms), sf(ms,SIDE_DOF);
+      p.get(BOUNDARY_CONDITION,bc);
+      p.get(TRACTION,sf);
+      p.get(BODY_FORCE,bf);
 
       Elas2DT3 eq(ms,u);
       eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(CONTACT_DISTANCE,d);
-      eq.setInput(BODY_FORCE,bf);
       eq.setInput(TRACTION,sf);
-      eq.setTerms(DEVIATORIC|DILATATION|CONTACT|BODY_FORCE);
+      eq.setInput(BODY_FORCE,bf);
       eq.run();
 
-      cout << u;
-      if (save_flag) {
-         IOField pl_file(data.getMeshFile(),data.getString("output_file"),ms,IOField::OUT);
-         pl_file.put(u);
-      }
+//    Compute deformed mesh
+      ms.Deform(u);
+      ms.put(data.getProject()+"-1.m");
+
+//    Output and/or save solution
+      if (Verbosity > 4)
+         cout << u;
+      if (data.getSave())
+         saveField(u,data.getProject()+".pos",GMSH);
    } CATCH_EXCEPTION
    return 0;
 }

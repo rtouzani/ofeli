@@ -253,7 +253,7 @@ void OptSolver::setBC(const Vect<real_t>& bc)
    _lb = -std::numeric_limits<real_t>::max();
    _ub =  std::numeric_limits<real_t>::max();
    size_t k = 0;
-   mesh_nodes(bc.getMesh()) {
+   node_loop(&(bc.getMesh())) {
      for (size_t i=1; i<=The_node.getNbDOF(); i++, k++) {
          if (The_node.getCode(i)>0)
             _lb[k] = _ub[k] = bc[k];

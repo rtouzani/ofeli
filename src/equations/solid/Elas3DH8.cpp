@@ -67,6 +67,8 @@ void Elas3DH8::set(const Element* el)
    _xl[0].z = _xl[1].z = _xl[2].z = _xl[3].z = -1.;
    _xl[4].z = _xl[5].z = _xl[6].z = _xl[7].z =  1.;
    ElementNodeVector(*_u,_eu);
+   if (AbsEqua<real_t>::_bf!=nullptr)
+      ElementNodeVector(*_bf,_ebf);
    eA0 = 0; eA1 = 0; eA2 = 0;
    eRHS = 0;
 }
@@ -80,6 +82,8 @@ void Elas3DH8::set(const Side* sd)
       delete _hexa, _hexa = nullptr;
    SideNodeCoordinates();
    SideNodeVector(*_u,_su);
+   if (AbsEqua<real_t>::_sf!=nullptr)
+      SideVector(*_sf,_ssf);
    sA0 = 0;
    sRHS = 0;
 }
@@ -169,12 +173,41 @@ void Elas3DH8::BodyRHS(const Vect<real_t>& f)
 }
 
 
+void Elas3DH8::BodyRHS()
+{
+   for (size_t k=0; k<8; ++k) {
+      real_t fx = 0., fy = 0., fz = 0.;
+      for (size_t j=1; j<=8; j++) {
+         fx += _sh[8*(j-1)+k]*_ebf(3*j-2);
+         fy += _sh[8*(j-1)+k]*_ebf(3*j-1);
+         fz += _sh[8*(j-1)+k]*_ebf(3*j  );
+      }
+      for (size_t i=1; i<=8; i++) {
+         eRHS(3*i-2) += _wg[k]*fx*_sh[8*(i-1)+k];
+         eRHS(3*i-1) += _wg[k]*fy*_sh[8*(i-1)+k];
+         eRHS(3*i  ) += _wg[k]*fz*_sh[8*(i-1)+k];
+      }
+   }
+}
+
+
 void Elas3DH8::BoundaryRHS(const Vect<real_t>& f)
 {
    for (size_t i=1; i<=4; i++) {
       for (size_t k=1; k<=3; k++) {
          if (_theSide->getCode(k) != CONTACT)
             sRHS(3*(i-1)+k) += _el_geo.area*f(_theSide->n(),k);
+      }
+   }
+}
+
+
+void Elas3DH8::BoundaryRHS()
+{
+   for (size_t i=1; i<=4; i++) {
+      for (size_t k=1; k<=3; k++) {
+         if (_theSide->getCode(k) != CONTACT)
+            sRHS(3*(i-1)+k) += _el_geo.area*_ssf[3*(i-1)+k-1];
       }
    }
 }

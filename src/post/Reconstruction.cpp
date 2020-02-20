@@ -40,17 +40,28 @@
 
 namespace OFELI {
 
+Reconstruction::Reconstruction(const Mesh& ms)
+{
+   setMesh(ms);
+}
+
+
+void Reconstruction::setMesh(const Mesh& ms)
+{
+  _theMesh = &ms;
+}
+
 void Reconstruction::P0toP1(const Vect<real_t>& u,
                             Vect<real_t>&       v)
 {
-   size_t nb_dof = u.getNbDOF();
+   size_t nb_dof = u.getNbDOF(), dim = _theMesh->getDim();
    v.setSize(_theMesh->getNbNodes(),nb_dof);
    v = 0;
    _M.setSize(_theMesh->getNbNodes());
    _M = 0;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
-      if (_theMesh->getDim()==1 && The_element.getShape()==LINE) {
+      if (dim==1 && The_element.getShape()==LINE) {
          real_t a = Line2(the_element).getLength();
          size_t n1=The_element(1)->n(), n2=The_element(2)->n();
          _M(n1) += a; _M(n2) += a;
@@ -59,7 +70,7 @@ void Reconstruction::P0toP1(const Vect<real_t>& u,
             v(n2,k) += a*u(n,k);
          }
       }
-      else if (_theMesh->getDim()==2 && The_element.getShape()==TRIANGLE) {
+      else if (dim==2 && The_element.getShape()==TRIANGLE) {
          real_t a = Triang3(the_element).getArea();
          size_t n1=The_element(1)->n(), n2=The_element(2)->n(), n3=The_element(3)->n();
          _M(n1) += a; _M(n2) += a; _M(n3) += a;
@@ -69,9 +80,9 @@ void Reconstruction::P0toP1(const Vect<real_t>& u,
             v(n3,k) += a*u(n,k);
          }
       }
-      else if (_theMesh->getDim()==2 && The_element.getShape()==QUADRILATERAL) {
+      else if (dim==2 && The_element.getShape()==QUADRILATERAL) {
          Quad4 q(the_element);
-         q.setLocal(Point<double>(0.,0.));
+         q.setLocal(Point<real_t>(0.,0.));
          real_t a = fabs(q.getDet());
          size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
                 n3=The_element(3)->n(), n4=The_element(4)->n();
@@ -84,7 +95,7 @@ void Reconstruction::P0toP1(const Vect<real_t>& u,
             v(n4,k) += a*u(n,k);
          }
       }
-      else if (_theMesh->getDim()==3 && The_element.getShape()==TETRAHEDRON) {
+      else if (dim==3 && The_element.getShape()==TETRAHEDRON) {
          real_t a = fabs(Tetra4(the_element).getVolume());
          size_t n1=The_element(1)->n(), n2=The_element(2)->n(),
                 n3=The_element(3)->n(), n4=The_element(4)->n();
@@ -101,7 +112,8 @@ void Reconstruction::P0toP1(const Vect<real_t>& u,
          throw OFELIException("Reconstruction::P0toP1(...): Not valid for element: " +
                               itos(element_label));
    }
-   mesh_nodes(*_theMesh) {
+
+   MESH_ND {
       for (size_t k=1; k<=nb_dof; k++)
          v(node_label,k) /= _M(node_label);
    }
@@ -115,15 +127,15 @@ void Reconstruction::DP1toP1(const Vect<real_t>& u,
    _M = 0;
    v = 0;
    MESH_EL {
-      size_t n = theElementLabel;
+      size_t n = element_label;
       if (_theMesh->getDim()==2 && TheElement.getShape()==TRIANGLE) {
-         real_t a = Triang3(theElement).getArea();
-         _M(TheElement(1)->n()) += a;
-         _M(TheElement(2)->n()) += a;
-         _M(TheElement(3)->n()) += a;
-         v(TheElement(1)->n()) += 0.25*a*(2*u(n,1) + u(n,2) + u(n,3));
-         v(TheElement(2)->n()) += 0.25*a*(2*u(n,2) + u(n,3) + u(n,1));
-         v(TheElement(3)->n()) += 0.25*a*(2*u(n,3) + u(n,1) + u(n,2));
+         real_t a = Triang3(the_element).getArea();
+         _M(The_element(1)->n()) += a;
+         _M(The_element(2)->n()) += a;
+         _M(The_element(3)->n()) += a;
+         v(The_element(1)->n()) += 0.25*a*(2*u(n,1) + u(n,2) + u(n,3));
+         v(The_element(2)->n()) += 0.25*a*(2*u(n,2) + u(n,3) + u(n,1));
+         v(The_element(3)->n()) += 0.25*a*(2*u(n,3) + u(n,1) + u(n,2));
       }
       else
          throw OFELIException("Reconstruction::DP1toP1(...): Not valid for element: " + itos(n));

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -67,8 +67,10 @@ namespace OFELI {
 
 class Element;
 class Side;
-extern Material theMaterial;
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+extern Material theMaterial;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
@@ -98,10 +100,14 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_ebf;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_eu;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_su;
+   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_ssf;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
-    Equa_Solid() : _cd(nullptr) { }
+    Equa_Solid() { }
 
 /// \brief Destructor
     virtual ~Equa_Solid() { }
@@ -131,15 +137,23 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
                   Vect<real_t>& u)
     {
        AbsEqua<real_t>::setInput(opt,u);
-       if (opt==CONTACT_DISTANCE)
-          _cd = &u;
     }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     virtual void BodyRHS(const Vect<T_>& f) { }
+    virtual void BodyRHS() { }
     virtual void BoundaryRHS(const Vect<T_>& f) { }
+    virtual void BoundaryRHS() { }
     virtual void Periodic(real_t coef=1) { }
     virtual int Contact(real_t coef=1.e07) { return 0; }
+    int run(Analysis   a=STATIONARY,
+            TimeScheme s=NONE)
+    {
+       int ret = AbsEqua<T_>::run(a,s);
+       if (_terms&CONTACT && a==STATIONARY)
+          ret = AbsEqua<T_>::run(a,s);
+       return ret;
+    }
 
 /** \brief Build the linear system of equations
  *  \details Before using this function, one must have properly selected 
@@ -154,8 +168,14 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build()
     {
+       static bool matrix_set = false;
+       if (AbsEqua<T_>::_A==nullptr && !matrix_set) {
+          AbsEqua<T_>::setMatrixType(SPARSE);
+          AbsEqua<T_>::setSolver(CG_SOLVER,DILU_PREC);
+          matrix_set = true;
+       }
        AbsEqua<T_>::_A->clear();
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
           if (_terms&MASS)
              Mass();
@@ -166,20 +186,20 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           if (_terms&DILATATION)
              Dilatation();
           eMat = eA0;
-          AbsEqua<T_>::_A->Assembly(*_theElement,eMat.get());
+          AbsEqua<T_>::_A->Assembly(The_element,eMat.get());
           if (AbsEqua<T_>::_bf!=nullptr)
-             BodyRHS(*AbsEqua<T_>::_bf);
+             BodyRHS();
           if (AbsEqua<T_>::_bc!=nullptr)
-             this->updateBC(*_theElement,*AbsEqua<T_>::_bc);
-          AbsEqua<T_>::_b->Assembly(*_theElement,eRHS.get());
+             this->updateBC(The_element,*AbsEqua<T_>::_bc);
+          AbsEqua<T_>::_b->Assembly(The_element,eRHS.get());
        }
        if (AbsEqua<T_>::_sf!=nullptr) {
-          mesh_sides(*_theMesh) {
+          MESH_SD {
              set(the_side);
              if (_terms&CONTACT)
                 Contact(1.e07);
              BoundaryRHS();
-             AbsEqua<T_>::_A->Assembly(The_side,sMat.get());
+             AbsEqua<T_>::_A->Assembly(The_side,sA0.get());
              AbsEqua<T_>::_b->Assembly(The_side,sRHS.get());
           }
        }
@@ -199,9 +219,8 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build(TimeStepping& s)
     {
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
-          this->ElementVector(*AbsEqua<T_>::_u);
           if (_terms&MASS)
              Mass();
           if (_terms&LUMPED_MASS)
@@ -216,9 +235,8 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
              BodyRHS();
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
        }
-       mesh_sides(*_theMesh) {
+       MESH_SD {
           set(the_side);
-          this->SideVector(*AbsEqua<T_>::_u);
           if (_terms&CONTACT)
              Contact(1.e07);
           s.SAssembly(The_side,sRHS.get(),sA0.get());
@@ -230,7 +248,7 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     void build(EigenProblemSolver& e)
     {
-       mesh_elements(*_theMesh) {
+       MESH_EL {
           set(the_element);
           this->ElementVector(*AbsEqua<T_>::_u);
           if (_terms&MASS)
@@ -307,14 +325,10 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        _nu  = theMaterial.PoissonRatio();
        _E   = theMaterial.YoungModulus();
     }
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     virtual void set(const Element* el) = 0;
     virtual void set(const Side* sd) = 0;
-    void BodyRHS() { BodyRHS(*AbsEqua<T_>::_bf); }
-    void BoundaryRHS() { BoundaryRHS(*AbsEqua<T_>::_sf); }
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
     real_t _E, _nu, _lambda, _G, _rho, _coef;
-    Vect<real_t> *_cd;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

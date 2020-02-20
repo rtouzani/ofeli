@@ -53,7 +53,8 @@ class Mesh;
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 struct PrescriptionPar {
    size_t dof;
-   int type, code;
+   EqDataType type;
+   int code;
    real_t x, y, z, t;
    std::string fct;
    bool bx, by, bz, bt;
@@ -100,13 +101,14 @@ class Prescription
  *    <li><tt>BODY_FORCE</tt>: Read values for body (or volume) forces.\n
  *       The value <tt>SOURCE</tt> has the same effect.
  *    <li><tt>POINT_FORCE</tt>: Read values for pointwise forces
+ *    <li><tt>CONTACT_DISTANCE</tt>: Read values for contact distance (for contact mechanics)
  *    <li><tt>INITIAL_FIELD</tt>: Read values for initial solution
  *    <li><tt>SOLUTION</tt>: Read values for a solution vector
  *  @param [in,out] v Vect instance that is instantiated on input and filled on output
  *  @param [in] time Value of time for which data is read [Default: <tt>0</tt>].
  *  @param [in] dof DOF to store (Default is <tt>0</tt>: All DOFs are chosen).
  */
-    int get(int           type,
+    int get(EqDataType    type,
             Vect<real_t>& v,
             real_t        time=0,
             size_t        dof=0);
@@ -116,7 +118,7 @@ class Prescription
    std::ifstream *_if;
    Mesh *_theMesh;
    Vect<real_t> *_v;
-   real_t _data[4];
+   real_t _time;
    bool pforce, initial, bc, force, flux;
    std::string _file;
    std::vector<PrescriptionPar> _p;

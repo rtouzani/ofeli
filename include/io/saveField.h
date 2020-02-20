@@ -77,7 +77,7 @@ template<class T_> class Vect;
  *  \brief Prototypes for functions to save mesh in various file formats.
  */
 
-/** \fn void saveField(Vect<real_t> &v, const Mesh &mesh, string output_file, int opt)
+/** \fn void saveField(const Vect<real_t> &v, const Mesh &mesh, string output_file, int opt)
  *  \ingroup Util
  *  \brief Save a vector to an output file in a given file format.
  *  \details Case where the vector does not contain mesh information
@@ -153,7 +153,23 @@ template<class T_> class Vect;
                    string        output_file,
                    int           opt);
 
-/** \fn void saveGnuplot(string input_file, string output_file, string mesh_file)
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void saveFormat(Mesh&  mesh,
+                    string input_file,
+                    string output_file,
+                    int    format,
+                    int    f=1);
+
+    void getfields(string                   file,
+                   Mesh&                    ms,
+                   size_t&                  nb_dof,
+                   vector<real_t>&          t,
+                   vector<vector<real_t> >& u,
+                   string&                  name
+                  );
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
+/** \fn void saveGnuplot(string input_file, string output_file, string mesh_file, int f)
  *  \ingroup Util
  *  \brief Save a vector to an input <a href="http://www.gnuplot.info/">Gnuplot</a> file.
  *
@@ -163,15 +179,17 @@ template<class T_> class Vect;
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (gnuplot format file)
  *  @param [in] mesh_file File containing mesh data
+ *  @param [in] f Field is stored each \c f time step [Default: <tt>1</tt>
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     void saveGnuplot(string input_file,
                      string output_file,
-                     string mesh_file);
+                     string mesh_file,
+                     int    f=1);
 
-/** \fn void saveGnuplot(Mesh& mesh, string input_file, string output_file)
+/** \fn void saveGnuplot(Mesh& mesh, string input_file, string output_file, int f)
  *  \ingroup Util
  *  \brief Save a vector to an input <a href="http://www.gnuplot.info/">Gnuplot</a> file.
  *
@@ -181,15 +199,17 @@ template<class T_> class Vect;
  *  @param [in] mesh Reference to Mesh instance
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (gnuplot format file)
+ *  @param [in] f Field is stored each \c f time step [Default: <tt>1</tt>]
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     void saveGnuplot(Mesh&  mesh,
                      string input_file,
-                     string output_file);
+                     string output_file,
+                     int    f=1);
 
-/**  \fn void saveTecplot(string input_file, string output_file, string mesh_file)
+/**  \fn void saveTecplot(string input_file, string output_file, string mesh_file, int f)
  *  \ingroup Util
  *  \brief Save a vector to an output file to an input <a href="http://www.tecplot.com">Tecplot</a> file.
  *
@@ -198,15 +218,17 @@ template<class T_> class Vect;
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (gnuplot format file)
  *  @param [in] mesh_file File containing mesh data
+ *  @param [in] f Field is stored each \c f time step [Default: <tt>1</tt>]
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     void saveTecplot(string input_file,
                      string output_file,
-                     string mesh_file);
+                     string mesh_file,
+                     int    f=1);
 
-/**  \fn void saveTecplot(Mesh& mesh, string input_file, string output_file)
+/**  \fn void saveTecplot(Mesh& mesh, string input_file, string output_file, int f)
  *  \ingroup Util
  *  \brief Save a vector to an output file to an input <a href="http://www.tecplot.com">Tecplot</a> file.
  *
@@ -215,15 +237,17 @@ template<class T_> class Vect;
  *  @param [in] mesh Reference to Mesh instance
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (gnuplot format file)
+ *  @param [in] f Field is stored each \c f time step [Default: <tt>1</tt>]
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     void saveTecplot(Mesh&  mesh,
                      string input_file,
-                     string output_file);
+                     string output_file,
+                     int    f=1);
 
-/** \fn saveVTK(string input_file, string output_file, string mesh_file)
+/** \fn saveVTK(string input_file, string output_file, string mesh_file, int f)
  *
  *  \ingroup Util
  *  \brief Save a vector to an output <a href="http://public.kitware.com/VTK/">VTK</a> file.
@@ -234,15 +258,17 @@ template<class T_> class Vect;
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (VTK format file)
  *  @param [in] mesh_file File containing mesh data
+ *  @param [in] f Field is stored each \c f time step [Default: <tt>1</tt>]
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     void saveVTK(string input_file,
                  string output_file,
-                 string mesh_file);
+                 string mesh_file,
+                 int    f=1);
 
-/** \fn saveVTK(Mesh& mesh, string input_file, string output_file)
+/** \fn saveVTK(Mesh& mesh, string input_file, string output_file, int f)
  *
  *  \ingroup Util
  *  \brief Save a vector to an output <a href="http://public.kitware.com/VTK/">VTK</a> file.
@@ -253,16 +279,17 @@ template<class T_> class Vect;
  *  @param [in] mesh Reference to Mesh instance
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (VTK format file)
+ *  @param [in] f Field is stored each \c f time step [Default: <tt>1</tt>]
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     void saveVTK(Mesh&  mesh,
                  string input_file,
-                 string output_file);
+                 string output_file,
+                 int    f=1);
 
-
-/**  \fn void saveGmsh(string input_file, string output_file, string mesh_file)
+/**  \fn void saveGmsh(string input_file, string output_file, string mesh_file, int f)
  *
  *  \ingroup Util
  *  \brief Save a vector to an output <a href="http://www.geuz.org/gmsh/">Gmsh</a> file.
@@ -272,15 +299,17 @@ template<class T_> class Vect;
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (Gmsh format file)
  *  @param [in] mesh_file File containing mesh data
+ *  @param [in] f Field is stored each \c f time step [Default: <tt>1</tt>]
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     void saveGmsh(string input_file,
                   string output_file,
-                  string mesh_file);
+                  string mesh_file,
+                  int    f=1);
 
-/**  \fn void saveGmsh(Mesh& mesh, string input_file, string output_file)
+/**  \fn void saveGmsh(Mesh& mesh, string input_file, string output_file, int f)
  *
  *  \ingroup Util
  *  \brief Save a vector to an output <a href="http://www.geuz.org/gmsh/">Gmsh</a> file.
@@ -290,13 +319,15 @@ template<class T_> class Vect;
  *  @param [in] mesh Reference to Mesh instance
  *  @param [in] input_file Input file (OFELI XML file containing a field).
  *  @param [in] output_file Output file (Gmsh format file)
+ *  @param [in] f Field is stored each \c f time step [Default: <tt>1</tt>]
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
     void saveGmsh(Mesh&  mesh,
                   string input_file,
-                  string output_file);
+                  string output_file,
+                  int    f=1);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

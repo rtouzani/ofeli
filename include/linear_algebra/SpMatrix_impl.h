@@ -604,7 +604,7 @@ void SpMatrix<T_>::DiagPrescribe(Mesh&           mesh,
       p = std::max(p,Abs(get(j,j)));
 #if !defined(USE_EIGEN)
    size_t k=0;
-   mesh_nodes(mesh) {
+   node_loop(&mesh) {
       for (size_t i=1; i<=The_node.getNbDOF(); ++i) {
          size_t ii=The_node.getDOF(i)-1;
          for (size_t j=0; j<_row_ptr[ii+1]-_row_ptr[ii]; j++,k++)
@@ -630,10 +630,10 @@ void SpMatrix<T_>::DiagPrescribe(Vect<T_>&       b,
       p = std::max(p,Abs(get(j,j)));
    size_t k=0;
    MESH_ND {
-      for (size_t i=1; i<=TheNode.getNbDOF(); ++i) {
-         size_t ii=TheNode.getDOF(i)-1;
+      for (size_t i=1; i<=The_node.getNbDOF(); ++i) {
+        size_t ii=The_node.getDOF(i)-1;
          for (size_t j=0; j<_row_ptr[ii+1]-_row_ptr[ii]; j++,k++)
-            if (TheNode.getCode(i)>0) {
+            if (The_node.getCode(i)>0) {
                b[ii] = p*u[ii];
                _a[k] = 0;
                if (ii+1==_col_ind[k])

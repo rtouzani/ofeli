@@ -59,12 +59,12 @@ namespace OFELI {
  * To select special boundary conditions.
  */
 enum BCType {
-  PERIODIC_A     =  9999,     /*!< Periodic Boundary conditions (first side) */
-  PERIODIC_B     = -9999,     /*!< Periodic Boundary conditions (second side) */
-  CONTACT_BC     =  9998,     /*!< Contact Boundary conditions */
-  CONTACT_M      =  9997,
-  CONTACT_S      = -9997,
-  SLIP           =  9996      /*!< Slip Boundary conditions */
+  PERIODIC_A     =  9999,     /*!< Periodic Boundary condition  (first side)      */
+  PERIODIC_B     = -9999,     /*!< Periodic Boundary condition  (second side)     */
+  CONTACT_BC     =  9998,     /*!< Contact Boundary conditions                    */
+  CONTACT_M      =  9997,     /*!< Contact Boundary condition, set as master side */
+  CONTACT_S      = -9997,     /*!< Contact Boundary condition, set as slave side  */
+  SLIP           =  9996      /*!< Slip Boundary condition                        */
 };
 
 class Element;
@@ -283,6 +283,9 @@ enum SideType {
  */
     real_t getMeasure() const;
 
+/// \brief Return coordinates of center of side.
+    Point<real_t> getCenter() const;
+
 /** \brief Say if a given node belongs to current side
  *  @param [in] nd Pointer to searched node
  *  @return index (local label) of node if found, <tt>0</tt> if not
@@ -319,10 +322,13 @@ enum SideType {
 /// \brief Return number of children of side
     size_t getNbChilds() const { return _nb_childs; }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    int getGlobalCode() const;
     friend class Mesh;
     friend void Refine(Mesh &in_mesh, Mesh &out_mesh);
     friend ostream& operator<<(ostream&    s,
                                const Mesh& ms);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 private:
 

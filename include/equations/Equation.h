@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -158,9 +158,9 @@ class Equation : virtual public AbsEqua<T_>
 /** \brief Update element matrix to impose bc by diagonalization technique
  *  @param [in] dof_type DOF type option. To choose among the enumerated values:
  *  <ul>
- *    <li><tt>NODE_FIELD</tt>, DOFs are supported by nodes [Default]
- *    <li><tt>ELEMENT_FIELD</tt>, DOFs are supported by elements
- *    <li><tt>SIDE_FIELD</tt>, DOFs are supported by sides
+ *    <li><tt>NODE_DOF</tt>, DOFs are supported by nodes [Default]
+ *    <li><tt>ELEMENT_DOF</tt>, DOFs are supported by elements
+ *    <li><tt>SIDE_DOF</tt>, DOFs are supported by sides
  *  </ul>
  *  @param [in] dof DOF setting:
  *  <ul>
@@ -168,8 +168,8 @@ class Equation : virtual public AbsEqua<T_>
  *     <li><tt>!= 0</tt>, Only DOF No. <tt>dof</tt> is handled in the system
  *  </ul>
  */
-    void DiagBC(int dof_type=NODE_DOF,
-                int dof=0);
+    void DiagBC(DOFSupport dof_type=NODE_DOF,
+                int        dof=0);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief Set Body Force
@@ -202,6 +202,14 @@ class Equation : virtual public AbsEqua<T_>
     void SideNodeVector(const Vect<T_>&     b,
                         LocalVect<T_,NSE_>& bs);
 
+/** \brief Localize Side Vector from a Vect instance.
+ *  @param [in] b Global vector to be localized.
+ *  @param [out] bs Local constant value of vector at given side. 
+ *  @remark All degrees of freedom are transferred to the local vector
+ */
+    void SideSideVector(const Vect<T_>& b,
+                        T_*             bs);
+
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
  *  @param [out] be Local vector, the length of which is the total number of element equations. 
@@ -231,9 +239,9 @@ class Equation : virtual public AbsEqua<T_>
  *  @param [in] b Global vector to be localized
  *  @param [in] dof_type DOF type option. To choose among the enumerated values:
  *  <ul>
- *    <li><tt>NODE_FIELD</tt>, DOFs are supported by nodes [Default]
- *    <li><tt>ELEMENT_FIELD</tt>, DOFs are supported by elements
- *    <li><tt>SIDE_FIELD</tt>, DOFs are supported by sides
+ *    <li><tt>NODE_DOF</tt>, DOFs are supported by nodes [Default]
+ *    <li><tt>ELEMENT_DOF</tt>, DOFs are supported by elements
+ *    <li><tt>SIDE_DOF</tt>, DOFs are supported by sides
  *  </ul>
  *  @param [in] flag Option to set:
  *  <ul>
@@ -245,21 +253,24 @@ class Equation : virtual public AbsEqua<T_>
  *  It uses the Element pointer <tt>_theElement</tt>
  */
     void ElementVector(const Vect<T_>& b,
-                       int             dof_type=NODE_FIELD,
+                       DOFSupport      dof_type=NODE_DOF,
                        int             flag=0);
 
 /** \brief Localize Side Vector.
  *  @param [in] b Global vector to be localized
  *  <ul>
- *     <li><tt>NODE_FIELD</tt>, DOFs are supported by nodes [ default ]
- *     <li><tt>ELEMENT_FIELD</tt>, DOFs are supported by elements
- *     <li><tt>SIDE_FIELD</tt>, DOFs are supported by sides
+ *     <li><tt>NODE_DOF</tt>, DOFs are supported by nodes [ default ]
+ *     <li><tt>ELEMENT_DOF</tt>, DOFs are supported by elements
+ *     <li><tt>SIDE_DOF</tt>, DOFs are supported by sides
+ *     <li><tt>BOUNDARY_SIDE_DOF</tt>, DOFs are supported by boundary sides
  *  </ul>
+ *  @param [out] sb Array in which local vector is stored
  *  The resulting local vector can be accessed by attribute <tt>ePrev</tt>.
  *  @remark This member function is to be used if a constructor with Side was invoked.
  *  It uses the Side pointer <tt>_theSide</tt>
  */
-    void SideVector(const Vect<T_>& b);
+    void SideVector(const Vect<T_>& b,
+                    T_*             sb);
 
 /** \brief Localize coordinates of element nodes
  *  \details Coordinates are stored in array <tt>_x[0], _x[1], ...</tt> which
@@ -464,6 +475,7 @@ class Equation : virtual public AbsEqua<T_>
     real_t setMaterialProperty(const string& exp,
                                const string& prop);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /// \brief LocalMatrix instance containing local matrix associated to current element
     LocalMatrix<T_,NEE_,NEE_> eMat, eA0, eA1, eA2;
 
@@ -478,6 +490,7 @@ class Equation : virtual public AbsEqua<T_>
 
 /// \brief LocalVect instance containing local right-hand side vector associated to current side
     LocalVect<T_,NSE_> sRHS;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  protected:
 
@@ -487,8 +500,9 @@ class Equation : virtual public AbsEqua<T_>
     const Side*                   _theSide;
     ElementGeom                   _el_geo;
     LocalVect<Point<real_t>,NEN_> _x;
-    LocalVect<T_,NEE_>            _eu;
+    LocalVect<T_,NEE_>            _eu, _ebf;
     LocalVect<T_,NSE_>            _su;
+    T_                            _ssf[MAX_NBDOF_NODE];
     void updateBC(const Element&  el,
                   Vect<T_>*       bc=nullptr);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

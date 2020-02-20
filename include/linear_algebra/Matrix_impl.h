@@ -323,7 +323,7 @@ void Matrix<T_>::Prescribe(Mesh&           mesh,
                            const Vect<T_>& u,
                            int             flag)
 {
-   MeshNodes(mesh) {
+   NodeLoop(mesh) {
       for (size_t i=1; i<=theNode->getNbDOF(); ++i) {
          if (TheNode.getCode(i)>0) {
             size_t k=TheNode.getDOF(i);
@@ -355,9 +355,9 @@ void Matrix<T_>::Prescribe(int             dof,
                            const Vect<T_>& u,
                            int             flag)
 {
-   MeshNodes(mesh) {
-      if (theNode->getCode(dof)==code) {
-         size_t k=theNode->getDOF(dof);
+   node_loop(&mesh) {
+      if (The_node.getCode(dof)==code) {
+         size_t k=The_node.getDOF(dof);
          if (flag==0) {
             _diag[k-1] = get(k,k)*_penal;
             set(k,k,_diag[k-1]);
@@ -384,10 +384,10 @@ void Matrix<T_>::Prescribe(Mesh&     mesh,
                            Vect<T_>& b,
                            int       flag)
 {
-   MeshNodes(mesh) {
-      for (size_t j=1; j<=theNode->getNbDOF(); ++j)
-         if (theNode->getCode(j)>0) {
-            size_t k=theNode->getDOF(j);
+   node_loop(&mesh) {
+      for (size_t j=1; j<=The_node.getNbDOF(); ++j)
+         if (The_node.getCode(j)>0) {
+            size_t k=The_node.getDOF(j);
             if (!flag) {
                _diag[k-1] = get(k,k)*_penal;
                set(k,k,_diag[k-1]);
@@ -413,7 +413,7 @@ void Matrix<T_>::Prescribe(size_t          dof,
                            const Vect<T_>& u,
                            int             flag)
 {
-   mesh_nodes(mesh) {
+   node_loop(&mesh) {
       if (The_node.getCode(dof)>0) {
          size_t k=node_label;
          if (!flag) {
@@ -432,7 +432,7 @@ void Matrix<T_>::Prescribe1(Mesh&           mesh,
                             const Vect<T_>& u,
                             int             flag)
 {
-   mesh_nodes(mesh) {
+   node_loop(&mesh) {
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          if (The_node.getCode(i)>0) {
             size_t k=The_node.getDOF(i);
@@ -457,7 +457,7 @@ void Matrix<T_>::Prescribe1(Vect<T_>&       b,
 template<class T_>
 void Matrix<T_>::Prescribe(Mesh& mesh)
 {
-   mesh_nodes(mesh) {
+   node_loop(&mesh) {
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          if (The_node.getCode(i)>0) {
             size_t k=The_node.getDOF(i);
@@ -478,7 +478,7 @@ void Matrix<T_>::Prescribe()
 template<class T_>
 void Matrix<T_>::PrescribeSide(Mesh& mesh)
 {
-   mesh_sides(mesh) {
+   side_loop(&mesh) {
       for (size_t i=1; i<=The_side.getNbDOF(); i++) {
          if (The_side.getCode(i)>0) {
             size_t k = The_side.getDOF(i);

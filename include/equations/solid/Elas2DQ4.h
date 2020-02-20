@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -127,10 +127,16 @@ class Elas2DQ4 : virtual public Equa_Solid<real_t,4,8,2,4>
  */
     void BodyRHS(const Vect<real_t>& f);
 
+/// \brief Add body right-hand side term to right hand side.
+    void BodyRHS();
+
 /** \brief Add boundary right-hand side term to right hand side.
  *  @param [in] f Vector containing source at nodes (DOF by DOF).
  */
     void BoundaryRHS(const Vect<real_t>& f);
+
+/// \brief Add boundary right-hand side term to right hand side.
+    void BoundaryRHS();
 
 /** \brief Calculate strains at element barycenters
  *  @param [out] eps Vector containing strains in elements

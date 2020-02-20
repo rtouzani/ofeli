@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -126,11 +126,9 @@ class DC3DAT3 : virtual public Equa_Therm<real_t,3,3,2,2>
 /// @param [in] u Vector for which gradient is computed.
     Point<real_t> & Grad(const Vect<real_t>& u);
 
- protected:
-    void set(const Element *el);
-    void set(const Side *sd);
-
  private:
+    void set(const Element* el);
+    void set(const Side* sd);
     real_t        _r[3];
     Point<real_t> _grad;
 };

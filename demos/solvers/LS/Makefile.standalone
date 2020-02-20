@@ -13,7 +13,7 @@ ls_demo2:	ls_demo2.o
 
 
 clean:
-	/bin/rm -f *.o ls_demo1 ls_demo2
+	/bin/rm -f *.o ls_demo1 ls_demo2 *.pos
 
 .cpp.o:
 	`ofeli-config --cxx` `ofeli-config --cflags` -c $<

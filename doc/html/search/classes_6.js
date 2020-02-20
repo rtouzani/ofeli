@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gauss',['Gauss',['../classOFELI_1_1Gauss.html',1,'OFELI']]],
-  ['grid',['Grid',['../classOFELI_1_1Grid.html',1,'OFELI']]]
+  ['gauss',['Gauss',['../a00044.html',1,'OFELI']]],
+  ['grid',['Grid',['../a00045.html',1,'OFELI']]]
 ];

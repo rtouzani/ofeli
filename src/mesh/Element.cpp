@@ -534,6 +534,41 @@ real_t Element::getMeasure() const
 }
 
 
+Point<real_t> Element::getCenter() const
+{
+   switch (_shape) {
+
+      case LINE:
+         return 0.5*(_node[0]->getCoord()+_node[1]->getCoord());
+
+      case TRIANGLE:
+         return OFELI_THIRD*(_node[0]->getCoord()+_node[1]->getCoord()+_node[2]->getCoord());
+
+      case TETRAHEDRON:
+         return 0.25*(_node[0]->getCoord() + _node[1]->getCoord() +
+                      _node[2]->getCoord() + _node[3]->getCoord());
+
+      case QUADRILATERAL:
+         return 0.25*(_node[0]->getCoord() + _node[1]->getCoord() +
+                      _node[2]->getCoord() + _node[3]->getCoord());
+
+      case HEXAHEDRON:
+         return 0.125*(_node[0]->getCoord() + _node[1]->getCoord() +
+                       _node[2]->getCoord() + _node[3]->getCoord() +
+                       _node[4]->getCoord() + _node[5]->getCoord() +
+                       _node[6]->getCoord() + _node[7]->getCoord());
+
+      case PENTAHEDRON:
+         return OFELI_SIXTH*(_node[0]->getCoord() + _node[1]->getCoord() +
+                             _node[2]->getCoord() + _node[3]->getCoord() +
+                             _node[4]->getCoord() + _node[5]->getCoord());
+
+      default:
+         return Point<real_t>(0.,0.,0.);
+   }
+}
+
+
 Point<real_t> Element::getUnitNormal(size_t i) const
 {
    size_t j;

@@ -1716,13 +1716,13 @@ void Domain::genMesh(string geo_file,
    Vect<size_t> nd_ref(_theMesh->getNbNodes());
    nd_ref = 0;
    MESH_SD {
-      for (size_t i=1; i<=TheSide.getNbNodes(); i++)
-         if (TheSide.getCode(1))
-            nd_ref[TheSide(i)->n()-1]++;
+      for (size_t i=1; i<=The_side.getNbNodes(); i++)
+         if (The_side.getCode(1))
+            nd_ref[The_side(i)->n()-1]++;
    }
    MESH_ND {
-      if (nd_ref[theNodeLabel-1]>1)
-         TheNode.setCode(1,0);
+      if (nd_ref[node_label-1]>1)
+         The_node.setCode(1,0);
    }
    _theMesh->put(mesh_file);
 }
@@ -1735,8 +1735,8 @@ void Domain::removeUnusedNodes()
    vector<Node *> nd(_theMesh->getNbNodes());
    clear(used);
    MESH_EL {
-      for (size_t i=1; i<=TheElement.getNbNodes(); i++)
-         used[TheElement(i)->n()-1]++;
+      for (size_t i=1; i<=The_element.getNbNodes(); i++)
+         used[The_element(i)->n()-1]++;
    }
 
    delete _theMesh;
@@ -1753,19 +1753,19 @@ void Domain::removeUnusedNodes()
       }
    }
    int ne = 0;
-   MeshElements(ms) {
-      Element *el = new Element(++ne,TheElement.getShape(),TheElement.getCode());
-      for (size_t i=1; i<=TheElement.getNbNodes(); i++)
-          el->Add(TheElement(i));
+   element_loop(&ms) {
+      Element *el = new Element(++ne,The_element.getShape(),The_element.getCode());
+      for (size_t i=1; i<=The_element.getNbNodes(); i++)
+          el->Add(The_element(i));
       _theMesh->Add(el);
    }
-   MeshSides(ms) {
-      Side *sd = new Side(theSideLabel,TheSide.getShape());
-      for (size_t i=1; i<=TheSide.getNbNodes(); i++)
-         sd->Add(TheSide(i));
-      sd->setNbDOF(TheSide.getNbDOF());
+   side_loop(&ms) {
+      Side *sd = new Side(side_label,The_side.getShape());
+      for (size_t i=1; i<=The_side.getNbNodes(); i++)
+         sd->Add(The_side(i));
+      sd->setNbDOF(The_side.getNbDOF());
       for (size_t i=1; i<=sd->getNbDOF(); i++)
-         sd->setCode(i,TheSide.getCode(i));
+         sd->setCode(i,The_side.getCode(i));
       _theMesh->Add(sd);
    }
 }

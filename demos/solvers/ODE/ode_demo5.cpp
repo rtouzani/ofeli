@@ -42,17 +42,14 @@ using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
-   if (argc<3) {
-      cout << "Usage: " << argv[0] << " <time step> <output file> [Phase portrait file]" << endl;
+   if (argc<2) {
+      cout << "Usage: " << argv[0] << " <time step>" << endl;
       return 0;
    }
    theTimeStep = atof(argv[1]);
    theFinalTime = 100.;
-   ofstream outf(argv[2]);
-   string ff = "phase.dat";
-   if (argc>4)
-      ff = argv[3];
-   ofstream oph(ff.c_str());
+   ofstream outf("output.dat");
+   ofstream oph("phase.dat");
 
 // Solution is stored in file given by the fourth argument
 // The phase portrait is solved in a file whose name can be given as a fourth argument,

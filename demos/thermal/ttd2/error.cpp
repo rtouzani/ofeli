@@ -31,7 +31,7 @@ using namespace OFELI;
 void error(double time, const Mesh &ms, const Vect<double> &u)
 {
    double e=0, a=10;
-   MeshNodes(ms) {
+   NodeLoop(ms) {
       double U = tanh(a*theNode->getCoord(2))*(exp(time)-1);
       double ee = U - u(theNodeLabel);
       e += ee*ee;

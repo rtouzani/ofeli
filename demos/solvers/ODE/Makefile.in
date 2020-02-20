@@ -361,6 +361,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 ode_demo1_SOURCES = ode_demo1.cpp
 ode_demo2_SOURCES = ode_demo2.cpp
 ode_demo3_SOURCES = ode_demo3.cpp
@@ -416,7 +417,7 @@ dist_ts_demo1_DATA = ts_demo1.cpp \
                      README
 
 dist_ts_demo2_DATA = ts_demo2.cpp \
-                      mesh2.m
+                     mesh2.m
 
 all: all-am
 
@@ -1044,7 +1045,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-local mostlyclean-am
 
 distclean: distclean-am
 	-rm -f Makefile
@@ -1129,26 +1130,26 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_ode_demo1DATA \
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
-	clean-binPROGRAMS clean-generic cscopelist-am ctags ctags-am \
-	distclean distclean-compile distclean-generic distclean-tags \
-	distdir dvi dvi-am html html-am info info-am install \
-	install-am install-binPROGRAMS install-data install-data-am \
-	install-dist_ode_demo1DATA install-dist_ode_demo2DATA \
-	install-dist_ode_demo3DATA install-dist_ode_demo4DATA \
-	install-dist_ode_demo5DATA install-dist_ode_demo6DATA \
-	install-dist_ode_demo7DATA install-dist_ts_demo1DATA \
-	install-dist_ts_demo2DATA install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-ode_demo1DATA \
-	install-ode_demo2DATA install-ode_demo3DATA \
-	install-ode_demo4DATA install-ode_demo5DATA \
-	install-ode_demo6DATA install-ode_demo7DATA install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	install-ts_demo1DATA install-ts_demo2DATA installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS \
+	clean-binPROGRAMS clean-generic clean-local cscopelist-am \
+	ctags ctags-am distclean distclean-compile distclean-generic \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-binPROGRAMS install-data \
+	install-data-am install-dist_ode_demo1DATA \
+	install-dist_ode_demo2DATA install-dist_ode_demo3DATA \
+	install-dist_ode_demo4DATA install-dist_ode_demo5DATA \
+	install-dist_ode_demo6DATA install-dist_ode_demo7DATA \
+	install-dist_ts_demo1DATA install-dist_ts_demo2DATA \
+	install-dvi install-dvi-am install-exec install-exec-am \
+	install-html install-html-am install-info install-info-am \
+	install-man install-ode_demo1DATA install-ode_demo2DATA \
+	install-ode_demo3DATA install-ode_demo4DATA \
+	install-ode_demo5DATA install-ode_demo6DATA \
+	install-ode_demo7DATA install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip install-ts_demo1DATA \
+	install-ts_demo2DATA installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS \
 	uninstall-dist_ode_demo1DATA uninstall-dist_ode_demo2DATA \
 	uninstall-dist_ode_demo3DATA uninstall-dist_ode_demo4DATA \
 	uninstall-dist_ode_demo5DATA uninstall-dist_ode_demo6DATA \
@@ -1161,6 +1162,9 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_ode_demo1DATA \
 
 .PRECIOUS: Makefile
 
+
+clean-local:
+	-rm -rf output.dat phase.dat *.vtk mm*.m output.dat
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

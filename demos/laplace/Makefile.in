@@ -333,6 +333,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 laplace_demo1_SOURCES = laplace_demo1.cpp
 laplace_demo2_SOURCES = laplace_demo2.cpp
 laplace_demo3_SOURCES = laplace_demo3.cpp
@@ -773,7 +774,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-local mostlyclean-am
 
 distclean: distclean-am
 	-rm -f Makefile
@@ -850,22 +851,23 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_laplace_demo1DATA \
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
-	clean-binPROGRAMS clean-generic cscopelist-am ctags ctags-am \
-	distclean distclean-compile distclean-generic distclean-tags \
-	distdir dvi dvi-am html html-am info info-am install \
-	install-am install-binPROGRAMS install-data install-data-am \
-	install-dist_laplace_demo1DATA install-dist_laplace_demo2DATA \
-	install-dist_laplace_demo3DATA install-dist_laplace_demo4DATA \
-	install-dvi install-dvi-am install-exec install-exec-am \
-	install-html install-html-am install-info install-info-am \
-	install-laplace_demo1DATA install-laplace_demo2DATA \
-	install-laplace_demo3DATA install-laplace_demo4DATA \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic pdf pdf-am \
-	ps ps-am tags tags-am uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-dist_laplace_demo1DATA \
+	clean-binPROGRAMS clean-generic clean-local cscopelist-am \
+	ctags ctags-am distclean distclean-compile distclean-generic \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-binPROGRAMS install-data \
+	install-data-am install-dist_laplace_demo1DATA \
+	install-dist_laplace_demo2DATA install-dist_laplace_demo3DATA \
+	install-dist_laplace_demo4DATA install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-laplace_demo1DATA \
+	install-laplace_demo2DATA install-laplace_demo3DATA \
+	install-laplace_demo4DATA install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-binPROGRAMS \
+	uninstall-dist_laplace_demo1DATA \
 	uninstall-dist_laplace_demo2DATA \
 	uninstall-dist_laplace_demo3DATA \
 	uninstall-dist_laplace_demo4DATA uninstall-laplace_demo1DATA \
@@ -874,6 +876,9 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_laplace_demo1DATA \
 
 .PRECIOUS: Makefile
 
+
+clean-local:
+	-rm -rf u.pos mesh-P2.m 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

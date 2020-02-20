@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -56,7 +56,9 @@ namespace OFELI {
  *  \brief Definition file for class FE_Electromagnetics.
  */
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 extern Material theMaterial;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \class Equa_Electromagnetics
  *  \ingroup Electromagnetics

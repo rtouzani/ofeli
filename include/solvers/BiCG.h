@@ -63,7 +63,7 @@ namespace OFELI {
  *
  */
 
-/** \fn int BiCG(const SpMatrix<T_> &A, const Prec<T_> &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t toler)
+/** \fn int BiCG(const SpMatrix<T_> &A, const Prec<T_> &P, const Vect<T_> &b, Vect<T_> &x, int max_it, real_t& toler)
  *  \ingroup Solver
  *  \brief Biconjugate gradient solver function.
  *  \details This function uses the preconditioned Biconjugate Conjugate Gradient algorithm to solve a

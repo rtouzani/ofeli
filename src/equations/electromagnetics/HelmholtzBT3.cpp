@@ -126,7 +126,7 @@ void HelmholtzBT3::BoundaryRHS(Vect<complex_t>& f)
 
 void HelmholtzBT3::build()
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       LHS();
       AbsEqua<complex_t>::_A->Assembly(The_element,eMat.get());
@@ -136,7 +136,7 @@ void HelmholtzBT3::build()
          this->updateBC(*_theElement,*AbsEqua<complex_t>::_bc);
       AbsEqua<complex_t>::_b->Assembly(The_element,eRHS.get());
    }
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       set(the_side);
       if (AbsEqua<complex_t>::_sf!=nullptr)
          BoundaryRHS(*_sf);

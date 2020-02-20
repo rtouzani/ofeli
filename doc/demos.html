@@ -142,7 +142,6 @@
       <li><a href="html/index.html"><span>Class Documentation</span></a>
       <li><a href="extlib.html"><span>External Libraries</span></a>
       <li><a href="fformats.html"><span>File Formats</span></a>
-      <li><a href="tutorial.html"><span>Tutorial</span></a>
       <li class="current"><a href="demos.html"><span>Demo Codes</span></a>
    </ul>
  </div>
@@ -153,13 +152,39 @@
 <p><font color="#203F5B" size="4" face="verdana,Helvetica">
 <b>Demo Codes</b></font></p>
 
-<a href="demos/stdc2.html"><img src="im/forward.gif" border="0"></a>
+<a href="demos/elliptic.html"><img src="im/forward.gif" border="0"></a>
 
 <SPAN class=TEXT>
 <p>
-We provide here some demonstration finite element programs to illustrate reasonable
-size prototype programs using <SPAN CLASS=LOGO>OFELI</SPAN>.
+Here is a collection of demo programs with increasing complexity to illustrate the main
+functionalities of the library <SPAN CLASS=LOGO>OFELI</SPAN>.
 
+<h4>1-D problems</h4>
+<img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
+<a href="demos/elliptic.html" class="centre">A two-point boundary
+value problem</a><br>
+<img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
+<a href="demos/heat.html" class="centre">A 1-D heat equation</a><br>
+<img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
+<a href="demos/transport.html" class="centre">A 1-D linear transport equation</a><br>
+
+<p>
+<h4>The Laplace equation</h4>
+<img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
+<a href="demos/laplace_demo1.html" class="centre">The 2-D Laplace
+equation with P<sub>1</sub> finite elements</a><br>
+<img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
+<a href="demos/laplace_demo2.html" class="centre">The 2-D Laplace
+equation with P<sub>2</sub> finite elements</a><br>
+<img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
+<a href="demos/laplace_demo3.html" class="centre">The 3-D Laplace
+equation with P<sub>1</sub> finite elements</a><br>
+<img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
+<a href="demos/laplace_demo3.html" class="centre">The 2-D
+Steklov-Poincar&eacute; problem using P<sub>0</sub> boundary elements</a><br>
+<a href="demos/laplace_demo4.html" class="centre"></a><br>
+
+<p>
 <h4>Heat Transfer</h4>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/stdc2.html" class="centre">A 2-D steady state diffusion convection code</a><br>
@@ -206,7 +231,7 @@ triangular finite elements and a projection method</a><br>
 -->
 
 <p>
-<h4>Using the Linear Solver</h4>
+<h4>The Linear Solver</h4>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/ls_demo1.html" class="centre">Solve a linear
 system by a direct method</a><br>
@@ -215,7 +240,7 @@ system by a direct method</a><br>
 system issued from a PDE by a preconditioned iterative method</a><br>
 
 <p>
-<h4>Using the ODE solver</h4>
+<h4>The ODE solver</h4>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/ode_demo1.html" class="centre">A nonlinear first-order ode given by a regular expression<br>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
@@ -229,7 +254,7 @@ linear ode's given numerically</a><br>
 nonlinear ode given by regular expressions</a><br>
   
 <p>
-<h4>Using the Time Stepping solver</h4>
+<h4>The Time Stepping solver</h4>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/ts_demo1.html" class="centre">Solution of
 a transient heat transfer problem by the BDF2 scheme</a><br>
@@ -238,7 +263,7 @@ a transient heat transfer problem by the BDF2 scheme</a><br>
 a problem of elastodynamics by the Newmark method</a><br>
 
 <p>
-<h4>Using the Eigen Problem solver</h4>
+<h4>The Eigen Problem solver</h4>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/eigen_demo1.html" class="centre">Eigenvalues of a given symmetric matrix</a><br>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
@@ -246,7 +271,7 @@ a problem of elastodynamics by the Newmark method</a><br>
 problem for the Laplace equation</a><br>
 
 <p>
-<h4>Using the Optimization solver</h4>
+<h4>The Optimization solver</h4>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/opt_demo1.html" class="centre">
 A one variable problem
@@ -261,7 +286,7 @@ Solution of the Laplace equation as an optimization problem
 </a><br>
 
 <p>
-<h4>Using the nonlinear solver</h4>
+<h4>The Nonlinear solver</h4>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/nl_demo1.html" class="centre">
 A one variable problem where the function is given by a C-function
@@ -277,11 +302,11 @@ defined by regular expressions
 </a><br>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/nl_demo4.html" class="centre">
-Solution the same system as above, where the functions are given by C-functions
+Solution of the same system as above, where the functions are given by C-functions
 </a><br>
 
 <p>
-<h4>Using Mesh adaptation</h4>
+<h4>Mesh adaptation</h4>
 <img src="im/o_arr.gif" width="11" height="12" align="absmiddle">
 <a href="demos/adapt_demo1.html" class="centre">
 A one variable problem with the objective function given

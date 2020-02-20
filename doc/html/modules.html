@@ -63,20 +63,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     </ul>
   </div>
 </div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-$(document).ready(function(){initNavTree('modules.html','');});
-</script>
-<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -98,148 +84,35 @@ $(document).ready(function(){initNavTree('modules.html','');});
 <div class="contents">
 <div class="textblock">Here is a list of all modules:</div><div class="directory">
 <div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><a class="el" href="group__OFELI.html" target="_self">OFELI</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__ConservationLaws.html" target="_self">Conservation Law Equations</a></td><td class="desc">Conservation law equations </td></tr>
-<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Electromagnetics.html" target="_self">Electromagnetics</a></td><td class="desc">Electromagnetic equations </td></tr>
-<tr id="row_0_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Mesh.html" target="_self">Finite Element Mesh</a></td><td class="desc">Mesh management classes </td></tr>
-<tr id="row_0_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Fluid.html" target="_self">Fluid Dynamics</a></td><td class="desc">Fluid Dynamics equations </td></tr>
-<tr id="row_0_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Equation.html" target="_self">General Purpose Equations</a></td><td class="desc">Gathers equation related classes </td></tr>
-<tr id="row_0_5_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Global.html" target="_self">Global Variables</a></td><td class="desc">All global variables in the library </td></tr>
-<tr id="row_0_6_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Therm.html" target="_self">Heat Transfer</a></td><td class="desc">Heat Transfer equations </td></tr>
-<tr id="row_0_7_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__IO.html" target="_self">Input/Output</a></td><td class="desc">Input/Output utility classes </td></tr>
-<tr id="row_0_8_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Interface.html" target="_self">Interface Problems</a></td><td class="desc">Interface problems, including image processing </td></tr>
-<tr id="row_0_9_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Laplace.html" target="_self">Laplace equation</a></td><td class="desc">Laplace and Poisson equations </td></tr>
-<tr id="row_0_10_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Physics.html" target="_self">Physical properties of media</a></td><td class="desc">Physical properties of materials and media </td></tr>
-<tr id="row_0_11_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Porous.html" target="_self">Porous Media problems</a></td><td class="desc">Porous Media equation classes </td></tr>
-<tr id="row_0_12_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Shape.html" target="_self">Shape Function</a></td><td class="desc">Shape function classes </td></tr>
-<tr id="row_0_13_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Solid.html" target="_self">Solid Mechanics</a></td><td class="desc">Solid Mechanics finite element equations </td></tr>
-<tr id="row_0_14_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Solver.html" target="_self">Solver</a></td><td class="desc">Solver functions and classes </td></tr>
-<tr id="row_0_15_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__Util.html" target="_self">Utilities</a></td><td class="desc">Utility functions and classes </td></tr>
-<tr id="row_0_16_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__VectMat.html" target="_self">Vector and Matrix</a></td><td class="desc">Vector and matrix classes </td></tr>
+<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><a class="el" href="a00341.html" target="_self">OFELI</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00324.html" target="_self">General Purpose Equations</a></td><td class="desc">Gathers equation related classes </td></tr>
+<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00325.html" target="_self">Conservation Law Equations</a></td><td class="desc">Conservation law equations </td></tr>
+<tr id="row_0_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00326.html" target="_self">Electromagnetics</a></td><td class="desc">Electromagnetic equations </td></tr>
+<tr id="row_0_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00327.html" target="_self">Fluid Dynamics</a></td><td class="desc">Fluid Dynamics equations </td></tr>
+<tr id="row_0_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00328.html" target="_self">Interface Problems</a></td><td class="desc">Interface problems, including image processing </td></tr>
+<tr id="row_0_5_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00329.html" target="_self">Laplace equation</a></td><td class="desc">Laplace and Poisson equations </td></tr>
+<tr id="row_0_6_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00330.html" target="_self">Porous Media problems</a></td><td class="desc">Porous Media equation classes </td></tr>
+<tr id="row_0_7_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00331.html" target="_self">Solid Mechanics</a></td><td class="desc">Solid Mechanics finite element equations </td></tr>
+<tr id="row_0_8_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00332.html" target="_self">Heat Transfer</a></td><td class="desc">Heat Transfer equations </td></tr>
+<tr id="row_0_9_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00333.html" target="_self">Input/Output</a></td><td class="desc">Input/Output utility classes </td></tr>
+<tr id="row_0_10_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00334.html" target="_self">Utilities</a></td><td class="desc">Utility functions and classes </td></tr>
+<tr id="row_0_11_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00336.html" target="_self">Physical properties of media</a></td><td class="desc">Physical properties of materials and media </td></tr>
+<tr id="row_0_12_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00337.html" target="_self">Global Variables</a></td><td class="desc">All global variables in the library </td></tr>
+<tr id="row_0_13_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00338.html" target="_self">Finite Element Mesh</a></td><td class="desc">Mesh management classes </td></tr>
+<tr id="row_0_14_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00339.html" target="_self">Shape Function</a></td><td class="desc">Shape function classes </td></tr>
+<tr id="row_0_15_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00340.html" target="_self">Solver</a></td><td class="desc">Solver functions and classes </td></tr>
+<tr id="row_0_16_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="a00335.html" target="_self">Vector and Matrix</a></td><td class="desc">Vector and matrix classes </td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->
-</div><!-- doc-content -->
 
 </div> <!-- class text -->
 </div> <!-- main menu -->
 <!-- Google Search -->
 <br><br>
-<center>
-  <div id="cse" style="width: 80%;">Loading</div>
-  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-  <script type="text/javascript"> 
-     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
-     google.setOnLoadCallback(function() {
-        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
-        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
-        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-        customSearchControl.draw('cse');
-     }, true);
-   </script>
-   <style type="text/css">
-     .gsc-control-cse {
-     font-family: Verdana, sans-serif;
-     border-color: #DAE0E5;
-     background-color: #DAE0E5;
-   }
-   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
-   input.gsc-input { border-color: #B6BEC5; }
-   input.gsc-search-button {
-     border-color: #B6BEC5;
-     background-color: #D0D1D4;
-   }
-   .gsc-tabHeader.gsc-tabhInactive {
-     border-color: #999999;
-     background-color: #EEEEEE;
-   }
-   .gsc-tabHeader.gsc-tabhActive {
-     border-color: #999999;
-     background-color: #999999;
-   }
-   .gsc-tabsArea { border-color: #999999; }
-   .gsc-webResult.gsc-result,
-   .gsc-results .gsc-imageResult {
-     border-color: #FFFFFF;
-     background-color: #FFFFFF;
-   }
-   .gsc-webResult.gsc-result:hover,
-   .gsc-imageResult:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gs-webResult.gs-result a.gs-title:link,
-   .gs-webResult.gs-result a.gs-title:link b,
-   .gs-imageResult a.gs-title:link,
-   .gs-imageResult a.gs-title:link b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:visited,
-   .gs-webResult.gs-result a.gs-title:visited b,
-   .gs-imageResult a.gs-title:visited,
-   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:hover,
-   .gs-webResult.gs-result a.gs-title:hover b,
-   .gs-imageResult a.gs-title:hover,
-   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:active,
-   .gs-webResult.gs-result a.gs-title:active b,
-   .gs-imageResult a.gs-title:active,
-   .gs-imageResult a.gs-title:active b { color: #0568CD; }
-   .gsc-cursor-page { color: #0568CD; }
-   a.gsc-trailing-more-results:link { color: #0568CD; }
-   .gs-webResult .gs-snippet,
-   .gs-imageResult .gs-snippet,
-   .gs-fileFormatType { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl,
-   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { display: none; }
-   .gs-webResult div.gs-visibleUrl-long { display: block; }
-   .gs-promotion div.gs-visibleUrl-short { display: none; }
-   .gs-promotion div.gs-visibleUrl-long { display: block; }
-   .gsc-cursor-box { border-color: #FFFFFF; }
-   .gsc-results .gsc-cursor-box .gsc-cursor-page {
-      border-color: #999999;
-      background-color: #FFFFFF;
-      color: #0568CD;
-   }
-   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
-      border-color: #999999;
-      background-color: #999999;
-      color: #0568CD;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion {
-      border-color: #D2D6DC;
-      background-color: #D0D1D4;
-   }
-   .gsc-completion-title { color: #0568CD; }
-   .gsc-completion-snippet { color: #5F6A73; }
-   .gs-promotion a.gs-title:link,
-   .gs-promotion a.gs-title:link *,
-   .gs-promotion .gs-snippet a:link { color: #0066CC; }
-   .gs-promotion a.gs-title:visited,
-   .gs-promotion a.gs-title:visited *,
-   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
-   .gs-promotion a.gs-title:hover,
-   .gs-promotion a.gs-title:hover *,
-   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
-   .gs-promotion a.gs-title:active,
-   .gs-promotion a.gs-title:active *,
-   .gs-promotion .gs-snippet a:active { color: #0066CC; }
-   .gs-promotion .gs-snippet,
-   .gs-promotion .gs-title .gs-promotion-title-right,
-   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
-   .gs-promotion .gs-visibleUrl,
-   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
-   </style>
-</center>
-<!-- End of Google Search Box -->
-<br><br><br></p>
+<br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2019 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2020 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

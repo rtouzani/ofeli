@@ -126,7 +126,7 @@ void Bar2DL2::BodyRHS(const Vect<real_t>& f)
 void Bar2DL2::build()
 {
    *AbsEqua<real_t>::_A = 0;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       if (_analysis==TRANSIENT) {
          if (_terms&LUMPED_MASS)
@@ -155,7 +155,7 @@ void Bar2DL2::Load()
 void Bar2DL2::getStresses(Vect<real_t>& s)
 {
    s.setSize(_nb_el,2);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       s(element_label,1) = _E*_section*(_eu(3)-_eu(1))/_el_geo.length;
       s(element_label,2) = _E*_section*(_eu(4)-_eu(2))/_el_geo.length;

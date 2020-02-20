@@ -248,10 +248,12 @@ class Node
  */
     int getLevel() const { return _level; }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend class Mesh;
     friend void Refine(Mesh &in_mesh, Mesh &out_mesh);
     friend ostream& operator<<(ostream&    s,
                                const Mesh& ms);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
 
@@ -270,7 +272,7 @@ class Node
 // Associated functions
 //-----------------------------------------------------------------------------
 
-/** \fn ostream & operator<<(ostream& s, const Node &nd)
+/** \fn ostream & operator<<(ostream &s, const Node &nd)
  *  \brief Output node data.
  *  \ingroup Mesh
  *

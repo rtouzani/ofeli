@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -107,9 +107,15 @@ class Elas3DT4 : virtual public Equa_Solid<real_t,4,12,3,9>
  */
     void BodyRHS(const Vect<real_t>& f);
 
+/// \brief Add body right-hand side term to right hand side.
+    void BodyRHS();
+
 /// \brief Add boundary right-hand side term to right hand side.
 /// @param [in] f Vect instance that contains constant traction to impose to side.
     void BoundaryRHS(const Vect<real_t>& f);
+
+/// \brief Add boundary right-hand side term to right hand side.
+    void BoundaryRHS();
 
  private:
 

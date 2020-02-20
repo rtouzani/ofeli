@@ -7,7 +7,7 @@ lh2d:	$(OBJ)
 	`ofeli-config --cxx` `ofeli-config --cflags` -o lh2d $(OBJ) `ofeli-config --libs`
 
 clean:
-	/bin/rm -f $(OBJ) lh2d`ofeli-config --exe_ext`
+	/bin/rm -f $(OBJ) lh2d`ofeli-config --exe_ext` rectangle.t
 
 
 .cpp.o:

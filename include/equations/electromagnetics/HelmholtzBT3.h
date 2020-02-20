@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -85,7 +85,7 @@ class HelmholtzBT3 : virtual public Equa_Electromagnetics<complex_t,3,3,2,2>
 /// \brief Destructor
     ~HelmholtzBT3();
 
-/// \brief
+/// \brief Builds system of equations
     void build();
 
 /// \brief Add element Left-Hand Side

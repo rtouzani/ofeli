@@ -272,8 +272,10 @@ class EigenProblemSolver
     void getEigenVector(int           n,
                         Vect<real_t>& v) const;
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream & operator<<(ostream&                  s,
                                 const EigenProblemSolver& es);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
 
@@ -292,10 +294,10 @@ class EigenProblemSolver
    void Mxv(const Vect<real_t>& b, Vect<real_t>& c);
 };
 
-/// \fn ostream & operator<<(ostream& s, const EigenSolver &es)
-/// \brief Output differential system information
+/// \fn ostream & operator<<(ostream& s, const EigenProblemSolver &es)
+/// \brief Output eigenproblem information
 /// \ingroup Solver
-    ostream & operator<<(      ostream&            s,
+    ostream & operator<<(ostream&                  s,
                          const EigenProblemSolver& es);
 
 /*! @} End of Doxygen Groups */

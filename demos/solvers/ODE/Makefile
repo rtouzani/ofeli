@@ -87,8 +87,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin19.0.0
-host_triplet = i386-apple-darwin19.0.0
+build_triplet = i386-apple-darwin19.2.0
+host_triplet = i386-apple-darwin19.2.0
 bin_PROGRAMS = ode_demo1$(EXEEXT) ode_demo2$(EXEEXT) \
 	ode_demo3$(EXEEXT) ode_demo4$(EXEEXT) ode_demo5$(EXEEXT) \
 	ode_demo6$(EXEEXT) ode_demo7$(EXEEXT) ts_demo1$(EXEEXT) \
@@ -243,14 +243,14 @@ CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/mkinstalldirs \
 	README
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /Users/touzani/ofeli/ofeli/missing aclocal-1.16
+ACLOCAL = ${SHELL} /Users/touzani/ofeli/missing aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoconf
-AUTOHEADER = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoheader
-AUTOMAKE = ${SHELL} /Users/touzani/ofeli/ofeli/missing automake-1.16
-AWK = gawk
+AUTOCONF = ${SHELL} /Users/touzani/ofeli/missing autoconf
+AUTOHEADER = ${SHELL} /Users/touzani/ofeli/missing autoheader
+AUTOMAKE = ${SHELL} /Users/touzani/ofeli/missing automake-1.16
+AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
@@ -271,7 +271,7 @@ EIGEN_CFLAGS = -I${prefix}/include/eigen3
 EXEEXT = 
 GREP = /usr/bin/grep
 HAVE_INLINE = 
-INSTALL = /opt/local/bin/ginstall -c
+INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
@@ -281,8 +281,8 @@ LIBOBJS =
 LIBS = 
 LTLIBOBJS = 
 MAINT = #
-MAKEINFO = ${SHELL} /Users/touzani/ofeli/ofeli/missing makeinfo
-MKDIR_P = /opt/local/bin/gmkdir -p
+MAKEINFO = ${SHELL} /Users/touzani/ofeli/missing makeinfo
+MKDIR_P = ../../.././install-sh -c -d
 MPI_CFLAGS = -I${prefix}/include/mpi 
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
@@ -309,10 +309,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 4.0.0
-abs_builddir = /Users/touzani/ofeli/ofeli/demos/solvers/ODE
-abs_srcdir = /Users/touzani/ofeli/ofeli/demos/solvers/ODE
-abs_top_builddir = /Users/touzani/ofeli/ofeli
-abs_top_srcdir = /Users/touzani/ofeli/ofeli
+abs_builddir = /Users/touzani/ofeli/demos/solvers/ODE
+abs_srcdir = /Users/touzani/ofeli/demos/solvers/ODE
+abs_top_builddir = /Users/touzani/ofeli
+abs_top_srcdir = /Users/touzani/ofeli
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -321,10 +321,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin19.0.0
+build = i386-apple-darwin19.2.0
 build_alias = 
 build_cpu = i386
-build_os = darwin19.0.0
+build_os = darwin19.2.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -332,15 +332,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin19.0.0
+host = i386-apple-darwin19.2.0
 host_alias = 
 host_cpu = i386
-host_os = darwin19.0.0
+host_os = darwin19.2.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/touzani/ofeli/ofeli/install-sh
+install_sh = ${SHELL} /Users/touzani/ofeli/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -361,6 +361,7 @@ top_build_prefix = ../../../
 top_builddir = ../../..
 top_srcdir = ../../..
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 ode_demo1_SOURCES = ode_demo1.cpp
 ode_demo2_SOURCES = ode_demo2.cpp
 ode_demo3_SOURCES = ode_demo3.cpp
@@ -416,7 +417,7 @@ dist_ts_demo1_DATA = ts_demo1.cpp \
                      README
 
 dist_ts_demo2_DATA = ts_demo2.cpp \
-                      mesh2.m
+                     mesh2.m
 
 all: all-am
 
@@ -1044,7 +1045,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-local mostlyclean-am
 
 distclean: distclean-am
 	-rm -f Makefile
@@ -1129,26 +1130,26 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_ode_demo1DATA \
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
-	clean-binPROGRAMS clean-generic cscopelist-am ctags ctags-am \
-	distclean distclean-compile distclean-generic distclean-tags \
-	distdir dvi dvi-am html html-am info info-am install \
-	install-am install-binPROGRAMS install-data install-data-am \
-	install-dist_ode_demo1DATA install-dist_ode_demo2DATA \
-	install-dist_ode_demo3DATA install-dist_ode_demo4DATA \
-	install-dist_ode_demo5DATA install-dist_ode_demo6DATA \
-	install-dist_ode_demo7DATA install-dist_ts_demo1DATA \
-	install-dist_ts_demo2DATA install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-ode_demo1DATA \
-	install-ode_demo2DATA install-ode_demo3DATA \
-	install-ode_demo4DATA install-ode_demo5DATA \
-	install-ode_demo6DATA install-ode_demo7DATA install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	install-ts_demo1DATA install-ts_demo2DATA installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS \
+	clean-binPROGRAMS clean-generic clean-local cscopelist-am \
+	ctags ctags-am distclean distclean-compile distclean-generic \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-binPROGRAMS install-data \
+	install-data-am install-dist_ode_demo1DATA \
+	install-dist_ode_demo2DATA install-dist_ode_demo3DATA \
+	install-dist_ode_demo4DATA install-dist_ode_demo5DATA \
+	install-dist_ode_demo6DATA install-dist_ode_demo7DATA \
+	install-dist_ts_demo1DATA install-dist_ts_demo2DATA \
+	install-dvi install-dvi-am install-exec install-exec-am \
+	install-html install-html-am install-info install-info-am \
+	install-man install-ode_demo1DATA install-ode_demo2DATA \
+	install-ode_demo3DATA install-ode_demo4DATA \
+	install-ode_demo5DATA install-ode_demo6DATA \
+	install-ode_demo7DATA install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip install-ts_demo1DATA \
+	install-ts_demo2DATA installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS \
 	uninstall-dist_ode_demo1DATA uninstall-dist_ode_demo2DATA \
 	uninstall-dist_ode_demo3DATA uninstall-dist_ode_demo4DATA \
 	uninstall-dist_ode_demo5DATA uninstall-dist_ode_demo6DATA \
@@ -1161,6 +1162,9 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_ode_demo1DATA \
 
 .PRECIOUS: Makefile
 
+
+clean-local:
+	-rm -rf output.dat phase.dat *.vtk mm*.m output.dat
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

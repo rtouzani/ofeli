@@ -1,6 +1,7 @@
 
 noinst_LIBRARIES = libcl.a
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 libcl_a_SOURCES =	Muscl.cpp \
 			Muscl1D.cpp \

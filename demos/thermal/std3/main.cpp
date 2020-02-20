@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 //    Read boundary conditions, body and boundary forces
       if (Verbosity>1)
          cout << "Reading boundary conditions, body and boundary sources ...\n";
-      Vect<double> bc(ms), bf(ms), sf(ms,1,BOUNDARY_SIDE_FIELD);
+      Vect<double> bc(ms), bf(ms), sf(ms,BOUNDARY_SIDE_DOF,1);
       p.get(BOUNDARY_CONDITION,bc);
       p.get(BODY_FORCE,bf);
       p.get(BOUNDARY_FORCE,sf,0);

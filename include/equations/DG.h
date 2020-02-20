@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -93,6 +93,7 @@ namespace OFELI {
 
  protected:
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
    size_t                            _nb_sdof, _ne, _nf;
    size_t                            _degree, _nb_el_dof, _nb_sd_dof, _neq;
    Vect<real_t>                      _x;
@@ -102,6 +103,7 @@ namespace OFELI {
    size_t IJ(size_t i) const { return _nb_el_dof*(_nf-1)+i; }
 
    void setDGLabel();
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 };
 

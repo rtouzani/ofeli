@@ -167,7 +167,7 @@ real_t ICPG1D::RiemannSolver_ROE(int s)
 {
    real_t lambda1, lambda2, lambda4;                            // eigenvalues
    real_t lambda_entropy_left, lambda_entropy_right;            // entropy correction
-   real_t rho_star, u_star, p_star, c_star;	                // entropy correction state
+   real_t rho_star, u_star, p_star, c_star;	                   // entropy correction state
    real_t alpha1, alpha2, alpha4;                               // amplitude of the waves
    real_t Roe_u, Roe_H, Roe_c;                                  // Roe averaged values
    real_t sqrt_rho_G=sqrt(_Gr(s)), sqrt_rho_D=sqrt(_Dr(s));     // square roots for rho_G and rho_D
@@ -668,7 +668,7 @@ real_t ICPG1D::getFlux()
    real_t lambda=1.e-10;
    MESH_SD {
       assert(mySolver);
-      lambda = max(lambda,(this->*mySolver)(int(theSideLabel)));
+      lambda = max(lambda,(this->*mySolver)(int(side_label)));
    }
    return lambda;
 }
@@ -688,8 +688,8 @@ void ICPG1D::setBC(int    code,
                    real_t u)
 {
    MESH_SD
-      if (theSide->getCode(1)==code)
-         setBC(*theSide,u);
+      if (The_side.getCode(1)==code)
+         setBC(The_side,u);
 }
 
 
@@ -710,19 +710,19 @@ void ICPG1D::setBC(const Side&                sd,
 }
 
 
-void ICPG1D::setBC(      int                  code,
+void ICPG1D::setBC(int                        code,
                    const LocalVect<real_t,3>& u)
 {
    MESH_SD
-      if (theSide->getCode()==code)
-         setBC(*theSide,u);
+      if (The_side.getCode()==code)
+         setBC(The_side,u);
 }
 
 
 void ICPG1D::setBC(const LocalVect<real_t,3>& u)
 {
    MESH_SD
-      setBC(*theSide,u);
+      setBC(The_side,u);
 }
 
 
@@ -766,19 +766,19 @@ void ICPG1D::setInOutflowBC(const Side&                sd,
 }
 
 
-void ICPG1D::setInOutflowBC(      int                  code,
+void ICPG1D::setInOutflowBC(int                        code,
                             const LocalVect<real_t,3>& u)
 {
    MESH_SD
-      if (theSide->getCode(1)==code)
-         setInOutflowBC(TheSide,u);
+      if (The_side.getCode(1)==code)
+         setInOutflowBC(The_side,u);
 }
 
 
 void ICPG1D::setInOutflowBC(const LocalVect<real_t,3>& u)
 {
    MESH_SD
-      setInOutflowBC(TheSide,u);
+      setInOutflowBC(The_side,u);
 }
 
 /*=====================================================
@@ -871,55 +871,45 @@ void ICPG1D::Forward(const Vect<real_t>& flux,
 
 void ICPG1D::getMomentum(Vect<real_t>& m) const
 {
-   m.setMesh(*_theMesh,1,ELEMENT_FIELD);
-   MeshElements(*_theMesh) {
-      size_t n = theElementLabel;
-      m.set(n,(*_r)(n)*(*_v)(n));
-   }
+   m.setMesh(*_theMesh,ELEMENT_DOF,1);
+   MESH_EL
+      m.set(element_label,(*_r)(element_label)*(*_v)(element_label));
 }
 
 
 void ICPG1D::getInternalEnergy(Vect<real_t>& ie) const
 {
-   ie.setMesh(*_theMesh,1,ELEMENT_FIELD);
-   MeshElements(*_theMesh) {
-      size_t n = theElementLabel;
-      ie.set(n,(*_p)(n)*(_Gamma -1.));
-   }
+   ie.setMesh(*_theMesh,ELEMENT_DOF,1);
+   MESH_EL
+      ie.set(element_label,(*_p)(element_label)*(_Gamma -1.));
 }
 
 
 void ICPG1D::getTotalEnergy(Vect<real_t>& te) const
 {
-   te.setMesh(*_theMesh,1,ELEMENT_FIELD);
+   te.setMesh(*_theMesh,ELEMENT_DOF,1);
    Vect<real_t> tmp_e;
    getInternalEnergy(tmp_e);
-   MeshElements(*_theMesh) {
-      size_t n = theElementLabel;
-      te.set(n,tmp_e(n) + 0.5*(*_r)(n)*(*_v)(n)*(*_v)(n));
-   }
+   MESH_EL
+      te.set(element_label,tmp_e(element_label) + 0.5*(*_r)(element_label)*(*_v)(element_label)*(*_v)(element_label));
 }
 
 
 void ICPG1D::getSoundSpeed(Vect<real_t>& s) const
 {
-   s.setMesh(*_theMesh,1,ELEMENT_FIELD);
-   MeshElements(*_theMesh) {
-      size_t n = theElementLabel;
-      s.set(n,sqrt(_Gamma*(*_p)(n)/(*_r)(n)));
-   }
+   s.setMesh(*_theMesh,ELEMENT_DOF,1);
+   MESH_EL
+      s.set(element_label,sqrt(_Gamma*(*_p)(element_label)/(*_r)(element_label)));
 }
 
 
 void ICPG1D::getMach(Vect<real_t>& m) const
 {
-   m.setMesh(*_theMesh,1,ELEMENT_FIELD);
+   m.setMesh(*_theMesh,ELEMENT_DOF,1);
    Vect<real_t> temp(*_theMesh);
    getSoundSpeed(temp);
-   MeshElements(*_theMesh) {
-      size_t n = theElementLabel;
-      m.set(n,(*_v)(n)/temp(n));
-   }
+   MESH_EL
+      m.set(element_label,(*_v)(element_label)/temp(element_label));
 }
 
 

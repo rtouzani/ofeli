@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['laplace_20equation',['Laplace equation',['../group__Laplace.html',1,'']]]
+  ['laplace_20equation',['Laplace equation',['../a00329.html',1,'']]]
 ];

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -129,9 +129,15 @@ class Elas2DT3 : public Equa_Solid<real_t,3,6,2,4>
  */
     void BodyRHS(const Vect<real_t>& f);
 
+/// \brief Add body right-hand side term to right hand side
+    void BodyRHS();
+
 /// \brief Add boundary right-hand side term to right hand side.
 /// @param [in] f Vect instance that contains constant traction to impose to side.
     void BoundaryRHS(const Vect<real_t>& f);
+
+/// \brief Add boundary right-hand side term to right hand side.
+    void BoundaryRHS();
 
 /** \brief Penalty Signorini contact side contribution to matrix and right-hand side.
  *  @param [in] coef Penalty value by which the added term is multiplied
@@ -177,11 +183,9 @@ class Elas2DT3 : public Equa_Solid<real_t,3,6,2,4>
  */
     void Periodic(real_t coef=1.e20);
 
- protected:
+ private:
    void set(const Element *el);
    void set(const Side *sd);
-
- private:
    real_t _E1, _E2, _E3, _E6;
 };
 

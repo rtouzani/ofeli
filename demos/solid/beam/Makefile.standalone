@@ -2,7 +2,8 @@
 all:	beam
 
 beam:	main.o
-	`ofeli-config --cxx` `ofeli-config --cflags` -o beam main.o `ofeli-config --libs`
+	`ofeli-config --cxx` `ofeli-config --cflags` -o beam main.o `ofeli-config --libs` beam_tecplot.dat deformed_beam.m
+
 
 clean:
 	/bin/rm -f main.o beam`ofeli-config --exe_ext`

@@ -206,32 +206,31 @@ class Vect
 
 /** \brief Constructor with a mesh instance
  *  @param [in] m Mesh instance
+ *  @param [in] dof_type Type of degrees of freedom. To be given among the enumerated
+ *  values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>, <tt>SIDE_DOF</tt> or <tt>EDGE_DOF</tt>
+ *  (Default: <tt>NODE_DOF</tt>)
  *  @param [in] nb_dof Number of degrees of freedom per node, element or side
  *  If <tt>nb_dof</tt> is set to <tt>0</tt> (default value) the constructor picks this number from
  *  the Mesh instance
- *  @param [in] dof_type Type of degrees of freedom. To be given among the enumerated
- *  values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>, <tt>SIDE_FIELD</tt> or <tt>EDGE_FIELD</tt>
- *  (Default: <tt>NODE_FIELD</tt>)
  */
-    Vect(Mesh& m,
-         int   nb_dof=0,
-         int   dof_type=NODE_FIELD);
+    Vect(Mesh&      m,
+         DOFSupport dof_type=NODE_DOF,
+         int        nb_dof=0);
 
 /** \brief Constructor with a mesh instance giving name and time for vector
  *  @param [in] m Mesh instance
+ *  @param [in] dof_type Type of degrees of freedom. To be given among the enumerated
+ *  values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>, <tt>SIDE_DOF</tt> or <tt>EDGE_DOF</tt>
  *  @param [in] name Name of the vector
- *  @param [in] t Time value for the vector
  *  @param [in] nb_dof Number of degrees of freedom per node, element or side
  *  If <tt>nb_dof</tt> is set to <tt>0</tt> the constructor picks this number from the Mesh instance
- *  @param [in] dof_type Type of degrees of freedom. To be given among the enumerated
- *  values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>, <tt>SIDE_FIELD</tt> or <tt>EDGE_FIELD</tt>
- *  (Default: <tt>NODE_FIELD</tt>)
+ *  @param [in] t Time value for the vector [Default <tt>0.0</tt>]
  */
-    Vect(Mesh&  m,
-         string name,
-         real_t t=0.0,
-         int    nb_dof=0,
-         int    dof_type=NODE_FIELD);
+    Vect(Mesh&      m,
+         DOFSupport dof_type,
+         string     name,
+         int        nb_dof=0,
+         real_t     t=0.0);
 
 /** \brief Constructor of an element vector.
  *  \details The constructed vector has local numbering of nodes
@@ -381,15 +380,16 @@ class Vect
 
 /** \brief Define mesh class to size vector
  *  @param [in] m Mesh instance
- *  @param [in] nb_dof Number of degrees of freedom per node, element or side
- *  If <tt>nb_dof</tt> is set to <tt>0</tt> the constructor picks this number from the Mesh instance
  *  @param [in] dof_type Parameter to precise the type of degrees of freedom. To be chosen
- *  among the enumerated values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>,
- *  <tt>SIDE_FIELD</tt>, <tt>EDGE_FIELD</tt> [Default: <tt>NODE_FIELD</tt>]
+ *  among the enumerated values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>,
+ *  <tt>SIDE_DOF</tt>, <tt>EDGE_DOF</tt> [Default: <tt>NODE_DOF</tt>]
+ *  @param [in] nb_dof Number of degrees of freedom per node, element or side.
+ *  If <tt>nb_dof</tt> is set to <tt>0</tt> the constructor picks this number from the Mesh instance
+ *  [Default: <tt>0</tt>]
  */
-    void setMesh(Mesh&  m,
-                 size_t nb_dof=0,
-                 size_t dof_type=NODE_FIELD);
+    void setMesh(Mesh&      m,
+                 DOFSupport dof_type=NODE_DOF,
+                 size_t     nb_dof=0);
 
 /// \brief Return vector (global) size
     size_t size() const;
@@ -422,10 +422,10 @@ class Vect
  *  \details The DOF type combined with number of DOF per component enable
  *  determining the size of vector
  *  @param [in] dof_type Type of degrees of freedom. Value to be chosen among 
- *  the enumerated values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>, <tt>SIDE_FIELD</tt> 
- *  or <tt>EDGE_FIELD</tt>
+ *  the enumerated values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>, <tt>SIDE_DOF</tt> 
+ *  or <tt>EDGE_DOF</tt>
  */
-    void setDOFType(int dof_type);
+    void setDOFType(DOFSupport dof_type);
 
 /** \brief Set Discontinuous Galerkin type vector
  *  \details When the vector is associated to a mesh, this one is sized differently if the
@@ -455,9 +455,9 @@ class Vect
 
 /** Return DOF type of vector
  *  @return dof_type Type of degrees of freedom. Value among the enumerated
- *  values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>, <tt>SIDE_FIELD</tt> or <tt>EDGE_FIELD</tt>
+ *  values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>, <tt>SIDE_DOF</tt> or <tt>EDGE_DOF</tt>
  */
-    int getDOFType() const;
+    DOFSupport getDOFType() const;
 
 /// \brief Set time value for vector
     void setTime(real_t t);
@@ -533,12 +533,23 @@ class Vect
  *  @param [in] m Mesh instance
  *  @param [in] code The value is assigned if the node has this code
  *  @param [in] val Value to assign
- *  @param [in] dof Degree of freedom to assign [Default: <tt>1</tt>]
+ *  @param [in] dof Degree of freedom to assign
  */
     void setNodeBC(Mesh&  m,
                    int    code,
                    T_     val,
-                   size_t dof=1);
+                   size_t dof);
+
+/** \brief Assign a given value to components of vector with given code
+ *  \details Vector components are assumed nodewise. Here all dofs of nodes
+ *  with given code will be assigned
+ *  @param [in] m Mesh instance
+ *  @param [in] code The value is assigned if the node has this code
+ *  @param [in] val Value to assign
+ */
+    void setNodeBC(Mesh& m,
+                   int   code,
+                   T_    val);
 
 /** \brief Assign a given value to components of vector corresponding to sides with given code
  *  \details Vector components are assumed nodewise
@@ -550,7 +561,12 @@ class Vect
     void setSideBC(Mesh&  m,
                    int    code,
                    T_     val,
-                   size_t dof=1);
+                   size_t dof);
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void setSideBC(Mesh& m,
+                   int   code,
+                   T_    val);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Assign a given function (given by an interpretable algebraic expression) to 
  *  components of vector with given code.
@@ -558,12 +574,23 @@ class Vect
  *  @param [in] m    Instance of mesh
  *  @param [in] code Code for which nodes will be assigned prescribed value
  *  @param [in] exp  Regular algebraic expression to prescribe
- *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ *  @param [in] dof  Degree of Freedom for which the value is assigned
  */
     void setNodeBC(Mesh&         m,
                    int           code,
                    const string& exp,
-                   size_t        dof=1);
+                   size_t        dof);
+
+/** \brief Assign a given function (given by an interpretable algebraic expression) to 
+ *  components of vector with given code.
+ *  \details Vector components are assumed nodewise. Case of 1-DOF problem
+ *  @param [in] m    Instance of mesh
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] exp  Regular algebraic expression to prescribe
+ */
+    void setNodeBC(Mesh&         m,
+                   int           code,
+                   const string& exp);
 
 /** \brief Assign a given function (given by an interpretable algebraic expression) to 
  *  components of vector corresponding to sides with given code.
@@ -571,12 +598,23 @@ class Vect
  *  @param [in] m    Instance of mesh
  *  @param [in] code Code for which nodes will be assigned prescribed value
  *  @param [in] exp  Regular algebraic expression to prescribe
- *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ *  @param [in] dof  Degree of Freedom for which the value is assigned
  */
     void setSideBC(Mesh&         m,
                    int           code,
                    const string& exp,
-                   size_t        dof=1);
+                   size_t        dof);
+
+/** \brief Assign a given function (given by an interpretable algebraic expression) to 
+ *  components of vector corresponding to sides with given code.
+ *  \details Vector components are assumed nodewise. Case of 1-DOF problem
+ *  @param [in] m    Instance of mesh
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] exp  Regular algebraic expression to prescribe
+ */
+    void setSideBC(Mesh&         m,
+                   int           code,
+                   const string& exp);
 
 /** \brief Assign a given value to components of vector with given code
  *  \details Vector components are assumed nodewise
@@ -586,7 +624,15 @@ class Vect
  */
     void setNodeBC(int    code,
                    T_     val,
-                   size_t dof=1);
+                   size_t dof);
+
+/** \brief Assign a given value to components of vector with given code
+ *  \details Vector components are assumed nodewise. Concerns 1-DOF problems
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] val  Value to prescribe
+ */
+    void setNodeBC(int    code,
+                   T_     val);
 
 /** \brief Assign a given function (given by an interpretable algebraic expression) to 
  *  components of vector with given code
@@ -599,32 +645,64 @@ class Vect
  */
     void setNodeBC(int           code,
                    const string& exp,
-                   size_t        dof=1);
+                   size_t        dof);
+
+/** \brief Assign a given function (given by an interpretable algebraic expression) to 
+ *  components of vector with given code
+ *  \details Vector components are assumed nodewise. Concerns 1-DOF problems
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] exp  Regular algebraic expression to prescribe
+ *  @warning This member function is to be used in the case where a constructor with a Mesh 
+ *  has been used
+ */
+    void setNodeBC(int           code,
+                   const string& exp);
 
 /** \brief Assign a given function (given by an interpre<table algebraic expression) to 
  *  components of vector with given code
  *  \details Vector components are assumed nodewise
  *  @param [in] code Code for which nodes will be assigned prescribed value
  *  @param [in] exp  Regular algebraic expression to prescribe
- *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ *  @param [in] dof  Degree of Freedom for which the value is assigned
  *  @warning This member function is to be used in the case where a constructor with a Mesh 
  *  has been used
  */
     void setSideBC(int           code,
                    const string& exp,
-                   size_t        dof=1);
+                   size_t        dof);
+
+/** \brief Assign a given function (given by an interpre<table algebraic expression) to 
+ *  components of vector with given code
+ *  \details Vector components are assumed nodewise. Case of 1-DOF problem
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] exp  Regular algebraic expression to prescribe
+ *  @warning This member function is to be used in the case where a constructor with a Mesh 
+ *  has been used
+ */
+    void setSideBC(int           code,
+                   const string& exp);
 
 /** \brief Assign a given value to components of vector with given code
  *  \details Vector components are assumed nodewise
  *  @param [in] code Code for which nodes will be assigned prescribed value
- *  @param [in] val  Value to prescribe
- *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ *  @param [in] val Value to prescribe
+ *  @param [in] dof Degree of Freedom for which the value is assigned
  *  @warning This member function is to be used in the case where a constructor with a Mesh 
  *  has been used
  */
     void setSideBC(int    code,
                    T_     val,
-                   size_t dof=1);
+                   size_t dof);
+
+/** \brief Assign a given value to components of vector with given code
+ *  \details Vector components are assumed nodewise. Concerns 1-DOF problems
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] val Value to prescribe
+ *  @warning This member function is to be used in the case where a constructor with a Mesh 
+ *  has been used
+ */
+    void setSideBC(int    code,
+                   T_     val);
 
 /** \brief Remove boundary conditions.
  *  \details This member function copies to current vector a vector
@@ -1105,7 +1183,8 @@ class Vect
 
  private:
 
-    size_t _size, _nx, _ny, _nz, _nb, _dof_type, _nb_dof;
+    DOFSupport _dof_type;
+    size_t _size, _nx, _ny, _nz, _nb, _nb_dof;
     int    _dg_degree;
     bool   _grid, _with_mesh, _with_regex[10];
     Mesh   *_theMesh;
@@ -1165,7 +1244,7 @@ Vect<T_> operator*(const Vect<T_>& x,
                    const T_&       a);
 
 
-/** \fn Vect<T_> operator/(const T_ &a, const Vect<T_> &x)
+/** \fn Vect<T_> operator/(const Vect<T_> &x, const T_ &a)
  *  \brief Operator / (Divide vector entries by constant)
  *  \ingroup VectMat
  *  \return <tt>x/a</tt>
@@ -1285,6 +1364,7 @@ ostream &operator<<(ostream&        s,
                     const Vect<T_>& v);
 
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 template<class T_>
 void OddEven(vector<T_>& x,
              vector<T_>& odd,
@@ -1298,10 +1378,9 @@ void OddEven(Vect<T_>&   x,
 
 
 void fft(vector<complex_t>& x);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */
-
-/*! @} */
 
 #endif

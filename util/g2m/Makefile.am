@@ -1,5 +1,6 @@
 AUTOMAKE_OPTIONS = no-dependencies
 g2mdir   =	$(datadir)/ofeli/util/g2m
+AM_CPPFLAGS = -std=c++1y
 
 bin_PROGRAMS = g2m
 

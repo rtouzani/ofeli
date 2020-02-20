@@ -60,7 +60,7 @@ IOField::IOField(const string& file,
    _set_file = true;
    _scan = false;
    _nb_dof = 1;
-   _dof_support = 0;
+   _dof_support = NONE;
    _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
    _v = nullptr;
    _file = file;
@@ -84,7 +84,7 @@ IOField::IOField(const string& file,
    _set_file = true;
    _scan = false;
    _nb_dof = 1;
-   _dof_support = 0;
+   _dof_support = NONE;
    _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
    _v = nullptr;
    _file = file;
@@ -109,7 +109,7 @@ IOField::IOField(const string& mesh_file,
    _set_file = true;
    _scan = false;
    _nb_dof = 1;
-   _dof_support = 1;
+   _dof_support = NODE_DOF;
    _nb_nodes = _theMesh->getNbNodes();
    _nb_elements = _theMesh->getNbElements();
    _nb_sides = _theMesh->getNbSides();
@@ -138,7 +138,7 @@ IOField::IOField(const string& file,
    _set_file = true;
    _scan = false;
    _nb_dof = 1;
-   _dof_support = 1;
+   _dof_support = NODE_DOF;
    _nb_nodes = _theMesh->getNbNodes();
    _nb_elements = _theMesh->getNbElements();
    _nb_sides = _theMesh->getNbSides();
@@ -238,7 +238,7 @@ void IOField::put(Mesh& ms)
    if (ms.getNbNodes()>0) {
       size_t k = 0;
       *_of << "   <Nodes>" << endl;
-      mesh_nodes(*_theMesh) {
+      MESH_ND {
          for (size_t i=1; i<=_theMesh->getDim(); i++)
             *_of << "  " << The_node.getCoord(i);
          size_t m = 0;
@@ -258,7 +258,7 @@ void IOField::put(Mesh& ms)
       size_t nbn = _theMesh->getPtrElement(1)->getNbNodes();
       string shape = sh[_theMesh->getPtrElement(1)->getShape()];
       *_of << "   <Elements shape=\"" << shape << "\"  nodes=\"" << nbn << "\">" << endl;
-      mesh_elements(*_theMesh) {
+      MESH_EL {
          for (size_t i=1; i<=nbn; i++)
             *_of << setw(10) << The_element.getNodeLabel(i);
          *_of << setw(10) << The_element.getCode() << "   ";
@@ -276,9 +276,9 @@ void IOField::put(Mesh& ms)
       string shape = sh[_theMesh->getPtrSide(1)->getShape()];
       *_of << "   <Sides shape=\"" << shape << "\"  nodes=\"" << nbn << "\">" << endl;
       size_t m = 0;
-      mesh_sides(*_theMesh) {
+      MESH_SD {
          for (size_t i=1; i<=nbn; i++)
-            *_of << setw(8) << the_side->getNodeLabel(i);
+            *_of << setw(8) << The_side(i)->n();
          m = 0;
          for (size_t j=1; j<=n; j++)
             m += The_side.getCode(j)*size_t(pow(10.,real_t(n-j)));
@@ -307,11 +307,11 @@ void IOField::put(const Vect<real_t>& v)
             *_of << " nb_dof=\"1\">" << endl;
          }
          else {
-            if (v.getDOFType()==NODE_FIELD)
+            if (v.getDOFType()==NODE_DOF)
                *_of << "<Field name=\"" << v.getName() << "\" type=\"Node\"";
-            else if (v.getDOFType()==ELEMENT_FIELD)
+            else if (v.getDOFType()==ELEMENT_DOF)
                *_of << "<Field name=\"" << v.getName() << "\" type=\"Element\"";
-            else if (v.getDOFType()==SIDE_FIELD)
+            else if (v.getDOFType()==SIDE_DOF)
                *_of << "<Field name=\"" << v.getName() << "\" type=\"Side\"";
             *_of << " nb_dof=\"" << v.getNbDOF() << "\">" << endl;
          }
@@ -354,11 +354,11 @@ void IOField::put(const PETScVect<real_t>& v)
             *_of << " nb_dof=\"1\">" << endl;
          }
          else {
-            if (v.getDOFType()==NODE_FIELD)
+            if (v.getDOFType()==NODE_DOF)
                *_of << "<Field name=\"" << v.getName() << "\" type=\"Node\"";
-            else if (v.getDOFType()==ELEMENT_FIELD)
+            else if (v.getDOFType()==ELEMENT_DOF)
                *_of << "<Field name=\"" << v.getName() << "\" type=\"Element\"";
-            else if (v.getDOFType()==SIDE_FIELD)
+            else if (v.getDOFType()==SIDE_DOF)
                *_of << "<Field name=\"" << v.getName() << "\" type=\"Side\"";
             *_of << " nb_dof=\"" << v.getNbDOF() << "\">" << endl;
          }

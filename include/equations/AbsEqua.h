@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -91,36 +91,6 @@ enum PDE_Terms {
    CONTACT             =  0x10000000,     /*!< Signorini contact                       */
    BUOYANCY            =  0x20000000,     /*!< Buoyancy force term                     */
    LORENTZ_FORCE       =  0x40000000      /*!< Lorentz force term                      */
-};
-
-
-/*! \enum EqDataType
- * Enumerate variable that selects equation data type
- */
-enum EqDataType {
-   INITIAL                      =    1,    /*!< Initial condition                      */
-   INITIAL_FIELD                =    1,    /*!< Initial condition                      */
-   SOLUTION                     =    1,    /*!< Solution vector (same as Initial)      */
-   INITIAL_AUX_1                =    2,    /*!< Initial auxiliary field                */
-   INITIAL_AUX_2                =    3,    /*!< Initial auxiliary field                */
-   INITIAL_AUX_3                =    4,    /*!< Initial auxiliary field                */
-   INITIAL_AUX_4                =    5,    /*!< Initial auxiliary field                */
-   BOUNDARY_CONDITION           =    6,    /*!< Boundary condition data                */
-   BODY_FORCE                   =    7,    /*!< Body force data                        */
-   SOURCE                       =    7,    /*!< Source data (same as Body force)       */
-   POINT_FORCE                  =    8,    /*!< Localized (at point) force             */
-   BOUNDARY_FORCE               =    9,    /*!< Boundary force data                    */
-   FLUX                         =    9,    /*!< Flux data (same as Boundary force)     */
-   TRACTION                     =    9,    /*!< Traction data (same as Boundary force) */
-   AUX_INPUT_FIELD_1            =   10,    /*!< Auxiliary input field 1                */
-   AUX_INPUT_FIELD_2            =   11,    /*!< Auxiliary input field 2                */
-   AUX_INPUT_FIELD_3            =   11,    /*!< Auxiliary input field 3                */
-   AUX_INPUT_FIELD_4            =   12,    /*!< Auxiliary input field 4                */
-   DISPLACEMENT_FIELD           =   13,    /*!< A displacement field                   */
-   VELOCITY_FIELD               =   14,    /*!< A velocity field                       */
-   PRESSURE_FIELD               =   15,    /*!< A pressure field                       */
-   TEMPERATURE_FIELD            =   16,    /*!< A temperature field                    */
-   CONTACT_DISTANCE             =   17     /*!< Contact distance                       */
 };
 
 
@@ -426,8 +396,8 @@ class AbsEqua
  *  <tt>SOURCE_DATA</tt> or <tt>FLUX</tt> with obvious meaning
  */
 #if defined(USE_PETSC)
-    virtual void setInput(EqDataType      opt,
-                          PETScVect<T_>&  u);
+    virtual void setInput(EqDataType     opt,
+                          PETScVect<T_>& u);
 #else
     virtual void setInput(EqDataType opt,
                           Vect<T_>&  u);

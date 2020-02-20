@@ -57,8 +57,8 @@ XMLParser::XMLParser()
           : _is_opened(false), _set_mesh(false), _set_field(false),
             _set_file(false), _set_prescription(false), _set_domain(false),
             _prescription_opened(false), _nb_dof(1), _dim(2), _nb_nodes(0),
-            _nb_elements(0), _nb_sides(0), _nb_edges(0), _scan(0), _dof_support(NODE_FIELD),
-            _nb_mat(0), _theMesh(nullptr), _v(nullptr), _parser(nullptr), _ipf(nullptr)
+            _nb_elements(0), _nb_sides(0), _nb_edges(0), _scan(0), _nb_mat(0),
+	    _dof_support(NODE_DOF), _theMesh(nullptr), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 { }
 
 
@@ -67,7 +67,7 @@ XMLParser::XMLParser(string file,
           : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
             _set_domain(false), _prescription_opened(false), _type(type),
             _file(file), _nb_dof(1), _dim(2), _nb_nodes(0), _nb_elements(0), _nb_sides(0),
-            _nb_edges(0), _scan(0), _dof_support(NODE_FIELD), _nb_mat(0), _theMesh(nullptr),
+            _nb_edges(0), _scan(0), _nb_mat(0), _dof_support(NODE_DOF), _theMesh(nullptr),
             _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    open();
@@ -80,8 +80,8 @@ XMLParser::XMLParser(string file,
                      int    format)
           : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
             _set_domain(false), _prescription_opened(false), _type(type),
-            _format(format), _file(file), _nb_dof(1), _scan(0), _dof_support(NODE_FIELD),
-            _nb_mat(0), _theMesh(&ms), _v(nullptr), _parser(nullptr), _ipf(nullptr)
+            _format(format), _file(file), _nb_dof(1), _scan(0), _nb_mat(0), _dof_support(NODE_DOF),
+            _theMesh(&ms), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    _nb_nodes = _theMesh->getNbNodes();
    _nb_elements = _theMesh->getNbElements();
@@ -277,7 +277,7 @@ int XMLParser::getMaterial()
 }
 
 
-int XMLParser::get(int                      type,
+int XMLParser::get(EqDataType               type,
                    vector<PrescriptionPar>& p)
 {
    _prescription_type = type;
@@ -405,7 +405,7 @@ int XMLParser::get(Mesh&         ms,
    _all_steps = 0;
    _nb_dof = v.getNbDOF();
    _name = v.getName();
-   _v->setMesh(*_theMesh,_nb_dof,_dof_support);
+   _v->setMesh(*_theMesh,_dof_support,_nb_dof);
    _v->setName(_name);
    if (parse(_xml)) {
       if (Verbosity>10)
@@ -527,7 +527,7 @@ bool XMLParser::on_tag_open(string     tag_name,
    }
 
    else
-      _par.type = 0;
+      _par.type = NO_TYPE;
 
    for (StringMap::iterator i=attributes.begin(); i!=attributes.end(); i++) {
       if (_ipf && _scan==0) {
@@ -1216,13 +1216,13 @@ void XMLParser::read_field(const StringMap::iterator& i)
          _name = i->second;
       else if (i->first=="type") {
          if (i->second=="Node")
-            _dof_support = NODE_FIELD;
+            _dof_support = NODE_DOF;
          else if (i->second=="Element")
-            _dof_support = ELEMENT_FIELD;
+            _dof_support = ELEMENT_DOF;
          else if (i->second=="Side")
-            _dof_support = SIDE_FIELD;
+            _dof_support = SIDE_DOF;
          else if (i->second=="Edge")
-            _dof_support = EDGE_FIELD;
+            _dof_support = EDGE_DOF;
          else
             ;
       }
@@ -1327,13 +1327,13 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
 {
    size_t nb = 0;
    if (_theMesh) {
-      if (_dof_support==NODE_FIELD)
+      if (_dof_support==NODE_DOF)
          nb = _nb_nodes*_nb_dof;
-      else if (_dof_support==ELEMENT_FIELD)
+      else if (_dof_support==ELEMENT_DOF)
          nb = _nb_elements*_nb_dof;
-      else if (_dof_support==SIDE_FIELD)
+      else if (_dof_support==SIDE_DOF)
          nb = _nb_sides*_nb_dof;
-      else if (_dof_support==EDGE_FIELD)
+      else if (_dof_support==EDGE_DOF)
          nb = _nb_edges*_nb_dof;
       else
          nb = _nx*_ny*_nz;
@@ -1350,16 +1350,16 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
       }
       else
          _ft->push_back(_time);
-      if (_dof_support==NODE_FIELD)
+      if (_dof_support==NODE_DOF)
          cout << "Found a nodewise field vector, Name: " << _name << ", Time = " 
               << _time << ", Nb. of DOF: " << _nb_dof << endl;
-      else if (_dof_support==ELEMENT_FIELD)
+      else if (_dof_support==ELEMENT_DOF)
          cout << "Found an elementwise field vector, Name: " << _name << ", Time = "
               << _time << ", Nb. of DOF: " << _nb_dof << endl;
-      else if (_dof_support==SIDE_FIELD)
+      else if (_dof_support==SIDE_DOF)
          cout << "Found a sidewise field vector, Name: " << _name << ", Time = "
               << _time << ", Nb. of DOF: " << _nb_dof << endl;
-      else if (_dof_support==EDGE_FIELD)
+      else if (_dof_support==EDGE_DOF)
          cout << "Found an edgewise field vector, Name: " << _name << ", Time = "
               << _time << ", Nb. of DOF: " << _nb_dof << endl;
       else
@@ -1396,7 +1396,7 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
                      while (it!=tokens.end()) {
                         _time = atof((*it++).c_str());
                         if (_time==_sought_time || _sought_time==-1.0) {
-                           _v->setMesh(*_theMesh,_nb_dof,_dof_support);
+			  _v->setMesh(*_theMesh,_dof_support,_nb_dof);
                            _v->setName(_name);
                            _v->setTime(_time);
                            for (size_t n=1; n<=_v->getNb(); n++)
@@ -1424,7 +1424,7 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
          else {
             if ((_name==_sought_name || _sought_name=="ANYTHING") &&
                 (_time==_sought_time || _sought_time==-1.0) && _set_field) {
-               _v->setMesh(*_theMesh,_nb_dof,_dof_support);
+               _v->setMesh(*_theMesh,_dof_support,_nb_dof);
                _v->setName(_name);
                _v->setTime(_time);
                for (size_t n=1; n<=_v->getNb(); n++)
@@ -1443,16 +1443,16 @@ void XMLParser::read_const_field_data(const vector<string>&     tokens,
    if (_scan) {
       _ft->push_back(_time);
       if (_scan>1) {
-         if (_dof_support==NODE_FIELD)
+         if (_dof_support==NODE_DOF)
             cout << "Found a nodewise field vector, Name: " << _name << ", Time = " 
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==ELEMENT_FIELD)
+         else if (_dof_support==ELEMENT_DOF)
             cout << "Found an elementwise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==SIDE_FIELD)
+         else if (_dof_support==SIDE_DOF)
             cout << "Found a sidewise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==EDGE_FIELD)
+         else if (_dof_support==EDGE_DOF)
             cout << "Found an edgewise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
          else
@@ -1483,16 +1483,16 @@ void XMLParser::read_const_field_data()
    if (_scan) {
       _ft->push_back(_time);
       if (_scan>1) {
-         if (_dof_support==NODE_FIELD)
+         if (_dof_support==NODE_DOF)
             cout << "Found a nodewise field vector, Name: " << _name << ", Time = " 
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==ELEMENT_FIELD)
+         else if (_dof_support==ELEMENT_DOF)
             cout << "Found an elementwise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==SIDE_FIELD)
+         else if (_dof_support==SIDE_DOF)
             cout << "Found a sidewise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==EDGE_FIELD)
+         else if (_dof_support==EDGE_DOF)
             cout << "Found an edgewise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
          else
@@ -1523,16 +1523,16 @@ void XMLParser::read_exp_field_data(const vector<string>&     tokens,
    if (_scan) {
       _ft->push_back(_time);
       if (_scan>1) {
-         if (_dof_support==NODE_FIELD)
+         if (_dof_support==NODE_DOF)
             cout << "Found a nodewise field vector, Name: " << _name << ", Time = " 
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==ELEMENT_FIELD)
+         else if (_dof_support==ELEMENT_DOF)
             cout << "Found an elementwise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==SIDE_FIELD)
+         else if (_dof_support==SIDE_DOF)
             cout << "Found a sidewise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==EDGE_FIELD)
+         else if (_dof_support==EDGE_DOF)
             cout << "Found an edgewise field vector, Name: " << _name << ", Time = "
                  << _time << ", Nb. of DOF: " << _nb_dof << endl;
          else
@@ -1570,9 +1570,9 @@ void XMLParser::parse_exp(size_t n,
                           size_t k)
 {
    Point<real_t> c;
-   if (_dof_support==NODE_FIELD)
+   if (_dof_support==NODE_DOF)
       c = _theMesh->getPtrNode(n)->getCoord();
-   else if (_dof_support==SIDE_FIELD) {
+   else if (_dof_support==SIDE_DOF) {
       theSide = _theMesh->getPtrSide(n);
       if (theSide->getShape()==LINE)
 	 c = Line2(theSide).getCenter();
@@ -1581,7 +1581,7 @@ void XMLParser::parse_exp(size_t n,
       else if (theSide->getShape()==QUADRILATERAL)
          c = Quad4(theSide).getCenter();
    }
-   else if (_dof_support==ELEMENT_FIELD) {
+   else if (_dof_support==ELEMENT_DOF) {
       theElement = _theMesh->getPtrElement(n);
       if (theElement->getShape()==LINE)
          c = Line2(theElement).getCenter();

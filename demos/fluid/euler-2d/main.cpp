@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
 
    try {
       IPF proj("euler - 2.0",argv[1]);
-
       string project = proj.getProject();
       theFinalTime = proj.getMaxTime();
       Mesh ms(proj.getMeshFile());
@@ -63,7 +62,7 @@ int main(int argc, char *argv[])
       proj.get("RightPressure",R(4));
       int time_mod = proj.getPlot();
 
-      Vect<double> r(ms,1,ELEMENT_DOF), p(ms,1,ELEMENT_DOF), v(ms,2,ELEMENT_DOF);
+      Vect<double> r(ms,ELEMENT_DOF,1), p(ms,ELEMENT_DOF,1), v(ms,ELEMENT_DOF,2);
       ICPG2DT eq(ms,r,v,p);
       eq.setInitialConditionShockTube(L,R,0.5);
 
@@ -72,7 +71,7 @@ int main(int argc, char *argv[])
               ff_v(proj.getString("v-file"),IOField::OUT),
               ff_c(proj.getString("c-file"),IOField::OUT);
 
-      Vect<double> aux1(ms), aux2(ms,2), sound(ms,1,ELEMENT_DOF);
+      Vect<double> aux1(ms), aux2(ms,NODE_DOF,2), sound(ms,ELEMENT_DOF,1);
       Reconstruction rr(ms);
 
 //    save variables
@@ -98,8 +97,8 @@ int main(int argc, char *argv[])
       eq.setMethod(Muscl::MULTI_SLOPE_M_METHOD);
       eq.setCFL(proj.getDouble("CFL"));
 
-      MeshBoundarySides(ms)
-         theSide->setCode(1,1);
+      BoundarySideLoop(ms)
+         TheSide.setCode(1,1);
 
       TimeLoop {
          eq.setReconstruction();

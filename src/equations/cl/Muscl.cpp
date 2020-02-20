@@ -47,6 +47,7 @@ Muscl::Muscl(Mesh& m)
 {
    _theMesh = &m;
    _verbose = 1;
+   _nb_nodes = _theMesh->getNbNodes();
    _nb_sides = _theMesh->getNbSides();
    _nb_elements = _theMesh->getNbElements();
    _solid_zone = false;

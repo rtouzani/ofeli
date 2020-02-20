@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -229,12 +229,10 @@ class DC2DT3 : public Equa_Therm<real_t,3,3,2,2>
     void JouleHeating(const Vect<real_t>& sigma,
                       const Vect<real_t>& psi);
 
- protected:
-    void set(const Element* el);
-    void set(const Side* sd);
-
  private:
     mutable Point<real_t> _f;
+    void set(const Element* el);
+    void set(const Side* sd);
 };
 
 /*! @} End of Doxygen Groups */

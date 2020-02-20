@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = tins2
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 tins2_SOURCES = main.cpp
 
@@ -17,6 +18,7 @@ tins2_DATA = main.cpp \
              step.dat \
              Makefile.standalone \
              README
+
 dist_tins2_DATA =	main.cpp \
                   cavity.dat \
                   cavity-60.dat \
@@ -26,3 +28,7 @@ dist_tins2_DATA =	main.cpp \
                   step.dat \
                   Makefile.standalone \
                   README
+
+clean-local:
+	-rm -rf *.v *.p
+

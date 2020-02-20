@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -219,7 +219,8 @@ class BiotSavart
  private:
 
    bool _C;
-   int _type, _code, _bound;
+   DOFSupport _type;
+   int _code, _bound;
    real_t _mu;
    Mesh *_theMesh;
    SideList *_theSideList;

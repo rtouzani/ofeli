@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -127,11 +127,9 @@ class DC2DT6 : virtual public Equa_Therm<real_t,6,6,3,3>
  */
     void BoundaryRHS(const Vect<real_t>& f);
 
- protected:
-    void set(const Element *el);
-    void set(const Side *sd);
-
  private:
+   void set(const Element* el);
+   void set(const Side* sd);
    Point<real_t> _x[6], _s[3];
    real_t        _a3;
 };

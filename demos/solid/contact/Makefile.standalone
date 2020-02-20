@@ -7,8 +7,7 @@ contact:	$(OBJ)
 	`ofeli-config --cxx` `ofeli-config --cflags` -o contact $(OBJ) `ofeli-config --libs`
 
 clean:
-	/bin/rm -f $(OBJ) contact`ofeli-config --exe_ext`
-
+	/bin/rm -f $(OBJ) contact`ofeli-config --exe_ext` *.d
 
 .cpp.o:
 	`ofeli-config --cxx` `ofeli-config --cflags` -c $<

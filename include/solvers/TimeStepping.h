@@ -44,7 +44,9 @@ using std::ostream;
 #include "linear_algebra/Vect.h"
 #include "equations/AbsEqua.h"
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define MAX_NB_DES  10
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 namespace OFELI {
 /*!
@@ -299,8 +301,10 @@ class TimeStepping
 /// \brief Return LinearSolver instance
     LinearSolver<real_t> &getLSolver() { return *_ls; }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend std::ostream & operator<<(std::ostream& s,
                                      TimeStepping& ts);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     struct DE {
@@ -424,7 +428,7 @@ class TimeStepping
    void setScheme();
 };
 
-/** \fn ostream & operator<<(ostream& s, const TimeStepping &ts)
+/** \fn ostream & operator<<(ostream& s, TimeStepping &ts)
  * \brief Output differential system information
  * \ingroup Solver
  *

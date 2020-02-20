@@ -297,7 +297,7 @@ void NSP2DQ41::getPressure()
    if (_p==nullptr)
       return;
    Vect<real_t> ep(_nb_el);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       real_t pr = 0.;
       for (size_t k=0; k<4; ++k) {
@@ -321,7 +321,7 @@ void NSP2DQ41::build()
       throw OFELIException("In NSP2DQ41::build: No solution vector given.");
    _A->clear();
    _b->clear();
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       ElementNodeVector(*_u,_eu);
       if (_terms&MASS)
@@ -338,7 +338,7 @@ void NSP2DQ41::build()
       AbsEqua<real_t>::_A->Assembly(The_element,eMat.get());
       AbsEqua<real_t>::_b->Assembly(The_element,eRHS.get());
    }
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       set(the_side);
       ElementSideVector(*_u,_su);
       if (_terms&TRACTION && AbsEqua<real_t>::_sf!=nullptr)

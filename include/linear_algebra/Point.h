@@ -445,8 +445,9 @@ inline double Distance(const Point<double>& a,
 }
 
 
-/** \fn Point<T_> operator- (const Point<T_> &a)
- * \brief Unary Operator <tt>-</tt>
+/** \fn bool operator< (const Point<size_t> &a, const Point<size_t> &b)
+ * \brief Comparison operator. Returns true if all components of first vector are lower than
+ * those of second one
  * \ingroup Util
  * \details Return minus <tt>a</tt>
  *
@@ -459,6 +460,8 @@ inline bool operator< (const Point<size_t>& a,
    if (a.x < b.x)
       return true;
    if (a.x==b.x && a.y<b.y)
+      return true;
+   if (a.x==b.x && a.y==b.y && a.z<b.z)
       return true;
    return false;
 }

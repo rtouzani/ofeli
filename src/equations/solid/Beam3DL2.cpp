@@ -111,7 +111,7 @@ void Beam3DL2::set(const Element* el)
 void Beam3DL2::getDisp(Vect<real_t>& d)
 {
    d.setSize(_nb_nodes,3);
-   mesh_nodes(*_theMesh) {
+   MESH_ND {
       size_t n = node_label;
       d(n,1) = (*_u)(n,1);
       d(n,2) = (*_u)(n,2);
@@ -123,7 +123,7 @@ void Beam3DL2::getDisp(Vect<real_t>& d)
 void Beam3DL2::build()
 {
    AbsEqua<real_t>::_A->clear();
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       if (_analysis==TRANSIENT) {
          ElementVector(*AbsEqua<real_t>::_u);
@@ -133,11 +133,11 @@ void Beam3DL2::build()
             Mass();
       }
       Stiffness();
-      if (_pf!=nullptr)
-         *_b += *_pf;
       AbsEqua<real_t>::_A->Assembly(The_element,eMat.get());
       AbsEqua<real_t>::_b->Assembly(The_element,eRHS.get());
    }
+   if (_pf!=nullptr)
+      *AbsEqua<real_t>::_b += *_pf;
 }
 
 
@@ -240,7 +240,7 @@ void Beam3DL2::Load(const Vect<real_t> &f)
 void Beam3DL2::AxialForce(Vect<real_t>& f)
 {
    f.setSize(_nb_el);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
      set(the_element);
      f(element_label) = _E*_ae*(_eu(9)-_eu(3))/_h;
    }
@@ -250,7 +250,7 @@ void Beam3DL2::AxialForce(Vect<real_t>& f)
 void Beam3DL2::ShearForce(Vect<real_t>& sh)
 {
    sh.setSize(_nb_el,2);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
      set(the_element);
      sh(element_label,1) = _mu*_ae*((_eu(7)-_eu(1))/_h - 0.5*(_eu(11)+_eu(5)));
      sh(element_label,2) = _mu*_ae*((_eu(8)-_eu(2))/_h - 0.5*(_eu(10)+_eu(4)));
@@ -261,7 +261,7 @@ void Beam3DL2::ShearForce(Vect<real_t>& sh)
 void Beam3DL2::BendingMoment(Vect<real_t>& m)
 {
    m.setSize(_nb_el,2);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       real_t c = -_E*(_eu(10)-_eu(4))/_h;
       m(element_label,1) = c*_I2e;
@@ -273,7 +273,7 @@ void Beam3DL2::BendingMoment(Vect<real_t>& m)
 void Beam3DL2::TwistingMoment(Vect<real_t>& m)
 {
    m.setSize(_nb_el);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       m(element_label) = _mu*(_I1e+_I2e)*(_eu(12)-_eu(6))/_h;
    }
@@ -284,7 +284,7 @@ void Beam3DL2::buildEigen(SkSMatrix<real_t>& K,
                           Vect<real_t>&      M)
 {
    real_t c, c1, c2, c3;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       if (_bending) {
          c1 = _E*_I1e/_h;

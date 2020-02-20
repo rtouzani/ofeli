@@ -167,7 +167,7 @@ void TINS3DT4S::PressureMatrix()
    if (Verbosity>2)
       cout << "Calculating pressure matrix ..." << endl;
    SpMatrix<real_t> Dx(1,*_theMesh,0), Dy(1,*_theMesh,0);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       real_t z=_c24/_TimeInt.delta, a=_vol*_TimeInt.delta;
       for (size_t i=0; i<4; i++) {
@@ -207,7 +207,7 @@ void TINS3DT4S::getMomentum()
    _b = 0;
    size_t j=0;
    _c = 0;
-   mesh_nodes(*_theMesh) {
+   MESH_ND {
       if (The_node.getCode(1)==0)
          _b[j++] = 0.5*_c(node_label,1);
       if (The_node.getCode(2)==0)
@@ -215,7 +215,7 @@ void TINS3DT4S::getMomentum()
    }
 
 // Loop over elements
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       LocalVect<real_t,12> ue(the_element,*_u);
       LocalVect<real_t,4> pe(the_element,*_p,1);
@@ -306,7 +306,7 @@ int TINS3DT4S::getPressure()
    Vect<real_t> b(_theMesh->getNbNodes());
    if (Verbosity>2)
       cout << "Solving pressure equation ..." << endl;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       LocalVect<real_t,6> ue(the_element,*_u);
       double d = _c24*(_dSh[0].x*ue[0] + _dSh[0].y*ue[1] +
@@ -333,7 +333,7 @@ void TINS3DT4S::updateVelocity()
 {
    if (Verbosity>2)
       cout << "Updating velocity ..." << endl;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       set(the_element);
       LocalVect<real_t,3> qe(the_element,_q,1);
       Point<real_t> dp = _c24*(qe[0]*_dSh[0]+qe[1]*_dSh[1]+qe[2]*_dSh[2]+qe[3]*_dSh[3]);

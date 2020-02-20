@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
       cout << "Usage: " << argv[0] << " <nx> <dt>" << endl;
       exit(1);
    }
+   ofstream pf("output.dat");
 
 // Declare problem data (matrix, rhs, boundary conditions, body forces)
    try {
@@ -54,7 +55,7 @@ int main(int argc, char *argv[])
       theTimeStep = atof(argv[2]);
       theFinalTime = 1.;
       TrMatrix<double> A(nx+1);
-      Vect<double> x, f(nx+1), u(nx+1), v(nx+1), sol(nx+1);
+      Vect<double> x, f(nx+1), u(nx+1), v(nx+1);
       x.setUniform(0.,L,nx+1);
       u.set("sin(pi*x)",x);
 
@@ -82,8 +83,14 @@ int main(int argc, char *argv[])
 //       Solve
          A.solve(v);
          u = v;
+
+//       save result in file each time step
+         for (size_t i=1; i<=nx+1; i++)
+            pf << x(i) << "   " << u(i) << endl;
+         pf << endl;
       }
 
+      Vect<double> sol(nx+1);
       sol.setTime(theFinalTime);
       sol.set("exp(t)*sin(pi*x)",x);
       cout << "Number of grid points: " << nx << endl;

@@ -172,6 +172,10 @@ class ODESolver
                  string a2,
                  string f);
 
+/// \brief Claim that ODE is linear
+/// \details Claim that the defined ODE (or system of ODEs) is linear
+    void setLinear();
+
 /** \brief Set time derivative, given as an algebraic expression, for a nonlinear ODE
  *  \details This function enables prescribing the value of the 1-st derivative
  *  for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be
@@ -415,8 +419,10 @@ class ODESolver
 /// \brief Return solution in the case of a scalar equation
     real_t get() const { return _y2; }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream & operator<<(ostream&         s,
                                 const ODESolver& de);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
 
@@ -432,7 +438,7 @@ class ODESolver
    int _sc;
    Iteration _s;
    Preconditioner _p;
-   bool _a0, _a1, _a2, _constant_matrix, _regex, _explicit, _init, _lhs, _rhs, _rhsF;
+   bool _linear, _a0, _a1, _a2, _constant_matrix, _regex, _explicit, _init, _lhs, _rhs, _rhsF;
    Vect<real_t> _u, _v, *_w, _f0, _f1, _f2, _b, _f01, _f, *_bc, _bb, _vv, _dudt;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _vF1, _vF2, _vF, _vDF1, _D, _k1, _k2, _k3, _k4;
    DMatrix<real_t> *_A0, *_A1, *_A2;

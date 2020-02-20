@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -91,6 +91,13 @@ class NSP2DQ41 : virtual public Equa_Fluid<real_t,4,8,2,4>
 /// \brief Define constant density
     void setDensity(real_t dens) { _dens = dens; }
 
+/** \brief Set equation input data
+ *  @param [in] opt Parameter that selects data type for input. This parameter
+ *  is to be chosen in the enumerated variable EqDataType
+ *  @param [in] u Vect instance that contains input vector data
+ *  List of data types contains <tt>INITIAL_FIELD</tt>, <tt>BOUNDARY_CONDITION_DATA</tt>, 
+ *  <tt>SOURCE_DATA</tt> or <tt>FLUX</tt> with obvious meaning
+ */
     void setInput(EqDataType    opt,
                   Vect<real_t>& u);
 

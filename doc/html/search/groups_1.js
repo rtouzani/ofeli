@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['electromagnetics',['Electromagnetics',['../group__Electromagnetics.html',1,'']]]
+  ['electromagnetics',['Electromagnetics',['../a00326.html',1,'']]]
 ];

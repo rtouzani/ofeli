@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['reconstruction',['Reconstruction',['../classOFELI_1_1Reconstruction.html',1,'OFELI']]],
-  ['rectangle',['Rectangle',['../classOFELI_1_1Rectangle.html',1,'OFELI']]]
+  ['reconstruction',['Reconstruction',['../a00094.html',1,'OFELI']]],
+  ['rectangle',['Rectangle',['../a00095.html',1,'OFELI']]]
 ];

@@ -285,6 +285,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LIBRARIES = libsolid.a
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 libsolid_a_SOURCES = Bar2DL2.cpp \
 			Beam3DL2.cpp \
 			Elas2DT3.cpp \

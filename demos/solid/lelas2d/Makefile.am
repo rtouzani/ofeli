@@ -1,12 +1,14 @@
 
 bin_PROGRAMS = lelas2d
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 lelas2d_SOURCES = main.cpp
 
 lelas2d_LDADD  = $(top_builddir)/src/libofeli.a
 
 lelas2ddir   =	$(datadir)/ofeli/demos/solid/lelas2d
+
 lelas2d_DATA = main.cpp \
                beam.dat \
                beam-10x5.m \
@@ -14,6 +16,7 @@ lelas2d_DATA = main.cpp \
                beam.m \
                Makefile.standalone \
                README
+
 dist_lelas2d_DATA = main.cpp \
                     beam.dat \
                     beam-10x5.m \
@@ -21,3 +24,7 @@ dist_lelas2d_DATA = main.cpp \
                     beam.m \
                     Makefile.standalone \
                     README
+
+clean-local:
+	-rm -rf *.d
+

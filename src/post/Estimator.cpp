@@ -58,7 +58,7 @@ void Estimator::setType(EstimatorType t)
       _nb_sd = _mesh->getNbSides();
       _N.setSize(_nb_sd);
       _sd_I.setSize(_nb_sd);
-      mesh_sides(*_mesh) {
+      side_loop(_mesh) {
          Point<real_t> T(The_side(1)->getCoord()-The_side(2)->getCoord());
          _N(side_label) = Point<real_t>(T.y,-T.x);
       }
@@ -77,17 +77,17 @@ void Estimator::setSolution(const Vect<real_t>& u)
       else
          throw OFELIException("Estimator::This element is not implemented for Estimator calculation.");
       _average = 0;
-      mesh_elements(*_mesh)
+      element_loop(_mesh)
          _average += _el_I(element_label);
       _average /= _nb_el;
    }
    else if (_est_type==ESTIM_ND_JUMP) {
       elementT3_ND_JUMP(u);
       _average = 0;
-      mesh_sides(*_mesh)
+      side_loop(_mesh)
          _average += _sd_I(side_label);
       _average /= _nb_sd;
-      mesh_sides(*_mesh)
+      side_loop(_mesh)
          _sd_I(side_label) /= _average;
    }
 }
@@ -120,7 +120,7 @@ void Estimator::getSideWiseIndex(Vect<real_t>& I)
 void Estimator::elementT3_ND_JUMP(const Vect<real_t>& u)
 {
    _sd_I.setSize(_nb_sd);
-   mesh_sides(*_mesh) {
+   side_loop(_mesh) {
       _sd_I(side_label) = 0;
       Element *el1 = The_side.getNeighborElement(1),
               *el2 = The_side.getNeighborElement(2);
@@ -148,9 +148,9 @@ void Estimator::elementT3_ZZ(const Vect<real_t>&   u,
    M = 0;
    Vect<Point<real_t> > Du(_nb_el,_nb_dof);
    if (_nb_dof==0)
-         throw OFELIException("Estimator::This procedure is not allowed with"
-                              " non constant nb of DOF per node.");
-   mesh_elements(*_mesh) {
+      throw OFELIException("Estimator::This procedure is not allowed with"
+                           " non constant nb of DOF per node.");
+   element_loop(_mesh) {
       Triang3 tr(the_element);
       std::vector<Point<real_t> > dsh = tr.DSh();
       real_t c = tr.getArea()*OFELI_THIRD;
@@ -166,13 +166,13 @@ void Estimator::elementT3_ZZ(const Vect<real_t>&   u,
       }
    }
 
-   mesh_nodes(*_mesh) {
+   node_loop(_mesh) {
       for (size_t k=1; k<=_nb_dof; k++)
          b(node_label,k) /= M(node_label);
    }
   
    Point<real_t> g[3];
-   mesh_elements(*_mesh) {
+   element_loop(_mesh) {
       Triang3 tr(the_element);
       size_t n = element_label;
       size_t n1 = The_element(1)->n(),
@@ -212,13 +212,13 @@ ostream& operator<<(ostream&         s,
    s << "LOCAL ERROR INFORMATION" << endl << endl;
    s.setf(ios::scientific);
    s << "Errors in elements" << endl << endl;
-   mesh_elements(r.getMesh()) {
+   element_loop(&(r.getMesh())) {
       s << setw(6) << element_label << "   ";
       s << setprecision(8) << setw(18) << r._el_I(element_label) << endl;
    }
    s << endl << "Average Error: " << r.getAverage() << endl;
    s << "Relative Errors in Elements" << endl << endl;
-   mesh_nodes(r.getMesh()) {
+   node_loop(&(r.getMesh())) {
       s << setw(6) << element_label << "   ";
       s << setprecision(8) << setw(18) << (r._el_I(element_label)-r.getAverage())/r.getAverage() << endl;
    }

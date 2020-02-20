@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin19.0.0
-host_triplet = i386-apple-darwin19.0.0
+build_triplet = i386-apple-darwin19.2.0
+host_triplet = i386-apple-darwin19.2.0
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -236,10 +236,10 @@ ACLOCAL = aclocal
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoconf
-AUTOHEADER = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoheader
-AUTOMAKE = ${SHELL} /Users/touzani/ofeli/ofeli/missing automake-1.16
-AWK = gawk
+AUTOCONF = ${SHELL} /Users/touzani/ofeli/missing autoconf
+AUTOHEADER = ${SHELL} /Users/touzani/ofeli/missing autoheader
+AUTOMAKE = ${SHELL} /Users/touzani/ofeli/missing automake-1.16
+AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
@@ -260,7 +260,7 @@ EIGEN_CFLAGS = -I${prefix}/include/eigen3
 EXEEXT = 
 GREP = /usr/bin/grep
 HAVE_INLINE = 
-INSTALL = /opt/local/bin/ginstall -c
+INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
@@ -270,8 +270,8 @@ LIBOBJS =
 LIBS = 
 LTLIBOBJS = 
 MAINT = #
-MAKEINFO = ${SHELL} /Users/touzani/ofeli/ofeli/missing makeinfo
-MKDIR_P = /opt/local/bin/gmkdir -p
+MAKEINFO = ${SHELL} /Users/touzani/ofeli/missing makeinfo
+MKDIR_P = ./install-sh -c -d
 MPI_CFLAGS = -I${prefix}/include/mpi 
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
@@ -298,10 +298,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 4.0.0
-abs_builddir = /Users/touzani/ofeli/ofeli
-abs_srcdir = /Users/touzani/ofeli/ofeli
-abs_top_builddir = /Users/touzani/ofeli/ofeli
-abs_top_srcdir = /Users/touzani/ofeli/ofeli
+abs_builddir = /Users/touzani/ofeli
+abs_srcdir = /Users/touzani/ofeli
+abs_top_builddir = /Users/touzani/ofeli
+abs_top_srcdir = /Users/touzani/ofeli
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -310,10 +310,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin19.0.0
+build = i386-apple-darwin19.2.0
 build_alias = 
 build_cpu = i386
-build_os = darwin19.0.0
+build_os = darwin19.2.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -321,15 +321,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin19.0.0
+host = i386-apple-darwin19.2.0
 host_alias = 
 host_cpu = i386
-host_os = darwin19.0.0
+host_os = darwin19.2.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/touzani/ofeli/ofeli/install-sh
+install_sh = ${SHELL} /Users/touzani/ofeli/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -787,7 +787,7 @@ maintainer-clean-generic:
 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 clean: clean-recursive
 
-clean-am: clean-generic mostlyclean-am
+clean-am: clean-generic clean-local mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
@@ -858,9 +858,9 @@ uninstall-am: uninstall-binSCRIPTS
 
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am \
 	am--refresh check check-am clean clean-cscope clean-generic \
-	cscope cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
-	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
-	distcheck distclean distclean-generic distclean-tags \
+	clean-local cscope cscopelist-am ctags ctags-am dist dist-all \
+	dist-bzip2 dist-gzip dist-lzip dist-shar dist-tarZ dist-xz \
+	dist-zip distcheck distclean distclean-generic distclean-tags \
 	distcleancheck distdir distuninstallcheck dvi dvi-am html \
 	html-am info info-am install install-am install-binSCRIPTS \
 	install-data install-data-am install-dvi install-dvi-am \
@@ -878,6 +878,9 @@ uninstall-am: uninstall-binSCRIPTS
 tests:
 	chmod a+x test_ofeli.sh
 	./test_ofeli.sh
+
+clean-local:
+	-rm -rf autom4te.cache *.log include/stamp-h1
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

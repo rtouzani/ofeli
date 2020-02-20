@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -97,10 +97,16 @@ public :
  */
     void BoundaryRHS(const Vect<real_t> &f);
 
+/// \brief Add boundary right-hand side term to right hand side
+    void BoundaryRHS();
+
 /** \brief Add body right-hand side term to right hand side.
     @param [in] f Vector containing source at nodes (DOF by DOF).
  */
     void BodyRHS(const Vect<real_t>& f);
+
+/// \brief Add body right-hand side term to right hand side.
+    void BodyRHS();
 
  private :
 

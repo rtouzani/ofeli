@@ -59,18 +59,18 @@ Muscl1D::Muscl1D(Mesh& m) : Muscl(m)
 
 void Muscl1D::Initialize()
 {
-   mesh_sides(*_theMesh) {
-      Element *el = the_side->getNeighborElement(1);
-      _Lrate.set(side_label,1./Line2(el).getLength());
+   MESH_SD {
+      the_element = the_side->getNeighborElement(1);
+      _Lrate.set(side_label,1./Line2(the_element).getLength());
       _Rrate.set(side_label,0.);  // default value if on boundary
       if (the_side->isOnBoundary()==false)
          _Rrate.set(side_label,1./Line2(the_side->getNeighborElement(2)).getLength());
    }
 
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
-      if (the_element->isOnBoundary() == false) {
-         Side *sd1=the_element->getPtrSide(1), *sd2=the_element->getPtrSide(2);
+      if (The_element.isOnBoundary() == false) {
+         Side *sd1=The_element.getPtrSide(1), *sd2=The_element.getPtrSide(2);
          Element *el1=sd1->getNeighborElement(1), *el2=sd2->getNeighborElement(1);
          if (el1==the_element)
             el1 = sd1->getNeighborElement(2);
@@ -95,7 +95,7 @@ void Muscl1D::FirstOrder(const Vect<real_t>& U,
                          size_t              dof)
 {
    Element *Lel, *Rel;
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t s = side_label;
       Lel = The_side.getNeighborElement(1);
       (The_side.isOnBoundary()) ? Rel = Lel : Rel = The_side.getNeighborElement(2);
@@ -110,7 +110,7 @@ void Muscl1D::SecondOrder(const Vect<real_t>& U,
                           Vect<real_t>&       RU,
                           size_t              dof)
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       Side *sd1 = The_element.getPtrSide(1); size_t ns1 = sd1->n();
       Side *sd2 = The_element.getPtrSide(2); size_t ns2 = sd2->n();
@@ -155,7 +155,7 @@ void Muscl1D::mesh_analyze()
    _MinimumLength = 1./OFELI_EPSMCH;
    _MaximumLength = _MeanLength = 0.;
    _taulim = 2.;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       nb_el++;
       aux = Line2(the_element).getLength();
       if (_MinimumLength>aux)

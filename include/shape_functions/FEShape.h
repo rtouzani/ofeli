@@ -254,8 +254,10 @@ class triangle : public FEShape
 
  protected:
 
-   real_t          _area, _h1, _h2, _h3;
-   Point<real_t>   _c;
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+   real_t        _area, _h1, _h2, _h3;
+   Point<real_t> _c;
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 
 /*! @} End of Doxygen Groups */

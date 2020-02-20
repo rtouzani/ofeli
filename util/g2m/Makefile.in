@@ -311,6 +311,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = no-dependencies
 g2mdir = $(datadir)/ofeli/util/g2m
+AM_CPPFLAGS = -std=c++1y
 g2m_SOURCES = main.cpp
 g2m_LDADD = $(top_builddir)/src/libofeli.a
 g2m_DATA = main.cpp test.dom README

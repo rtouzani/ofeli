@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['initpetsc',['InitPetsc',['../group__Global.html#ga456491ea5cf5a6e7c0824c4bfa9caa1d',1,'OFELI']]]
+  ['maxnbiterations',['MaxNbIterations',['../a00337.html#ga534f6e466357af135f45bb1ce6f517c9',1,'OFELI']]]
 ];

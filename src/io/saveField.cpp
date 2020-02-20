@@ -80,7 +80,7 @@ void saveField(PETScVect<real_t>& v,
    bool scalar = true;
    size_t nb_dof = v.getNbDOF();
    size_t dim = mesh->getDim();
-   int type = v.getDOFType();
+   DOFSupport type = v.getDOFType();
    if (nb_dof>1)
       scalar = false;
    ofstream fp(output_file.c_str());
@@ -91,11 +91,11 @@ void saveField(PETScVect<real_t>& v,
 
       case GNUPLOT:
          if (dim==1) {
-            mesh_nodes(*mesh)
+            node_loop(mesh)
               fp << The_node.getX() << " " << v(node_label) << endl;
             break;
          }
-         mesh_elements(*mesh) {
+         element_loop(mesh) {
             m = 0;
             switch(The_element.getShape()) {
                case LINE:          m = 2; break;
@@ -114,7 +114,7 @@ void saveField(PETScVect<real_t>& v,
       case VTK:
       {
          size_t size = 0;
-         mesh_elements(*mesh) {
+         element_loop(mesh) {
             switch(The_element.getShape()) {
                case LINE:          m = 2; break;
                case TRIANGLE:      m = 3; break;
@@ -130,7 +130,7 @@ void saveField(PETScVect<real_t>& v,
          mesh_nodes(*mesh)
             fp << The_node.getX() << "  " << The_node.getY() << " " << The_node.getZ() << endl;
          fp << "\nCELLS " << mesh->getNbElements() << " " << size << endl;
-         mesh_elements(*mesh) {
+         element_loop(mesh) {
             switch (The_element.getShape()) {
                case LINE:          m = 2; break;
                case TRIANGLE:      m = 3; break;
@@ -146,7 +146,7 @@ void saveField(PETScVect<real_t>& v,
          }
          fp << "\nCELL_TYPES  " << mesh->getNbElements() << endl;
          k = 0;
-         mesh_elements(*mesh) {
+         element_loop(mesh) {
             switch(The_element.getShape()) {
                case LINE:          m =  3; break;
                case TRIANGLE:      m =  5; break;
@@ -159,17 +159,17 @@ void saveField(PETScVect<real_t>& v,
             if (++k%30 == 0)
                fp << endl;
          }
-         if (type==NODE_FIELD)
+         if (type==NODE_DOF)
             fp << "\nPOINT_DATA  " << mesh->getNbNodes() << endl;
-         else if (type==ELEMENT_FIELD)
+         else if (type==ELEMENT_DOF)
             fp << "\nCELL_DATA  " << mesh->getNbElements() << endl;
          if (scalar)
             fp << "SCALARS  u  double  1\nLOOKUP_TABLE  default" << endl;
          else
             fp << "VECTORS  u  double" << endl;
 
-         if (type==NODE_FIELD) {
-            mesh_nodes(*mesh) {
+         if (type==NODE_DOF) {
+            node_loop(mesh) {
                fp << v(node_label,1) << " ";
                if (!scalar) {
                   fp << v(node_label,2) << " ";
@@ -181,8 +181,8 @@ void saveField(PETScVect<real_t>& v,
                fp << endl;
             }
          }
-         else if (type==ELEMENT_FIELD) {
-            mesh_elements(*mesh) {
+         else if (type==ELEMENT_DOF) {
+            element_loop(mesh) {
                fp << v(element_label,1) << " ";
                if (!scalar) {
                   fp << v(element_label,2) << " ";
@@ -206,7 +206,7 @@ void saveField(PETScVect<real_t>& v,
          switch (dim) {
 
             case 1:
-               mesh_elements(*mesh) {
+               element_loop(mesh) {
                   fp << "SL(";
                   fp << The_element(1)->getX() <<  ", 0., 0., "
                      << The_element(2)->getX() <<  ", 0., 0. ) {\n";
@@ -217,7 +217,7 @@ void saveField(PETScVect<real_t>& v,
                break;
 
             case 2:
-               mesh_elements(*mesh) {
+               element_loop(mesh) {
                   size_t nb_en = The_element.getNbNodes();
                   fp << tt;
                   if (nb_en==3)
@@ -243,7 +243,7 @@ void saveField(PETScVect<real_t>& v,
                break;
 
             case 3:
-               mesh_elements(*mesh) {
+               element_loop(mesh) {
                   size_t nb_en = The_element.getNbNodes();
                   fp << tt;
                   if (nb_en==4)
@@ -311,14 +311,14 @@ void saveField(PETScVect<real_t>& v,
             fp << "FECONNECT)";
          }
          fp << endl;
-         mesh_nodes(*mesh) {
+         node_loop(mesh) {
             for (size_t i=1; i<=dim; i++)
                fp << "  " << The_node.getCoord(i);
             for (size_t j=0; j<nb_dof; j++)
                fp << "  " << v(node_label,j);
             fp << endl;
          }
-         mesh_elements(*mesh) {
+         element_loop(mesh) {
             for (size_t n=1; n<=The_element.getNbNodes(); n++)
                fp << "  " << The_element(n)->n();
             fp << endl;
@@ -345,7 +345,7 @@ void saveField(PETScVect<real_t>& v,
    bool scalar = true;
    size_t nb_dof = v.getNbDOF();
    size_t dim = mesh.getDim();
-   int type = v.getDOFType();
+   DOFSupport type = v.getDOFType();
    if (nb_dof>1)
       scalar = false;
    ofstream fp(output_file.c_str());
@@ -356,13 +356,13 @@ void saveField(PETScVect<real_t>& v,
 
       case GNUPLOT:
          if (dim==1) {
-            mesh_nodes(mesh) {
+            node_loop(&mesh) {
                fp << setprecision(4) << setw(18) << The_node.getX() << " "
                   << setprecision(4) << setw(18) << v(node_label) << endl;
             }
             break;
          }
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             m = 0;
             switch(The_element.getShape()) {
                case LINE:          m = 2; break;
@@ -385,7 +385,7 @@ void saveField(PETScVect<real_t>& v,
       case VTK:
       {
          size_t size = 0;
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             switch(The_element.getShape()) {
                case LINE:          m = 2; break;
                case TRIANGLE:      m = 3; break;
@@ -419,7 +419,7 @@ void saveField(PETScVect<real_t>& v,
          }
          fp << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
          k = 0;
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             switch(The_element.getShape()) {
                case LINE:          m =  3; break;
                case TRIANGLE:      m =  5; break;
@@ -432,17 +432,17 @@ void saveField(PETScVect<real_t>& v,
             if (++k%30 == 0)
                fp << endl;
          }
-         if (type==NODE_FIELD)
+         if (type==NODE_DOF)
             fp << "\nPOINT_DATA  " << mesh.getNbNodes() << endl;
-         else if (type==ELEMENT_FIELD)
+         else if (type==ELEMENT_DOF)
             fp << "\nCELL_DATA  " << mesh.getNbElements() << endl;
          if (scalar)
             fp << "SCALARS  u  double  1\nLOOKUP_TABLE  default" << endl;
          else
             fp << "VECTORS  u  double" << endl;
 
-         if (type==NODE_FIELD) {
-            mesh_nodes(mesh) {
+         if (type==NODE_DOF) {
+            node_loop(&mesh) {
                fp << v(node_label,1) << " ";
                if (!scalar) {
                   fp << v(node_label,2) << " ";
@@ -454,8 +454,8 @@ void saveField(PETScVect<real_t>& v,
                fp << endl;
             }
          }
-         else if (type==ELEMENT_FIELD) {
-            mesh_elements(mesh) {
+         else if (type==ELEMENT_DOF) {
+            element_loop(&mesh) {
                fp << v(element_label,1) << " ";
                if (!scalar) {
                   fp << v(element_label,2) << " ";
@@ -479,7 +479,7 @@ void saveField(PETScVect<real_t>& v,
          switch (dim) {
 
             case 1:
-               mesh_elements(mesh) {
+               element_loop(&mesh) {
                   fp << "SL(";
                   fp << The_element(1)->getX() <<  ", 0., 0., "
                      << The_element(2)->getX() <<  ", 0., 0. ) {\n";
@@ -490,7 +490,7 @@ void saveField(PETScVect<real_t>& v,
                break;
 
             case 2:
-               mesh_elements(mesh) {
+               element_loop(&mesh) {
                   size_t nb_en = The_element.getNbNodes();
                   fp << tt;
                   if (nb_en==3)
@@ -516,7 +516,7 @@ void saveField(PETScVect<real_t>& v,
                break;
 
             case 3:
-               mesh_elements(mesh) {
+               element_loop(&mesh) {
                   size_t nb_en = The_element.getNbNodes();
                   fp << tt;
                   if (nb_en==4)
@@ -584,14 +584,14 @@ void saveField(PETScVect<real_t>& v,
             fp << "FECONNECT)";
          }
          fp << endl;
-         mesh_nodes(mesh) {
+         node_loop(&mesh) {
             for (size_t i=1; i<=dim; i++)
                fp << "  " << The_node.getCoord(i);
             for (size_t j=0; j<nb_dof; j++)
                fp << "  " << v(node_label,j);
             fp << endl;
          }
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             for (size_t n=1; n<=The_element.getNbNodes(); n++)
                fp << "  " << The_element(n)->n();
             fp << endl;
@@ -618,7 +618,7 @@ void saveField(const Vect<real_t>& v,
    size_t i, k, n, m=0;
    bool scalar = true;
    size_t nb_dof = v.getNbDOF();
-   int type = v.getDOFType();
+   DOFSupport type = v.getDOFType();
    if (nb_dof>1)
       scalar = false;
    ofstream fp(output_file.c_str());
@@ -628,13 +628,13 @@ void saveField(const Vect<real_t>& v,
 
       case GNUPLOT:
          if (mesh.getDim()==1) {
-            mesh_nodes(mesh) {
+            node_loop(&mesh) {
                fp << setprecision(4) << setw(18) << The_node.getX() << " "
                   << setprecision(4) << setw(18) << v(node_label) << endl;
             }
             break;
          }
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             m = 0;
             switch(The_element.getShape()) {
                case LINE:          m = 2; break;
@@ -657,7 +657,7 @@ void saveField(const Vect<real_t>& v,
       case VTK:
       {
          size_t size = 0;
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             switch(The_element.getShape()) {
                case LINE:          m = 2; break;
                case TRIANGLE:      m = 3; break;
@@ -670,12 +670,12 @@ void saveField(const Vect<real_t>& v,
          }
          fp << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
          fp << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
-         mesh_nodes(mesh) {
+         node_loop(&mesh) {
             fp << The_node.getX() << "  " << The_node.getY() << "  "
                << The_node.getZ() << endl;
          }
          fp << "\nCELLS " << mesh.getNbElements() << " " << size << endl;
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             switch (The_element.getShape()) {
                case LINE:          m = 2; break;
                case TRIANGLE:      m = 3; break;
@@ -691,7 +691,7 @@ void saveField(const Vect<real_t>& v,
          }
          fp << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
          k = 0;
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             switch(The_element.getShape()) {
                case LINE:          m =  3; break;
                case TRIANGLE:      m =  5; break;
@@ -704,17 +704,17 @@ void saveField(const Vect<real_t>& v,
             if (++k%30 == 0)
                fp << endl;
          }
-         if (type==NODE_FIELD)
+         if (type==NODE_DOF)
             fp << "\nPOINT_DATA  " << mesh.getNbNodes() << endl;
-         else if (type==ELEMENT_FIELD)
+         else if (type==ELEMENT_DOF)
             fp << "\nCELL_DATA  " << mesh.getNbElements() << endl;
          if (scalar)
             fp << "SCALARS  u  double  1\nLOOKUP_TABLE  default" << endl;
          else
             fp << "VECTORS  u  double" << endl;
 
-         if (type==NODE_FIELD) {
-            mesh_nodes(mesh) {
+         if (type==NODE_DOF) {
+            node_loop(&mesh) {
                fp << v(node_label,1) << " ";
                if (!scalar) {
                   fp << v(node_label,2) << " ";
@@ -726,8 +726,8 @@ void saveField(const Vect<real_t>& v,
                fp << endl;
             }
          }
-         else if (type==ELEMENT_FIELD) {
-            mesh_elements(mesh) {
+         else if (type==ELEMENT_DOF) {
+            element_loop(&mesh) {
                fp << v(element_label,1) << " ";
                if (!scalar) {
                   fp << v(element_label,2) << " ";
@@ -751,7 +751,7 @@ void saveField(const Vect<real_t>& v,
          switch (mesh.getDim()) {
 
             case 1:
-               mesh_elements(mesh) {
+               element_loop(&mesh) {
                   fp << "SL(";
                   fp << The_element(1)->getX() <<  ", 0., 0., "
                      << The_element(2)->getX() <<  ", 0., 0. ) {\n";
@@ -762,7 +762,7 @@ void saveField(const Vect<real_t>& v,
                break;
 
             case 2:
-               mesh_elements(mesh) {
+               element_loop(&mesh) {
                   size_t nb_en = The_element.getNbNodes();
                   fp << tt;
                   if (nb_en==3)
@@ -788,7 +788,7 @@ void saveField(const Vect<real_t>& v,
                break;
 
             case 3:
-               mesh_elements(mesh) {
+               element_loop(&mesh) {
                   size_t nb_en = The_element.getNbNodes();
                   fp << tt;
                   if (nb_en==4)
@@ -856,14 +856,14 @@ void saveField(const Vect<real_t>& v,
             fp << "FECONNECT)";
          }
          fp << endl;
-         mesh_nodes(mesh) {
+         node_loop(&mesh) {
             for (size_t i=1; i<=mesh.getDim(); i++)
                fp << "  " << The_node.getCoord(i);
             for (size_t j=0; j<nb_dof; j++)
                fp << "  " << v(node_label,j);
             fp << endl;
          }
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             for (size_t n=1; n<=The_element.getNbNodes(); n++)
                fp << "  " << The_element(n)->n();
             fp << endl;
@@ -974,7 +974,7 @@ void saveField(Vect<real_t>& v,
                fp << "4  " << nn+j-2 << "  " << nn+j+ny-1 << "  " << nn+j+ny << "  " << nn+j-1 << endl;
             nn += ny+1;
          }
-         if (v.getDOFType()==NODE_FIELD) {
+         if (v.getDOFType()==NODE_DOF) {
             nx++, ny++;
             fp << "\nPOINT_DATA  " << nx*ny << endl;
          }
@@ -993,46 +993,70 @@ void saveField(Vect<real_t>& v,
 }
 
 
+void saveFormat(Mesh&  mesh,
+                string input_file,
+                string output_file,
+                int    format,
+                int    f)
+{
+   if (f<=0)
+      throw OFELIException("In saveFormat(Mesh,string,string,int,int): "
+                           " Illegal value of savinag frequency");
+   switch (format) {
+
+      case GNUPLOT:
+         saveGnuplot(mesh,input_file,output_file,f);
+         break;
+
+      case VTK:
+         saveVTK(mesh,input_file,output_file,f);
+         break;
+
+      case GMSH:
+         saveGmsh(mesh,input_file,output_file,f);
+         break;
+
+      case TECPLOT:
+         saveTecplot(mesh,input_file,output_file,f);
+         break;
+   }
+}
+
+
 void saveGnuplot(string input_file,
                  string output_file,
-                 string mesh_file)
+                 string mesh_file,
+                 int    f)
 {
    Mesh mesh(mesh_file);
-   saveGnuplot(mesh,input_file,output_file);
+   saveGnuplot(mesh,input_file,output_file,f);
 }
 
 
 void saveGnuplot(Mesh&  mesh,
                  string input_file,
-                 string output_file)
+                 string output_file,
+                 int    f)
 {
-   vector<real_t> tm;
+   size_t nb_dof=0;
    cout << "Converting file: " << input_file << " to Gnuplot format." << endl;
-   {
-      IOField temp(input_file,mesh,IOField::IN);
-      temp.scan(tm,NODE_FIELD);
-   }
-   size_t nb_time = tm.size();
-   if (nb_time)
-      cout << "Number of found time steps: " << nb_time << ", Running from "
-           << "time: " << tm[0] << " to time: " << tm[nb_time-1] << "." << endl;
-   else
-      cout << "No time step was found." << endl;
+   vector<vector<real_t> > field;
+   vector<real_t> tm;
+   string name;
+   getfields(input_file,mesh,nb_dof,tm,field,name);
 
    Vect<real_t> v(mesh);
    size_t dim = mesh.getDim();
-   IOField io(input_file,mesh,IOField::IN);
-   io.get(v,tm[0]);
    ofstream fp(output_file.c_str());
    fp.setf(ios::right|ios::scientific);
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       size_t m = 0;
       switch (dim) {
 
          case 1: if (The_element.getShape()==LINE)
                     m = 2;
                  if (!m)
-                    throw OFELIException("In saveGnuplot(string,string,string): "
+                    throw OFELIException("In saveGnuplot(string,string,string,int): "
                                           " Unknown element shape " + itos(element_label));
                  break;
 
@@ -1041,7 +1065,7 @@ void saveGnuplot(Mesh&  mesh,
                  if (The_element.getShape()==TRIANGLE)
                     m = 3;
                  if (!m)
-                    throw OFELIException("In saveGnuplot(string,string,string): "
+                    throw OFELIException("In saveGnuplot(string,string,string,int): "
                                          " Unknown element shape " + itos(element_label));
       }
       for (size_t n=1; n<=m; n++) {
@@ -1059,32 +1083,25 @@ void saveGnuplot(Mesh&  mesh,
 
 void saveTecplot(string input_file,
                  string output_file,
-                 string mesh_file)
+                 string mesh_file,
+                 int    f)
 {
    Mesh mesh(mesh_file);
-   saveTecplot(mesh,input_file,output_file);
+   saveTecplot(mesh,input_file,output_file,f);
 }
 
 
 void saveTecplot(Mesh&  mesh,
                  string input_file,
-                 string output_file)
+                 string output_file,
+                 int    f)
 {
+   size_t nb_dof=0;
    cout << "Converting file: " << input_file << " to Tecplot format." << endl;
+   vector<vector<real_t> > field;
    vector<real_t> tm;
-   {
-      IOField temp(input_file,mesh,IOField::IN);
-      temp.scan(tm,NODE_FIELD);
-   }
-   size_t nb_time = tm.size();
-   cout << "Number of found time steps: " << nb_time << ", Running from "
-        << "time: " << tm[0] << " to time: " << tm[nb_time-1] << "." << endl;
-
-   vector<vector<real_t> > field(nb_time);
-   IOField io(input_file,mesh,IOField::IN);
    string name;
-   io.get(mesh,field,name);
-   size_t nb_dof = io.getNbDOF();
+   getfields(input_file,mesh,nb_dof,tm,field,name);
    string shape;
    if (mesh.getShape()==LINE)
       shape = "LINESEG";
@@ -1101,7 +1118,7 @@ void saveTecplot(Mesh&  mesh,
 
    ofstream fp(output_file.c_str());
    fp.setf(ios::right|ios::scientific);
-   size_t count = 0;
+   size_t count = 0, nb_time = tm.size();
 
    for (size_t n=0; n<nb_time; n++) {
       if (count==0) {
@@ -1118,35 +1135,37 @@ void saveTecplot(Mesh&  mesh,
          fp << endl;
       }
 
-      fp << "\nZONE T=\"" << "step-" << n << "\", N=" << mesh.getNbNodes() << ", E="
-         << mesh.getNbElements() << ", F=FEPOINT, ET=" << shape
-         << ", SOLUTIONTIME=" << tm[n];
-      if (count) {
-         fp << ", D=(1,";
-         if (mesh.getDim()>1)
-            fp << "2,";
-         if (mesh.getDim()==3)
-            fp << "3,";
-         fp << "FECONNECT)";
-      }
-      fp << endl;
-
-      mesh_nodes(mesh) {
-         if (count==0)
-            for (size_t i=1; i<=mesh.getDim(); i++)
-               fp << "  " << The_node.getCoord(i);
-         for (size_t j=0; j<nb_dof; j++)
-            fp << "  " << field[n][nb_dof*(node_label-1)+j];
+      if ((n+1)%f==0) {
+         fp << "\nZONE T=\"" << "step-" << n << "\", N=" << mesh.getNbNodes() << ", E="
+            << mesh.getNbElements() << ", F=FEPOINT, ET=" << shape
+            << ", SOLUTIONTIME=" << tm[n];
+         if (count) {
+            fp << ", D=(1,";
+            if (mesh.getDim()>1)
+               fp << "2,";
+            if (mesh.getDim()==3)
+               fp << "3,";
+            fp << "FECONNECT)";
+         }
          fp << endl;
-      }
-      if (count==0) {
-         mesh_elements(mesh) {
-            for (n=1; n<=The_element.getNbNodes(); n++)
-               fp << setw(10) << The_element(n)->n();
+
+         node_loop(&mesh) {
+            if (count==0)
+               for (size_t i=1; i<=mesh.getDim(); i++)
+                  fp << "  " << The_node.getCoord(i);
+            for (size_t j=0; j<nb_dof; j++)
+               fp << "  " << field[n][nb_dof*(node_label-1)+j];
             fp << endl;
          }
+         if (count==0) {
+            element_loop(&mesh) {
+               for (n=1; n<=The_element.getNbNodes(); n++)
+                  fp << setw(10) << The_element(n)->n();
+               fp << endl;
+            }
+         }
+         count++;
       }
-      count++;
    }
    fp.close();
 }
@@ -1154,16 +1173,18 @@ void saveTecplot(Mesh&  mesh,
 
 void saveVTK(string input_file,
              string output_file,
-             string mesh_file)
+             string mesh_file,
+             int    f)
 {
    Mesh mesh(mesh_file);
-   saveVTK(mesh,input_file,output_file);
+   saveVTK(mesh,input_file,output_file,f);
 }
 
 
 void saveVTK(Mesh&  mesh,
              string input_file,
-             string output_file)
+             string output_file,
+             int    f)
 {
    ofstream *pf=nullptr;
    size_t m=0, k=0, nb_dof;
@@ -1171,33 +1192,17 @@ void saveVTK(Mesh&  mesh,
 
    cout << "Converting file: " << input_file << " to VTK format." << endl;
    string proj=output_file.substr(0,output_file.rfind("."));
+   vector<vector<real_t> > field;
    vector<real_t> tm;
-   {
-      IOField temp(input_file,mesh,IOField::IN);
-      temp.scan(tm,NODE_FIELD);
-      nb_dof = temp.getNbDOF();
-   }
-   size_t nb_time = tm.size();
-   if (nb_time)
-      cout << "Number of found time steps: " << nb_time << ", Running from "
-           << "time: " << tm[0] << " to time: " << tm[nb_time-1] << "." << endl;
-   else {
-      cout << "No time step was found." << endl;
-      return;
-   }
-
-   vector<vector<real_t> > field(nb_time);
-   for (size_t i=0; i<nb_time; i++)
-      field[i].resize(nb_dof*mesh.getNbNodes());
-   IOField io(input_file,mesh,IOField::IN);
    string name;
-   io.get(mesh,field,name);
+   getfields(input_file,mesh,nb_dof,tm,field,name);
 
+   size_t nb_st=0;
    bool scalar = true;
    if (nb_dof>1)
       scalar = false;
-   size_t size=0;
-   mesh_elements(mesh) {
+   size_t size=0, nb_time=tm.size();
+   element_loop(&mesh) {
       int s = The_element.getShape();
       if (s==LINE)
          m = 2;
@@ -1213,130 +1218,126 @@ void saveVTK(Mesh&  mesh,
       size += m + 1;
    }
    for (size_t n=0; n<nb_time; n++) {
-      string tt = "Time=" + dtos(tm[n]);
-      if (nb_time==1)
-         of = proj + ".vtk";
-      else
-         of = proj + "-" + zeros(n) + ".vtk";
-      cout << "   Storing time step " << n+1 << " in file " << of << endl;
-      pf = new ofstream(of.c_str());
-      *pf << setprecision(16) << std::scientific;
-      *pf << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
-      *pf << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
-      mesh_nodes(mesh)
-         *pf << The_node.getX() << "  " << The_node.getY() << "  " << The_node.getZ() << endl;
-      *pf << "\nCELLS " << mesh.getNbElements() << setw(10) << size << endl;
-      mesh_elements(mesh) {
-         int s = The_element.getShape();
-         if (s==LINE)
-            m = 2;
-         else if (s==TRIANGLE)
-            m = 3;
-         else if (s==QUADRILATERAL || s==TETRAHEDRON)
-            m = 4;
-         else if (s==HEXAHEDRON)
-            m = 8;
-         else if (s==PENTAHEDRON)
-            m = 6;
-         else;
-         *pf << setw(8) << m;
-         for (size_t i=0; i<m; i++)
-           *pf << setw(10) << The_element(i+1)->n()-1;
-         *pf << endl;
-      }
-      *pf << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
-      k = 0;
-      mesh_elements(mesh) {
-         switch (The_element.getShape()) {
-            case LINE:            m =  3; break;
-            case TRIANGLE:        m =  5; break;
-            case QUADRILATERAL:   m =  9; break;
-            case TETRAHEDRON:     m = 10; break;
-            case HEXAHEDRON:      m = 12; break;
-            case PENTAHEDRON:     m = 13; break;
-         }
-         *pf << setw(4) << m;
-         if (++k%30 == 0)
-            *pf << endl;
-      }
-      *pf << "\nPOINT_DATA  " << mesh.getNbNodes() << endl;
-
-      if (scalar)
-         *pf << "SCALARS  u  double  1\nLOOKUP_TABLE  default" << endl;
-      else
-         *pf << "VECTORS  u  double" << endl;
-
-      mesh_nodes(mesh) {
-         *pf << field[n][nb_dof*(node_label-1)] << " ";
-         if (!scalar) {
-            *pf << field[n][nb_dof*(node_label-1)+1] << " ";
-            if (nb_dof > 2)
-               *pf << field[n][nb_dof*(node_label-1)+2] << " ";
+      if ((n+1)%f==0) {
+         nb_st++;
+         string tt = "Time=" + dtos(tm[n]);
+         if (nb_time==1)
+            of = proj + ".vtk";
+         else
+            of = proj + "-" + zeros(n) + ".vtk";
+         cout << "   Storing time step " << n+1 << " in file " << of << endl;
+         pf = new ofstream(of.c_str());
+         *pf << setprecision(16) << std::scientific;
+         *pf << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
+         *pf << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
+         node_loop(&mesh)
+            *pf << The_node.getX() << "  " << The_node.getY() << "  " << The_node.getZ() << endl;
+         *pf << "\nCELLS " << mesh.getNbElements() << setw(10) << size << endl;
+         element_loop(&mesh) {
+            int s = The_element.getShape();
+            if (s==LINE)
+               m = 2;
+            else if (s==TRIANGLE)
+               m = 3;
+            else if (s==QUADRILATERAL || s==TETRAHEDRON)
+               m = 4;
+            else if (s==HEXAHEDRON)
+               m = 8;
+            else if (s==PENTAHEDRON)
+               m = 6;
             else
-               *pf << 0. << " ";
+               ;
+            *pf << setw(8) << m;
+            for (size_t i=0; i<m; i++)
+              *pf << setw(10) << The_element(i+1)->n()-1;
+            *pf << endl;
          }
-         *pf << endl;
+         *pf << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
+         k = 0;
+         element_loop(&mesh) {
+            switch (The_element.getShape()) {
+               case LINE:            m =  3; break;
+               case TRIANGLE:        m =  5; break;
+               case QUADRILATERAL:   m =  9; break;
+               case TETRAHEDRON:     m = 10; break;
+               case HEXAHEDRON:      m = 12; break;
+               case PENTAHEDRON:     m = 13; break;
+            }
+            *pf << setw(4) << m;
+            if (++k%30 == 0)
+               *pf << endl;
+         }
+         *pf << "\nPOINT_DATA  " << mesh.getNbNodes() << endl;
+
+         if (scalar)
+            *pf << "SCALARS  u  double  1\nLOOKUP_TABLE  default" << endl;
+         else
+            *pf << "VECTORS  u  double" << endl;
+
+         node_loop(&mesh) {
+            *pf << field[n][nb_dof*(node_label-1)] << " ";
+            if (!scalar) {
+               *pf << field[n][nb_dof*(node_label-1)+1] << " ";
+               if (nb_dof > 2)
+                  *pf << field[n][nb_dof*(node_label-1)+2] << " ";
+               else
+                  *pf << 0. << " ";
+            }
+            *pf << endl;
+         }
       }
    }
    pf->close();
    delete pf;
+   cout << "Number of stored time steps: " << nb_st << endl;
 }
 
 
 void saveGmsh(string input_file,
               string output_file,
-              string mesh_file)
+              string mesh_file,
+              int    f)
 {
    Mesh mesh(mesh_file);
-   saveGmsh(mesh,input_file,output_file);
+   saveGmsh(mesh,input_file,output_file,f);
 }
 
 
 void saveGmsh(Mesh&  mesh,
               string input_file,
-              string output_file)
+              string output_file,
+              int    f)
 {
-   size_t i, k, nb_dof=0, nb_en=0;
+  size_t i, k, nb_dof=0, nb_en=0;
    ofstream pf(output_file.c_str());
    pf << setprecision(16);
 
    cout << "Converting file: " << input_file << " to Gmsh format." << endl;
+   vector<vector<real_t> > field;
    vector<real_t> tm;
-   {
-      IOField temp(input_file,mesh,IOField::IN);
-      temp.scan(tm,NODE_FIELD);
-      nb_dof = temp.getNbDOF();
-   }
-
-   size_t nb_time = tm.size();
-   if (nb_time)
-      cout << "Number of found time steps: " << nb_time << ", Running from "
-           << "time: " << tm[0] << " to time: " << tm[nb_time-1] << "." << endl;
-   else {
-      cout << "No time step was found." << endl;
-      return;
-   }
-
-   IOField io(input_file,mesh,IOField::IN);
-   vector<vector<real_t> > field(nb_time);
    string name;
-   io.get(mesh,field,name);
+   getfields(input_file,mesh,nb_dof,tm,field,name);
    char tt = 'S';
    if (nb_dof == mesh.getDim())
       tt = 'V';
 
    pf << "View \"" << name << "\" {" << endl;
-   size_t j;
+   size_t j, nb_st=0, nb_time=tm.size();
    switch (mesh.getDim()) {
 
       case 1:
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             pf << "SL(";
             pf << The_element(1)->getX() <<  ", 0., 0., "
                << The_element(2)->getX() <<  ", 0., 0. ) {" << endl;
-            for (i=0; i<nb_time-1; i++)
-               pf << field[i][The_element(1)->n()-1] << ","
-                  << field[i][The_element(2)->n()-1] << ",";
+            for (i=0; i<nb_time-1; i++) {
+               if ((i+1)%f==0) {
+                  if (The_element.n()==1)
+                     nb_st++;
+                  pf << field[i][The_element(1)->n()-1] << ","
+                     << field[i][The_element(2)->n()-1] << ",";
+               }
+            }
             pf << field[nb_time-1][The_element(1)->n()-1] << ","
                << field[nb_time-1][The_element(2)->n()-1] << "};" << endl;
          }
@@ -1344,7 +1345,7 @@ void saveGmsh(Mesh&  mesh,
          break;
 
       case 2:
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             pf << tt;
             if ((nb_en=The_element.getNbNodes())==3)
                pf << "T";
@@ -1356,15 +1357,19 @@ void saveGmsh(Mesh&  mesh,
             pf << The_element(nb_en)->getX() << "," << The_element(nb_en)->getY() 
                << ",0.) {" << endl;
             for (i=0; i<nb_time; i++) {
-               for (k=1; k<=nb_en; k++) {
-                  j = nb_dof*(The_element(k)->n()-1);
-                  pf << field[i][j];
-                  if (nb_dof > 1)
-                     pf << "," << field[i][j+1] << ",0.0";
-                  if (i<nb_time-1 || k<nb_en)
-                     pf << ",";
+               if ((i+1)%f==0) {
+                  if (The_element.n()==1)
+                     nb_st++;
+                  for (k=1; k<=nb_en; k++) {
+                     j = nb_dof*(The_element(k)->n()-1);
+                     pf << field[i][j];
+                     if (nb_dof > 1)
+                        pf << "," << field[i][j+1] << ",0.0";
+                     if (i<nb_time-1 || k<nb_en)
+                        pf << ",";
+                  }
+                  pf << endl;
                }
-               pf << endl;
             }
             pf << "};" << endl;
          }
@@ -1372,7 +1377,7 @@ void saveGmsh(Mesh&  mesh,
          break;
 
       case 3:
-         mesh_elements(mesh) {
+         element_loop(&mesh) {
             pf << tt;
             if ((nb_en=The_element.getNbNodes())==4)
                pf << "S";
@@ -1391,13 +1396,17 @@ void saveGmsh(Mesh&  mesh,
                << The_element(nb_en)->getY() << ","
                << The_element(nb_en)->getZ() << ") {" << endl;
             for (i=0; i<nb_time; i++) {
-               for (k=1; k<=nb_en; k++) {
-                  pf << field[i][nb_dof*(The_element(k)->n()-1)];
-                  if (nb_dof > 1)
-                     pf << "," << field[i][nb_dof*(The_element(k)->n()-1)+1] << ","
-                        << field[i][nb_dof*(The_element(k)->n()-1)+2] << endl;
-                  if (i<nb_time-1 || k<nb_en)
-                     pf << ",";
+               if ((i+1)%f==0) {
+                  if (The_element.n()==1)
+                     nb_st++;                 
+                  for (k=1; k<=nb_en; k++) {
+                     pf << field[i][nb_dof*(The_element(k)->n()-1)];
+                     if (nb_dof > 1)
+                        pf << "," << field[i][nb_dof*(The_element(k)->n()-1)+1] << ","
+                           << field[i][nb_dof*(The_element(k)->n()-1)+2] << endl;
+                     if (i<nb_time-1 || k<nb_en)
+                        pf << ",";
+                  }
                }
             }
             pf << "};" << endl;
@@ -1405,6 +1414,35 @@ void saveGmsh(Mesh&  mesh,
          pf << "};" << endl;
          break;
    }
+   cout << "Number of stored time steps: " << nb_st << endl;
+}
+
+
+void getfields(string                   file,
+               Mesh&                    ms,
+               size_t&                  nb_dof,
+               vector<real_t>&          t,
+               vector<vector<real_t> >& u,
+               string&                  name
+              )
+{
+   {
+      IOField temp(file,ms,IOField::IN);
+      temp.scan(t,NODE_DOF);
+      nb_dof = temp.getNbDOF();
+   }
+   size_t n = t.size();
+   if (n)
+      cout << "Number of found time steps: " << n << ", Running from "
+           << "time: " << t[0] << " to time: " << t[n-1] << "." << endl;
+   else {
+      cout << "No time step was found." << endl;
+      return;
+   }
+
+   IOField io(file,ms,IOField::IN);
+   u.resize(n);
+   io.get(ms,u,name);
 }
 
 } /* namespace OFELI */

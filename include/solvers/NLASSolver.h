@@ -251,7 +251,9 @@ class NLASSolver
 /// \brief Return number of iterations
     int getNbIter() const { return _nb_it; }
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream & operator<<(ostream& s, const NLASSolver &nl);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 private:
 

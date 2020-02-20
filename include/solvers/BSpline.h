@@ -47,6 +47,7 @@ namespace OFELI {
  *  @{
  */
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 void compute_intervals(Vect<size_t>& u,
                        size_t        n,
                        size_t        t);
@@ -60,6 +61,7 @@ void compute_point(const Vect<size_t>&         u,
                    real_t                      v,
                    const Vect<Point<real_t> >& control,
                    Point<real_t>&              output);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 
 /*! \file BSpline.h

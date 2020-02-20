@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['verbosity',['Verbosity',['../group__Global.html#gab00944552a5ef41ef0c18de744dd8207',1,'OFELI']]]
+  ['y',['y',['../a00088.html#ab4943c75e718fe503722ac7d26c746a6',1,'OFELI::Point::y()'],['../a00089.html#ab4943c75e718fe503722ac7d26c746a6',1,'OFELI::Point2D::y()']]]
 ];

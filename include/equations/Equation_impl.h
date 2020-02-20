@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -200,11 +200,11 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element& el,
 
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(int dof_type,
-                                              int dof)
+void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
+                                              int        dof)
 {
    size_t in, jn;
-   if (dof_type==NODE_FIELD) {
+   if (dof_type==NODE_DOF) {
       if (dof) {
          for (size_t i=1; i<=NEN_; i++) {
             Node *nd1 = (*_theElement)(i);
@@ -236,7 +236,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(int dof_type,
       }
    }
 
-   else if (dof_type==SIDE_FIELD) {
+   else if (dof_type==SIDE_DOF) {
       if (dof) {
          for (size_t i=1; i<=NEN_; i++) {
             Side *sd1 = _theElement->getPtrSide(i);
@@ -357,16 +357,29 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<T_>&     b,
    }
 }
 
+/*
+template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideNodeVector(const Vect<T_>& b,
+                                                      T_*             sb)
+{
+   size_t k = 0;
+   for (size_t n=1; n<=NSN_; ++n) {
+      size_t nd = (*_theSide)(n)->n();
+      for (size_t i=0; i<_nb_dof; ++i)
+         sb[k++] = b[_nb_dof*(nd-1)+i];
+   }
+   }*/
+
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
-                                                     int             dof_type,
+                                                     DOFSupport      dof_type,
                                                      int             flag)
 {
    size_t k=0;
    switch (dof_type) {
 
-      case NODE_FIELD:
+      case NODE_DOF:
          if (flag==0) {
             for (size_t n=1; n<=NEN_; ++n) {
                Node *nd = (*_theElement)(n);
@@ -384,7 +397,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
          }
          break;
 
-      case SIDE_FIELD:
+      case SIDE_DOF:
          if (flag==0) {
             for (size_t n=1; n<=NEN_; n++) {
                Side *sd=_theElement->getPtrSide(n);
@@ -400,19 +413,19 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
                   _su[k++] = b(sd->getDOF(flag));
             }
          }
+
+      default:
+         break;
    }
 }
 
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<T_>& b)
+void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<T_>& b,
+                                                  T_*             sb)
 {
-   size_t k = 0;
-   for (size_t n=1; n<=NSN_; n++) {
-      Node *nd = (*_theSide)(n);
-      for (size_t j=1; j<=nd->getNbDOF(); j++)
-         _su[k++] = b(nd->getDOF(j));
-   }
+   for (size_t i=0; i<_theSide->getNbDOF(); ++i)
+      sb[i] = b(_theSide->getNbDOF()*(_theSide->n()-1)+i+1);
 }
 
 

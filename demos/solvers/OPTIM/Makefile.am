@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = opt_demo1 opt_demo2 opt_demo3
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 opt_demo1_SOURCES =	opt_demo1.cpp
 opt_demo2_SOURCES =	opt_demo2.cpp

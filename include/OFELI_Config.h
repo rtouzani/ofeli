@@ -58,9 +58,11 @@
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of current release
  */
-#define OFELI_RELEASE_DATE            "12-2019"
+#define OFELI_RELEASE_DATE            "2-2020"
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define MY_RANDOM             55085111
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \typedef lsize_t
  *  \ingroup Util
@@ -92,13 +94,6 @@ typedef  std::complex<double>  complex_t;
  * \details This value is necessary only if nodes are to be renumbered.
  */
 #define GRAPH_MEMORY           1000000
-
-/*! \def MAX_NB_EQUATIONS
- *  \ingroup Solver
- * \brief Maximum number of equations
- * \details Useful for coupled problems
- */
-#define MAX_NB_EQUATIONS                   5
 
 /*! \def MAX_NB_INPUT_FIELDS
  *  \ingroup Solver
@@ -264,27 +259,46 @@ enum FieldName {
    MOMENTUM                     =  11,    ///< Momentum
 };
 
-/*! \enum FieldType
- * \brief Enumerate variable that selects field type
- */
- enum FieldType {
-    NONE                = 0, ///< No support information
-    NODE_FIELD          = 1, ///< DOFs are supported by nodes
-    ELEMENT_FIELD       = 2, ///< DOFs are supported by elements
-    SIDE_FIELD          = 3, ///< DOFs are supported by sides (faces in 3-D, edges in 2-D)
-    BOUNDARY_SIDE_FIELD = 4, ///< DOFs are supported by boundary sides (faces in 3-D, edges in 2-D)
-    EDGE_FIELD          = 5  ///< DOFs are supported by edges
- };
-
 /*! \enum DOFSupport
  * \brief Choose Support of degrees of freedom
  */
 enum DOFSupport {
+    NONE              = 0,   ///< No support assigned to DOFs
     NODE_DOF          = 1,   ///< DOFs are supported by nodes
     ELEMENT_DOF       = 2,   ///< DOFs are supported by elements
     SIDE_DOF          = 3,   ///< DOFs are supported by sides
     BOUNDARY_SIDE_DOF = 4,   ///< DOFs are supported by sides
     EDGE_DOF          = 5    ///< DOFs are supported by edges
+};
+
+
+/*! \enum EqDataType
+ * Enumerate variable that selects equation data type
+ */
+enum EqDataType {
+   NO_TYPE                      =    0,    /*!< No type prescribed                     */
+   INITIAL                      =    1,    /*!< Initial condition                      */
+   INITIAL_FIELD                =    1,    /*!< Initial condition                      */
+   SOLUTION                     =    1,    /*!< Solution vector (same as Initial)      */
+   INITIAL_AUX_1                =    2,    /*!< Initial auxiliary field                */
+   INITIAL_AUX_2                =    3,    /*!< Initial auxiliary field                */
+   INITIAL_AUX_3                =    4,    /*!< Initial auxiliary field                */
+   INITIAL_AUX_4                =    5,    /*!< Initial auxiliary field                */
+   BOUNDARY_CONDITION           =    6,    /*!< Boundary condition data                */
+   BODY_FORCE                   =    7,    /*!< Body force data                        */
+   SOURCE                       =    7,    /*!< Source data (same as Body force)       */
+   POINT_FORCE                  =    8,    /*!< Localized (at point) force             */
+   BOUNDARY_FORCE               =    9,    /*!< Boundary force data                    */
+   FLUX                         =    9,    /*!< Flux data (same as Boundary force)     */
+   TRACTION                     =    9,    /*!< Traction data (same as Boundary force) */
+   AUX_INPUT_FIELD_1            =   10,    /*!< Auxiliary input field 1                */
+   AUX_INPUT_FIELD_2            =   11,    /*!< Auxiliary input field 2                */
+   AUX_INPUT_FIELD_3            =   11,    /*!< Auxiliary input field 3                */
+   AUX_INPUT_FIELD_4            =   12,    /*!< Auxiliary input field 4                */
+   DISPLACEMENT_FIELD           =   13,    /*!< A displacement field                   */
+   VELOCITY_FIELD               =   14,    /*!< A velocity field                       */
+   PRESSURE_FIELD               =   15,    /*!< A pressure field                       */
+   TEMPERATURE_FIELD            =   16,    /*!< A temperature field                    */
 };
 
 
@@ -299,7 +313,7 @@ enum ElementShape {
    QUADRILATERAL = 4,            /*!< Elements are quadrilaterals       */
    TETRAHEDRON   = 5,            /*!< Elements are tetrahedra           */
    HEXAHEDRON    = 6,            /*!< Elements are hexahedra (bricks)   */
-   PENTAHEDRON   = 7,            /*!< Elements are pentahedra (prisms)  */
+   PENTAHEDRON   = 7,            /*!< Elements are pentahedra           */
    PRISM         = 8,            /*!< Elements are prisms               */
    PYRAMID       = 9             /*!< Elements are pyramids             */
 };

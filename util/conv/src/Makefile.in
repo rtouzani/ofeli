@@ -310,6 +310,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 cmesh_SOURCES = cmesh.cpp
 cfield_SOURCES = cfield.cpp
 cmesh_LDADD = $(top_builddir)/src/libofeli.a

@@ -117,7 +117,7 @@ void BC_RHS(int           opt,
       f.set("exp(-100*y^2)");
    }
    else {
-      MeshNodes(ms) {
+      NodeLoop(ms) {
          double x = TheNode.getX(), y = TheNode.getY();
          double rr = pow(x*x+y*y,OFELI_THIRD);
          double t = 2*OFELI_THIRD*atan2(y,x);

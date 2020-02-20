@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
       eq.TwistingMoment(tm);
       eq.ShearForce(sf);
       cout << "Element     Axial Force       Bending Moment    Twisting Moment   Shear Force" << endl;
-      MeshElements(ms) {
+      ElementLoop(ms) {
          size_t n = theElementLabel;
          cout << setw(8) << n << " " << af(n) << " " << bm(n) << " " << tm(n) << " " << sf(n) << endl;
       }

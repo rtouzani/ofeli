@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
       Mesh ms(data.getMeshFile());
 
 //    Declare problem data
-      Vect<double> g(ms), u(ms,0,BOUNDARY_SIDE_FIELD);
+      Vect<double> g(ms), u(ms,BOUNDARY_SIDE_DOF);
       g.setNodeBC(1,"0.");
       g.setNodeBC(2,"1.");
 
@@ -67,8 +67,7 @@ int main(int argc, char *argv[])
 //    Solve problem
       eq.run();
 
-//    Get analytical solution and compute error
-      cout << u;
+//    Output solution norm
       cout << "L2 solution norm: " << u.Norm(WNORM2) << endl;
 
    } CATCH_EXCEPTION

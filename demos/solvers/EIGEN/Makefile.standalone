@@ -8,7 +8,7 @@ eigen_demo2:	eigen_demo2.o
 	`ofeli-config --cxx` `ofeli-config --cflags` -o eigen_demo2 eigen_demo2.o `ofeli-config --libs`
 
 clean:
-	/bin/rm -f *.o eigen_demo1 eigen_demo2
+	/bin/rm -f *.o eigen_demo1 eigen_demo2 *.pos
 
 
 .cpp.o:

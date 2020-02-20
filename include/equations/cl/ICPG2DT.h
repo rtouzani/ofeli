@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -156,10 +156,12 @@ class ICPG2DT : public Muscl2DT {
 /// \brief Return elementwise Mach number
     void getMach(Vect<real_t>& m) const;
 
-//  some initial conditions
+/// \brief Set initial condition for the schock tube problem
     void setInitialConditionShockTube(const LocalVect<real_t,4>& BcL,
                                       const LocalVect<real_t,4>& BcR,
-                                            real_t               x0);
+                                      real_t                     x0);
+
+/// \brief Set initial condition
     void setInitialCondition(const LocalVect<real_t,4>& u);
 
 /** \brief Prescribe a constant boundary condition at given side
@@ -167,7 +169,7 @@ class ICPG2DT : public Muscl2DT {
  *  @param [in] a Value to prescribe
  */
     void setBC(const Side&  sd,
-                     real_t a);
+               real_t      a);
 
 /** \brief Prescribe a constant boundary condition for a given code
  *  @param [in] code Code for which value is imposed
@@ -195,7 +197,7 @@ class ICPG2DT : public Muscl2DT {
  *  constant values to prescribe for the four fields (<tt>r</tt>, <tt>vx</tt>,
  *  <tt>vy</tt>, <tt>p</tt>)
  */
-    void setBC(      int                  code,
+    void setBC(int                        code,
                const LocalVect<real_t,4>& u);
 
 /** \brief Prescribe a constant boundary condition at all boundary sides
@@ -204,11 +206,14 @@ class ICPG2DT : public Muscl2DT {
  *  <tt>vy</tt>, <tt>p</tt>)
  */
     void setBC(const LocalVect<real_t,4>& u);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setInOutFlowBC(const Side&                sd,
                         const LocalVect<real_t,4>& u);
-    void setInOutFlowBC(      int                  code,
+    void setInOutFlowBC(int                        code,
                         const LocalVect<real_t,4>& u);
     void setInOutFlowBC(const LocalVect<real_t,4>& u);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Return density at given element label
 /// @param [in] i Element label
@@ -238,16 +243,28 @@ class ICPG2DT : public Muscl2DT {
 //  memory allocation and default paramaters
     void init();
 
-//  solvers
+/// \brief set Roe Riemann solver
     real_t RiemannSolver_ROE(int s);
+
+/// \brief set Roe Riemann solver
     real_t RiemannSolver_VFROE(int s);
+
+/// \brief set Roe Riemann solver
     real_t RiemannSolver_LF(int s);
+
+/// \brief set Roe Riemann solver
     real_t RiemannSolver_RUSANOV(int s);
+
+/// \brief set Roe Riemann solver
     real_t RiemannSolver_HLL(int s);
+
+/// \brief set Roe Riemann solver
     real_t RiemannSolver_HLLC(int s);
 
-//  conversion function
+/// \brief Set passage for primal to conservative variables
     void fromPrimalToConservative();
+
+/// \brief Set passage for conservative to primal variables
     void fromConservativeToPrimal();
 
 //  temp variables used by all solvers

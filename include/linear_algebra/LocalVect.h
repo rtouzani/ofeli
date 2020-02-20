@@ -449,25 +449,25 @@ void Axpy(T_                      a,
 template<size_t I_>
 struct _meta_xpy
 {
-  template<class T_, size_t N_>
-  void xpy_(const LocalVect<T_,N_>& x,
-            LocalVect<T_,N_>&       y)
-  {
-     y[I_] += x[I_];
-     _meta_axpy<I_-1>::_xpy(x,y);
-  }
+   template<class T_, size_t N_>
+   void xpy_(const LocalVect<T_,N_>& x,
+             LocalVect<T_,N_>&       y)
+   {
+      y[I_] += x[I_];
+      _meta_axpy<I_-1>::_xpy(x,y);
+   }
 };
 
 
 template<>
 struct _meta_xpy<0>
 {
-  template<class T_, size_t N_>
-  void _xpy(const LocalVect<T_,N_>& x,
-            LocalVect<T_,N_>&       y)
-  {
-     y[0] += x[0];
-  }
+   template<class T_, size_t N_>
+   void _xpy(const LocalVect<T_,N_>& x,
+             LocalVect<T_,N_>&       y)
+   {
+      y[0] += x[0];
+   }
 };
 
 

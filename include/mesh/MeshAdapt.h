@@ -58,7 +58,9 @@ using std::string;
 #include "mesh/bamg/Mesh2.h"
 #include "mesh/bamg/QuadTree.h"
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 void MeshErrorIO(ios&);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 using namespace bamg;
 
@@ -298,7 +300,9 @@ class MeshAdapt
     int run(const Vect<real_t>& u,
             Vect<real_t>&       v);
 
-    friend ostream & operator<<(ostream& s, const MeshAdapt& a);
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  friend ostream & operator<<(ostream& s, const MeshAdapt& a);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
 

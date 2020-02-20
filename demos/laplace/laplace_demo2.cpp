@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 
 // Transform 3-Node to 6-Node triangles and save resulting mesh
       ms.AddMidNodes();
-      ms.put("out.m");
+      ms.put("mesh-P2.m");
 
 //    Declare problem data
       Vect<double> bc(ms), bf(ms);

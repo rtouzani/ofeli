@@ -97,7 +97,7 @@ Muscl2DT::~Muscl2DT() { }
 
 void Muscl2DT::Initialize()
 {
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       size_t s = side_label;
       _n.set(s,The_side.getUnitNormal());
       real_t L = Line2(the_side).getLength();
@@ -112,7 +112,7 @@ void Muscl2DT::Initialize()
 // Precalculate the B_iB_j and B_iQ_j abd B_iM_j vectors
 // (for the second order method)
    size_t bad_triang=0;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       Side *sd1 = The_element.getPtrSide(1),
            *sd2 = The_element.getPtrSide(2),
@@ -151,8 +151,7 @@ void Muscl2DT::Initialize()
          real_t det1 = _determ(P1-c,P2-P1),
                 det2 = _determ(tr1.getCenter()-c,P2-P1);
          if (det1/det2<0.0)
-            throw OFELIException("Muscl2DT::Initialize(): Element " +
-                                 itos(element_label) +
+            throw OFELIException("Muscl2DT::Initialize(): Element " + itos(element_label) +
                                  " is inconsistent with Muscl method.");
          _BQv.set(n,1,_BBv(n,1)*det1/det2);
 //       2
@@ -160,8 +159,7 @@ void Muscl2DT::Initialize()
          det1 = _determ(P1-c,P2-P1);
          det2 = _determ(tr2.getCenter()-c,P2-P1);
          if (det1/det2<0.0)
-            throw OFELIException("Muscl2DT::Initialize(): Element " +
-                                 itos(element_label) +
+            throw OFELIException("Muscl2DT::Initialize(): Element " + itos(element_label) +
                                  " is inconsistent with Muscl method.");
          _BQv.set(n,2,_BBv(n,2)*det1/det2);
 //       3
@@ -184,7 +182,7 @@ void Muscl2DT::Initialize()
    }
 
 // Q and M Methods
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       if (The_element.isOnBoundary()==true) {
          _beta12.set(n,0.); _beta13.set(n,0.);
@@ -258,9 +256,9 @@ void Muscl2DT::Initialize()
 
 
 bool Muscl2DT::setReconstruction(const Vect<real_t>& U,
-                                       Vect<real_t>& LU,
-                                       Vect<real_t>& RU,
-                                       size_t        dof)
+                                 Vect<real_t>&       LU,
+                                 Vect<real_t>&       RU,
+                                 size_t              dof)
 {
    switch (_method) {
             
@@ -284,13 +282,12 @@ bool Muscl2DT::setReconstruction(const Vect<real_t>& U,
 
 
 void Muscl2DT::FirstOrder(const Vect<real_t>& U,
-                                Vect<real_t>& LU,
-                                Vect<real_t>& RU,
-                                size_t        dof)
+                          Vect<real_t>&       LU,
+                          Vect<real_t>&       RU,
+                          size_t              dof)
 {
-   Element *Lel, *Rel;
-   mesh_sides(*_theMesh) {
-      Lel = The_side.getNeighborElement(1);
+   MESH_SD {
+      Element *Lel = The_side.getNeighborElement(1), *Rel = nullptr;
       (The_side.isOnBoundary()) ? Rel = Lel : Rel = The_side.getNeighborElement(2);
       LU.set(side_label,dof,U(Lel->n(),dof));
       RU.set(side_label,dof,U(Rel->n(),dof));
@@ -299,11 +296,11 @@ void Muscl2DT::FirstOrder(const Vect<real_t>& U,
 
 
 void Muscl2DT::MultiSlopeQ(const Vect<real_t>& U,
-                                 Vect<real_t>& LU,
-                                 Vect<real_t>& RU,
-                                 size_t        dof)
+                           Vect<real_t>&       LU,
+                           Vect<real_t>&       RU,
+                           size_t              dof)
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       real_t ue = U(n,dof);
       Side *sd1 = The_element.getPtrSide(1),
@@ -360,11 +357,11 @@ void Muscl2DT::MultiSlopeQ(const Vect<real_t>& U,
 
 
 void Muscl2DT::MultiSlopeM(const Vect<real_t>& U,
-                                 Vect<real_t>& LU,
-                                 Vect<real_t>& RU,
-                                 size_t        dof)
+                           Vect<real_t>&       LU,
+                           Vect<real_t>&       RU,
+                           size_t              dof)
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       Side *sd1 = The_element.getPtrSide(1),
            *sd2 = The_element.getPtrSide(2),
@@ -441,8 +438,8 @@ void Muscl2DT::MultiSlopeM(const Vect<real_t>& U,
 
 
 void Muscl2DT::Grad(const LocalVect<real_t,3>& U,
-                          Point<real_t>&       slope,
-                          size_t               n)
+                    Point<real_t>&             slope,
+                    size_t                     n)
 {
    Point<real_t> u(U(2)-U(1),U(3)-U(1));
    Point<real_t> A=_BBv(n,2)-_BBv(n,1), B=_BBv(n,3)-_BBv(n,1);
@@ -452,8 +449,8 @@ void Muscl2DT::Grad(const LocalVect<real_t,3>& U,
 
 
 void Muscl2DT::LeastSquare(const LocalVect<real_t,3>& U,
-                                 Point<real_t>&       slope,
-                                 size_t               n)
+                           Point<real_t>&             slope,
+                           size_t                     n)
 {
    real_t a11 = _BBv(n,1).x*_BBv(n,1).x + _BBv(n,2).x*_BBv(n,2).x + _BBv(n,3).x*_BBv(n,3).x;
    real_t a12 = _BBv(n,1).x*_BBv(n,1).y + _BBv(n,2).x*_BBv(n,2).y + _BBv(n,3).x*_BBv(n,3).y;
@@ -466,12 +463,12 @@ void Muscl2DT::LeastSquare(const LocalVect<real_t,3>& U,
 
 
 void Muscl2DT::GradientQ(const Vect<real_t>& U,
-                               Vect<real_t>& LU,
-                               Vect<real_t>& RU,
-                               size_t        dof)
+                         Vect<real_t>&       LU,
+                         Vect<real_t>&       RU,
+                         size_t              dof)
 {
    LocalVect<real_t,3> qU, dU, ar;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       real_t ue = U(n,dof);
       Side *sd1 = The_element.getPtrSide(1); size_t ns1 = sd1->n();
@@ -517,20 +514,20 @@ void Muscl2DT::GradientQ(const Vect<real_t>& U,
          val2 += phi*slope*_BQv(n,2);
          val3 += phi*slope*_BQv(n,3);
       }
-         (sd1->getNeighborElement(1)==the_element) ? LU.set(ns1,dof,val1) : RU.set(ns1,dof,val1);
-         (sd2->getNeighborElement(1)==the_element) ? LU.set(ns2,dof,val2) : RU.set(ns2,dof,val2);
-         (sd3->getNeighborElement(1)==the_element) ? LU.set(ns3,dof,val3) : RU.set(ns3,dof,val3);
+      (sd1->getNeighborElement(1)==the_element) ? LU.set(ns1,dof,val1) : RU.set(ns1,dof,val1);
+      (sd2->getNeighborElement(1)==the_element) ? LU.set(ns2,dof,val2) : RU.set(ns2,dof,val2);
+      (sd3->getNeighborElement(1)==the_element) ? LU.set(ns3,dof,val3) : RU.set(ns3,dof,val3);
    }
 }
 
 
 void Muscl2DT::GradientM(const Vect<real_t>& U,
-                               Vect<real_t>& LU,
-                               Vect<real_t>& RU,
-                               size_t        dof)
+                         Vect<real_t>&       LU,
+                         Vect<real_t>&       RU,
+                         size_t              dof)
 {
    LocalVect<real_t,3> qU, dU, aU, ar;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       real_t ue = U(n,dof);
       Side *sd1 = The_element.getPtrSide(1); size_t ns1 = sd1->n();
@@ -586,7 +583,7 @@ void Muscl2DT::GradientM(const Vect<real_t>& U,
 real_t Muscl2DT::getMinSize32()
 {
    real_t maxS=1e-10, minVsS=1e10;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       for (size_t i=1; i<=3; ++i) {
          Line2 l(The_element.getPtrSide(i));
          if (l.getLength()>maxS)
@@ -603,7 +600,7 @@ real_t Muscl2DT::getMinSize32()
 real_t Muscl2DT::gettaulim()
 {
    real_t taulim = 2.;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       if (The_element.isOnBoundary() == false) {
          size_t n = element_label;
          for (size_t i=1; i<=3; ++i)
@@ -618,7 +615,7 @@ real_t Muscl2DT::getComega()
 {
    real_t Comega = 0.;
    LocalMatrix<real_t,3,3> beta;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       if (The_element.isOnBoundary()==false && _order(n)) {
          beta(1,1) = -1; beta(1,2) = _beta12(n); beta(1,3) = _beta13(n);
@@ -643,7 +640,7 @@ void Muscl2DT::getgraphComega()
    const size_t nb_comega_max = 10000;
    LocalMatrix<real_t,3,3> beta;
    Vect<int> nbcomega(nb_comega_max);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       if (The_element.isOnBoundary()==false && _order(n)) {
          beta(1,1) = -1;

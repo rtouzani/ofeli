@@ -1,6 +1,7 @@
 
 bin_PROGRAMS = vmesh 
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 vmesh_SOURCES = main.cpp
 

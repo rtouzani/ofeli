@@ -116,7 +116,7 @@ void Muscl3DT::Initialize()
    Point<real_t> normal, center, AB, AC;
    size_t i;
    int bad_tetra=0;
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       _n(side_label) = the_side->getUnitNormal();
       the_element = The_side.getNeighborElement(1);
 
@@ -129,7 +129,7 @@ void Muscl3DT::Initialize()
    }
 
 // Precalculate the B_iB_j and B_iQ_j abd B_iM_j vectors
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       if (the_element->isOnBoundary()==false) {
          Side *sd1=the_element->getPtrSide(1), *sd2=the_element->getPtrSide(2),
@@ -188,7 +188,7 @@ void Muscl3DT::Initialize()
    LocalVect<Point<real_t>,4> t, r, t_ortho;
    LocalVect<real_t,4> alpha, alpha_ortho;
    LocalMatrix<real_t,4,4> PI, beta;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
 
 //    we first compute _beta and _betabis
@@ -364,7 +364,7 @@ void Muscl3DT::FirstOrder(const Vect<real_t>& U,
                                 size_t        dof)
 {
    Element *ell, *elr;
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       ell = the_side->getNeighborElement(1);
       if (the_side->isOnBoundary())
          elr = ell;
@@ -381,7 +381,7 @@ void Muscl3DT::MultiSlopeQ(const Vect<real_t>& U,
                                  Vect<real_t>& RU,
                                  size_t        dof)
 {
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = element_label;
       Side *sd1 = the_element->getPtrSide(1); size_t ns1 = sd1->n();
       Side *sd2 = the_element->getPtrSide(2); size_t ns2 = sd2->n();
@@ -456,8 +456,8 @@ void Muscl3DT::MultiSlopeM(const Vect<real_t>& U,
                                  Vect<real_t>& RU,
                                  size_t        dof)
 {
-   mesh_elements(*_theMesh) {
-      size_t n = the_element->n();
+   MESH_EL {
+      size_t n = element_label;
       real_t ue = U(n,dof);
       Side *sd1 = the_element->getPtrSide(1); size_t ns1 = sd1->n();
       Side *sd2 = the_element->getPtrSide(2); size_t ns2 = sd2->n();
@@ -546,7 +546,7 @@ void Muscl3DT::GradientQ(const Vect<real_t>& U,
                                size_t        dof)
 {
 
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = the_element->n();
       real_t ue = U(n,dof);
       Side *sd1 = the_element->getPtrSide(1); size_t ns1 = sd1->n();
@@ -613,8 +613,8 @@ void Muscl3DT::GradientM(const Vect<real_t>& U,
                                Vect<real_t>& RU,
                                size_t        dof)
 {
-   mesh_elements(*_theMesh) {
-      size_t n = the_element->n();
+   MESH_EL {
+      size_t n = element_label;
       real_t ue = U(n,dof);
       Side *sd1 = the_element->getPtrSide(1); size_t ns1 = sd1->n();
       Side *sd2 = the_element->getPtrSide(2); size_t ns2 = sd2->n();
@@ -720,7 +720,7 @@ Point<real_t> Muscl3DT::getGrad(const LocalVect<real_t,4>& qU,
 real_t Muscl3DT::getMinSize32()
 {
    real_t maxS=OFELI_EPSMCH, minVsS=1./OFELI_EPSMCH;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       Tetra4 tt(the_element);
       for (size_t i=1; i<=4; ++i) {
          Triang3 t(the_element->getPtrSide(i));
@@ -737,7 +737,8 @@ real_t Muscl3DT::getMinSize32()
 real_t Muscl3DT::gettaulim()
 {
    real_t taulim = 2.;
-   mesh_elements(*_theMesh) {
+
+   MESH_EL {
       if (the_element->isOnBoundary()==false) {
          size_t n = the_element->n();
          for (size_t i=1; i<=4; ++i)
@@ -752,9 +753,9 @@ void Muscl3DT::getgraphtau()
 {
    const size_t nb_tau_max = 10000;
    Vect<int> nbtau(nb_tau_max);
-   mesh_elements(*_theMesh) {
-      if (the_element->isOnBoundary()==false) {
-         size_t n = the_element->n();
+   MESH_EL {
+      if (The_element.isOnBoundary()==false) {
+         size_t n = element_label;
          for (int i=1; i<=4; ++i)
             nbtau[min(int((_BBl(n,i)/_BQl(n,i)-1)/4.*(int(nb_tau_max)-1)),int(nb_tau_max)-1)]++;
       }
@@ -770,8 +771,8 @@ real_t Muscl3DT::getComega()
 {
    real_t Comega = 0.;
    LocalMatrix<real_t,4,4> beta;
-   mesh_elements(*_theMesh) {
-      size_t n = the_element->n();
+   MESH_EL {
+      size_t n = element_label;
       if (the_element->isOnBoundary()==false && _order(n)) {
          beta(1,1) = -1;
          beta(1,2) = _beta12(n);
@@ -809,7 +810,7 @@ void Muscl3DT::getgraphComega()
    const size_t nb_comega_max = 10000;
    LocalMatrix<real_t,4,4> beta;
    Vect<int> nbcomega(nb_comega_max);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       size_t n = the_element->n();
       if (the_element->isOnBoundary()==false && _order(n)) {
          beta(1,1) = -1;

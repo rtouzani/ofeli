@@ -238,6 +238,26 @@ size_t Side::getNbVertices() const
 }
 
 
+Point<real_t> Side::getCenter() const
+{
+   switch (_shape) {
+
+      case LINE:
+         return 0.5*(_node[0]->getCoord()+_node[1]->getCoord());
+
+      case TRIANGLE:
+         return OFELI_THIRD*(_node[0]->getCoord()+_node[1]->getCoord()+_node[2]->getCoord());
+
+      case QUADRILATERAL:
+         return 0.25*(_node[0]->getCoord() + _node[1]->getCoord() +
+                      _node[2]->getCoord() + _node[3]->getCoord());
+
+      default:
+         return Point<real_t>(0.,0.,0.);
+   }
+}
+
+
 real_t Side::getMeasure() const
 {
    Point<real_t> x[4];
@@ -385,6 +405,17 @@ int Side::isReferenced()
          return -1;
    }
    return 0;
+}
+
+
+int Side::getGlobalCode() const
+{
+   int code=0, p=1;
+   for (int i=_nb_dof; i>0; --i) {
+      code += p*_code[i-1];
+      p *= 10;
+   }
+   return code;
 }
 
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2019 Rachid Touzani
+   Copyright (C) 1998 - 2020 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -442,8 +442,9 @@ void AbsEqua<T_>::setInput(EqDataType opt,
       _bc = &u;
    else if (opt==SOURCE || opt==BODY_FORCE)
       _bf = &u;
-   else if (opt==FLUX || opt==TRACTION)
+   else if (opt==FLUX || opt==TRACTION || opt==BOUNDARY_FORCE) {
       _sf = &u;
+   }
    else if (opt==POINT_FORCE)
       _pf = &u;
    else

@@ -31,3 +31,6 @@ ACLOCAL = aclocal
 tests:
 	chmod a+x test_ofeli.sh
 	./test_ofeli.sh
+
+clean-local:
+	-rm -rf autom4te.cache *.log include/stamp-h1

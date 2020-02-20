@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
       Reconstruction pp(ms);
 
 //    Get velocity field
-      Vect<double> v(ms,2,SIDE_FIELD);
+      Vect<double> v(ms,SIDE_DOF,2);
       IOField vf(proj.getMeshFile(),proj.getString("vf"),ms,IOField::IN);
       vf.get(v);
       eq.setVelocity(v);
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 
 //    open output file
       IOField ff(proj.getMeshFile(),proj.getPlotFile(),ms,IOField::OUT);
-      Vect<double> U(ms,"T",0.,1,NODE_FIELD);
+      Vect<double> U(ms,NODE_DOF,"T",1,0.);
       pp.P0toP1(u,U);
       ff.put(U);
 
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 
 void set_init(Vect<double> &u)
 {
-   MeshElements(u.getMesh()) {
+   ElementLoop(u.getMesh()) {
       Point<double> a = Triang3(theElement).getCenter();
       double r = sqrt((a.x-0.35)*(a.x-0.35)+(a.y-0.35)*(a.y-0.35));
       u(theElementLabel) = 0.;

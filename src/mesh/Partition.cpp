@@ -111,7 +111,7 @@ void Partition::Prepare()
    if (Verbosity)
       cout << "Preparing data for Metis ..." << endl;
    int i=0, esize=0;
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       type[i] = 0;
       int sh=the_element->getShape();
       if (sh==TRIANGLE)
@@ -162,7 +162,7 @@ void Partition::Prepare()
    }
 
    vector<int> elmnts(esize*ne);
-   mesh_elements(*_theMesh) {
+   MESH_EL {
       for (int j=0; j<esize; j++)
          elmnts[(element_label-1)*esize+j] = The_element(j+1)->n() - 1;
    }
@@ -206,7 +206,7 @@ void Partition::Init()
       Mesh ms;
       _theSubMesh[sd] = new Mesh;
       _theSubMesh[sd]->setDim(_theMesh->getDim());
-      mesh_elements(*_theMesh) {
+      MESH_EL {
          size_t n=element_label;
          if (_epart[n-1]==sd) {
             Element *el=new Element(The_element);
@@ -274,11 +274,11 @@ void Partition::NodeNeighborList()
 {
    _node_neig.resize(_theMesh->getNbNodes());
    _nnz.resize(_theMesh->getNbNodes());
-   mesh_nodes(*_theMesh) {
+   MESH_ND {
       _nnz[node_label-1].resize(_nb_submesh+1);
       clear(_nnz[node_label-1]);
    }
-   mesh_sides(*_theMesh) {
+   MESH_SD {
       for (size_t i=1; i<=The_side.getNbNodes(); i++) {
          the_node = The_side(i);
          size_t n=The_node.n()-1;
@@ -291,7 +291,7 @@ void Partition::NodeNeighborList()
          }
       }
    }
-   mesh_nodes(*_theMesh) {
+   MESH_ND {
       size_t n=node_label-1;
       for (int s=0; s<_nb_submesh; s++)
          if (s!=_npart[n])

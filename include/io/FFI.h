@@ -88,7 +88,6 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define LENGTH_CMD   30
 #define LINE_LENGTH 120
 #define NB_CMD       12
@@ -96,7 +95,6 @@ namespace OFELI {
 #define FFI_BINARY    1
 
 int _is_number(const string &);
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 class FFI
 {

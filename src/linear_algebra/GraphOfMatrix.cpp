@@ -74,7 +74,7 @@ size_t SimpleSkyline(const Mesh&     m,
    size_t n, size=m.getNbNodes();
    ch.resize(size,0);
 
-   mesh_elements(m) {
+   element_loop(&m) {
       int mini = int(size);
       for (n=1; n<=The_element.getNbNodes(); n++)
          mini = min(int(The_element(n)->n()),mini);
@@ -93,7 +93,7 @@ size_t NodeSkyline(const Mesh&     m,
    size_t size=m.getNbEq();
    ch.resize(size,0);
 
-   mesh_elements(m) {
+   element_loop(&m) {
       int mini=int(size);
       for (size_t n=1; n<=The_element.getNbNodes(); n++) {
          the_node = The_element(n);
@@ -121,7 +121,7 @@ size_t NodeSkyline(const Mesh&     m,
    size_t size=m.getNbNodes()*(dof2-dof1+1);
    ch.resize(size,0);
 
-   mesh_elements(m) {
+   element_loop(&m) {
       int mini = int(size);
       for (size_t n=1; n<=The_element.getNbNodes(); n++) {
           the_node = The_element(n);
@@ -147,7 +147,7 @@ size_t NodeSkyline(const Mesh&     m,
    int i;
    size_t size=m.getNbEq();
    ch.resize(size,0);
-   mesh_elements(m) {
+   element_loop(&m) {
       int mini=int(size);
       for (size_t n=1; n<=The_element.getNbNodes(); n++) {
          the_node = The_element(n);
@@ -171,7 +171,7 @@ size_t SideSkyline(const Mesh&     m,
    size_t size=m.getNbEq();
    ch.resize(size,0);
 
-   mesh_elements(m) {
+   element_loop(&m) {
       int mini=int(size);
       for (size_t n=1; n<=The_element.getNbSides(); n++) {
          the_side = The_element.getPtrSide(n);
@@ -197,7 +197,7 @@ size_t SideSkyline(const Mesh&     m,
    size_t size=m.getNbEq();
    ch.resize(size,0);
 
-   mesh_elements(m) {
+   element_loop(&m) {
       int mini=int(size);
       for (size_t n=1; n<=The_element.getNbSides(); n++) {
          the_side = The_element.getPtrSide(n);
@@ -225,7 +225,7 @@ size_t SideSkyline(const Mesh&     m,
    size_t size=m.getNbEq();
    ch.resize(size,0);
 
-   mesh_elements(m) {
+   element_loop(&m) {
       int mini=int(size);
       for (size_t n=1; n<=The_element.getNbSides(); n++)
          mini = min(int(The_element.getSideLabel(n)),mini);
@@ -246,7 +246,7 @@ size_t ElementSkyline(const Mesh&     m,
    size_t size=m.getNbElements();
    ch.resize(size,0);
 
-   mesh_sides(m) {
+   side_loop(&m) {
       int mini = int(size);
       el1 = The_side.getNeighborElement(1);
       el2 = The_side.getNeighborElement(2);
@@ -270,7 +270,7 @@ size_t ElementSkyline(const Mesh&     m,
    size_t size=m.getNbEq();
    ch.resize(size,0);
 
-   mesh_sides(m) {
+   side_loop(&m) {
       int mini = int(size);
       if ((el1=The_side.getNeighborElement(1)) &&
           (el2=The_side.getNeighborElement(2))) {
@@ -295,7 +295,7 @@ size_t SimpleGraph(const Mesh&     m,
    SimpleSkyline(m,ch);
 
    vector<RC> pp;
-   mesh_elements(m) {
+   element_loop(&m) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
          if ((k=The_element(in)->n())!=0)
             for (size_t jn=1; jn<=The_element.getNbNodes(); jn++) {
@@ -337,7 +337,7 @@ size_t NodeGraph(const Mesh&     mesh,
                  vector<RC>&     IJ,
                  vector<size_t>& nbc)
 {
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
          Node *nd1=The_element(in);
          for (size_t k=1; k<=nd1->getNbDOF(); k++) {
@@ -370,7 +370,7 @@ size_t NodeGraph(const Mesh&     mesh,
                  vector<RC>&     IJ,
                  vector<size_t>& nbc)
 {
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
          Node *nd1=The_element(in);
          for (size_t k=dof1; k<=dof2; k++) {
@@ -399,7 +399,7 @@ size_t SideGraph(const Mesh&     mesh,
                  vector<RC>&     IJ,
                  vector<size_t>& nbc)
 {
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       for (size_t in=1; in<=The_element.getNbSides(); in++) {
          Side *sd1=The_element.getPtrSide(in);
          for (size_t k=1; k<=sd1->getNbDOF(); k++) {
@@ -430,7 +430,7 @@ size_t SideGraph(const Mesh&     mesh,
                  vector<RC>&     IJ,
                  vector<size_t>& nbc)
 {
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       for (size_t in=1; in<=The_element.getNbSides(); in++) {
          Side *sd1=The_element.getPtrSide(in);
          for (size_t k=dof1; k<=dof2; k++) {
@@ -460,7 +460,7 @@ size_t ElementGraph(const Mesh&     mesh,
                     vector<size_t>& nbc)
 {
    Element *el1, *el2;
-   mesh_sides(mesh) {
+   side_loop(&mesh) {
       if ((el1=The_side.getNeighborElement(1)) && (el2=The_side.getNeighborElement(2))) {
          IJ.push_back(RC(el1->n()-1,el1->n()-1));
          IJ.push_back(RC(el2->n()-1,el2->n()-1));
@@ -478,7 +478,7 @@ size_t SideNodeGraph(const Mesh&     mesh,
                      vector<RC>&     IJ,
                      vector<size_t>& nbc)
 {
-   mesh_sides(mesh) {
+   side_loop(&mesh) {
       for (size_t k=1; k<=The_side.getNbDOF(); k++) {
          if (The_side.getCode(k)!=0) {
             for (size_t in=1; in<=The_side.getNbNodes(); in++) {
@@ -500,7 +500,7 @@ size_t NodeSideGraph(const Mesh&     mesh,
                      vector<RC>&     IJ,
                      vector<size_t>& nbc)
 {
-   mesh_sides(mesh) {
+   side_loop(&mesh) {
       for (size_t k=1; k<=The_side.getNbDOF(); k++) {
          if (theSide->getCode(k)!=0) {
             for (size_t in=1; in<=The_side.getNbNodes(); in++) {
@@ -522,7 +522,7 @@ size_t NodeGraphScal(const Mesh&     mesh,
                      vector<RC>&     IJ,
                      vector<size_t>& nbc)
 {
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
          for (size_t jn=1; jn<=The_element.getNbNodes(); jn++) {
             IJ.push_back(RC(The_element(in)->n()-1,The_element(jn)->n()-1));
@@ -543,7 +543,7 @@ size_t NodeGraphScal(const Mesh&     mesh,
                      vector<RC>&     IJ,
                      vector<size_t>& nbc)
 {
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
          size_t ii=The_element(in)->getDOF(dof);
          if (ii) {
@@ -568,7 +568,7 @@ size_t XGraph(const Mesh&     mesh,
               vector<RC>&     IJ,
               vector<size_t>& nbc)
 {
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       for (size_t in=1; in<=The_element.getNbNodes(); in++) {
          for (size_t jn=1; jn<=The_element.getNbNodes(); jn++) {
             IJ.push_back(RC(The_element(in)->n()-1,The_element(jn)->n()-1));
@@ -628,7 +628,7 @@ size_t DG0Graph(const Mesh&     mesh,
    I.clear();
    Element *el1, *el2, *el;
    vector<RC> IJ;
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       for (size_t i=1; i<=The_element.getNbSides(); i++) {
          if ((el=The_element.getNeighborElement(i))) {
             IJ.push_back(RC(el->n(),element_label));
@@ -655,7 +655,7 @@ size_t DGGraph(const Mesh&     mesh,
 {
    I.clear();
    size_t fd=1;
-   mesh_elements(mesh) {
+   element_loop(&mesh) {
       The_element.setFirstDOF(fd);
       for (size_t i=1; i<=The_element.getNbDOF(); i++)
         for (size_t j=1; j<=The_element.getNbDOF(); j++)
@@ -663,7 +663,7 @@ size_t DGGraph(const Mesh&     mesh,
       fd += The_element.getNbDOF();
    }
 
-   mesh_sides(mesh) {
+   side_loop(&mesh) {
       Element *el1=The_side.getNeighborElement(1),
               *el2=The_side.getNeighborElement(2);
       if (el1 && el2) {

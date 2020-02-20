@@ -41,10 +41,10 @@ int main(int argc, char *argv[])
    }
 
    IPF data("lelas2d - 1.1 ",argv[1]);
-   int output_flag = data.getOutput();
+   Verbosity = data.getVerbose();
    int save_flag = data.getSave();
 
-   if (output_flag) {
+   if (Verbosity) {
       cout << endl << endl;
       cout << "    *******************************************************\n";
       cout << "    *                   L E L A S 2 D                     *\n";
@@ -59,31 +59,27 @@ int main(int argc, char *argv[])
       cout << "=====================================================================\n\n";
    }
 
-//----------
-// Read data
-//----------
-
 // Read Mesh data
    try {
-      if (output_flag > 1)
+      if (Verbosity > 1)
          cout << "Reading mesh data ...\n";
       Mesh ms(data.getMeshFile(1));
       Prescription p(ms,data.getDataFile());
-      if (output_flag > 1)
+      if (Verbosity > 5)
          cout << ms;
 
 //    Read boundary conditions, body and boundary forces
-      Vect<double> u(ms), bc(ms), body_f(ms), bound_f(ms,2,SIDE_DOF);
+      Vect<double> u(ms), bc(ms), body_f(ms), bound_f(ms,2,BOUNDARY_SIDE_DOF);
       p.get(BOUNDARY_CONDITION,bc,0);
-      if (output_flag > 1)
+      if (Verbosity > 1)
          cout << "Reading body forces ..." << endl;
       p.get(BODY_FORCE,body_f);
-      if (output_flag > 1)
+      if (Verbosity > 1)
          cout << "Reading Boundary Tractions ..." << endl;
       p.get(TRACTION,bound_f,0);
 
 //    Declare equation instance and solve
-      if (output_flag > 1)
+      if (Verbosity > 1)
          cout << "Setting and solving equation ...\n";
       Elas2DQ4 eq(ms,u);
       eq.setInput(BOUNDARY_CONDITION,bc);
@@ -92,7 +88,7 @@ int main(int argc, char *argv[])
       eq.run();
 
 //    Output and save solution
-      if (output_flag > 0)
+      if (Verbosity > 3)
          cout << u;
       if (save_flag) {
          IOField pl_file(data.getPlotFile(),IOField::OUT);
@@ -100,7 +96,7 @@ int main(int argc, char *argv[])
       }
 
 //    Calculate principal and Von-Mises stresses
-      if (output_flag > 1)
+      if (Verbosity > 1)
          cout << "Calculating stresses ...\n";
       Vect<double> st, vm;
       eq.Stress(st,vm);

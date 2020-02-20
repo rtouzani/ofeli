@@ -41,12 +41,11 @@ typedef struct KeyValueType KeyValueType;
 * The following data structure will hold a node of a doubly-linked list.
 **************************************************************************/
 struct ListNodeType {
-  int id;                       	/* The id value of the node */
+  int id;                               /* The id value of the node */
   struct ListNodeType *prev, *next;     /* It's a doubly-linked list */
 };
 
 typedef struct ListNodeType ListNodeType;
-
 
 
 /*************************************************************************

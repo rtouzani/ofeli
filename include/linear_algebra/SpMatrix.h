@@ -141,15 +141,33 @@ template<class T_> class SpMatrix : public Matrix<T_>
              size_t dof=0,
              int    is_diagonal=false);
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #ifndef USE_EIGEN
-    SpMatrix(size_t dof,
+ /** \brief Constructor using a Mesh instance and selecting a DOF (For use with Eigen Library).
+ *  @param [in] dof Option parameter.\n
+ *  <tt>dof=1</tt> means that only one degree of freedom for each node (or element or side)
+ *  is taken to determine matrix structure. The value <tt>dof=0</tt> means that matrix 
+ *  structure is determined using all DOFs.
+ *  @param [in] mesh Mesh instance from which matrix graph is extracted.
+ *  @param [in] code.
+ */
+   SpMatrix(size_t dof,
              Mesh&  mesh,
              int    code=0);
 
+/** \brief Constructor using a Mesh instance.
+ *  @param [in] mesh Mesh instance from which matrix graph is extracted.
+ *  @param [in] dof Option parameter, with default value <tt>0</tt>.\n
+ *  <tt>dof=1</tt> means that only one degree of freedom for each node (or element or side)
+ *  is taken to determine matrix structure. The value <tt>dof=0</tt> means that matrix 
+ *  structure is determined using all DOFs.
+ *  @param [in] is_diagonal Boolean argument to say is the matrix is actually a diagonal matrix or not.
+ */
     SpMatrix(size_t dof,
              size_t nb_eq,
              Mesh&  mesh);
 #endif
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef USE_EIGEN
 /** \brief Constructor for a square matrix using non zero row and column indices

@@ -269,8 +269,10 @@ template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_> operator*(T_                             a,
                                   const LocalMatrix<T_,NR_,NC_>& x);
 
-/** \fn LocalMatrix<T_,NR_,NC_> operator*(const LocalVect<T_,NC_> &x, LocalVect<T_,NR_> &x)
+/** \fn LocalVect<T_,NR_,NC_> operator*(const LocalMatrix<T_,NR_,NC_> &x, const LocalVect<T_,NC_> &x)
     \brief Operator <tt>*</tt> (Multiply matrix <tt>A</tt> by vector <tt>x</tt>)
+    \details This function performs a matrix-vector product and returns resulting vector as
+    a reference to LocalVect instance
     \ingroup VectMat
     \return  <tt>A*x</tt>
  */
