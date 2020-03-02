@@ -1761,6 +1761,59 @@ double FunctionParser::Eval(const OFELI::Point<double> &x, const double &t)
 }
 
 
+std::string FunctionParser::itos(int i)
+{
+   std::stringstream s;
+   s << i;
+   return s.str();
+}
+
+
+int FunctionParser::Parse(const std::string& Function,
+                          const std::string& Var,
+                          size_t             n,
+                          bool               useDegrees)
+{
+    std::string Vars="";
+    if (n==1)
+       Vars = Var;
+    else {
+       for (size_t i=1; i<n; ++i)
+          Vars += Var + itos(i) + ",";
+       Vars += Var + itos(n);
+    }
+    CopyOnWrite();
+
+    if(!ParseVariables(Vars))
+    {
+        parseErrorType = INVALID_VARS;
+        return int(Function.size());
+    }
+
+    return ParseFunction(Function.c_str(), useDegrees);
+}
+
+
+int FunctionParser::Parset(const std::string& Function,
+                           const std::string& Var,
+                           size_t             n,
+                           bool               useDegrees)
+{
+    std::string Vars="t,";
+    for (size_t i=1; i<n; ++i)
+       Vars += Var + itos(i) + ",";
+    Vars += Var + itos(n);
+    CopyOnWrite();
+
+    if(!ParseVariables(Vars))
+    {
+        parseErrorType = INVALID_VARS;
+        return int(Function.size());
+    }
+
+    return ParseFunction(Function.c_str(), useDegrees);
+}
+
 
 #ifndef FP_SUPPORT_OPTIMIZER
 void FunctionParser::Optimize()

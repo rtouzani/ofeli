@@ -505,7 +505,6 @@ inline void clear(Vect<T_>& v)
 }
 
 
-
 /** \fn real_t Nrm2(size_t n, real_t* x)
  *  \ingroup Util
  *  \brief Return 2-norm of array <tt>x</tt>
@@ -578,9 +577,9 @@ inline std::string itos(int i)
 */
 inline std::string itos(size_t i)
 {
-	std::stringstream s;
-	s << i;
-	return s.str();
+   std::stringstream s;
+   s << i;
+   return s.str();
 }
 
 

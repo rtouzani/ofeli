@@ -35,6 +35,8 @@ class FunctionParser
 
     int Parse(const char* Function, const std::string& Vars, bool useDegrees=false);
     int Parse(const std::string& Function, const std::string& Vars, bool useDegrees=false);
+    int Parse(const std::string& Function, const std::string& Var, size_t n, bool useDegrees=false);
+    int Parset(const std::string& Function, const std::string& Var, size_t n, bool useDegrees=false);
 
     void setDelimiterChar(char);
 
@@ -89,6 +91,7 @@ private:
     char delimiterChar;
     ParseErrorType parseErrorType;
     int evalErrorType;
+    std::string itos(int i);
 
     friend class FPoptimizer_CodeTree::CodeTree;
 

@@ -135,7 +135,7 @@ void NLASSolver::setPDE(AbsEqua<real_t>& eq)
 void NLASSolver::eval(real_t x)
 {
    int err;
-   theParser.Parse(_f_exp[0].c_str(),"x");
+   theParser.Parse(_f_exp[0],"x");
    _f_exp[0] = theParser.Eval(x);
    if ((err=theParser.EvalError()))
       throw OFELIException("In NLASSolver::eval(double):\n"
@@ -246,7 +246,7 @@ real_t NLASSolver::Function(const Vect<real_t>& u,
 {
    if (_fct_type==EXPRESSION) {
       int err;
-      theParser.Parse(_f_exp[i-1].c_str(),_var.c_str());
+      theParser.Parse(_f_exp[i-1],_var);
       real_t v = theParser.Eval(u);
       if ((err=theParser.EvalError()))
          throw OFELIException("In NLASSolver::Function(u,i):\n"
@@ -269,7 +269,7 @@ void NLASSolver::Gradient(const Vect<real_t>& u,
 {
    if (_fct_type==EXPRESSION) {
       int err;
-      theParser.Parse(_Df_exp(i,j).c_str(),_var.c_str());
+      theParser.Parse(_Df_exp(i,j),_var);
       (*_Df)(i,j) = theParser.Eval(&u[0]);
       if ((err=theParser.EvalError()))
          throw OFELIException("In NLASSolver::Gradient(u,i):\n"
@@ -290,7 +290,7 @@ real_t NLASSolver::Function(real_t x)
 {
    if (_fct_type==EXPRESSION) {
       int err;
-      theParser.Parse(_f_exp[0].c_str(),_var.c_str());
+      theParser.Parse(_f_exp[0],_var);
       real_t v = theParser.Eval(x);
       if ((err=theParser.EvalError()))
          throw OFELIException("In NLASSolver::Function(x):\n"
@@ -311,7 +311,7 @@ real_t NLASSolver::Gradient(real_t x)
 {
    if (_fct_type==EXPRESSION) {
       int err;
-      theParser.Parse(_Df_exp[0].c_str(),_var.c_str());
+      theParser.Parse(_Df_exp[0],_var);
       real_t g = theParser.Eval(x);
       if ((err=theParser.EvalError()))
          throw OFELIException("In NLASSolver::Gradient(x,g):\n"

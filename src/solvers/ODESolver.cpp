@@ -327,7 +327,7 @@ real_t ODESolver::eval(string exp,
    real_t v, d[2];
    d[0] = t; d[1] = y;
    int err;
-   theParser.Parse(exp.c_str(),"t,y");
+   theParser.Parse(exp,"t,y");
    v = theParser.Eval(d);
    if ((err=theParser.EvalError()))
       throw OFELIException("In ODESolver::eval(string,real_t,real_t): "
@@ -345,7 +345,7 @@ real_t ODESolver::eval(string              exp,
    for (size_t j=0; j<_nb_eq+1; ++j)
       d[j+1] = x[j];
    int err;
-   theParser.Parse(exp.c_str(),"t,y1,y2,y3,y4,y5,y6,y7,y8,y9,y10");
+   theParser.Parset(exp,"y",_nb_eq,0);
    v = theParser.Eval(d);
    if ((err=theParser.EvalError()))
       throw OFELIException("In ODESolver::eval(string,real_t,Vect<real_t>): "
@@ -359,7 +359,7 @@ real_t ODESolver::eval(string exp,
 {
    real_t v;
    int err;
-   theParser.Parse(exp.c_str(),"t");
+   theParser.Parse(exp,"t");
    v = theParser.Eval(t);
    if ((err=theParser.EvalError()))
       throw OFELIException("In ODESolver::eval(string,real_t): "
@@ -522,7 +522,7 @@ real_t ODESolver::runOneTimeStep()
       if (_init==false)
          throw OFELIException("In ODESolver::runOneTimeStep(): No given initial condition.");
       if (_lhs==false && _rhs==false)
-         throw OFELIException("In ODESolver::runOneTimeStep(): ODE insufficiently defined.");
+         throw OFELIException("In ODESolver::runOneTimeStep(): ODE unsufficiently defined.");
    }
    _step++;
    _time = theTime;
