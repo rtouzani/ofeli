@@ -76,6 +76,13 @@ void DC1DL2::set(const Element* el)
    _dSh = ln.DSh();
    ElementNodeCoordinates();
    ElementVector(*_u);
+   _ex = _el_geo.center.x, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_Cp_set)
+      _cp = _Cp_exp.value();
+   if (_kappa_set)
+      _diff = _kappa_exp.value();
    eA0 = 0, eA1 = 0;
    eRHS = 0;
 }
@@ -92,7 +99,7 @@ void DC1DL2::setInput(EqDataType    opt,
 
 void DC1DL2::LCapacity(real_t coef)
 {
-   real_t c = 0.5*_el_geo.length*_rhocp*coef;
+   real_t c = 0.5*_el_geo.length*_rho*_cp*coef;
    eA1(1,1) += c;
    eA1(2,2) += c;
 }
@@ -100,7 +107,7 @@ void DC1DL2::LCapacity(real_t coef)
 
 void DC1DL2::Capacity(real_t coef)
 {
-   real_t c = OFELI_SIXTH*_el_geo.length*_rhocp*coef;
+   real_t c = OFELI_SIXTH*_el_geo.length*_rho*_cp*coef;
    eA1(1,1) += 2*c;
    eA1(2,2) += 2*c;
    eA1(1,2) +=   c;

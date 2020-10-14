@@ -68,7 +68,7 @@ namespace OFELI {
  */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-struct Fct {
+struct fct {
    size_t NbVar;
    string Label;
    vector<string>          VarLabel;
@@ -76,11 +76,17 @@ struct Fct {
    vector<size_t>          Np;
    Vect<real_t>            Val;
    std::map<string,size_t> Id;
-   Fct() {
+   fct() {
       Min.resize(5);
       Max.resize(5);
       VarLabel.resize(5);
       Np.resize(5);
+   }
+   fct& operator=(real_t a)
+   {
+      for (size_t i=0; i<NbVar; ++i)
+         Val[i] = a;
+      return *this;
    }
 };
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
@@ -153,7 +159,7 @@ class Tabulation
  private:
 
    size_t                   _nb_funct;
-   Vect<Fct>                _funct;
+   Vect<fct>                _funct;
    std::map<string,size_t>  _funct_id;
    void setFunction(string label);
    void setVariable(string label);

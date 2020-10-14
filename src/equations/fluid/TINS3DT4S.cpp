@@ -29,12 +29,14 @@
 
   ==============================================================================*/
 
+#include "equations/AbsEqua_impl.h"
+#include "equations/Equation_impl.h"
 #include "equations/fluid/TINS3DT4S.h"
 #include "shape_functions/Tetra4.h"
 #include "shape_functions/Triang3.h"
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/LocalVect_impl.h"
-#include "linear_algebra/SpMatrix_impl.h"
+#include "linear_algebra/Assembly_impl.h"
 #include <algorithm>
 
 using std::cout;
@@ -50,8 +52,8 @@ TINS3DT4S::TINS3DT4S()
 TINS3DT4S::TINS3DT4S(Mesh& ms)
           : Equation<real_t,4,12,3,9>(ms), _constant_matrix(true)
 {
+   _TimeInt.step = 0;
    init();
-   _dens = 0.;
    _Re = 0.;
 }
 
@@ -60,8 +62,8 @@ TINS3DT4S::TINS3DT4S(Mesh&         ms,
                      Vect<real_t>& u)
           : Equation<real_t,4,12,3,9>(ms,u), _constant_matrix(true)
 {
+   _TimeInt.step = 0;
    init();
-   _dens = 0.;
    _Re = 0.;
 }
 
@@ -74,8 +76,8 @@ void TINS3DT4S::init()
    if (Verbosity>2)
       cout << "Initializing Navier-Stokes equations settings ..." << endl;
    _theMesh->removeImposedDOF();
-   _VM.setMesh(*_theMesh);
    _MM.setSize(_nb_nodes);
+   _bp.setSize(_nb_nodes);
    _PM.setExtendedGraph();
    _PM.setMesh(*_theMesh,1);
    for (size_t i=0; i<=_PM.size(); i++)
@@ -85,7 +87,7 @@ void TINS3DT4S::init()
    PressureMatrix();
 #if !defined(USE_EIGEN)
    _PP.setType(DILU_PREC);
-   _PP.setMatrix(_PM);
+   //   _PP.setMatrix(_PM);
 #endif
    _q.setSize(_nb_nodes);
    _c.setSize(_nb_nodes,2);
@@ -108,7 +110,7 @@ void TINS3DT4S::setInput(EqDataType    opt,
 void TINS3DT4S::set(Element* el)
 {
    _theElement = el, _theSide = nullptr;
-   _visc = _dens = 1.;
+   _rho = _mu = 1.;
    if (_Re==0.) {
       setMaterial();
       _Re = 1;
@@ -117,11 +119,19 @@ void TINS3DT4S::set(Element* el)
    Tetra4 te(el);
    _el_geo.det = te.getDet();
    _cr = te.getMaxEdgeLength();
+   _el_geo.center = te.getCenter();
    _c24 = _el_geo.det/24.;
    _vol = _el_geo.det/6.;
    _dSh = te.DSh();
    for (size_t i=0; i<4; ++i)
       _en[i] = (*el)(i+1)->n();
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _ez = _el_geo.center.z, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_mu_set)
+      _mu = _mu_exp.value();
+   if (_beta_set)
+      _beta = _beta_exp.value();
    eMat = 0; eRHS = 0;
 }
 
@@ -135,9 +145,23 @@ void TINS3DT4S::build()
 }
 
 
+int TINS3DT4S::runOneTimeStep()
+{
+   if (_TimeInt.step==0) {
+      if (_u==nullptr)
+         throw OFELIException("In TINS3DT4S::runOneTimeStep(): No solution vector (initial condition) given.");
+      if (_p==nullptr)
+         throw OFELIException("In TINS3DT4S::runOneTimeStep(): No pressure vector given.");
+      PressureMatrix();
+   }
+   build();
+   return 0;
+}
+
+
 void TINS3DT4S::ElementVelocityMatrix()
 {
-   real_t c=_vol*_visc/_Re;
+   real_t c=_vol*_mu/_Re;
    for (size_t j=1; j<=4; j++) {
       Point<real_t> db=c*_dSh[j-1];
       for (size_t i=1; i<=4; i++) {
@@ -153,7 +177,7 @@ void TINS3DT4S::ElementVelocityMatrix()
          eMat(3*i  ,3*j  ) += 2*a.z*db.z + a.y*db.y + a.x*db.x;
       }
    }
-   c = _c24*_dens;
+   c = _c24*_rho;
    for (size_t i=1; i<=4; i++) {
       eMat(3*i-2,3*i-2) += c;
       eMat(3*i-1,3*i-1) += c;
@@ -202,69 +226,66 @@ void TINS3DT4S::getMomentum()
    if (Verbosity>2)
       cout << "Solving momentum equations ..." << endl;
    LocalVect<real_t,12> ce;
-   if (_TimeInt.step==1 || _constant_matrix==false)
-      _VM = 0;
-   _b = 0;
+   _A->clear();
+   _b->clear();
    size_t j=0;
    _c = 0;
    MESH_ND {
-      if (The_node.getCode(1)==0)
-         _b[j++] = 0.5*_c(node_label,1);
-      if (The_node.getCode(2)==0)
-         _b[j++] = 0.5*_c(node_label,2);
+      for (size_t i=1; i<=3; ++i)
+         if (The_node.getCode(i)==0)
+            _b[j++] = 0.5*_c(node_label,i);
    }
 
 // Loop over elements
    MESH_EL {
       set(the_element);
-      LocalVect<real_t,12> ue(the_element,*_u);
-      LocalVect<real_t,4> pe(the_element,*_p,1);
+      ElementNodeVector(*_u,_eu);
 
 //    cfl in element
-      real_t d1=0.25*(ue[0]+ue[3]+ue[6]+ue[ 9]),
-             d2=0.25*(ue[1]+ue[4]+ue[7]+ue[10]),
-             d3=0.25*(ue[2]+ue[5]+ue[8]+ue[11]);
+      real_t d1=0.25*(_eu[0]+_eu[3]+_eu[6]+_eu[ 9]),
+             d2=0.25*(_eu[1]+_eu[4]+_eu[7]+_eu[10]),
+             d3=0.25*(_eu[2]+_eu[5]+_eu[8]+_eu[11]);
       _cfl = std::max(_cfl,_TimeInt.delta*sqrt(d1*d1+d2*d2+d3*d3)/_cr);
 
 //    Element matrix
-      if (_TimeInt.step==1 || _constant_matrix==false)
-         ElementVelocityMatrix();
+      ElementVelocityMatrix();
 
 //    Mass (R.H.S.)
-      real_t cc=_c24*_dens/_TimeInt.delta;
-      for (size_t i=0; i<3; ++i) {
-         eRHS(2*i+1) = cc*ue[2*i  ];
-         eRHS(2*i+2) = cc*ue[2*i+1];
+      real_t cc=_c24*_rho/_TimeInt.delta;
+      for (size_t i=1; i<=4; ++i) {
+         eRHS(3*i-2) = cc*_eu(3*i-2);
+         eRHS(3*i-1) = cc*_eu(3*i-1);
+         eRHS(3*i  ) = cc*_eu(3*i  );
       }
 
 //    Viscous Term (R.H.S.)
-      cc = 0.5*_vol*_visc/_Re;
+      cc = 0.5*_vol*_mu/_Re;
       for (size_t i=0; i<4; i++) {
          for (size_t j=0; j<4; j++) {
-            eRHS(3*i+1) -= cc*(_dSh[i].y*_dSh[j].x*ue[2*j+1] + (2*_dSh[i].x*_dSh[j].x+_dSh[i].y*_dSh[j].y)*ue[2*j  ]);
-            eRHS(3*i+2) -= cc*(_dSh[i].x*_dSh[j].y*ue[2*j  ] + (2*_dSh[i].y*_dSh[j].y+_dSh[i].x*_dSh[j].x)*ue[2*j+1]);
-            eRHS(3*i+3) -= cc*(_dSh[i].x*_dSh[j].y*ue[2*j  ] + (2*_dSh[i].y*_dSh[j].y+_dSh[i].x*_dSh[j].x)*ue[2*j+1]);
+            eRHS(3*i+1) -= cc*(_dSh[i].y*_dSh[j].x*_eu[2*j+1] + (2*_dSh[i].x*_dSh[j].x+_dSh[i].y*_dSh[j].y)*_eu[2*j  ]);
+            eRHS(3*i+2) -= cc*(_dSh[i].x*_dSh[j].y*_eu[2*j  ] + (2*_dSh[i].y*_dSh[j].y+_dSh[i].x*_dSh[j].x)*_eu[2*j+1]);
+            eRHS(3*i+3) -= cc*(_dSh[i].x*_dSh[j].y*_eu[2*j  ] + (2*_dSh[i].y*_dSh[j].y+_dSh[i].x*_dSh[j].x)*_eu[2*j+1]);
          }
       }
 
 //    Convection
-      Point<real_t> du = _dSh[0]*ue[0] + _dSh[1]*ue[3] + _dSh[2]*ue[6] + _dSh[3]*ue[ 9],
-                    dv = _dSh[0]*ue[1] + _dSh[1]*ue[4] + _dSh[2]*ue[7] + _dSh[2]*ue[10],
-                    dw = _dSh[0]*ue[2] + _dSh[1]*ue[5] + _dSh[2]*ue[8] + _dSh[2]*ue[11];
+      Point<real_t> du = _dSh[0]*_eu[0] + _dSh[1]*_eu[3] + _dSh[2]*_eu[6] + _dSh[3]*_eu[ 9],
+                    dv = _dSh[0]*_eu[1] + _dSh[1]*_eu[4] + _dSh[2]*_eu[7] + _dSh[2]*_eu[10],
+                    dw = _dSh[0]*_eu[2] + _dSh[1]*_eu[5] + _dSh[2]*_eu[8] + _dSh[2]*_eu[11];
       for (size_t i=0; i<4; i++) {
-         ce[3*i  ] = _c24*_dens*((d1 + ue[3*i])*du.x + (d2 + ue[3*i+1])*du.y + (d3 + ue[3*i+2])*du.z);
-         ce[3*i+1] = _c24*_dens*((d1 + ue[3*i])*dv.x + (d2 + ue[3*i+1])*dv.y + (d3 + ue[3*i+2])*dv.z);
-         ce[3*i+2] = _c24*_dens*((d1 + ue[3*i])*dw.x + (d2 + ue[3*i+1])*dw.y + (d3 + ue[3*i+2])*dw.z);
+         ce[3*i  ] = _c24*_rho*((d1 + _eu[3*i])*du.x + (d2 + _eu[3*i+1])*du.y + (d3 + _eu[3*i+2])*du.z);
+         ce[3*i+1] = _c24*_rho*((d1 + _eu[3*i])*dv.x + (d2 + _eu[3*i+1])*dv.y + (d3 + _eu[3*i+2])*dv.z);
+         ce[3*i+2] = _c24*_rho*((d1 + _eu[3*i])*dw.x + (d2 + _eu[3*i+1])*dw.y + (d3 + _eu[3*i+2])*dw.z);
       }
       Axpy(-1.5,ce,eRHS);
       Assembly(The_element,ce,_c);
 
 //    Pressure Gradient
-      Point<real_t> dp = _c24*(pe[0]*_dSh[0]+pe[1]*_dSh[1]+pe[2]*_dSh[2]+pe[3]*_dSh[3]);
-      for (size_t i=0; i<4; ++i) {
-         eRHS(3*i+1) -= dp.x;
-         eRHS(3*i+2) -= dp.y;
-         eRHS(3*i+3) -= dp.z;
+      Point<real_t> dp = _c24*((*_p)(_en[0])*_dSh[0]+(*_p)(_en[1])*_dSh[1]+(*_p)(_en[2])*_dSh[2]+(*_p)(_en[3])*_dSh[3]);
+      for (size_t i=1; i<=4; ++i) {
+         eRHS(3*i-2) -= dp.x;
+         eRHS(3*i-1) -= dp.y;
+         eRHS(3*i  ) -= dp.z;
       }
 
 //    Body Force
@@ -280,49 +301,47 @@ void TINS3DT4S::getMomentum()
       Equa_Fluid<real_t,4,12,3,9>::updateBC(The_element,*_bc);
 
 //    Assembly of matrix and R.H.S.
-      if (_TimeInt.step==1 || _constant_matrix==false)
-         Assembly(The_element,eMat,_VM);
-      Assembly(The_element,eRHS,_b);
+      AbsEqua<real_t>::_A->Assembly(The_element,eMat.get());
+      AbsEqua<real_t>::_b->Assembly(The_element,eRHS.get());
    }
 
 // Solve the linear system
 #ifdef USE_EIGEN
    LinearSolver<real_t> ls(1000,toler,1);
-   int nb_it = ls.solve(_VM,_b,_uu,CG_SOLVER,ILU_PREC);
+   int nb_it = ls.solve(*_A,*_b,_uu,CG_SOLVER,ILU_PREC);
 #else
-   LinearSolver<real_t> ls(_VM,_b,_uu);
-   ls.setTolerance(_toler);
-   int nb_it = ls.solve(CG_SOLVER,DILU_PREC);
+   int nb_it = solveLinearSystem(_A,*_b,_uu);
 #endif
    if (_bc!=nullptr)
       _u->insertBC(_uu,*_bc);
-   if (Verbosity>1)
+   if (Verbosity>3)
       cout << "Nb. of CG iterations for Momentum: " << nb_it << endl;
 }
 
 
 int TINS3DT4S::getPressure()
 {
-   Vect<real_t> b(_theMesh->getNbNodes());
+   _bp.clear();
    if (Verbosity>2)
       cout << "Solving pressure equation ..." << endl;
    MESH_EL {
       set(the_element);
-      LocalVect<real_t,6> ue(the_element,*_u);
-      double d = _c24*(_dSh[0].x*ue[0] + _dSh[0].y*ue[1] +
-                       _dSh[1].x*ue[2] + _dSh[1].y*ue[3] +
-                       _dSh[2].x*ue[4] + _dSh[2].y*ue[5]);
-      for (size_t i=0; i<3; ++i)
-         b(_en[i]) -= d;
+      ElementNodeVector(*_u,_eu);
+      real_t d = 0;
+      for (size_t i=0; i<4; ++i)
+         d += _dSh[i].x*_eu[3*i] + _dSh[i].y*_eu[3*i+1] + _dSh[i].z*_eu[3*i+2];
+      for (size_t i=0; i<4; ++i)
+         _bp(_en[i]) -= _c24*d;
    }
    real_t toler=1.e-7;
 #ifdef USE_EIGEN
    LinearSolver<double> ls(1000,toler,1);
-   int nb_it = ls.solve(_PM,b,_q,CG_SOLVER,ILU_PREC);
+   int nb_it = ls.solve(_PM,_bp,_q,CG_SOLVER,ILU_PREC);
 #else
-   int nb_it = CG(_PM,_PP,b,_q,1000,toler);
+   _PP.setMatrix(_PM);
+   int nb_it = CG(_PM,_PP,_bp,_q,1000,toler);
 #endif
-   if (Verbosity>1)
+   if (Verbosity>3)
       cout << "Nb. of CG iterations for pressure: " << nb_it << endl;
    *_p += 2.*_q;
    return nb_it;
@@ -335,6 +354,7 @@ void TINS3DT4S::updateVelocity()
       cout << "Updating velocity ..." << endl;
    MESH_EL {
       set(the_element);
+      ElementNodeVector(*_u,_eu);
       LocalVect<real_t,3> qe(the_element,_q,1);
       Point<real_t> dp = _c24*(qe[0]*_dSh[0]+qe[1]*_dSh[1]+qe[2]*_dSh[2]+qe[3]*_dSh[3]);
       for (size_t i=0; i<4; ++i) {

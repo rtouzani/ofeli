@@ -80,6 +80,13 @@ void EC2D1T3::set(const Element* el)
    ElementNodeCoordinates();
    _dSh = tr.DSh();
    ElementNodeVector(*_u,_eu);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_omega_set)
+      _omega = _omega_exp.value();
+   if (_Mu_set)
+      _Mu = _Mu_exp.value();
+   if (_sigma_set)
+      _sigma = _sigma_exp.value();
    eMat = complex_t(0.);
    eRHS = complex_t(0.);
 }
@@ -118,11 +125,10 @@ int EC2D1T3::run()
 }*/
 
 
-void EC2D1T3::Magnetic(real_t coef,
-                       real_t omega)
+void EC2D1T3::Magnetic(real_t coef)
 {
-   complex_t c = 0.5*coef*_mu*omega*_el_geo.area*OFELI_SIXTH*OFELI_IMAG;
-   complex_t d = coef*_mu*omega*_el_geo.area*OFELI_SIXTH*OFELI_IMAG;
+   complex_t c = 0.5*coef*_Mu*_omega*_el_geo.area*OFELI_SIXTH*OFELI_IMAG;
+   complex_t d = coef*_Mu*_omega*_el_geo.area*OFELI_SIXTH*OFELI_IMAG;
    eMat(1,1) += d; eMat(2,2) += d; eMat(3,3) += d;
    eMat(1,2) += c; eMat(2,1) += c; eMat(1,3) += c;
    eMat(3,1) += c; eMat(2,3) += c; eMat(3,2) += c;
@@ -131,7 +137,7 @@ void EC2D1T3::Magnetic(real_t coef,
 
 void EC2D1T3::Electric(real_t coef)
 {
-   static real_t d = coef*_rho*_el_geo.area;
+   static real_t d = coef*_el_geo.area/_sigma;
    for (size_t i=1; i<=3; i++)
       for (size_t j=1; j<=3; j++)
          eMat(i,j) += d*(_dSh[i-1],_dSh[j-1]);
@@ -140,7 +146,7 @@ void EC2D1T3::Electric(real_t coef)
 
 complex_t EC2D1T3::IntegMF()
 {
-   static real_t c = _mu*_el_geo.area*OFELI_SIXTH;
+   static real_t c = _Mu*_el_geo.area*OFELI_SIXTH;
    complex_t x=0;
    for (size_t i=1; i<=3; i++)
       x += _eu(i)*c;
@@ -170,7 +176,7 @@ complex_t EC2D1T3::IntegND(const Vect<complex_t>& h)
       for (size_t i=0; i<j; i++) {
          real_t n1 = _x[i2[i]-1].y - _x[i1[i]-1].y;
          real_t n2 = _x[i1[i]-1].x - _x[i2[i]-1].x;
-         xx += _rho*(n1*dhx + n2*dhy);
+         xx += (n1*dhx + n2*dhy)/_sigma;
       }
    }
    return xx;
@@ -194,7 +200,7 @@ void EC2D1T3::UpdateMF()
    complex_t xx=0;
    MeshElements(ms1) {
       set(theElement);
-      real_t c = _mu*_area*OFELI_SIXTH;
+      real_t c = _Mu*_area*OFELI_SIXTH;
       for (size_t i=1; i<=3; i++)
          xx += c*b1(theElement->getNodeLabel(i));
    }
@@ -221,7 +227,7 @@ real_t EC2D1T3::Joule()
 {
    Point<real_t> dhr = _eu(1).real()*_dSh[0] + _eu(2).real()*_dSh[1] + _eu(3).real()*_dSh[2], 
                  dhi = _eu(1).imag()*_dSh[0] + _eu(2).imag()*_dSh[1] + _eu(3).imag()*_dSh[2];
-   return 0.5*_rho/(dhr*dhr+dhi*dhi);
+   return 0.5/(dhr*dhr+dhi*dhi)/_sigma;
 }
 
 } /* namespace OFELI */

@@ -50,24 +50,20 @@ TINS2DT3S::TINS2DT3S()
 
 
 TINS2DT3S::TINS2DT3S(Mesh& ms)
-          : Equation<real_t,3,6,2,4>(ms), _constant_matrix(false)
+          : Equation<real_t,3,6,2,4>(ms), _constant_matrix(false), _p(nullptr)
 {
    _TimeInt.step = 0;
-   _p = nullptr;
    init();
-   _dens = 0.;
    _Re = 0.;
 }
 
 
 TINS2DT3S::TINS2DT3S(Mesh&         ms,
                      Vect<real_t>& u)
-          : Equation<real_t,3,6,2,4>(ms,u), _constant_matrix(false)
+          : Equation<real_t,3,6,2,4>(ms,u), _constant_matrix(false), _p(nullptr)
 {
    _TimeInt.step = 0;
-   _p = nullptr;
    init();
-   _dens = 0.;
    _Re = 0.;
 }
 
@@ -86,10 +82,11 @@ void TINS2DT3S::init()
       _row_ptr.push_back(_PM.getRowPtr(i+1));
    for (size_t i=0; i<_PM.getLength(); i++)
       _col_ind.push_back(_PM.getColInd(i+1));
+   _bp.setSize(_nb_nodes);
    PressureMatrix();
 #if !defined(USE_EIGEN)
    _PP.setType(DILU_PREC);
-   _PP.setMatrix(_PM);
+   //   _PP.setMatrix(_PM);
 #endif
    _q.setSize(_nb_nodes);
    _c.setSize(_nb_nodes,2);
@@ -112,18 +109,27 @@ void TINS2DT3S::setInput(EqDataType    opt,
 void TINS2DT3S::set(Element* el)
 {
    _theElement = el, _theSide = nullptr;
-   _visc = _dens = 1.;
+   _mu = _rho = 1.;
    if (_Re==0.) {
       setMaterial();
-      _Re = 1;
+      _Re = 1.0;
    }
    _ne = element_label;
    Triang3 tr(el);
    _el_geo.det = tr.getDet();
+   _el_geo.center = tr.getCenter();
    _cr = tr.getCircumRadius();
    _dSh = tr.DSh();
+   _cd = OFELI_SIXTH*_el_geo.det;
    for (size_t i=0; i<3; ++i)
       _en[i] = (*el)(i+1)->n();
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_mu_set)
+      _mu = _mu_exp.value();
+   if (_beta_set)
+      _beta = _beta_exp.value();
    eMat = 0; eRHS = 0;
 }
 
@@ -164,17 +170,15 @@ int TINS2DT3S::runOneTimeStep()
 
 void TINS2DT3S::ElementVelocityMatrix()
 {
-   real_t a=0.25*_el_geo.det*_visc/_Re;
-   for (size_t i=0; i<3; i++) {
-      for (size_t j=0; j<3; j++) {
-         eMat(2*i+1,2*j+1) = a*(2*_dSh[i].x*_dSh[j].x + _dSh[i].y*_dSh[j].y);
-         eMat(2*i+1,2*j+2) = a*_dSh[i].y*_dSh[j].x;
-         eMat(2*i+2,2*j+1) = a*_dSh[i].x*_dSh[j].y;
-         eMat(2*i+2,2*j+2) = a*(2*_dSh[i].y*_dSh[j].y + _dSh[i].x*_dSh[j].x);
+   real_t a = _rho*_cd/_TimeInt.delta;
+   real_t c = 0.25*_el_geo.det*_mu/_Re;
+   for (size_t i=0; i<3; ++i) {
+      for (size_t j=0; j<3; ++j) {
+         eMat(2*i+1,2*j+1) += c*(2*_dSh[i].x*_dSh[j].x + _dSh[i].y*_dSh[j].y);
+         eMat(2*i+1,2*j+2) += c*_dSh[i].y*_dSh[j].x;
+         eMat(2*i+2,2*j+1) += c*_dSh[i].x*_dSh[j].y;
+         eMat(2*i+2,2*j+2) += c*(2*_dSh[i].y*_dSh[j].y + _dSh[i].x*_dSh[j].x);
       }
-   }
-   a = _dens*_el_geo.det/(6.*_TimeInt.delta);
-   for (size_t i=0; i<3; i++) {
       eMat(2*i+1,2*i+1) += a;
       eMat(2*i+2,2*i+2) += a;
    }
@@ -205,11 +209,11 @@ void TINS2DT3S::PressureMatrix()
    SpMatrix<real_t> Dx(1,*_theMesh,0), Dy(1,*_theMesh,0);
    MESH_EL {
       set(the_element);
-      real_t z=_el_geo.det/(6*_TimeInt.delta), a=0.5*_TimeInt.delta*_el_geo.det;
+      real_t a=0.5*_TimeInt.delta*_el_geo.det;
       for (size_t i=0; i<3; i++) {
-         _MM(_en[i]) += z;
+         _MM(_en[i]) += _cd/_TimeInt.delta;
          for (size_t j=0; j<3; j++) {
-            _PM.add(_en[i],_en[j],a*(_dSh[i]*_dSh[j]));
+            _PM.add(_en[i],_en[j],a*(_dSh[i],_dSh[j]));
             Dx.add(_en[i],_en[j],_dSh[j].x*_el_geo.det);
             Dy.add(_en[i],_en[j],_dSh[j].y*_el_geo.det);
          }
@@ -241,7 +245,6 @@ void TINS2DT3S::getMomentum()
    _A->clear();
    _b->clear();
    size_t j=0;
-   _c = 0;
    MESH_ND {
       if (The_node.getCode(1)==0)
          (*_b)[j++] = 0.5*_c(node_label,1);
@@ -262,47 +265,47 @@ void TINS2DT3S::getMomentum()
       ElementVelocityMatrix();
 
 //    Mass (R.H.S.)
-      real_t cc=_dens*_el_geo.det/(6.*_TimeInt.delta);
-      for (size_t i=0; i<3; ++i) {
-         eRHS(2*i+1) = cc*_eu(2*i+1);
-         eRHS(2*i+2) = cc*_eu(2*i+2);
+      real_t a = _rho*_cd/_TimeInt.delta;
+      for (size_t i=1; i<=3; ++i) {
+         eRHS(2*i-1) = a*_eu(2*i-1);
+         eRHS(2*i  ) = a*_eu(2*i  );
       }
 
 //    Viscous Term (R.H.S.)
-      cc = 0.25*_visc*_el_geo.det/_Re;
+      a = 0.25*_mu*_el_geo.det/_Re;
       for (size_t i=0; i<3; i++) {
          for (size_t j=0; j<3; j++) {
-            eRHS(2*i+1) -= cc*(_dSh[i].y*_dSh[j].x*_eu[2*j+1] + (2*_dSh[i].x*_dSh[j].x+_dSh[i].y*_dSh[j].y)*_eu[2*j  ]);
-            eRHS(2*i+2) -= cc*(_dSh[i].x*_dSh[j].y*_eu[2*j  ] + (2*_dSh[i].y*_dSh[j].y+_dSh[i].x*_dSh[j].x)*_eu[2*j+1]);
+            eRHS(2*i+1) -= a*(_dSh[i].y*_dSh[j].x*_eu[2*j+1] + (2*_dSh[i].x*_dSh[j].x+_dSh[i].y*_dSh[j].y)*_eu[2*j  ]);
+            eRHS(2*i+2) -= a*(_dSh[i].x*_dSh[j].y*_eu[2*j  ] + (2*_dSh[i].y*_dSh[j].y+_dSh[i].x*_dSh[j].x)*_eu[2*j+1]);
          }
       }
 
 //    Convection
-      cc = _el_geo.det*_dens/24.;
+      a = 0.25*_cd*_rho;
       Point<real_t> du = _dSh[0]*_eu[0] + _dSh[1]*_eu[2] + _dSh[2]*_eu[4],
                     dv = _dSh[0]*_eu[1] + _dSh[1]*_eu[3] + _dSh[2]*_eu[5];
       for (size_t i=0; i<3; i++) {
-         ce[2*i  ] = cc*((d1 + _eu[2*i])*du.x + (d2 + _eu[2*i+1])*du.y);
-         ce[2*i+1] = cc*((d1 + _eu[2*i])*dv.x + (d2 + _eu[2*i+1])*dv.y);
+         ce[2*i  ] = a*((d1 + _eu[2*i])*du.x + (d2 + _eu[2*i+1])*du.y);
+         ce[2*i+1] = a*((d1 + _eu[2*i])*dv.x + (d2 + _eu[2*i+1])*dv.y);
       }
       Axpy(-1.5,ce,eRHS);
       Assembly(The_element,ce,_c);
 
 //    Pressure Gradient
-      Point<real_t> dp = _el_geo.det/6.*((*_p)(_en[0])*_dSh[0]+(*_p)(_en[1])*_dSh[1]+(*_p)(_en[2])*_dSh[2]);
-      for (size_t i=0; i<3; ++i) {
-         eRHS(2*i+1) -= dp.x;
-         eRHS(2*i+2) -= dp.y;
+      Point<real_t> dp = _cd*((*_p)(_en[0])*_dSh[0]+(*_p)(_en[1])*_dSh[1]+(*_p)(_en[2])*_dSh[2]);
+      for (size_t i=1; i<=3; ++i) {
+         eRHS(2*i-1) -= dp.x;
+         eRHS(2*i  ) -= dp.y;
       }
 
 //    Body Force
       if (_bf!=nullptr) {
          for (size_t i=0; i<3; ++i) {
-            eRHS(2*i+1) += (*_bf)(2*_en[i]-1)*_el_geo.det/6.;
-            eRHS(2*i+2) += (*_bf)(2*_en[i]  )*_el_geo.det/6.;
+            eRHS(2*i+1) += _cd*(*_bf)(2*_en[i]-1);
+            eRHS(2*i+2) += _cd*(*_bf)(2*_en[i]  );
          }
       }
-      
+
 //    Boundary conditions
       Equa_Fluid<real_t,3,6,2,4>::updateBC(The_element,_bc);
 
@@ -327,24 +330,25 @@ void TINS2DT3S::getMomentum()
 
 int TINS2DT3S::getPressure()
 {
-   Vect<real_t> b(_theMesh->getNbNodes());
+   _bp.clear();
    if (Verbosity>2)
       cout << "Solving pressure equation ..." << endl;
    MESH_EL {
       set(the_element);
       ElementNodeVector(*_u,_eu);
-      real_t d = _el_geo.det/6.*(_dSh[0].x*_eu[0] + _dSh[0].y*_eu[1] +
-                                 _dSh[1].x*_eu[2] + _dSh[1].y*_eu[3] +
-                                 _dSh[2].x*_eu[4] + _dSh[2].y*_eu[5]);
+      real_t d = _cd*(_dSh[0].x*_eu[0] + _dSh[0].y*_eu[1] +
+                      _dSh[1].x*_eu[2] + _dSh[1].y*_eu[3] +
+                      _dSh[2].x*_eu[4] + _dSh[2].y*_eu[5]);
       for (size_t i=0; i<3; ++i)
-         b(_en[i]) -= d;
+         _bp(_en[i]) -= d;
    }
    real_t toler=1.e-7;
 #ifdef USE_EIGEN
    LinearSolver<real_t> ls(1000,toler,1);
-   int nb_it = ls.solve(_PM,b,_q,CG_SOLVER,ILU_PREC);
+   int nb_it = ls.solve(_PM,_bp,_q,CG_SOLVER,ILU_PREC);
 #else
-   int nb_it = CG(_PM,_PP,b,_q,1000,toler);
+   _PP.setMatrix(_PM);
+   int nb_it = CG(_PM,_PP,_bp,_q,1000,toler);
 #endif
    if (Verbosity>3)
       cout << "Nb. of CG iterations for pressure: " << nb_it << endl;
@@ -361,7 +365,7 @@ void TINS2DT3S::updateVelocity()
       set(the_element);
       ElementNodeVector(*_u,_eu);
       LocalVect<real_t,3> qe(the_element,_q,1);
-      Point<real_t> dp = _el_geo.det/6.*(qe[0]*_dSh[0]+qe[1]*_dSh[1]+qe[2]*_dSh[2]);
+      Point<real_t> dp = _cd*(qe[0]*_dSh[0]+qe[1]*_dSh[1]+qe[2]*_dSh[2]);
       for (size_t i=0; i<3; ++i) {
          size_t n = _en[i];
          if ((*_theMesh)[n]->getCode(1)==0)

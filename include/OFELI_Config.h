@@ -38,7 +38,6 @@
 #include <stdexcept>
 #include "util/constants.h"
 #include "util/macros.h"
-#include "io/fparser/fparser.h"
 #include <complex>
 
 /*! \file OFELI_Config.h

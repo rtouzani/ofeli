@@ -807,7 +807,7 @@ ostream& operator<<(ostream&           s,
 {
    for (size_t i=1; i<=A.getNbRows(); i++) {
       s << "\nRow  " << setw(6) << i << endl;
-      for (size_t j=1; j<=A.getNbColumns; j++)
+      for (size_t j=1; j<=A.getNbColumns(); j++)
          s << "  " << setprecision(8) << std::setfill(' ')
            << setw(18) << A(i,j);
       s << endl;

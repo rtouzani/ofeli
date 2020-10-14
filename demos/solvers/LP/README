@@ -1,0 +1,5 @@
+Linear programming demo programs
+--------------------------------
+
+lp_demo1 Solves a linear programming problem using the simplex method
+

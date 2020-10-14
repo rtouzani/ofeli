@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
       Mesh ms(data.getMeshFile());
 
 //    Declare problem data (boundary conditions, body forces)
-      Vect<double> u(ms), bc(ms), p(ms,1,NODE_DOF);
+      Vect<double> u(ms), bc(ms), p(ms,NODE_DOF,1);
+      cout << "**** "<<p.getNbDOF()<<endl;
       Prescription pr(ms,data.getDataFile());
       pr.get(BOUNDARY_CONDITION,bc);
       u.setName("Velocity");
@@ -93,10 +94,10 @@ int main(int argc, char *argv[])
          eq.runOneTimeStep();
 
 //       Store solution
-         if (save_flag)
+         if (save_flag) {
             v_file.put(u);
-         if (save_flag)
             p_file.put(p);
+	 }
       }
    } CATCH_EXCEPTION
    return 0;

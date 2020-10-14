@@ -148,7 +148,7 @@ class XMLParser : public Parser
    std::ifstream _is;
    bool _is_opened, _is_closed, _set_mesh, _set_field, _set_file, _set_prescription;
    bool _set_domain, _prescription_opened, _compact, _value;
-   real_t _time, _sought_time, _scan_steps, _val;
+   real_t _x, _y, _z, _time, _sought_time, _scan_steps, _val;
    int _access, _type, _cm, _format, _var, _code;
    EqDataType _prescription_type;
    string _file, _mesh_file, _el_shape, _sd_shape, _name, _sought_name, _tag_name, _xml, _mat;
@@ -166,6 +166,7 @@ class XMLParser : public Parser
    vector<PrescriptionPar> *_vp;
    vector<real_t> *_ft;
    vector<vector<real_t> > *_V;
+   exprtk::expression<real_t> _exp;
 
    virtual bool on_tag_open(string tag_name, StringMap& attributes);
    virtual bool on_cdata(string cdata);

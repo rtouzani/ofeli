@@ -35,6 +35,7 @@
 
 #include "OFELI_Config.h"
 #include "linear_algebra/LocalVect.h"
+#include "linear_algebra/Point.h"
 
 namespace OFELI {
 /*!

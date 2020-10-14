@@ -566,11 +566,11 @@ void getGmsh(string file,
 // Mesh Format
    pf >> kw;
    if (kw!="$MeshFormat")
-      throw OFELIException("getGmsh(...): Keyword MeshFormat not found.");
+      throw OFELIException("getGmsh(...): Keyword MeshFormat not found in file "+file);
    pf >> d[0] >> n[0] >> n[1];
    pf >> kw;
    if (kw!="$EndMeshFormat")
-      throw OFELIException("getGmsh(...): Keyword EndMeshFormat not found.");
+      throw OFELIException("getGmsh(...): Keyword EndMeshFormat not found in file "+file);
 
 // Physical name
    pf >> kw;
@@ -580,7 +580,7 @@ void getGmsh(string file,
          pf >> n[1] >> n[2] >> w;
       pf >> kw;
       if (kw!="$EndPhysicalNames")
-         throw OFELIException("getGmsh(...): Keyword EndPhysicalName not found.");
+         throw OFELIException("getGmsh(...): Keyword EndPhysicalName not found in file "+file);
       pf >> kw;
    }
 
@@ -642,7 +642,7 @@ void getGmsh(string file,
       }
       pf >> kw;
       if (kw!="$EndEntities")
-         throw OFELIException("getGmsh(...): Keyword EndEntities not found.");
+         throw OFELIException("getGmsh(...): Keyword EndEntities not found in file "+file);
    }
 
 // Partitioned Entities
@@ -659,12 +659,12 @@ void getGmsh(string file,
             pf >> n[6];
       }
       if (kw!="$EndPartitionedEntities")
-         throw OFELIException("getGmsh(...): Keyword EndEntities not found.");
+         throw OFELIException("getGmsh(...): Keyword EndEntities not found in file "+file);
       pf >> kw;
    }
 
    if (kw!="$Nodes")
-      throw OFELIException("getGmsh(...): Keyword Nodes not found.");
+      throw OFELIException("getGmsh(...): Keyword Nodes not found in file "+file);
    pf >> n[0] >> nb_nodes >> n[1] >> n[2];
    int m=0, nm=0;
    vector<Nd> nod;
@@ -693,11 +693,11 @@ void getGmsh(string file,
    }
    pf >> kw;
    if (kw!="$EndNodes")
-      throw OFELIException("getGmsh(...): Keyword EndNodes not found.");
+      throw OFELIException("getGmsh(...): Keyword EndNodes not found in file "+file);
 
    pf >> kw;
    if (kw!="$Elements")
-      throw OFELIException("getGmsh(...): Keyword Elements not found.");
+      throw OFELIException("getGmsh(...): Keyword Elements not found in file "+file);
    pf >> n[0] >> nb_elements >> n[1] >> n[2];
    vector<El> elements, sides;
    El ell;
@@ -740,7 +740,7 @@ void getGmsh(string file,
    }
    pf >> kw;
    if (kw!="$EndElements")
-      throw OFELIException("getGmsh(...): Keywords EndElements not found.");
+      throw OFELIException("getGmsh(...): Keywords EndElements not found in file "+file);
 
 // Build a mesh instance
    mesh.setDim(dim);
@@ -766,6 +766,7 @@ void getGmsh(string file,
    for (int j=0; j<sides.size(); j++) {
       ell = sides[j];
       sd = new Side(++label,ell.shape);
+      sd->setNbDOF(nb_dof);
       for (int k=0; k<ell.nb_nodes; ++k)
          sd->Add(mesh[ell.node[k]]);
       DOFCode(ell.region,nb_dof,code);

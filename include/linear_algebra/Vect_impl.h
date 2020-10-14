@@ -37,7 +37,6 @@
 #include "util/macros.h"
 #include "linear_algebra/Vect.h"
 #include "linear_algebra/Point.h"
-#include "io/fparser/fparser.h"
 #include "linear_algebra/LocalVect.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "mesh/Mesh.h"
@@ -46,9 +45,10 @@
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Tetra4.h"
 #include "util/util.h"
+#include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
-extern FunctionParser theParser;
+extern exprtk::parser<real_t> theParser;
 
 /** \defgroup VectMat Vector and Matrix
  *  \brief Vector and matrix classes
@@ -111,8 +111,7 @@ Vect<T_>::Vect(size_t nx,
    _v.conservativeResize(_size);
    clear();
 #else
-   for (size_t i=0; i<_size; i++)
-      (*this)[i] = 0;
+   clear();
 #endif
    for (size_t i=0; i<10; ++i)
       _with_regex[i] = false;
@@ -427,41 +426,38 @@ void Vect<T_>::set(const string& exp,
 {
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::set(string,dof): No mesh defined");
-   int err;
-   PARSE(exp.c_str(),"x,y,z,t");
+   exprtk::expression<double> expression;
+   double x=0., y=0., z=0.;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   symbol_table.add_variable("x",x);
+   symbol_table.add_variable("y",y);
+   symbol_table.add_variable("z",z);
+   symbol_table.add_variable("t",_time);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    if (_dof_type==NODE_DOF) {
       MESH_ND {
-	set(The_node.getNbDOF()*(node_label-1)+dof,EVAL_XT(The_node.getCoord(),_time));
-         if ((err=theParser.EvalError()))
-            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
-                                 "Error code: "+itos(err));
+	x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
+	set(The_node.getNbDOF()*(node_label-1)+dof,expression.value());
       }
    }
    else if (_dof_type==SIDE_DOF) {
       MESH_SD {
-         Point<real_t> x = The_side.getCenter();
-         set(The_side.getNbDOF()*(side_label-1)+dof,EVAL_XT(x,_time));
-         if ((err=theParser.EvalError()))
-            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
-                                 "Error code: "+itos(err));
+         x = The_side.getCenter().x, y = The_side.getCenter().y, z = The_side.getCenter().z;
+         set(The_side.getNbDOF()*(side_label-1)+dof,expression.value());
       }
    }
    else if (_dof_type==BOUNDARY_SIDE_DOF) {
       MESH_BD_SD {
-         Point<real_t> x = The_side.getCenter();
-         set(The_side.getNbDOF()*(side_label-1)+dof,EVAL_XT(x,_time));
-         if ((err=theParser.EvalError()))
-            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
-                                 "Error code: "+itos(err));
+         x = The_side.getCenter().x, y = The_side.getCenter().y, z = The_side.getCenter().z;
+         set(The_side.getNbDOF()*(side_label-1)+dof,expression.value());
       }
    }
    else if (_dof_type==ELEMENT_DOF) {
       MESH_EL {
-         Point<real_t> x = The_element.getCenter();
-         set(element_label,EVAL_XT(x,_time));
-         if ((err=theParser.EvalError()))
-            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
-                                 "Error code: "+itos(err));
+         x = The_element.getCenter().x, y = The_element.getCenter().y, z = The_element.getCenter().z;
+         set(element_label,expression.value());
       }
    }
    else
@@ -473,15 +469,16 @@ template<class T_>
 void Vect<T_>::set(const string&       exp,
                    const Vect<real_t>& x)
 {
-   int err;
-   real_t d[] = {0., _time};
-   PARSE(exp.c_str(),"x,t");
+   real_t y=0.;
+   exprtk::expression<double> expression;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   symbol_table.add_variable("x",y);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    for (size_t i=0; i<x.size(); i++) {
-      d[0] = x[i];
-      set(i+1,EVAL(d));
-      if ((err=theParser.EvalError()))
-         throw OFELIException("In Vect::set(string,dof): Illegal regular expression."
-                              "Error code: "+itos(err));
+      y = x[i];
+      set(i+1,expression.value());
    }
 }
 
@@ -494,14 +491,20 @@ void Vect<T_>::set(Mesh&  ms,
    setMesh(ms);
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::set(ms,string,dof): No mesh defined");
-   int err;
-   PARSE(exp.c_str(),"x,y,z,t");
+   real_t x=0., y=0., z=0.;
+   exprtk::expression<real_t> expression;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   symbol_table.add_variable("x",x);
+   symbol_table.add_variable("y",y);
+   symbol_table.add_variable("z",z);
+   symbol_table.add_variable("t",_time);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    if (_dof_type==NODE_DOF) {
       MESH_ND {
-         set(The_node.getNbDOF()*(node_label-1)+dof,EVAL_XT(The_node.getCoord(1),_time));
-         if ((err=theParser.EvalError()))
-            throw OFELIException("In Vect::set(string,dof): Illegal regular expression. "
-                                 "Error code: "+itos(err));
+         x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
+         set(The_node.getNbDOF()*(node_label-1)+dof,expression.value());
       }
    }
    else
@@ -514,16 +517,18 @@ template <class T_>
 void Vect<T_>::set(const Vect<real_t>& x,
                    const string&       exp)
 {
-   int err;
    setSize(x._nx,x._ny,x._nz);
-   real_t d[] = {0., 0.};
-   theParser.Parse(exp.c_str(),"x,i");
+   exprtk::expression<real_t> expression;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   real_t xx=0., ii=0;
+   symbol_table.add_variable("x",xx);
+   symbol_table.add_variable("i",ii);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    for (size_t i=0; i<_size; i++) {
-      d[0] = x[i];
-      d[1] = i + 1;
-      set(i+1,theParser.Eval(d));
-      if ((err=theParser.EvalError()))
-         throw OFELIException("In Vect::set(Vect,string): Illegal regular expression. Error code: "+itos(err));
+      xx = x[i], ii = i+1;
+      set(i+1,expression.value());
    }
 }
 
@@ -535,10 +540,9 @@ void Vect<T_>::setMesh(Mesh&      m,
 {
    _theMesh = &m;
    _with_mesh = true;
-   size_t n=_theMesh->getNbDOF();
    _nb_dof = nb_dof;
    if (nb_dof==0)
-      _nb_dof = n/_theMesh->getNbNodes();
+      _nb_dof = _theMesh->getNbDOF()/_theMesh->getNbNodes();
    _dof_type = dof_type;
    if (dof_type==NODE_DOF)
       _nb = _theMesh->getNbNodes();
@@ -570,8 +574,10 @@ void Vect<T_>::setSize(size_t nx,
    _size = _nx*_ny*_nz;
 #if defined (USE_EIGEN)
    _v.conservativeResize(_size,1);
+   clear();
 #else
    vector<T_>::resize(_size);
+   clear();
 #endif
 }
 
@@ -792,15 +798,20 @@ size_t Vect<T_>::getNz() const { return _nz; }
 template <class T_>
 void Vect<T_>::setIJK(const string& exp)
 {
-   int err;
-   PARSE(exp.c_str(),"i,j,k");
-   for (size_t i=1; i<=_nx; ++i) {
-      for (size_t j=1; j<=_ny; ++j) {
-         for (size_t k=1; k<=_nz; ++k) {
-            set(i,j,k,EVAL_XYZ(i,j,k));
-            if ((err=theParser.EvalError()))
-               throw OFELIException("In Vect::setIJK(string,dof): Illegal regular expression."
-                                    " Error code: "+itos(err));
+   exprtk::expression<real_t> expression;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   real_t i=0., j=0., k=0.;
+   symbol_table.add_variable("i",i);
+   symbol_table.add_variable("j",j);
+   symbol_table.add_variable("k",k);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
+   for (size_t ii=1; ii<=_nx; ++ii) {
+      for (size_t jj=1; jj<=_ny; ++jj) {
+         for (size_t kk=1; kk<=_nz; ++kk) {
+            i = ii, j = jj, k = kk;
+            set(i,j,k,expression.value());
          }
       }
    }
@@ -884,20 +895,21 @@ void Vect<T_>::setNodeBC(Mesh&         m,
                          const string& exp,
                          size_t        dof)
 {
-   theParser.Parse(exp.c_str(),"x,y,z,t");
-   int err;
-   real_t d[] = {0., 0., 0., _time};
+   exprtk::expression<real_t> expression;
+   exprtk::symbol_table<real_t> symbol_table;
+   add_constants(symbol_table);
+   real_t x=0., y=0., z=0.;
+   symbol_table.add_variable("x",x);
+   symbol_table.add_variable("y",y);
+   symbol_table.add_variable("z",z);
+   symbol_table.add_variable("t",_time);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    node_loop(&m) {
-      d[0] = The_node.getCoord(1);
-      d[1] = The_node.getCoord(2);
-      d[2] = The_node.getCoord(3);
+      x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-         if (The_node.getCode(dof)==code) {
-            set(node_label,dof,theParser.Eval(d));
-            if ((err=theParser.EvalError()))
-               throw OFELIException("In Vect::setNodeBC(Mesh,int,string,size_t): "
-                                    "Illegal regular expression. Error code: "+itos(err));
-         }
+         if (The_node.getCode(dof)==code)
+            set(node_label,dof,expression.value());
       }
    }
 }
@@ -908,22 +920,23 @@ void Vect<T_>::setNodeBC(Mesh&         m,
                          int           code,
                          const string& exp)
 {
-   theParser.Parse(exp.c_str(),"x,y,z,t");
-   int err;
+   exprtk::expression<real_t> expression;
+   exprtk::symbol_table<real_t> symbol_table;
+   add_constants(symbol_table);
+   real_t x=0., y=0., z=0.;
+   symbol_table.add_variable("x",x);
+   symbol_table.add_variable("y",y);
+   symbol_table.add_variable("z",z);
+   symbol_table.add_variable("t",_time);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    int c[6];
-   real_t d[] = {0., 0., 0., _time};
    node_loop(&m) {
-      d[0] = The_node.getCoord(1);
-      d[1] = The_node.getCoord(2);
-      d[2] = The_node.getCoord(3);
+      x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
       DOFCode(code,The_node.getNbDOF(),c);
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-         if (The_node.getCode(i)==c[i-1]) {
-            set(node_label,i,theParser.Eval(d));
-            if ((err=theParser.EvalError()))
-               throw OFELIException("In Vect::setNodeBC(Mesh,int,string): "
-                                    "Illegal regular expression. Error code: "+itos(err));
-         }
+         if (The_node.getCode(i)==c[i-1])
+            set(node_label,i,expression.value());
       }
    }
 }
@@ -935,22 +948,23 @@ void Vect<T_>::setSideBC(Mesh&         m,
                          const string& exp,
                          size_t        dof)
 {
-   theParser.Parse(exp.c_str(),"x,y,z,t");
-   int err;
-   real_t d[] = {0., 0., 0., _time};
+   exprtk::expression<real_t> expression;
+   exprtk::symbol_table<real_t> symbol_table;
+   add_constants(symbol_table);
+   real_t x=0., y=0., z=0.;
+   symbol_table.add_variable("x",x);
+   symbol_table.add_variable("y",y);
+   symbol_table.add_variable("z",z);
+   symbol_table.add_variable("t",_time);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    side_loop(&m) {
       if (The_side.getCode(dof)==code) {
          for (size_t n=1; n<=The_side.getNbNodes(); n++) {
             the_node = The_side(n);
-            d[0] = The_node.getCoord(1);
-            d[1] = The_node.getCoord(2);
-            d[2] = The_node.getCoord(3);
-            for (size_t i=1; i<=The_side.getNbDOF(); i++) {
-               set(node_label,dof,theParser.Eval(d));
-               if ((err=theParser.EvalError()))
-                  throw OFELIException("In Vect::setSideBC(Mesh,int,string,size_t): "
-                                       "Illegal regular expression. Error code: "+itos(err));
-            }
+            x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
+            for (size_t i=1; i<=The_side.getNbDOF(); i++)
+               set(node_label,dof,expression.value());
          }
       }
    }
@@ -962,9 +976,16 @@ void Vect<T_>::setSideBC(Mesh&         m,
                          int           code,
                          const string& exp)
 {
-   theParser.Parse(exp.c_str(),"x,y,z,t");
-   int err;
-   real_t d[] = {0., 0., 0., _time};
+   exprtk::expression<real_t> expression;
+   exprtk::symbol_table<real_t> symbol_table;
+   add_constants(symbol_table);
+   real_t x=0., y=0., z=0.;
+   symbol_table.add_variable("x",x);
+   symbol_table.add_variable("y",y);
+   symbol_table.add_variable("z",z);
+   symbol_table.add_variable("t",_time);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    int c[6];
    side_loop(&m) {
       DOFCode(code,The_side.getNbDOF(),c);
@@ -972,13 +993,8 @@ void Vect<T_>::setSideBC(Mesh&         m,
          if (The_side.getCode(i)==c[i-1]) {
             for (size_t n=1; n<=The_side.getNbNodes(); ++n) {
                the_node = The_side(n);
-               d[0] = The_node.getCoord(1);
-               d[1] = The_node.getCoord(2);
-               d[2] = The_node.getCoord(3);
-               set(node_label,i,theParser.Eval(d));
-               if ((err=theParser.EvalError()))
-                  throw OFELIException("In Vect::setSideBC(Mesh,int,string): "
-                                       "Illegal regular expression. Error code: "+itos(err));
+               x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
+               set(node_label,i,expression.value());
             }
          }
       }
@@ -2041,6 +2057,28 @@ void Vect<T_>::clear()
 #else
       (*this)[i] = static_cast<T_>(0);
 #endif
+}
+
+
+class Fct;
+template<>
+inline void Vect<Fct>::clear()
+{
+}
+
+
+struct fct;
+template<>
+inline void Vect<fct>::clear()
+{
+}
+
+
+template<>
+inline void Vect<string>::clear()
+{
+   for (size_t i=0; i<size(); ++i)
+      (*this)[i] = " ";
 }
 
 

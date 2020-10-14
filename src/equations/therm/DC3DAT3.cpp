@@ -78,9 +78,17 @@ void DC3DAT3::set(const Element* el)
    setMaterial();
    Triang3 tr(_theElement);
    _el_geo.area = tr.getArea();
+   _el_geo.center = tr.getCenter();
    _dSh = tr.DSh();
    ElementNodeCoordinates();
    ElementVector(*_u);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_Cp_set)
+      _cp = _Cp_exp.value();
+   if (_kappa_set)
+      _diff = _kappa_exp.value();
    eA0 = 0, eA1 = 0;
    eRHS = 0;
 }
@@ -100,7 +108,7 @@ void DC3DAT3::set(const Side* sd)
 
 void DC3DAT3::LCapacity(real_t coef)
 {
-   real_t c = OFELI_THIRD*_el_geo.area*_rhocp*coef;
+   real_t c = OFELI_THIRD*_el_geo.area*_rho*_cp*coef;
    eA1(1,1) += c*_r[0];
    eA1(2,2) += c*_r[1];
    eA1(3,3) += c*_r[2];
@@ -109,7 +117,7 @@ void DC3DAT3::LCapacity(real_t coef)
 
 void DC3DAT3::Capacity(real_t coef)
 {
-   real_t c = 0.5*OFELI_TWELVETH*_el_geo.area*_rhocp*coef;
+   real_t c = 0.5*OFELI_TWELVETH*_el_geo.area*_rho*_cp*coef;
    eA1(1,1) += c*(2*_r[0] + _r[1] + _r[2]);
    eA1(2,2) += c*(_r[0] + 2*_r[1] + _r[2]);
    eA1(3,3) += c*(_r[0] + _r[1] + 2*_r[2]);

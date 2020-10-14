@@ -55,12 +55,13 @@
 #include "linear_algebra/BMatrix_impl.h"
 #include "linear_algebra/TrMatrix_impl.h"
 
+extern exprtk::parser<real_t> theParser;
+
 namespace OFELI {
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 extern Material theMaterial;
-
 
 template<class T_>
 AbsEqua<T_>::AbsEqua()
@@ -70,6 +71,9 @@ AbsEqua<T_>::AbsEqua()
               _bc(nullptr), _bf(nullptr), _sf(nullptr), _pf(nullptr), _v(nullptr)
 {
    setTimeIntegrationParam();
+   _rho_set = _Cp_set = _kappa_set = _mu_set = _sigma_set = _Mu_set = false;
+   _epsilon_set = _omega_set = _beta_set = _v_set = _young_set = _poisson_set = false;
+   set_exprtk();
 }
 
 
@@ -80,6 +84,127 @@ AbsEqua<T_>::~AbsEqua()
       delete _A;
    if (_b!=nullptr)
       delete _b;
+}
+
+template<class T_>
+void AbsEqua<T_>::set_exprtk()
+{
+   double pi=3.14159265358979323846264338328, e=2.71828182845904523536028747135;
+   _symbol_table.add_constant("pi",pi);
+   _symbol_table.add_constant("e",e);
+   _symbol_table.add_constants();
+   _symbol_table.add_variable("x",_ex);
+   _symbol_table.add_variable("y",_ey);
+   _symbol_table.add_variable("z",_ez);
+   _symbol_table.add_variable("t",_et);
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_rho(string exp)
+{
+   _rho_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_rho_exp);
+   _rho_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_Cp(string exp)
+{
+   _Cp_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_Cp_exp);
+   _Cp_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_kappa(string exp)
+{
+   _kappa_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_kappa_exp);
+   _kappa_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_mu(string exp)
+{
+   _mu_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_mu_exp);
+  _mu_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_sigma(string exp)
+{
+   _sigma_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_sigma_exp);
+   _sigma_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_Mu(string exp)
+{
+   _Mu_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_Mu_exp);
+   _Mu_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_epsilon(string exp)
+{
+   _epsilon_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_epsilon_exp);
+   _epsilon_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_omega(string exp)
+{
+   _omega_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_omega_exp);
+   _omega_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_beta(string exp)
+{
+   _beta_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_beta_exp);
+   _beta_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_v(string exp)
+{
+   _v_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_v_exp);
+   _v_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_young(string exp)
+{
+   _young_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_young_exp);
+   _young_set = true;
+}
+
+
+template<class T_>
+void AbsEqua<T_>::set_poisson(string exp)
+{
+   _poisson_exp.register_symbol_table(_symbol_table);
+   theParser.compile(exp,_poisson_exp);
+   _poisson_set = true;
 }
 
 
@@ -157,8 +282,13 @@ int AbsEqua<T_>::run(Analysis   a,
    if (a==STATIONARY) {
       build();
       ret = solveLinearSystem(*_b,_uu);
-      if (_bc!=nullptr)
+      if (_bc!=nullptr) {
+cout<<"$   "<<_uu.size()<<endl;
+cout<<"$$  "<<_bc->size()<<endl;
+cout<<"$$$ "<<_theMesh->getNbNodes()<<endl;
+ cout<<"$$$$"<<_u->size()<<endl;
          _u->insertBC(*_theMesh,_uu,*_bc);
+      }
       else
          *_u = _uu;
    }
@@ -438,13 +568,14 @@ void AbsEqua<T_>::setInput(EqDataType opt,
 {
    if (opt==INITIAL_FIELD || opt==SOLUTION)
       _u = &u;
-   else if (opt==BOUNDARY_CONDITION)
+   else if (opt==BOUNDARY_CONDITION) {
       _bc = &u;
+cout<<"si: "<<_bc->size()<<endl;
+   }
    else if (opt==SOURCE || opt==BODY_FORCE)
       _bf = &u;
-   else if (opt==FLUX || opt==TRACTION || opt==BOUNDARY_FORCE) {
+   else if (opt==FLUX || opt==TRACTION || opt==BOUNDARY_FORCE)
       _sf = &u;
-   }
    else if (opt==POINT_FORCE)
       _pf = &u;
    else

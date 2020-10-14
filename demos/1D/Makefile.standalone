@@ -1,0 +1,21 @@
+
+all:	elliptic heat transport
+
+elliptic:	elliptic.o
+		`ofeli-config --cxx` `ofeli-config --cflags` -o elliptic elliptic.o `ofeli-config --libs`
+
+heat:	heat.o
+	`ofeli-config --cxx` `ofeli-config --cflags` -o heat heat.o `ofeli-config --libs`
+
+transport:	transport.o
+		`ofeli-config --cxx` `ofeli-config --cflags` -o transport transport.o `ofeli-config --libs`
+
+clean:
+	/bin/rm -f *.o ad1`ofeli-config elliptic heat transport
+
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

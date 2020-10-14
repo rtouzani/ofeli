@@ -47,8 +47,6 @@
 #include "linear_algebra/TrMatrix_impl.h"
 #include "OFELIException.h"
 
-extern FunctionParser theParser;
-
 namespace OFELI {
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -170,7 +168,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&  el,
          for (size_t j=1; j<=NEN_; ++j) {
             for (size_t l=1; l<=_nb_dof; ++l, ++jn) {
                if (el(j)->getCode(l) > 0)
-                  eRHS(in) -= eMat(in,jn) * bc(_nb_dof*(el(j)->n()-1)+l);
+                  eRHS(in) -= eMat(in,jn) * bc(el(j)->n(),l);
             }
          }
       }
@@ -191,7 +189,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element& el,
          for (size_t j=1; j<=NEN_; ++j) {
             for (size_t l=1; l<=_nb_dof; ++l, ++jn) {
                if (el(j)->getCode(l) > 0)
-                  eRHS(in) -= eMat(in,jn) * (*bc)(_nb_dof*(el(j)->n()-1)+l);
+                  eRHS(in) -= eMat(in,jn) * (*bc)(el(j)->n(),l);
             }
          }
       }
@@ -831,18 +829,15 @@ template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 real_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty(const string& exp,
                                                              const string& prop)
 {
-   int err;
-   real_t d[4], r;
-   theParser.Parse(exp,"x,y,z,t");
-   d[0] = _el_geo.center.x;
-   d[1] = _el_geo.center.y;
-   d[2] = _el_geo.center.z;
-   d[3] = _TimeInt.time;
-   r = theParser.Eval(d);
-   if ((err=theParser.EvalError()))
-      throw OFELIException("In Equation::setMaterialProperty(string,string): "
-                           "Error in evaluation in expression " + prop);
-   return r;
+   exprtk::expression<double> expression;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   symbol_table.add_variable("x",_x.x);
+   symbol_table.add_variable("y",_x.y);
+   symbol_table.add_variable("z",_x.z);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
+   return expression.value();
 }
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

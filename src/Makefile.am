@@ -63,16 +63,15 @@ THERM_OBJS = equations/therm/DC1DL2.o \
              equations/therm/DC3DT4.o \
              equations/therm/PhaseChange.o
 
-IO_OBJS = io/FFI.o \
+IO_OBJS = io/Fct.o \
+          io/FFI.o \
           io/IOField.o \
           io/IPF.o \
           io/Prescription.o \
           io/Tabulation.o \
           io/XMLParser.o \
-          io/saveField.o
-
-FPARSER_OBJS = io/fparser/fparser.o \
-               io/fparser/fpoptimizer.o
+          io/saveField.o \
+          io/exprtk_adds.o
 
 XMLSP_OBJS = io/xmlsp/xmlsp.o
 
@@ -178,6 +177,7 @@ SOLVERS_OBJS = solvers/BSpline.o \
                solvers/OptimTN.o \
                solvers/OptimPG.o \
                solvers/OptSolver.o \
+               solvers/Simplex.o \
                solvers/Solver.o \
                solvers/TimeStepping.o
 

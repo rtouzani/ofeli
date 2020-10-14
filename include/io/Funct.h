@@ -38,10 +38,10 @@
 using std::string;
 
 #include "OFELI_Config.h"
-#include "io/fparser/fparser.h"
+#include "io/exprtk_adds.h"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-extern FunctionParser theParser;
+extern exprtk::parser<real_t> theParser;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 namespace OFELI {
@@ -143,7 +143,7 @@ class Funct
                       real_t t) const { return theParser.Eval(x,y,z,t); }
 
 /** \brief Operator =.
- *  \details Define the function by an algebraic expression following regexp rules
+ *  \details Define the function by an algebraic expression
  *  @param [in] e Algebraic expression defining the function.
  */
     void operator=(string e) { theParser.Parse(e.c_str(),_vn.c_str()); }

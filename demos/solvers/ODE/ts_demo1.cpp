@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
 // Declare and initialize used vector
 // u: initial solution and solution at each time step
-   Vect<double> u(ms), f(ms), bc(ms);
+   Vect<double> u(ms);
    u.set("exp(x+y)");
 
 // Instantiate equation class and declare used terms
@@ -79,14 +79,10 @@ int main(int argc, char *argv[])
    TimeLoop {
 
 //    To give source term by an expression, set time value
-      f.setTime(theTime);
-      f.set("-3*exp(-t)*exp(x+y)");
-      ts.setRHS(f);
+      ts.setRHS("-3*exp(-t)*exp(x+y)");
 
 //    Set Dirichlet boundary condition
-      bc.setTime(theTime);
-      bc.setNodeBC(1,"exp(-t)*exp(x+y)");
-      ts.setBC(bc);
+      ts.setBC(1,"exp(-t)*exp(x+y)");
 
 //    Run the time step: The solution is stored in vector u
       ts.runOneTimeStep();

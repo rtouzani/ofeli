@@ -81,9 +81,17 @@ void DC3DT4::set(const Element* el)
    Tetra4 t(_theElement);
    _el_geo.volume = t.getVolume();
    _el_geo.det = t.getDet();
+   _el_geo.center = t.getCenter();
    _dSh = t.DSh();
    ElementNodeCoordinates();
    ElementVector(*_u);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _ez = _el_geo.center.z, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_Cp_set)
+      _cp = _Cp_exp.value();
+   if (_kappa_set)
+      _diff = _kappa_exp.value();
    eA0 = 0, eA1 = 0, eMat = 0;
    eRHS = 0;
 }
@@ -102,7 +110,7 @@ void DC3DT4::set(const Side* sd)
 
 void DC3DT4::LCapacity(real_t coef)
 {
-   real_t c = coef*0.25*_el_geo.volume*_rhocp;
+   real_t c = coef*0.25*_el_geo.volume*_rho*_cp;
    for (size_t i=1; i<=4; i++)
       eA1(i,i) += c;
 }
@@ -110,7 +118,7 @@ void DC3DT4::LCapacity(real_t coef)
 
 void DC3DT4::Capacity(real_t coef)
 {
-   real_t c = 0.1*_el_geo.volume*_rhocp*coef;
+   real_t c = 0.1*_el_geo.volume*_rho*_cp*coef;
    real_t d = 0.5*c;
    eA1(1,1) += c; eA1(2,2) += c; eA1(3,3) += c; eA1(4,4) += c;
    eA1(1,2) += d; eA1(2,1) += d; eA1(1,3) += d; eA1(1,4) += d;

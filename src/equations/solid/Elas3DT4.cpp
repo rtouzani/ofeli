@@ -78,8 +78,15 @@ void Elas3DT4::set(const Element* el)
    if (AbsEqua<real_t>::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    _dSh = tetra.DSh();
-   _lambda = _nu*_E/((1+_nu)*(1-2*_nu));
-   _G = 0.5*_E/(1+_nu);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _ez = _el_geo.center.z, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_young_set)
+      _young = _young_exp.value();
+   if (_poisson_set)
+      _poisson = _poisson_exp.value();
+   _lambda = _poisson*_young/((1+_poisson)*(1-2*_poisson));
+   _G = 0.5*_young/(1+_poisson);
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }
@@ -104,8 +111,8 @@ void Elas3DT4::Media(real_t E,
                      real_t nu,
                      real_t rho)
 {
-   _E = E;
-   _nu = nu;
+   _young = E;
+   _poisson = nu;
    _rho = rho;
 }
 

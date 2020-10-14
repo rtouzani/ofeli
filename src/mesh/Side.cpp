@@ -31,15 +31,15 @@
 
 #include "mesh/Side.h"
 #include "mesh/Mesh.h"
-#include "io/fparser/fparser.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Quad4.h"
 #include "shape_functions/Tetra4.h"
 #include "shape_functions/Hexa8.h"
 #include "util/util.h"
+#include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
-extern FunctionParser theParser;
+extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -144,13 +144,18 @@ void Side::setCode(const string& exp,
                    int           code,
                    size_t        dof)
 {
-   PARSE(exp.c_str(),"x,y,z,t");
-   real_t d[3];
+   real_t x=0., y=0., z=0.;
+   exprtk::expression<double> expression;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   symbol_table.add_variable("x",x);
+   symbol_table.add_variable("y",y);
+   symbol_table.add_variable("z",z);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    for (size_t i=0; i<_nb_nodes; i++) {
-      d[0] = _node[i]->getCoord(1);
-      d[1] = _node[i]->getCoord(2);
-      d[2] = _node[i]->getCoord(3);
-      if (!EVAL(d))
+      x = _node[i]->getX(), y = _node[i]->getY(), z = _node[i]->getZ();
+      if (expression.value())
          return;
    }
    _code[dof-1] = code;

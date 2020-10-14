@@ -61,8 +61,7 @@ int OptimPG(OptSolver&          opt,
             int&                nb_obj_eval,
             int&                nb_grad_eval,
             int&                max_it,
-            real_t              toler,
-            int                 verb)
+            real_t              toler)
 {
    size_t n = x.size();
    Vect<real_t> px(n), xc(n), xt(n), gc(n), pgc(n), pl(n), xcc(n);

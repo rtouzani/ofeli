@@ -55,6 +55,7 @@ using std::string;
 #include "linear_algebra/Vect.h"
 #include "linear_algebra/Matrix.h"
 #include "solvers/MyNLAS.h"
+#include "io/Fct.h"
 
 
 namespace OFELI {
@@ -142,10 +143,6 @@ class NLASSolver
 
 //-------------------------------   MODIFIERS  ---------------------------------
 
-/// \brief Set verbosity parameter
-/// Value must be between 0 and 5. Default value is 0
-    void setVerbose(int verb) { _verb = verb; }
-
 /// \brief Set Maximal number of iterations
 /// \details Default value of this parameter is 100
     void setMaxIter(int max_it) { _max_it = max_it; }
@@ -197,6 +194,11 @@ class NLASSolver
  *  a variable
  */
     void setf(string exp);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void setf(Fct& f);
+    void setDf(Fct& df, int i=1, int j=1);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Set pzrtial derivative of function for which zero is sought (case of many equations)
  *  @param [in] exp Regular expression defining the partial derivative. In this expression, the
@@ -263,23 +265,20 @@ private:
      CLASS      = 2
    };
 
-   bool _cv, _f_given, _grad_given, _u_set, _ab_given;
+   bool _fct_allocated, _df_computed, _cv, _f_given, _df_given, _u_set, _ab_given;
    AbsEqua<real_t> *_theEqua;
-   int _nl, _verb, _max_it, _nl_it, _nb_eq, _it, _nb_it, _fct_type;
-   Vect<real_t> *_u, _v, _f;
+   int _nl, _max_it, _nl_it, _nb_eq, _it, _nb_it, _fct_type;
+   Vect<real_t> *_u, _v, _f, _w;
    real_t _toler, *_x, _y, _a, _b, _g;
-   string _var;
-   Vect<string> _Df_exp, _f_exp;
-   Matrix<double> *_Df;
+   Matrix<real_t> *_Df;
    Mesh *_theMesh;
    MyNLAS *_my_nlas;
    function<real_t(real_t)> _fct1, _grad1; 
    function<Vect<real_t>(Vect<real_t>)> _fct, _grad;
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+   vector<Fct *> _theFct, _theDFct;
    typedef void (NLASSolver::* NLPtr)();
    static NLPtr NL[7];
    NLPtr _nlp;
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
    real_t Function(const Vect<real_t>& u, int i=1);
    real_t Function(real_t x);
@@ -290,9 +289,7 @@ private:
    void solvePicard();
    void solveSecant();
    void solveNewton();
-   void eval(double x);
 };
-
 
 //-----------------------------------------------------------------------------
 // Associated functions

@@ -50,6 +50,7 @@
 #include "linear_algebra/LocalVect.h"
 #include "solvers/LinearSolver.h"
 #include "solvers/EigenProblemSolver.h"
+#include "io/exprtk_adds.h"
 
 namespace OFELI {
 /*!
@@ -123,7 +124,8 @@ enum TimeScheme {
    RUNGE_KUTTA        =  8,    /*!< 4-th Order Runge-Kutta scheme (4th Order)     */
    RK4                =  8,    /*!< 4-th Order Runge-Kutta scheme                 */
    RK3_TVD            =  9,    /*!< 3-rd Order Runge-Kutta TVD scheme             */
-   BDF2               = 10     /*!< Backward Difference Formula (2nd Order)       */
+   BDF2               = 10,    /*!< Backward Difference Formula (2nd Order)       */
+   BUILTIN            = 11     /*!< Builtin scheme, implemented in equation class */
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -316,9 +318,20 @@ class AbsEqua
     void setMatrixType(int t);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-/// \brief Set terms in equations
     virtual void setWithConvection(int f);
     void setTerms(PDE_Terms t);
+    void set_rho(string exp);
+    void set_Cp(string exp);
+    void set_kappa(string exp);
+    void set_mu(string exp);
+    void set_sigma(string exp);
+    void set_Mu(string exp);
+    void set_epsilon(string exp);
+    void set_omega(string exp);
+    void set_beta(string exp);
+    void set_v(string exp);
+    void set_young(string exp);
+    void set_poisson(string exp);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Solve the linear system with given matrix and right-hand side
@@ -413,16 +426,23 @@ class AbsEqua
    
  protected:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   Mesh                   *_theMesh;
-   size_t                 _nb_nodes, _nb_sides, _nb_boundary_sides, _nb_el, _nb_eq, _nb_dof, _nb_dof_total;
-   int                    _field_type, _terms;
-   int                    _matrix_type, _solver, _max_it;
-   size_t                 _nb_fields, _nb_eigv;
-   EigenProblemSolver     _ev;
-   bool                   _eigen;
-   bool                   _constant_matrix, _constant_mesh, _set_matrix, _set_solver;
-   int                    _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
-   string                 _equation_name, _finite_element;
+   Mesh                         *_theMesh;
+   size_t                       _nb_nodes, _nb_sides, _nb_boundary_sides, _nb_el, _nb_eq, _nb_dof, _nb_dof_total;
+   int                          _field_type, _terms;
+   int                          _matrix_type, _solver, _max_it;
+   size_t                       _nb_fields, _nb_eigv;
+   EigenProblemSolver           _ev;
+   bool                         _eigen;
+   bool                         _constant_matrix, _constant_mesh, _set_matrix, _set_solver;
+   int                          _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
+   string                       _equation_name, _finite_element;
+   bool                         _rho_set, _Cp_set, _kappa_set, _mu_set, _sigma_set, _Mu_set;
+   bool                         _epsilon_set, _omega_set, _beta_set, _v_set, _young_set, _poisson_set;
+   exprtk::symbol_table<real_t> _symbol_table;
+   exprtk::expression<real_t>   _rho_exp, _Cp_exp, _kappa_exp, _mu_exp, _sigma_exp, _Mu_exp;
+   exprtk::expression<real_t>   _epsilon_exp, _omega_exp, _beta_exp, _v_exp, _young_exp, _poisson_exp;
+   real_t                       _ex, _ey, _ez, _et;
+
    LinearSolver<T_>       _ls;
    real_t                 _toler;
    Prescription           *_prescription;
@@ -457,6 +477,7 @@ class AbsEqua
    void setConstantMatrix();
    void setConstantMesh();
    virtual void setTerms(int opt);
+   void set_exprtk();
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

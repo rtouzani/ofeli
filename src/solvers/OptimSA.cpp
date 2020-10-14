@@ -234,7 +234,7 @@ namespace OFELI {
 
     @return
     <ul>
-	   <li>0 - Normal return; termination criteria achieved.\n
+        <li>0 - Normal return; termination criteria achieved.\n
         <li>1 - Number of function evaluations \a (nfcnev) is
                 greater than the maximum number \a (max_eval).\n
         <li>2 - The starting value \a (x) is not inside the
@@ -255,7 +255,6 @@ int OptimSA(OptSolver&          opt,
             const Vect<real_t>& lb,
             const Vect<real_t>& ub,
             const Vect<real_t>& c,
-            int&                verb,
             real_t&             t,
             Vect<real_t>&       vm,
             real_t&             fopt,
@@ -302,7 +301,7 @@ int OptimSA(OptSolver&          opt,
    ++nb_obj_eval;
    fopt = f;
    fstar[0] = f;
-   if (verb >= 1) {
+   if (Verbosity >= 1) {
       cout << endl;
       cout << "Initial x\n" << x;
       cout << "Initial f: " << -f << endl;
@@ -330,7 +329,7 @@ L100:
 //                x[i] = lb[i] + (ub[i] - lb[i]) * ranmar();
                   x[i] = lb[i] + (ub[i] - lb[i]) * rand();
                   ++lnobds, ++nobds;
-                  if (verb >= 3) {
+                  if (Verbosity >= 3) {
                      cout << endl;
                      cout << "Current x\n" << x;
                      cout << "Current f : " << -f << endl;
@@ -342,7 +341,7 @@ L100:
 //          Evaluate the function with the trial point xp and return as fp
             fp = -opt.Objective(xp);
             ++nb_obj_eval;
-            if (verb >= 3) {
+            if (Verbosity >= 3) {
                cout << endl << "Current x\n" << x;
                cout << "Current f : " << -f << endl;
                cout << "Trial x\n" << xp;
@@ -358,7 +357,7 @@ L100:
 
 //          Accept the new point if the function value increases
             if (fp >= f) {
-               if (verb >= 3)
+               if (Verbosity >= 3)
                   cout << "Point accepted\n";
                x = xp;
                f = fp;
@@ -366,7 +365,7 @@ L100:
 
 //             If greater than any other point, record as new optimum
                if (fp > fopt) {
-                  if (verb >= 3)
+                  if (Verbosity >= 3)
                      cout << "New Optimum\n";
                   x = xp;
                   fopt = fp;
@@ -380,14 +379,14 @@ L100:
 //             pp = ranmar_();
                pp = rand();
                if (pp < p) {
-                  if (verb >= 3)
+                  if (Verbosity >= 3)
                      cout << "Though higher, point accepted\n";
                   x = xp;
                   f = fp;
                   ++nacc, ++nacp[k], ++ndown;
                } else {
                   ++nrej;
-                  if (verb >= 3)
+                  if (Verbosity >= 3)
                      cout << "Higher point rejected\n";
                }
             }
@@ -404,7 +403,7 @@ L100:
          if (vm[i] > (ub[i]-lb[i]))
             vm[i] = ub[i] - lb[i];
       }
-      if (verb >= 2) {
+      if (Verbosity >= 2) {
          cout << "Intermediate results after step length adjustment\n";
          cout << "New step length (vm)\n" << vm;
          cout << "Current optimal x\n" << x;
@@ -412,7 +411,7 @@ L100:
       }
       nacp = 0;
    }
-   if (verb >= 1) {
+   if (Verbosity >= 1) {
       totmov = nup + ndown + nrej;
       cout << "Intermediate results before next temperature reduction\n";
       cout << "Current Temperature:            " << t << endl;
@@ -439,7 +438,7 @@ L100:
 // Terminate SA if appropriate.
    if (quit) {
       fopt = -fopt;
-      if (verb >= 1)
+      if (Verbosity >= 1)
          cout << "SA Achieved termination criteria.\n";
       return 0;
    }

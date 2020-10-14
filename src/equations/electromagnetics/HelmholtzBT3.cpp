@@ -42,7 +42,7 @@ namespace OFELI {
 HelmholtzBT3::HelmholtzBT3(Mesh& ms)
              : Equation<complex_t,3,3,2,2>(ms)
 {
-   _wave_nb = 1.;
+   _omega = 1.;
    _equation_name = "Helmholtz equation in a bounded domain";
    _finite_element = "2-D, 3-Node Triangles (P1)";
    _theMesh->removeImposedDOF();
@@ -55,7 +55,7 @@ HelmholtzBT3::HelmholtzBT3(Mesh&            ms,
                            Vect<complex_t>& u)
              : Equation<complex_t,3,3,2,2>(ms,u)
 {
-   _wave_nb = 1.;
+   _omega = 1.;
    _equation_name = "Helmholtz equation in a bounded domain";
    _finite_element = "2-D, 3-Node Triangles (P1)";
    _theMesh->removeImposedDOF();
@@ -75,9 +75,13 @@ void HelmholtzBT3::set(const Element* el)
    setMaterial();
    Triang3 tr(_theElement);
    _el_geo.area = tr.getArea();
+   _el_geo.center = tr.getCenter();
    _dSh = tr.DSh();
    ElementNodeCoordinates();
    ElementNodeVector(*_u,_eu);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_omega_set)
+      _omega = _omega_exp.value();
    eMat = complex_t(0);
    eRHS = complex_t(0);
 }
@@ -96,7 +100,7 @@ void HelmholtzBT3::set(const Side* sd)
 
 void HelmholtzBT3::LHS()
 {
-   real_t c = _wave_nb*_wave_nb*_el_geo.area/12.0;
+   real_t c = _omega*_el_geo.area*OFELI_TWELVETH;
    for (size_t i=1; i<=3; i++) {
       Point<real_t> a = _el_geo.area*_dSh[i-1];
       for (size_t j=1; j<=3; j++)

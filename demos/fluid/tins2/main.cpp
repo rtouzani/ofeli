@@ -67,7 +67,9 @@ int main(int argc, char *argv[])
       eq.setTolerance(proj.getTolerance());
       Prescription pr(mesh,proj.getDataFile());
       pr.get(INITIAL_FIELD,u);
+      pr.get(BOUNDARY_CONDITION,bc,0.);
       eq.setInput(INITIAL_FIELD,u);
+      eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(PRESSURE_FIELD,p);
 
 //    Loop on time steps

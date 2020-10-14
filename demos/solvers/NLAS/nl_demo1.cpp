@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
    double x = 0.;
    NLASSolver nls(x,REGULA_FALSI);
    nls.setFunction(function<double(double)>(f));
-   nls.setVerbose(3);
+   Verbosity = 3;
    nls.setInitial(0.,2.);
    nls.run();
    cout << "Solution: " << x << endl;

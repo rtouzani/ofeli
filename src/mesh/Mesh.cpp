@@ -72,6 +72,7 @@ Side *theSide, *the_side;
 Edge *theEdge, *the_edge;
 
 extern Material theMaterial;
+
 Mesh::Mesh()
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0), _dim(2),
        _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0), _no_imposed_dof(false),

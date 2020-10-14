@@ -45,8 +45,7 @@ int OptimTN(OptSolver&          opt,
             int&                nb_obj_eval,
             int&                nb_grad_eval,
             int&                max_it,
-            real_t              toler,
-            int                 verb)
+            real_t              toler)
 {
    int ret;
    size_t n=x.size();
@@ -69,13 +68,14 @@ int OptimTN(OptSolver&          opt,
    real_t accrcy = toler;
    size_t max_fun = 150*n;
    real_t eta=0.25, stepmx=10., xtol=sqrt(accrcy);
-   ret = lmqnbc(opt,x,f,g,lb,ub,pivot,verb,max_it,max_fun,eta,stepmx,accrcy,xtol,
+   ret = lmqnbc(opt,x,f,g,lb,ub,pivot,max_it,max_fun,eta,stepmx,accrcy,xtol,
                 nb_obj_eval,nb_grad_eval);
 
 // Print results
-   if (ret)
+   if (ret && Verbosity>2)
       cout << "\n\nError Code = " << ret << endl;
-   cout << "\n\nOptimal Function Value = " << f << endl;
+   if (Verbosity>1)
+      cout << "\n\nOptimal Function Value = " << f << endl;
    return ret;
 }
 
@@ -87,7 +87,6 @@ int lmqnbc(OptSolver&          opt,
            const Vect<real_t>& lb,
            const Vect<real_t>& ub,
            vector<int>&        pivot,
-           int                 verb,
            int&                max_it,
            size_t              max_fun,
            real_t&             eta,
@@ -118,7 +117,7 @@ int lmqnbc(OptSolver&          opt,
       cout << "There is no feasible point; Terminating algorithm." << endl;
       return ier;
    }
-   if (verb>0)
+   if (Verbosity>0)
       cout << "\n\n   NIT  NF   CG           F                  GTG\n" << endl;
 
 // Initialize variables
@@ -154,7 +153,7 @@ int lmqnbc(OptSolver&          opt,
    }
    ztime(g,pivot);
    real_t gtg = (g,g);
-   if (verb>0)
+   if (Verbosity>0)
       monit(fnew,g,pivot,niter,nftotl,nb_obj_eval);
 
 // Check if the initial point is a local minimum
@@ -177,7 +176,7 @@ int lmqnbc(OptSolver&          opt,
 /* ..................start of main iterative loop.......... */
 
 // Compute the new search direction
-   modlnp(opt,verb-3,w[12],w[0],w[1],w[3],w[6],w[13],x,g,w[2],max_it,nb_obj_eval,
+   modlnp(opt,w[12],w[0],w[1],w[3],w[6],w[13],x,g,w[2],max_it,nb_obj_eval,
           nb_grad_eval,nmodif,nlincg,upd1,yksk,gsk,yrsr,lreset,1,pivot,accrcy,gtpnew,
           gnorm,xnorm,lhyr,w);
 
@@ -212,13 +211,13 @@ L20:
       flast = fnew;
    }
 
-   if (verb>2)
+   if (Verbosity>2)
       cout << "        Linesearch results: alpha, pnorm: " << alpha << " " << pnorm << endl;
    ++niter;
    nftotl += numf;
 
 // If required, print the details of this iteration
-   if (verb>0)
+   if (Verbosity>0)
       monit(fnew,g,pivot,niter,nftotl,nb_obj_eval);
    if (nwhy<0)
       return nwhy;
@@ -288,11 +287,11 @@ L40:
       }
 
 //    Compute new search direction
-      if (upd1 && verb>2)
+      if (upd1 && Verbosity>2)
          cout << "upd1 is true - Trivial Preconditioning" << endl;
-      if (newcon && verb>=3)
+      if (newcon && Verbosity>=3)
          cout << "newcon is true - Constraint added in linesearch" << endl;
-      modlnp(opt,verb-3,w[12],w[0],w[1],w[3],w[6],w[13],x,g,w[2],max_it,
+      modlnp(opt,w[12],w[0],w[1],w[3],w[6],w[13],x,g,w[2],max_it,
              nb_obj_eval,nb_grad_eval,nmodif,nlincg,upd1,yksk,gsk,yrsr,lreset,1,
              pivot,accrcy,gtpnew,gnorm,xnorm,lhyr,w);   
       if (newcon)
@@ -329,7 +328,7 @@ L140:
 
 //  Local search could be installed here
    f = oldf;
-   if (verb>0)
+   if (Verbosity>0)
       monit(f,g,pivot,niter,nftotl,nb_obj_eval);
    return nwhy;
 }
@@ -472,7 +471,6 @@ int cnvtst(real_t              alpha,
 
 
 int modlnp(OptSolver&    opt,
-           int           modet,
            Vect<real_t>& zsol,
            Vect<real_t>& gv,
            Vect<real_t>& r,
@@ -501,6 +499,7 @@ int modlnp(OptSolver&    opt,
            int           lhyr,
            Vect<real_t>* w)
 {
+   int modet = Verbosity - 3;
    real_t beta=0, qnew=0, alpha=0, delta=0, rzold=0, rnorm=0, qtest=0, pr;
    nmodif = 0;
    size_t n=x.size();

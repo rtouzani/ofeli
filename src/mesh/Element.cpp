@@ -34,11 +34,11 @@
 #include "mesh/Side.h"
 #include "mesh/Node.h"
 #include "linear_algebra/LocalMatrix_impl.h"
-#include "io/fparser/fparser.h"
+#include "io/exprtk_adds.h"
 #include "util/util.h"
 #include "OFELIException.h"
 
-extern FunctionParser theParser;
+extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -354,15 +354,20 @@ int Element::Contains(const Side* sd) const
 
 
 void Element::setCode(const string& exp,
-                            int     code)
+                      int           code)
 {
-   theParser.Parse(exp.c_str(),"x,y,z");
-   real_t d[3];
+   exprtk::expression<double> expression;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   real_t x=0., y=0., z=0.;
+   symbol_table.add_variable("x",x);
+   symbol_table.add_variable("y",y);
+   symbol_table.add_variable("z",z);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
    for (size_t i=0; i<_nb_nodes; i++) {
-      d[0] = _node[i]->getCoord(1);
-      d[1] = _node[i]->getCoord(2);
-      d[2] = _node[i]->getCoord(3);
-      if (!theParser.Eval(d))
+      x = _node[i]->getX(), y = _node[i]->getY(), z = _node[i]->getZ();
+      if (expression.value())
          return;
    }
    _code = code;

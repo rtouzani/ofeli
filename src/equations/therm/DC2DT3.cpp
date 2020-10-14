@@ -51,7 +51,7 @@ DC2DT3::DC2DT3()
 }
 
 
-DC2DT3::DC2DT3(Mesh& ms) 
+DC2DT3::DC2DT3(Mesh& ms)
        : Equation<real_t,3,3,2,2>(ms)
 {
    _equation_name = "Diffusion/Convection";
@@ -88,6 +88,13 @@ void DC2DT3::set(const Element* el)
    _el_geo.size = 2*tr.getCircumRadius();
    ElementNodeCoordinates();
    ElementNodeVector(*_u,_eu);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_Cp_set)
+      _cp = _Cp_exp.value();
+   if (_kappa_set)
+      _diff = _kappa_exp.value();
    eA0 = 0, eA1 = 0;
    eRHS = 0;
 }
@@ -115,7 +122,7 @@ void DC2DT3::setInput(EqDataType    opt,
 
 void DC2DT3::LCapacity(real_t coef)
 {
-   real_t c=OFELI_THIRD*_el_geo.area*_rhocp*coef;
+   real_t c=OFELI_THIRD*_el_geo.area*_rho*_cp*coef;
    eA1(1,1) += c;
    eA1(2,2) += c;
    eA1(3,3) += c;
@@ -125,7 +132,7 @@ void DC2DT3::LCapacity(real_t coef)
 
 void DC2DT3::Capacity(real_t coef)
 {
-   real_t c=OFELI_SIXTH*_el_geo.area*_rhocp*coef;
+   real_t c=OFELI_SIXTH*_el_geo.area*_rho*_cp*coef;
    real_t d=0.5*c;
    eA1(1,1) += c; eA1(2,2) += c; eA1(3,3) += c;
    eA1(1,2) += d; eA1(2,1) += d; eA1(1,3) += d;

@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
 
    IPF data("Helmholtz - 1.0",argv[1]);
    Verbosity = data.getVerbose();
-   double wave_nb = data.getDoublePar(1);
 
    if (Verbosity) {
       cout << endl << endl;
@@ -68,7 +67,6 @@ int main(int argc, char *argv[])
 
 //    Read Mesh data
       Mesh ms(data.getMeshFile());
-      wave_nb = data.getDouble("wave_nb");
       if (Verbosity > 5)
          cout << ms;
 
@@ -84,7 +82,7 @@ int main(int argc, char *argv[])
 
       HelmholtzBT3 eq(ms,u);
       eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setWaveNumber(wave_nb);
+      eq.set_omega(data.getString("omega"));
       eq.run();
 
       if (Verbosity > 4)

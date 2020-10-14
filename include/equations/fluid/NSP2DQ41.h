@@ -85,12 +85,6 @@ class NSP2DQ41 : virtual public Equa_Fluid<real_t,4,8,2,4>
  */  
     void setPenalty(real_t lambda) { _penal = lambda; }
 
-/// \brief Define constant viscosity
-    void setViscosity(real_t visc) { _visc = visc; }
-
-/// \brief Define constant density
-    void setDensity(real_t dens) { _dens = dens; }
-
 /** \brief Set equation input data
  *  @param [in] opt Parameter that selects data type for input. This parameter
  *  is to be chosen in the enumerated variable EqDataType

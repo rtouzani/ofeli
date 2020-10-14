@@ -91,11 +91,19 @@ void Elas2DT3::set(const Element* el)
    PlaneStrain();
    Triang3 tr(el);
    _el_geo.area = tr.getArea();
+   _el_geo.center = tr.getCenter();
    _dSh = tr.DSh();
    ElementNodeCoordinates();
    ElementNodeVector(*_u,_eu);
    if (AbsEqua<real_t>::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_young_set)
+      _young = _young_exp.value();
+   if (_poisson_set)
+      _poisson = _poisson_exp.value();
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }
@@ -119,8 +127,8 @@ void Elas2DT3::Media(real_t E,
                      real_t nu,
                      real_t rho)
 {
-   _E = E;
-   _nu = nu;
+   _young = E;
+   _poisson = nu;
    _rho = rho;
    PlaneStrain(E,nu);
 }
@@ -129,11 +137,11 @@ void Elas2DT3::Media(real_t E,
 void Elas2DT3::PlaneStrain(real_t E,
                            real_t nu)
 {
-   _E = E;
-   _nu = nu;
-   _lambda = _nu*_E/((1+_nu)*(1-2*_nu));
-   _G = 0.5*_E/(1+_nu);
-   _E1 = _lambda*(1-_nu)/_nu;
+   _young = E;
+   _poisson = nu;
+   _lambda = _poisson*_young/((1+_poisson)*(1-2*_poisson));
+   _G = 0.5*_young/(1+_poisson);
+   _E1 = _lambda*(1-_poisson)/_poisson;
    _E2 = _lambda;
    _E3 = _E1;
    _E6 = _G;
@@ -142,9 +150,9 @@ void Elas2DT3::PlaneStrain(real_t E,
 
 void Elas2DT3::PlaneStrain()
 {
-   _lambda = _nu*_E/((1+_nu)*(1-2*_nu));
-   _G = 0.5*_E/(1+_nu);
-   _E1 = _lambda*(1-_nu)/_nu;
+   _lambda = _poisson*_young/((1+_poisson)*(1-2*_poisson));
+   _G = 0.5*_young/(1+_poisson);
+   _E1 = _lambda*(1-_poisson)/_poisson;
    _E2 = _lambda;
    _E3 = _E1;
    _E6 = _G;
@@ -156,8 +164,8 @@ void Elas2DT3::PlaneStress(real_t E,
 {
    PlaneStrain(E,nu);
    _lambda = 2*_lambda*_G/(_lambda+2*_G);
-   _E1 = _E/(1-_nu*_nu);
-   _E2 = _E1*_nu;
+   _E1 = _young/(1-_poisson*_poisson);
+   _E2 = _E1*_poisson;
    _E3 = _E1;
    _E6 = _G;
 }
@@ -167,8 +175,8 @@ void Elas2DT3::PlaneStress()
 {
    PlaneStrain();
    _lambda = 2*_lambda*_G/(_lambda+2*_G);
-   _E1 = _E/(1-_nu*_nu);
-   _E2 = _E1*_nu;
+   _E1 = _young/(1-_poisson*_poisson);
+   _E2 = _E1*_poisson;
    _E3 = _E1;
    _E6 = _G;
 }

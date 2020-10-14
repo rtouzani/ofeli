@@ -66,8 +66,16 @@ void NS2DT3BT3::set(const Element* el)
    setMaterial();
    Triang3 tr(_theElement);
    _el_geo.area = tr.getArea();
+   _el_geo.center = tr.getCenter();
    ElementNodeCoordinates();
    _dSh = tr.DSh();
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_mu_set)
+      _mu = _mu_exp.value();
+   if (_beta_set)
+      _beta = _beta_exp.value();
    eA0 = 0, eA1 = 0;
    eRHS = 0;
 }
@@ -103,7 +111,7 @@ void NS2DT3BT3::Misc()
 {
    Point<real_t> x32=_x[2]-_x[1], x13=_x[0]-_x[2], x21=_x[1]-_x[0];
    real_t n13=(x13,x13), n21=(x21,x21), m32=(x13,x21);
-   real_t a = 0.25*_visc/_el_geo.area;
+   real_t a = 0.25*_mu/_el_geo.area;
 
    _aa(1,1) = a*x32.NNorm();
    _aa(2,1) = -a*(n13 + m32);
@@ -146,7 +154,7 @@ void NS2DT3BT3::Misc()
 
 void NS2DT3BT3::LMass(real_t coef)
 {
-   real_t c = coef*_dens*OFELI_THIRD*_el_geo.area;
+   real_t c = coef*_rho*OFELI_THIRD*_el_geo.area;
    for (size_t i=1; i<=3; i++) {
       eA1(3*i-2,3*i-2) += c;
       eA1(3*i-1,3*i-1) += c;

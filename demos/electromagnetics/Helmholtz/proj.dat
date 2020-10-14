@@ -7,7 +7,7 @@
 </info>
 <Project name="proj">
    <verbose value="3"/>
-   <parameter label="wave_nb" value="2.23606798"/>
+   <parameter label="omega" value="628"/>
    <mesh_file value="proj.m"/>
 </Project>
 </OFELI_File>

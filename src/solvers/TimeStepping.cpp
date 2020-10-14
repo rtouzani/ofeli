@@ -37,9 +37,7 @@
 #include "linear_algebra/SkMatrix_impl.h"
 #include "linear_algebra/Assembly_impl.h"
 #include "OFELIException.h"
-#include "io/fparser/fparser.h"
 
-extern FunctionParser theParser;
 
 namespace OFELI {
 
@@ -54,7 +52,8 @@ TimeStepping::TSPtr TimeStepping::TS [] = {
    &TimeStepping::solveAB2,                 // Adams Bashforth 2
    &TimeStepping::solveRK4,                 // Runge Kutta 4
    &TimeStepping::solveRK3_TVD,             // TVD Runge Kutta 3
-   &TimeStepping::solveBDF2                 // Backward Differentiation Formula
+   &TimeStepping::solveBDF2,                // Backward Differentiation Formula
+   &TimeStepping::solveBuiltIn              // A specific time scheme implemented in the equation class
 };
 
 TimeStepping::ASPtr TimeStepping::AS [] = {
@@ -115,7 +114,7 @@ TimeStepping::PreSolvePtr TimeStepping::PS [] = {
 
 
 TimeStepping::TimeStepping() :
-              _order(0), _step(0), _nb_des(0), _ind(0), _verb(1), _regex(false), _time_step(0.1),
+              _order(0), _step(0), _nb_des(0), _ind(0), _regex(false), _time_step(0.1),
               _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5), _nl_toler(1.e-6),
               _max_nl_it(100)
 {
@@ -126,7 +125,7 @@ TimeStepping::TimeStepping() :
 TimeStepping::TimeStepping(TimeScheme s,
                            real_t     time_step,
                            real_t     final_time) :
-              _order(0), _step(0), _nb_des(0), _ind(0), _verb(1), _time_step(0.1), _time(0.),
+              _order(0), _step(0), _nb_des(0), _ind(0), _time_step(0.1), _time(0.),
               _final_time(1.), _beta(0.25), _gamma(0.5), _nl_toler(1.e-6), _max_nl_it(100)
 {
    setScheme();
@@ -154,9 +153,11 @@ void TimeStepping::setScheme()
    _sch[RK4] = 7;
    _sch[RK3_TVD] = 8;
    _sch[BDF2] = 9;
+   _sch[BUILTIN] = 10;
    _scs = {{STATIONARY,"Stationary"}, {FORWARD_EULER,"Forward Euler"}, {BACKWARD_EULER,"Backward Euler"},
            {CRANK_NICOLSON,"Crank-Nicolson"}, {HEUN,"Heun"}, {NEWMARK,"Newmark"}, {LEAP_FROG,"LeapFrog"},
-           {AB2,"Adams-Bashforth"}, {RK4,"Runge-Kutta 4"}, {RK3_TVD,"Runge-Kutta 3, TVD"}, {BDF2,"BDF 2"}};
+           {AB2,"Adams-Bashforth"}, {RK4,"Runge-Kutta 4"}, {RK3_TVD,"Runge-Kutta 3, TVD"}, {BDF2,"BDF 2"},
+           {BUILTIN,"BuiltIn"}};
 }
 
 
@@ -299,10 +300,29 @@ void TimeStepping::setRHS(Vect<real_t>& f)
 }
 
 
+void TimeStepping::setRHS(string exp)
+{
+   _ff.setMesh(*_de[_nb_des-1].mesh);
+   _ff.setTime(theTime);
+   _ff.set(exp);
+   setRHS(_ff);
+}
+
+
 void TimeStepping::setBC(Vect<real_t>& u)
 {
    _de[_nb_des-1].bc = &u;
    _de[_nb_des-1].set_bc = true;
+}
+
+
+void TimeStepping::setBC(int    code,
+			 string exp)
+{
+   _fbc.setMesh(*_de[_nb_des-1].mesh);
+   _fbc.setTime(theTime);
+   _fbc.setNodeBC(code,exp);
+   setRHS(_fbc);
 }
 
 
@@ -336,13 +356,19 @@ real_t TimeStepping::runOneTimeStep()
 {
    _step++;
    _time = theTime;
-   if (_verb>0)
+   if (Verbosity>1)
       std::cout << "   Time step: " << _step << ", time: " << _time << " ..." << std::endl;
+
    for (int e=0; e<_nb_des; ++e) {
       DE &de = _de[e];
-      if (de.bc != nullptr) {
-         de.eq->setInput(BOUNDARY_CONDITION,*de.bc);
+      if (_sc==int(BUILTIN)) {
+         if (de.bc != nullptr)
+            de.eq->setInput(BOUNDARY_CONDITION,*de.bc);
+         de.eq->runOneTimeStep();
+	 break;
       }
+      if (de.bc != nullptr)
+         de.eq->setInput(BOUNDARY_CONDITION,*de.bc);
       if (de.nl) {
          for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
             int it=1;
@@ -386,7 +412,7 @@ real_t TimeStepping::runOneTimeStep()
 
 void TimeStepping::run(bool opt)
 {
-   if (_verb>0)
+   if (Verbosity>0)
       std::cout << "Running time integration ..." << std::endl;
    for (int e=0; e<_nb_des; ++e)
       _de[e].constant_matrix = opt;
@@ -589,6 +615,11 @@ void TimeStepping::solveBDF2()
       de.u = de.v;
       de.v = *de.w;
    }
+}
+
+
+void TimeStepping::solveBuiltIn()
+{
 }
 
 

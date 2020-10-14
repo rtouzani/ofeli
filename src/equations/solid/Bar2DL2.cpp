@@ -73,6 +73,9 @@ void Bar2DL2::set(const Element* el)
    _cc = c*c;
    _ss = s*s;
    _sc = c*s;
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_young_set)
+      _young = _young_exp.value();
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }
@@ -105,7 +108,7 @@ void Bar2DL2::Mass(real_t coef)
 
 void Bar2DL2::Stiffness(real_t coef)
 {
-   real_t c = _E*_section*coef/_el_geo.length;
+   real_t c = _young*_section*coef/_el_geo.length;
    real_t cc = c*_cc, ss = c*_ss, sc = c*_sc;
    eA0(1,1) += cc; eA0(1,2) += sc; eA0(1,3) -= cc; eA0(1,4) -= sc;
    eA0(2,1) += sc; eA0(2,2) += ss; eA0(2,3) -= sc; eA0(2,4) -= ss;
@@ -157,8 +160,8 @@ void Bar2DL2::getStresses(Vect<real_t>& s)
    s.setSize(_nb_el,2);
    MESH_EL {
       set(the_element);
-      s(element_label,1) = _E*_section*(_eu(3)-_eu(1))/_el_geo.length;
-      s(element_label,2) = _E*_section*(_eu(4)-_eu(2))/_el_geo.length;
+      s(element_label,1) = _young*_section*(_eu(3)-_eu(1))/_el_geo.length;
+      s(element_label,2) = _young*_section*(_eu(4)-_eu(2))/_el_geo.length;
    }
 }
 

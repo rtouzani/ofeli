@@ -61,6 +61,13 @@ void EC2DB2T3::set(const Element *el)
    _det = 2*_area;
    ElementNodeCoordinates();
    _dSh = tr.DSh();
+   _ex = _center.x, _ey = _center.y, _et = _TimeInt.time;
+   if (_omega_set)
+      _omega = _omega_exp.value();
+   if (_Mu_set)
+      _Mu = _Mu_exp.value();
+   if (_sigma_set)
+      _sigma = _sigma_exp.value();
    eMat = 0;
    eRHS = 0;
 }
@@ -81,14 +88,14 @@ void EC2DB2T3::set(const Side *sd)
 
 void EC2DB2T3::RHS(real_t coef)
 {
-   eRHS(1) = eRHS(3) = eRHS(5) = coef*OFELI_THIRD*_area/_rho;
+   eRHS(1) = eRHS(3) = eRHS(5) = coef*OFELI_THIRD*_area*_sigma;
    eRHS(2) = eRHS(4) = eRHS(6) = 0;
 }
 
 
-void EC2DB2T3::EMatr(real_t omega)
+void EC2DB2T3::EMatr()
 {
-   real_t c = 0.25*_mu*omega*OFELI_THIRD*_area/_rho;
+   real_t c = 0.25*_Mu*_omega*OFELI_THIRD*_area*_sigma;
    for (size_t i=1; i<=3; i++) {
       eMat(2*i-1,2*i  ) -= c;
       eMat(2*i  ,2*i-1) += c;
@@ -101,21 +108,20 @@ void EC2DB2T3::EMatr(real_t omega)
 }
 
 
-complex_t EC2DB2T3::Constant(real_t                     omega,
-                             const LocalVect<real_t,6>& u,
+complex_t EC2DB2T3::Constant(const LocalVect<real_t,6>& u,
                              complex_t                  I)
 {
    real_t ur = OFELI_THIRD*_area*(u(1)+u(3)+u(5));
    real_t ui = OFELI_THIRD*_area*(u(2)+u(4)+u(6));
-   real_t c1 = _rho*(I.real() - omega*ui/_rho)/_area;
-   real_t c2 = _rho*(I.imag() + omega*ur/_rho)/_area;
-   return complex_t (c1,c2);
+   real_t c1 = (I.real() - _omega*ui*_sigma)/_area/_sigma;
+   real_t c2 = (I.imag() + _omega*ur*_sigma)/_area/_sigma;
+   return complex_t(c1,c2);
 }
 
 
 real_t EC2DB2T3::MagneticPressure(const LocalVect<real_t,6>& u)
 {
-   real_t c = 0.5*_mu*_area;
+   real_t c = 0.5*_Mu*_area;
    real_t dxr=0, dxi=0, dyr=0, dyi=0;
    for (size_t i=0; i<3; i++) {
       dxr += _dSh[i].x*u(2*i  );

@@ -42,11 +42,7 @@ using std::setw;
 using std::string;
 
 #include "OFELI_Config.h"
-#include "io/fparser/fparser.h"
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-extern FunctionParser theParser;
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+#include "linear_algebra/Point.h"
 
 namespace OFELI {
 /*!

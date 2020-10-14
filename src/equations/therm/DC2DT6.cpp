@@ -74,9 +74,17 @@ void DC2DT6::set(const Element* el)
    setMaterial();
    Triang6S tr(el);
    _el_geo.area = tr.getArea();
+   _el_geo.center = tr.getCenter();
    ElementNodeCoordinates();
    tr.atMidEdges(_dSh,_wg);
    ElementVector(*_u);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_Cp_set)
+      _cp = _Cp_exp.value();
+   if (_kappa_set)
+      _diff = _kappa_exp.value();
    eA0 = 0, eA1 = 0;
    eRHS = 0;
    _a3 = OFELI_THIRD*_el_geo.area;
@@ -94,7 +102,7 @@ void DC2DT6::set(const Side* sd)
 
 void DC2DT6::LCapacity(real_t coef)
 {
-   real_t c = 0.5*_a3*_rhocp*coef;
+   real_t c = 0.5*_a3*_rho*_cp*coef;
    eA1(1,1) += c; eA1(2,2) += c;
    eA1(3,3) += c; eA1(4,4) += c;
    eA1(5,5) += c; eA1(6,6) += c;
@@ -103,7 +111,7 @@ void DC2DT6::LCapacity(real_t coef)
 
 void DC2DT6::Capacity(real_t coef)
 {
-   real_t c = OFELI_SIXTH*_el_geo.area*_rhocp*coef;
+   real_t c = OFELI_SIXTH*_el_geo.area*_rho*_cp*coef;
    real_t d = 0.5*c;
    eA1(1,1) += c;
    eA1(2,2) += c;

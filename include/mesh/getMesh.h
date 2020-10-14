@@ -37,6 +37,7 @@
 #include <string>
 using std::string;
 
+#include <vector>
 #include "OFELI_Config.h"
 #include "linear_algebra/Point.h"
 

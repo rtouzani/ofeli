@@ -51,6 +51,7 @@ using std::string;
 #include "solvers/LinearSolver.h"
 #include "solvers/Iter.h"
 #include "equations/AbsEqua.h"
+#include "io/Fct.h"
 
 namespace OFELI {
 /*!
@@ -106,6 +107,9 @@ class ODESolver
 
 /// \brief Default constructor
     ODESolver();
+
+/// \brief Constructor providing the number of equations
+    ODESolver(size_t nb_eq);
 
 /** \brief Constructor using time discretization data
  *  @param [in] s Choice of the scheme: To be chosen in the enumerated variable
@@ -207,19 +211,27 @@ class ODESolver
  *  In the case of a system of ODEs, this function can be called once for each equation, 
  *  given in the order of the unknowns
  */
-    void setDF(string df);
+    void setDF(string df,
+               int    i,
+               int    j);
 
-/** \brief Set time derivative with respect to the unknown of the function defining the ODE
+/** \brief Set time derivative of the function defining the ODE
  *  \details This function enables prescribing the value of the 1-st derivative
  *  for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be
  *  used for nonlinear ODEs of the form 
  *  y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))\n
- *  This function is to be used for the <tt>i</tt>-th equation of a system of ODEs
- *  @param [in] df Expression of time derivative of the function
- *  @param [in] i Index of equation. Must be not larger than the number of equations
+ *  In the case of a system of ODEs, this function can be called once for each equation, 
+ *  given in the order of the unknowns
  */
-    void setDF(string df,
-               int    i);
+    void setdFdt(string df,
+                 int    i);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void setF(Fct& f);
+    void setF(Fct& f, int i);
+    void setDF(Fct& df, int i=1, int j=1);
+    void setdFdt(Fct& df, int i=1);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Set intermediate right-hand side vector for the Runge-Kutta method
  *  @param [in] f Value of right-hand side
@@ -438,18 +450,20 @@ class ODESolver
    int _sc;
    Iteration _s;
    Preconditioner _p;
+   bool _fct_allocated, _dF_computed, _setF_called, _RK4_rhs;
    bool _linear, _a0, _a1, _a2, _constant_matrix, _regex, _explicit, _init, _lhs, _rhs, _rhsF;
-   Vect<real_t> _u, _v, *_w, _f0, _f1, _f2, _b, _f01, _f, *_bc, _bb, _vv, _dudt;
+   Vect<real_t> _x, _u, _v, *_w, _f0, _f1, _f2, _b, _f01, _f, *_bc, _bb, _vv, _dudt;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _vF1, _vF2, _vF, _vDF1, _D, _k1, _k2, _k3, _k4;
    DMatrix<real_t> *_A0, *_A1, *_A2;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2;
    real_t _y0, _y1, _dy1, _y2, _dy2, _ddy, _d0, _d1, _d2, _d01, _dydt;
-   string _exc[3];
-   vector<string> _expF, _expDF, _expA0, _expA1, _expA2;
+   vector<string> _expA0, _expA1, _expA2, _var;
+   vector<Fct *> _theF, _theDF, _thedFdt;
+   vector<Fct> _theC;
+   vector<real_t> _xv;
    real_t _beta, _gamma;
    LinearSolver<real_t> _ls;
    DEType _type;
-   bool _RK4_rhs, _setF_called, _setDF1_called;
    Iter<real_t> _iter;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -489,9 +503,9 @@ class ODESolver
    Vect<real_t>& setF_Newmark();
    Vect<real_t>& setF_BDF2();
 
-   real_t eval(string exp, real_t t, real_t y);
-   real_t eval(string exp, real_t t);
-   real_t eval(string exp, real_t t, const Vect<real_t>& y);
+   real_t eval(real_t t, real_t y, Fct* f);
+   real_t eval(real_t t, const Vect<real_t>& y, Fct* f);
+
 };
 
 /// \fn ostream & operator<<(ostream& s, const ODESolver &de)

@@ -111,7 +111,7 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
     {
        MESH_EL {
           set(the_element);
-          Magnetic(_omega,1.);
+          Magnetic(1.);
           Electric();
           AbsEqua<complex_t>::_A->Assembly(The_element,eMat.get());
        }
@@ -130,11 +130,9 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
     }
 
 /** \brief Add magnetic contribution to matrix
- *  @param [in] omega Angular frequency
  *  @param [in] coef Coefficient to multiply by [Default: <tt>1</tt>]
  */
-    void Magnetic(real_t omega,
-                  real_t coef=1.);
+    void Magnetic(real_t coef=1.);
 
 /// \brief Add electric contribution to matrix
 /// @param [in] coef Coefficient to multiply by [Default: <tt>1</tt>]

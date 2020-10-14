@@ -79,10 +79,18 @@ void EC2D2T3::set(const Element* el)
    setMaterial();
    Triang3 tr(el);
    _el_geo.area = tr.getArea();
+   _el_geo.center = tr.getCenter();
    _x[0] = (*_theElement)(1)->getCoord();
    _x[1] = (*_theElement)(2)->getCoord();
    _x[2] = (*_theElement)(3)->getCoord();
    _dSh = tr.DSh();
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_omega_set)
+      _omega = _omega_exp.value();
+   if (_Mu_set)
+      _Mu = _Mu_exp.value();
+   if (_sigma_set)
+      _sigma = _sigma_exp.value();
    eMat = 0;
    eRHS = 0;
 }
@@ -107,14 +115,14 @@ void EC2D2T3::set(const Side* sd)
 
 void EC2D2T3::RHS(real_t coef)
 {
-   eRHS(1) = eRHS(3) = eRHS(5) = coef*OFELI_THIRD*_el_geo.area/_rho;
+   eRHS(1) = eRHS(3) = eRHS(5) = coef*OFELI_THIRD*_el_geo.area*_sigma;
    eRHS(2) = eRHS(4) = eRHS(6) = 0;
 }
 
 
-void EC2D2T3::FEBlock(real_t omega)
+void EC2D2T3::FEBlock()
 {
-   real_t c = 0.25*_mu*omega*OFELI_THIRD*_el_geo.area/_rho;
+   real_t c = 0.25*_Mu*_omega*OFELI_THIRD*_el_geo.area*_sigma;
    for (size_t i=1; i<=3; i++) {
       eMat(2*i-1,2*i  ) -= c;
       eMat(2*i  ,2*i-1) += c;
@@ -158,21 +166,20 @@ void EC2D2T3::BEBlocks(size_t            n1,
 }
 
 
-complex_t EC2D2T3::Constant(real_t              omega,
-                            const Vect<real_t>& u,
+complex_t EC2D2T3::Constant(const Vect<real_t>& u,
                             complex_t&          I)
 {
    real_t ur = OFELI_THIRD*_el_geo.area*(u(1)+u(3)+u(5));
    real_t ui = OFELI_THIRD*_el_geo.area*(u(2)+u(4)+u(6));
-   real_t c1 = _rho*(I.real() - omega*ui/_rho)/_el_geo.area;
-   real_t c2 = _rho*(I.imag() + omega*ur/_rho)/_el_geo.area;
+   real_t c1 = 1./_sigma*(I.real() - _sigma*_omega*ui)/_el_geo.area;
+   real_t c2 = 1./_sigma*(I.imag() + _sigma*_omega*ur)/_el_geo.area;
    return std::complex<real_t> (c1,c2);
 }
 
 
 real_t EC2D2T3::MagneticPressure(const Vect<real_t>& u)
 {
-   real_t c = 0.5*_mu*_el_geo.area;
+   real_t c = 0.5*_Mu*_el_geo.area;
    real_t dxr=0, dxi=0, dyr=0, dyi=0;
    for (size_t i=1; i<=3; i++) {
       dxr += _dSh[i-1].x*u(2*i-1);

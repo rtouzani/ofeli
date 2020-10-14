@@ -31,6 +31,7 @@
 
 #include "OFELI.h"
 #include "io/tclap/CmdLine.h"
+#include "io/exprtk_adds.h"
 
 //using namespace std;
 using namespace TCLAP;

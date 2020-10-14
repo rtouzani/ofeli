@@ -32,14 +32,15 @@
 #include "mesh/getMesh.h"
 #include "io/XMLParser.h"
 #include "util/util.h"
-#include "io/fparser/fparser.h"
 #include "linear_algebra/Vect_impl.h"
 #include "mesh/bamg/Mesh2.h"
 #include "mesh/bamg/Meshio.h"
 #include "mesh/bamg/QuadTree.h"
 #include "mesh/bamg/R2.h"
+#include "io/exprtk_adds.h"
 #include "OFELIException.h"
-extern FunctionParser theParser;
+
+extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -213,32 +214,40 @@ int Domain::getCurve()
 
 // Case of a curve given by equation
    else if (type == -1) {
-      real_t data[4];
       string regex = _ff->getE("Curve's equation: ");
-      theParser.Parse(regex,"x,y,z,t");
+      real_t x=0., y=0., z=0.;
+      exprtk::expression<real_t> exp;
+      exprtk::symbol_table<real_t> symbol_table;
+      add_constants(symbol_table);
+      x = _v[n1-1].x; y = _v[n1-1].y; z = _v[n1-1].z;
+      symbol_table.add_variable("x",x);
+      symbol_table.add_variable("y",y);
+      symbol_table.add_variable("z",z);
+      exp.register_symbol_table(symbol_table);
+      theParser.compile(regex,exp);
       size_t nb = _ff->getI("nb. of discretization points: ");
       if (nb<3)
          nb = 3;
       ll.nb = nb;
       ll.node.resize(nb+1);
-      data[0] = _v[n1-1].x; data[1] = _v[n1-1].y; data[2] = _v[n1-1].z;
-      real_t vv = theParser.Eval(data);
+      x = _v[n1-1].x; y = _v[n1-1].y; z = _v[n1-1].z;
+      real_t vv = exp.value();
       if (fabs(vv) > 1.e-8)
          throw OFELIException("Domain::getCurve(): )");
-      data[0] = _v[n2-1].x; data[1] = _v[n2-1].y; data[2] = _v[n2-1].z;
-      vv = theParser.Eval(data);
+      x = _v[n2-1].x; y = _v[n2-1].y; z = _v[n2-1].z;
+      vv = exp.value();
       if (fabs(vv) > 1.e-8)
          throw OFELIException("In Domain::getCurve(): ");
       ll.node[0] = _v[n1-1];
       ll.node[1] = _v[n2-1];
-      data[0] = 0.9*ll.node[0].x + 0.1*ll.node[1].x;
-      data[1] = 0.9*ll.node[0].y + 0.1*ll.node[1].y;
-      data[2] = 0.1*ll.node[1].z;
+      x = 0.9*ll.node[0].x + 0.1*ll.node[1].x;
+      y = 0.9*ll.node[0].y + 0.1*ll.node[1].y;
+      z = 0.1*ll.node[1].z;
       for (i=1; i<nb-1; i++) {
-         Position(i/real_t(nb-1),data);
-         ll.node[i].x = data[0];
-         ll.node[i].y = data[1];
-         ll.node[i].z = data[2];
+	Position(i/real_t(nb-1),x,y,z);
+         ll.node[i].x = x;
+         ll.node[i].y = y;
+         ll.node[i].z = z;
       }
    }
 
@@ -258,14 +267,14 @@ int Domain::getCurve()
 
 
 int Domain::Position(real_t  s,
-                     real_t* data)
+                     real_t& x,
+		     real_t& y,
+		     real_t& z)
 {
-   real_t d0[4], d[4], dxf, dyf, ex, ey, ez;
+  /*   real_t dxf, dyf, ex, ey, ez;
    real_t det, g;
+   real_t x1=x, y1=y, z1=z, x2=x, y2=y, z2=z;
    int it=1;
-   d0[0] = d[0] = data[0];
-   d0[1] = d[1] = data[1];
-   d0[2] = d[2] = data[2];
    data[0] -= theParser.Eval(d);
    data[1] -= theParser.Eval(d);
    ex = data[0] - d[0]; ey = data[1] - d[1]; ez = data[3] - d[3];
@@ -287,7 +296,7 @@ int Domain::Position(real_t  s,
       it++;
       if (fabs(ex+ey+ez) < 1.e-8)
          return it;
-   }
+	 }*/
    return 0;
 }
 

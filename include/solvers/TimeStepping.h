@@ -192,8 +192,20 @@ class TimeStepping
 /// \brief Set right-hand side vector
     void setRHS(Vect<real_t>& b);
 
+/** \brief Set right-hand side as defined by a regular expression
+ *  @param [in] exp Regular expression as a function of \c x, \c y, \c z and \c t
+ */
+    void setRHS(string exp);
+
 /// \brief Set vector containing boundary condition to enforce
     void setBC(Vect<real_t>& u);
+
+/** \brief Set boundary condition as defined by a regular expression
+ *  @param [in] code Code for which expression is assigned
+ *  @param [in] exp Regular expression to assign as a function of \c x, \c y, \c z and \c t
+ */
+    void setBC(int    code,
+	       string exp);
 
 /** \brief Define parameters for the Newmark scheme
  *  @param [in] beta Parameter beta [Default: <tt>0.25</tt>]
@@ -246,16 +258,6 @@ class TimeStepping
     void setNLTerm(Vect<real_t>& a0,
                    Vect<real_t>& a1,
                    Vect<real_t>& a2);
-
-/** \brief Set verbosity parameter:
- *  \details
- *  <ul>
- *     <li> = 0, No output
- *     <li> = 1, Print step label and time value
- *     <li> = 2, Print step label, time value, time step and integration scheme
- *  </ul>
- */
-    void setVerbose(int v=0) { _verb = v; }
 
 /// \brief Run one time step
 /// @return Value of new time step if this one is updated
@@ -324,16 +326,16 @@ class TimeStepping
 
    vector<DE> _de;
    size_t _order, _nb_ssteps, _step, _sstep;
-   int _nb_des, _ind, _verb, _sc, _non_linear, _max_it;
+   int _nb_des, _ind, _sc, _non_linear, _max_it;
    bool _regex;
-   Vect<real_t> *_a0, *_a1, *_a2;
+   Vect<real_t> *_a0, *_a1, *_a2, _ff, _fbc, _fsf;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;
    real_t _beta, _gamma, _nl_toler;
    int _max_nl_it;
    LinearSolver<real_t> *_ls;
 
    typedef void (TimeStepping::* TSPtr)();
-   static TSPtr TS[11];
+   static TSPtr TS[12];
    TSPtr _solve;
 
    typedef void (TimeStepping::* ASPtr)(const Element&,real_t*,real_t*,real_t*,real_t*);
@@ -368,6 +370,7 @@ class TimeStepping
    void solveRK3_TVD();
    void solveNewmark();
    void solveBDF2();
+   void solveBuiltIn();
 
 // Functions to assemble the linear system for time integration schemes
    void AssembleStationary(const Element& el, real_t* eb, real_t* eA0, real_t* eA1, real_t* eA2=nullptr);

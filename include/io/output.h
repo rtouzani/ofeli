@@ -33,7 +33,6 @@
 #include "OFELI_Config.h"
 #include <iostream>
 using std::ostream;
-using std::setw;
 
 #include <iomanip>
 #include <complex>

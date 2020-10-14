@@ -978,7 +978,7 @@ void SpMatrix<T_>::operator=(const T_& x)
          _A.coeffRef(_IJ[i].first,_IJ[i].first) = x;	
 }
 #else
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_length; ++i)
       _a[i] = x;
 #endif
 }
@@ -1237,6 +1237,9 @@ void SpMatrix<T_>::clear()
 #ifdef USE_EIGEN
    for (size_t i=0; i<_length; i++)
       _A.coeffRef(_IJ[i].first,_IJ[i].second) = static_cast<T_>(0);
+#else
+   for (size_t i=0; i<_length; ++i)
+      _a[i] = static_cast<T_>(0);
 #endif
 }
 

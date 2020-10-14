@@ -33,6 +33,7 @@
 #define __IPF_H
 
 #include "OFELI_Config.h"
+#include "linear_algebra/Point.h"
 #include <complex>
 using std::complex;
 

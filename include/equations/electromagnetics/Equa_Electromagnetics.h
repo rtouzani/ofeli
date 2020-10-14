@@ -96,16 +96,12 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
+   using AbsEqua<T_>::_Mu_set;
+   using AbsEqua<T_>::_sigma_set;
+   using AbsEqua<T_>::_omega_set;
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-/// \brief Set wave number
-/// \details Provide wave number if necessary. By default, this value is <tt>1</tt>
-    void setWaveNumber(real_t w)
-    {
-       _wave_nb = w;
-    }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void build() { }
@@ -126,7 +122,7 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  protected:
 
 /// \brief Set (constant) magnetic permeability
-    void MagneticPermeability(const real_t& mu) { _mu = mu; }
+    void MagneticPermeability(const real_t& mu) { _Mu = mu; }
 
 /// \brief Set magnetic permeability given by an algebraic expression
     void MagneticPermeability(const string& exp) { setMaterialProperty(exp.c_str(),"Magnetic Permeability"); }
@@ -137,23 +133,16 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 /// \brief set electric conductivity given by an algebraic expression
     void ElectricConductivity(const string& exp) { setMaterialProperty(exp.c_str(),"Electric Conductivity"); }
 
-/// \brief Set (constant) electric resistivity
-    void ElectricResistivity(const real_t& rho) { _rho = rho; }
-
-/// \brief Set electric resistivity given by an algebraic expression
-    void ElectricResistivity(const string& exp) { setMaterialProperty(exp.c_str(),"Electric Resistivity"); }
-
 /// \brief Set material properties
     void setMaterial()
     {
        theMaterial.setCode(_theElement->getCode());
        _sigma = theMaterial.ElectricConductivity();
-       _rho   = theMaterial.ElectricResistivity();
-       _mu    = theMaterial.MagneticPermeability();
+       _Mu    = theMaterial.MagneticPermeability();
     }
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    Point<real_t> _x[NEN_];
-   real_t        _mu, _sigma, _rho, _body_source, _bound_source, _wave_nb;
+   real_t        _Mu, _sigma, _omega, _body_source, _bound_source;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 };

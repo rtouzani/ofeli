@@ -999,9 +999,9 @@ void saveFormat(Mesh&  mesh,
                 int    format,
                 int    f)
 {
-   if (f<=0)
-      throw OFELIException("In saveFormat(Mesh,string,string,int,int): "
-                           " Illegal value of savinag frequency");
+   if (f<0)
+      return;
+
    switch (format) {
 
       case GNUPLOT:
@@ -1186,6 +1186,9 @@ void saveVTK(Mesh&  mesh,
              string output_file,
              int    f)
 {
+  if (f<=0)
+     return;
+
    ofstream *pf=nullptr;
    size_t m=0, k=0, nb_dof;
    string of;
@@ -1217,74 +1220,72 @@ void saveVTK(Mesh&  mesh,
       else ;
       size += m + 1;
    }
-   for (size_t n=0; n<nb_time; n++) {
-      if ((n+1)%f==0) {
-         nb_st++;
-         string tt = "Time=" + dtos(tm[n]);
-         if (nb_time==1)
-            of = proj + ".vtk";
+   for (size_t n=0; n<nb_time; n+=f) {
+      nb_st++;
+      string tt = "Time=" + dtos(tm[n]);
+      if (nb_time==1)
+         of = proj + ".vtk";
+      else
+         of = proj + "-" + zeros(n) + ".vtk";
+      cout << "   Storing time step " << n+1 << " in file " << of << endl;
+      pf = new ofstream(of.c_str());
+      *pf << setprecision(16) << std::scientific;
+      *pf << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
+      *pf << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
+      node_loop(&mesh)
+         *pf << The_node.getX() << "  " << The_node.getY() << "  " << The_node.getZ() << endl;
+      *pf << "\nCELLS " << mesh.getNbElements() << setw(10) << size << endl;
+      element_loop(&mesh) {
+         int s = The_element.getShape();
+         if (s==LINE)
+            m = 2;
+         else if (s==TRIANGLE)
+            m = 3;
+         else if (s==QUADRILATERAL || s==TETRAHEDRON)
+            m = 4;
+         else if (s==HEXAHEDRON)
+            m = 8;
+         else if (s==PENTAHEDRON)
+            m = 6;
          else
-            of = proj + "-" + zeros(n) + ".vtk";
-         cout << "   Storing time step " << n+1 << " in file " << of << endl;
-         pf = new ofstream(of.c_str());
-         *pf << setprecision(16) << std::scientific;
-         *pf << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
-         *pf << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
-         node_loop(&mesh)
-            *pf << The_node.getX() << "  " << The_node.getY() << "  " << The_node.getZ() << endl;
-         *pf << "\nCELLS " << mesh.getNbElements() << setw(10) << size << endl;
-         element_loop(&mesh) {
-            int s = The_element.getShape();
-            if (s==LINE)
-               m = 2;
-            else if (s==TRIANGLE)
-               m = 3;
-            else if (s==QUADRILATERAL || s==TETRAHEDRON)
-               m = 4;
-            else if (s==HEXAHEDRON)
-               m = 8;
-            else if (s==PENTAHEDRON)
-               m = 6;
+            ;
+         *pf << setw(8) << m;
+         for (size_t i=0; i<m; i++)
+           *pf << setw(10) << The_element(i+1)->n()-1;
+         *pf << endl;
+      }
+      *pf << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
+      k = 0;
+      element_loop(&mesh) {
+         switch (The_element.getShape()) {
+            case LINE:            m =  3; break;
+            case TRIANGLE:        m =  5; break;
+            case QUADRILATERAL:   m =  9; break;
+            case TETRAHEDRON:     m = 10; break;
+            case HEXAHEDRON:      m = 12; break;
+            case PENTAHEDRON:     m = 13; break;
+         }
+         *pf << setw(4) << m;
+         if (++k%30 == 0)
+            *pf << endl;
+      }
+      *pf << "\nPOINT_DATA  " << mesh.getNbNodes() << endl;
+
+      if (scalar)
+         *pf << "SCALARS  u  double  1\nLOOKUP_TABLE  default" << endl;
+      else
+         *pf << "VECTORS  u  double" << endl;
+
+      node_loop(&mesh) {
+         *pf << field[n][nb_dof*(node_label-1)] << " ";
+         if (!scalar) {
+            *pf << field[n][nb_dof*(node_label-1)+1] << " ";
+            if (nb_dof > 2)
+               *pf << field[n][nb_dof*(node_label-1)+2] << " ";
             else
-               ;
-            *pf << setw(8) << m;
-            for (size_t i=0; i<m; i++)
-              *pf << setw(10) << The_element(i+1)->n()-1;
-            *pf << endl;
+               *pf << 0. << " ";
          }
-         *pf << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
-         k = 0;
-         element_loop(&mesh) {
-            switch (The_element.getShape()) {
-               case LINE:            m =  3; break;
-               case TRIANGLE:        m =  5; break;
-               case QUADRILATERAL:   m =  9; break;
-               case TETRAHEDRON:     m = 10; break;
-               case HEXAHEDRON:      m = 12; break;
-               case PENTAHEDRON:     m = 13; break;
-            }
-            *pf << setw(4) << m;
-            if (++k%30 == 0)
-               *pf << endl;
-         }
-         *pf << "\nPOINT_DATA  " << mesh.getNbNodes() << endl;
-
-         if (scalar)
-            *pf << "SCALARS  u  double  1\nLOOKUP_TABLE  default" << endl;
-         else
-            *pf << "VECTORS  u  double" << endl;
-
-         node_loop(&mesh) {
-            *pf << field[n][nb_dof*(node_label-1)] << " ";
-            if (!scalar) {
-               *pf << field[n][nb_dof*(node_label-1)+1] << " ";
-               if (nb_dof > 2)
-                  *pf << field[n][nb_dof*(node_label-1)+2] << " ";
-               else
-                  *pf << 0. << " ";
-            }
-            *pf << endl;
-         }
+         *pf << endl;
       }
    }
    pf->close();
@@ -1308,7 +1309,7 @@ void saveGmsh(Mesh&  mesh,
               string output_file,
               int    f)
 {
-  size_t i, k, nb_dof=0, nb_en=0;
+   size_t nb_dof=0, nb_en=0;
    ofstream pf(output_file.c_str());
    pf << setprecision(16);
 
@@ -1322,7 +1323,8 @@ void saveGmsh(Mesh&  mesh,
       tt = 'V';
 
    pf << "View \"" << name << "\" {" << endl;
-   size_t j, nb_st=0, nb_time=tm.size();
+   size_t nb_st=0, nb_time=tm.size();
+
    switch (mesh.getDim()) {
 
       case 1:
@@ -1330,16 +1332,18 @@ void saveGmsh(Mesh&  mesh,
             pf << "SL(";
             pf << The_element(1)->getX() <<  ", 0., 0., "
                << The_element(2)->getX() <<  ", 0., 0. ) {" << endl;
-            for (i=0; i<nb_time-1; i++) {
-               if ((i+1)%f==0) {
+            for (size_t n=0; n<nb_time-1; ++n) {
+               if ((n+1)%f==0) {
                   if (The_element.n()==1)
                      nb_st++;
-                  pf << field[i][The_element(1)->n()-1] << ","
-                     << field[i][The_element(2)->n()-1] << ",";
+                  pf << field[n][The_element(1)->n()-1] << ","
+                     << field[n][The_element(2)->n()-1];
+                  if (n<nb_time-1)
+                     pf << ",";
+                  pf << endl;
                }
             }
-            pf << field[nb_time-1][The_element(1)->n()-1] << ","
-               << field[nb_time-1][The_element(2)->n()-1] << "};" << endl;
+	    pf << "};" << endl;
          }
          pf << "};" << endl;
          break;
@@ -1348,24 +1352,21 @@ void saveGmsh(Mesh&  mesh,
          element_loop(&mesh) {
             pf << tt;
             if ((nb_en=The_element.getNbNodes())==3)
-               pf << "T";
+               pf << "T(";
             else if (nb_en==4)
-               pf << "Q";
-            pf << "(";
-            for (k=1; k<nb_en; k++)
+               pf << "Q(";
+            for (size_t k=1; k<nb_en; ++k)
                pf << The_element(k)->getX() << "," << The_element(k)->getY() << ",0.,";
-            pf << The_element(nb_en)->getX() << "," << The_element(nb_en)->getY() 
-               << ",0.) {" << endl;
-            for (i=0; i<nb_time; i++) {
-               if ((i+1)%f==0) {
+            pf << The_element(nb_en)->getX() << "," << The_element(nb_en)->getY() << ",0.) {" << endl;
+            for (size_t n=0; n<nb_time; ++n) {
+               if ((n+1)%f==0) {
                   if (The_element.n()==1)
                      nb_st++;
-                  for (k=1; k<=nb_en; k++) {
-                     j = nb_dof*(The_element(k)->n()-1);
-                     pf << field[i][j];
+                  for (size_t k=1; k<=nb_en; ++k) {
+                     pf << field[n][nb_dof*(The_element(k)->n()-1)];
                      if (nb_dof > 1)
-                        pf << "," << field[i][j+1] << ",0.0";
-                     if (i<nb_time-1 || k<nb_en)
+                        pf << "," << field[n][nb_dof*(The_element(k)->n()-1)+1] << ",0.0";
+                     if (n<nb_time-1 || k<nb_en)
                         pf << ",";
                   }
                   pf << endl;
@@ -1388,23 +1389,23 @@ void saveGmsh(Mesh&  mesh,
             else if (nb_en==5)
                pf << "Y";
             pf << "(";
-            for (k=1; k<=nb_en-1; k++)
+            for (size_t k=1; k<=nb_en-1; ++k)
                pf << The_element(k)->getX() << ","
                   << The_element(k)->getY() << ","
                   << The_element(k)->getZ() << ",";
             pf << The_element(nb_en)->getX() << ","
                << The_element(nb_en)->getY() << ","
                << The_element(nb_en)->getZ() << ") {" << endl;
-            for (i=0; i<nb_time; i++) {
-               if ((i+1)%f==0) {
+            for (size_t n=0; n<nb_time; ++n) {
+               if ((n+1)%f==0) {
                   if (The_element.n()==1)
                      nb_st++;                 
-                  for (k=1; k<=nb_en; k++) {
-                     pf << field[i][nb_dof*(The_element(k)->n()-1)];
+                  for (size_t k=1; k<=nb_en; ++k) {
+                     pf << field[n][nb_dof*(The_element(k)->n()-1)];
                      if (nb_dof > 1)
-                        pf << "," << field[i][nb_dof*(The_element(k)->n()-1)+1] << ","
-                           << field[i][nb_dof*(The_element(k)->n()-1)+2] << endl;
-                     if (i<nb_time-1 || k<nb_en)
+                        pf << "," << field[n][nb_dof*(The_element(k)->n()-1)+1] << ","
+                           << field[n][nb_dof*(The_element(k)->n()-1)+2] << endl;
+                     if (n<nb_time-1 || k<nb_en)
                         pf << ",";
                   }
                }

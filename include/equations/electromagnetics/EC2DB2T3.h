@@ -71,17 +71,14 @@ class EC2DB2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
     void RHS(real_t coef=1.);
 
 /// \brief Compute Finite Element Diagonal Block
-/// @param [in] omega Angular frequency
-    void EMatr(real_t omega);
+    void EMatr();
 
 /** \brief Compute constant to multiply by potential
- *  @param omega [in] Angular frequency
  *  @param [in] u Vector containing potential at nodes
  *  @param [in] I Prescribed total current
  */
-    complex_t Constant(      real_t               omega,
-                       const LocalVect<real_t,6>& u,
-                             complex_t            I);
+    complex_t Constant(const LocalVect<real_t,6>& u,
+                       complex_t                  I);
 
 /// \brief Compute magnetic pressure in element
 /// @param [in] u Vector containing potential at nodes

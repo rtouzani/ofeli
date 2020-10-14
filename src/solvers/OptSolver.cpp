@@ -35,46 +35,54 @@
 #include <limits>
 #include <algorithm>
 #include "OFELIException.h"
-#include "io/fparser/fparser.h"
-extern FunctionParser theParser;
 
 namespace OFELI {
 
 OptSolver::OptSolver()
-          : _size(1), _verb(Verbosity), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
-            _max_it(1000), _toler(1.e-10), _exp(true), _sa_opt(false), _tn_opt(false),
-            _obj_type(0), _x_set(true), _method_set(false), _var("")
+          : _size(1), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
+            _max_it(1000), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
+            _obj_type(0), _x_set(true), _method_set(false), _fct_allocated(false)
 {
    _x = new Vect<real_t>(1);
    _lb.setSize(_size);
    _ub.setSize(_size);
    _lb = -std::numeric_limits<real_t>::max();
    _ub =  std::numeric_limits<real_t>::max();
+   _var.push_back("x");
+   _theDFct.resize(1);
 }
 
 
 OptSolver::OptSolver(Vect<real_t>& x)
-          : _size(x.size()), _verb(Verbosity), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
-            _max_it(1000), _x(&x), _toler(1.e-10), _exp(true), _sa_opt(false), _tn_opt(false),
-            _obj_type(0), _x_set(false), _method_set(false)
+          : _size(x.size()), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
+            _max_it(1000), _x(&x), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
+            _obj_type(0), _x_set(false), _method_set(false), _fct_allocated(false)
 {
-   _lb.setSize(_size);
-   _ub.setSize(_size);
-   _lb = -std::numeric_limits<real_t>::max();
-   _ub =  std::numeric_limits<real_t>::max();
+   set(x);
+   if (_size==1)
+      _var.push_back("x");
+   else {
+      for (size_t j=0; j<_size; ++j)
+         _var.push_back("x"+itos(j+1));
+   }
+   _theDFct.resize(_size);
 }
 
 
 OptSolver::OptSolver(MyOpt&        opt,
                      Vect<real_t>& x)
-          : _size(x.size()), _verb(Verbosity), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
-            _max_it(1000), _x(&x), _toler(1.e-10), _opt(&opt), _exp(false), _sa_opt(false),
-            _tn_opt(false), _obj_type(0), _x_set(false), _method_set(false)
+          : _size(x.size()), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
+            _max_it(1000), _x(&x), _toler(1.e-10), _opt(&opt), _sa_opt(false),
+            _tn_opt(false), _obj_type(0), _x_set(false), _method_set(false), _fct_allocated(false)
 {
-   _lb.setSize(_size);
-   _ub.setSize(_size);
-   _lb = -std::numeric_limits<real_t>::max();
-   _ub =  std::numeric_limits<real_t>::max();
+   set(x);
+   if (_size==1)
+      _var.push_back("x");
+   else {
+      for (size_t j=0; j<_size; ++j)
+         _var.push_back("x"+itos(j+1));
+   }
+   _theDFct.resize(_size);
 }
 
 
@@ -82,6 +90,28 @@ OptSolver::~OptSolver()
 {
    if (_x_set)
       delete _x;
+   if (_fct_allocated) {
+      delete _theFct;
+      for (size_t i=0; i<_size; ++i) {
+         delete _theDFct[i];
+         for (size_t j=0; j<_size; ++j)
+            delete _theDDFct[_size*i+j];
+      }
+   }
+}
+
+
+void OptSolver::set(Vect<real_t>& x)
+{
+   if (_x_set)
+      delete _x;
+   _x = &x;
+   _x_set = false;
+   _size = _x->size();
+   _lb.setSize(_size);
+   _ub.setSize(_size);
+   _lb = -std::numeric_limits<real_t>::max();
+   _ub =  std::numeric_limits<real_t>::max();
 }
 
 
@@ -126,14 +156,8 @@ void OptSolver::setLowerBounds(Vect<real_t>& lb)
 
 real_t OptSolver::Objective(Vect<real_t>& x)
 {
-   if (_exp) {
-      int err;
-      theParser.Parse(_exp_obj.c_str(),_var.c_str());
-      real_t v = theParser.Eval(x);
-      if ((err=theParser.EvalError()))
-         throw OFELIException("In OptSolver::Objective(x): Illegal algebraic expression "+itos(err));
-      return v;
-   }
+   if (_type==EXPRESSION || _type==FCT)
+      return eval(x,_theFct);
    else
       return _opt->Objective(x);
 }
@@ -142,14 +166,14 @@ real_t OptSolver::Objective(Vect<real_t>& x)
 void OptSolver::Gradient(Vect<real_t>& x,
                          Vect<real_t>& g)
 {
-   if (_exp) {
-      int err;
-      for (size_t i=0; i<_size; i++) {
-         theParser.Parse(_exp_grad[i].c_str(),_var.c_str());
-         g[i] = theParser.Eval(x);
-         if ((err=theParser.EvalError()))
-            throw OFELIException("In OptSolver::Gradient(x,g): Illegal algebraic expression "+itos(err));
-      }
+   if ((_type==FCT || _type==EXPRESSION) && _grad_computed) {
+      _xv = x;
+      for (size_t i=0; i<_size; i++)
+         g[i] = _theFct->D(_xv,i+1);
+   }
+   else if ((_type==FCT || _type==EXPRESSION) && !_grad_computed) {
+      for (size_t i=0; i<_size; i++)
+         g[i] = eval(x,_theDFct[i]);
    }
    else
       _opt->Gradient(x,g);
@@ -158,13 +182,18 @@ void OptSolver::Gradient(Vect<real_t>& x,
 
 void OptSolver::setObjective(string exp)
 {
-   _exp_obj = exp;
-   _exp_grad.setSize(_size);
-   _exp_hess.setSize(_size,_size);
-   _var = "";
-   for (size_t i=1; i<_size; i++)
-      _var += "x" + itos(i) + ",";
-   _var += "x" + itos(_size);
+   _theFct = new Fct(exp,_var);
+   _type = EXPRESSION;
+   _fct_allocated = true;
+   _grad_computed = true;
+}
+
+
+void OptSolver::setObjective(Fct& f)
+{
+   _theFct = &f;
+   _type = FCT;
+   _grad_computed = true;
 }
 
 
@@ -172,16 +201,61 @@ void OptSolver::setGradient(string exp,
                             int    i)
 {
    if (_opt_method==SIMULATED_ANNEALING)
-      throw OFELIException("In OptSolver::setGradient(exp,i): Providing the gradient is useless for the simulated annealing method.");
+      throw OFELIException("In OptSolver::setGradient(exp,i): Providing the gradient "
+			   "is useless for the simulated annealing method.");
    if (i>int(_size) || i<=0)
       throw OFELIException("In OptSolver::setGradient(exp,i): Index is out of bounds");
-   _exp_grad[i-1] = exp;
+   _theDFct[i-1] = new Fct(exp,_var);
+   _grad_computed = false;
+}
+
+
+void OptSolver::setHessian(string exp,
+                           int    i,
+                           int    j)
+{
+   if (_opt_method!=NEWTON)
+      throw OFELIException("In OptSolver::setHessian(exp,i,j): Providing the hessian "
+			   "is available for Newton's method only.");
+   if (i>int(_size) || i<=0)
+      throw OFELIException("In OptSolver::setHessian(exp,i,j): First index is out of bounds");
+   if (j>int(_size) || j<=0)
+      throw OFELIException("In OptSolver::setHessian(exp,i,j): Second index is out of bounds");
+   _theDDFct[_size*(i-1)+j-1] = new Fct(exp,_var);
+   _hessian_computed = false;
+}
+
+
+void OptSolver::setGradient(Fct& f,
+                            int  i)
+{
+   if (_opt_method==SIMULATED_ANNEALING)
+      throw OFELIException("In OptSolver::setGradient(Fct,i): Providing the gradient is useless for the simulated annealing method.");
+   if (i>int(_size) || i<=0)
+      throw OFELIException("In OptSolver::setGradient(Fct,i): Index is out of bounds");
+   _theDFct[i-1] = &f;
+   _grad_computed = false;
+}
+
+
+void OptSolver::setHessian(Fct&   f,
+                           int    i,
+                           int    j)
+{
+   if (_opt_method!=NEWTON)
+      throw OFELIException("In OptSolver::setHessian(exp,i,j): Providing the hessian "
+			   "is available for Newton's method only.");
+   if (i>int(_size) || i<=0)
+      throw OFELIException("In OptSolver::setHessian(exp,i,j): First index is out of bounds");
+   if (j>int(_size) || j<=0)
+      throw OFELIException("In OptSolver::setHessian(exp,i,j): Second index is out of bounds");
+   _theDDFct[_size*(i-1)+j-1] = &f;
+   _hessian_computed = false;
 }
 
 
 void OptSolver::setTNDefaults()
 {
-   _verb = Verbosity;
    _max_it = 200;
    _toler = OFELI_EPSMCH;
 }
@@ -189,7 +263,6 @@ void OptSolver::setTNDefaults()
 
 void OptSolver::setPGDefaults()
 {
-   _verb = 1;
    _max_it = 100;
    _toler = OFELI_EPSMCH;
 }
@@ -197,7 +270,6 @@ void OptSolver::setPGDefaults()
 
 void OptSolver::setNMDefaults()
 {
-   _verb = Verbosity;
    _max_it = 100;
    _toler = OFELI_EPSMCH;
    _reqmin = 0.,
@@ -268,17 +340,17 @@ int OptSolver::run()
       throw OFELIException("In OptSolver::run(): No optimization method has been chosen.");
    int ret = 0;
    if (_opt_method==TRUNCATED_NEWTON) {
-      if (_verb>0)
+      if (Verbosity>0)
          cout << "Solving the optimization problem by the Truncated Newton method ..." << endl;
-      ret = OptimTN(*this,*_x,_lb,_ub,_nb_obj_eval,_nb_grad_eval,_max_it,_toler,_verb);
+      ret = OptimTN(*this,*_x,_lb,_ub,_nb_obj_eval,_nb_grad_eval,_max_it,_toler);
    }
    else if (_opt_method==SIMULATED_ANNEALING)
-      ret = OptimSA(*this,*_x,_rt,_toler,_ns,_nt,_neps,_max_eval,_lb,_ub,_c,_verb,_t,
+      ret = OptimSA(*this,*_x,_rt,_toler,_ns,_nt,_neps,_max_eval,_lb,_ub,_c,_t,
                     _vm,_fopt,_nacc,_nb_obj_eval,_nobds);
    else if (_opt_method==NELDER_MEAD)
       ret = OptimNM(*this,*_x,_fopt,_reqmin,_step,_conv,_max_eval,_nb_obj_eval,_nb_restart);
    else if (_opt_method==GRADIENT)
-      ret = OptimPG(*this,*_x,_lb,_ub,_nb_obj_eval,_nb_grad_eval,_max_it,_toler,_verb);
+      ret = OptimPG(*this,*_x,_lb,_ub,_nb_obj_eval,_nb_grad_eval,_max_it,_toler);
    else
       ;
    return ret;
@@ -291,6 +363,14 @@ int OptSolver::run(real_t toler,
    _toler = toler;
    _max_it = max_it;
    return run();
+}
+
+
+real_t OptSolver::eval(const Vect<real_t>& x,
+                       Fct*                f)
+{
+   _xv = x;
+   return (*f)(_xv);
 }
 
 

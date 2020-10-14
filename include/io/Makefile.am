@@ -2,16 +2,19 @@
 
 AUTOMAKE_OPTIONS = no-dependencies
 
-SUBDIRS = fparser tclap xmlsp
+SUBDIRS = tclap xmlsp
 
 ssdir =	$(pkgincludedir)/io
 
-ss_HEADERS =	FFI.h \
-		Funct.h \
-		IOField.h \
-		IPF.h \
-		Prescription.h \
-		Tabulation.h \
-		XMLParser.h \
-		output.h \
-		saveField.h
+ss_HEADERS = Fct.h \
+             FFI.h \
+             Funct.h \
+             IOField.h \
+             IPF.h \
+             Prescription.h \
+             Tabulation.h \
+             XMLParser.h \
+             output.h \
+             saveField.h \
+             exprtk.hpp \
+             exprtk_adds.h

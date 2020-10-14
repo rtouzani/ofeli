@@ -13,6 +13,7 @@ libsolvers_a_SOURCES = \
 	OptimTN.cpp \
 	OptimPG.cpp \
 	OptSolver.cpp \
+	Simplex.cpp \
 	Solver.cpp \
 	TimeStepping.cpp
 

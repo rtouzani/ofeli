@@ -84,6 +84,7 @@
 #include "solvers/OptSolver.h"
 #include "solvers/EigenProblemSolver.h"
 #include "solvers/NLASSolver.h"
+#include "solvers/Simplex.h"
 #include "solvers/TimeStepping.h"
 
 /*

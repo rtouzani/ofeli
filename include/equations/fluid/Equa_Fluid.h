@@ -91,6 +91,9 @@ class Equa_Fluid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC;
+   using AbsEqua<T_>::_rho_set;
+   using AbsEqua<T_>::_mu_set;
+   using AbsEqua<T_>::_beta_set;
 
 
 /// \brief Default constructor.
@@ -112,13 +115,13 @@ class Equa_Fluid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
     void Reynolds(const real_t& Re) { _Re = Re; }
 
 /// \brief Set (constant) Viscosity
-    void Viscosity(const real_t& visc) { _visc = visc; }
+    void Viscosity(const real_t& visc) { _mu = visc; }
 
 /// \brief Set viscosity given by an algebraic expression
     void Viscosity(const string& exp) { setMaterialProperty(exp.c_str(),"Viscosity"); }
 
 /// \brief Set (constant) Viscosity
-    void Density(const real_t &dens) { _dens = dens; }
+    void Density(const real_t &dens) { _rho = dens; }
 
 /// \brief Set Density given by an algebraic expression
     void Density(const string& exp) { setMaterialProperty(exp.c_str(),"Density"); }
@@ -133,11 +136,11 @@ class Equa_Fluid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
     void setMaterial()
     {
        theMaterial.setCode(_theElement->getCode());
-       _visc = theMaterial.Viscosity();
-       _dens = theMaterial.Density();
+       _mu = theMaterial.Viscosity();
+       _rho = theMaterial.Density();
     }
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    real_t _visc, _dens, _beta, _Re, _cfl;
+    real_t _mu, _rho, _beta, _Re, _cfl;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 };

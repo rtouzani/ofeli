@@ -50,7 +50,6 @@ NSP2DQ41::NSP2DQ41(Mesh& ms)
    setSolver(DIRECT_SOLVER);
    _equation_name = "Navier-Stokes";
    _finite_element = "2-D, 4-Node Quadrilaterals (Q1/P0), Penalty";
-   _dens = _visc = 0.;
    _terms = VISCOSITY|DILATATION|BODY_FORCE|TRACTION;
 }
 
@@ -66,7 +65,6 @@ NSP2DQ41::NSP2DQ41(Mesh&         ms,
    setSolver(DIRECT_SOLVER);
    _equation_name = "Navier-Stokes";
    _finite_element = "2-D, 4-Node Quadrilaterals (Q1/P0), Penalty";
-   _dens = _visc = 0.;
    _terms = VISCOSITY|DILATATION|BODY_FORCE|TRACTION;
    _terms = MASS|VISCOSITY|DILATATION;
 }
@@ -89,12 +87,20 @@ void NSP2DQ41::set(const Element *el)
       delete _quad, _quad = nullptr;
    if (_ln != nullptr)
       delete _ln, _ln = nullptr;
-   _dens = _visc = 1.;
+   _rho = _mu = 1.;
    _quad = new Quad4(_theElement);
    _quad->atGauss(2,_sh,_dSh,_wg);
    _xl[0] = _yl[0] = _yl[1] = _xl[3] = -1.;
    _xl[1] = _xl[2] = _yl[2] = _yl[3] =  1.;
    ElementNodeCoordinates();
+   _el_geo.center = _quad->getCenter();
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_mu_set)
+      _mu = _mu_exp.value();
+   if (_beta_set)
+      _beta = _beta_exp.value();
    eMat = 0;
    eRHS = 0;
 }
@@ -130,7 +136,7 @@ void NSP2DQ41::LMass(real_t coef)
 {
    for (size_t i=0; i<4; i++) {
       _quad->setLocal(Point<real_t>(_xl[i],_yl[i]));
-      real_t c = _dens*coef*_quad->getDet();
+      real_t c = _rho*coef*_quad->getDet();
       eMat(2*i+1,2*i+1) += c;
       eMat(2*i+2,2*i+2) += c;
       eRHS(2*i+1) += c*_eu(2*i+1);
@@ -149,7 +155,7 @@ void NSP2DQ41::Mass(real_t coef)
 void NSP2DQ41::Viscous(real_t coef)
 {
    for (size_t k=0; k<4; ++k) {
-      real_t c = coef*_visc*_wg[k];
+      real_t c = coef*_mu*_wg[k];
       for (size_t i=0; i<4; i++) {
          Point<real_t> a = c*_dSh[4*i+k];
          for (size_t j=0; j<4; j++) {
@@ -203,7 +209,7 @@ void NSP2DQ41::RHS_Convection(real_t coef)
       real_t t1 = ug[0]*dug[0].x + ug[1]*dug[0].y;
       real_t t2 = ug[0]*dug[1].x + ug[1]*dug[1].y;
       for (size_t i=1; i<=4; ++i) {
-         real_t c = coef*_dens*_ln->getLength()*_sh[4*(i-1)+k];
+         real_t c = coef*_rho*_ln->getLength()*_sh[4*(i-1)+k];
          eRHS(2*i-1) -= c*t1;
          eRHS(2*i  ) -= c*t2;
       }
@@ -222,7 +228,7 @@ void NSP2DQ41::LHS1_Convection(real_t coef)
       }
       for (size_t ii=1; ii<=4; ++ii) {
          for (size_t jj=1; jj<=4; ++jj) {
-            real_t c = coef*_dens*_wg[k]*(ug[0]*_dSh[4*(jj-1)+k].x + ug[1]*_dSh[4*(jj-1)+k].y);
+            real_t c = coef*_rho*_wg[k]*(ug[0]*_dSh[4*(jj-1)+k].x + ug[1]*_dSh[4*(jj-1)+k].y);
             eMat(2*ii-1,2*jj-1) += c*_sh[4*(ii-1)+k];
             eMat(2*ii  ,2*jj  ) += c*_sh[4*(ii-1)+k];
          }
@@ -244,7 +250,7 @@ void NSP2DQ41::LHS2_Convection(real_t coef)
       }
       for (size_t ii=1; ii<=4; ii++) {
          for (size_t jj=1; jj<=4; jj++) {
-            real_t c = _dens*_quad->getDet()*_sh[4*(ii-1)+k]*_sh[4*(jj-1)+k];
+            real_t c = _rho*_quad->getDet()*_sh[4*(ii-1)+k]*_sh[4*(jj-1)+k];
             eMat(2*ii-1,2*jj-1) += c*dug[0].x;
             eMat(2*ii-1,2*jj  ) += c*dug[0].y;
             eMat(2*ii  ,2*jj-1) += c*dug[1].x;

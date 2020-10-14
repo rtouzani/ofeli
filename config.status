@@ -393,7 +393,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 "
 
 # Files that config.status was made for.
-config_files=" Makefile include/Makefile include/equations/Makefile include/equations/cl/Makefile include/equations/electromagnetics/Makefile include/equations/fluid/Makefile include/equations/interface/Makefile include/equations/laplace/Makefile include/equations/solid/Makefile include/equations/therm/Makefile include/equations/porous/Makefile include/io/Makefile include/io/fparser/Makefile include/io/tclap/Makefile include/io/xmlsp/Makefile include/linear_algebra/Makefile include/linear_algebra/petsc/Makefile include/mesh/Makefile include/mesh/bamg/Makefile include/mesh/metis/Makefile include/post/Makefile include/shape_functions/Makefile include/solvers/Makefile include/util/Makefile src/Makefile src/equations/Makefile src/equations/cl/Makefile src/equations/electromagnetics/Makefile src/equations/fluid/Makefile src/equations/interface/Makefile src/equations/laplace/Makefile src/equations/porous/Makefile src/equations/solid/Makefile src/equations/therm/Makefile src/io/Makefile src/io/fparser/Makefile src/io/xmlsp/Makefile src/linear_algebra/Makefile src/mesh/Makefile src/mesh/bamg/Makefile src/mesh/metis/Makefile src/post/Makefile src/shape_functions/Makefile src/solvers/Makefile src/util/Makefile material/Makefile util/Makefile util/g2m/Makefile util/conv/Makefile util/conv/src/Makefile util/conv/examples/Makefile util/conv/matlab/Makefile util/vmesh/Makefile demos/Makefile demos/1D/Makefile demos/laplace/Makefile demos/thermal/Makefile demos/thermal/std3/Makefile demos/thermal/stdc2/Makefile demos/thermal/ttd2/Makefile demos/solid/Makefile demos/solid/beam/Makefile demos/solid/truss/Makefile demos/solid/contact/Makefile demos/solid/lelas2d/Makefile demos/solid/lelas3d/Makefile demos/fluid/Makefile demos/fluid/tiff2/Makefile demos/fluid/tins2/Makefile demos/fluid/lh2d/Makefile demos/fluid/euler-2d/Makefile demos/electromagnetics/Makefile demos/electromagnetics/Helmholtz/Makefile demos/solvers/Makefile demos/solvers/LS/Makefile demos/solvers/ODE/Makefile demos/solvers/EIGEN/Makefile demos/solvers/OPTIM/Makefile demos/solvers/NLAS/Makefile demos/adapt/Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/demos/Makefile doc/im/Makefile doc/css/Makefile doc/presentations/Makefile tools/Makefile ofeli-config test_ofeli.sh"
+config_files=" Makefile include/Makefile include/equations/Makefile include/equations/cl/Makefile include/equations/electromagnetics/Makefile include/equations/fluid/Makefile include/equations/interface/Makefile include/equations/laplace/Makefile include/equations/solid/Makefile include/equations/therm/Makefile include/equations/porous/Makefile include/io/Makefile include/io/tclap/Makefile include/io/xmlsp/Makefile include/linear_algebra/Makefile include/linear_algebra/petsc/Makefile include/mesh/Makefile include/mesh/bamg/Makefile include/mesh/metis/Makefile include/post/Makefile include/shape_functions/Makefile include/solvers/Makefile include/util/Makefile src/Makefile src/equations/Makefile src/equations/cl/Makefile src/equations/electromagnetics/Makefile src/equations/fluid/Makefile src/equations/interface/Makefile src/equations/laplace/Makefile src/equations/porous/Makefile src/equations/solid/Makefile src/equations/therm/Makefile src/io/Makefile src/io/xmlsp/Makefile src/linear_algebra/Makefile src/mesh/Makefile src/mesh/bamg/Makefile src/mesh/metis/Makefile src/post/Makefile src/shape_functions/Makefile src/solvers/Makefile src/util/Makefile material/Makefile util/Makefile util/g2m/Makefile util/conv/Makefile util/conv/src/Makefile util/conv/examples/Makefile util/conv/matlab/Makefile util/vmesh/Makefile demos/Makefile demos/1D/Makefile demos/laplace/Makefile demos/thermal/Makefile demos/thermal/std3/Makefile demos/thermal/stdc2/Makefile demos/thermal/ttd2/Makefile demos/solid/Makefile demos/solid/beam/Makefile demos/solid/truss/Makefile demos/solid/contact/Makefile demos/solid/lelas2d/Makefile demos/solid/lelas3d/Makefile demos/fluid/Makefile demos/fluid/tiff2/Makefile demos/fluid/tins2/Makefile demos/fluid/lh2d/Makefile demos/fluid/euler-2d/Makefile demos/electromagnetics/Makefile demos/electromagnetics/Helmholtz/Makefile demos/solvers/Makefile demos/solvers/LS/Makefile demos/solvers/ODE/Makefile demos/solvers/EIGEN/Makefile demos/solvers/OPTIM/Makefile demos/solvers/NLAS/Makefile demos/solvers/LP/Makefile demos/adapt/Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/demos/Makefile doc/im/Makefile doc/css/Makefile doc/presentations/Makefile tools/Makefile ofeli-config test_ofeli.sh"
 config_headers=" include/config.h"
 config_commands=" depfiles"
 
@@ -437,11 +437,11 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/Users/touzani/ofeli'
+ac_pwd='/Users/touzani/ofeli/ofeli'
 srcdir='.'
-INSTALL='/usr/bin/install -c'
-MKDIR_P='./install-sh -c -d'
-AWK='awk'
+INSTALL='/opt/local/bin/ginstall -c'
+MKDIR_P='/opt/local/bin/gmkdir -p'
+AWK='gawk'
 test -n "$AWK" || AWK=awk
 # The default lists apply if the user does not specify any file.
 ac_need_defaults=:
@@ -560,7 +560,6 @@ do
     "include/equations/therm/Makefile") CONFIG_FILES="$CONFIG_FILES include/equations/therm/Makefile" ;;
     "include/equations/porous/Makefile") CONFIG_FILES="$CONFIG_FILES include/equations/porous/Makefile" ;;
     "include/io/Makefile") CONFIG_FILES="$CONFIG_FILES include/io/Makefile" ;;
-    "include/io/fparser/Makefile") CONFIG_FILES="$CONFIG_FILES include/io/fparser/Makefile" ;;
     "include/io/tclap/Makefile") CONFIG_FILES="$CONFIG_FILES include/io/tclap/Makefile" ;;
     "include/io/xmlsp/Makefile") CONFIG_FILES="$CONFIG_FILES include/io/xmlsp/Makefile" ;;
     "include/linear_algebra/Makefile") CONFIG_FILES="$CONFIG_FILES include/linear_algebra/Makefile" ;;
@@ -583,7 +582,6 @@ do
     "src/equations/solid/Makefile") CONFIG_FILES="$CONFIG_FILES src/equations/solid/Makefile" ;;
     "src/equations/therm/Makefile") CONFIG_FILES="$CONFIG_FILES src/equations/therm/Makefile" ;;
     "src/io/Makefile") CONFIG_FILES="$CONFIG_FILES src/io/Makefile" ;;
-    "src/io/fparser/Makefile") CONFIG_FILES="$CONFIG_FILES src/io/fparser/Makefile" ;;
     "src/io/xmlsp/Makefile") CONFIG_FILES="$CONFIG_FILES src/io/xmlsp/Makefile" ;;
     "src/linear_algebra/Makefile") CONFIG_FILES="$CONFIG_FILES src/linear_algebra/Makefile" ;;
     "src/mesh/Makefile") CONFIG_FILES="$CONFIG_FILES src/mesh/Makefile" ;;
@@ -627,6 +625,7 @@ do
     "demos/solvers/EIGEN/Makefile") CONFIG_FILES="$CONFIG_FILES demos/solvers/EIGEN/Makefile" ;;
     "demos/solvers/OPTIM/Makefile") CONFIG_FILES="$CONFIG_FILES demos/solvers/OPTIM/Makefile" ;;
     "demos/solvers/NLAS/Makefile") CONFIG_FILES="$CONFIG_FILES demos/solvers/NLAS/Makefile" ;;
+    "demos/solvers/LP/Makefile") CONFIG_FILES="$CONFIG_FILES demos/solvers/LP/Makefile" ;;
     "demos/adapt/Makefile") CONFIG_FILES="$CONFIG_FILES demos/adapt/Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "doc/html/Makefile") CONFIG_FILES="$CONFIG_FILES doc/html/Makefile" ;;
@@ -748,14 +747,14 @@ S["PETSC_CFLAGS"]="-I${prefix}/include/petsc "
 S["OFELI_LDFLAGS"]="-L${exec_prefix}/lib "
 S["OFELI_CFLAGS"]="-I${prefix}/include/ofeli "
 S["OFELI_LIBS"]="-lofeli "
-S["host_os"]="darwin19.2.0"
+S["host_os"]="darwin17.7.0"
 S["host_vendor"]="apple"
 S["host_cpu"]="i386"
-S["host"]="i386-apple-darwin19.2.0"
-S["build_os"]="darwin19.2.0"
+S["host"]="i386-apple-darwin17.7.0"
+S["build_os"]="darwin17.7.0"
 S["build_vendor"]="apple"
 S["build_cpu"]="i386"
-S["build"]="i386-apple-darwin19.2.0"
+S["build"]="i386-apple-darwin17.7.0"
 S["MAINT"]="#"
 S["MAINTAINER_MODE_FALSE"]=""
 S["MAINTAINER_MODE_TRUE"]="#"
@@ -768,17 +767,17 @@ S["am__tar"]="$${TAR-tar} chof - \"$$tardir\""
 S["AMTAR"]="$${TAR-tar}"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
-S["AWK"]="awk"
+S["AWK"]="gawk"
 S["mkdir_p"]="$(MKDIR_P)"
-S["MKDIR_P"]="./install-sh -c -d"
+S["MKDIR_P"]="/opt/local/bin/gmkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]=""
-S["install_sh"]="${SHELL} /Users/touzani/ofeli/install-sh"
-S["MAKEINFO"]="${SHELL} /Users/touzani/ofeli/missing makeinfo"
-S["AUTOHEADER"]="${SHELL} /Users/touzani/ofeli/missing autoheader"
-S["AUTOMAKE"]="${SHELL} /Users/touzani/ofeli/missing automake-1.16"
-S["AUTOCONF"]="${SHELL} /Users/touzani/ofeli/missing autoconf"
-S["ACLOCAL"]="${SHELL} /Users/touzani/ofeli/missing aclocal-1.16"
+S["install_sh"]="${SHELL} /Users/touzani/ofeli/ofeli/install-sh"
+S["MAKEINFO"]="${SHELL} /Users/touzani/ofeli/ofeli/missing makeinfo"
+S["AUTOHEADER"]="${SHELL} /Users/touzani/ofeli/ofeli/missing autoheader"
+S["AUTOMAKE"]="${SHELL} /Users/touzani/ofeli/ofeli/missing automake-1.16"
+S["AUTOCONF"]="${SHELL} /Users/touzani/ofeli/ofeli/missing autoconf"
+S["ACLOCAL"]="${SHELL} /Users/touzani/ofeli/ofeli/missing aclocal-1.16"
 S["PACKAGE"]="ofeli"
 S["CYGPATH_W"]="echo"
 S["am__isrc"]=""
@@ -1293,7 +1292,9 @@ $as_echo X/"$am_mf" |
     { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
 as_fn_error $? "Something went wrong bootstrapping makefile fragments
-    for automatic dependency tracking.  Try re-running configure with the
+    for automatic dependency tracking.  If GNU make was not used, consider
+    re-running the configure script with MAKE=\"gmake\" (or whatever is
+    necessary).  You can also try re-running configure with the
     '--disable-dependency-tracking' option to at least be able to build
     the package (albeit without support for automatic dependency tracking).
 See \`config.log' for more details" "$LINENO" 5; }

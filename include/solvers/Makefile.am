@@ -26,6 +26,7 @@ ss_HEADERS = \
 		Prec_impl.h \
 		Richardson.h \
 		Schur.h \
+		Simplex.h \
 		SSOR.h \
 		TimeStepping.h
 

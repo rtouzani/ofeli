@@ -104,6 +104,9 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_eu;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_su;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_ssf;
+   using AbsEqua<T_>::_rho_set;
+   using AbsEqua<T_>::_young_set;
+   using AbsEqua<T_>::_poisson_set;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
@@ -300,19 +303,19 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  protected:
 
 /// \brief Set (constant) Young modulus
-    void Young(const real_t& E) { _E = E; }
+    void Young(const real_t& E) { _young = E; }
 
 /// \brief Set (constant) Poisson ratio
-    void Poisson(const real_t& nu) { _nu = nu; }
+    void Poisson(const real_t& nu) { _poisson = nu; }
 
 /// \brief Set (constant) density
     void Density(const real_t& rho) { _rho = rho; }
 
 /// \brief Set Young modulus given by an algebraic expression
-    void Young(const string& exp) { _E = setMaterialProperty(exp.c_str(),"Young Modulus"); }
+    void Young(const string& exp) { _young = setMaterialProperty(exp.c_str(),"Young Modulus"); }
 
 /// \brief Set Poisson ratio given by an algebraic expression
-    void Poisson(const string& exp) { _nu = setMaterialProperty(exp.c_str(),"Poisson Coefficient"); }
+    void Poisson(const string& exp) { _poisson = setMaterialProperty(exp.c_str(),"Poisson Coefficient"); }
 
 /// \brief Set density given by an algebraic expression
     void Density(const string& exp) { _rho = setMaterialProperty(exp.c_str(),"Density"); }
@@ -322,13 +325,13 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     {
        theMaterial.setCode(_theElement->getCode());
        _rho = theMaterial.Density();
-       _nu  = theMaterial.PoissonRatio();
-       _E   = theMaterial.YoungModulus();
+       _poisson = theMaterial.PoissonRatio();
+       _young = theMaterial.YoungModulus();
     }
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     virtual void set(const Element* el) = 0;
     virtual void set(const Side* sd) = 0;
-    real_t _E, _nu, _lambda, _G, _rho, _coef;
+    real_t _young, _poisson, _lambda, _G, _rho, _coef;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

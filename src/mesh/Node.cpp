@@ -33,10 +33,10 @@
 #include "mesh/Node.h"
 #include "io/output.h"
 #include "linear_algebra/Point.h"
-#include "io/fparser/fparser.h"
 #include "OFELIException.h"
+#include "io/exprtk_adds.h"
 
-extern FunctionParser theParser;
+extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -105,9 +105,15 @@ void Node::setCode(const string& exp,
                    int           code,
                    size_t        dof)
 {
-   PARSE(exp.c_str(),"x,y,z,t");
-   double d[] = {_x.x,_x.y,_x.z};
-   if (EVAL(d))
+   exprtk::expression<double> expression;
+   exprtk::symbol_table<double> symbol_table;
+   add_constants(symbol_table);
+   symbol_table.add_variable("x",_x.x);
+   symbol_table.add_variable("y",_x.y);
+   symbol_table.add_variable("z",_x.z);
+   expression.register_symbol_table(symbol_table);
+   theParser.compile(exp,expression);
+   if (expression.value())
       _code[dof-1] = code;
 }
 

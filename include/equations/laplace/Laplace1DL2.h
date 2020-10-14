@@ -119,6 +119,7 @@ class Laplace1DL2 : public Equa_Laplace<real_t,2,2,1,1> {
     void setTraction(real_t f,
                      int    lr);
 
+    
  private:
     real_t _lsf, _rsf, _lbc, _rbc;
     bool   _is_lbc, _is_rbc;

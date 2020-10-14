@@ -50,6 +50,7 @@ using std::string;
 #include "equations/AbsEqua.h"
 #include "linear_algebra/Vect.h"
 #include "MyOpt.h"
+#include "io/Fct.h"
 
 namespace OFELI {
 
@@ -81,6 +82,7 @@ class OptSolver
       TRUNCATED_NEWTON     = 1,   /*!< Truncated Newton method                          */
       SIMULATED_ANNEALING  = 2,   /*!< Simulated annealing global optimization method   */
       NELDER_MEAD          = 3,   /*!< Nelder-Mead global optimization method           */
+      NEWTON               = 4    /*!< Newton's method                                  */
    };
 
 //----------------------------   BASIC OPERATIONS   ----------------------------
@@ -119,6 +121,9 @@ class OptSolver
     ~OptSolver();
 
 //-------------------------------   MODIFIERS  ---------------------------------
+
+/// \brief Set Solution vector
+    void set(Vect<real_t>& x);
 
 /// \brief Return the total number of function evaluations.
     int getNbFctEval() const { return _nb_obj_eval; }
@@ -171,6 +176,24 @@ class OptSolver
     void setGradient(string exp,
                      int    i=1);
 
+/** \brief Define an entry of the Hessian matrix
+ *  @param [in] exp Regular expression defining the Hessian matrix entry
+ *  @param [in] i <i>i</i>-th row of Hessian matrix [Default: <tt>1</tt>]
+ *  @param [in] j <i>j</i>-th column of Hessian matrix [Default: <tt>1</tt>]
+ */
+    void setHessian(string exp,
+                    int    i=1,
+                    int    j=1);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void setObjective(Fct& f);
+    void setGradient(Fct& f,
+                     int  i=1);
+    void setHessian(Fct& f,
+                    int  i=1,
+                    int  j=1);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 /** \brief Choose user defined optimization class
  *  @param [in] opt Reference to inherited user specified optimization class
  */
@@ -192,11 +215,6 @@ class OptSolver
  *  @param [in] lb Lower value
  */
     void setLowerBound(real_t lb);
-
-/** \brief Set verbosity parameter
- * @param [in] verb Verbosity parameter
- */
-    void setVerbosity(int verb) { _verb = verb; }
 
 /** \brief Define lower bounds for optimization variables
  * @param [in] lb Vector containing lower values for variables
@@ -304,9 +322,9 @@ class OptSolver
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend int OptimTN(OptSolver&, Vect<real_t>&, const Vect<real_t>&, const Vect<real_t>&,
-                       int&, int&, int&, real_t, int);
+                       int&, int&, int&, real_t);
     friend int lmqnbc(OptSolver&, Vect<real_t>&, real_t&, Vect<real_t>&, const Vect<real_t>&,
-                      const Vect<real_t>&, vector<int>&, int, int&, size_t, real_t&, real_t&,
+                      const Vect<real_t>&, vector<int>&, int&, size_t, real_t&, real_t&,
                       real_t&, real_t&, int&, int&);
     friend int modlnp(OptSolver&, int, Vect<real_t>&, Vect<real_t>&, Vect<real_t>&, Vect<real_t>&,
                       Vect<real_t>&, Vect<real_t>&, Vect<real_t>&, Vect<real_t>& g, Vect<real_t>&,
@@ -318,27 +336,36 @@ class OptSolver
                       const vector<real_t>&, real_t, Vect<real_t>&, real_t&, real_t&,
                       Vect<real_t>&, int&, Vect<real_t>*);
     friend int OptimPG(OptSolver&, Vect<real_t>&, const Vect<real_t>&, const Vect<real_t>&, int&,
-                       int&, int&, real_t, int);
+                       int&, int&, real_t);
     friend int OptimNM(OptSolver&, Vect<real_t>&, real_t&, real_t, Vect<real_t>&, int, int, int&, int&);
     friend int OptimSA(OptSolver&, Vect<real_t>&, real_t&, real_t& , int&, int&, int&, int&,
-                       const Vect<real_t>&, const Vect<real_t>&, const Vect<real_t>&, int&, real_t&,
+                       const Vect<real_t>&, const Vect<real_t>&, const Vect<real_t>&, real_t&,
                        Vect<real_t>&, real_t&, int&, int&, int&);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
 
+   enum {
+     FUNCTION   = 0,
+     EXPRESSION = 1,
+     FCT        = 2,
+     CLASS      = 3
+   };
+
    size_t _size;
-   int _verb, _eval, _nacc, _ns, _nt, _nobds, _nb_obj_eval, _nb_grad_eval;
-   int _conv, _max_eval, _neps, _nb_restart, _max_it;
+   int _eval, _nacc, _ns, _nt, _nobds, _nb_obj_eval, _nb_grad_eval;
+   int _conv, _max_eval, _neps, _nb_restart, _max_it, _type;
    vector<int> _pivot;
    Vect<real_t> *_x, _c, _vm, _lb, _ub, _g, _step;
    OptMethod _opt_method;
    real_t _accrcy, _toler, _reqmin;
    real_t _f, _rt, _fopt, _t;
    MyOpt *_opt;
-   bool _exp, _sa_opt, _tn_opt, _obj_type, _x_set, _method_set;
-   string _exp_obj, _var;
-   Vect<string> _exp_grad, _exp_hess;
+   bool _sa_opt, _tn_opt, _obj_type, _x_set, _method_set, _fct_allocated, _grad_computed, _hessian_computed;
+   Fct *_theFct;
+   vector<Fct *> _theDFct, _theDDFct;
+   vector<string> _var;
+   vector<real_t> _xv;
 
    void setTNDefaults();
    void setSADefaults();
@@ -349,7 +376,7 @@ class OptSolver
 
    real_t Objective(Vect<real_t>& x);
    void Gradient(Vect<real_t>& x, Vect<real_t>& g);
-
+   real_t eval(const Vect<real_t>& x, Fct* f);
 };
 
 /// \fn ostream & operator<<(ostream& s, const OptSolver &de)

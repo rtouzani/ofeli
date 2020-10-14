@@ -42,6 +42,7 @@
 
 #include "OFELI_Config.h"
 #include "OFELIException.h"
+#include "linear_algebra/Point.h"
 #include <algorithm>
 using std::vector;
 
@@ -56,7 +57,7 @@ namespace OFELI {
  *  \brief Definition file for class FEShape.
  */
 
-template<class T_> struct Point;
+//template<class T_> struct Point;
 class Element;
 class Side;
 class Edge;

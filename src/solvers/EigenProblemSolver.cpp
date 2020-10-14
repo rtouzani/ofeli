@@ -31,7 +31,6 @@
 
 #include "equations/AbsEqua.h"
 #include "solvers/EigenProblemSolver.h"
-#include "io/fparser/fparser.h"
 #include "linear_algebra/DMatrix_impl.h"
 #include "linear_algebra/DSMatrix_impl.h"
 #include "linear_algebra/SkSMatrix_impl.h"
@@ -39,7 +38,7 @@
 #include "linear_algebra/Assembly_impl.h"
 #include "equations/AbsEqua_impl.h"
 
-extern FunctionParser theParser;
+extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 

@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
 // Solution as a system of 2 first-order ODEs
    try {
-      ODESolver ode(BDF2,theTimeStep,theFinalTime,2);
+      ODESolver ode(RK4,theTimeStep,theFinalTime,2);
 
 //    Set differential equation coefficients
       DMatrix<double> A0(2,2), A1(2,2);
@@ -74,8 +74,6 @@ int main(int argc, char *argv[])
       f(1) = 0; f(2) = -3;
       ode.setInitial(y);
       ode.setInitialRHS(f); // Used for a multistep scheme only
-      ode.setRHS(f);
-      ode.setRK4RHS(ff);    // Used only if the RK4 scheme is used
 
 //    Loop on time steps to run the time integration scheme
       TimeLoop {
@@ -85,7 +83,9 @@ int main(int argc, char *argv[])
 
 //       Vector ff might be used in the case of a multistep scheme like RK4
          double t=theTime-0.5*theTimeStep;
+         ode.setRHS(f);
          ff(1) = 0; ff(2) = 3*(t-1)*exp(-t);
+         ode.setRK4RHS(ff);    // Used only if the RK4 scheme is used
 
 //       Run one time step
          ode.runOneTimeStep();
@@ -94,8 +94,8 @@ int main(int argc, char *argv[])
 
 //    Output differential equation information and error
       cout << ode << endl;
-      cout << "Error: " << fabs(y(1)-theFinalTime*exp(-theFinalTime)) << ", "
-           << fabs(y(2)-(1-theFinalTime)*exp(-theFinalTime)) << endl;
+      double t = theFinalTime;
+      cout << "Error: " << fabs(y(1)-t*exp(-t)) << ", " << fabs(y(2)-(1-t)*exp(-t)) << endl;
    } CATCH_EXCEPTION
 
    return 0;

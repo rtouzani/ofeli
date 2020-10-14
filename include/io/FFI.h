@@ -188,8 +188,8 @@ class FFI
    int get_token();
 };
 
-/*! @} End of Doxygen Groups */
 } /* namespace OFELI */
+/*! @} End of Doxygen Groups */
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #endif

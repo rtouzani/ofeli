@@ -43,10 +43,10 @@ using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
+  Verbosity = 2;
    double x = 1.;
    NLASSolver nls(x,SECANT);
-   nls.setf("x*x-2");
-   nls.setDf("2*x");
+   nls.setf("x^2-2");
    nls.run();
    cout << "Solution: " << x << endl;
    cout << nls;

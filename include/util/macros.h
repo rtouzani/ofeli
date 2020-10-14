@@ -48,27 +48,6 @@ namespace OFELI {
 #define MESH_BOUNDARY_SIDES for (topBoundarySide(); (theSide=getBoundarySide());)
 #define MESH_EDGES          for (topEdge(); (theEdge=getEdge());)
 #define MAT(M,A)            (M &)(*A)
-#define EVAL(d)             theParser.Eval(d)
-#define EVAL_XY(x,y)        theParser.Eval(x,y)
-#define EVAL_XYZ(x,y,z)     theParser.Eval(x,y,z)
-#define EVAL_X(x)           theParser.Eval(x)
-#define EVAL_XT(x,t)        theParser.Eval(x,t)
-#define EVAL_XYZT(x,y,z,t)  theParser.Eval(x,y,z,t)
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-
-/*! \def PARSE(exp,var)
- *  \ingroup Util
- * A macro that parses a regular expression \a exp using
- * the variables in the string \a var.
- * For instance, to parse the function \a sin(x+y) one must
- * declare \a PARSE("sin(x+y)","x,y")
- */
-#define PARSE(exp,var) theParser.Parse(exp,var)
-
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-#define EVAL_ERR theParser.EvalError()
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \def CATCH_EXCEPTION
@@ -76,18 +55,18 @@ namespace OFELI {
  *  This macro can be inserted after a <tt>try</tt> loop to catch a thrown 
  *  exception.
  */
-#define CATCH_EXCEPTION                                   \
-   catch(OFELIException &e) {                             \
-      std::cout << "OFELI error: " << e.what() << endl;   \
-      return 1;                                           \
-   }                                                      \
-   catch(runtime_error &e) {                              \
-      std::cout << "Runtime error: " << e.what() << endl; \
-      return 1;                                           \
-   }                                                      \
-   catch( ... ) {                                         \
-      std::cout << "Unexpected error: " << endl;          \
-      return 1;                                           \
+#define CATCH_EXCEPTION                                         \
+   catch(OFELIException &e) {                                   \
+      std::cout << "OFELI error: " << e.what() << endl;         \
+      return 1;                                                 \
+   }                                                            \
+   catch(runtime_error &e) {                                    \
+      std::cout << "OFELI Runtime error: " << e.what() << endl; \
+      return 1;                                                 \
+   }                                                            \
+   catch( ... ) {                                               \
+      std::cout << "OFELI Unexpected error: " << endl;          \
+      return 1;                                                 \
    }
 
 /*! \def TheNode

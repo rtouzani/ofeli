@@ -65,8 +65,7 @@ int OptimTN(OptSolver&          opt,
             int&                nb_obj_eval,
             int&                nb_grad_eval,
             int&                max_it,
-            real_t              toler,
-            int                 verb);
+            real_t              toler);
 
 int lmqnbc(OptSolver&          opt,
            Vect<real_t>&       x,
@@ -75,7 +74,6 @@ int lmqnbc(OptSolver&          opt,
            const Vect<real_t>& lb,
            const Vect<real_t>& ub,
            vector<int>&        pivot,
-           int                 verb,
            int&                max_it,
            size_t              max_fun,
            real_t&             eta,
@@ -145,7 +143,6 @@ int cnvtst(real_t              alpha,
  * feval       - value of quadratic function
  */
 int modlnp(OptSolver&    opt,
-           int           modet,
            Vect<real_t>& zsol,
            Vect<real_t>& gv,
            Vect<real_t>& r,
@@ -384,7 +381,6 @@ int OptimSA(OptSolver&          opt,
             const Vect<real_t>& lb,
             const Vect<real_t>& ub,
             const Vect<real_t>& c,
-            int&                verb,
             real_t&             t,
             Vect<real_t>&       vm,
             real_t&             fopt,
@@ -417,8 +413,7 @@ int OptimPG(OptSolver&          opt,
             const Vect<real_t>& ub,
             int&                nb_eval,
             int                 max_it,
-            real_t              toler,
-            int                 verb);
+            real_t              toler);
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

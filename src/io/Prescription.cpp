@@ -32,11 +32,10 @@
 #include "io/Prescription.h"
 #include "mesh/Mesh.h"
 #include "io/XMLParser.h"
-#include "io/fparser/fparser.h"
 #include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 
-extern FunctionParser theParser;
+extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -48,6 +47,7 @@ Prescription::Prescription()
 Prescription::Prescription(Mesh&              mesh,
                            const std::string& file)
 {
+   _x = _y = _z = 0.;
    _theMesh = &mesh;
    _file = file;
 }
@@ -64,15 +64,19 @@ int Prescription::get(EqDataType    type,
    _time = time;
    PrescriptionPar par;
    par.dof = dof;
-   int ret;
    _v = &v;
    _v->clear();
    XMLParser p(_file,*_theMesh,XMLParser::PRESCRIBE);
    p.get(type,_p);
+   exprtk::symbol_table<real_t> symbol_table;
+   add_constants(symbol_table);
+   symbol_table.add_variable("x",_x);
+   symbol_table.add_variable("y",_y);
+   symbol_table.add_variable("z",_z);
+   symbol_table.add_variable("t",_time);
+   _exp.register_symbol_table(symbol_table);
    for (size_t k=0; k<_p.size(); k++) {
-      if ((ret=PARSE(_p[k].fct,"x,y,z,t")) != -1)
-         throw OFELIException("In Prescription::get(int,Vect<real_t>,real_t,size_t):"
-                              " Error in expression parsing.");
+      theParser.compile(_p[k].fct,_exp);
       if (dof) {
          if (type==BOUNDARY_CONDITION)
             get_boundary_condition(k,dof);
@@ -106,9 +110,9 @@ int Prescription::get(EqDataType    type,
 
 void Prescription::get_point_force(size_t k)
 {
-   int err;
    bool p = _p[k].bx || _p[k].by || _p[k].bz;
    MESH_ND {
+      _x = The_node.getX(), _y = The_node.getY(), _z = The_node.getZ();
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          real_t e = 0;
          if (_p[k].bx)
@@ -117,12 +121,8 @@ void Prescription::get_point_force(size_t k)
             e += (_p[k].y-The_node.getY())*(_p[k].y-The_node.getY());
          if (_p[k].bz)
             e += (_p[k].z-The_node.getZ())*(_p[k].z-The_node.getZ());
-         if (i==_p[k].dof && sqrt(e)<OFELI_EPSMCH && p) {
-            (*_v)(node_label,i) = EVAL_XT(The_node.getCoord(),_time);
-            if ((err=EVAL_ERR))
-               throw OFELIException("In Prescription::get_point_force(size_t): "
-                                    "Error in expression evaluation.");
-         }
+         if (i==_p[k].dof && sqrt(e)<OFELI_EPSMCH && p)
+            (*_v)(node_label,i) = _exp.value();
       }
    }
 }
@@ -131,8 +131,8 @@ void Prescription::get_point_force(size_t k)
 void Prescription::get_point_force(size_t k,
                                    size_t dof)
 {
-   int err;
    MESH_ND {
+      _x = The_node.getX(), _y = The_node.getY(), _z = The_node.getZ();
       real_t e = 0;
       if (_p[k].bx)
          e += (_p[k].x-The_node.getX())*(_p[k].x-The_node.getX());
@@ -140,12 +140,8 @@ void Prescription::get_point_force(size_t k,
          e += (_p[k].y-The_node.getY())*(_p[k].y-The_node.getY());
       if (_p[k].bz)
          e += (_p[k].z-The_node.getZ())*(_p[k].z-The_node.getZ());
-      if (sqrt(e)<OFELI_EPSMCH && _p[k].dof==dof) {
-         (*_v)(node_label,dof) = EVAL_XT(The_node.getCoord(),_time);
-         if ((err=EVAL_ERR))
-            throw OFELIException("In Prescription::get_point_force(size_t,size_t): "
-                                 "Error in expression evaluation.");
-      }
+      if (sqrt(e)<OFELI_EPSMCH && _p[k].dof==dof)
+         (*_v)(node_label,dof) = _exp.value();
    }
 }
 
@@ -153,14 +149,10 @@ void Prescription::get_point_force(size_t k,
 void Prescription::get_boundary_condition(size_t k,
                                           size_t dof)
 {
-   int err;
    MESH_ND {
-      if (the_node->getCode(dof)==_p[k].code) {
-         (*_v)(node_label,dof) = EVAL_XT(The_node.getCoord(),_time);
-         if ((err=EVAL_ERR))
-            throw OFELIException("In Prescription::get_boundary_condition(size_t,size_t): "
-                                 "Error in expression evaluation.");
-      }
+      _x = The_node.getX(), _y = The_node.getY(), _z = The_node.getZ();
+      if (the_node->getCode(dof)==_p[k].code)
+         (*_v)(node_label,dof) = _exp.value();
    }
 }
 
@@ -168,16 +160,12 @@ void Prescription::get_boundary_condition(size_t k,
 void Prescription::get_boundary_condition(size_t k)
 {
    size_t l=0;
-   int err;
    MESH_ND {
+      _x = The_node.getX(), _y = The_node.getY(), _z = The_node.getZ();
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          l++;
-         if (The_node.getCode(_p[k].dof)==_p[k].code && i==_p[k].dof) {
-            (*_v)(l) = EVAL_XT(The_node.getCoord(),_time);
-            if ((err=EVAL_ERR))
-               throw OFELIException("In Prescription::get_boundary_condition(size_t): "
-                                    "Error in expression evaluation.");
-         }
+         if (The_node.getCode(_p[k].dof)==_p[k].code && i==_p[k].dof)
+            (*_v)(l) = _exp.value();
       }
    }
 }
@@ -186,15 +174,12 @@ void Prescription::get_boundary_condition(size_t k)
 void Prescription::get_boundary_force(size_t k,
                                       size_t dof)
 {
-   int err;
    MESH_SD {
+      _x = The_side.getCenter().x, _y = The_side.getCenter().y, _z = The_side.getCenter().z;
       if (The_side.getCode(_p[k].dof)==_p[k].code && (_p[k].dof==dof||dof==0)) {
-         real_t z = EVAL_XT(The_side.getCenter(),_time);
+         real_t z = _exp.value();
          for (size_t i=1; i<=The_side.getNbNodes(); ++i)
             (*_v)(The_side(i)->n()) = z;
-         if ((err=EVAL_ERR))
-            throw OFELIException("In Prescription::get_boundary_force(size_t,size_t): "
-                                 "Error in expression evaluation.");
       }
    }
 }
@@ -202,22 +187,14 @@ void Prescription::get_boundary_force(size_t k,
 
 void Prescription::get_boundary_force(size_t k)
 {
-  int err=0;
    MESH_SD {
-      if (The_side.getGlobalCode()==9998) {
-         (*_v)(The_side.getDOF(_p[k].dof)) = EVAL_XT(The_side.getCenter(),_time);
-         if ((err=EVAL_ERR))
-            throw OFELIException("In Prescription::get_boundary_force(size_t): "
-                                 "Error in expression evaluation.");
-      }
+      _x = The_side.getCenter().x, _y = The_side.getCenter().y, _z = The_side.getCenter().z;
+      if (The_side.getGlobalCode()==9998)
+         (*_v)(The_side.getDOF(_p[k].dof)) = _exp.value();
       else {
          for (size_t j=1; j<=The_side.getNbDOF(); j++) {
-            if (The_side.getCode(_p[k].dof)==_p[k].code && j==_p[k].dof) {
-               (*_v)(The_side.getDOF(j)) = EVAL_XT(The_side.getCenter(),_time);
-               if ((err=EVAL_ERR))
-                  throw OFELIException("In Prescription::get_boundary_force(size_t): "
-                                       "Error in expression evaluation.");
-            }
+            if (The_side.getCode(_p[k].dof)==_p[k].code && j==_p[k].dof)
+               (*_v)(The_side.getDOF(j)) = _exp.value();
          }
       }
    }
@@ -227,29 +204,21 @@ void Prescription::get_boundary_force(size_t k)
 void Prescription::get_vector(size_t k,
                               size_t dof)
 {
-   int err;
    MESH_ND {
-      if (_p[k].dof==dof || dof==0) {
-         (*_v)(node_label) = EVAL_XT(The_node.getCoord(),_time);
-         if ((err=EVAL_ERR))
-            throw OFELIException("In Prescription::get_vector(size_t,size_t): "
-                                 "Error in expression evaluation.");
-      }
+      _x = The_node.getX(), _y = The_node.getY(), _z = The_node.getZ();
+      if (_p[k].dof==dof || dof==0)
+         (*_v)(node_label) = _exp.value();
    }
 }
 
 
 void Prescription::get_vector(size_t k)
 {
-   int err;
    MESH_ND {
+      _x = The_node.getX(), _y = The_node.getY(), _z = The_node.getZ();
       for (size_t i=1; i<=the_node->getNbDOF(); ++i) {
-         if (i==_p[k].dof) {
-            (*_v)(node_label,i) = EVAL_XT(The_node.getCoord(),_time);
-            if ((err=EVAL_ERR))
-               throw OFELIException("In Prescription::get_vector(size_t): "
-                                    "Error in expression evaluation.");
-         }
+         if (i==_p[k].dof)
+            (*_v)(node_label,i) = _exp.value();
       }
    }
 }

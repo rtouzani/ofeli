@@ -96,7 +96,7 @@ class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
     void RHS(real_t coef=1.);
 
 /// \brief Compute Finite Element Diagonal Block
-    void FEBlock(real_t omega);
+    void FEBlock();
 
 /// \brief Compute boundary element blocks
     void BEBlocks(size_t            n1,
@@ -106,8 +106,7 @@ class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
                   SpMatrix<real_t>& D);
 
 /// \brief Compute constant to multiply by potential
-    complex_t Constant(real_t              omega,
-                       const Vect<real_t>& u,
+    complex_t Constant(const Vect<real_t>& u,
                        complex_t&          I);
 
 /// \brief Compute magnetic pressure in element

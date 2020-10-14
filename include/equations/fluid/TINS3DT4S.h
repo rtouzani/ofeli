@@ -102,18 +102,20 @@ class TINS3DT4S : virtual public Equa_Fluid<real_t,4,12,3,9> {
 /// \brief Run one time step
     int runOneTimeStep();
 
+/// \brief Run (in the case of one step run)
+    int run() { return runOneTimeStep(); }
+
 private:
 
    bool             _constant_matrix;
    real_t           _cr, _c24, _vol, _cfl;
    size_t           _ne, _en[4];
-   Vect<real_t>     _b, *_p, _MM, _c, _q;
+   Vect<real_t>     *_p, _MM, _c, _q, _bp;
    vector<size_t>   _col_ind, _row_ptr;
-   SpMatrix<real_t> _VM, _PM;
+   SpMatrix<real_t> _PM;
 #ifndef USE_EIGEN
    Prec<real_t>     _PP, _PV;
 #endif
-   Point<real_t>    _g;
 
    void build();
    void set(Element *el);

@@ -361,7 +361,9 @@ private:
    int saveAsBamg();
    int saveAsTriangle();
    int Position(real_t  s,
-                real_t* data);
+                real_t& x,
+                real_t& y,
+                real_t& z);
    void gm();
    void gm1();
    void gm2();

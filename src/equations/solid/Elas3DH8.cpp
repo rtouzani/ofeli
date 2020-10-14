@@ -59,6 +59,7 @@ void Elas3DH8::set(const Element* el)
       delete _quad, _quad = nullptr;
    _hexa->atGauss(2,_dSh,_wg);
    _hexa->atGauss(2,_sh,_wg);
+   _el_geo.center = _hexa->getCenter();
    ElementNodeCoordinates();
    _xl[0].x = _xl[3].x = _xl[4].x = _xl[7].x = -1.;
    _xl[1].x = _xl[2].x = _xl[5].x = _xl[6].x =  1.;
@@ -69,6 +70,13 @@ void Elas3DH8::set(const Element* el)
    ElementNodeVector(*_u,_eu);
    if (AbsEqua<real_t>::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
+   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _ez = _el_geo.center.z, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_young_set)
+      _young = _young_exp.value();
+   if (_poisson_set)
+      _poisson = _poisson_exp.value();
    eA0 = 0; eA1 = 0; eA2 = 0;
    eRHS = 0;
 }

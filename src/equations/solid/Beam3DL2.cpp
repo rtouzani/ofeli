@@ -95,7 +95,15 @@ void Beam3DL2::set(const Element* el)
    _x[1] = (*_theElement)(2)->getCoord();
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
-   _mu = 0.5*_E/(1+_nu);
+   Point<real_t> c = 0.5*(_x[0]+_x[1]);
+   _ex = c.x, _ey = c.y, _ez = c.z, _et = _TimeInt.time;
+   if (_rho_set)
+      _rho = _rho_exp.value();
+   if (_young_set)
+      _young = _young_exp.value();
+   if (_poisson_set)
+      _poisson = _poisson_exp.value();
+   _mu = 0.5*_young/(1+_poisson);
    _h = sqrt((_x[1].x - _x[0].x)*(_x[1].x - _x[0].x)
            + (_x[1].y - _x[0].y)*(_x[1].y - _x[0].y)
            + (_x[1].z - _x[0].z)*(_x[1].z - _x[0].z));
@@ -164,7 +172,7 @@ void Beam3DL2::Stiffness(real_t coef)
 
 // Bending
    if (_bending) {
-      real_t c1 = coef*_E*_I1e/_h, c2 = coef*_E*_I2e/_h;
+      real_t c1 = coef*_young*_I1e/_h, c2 = coef*_young*_I2e/_h;
       eA0( 4, 4) += c1;
       eA0( 5, 5) += c2;
       eA0(10,10) += c1;
@@ -210,7 +218,7 @@ void Beam3DL2::Stiffness(real_t coef)
 
 // Axial
    if (_axial) {
-      real_t c1 = coef*_E*_ae/_h;
+      real_t c1 = coef*_young*_ae/_h;
       eA0( 3, 3) += c1;
       eA0( 3, 9) -= c1;
       eA0( 9, 9) += c1;
@@ -242,7 +250,7 @@ void Beam3DL2::AxialForce(Vect<real_t>& f)
    f.setSize(_nb_el);
    MESH_EL {
      set(the_element);
-     f(element_label) = _E*_ae*(_eu(9)-_eu(3))/_h;
+     f(element_label) = _young*_ae*(_eu(9)-_eu(3))/_h;
    }
 }
 
@@ -263,7 +271,7 @@ void Beam3DL2::BendingMoment(Vect<real_t>& m)
    m.setSize(_nb_el,2);
    MESH_EL {
       set(the_element);
-      real_t c = -_E*(_eu(10)-_eu(4))/_h;
+      real_t c = -_young*(_eu(10)-_eu(4))/_h;
       m(element_label,1) = c*_I2e;
       m(element_label,2) = c*_I1e;
    }
@@ -287,8 +295,8 @@ void Beam3DL2::buildEigen(SkSMatrix<real_t>& K,
    MESH_EL {
       set(the_element);
       if (_bending) {
-         c1 = _E*_I1e/_h;
-         c2 = _E*_I2e/_h;
+         c1 = _young*_I1e/_h;
+         c2 = _young*_I2e/_h;
          eA0( 4, 4) += c1; eA0( 5, 5) += c2;
          eA0(10,10) += c1; eA0(11,11) += c2;
          eA0( 4,10) -= c1; eA0( 5,11) -= c2;
@@ -315,7 +323,7 @@ void Beam3DL2::buildEigen(SkSMatrix<real_t>& K,
          eA0( 7,11) -= c2; eA0( 6,10) += c2;
       }
       if (_axial) {
-         c1 = _E*_ae/_h;
+         c1 = _young*_ae/_h;
          eA0( 3, 3) += c1; eA0( 3, 9) -= c1; eA0( 9, 9) += c1;
       }
       if (_torsion) {

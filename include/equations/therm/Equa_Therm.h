@@ -101,7 +101,9 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
-
+   using AbsEqua<T_>::_rho_set;
+   using AbsEqua<T_>::_Cp_set;
+   using AbsEqua<T_>::_kappa_set;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
@@ -110,7 +112,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        _terms = DIFFUSION;
        _analysis = STEADY_STATE;
        _TimeInt.scheme = NONE;
-       _rhocp_is_set = _conductivity_is_set = false;
+       _rho_is_set = _cp_is_set = _conductivity_is_set = false;
        _terms = DIFFUSION;
     }
 
@@ -234,7 +236,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        MESH_EL {
           set(the_element);
           if (_terms&CAPACITY)
-             Capacity(1.);
+             Capacity();
           if (_terms&LUMPED_CAPACITY)
              LCapacity();
           if (_terms&DIFFUSION)
@@ -276,17 +278,14 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
        }
     }
 
-/// \brief Set product of Density by Specific heat (constants)
-    void setRhoCp(const real_t& rhocp) { _rhocp = rhocp; }
+/// \brief Set Density (constant)
+    void setRho(const real_t& rho) { _rho = rho; }
+
+/// \brief Set Specific heat (constant)
+    void setCp(const real_t& cp) { _cp = cp; }
 
 /// \brief Set (constant) thermal conductivity
     void setConductivity(const real_t& diff) { _diff = diff; }
-
-/// \brief Set product of Density by Specific heat given by an algebraic expression
-    void RhoCp(const string& exp) { _rhocp = setMaterialProperty(exp.c_str(),"RhoCp"); }
-
-/// \brief Set thermal conductivity given by an algebraic expression
-    void Conduc(const string& exp) { _diff = setMaterialProperty(exp.c_str(),"Conductivity"); }
 
  protected:
 
@@ -300,13 +299,14 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void setMaterial()
     {
        theMaterial.setCode(_theElement->getCode());
-       _rhocp = theMaterial.Density() * theMaterial.SpecificHeat();
+       _rho = theMaterial.Density();
+       _cp = theMaterial.SpecificHeat();
        _diff  = theMaterial.ThermalConductivity();
     }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   bool     _stab, _rhocp_is_set, _conductivity_is_set;
-   real_t   _diff, _rhocp, _coef;
+    bool    _stab, _rho_is_set, _cp_is_set, _conductivity_is_set;
+    real_t  _diff, _rho, _cp, _coef;
    Vect<T_> *_vel;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };

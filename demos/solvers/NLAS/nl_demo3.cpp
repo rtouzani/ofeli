@@ -50,12 +50,8 @@ int main(int argc, char *argv[])
 //    First solution using a first initial guess
       x(1) = -1.; x(2) = 0.;
       NLASSolver nls(x,NEWTON);
-      nls.setf("x1*x1-2*x1*x2-2");
-      nls.setDf("2*x1-2*x2",1,1);
-      nls.setDf("-2*x1",1,2);
-      nls.setf("x1+x2*x2+1");
-      nls.setDf("1",2,1);
-      nls.setDf("2*x2",2,2);
+      nls.setf("x1^2-2*x1*x2-2");
+      nls.setf("x1+x2^2+1");
       nls.run();
       cout << "Solution 1:\n" << x << endl;
 
