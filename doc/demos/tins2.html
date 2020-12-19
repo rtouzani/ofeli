@@ -140,7 +140,6 @@
    <li><a href="../overview.html"><span>Overview</span></a>
    <li><a href="../html/index.html"><span>Class Documentation</span></a>
    <li><a href="../fformats.html"><span>File Formats</span></a>
-   <li><a href="../tutorial.html"><span>Tutorial</span></a>
    <li class="current"><a href="../demos.html"><span>Demo Codes</span></a>
  </div>
 
@@ -224,7 +223,7 @@ instance. We also transmit to the created instance necessary parameters:
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
 <pre><font color="blue" size=3>   Vect&lt;double&gt; u(mesh,"Velocity",0), p(mesh,"Pressure",0,1);
-   TINS2DT3B eq(mesh,u,p,theTimeStep,Re);
+   TINS2DT3S eq(mesh,u,p,theTimeStep,Re);
    eq.setVerbose(verbose);
    eq.setTolerance(tol);
 </font></pre>
@@ -339,7 +338,7 @@ All other data that are not given are by default set to  <span class=TT>0</span>
 
 &nbsp;
 <div id="foot_bar">
-        Copyright &copy; 1998-2013 Rachid Touzani&nbsp;
+        Copyright &copy; 1998-2021 Rachid Touzani&nbsp;
 </div>
 
 </body>

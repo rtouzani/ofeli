@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -408,7 +408,7 @@ int DMatrix<T_>::setLU()
    for (size_t i=1; i<_size; i++) {
       for (size_t j=1; j<=i; j++) {
          if (Abs(_a[_nb_rows*(j-1)+j-1]) < OFELI_EPSMCH)
-            throw OFELIException("In DMatrix::setLU(): " + itos(int(i)) + "-th pivot is null.");
+            throw OFELIException("In DMatrix::setLU(): " + to_string(int(i)) + "-th pivot is null.");
          _a[_nb_rows*i+j-1] /= _a[_nb_rows*(j-1)+j-1];
          for (size_t k=0; k<j; k++)
             _a[_nb_rows*i+j] -= _a[_nb_rows*i+k]*_a[_nb_rows*k+j];
@@ -427,7 +427,7 @@ int DMatrix<T_>::setTransLU()
    for (size_t i=1; i<_size; i++) {
       for (size_t j=1; j<=i; j++) {
          if (Abs(_a[_nb_rows*(i-1)+i-1]) < OFELI_EPSMCH)
-            throw OFELIException("In DMatrix::setTLU(): " + itos(int(i)) + "-th pivot is null.");
+            throw OFELIException("In DMatrix::setTLU(): " + to_string(i) + "-th pivot is null.");
          _a[_nb_rows*j+i-1] /= _a[_nb_rows*(i-1)+i-1];
          for (size_t k=0; k<j; k++)
             _a[_nb_rows*j+i] -= _a[_nb_rows*k+i]*_a[_nb_rows*j+k];
@@ -519,7 +519,7 @@ int DMatrix<T_>::solveLU(Vect<T_>& b,
    }
    for (int ii=int(_size)-1; ii>-1; ii--) {
       if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
-         throw OFELIException("In DMatrix::solveLU(Vect<T_>): " + itos(ii+1) + "-th pivot is null.");
+         throw OFELIException("In DMatrix::solveLU(Vect<T_>): " + to_string(ii+1) + "-th pivot is null.");
       b[ii] /= _a[_nb_cols*ii+ii];
       for (size_t j=0; j<size_t(ii); j++)
          b[j] -= b[ii] * _a[_nb_cols*j+ii];
@@ -553,7 +553,7 @@ int DMatrix<T_>::solveTransLU(Vect<T_>& b,
    }
    for (int ii=int(_size)-1; ii>-1; ii--) {
       if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
-         throw OFELIException("In DMatrix::solveTransLU(Vect<real_t>): " + itos(ii+1)
+         throw OFELIException("In DMatrix::solveTransLU(Vect<real_t>): " + to_string(ii+1)
                               + "-th pivot is null.");
       b[ii] /= _a[_nb_cols*ii+ii];
       for (size_t j=0; j<size_t(ii); j++)

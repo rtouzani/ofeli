@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -361,7 +361,8 @@ class OptSolver
    real_t _accrcy, _toler, _reqmin;
    real_t _f, _rt, _fopt, _t;
    MyOpt *_opt;
-   bool _sa_opt, _tn_opt, _obj_type, _x_set, _method_set, _fct_allocated, _grad_computed, _hessian_computed;
+   bool _sa_opt, _tn_opt, _obj_type, _x_set, _method_set, _fct_allocated;
+   bool _grad_allocated, _hessian_allocated, _grad_computed, _hessian_computed;
    Fct *_theFct;
    vector<Fct *> _theDFct, _theDDFct;
    vector<string> _var;

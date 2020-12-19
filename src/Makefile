@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin17.7.0
-host_triplet = i386-apple-darwin17.7.0
+build_triplet = i386-apple-darwin19.6.0
+host_triplet = i386-apple-darwin19.6.0
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -238,19 +238,19 @@ am__relativize = \
     dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
   done; \
   reldir="$$dir2"
-ACLOCAL = ${SHELL} /Users/touzani/ofeli/ofeli/missing aclocal-1.16
+ACLOCAL = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoconf
-AUTOHEADER = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoheader
-AUTOMAKE = ${SHELL} /Users/touzani/ofeli/ofeli/missing automake-1.16
+AUTOCONF = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing autoconf
+AUTOHEADER = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing autoheader
+AUTOMAKE = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing automake-1.16
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -276,7 +276,7 @@ LIBOBJS =
 LIBS = 
 LTLIBOBJS = 
 MAINT = #
-MAKEINFO = ${SHELL} /Users/touzani/ofeli/ofeli/missing makeinfo
+MAKEINFO = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing makeinfo
 MKDIR_P = /opt/local/bin/gmkdir -p
 MPI_CFLAGS = -I${prefix}/include/mpi 
 MPI_LDFLAGS =  
@@ -304,10 +304,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 4.0.0
-abs_builddir = /Users/touzani/ofeli/ofeli/src
-abs_srcdir = /Users/touzani/ofeli/ofeli/src
-abs_top_builddir = /Users/touzani/ofeli/ofeli
-abs_top_srcdir = /Users/touzani/ofeli/ofeli
+abs_builddir = /Users/touzani/Documents/NUMERIC/ofeli/ofeli/src
+abs_srcdir = /Users/touzani/Documents/NUMERIC/ofeli/ofeli/src
+abs_top_builddir = /Users/touzani/Documents/NUMERIC/ofeli/ofeli
+abs_top_srcdir = /Users/touzani/Documents/NUMERIC/ofeli/ofeli
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -316,10 +316,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin17.7.0
+build = i386-apple-darwin19.6.0
 build_alias = 
 build_cpu = i386
-build_os = darwin17.7.0
+build_os = darwin19.6.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -327,15 +327,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin17.7.0
+host = i386-apple-darwin19.6.0
 host_alias = 
 host_cpu = i386
-host_os = darwin17.7.0
+host_os = darwin19.6.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/touzani/ofeli/ofeli/install-sh
+install_sh = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -520,6 +520,7 @@ SHAPE_FUNCTIONS_OBJS = shape_functions/Hexa8.o \
 
 SOLVERS_OBJS = solvers/BSpline.o \
                solvers/EigenProblemSolver.o \
+               solvers/LPSolver.o \
                solvers/NLASSolver.o \
                solvers/ODESolver.o \
                solvers/OptimNM.o \
@@ -527,7 +528,7 @@ SOLVERS_OBJS = solvers/BSpline.o \
                solvers/OptimTN.o \
                solvers/OptimPG.o \
                solvers/OptSolver.o \
-               solvers/Simplex.o \
+               solvers/simplex.o \
                solvers/Solver.o \
                solvers/TimeStepping.o
 

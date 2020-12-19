@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -237,7 +237,7 @@ T_& BMatrix<T_>::operator()(size_t i,
       return _a[i-1][_ld+j-i];
    else
       throw OFELIException("In BMatrix::operator(): Illegal pair of indices " +
-                           itos(int(i))+","+itos(int(j))+").");
+                           to_string(i)+","+to_string(j)+").");
    return _zero;
 }
 
@@ -288,7 +288,7 @@ int BMatrix<T_>::setLU()
    for (int i=0; i<int(_size)-1; i++) {
       int kend=std::min(_ld+1,int(_size)-i), kjend=std::min(_ud+1,int(_size)-i);
       if (Abs(_a[i][_ld]) < OFELI_EPSMCH)
-         throw OFELIException("In BMatrix::Factor(): " + itos(int(i)+1) + "-th pivot is null.");
+         throw OFELIException("In BMatrix::Factor(): " + to_string(i+1) + "-th pivot is null.");
       for (int k=1; k!=kend; k++) {
          _a[k+i][_ld-k] /= _a[i][_ld];
          for (int j=1; j!=kjend; j++)

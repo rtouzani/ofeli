@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,7 +50,7 @@ Edge::Edge()
 Edge::Edge(size_t label)
 {
    if (label<1)
-      throw OFELIException("Edge::Edge(size_t): Illegal edge label "+itos(label));
+     throw OFELIException("Edge::Edge(size_t): Illegal edge label "+std::to_string(label));
    _label = label;
    _nb_eq = _nb_nodes = 0;
    _neig_sd = 0;

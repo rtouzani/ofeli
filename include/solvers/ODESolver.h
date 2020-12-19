@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -228,7 +228,6 @@ class ODESolver
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setF(Fct& f);
-    void setF(Fct& f, int i);
     void setDF(Fct& df, int i=1, int j=1);
     void setdFdt(Fct& df, int i=1);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

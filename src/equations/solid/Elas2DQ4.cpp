@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -250,12 +250,10 @@ void Elas2DQ4::BodyRHS(const Vect<real_t>& f)
 
 void Elas2DQ4::BoundaryRHS()
 {
-   for (size_t k=0; k<2; k++) {
-      real_t c=0.5*_ww[k]*_ln->getLength();
-      for (size_t i=1; i<=2; i++) {
-         sRHS(2*i-1) += c*_ssf[0]*_ln->Sh(i,_g[k]);
-         sRHS(2*i  ) += c*_ssf[1]*_ln->Sh(i,_g[k]);
-      }
+   real_t c=0.5*_ln->getLength();
+   for (size_t i=1; i<=2; i++) {
+      sRHS(2*i-1) += c*_ssf[0];
+      sRHS(2*i  ) += c*_ssf[1];
    }
 }
 

@@ -1,5 +1,5 @@
 dnl ------------------------------------------------------------------------------
-dnl OFELI - Copyright (C) 1998-2020 Rachid Touzani
+dnl OFELI - Copyright (C) 1998-2021 Rachid Touzani
 
 dnl This file is part of OFELI.
 
@@ -329,7 +329,7 @@ demo_exes="elliptic heat transport "
 demo_exes+="laplace_demo1 laplace_demo2 laplace_demo3 laplace_demo4 "
 demo_exes+="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz ls_demo1 ls_demo2 "
 demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2 "
-demo_exes+="opt_demo1 opt_demo2 opt_demo3 opt_demo4 nl_demo1 nl_demo2 nl_demo3 nl_demo4 "
+demo_exes+="opt_demo1 opt_demo2 opt_demo3 opt_demo4 opt_demo5 nl_demo1 nl_demo2 nl_demo3 nl_demo4 "
 
 AC_OUTPUT(
    Makefile
@@ -409,7 +409,6 @@ AC_OUTPUT(
    demos/solvers/EIGEN/Makefile
    demos/solvers/OPTIM/Makefile
    demos/solvers/NLAS/Makefile
-   demos/solvers/LP/Makefile
    demos/adapt/Makefile
    doc/Makefile
    doc/html/Makefile

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -119,15 +119,15 @@ class Equa_Laplace : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
              BodyRHS(*_bf);
           if (_bc!=nullptr)
              this->updateBC(*_theElement,*_bc);
-          AbsEqua<T_>::_A->Assembly(*_theElement,eMat.get());
-          AbsEqua<T_>::_b->Assembly(*_theElement,eRHS.get());
+          _A->Assembly(*_theElement,eMat.get());
+          _b->Assembly(*_theElement,eRHS.get());
        }
        if (_sf!=nullptr) {
           MESH_BD_SD {
              set(the_side);
              if (_sf!=nullptr)
                 BoundaryRHS(*_sf);
-             AbsEqua<T_>::_b->Assembly(*_theSide,sRHS.get());
+             _b->Assembly(*_theSide,sRHS.get());
           }
        }
     }

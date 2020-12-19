@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -33,7 +33,8 @@
 #include "mesh/getMesh.h"
 #include "mesh/saveMesh.h"
 #include "linear_algebra/Vect_impl.h"
-#include "util/util.h"
+
+using std::to_string;
 
 namespace OFELI {
 
@@ -184,7 +185,7 @@ int MeshAdapt::run()
 
    if (_iter>0) {
       setBackgroundMesh(_output_mesh_file);
-      setOutputMesh("mesh."+itos(_iter)+".bamg");
+      setOutputMesh("mesh."+to_string(_iter)+".bamg");
       _set_geo = false;
    }
 
@@ -428,7 +429,7 @@ int MeshAdapt::run()
    _iter++;
    if (_iter>1) {
       for (size_t i=0; i<=_iter; i++)
-          remove(string("mesh."+itos(i)+".bamg").c_str());
+         remove(string("mesh."+to_string(i)+".bamg").c_str());
       remove("mesh.geo");
    }
    return 0;

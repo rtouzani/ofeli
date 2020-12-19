@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -154,10 +154,11 @@ void TimeStepping::setScheme()
    _sch[RK3_TVD] = 8;
    _sch[BDF2] = 9;
    _sch[BUILTIN] = 10;
-   _scs = {{STATIONARY,"Stationary"}, {FORWARD_EULER,"Forward Euler"}, {BACKWARD_EULER,"Backward Euler"},
-           {CRANK_NICOLSON,"Crank-Nicolson"}, {HEUN,"Heun"}, {NEWMARK,"Newmark"}, {LEAP_FROG,"LeapFrog"},
-           {AB2,"Adams-Bashforth"}, {RK4,"Runge-Kutta 4"}, {RK3_TVD,"Runge-Kutta 3, TVD"}, {BDF2,"BDF 2"},
-           {BUILTIN,"BuiltIn"}};
+   _scs = {{STATIONARY,"Stationary"}, {FORWARD_EULER,"Forward Euler"},
+           {BACKWARD_EULER,"Backward Euler"}, {CRANK_NICOLSON,"Crank-Nicolson"},
+           {HEUN,"Heun"}, {NEWMARK,"Newmark"}, {LEAP_FROG,"LeapFrog"},
+           {AB2,"Adams-Bashforth"}, {RK4,"Runge-Kutta 4"}, {RK3_TVD,"Runge-Kutta 3, TVD"},
+           {BDF2,"BDF 2"}, {BUILTIN,"BuiltIn"}};
 }
 
 
@@ -225,7 +226,8 @@ void TimeStepping::set(TimeScheme s,
       _nb_ssteps = 4;
    _sc = int(s);
    if (s&FORWARD_EULER || s&BACKWARD_EULER || s&CRANK_NICOLSON || s&HEUN || s&NEWMARK ||
-       s&LEAP_FROG || s&ADAMS_BASHFORTH || s&AB2 || s&RUNGE_KUTTA || s&RK4 || s&RK3_TVD || s&BDF2) {
+       s&LEAP_FROG || s&ADAMS_BASHFORTH || s&AB2 || s&RUNGE_KUTTA || s&RK4 || s&RK3_TVD ||
+       s&BDF2) {
       _presolve = PS[int(s)];
       _solve = TS[int(s)];
       _assemb = AS[int(s)];
@@ -322,7 +324,7 @@ void TimeStepping::setBC(int    code,
    _fbc.setMesh(*_de[_nb_des-1].mesh);
    _fbc.setTime(theTime);
    _fbc.setNodeBC(code,exp);
-   setRHS(_fbc);
+   setBC(_fbc);
 }
 
 
@@ -357,7 +359,7 @@ real_t TimeStepping::runOneTimeStep()
    _step++;
    _time = theTime;
    if (Verbosity>1)
-      std::cout << "   Time step: " << _step << ", time: " << _time << " ..." << std::endl;
+      cout << "   Time step: " << _step << ", time: " << _time << " ..." << endl;
 
    for (int e=0; e<_nb_des; ++e) {
       DE &de = _de[e];

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -35,9 +35,9 @@
 #include "mesh/Node.h"
 #include "linear_algebra/LocalMatrix_impl.h"
 #include "io/exprtk_adds.h"
-#include "util/util.h"
 #include "OFELIException.h"
 
+using std::to_string;
 extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
@@ -60,7 +60,7 @@ Element::Element(size_t        label,
           _code(1), _parent(nullptr)
 {
    if (label<1)
-      throw OFELIException("Element::Element(size_t,string): Illegal element label "+itos(label));
+      throw OFELIException("Element::Element(size_t,string): Illegal element label "+to_string(label));
    shape_index(shape);
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
@@ -75,7 +75,7 @@ Element::Element(size_t label,
           _code(1), _shape(shape), _parent(nullptr)
 {
    if (label<1)
-      throw OFELIException("Element::Element(size_t,int): Illegal element label "+itos(label));
+      throw OFELIException("Element::Element(size_t,int): Illegal element label "+to_string(label));
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
       _neig_el[i] = nullptr;
@@ -90,7 +90,7 @@ Element::Element(size_t        label,
           _code(c), _parent(nullptr)
 {
    if (label<1)
-      throw OFELIException("Element::Element(size_t,string,int): Illegal element label "+itos(label));
+      throw OFELIException("Element::Element(size_t,string,int): Illegal element label "+to_string(label));
    shape_index(shape);
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
@@ -106,7 +106,7 @@ Element::Element(size_t label,
           _code(c), _shape(shape), _parent(nullptr)
 {
    if (label<1)
-      throw OFELIException("Element::Element(size_t,int,int): Illegal element label " + itos(label));
+      throw OFELIException("Element::Element(size_t,int,int): Illegal element label " + to_string(label));
    calculate_nb_sides();
    for (size_t i=0; i<MAX_NB_ELEMENT_SIDES; i++)
       _neig_el[i] = nullptr;
@@ -224,7 +224,7 @@ void Element::Replace(size_t label,
                       Side*  side)
 {
    if (!side)
-      throw OFELIException("Element::Replace(size_t,Side *): Trying to replace "+itos(label) + 
+      throw OFELIException("Element::Replace(size_t,Side *): Trying to replace "+to_string(label) + 
                            "-th side by an undefined side.");
    _side[label-1] = side;
 }
@@ -234,7 +234,7 @@ void Element::Replace(size_t label,
                       Node*  node)
 {
    if (!node)
-      throw OFELIException("Element::Replace(size_t,Node *): Trying to replace "+itos(label) +
+      throw OFELIException("Element::Replace(size_t,Node *): Trying to replace "+to_string(label) +
                            "-th node by an undefined node.");
    _node[label-1] = node;
 }
@@ -418,7 +418,7 @@ real_t Element::getMeasure() const
             x[1] = _node[1]->getCoord();
             m = (x[1].x-x[0].x)*(x[1].x-x[0].x) - (x[1].y-x[0].y)*(x[1].y-x[0].y);
             if (m==0)
-               throw OFELIException("Element::getMeasure(): Length of line "+itos(_label)+" is null.");
+               throw OFELIException("Element::getMeasure(): Length of line "+to_string(_label)+" is null.");
             break;
          }
 
@@ -429,9 +429,9 @@ real_t Element::getMeasure() const
             x[2] = _node[2]->getCoord();
             m = 0.5*((x[1].x-x[0].x)*(x[2].y-x[0].y) - (x[1].y-x[0].y)*(x[2].x-x[0].x));
             if (m==0)
-               throw OFELIException("Element::getMeasure(): Area of triangle "+itos(_label)+" is null.");
+               throw OFELIException("Element::getMeasure(): Area of triangle "+to_string(_label)+" is null.");
             if (m<0)
-               throw OFELIException("Element::getMeasure(): Area of triangle "+itos(_label) +
+               throw OFELIException("Element::getMeasure(): Area of triangle "+to_string(_label) +
                                     " is negative. Triangle is incorrectly oriented.");
             break;
          }
@@ -467,9 +467,9 @@ real_t Element::getMeasure() const
             }
             m = OFELI_SIXTH*(J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3));
             if (m==0)
-               throw OFELIException("Element::getMeasure(): Area of tetrahedron "+itos(_label)+" is null.");
+               throw OFELIException("Element::getMeasure(): Area of tetrahedron "+to_string(_label)+" is null.");
              if (m<0)
-                throw OFELIException("Element::getMeasure(): Area of tetrahedron "+itos(_label) +
+                throw OFELIException("Element::getMeasure(): Area of tetrahedron "+to_string(_label) +
                                      " is negative. Tetrahedron is incorrectly oriented.");
             break;
          }
@@ -491,9 +491,9 @@ real_t Element::getMeasure() const
             }
             m = dxds*dydt - dxdt*dyds;
             if (m==0)
-               throw OFELIException("Element::getMeasure(): Area of quadrilateral "+itos(_label)+" is null.");
+               throw OFELIException("Element::getMeasure(): Area of quadrilateral "+to_string(_label)+" is null.");
             if (m<0)
-                throw OFELIException("Element::getMeasure(): Area of quadrilateral " + itos(_label) +
+                throw OFELIException("Element::getMeasure(): Area of quadrilateral " + to_string(_label) +
                                      " is negative. Quadrilateral is incorrectly oriented.");
             break;
          }
@@ -528,9 +528,9 @@ real_t Element::getMeasure() const
             }
             m = J(1,1)*IJ(1,1) + J(2,1)*IJ(1,2) + J(3,1)*IJ(1,3);
             if (m==0)
-               throw OFELIException("Element::getMeasure(): Area of hexahedron "+itos(_label)+" is null.");
+               throw OFELIException("Element::getMeasure(): Area of hexahedron "+to_string(_label)+" is null.");
             if (m<0)
-               throw OFELIException("Element::getMeasure(): Area of hexahedron "+itos(_label) +
+               throw OFELIException("Element::getMeasure(): Area of hexahedron "+to_string(_label) +
                                     " is negative. Hexahedron is incorrectly oriented.");
             break;
          }
@@ -596,7 +596,7 @@ Point<real_t> Element::getUnitNormal(size_t i) const
    }
    else
       throw OFELIException("Element::getUnitNormal(size_t): Calculation of outward normal "
-                           "is not available for element shape " + itos(_shape));
+                           "is not available for element shape " + to_string(_shape));
    return N*(1./s);
 }
 
@@ -631,7 +631,7 @@ void Element::setChild(Element* el)
 Element *Element::getChild(size_t i) const
 {
    if (i>_nb_childs)
-      throw OFELIException("Element::getChild(size_t): Number of children is too large: "+itos(i));
+      throw OFELIException("Element::getChild(size_t): Number of children is too large: "+to_string(i));
    return _child[i-1];
 }
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -49,6 +49,7 @@ using std::min;
 using std::max;
 using std::ofstream;
 using std::cout;
+using std::to_string;
 
 namespace OFELI {
 
@@ -151,7 +152,7 @@ void Muscl2DT::Initialize()
          real_t det1 = _determ(P1-c,P2-P1),
                 det2 = _determ(tr1.getCenter()-c,P2-P1);
          if (det1/det2<0.0)
-            throw OFELIException("Muscl2DT::Initialize(): Element " + itos(element_label) +
+            throw OFELIException("Muscl2DT::Initialize(): Element " + to_string(element_label) +
                                  " is inconsistent with Muscl method.");
          _BQv.set(n,1,_BBv(n,1)*det1/det2);
 //       2
@@ -159,7 +160,7 @@ void Muscl2DT::Initialize()
          det1 = _determ(P1-c,P2-P1);
          det2 = _determ(tr2.getCenter()-c,P2-P1);
          if (det1/det2<0.0)
-            throw OFELIException("Muscl2DT::Initialize(): Element " + itos(element_label) +
+            throw OFELIException("Muscl2DT::Initialize(): Element " + to_string(element_label) +
                                  " is inconsistent with Muscl method.");
          _BQv.set(n,2,_BBv(n,2)*det1/det2);
 //       3
@@ -168,7 +169,7 @@ void Muscl2DT::Initialize()
          det2 = _determ(tr3.getCenter()-c,P2-P1);
          if (det1/det2<0.0)
             throw OFELIException("Muscl2DT::Initialize(): Element "
-                                 + itos(element_label) +
+                                 + to_string(element_label) +
                                  " is inconsistent with Muscl method.");
          _BQv.set(n,3,_BBv(n,3)*det1/det2);
       }

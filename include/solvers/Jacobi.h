@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -86,7 +86,7 @@ int Jacobi(const SpMatrix<T_>& A,
    size_t size = x.Size();
    for (size_t i=1; i<=size; i++)
       if (std::abs(A(i,i)) < OFELI_EPSMCH)
-         throw OFELIException("In Jacobi(A,b,x,omega,max_it,toler): null diagonal term: " + itos(i));
+         throw OFELIException("In Jacobi(A,b,x,omega,max_it,toler): null diagonal term: " + std::to_string(i));
    size_t j;
    int it;
    real_t nrm = x.Norm2();

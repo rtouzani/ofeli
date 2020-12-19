@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -337,8 +337,8 @@ void SkSMatrix<T_>::set(size_t    i,
    if (i>=j)
       _a[_ch[i-1]+j-i] = val;
    else
-      throw OFELIException("In SkSMatrix::set(i,j,x): Index pair (" + itos(int(i)) +
-                           "," + itos(int(j)) + ") not compatible with skyline symmeric storage.");
+      throw OFELIException("In SkSMatrix::set(i,j,x): Index pair (" + to_string(i) +
+                           "," + to_string(j) + ") not compatible with skyline symmeric storage.");
 }
 
 
@@ -553,7 +553,7 @@ int SkSMatrix<T_>::setLDLt()
          _a[_ch[i]+k-i] = s;
       }
       if (Abs(pivot) < OFELI_EPSMCH)
-         throw OFELIException("In SkSMatrix::setLDLt(): " + itos(int(i)+1) + "-th pivot is null.");
+         throw OFELIException("In SkSMatrix::setLDLt(): " + to_string(i+1) + "-th pivot is null.");
       else
          _a[_ch[i]] = T_(1.)/pivot;
    }
@@ -598,7 +598,7 @@ int SkSMatrix<T_>::solve(Vect<T_>& b,
    if (_is_diagonal) {
       for (size_t i=0; i<_size; i++) {
          if (Abs(_a[i]) < OFELI_EPSMCH)
-            throw OFELIException("In SkSMatrix::solve(b): " + itos(i+1) + "-th diagonal is null.");
+            throw OFELIException("In SkSMatrix::solve(b): " + to_string(i+1) + "-th diagonal is null.");
          b[i] /= _a[i];
       }
       return ret;

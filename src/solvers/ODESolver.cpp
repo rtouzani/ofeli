@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,6 +34,7 @@
 #include "linear_algebra/DMatrix_impl.h"
 #include "OFELIException.h"
 
+using std::to_string;
 using std::cout;
 
 namespace OFELI {
@@ -108,8 +109,8 @@ ODESolver::ODESolver(size_t nb_eq)
    if (_nb_eq==1)
       _var.push_back("y");
    else {
-      for (size_t j=0; j<_nb_eq; ++j)
-         _var.push_back("y"+itos(j+1));
+      for (size_t j=1; j<=_nb_eq; ++j)
+         _var.push_back("y"+to_string(j));
    }
 }
 
@@ -152,8 +153,8 @@ ODESolver::ODESolver(TimeScheme s,
    if (_nb_eq==1)
       _var.push_back("y");
    else {
-      for (size_t j=0; j<_nb_eq; ++j)
-         _var.push_back("y"+itos(j+1));
+      for (size_t j=1; j<=_nb_eq; ++j)
+         _var.push_back("y"+to_string(j));
    }
 }
 
@@ -209,7 +210,7 @@ void ODESolver::setCoef(string a0,
                         string f)
 {
    if (_nb_eq>1)
-      throw OFELIException("In ODESolver::setCoef(...): This function is valid for scalar ode's only.");
+      throw OFELIException("In ODESolver::setCoef(...): This function is available for scalar ode's only.");
    vector<string> var;
    var.push_back("t");
    _theC.resize(3);
@@ -307,9 +308,9 @@ void ODESolver::setdFdt(string df,
 
 void ODESolver::setF(Fct& f)
 {
-   static int i=0;
+   static size_t i=0;
    if (i+1>_nb_eq)
-      throw OFELIException("In NLASSolver::setF(string):\nToo many function definitions.");
+      throw OFELIException("In ODESolver::setF(Fct):\nToo many function definitions.");
    if (_step==1)
       i = 0;
    _dF_computed = true;
@@ -320,6 +321,9 @@ void ODESolver::setF(Fct& f)
       _y0 = _u[0];
    _lhs = _rhs = true;
    _setF_called = true;
+   _type = SCALAR_NL;
+   if (_nb_eq>1)
+      _type = VECTOR_NL;
 }
 
 
@@ -331,7 +335,7 @@ void ODESolver::setDF(Fct& df,
       throw OFELIException("In ODESolver::setDF(Fct,int,int):\nFunction must be given first.");
    if (i<=0 || i>int(_nb_eq) || j>int(_nb_eq) || j<=0)
       throw OFELIException("In ODESolver::setDF(Fct,i,j):\n"
-                           "Index (" + itos(i) + "," + itos(j) + ") is out of bounds");
+                           "Index (" + to_string(i) + "," + to_string(j) + ") is out of bounds");
    _theDF[_nb_eq*(i-1)+j-1] = &df;
    _dF_computed = false;
 }
@@ -343,7 +347,7 @@ void ODESolver::setdFdt(Fct& df,
    if (_setF_called==false)
       throw OFELIException("In ODESolver::setdFdt(Fct,int):\nFunction must be given first.");
    if (i<=0 || i>int(_nb_eq))
-      throw OFELIException("In ODESolver::setdFdt(Fct,int,int):\nIndex " + itos(i) + " is out of bounds");
+      throw OFELIException("In ODESolver::setdFdt(Fct,int,int):\nIndex " + to_string(i) + " is out of bounds");
    _thedFdt[i-1] = &df;
    _dF_computed = false;
 }

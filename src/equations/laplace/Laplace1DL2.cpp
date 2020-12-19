@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -70,7 +70,7 @@ Laplace1DL2::Laplace1DL2(Mesh&         ms,
             : Equation<real_t,2,2,1,1>(ms,u),
               _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
 {
-   _u = &u;
+   _u = &u; 
    _theMesh = &ms;
    setMatrixType(TRIDIAGONAL);
    setSolver(DIRECT_SOLVER);

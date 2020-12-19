@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -433,14 +433,12 @@ template<class T_> class LinearSolver
        _x->setSize(x.size(),1,1);
        *_x = x;
 #else
-       if (_s==DIRECT_SOLVER) {
-          if (_fact)
-             _A->Factor();
-          return _A->solve(*_b,*_x);
-       }
        switch (_s) {
 
           case DIRECT_SOLVER:
+             if (_fact)
+                _A->Factor();
+            _nb_it = _A->solve(*_b,*_x);
              break;
 
           case CG_SOLVER:

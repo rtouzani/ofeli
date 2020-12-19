@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -105,7 +105,7 @@ NLASSolver::~NLASSolver()
    if (_u_set)
       delete _u;
    if (_fct_allocated) {
-      for (size_t i=0; i<_nb_eq; ++i) {
+      for (int i=0; i<_nb_eq; ++i) {
          delete _theFct[i];
          delete _theDFct[i];
       }
@@ -197,7 +197,7 @@ void NLASSolver::setDf(Fct& df,
                            "Providing the gradient is useless for the chosen algorithm.");
    if (i<=0 || j>int(_nb_eq) || j>int(_nb_eq) || j<=0)
       throw OFELIException("In NLASSolver::setDf(Fct,i,j):\n"
-                           "Index (" + itos(i) + "," + itos(j) + ") is out of bounds");
+                           "Index (" + to_string(i) + "," + to_string(j) + ") is out of bounds");
    _theDFct[_nb_eq*(i-1)+j-1] = &df;
    _df_computed = false;
    _df_given = true;
@@ -220,8 +220,8 @@ void NLASSolver::setf(string exp)
    if (_nb_eq==1)
       var[0] = "x";
    else {
-      for (size_t j=0; j<_nb_eq; ++j)
-         var[j] = "x" + itos(j+1);
+      for (int j=0; j<_nb_eq; ++j)
+         var[j] = "x" + to_string(j+1);
    }
    _theFct[i++] = new Fct(exp,var);
    _fct_allocated = true;
@@ -239,13 +239,13 @@ void NLASSolver::setDf(string exp,
                            "Providing the gradient is useless for the chosen algorithm.");
    if (i<=0 || j>int(_nb_eq) || j>int(_nb_eq) || j<=0)
       throw OFELIException("In NLASSolver::setDf(exp,i,j):\n"
-                           "Index (" + itos(i) + "," + itos(j) + ") is out of bounds");
+                           "Index (" + to_string(i) + "," + to_string(j) + ") is out of bounds");
    vector<string> var(_nb_eq);
    if (_nb_eq==1)
       var[0] = "x";
    else
-      for (size_t j=0; j<_nb_eq; ++j)
-         var[j] = "x" + itos(j+1);
+      for (int j=0; j<_nb_eq; ++j)
+         var[j] = "x" + to_string(j+1);
    _theDFct[_nb_eq*(i-1)+j-1] = new Fct(exp,var);
    _fct_allocated = true;
    _df_computed = false;

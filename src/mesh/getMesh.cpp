@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -518,7 +518,7 @@ void getGambit(string file,
            }
            else
               throw OFELIException("getGambit(...): Element shape " + sh[TheElement.getShape()] +
-                                   "incompatible with " + itos(TheElement.getNbNodes()) + "nodes.");
+                                   "incompatible with " + to_string(TheElement.getNbNodes()) + "nodes.");
            TheSide.setNbDOF(nb_dof);
            for (size_t j=1; j<=nb_dof; j++)
               TheSide.setCode(j,code[j-1]);
@@ -543,9 +543,9 @@ void getGmsh(string file,
 {
    string        kw, w;
    int           nb_nodes, nb_elements;
-   int           n[10], dim=0;
+   int           n[10];
+   size_t        dim=0;
    real_t        d[100];
-   Point<real_t> x[3];
    Node          *nd;
    Element       *el;
    Side          *sd;
@@ -710,7 +710,7 @@ void getGmsh(string file,
          nse++;
          ell.shape = sh[n[5]-1];
          ell.nb_nodes = nb_en[n[5]-1];
-         for (int i=0; i<ell.nb_nodes; ++i) {
+         for (size_t i=0; i<ell.nb_nodes; ++i) {
             pf >> m;
             ell.node[i] = nod[m-1].n;
          }
@@ -755,22 +755,22 @@ void getGmsh(string file,
       mesh.Add(nd);
    }
    size_t label = 0;
-   for (int j=0; j<ne; ++j) {
+   for (size_t j=0; j<ne; ++j) {
       ell = elements[j];
       el = new Element(++label,ell.shape,ell.region);
-      for (int k=0; k<ell.nb_nodes; ++k)
+      for (size_t k=0; k<ell.nb_nodes; ++k)
          el->Add(mesh[ell.node[k]]);
       mesh.Add(el);
    }
    label = 0;
-   for (int j=0; j<sides.size(); j++) {
+   for (size_t j=0; j<sides.size(); ++j) {
       ell = sides[j];
       sd = new Side(++label,ell.shape);
       sd->setNbDOF(nb_dof);
-      for (int k=0; k<ell.nb_nodes; ++k)
+      for (size_t k=0; k<ell.nb_nodes; ++k)
          sd->Add(mesh[ell.node[k]]);
       DOFCode(ell.region,nb_dof,code);
-      for (int k=0; k<nb_dof; ++k)
+      for (size_t k=0; k<nb_dof; ++k)
          sd->setCode(k+1,code[k]);
       mesh.Add(sd);    
    }

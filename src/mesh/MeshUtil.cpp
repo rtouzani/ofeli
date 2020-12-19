@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -39,6 +39,7 @@ using std::vector;
 
 #include <string>
 using std::string;
+using std::to_string;
 
 #include "mesh/MeshUtil.h"
 #include "mesh/Mesh.h"
@@ -333,7 +334,7 @@ void Refine(Mesh& in_mesh,
    size_t el_label=0;
    element_loop(&in_mesh) {
       if (The_element.getShape() != TRIANGLE)
-         throw OFELIException("Refine(...): Element " + itos(element_label) + " is not a triangle.");
+         throw OFELIException("Refine(...): Element " + to_string(element_label) + " is not a triangle.");
       Node *nd[6]={nullptr,nullptr,nullptr,nullptr,nullptr,nullptr};
       nd[0] = The_element(1); 
       nd[1] = The_element(2); 
@@ -896,11 +897,11 @@ void MeshToGrid(Mesh&               m,
 
    element_loop(&m) {
       if (dim==1 && The_element.getShape() != LINE)
-         throw OFELIException("MeshToGrid(...): Element "+itos(element_label)+" is not a line.");
+         throw OFELIException("MeshToGrid(...): Element "+to_string(element_label)+" is not a line.");
       if (dim==2 && The_element.getShape() != TRIANGLE)
-         throw OFELIException("MeshToGrid(...): Element "+itos(element_label)+" is not a triangle.");
+         throw OFELIException("MeshToGrid(...): Element "+to_string(element_label)+" is not a triangle.");
       if (dim==3 && The_element.getShape() != TETRAHEDRON)
-         throw OFELIException("MeshToGrid(...): Element "+itos(element_label)+" is not a tetrahedron.");
+         throw OFELIException("MeshToGrid(...): Element "+to_string(element_label)+" is not a tetrahedron.");
 
       xm = xM = The_element(1)->getCoord();
       for (size_t l=2; l<=The_element.getNbNodes(); l++) {

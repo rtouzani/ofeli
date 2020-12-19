@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -772,8 +772,8 @@ T_& SpMatrix<T_>::operator()(size_t i,
 #else
    int k=_col_index(i,j);
    if (k<0)
-      throw OFELIException("In SpMatrix::set(i,j,x): Index pair: (" + itos(int(i)) +
-                           "," + itos(int(j)) + ") not compatible with sparse storage.");
+      throw OFELIException("In SpMatrix::set(i,j,x): Index pair: (" + to_string(i) +
+                           "," + to_string(j) + ") not compatible with sparse storage.");
    else
       return _a[_row_ptr[i-1]+k];
    return _temp;
@@ -947,8 +947,8 @@ void SpMatrix<T_>::set(size_t    i,
 #else
    int k=_col_index(i,j);
    if (k<0)
-      throw OFELIException("In SpMatrix::set(i,j,x): Index pair (" + itos(int(i)) +
-                           "," + itos(int(j)) + ") not compatible with sparse storage.");
+      throw OFELIException("In SpMatrix::set(i,j,x): Index pair (" + to_string(i) +
+                           "," + to_string(j) + ") not compatible with sparse storage.");
    else
       _a[_row_ptr[i-1]+k] = val;
 #endif
@@ -1023,7 +1023,7 @@ int SpMatrix<T_>::DILUFactorize(vector<size_t>& id,
             id[i] = k + 1;
             if (_a[k]==static_cast<T_>(0))
                throw OFELIException("In SpMatrix::DILUFactorize(...): Zero pivot detected in row "
-                                    +itos(i+1));
+                                    +to_string(i+1));
             pivot[i] = _a[k];
          }
       }
@@ -1174,7 +1174,7 @@ void SpMatrix<T_>::SSORSolve(const Vect<T_>& b,
             id[i] = k + 1;
             if (_a[k]==static_cast<T_>(0))
                throw OFELIException("In SpMatrix::SSORSolve(b,x):"
-                                    " Zero pivot detected in row " + itos(i+1));
+                                    " Zero pivot detected in row " + to_string(i+1));
          }
       }
    }

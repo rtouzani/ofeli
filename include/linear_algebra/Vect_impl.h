@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -44,9 +44,10 @@
 #include "mesh/Grid.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Tetra4.h"
-#include "util/util.h"
 #include "io/exprtk_adds.h"
 #include "OFELIException.h"
+
+using std::to_string;
 
 extern exprtk::parser<real_t> theParser;
 
@@ -343,12 +344,12 @@ Vect<T_>::Vect(size_t          d,
            _theMesh(v._theMesh), _name(name), _time(v._time)
 {
    if (d<=0)
-      throw OFELIException("In Vect::Vect(size_t,Vect<T_>,string): Illegal value of nb_dof = "+itos(d));
+      throw OFELIException("In Vect::Vect(size_t,Vect<T_>,string): Illegal value of nb_dof = "+to_string(d));
    size_t nd=v.getNbDOF();
    vector<size_t> dof_list(nd);
    dof_select(d,dof_list);
    if (_nb_dof>nd)
-      throw OFELIException("In Vect::Vect(size_t,Vect<T_>,string): Illegal value of dof = "+itos(nd));
+      throw OFELIException("In Vect::Vect(size_t,Vect<T_>,string): Illegal value of dof = "+to_string(nd));
    _theMesh = &(v.getMesh());
    setSize(_nb,_nb_dof,1);
    for (size_t i=1; i<=_nb; i++) {
@@ -474,6 +475,7 @@ void Vect<T_>::set(const string&       exp,
    exprtk::symbol_table<double> symbol_table;
    add_constants(symbol_table);
    symbol_table.add_variable("x",y);
+   symbol_table.add_variable("t",_time);
    expression.register_symbol_table(symbol_table);
    theParser.compile(exp,expression);
    for (size_t i=0; i<x.size(); i++) {
@@ -619,22 +621,25 @@ void Vect<T_>::setDG(int degree)
    _dof_type = ELEMENT_DOF;
    switch (_theMesh->getDim()) {
 
-      case 1: _nb_dof = _dg_degree+1;
-              break;
+      case 1:
+         _nb_dof = _dg_degree+1;
+         break;
 
-      case 2: if (_dg_degree<10)
-                 _nb_dof = (_dg_degree+1)*(_dg_degree+2)/2;
-              else
-                 _nb_dof = (_dg_degree+1)*(_dg_degree+1);
-              break;
+      case 2:
+         if (_dg_degree<10)
+            _nb_dof = (_dg_degree+1)*(_dg_degree+2)/2;
+         else
+            _nb_dof = (_dg_degree+1)*(_dg_degree+1);
+         break;
 
-      case 3: if (_dg_degree<10)
-                 _nb_dof = (_dg_degree+1)*(_dg_degree+2)/2;
-              else if (_dg_degree<20)
-                 _nb_dof = (_dg_degree+1)*(_dg_degree+1)*(_dg_degree+1);
-              else
-                 _nb_dof = (_dg_degree+1)*(_dg_degree+1)*(_dg_degree+2)/2;
-              break;
+      case 3:
+         if (_dg_degree<10)
+            _nb_dof = (_dg_degree+1)*(_dg_degree+2)/2;
+         else if (_dg_degree<20)
+            _nb_dof = (_dg_degree+1)*(_dg_degree+1)*(_dg_degree+1);
+         else
+            _nb_dof = (_dg_degree+1)*(_dg_degree+1)*(_dg_degree+2)/2;
+         break;
    }
    setSize(_theMesh->getNbElements(),_nb_dof,1);
 }
@@ -827,7 +832,7 @@ void Vect<T_>::setNodeBC(Mesh&  m,
    if (m.getDOFSupport()==NODE_DOF) {
       node_loop(&m) {
          for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-            if (The_node.getCode(dof)==code)
+            if (The_node.getCode(dof)==code && code!=0)
                set(node_label,dof,val);
          }
       }
@@ -835,7 +840,7 @@ void Vect<T_>::setNodeBC(Mesh&  m,
    if (m.getDOFSupport()==SIDE_DOF) {
       boundary_side_loop(&m) {
          for (size_t i=1; i<=The_side.getNbDOF(); i++) {
-            if (The_side.getCode(dof)==code)
+            if (The_side.getCode(dof)==code && code!=0)
                set(side_label,dof,val);
          }
       }
@@ -853,7 +858,7 @@ void Vect<T_>::setNodeBC(Mesh& m,
       node_loop(&m) {
          DOFCode(code,The_node.getNbDOF(),c);
          for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-            if (The_node.getCode(i)==c[i-1])
+            if (The_node.getCode(i)==c[i-1] && c[i-1]!=0)
                set(node_label,i,val);
          }
       }
@@ -861,8 +866,8 @@ void Vect<T_>::setNodeBC(Mesh& m,
    if (m.getDOFSupport()==SIDE_DOF) {
       boundary_side_loop(&m) {
          DOFCode(code,The_side.getNbDOF(),c);
-         for (size_t i=1; i<=The_side.getNbDOF(); i++) {
-            if (The_side.getCode(i)==c[i-1])
+         for (size_t i=1; i<=The_side.getNbDOF(); ++i) {
+            if (The_side.getCode(i)==c[i-1] && c[i-1]!=0)
                set(side_label,i,val);
          }
       }
@@ -908,7 +913,7 @@ void Vect<T_>::setNodeBC(Mesh&         m,
    node_loop(&m) {
       x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-         if (The_node.getCode(dof)==code)
+         if (The_node.getCode(dof)==code && code!=0)
             set(node_label,dof,expression.value());
       }
    }
@@ -935,7 +940,7 @@ void Vect<T_>::setNodeBC(Mesh&         m,
       x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
       DOFCode(code,The_node.getNbDOF(),c);
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-         if (The_node.getCode(i)==c[i-1])
+         if (The_node.getCode(i)==c[i-1] && c[i-1]!=0)
             set(node_label,i,expression.value());
       }
    }
@@ -959,13 +964,12 @@ void Vect<T_>::setSideBC(Mesh&         m,
    expression.register_symbol_table(symbol_table);
    theParser.compile(exp,expression);
    side_loop(&m) {
-      if (The_side.getCode(dof)==code) {
-         for (size_t n=1; n<=The_side.getNbNodes(); n++) {
-            the_node = The_side(n);
-            x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
-            for (size_t i=1; i<=The_side.getNbDOF(); i++)
-               set(node_label,dof,expression.value());
-         }
+      if (The_side.getCode(dof)==code && code!=0) {
+         x = The_side.getCenter().x;
+         y = The_side.getCenter().y;
+         z = The_side.getCenter().z;
+         for (size_t i=1; i<=The_side.getNbDOF(); i++)
+            set(side_label,dof,expression.value());
       }
    }
 }
@@ -990,12 +994,9 @@ void Vect<T_>::setSideBC(Mesh&         m,
    side_loop(&m) {
       DOFCode(code,The_side.getNbDOF(),c);
       for (size_t i=1; i<=The_side.getNbDOF(); ++i) {
-         if (The_side.getCode(i)==c[i-1]) {
-            for (size_t n=1; n<=The_side.getNbNodes(); ++n) {
-               the_node = The_side(n);
-               x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
-               set(node_label,i,expression.value());
-            }
+         if (The_side.getCode(i)==c[i-1] && c[i-1]!=0) {
+            x = The_side.getCenter().x; y = The_side.getCenter().y; z = The_side.getCenter().z;
+            set(side_label,i,expression.value());
          }
       }
    }

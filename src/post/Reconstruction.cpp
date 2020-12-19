@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -110,7 +110,7 @@ void Reconstruction::P0toP1(const Vect<real_t>& u,
       }
       else
          throw OFELIException("Reconstruction::P0toP1(...): Not valid for element: " +
-                              itos(element_label));
+                              std::to_string(element_label));
    }
 
    MESH_ND {
@@ -138,7 +138,7 @@ void Reconstruction::DP1toP1(const Vect<real_t>& u,
          v(The_element(3)->n()) += 0.25*a*(2*u(n,3) + u(n,1) + u(n,2));
       }
       else
-         throw OFELIException("Reconstruction::DP1toP1(...): Not valid for element: " + itos(n));
+	throw OFELIException("Reconstruction::DP1toP1(...): Not valid for element: " + std::to_string(n));
    }
    for (size_t i=1; i<=_theMesh->getNbNodes(); i++)
       v(i) /= _M(i);

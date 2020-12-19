@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -88,7 +88,7 @@ int Prescription::get(EqDataType    type,
             get_point_force(k,dof);
          else
             throw OFELIException("In Prescription::get(int,Vect<real_t>,real_t,size_t):"
-                                 " Type "+itos(type)+" not found.");
+                                 " Type "+std::to_string(type)+" not found.");
       }
       else {
          if (type==BOUNDARY_CONDITION)
@@ -101,7 +101,7 @@ int Prescription::get(EqDataType    type,
             get_point_force(k);
          else
             throw OFELIException("In Prescription::get(int,Vect<real_t>,real_t,size_t):"
-                                 " Type "+itos(type)+" not found.");
+                                 " Type "+std::to_string(type)+" not found.");
       }
    }
    return 0;

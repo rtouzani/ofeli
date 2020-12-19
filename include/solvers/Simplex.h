@@ -1,12 +1,15 @@
+#ifndef __SIMPLEX_H
+#define __SIMPLEX_H
+
 /*==============================================================================
 
                                     O  F  E  L  I
 
-                           Object  Finite  Element  Library
+                            Object  Finite  Element  Library
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -25,81 +28,106 @@
 
   ==============================================================================
 
-              Definition of class Simplex to solve Linear Programming
-                     problems by the simplex method
+                          Definition of class 'simplex'
 
   ==============================================================================*/
 
-#ifndef __SIMPLEX_H
-#define __SIMPLEX_H
-
 #include "OFELI_Config.h"
 #include "linear_algebra/Vect.h"
-#include "linear_algebra/DMatrix.h"
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+/*! \file simplex.h
+ *  \brief Definition file for class simplex.
+ */
 
 namespace OFELI {
 
-/*!
- *  \addtogroup OFELI
- *  @{
- */
+//-----------------------------------------------------------------------------
+// Class simplex
+//-----------------------------------------------------------------------------
 
-/*! \file Simplex.h
- *  \brief Definition file for class Simplex.
+/*! \class simplex
+ * \ingroup Solver
+ * \brief To solve a linear programming problem using the simplex method
+ *
+ * \author Rachid Touzani
+ * \copyright GNU Lesser Public License
  */
-
-/*! \class Simplex
- *  \ingroup VectMat
- * \brief To run the Simplex method.
- *
- * This class uses the Simplex method to solve linear programming problems.
- * Namely, we consider solving the linear program
- *     Min C1*x1 + ... + Cn*xn
- * under the constraints:
- *     ai1*x1 + ai2*x2 + ... + ain*xn <= bi       i=1,...,m 
- *
- *
- *  \author Rachid Touzani
- *  \copyright GNU Lesser Public License
- */
-
-class Simplex {
+class simplex {
 
  public:
 
-/** Constructor using Linear Program data
- *  @param [in] A Matrix defining coefficients of constraints
- *  @param [in] b Vector of constraint values
- *  @param [in] c Vector containing coefficients of linear cost functional
- *  @param [out] x Vector of obtained solution: After executing the function run
- *  this vector contains solution 
+/** \brief Default constructor
+ *  \details Useful to set principal constants
  */
-    Simplex(const DMatrix<real_t>& A, Vect<real_t>& b, const Vect<real_t>& c, Vect<real_t>& x);
+    simplex();
 
-/** \brief Run the Simplex algorithm
- *  @return Number of performed iterations to run the Simplex method
- */
+  /*---------------------------------------------------------------------------------------- 
+ Simplex method for linear programming. Input parameters a, m, n, mp, np, m1, m2, and m3, 
+ and output parameters a, icase, izrov, and iposv are described above (see reference). 
+ Parameters: MMAX is the maximum number of constraints expected; NMAX is the maximum number 
+ of variables expected; EPS is the absolute precision, which should be adjusted to the 
+ scale of your variables.                                    
+ -----------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------
+ Initial left-hand variables. m1 type constraints are represented by having their slackv ariable 
+ initially left-hand, with no artificial variable. m2 type constraints have their slack 
+ variable initially left-hand, with a minus sign, and their artificial variable handled implicitly 
+ during their first exchange. m3 type constraints have their artificial variable initially 
+ left-hand.     
+------------------------------------------------------------------------------------------------*/ 
+   simplex(Vect<real_t>& A,
+           int           nv,
+           int           nb_le,
+           int           nb_ge,
+           int           nb_eq,
+           Vect<real_t>& x);
+
+/// \brief Destructor
+    ~simplex();
+
+/**
+  */
+    void set(Vect<real_t>& A,
+             int           nv,
+             int           nb_le,
+             int           nb_ge,
+             int           nb_eq,
+             Vect<real_t>& x);
+
+/**
+  */
     int run();
 
-/// \brief Return obtained cost
-    real_t getCost() const { return _max; }
+/** \brief Return objective value
+ *  \details Return objective value corresponding to obtained optimal value
+ *  \return Objective value for reached optimal solution
+ */
+    real_t getObjective() const;
 
  private:
-    size_t _nr, _nc, _nb_it;
-    DMatrix<real_t> _A;
-    Vect<real_t>    *_b, _c, *_x;
-    real_t _max;
-    bool _isUnbounded;
+   int _nv, _nb_le, _nb_ge, _nb_eq, _nb, _nl2, _ret;
+   real_t **_A;
+   Vect<real_t> *_x;
+   vector<int> _l1, _l2, _l3, _zerov, _posv;
+   real_t _eps;
 
-/// if the table has further negative constraints,then it is not optimal
-    bool checkOptimality();
-    void doPivoting(size_t pr, size_t pc);
-    size_t getPivotRow(size_t pivotColumn);
-    size_t getPivotColumn();
-    bool solve();
+// Determine the maximum of elements whose index is contained in the supplied list 
+// _l1, either with or without taking the absolute value, as flagged by iabf. 
+   void simp1(int mm, int iabf, int &kp, real_t &bmax);
+
+// Locate a pivot element, taking degeneracy into account. 
+   void simp2(int& ip, int kp, real_t& q1);
+
+// Matrix operations to exchange a left-hand and right-hand variable (see text). 
+   void simp3(int ii, int ip, int kp);
+
+   void setSolution();
 };
- 
-/*! @} End of Doxygen Groups */
+
 } /* namespace OFELI */
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #endif

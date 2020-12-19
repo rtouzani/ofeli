@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -44,6 +44,7 @@
 
 using std::min;
 using std::max;
+using std::to_string;
 
 namespace OFELI {
 
@@ -185,9 +186,9 @@ real_t ICPG2DT::RiemannSolver_ROE(int s)
 
 // Averages are hence normalized !!
    if (_Lr(s)<_min_density)
-      throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): Left minimum density rho = " + dtos(_Lr(s)));
+      throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): Left minimum density rho = " + to_string(_Lr(s)));
    if (_Rr(s)<_min_density)
-      throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): Right minimum density rho = " + dtos(_Rr(s)));
+      throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): Right minimum density rho = " + to_string(_Rr(s)));
 
 // get data
    _tLr = _Lr(s); _tRr = _Rr(s);
@@ -215,10 +216,10 @@ real_t ICPG2DT::RiemannSolver_ROE(int s)
    real_t Roe_c = (_Gamma-1.)*(Roe_H-0.5*Roe_u.NNorm());   //  c*c !!!!
    if (Roe_c<0)
       throw OFELIException("ICPG2DT::RiemannSolver_ROE(int): Roe sound speed negative in point "
-                           + itos(s) + ", on boundary (0/1) "
-                           + itos(_theMesh->getPtrSide(s)->isOnBoundary())
-                           + ": "+ dtos(Triang3(_theMesh->getPtrSide(s)).getCenter().x) + "  " 
-                           + dtos(Triang3(_theMesh->getPtrSide(s)).getCenter().y));
+                           + to_string(s) + ", on boundary (0/1) "
+                           + to_string(_theMesh->getPtrSide(s)->isOnBoundary())
+                           + ": "+ to_string(Triang3(_theMesh->getPtrSide(s)).getCenter().x) + "  " 
+                           + to_string(Triang3(_theMesh->getPtrSide(s)).getCenter().y));
    Roe_c = sqrt(Roe_c);
 
 // compute eigenvalues

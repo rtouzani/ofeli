@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -38,7 +38,6 @@ using std::string;
 #include "io/XMLParser.h"
 #include "util/banner.h"
 #include "io/IPF.h"
-#include "util/util.h"
 #include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 
@@ -69,7 +68,7 @@ IPF::IPF(const string& prog,
    for (size_t i=0; i<MAX_NB_PAR; i++) {
       if (_plot_file[i].size()==0) {
          _plot_file[i] = _project;
-         _plot_file[i] += itos(i+1) + ".pl";
+         _plot_file[i] += std::to_string(i+1) + ".pl";
       }
    }
    Verbosity = getVerbose();
@@ -94,7 +93,7 @@ IPF::IPF(const string& file)
    for (size_t i=0; i<MAX_NB_PAR; i++) {
       if (_plot_file[i].size()==0) {
          _plot_file[i] = _project + "-";
-         _plot_file[i] += itos(i+1) + ".pl";
+         _plot_file[i] += std::to_string(i+1) + ".pl";
       }
    }
    Verbosity = getVerbose();

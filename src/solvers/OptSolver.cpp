@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -36,12 +36,15 @@
 #include <algorithm>
 #include "OFELIException.h"
 
+using std::to_string;
+
 namespace OFELI {
 
 OptSolver::OptSolver()
           : _size(1), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
             _max_it(1000), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
-            _obj_type(0), _x_set(true), _method_set(false), _fct_allocated(false)
+            _obj_type(0), _x_set(true), _method_set(false),
+            _fct_allocated(false), _grad_allocated(false), _hessian_allocated(false)
 {
    _x = new Vect<real_t>(1);
    _lb.setSize(_size);
@@ -50,22 +53,25 @@ OptSolver::OptSolver()
    _ub =  std::numeric_limits<real_t>::max();
    _var.push_back("x");
    _theDFct.resize(1);
+   _theDDFct.resize(1);
 }
 
 
 OptSolver::OptSolver(Vect<real_t>& x)
           : _size(x.size()), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
             _max_it(1000), _x(&x), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
-            _obj_type(0), _x_set(false), _method_set(false), _fct_allocated(false)
+            _obj_type(0), _x_set(false), _method_set(false),
+            _fct_allocated(false), _grad_allocated(false), _hessian_allocated(false)
 {
    set(x);
    if (_size==1)
       _var.push_back("x");
    else {
       for (size_t j=0; j<_size; ++j)
-         _var.push_back("x"+itos(j+1));
+         _var.push_back("x"+to_string(j+1));
    }
    _theDFct.resize(_size);
+   _theDDFct.resize(_size*_size);
 }
 
 
@@ -73,16 +79,18 @@ OptSolver::OptSolver(MyOpt&        opt,
                      Vect<real_t>& x)
           : _size(x.size()), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
             _max_it(1000), _x(&x), _toler(1.e-10), _opt(&opt), _sa_opt(false),
-            _tn_opt(false), _obj_type(0), _x_set(false), _method_set(false), _fct_allocated(false)
+            _tn_opt(false), _obj_type(0), _x_set(false), _method_set(false),
+            _fct_allocated(false), _grad_allocated(false), _hessian_allocated(false)
 {
    set(x);
    if (_size==1)
       _var.push_back("x");
    else {
       for (size_t j=0; j<_size; ++j)
-         _var.push_back("x"+itos(j+1));
+         _var.push_back("x"+to_string(j+1));
    }
    _theDFct.resize(_size);
+   _theDDFct.resize(_size*_size);
 }
 
 
@@ -90,13 +98,15 @@ OptSolver::~OptSolver()
 {
    if (_x_set)
       delete _x;
-   if (_fct_allocated) {
+   if (_fct_allocated)
       delete _theFct;
-      for (size_t i=0; i<_size; ++i) {
+   if (_grad_allocated) {
+      for (size_t i=0; i<_size; ++i)
          delete _theDFct[i];
-         for (size_t j=0; j<_size; ++j)
-            delete _theDDFct[_size*i+j];
-      }
+   }
+   if (_hessian_allocated) {
+      for (size_t i=0; i<_size*_size; ++i)
+         delete _theDDFct[i];
    }
 }
 
@@ -206,6 +216,7 @@ void OptSolver::setGradient(string exp,
    if (i>int(_size) || i<=0)
       throw OFELIException("In OptSolver::setGradient(exp,i): Index is out of bounds");
    _theDFct[i-1] = new Fct(exp,_var);
+   _grad_allocated = true;
    _grad_computed = false;
 }
 
@@ -222,6 +233,7 @@ void OptSolver::setHessian(string exp,
    if (j>int(_size) || j<=0)
       throw OFELIException("In OptSolver::setHessian(exp,i,j): Second index is out of bounds");
    _theDDFct[_size*(i-1)+j-1] = new Fct(exp,_var);
+   _hessian_allocated = true;
    _hessian_computed = false;
 }
 

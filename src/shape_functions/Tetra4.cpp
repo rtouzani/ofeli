@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -35,7 +35,6 @@
 #include "mesh/Side.h"
 #include "linear_algebra/LocalVect_impl.h"
 #include "linear_algebra/LocalMatrix_impl.h"
-#include "util/util.h"
 
 namespace OFELI {
 
@@ -53,7 +52,8 @@ Tetra4::Tetra4()
 Tetra4::Tetra4(const Element* el)
 {
    if (el->getNbNodes() != 4)
-      throw OFELIException("Tetra4::Tetra4(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
+     throw OFELIException("Tetra4::Tetra4(Element *): Illegal number of element nodes: "
+                          + std::to_string(el->getNbNodes()));
    set(el);
 }
 

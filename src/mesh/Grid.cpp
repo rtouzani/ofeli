@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,6 +34,8 @@
 #include "linear_algebra/GraphOfMatrix.h"
 #include "OFELIException.h"
 
+using std::to_string;
+
 namespace OFELI {
 
 Grid::Grid()
@@ -50,7 +52,7 @@ Grid::Grid(real_t xm,
    _n.x = npx; _n.y = _n.z = 0;
    _h.y = _h.z = 0;
    if (xM <= xm)
-      throw OFELIException("Grid::Grid(real_t,real_t,size_t): xmin = "+dtos(xm)+" is larger than xmax = "+dtos(xM));
+      throw OFELIException("Grid::Grid(real_t,real_t,size_t): xmin = "+to_string(xm)+" is larger than xmax = "+to_string(xM));
    _xmin.x = xm; 
    _xmax.x = xM;
    _xmin.y = _xmax.y = _xmin.z = _xmax.z = 0;
@@ -72,11 +74,11 @@ Grid::Grid(real_t xm,
    _n.x = npx; _n.y = npy; _n.z = 0;
    _h.z = 0;
    if (xM <= xm)
-      throw OFELIException("Grid::Grid(real_t,real_t,real_t,size_t,size_t): xmin = " + dtos(xm) + 
-                           " is larger than xmax = " + dtos(xM));
+      throw OFELIException("Grid::Grid(real_t,real_t,real_t,size_t,size_t): xmin = " + to_string(xm) + 
+                           " is larger than xmax = " + to_string(xM));
    if (yM <= ym)
-      throw OFELIException("Grid::Grid(real_t,real_t,real_t,size_t,size_t): ymin = " + dtos(ym) + 
-                           " is larger than ymax = " + dtos(yM));
+      throw OFELIException("Grid::Grid(real_t,real_t,real_t,size_t,size_t): ymin = " + to_string(ym) + 
+                           " is larger than ymax = " + to_string(yM));
    _xmin.x = xm; _xmin.y = ym; _xmin.z = 0; 
    _xmax.x = xM; _xmax.y = yM; _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
@@ -97,11 +99,11 @@ Grid::Grid(Point<real_t> m,
    _n.x = npx; _n.y = npy; _n.z = 0;
    _h.z = 0;
    if (M.x <= m.x)
-      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t): xmin = " + dtos(M.x) + 
-                           " is larger than xmax = " + dtos(m.x));
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t): xmin = " + to_string(M.x) + 
+                           " is larger than xmax = " + to_string(m.x));
    if (M.y <= m.y)
-      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t): ymin = " + dtos(M.y) + 
-                           " is larger than ymax = " + dtos(m.y));
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t): ymin = " + to_string(M.y) + 
+                           " is larger than ymax = " + to_string(m.y));
    _xmin = m; _xmax = M;
    _xmin.z = _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
@@ -127,13 +129,13 @@ Grid::Grid(real_t xm,
    _n.x = npx; _n.y = npy; _n.z = npz;
    if (xM <= xm)
       throw OFELIException("Grid::Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): xmin = " + 
-                            dtos(xM) + " is larger than xmax = " + dtos(xm));
+                            to_string(xM) + " is larger than xmax = " + to_string(xm));
    if (yM <= ym)
       throw OFELIException("Grid::Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): ymin = " + 
-                           dtos(yM) + " is larger than ymax = " + dtos(ym));
+                           to_string(yM) + " is larger than ymax = " + to_string(ym));
    if (zM <= zm)
       throw OFELIException("Grid::Grid(real_t,real_t,real_t,real_t,real_t,real_t,size_t,size_t,size_t): zmin = " + 
-                           dtos(zM) + " is larger than zmax = " + dtos(zm));
+                            to_string(zM) + " is larger than zmax = " + to_string(zm));
    _xmin.x = xm; _xmin.y = ym; _xmin.z = zm; 
    _xmax.x = xM; _xmax.y = yM; _xmax.z = zM;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
@@ -160,14 +162,14 @@ Grid::Grid(Point<real_t> m,
    if (npy==0)
       _dim = 1;
    if (M.x <= m.x)
-      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): xmin = " + dtos(M.x) + 
-                           " is larger than xmax = " + dtos(m.x));
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): xmin = " + to_string(M.x) + 
+                           " is larger than xmax = " + to_string(m.x));
    if (M.y <= m.y)
-      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): ymin = " + dtos(M.y) + 
-                           " is larger than ymax = " + dtos(m.y));
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): ymin = " + to_string(M.y) + 
+                           " is larger than ymax = " + to_string(m.y));
    if (M.z <= m.z)
-      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): zmin = " + dtos(M.z) + 
-                           " is larger than zmax = " + dtos(m.z));
+      throw OFELIException("Grid::Grid(Point<real_t>,Point<real_t>,size_t,size_t,size_t): zmin = " + to_string(M.z) + 
+                           " is larger than zmax = " + to_string(m.z));
    _xmin = m; _xmax = M;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;

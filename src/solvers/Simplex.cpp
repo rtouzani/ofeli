@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -25,211 +25,306 @@
 
   ==============================================================================
 
-                      Implementation of class 'Simplex'
+                      Implementation of class 'simplex'
 
   ==============================================================================*/
 
-#include "solvers/Simplex.h"
-#include "linear_algebra/DMatrix_impl.h"
-#include "linear_algebra/Vect_impl.h"
 #include <iostream>
-#include <cmath>
+using std::ostream;
+using std::endl;
+using std::cerr;
+
+#include "solvers/simplex.h"
+#include "linear_algebra/Vect_impl.h"
+
+#include <iostream>
+using std::ostream;
+using std::endl;
 
 namespace OFELI {
 
-Simplex::Simplex(const DMatrix<real_t>& A,
-                 Vect<real_t>&          b,
-                 const Vect<real_t>&    c,
-                 Vect<real_t>&          x)
-        : _nb_it(0), _b(&b), _x(&x), _max(0.), _isUnbounded(false)
+simplex::simplex()
 {
-   size_t m = A.getNbRows(), n = A.getNbColumns();
-   _nr = m, _nc = n + m;
-   _A.setSize(_nr,_nc);
-   _c.setSize(_nc);
-   for (size_t i=1; i<=n; ++i)
-      _c(i) = c(i);
-   for (size_t i=1; i<=_nr; ++i) {
-      for (size_t j=1; j<=n; ++j)
-         _A(i,j) = A(i,j);
-      for (size_t j=n+1; j<=_nc; ++j)
-         _A(i,j) = 0.;
-      _A(i,i+n) = 1.;
-   }
 }
 
 
-bool Simplex::solve()
+simplex::simplex(Vect<real_t>& A,
+                 int           nv,
+                 int           nb_le,
+                 int           nb_ge,
+                 int           nb_eq,
+                 Vect<real_t>& x)
+        :  _ret(0), _eps(DBL_EPSILON)
 {
-// Check whether the table is optimal,if optimal no need to process further
-   if (checkOptimality())
-      return true;
-
-// Find the column which has the pivot.
-// The least coefficient of the objective function.
-   size_t pc = getPivotColumn();
-   if (_isUnbounded) {
-      throw OFELIException("In Simple::solve(): Unbounded");
-      return true;
-   }
-
-// Find the row with the pivot value.
-// The least value item's row in the array b
-   size_t pr = getPivotRow(pc);
-
-// Form the next table according to the pivot value
-   doPivoting(pr,pc);
-   return false;
+   set(A,nv,nb_le,nb_ge,nb_eq,x);
 }
 
 
-bool Simplex::checkOptimality()
+simplex::~simplex()
 {
-// if the table has further negative constraints,then it is not optimal
-   bool isOptimal = false;
-   size_t positiveValueCount = 0;
-
-// check if the coefficients of the objective function are negative
-   for (size_t i=0; i<_nc; ++i) {
-      real_t value = _c[i];
-      if (value >= 0)
-         positiveValueCount++;
-   }
-// if all the constraints are positive now,the table is optimal
-   if (positiveValueCount == _nc)
-      isOptimal = true;
-   return isOptimal;
+   for (size_t i=0; i<_nb+2; ++i)
+      delete _A[i];
+   delete [] _A;
 }
 
 
-void Simplex::doPivoting(size_t pr,
-			 size_t pc)
+void simplex::set(Vect<real_t>& A,
+                  int           nv,
+                  int           nb_le,
+                  int           nb_ge,
+                  int           nb_eq,
+                  Vect<real_t>& x)
 {
-   real_t pivotValue = _A(pr+1,pc+1);
-   Vect<real_t> pivotRowVals(_nc), pivotColVals(_nr), rowNew(_nc);
-   _max -= (_c[pc]*((*_b)[pr]/pivotValue));
-   for (size_t i=0; i<_nc; ++i)
-      pivotRowVals[i] = _A(pr+1,i+1);
+   _nv = nv;
+   _nb_le = nb_le;
+   _nb_ge = nb_ge;
+   _nb_eq = nb_eq;
+   _nl2 = _nb = nb_le + nb_ge + nb_eq;
+   _A = new real_t* [_nb+3];
+   for (size_t i=0; i<_nb+3; ++i)
+      _A[i] = new real_t [_nv+2];
+   for (int j=1; j<_nv+2; ++j)
+      _A[1][j] = -A(1,j);
+   for (int i=2; i<_nb+2; ++i) {
+      _A[i][1] = A(i,1);
+      for (int j=2; j<_nv+2; ++j)
+         _A[i][j] = -A(i,j);
+   }
+   _l1.resize(_nv);
+   _l2.resize(_nb);
+   _l3.resize(_nb);
+   _zerov.resize(_nv);
+   _posv.resize(_nb);
 
-// get the column that has the pivot value
-   for (size_t j=0; j<_nr; ++j)
-     pivotColVals[j] = _A(j+1,pc+1);
+   for (int i=0; i<_nv; ++i)
+      _l1[i] = _zerov[i] = i + 1;
+   for (int i=1; i<=_nb; i++) { 
+      if (_A[i+1][1]<0.0) {
+         throw OFELIException("In simplex::simplex(...): Constants in constraints must be nonnegative");
+         _ret = 1;
+      }
+      _l2[i-1] = i;
+      _posv[i-1] = _nv + i; 
+   }
+   for (int i=0; i<_nb_ge+1; ++i)
+      _l3[i] = 1;
+   _x = &x;
+}
 
-//set the row values that has the pivot value divided by the pivot value and put into new row
-   for (size_t k=0; k<_nc; ++k)
-      rowNew[k] = pivotRowVals[k]/pivotValue;
-   (*_b)[pr] /= pivotValue;
-
-// process the other coefficients in the A array by subtracting
-   for (size_t m=0; m<_nr; ++m) {
-//    ignore the pivot row as we already calculated that
-      if (m != pr) {
-         for (size_t p=0; p<_nc; ++p) {
-            real_t multiplyValue = pivotColVals[m];
-            _A(m+1,p+1) -= multiplyValue*rowNew[p];
-//C[p] = C[p] - (multiplyValue*C[pivotRow]);
-//B[i] = B[i] - (multiplyValue*B[pivotRow]);
+  
+void simplex::setSolution()
+{
+   if (_ret)
+      return;
+   for (int i=1; i<=_nv; i++) {
+      (*_x)(i) = 0.;
+      for (int j=1; j<=_nb; j++) {
+         if (_posv[j-1]==i) {
+            (*_x)(i) = _A[j+1][1];
+            break;
          }
       }
    }
-
-// Process the values of the B array
-   for (size_t i=0; i<_nr; ++i) {
-      if (i != pr) {
-         real_t multiplyValue = pivotColVals[i];
-         (*_b)[i] -= multiplyValue*(*_b)[pr];
-      }
-   }
-
-// The least coefficient of the constraints of the objective function
-   real_t multiplyValue = _c[pc];
-// process the C array
-   for (size_t i=0; i<_nc; ++i)
-      _c[i] -= multiplyValue*rowNew[i];
-
-// Replace the pivot row in the new calculated A array
-   for (size_t i=0; i<_nc; ++i)
-      _A(pr+1,i+1) = rowNew[i];
 }
 
 
-// Find the least coefficients of constraints in the objective function's position
-size_t Simplex::getPivotColumn()
+void simplex::simp1(int     mm,
+                    int     iabf,
+                    int&    kp,
+                    real_t& bmax)
 {
-   size_t loc = 0;
-   real_t minm = _c[0];
-   for (size_t i=1; i<_nc; ++i) {
-      if (_c[i]<minm) {
-         minm = _c[i];
-         loc = i;
+   real_t test=0.0;
+   kp = _l1[0];
+   bmax = _A[mm+1][kp+1];
+   if (_nv < 2)
+      return;
+   for (int i=1; i<_nv; ++i) {
+      if (iabf==0)
+         test = _A[mm+1][_l1[i]+1] - bmax;
+      else
+         test = fabs(_A[mm+1][_l1[i]+1]) - fabs(bmax);
+      if (test>0.0) {
+         bmax = _A[mm+1][_l1[i]+1]; 
+         kp = _l1[i];
       }
    }
-   return loc;
 }
 
 
-//find the row with the pivot value.The least value item's row in the B array
-size_t Simplex::getPivotRow(size_t pivotColumn)
+void simplex::simp2(int&    ip,
+                    int     kp,
+                    real_t& qq)
 {
-   Vect<real_t> positiveValues(_nr), result(_nr);
-   int negativeValueCount = 0;
-   for (size_t i=0; i<_nr; ++i) {
-      if (_A(i+1,pivotColumn+1)>0)
-         positiveValues[i] = _A(i+1,pivotColumn+1);
-      else {
-         positiveValues[i] = 0;
-         negativeValueCount += 1;
+// Locate a pivot element, taking degeneracy into account. 
+   ip = 0; 
+   if (_nl2 < 1)
+      return;
+   int i = 0;
+   for (i=1; i<=_nl2; i++) 
+      if (_A[i+1][kp+1] < -_eps)
+         goto e2; 
+   return;  // No possible pivots. Return with message. 
+
+e2:
+   qq = -_A[_l2[i-1]+1][1]/_A[_l2[i-1]+1][kp+1]; 
+   ip = _l2[i-1];
+   if (i+1 > _nl2)
+      return;
+   int q0=0, qp=0;
+   for (i=i+1; i<=_nl2; i++) { 
+      int ii = _l2[i-1];
+      if (_A[ii+1][kp+1] < -_eps) { 
+         real_t q = -_A[ii+1][1]/_A[ii+1][kp+1]; 
+         if (q<qq)
+            ip = ii, qq = q;
+         else if (q==qq) {  // We have a degeneracy.
+            for (int k=1; k<=_nv; ++k) { 
+               real_t qp = -_A[ip+1][k+1]/_A[ip+1][kp+1];
+               q0 = -_A[ii+1][k+1]/_A[ii+1][kp+1];
+               if (q0 != qp)
+                  goto e6; 
+            }
+e6:         if (q0<qp)
+               ip = ii;
+         }
       }
    }
+}
 
-// Checking the unbound condition if all the values are negative ones
-   if (negativeValueCount==_nr)
-      _isUnbounded = true;
+
+void simplex::simp3(int ii,
+		    int ip,
+		    int kp)
+{ 
+   real_t pivot = 1.0/_A[ip+1][kp+1];
+   if (ii >= 0) {
+      for (int i=1; i<=ii+1; ++i) {
+         if (i-1 != ip) {
+            _A[i][kp+1] *= pivot; 
+            for (int j=1; j<=ii+1; ++j) 
+               if (j-1 != kp)
+                  _A[i][j] -= _A[ip+1][j]*_A[i][kp+1]; 
+         }
+      }
+   }
+   for (int i=1; i<=ii+1; ++i)
+      if (i-1 != kp)
+         _A[ip+1][i] = -_A[ip+1][i]*pivot; 
+   _A[ip+1][kp+1] = pivot;
+}
+
+
+int simplex::run()
+{
+   int kh, kp, is, ip, ir=0;
+   real_t bmax, q1;
+   if (_nb_ge+_nb_eq==0)
+      goto e30;
+   ir = 1;
+
+// Compute the auxiliary objective function.
+   for (int k=1; k<=_nv+1; ++k) { 
+      q1 = 0.0;
+      for (int i=_nb_le+1; i<=_nb; ++i)
+         q1 += _A[i+1][k]; 
+      _A[_nb+2][k] = -q1; 
+   }
+
+e10:
+   simp1(_nb+1,0,kp,bmax);  // Find max. coeff. of auxiliary objective fn 
+   if (bmax<=_eps && _A[_nb+2][1]<-_eps) { 
+      _ret = -1;          // Auxiliary objective function is still negative and can’t be improved, 
+      return _ret;        // hence no feasible solution exists.
+   }
+   else if (bmax<=_eps && _A[_nb+2][1]<=_eps) {
+      int m=_nb_le+_nb_ge+1;
+      if (m<=_nb) {
+         for (ip=m; ip<=_nb; ip++) {
+            if (_posv[ip-1]==ip+_nv) {    // Found an artificial variable for an equalityconstraint. 
+               simp1(ip,1,kp,bmax); 
+               if (bmax>_eps)         // Exchange with column corresponding to maximum
+	          goto e1;            // pivot element in row.
+            }                  
+         }
+      }
+      ir = 0;
+      m--;
+      if (_nb_le+1>m)
+	 goto e30;
+
+//    Change sign of row for any m2 constraints
+      for (int i=_nb_le+1; i<=_nb_le+_nb_ge; ++i) {
+         if (_l3[i-_nb_le-1]==1)             // still present from the initial basis. 
+            for (int k=1; k<=_nv+1; ++k) 
+               _A[i+1][k] *= -1.0;
+      }
+      goto e30;           // Go to phase two. 
+   }
+
+   simp2(ip,kp,q1);       // Locate a pivot element (phase one).
+   if (ip == 0) {         // Maximum of auxiliary objective function is
+      _ret = -1;          // unbounded, so no feasible solution exists.
+      return _ret; 
+   }
+
+e1:
+   simp3(_nb+1,ip,kp); 
+// Exchange a left- and a right-hand variable (phase one), then update lists. 
+   if (_posv[ip-1]>=_nv+_nb_le+_nb_ge+1) { // Exchanged out an artificial variable for an 
+                                           // equality constraint. Make sure it stays 
+                                           // out by removing it from the l1 list.
+      int k = 0;
+      for (k=1; k<=_nv; k++)
+         if (_l1[k-1]==kp)
+	    goto e2; 
+e2:
+      for (int i=k; i<_nv; ++i)
+         _l1[i-1] = _l1[i]; 
+   }	
    else {
-      for (size_t i=0; i<_nr; ++i) {
-         result[i] = 0;
-         real_t value = positiveValues[i];
-         if (value>0)
-            result[i] = (*_b)[i]/value;
-      }
+      if (_posv[ip-1] < _nv+_nb_le+1)
+         goto e20;
+      kh = _posv[ip-1] - _nb_le - _nv;
+      if (_l3[kh-1]==0)
+         goto e20;     // Exchanged out an m2 type constraint. 
+      _l3[kh-1] = 0;   // If it’s the first time, correct the pivot column  or the minus
+                       // sign and the implicit artificial variable. 
    }
-// Find the minimum's location of the smallest item of the array b
-   real_t mm = 99999999;
-   size_t loc = 0;
-   for (size_t i=0; i<_nr; ++i) {
-      if (result[i]>0) {
-         if (result[i]<mm) {
-            mm = result[i];
-            loc = i;
-         }
-      }
+   _A[_nb+2][kp+1] += 1.0;
+   for (int i=1; i<=_nb+2; i++)
+      _A[i][kp+1] *= -1.0;
+
+e20:
+   is = _zerov[kp-1];             // Update lists of left- and right-hand variables. 
+   _zerov[kp-1] = _posv[ip-1]; 
+   _posv[ip-1] = is;
+   if (ir != 0)
+      goto e10;       // if still in phase one, go back to 10. 
+// End of phase one code for finding an initial feasible solution. Now, in phase two, optimize it. 
+e30:
+   simp1(0,0,kp,bmax);             // Test the z-row for doneness. 
+   if (bmax <= _eps) {             // Done. Solution found. Return with the good news. 
+      _ret = 0; 
+      setSolution();
+      return _ret; 
    }
-   return loc;
+   simp2(ip,kp,q1);                // Locate a pivot element (phase two). 
+   if (ip==0) {                    // Objective function is unbounded. Report and return. 
+      _ret = 1;
+      return _ret;
+   }
+   simp3(_nb,ip,kp);               // Exchange a left- and a right-hand variable (phase two), 
+   goto e20;                       // Update lists of left- and right-hand variables and 
+                                   // return for another iteration.
 }
 
 
-int Simplex::run()
+real_t simplex::getObjective() const
 {
-   bool end=false;
-   while (!end) {
-      bool result = solve();
-      _nb_it++;
-      if (result)
-         end = true;
-   }
-   for (size_t i=0; i<_nc; ++i) {
-      size_t count0=0, index=0;
-      for (size_t j=0; j<_nr; ++j) {
-         if (_A(j+1,i+1)==0.0)
-            count0 += 1;
-         else if (_A(j+1,i+1)==1)
-            index = j;
-      }
-      (*_x)[i] = 0.;
-      if (count0==_nr-1)
-         (*_x)[i] = (*_b)[index];
-   }
-   return _nb_it;
+   if (_ret==0)
+      return _A[1][1];
+   else
+      return 0;
 }
 
 } /* namespace OFELI */

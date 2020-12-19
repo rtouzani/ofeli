@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -67,8 +67,8 @@ template<class T_>
 AbsEqua<T_>::AbsEqua()
             : _theMesh(nullptr), _solver(-1), _nb_fields(1), _eigen(false),
               _set_matrix(false), _set_solver(false), _analysis(STATIONARY),
-              _A(nullptr), _b(nullptr), _u(nullptr),
-              _bc(nullptr), _bf(nullptr), _sf(nullptr), _pf(nullptr), _v(nullptr)
+              _A(nullptr), _b(nullptr), _u(nullptr), _bc(nullptr), _bf(nullptr),
+              _sf(nullptr), _pf(nullptr), _v(nullptr)
 {
    setTimeIntegrationParam();
    _rho_set = _Cp_set = _kappa_set = _mu_set = _sigma_set = _Mu_set = false;
@@ -282,13 +282,8 @@ int AbsEqua<T_>::run(Analysis   a,
    if (a==STATIONARY) {
       build();
       ret = solveLinearSystem(*_b,_uu);
-      if (_bc!=nullptr) {
-cout<<"$   "<<_uu.size()<<endl;
-cout<<"$$  "<<_bc->size()<<endl;
-cout<<"$$$ "<<_theMesh->getNbNodes()<<endl;
- cout<<"$$$$"<<_u->size()<<endl;
+      if (_bc!=nullptr)
          _u->insertBC(*_theMesh,_uu,*_bc);
-      }
       else
          *_u = _uu;
    }
@@ -368,8 +363,8 @@ template<class T_>
 void AbsEqua<T_>::setSolver(Iteration      ls,
                             Preconditioner pc)
 {
-   if (ls==DIRECT_SOLVER) {
-   }
+   if (_matrix_type==TRIDIAGONAL)
+      ls = DIRECT_SOLVER;
    if (ls==DIRECT_SOLVER && _matrix_type==SPARSE)
       throw OFELIException("In AbsEqua::setSolver(Iteration,Preconditioner): "
                            "Choices of solver and storage modes are incompatible.");
@@ -384,6 +379,8 @@ template<class T_>
 void AbsEqua<T_>::setLinearSolver(Iteration      ls,
                                   Preconditioner pc)
 {
+   if (_matrix_type==TRIDIAGONAL)
+      ls = DIRECT_SOLVER;
    setSolver(ls,pc);
 }
 
@@ -445,7 +442,8 @@ int AbsEqua<T_>::solveLinearSystem(Matrix<T_>* A,
    _ls.setMatrix(A);
    _ls.setRHS(b);
    _ls.setSolution(x);
-   return _ls.solve();
+   int ret = _ls.solve();
+   return ret;
 }
 
 
@@ -568,10 +566,8 @@ void AbsEqua<T_>::setInput(EqDataType opt,
 {
    if (opt==INITIAL_FIELD || opt==SOLUTION)
       _u = &u;
-   else if (opt==BOUNDARY_CONDITION) {
+   else if (opt==BOUNDARY_CONDITION)
       _bc = &u;
-cout<<"si: "<<_bc->size()<<endl;
-   }
    else if (opt==SOURCE || opt==BODY_FORCE)
       _bf = &u;
    else if (opt==FLUX || opt==TRACTION || opt==BOUNDARY_FORCE)

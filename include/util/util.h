@@ -1,6 +1,6 @@
 /*==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -559,42 +559,6 @@ inline char itoc(int i)
 }
 
 
-/** \fn string itos(int i)
- *  \ingroup Util
- *  \brief Function to convert an integer to a string.
- */
-inline std::string itos(int i)
-{
-   std::stringstream s;
-   s << i;
-   return s.str();
-}
-
-
-/** \fn string itos(size_t i)
-*  \ingroup Util
-*  \brief Function to convert an integer to a string.
-*/
-inline std::string itos(size_t i)
-{
-   std::stringstream s;
-   s << i;
-   return s.str();
-}
-
-
-/** \fn string dtos(real_t d)
- *  \ingroup Util
- *  \brief Function to convert a real to a string.
- */
-inline std::string dtos(real_t d)
-{
-   std::stringstream s;
-   s << d;
-   return s.str();
-}
-
-
 /** \fn T_ stringTo(const std::string& s)
  *  \ingroup Util
  *  \brief Function to convert a string to a template type parameter.
@@ -675,7 +639,7 @@ inline std::string zeros(size_t m,
       n--, k++;
    for (size_t l=0; l<n; l++)
       s += "0";
-   return s+itos(int(m));
+   return s+std::to_string(int(m));
 }
 
 

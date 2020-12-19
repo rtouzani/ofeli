@@ -10,7 +10,7 @@
 
   ------------------------------------------------------------------------------
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -51,20 +51,27 @@
 #include "OFELI.h"
 using namespace OFELI;
 
-
 int main()
 {
-   const size_t n = 2, m = 6;
-   DMatrix<double> A(m,n);
-   Vect<double> c(n), b(m), x(n+m);
-   c(1) = -100., c(2) = -125.;
-   b(1) = 30., b(2) = 44., b(3) = 0., b(4) = 5., b(5) = 0., b(6) = 4.;
-   A(1,1) = 3., A(1,2) = 6., A(2,1) = 8., A(2,2) =  4., A(3,1) = -1., A(3,2) = 0.;
-   A(4,1) = 1., A(4,2) = 0., A(5,1) = 0., A(5,2) = -1., A(6,1) =  0., A(6,2) = 1.;
-   Simplex s(A,b,c,x);
-   int nb_it = s.run();
-   cout << "Solution:\n" << x;
-   cout << "Cost: " << s.getCost() << endl;
-   cout << "Nb. of iterations: " << nb_it << endl;
+   int nv=4, nb_le=3, nb_ge=1, nb_eq=0;
+   Vect<double> x(nv), a(nv);
+
+   LPSolver s;
+   s.setSize(nv,nb_le,nb_ge,nb_eq);
+   s.set(x);
+   a(1) = -1, a(2) = -1, a(3) = -1, a(4) = -1;
+   s.set(LPSolver::OBJECTIVE,a);
+   a(1) = 2.0, a(2) = 3.0, a(3) = 4.0, a(4) = 5.0;
+   s.set(LPSolver::LE_CONSTRAINT,a,3300.0);
+   a(1) = 3.0, a(2) = 4.0, a(3) = 5.0, a(4) = 6.0;
+   s.set(LPSolver::LE_CONSTRAINT,a,4000.0);
+   a(1) = 15.0, a(2) = 10.0, a(3) = 9.0, a(4) = 7.0;
+   s.set(LPSolver::LE_CONSTRAINT,a,12000.0);
+   a(1) = 0.0, a(2) = 0.0, a(3) = 1.0, a(4) = 0.0;
+   s.set(LPSolver::GE_CONSTRAINT,a,400.0);
+
+   s.run();
+   cout << "Solution\n" << x;
+   cout << "Optimal objective: " << s.getObjective() << endl;
    return 0;
 }

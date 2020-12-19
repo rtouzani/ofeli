@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -32,7 +32,8 @@
 
 #include "shape_functions/Line2.h"
 #include "linear_algebra/LocalVect_impl.h"
-#include "util/util.h"
+
+using std::to_string;
 
 namespace OFELI {
 
@@ -51,7 +52,7 @@ Line2::Line2(const Element* el)
 {
    if (el->getNbNodes() != 2)
       throw OFELIException("Line2::Line2(Element *): Illegal number of element nodes: " +
-                           itos(el->getNbNodes()));
+                           to_string(el->getNbNodes()));
    _sh.resize(2);
    _dsh.resize(2);
    _node.resize(2);
@@ -78,7 +79,7 @@ Line2::Line2(const Side* side)
 {
    if (side->getNbNodes() != 2)
       throw OFELIException("Line2::Line2(Side *): Illegal number of side nodes: " +
-                           itos(side->getNbNodes()));
+                           to_string(side->getNbNodes()));
    _sh.resize(2);
    _dsh.resize(2);
    _node.resize(2);

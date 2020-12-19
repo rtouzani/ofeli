@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -40,6 +40,7 @@ using std::istringstream;
 using std::endl;
 
 #include <iomanip>
+using std::to_string;
 using std::setw;
 using std::ios;
 using std::setprecision;
@@ -1057,7 +1058,7 @@ void saveGnuplot(Mesh&  mesh,
                     m = 2;
                  if (!m)
                     throw OFELIException("In saveGnuplot(string,string,string,int): "
-                                          " Unknown element shape " + itos(element_label));
+                                          " Unknown element shape " + to_string(element_label));
                  break;
 
          case 2: if (The_element.getShape()==QUADRILATERAL)
@@ -1066,7 +1067,7 @@ void saveGnuplot(Mesh&  mesh,
                     m = 3;
                  if (!m)
                     throw OFELIException("In saveGnuplot(string,string,string,int): "
-                                         " Unknown element shape " + itos(element_label));
+                                         " Unknown element shape " + to_string(element_label));
       }
       for (size_t n=1; n<=m; n++) {
          the_node = The_element(n);
@@ -1222,7 +1223,7 @@ void saveVTK(Mesh&  mesh,
    }
    for (size_t n=0; n<nb_time; n+=f) {
       nb_st++;
-      string tt = "Time=" + dtos(tm[n]);
+      string tt = "Time=" + to_string(tm[n]);
       if (nb_time==1)
          of = proj + ".vtk";
       else

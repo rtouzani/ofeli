@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -84,7 +84,7 @@
 #include "solvers/OptSolver.h"
 #include "solvers/EigenProblemSolver.h"
 #include "solvers/NLASSolver.h"
-#include "solvers/Simplex.h"
+#include "solvers/LPSolver.h"
 #include "solvers/TimeStepping.h"
 
 /*

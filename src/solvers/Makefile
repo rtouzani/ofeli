@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin17.7.0
-host_triplet = i386-apple-darwin17.7.0
+build_triplet = i386-apple-darwin19.6.0
+host_triplet = i386-apple-darwin19.6.0
 subdir = src/solvers
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -107,10 +107,11 @@ am__v_AR_1 =
 libsolvers_a_AR = $(AR) $(ARFLAGS)
 libsolvers_a_LIBADD =
 am_libsolvers_a_OBJECTS = BSpline.$(OBJEXT) \
-	EigenProblemSolver.$(OBJEXT) NLASSolver.$(OBJEXT) \
-	ODESolver.$(OBJEXT) OptimNM.$(OBJEXT) OptimSA.$(OBJEXT) \
-	OptimTN.$(OBJEXT) OptimPG.$(OBJEXT) OptSolver.$(OBJEXT) \
-	Simplex.$(OBJEXT) Solver.$(OBJEXT) TimeStepping.$(OBJEXT)
+	EigenProblemSolver.$(OBJEXT) LPSolver.$(OBJEXT) \
+	NLASSolver.$(OBJEXT) ODESolver.$(OBJEXT) OptimNM.$(OBJEXT) \
+	OptimSA.$(OBJEXT) OptimTN.$(OBJEXT) OptimPG.$(OBJEXT) \
+	OptSolver.$(OBJEXT) simplex.$(OBJEXT) Solver.$(OBJEXT) \
+	TimeStepping.$(OBJEXT)
 libsolvers_a_OBJECTS = $(am_libsolvers_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -168,19 +169,19 @@ ETAGS = etags
 CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/mkinstalldirs
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /Users/touzani/ofeli/ofeli/missing aclocal-1.16
+ACLOCAL = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing aclocal-1.16
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoconf
-AUTOHEADER = ${SHELL} /Users/touzani/ofeli/ofeli/missing autoheader
-AUTOMAKE = ${SHELL} /Users/touzani/ofeli/ofeli/missing automake-1.16
+AUTOCONF = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing autoconf
+AUTOHEADER = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing autoheader
+AUTOMAKE = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing automake-1.16
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = 
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -206,7 +207,7 @@ LIBOBJS =
 LIBS = 
 LTLIBOBJS = 
 MAINT = #
-MAKEINFO = ${SHELL} /Users/touzani/ofeli/ofeli/missing makeinfo
+MAKEINFO = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/missing makeinfo
 MKDIR_P = /opt/local/bin/gmkdir -p
 MPI_CFLAGS = -I${prefix}/include/mpi 
 MPI_LDFLAGS =  
@@ -234,10 +235,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 4.0.0
-abs_builddir = /Users/touzani/ofeli/ofeli/src/solvers
-abs_srcdir = /Users/touzani/ofeli/ofeli/src/solvers
-abs_top_builddir = /Users/touzani/ofeli/ofeli
-abs_top_srcdir = /Users/touzani/ofeli/ofeli
+abs_builddir = /Users/touzani/Documents/NUMERIC/ofeli/ofeli/src/solvers
+abs_srcdir = /Users/touzani/Documents/NUMERIC/ofeli/ofeli/src/solvers
+abs_top_builddir = /Users/touzani/Documents/NUMERIC/ofeli/ofeli
+abs_top_srcdir = /Users/touzani/Documents/NUMERIC/ofeli/ofeli
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -246,10 +247,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin17.7.0
+build = i386-apple-darwin19.6.0
 build_alias = 
 build_cpu = i386
-build_os = darwin17.7.0
+build_os = darwin19.6.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -257,15 +258,15 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin17.7.0
+host = i386-apple-darwin19.6.0
 host_alias = 
 host_cpu = i386
-host_os = darwin17.7.0
+host_os = darwin19.6.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/touzani/ofeli/ofeli/install-sh
+install_sh = ${SHELL} /Users/touzani/Documents/NUMERIC/ofeli/ofeli/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -289,18 +290,19 @@ noinst_LIBRARIES = libsolvers.a
 AUTOMAKE_OPTIONS = no-dependencies
 AM_CPPFLAGS = -std=c++1y
 libsolvers_a_SOURCES = \
-	BSpline.cpp \
-	EigenProblemSolver.cpp \
-	NLASSolver.cpp \
-	ODESolver.cpp \
-	OptimNM.cpp \
-	OptimSA.cpp \
-	OptimTN.cpp \
-	OptimPG.cpp \
-	OptSolver.cpp \
-	Simplex.cpp \
-	Solver.cpp \
-	TimeStepping.cpp
+        BSpline.cpp \
+        EigenProblemSolver.cpp \
+        LPSolver.cpp \
+        NLASSolver.cpp \
+        ODESolver.cpp \
+        OptimNM.cpp \
+        OptimSA.cpp \
+        OptimTN.cpp \
+        OptimPG.cpp \
+        OptSolver.cpp \
+        simplex.cpp \
+        Solver.cpp \
+        TimeStepping.cpp
 
 all: all-am
 

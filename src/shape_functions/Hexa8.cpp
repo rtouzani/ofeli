@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,7 +52,7 @@ Hexa8::Hexa8(const Element* el)
 {
    if (el->getNbNodes() != 8)
       throw OFELIException("Hexa8::Hexa8(Element *): Illegal number of element nodes: " +
-                           itos(el->getNbNodes()));
+                           std::to_string(el->getNbNodes()));
    _label = el->n();
    _sh.resize(8);
    _dsh.resize(8);

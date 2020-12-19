@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -51,7 +51,7 @@ Penta6::Penta6(const Element* el)
 {
    if (el->getNbNodes() != 6)
       throw OFELIException("Penta6::Penta6(Element *): Illegal number of element nodes: " +
-                           itos(el->getNbNodes()));
+                           std::to_string(el->getNbNodes()));
    _sh.resize(6);
    _node.resize(6);
    _x.resize(6);

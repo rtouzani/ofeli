@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -332,7 +332,7 @@ int DSMatrix<T_>::setLDLt()
          _a[(i+1)*i/2+j] = s;
       }
       if (Abs(pivot) < OFELI_EPSMCH)
-         throw OFELIException("In DSMatrix::setLDLt(): " + itos(int(i)+1) + "-th pivot is null.");
+         throw OFELIException("In DSMatrix::setLDLt(): " + to_string(i+1) + "-th pivot is null.");
       _a[(i+1)*i/2+i] = 1./pivot;
    }
    return err;

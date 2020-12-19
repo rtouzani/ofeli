@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -268,7 +268,7 @@ T_& TrMatrix<T_>::operator()(size_t i,
       return _a[3*i-1];
    else {
       throw OFELIException("In TrMatrix::Operator(): Index pair (" +
-                            itos(int(i)) + "," + itos(int(j)) +
+                            to_string(i) + "," + to_string(j) +
                            ") not compatible with tridiagonal structure.");
    }
    return _zero;
@@ -320,7 +320,7 @@ int TrMatrix<T_>::solve(Vect<T_>& b,
    for (size_t i=1; i<_size; ++i) {
       ret = int(i);
       if (Abs(_a[3*i-2]) < OFELI_EPSMCH)
-         throw OFELIException("In TrMatrix::solve(Vect<T_>): " + itos(int(i))
+         throw OFELIException("In TrMatrix::solve(Vect<T_>): " + to_string(int(i))
                               + "-th pivot is null."); 
       else
          p = _a[3*i]/_a [3*i-2];
@@ -328,7 +328,7 @@ int TrMatrix<T_>::solve(Vect<T_>& b,
       b.add(i+1,-p*b(i));
    }
    if (Abs(_a[3*_size-2]) < OFELI_EPSMCH)
-      throw OFELIException("In TrMatrix::solve(Vect<T_>): " + itos(_size)
+      throw OFELIException("In TrMatrix::solve(Vect<T_>): " + to_string(_size)
                            + "-th pivot is null.");
    else
       b(_size) /= _a[3*_size-2];

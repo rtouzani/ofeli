@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string>
+using std::to_string;
 
 #include <iostream>
 using std::cout;
@@ -604,7 +605,7 @@ Mesh::Mesh(real_t xmin,
             }
             else
                throw OFELIException("Mesh::Mesh(real_t,real_t,real_t,real_t,size_t,size_t,int,int,int,int,int): "
-                                    "Illegal option "+itos(opt));
+                                    "Illegal option "+to_string(opt));
          }
       }
       x.x += hx;
@@ -761,7 +762,7 @@ Mesh::Mesh(real_t xmin,
             }
             else
                throw OFELIException("Mesh::Mesh(real_t,real_t,real_t,real_t,size_t,size_t,int,int,int,int,int):"
-                                    " Illegal option "+itos(opt));
+                                    " Illegal option "+to_string(opt));
          }
          n++;
       }
@@ -1118,7 +1119,7 @@ void Mesh::RenumberNode(size_t n1,
       nd->setLabel(n2);
    else
       throw OFELIException("Mesh::RenumberNode(size_t,size_t): Node with label "
-                           + itos(n1) + " does not exist.");
+                           + to_string(n1) + " does not exist.");
 }
 
 
@@ -1130,7 +1131,7 @@ void Mesh::RenumberElement(size_t n1,
       el->setLabel(n2);
    else
       throw OFELIException("Mesh::RenumberElement(size_t,size_t): Element with label " +
-                           itos(n1)+" does not exist.");
+                           to_string(n1)+" does not exist.");
 }
 
 
@@ -1142,7 +1143,7 @@ void Mesh::RenumberSide(size_t n1,
       sd->setLabel(n2);
    else
       throw OFELIException("Mesh::RenumberSide(size_t,size_t): Side with label " +
-                           itos(n1)+" does not exist.");
+                           to_string(n1)+" does not exist.");
 }
 
 
@@ -1154,7 +1155,7 @@ void Mesh::RenumberEdge(size_t n1,
       ed->setLabel(n2);
    else
       throw OFELIException("Mesh::RenumberEdge(size_t,size_t): Edge with label " +
-                           itos(n1)+" does not exist.");
+                           to_string(n1)+" does not exist.");
 }
 
 
@@ -1190,7 +1191,7 @@ void Mesh::inCoarse(Mesh& ms,
 
    element_loop(&ms) {
       if (The_element.getShape() != TRIANGLE)
-         throw OFELIException("Mesh::inCoarse(Mesh,bool): Element "+itos(element_label) +
+         throw OFELIException("Mesh::inCoarse(Mesh,bool): Element "+to_string(element_label) +
                               " is not a triangle.");
       for (i=0; i<3; i++) {
          x[i] = (The_element)(i+1)->getCoord(1);
@@ -2468,7 +2469,7 @@ void Mesh::checkNodeLabels()
 {
    for (size_t i=0; i<_nb_nodes; i++) {
       if (theNodes[i]->n()>_nb_nodes)
-         throw OFELIException("Mesh::checkNodeLabels(): The node label: " + itos(theNodes[i]->n()) + 
+         throw OFELIException("Mesh::checkNodeLabels(): The node label: " + to_string(theNodes[i]->n()) + 
                               " exceeds the total number of nodes.");
    }
    if (_nb_nodes>0)
@@ -2480,7 +2481,7 @@ void Mesh::checkElementLabels()
 {
    for (size_t i=0; i<_nb_elements; i++) {
       if (theElements[i]->n()>_nb_elements)
-         throw OFELIException("Mesh::checkElementLabels(): The element label: " + itos(theElements[i]->n()) + 
+         throw OFELIException("Mesh::checkElementLabels(): The element label: " + to_string(theElements[i]->n()) + 
                               " exceeds the total number of elements.");
    }
    if (_nb_elements>0)
@@ -2492,7 +2493,7 @@ void Mesh::checkSideLabels()
 {
    for (size_t i=0; i<_nb_sides; i++) {
       if (theSides[i]->n()>_nb_sides)
-         throw OFELIException("Mesh::checkSideLabels(): The side label: " + itos(theSides[i]->n()) + 
+         throw OFELIException("Mesh::checkSideLabels(): The side label: " + to_string(theSides[i]->n()) + 
                               " exceeds the total number of sides.");
    }
    if (_nb_sides>0)
@@ -2712,7 +2713,7 @@ void Mesh::get(const string& mesh_file,
    else if (ff==TRIANGLE_FF)
       getTriangle(mesh_file,*this,nb_dof);
    else
-      throw OFELIException("Mesh::get(string,int,int): Unknown file format "+itos(ff));
+      throw OFELIException("Mesh::get(string,int,int): Unknown file format "+to_string(ff));
    NumberEquations();
    element_loop(this)
       theMaterial.check(The_element.getCode());

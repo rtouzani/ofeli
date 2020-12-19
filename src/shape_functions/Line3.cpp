@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -35,7 +35,7 @@
 
 namespace OFELI {
 
-string itos(int i);
+using std::to_string;
 
 Line3::Line3()
 {
@@ -52,7 +52,7 @@ Line3::Line3(const Element* el)
 {
    if (el->getNbNodes() != 3)
       throw OFELIException("Line3::Line3(Element *): Illegal number of element nodes: " +
-                           itos(el->getNbNodes()));
+                           to_string(el->getNbNodes()));
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);
@@ -76,7 +76,7 @@ Line3::Line3(const Side *sd)
 {
    if (sd->getNbNodes() != 3)
       throw OFELIException("Line3::Line3(Side *): Illegal number of side nodes: " +
-                           itos(sd->getNbNodes()));
+                           to_string(sd->getNbNodes()));
    _sh.resize(3);
    _node.resize(3);
    _x.resize(3);

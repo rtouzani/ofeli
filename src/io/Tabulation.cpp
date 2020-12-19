@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -138,7 +138,9 @@ real_t Tabulation::getValue(string funct,
    real_t h1 = (_funct(n).Max[0]-_funct(n).Min[0])/(N1-1),
           h2 = (_funct(n).Max[1]-_funct(n).Min[1])/(N2-1),
           h3 = (_funct(n).Max[2]-_funct(n).Min[2])/(N3-1);
-   size_t i=size_t((v1-_funct(n).Min[0])/h1), j=size_t((v2-_funct(n).Min[1])/h2), k=size_t((v3-_funct(n).Min[2])/h3);
+   size_t i=size_t((v1-_funct(n).Min[0])/h1),
+          j=size_t((v2-_funct(n).Min[1])/h2),
+          k=size_t((v3-_funct(n).Min[2])/h3);
    real_t r = (v1-_funct(n).Min[0])/h1 - i,
           s = (v2-_funct(n).Min[1])/h2 - j,
           t = (v3-_funct(n).Min[2])/h3 - k;
@@ -154,14 +156,14 @@ real_t Tabulation::getValue(string funct,
       k=0, t=0;
    if (v3>_funct(n).Max[2])
       k=N3-1, t=1;
-   return   (1-r)*(1-s)*(1-t)*_funct(n).Val(i+1,j+1,k+1)
-          + (1-r)*s*(1-t)*_funct(n).Val(i+1,j+2,k+1)
-          + (1-r)*(1-s)*t*_funct(n).Val(i+1,j+1,k+2)
-          + (1-r)*s*t*_funct(n).Val(i+1,j+2,k+2)
-          + r*(1-s)*(1-t)*_funct(n).Val(i+2,j+1,k+1)
-          + r*s*(1-t)*_funct(n).Val(i+2,j+2,k+1)
-          + r*(1-s)*t*_funct(n).Val(i+2,j+1,k+2)
-          + r*s*t*_funct(n).Val(i+2,j+2,k+2);
+   real_t w1 = (1-r)*(1-s)*(1-t)*_funct(n).Val(i+1,j+1,k+1)
+             + (1-r)*s*(1-t)*_funct(n).Val(i+1,j+2,k+1)
+             + (1-r)*(1-s)*t*_funct(n).Val(i+1,j+1,k+2);
+   real_t w2 = (1-r)*s*t*_funct(n).Val(i+1,j+2,k+2)
+             + r*(1-s)*(1-t)*_funct(n).Val(i+2,j+1,k+1)
+             + r*s*(1-t)*_funct(n).Val(i+2,j+2,k+1)
+             + r*s*t*_funct(n).Val(i+2,j+2,k+2);
+   return w1+w2;
 }
 
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -308,7 +308,7 @@ int Prec<T_>::inv_diag()
 {
    for (size_t i=1; i<=_a->getNbRows(); i++) {
       if ((*_a)(i,i) == static_cast<T_>(0))
-         throw OFELIException("In Prec::inv_diag(): null diagonal term: " + itos(i));
+         throw OFELIException("In Prec::inv_diag(): null diagonal term: " + to_string(i));
       if ((_pivot[i-1]=static_cast<T_>(1)/(*_a)(i,i)) == static_cast<T_>(0))
          return -i;
    }

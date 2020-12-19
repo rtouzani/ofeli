@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -288,7 +288,7 @@ int LocalMatrix<T_,NR_,NC_>::Factor()
    for (size_t i=1; i<NR_; ++i) {
       for (j=1; j<=i; j++) {
          if (Abs(_a[NR_*(j-1)+j-1]) < OFELI_EPSMCH)
-            throw OFELIException("In LocalMatrix::Factor(): The "+itos(i)+"-th pivot is too small.");
+            throw OFELIException("In LocalMatrix::Factor(): The "+to_string(i)+"-th pivot is too small.");
          _a[NR_*i+j-1] /= _a[NR_*(j-1)+j-1];
          for (k=0; k<j; k++)
             _a[NR_*i+j] -= _a[NR_*i+k]*_a[NR_*k+j];
@@ -315,7 +315,7 @@ int LocalMatrix<T_,NR_,NC_>::solve(LocalVect<T_,NR_>& b)
    }
    for (i=NR_-1; i>-1; i--) {
       if (Abs(_a[NR_*i+i]) < OFELI_EPSMCH)
-         throw OFELIException("In LocalMatrix::Solve(b): The "+itos(i+1)+"-th diagonal entry is too small.");
+         throw OFELIException("In LocalMatrix::Solve(b): The "+to_string(i+1)+"-th diagonal entry is too small.");
       b[i] /= _a[NR_*i+i];
       for (j=0; j<i; j++)
          b[j] -= b[i] * _a[NR_*j+i];

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -31,7 +31,6 @@
 #include "mesh/saveMesh.h"
 #include "mesh/getMesh.h"
 #include "io/XMLParser.h"
-#include "util/util.h"
 #include "linear_algebra/Vect_impl.h"
 #include "mesh/bamg/Mesh2.h"
 #include "mesh/bamg/Meshio.h"
@@ -40,6 +39,7 @@
 #include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
+using std::to_string;
 extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
@@ -334,10 +334,10 @@ int Domain::getLine()
    Ln ll;
    size_t n1 = _ff->getI("First End Point: ");
    if (n1 > _nb_vertices)
-      throw OFELIException("In Domain::getLine(): Vertex "+itos(n1)+" is not defined.");
+      throw OFELIException("In Domain::getLine(): Vertex "+to_string(n1)+" is not defined.");
    size_t n2 = _ff->getI("Second End Point: ");
    if (n2 > _nb_vertices)
-      throw OFELIException("In Domain::getLine(): Vertex "+itos(n2)+" is not defined.");
+      throw OFELIException("In Domain::getLine(): Vertex "+to_string(n2)+" is not defined.");
    ll.n1 = n1, ll.n2 = n2;
    ll.Dcode = _ff->getI("Dirichlet Code: ");
    ll.Ncode = _ff->getI("Neumann Code: ");
@@ -414,15 +414,15 @@ void Domain::getCircle()
    ln.n1 = n1;
    ln.node.push_back(_v[n1-1]);
    if (n1 > _nb_vertices)
-      throw OFELIException("In Domain::getCircle(): Vertex "+itos(n1)+" is not defined.");
+      throw OFELIException("In Domain::getCircle(): Vertex "+to_string(n1)+" is not defined.");
    size_t n2 = _ff->getI("Second end vertex: ");
    if (n2 > _nb_vertices)
-      throw OFELIException("In Domain::getCircle(): Vertex "+itos(n2)+" is not defined.");
+      throw OFELIException("In Domain::getCircle(): Vertex "+to_string(n2)+" is not defined.");
    ln.n2 = n2;
    ln.node.push_back(_v[n2-1]);
    size_t n3 = _ff->getI("Center vertex: ");
    if (n3 > _nb_vertices)
-      throw OFELIException("In Domain::getCircle(): Vertex "+itos(n3)+" is not defined.");
+      throw OFELIException("In Domain::getCircle(): Vertex "+to_string(n3)+" is not defined.");
    ln.nb = nb;
 
    int dc = ln.Dcode = _ff->getI("Dirichlet Code: ");
@@ -473,7 +473,7 @@ void Domain::insertContour(const vector<size_t>& c)
          i1 = _l[n1-1].n1; i2 = _l[n2-1].n1;
          cc.orientation[i] = -1;
          if (i1 != i2)
-            throw OFELIException("In Domain::insertContour(vector<size_t>): Lines "+itos(n1)+" and "+itos(n2) +
+            throw OFELIException("In Domain::insertContour(vector<size_t>): Lines "+to_string(n1)+" and "+to_string(n2) +
                                  " are not correctly connected.\nContour cancelled.");
       }
    }
@@ -510,7 +510,7 @@ int Domain::getContour()
          cc.orientation.push_back(-1);
          i1 = _l[n1-1].n1; i2 = _l[n2-1].n1;
          if (i1 != i2)
-            throw OFELIException("In Domain::getContour(): Lines "+itos(n1)+" and "+itos(n2)+ 
+            throw OFELIException("In Domain::getContour(): Lines "+to_string(n1)+" and "+to_string(n2)+ 
                                  " are not correctly connected.\nContour cancelled.");
       }
    }
@@ -543,8 +543,8 @@ void Domain::insertHole(const vector<size_t>& h)
       size_t n1=hh.line[i], n2=hh.line[i+1];
       size_t i1=_l[n1-1].n2, i2=_l[n2-1].n1;
       if (i1 != i2)
-         throw OFELIException("In Domain::insertHole(vector<size_t>): Lines "+itos(n1) +
-                              " and "+itos(n2)+" are not correctly connected.\nHole cancelled.");
+         throw OFELIException("In Domain::insertHole(vector<size_t>): Lines "+to_string(n1) +
+                              " and "+to_string(n2)+" are not correctly connected.\nHole cancelled.");
    }
    _h.push_back(hh);
    _nb_holes++;
@@ -565,8 +565,8 @@ int Domain::getHole()
       size_t n1=hh.line[i], n2=hh.line[i+1];
       size_t i1=_l[n1-1].n2, i2=_l[n2-1].n1;
       if (i1 != i2)
-         throw OFELIException("In Domain::getHole(): Lines "+itos(n1)+" and " +
-                              itos(n2) + " are not correctly connected.");
+         throw OFELIException("In Domain::getHole(): Lines "+to_string(n1)+" and " +
+                              to_string(n2) + " are not correctly connected.");
    }
    _h.push_back(hh);
    _nb_holes++;
@@ -2110,20 +2110,8 @@ int Domain::get()
             _ret_line = getLine();
             break;
 
-         case 15:
-            _ret_line = getCurve();
-            break;
-
          case 4:
             getCircle();
-            break;
-
-         case 16:
-            _ret_cont = getContour();
-            break;
-
-         case 17:
-            getHole();
             break;
 
          case 5:
@@ -2173,9 +2161,21 @@ int Domain::get()
          case 14:
             _dim = _ff->getI();
             break;
+
+         case 15:
+            _ret_line = getCurve();
+            break;
+
+         case 16:
+            _ret_cont = getContour();
+            break;
+
+         case 17:
+            getHole();
+            break;
        }
    }
-   while ((key>=-1)||(key<=17));
+   while ((key>=-1)&&(key<=17));
    return ret;
 }
 

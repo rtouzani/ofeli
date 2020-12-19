@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -57,7 +57,7 @@ Quad4::Quad4(const Element* el)
 {
    if (el->getNbNodes() != 4)
       throw OFELIException("Quad4::Quad4(Element *): Illegal number of element nodes: " +
-                           itos(el->getNbNodes()));
+                           std::to_string(el->getNbNodes()));
    _sh.resize(4);
    _dsh.resize(4);
    _node.resize(4);
@@ -80,7 +80,7 @@ Quad4::Quad4(const Side* side)
 {
    if (side->getNbNodes() != 4)
       throw OFELIException("Quad4::Quad4(Side *): Illegal number of side nodes: " +
-                           itos(side->getNbNodes()));
+                           std::to_string(side->getNbNodes()));
    _sh.resize(4);
    _dsh.resize(4);
    _node.resize(4);

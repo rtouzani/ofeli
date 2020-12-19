@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -57,7 +57,7 @@
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of current release
  */
-#define OFELI_RELEASE_DATE            "2-2020"
+#define OFELI_RELEASE_DATE            "1-2021"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define MY_RANDOM             55085111

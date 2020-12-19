@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -35,11 +35,8 @@
 #include "mesh/Element.h"
 #include "mesh/Side.h"
 #include "linear_algebra/Point.h"
-#include "util/util.h"
 
 namespace OFELI {
-
-string itos(int i);
 
 Triang6S::Triang6S()
 {
@@ -54,7 +51,8 @@ Triang6S::Triang6S(const Element* el)
 {
    _el = el;
    if (_el->getNbNodes() != 6)
-      throw OFELIException("Triang6S::Triang6S(Element *): Illegal number of element nodes: " + itos(el->getNbNodes()));
+     throw OFELIException("Triang6S::Triang6S(Element *): Illegal number of element nodes: "
+                          + std::to_string(el->getNbNodes()));
    _sh.resize(6);
    _dsh.resize(6);
    _node.resize(6);

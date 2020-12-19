@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -32,7 +32,6 @@
 #include "shape_functions/Triang3.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
-#include "util/util.h"
 #include "linear_algebra/LocalVect_impl.h"
 
 namespace OFELI {
@@ -50,7 +49,7 @@ Triang3::Triang3(const Element* el)
 {
    if (el->getNbNodes() != 3)
       throw OFELIException("Triang3::Triang3(Element *): Illegal number of element nodes: " +
-                           itos(el->getNbNodes()));
+                           std::to_string(el->getNbNodes()));
    _el = el; _sd = nullptr;
    _dsh.resize(3);
    set(el);
@@ -61,7 +60,7 @@ Triang3::Triang3(const Side* sd)
 {
    if (sd->getNbNodes() != 3)
       throw OFELIException("Triang3::Triang3(Side *): Illegal number of side nodes: " +
-                           itos(sd->getNbNodes()));
+                           std::to_string(sd->getNbNodes()));
    _el = nullptr; _sd = sd;
    _dsh.resize(3);
    set(sd);

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -36,6 +36,7 @@ using std::ostream;
 #include "OFELI_Config.h"
 #include "mesh/Mesh.h"
 #include "linear_algebra/Vect.h"
+using std::to_string;
 
 namespace OFELI {
 /*!
@@ -128,7 +129,7 @@ class Matrix
 
 /** \brief Set matrix to 0 and reset factorization parameter
  *  @warning This function must be used if after a factorization, the matrix has
- *  modified
+ *  been modified
  */
     virtual void reset();
 

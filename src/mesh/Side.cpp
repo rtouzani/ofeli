@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -39,6 +39,7 @@
 #include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
+using std::to_string;
 extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
@@ -66,7 +67,7 @@ Side::Side(size_t        label,
            const string& shape)
 {
    if (label<1)
-      throw OFELIException("Side::Side(size_t,string): Illegal side label "+itos(label));
+      throw OFELIException("Side::Side(size_t,string): Illegal side label "+to_string(label));
    shape_index(shape);
    _label = label;
    _nb_nodes = _nb_edges = _nb_eq = 0;
@@ -87,7 +88,7 @@ Side::Side(size_t label,
            int    shape)
 {
    if (label<1)
-      throw OFELIException("Side::Side(size_t,int): Illegal side label "+itos(label));
+      throw OFELIException("Side::Side(size_t,int): Illegal side label "+to_string(label));
    _shape = shape;
    _label = label;
    _nb_nodes = _nb_edges = _nb_eq = 0;
@@ -184,7 +185,7 @@ void Side::Replace(size_t label,
 {
    if (!node)
       throw OFELIException("Side::Replace(size_t,Node *): Trying to replace "
-                           "an undefined node to size "+itos(label));
+                           "an undefined node to size "+to_string(label));
    _node[label-1] = node;
 }
 
@@ -212,7 +213,7 @@ void Side::setChild(Side* sd)
 Side *Side::getChild(size_t i) const
 {
    if (i > _nb_childs)
-      throw OFELIException("Side::getChild(size_t): Number of children is "+itos(i));
+      throw OFELIException("Side::getChild(size_t): Number of children is "+to_string(i));
    return _child[i-1];
 }
 
@@ -273,7 +274,7 @@ real_t Side::getMeasure() const
       x[1] = _node[1]->getCoord();
       m = sqrt((x[1].x-x[0].x)*(x[1].x-x[0].x) + (x[1].y-x[0].y)*(x[1].y-x[0].y));
       if (m==0)
-         throw OFELIException("Side::getMeasure(): Length of line "+itos(_label)+" is null.");
+         throw OFELIException("Side::getMeasure(): Length of line "+to_string(_label)+" is null.");
    }
 
    else if (_shape==TRIANGLE) {
@@ -284,9 +285,9 @@ real_t Side::getMeasure() const
       real_t c = x[0].x*(x[1].y-x[2].y) - x[1].x*(x[0].y-x[2].y) + x[2].x*(x[0].y-x[1].y);
       m = 0.5*sqrt(a*a + b*b + c*c);
       if (m==0)
-         throw OFELIException("Side::getMeasure(): Area of triangle "+itos(_label)+" is null.");
+         throw OFELIException("Side::getMeasure(): Area of triangle "+to_string(_label)+" is null.");
       if (m<0)
-         throw OFELIException("Side::getMeasure(): Area of triangle " + itos(_label) + "is negative.");
+         throw OFELIException("Side::getMeasure(): Area of triangle " + to_string(_label) + "is negative.");
    }
 
    else if (_shape==QUADRILATERAL) {
@@ -304,9 +305,9 @@ real_t Side::getMeasure() const
       }
       m = dxds*dydt - dxdt*dyds;
       if (m==0)
-         throw OFELIException("Side::getMeasure(): Area of quadrilateral " + itos(_label) + " is null.");
+         throw OFELIException("Side::getMeasure(): Area of quadrilateral " + to_string(_label) + " is null.");
       if (m<0)
-         throw OFELIException("Side::getMeasure(): Area of quadrilateral " + itos(_label) + " is negative.");
+         throw OFELIException("Side::getMeasure(): Area of quadrilateral " + to_string(_label) + " is negative.");
    }
 
    return m;

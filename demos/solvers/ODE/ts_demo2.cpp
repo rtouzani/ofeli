@@ -6,7 +6,7 @@
  
  ==============================================================================
 
-  Copyright (C) 1998 - 2020 Rachid Touzani
+  Copyright (C) 1998 - 2021 Rachid Touzani
 
   This file is part of OFELI.
 
@@ -37,6 +37,8 @@
 
 #include "OFELI.h"
 #include "Solid.h"
+
+using std::to_string;
 using namespace OFELI;
 
 int main(int argc, char *argv[])
@@ -82,10 +84,10 @@ int main(int argc, char *argv[])
       ts.runOneTimeStep();
 
 //    Save solution for post processing
-      saveField(u,ms,"u-"+itos(theStep)+".vtk",VTK);
+      saveField(u,ms,"u-"+to_string(theStep)+".vtk",VTK);
       Mesh dm(ms);
       DeformMesh(dm,u,1.);
-      dm.save("mm-"+itos(theStep)+".m");
+      dm.save("mm-"+to_string(theStep)+".m");
    }
 
 // Display TimeStepping class information

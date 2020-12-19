@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -256,8 +256,8 @@ void SkMatrix<T_>::set(size_t    i,
    else if (l>=0 && i<=j)
       _aU[_ch[j-1]+i-j] = val;
    else
-      throw OFELIException("In SkMatrix::Set(i,j,x): Index pair: ("+itos(int(i))+"," +
-                            itos(int(j))+") not " + "compatible with skyline symmeric storage.");
+      throw OFELIException("In SkMatrix::Set(i,j,x): Index pair: ("+to_string(i)+"," +
+                            to_string(j)+") not " + "compatible with skyline symmeric storage.");
 }
 
 
@@ -399,8 +399,8 @@ T_& SkMatrix<T_>::operator()(size_t i,
    else if (l>=0 && i<=j)
       return _aU[_ch[j-1]+i-j];
    else
-      throw OFELIException("In SkMatrix::Operator(): Index pair (" + itos(int(i)) + "," +
-                           itos(int(j)) + ") not compatible with skyline structure");
+      throw OFELIException("In SkMatrix::Operator(): Index pair (" + to_string(i) + "," +
+                            to_string(j) + ") not compatible with skyline structure");
    return _temp;
 }
 
@@ -531,7 +531,7 @@ int SkMatrix<T_>::setLU()
       for (k=0; k<i-di; k++)
          _aU[_ch[i]] -= _a[_ch[i]+k+di-i]*_aU[_ch[i]+k+di-i];
       if (Abs(_aU[_ch[i]]) < OFELI_EPSMCH)
-         throw OFELIException("In SkMatrix::Factor(): " + itos(i+1) + "-th pivot is null.");
+         throw OFELIException("In SkMatrix::Factor(): " + to_string(i+1) + "-th pivot is null.");
    }
    return 0;
 }
@@ -545,7 +545,7 @@ int SkMatrix<T_>::solve(Vect<T_>& b,
    if (_is_diagonal) {
       for (size_t i=0; i<_size; i++) {
          if (Abs(_aU[i]) < OFELI_EPSMCH)
-            throw OFELIException("In SkMatrix::solve(b): " + itos(i+1) + "-th diagonal is null.");
+            throw OFELIException("In SkMatrix::solve(b): " + to_string(i+1) + "-th diagonal is null.");
          b[i] /= _aU[i];
       }
       return ret;
@@ -563,7 +563,7 @@ int SkMatrix<T_>::solve(Vect<T_>& b,
    }
    for (int k=int(_size-1); k>0; k--) {
       if (Abs(_aU[_ch[k]]) < OFELI_EPSMCH)
-         throw OFELIException("In SkMatrix::solve(b): " + itos(k+1) + "-th pivot is null.");
+         throw OFELIException("In SkMatrix::solve(b): " + to_string(k+1) + "-th pivot is null.");
       b[k] /= _aU[_ch[k]];
       di = k+1+_ch[k-1]-_ch[k];
       for (j=0; j<k-di; j++)
@@ -605,7 +605,7 @@ int SkMatrix<T_>::solveLU(const Vect<T_>& b,
    }
    for (int k=int(_size-1); k>0; k--) {
       if (Abs(_aU[_ch[k]]) < OFELI_EPSMCH)
-         throw OFELIException("In SkMatrix::solveLU(b,x): " + itos(k+1) + "-th pivot is null.");
+         throw OFELIException("In SkMatrix::solveLU(b,x): " + to_string(k+1) + "-th pivot is null.");
       x[k] /= _aU[_ch[k]];
       di = k+1+_ch[k-1]-_ch[k];
       for (j=0; j<k-di; j++)
