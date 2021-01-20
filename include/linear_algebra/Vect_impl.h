@@ -44,12 +44,9 @@
 #include "mesh/Grid.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Tetra4.h"
-#include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
 using std::to_string;
-
-extern exprtk::parser<real_t> theParser;
 
 /** \defgroup VectMat Vector and Matrix
  *  \brief Vector and matrix classes
@@ -427,39 +424,22 @@ void Vect<T_>::set(const string& exp,
 {
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::set(string,dof): No mesh defined");
-   exprtk::expression<double> expression;
-   double x=0., y=0., z=0.;
-   exprtk::symbol_table<double> symbol_table;
-   add_constants(symbol_table);
-   symbol_table.add_variable("x",x);
-   symbol_table.add_variable("y",y);
-   symbol_table.add_variable("z",z);
-   symbol_table.add_variable("t",_time);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
+   _theFct.set(exp,_var);
    if (_dof_type==NODE_DOF) {
-      MESH_ND {
-	x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
-	set(The_node.getNbDOF()*(node_label-1)+dof,expression.value());
-      }
+      MESH_ND
+         set(The_node.getNbDOF()*(node_label-1)+dof,_theFct(The_node.getCoord(),_time));
    }
    else if (_dof_type==SIDE_DOF) {
-      MESH_SD {
-         x = The_side.getCenter().x, y = The_side.getCenter().y, z = The_side.getCenter().z;
-         set(The_side.getNbDOF()*(side_label-1)+dof,expression.value());
-      }
+      MESH_SD
+         set(The_side.getNbDOF()*(side_label-1)+dof,_theFct(The_side.getCenter(),_time));
    }
    else if (_dof_type==BOUNDARY_SIDE_DOF) {
-      MESH_BD_SD {
-         x = The_side.getCenter().x, y = The_side.getCenter().y, z = The_side.getCenter().z;
-         set(The_side.getNbDOF()*(side_label-1)+dof,expression.value());
-      }
+      MESH_BD_SD
+         set(The_side.getNbDOF()*(side_label-1)+dof,_theFct(The_side.getCenter(),_time));
    }
    else if (_dof_type==ELEMENT_DOF) {
-      MESH_EL {
-         x = The_element.getCenter().x, y = The_element.getCenter().y, z = The_element.getCenter().z;
-         set(element_label,expression.value());
-      }
+      MESH_EL
+         set(element_label,_theFct(The_element.getCenter(),_time));
    }
    else
       throw OFELIException("In Vect::set(string,size_t): Unknown vector type.");
@@ -470,18 +450,9 @@ template<class T_>
 void Vect<T_>::set(const string&       exp,
                    const Vect<real_t>& x)
 {
-   real_t y=0.;
-   exprtk::expression<double> expression;
-   exprtk::symbol_table<double> symbol_table;
-   add_constants(symbol_table);
-   symbol_table.add_variable("x",y);
-   symbol_table.add_variable("t",_time);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
-   for (size_t i=0; i<x.size(); i++) {
-      y = x[i];
-      set(i+1,expression.value());
-   }
+   _theFct.set(exp,_var);
+   for (size_t i=0; i<x.size(); ++i)
+      set(i+1,_theFct(x[i],0.,0.,_time));
 }
 
 
@@ -493,21 +464,10 @@ void Vect<T_>::set(Mesh&  ms,
    setMesh(ms);
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::set(ms,string,dof): No mesh defined");
-   real_t x=0., y=0., z=0.;
-   exprtk::expression<real_t> expression;
-   exprtk::symbol_table<double> symbol_table;
-   add_constants(symbol_table);
-   symbol_table.add_variable("x",x);
-   symbol_table.add_variable("y",y);
-   symbol_table.add_variable("z",z);
-   symbol_table.add_variable("t",_time);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
+   _theFct.set(exp,_var);
    if (_dof_type==NODE_DOF) {
-      MESH_ND {
-         x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
-         set(The_node.getNbDOF()*(node_label-1)+dof,expression.value());
-      }
+      MESH_ND
+         set(The_node.getNbDOF()*(node_label-1)+dof,_theFct(The_node.getCoord(),_time));
    }
    else
       throw OFELIException("In Vect::set(string,size_t): This member function is "
@@ -520,17 +480,12 @@ void Vect<T_>::set(const Vect<real_t>& x,
                    const string&       exp)
 {
    setSize(x._nx,x._ny,x._nz);
-   exprtk::expression<real_t> expression;
-   exprtk::symbol_table<double> symbol_table;
-   add_constants(symbol_table);
-   real_t xx=0., ii=0;
-   symbol_table.add_variable("x",xx);
-   symbol_table.add_variable("i",ii);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
+   vector<string> var = {"x","i","t"};
+   _theFct.set(exp,var);
+   vector<real_t> xv(3);
    for (size_t i=0; i<_size; i++) {
-      xx = x[i], ii = i+1;
-      set(i+1,expression.value());
+      xv[0] = x[i], xv[1] = i+1, xv[2] = _time;
+      set(i+1,_theFct(xv));
    }
 }
 
@@ -803,20 +758,14 @@ size_t Vect<T_>::getNz() const { return _nz; }
 template <class T_>
 void Vect<T_>::setIJK(const string& exp)
 {
-   exprtk::expression<real_t> expression;
-   exprtk::symbol_table<double> symbol_table;
-   add_constants(symbol_table);
-   real_t i=0., j=0., k=0.;
-   symbol_table.add_variable("i",i);
-   symbol_table.add_variable("j",j);
-   symbol_table.add_variable("k",k);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
-   for (size_t ii=1; ii<=_nx; ++ii) {
-      for (size_t jj=1; jj<=_ny; ++jj) {
-         for (size_t kk=1; kk<=_nz; ++kk) {
-            i = ii, j = jj, k = kk;
-            set(i,j,k,expression.value());
+   vector<string> var = {"i","j","k","t"};
+   _theFct.set(exp,var);
+   vector<real_t> xv(4);
+   for (size_t i=1; i<=_nx; ++i) {
+      for (size_t j=1; j<=_ny; ++j) {
+         for (size_t k=1; k<=_nz; ++k) {
+            xv[0] = i, xv[1] = j, xv[2] = k, xv[3] = _time;
+            set(i,j,k,_theFct(xv));
          }
       }
    }
@@ -900,21 +849,11 @@ void Vect<T_>::setNodeBC(Mesh&         m,
                          const string& exp,
                          size_t        dof)
 {
-   exprtk::expression<real_t> expression;
-   exprtk::symbol_table<real_t> symbol_table;
-   add_constants(symbol_table);
-   real_t x=0., y=0., z=0.;
-   symbol_table.add_variable("x",x);
-   symbol_table.add_variable("y",y);
-   symbol_table.add_variable("z",z);
-   symbol_table.add_variable("t",_time);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
+   _theFct.set(exp,_var);
    node_loop(&m) {
-      x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          if (The_node.getCode(dof)==code && code!=0)
-            set(node_label,dof,expression.value());
+            set(node_label,dof,_theFct(The_node.getCoord(),_time));
       }
    }
 }
@@ -925,23 +864,13 @@ void Vect<T_>::setNodeBC(Mesh&         m,
                          int           code,
                          const string& exp)
 {
-   exprtk::expression<real_t> expression;
-   exprtk::symbol_table<real_t> symbol_table;
-   add_constants(symbol_table);
-   real_t x=0., y=0., z=0.;
-   symbol_table.add_variable("x",x);
-   symbol_table.add_variable("y",y);
-   symbol_table.add_variable("z",z);
-   symbol_table.add_variable("t",_time);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
+  _theFct.set(exp,_var);
    int c[6];
    node_loop(&m) {
-      x = The_node.getX(), y = The_node.getY(), z = The_node.getZ();
       DOFCode(code,The_node.getNbDOF(),c);
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          if (The_node.getCode(i)==c[i-1] && c[i-1]!=0)
-            set(node_label,i,expression.value());
+            set(node_label,i,_theFct(The_node.getCoord(),_time));
       }
    }
 }
@@ -953,23 +882,11 @@ void Vect<T_>::setSideBC(Mesh&         m,
                          const string& exp,
                          size_t        dof)
 {
-   exprtk::expression<real_t> expression;
-   exprtk::symbol_table<real_t> symbol_table;
-   add_constants(symbol_table);
-   real_t x=0., y=0., z=0.;
-   symbol_table.add_variable("x",x);
-   symbol_table.add_variable("y",y);
-   symbol_table.add_variable("z",z);
-   symbol_table.add_variable("t",_time);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
+  _theFct.set(exp,_var);
    side_loop(&m) {
       if (The_side.getCode(dof)==code && code!=0) {
-         x = The_side.getCenter().x;
-         y = The_side.getCenter().y;
-         z = The_side.getCenter().z;
          for (size_t i=1; i<=The_side.getNbDOF(); i++)
-            set(side_label,dof,expression.value());
+            set(side_label,dof,_theFct(The_side.getCenter(),_time));
       }
    }
 }
@@ -980,23 +897,13 @@ void Vect<T_>::setSideBC(Mesh&         m,
                          int           code,
                          const string& exp)
 {
-   exprtk::expression<real_t> expression;
-   exprtk::symbol_table<real_t> symbol_table;
-   add_constants(symbol_table);
-   real_t x=0., y=0., z=0.;
-   symbol_table.add_variable("x",x);
-   symbol_table.add_variable("y",y);
-   symbol_table.add_variable("z",z);
-   symbol_table.add_variable("t",_time);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
+   _theFct.set(exp,_var);
    int c[6];
    side_loop(&m) {
       DOFCode(code,The_side.getNbDOF(),c);
       for (size_t i=1; i<=The_side.getNbDOF(); ++i) {
          if (The_side.getCode(i)==c[i-1] && c[i-1]!=0) {
-            x = The_side.getCenter().x; y = The_side.getCenter().y; z = The_side.getCenter().z;
-            set(side_label,i,expression.value());
+            set(side_label,i,_theFct(The_side.getCenter(),_time));
          }
       }
    }

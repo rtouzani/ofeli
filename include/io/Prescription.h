@@ -36,7 +36,7 @@
 #include <fstream>
 #include <vector>
 #include "OFELI_Config.h"
-#include "io/exprtk.hpp"
+#include "io/Fct.h"
 
 namespace OFELI {
 /*!
@@ -118,12 +118,12 @@ class Prescription
 
    std::ifstream *_if;
    Mesh *_theMesh;
-   real_t _x, _y, _z;
    Vect<real_t> *_v;
    real_t _time;
    bool pforce, initial, bc, force, flux;
    std::string _file;
    std::vector<PrescriptionPar> _p;
+   Fct _theFct;
    int Type(int type);
    void get_point_force(size_t k);
    void get_point_force(size_t k, size_t dof);
@@ -133,7 +133,6 @@ class Prescription
    void get_vector(size_t k);
    void get_boundary_force(size_t k, size_t dof);
    void get_boundary_force(size_t k);
-   exprtk::expression<real_t> _exp;
 };
 
 /*! @} End of Doxygen Groups */

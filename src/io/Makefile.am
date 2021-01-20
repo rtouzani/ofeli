@@ -11,6 +11,5 @@ libio_a_SOURCES = Fct.cpp \
                   Prescription.cpp \
                   Tabulation.cpp \
                   XMLParser.cpp \
-                  saveField.cpp \
-                  exprtk_adds.cpp
+                  saveField.cpp
 

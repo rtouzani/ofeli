@@ -50,7 +50,6 @@
 #include "linear_algebra/LocalVect.h"
 #include "solvers/LinearSolver.h"
 #include "solvers/EigenProblemSolver.h"
-#include "io/exprtk_adds.h"
 
 namespace OFELI {
 /*!
@@ -426,23 +425,22 @@ class AbsEqua
    
  protected:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   Mesh                         *_theMesh;
-   size_t                       _nb_nodes, _nb_sides, _nb_boundary_sides, _nb_el, _nb_eq, _nb_dof, _nb_dof_total;
-   int                          _field_type, _terms;
-   int                          _matrix_type, _solver, _max_it;
-   size_t                       _nb_fields, _nb_eigv;
-   EigenProblemSolver           _ev;
-   bool                         _eigen;
-   bool                         _constant_matrix, _constant_mesh, _set_matrix, _set_solver;
-   int                          _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
-   string                       _equation_name, _finite_element;
-   bool                         _rho_set, _Cp_set, _kappa_set, _mu_set, _sigma_set, _Mu_set;
-   bool                         _epsilon_set, _omega_set, _beta_set, _v_set, _young_set, _poisson_set;
-   exprtk::symbol_table<real_t> _symbol_table;
-   exprtk::expression<real_t>   _rho_exp, _Cp_exp, _kappa_exp, _mu_exp, _sigma_exp, _Mu_exp;
-   exprtk::expression<real_t>   _epsilon_exp, _omega_exp, _beta_exp, _v_exp, _young_exp, _poisson_exp;
-   real_t                       _ex, _ey, _ez, _et;
-
+   Mesh                   *_theMesh;
+   size_t                 _nb_nodes, _nb_sides, _nb_boundary_sides, _nb_el, _nb_eq, _nb_dof, _nb_dof_total;
+   int                    _field_type, _terms;
+   int                    _matrix_type, _solver, _max_it;
+   size_t                 _nb_fields, _nb_eigv;
+   EigenProblemSolver     _ev;
+   bool                   _eigen;
+   bool                   _constant_matrix, _constant_mesh, _set_matrix, _set_solver;
+   int                    _sol_type, _init_type, _bc_type, _bf_type, _sf_type;
+   string                 _equation_name, _finite_element;
+   bool                   _rho_set, _Cp_set, _kappa_set, _mu_set, _sigma_set, _Mu_set;
+   bool                   _epsilon_set, _omega_set, _beta_set, _v_set, _young_set, _poisson_set;
+   Fct                    _rho_fct, _Cp_fct, _kappa_fct, _mu_fct, _sigma_fct, _Mu_fct;
+   Fct                    _epsilon_fct, _omega_fct, _beta_fct, _v_fct, _young_fct, _poisson_fct;
+   Fct                    _theFct;
+   real_t                 _ex, _ey, _ez, _et;
    LinearSolver<T_>       _ls;
    real_t                 _toler;
    Prescription           *_prescription;

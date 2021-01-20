@@ -1,6 +1,7 @@
 
 noinst_LIBRARIES = libshape_functions.a
 AUTOMAKE_OPTIONS = no-dependencies
+AM_CPPFLAGS = -std=c++1y
 
 libshape_functions_a_SOURCES =	\
 				Hexa8.cpp \

@@ -78,13 +78,12 @@ void DC2DT6::set(const Element* el)
    ElementNodeCoordinates();
    tr.atMidEdges(_dSh,_wg);
    ElementVector(*_u);
-   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
    if (_rho_set)
-      _rho = _rho_exp.value();
+      _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_Cp_set)
-      _cp = _Cp_exp.value();
+      _cp = _Cp_fct(_el_geo.center,_TimeInt.time);
    if (_kappa_set)
-      _diff = _kappa_exp.value();
+      _diff = _kappa_fct(_el_geo.center,_TimeInt.time);
    eA0 = 0, eA1 = 0;
    eRHS = 0;
    _a3 = OFELI_THIRD*_el_geo.area;

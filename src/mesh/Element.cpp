@@ -34,11 +34,9 @@
 #include "mesh/Side.h"
 #include "mesh/Node.h"
 #include "linear_algebra/LocalMatrix_impl.h"
-#include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
 using std::to_string;
-extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -350,27 +348,6 @@ int Element::Contains(const Side* sd) const
       if (_side[i]==sd)
          return int(i+1);
    return 0;
-}
-
-
-void Element::setCode(const string& exp,
-                      int           code)
-{
-   exprtk::expression<double> expression;
-   exprtk::symbol_table<double> symbol_table;
-   add_constants(symbol_table);
-   real_t x=0., y=0., z=0.;
-   symbol_table.add_variable("x",x);
-   symbol_table.add_variable("y",y);
-   symbol_table.add_variable("z",z);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
-   for (size_t i=0; i<_nb_nodes; i++) {
-      x = _node[i]->getX(), y = _node[i]->getY(), z = _node[i]->getZ();
-      if (expression.value())
-         return;
-   }
-   _code = code;
 }
 
 

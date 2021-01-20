@@ -16,5 +16,4 @@ ss_HEADERS = Fct.h \
              XMLParser.h \
              output.h \
              saveField.h \
-             exprtk.hpp \
-             exprtk_adds.h
+             exprtk.hpp

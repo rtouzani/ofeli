@@ -365,7 +365,10 @@ void NLASSolver::solveBisection()
       _y = 0.5*(_a+_b);
       if (Verbosity>1)
          cout << "Iteration " << _it+1 << ", Solution: " << _y << endl;
-      if (fabs(*_x-_y)/fabs(*_x) < _toler) {
+      real_t xx = fabs(*_x);
+      if (xx<OFELI_EPSMCH)
+         xx = 1.;
+      if (fabs(*_x-_y)/xx < _toler) {
          _cv = true;
          _nb_it = _it, _it = _max_it;
       }
@@ -400,7 +403,10 @@ void NLASSolver::solveRegulaFalsi()
       _y = (fa*_b-fb*_a)/(fa-fb);
       if (Verbosity>1)
          cout << "Iteration " << _it+1 << ", Solution: " << _y << endl;
-      if (fabs(*_x-_y)/fabs(*_x) < _toler) {
+      real_t xx = fabs(*_x);
+      if (xx<OFELI_EPSMCH)
+         xx = 1.;
+      if (fabs(*_x-_y)/xx < _toler) {
          _cv = true;
          _nb_it = _it, _it = _max_it;
       }
@@ -433,10 +439,15 @@ void NLASSolver::solveSecant()
          cout << "Initial guess: " << *_x << endl;
       _g = Gradient(*_x);
       while (++_it < _max_it) {
+         if (fabs(_g)<OFELI_EPSMCH)
+            throw OFELIException("In NLASSolver::solveSecant(): Null derivative.");
          _y = *_x - Function(*_x)/_g;
          if (Verbosity>1)
             cout << "Iteration " << _it+1 << ", Solution: : " << _y << endl;
-         if (fabs(*_x-_y)/fabs(*_x) < _toler) {
+         real_t xx = fabs(*_x);
+         if (xx<OFELI_EPSMCH)
+            xx = 1.;
+         if (fabs(*_x-_y)/xx < _toler) {
             _nb_it = _it, _it = _max_it;
             _cv = true;
          }
@@ -489,10 +500,16 @@ void NLASSolver::solveNewton()
       if (Verbosity>2)
          cout << "Initial guess: " << *_x << endl;
       while (++_it < _max_it) {
-         _y = *_x - Function(*_x)/Gradient(*_x);
+         _g = Gradient(*_x);
+         if (fabs(_g)<OFELI_EPSMCH)
+            throw OFELIException("In NLASSolver::solveNewton(): Null derivative.");
+         _y = *_x - Function(*_x)/_g;
          if (Verbosity>1)
             cout << "Iteration " << _it+1 << ", Solution: " << _y << endl;
-         if (fabs(*_x-_y)/fabs(*_x) < _toler) {
+         real_t xx = fabs(*_x);
+         if (xx<OFELI_EPSMCH)
+            xx = 1.;
+         if (fabs(*_x-_y)/xx < _toler) {
             _nb_it = _it, _it = _max_it;
             _cv = true;
          }

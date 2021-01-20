@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -43,6 +43,7 @@ using std::string;
 
 #include "OFELI_Config.h"
 #include "linear_algebra/Point.h"
+#include "io/Fct.h"
 
 namespace OFELI {
 /*!
@@ -262,6 +263,7 @@ class Material
    void getFunction(size_t i);
    void getTable() { }
    real_t _data[10];
+   Fct _theFct;
 
    void set_kw();
    real_t getProperty(Prop& prop);

@@ -36,11 +36,9 @@
 #include "mesh/bamg/Meshio.h"
 #include "mesh/bamg/QuadTree.h"
 #include "mesh/bamg/R2.h"
-#include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
 using std::to_string;
-extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -216,26 +214,16 @@ int Domain::getCurve()
    else if (type == -1) {
       string regex = _ff->getE("Curve's equation: ");
       real_t x=0., y=0., z=0.;
-      exprtk::expression<real_t> exp;
-      exprtk::symbol_table<real_t> symbol_table;
-      add_constants(symbol_table);
-      x = _v[n1-1].x; y = _v[n1-1].y; z = _v[n1-1].z;
-      symbol_table.add_variable("x",x);
-      symbol_table.add_variable("y",y);
-      symbol_table.add_variable("z",z);
-      exp.register_symbol_table(symbol_table);
-      theParser.compile(regex,exp);
+      _theFct.set(regex);
       size_t nb = _ff->getI("nb. of discretization points: ");
       if (nb<3)
          nb = 3;
       ll.nb = nb;
       ll.node.resize(nb+1);
-      x = _v[n1-1].x; y = _v[n1-1].y; z = _v[n1-1].z;
-      real_t vv = exp.value();
+      real_t vv = _theFct(_v[n1-1],0.);
       if (fabs(vv) > 1.e-8)
          throw OFELIException("Domain::getCurve(): )");
-      x = _v[n2-1].x; y = _v[n2-1].y; z = _v[n2-1].z;
-      vv = exp.value();
+      vv = _theFct(_v[n2-1],0.);
       if (fabs(vv) > 1.e-8)
          throw OFELIException("In Domain::getCurve(): ");
       ll.node[0] = _v[n1-1];
@@ -271,32 +259,30 @@ int Domain::Position(real_t  s,
 		     real_t& y,
 		     real_t& z)
 {
-  /*   real_t dxf, dyf, ex, ey, ez;
+   real_t x0, y0, z0, xx, yy, zz, dxf, dyf, ex, ey, ez;
    real_t det, g;
-   real_t x1=x, y1=y, z1=z, x2=x, y2=y, z2=z;
    int it=1;
-   data[0] -= theParser.Eval(d);
-   data[1] -= theParser.Eval(d);
-   ex = data[0] - d[0]; ey = data[1] - d[1]; ez = data[3] - d[3];
+   x0 = xx = x, y0 = yy = y, z0 = zz = z;
+   x -= _theFct(xx,yy,zz,0.);
+   y -= _theFct(xx,yy,zz,0.);
+   ex = x - xx; ey = y - yy; ez = z - zz;
    if (fabs(ex*ex+ey*ey+ez*ez) < 1.e-8)
       return 0;
-//   data[2] -= theParser.Eval(d);
    while (it<50) {
-      dxf = (EVAL(data)-EVAL(d))/(data[0]-d[0]);
-      dyf = (EVAL(data)-EVAL(d))/(data[1]-d[1]);
-      g = 0.5*(s*s - (d[0]-d0[0])*(d[0]-d0[0]) - (d[1]-d0[1])*(d[1]-d0[1]));
-//      dzf = (theParser.Eval(data)-theParser.Eval(d))/(data[2]-d[2]);
-      d[0] = data[0]; d[1] = data[1];// d[2] = data[2];
-      det = (d[0]-d0[0])*dyf - (d[1]-d0[1])*dxf;
-      data[0] += ((data[1]-d0[1])*EVAL(data) + dyf*g)/det;
-      data[1] -= ((data[0]-d0[0])*EVAL(data) + dxf*g)/det;
-      ex = (data[0] - d[0])*(data[0] - d[0]);
-      ey = (data[1] - d[1])*(data[1] - d[1]);
-      ez = (data[2] - d[2])*(data[2] - d[2]);
+      dxf = (_theFct(x,y,z,0.)-_theFct(xx,yy,zz,0.))/(x-xx);
+      dyf = (_theFct(x,y,z,0.)-_theFct(xx,yy,zz,0.))/(y-yy);
+      g = 0.5*(s*s - (xx-x0)*(xx-x0) - (yy-y0)*(yy-y0));
+      xx = x; yy = y;
+      det = (xx-x0)*dyf - (yy-y0)*dxf;
+      x += ((y-y0)*_theFct(x,y,z,0.) + dyf*g)/det;
+      y -= ((x-x0)*_theFct(x,y,z,0.) + dxf*g)/det;
+      ex = (x - xx)*(x - xx);
+      ey = (y - yy)*(y - yy);
+      ez = (z - zz)*(z - zz);
       it++;
       if (fabs(ex+ey+ez) < 1.e-8)
          return it;
-	 }*/
+   }
    return 0;
 }
 

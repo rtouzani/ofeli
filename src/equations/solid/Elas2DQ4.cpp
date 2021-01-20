@@ -89,13 +89,12 @@ void Elas2DQ4::set(const Element* el)
       ElementNodeVector(*_u,_eu);
    if (AbsEqua<real_t>::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
-   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
    if (_rho_set)
-      _rho = _rho_exp.value();
+      _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_young_set)
-      _young = _young_exp.value();
+      _young = _young_fct(_el_geo.center,_TimeInt.time);
    if (_poisson_set)
-      _poisson = _poisson_exp.value();
+      _poisson = _poisson_fct(_el_geo.center,_TimeInt.time);
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }

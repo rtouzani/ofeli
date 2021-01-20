@@ -164,7 +164,7 @@ enum Setting {
     int run();
 
 /// \brief Return objective
-/// \details Once execuion is complete, this function returns optimal value of objective 
+/// \details Once execution is complete, this function returns optimal value of objective 
     real_t getObjective() const { return _theSimplex.getObjective(); }
 
 /// Output class information

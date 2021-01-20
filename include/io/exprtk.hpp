@@ -1,3 +1,4 @@
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /*
  ******************************************************************
  *           C++ Mathematical Expression Toolkit Library          *
@@ -39029,3 +39030,4 @@ namespace exprtk
 } // namespace exprtk
 
 #endif
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */

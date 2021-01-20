@@ -54,8 +54,8 @@
 #include "linear_algebra/SkSMatrix_impl.h"
 #include "linear_algebra/BMatrix_impl.h"
 #include "linear_algebra/TrMatrix_impl.h"
+#include "io/Fct.h"
 
-extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -73,7 +73,6 @@ AbsEqua<T_>::AbsEqua()
    setTimeIntegrationParam();
    _rho_set = _Cp_set = _kappa_set = _mu_set = _sigma_set = _Mu_set = false;
    _epsilon_set = _omega_set = _beta_set = _v_set = _young_set = _poisson_set = false;
-   set_exprtk();
 }
 
 
@@ -86,25 +85,11 @@ AbsEqua<T_>::~AbsEqua()
       delete _b;
 }
 
-template<class T_>
-void AbsEqua<T_>::set_exprtk()
-{
-   double pi=3.14159265358979323846264338328, e=2.71828182845904523536028747135;
-   _symbol_table.add_constant("pi",pi);
-   _symbol_table.add_constant("e",e);
-   _symbol_table.add_constants();
-   _symbol_table.add_variable("x",_ex);
-   _symbol_table.add_variable("y",_ey);
-   _symbol_table.add_variable("z",_ez);
-   _symbol_table.add_variable("t",_et);
-}
-
 
 template<class T_>
 void AbsEqua<T_>::set_rho(string exp)
 {
-   _rho_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_rho_exp);
+   _rho_fct.set(exp);
    _rho_set = true;
 }
 
@@ -112,8 +97,7 @@ void AbsEqua<T_>::set_rho(string exp)
 template<class T_>
 void AbsEqua<T_>::set_Cp(string exp)
 {
-   _Cp_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_Cp_exp);
+   _Cp_fct.set(exp);
    _Cp_set = true;
 }
 
@@ -121,8 +105,7 @@ void AbsEqua<T_>::set_Cp(string exp)
 template<class T_>
 void AbsEqua<T_>::set_kappa(string exp)
 {
-   _kappa_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_kappa_exp);
+   _kappa_fct.set(exp);
    _kappa_set = true;
 }
 
@@ -130,17 +113,15 @@ void AbsEqua<T_>::set_kappa(string exp)
 template<class T_>
 void AbsEqua<T_>::set_mu(string exp)
 {
-   _mu_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_mu_exp);
-  _mu_set = true;
+   _mu_fct.set(exp);
+   _mu_set = true;
 }
 
 
 template<class T_>
 void AbsEqua<T_>::set_sigma(string exp)
 {
-   _sigma_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_sigma_exp);
+   _sigma_fct.set(exp);
    _sigma_set = true;
 }
 
@@ -148,8 +129,7 @@ void AbsEqua<T_>::set_sigma(string exp)
 template<class T_>
 void AbsEqua<T_>::set_Mu(string exp)
 {
-   _Mu_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_Mu_exp);
+   _Mu_fct.set(exp);
    _Mu_set = true;
 }
 
@@ -157,8 +137,7 @@ void AbsEqua<T_>::set_Mu(string exp)
 template<class T_>
 void AbsEqua<T_>::set_epsilon(string exp)
 {
-   _epsilon_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_epsilon_exp);
+   _epsilon_fct.set(exp);
    _epsilon_set = true;
 }
 
@@ -166,8 +145,7 @@ void AbsEqua<T_>::set_epsilon(string exp)
 template<class T_>
 void AbsEqua<T_>::set_omega(string exp)
 {
-   _omega_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_omega_exp);
+   _omega_fct.set(exp);
    _omega_set = true;
 }
 
@@ -175,8 +153,7 @@ void AbsEqua<T_>::set_omega(string exp)
 template<class T_>
 void AbsEqua<T_>::set_beta(string exp)
 {
-   _beta_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_beta_exp);
+   _beta_fct.set(exp);
    _beta_set = true;
 }
 
@@ -184,8 +161,7 @@ void AbsEqua<T_>::set_beta(string exp)
 template<class T_>
 void AbsEqua<T_>::set_v(string exp)
 {
-   _v_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_v_exp);
+   _v_fct.set(exp);
    _v_set = true;
 }
 
@@ -193,8 +169,7 @@ void AbsEqua<T_>::set_v(string exp)
 template<class T_>
 void AbsEqua<T_>::set_young(string exp)
 {
-   _young_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_young_exp);
+   _young_fct.set(exp);
    _young_set = true;
 }
 
@@ -202,8 +177,7 @@ void AbsEqua<T_>::set_young(string exp)
 template<class T_>
 void AbsEqua<T_>::set_poisson(string exp)
 {
-   _poisson_exp.register_symbol_table(_symbol_table);
-   theParser.compile(exp,_poisson_exp);
+   _poisson_fct.set(exp);
    _poisson_set = true;
 }
 

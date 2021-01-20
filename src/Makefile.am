@@ -70,8 +70,7 @@ IO_OBJS = io/Fct.o \
           io/Prescription.o \
           io/Tabulation.o \
           io/XMLParser.o \
-          io/saveField.o \
-          io/exprtk_adds.o
+          io/saveField.o
 
 XMLSP_OBJS = io/xmlsp/xmlsp.o
 

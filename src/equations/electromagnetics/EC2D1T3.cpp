@@ -34,6 +34,7 @@
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
 #include "linear_algebra/Vect_impl.h"
+#include "io/Fct.h"
 
 namespace OFELI {
 
@@ -80,13 +81,12 @@ void EC2D1T3::set(const Element* el)
    ElementNodeCoordinates();
    _dSh = tr.DSh();
    ElementNodeVector(*_u,_eu);
-   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
    if (_omega_set)
-      _omega = _omega_exp.value();
+      _omega = _omega_fct(_el_geo.center,0.);
    if (_Mu_set)
-      _Mu = _Mu_exp.value();
+      _Mu = _Mu_fct(_el_geo.center,0.);
    if (_sigma_set)
-      _sigma = _sigma_exp.value();
+      _sigma = _sigma_fct(_el_geo.center,0.);
    eMat = complex_t(0.);
    eRHS = complex_t(0.);
 }

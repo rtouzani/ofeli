@@ -78,13 +78,12 @@ void Elas3DT4::set(const Element* el)
    if (AbsEqua<real_t>::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    _dSh = tetra.DSh();
-   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _ez = _el_geo.center.z, _et = _TimeInt.time;
    if (_rho_set)
-      _rho = _rho_exp.value();
+      _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_young_set)
-      _young = _young_exp.value();
+      _young = _young_fct(_el_geo.center,_TimeInt.time);
    if (_poisson_set)
-      _poisson = _poisson_exp.value();
+      _poisson = _poisson_fct(_el_geo.center,_TimeInt.time);
    _lambda = _poisson*_young/((1+_poisson)*(1-2*_poisson));
    _G = 0.5*_young/(1+_poisson);
    eA0 = 0, eA1 = 0, eA2 = 0;

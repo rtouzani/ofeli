@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
       N = atoi(argv[1]);
    Mesh ms(0.,L,N);
    int NbN = N+1;
-
+   
 // Declare problem data (matrix, rhs, boundary conditions, body forces)
    try {
       TrMatrix<double> A(NbN);

@@ -73,9 +73,8 @@ void Bar2DL2::set(const Element* el)
    _cc = c*c;
    _ss = s*s;
    _sc = c*s;
-   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
    if (_young_set)
-      _young = _young_exp.value();
+      _young = _young_fct(_el_geo.center,_TimeInt.time);
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
 }

@@ -48,8 +48,6 @@
 #include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 
-extern exprtk::parser<real_t> theParser;
-
 namespace OFELI {
 
 extern Material theMaterial;
@@ -73,13 +71,6 @@ XMLParser::XMLParser(string file,
 {
    open();
    _x = _y = _z = _time = 0.;
-   exprtk::symbol_table<real_t> symbol_table;
-   add_constants(symbol_table);
-   symbol_table.add_variable("x",_x);
-   symbol_table.add_variable("y",_y);
-   symbol_table.add_variable("z",_z);
-   symbol_table.add_variable("t",_time);
-   _exp.register_symbol_table(symbol_table);
 }
 
 
@@ -1552,7 +1543,7 @@ void XMLParser::read_exp_field_data(const vector<string>&     tokens,
       if ((_name==_sought_name || _sought_name=="ANYTHING") &&
           (_time==_sought_time || _sought_time==-1.0) && _set_field) {
          _v->setTime(_time);
-         theParser.compile((*it++),_exp);
+	 _theFct.set(*it++);
          for (size_t n=1; n<=_v->getNb(); n++) {
             if (_dof==0)
                for (size_t k=1; k<=_v->getNbDOF(); k++)
@@ -1605,8 +1596,7 @@ void XMLParser::parse_exp(size_t n,
       else if (theElement->getShape()==PENTAHEDRON)
          c = Penta6(theElement).getCenter();
    }
-   _x = c.x, _y = c.y, _z = c.z;
-   (*_v)(n,k) = _exp.value();
+   (*_v)(n,k) = _theFct(c);
 }
 
 

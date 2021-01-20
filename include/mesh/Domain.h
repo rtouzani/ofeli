@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -42,6 +42,7 @@
 #include "linear_algebra/Point.h"
 #include "mesh/Mesh.h"
 #include "io/FFI.h"
+#include "io/Fct.h"
 
 using std::string;
 using std::vector;
@@ -330,6 +331,7 @@ private:
    FFI *_ff;
    Mesh *_theMesh;
    string _domain_file, _geo_file, _bamg_file, _ofeli_file, _output_file;
+   Fct _theFct;
    ofstream *_jf;
    vector<string> _kw;
    vector<Vertex> _v, _nd, _bnd;

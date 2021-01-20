@@ -56,6 +56,7 @@ using std::ios;
 using std::setprecision;
 
 #include "OFELI_Config.h"
+#include "io/Fct.h"
 
 #if defined (USE_EIGEN)
 #include <Eigen/Dense>
@@ -1190,6 +1191,8 @@ class Vect
     Mesh   *_theMesh;
     string _name, _regex[10];
     real_t _time;
+    const vector<string> _var = {"x","y","z","t"};
+    Fct _theFct;
     void dof_select(size_t d, vector<size_t> &dof_list);
     size_t ijk(size_t i, size_t j)           const { return _ny*(i-1)+j-1; }
     size_t ijk(size_t i, size_t j, size_t k) const { return _ny*_nz*(i-1)+_nz*(j-1)+k-1; }

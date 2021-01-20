@@ -96,13 +96,12 @@ void Beam3DL2::set(const Element* el)
    eA0 = 0, eA1 = 0, eA2 = 0;
    eRHS = 0;
    Point<real_t> c = 0.5*(_x[0]+_x[1]);
-   _ex = c.x, _ey = c.y, _ez = c.z, _et = _TimeInt.time;
    if (_rho_set)
-      _rho = _rho_exp.value();
+      _rho = _rho_fct(c,_TimeInt.time);
    if (_young_set)
-      _young = _young_exp.value();
+      _young = _young_fct(c,_TimeInt.time);
    if (_poisson_set)
-      _poisson = _poisson_exp.value();
+      _poisson = _poisson_fct(c,_TimeInt.time);
    _mu = 0.5*_young/(1+_poisson);
    _h = sqrt((_x[1].x - _x[0].x)*(_x[1].x - _x[0].x)
            + (_x[1].y - _x[0].y)*(_x[1].y - _x[0].y)

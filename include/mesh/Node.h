@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,6 +50,7 @@ using std::string;
 
 #include "OFELI_Config.h"
 #include "linear_algebra/Point.h"
+#include "io/Fct.h"
 
 namespace OFELI {
 /*!
@@ -261,6 +262,7 @@ class Node
    int               _level, _code[MAX_NBDOF_NODE];
    Point<real_t>     _x;
    vector<Element *> _el;
+   Fct               _theFct;
    bool              _on_boundary;
    void Neig() { _nb_neig_el++; }
    void Add() { }

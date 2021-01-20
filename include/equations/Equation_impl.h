@@ -829,15 +829,8 @@ template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 real_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty(const string& exp,
                                                              const string& prop)
 {
-   exprtk::expression<double> expression;
-   exprtk::symbol_table<double> symbol_table;
-   add_constants(symbol_table);
-   symbol_table.add_variable("x",_x.x);
-   symbol_table.add_variable("y",_x.y);
-   symbol_table.add_variable("z",_x.z);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
-   return expression.value();
+   _theFct.set(exp);
+   return _theFct(_x,0.);
 }
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

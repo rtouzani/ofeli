@@ -38,8 +38,6 @@
 #include "linear_algebra/Assembly_impl.h"
 #include "equations/AbsEqua_impl.h"
 
-extern exprtk::parser<real_t> theParser;
-
 namespace OFELI {
 
 EigenProblemSolver::EigenProblemSolver()

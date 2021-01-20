@@ -69,13 +69,12 @@ void NS2DT3BT3::set(const Element* el)
    _el_geo.center = tr.getCenter();
    ElementNodeCoordinates();
    _dSh = tr.DSh();
-   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
    if (_rho_set)
-      _rho = _rho_exp.value();
+      _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_mu_set)
-      _mu = _mu_exp.value();
+      _mu = _mu_fct(_el_geo.center,_TimeInt.time);
    if (_beta_set)
-      _beta = _beta_exp.value();
+      _beta = _beta_fct(_el_geo.center,_TimeInt.time);
    eA0 = 0, eA1 = 0;
    eRHS = 0;
 }

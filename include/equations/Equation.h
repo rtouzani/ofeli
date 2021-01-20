@@ -85,6 +85,7 @@ class Equation : virtual public AbsEqua<T_>
   using AbsEqua<T_>::_nb_dof;
   using AbsEqua<T_>::_nb_dof_total;
   using AbsEqua<T_>::_nb_eq;
+  using AbsEqua<T_>::_theFct;
 
 /// Default constructor.
 /// Constructs an "empty" equation

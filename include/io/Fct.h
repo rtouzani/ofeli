@@ -38,8 +38,15 @@
 using std::string;
 using std::vector;
 
-#include "io/exprtk_adds.h"
 #include "OFELI_Config.h"
+#include "linear_algebra/Point.h"
+
+namespace exprtk {
+   template <typename T> class parser;
+   template <typename T> class expression;
+   template <typename T> class expression_helper;
+   template <typename T> class symbol_table;
+}
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -54,38 +61,40 @@ class Fct {
  public:
 
    Fct();
+   Fct(string exp, const vector<string>& v);
    Fct(string exp);
-   Fct(string exp, vector<string>& v);
    Fct(string exp, string v);
-   Fct(string n, string exp, vector<string>& v);
+   Fct(string n, string exp, const vector<string>& v);
    ~Fct();
    string getErrorMessage();
+   int set(string exp, const vector<string>& v, int opt=0);
    int set(string exp, int opt=0);
-   int set(string exp, vector<string>& v, int opt=0);
    int set(string exp, string v, int opt=0);
-   int set(string n, string exp, vector<string>& v, int opt=0);
-   int set(vector<string>& v, int opt=0);
+   int set(string n, string exp, const vector<string>& v, int opt=0);
    real_t operator()(real_t x);
    real_t operator()(real_t x, real_t y);
    real_t operator()(real_t x, real_t y, real_t z);
    real_t operator()(real_t x, real_t y, real_t z, real_t t);
+   real_t operator()(const Point<real_t>& x);
+   real_t operator()(const Point<real_t>& x, real_t t);
    real_t operator()(const vector<real_t>& x);
    real_t D(real_t x);
    real_t D(const vector<real_t>& x, size_t i);
    int check();
    string name, expr;
    vector<string> var;
-
    size_t nb_var;
    friend std::ostream& operator<<(std::ostream& s, const Fct& f);
 
  private:
 
+   exprtk::parser<real_t> *_p;
+   exprtk::symbol_table<real_t> *_st;
+   exprtk::expression<real_t> *_ex;
+   void add_constants();
    bool exp_ok, var_ok;
    int err;
    string error_message;
-   exprtk::symbol_table<real_t> symbol_table;
-   exprtk::expression<real_t> expression;
    vector<real_t> xvar;
 };
 

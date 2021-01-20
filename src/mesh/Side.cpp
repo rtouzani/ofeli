@@ -36,11 +36,9 @@
 #include "shape_functions/Tetra4.h"
 #include "shape_functions/Hexa8.h"
 #include "util/util.h"
-#include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
 using std::to_string;
-extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -138,28 +136,6 @@ void Side::setNode(size_t i,
                    Node*  node)
 {
    _node[i-1] = node;
-}
-
-
-void Side::setCode(const string& exp,
-                   int           code,
-                   size_t        dof)
-{
-   real_t x=0., y=0., z=0.;
-   exprtk::expression<double> expression;
-   exprtk::symbol_table<double> symbol_table;
-   add_constants(symbol_table);
-   symbol_table.add_variable("x",x);
-   symbol_table.add_variable("y",y);
-   symbol_table.add_variable("z",z);
-   expression.register_symbol_table(symbol_table);
-   theParser.compile(exp,expression);
-   for (size_t i=0; i<_nb_nodes; i++) {
-      x = _node[i]->getX(), y = _node[i]->getY(), z = _node[i]->getZ();
-      if (expression.value())
-         return;
-   }
-   _code[dof-1] = code;
 }
 
 

@@ -185,6 +185,26 @@ class OptSolver
                     int    i=1,
                     int    j=1);
 
+/** \brief Impose an inequatity constraint by a penalty method
+ *  \details The constraint is of the form
+ *      F(x) <= 0
+ *  where F is any function of the optimization variable vector \c v
+ *  @param [in] exp Regular expression defining the constraint (the function \c F
+ *  @param [in] penal Penalty parameter (large number) [Default: <tt>1./DBL_EPSILON</tt>]
+ */
+    void setIneqConstraint(string exp,
+                           real_t penal=1./OFELI_TOLERANCE);
+
+/** \brief Impose an equatity constraint by a penalty method
+ *  \details The constraint is of the form
+ *      F(x) = 0
+ *  where F is any function of the optimization variable vector \c v
+ *  @param [in] exp Regular expression defining the constraint (the function \c F
+ *  @param [in] penal Penalty parameter (large number) [Default: <tt>1./DBL_EPSILON</tt>]
+ */
+    void setEqConstraint(string exp,
+                         real_t penal=1./OFELI_TOLERANCE);
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setObjective(Fct& f);
     void setGradient(Fct& f,
@@ -192,6 +212,10 @@ class OptSolver
     void setHessian(Fct& f,
                     int  i=1,
                     int  j=1);
+    void setIneqConstraint(Fct&   f,
+                           real_t penal=1./OFELI_EPSMCH);
+    void setEqConstraint(Fct&   f,
+                         real_t penal=1./OFELI_EPSMCH);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Choose user defined optimization class
@@ -352,7 +376,7 @@ class OptSolver
      CLASS      = 3
    };
 
-   size_t _size;
+   size_t _size, _nb_in_const, _nb_eq_const;
    int _eval, _nacc, _ns, _nt, _nobds, _nb_obj_eval, _nb_grad_eval;
    int _conv, _max_eval, _neps, _nb_restart, _max_it, _type;
    vector<int> _pivot;

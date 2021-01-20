@@ -2451,12 +2451,7 @@ program_transform_name=`$as_echo "$program_transform_name" | sed "$ac_script"`
 am_aux_dir=`cd "$ac_aux_dir" && pwd`
 
 if test x"${MISSING+set}" != xset; then
-  case $am_aux_dir in
-  *\ * | *\	*)
-    MISSING="\${SHELL} \"$am_aux_dir/missing\"" ;;
-  *)
-    MISSING="\${SHELL} $am_aux_dir/missing" ;;
-  esac
+  MISSING="\${SHELL} '$am_aux_dir/missing'"
 fi
 # Use eval to expand $SHELL
 if eval "$MISSING --is-lightweight"; then
@@ -5760,7 +5755,7 @@ demo_exes+="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d 
 demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2 "
 demo_exes+="opt_demo1 opt_demo2 opt_demo3 opt_demo4 opt_demo5 nl_demo1 nl_demo2 nl_demo3 nl_demo4 "
 
-ac_config_files="$ac_config_files Makefile include/Makefile include/equations/Makefile include/equations/cl/Makefile include/equations/electromagnetics/Makefile include/equations/fluid/Makefile include/equations/interface/Makefile include/equations/laplace/Makefile include/equations/solid/Makefile include/equations/therm/Makefile include/equations/porous/Makefile include/io/Makefile include/io/tclap/Makefile include/io/xmlsp/Makefile include/linear_algebra/Makefile include/linear_algebra/petsc/Makefile include/mesh/Makefile include/mesh/bamg/Makefile include/mesh/metis/Makefile include/post/Makefile include/shape_functions/Makefile include/solvers/Makefile include/util/Makefile src/Makefile src/equations/Makefile src/equations/cl/Makefile src/equations/electromagnetics/Makefile src/equations/fluid/Makefile src/equations/interface/Makefile src/equations/laplace/Makefile src/equations/porous/Makefile src/equations/solid/Makefile src/equations/therm/Makefile src/io/Makefile src/io/xmlsp/Makefile src/linear_algebra/Makefile src/mesh/Makefile src/mesh/bamg/Makefile src/mesh/metis/Makefile src/post/Makefile src/shape_functions/Makefile src/solvers/Makefile src/util/Makefile material/Makefile util/Makefile util/g2m/Makefile util/conv/Makefile util/conv/src/Makefile util/conv/examples/Makefile util/conv/matlab/Makefile util/vmesh/Makefile demos/Makefile demos/1D/Makefile demos/laplace/Makefile demos/thermal/Makefile demos/thermal/std3/Makefile demos/thermal/stdc2/Makefile demos/thermal/ttd2/Makefile demos/solid/Makefile demos/solid/beam/Makefile demos/solid/truss/Makefile demos/solid/contact/Makefile demos/solid/lelas2d/Makefile demos/solid/lelas3d/Makefile demos/fluid/Makefile demos/fluid/tiff2/Makefile demos/fluid/tins2/Makefile demos/fluid/lh2d/Makefile demos/fluid/euler-2d/Makefile demos/electromagnetics/Makefile demos/electromagnetics/Helmholtz/Makefile demos/solvers/Makefile demos/solvers/LS/Makefile demos/solvers/ODE/Makefile demos/solvers/EIGEN/Makefile demos/solvers/OPTIM/Makefile demos/solvers/NLAS/Makefile demos/adapt/Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/demos/Makefile doc/im/Makefile doc/css/Makefile doc/presentations/Makefile tools/Makefile ofeli-config test_ofeli.sh"
+ac_config_files="$ac_config_files Makefile include/Makefile include/equations/Makefile include/equations/cl/Makefile include/equations/electromagnetics/Makefile include/equations/fluid/Makefile include/equations/interface/Makefile include/equations/laplace/Makefile include/equations/solid/Makefile include/equations/therm/Makefile include/equations/porous/Makefile include/io/Makefile include/io/tclap/Makefile include/io/xmlsp/Makefile include/linear_algebra/Makefile include/linear_algebra/petsc/Makefile include/mesh/Makefile include/mesh/bamg/Makefile include/mesh/metis/Makefile include/post/Makefile include/shape_functions/Makefile include/solvers/Makefile include/util/Makefile src/Makefile src/equations/Makefile src/equations/cl/Makefile src/equations/electromagnetics/Makefile src/equations/fluid/Makefile src/equations/interface/Makefile src/equations/laplace/Makefile src/equations/porous/Makefile src/equations/solid/Makefile src/equations/therm/Makefile src/io/Makefile src/io/xmlsp/Makefile src/linear_algebra/Makefile src/mesh/Makefile src/mesh/bamg/Makefile src/mesh/metis/Makefile src/post/Makefile src/shape_functions/Makefile src/solvers/Makefile src/util/Makefile material/Makefile util/Makefile util/g2m/Makefile util/conv/Makefile util/conv/src/Makefile util/conv/examples/Makefile util/conv/matlab/Makefile util/vmesh/Makefile demos/Makefile demos/1D/Makefile demos/laplace/Makefile demos/thermal/Makefile demos/thermal/std3/Makefile demos/thermal/stdc2/Makefile demos/thermal/ttd2/Makefile demos/solid/Makefile demos/solid/beam/Makefile demos/solid/truss/Makefile demos/solid/contact/Makefile demos/solid/lelas2d/Makefile demos/solid/lelas3d/Makefile demos/fluid/Makefile demos/fluid/tiff2/Makefile demos/fluid/tins2/Makefile demos/fluid/lh2d/Makefile demos/fluid/euler-2d/Makefile demos/electromagnetics/Makefile demos/electromagnetics/Helmholtz/Makefile demos/solvers/Makefile demos/solvers/LS/Makefile demos/solvers/ODE/Makefile demos/solvers/EIGEN/Makefile demos/solvers/OPTIM/Makefile demos/solvers/NLAS/Makefile demos/adapt/Makefile doc/Makefile doc/html/Makefile doc/demos/Makefile doc/im/Makefile doc/css/Makefile doc/presentations/Makefile tools/Makefile ofeli-config test_ofeli.sh"
 
 
 
@@ -6492,7 +6487,6 @@ do
     "demos/adapt/Makefile") CONFIG_FILES="$CONFIG_FILES demos/adapt/Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "doc/html/Makefile") CONFIG_FILES="$CONFIG_FILES doc/html/Makefile" ;;
-    "doc/html/search/Makefile") CONFIG_FILES="$CONFIG_FILES doc/html/search/Makefile" ;;
     "doc/demos/Makefile") CONFIG_FILES="$CONFIG_FILES doc/demos/Makefile" ;;
     "doc/im/Makefile") CONFIG_FILES="$CONFIG_FILES doc/im/Makefile" ;;
     "doc/css/Makefile") CONFIG_FILES="$CONFIG_FILES doc/css/Makefile" ;;

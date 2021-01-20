@@ -32,29 +32,31 @@
 #include "io/Fct.h"
 #include <ostream>
 #include <iostream>
-
-extern exprtk::parser<real_t> theParser;
+#include "io/exprtk.hpp"
 
 namespace OFELI {
 
 Fct::Fct()
-    : name("f"), nb_var(0), exp_ok(false), var_ok(false), err(1)
+    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+      exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
 }
 
 
 Fct::Fct(string exp)
-   : name("f"), nb_var(0), exp_ok(false), var_ok(false), err(1)
+    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+      exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
    set(exp);
 }
 
 
-Fct::Fct(string          exp,
-         vector<string>& v)
-    : name("f"), nb_var(0), exp_ok(false), var_ok(false), err(1)
+Fct::Fct(string                exp,
+         const vector<string>& v)
+    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+      exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
    set(exp,v);
@@ -63,25 +65,41 @@ Fct::Fct(string          exp,
 
 Fct::Fct(string exp,
          string v)
-    : name("f"), nb_var(0), exp_ok(false), var_ok(false), err(1)
+    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+      exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
    set(exp,v);
 }
 
 
-Fct::Fct(string          n,
-         string          exp,
-         vector<string>& v)
-    : name("f"), nb_var(0), exp_ok(false), var_ok(false), err(1)
+Fct::Fct(string                n,
+         string                exp,
+         const vector<string>& v)
+    : name(n), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+      exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
-   set(n,exp,v);
+   set(exp,v);
 }
 
 
 Fct::~Fct()
 {
+   if (_p!=nullptr)
+      delete _p;
+   if (_ex!=nullptr)
+      delete _ex;
+   if (_st!=nullptr)
+      delete _st;
+}
+
+
+void Fct::add_constants()
+{
+   _st->add_constant("pi",OFELI_PI);
+   _st->add_constant("e",OFELI_E);
+   _st->add_constants();
 }
 
 
@@ -91,30 +109,10 @@ string Fct::getErrorMessage()
 }
 
 
-  int Fct::set(string exp,
-	       int    opt)
-{
-   exp_ok = true;
-   expr = exp;
-   err = 1;
-   if (var_ok) {
-      add_constants(symbol_table);
-      expression.register_symbol_table(symbol_table);
-      err = theParser.compile(expr,expression);
-      if (err==0) {
-         error_message = theParser.error();
-         if (opt==0)
-            std::cout << "Error: " << error_message << ", Expression: " << expr << std::endl;
-      }
-   }
-   return 1-err;
-}
-
-
-int Fct::set(string          n,
-             string          exp,
-             vector<string>& v,
-             int             opt)
+int Fct::set(string                n,
+             string                exp,
+             const vector<string>& v,
+             int                   opt)
 {
    name = n;
    return set(exp,v,opt);
@@ -125,17 +123,26 @@ int Fct::set(string exp,
              string v,
              int    opt)
 {
+   if (_p!=nullptr)
+      delete _p;
+   _p = new exprtk::parser<real_t>;
+   if (_st!=nullptr)
+      delete _st;
+   _st = new exprtk::symbol_table<real_t>;
+   if (_ex!=nullptr)
+      delete _ex;
+   _ex = new exprtk::expression<real_t>;
    exp_ok = var_ok = true;
    nb_var = 1;
    expr = exp;
    var.push_back(v);
    xvar.push_back(0.);
-   add_constants(symbol_table);
-   symbol_table.add_variable(var[0],xvar[0]);
-   expression.register_symbol_table(symbol_table);
-   err = theParser.compile(exp,expression);
+   add_constants();
+   _st->add_variable(var[0],xvar[0]);
+   _ex->register_symbol_table(*_st);
+   err = _p->compile(exp,*_ex);
    if (err==0) {
-      error_message = theParser.error();
+     error_message = _p->error();
       if (opt==0)
          std::cout << "Error: " << error_message << ", Expression: " << expr << std::endl;
    }
@@ -143,10 +150,51 @@ int Fct::set(string exp,
 }
 
 
-int Fct::set(string          exp,
-             vector<string>& v,
-             int             opt)
+int Fct::set(string exp,
+             int    opt)
 {
+   if (_p!=nullptr)
+      delete _p;
+   _p = new exprtk::parser<real_t>;
+   if (_st!=nullptr)
+      delete _st;
+   _st = new exprtk::symbol_table<real_t>;
+   if (_ex!=nullptr)
+      delete _ex;
+   _ex = new exprtk::expression<real_t>;
+   exp_ok = var_ok = true;
+   nb_var = 4;
+   expr = exp;
+   vector<string> var = {"x","y","z","t"};
+   for (size_t i=0; i<4; ++i) {
+      xvar.push_back(0.);
+      _st->add_variable(var[i],xvar[i]);
+   }
+   add_constants();
+   _ex->register_symbol_table(*_st);
+   err = _p->compile(exp,*_ex);
+   if (err==0) {
+      error_message = _p->error();
+      if (opt==0)
+         std::cout << "Error: " << error_message << ", Expression: " << expr << std::endl;
+   }
+   return 1-err;
+}
+
+
+int Fct::set(string                exp,
+             const vector<string>& v,
+             int                   opt)
+{
+   if (_p!=nullptr)
+      delete _p;
+   _p = new exprtk::parser<real_t>;
+   if (_st!=nullptr)
+      delete _st;
+   _st = new exprtk::symbol_table<real_t>;
+   if (_ex!=nullptr)
+      delete _ex;
+   _ex = new exprtk::expression<real_t>;
    exp_ok = var_ok = true;
    nb_var = v.size();
    expr = exp;
@@ -154,40 +202,15 @@ int Fct::set(string          exp,
       var.push_back(*it);
       xvar.push_back(0.);
    }
-   add_constants(symbol_table);
+   add_constants();
    for (size_t i=0; i<nb_var; ++i)
-      symbol_table.add_variable(var[i],xvar[i]);
-   expression.register_symbol_table(symbol_table);
-   err = theParser.compile(exp,expression);
+      _st->add_variable(var[i],xvar[i]);
+   _ex->register_symbol_table(*_st);
+   err = _p->compile(exp,*_ex);
    if (err==0) {
-      error_message = theParser.error();
+      error_message = _p->error();
       if (opt==0)
          std::cout << "Error: " << error_message << ", Expression: " << expr << std::endl;
-   }
-   return 1-err;
-}
-
-
-int Fct::set(vector<string>& v,
-             int             opt)
-{
-   var_ok = true;
-   nb_var = var.size();
-   for (auto it=std::begin(v); it!=std::end(v); ++it) {
-      var.push_back(*it);
-      xvar.push_back(0.);
-   }
-   add_constants(symbol_table);
-   for (size_t i=0; i<nb_var; ++i)
-      symbol_table.add_variable(var[i],xvar[i]);
-   expression.register_symbol_table(symbol_table);
-   if (exp_ok) {
-      err = theParser.compile(expr,expression);
-      if (err==0) {
-         error_message = theParser.error();
-         if (opt==0)
-            std::cout << "Error: " << error_message << ", Expression: " << expr << std::endl;
-      }
    }
    return 1-err;
 }
@@ -196,7 +219,7 @@ int Fct::set(vector<string>& v,
 real_t Fct::D(real_t x)
 {
    xvar[0] = x;
-   return exprtk::derivative(expression,xvar[0]);
+   return exprtk::derivative(*_ex,xvar[0]);
 }
 
 
@@ -205,7 +228,7 @@ real_t Fct::D(const vector<real_t>& x,
 {
    xvar = x;
    if (i<=nb_var)
-      return exprtk::derivative(expression,xvar[i-1]);
+      return exprtk::derivative(*_ex,xvar[i-1]);
    else
       return 0.;
 }
@@ -223,7 +246,7 @@ int Fct::check()
 real_t Fct::operator()(real_t x)
 {
    xvar[0] = x;
-   return expression.value();
+   return _ex->value();
 }
 
 
@@ -231,7 +254,7 @@ real_t Fct::operator()(real_t x,
 		       real_t y)
 {
    xvar[0] = x, xvar[1] = y;
-   return expression.value();
+   return _ex->value();
 }
 
 
@@ -240,7 +263,7 @@ real_t Fct::operator()(real_t x,
 		       real_t z)
 {
    xvar[0] = x, xvar[1] = y, xvar[2] = z;
-   return expression.value();
+   return _ex->value();
 }
 
 
@@ -250,14 +273,29 @@ real_t Fct::operator()(real_t x,
 		       real_t t)
 {
    xvar[0] = x, xvar[1] = y, xvar[2] = z, xvar[3] = t;
-   return expression.value();
+   return _ex->value();
+}
+
+
+real_t Fct::operator()(const Point<real_t>& x)
+{
+   xvar[0] = x.x, xvar[1] = x.y, xvar[2] = x.z;
+   return _ex->value();
+}
+
+
+real_t Fct::operator()(const Point<real_t>& x,
+                       real_t               t)
+{
+   xvar[0] = x.x, xvar[1] = x.y, xvar[2] = x.z, xvar[3] = t;
+   return _ex->value();
 }
 
 
 real_t Fct::operator()(const vector<real_t>& x)
 {
    xvar = x;
-   return expression.value();
+   return _ex->value();
 }
 
   

@@ -79,9 +79,8 @@ void HelmholtzBT3::set(const Element* el)
    _dSh = tr.DSh();
    ElementNodeCoordinates();
    ElementNodeVector(*_u,_eu);
-   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
    if (_omega_set)
-      _omega = _omega_exp.value();
+      _omega = _omega_fct(_el_geo.center,0.);
    eMat = complex_t(0);
    eRHS = complex_t(0);
 }

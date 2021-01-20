@@ -34,13 +34,10 @@
 #include "mesh/Material.h"
 #include "io/XMLParser.h"
 #include "linear_algebra/Point.h"
-#include "io/exprtk_adds.h"
 #include "OFELIException.h"
 
 using std::cout;
 using std::ifstream;
-
-extern exprtk::parser<real_t> theParser;
 
 namespace OFELI {
 
@@ -165,17 +162,8 @@ real_t Material::getProperty(Prop& prop)
    if (prop.type==BY_VALUE)
       val = prop.value;
    else {
-      exprtk::expression<double> exp;
-      double x=0., y=0., z=0., t=0.;
-      exprtk::symbol_table<double> symbol_table;
-      add_constants(symbol_table);
-      symbol_table.add_variable("x",x);
-      symbol_table.add_variable("y",y);
-      symbol_table.add_variable("z",z);
-      symbol_table.add_variable("t",t);
-      exp.register_symbol_table(symbol_table);
-      theParser.compile(prop.fp_xyzt,exp);
-      val = exp.value();
+      _theFct.set(prop.fp_xyzt);
+      val = _theFct(0.,0.,0.,0.);
    }
    return val;
 }
@@ -189,17 +177,8 @@ real_t Material::getProperty(Prop&                prop,
    if (prop.type==BY_VALUE)
       val = prop.value;
    else {
-      exprtk::expression<double> exp;
-      double xx=x.x, y=x.y, z=x.z, t=0.;
-      exprtk::symbol_table<double> symbol_table;
-      add_constants(symbol_table);
-      symbol_table.add_variable("x",xx);
-      symbol_table.add_variable("y",y);
-      symbol_table.add_variable("z",z);
-      symbol_table.add_variable("t",t);
-      exp.register_symbol_table(symbol_table);
-      theParser.compile(prop.fp_xyzt,exp);
-      val = exp.value();
+      _theFct.set(prop.fp_xyzt);
+      val = _theFct(x,t);
    }
    return val;
 }

@@ -166,7 +166,7 @@ class XMLParser : public Parser
    vector<PrescriptionPar> *_vp;
    vector<real_t> *_ft;
    vector<vector<real_t> > *_V;
-   exprtk::expression<real_t> _exp;
+   Fct _theFct;
 
    virtual bool on_tag_open(string tag_name, StringMap& attributes);
    virtual bool on_cdata(string cdata);

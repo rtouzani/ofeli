@@ -52,12 +52,8 @@ int main()
 //    Select optimization algorithm
       os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
 
-//    Set objective function and its gradient 
+//    Set objective function
       os.setObjective("x1^2+(x1-x2)^2+(x2-x3)^2+(x3-x4)^2+x4^2-10*x4");
-      os.setGradient("4*x1-2*x2",1);
-      os.setGradient("-2*x1+4*x2-2*x3",2);
-      os.setGradient("-2*x2+4*x3-2*x4",3);
-      os.setGradient("-2*x3+4*x4-10",4);
 
 //    Run the optimization procedure
       os.run();

@@ -41,8 +41,8 @@ using std::to_string;
 namespace OFELI {
 
 OptSolver::OptSolver()
-          : _size(1), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
-            _max_it(1000), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
+          : _size(1), _nb_in_const(0), _nb_eq_const(0), _nb_obj_eval(0), _nb_grad_eval(0),
+            _max_eval(100000), _max_it(1000), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
             _obj_type(0), _x_set(true), _method_set(false),
             _fct_allocated(false), _grad_allocated(false), _hessian_allocated(false)
 {
@@ -54,12 +54,13 @@ OptSolver::OptSolver()
    _var.push_back("x");
    _theDFct.resize(1);
    _theDDFct.resize(1);
+   _theFct = nullptr;
 }
 
 
 OptSolver::OptSolver(Vect<real_t>& x)
-          : _size(x.size()), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
-            _max_it(1000), _x(&x), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
+          : _size(x.size()), _nb_in_const(0), _nb_eq_const(0), _nb_obj_eval(0), _nb_grad_eval(0),
+            _max_eval(100000), _max_it(1000), _x(&x), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
             _obj_type(0), _x_set(false), _method_set(false),
             _fct_allocated(false), _grad_allocated(false), _hessian_allocated(false)
 {
@@ -72,13 +73,14 @@ OptSolver::OptSolver(Vect<real_t>& x)
    }
    _theDFct.resize(_size);
    _theDDFct.resize(_size*_size);
+   _theFct = nullptr;
 }
 
 
 OptSolver::OptSolver(MyOpt&        opt,
                      Vect<real_t>& x)
-          : _size(x.size()), _nb_obj_eval(0), _nb_grad_eval(0), _max_eval(100000),
-            _max_it(1000), _x(&x), _toler(1.e-10), _opt(&opt), _sa_opt(false),
+          : _size(x.size()), _nb_in_const(0), _nb_eq_const(0), _nb_obj_eval(0), _nb_grad_eval(0),
+            _max_eval(100000), _max_it(1000), _x(&x), _toler(1.e-10), _opt(&opt), _sa_opt(false),
             _tn_opt(false), _obj_type(0), _x_set(false), _method_set(false),
             _fct_allocated(false), _grad_allocated(false), _hessian_allocated(false)
 {
@@ -91,6 +93,7 @@ OptSolver::OptSolver(MyOpt&        opt,
    }
    _theDFct.resize(_size);
    _theDDFct.resize(_size*_size);
+   _theFct = nullptr;
 }
 
 
@@ -266,6 +269,54 @@ void OptSolver::setHessian(Fct&   f,
 }
 
 
+void OptSolver::setIneqConstraint(Fct&   f,
+				  real_t penal)
+{
+   if (_theFct==nullptr)
+      throw OFELIException("In OptSolver::setIneqConstraint(f,penal): setObjective must be called first");
+   string s = _theFct->expr + " + " + to_string(0.5*penal) + "*max(" + f.expr + ",0.)^2";
+   vector<string> var = _theFct->var;
+   _theFct->set(s,var);
+   _nb_in_const++;
+}
+
+
+void OptSolver::setEqConstraint(Fct&   f,
+                                real_t penal)
+{
+   if (_theFct==nullptr)
+      throw OFELIException("In OptSolver::setEqConstraint(f,penal): setObjective must be called first");
+   string s = _theFct->expr + " + " + to_string(0.5*penal) + "*(" + f.expr + ")^2";
+   vector<string> var = _theFct->var;
+   _theFct->set(s,var);
+   _nb_eq_const++;
+}
+
+
+void OptSolver::setIneqConstraint(string exp,
+				  real_t penal)
+{
+   if (_theFct==nullptr)
+      throw OFELIException("In OptSolver::setIneqConstraint(exp,penal): setObjective must be called first");
+   string s = _theFct->expr + " + " + to_string(0.5*penal) + "*max(" + exp + ",0.)^2";
+   vector<string> var = _theFct->var;
+   _theFct->set(s,var);
+   _nb_in_const++;
+}
+
+
+void OptSolver::setEqConstraint(string exp,
+                                real_t penal)
+{
+   if (_theFct==nullptr)
+      throw OFELIException("In OptSolver::setEqConstraint(exp,penal): setObjective must be called first");
+   string s = _theFct->expr + " + " + to_string(0.5*penal) + "*(" + exp + ")^2";
+   vector<string> var = _theFct->var;
+   _theFct->set(s,var);
+   _nb_eq_const++;
+}
+
+
 void OptSolver::setTNDefaults()
 {
    _max_it = 200;
@@ -325,8 +376,7 @@ void OptSolver::setSAOpt(real_t        rt,
    _vm = vm;
    _neps = neps;
    _max_eval = maxevl;
-// *  @param c [in] Vector that controls the step length adjustment. The suggested
-// *  value for all elements is 2.
+// c Vector that controls the step length adjustment. The suggested value for all elements is 2.
    _c.setSize(_size);
    _c = 2;
 }

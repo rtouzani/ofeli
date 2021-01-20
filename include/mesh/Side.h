@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -159,15 +159,6 @@ enum SideType {
  */
     void setCode(size_t dof,
                  int    code) { _code[dof-1] = code; }
-
-/** \brief Define code by a boolean algebraic expression invoking coordinates of side nodes
- *  @param [in] exp Boolean algebraic expression as required by <tt>fparser</tt>
- *  @param [in] code Code to assign to node if the algebraic expression is true
- *  @param [in] dof Degree of Freedom for which code is assigned [Default: 1]
- */
-    void setCode(const string& exp,
-                 int           code,
-                 size_t        dof=1);
 
 /// \brief Replace a node at a given local label
     void Replace(size_t label,

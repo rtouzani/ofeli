@@ -123,13 +123,12 @@ void TINS2DT3S::set(Element* el)
    _cd = OFELI_SIXTH*_el_geo.det;
    for (size_t i=0; i<3; ++i)
       _en[i] = (*el)(i+1)->n();
-   _ex = _el_geo.center.x, _ey = _el_geo.center.y, _et = _TimeInt.time;
    if (_rho_set)
-      _rho = _rho_exp.value();
+      _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_mu_set)
-      _mu = _mu_exp.value();
+      _mu = _mu_fct(_el_geo.center,_TimeInt.time);
    if (_beta_set)
-      _beta = _beta_exp.value();
+      _beta = _beta_fct(_el_geo.center,_TimeInt.time);
    eMat = 0; eRHS = 0;
 }
 

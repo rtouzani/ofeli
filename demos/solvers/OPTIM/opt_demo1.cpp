@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
 //    Select optimization algorithm
 //    Here we choose the truncated Newton method
-      os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
+      os.setOptMethod(OptSolver::GRADIENT);
 
 //    Define objective function
       os.setObjective("x^2-x+1");

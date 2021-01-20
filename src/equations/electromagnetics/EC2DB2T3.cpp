@@ -61,13 +61,12 @@ void EC2DB2T3::set(const Element *el)
    _det = 2*_area;
    ElementNodeCoordinates();
    _dSh = tr.DSh();
-   _ex = _center.x, _ey = _center.y, _et = _TimeInt.time;
    if (_omega_set)
-      _omega = _omega_exp.value();
+      _omega = _omega_fct(_el_geo.center,0.);
    if (_Mu_set)
-      _Mu = _Mu_exp.value();
+      _Mu = _Mu_fct(_el_geo.center,0.);
    if (_sigma_set)
-      _sigma = _sigma_exp.value();
+      _sigma = _sigma_fct(_el_geo.center,0.);
    eMat = 0;
    eRHS = 0;
 }

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -135,13 +135,6 @@ class Element
 /// \brief Define code of element.
 /// @param [in] c Code to assign to element.
     void setCode(int c) { _code = c; }
-
-/** \brief Define code by a boolean algebraic expression invoking coordinates of element nodes
- *  @param [in] exp Boolean algebraic expression as required by <tt>fparser</tt>
- *  @param [in] code Code to assign to node if the algebraic expression is true
- */
-    void setCode(const string& exp,
-                 int           code);
 
 /// \brief Insert a node at end of list of nodes of element.
 /// @param [in] node Pointer to Node instance.

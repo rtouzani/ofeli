@@ -73,8 +73,7 @@ int OptimPG(OptSolver&          opt,
       cout << "Warning in OptimPG(..): Initial iterate not feasible." << endl;
       ProjActiveSet(xc,lb,ub,xc);
    }
-   real_t alp = 1.e-4;
-   real_t fc = opt.Objective(xc);
+   real_t alp = 1.e-4, fc = opt.Objective(xc);
    opt.Gradient(xc,gc);
    nb_obj_eval = nb_grad_eval = 1;
    xcc = xc - gc;

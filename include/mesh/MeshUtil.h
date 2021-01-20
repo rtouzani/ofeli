@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2020 Rachid Touzani
+   Copyright (C) 1998 - 2021 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -216,7 +216,7 @@ bool operator==(const Side& sd1,
  *  @param [in,out] mesh Mesh instance. On output, node coordinates are modified to take into
  *  account the displacement
  *  @param [in] u Displacement field at nodes
- *  @param [in] rate Maximal deformation rate. [Default: <tt>1</tt>]. A typical value is
+ *  @param [in] a Maximal deformation rate. [Default: <tt>1</tt>]. A typical value is
  *  0.2 (<i>i.e.</i> 20%).
  *
  * \author Rachid Touzani
@@ -502,7 +502,7 @@ real_t getMeanSideMeasure(const Mesh &m);
  * node coordinates
  * @param [in] m Reference to mesh instance
  * @param [in] exp Regular expression using <tt>x</tt>, <tt>y</tt>, and <tt>z</tt>
- * coordinates of nodes, according to <tt>fparser</tt> parser
+ * coordinates of nodes, according to <tt>exprtk</tt> parser
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
  */
@@ -517,7 +517,7 @@ void setNodeCodes(Mesh&         m,
  * node coordinates
  * @param [in] m Reference to mesh instance
  * @param [in] exp Regular expression using <tt>x</tt>, <tt>y</tt>, and <tt>z</tt> 
- * coordinates of nodes, according to <tt>fparser</tt> parser
+ * coordinates of nodes, according to <tt>exprtk</tt> parser
  * @param [in] code Code to assign
  * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
  *
@@ -528,58 +528,6 @@ void setBoundaryNodeCodes(Mesh&         m,
                           const string& exp,
                           int           code,
                           size_t        dof=1);
-
-/** \fn void setSideCodes(Mesh& m, const string& exp, int code, size_t dof=1)
- * \ingroup Mesh
- * \brief Assign a given code to all sides satisfying a boolean expression using
- * node coordinates
- * @param [in] m Reference to mesh instance
- * @param [in] exp Regular expression using <tt>x</tt>, <tt>y</tt>, and <tt>z</tt> 
- * coordinates of side nodes, according to <tt>fparser</tt> parser
- * @param [in] code Code to assign
- * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
- *
- * \author Rachid Touzani
- * \copyright GNU Lesser Public License
- */
-void setSideCodes(Mesh&         m,
-                  const string& exp,
-                  int           code,
-                  size_t        dof=1);
-
-/** \fn void setBoundarySideCodes(Mesh& m, const string& exp, int code, size_t dof=1)
- * \ingroup Mesh
- * \brief Assign a given code to all sides on boundary that satisfy a boolean expression using
- * node coordinates
- * @param [in] m Reference to mesh instance
- * @param [in] exp Regular expression using <tt>x</tt>, <tt>y</tt>, and <tt>z</tt> 
- * coordinates of side nodes, according to <tt>fparser</tt> parser
- * @param [in] code Code to assign
- * @param [in] dof Degree of freedom for which code is assigned [Default: <tt>1</tt>]
- *
- * \author Rachid Touzani
- * \copyright GNU Lesser Public License
- */
-void setBoundarySideCodes(Mesh&         m,
-                          const string& exp,
-                          int           code,
-                          size_t        dof=1);
-
-/** \fn void setElementCodes(Mesh &m, const string &exp, int code)
- * \ingroup Mesh
- * \brief Assign a given code to all elements satisfying a boolean expression using
- * node coordinates
- * @param [in] m Reference to mesh instance
- * @param [in] exp Regular expression using <tt>x</tt>, <tt>y</tt>, and <tt>z</tt>
- * coordinates of element nodes, according to <tt>fparser</tt> parser
- * @param [in] code Code to assign
- *
- * \author Rachid Touzani
- * \copyright GNU Lesser Public License
- */
-void setElementCodes(Mesh&         m,
-                     const string& exp,
-                     int           code);
 
 /** \fn int NodeInElement(const Node *nd, const Element *el)
  * \ingroup Mesh
