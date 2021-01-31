@@ -106,7 +106,7 @@ int LPSolver::run()
 {
    _theSimplex.set(_A,_nv,_nb_le,_nb_ge,_nb_eq,*_x);
    _ret = _theSimplex.run();
-   return _it;
+   return _ret;
 }
 
 

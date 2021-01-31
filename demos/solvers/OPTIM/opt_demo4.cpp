@@ -42,12 +42,12 @@
 
   The linear program can be stated as follows:
  
-       Maximize x1 + x2 + 3x3 -0.5x4 
+       Maximize x1 + x2 + 3*x3 -0.5*x4 
        Subject to the constraints:
           x1  + 2x3 <= 740
           2x2 - 7x4 <= 0
           x2  - x3 + 2x4 >= 0.5
-          x1 + x2 + x3 +x4 = 9
+          x1 + x2 + x3 + x4 = 9
           and all x's >=0.
 
   ==============================================================================*/

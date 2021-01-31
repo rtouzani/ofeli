@@ -306,7 +306,7 @@ e30:
    if (bmax <= _eps) {             // Done. Solution found. Return with the good news. 
       _ret = 0; 
       setSolution();
-      return _ret; 
+      return _ret;
    }
    simp2(ip,kp,q1);                // Locate a pivot element (phase two). 
    if (ip==0) {                    // Objective function is unbounded. Report and return. 

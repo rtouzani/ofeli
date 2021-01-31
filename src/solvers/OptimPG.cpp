@@ -70,7 +70,8 @@ int OptimPG(OptSolver&          opt,
    xc = x;
    ProjActiveSet(xc,lb,ub,px);
    if ((xc-px).getNorm2()>0) {
-      cout << "Warning in OptimPG(..): Initial iterate not feasible." << endl;
+      if (Verbosity)
+         cout << "Warning in OptimPG(..): Initial iterate not feasible." << endl;
       ProjActiveSet(xc,lb,ub,xc);
    }
    real_t alp = 1.e-4, fc = opt.Objective(xc);

@@ -48,30 +48,48 @@
   <div class="summary">
 <a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">Fluid Dynamics<div class="ingroups"><a class="el" href="a00344.html">OFELI</a></div></div>  </div>
+<div class="title">Conservation Law Equations<div class="ingroups"><a class="el" href="a00346.html">OFELI</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Fluid Dynamics equations.  
+<p>Conservation law equations.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html">Equa_Fluid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class for Fluid Dynamics <a class="el" href="a00035.html" title="Abstract class for all equation classes. ">Equation</a> classes.  <a href="a00030.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html">ICPG1D</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 1-D.  <a href="a00048.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00082.html">NSP2DQ41</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for incompressible Navier-Stokes equations in 2-D domains using Q<sub>1</sub>/P<sub>0</sub> element and a penaly formulation for the incompressibility condition.  <a href="a00082.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html">ICPG2DT</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 2-D.  <a href="a00049.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html">TINS2DT3S</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 2-D domains. Numerical approximation uses stabilized 3-node triangle finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration.  <a href="a00108.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00050.html">ICPG3DT</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 3-D.  <a href="a00050.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00109.html">TINS3DT4S</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 3-D domains. Numerical approximation uses stabilized 4-node tatrahedral finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration.  <a href="a00109.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00060.html">LCL1D</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve the linear conservation law (Hyperbolic equation) in 1-D by a MUSCL Finite Volume scheme.  <a href="a00060.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html">LCL2DT</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve the linear hyperbolic equation in 2-D by a MUSCL Finite Volume scheme on triangles.  <a href="a00061.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00062.html">LCL3DT</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve the linear conservation law equation in 3-D by a MUSCL Finite Volume scheme on tetrahedra.  <a href="a00062.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html">Muscl</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parent class for hyperbolic solvers with Muscl scheme.  <a href="a00073.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html">Muscl1D</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for 1-D hyperbolic solvers with <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> scheme.  <a href="a00074.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html">Muscl2DT</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for 2-D hyperbolic solvers with <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> scheme.  <a href="a00075.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html">Muscl3DT</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for 3-D hyperbolic solvers with <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> scheme using tetrahedra.  <a href="a00076.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Fluid Dynamics equations. </p>
+<p>Conservation law equations. </p>
 </div><!-- contents -->
 
 </div> <!-- class text -->

@@ -196,6 +196,7 @@ void OptSolver::Gradient(Vect<real_t>& x,
 void OptSolver::setObjective(string exp)
 {
    _theFct = new Fct(exp,_var);
+   _fct.set(exp,_var);
    _type = EXPRESSION;
    _fct_allocated = true;
    _grad_computed = true;
@@ -205,6 +206,7 @@ void OptSolver::setObjective(string exp)
 void OptSolver::setObjective(Fct& f)
 {
    _theFct = &f;
+   _fct = f;
    _type = FCT;
    _grad_computed = true;
 }
@@ -425,6 +427,12 @@ int OptSolver::run(real_t toler,
    _toler = toler;
    _max_it = max_it;
    return run();
+}
+
+
+real_t OptSolver::getObjective()
+{
+   return _fct(*_x);
 }
 
 

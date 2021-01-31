@@ -143,7 +143,7 @@ enum Setting {
  *                <li> OBJECTIVE To set objective function to minimize
  *                <li> LE_CONSTRAINT To set a '<=' inequality constraint
  *                <li> GE_CONSTRAINT To set a '>=' inequality constraint
- *                <li> LE_CONSTRAINT To set an equality constraint
+ *                <li> EQ_CONSTRAINT To set an equality constraint
  *              </ul>
  *  @param [in] a Vector coefficients if the chosen function. If \c opt==OBJECTIVE,
  *  vector components are the coefficients multiplying the variables in the objective function.

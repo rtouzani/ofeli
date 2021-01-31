@@ -345,6 +345,7 @@ class OptSolver
                                 const OptSolver& os);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+    real_t getObjective();
     friend int OptimTN(OptSolver&, Vect<real_t>&, const Vect<real_t>&, const Vect<real_t>&,
                        int&, int&, int&, real_t);
     friend int lmqnbc(OptSolver&, Vect<real_t>&, real_t&, Vect<real_t>&, const Vect<real_t>&,
@@ -387,7 +388,7 @@ class OptSolver
    MyOpt *_opt;
    bool _sa_opt, _tn_opt, _obj_type, _x_set, _method_set, _fct_allocated;
    bool _grad_allocated, _hessian_allocated, _grad_computed, _hessian_computed;
-   Fct *_theFct;
+   Fct *_theFct, _fct;
    vector<Fct *> _theDFct, _theDDFct;
    vector<string> _var;
    vector<real_t> _xv;

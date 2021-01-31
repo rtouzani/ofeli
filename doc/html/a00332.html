@@ -48,39 +48,30 @@
   <div class="summary">
 <a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">Laplace equation<div class="ingroups"><a class="el" href="a00344.html">OFELI</a></div></div>  </div>
+<div class="title">Fluid Dynamics<div class="ingroups"><a class="el" href="a00346.html">OFELI</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Laplace and Poisson equations.  
+<p>Fluid Dynamics equations.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html">Equa_Laplace&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class for classes about the Laplace equation.  <a href="a00031.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html">Equa_Fluid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class for Fluid Dynamics <a class="el" href="a00035.html" title="Abstract class for all equation classes. ">Equation</a> classes.  <a href="a00030.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html">Laplace1DL2</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equation for a 1-D elliptic equation using the 2-Node line element (<code>P<sub>1</sub></code>).  <a href="a00055.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00082.html">NSP2DQ41</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for incompressible Navier-Stokes equations in 2-D domains using Q<sub>1</sub>/P<sub>0</sub> element and a penaly formulation for the incompressibility condition.  <a href="a00082.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html">Laplace1DL3</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equation for the 1-D elliptic equation using the 3-Node line (<code>P<sub>2</sub></code>).  <a href="a00056.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html">TINS2DT3S</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 2-D domains. Numerical approximation uses stabilized 3-node triangle finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration.  <a href="a00108.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html">Laplace2DT3</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equation for the Laplace equation using the 2-D triangle element (<code>P<sub>1</sub></code>).  <a href="a00057.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00058.html">Laplace2DT6</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equation for the Laplace equation using the 2-D triangle element (<code>P<sub>2</sub></code>).  <a href="a00058.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html">LaplaceDG2DP1</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build and solve the linear system for the Poisson problem using the <a class="el" href="a00013.html" title="Enables preliminary operations and utilities for the Discontinous Galerkin method. ">DG</a> P<sub>1</sub> 2-D triangle element.  <a href="a00059.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html">SteklovPoincare2DBE</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solver of the Steklov Poincare problem in 2-D geometries using piecewie constant boundary elemen.  <a href="a00103.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00109.html">TINS3DT4S</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 3-D domains. Numerical approximation uses stabilized 4-node tatrahedral finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration.  <a href="a00109.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Laplace and Poisson equations. </p>
+<p>Fluid Dynamics equations. </p>
 </div><!-- contents -->
 
 </div> <!-- class text -->
