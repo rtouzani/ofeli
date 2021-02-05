@@ -61,16 +61,16 @@ class Fct {
  public:
 
    Fct();
-   Fct(string exp, const vector<string>& v);
-   Fct(string exp);
-   Fct(string exp, string v);
-   Fct(string n, string exp, const vector<string>& v);
+   Fct(const string& exp, const vector<string>& v);
+   Fct(const string& exp);
+   Fct(const string& exp, const string& v);
+   Fct(const string& n, const string& exp, const vector<string>& v);
    ~Fct();
    string getErrorMessage();
-   int set(string exp, const vector<string>& v, int opt=0);
-   int set(string exp, int opt=0);
-   int set(string exp, string v, int opt=0);
-   int set(string n, string exp, const vector<string>& v, int opt=0);
+   int set(const string& exp, const vector<string>& v, int opt=0);
+   int set(const string& exp, int opt=0);
+   int set(const string& exp, const string &v, int opt=0);
+   int set(const string& n, const string &exp, const vector<string>& v, int opt=0);
    real_t operator()(real_t x);
    real_t operator()(real_t x, real_t y);
    real_t operator()(real_t x, real_t y, real_t z);

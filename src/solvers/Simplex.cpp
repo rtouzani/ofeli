@@ -44,6 +44,7 @@ using std::endl;
 namespace OFELI {
 
 simplex::simplex()
+        :  _ret(0), _eps(DBL_EPSILON)
 {
 }
 
@@ -62,7 +63,7 @@ simplex::simplex(Vect<real_t>& A,
 
 simplex::~simplex()
 {
-   for (size_t i=0; i<_nb+2; ++i)
+   for (int i=0; i<_nb+2; ++i)
       delete _A[i];
    delete [] _A;
 }
@@ -81,7 +82,7 @@ void simplex::set(Vect<real_t>& A,
    _nb_eq = nb_eq;
    _nl2 = _nb = nb_le + nb_ge + nb_eq;
    _A = new real_t* [_nb+3];
-   for (size_t i=0; i<_nb+3; ++i)
+   for (int i=0; i<_nb+3; ++i)
       _A[i] = new real_t [_nv+2];
    for (int j=1; j<_nv+2; ++j)
       _A[1][j] = -A(1,j);
@@ -151,25 +152,24 @@ void simplex::simp1(int     mm,
 }
 
 
-void simplex::simp2(int&    ip,
-                    int     kp,
-                    real_t& qq)
+int simplex::simp2(int     kp,
+                   real_t& qq)
 {
 // Locate a pivot element, taking degeneracy into account. 
-   ip = 0; 
+   int ip = 0;
    if (_nl2 < 1)
-      return;
+      return ip;
    int i = 0;
    for (i=1; i<=_nl2; i++) 
       if (_A[i+1][kp+1] < -_eps)
          goto e2; 
-   return;  // No possible pivots. Return with message. 
+   return ip;  // No possible pivots. Return with message. 
 
 e2:
    qq = -_A[_l2[i-1]+1][1]/_A[_l2[i-1]+1][kp+1]; 
    ip = _l2[i-1];
    if (i+1 > _nl2)
-      return;
+      return ip;
    int q0=0, qp=0;
    for (i=i+1; i<=_nl2; i++) { 
       int ii = _l2[i-1];
@@ -189,6 +189,7 @@ e6:         if (q0<qp)
          }
       }
    }
+   return ip;
 }
 
 
@@ -233,8 +234,8 @@ int simplex::run()
 e10:
    simp1(_nb+1,0,kp,bmax);  // Find max. coeff. of auxiliary objective fn 
    if (bmax<=_eps && _A[_nb+2][1]<-_eps) { 
-      _ret = -1;          // Auxiliary objective function is still negative and can’t be improved, 
-      return _ret;        // hence no feasible solution exists.
+      _ret = -1;            // Auxiliary objective function is still negative and can’t be improved, 
+      return _ret;          // hence no feasible solution exists.
    }
    else if (bmax<=_eps && _A[_nb+2][1]<=_eps) {
       int m=_nb_le+_nb_ge+1;
@@ -261,7 +262,7 @@ e10:
       goto e30;           // Go to phase two. 
    }
 
-   simp2(ip,kp,q1);       // Locate a pivot element (phase one).
+   ip = simp2(kp,q1);       // Locate a pivot element (phase one).
    if (ip == 0) {         // Maximum of auxiliary objective function is
       _ret = -1;          // unbounded, so no feasible solution exists.
       return _ret; 
@@ -301,6 +302,7 @@ e20:
    if (ir != 0)
       goto e10;       // if still in phase one, go back to 10. 
 // End of phase one code for finding an initial feasible solution. Now, in phase two, optimize it. 
+
 e30:
    simp1(0,0,kp,bmax);             // Test the z-row for doneness. 
    if (bmax <= _eps) {             // Done. Solution found. Return with the good news. 
@@ -308,7 +310,7 @@ e30:
       setSolution();
       return _ret;
    }
-   simp2(ip,kp,q1);                // Locate a pivot element (phase two). 
+   ip = simp2(kp,q1);                // Locate a pivot element (phase two). 
    if (ip==0) {                    // Objective function is unbounded. Report and return. 
       _ret = 1;
       return _ret;

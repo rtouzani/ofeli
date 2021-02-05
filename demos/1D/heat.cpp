@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 //       Build linear system
          f.setTime(theTime);
          f.set("exp(t)*sin(pi*x)*(1+pi^2)",x);
-         for (int i=2; i<=nx; i++) {
+         for (size_t i=2; i<=nx; i++) {
             A(i,i  ) =  1./theTimeStep + 2./(h*h);
             A(i,i+1) = -1./(h*h);
             A(i,i-1) = -1./(h*h);

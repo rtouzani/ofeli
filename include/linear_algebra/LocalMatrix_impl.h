@@ -47,7 +47,10 @@ namespace OFELI {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 template<class T_,size_t NR_,size_t NC_>
-LocalMatrix<T_,NR_,NC_>::LocalMatrix() { _length = NR_ * NC_; }
+LocalMatrix<T_,NR_,NC_>::LocalMatrix()
+{
+   _length = NR_ * NC_;
+}
 
 
 template<class T_,size_t NR_,size_t NC_>

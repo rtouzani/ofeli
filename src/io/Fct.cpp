@@ -44,7 +44,7 @@ Fct::Fct()
 }
 
 
-Fct::Fct(string exp)
+Fct::Fct(const string& exp)
     : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
       exp_ok(false), var_ok(false), err(1)
 {
@@ -53,7 +53,7 @@ Fct::Fct(string exp)
 }
 
 
-Fct::Fct(string                exp,
+Fct::Fct(const string&         exp,
          const vector<string>& v)
     : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
       exp_ok(false), var_ok(false), err(1)
@@ -63,8 +63,8 @@ Fct::Fct(string                exp,
 }
 
 
-Fct::Fct(string exp,
-         string v)
+Fct::Fct(const string& exp,
+         const string& v)
     : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
       exp_ok(false), var_ok(false), err(1)
 {
@@ -73,8 +73,8 @@ Fct::Fct(string exp,
 }
 
 
-Fct::Fct(string                n,
-         string                exp,
+Fct::Fct(const string&         n,
+         const string&         exp,
          const vector<string>& v)
     : name(n), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
       exp_ok(false), var_ok(false), err(1)
@@ -109,8 +109,8 @@ string Fct::getErrorMessage()
 }
 
 
-int Fct::set(string                n,
-             string                exp,
+int Fct::set(const string&         n,
+             const string&         exp,
              const vector<string>& v,
              int                   opt)
 {
@@ -119,9 +119,9 @@ int Fct::set(string                n,
 }
 
 
-int Fct::set(string exp,
-             string v,
-             int    opt)
+int Fct::set(const string& exp,
+             const string& v,
+             int           opt)
 {
    if (_p!=nullptr)
       delete _p;
@@ -150,8 +150,8 @@ int Fct::set(string exp,
 }
 
 
-int Fct::set(string exp,
-             int    opt)
+int Fct::set(const string& exp,
+             int           opt)
 {
    if (_p!=nullptr)
       delete _p;
@@ -182,7 +182,7 @@ int Fct::set(string exp,
 }
 
 
-int Fct::set(string                exp,
+int Fct::set(const string&         exp,
              const vector<string>& v,
              int                   opt)
 {

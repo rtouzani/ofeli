@@ -118,7 +118,7 @@ class simplex {
    void simp1(int mm, int iabf, int &kp, real_t &bmax);
 
 // Locate a pivot element, taking degeneracy into account. 
-   void simp2(int& ip, int kp, real_t& q1);
+   int simp2(int kp, real_t& q1);
 
 // Matrix operations to exchange a left-hand and right-hand variable (see text). 
    void simp3(int ii, int ip, int kp);

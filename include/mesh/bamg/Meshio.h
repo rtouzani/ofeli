@@ -68,7 +68,7 @@ class MeshIstream {
       char c;
       int cmm=0;
       while (in.get(c) &&  
-         (isspace(c) ? (((c=='\n'||c==char(12)||c==char(15)) && (LineNumber++,cmm=0)),1) : (cmm || (c=='#' && (cmm=1) ))))
+             (isspace(c) ? (((c=='\n'||c==char(12)||c==char(15)) && (LineNumber++,(cmm=0))),1) : (cmm || (c=='#' && (cmm=1) ))))
          ;
       if (in.good())
          in.putback(c);

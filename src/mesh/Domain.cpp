@@ -259,10 +259,10 @@ int Domain::Position(real_t  s,
 		     real_t& y,
 		     real_t& z)
 {
-   real_t x0, y0, z0, xx, yy, zz, dxf, dyf, ex, ey, ez;
+   real_t x0, y0, xx, yy, zz=0., dxf, dyf, ex, ey, ez;
    real_t det, g;
    int it=1;
-   x0 = xx = x, y0 = yy = y, z0 = zz = z;
+   x0 = xx = x, y0 = yy = y;
    x -= _theFct(xx,yy,zz,0.);
    y -= _theFct(xx,yy,zz,0.);
    ex = x - xx; ey = y - yy; ez = z - zz;
