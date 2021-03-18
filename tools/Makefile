@@ -189,7 +189,7 @@ AUTOMAKE = ${SHELL} '/Users/touzani/ofeli/missing' automake-1.16
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = 
+CFLAGS =  
 CPP = gcc -E
 CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
 CXX = g++
@@ -223,7 +223,7 @@ MPI_CFLAGS = -I${prefix}/include/mpi
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
 OBJEXT = o
-OFELI_CFLAGS = -I${prefix}/include/ofeli 
+OFELI_CFLAGS = -I${prefix}/include/ofeli -std=c++1y 
 OFELI_FLAGS = -I$(top_srcdir)/include
 OFELI_LDFLAGS = -L${exec_prefix}/lib 
 OFELI_LIB = -lofeli
@@ -231,10 +231,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 4.0.0
+PACKAGE_STRING = ofeli 4.0.1
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 4.0.0
+PACKAGE_VERSION = 4.0.1
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -244,7 +244,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 4.0.0
+VERSION = 4.0.1
 abs_builddir = /Users/touzani/ofeli/tools
 abs_srcdir = /Users/touzani/ofeli/tools
 abs_top_builddir = /Users/touzani/ofeli
@@ -296,7 +296,7 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
-SUBDIRS = 
+SUBDIRS = vscode
 all: all-recursive
 
 .SUFFIXES:

@@ -463,12 +463,9 @@ void ODESolver::setRHS(string f)
       i = 0;
    if (i+1>_nb_eq)
       throw OFELIException("In ODESolver::setRHS(string):\nToo many function definitions.");
-cout<<"*1*"<<endl;
    _theF[i] = new Fct(f,"t");
-cout<<"*2*"<<endl;
    _fct_allocated = true;
    _f1(i+1) = (*_theF[i])(_time);
-cout<<"*3*"<<endl;
    _regex = true;
    _rhs = true;
    _type = SCALAR_LINEAR;

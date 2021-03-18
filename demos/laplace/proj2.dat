@@ -7,11 +7,11 @@
 </info>
 <Project name="proj">
   <mesh_file>square.m</mesh_file>
-    <verbose>3</verbose>
+  <verbose>3</verbose>
 </Project>
 <Prescription>
-    <BoundaryCondition code="1">exp(x)*sin(y) + exp(y)*cos(x)</BoundaryCondition>
-    <Source>0.</Source>
-    <Solution>exp(x)*sin(y)  + exp(y)*cos(x)</Solution>
+  <BoundaryCondition code="1">exp(x)*sin(y) + exp(y)*cos(x)</BoundaryCondition>
+  <Source>0.</Source>
+  <Solution>exp(x)*sin(y) + exp(y)*cos(x)</Solution>
 </Prescription>
 </OFELI_File>

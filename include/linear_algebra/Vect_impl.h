@@ -480,8 +480,7 @@ void Vect<T_>::set(const Vect<real_t>& x,
                    const string&       exp)
 {
    setSize(x._nx,x._ny,x._nz);
-   vector<string> var = {"x","i","t"};
-   _theFct.set(exp,var);
+   _theFct.set(exp,_var_xit);
    vector<real_t> xv(3);
    for (size_t i=0; i<_size; i++) {
       xv[0] = x[i], xv[1] = i+1, xv[2] = _time;
@@ -758,8 +757,7 @@ size_t Vect<T_>::getNz() const { return _nz; }
 template <class T_>
 void Vect<T_>::setIJK(const string& exp)
 {
-   vector<string> var = {"i","j","k","t"};
-   _theFct.set(exp,var);
+   _theFct.set(exp,_var_ijkt);
    vector<real_t> xv(4);
    for (size_t i=1; i<=_nx; ++i) {
       for (size_t j=1; j<=_ny; ++j) {

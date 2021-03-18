@@ -34,11 +34,6 @@
 #define __SPMATRIX_H
 
 #include "linear_algebra/Matrix.h"
-#ifdef USE_EIGEN
-#include <Eigen/Dense>
-#include <Eigen/Sparse>
-using namespace Eigen;
-#endif
 
 namespace OFELI {
 /*!
@@ -100,12 +95,6 @@ template<class T_> class SpMatrix : public Matrix<T_>
     using Matrix<T_>::_theMesh;
     using Matrix<T_>::_row_ptr;
     using Matrix<T_>::_col_ind;
-
-#ifdef USE_EIGEN
-    typedef Eigen::Matrix<T_,Eigen::Dynamic,1> VectorX;
-    typedef SparseMatrix<T_>                   SpMat;
-    typedef Triplet<real_t>                    Tr;
-#endif
 
  public:
 

@@ -47,7 +47,6 @@ Domain::Domain()
          _nb_contours(0), _nb_holes(0), _sub_domain(0), _nb_required_vertices(0),
          _nb_required_edges(0), _nb_sub_domains(0), _ret_cont(1), _ret_save(1), _ret_sd(1)
 {
-   init_kw();
 }
 
 
@@ -57,7 +56,6 @@ Domain::Domain(const string& file)
          _nb_required_vertices(0), _nb_required_edges(0), _nb_sub_domains(0), _ret_cont(1),
          _ret_save(1), _ret_sd(1)
 {
-   init_kw();
    get(file);
 }
 
@@ -68,30 +66,6 @@ Domain::~Domain()
       delete _ff;
    if (_theMesh!=nullptr)
       delete _theMesh;
-}
-
-
-void Domain::init_kw()
-{
-   _kw.push_back("q$uit");
-   _kw.push_back("he$lp");
-   _kw.push_back("v$ertex");
-   _kw.push_back("line$");
-   _kw.push_back("circ$le");
-   _kw.push_back("sub$domain");
-   _kw.push_back("rectangle$");
-   _kw.push_back("disk$");
-   _kw.push_back("dv$");
-   _kw.push_back("dl$");
-   _kw.push_back("lis$t");
-   _kw.push_back("save$");
-   _kw.push_back("mesh$");
-   _kw.push_back("dof$");
-   _kw.push_back("dim$");
-   _kw.push_back("curve$");
-   _kw.push_back("con$tour");
-   _kw.push_back("h$ole");
-   _kw.push_back("EOF$");
 }
 
 
@@ -232,7 +206,7 @@ int Domain::getCurve()
       y = 0.9*ll.node[0].y + 0.1*ll.node[1].y;
       z = 0.1*ll.node[1].z;
       for (i=1; i<nb-1; i++) {
-	Position(i/real_t(nb-1),x,y,z);
+         Position(i/real_t(nb-1),x,y,z);
          ll.node[i].x = x;
          ll.node[i].y = y;
          ll.node[i].z = z;
@@ -256,8 +230,8 @@ int Domain::getCurve()
 
 int Domain::Position(real_t  s,
                      real_t& x,
-		     real_t& y,
-		     real_t& z)
+                     real_t& y,
+                     real_t& z)
 {
    real_t x0, y0, xx, yy, zz=0., dxf, dyf, ex, ey, ez;
    real_t det, g;
@@ -320,10 +294,10 @@ int Domain::getLine()
    Ln ll;
    size_t n1 = _ff->getI("First End Point: ");
    if (n1 > _nb_vertices)
-      throw OFELIException("In Domain::getLine(): Vertex "+to_string(n1)+" is not defined.");
+      throw OFELIException("In Domain::getLine(): Vertex "+to_string(n1)+" undefined.");
    size_t n2 = _ff->getI("Second End Point: ");
    if (n2 > _nb_vertices)
-      throw OFELIException("In Domain::getLine(): Vertex "+to_string(n2)+" is not defined.");
+      throw OFELIException("In Domain::getLine(): Vertex "+to_string(n2)+" undefined.");
    ll.n1 = n1, ll.n2 = n2;
    ll.Dcode = _ff->getI("Dirichlet Code: ");
    ll.Ncode = _ff->getI("Neumann Code: ");

@@ -40,6 +40,15 @@
 #include "linear_algebra/GraphOfMatrix.h"
 #include "solvers/LinearSolver.h"
 
+#ifdef USE_EIGEN
+#include <Eigen/Dense>
+#include <Eigen/Sparse>
+
+typedef Eigen::Matrix<T_,Eigen::Dynamic,1> VectorX;
+typedef SparseMatrix<T_>                   SpMat;
+typedef Triplet<real_t>                    Tr;
+#endif
+
 namespace OFELI {
 
 template<class T_> class LinearSolver;

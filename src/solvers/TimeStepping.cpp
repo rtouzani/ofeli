@@ -415,7 +415,7 @@ real_t TimeStepping::runOneTimeStep()
 void TimeStepping::run(bool opt)
 {
    if (Verbosity>0)
-      std::cout << "Running time integration ..." << std::endl;
+      cout << "Running time integration ..." << std::endl;
    for (int e=0; e<_nb_des; ++e)
       _de[e].constant_matrix = opt;
    TimeLoop {

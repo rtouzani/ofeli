@@ -333,7 +333,9 @@ private:
    string _domain_file, _geo_file, _bamg_file, _ofeli_file, _output_file;
    Fct _theFct;
    ofstream *_jf;
-   vector<string> _kw;
+   const vector<string> _kw {"q$uit","he$lp","v$ertex","line$","circ$le","sub$domain","rectangle$",
+                             "disk$","dv$","dl$","lis$t","save$","mesh$","dof$","dim$","curve$",
+                             "con$tour","h$ole","EOF$"};
    vector<Vertex> _v, _nd, _bnd;
    vector<El> _el;
    vector<Ln> _l;
@@ -379,7 +381,6 @@ private:
    void dof_code(int  mark,
                  int* code);
    int zero_code(const vector<int>& code);
-   void init_kw();
    int setCode(size_t ne1,
                size_t ne2,
                size_t i,

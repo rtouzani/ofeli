@@ -28,7 +28,7 @@ void WriteStr(ostream& out,
    int i=0;
    char c;
    out << '"';
-   while (i++, c=*str++) {
+   while (i++, (c=*str++)) {
       if (i==70)
          cout << " //\n", i=0;
       if (c == '"')

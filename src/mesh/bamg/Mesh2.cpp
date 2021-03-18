@@ -2818,7 +2818,7 @@ void Triangles::GeomToTriangles0(long inbvx)
       }
       else
          assert(NbVerticesOnGeomEdge==NbVerticesOnGeomEdge0);
-      assert(nbex=nbe);
+      assert((nbex=nbe));
    }
 
    Insert();

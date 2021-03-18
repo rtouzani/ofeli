@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin19.6.0
-host_triplet = i386-apple-darwin19.6.0
+build_triplet = i386-apple-darwin20.3.0
+host_triplet = i386-apple-darwin20.3.0
 subdir = src/equations/fluid
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -175,9 +175,9 @@ AUTOMAKE = ${SHELL} '/Users/touzani/ofeli/missing' automake-1.16
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = 
+CFLAGS =  
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -209,7 +209,7 @@ MPI_CFLAGS = -I${prefix}/include/mpi
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
 OBJEXT = o
-OFELI_CFLAGS = -I${prefix}/include/ofeli 
+OFELI_CFLAGS = -I${prefix}/include/ofeli -std=c++1y 
 OFELI_FLAGS = -I$(top_srcdir)/include
 OFELI_LDFLAGS = -L${exec_prefix}/lib 
 OFELI_LIB = -lofeli
@@ -217,10 +217,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 4.0.0
+PACKAGE_STRING = ofeli 4.0.1
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 4.0.0
+PACKAGE_VERSION = 4.0.1
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -230,7 +230,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 4.0.0
+VERSION = 4.0.1
 abs_builddir = /Users/touzani/ofeli/src/equations/fluid
 abs_srcdir = /Users/touzani/ofeli/src/equations/fluid
 abs_top_builddir = /Users/touzani/ofeli
@@ -243,10 +243,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin19.6.0
+build = i386-apple-darwin20.3.0
 build_alias = 
 build_cpu = i386
-build_os = darwin19.6.0
+build_os = darwin20.3.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -254,10 +254,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin19.6.0
+host = i386-apple-darwin20.3.0
 host_alias = 
 host_cpu = i386
-host_os = darwin19.6.0
+host_os = darwin20.3.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -286,9 +286,9 @@ noinst_LIBRARIES = libfluid.a
 AUTOMAKE_OPTIONS = no-dependencies
 AM_CPPFLAGS = -std=c++1y
 libfluid_a_SOURCES = NSP2DQ41.cpp \
-							NS2DT3BT3.cpp \
-							TINS2DT3S.cpp \
-							TINS3DT4S.cpp
+                     NS2DT3BT3.cpp \
+                     TINS2DT3S.cpp \
+                     TINS3DT4S.cpp
 
 all: all-am
 

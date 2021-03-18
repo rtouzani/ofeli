@@ -65,8 +65,9 @@ int Prescription::get(EqDataType    type,
    _v->clear();
    XMLParser p(_file,*_theMesh,XMLParser::PRESCRIBE);
    p.get(type,_p);
+   _theFct.resize(_p.size());
    for (size_t k=0; k<_p.size(); k++) {
-      _theFct.set(_p[k].fct);
+      _theFct[k].set(_p[k].fct);
       if (dof) {
          if (type==BOUNDARY_CONDITION)
             get_boundary_condition(k,dof);
@@ -111,7 +112,7 @@ void Prescription::get_point_force(size_t k)
          if (_p[k].bz)
             e += (_p[k].z-The_node.getZ())*(_p[k].z-The_node.getZ());
          if (i==_p[k].dof && sqrt(e)<OFELI_EPSMCH && p)
-            (*_v)(node_label,i) = _theFct(The_node.getCoord());
+            (*_v)(node_label,i) = _theFct[k](The_node.getCoord());
       }
    }
 }
@@ -129,7 +130,7 @@ void Prescription::get_point_force(size_t k,
       if (_p[k].bz)
          e += (_p[k].z-The_node.getZ())*(_p[k].z-The_node.getZ());
       if (sqrt(e)<OFELI_EPSMCH && _p[k].dof==dof)
-         (*_v)(node_label,dof) = _theFct(The_node.getCoord());
+         (*_v)(node_label,dof) = _theFct[k](The_node.getCoord());
    }
 }
 
@@ -139,19 +140,18 @@ void Prescription::get_boundary_condition(size_t k,
 {
    MESH_ND {
       if (the_node->getCode(dof)==_p[k].code)
-         (*_v)(node_label,dof) = _theFct(The_node.getCoord());
+         (*_v)(node_label,dof) = _theFct[k](The_node.getCoord());
    }
 }
 
 
 void Prescription::get_boundary_condition(size_t k)
 {
-   size_t l=0;
+   size_t l=1;
    MESH_ND {
-      for (size_t i=1; i<=The_node.getNbDOF(); i++) {
-         l++;
+      for (size_t i=1; i<=The_node.getNbDOF(); i++, l++) {
          if (The_node.getCode(_p[k].dof)==_p[k].code && i==_p[k].dof)
-            (*_v)(l) = _theFct(The_node.getCoord());
+            (*_v)(l) = _theFct[k](The_node.getCoord());
       }
    }
 }
@@ -163,7 +163,7 @@ void Prescription::get_boundary_force(size_t k,
    MESH_SD {
       if (The_side.getCode(_p[k].dof)==_p[k].code && (_p[k].dof==dof||dof==0)) {
          for (size_t i=1; i<=The_side.getNbNodes(); ++i)
-            (*_v)(The_side(i)->n()) = _theFct(The_side.getCenter());
+            (*_v)(The_side(i)->n()) = _theFct[k](The_side.getCenter());
       }
    }
 }
@@ -173,11 +173,11 @@ void Prescription::get_boundary_force(size_t k)
 {
    MESH_SD {
       if (The_side.getGlobalCode()==9998)
-         (*_v)(The_side.getDOF(_p[k].dof)) = _theFct(The_side.getCenter());
+         (*_v)(The_side.getDOF(_p[k].dof)) = _theFct[k](The_side.getCenter());
       else {
          for (size_t j=1; j<=The_side.getNbDOF(); j++) {
             if (The_side.getCode(_p[k].dof)==_p[k].code && j==_p[k].dof)
-               (*_v)(The_side.getDOF(j)) = _theFct(The_side.getCenter());
+               (*_v)(The_side.getDOF(j)) = _theFct[k](The_side.getCenter());
          }
       }
    }
@@ -189,7 +189,7 @@ void Prescription::get_vector(size_t k,
 {
    MESH_ND {
       if (_p[k].dof==dof || dof==0)
-         (*_v)(node_label) = _theFct(The_node.getCoord());
+         (*_v)(node_label) = _theFct[k](The_node.getCoord());
    }
 }
 
@@ -199,7 +199,7 @@ void Prescription::get_vector(size_t k)
    MESH_ND {
       for (size_t i=1; i<=the_node->getNbDOF(); ++i) {
          if (i==_p[k].dof)
-            (*_v)(node_label,i) = _theFct(The_node.getCoord());
+            (*_v)(node_label,i) = _theFct[k](The_node.getCoord());
       }
    }
 }

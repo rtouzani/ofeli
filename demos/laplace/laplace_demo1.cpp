@@ -76,7 +76,6 @@ int main(int argc, char *argv[])
       Vect<double> sol(ms);
       p.get(SOLUTION,sol);
       cout << "L2-Error: " << (u-sol).Norm(WNORM2) << endl;
-
-   } CATCH_EXCEPTION
+  } CATCH_EXCEPTION
    return 0;
 }

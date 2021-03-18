@@ -37,7 +37,7 @@
 namespace OFELI {
 
 Fct::Fct()
-    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr), _xvar(nullptr),
       exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -45,7 +45,7 @@ Fct::Fct()
 
 
 Fct::Fct(const string& exp)
-    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr), _xvar(nullptr),
       exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -55,7 +55,7 @@ Fct::Fct(const string& exp)
 
 Fct::Fct(const string&         exp,
          const vector<string>& v)
-    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr), _xvar(nullptr),
       exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -65,7 +65,7 @@ Fct::Fct(const string&         exp,
 
 Fct::Fct(const string& exp,
          const string& v)
-    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+    : name("f"), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr), _xvar(nullptr),
       exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -76,7 +76,7 @@ Fct::Fct(const string& exp,
 Fct::Fct(const string&         n,
          const string&         exp,
          const vector<string>& v)
-    : name(n), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr),
+    : name(n), nb_var(0), _p(nullptr), _st(nullptr), _ex(nullptr), _xvar(nullptr),
       exp_ok(false), var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -92,6 +92,8 @@ Fct::~Fct()
       delete _ex;
    if (_st!=nullptr)
       delete _st;
+   if (_xvar!=nullptr)
+      delete _xvar;
 }
 
 
@@ -136,9 +138,11 @@ int Fct::set(const string& exp,
    nb_var = 1;
    expr = exp;
    var.push_back(v);
-   xvar.push_back(0.);
+   if (_xvar!=nullptr)
+      delete _xvar;
+   _xvar = new vector<real_t>(1);
    add_constants();
-   _st->add_variable(var[0],xvar[0]);
+   _st->add_variable(var[0],(*_xvar)[0]);
    _ex->register_symbol_table(*_st);
    err = _p->compile(exp,*_ex);
    if (err==0) {
@@ -165,10 +169,15 @@ int Fct::set(const string& exp,
    exp_ok = var_ok = true;
    nb_var = 4;
    expr = exp;
-   vector<string> var = {"x","y","z","t"};
+   var.push_back("x");
+   var.push_back("y");
+   var.push_back("z");
+   var.push_back("t");
+   if (_xvar!=nullptr)
+      delete _xvar;
+   _xvar = new vector<real_t>(4);
    for (size_t i=0; i<4; ++i) {
-      xvar.push_back(0.);
-      _st->add_variable(var[i],xvar[i]);
+      _st->add_variable(var[i],(*_xvar)[i]);
    }
    add_constants();
    _ex->register_symbol_table(*_st);
@@ -198,13 +207,14 @@ int Fct::set(const string&         exp,
    exp_ok = var_ok = true;
    nb_var = v.size();
    expr = exp;
-   for (auto it=std::begin(v); it!=std::end(v); ++it) {
+   if (_xvar!=nullptr)
+      delete _xvar;
+   for (auto it=std::begin(v); it!=std::end(v); ++it)
       var.push_back(*it);
-      xvar.push_back(0.);
-   }
+   _xvar = new vector<real_t>(nb_var);
    add_constants();
    for (size_t i=0; i<nb_var; ++i)
-      _st->add_variable(var[i],xvar[i]);
+      _st->add_variable(var[i],(*_xvar)[i]);
    _ex->register_symbol_table(*_st);
    err = _p->compile(exp,*_ex);
    if (err==0) {
@@ -218,17 +228,17 @@ int Fct::set(const string&         exp,
 
 real_t Fct::D(real_t x)
 {
-   xvar[0] = x;
-   return exprtk::derivative(*_ex,xvar[0]);
+   (*_xvar)[0] = x;
+   return exprtk::derivative(*_ex,(*_xvar)[0]);
 }
 
 
 real_t Fct::D(const vector<real_t>& x,
               size_t                i)
 {
-   xvar = x;
+   *_xvar = x;
    if (i<=nb_var)
-      return exprtk::derivative(*_ex,xvar[i-1]);
+      return exprtk::derivative(*_ex,(*_xvar)[i-1]);
    else
       return 0.;
 }
@@ -245,41 +255,41 @@ int Fct::check()
 
 real_t Fct::operator()(real_t x)
 {
-   xvar[0] = x;
+   (*_xvar)[0] = x;
    return _ex->value();
 }
 
 
 real_t Fct::operator()(real_t x,
-		       real_t y)
+                       real_t y)
 {
-   xvar[0] = x, xvar[1] = y;
+   (*_xvar)[0] = x, (*_xvar)[1] = y;
    return _ex->value();
 }
 
 
 real_t Fct::operator()(real_t x,
-		       real_t y,
-		       real_t z)
+                       real_t y,
+                       real_t z)
 {
-   xvar[0] = x, xvar[1] = y, xvar[2] = z;
+   (*_xvar)[0] = x, (*_xvar)[1] = y, (*_xvar)[2] = z;
    return _ex->value();
 }
 
 
 real_t Fct::operator()(real_t x,
-		       real_t y,
-		       real_t z,
-		       real_t t)
+                       real_t y,
+                       real_t z,
+                       real_t t)
 {
-   xvar[0] = x, xvar[1] = y, xvar[2] = z, xvar[3] = t;
+   (*_xvar)[0] = x, (*_xvar)[1] = y, (*_xvar)[2] = z, (*_xvar)[3] = t;
    return _ex->value();
 }
 
 
 real_t Fct::operator()(const Point<real_t>& x)
 {
-   xvar[0] = x.x, xvar[1] = x.y, xvar[2] = x.z;
+   (*_xvar)[0] = x.x, (*_xvar)[1] = x.y, (*_xvar)[2] = x.z;
    return _ex->value();
 }
 
@@ -287,14 +297,14 @@ real_t Fct::operator()(const Point<real_t>& x)
 real_t Fct::operator()(const Point<real_t>& x,
                        real_t               t)
 {
-   xvar[0] = x.x, xvar[1] = x.y, xvar[2] = x.z, xvar[3] = t;
+   (*_xvar)[0] = x.x, (*_xvar)[1] = x.y, (*_xvar)[2] = x.z, (*_xvar)[3] = t;
    return _ex->value();
 }
 
 
 real_t Fct::operator()(const vector<real_t>& x)
 {
-   xvar = x;
+   *_xvar = x;
    return _ex->value();
 }
 

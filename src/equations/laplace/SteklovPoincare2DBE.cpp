@@ -96,7 +96,7 @@ void SteklovPoincare2DBE::setMesh(Mesh& ms)
 {
    _theMesh = &ms;
    _nb_eq = _nb_boundary_sides = _theMesh->getNbBoundarySides();
-   if (_nb_sides==0)
+   if (_nb_eq==0)
       throw OFELIException("SteklovPoincare2DBE::setMesh(ms): No boundary sides extracted.");
    _nn.setSize(_nb_eq);
    _length.setSize(_nb_eq);

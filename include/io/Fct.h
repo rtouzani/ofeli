@@ -91,11 +91,11 @@ class Fct {
    exprtk::parser<real_t> *_p;
    exprtk::symbol_table<real_t> *_st;
    exprtk::expression<real_t> *_ex;
+   vector<real_t> *_xvar;
    void add_constants();
    bool exp_ok, var_ok;
    int err;
    string error_message;
-   vector<real_t> xvar;
 };
 
 } /* namespace OFELI */

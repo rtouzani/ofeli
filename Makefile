@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin19.6.0
-host_triplet = i386-apple-darwin19.6.0
+build_triplet = i386-apple-darwin20.3.0
+host_triplet = i386-apple-darwin20.3.0
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -244,9 +244,9 @@ AUTOMAKE = ${SHELL} '/Users/touzani/ofeli/missing' automake-1.16
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = 
+CFLAGS =  
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall 
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -278,7 +278,7 @@ MPI_CFLAGS = -I${prefix}/include/mpi
 MPI_LDFLAGS =  
 MPI_LIBS = -lmpi 
 OBJEXT = o
-OFELI_CFLAGS = -I${prefix}/include/ofeli 
+OFELI_CFLAGS = -I${prefix}/include/ofeli -std=c++1y 
 OFELI_FLAGS = -I$(top_srcdir)/include
 OFELI_LDFLAGS = -L${exec_prefix}/lib 
 OFELI_LIB = -lofeli
@@ -286,10 +286,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 4.0.0
+PACKAGE_STRING = ofeli 4.0.1
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 4.0.0
+PACKAGE_VERSION = 4.0.1
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -299,7 +299,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 4.0.0
+VERSION = 4.0.1
 abs_builddir = /Users/touzani/ofeli
 abs_srcdir = /Users/touzani/ofeli
 abs_top_builddir = /Users/touzani/ofeli
@@ -312,10 +312,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin19.6.0
+build = i386-apple-darwin20.3.0
 build_alias = 
 build_cpu = i386
-build_os = darwin19.6.0
+build_os = darwin20.3.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -323,10 +323,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin19.6.0
+host = i386-apple-darwin20.3.0
 host_alias = 
 host_cpu = i386
-host_os = darwin19.6.0
+host_os = darwin20.3.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -351,9 +351,7 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-DDIR = $(datadir)/ofeli/doc \
-       $(datadir)/ofeli/tools
-
+DDIR = $(datadir)/ofeli/doc
 AUX_DIST = config.guess \
            config.sub \
            install-sh \
@@ -370,7 +368,7 @@ AUX_DIST_EXTRA = readline.m4 \
 
 EXTRA_DIST = bootstrap ChangeLog
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = doc include src util tools material demos
+SUBDIRS = doc include src util material demos
 bin_SCRIPTS = ofeli-config test_ofeli.sh
 MAINTAINERCLEANFILES = aclocal.m4 configure $(AUX_DIST)
 DISTCLEANFILES = $(top_builddir)/include/datadir.h
@@ -886,6 +884,27 @@ uninstall-am: uninstall-binSCRIPTS
 tests:
 	chmod a+x test_ofeli.sh
 	./test_ofeli.sh
+
+sdk:
+	mkdir -p ofeli-sdk
+	mkdir -p ofeli-sdk/bin
+	mkdir -p ofeli-sdk/lib
+	mkdir -p ofeli-sdk/include
+	mkdir -p ofeli-sdk/material
+	cp src/libofeli.a ofeli-sdk/lib/.
+	cp util/conv/src/cmesh ofeli-sdk/bin/.
+	cp util/conv/src/cfield ofeli-sdk/bin/.
+	cp util/g2m/g2m ofeli-sdk/bin/.
+	cp util/vmesh/vmesh ofeli-sdk/bin/.
+	cp material/* ofeli-sdk/material/.
+	cp ofeli-config ofeli-sdk/bin/.
+	cp -rf include/ ofeli-sdk/include/
+	cp ../tools/install-sdk.sh ofeli-sdk/.
+	find ofeli-sdk/ -name "Makefile.am" -exec rm {} \;
+	find ofeli-sdk/ -name "Makefile.in" -exec rm {} \;
+	find ofeli-sdk/ -name "Makefile" -exec rm {} \;
+	tar czf ofeli-sdk.tar.gz ofeli-sdk/
+	rm -rf ofeli-sdk
 
 clean-local:
 	-rm -rf autom4te.cache *.log include/stamp-h1

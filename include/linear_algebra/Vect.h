@@ -1191,7 +1191,9 @@ class Vect
     Mesh   *_theMesh;
     string _name, _regex[10];
     real_t _time;
-    const vector<string> _var = {"x","y","z","t"};
+    const vector<string> _var {"x","y","z","t"};
+    const vector<string> _var_xit {"x","i","t"};
+    const vector<string> _var_ijkt {"i","j","k","t"};
     Fct _theFct;
     void dof_select(size_t d, vector<size_t> &dof_list);
     size_t ijk(size_t i, size_t j)           const { return _ny*(i-1)+j-1; }
