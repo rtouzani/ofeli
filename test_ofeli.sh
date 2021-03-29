@@ -249,6 +249,24 @@ if test "$ans" = "y" ; then
     ./opt_demo3 test.dat
 fi
 
+echo "Test demo for the Brachistochrone optimization problem (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+    ./opt_demo4 30
+fi
+
+echo "Test demo for a linear programming problem (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+    ./opt_demo5
+fi
+
+echo "Test demo for another linear programming problem (y/n) ? \c"
+read ans
+if test "$ans" = "y" ; then
+    ./opt_demo6
+fi
+
 echo "-----------------------------------------------------------------"
 echo "Testing Nonlinear Systems solver Demos ..."
 echo "-----------------------------------------------------------------"

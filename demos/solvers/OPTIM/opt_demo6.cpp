@@ -1,7 +1,7 @@
 /*==============================================================================
 
                                 **********************
-                                *      opt_demo4     *
+                                *      opt_demo5     *
                                 **********************
 
 
@@ -41,14 +41,13 @@
   the profit for this production problem. 
 
   The linear program can be stated as follows:
- 
-       Maximize x1 + x2 + 3*x3 -0.5*x4 
-       Subject to the constraints:
-          x1  + 2x3 <= 740
-          2x2 - 7x4 <= 0
-          x2  - x3 + 2x4 >= 0.5
-          x1 + x2 + x3 + x4 = 9
-          and all x's >=0.
+
+      Maximize x1 + x2 + x3 + x4
+      Subject to the constraints:
+       2*x1 +  3*x2 +  4*x3 +  5*x4 <=  3300      
+       3*x1 +  4*x2 +  5*x3 +  6*x4 <=  4000      
+      15*x1 + 10*x2 +  9*x3 +  7*x4 <= 12000      
+      x1>=0, x2>=0, x3>=400, x4>=0
 
   ==============================================================================*/
 
@@ -58,22 +57,22 @@ using namespace OFELI;
 
 int main()
 {
-   int nv=4, nb_le=2, nb_ge=1, nb_eq=1;
+   int nv=4, nb_le=3, nb_ge=1, nb_eq=0;
    Vect<double> x(nv), a(nv);
 
    LPSolver s;
    s.setSize(nv,nb_le,nb_ge,nb_eq);
    s.set(x);
-   a(1) = -1.0, a(2) = -1.0, a(3) = -3.0, a(4) = 0.5;
+   a(1) = -1, a(2) = -1, a(3) = -1, a(4) = -1;
    s.set(LPSolver::OBJECTIVE,a);
-   a(1) = 1.0, a(2) = 0.0, a(3) = 2.0, a(4) = 0.0;
-   s.set(LPSolver::LE_CONSTRAINT,a,740.0);
-   a(1) = 0.0, a(2) = 2.0, a(3) = 0.0, a(4) = -7.0;
-   s.set(LPSolver::LE_CONSTRAINT,a,0.0);
-   a(1) = 0.0, a(2) = 1.0, a(3) = -1.0, a(4) = 2.0;
-   s.set(LPSolver::GE_CONSTRAINT,a,0.5);
-   a(1) = 1.0, a(2) = 1.0, a(3) = 1.0, a(4) = 1.0;
-   s.set(LPSolver::EQ_CONSTRAINT,a,9.0);
+   a(1) = 2.0, a(2) = 3.0, a(3) = 4.0, a(4) = 5.0;
+   s.set(LPSolver::LE_CONSTRAINT,a,3300.0);
+   a(1) = 3.0, a(2) = 4.0, a(3) = 5.0, a(4) = 6.0;
+   s.set(LPSolver::LE_CONSTRAINT,a,4000.0);
+   a(1) = 15.0, a(2) = 10.0, a(3) = 9.0, a(4) = 7.0;
+   s.set(LPSolver::LE_CONSTRAINT,a,12000.0);
+   a(1) = 0.0, a(2) = 0.0, a(3) = 1.0, a(4) = 0.0;
+   s.set(LPSolver::GE_CONSTRAINT,a,400.0);
 
    s.run();
    cout << "Solution\n" << x;

@@ -1,0 +1,7 @@
+Installation procedure for Source Development Kit of OFELI.
+
+1. Check destination directory where installation takes place.
+   By default: /usr/local/
+   Otherwise, modify the line with 'PREFIX='
+2. Execute the script install-sdk.sh under sudo if necessary.
+3. That's it.

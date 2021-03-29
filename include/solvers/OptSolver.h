@@ -34,6 +34,8 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <functional>
+using std::function;
 
 #include <iostream>
 using std::ostream;
@@ -218,10 +220,65 @@ class OptSolver
                          real_t penal=1./OFELI_EPSMCH);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/** \brief Define the objective function by a user defined one-variable function
+ *  \details This function can be used in the case where a user defined function is
+ *  to be given. To be used in the one-variable case.
+ *  @param [in] f Function given as a function of one real variable which is the optimization
+ *  variable and returning the objective value. This function can be defined by the calling program as a
+ *  C-function and then cast to an instance of class function
+ */
+    void setObjective(function<real_t(real_t)> f);
+
+/** \brief Define the objective function by a user defined multi-variable function
+ *  \details This function can be used in the case where a user defined function is
+ *  to be given. To be used in the multivariable case.
+ *  @param [in] f Function given as a function of many real variables and returning the objective value. 
+ *  This function can be defined by the calling program as a
+ *  C-function and then cast to an instance of class function
+ */
+    void setObjective(function<real_t(Vect<real_t>)> f);
+
+/** \brief Define the derivative of the objective function by a user defined function
+ *  @param [in] f Function given as a function of a real variable and returning the derivative
+ *  of the objective value. 
+ *  This function can be defined by the calling program as a
+ *  C-function and then cast to an instance of class function
+ */
+    void setGradient(function<real_t(real_t)> f);
+
+/** \brief Define the gradient of the objective function by a user defined function
+ *  @param [in] f Function given as a function of a many real variables and returning the 
+ * partial derivatives of the objective value. 
+ *  This function can be defined by the calling program as a
+ *  C-function and then cast to an instance of class function
+ */
+    void setGradient(function<Vect<real_t>(Vect<real_t>)> f);
+
 /** \brief Choose user defined optimization class
  *  @param [in] opt Reference to inherited user specified optimization class
  */
     void setOptClass(MyOpt& opt) { _opt = &opt; }
+
+/** \brief Define lower bound for a particular optimization variable
+ *  \details Method to impose a lower bound for a component of the optimization variable
+ *  @param [in] i Index of component to bound (index starts from \c 1 )
+ *  @param [in] lb Lower bound
+ */
+    void setLowerBound(size_t i, real_t lb);
+
+/** \brief Define upper bound for a particular optimization variable
+ *  \details Method to impose an upper bound for a component of the optimization variable
+ *  @param [in] i Index of component to bound (index starts from \c 1 )
+ *  @param [in] ub Upper bound
+ */
+    void setUpperBound(size_t i, real_t ub);
+
+/** \brief Define value to impose to a particular optimization variable
+ *  \details Method to impose a value for a component of the optimization variable
+ *  @param [in] i Index of component to enforce (index starts from \c 1 )
+ *  @param [in] b Value to impose
+ */
+    void setEqBound(size_t i, real_t b);
 
 /** \brief Define upper bound for optimization variable
  *  \details Case of a one-variable problem
@@ -374,7 +431,8 @@ class OptSolver
      FUNCTION   = 0,
      EXPRESSION = 1,
      FCT        = 2,
-     CLASS      = 3
+     VECTOR     = 3,
+     CLASS      = 4
    };
 
    size_t _size, _nb_in_const, _nb_eq_const;
@@ -392,6 +450,8 @@ class OptSolver
    vector<Fct *> _theDFct, _theDDFct;
    vector<string> _var;
    vector<real_t> _xv;
+   function<real_t(real_t)> _obj_fct1, _grad1; 
+   function<Vect<real_t>(Vect<real_t>)> _obj_fct2, _grad2;
 
    void setTNDefaults();
    void setSADefaults();

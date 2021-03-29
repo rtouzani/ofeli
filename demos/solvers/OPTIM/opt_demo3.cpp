@@ -33,7 +33,7 @@
   ==============================================================================*/
 
 #include "OFELI.h"
-#include "Opt.h"
+#include "Opt3.h"
 using namespace OFELI;
 
 int main(int argc, char *argv[])
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
    }
 
    try {
-      IPF proj(argv[1]);
+      IPF proj(argv[0],argv[1]);
       Mesh ms(proj.getMeshFile(1));
 
 //    Declare solution and boundary condition vectors
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
       f = "2*pi^2*sin(pi*x)*cos(pi*y)";
  
 //    Define the optimization problem and choose the optimization algorithm
-      Opt opt(ms);
+      Opt3 opt(ms);
       opt.getEquation()->setInput(SOURCE,f);
       OptSolver os(opt,u);
       os.setOptMethod(OptSolver::GRADIENT);

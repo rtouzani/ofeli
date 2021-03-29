@@ -90,7 +90,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = opt_demo1$(EXEEXT) opt_demo2$(EXEEXT) \
-	opt_demo3$(EXEEXT) opt_demo4$(EXEEXT) opt_demo5$(EXEEXT)
+	opt_demo3$(EXEEXT) opt_demo4$(EXEEXT) opt_demo5$(EXEEXT) \
+	opt_demo6$(EXEEXT)
 subdir = demos/solvers/OPTIM
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -99,7 +100,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 DIST_COMMON = $(srcdir)/Makefile.am $(dist_opt_demo1_DATA) \
 	$(dist_opt_demo2_DATA) $(dist_opt_demo3_DATA) \
 	$(dist_opt_demo4_DATA) $(dist_opt_demo5_DATA) \
-	$(am__DIST_COMMON)
+	$(dist_opt_demo6_DATA) $(am__DIST_COMMON)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/include/config.h
 CONFIG_CLEAN_FILES =
@@ -107,9 +108,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(opt_demo1dir)" \
 	"$(DESTDIR)$(opt_demo2dir)" "$(DESTDIR)$(opt_demo3dir)" \
 	"$(DESTDIR)$(opt_demo4dir)" "$(DESTDIR)$(opt_demo5dir)" \
-	"$(DESTDIR)$(opt_demo1dir)" "$(DESTDIR)$(opt_demo2dir)" \
-	"$(DESTDIR)$(opt_demo3dir)" "$(DESTDIR)$(opt_demo4dir)" \
-	"$(DESTDIR)$(opt_demo5dir)"
+	"$(DESTDIR)$(opt_demo6dir)" "$(DESTDIR)$(opt_demo1dir)" \
+	"$(DESTDIR)$(opt_demo2dir)" "$(DESTDIR)$(opt_demo3dir)" \
+	"$(DESTDIR)$(opt_demo4dir)" "$(DESTDIR)$(opt_demo5dir)" \
+	"$(DESTDIR)$(opt_demo6dir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_opt_demo1_OBJECTS = opt_demo1.$(OBJEXT)
 opt_demo1_OBJECTS = $(am_opt_demo1_OBJECTS)
@@ -126,6 +128,9 @@ opt_demo4_DEPENDENCIES = $(top_builddir)/src/libofeli.a
 am_opt_demo5_OBJECTS = opt_demo5.$(OBJEXT)
 opt_demo5_OBJECTS = $(am_opt_demo5_OBJECTS)
 opt_demo5_DEPENDENCIES = $(top_builddir)/src/libofeli.a
+am_opt_demo6_OBJECTS = opt_demo6.$(OBJEXT)
+opt_demo6_OBJECTS = $(am_opt_demo6_OBJECTS)
+opt_demo6_DEPENDENCIES = $(top_builddir)/src/libofeli.a
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -155,9 +160,11 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(opt_demo1_SOURCES) $(opt_demo2_SOURCES) \
-	$(opt_demo3_SOURCES) $(opt_demo4_SOURCES) $(opt_demo5_SOURCES)
+	$(opt_demo3_SOURCES) $(opt_demo4_SOURCES) $(opt_demo5_SOURCES) \
+	$(opt_demo6_SOURCES)
 DIST_SOURCES = $(opt_demo1_SOURCES) $(opt_demo2_SOURCES) \
-	$(opt_demo3_SOURCES) $(opt_demo4_SOURCES) $(opt_demo5_SOURCES)
+	$(opt_demo3_SOURCES) $(opt_demo4_SOURCES) $(opt_demo5_SOURCES) \
+	$(opt_demo6_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -192,8 +199,9 @@ am__uninstall_files_from_dir = { \
   }
 DATA = $(dist_opt_demo1_DATA) $(dist_opt_demo2_DATA) \
 	$(dist_opt_demo3_DATA) $(dist_opt_demo4_DATA) \
-	$(dist_opt_demo5_DATA) $(opt_demo1_DATA) $(opt_demo2_DATA) \
-	$(opt_demo3_DATA) $(opt_demo4_DATA) $(opt_demo5_DATA)
+	$(dist_opt_demo5_DATA) $(dist_opt_demo6_DATA) \
+	$(opt_demo1_DATA) $(opt_demo2_DATA) $(opt_demo3_DATA) \
+	$(opt_demo4_DATA) $(opt_demo5_DATA) $(opt_demo6_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -340,26 +348,31 @@ opt_demo2_SOURCES = opt_demo2.cpp
 opt_demo3_SOURCES = opt_demo3.cpp
 opt_demo4_SOURCES = opt_demo4.cpp
 opt_demo5_SOURCES = opt_demo5.cpp
+opt_demo6_SOURCES = opt_demo6.cpp
 opt_demo1_LDADD = $(top_builddir)/src/libofeli.a
 opt_demo2_LDADD = $(top_builddir)/src/libofeli.a
 opt_demo3_LDADD = $(top_builddir)/src/libofeli.a
 opt_demo4_LDADD = $(top_builddir)/src/libofeli.a
 opt_demo5_LDADD = $(top_builddir)/src/libofeli.a
+opt_demo6_LDADD = $(top_builddir)/src/libofeli.a
 opt_demo1dir = $(datadir)/ofeli/demos/solvers/OPTIM
 opt_demo2dir = $(datadir)/ofeli/demos/solvers/OPTIM
 opt_demo3dir = $(datadir)/ofeli/demos/solvers/OPTIM
 opt_demo4dir = $(datadir)/ofeli/demos/solvers/OPTIM
 opt_demo5dir = $(datadir)/ofeli/demos/solvers/OPTIM
+opt_demo6dir = $(datadir)/ofeli/demos/solvers/OPTIM
 opt_demo1_DATA = opt_demo1.cpp
 opt_demo2_DATA = opt_demo2.cpp
-opt_demo3_DATA = opt_demo3.cpp Opt.h test.dat test.m Makefile.standalone README
-opt_demo4_DATA = opt_demo4.cpp
+opt_demo3_DATA = opt_demo3.cpp Opt3.h test.dat test.m Makefile.standalone README
+opt_demo4_DATA = opt_demo4.cpp Opt4.h
 opt_demo5_DATA = opt_demo5.cpp
+opt_demo6_DATA = opt_demo6.cpp
 dist_opt_demo1_DATA = opt_demo1.cpp
 dist_opt_demo2_DATA = opt_demo2.cpp
-dist_opt_demo3_DATA = opt_demo3.cpp Opt.h test.dat test.m Makefile.standalone README
-dist_opt_demo4_DATA = opt_demo4.cpp
+dist_opt_demo3_DATA = opt_demo3.cpp Opt3.h test.dat test.m Makefile.standalone README
+dist_opt_demo4_DATA = opt_demo4.cpp Opt4.h
 dist_opt_demo5_DATA = opt_demo5.cpp
+dist_opt_demo6_DATA = opt_demo6.cpp
 all: all-am
 
 .SUFFIXES:
@@ -455,6 +468,10 @@ opt_demo4$(EXEEXT): $(opt_demo4_OBJECTS) $(opt_demo4_DEPENDENCIES) $(EXTRA_opt_d
 opt_demo5$(EXEEXT): $(opt_demo5_OBJECTS) $(opt_demo5_DEPENDENCIES) $(EXTRA_opt_demo5_DEPENDENCIES) 
 	@rm -f opt_demo5$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(opt_demo5_OBJECTS) $(opt_demo5_LDADD) $(LIBS)
+
+opt_demo6$(EXEEXT): $(opt_demo6_OBJECTS) $(opt_demo6_DEPENDENCIES) $(EXTRA_opt_demo6_DEPENDENCIES) 
+	@rm -f opt_demo6$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(opt_demo6_OBJECTS) $(opt_demo6_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -572,6 +589,27 @@ uninstall-dist_opt_demo5DATA:
 	@list='$(dist_opt_demo5_DATA)'; test -n "$(opt_demo5dir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(opt_demo5dir)'; $(am__uninstall_files_from_dir)
+install-dist_opt_demo6DATA: $(dist_opt_demo6_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_opt_demo6_DATA)'; test -n "$(opt_demo6dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(opt_demo6dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(opt_demo6dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(opt_demo6dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(opt_demo6dir)" || exit $$?; \
+	done
+
+uninstall-dist_opt_demo6DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_opt_demo6_DATA)'; test -n "$(opt_demo6dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(opt_demo6dir)'; $(am__uninstall_files_from_dir)
 install-opt_demo1DATA: $(opt_demo1_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(opt_demo1_DATA)'; test -n "$(opt_demo1dir)" || list=; \
@@ -677,6 +715,27 @@ uninstall-opt_demo5DATA:
 	@list='$(opt_demo5_DATA)'; test -n "$(opt_demo5dir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(opt_demo5dir)'; $(am__uninstall_files_from_dir)
+install-opt_demo6DATA: $(opt_demo6_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(opt_demo6_DATA)'; test -n "$(opt_demo6dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(opt_demo6dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(opt_demo6dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(opt_demo6dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(opt_demo6dir)" || exit $$?; \
+	done
+
+uninstall-opt_demo6DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(opt_demo6_DATA)'; test -n "$(opt_demo6dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(opt_demo6dir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -767,7 +826,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(opt_demo1dir)" "$(DESTDIR)$(opt_demo2dir)" "$(DESTDIR)$(opt_demo3dir)" "$(DESTDIR)$(opt_demo4dir)" "$(DESTDIR)$(opt_demo5dir)" "$(DESTDIR)$(opt_demo1dir)" "$(DESTDIR)$(opt_demo2dir)" "$(DESTDIR)$(opt_demo3dir)" "$(DESTDIR)$(opt_demo4dir)" "$(DESTDIR)$(opt_demo5dir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(opt_demo1dir)" "$(DESTDIR)$(opt_demo2dir)" "$(DESTDIR)$(opt_demo3dir)" "$(DESTDIR)$(opt_demo4dir)" "$(DESTDIR)$(opt_demo5dir)" "$(DESTDIR)$(opt_demo6dir)" "$(DESTDIR)$(opt_demo1dir)" "$(DESTDIR)$(opt_demo2dir)" "$(DESTDIR)$(opt_demo3dir)" "$(DESTDIR)$(opt_demo4dir)" "$(DESTDIR)$(opt_demo5dir)" "$(DESTDIR)$(opt_demo6dir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -802,7 +861,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-local mostlyclean-am
 
 distclean: distclean-am
 	-rm -f Makefile
@@ -823,9 +882,10 @@ info-am:
 
 install-data-am: install-dist_opt_demo1DATA install-dist_opt_demo2DATA \
 	install-dist_opt_demo3DATA install-dist_opt_demo4DATA \
-	install-dist_opt_demo5DATA install-opt_demo1DATA \
-	install-opt_demo2DATA install-opt_demo3DATA \
-	install-opt_demo4DATA install-opt_demo5DATA
+	install-dist_opt_demo5DATA install-dist_opt_demo6DATA \
+	install-opt_demo1DATA install-opt_demo2DATA \
+	install-opt_demo3DATA install-opt_demo4DATA \
+	install-opt_demo5DATA install-opt_demo6DATA
 
 install-dvi: install-dvi-am
 
@@ -872,37 +932,44 @@ ps-am:
 uninstall-am: uninstall-binPROGRAMS uninstall-dist_opt_demo1DATA \
 	uninstall-dist_opt_demo2DATA uninstall-dist_opt_demo3DATA \
 	uninstall-dist_opt_demo4DATA uninstall-dist_opt_demo5DATA \
-	uninstall-opt_demo1DATA uninstall-opt_demo2DATA \
-	uninstall-opt_demo3DATA uninstall-opt_demo4DATA \
-	uninstall-opt_demo5DATA
+	uninstall-dist_opt_demo6DATA uninstall-opt_demo1DATA \
+	uninstall-opt_demo2DATA uninstall-opt_demo3DATA \
+	uninstall-opt_demo4DATA uninstall-opt_demo5DATA \
+	uninstall-opt_demo6DATA
 
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean \
-	clean-binPROGRAMS clean-generic cscopelist-am ctags ctags-am \
-	distclean distclean-compile distclean-generic distclean-tags \
-	distdir dvi dvi-am html html-am info info-am install \
-	install-am install-binPROGRAMS install-data install-data-am \
-	install-dist_opt_demo1DATA install-dist_opt_demo2DATA \
-	install-dist_opt_demo3DATA install-dist_opt_demo4DATA \
-	install-dist_opt_demo5DATA install-dvi install-dvi-am \
+	clean-binPROGRAMS clean-generic clean-local cscopelist-am \
+	ctags ctags-am distclean distclean-compile distclean-generic \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-binPROGRAMS install-data \
+	install-data-am install-dist_opt_demo1DATA \
+	install-dist_opt_demo2DATA install-dist_opt_demo3DATA \
+	install-dist_opt_demo4DATA install-dist_opt_demo5DATA \
+	install-dist_opt_demo6DATA install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
 	install-info install-info-am install-man install-opt_demo1DATA \
 	install-opt_demo2DATA install-opt_demo3DATA \
-	install-opt_demo4DATA install-opt_demo5DATA install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS \
-	uninstall-dist_opt_demo1DATA uninstall-dist_opt_demo2DATA \
-	uninstall-dist_opt_demo3DATA uninstall-dist_opt_demo4DATA \
-	uninstall-dist_opt_demo5DATA uninstall-opt_demo1DATA \
+	install-opt_demo4DATA install-opt_demo5DATA \
+	install-opt_demo6DATA install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic pdf pdf-am \
+	ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-binPROGRAMS uninstall-dist_opt_demo1DATA \
+	uninstall-dist_opt_demo2DATA uninstall-dist_opt_demo3DATA \
+	uninstall-dist_opt_demo4DATA uninstall-dist_opt_demo5DATA \
+	uninstall-dist_opt_demo6DATA uninstall-opt_demo1DATA \
 	uninstall-opt_demo2DATA uninstall-opt_demo3DATA \
-	uninstall-opt_demo4DATA uninstall-opt_demo5DATA
+	uninstall-opt_demo4DATA uninstall-opt_demo5DATA \
+	uninstall-opt_demo6DATA
 
 .PRECIOUS: Makefile
 
+
+clean-local:
+	rm -f plot.dat
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

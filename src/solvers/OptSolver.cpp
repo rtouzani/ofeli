@@ -2,7 +2,7 @@
 
                                     O  F  E  L  I
 
-                            Object  Finite  Element  Library
+                      u      Object  Finite  Element  Library
 
   ==============================================================================
 
@@ -161,6 +161,27 @@ void OptSolver::setLowerBound(real_t lb)
 }
 
 
+void OptSolver::setLowerBound(size_t i,
+                              real_t lb)
+{
+   _lb[i-1] = lb;
+}
+
+
+void OptSolver::setUpperBound(size_t i,
+                              real_t ub)
+{
+   _ub[i-1] = ub;
+}
+
+
+void OptSolver::setEqBound(size_t i,
+                           real_t b)
+{
+   _lb[i-1] = _ub[i-1] = b;
+}
+
+
 void OptSolver::setLowerBounds(Vect<real_t>& lb)
 {
    _lb = lb;
@@ -203,6 +224,20 @@ void OptSolver::setObjective(string exp)
 }
 
 
+void OptSolver::setObjective(function<real_t(real_t)> f)
+{
+   _type = VECTOR;
+   _obj_fct1 = f;
+}
+
+
+void OptSolver::setObjective(function<real_t(Vect<real_t>)> f)
+{
+   _type = VECTOR;
+   _obj_fct2 = f;
+}
+
+
 void OptSolver::setObjective(Fct& f)
 {
    _theFct = &f;
@@ -212,12 +247,26 @@ void OptSolver::setObjective(Fct& f)
 }
 
 
+void OptSolver::setGradient(function<real_t(real_t)> f)
+{
+   _type = VECTOR;
+   _grad1 = f;
+}
+
+
+void OptSolver::setGradient(function<Vect<real_t>(Vect<real_t>)> f)
+{
+   _type = VECTOR;
+   _grad2 = f;
+}
+
+
 void OptSolver::setGradient(string exp,
                             int    i)
 {
    if (_opt_method==SIMULATED_ANNEALING)
       throw OFELIException("In OptSolver::setGradient(exp,i): Providing the gradient "
-			   "is useless for the simulated annealing method.");
+                           "is useless for the simulated annealing method.");
    if (i>int(_size) || i<=0)
       throw OFELIException("In OptSolver::setGradient(exp,i): Index is out of bounds");
    _theDFct[i-1] = new Fct(exp,_var);
@@ -232,7 +281,7 @@ void OptSolver::setHessian(string exp,
 {
    if (_opt_method!=NEWTON)
       throw OFELIException("In OptSolver::setHessian(exp,i,j): Providing the hessian "
-			   "is available for Newton's method only.");
+                           "is available for Newton's method only.");
    if (i>int(_size) || i<=0)
       throw OFELIException("In OptSolver::setHessian(exp,i,j): First index is out of bounds");
    if (j>int(_size) || j<=0)
@@ -261,7 +310,7 @@ void OptSolver::setHessian(Fct&   f,
 {
    if (_opt_method!=NEWTON)
       throw OFELIException("In OptSolver::setHessian(exp,i,j): Providing the hessian "
-			   "is available for Newton's method only.");
+                           "is available for Newton's method only.");
    if (i>int(_size) || i<=0)
       throw OFELIException("In OptSolver::setHessian(exp,i,j): First index is out of bounds");
    if (j>int(_size) || j<=0)
@@ -272,7 +321,7 @@ void OptSolver::setHessian(Fct&   f,
 
 
 void OptSolver::setIneqConstraint(Fct&   f,
-				  real_t penal)
+                                  real_t penal)
 {
    if (_theFct==nullptr)
       throw OFELIException("In OptSolver::setIneqConstraint(f,penal): setObjective must be called first");
@@ -296,7 +345,7 @@ void OptSolver::setEqConstraint(Fct&   f,
 
 
 void OptSolver::setIneqConstraint(string exp,
-				  real_t penal)
+                                  real_t penal)
 {
    if (_theFct==nullptr)
       throw OFELIException("In OptSolver::setIneqConstraint(exp,penal): setObjective must be called first");

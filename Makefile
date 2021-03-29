@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin20.3.0
-host_triplet = i386-apple-darwin20.3.0
+build_triplet = i386-apple-darwin19.6.0
+host_triplet = i386-apple-darwin19.6.0
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -246,7 +246,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS =  
 CPP = gcc -E
-CPPFLAGS = -Wall 
+CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
@@ -312,10 +312,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin20.3.0
+build = i386-apple-darwin19.6.0
 build_alias = 
 build_cpu = i386
-build_os = darwin20.3.0
+build_os = darwin19.6.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -323,10 +323,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin20.3.0
+host = i386-apple-darwin19.6.0
 host_alias = 
 host_cpu = i386
-host_os = darwin20.3.0
+host_os = darwin19.6.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -360,7 +360,8 @@ AUX_DIST = config.guess \
            mdate-sh \
            missing \
            mkinstalldirs \
-           ofeli.cbp
+           install-sdk.sh \
+           README-sdk
 
 AUX_DIST_EXTRA = readline.m4 \
                  sys_errlist.m4 \
@@ -884,27 +885,6 @@ uninstall-am: uninstall-binSCRIPTS
 tests:
 	chmod a+x test_ofeli.sh
 	./test_ofeli.sh
-
-sdk:
-	mkdir -p ofeli-sdk
-	mkdir -p ofeli-sdk/bin
-	mkdir -p ofeli-sdk/lib
-	mkdir -p ofeli-sdk/include
-	mkdir -p ofeli-sdk/material
-	cp src/libofeli.a ofeli-sdk/lib/.
-	cp util/conv/src/cmesh ofeli-sdk/bin/.
-	cp util/conv/src/cfield ofeli-sdk/bin/.
-	cp util/g2m/g2m ofeli-sdk/bin/.
-	cp util/vmesh/vmesh ofeli-sdk/bin/.
-	cp material/* ofeli-sdk/material/.
-	cp ofeli-config ofeli-sdk/bin/.
-	cp -rf include/ ofeli-sdk/include/
-	cp ../tools/install-sdk.sh ofeli-sdk/.
-	find ofeli-sdk/ -name "Makefile.am" -exec rm {} \;
-	find ofeli-sdk/ -name "Makefile.in" -exec rm {} \;
-	find ofeli-sdk/ -name "Makefile" -exec rm {} \;
-	tar czf ofeli-sdk.tar.gz ofeli-sdk/
-	rm -rf ofeli-sdk
 
 clean-local:
 	-rm -rf autom4te.cache *.log include/stamp-h1

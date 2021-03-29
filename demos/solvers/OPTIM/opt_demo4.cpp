@@ -1,14 +1,10 @@
 /*==============================================================================
 
-                                **********************
-                                *      opt_demo4     *
-                                **********************
+                                    O  F  E  L  I
 
+                            Object  Finite  Element  Library
 
-                  A demo program for solving a linear program problem 
-                             using the Simplex method
-
-  ------------------------------------------------------------------------------
+  ==============================================================================
 
    Copyright (C) 1998 - 2021 Rachid Touzani
 
@@ -29,54 +25,53 @@
 
   ==============================================================================
 
-  A simple production planning problem is given by the use of two ingredients A 
-  and B that produce products 1 and 2. The available supply of A is 30 units 
-  and B is 44 units. For production it requires:
+                A program to illustrate the Optimization solver
 
-    3 units of A and 8 units of B to produce Product 1
-    6 units of A and 4 units of B to produce Product 2 
-
-  There are at most 5 units of Product 1 and 4 units of Product 2. Product 1 can 
-  be sold for 100 and Product 2 can be sold for 125. The objective is to maximize 
-  the profit for this production problem. 
-
-  The linear program can be stated as follows:
- 
-       Maximize x1 + x2 + 3*x3 -0.5*x4 
-       Subject to the constraints:
-          x1  + 2x3 <= 740
-          2x2 - 7x4 <= 0
-          x2  - x3 + 2x4 >= 0.5
-          x1 + x2 + x3 + x4 = 9
-          and all x's >=0.
-
+              Solution of the well known Brachistochrone problem
+  
   ==============================================================================*/
 
-
 #include "OFELI.h"
+#include "Opt4.h"
+
 using namespace OFELI;
 
-int main()
+int main(int argc, char *argv[])
 {
-   int nv=4, nb_le=2, nb_ge=1, nb_eq=1;
-   Vect<double> x(nv), a(nv);
+// Define number of discretization points and bound values
+   int n = 20;
+   const double a = 0., b = 1., g = 10., y0=5., y1=1.;
+   if (argc>1)
+      n = atoi(argv[1]);
 
-   LPSolver s;
-   s.setSize(nv,nb_le,nb_ge,nb_eq);
-   s.set(x);
-   a(1) = -1.0, a(2) = -1.0, a(3) = -3.0, a(4) = 0.5;
-   s.set(LPSolver::OBJECTIVE,a);
-   a(1) = 1.0, a(2) = 0.0, a(3) = 2.0, a(4) = 0.0;
-   s.set(LPSolver::LE_CONSTRAINT,a,740.0);
-   a(1) = 0.0, a(2) = 2.0, a(3) = 0.0, a(4) = -7.0;
-   s.set(LPSolver::LE_CONSTRAINT,a,0.0);
-   a(1) = 0.0, a(2) = 1.0, a(3) = -1.0, a(4) = 2.0;
-   s.set(LPSolver::GE_CONSTRAINT,a,0.5);
-   a(1) = 1.0, a(2) = 1.0, a(3) = 1.0, a(4) = 1.0;
-   s.set(LPSolver::EQ_CONSTRAINT,a,9.0);
+   try {
+//    Instantiate solution vector (Initialized to 0)
+      Vect<double> y(n+1);
+      y[0] = y0, y[n] = y1;
 
-   s.run();
-   cout << "Solution\n" << x;
-   cout << "Optimal objective: " << s.getObjective() << endl;
+//    Instantiate optimization solver class using solution vector
+      Verbosity = 1;
+      Opt4 opt(g,a,b,y);
+      OptSolver os(opt,y);
+
+//    Select optimization algorithm
+      os.setOptMethod(OptSolver::TRUNCATED_NEWTON);
+
+//    Impose bound constraints
+      os.setEqBound(1,y0);
+      os.setEqBound(n+1,y1);
+
+//    Run the optimization procedure
+      os.run();
+
+//    Output class information, solution and save for plotting
+      cout << os;
+      cout << "\nSolution stored in file 'plot.dat'" << endl;
+      double h = (b-a)/n;
+      ofstream fs("plot.dat");
+      for (size_t i=0; i<=n; ++i) 
+         fs << i*h << "  " << y[i] << endl;
+   } CATCH_EXCEPTION
+
    return 0;
 }

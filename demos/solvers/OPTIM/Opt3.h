@@ -30,8 +30,8 @@
 
   ==============================================================================*/
 
-#ifndef __OPT_H
-#define __OPT_H
+#ifndef __OPT3_H
+#define __OPT3_H
 
 #include "OFELI.h"
 #include "solvers/MyOpt.h"
@@ -39,7 +39,7 @@
 
 using namespace OFELI;
 
-class Opt : public MyOpt
+class Opt3 : public MyOpt
 {
 
  public:
@@ -47,7 +47,7 @@ class Opt : public MyOpt
 /* Constructor using the Mesh instance
  * mesh (in) Mesh instance
  */
-   Opt(Mesh& mesh) : MyOpt(mesh)
+   Opt3(Mesh& mesh) : MyOpt(mesh)
    {
       setEquation(&eq);
       eq.setMesh(*_theMesh);

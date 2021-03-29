@@ -49,19 +49,15 @@ namespace OFELI {
  * \ingroup Util
  * \brief Return sign of <tt>a</tt>: <tt>-1</tt> or <tt>1</tt>. 
  */
-inline int Sgn(real_t a)
-{
-   return (((a) > 0) ? (1) : -(1));
-}
+inline int Sgn(real_t a) { return (((a) > 0) ? (1) : -(1)); }
+
 
 /** \fn real_t Abs2(complex_t a)
  *  \ingroup Util
  *  \brief Return square of modulus of complex number <tt>a</tt>
  */
-inline real_t Abs2(complex_t a)
-{
-   return (a.real()*a.real()+a.imag()*a.imag());
-}
+inline real_t Abs2(complex_t a) { return (a.real()*a.real()+a.imag()*a.imag()); }
+
 
 /** \fn real_t Abs2(real_t a)
  *  \ingroup Util
@@ -69,11 +65,13 @@ inline real_t Abs2(complex_t a)
  */
 inline real_t Abs2(real_t a) { return (a*a); }
 
+
 /** \fn real_t Abs(real_t a)
  * \ingroup Util
  * \brief Return absolute value of <tt>a</tt>
  */
 inline real_t Abs(real_t a) { return (((a) > 0) ? (a) : -(a)); }
+
 
 /** \fn real_t Abs(complex_t a)
  *  \ingroup Util
@@ -81,11 +79,13 @@ inline real_t Abs(real_t a) { return (((a) > 0) ? (a) : -(a)); }
  */
 inline real_t Abs(complex_t a) { return sqrt(Abs2(a)); }
 
+
 /** \fn real_t Abs(const Point<real_t>& p)
  *  \ingroup Util
  *  \brief Return Norm of vector <tt>a</tt>
  */
 inline real_t Abs(const Point<real_t>& p) { return p.Norm(); }
+
 
 /** \fn real_t Conjg(real_t x)
  *  \ingroup Util
@@ -93,11 +93,13 @@ inline real_t Abs(const Point<real_t>& p) { return p.Norm(); }
  */
 inline real_t Conjg(real_t a) { return a; }
 
+
 /** \fn complex_t Conjg(complex_t x)
  *  \ingroup Util
  *  \brief Return complex conjugate of complex number <tt>a</tt>
  */
 inline complex_t Conjg(complex_t a) { return complex_t(a.real(),-a.imag()); }
+
 
 /** \fn real_t Max(real_t a, real_t b, real_t c)
  *  \ingroup Util
@@ -105,10 +107,15 @@ inline complex_t Conjg(complex_t a) { return complex_t(a.real(),-a.imag()); }
  */
 inline real_t Max(real_t a,
                   real_t b,
-                  real_t c)
-{
-   return std::max(std::max(a,b),c);
-}
+                  real_t c) { return std::max(std::max(a,b),c);}
+
+
+/** \fn size_t Kronecker(int i, int j)
+ * \ingroup Util
+ * \brief Return Kronecker delta of <tt>i</tt> and <tt>j</tt>. 
+ */
+inline int Kronecker(int i, int j) { return ((i==j) ? 1 : 0); }
+
 
 /** \fn int Max(int a, int b, int c)
  *  \ingroup Util
@@ -117,6 +124,7 @@ inline real_t Max(real_t a,
 inline int Max(int a,
                int b,
                int c) { return std::max(std::max(a,b),c); }
+
 
 /** \fn real_t Min(real_t a, real_t b, real_t c)
  *  \ingroup Util
@@ -134,6 +142,7 @@ inline int Min(int a,
                int b,
                int c) { return std::min(std::min(a,b),c); }
 
+
 /** \fn real_t Max(real_t a, real_t b, real_t c, real_t d)
  *  \ingroup Util
  *  \brief Return maximum value of integer numbers <tt>a</tt>, <tt>b</tt>, <tt>c</tt>
@@ -143,6 +152,7 @@ inline real_t Max(real_t a,
                   real_t b,
                   real_t c,
                   real_t d) { return std::max(Max(a,b,c),d); }
+
 
 /** \fn int Max(int a, int b, int  c, int d)
  *  \ingroup Util
@@ -154,6 +164,7 @@ inline int Max(int a,
                int c,
                int d) { return std::max(Max(a,b,c),d); }
 
+
 /** \fn real_t Min(real_t a, real_t b, real_t c, real_t d)
  *  \ingroup Util
  *  \brief Return minimum value of real numbers <tt>a</tt>, <tt>b</tt>, <tt>c</tt>
@@ -164,6 +175,7 @@ inline real_t Min(real_t a,
                   real_t c,
                   real_t d) { return std::min(Min(a,b,c),d); }
 
+
 /// \fn int Min(int a, int b, int c, int d)
 /// \ingroup Util
 /// \brief Return minimum value of integer numbers <tt>a</tt>, <tt>b</tt>, <tt>c</tt> and <tt>d</tt>
@@ -171,6 +183,7 @@ inline int Min(int a,
                int b,
                int c,
                int d) { return std::min(Min(a,b,c),d); }
+
 
 /// \fn real_t Arg(complex_t x)
 /// \ingroup Util
