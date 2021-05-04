@@ -37,7 +37,7 @@
 #include "solvers/TimeStepping.h"
 #include "mesh/Material.h"
 
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 using std::complex;
 using std::abs;
@@ -96,9 +96,9 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
-   using AbsEqua<T_>::_Mu_set;
-   using AbsEqua<T_>::_sigma_set;
-   using AbsEqua<T_>::_omega_set;
+   using Equa<T_>::_Mu_set;
+   using Equa<T_>::_sigma_set;
+   using Equa<T_>::_omega_set;
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -110,11 +110,10 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 
     int runTransient()
     {
-       AbsEqua<T_>::_b->clear();
-       cout<<"RT 0"<<endl;
+       Equa<T_>::_b->clear();
        build();
-       int ret=AbsEqua<T_>::solveLinearSystem(*AbsEqua<T_>::_b,AbsEqua<T_>::_uu);
-       AbsEqua<T_>::_u->insertBC(*_theMesh,AbsEqua<T_>::_uu,*AbsEqua<T_>::_bc);
+       int ret=Equa<T_>::solveLinearSystem(*Equa<T_>::_b,Equa<T_>::_uu);
+       Equa<T_>::_u->insertBC(*_theMesh,Equa<T_>::_uu,*Equa<T_>::_bc);
        return ret;
     }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

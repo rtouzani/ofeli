@@ -34,7 +34,7 @@
 #ifndef __EQUATION_H
 #define __EQUATION_H
 
-#include "equations/AbsEqua.h"
+#include "equations/Equa.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "linear_algebra/LocalVect.h"
 
@@ -70,22 +70,22 @@ class Node;
  */
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-class Equation : virtual public AbsEqua<T_>
+class Equation : virtual public Equa<T_>
 {
 
  public:
 
-  using AbsEqua<T_>::_theMesh;
-  using AbsEqua<T_>::_field_type;
-  using AbsEqua<T_>::_matrix_type;
-  using AbsEqua<T_>::_TimeInt;
-  using AbsEqua<T_>::_nb_fields;
-  using AbsEqua<T_>::_nb_nodes;
-  using AbsEqua<T_>::_nb_el;
-  using AbsEqua<T_>::_nb_dof;
-  using AbsEqua<T_>::_nb_dof_total;
-  using AbsEqua<T_>::_nb_eq;
-  using AbsEqua<T_>::_theFct;
+  using Equa<T_>::_theMesh;
+  using Equa<T_>::_field_type;
+  using Equa<T_>::_matrix_type;
+  using Equa<T_>::_TimeInt;
+  using Equa<T_>::_nb_fields;
+  using Equa<T_>::_nb_nodes;
+  using Equa<T_>::_nb_el;
+  using Equa<T_>::_nb_dof;
+  using Equa<T_>::_nb_dof_total;
+  using Equa<T_>::_nb_eq;
+  using Equa<T_>::_theFct;
 
 /// Default constructor.
 /// Constructs an "empty" equation

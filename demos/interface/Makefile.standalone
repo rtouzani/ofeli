@@ -1,0 +1,15 @@
+
+all:	fmm_demo
+
+fmm_demo:	fmm_demo.o
+		`ofeli-config --cxx` `ofeli-config --cflags` -o fmm_demo fmm_demo.o `ofeli-config --libs`
+
+clean:
+	/bin/rm -f *.o fmm_demo
+
+
+.cpp.o:
+	`ofeli-config --cxx` `ofeli-config --cflags` -c $<
+
+.c.o:
+	`ofeli-config --cc` `ofeli-config --cflags` -c $<

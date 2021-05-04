@@ -33,9 +33,10 @@
 
 #include "equations/laplace/Laplace1DL2.h"
 #include "shape_functions/Line2.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
+
 
 namespace OFELI {
 

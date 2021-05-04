@@ -33,6 +33,7 @@
 #define __CONSTANTS_H
 
 #include <float.h>
+#include <limits>
 
 namespace OFELI {
 /*!

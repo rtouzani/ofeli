@@ -675,6 +675,16 @@ static inline std::string& trim(std::string& str, const std::string& chars = "\t
    return ltrim(rtrim(str, chars), chars);
 }
 
+inline int MaxQuad(const real_t& a, const real_t& b, const real_t& c, real_t& x)
+{
+   real_t d = b*b - a*c;
+   if (d<0.)
+      return -1;
+   d = sqrt(d);
+   x = fmax((-b-d)/a,(-b+d)/a);
+   return 0;
+}
+
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */

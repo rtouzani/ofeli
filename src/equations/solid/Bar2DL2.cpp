@@ -127,7 +127,7 @@ void Bar2DL2::BodyRHS(const Vect<real_t>& f)
 
 void Bar2DL2::build()
 {
-   *AbsEqua<real_t>::_A = 0;
+   *Equa<real_t>::_A = 0;
    MESH_EL {
       set(the_element);
       if (_analysis==TRANSIENT) {
@@ -137,8 +137,8 @@ void Bar2DL2::build()
             Mass();
       }
       Stiffness();
-      AbsEqua<real_t>::_A->Assembly(The_element,eA0.get());
-      AbsEqua<real_t>::_b->Assembly(The_element,eRHS.get());
+      Equa<real_t>::_A->Assembly(The_element,eA0.get());
+      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
    }
    if (_pf!=nullptr)
       Load();

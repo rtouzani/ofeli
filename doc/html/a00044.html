@@ -53,116 +53,179 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00327.html">OFELI</a></li><li class="navelem"><a class="el" href="a00044.html">Gauss</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00044.html">Grid</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a00391.html">List of all members</a>  </div>
+<a href="a00387.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Gauss Class Reference<div class="ingroups"><a class="el" href="a00346.html">OFELI</a><a class="el" href="a00346.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00339.html">Utilities</a></div></div>  </div>
+<div class="title">Grid Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00339.html">Finite Element Mesh</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Calculate data for Gauss integration.  
+<p>To manipulate structured grids.  
  <a href="a00044.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af9f3b1e7a7b3a7c9f04b9eea81ea836b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9f3b1e7a7b3a7c9f04b9eea81ea836b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#af9f3b1e7a7b3a7c9f04b9eea81ea836b">Gauss</a> ()</td></tr>
-<tr class="memdesc:af9f3b1e7a7b3a7c9f04b9eea81ea836b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:af9f3b1e7a7b3a7c9f04b9eea81ea836b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecd62a41ddc1a71da8acbb12cce50dbc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#aecd62a41ddc1a71da8acbb12cce50dbc">Gauss</a> (size_t np)</td></tr>
-<tr class="memdesc:aecd62a41ddc1a71da8acbb12cce50dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using number of <a class="el" href="a00044.html" title="Calculate data for Gauss integration. ">Gauss</a> points.  <a href="#aecd62a41ddc1a71da8acbb12cce50dbc">More...</a><br /></td></tr>
-<tr class="separator:aecd62a41ddc1a71da8acbb12cce50dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6a8dae6b91358b3ab30e78d8e666866"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6a8dae6b91358b3ab30e78d8e666866"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ae6a8dae6b91358b3ab30e78d8e666866">setNbPoints</a> (size_t np)</td></tr>
-<tr class="memdesc:ae6a8dae6b91358b3ab30e78d8e666866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set number of integration points. <br /></td></tr>
-<tr class="separator:ae6a8dae6b91358b3ab30e78d8e666866"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a638c51e12d47a6da324d2c89c7107564"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a638c51e12d47a6da324d2c89c7107564">setTriangle</a> (<a class="el" href="a00067.html">LocalVect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 7 &gt; &amp;<a class="el" href="a00044.html#a554924d779d783548a139da9d76fa44e">w</a>, <a class="el" href="a00067.html">LocalVect</a>&lt; <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;, 7 &gt; &amp;<a class="el" href="a00044.html#a186ff0a045ae2f0e2f4a81c905b47441">x</a>)</td></tr>
-<tr class="memdesc:a638c51e12d47a6da324d2c89c7107564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose integration on triangle (7-point formula)  <a href="#a638c51e12d47a6da324d2c89c7107564">More...</a><br /></td></tr>
-<tr class="separator:a638c51e12d47a6da324d2c89c7107564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a186ff0a045ae2f0e2f4a81c905b47441"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a186ff0a045ae2f0e2f4a81c905b47441"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a186ff0a045ae2f0e2f4a81c905b47441">x</a> (size_t i) const </td></tr>
-<tr class="memdesc:a186ff0a045ae2f0e2f4a81c905b47441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinate of <code>i</code>-th Gauss-Legendre point. <br /></td></tr>
-<tr class="separator:a186ff0a045ae2f0e2f4a81c905b47441"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b4e5fe97f01383c65adc14bc62f060d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b4e5fe97f01383c65adc14bc62f060d"></a>
-const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a5b4e5fe97f01383c65adc14bc62f060d">xt</a> (size_t i) const </td></tr>
-<tr class="memdesc:a5b4e5fe97f01383c65adc14bc62f060d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of points in the reference triangle. <br /></td></tr>
-<tr class="separator:a5b4e5fe97f01383c65adc14bc62f060d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a554924d779d783548a139da9d76fa44e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a554924d779d783548a139da9d76fa44e"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a554924d779d783548a139da9d76fa44e">w</a> (size_t i) const </td></tr>
-<tr class="memdesc:a554924d779d783548a139da9d76fa44e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return weight of <code>i</code>-th Gauss-Legendre point. <br /></td></tr>
-<tr class="separator:a554924d779d783548a139da9d76fa44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a335d0339fe70071fcdf4cd5b1c7b5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0a335d0339fe70071fcdf4cd5b1c7b5f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga0a335d0339fe70071fcdf4cd5b1c7b5f">Grid</a> ()</td></tr>
+<tr class="memdesc:ga0a335d0339fe70071fcdf4cd5b1c7b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a default grid with 10 intervals in each direction. <br /></td></tr>
+<tr class="separator:ga0a335d0339fe70071fcdf4cd5b1c7b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef6c769c18847566879724e0641d93ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaef6c769c18847566879724e0641d93ae">Grid</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xm, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xM, size_t npx)</td></tr>
+<tr class="memdesc:gaef6c769c18847566879724e0641d93ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 1-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#gaef6c769c18847566879724e0641d93ae">More...</a><br /></td></tr>
+<tr class="separator:gaef6c769c18847566879724e0641d93ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7f0e09e0868e20292e3b418e0a3fce9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaa7f0e09e0868e20292e3b418e0a3fce9">Grid</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xm, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xM, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ym, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> yM, size_t npx, size_t npy)</td></tr>
+<tr class="memdesc:gaa7f0e09e0868e20292e3b418e0a3fce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 2-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#gaa7f0e09e0868e20292e3b418e0a3fce9">More...</a><br /></td></tr>
+<tr class="separator:gaa7f0e09e0868e20292e3b418e0a3fce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0528674c839ad69c4ab242ddc0dcf655"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga0528674c839ad69c4ab242ddc0dcf655">Grid</a> (<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; m, <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; M, size_t npx, size_t npy)</td></tr>
+<tr class="memdesc:ga0528674c839ad69c4ab242ddc0dcf655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 2-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#ga0528674c839ad69c4ab242ddc0dcf655">More...</a><br /></td></tr>
+<tr class="separator:ga0528674c839ad69c4ab242ddc0dcf655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1eab4d5181c7b7294bca6e650da4f061"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga1eab4d5181c7b7294bca6e650da4f061">Grid</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xm, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xM, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ym, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> yM, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> zm, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> zM, size_t npx, size_t npy, size_t npz)</td></tr>
+<tr class="memdesc:ga1eab4d5181c7b7294bca6e650da4f061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 3-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#ga1eab4d5181c7b7294bca6e650da4f061">More...</a><br /></td></tr>
+<tr class="separator:ga1eab4d5181c7b7294bca6e650da4f061"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae195c690cdc77fe012f139e11a13e25b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gae195c690cdc77fe012f139e11a13e25b">Grid</a> (<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; m, <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; M, size_t npx, size_t npy, size_t npz)</td></tr>
+<tr class="memdesc:gae195c690cdc77fe012f139e11a13e25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 3-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#gae195c690cdc77fe012f139e11a13e25b">More...</a><br /></td></tr>
+<tr class="separator:gae195c690cdc77fe012f139e11a13e25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f65f5226354bc55b1419cfec3c8bf84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga9f65f5226354bc55b1419cfec3c8bf84">setXMin</a> (const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:ga9f65f5226354bc55b1419cfec3c8bf84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set min. coordinates of the domain.  <a href="a00342.html#ga9f65f5226354bc55b1419cfec3c8bf84">More...</a><br /></td></tr>
+<tr class="separator:ga9f65f5226354bc55b1419cfec3c8bf84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5cd060d87716f96df1fe751da2458ab1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga5cd060d87716f96df1fe751da2458ab1">setXMax</a> (const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="separator:ga5cd060d87716f96df1fe751da2458ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga908ba56330052baa8b0a5507e1e1ab54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga908ba56330052baa8b0a5507e1e1ab54">setDomain</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax)</td></tr>
+<tr class="memdesc:ga908ba56330052baa8b0a5507e1e1ab54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dimensions of the domain: 1-D case.  <a href="a00342.html#ga908ba56330052baa8b0a5507e1e1ab54">More...</a><br /></td></tr>
+<tr class="separator:ga908ba56330052baa8b0a5507e1e1ab54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa946270292476658200512e284668c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaaa946270292476658200512e284668c1">setDomain</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymax)</td></tr>
+<tr class="memdesc:gaaa946270292476658200512e284668c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dimensions of the domain: 2-D case.  <a href="a00342.html#gaaa946270292476658200512e284668c1">More...</a><br /></td></tr>
+<tr class="separator:gaaa946270292476658200512e284668c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c6c8c9cf29134901b832311148f2b64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga0c6c8c9cf29134901b832311148f2b64">setDomain</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymax, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> zmin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> zmax)</td></tr>
+<tr class="memdesc:ga0c6c8c9cf29134901b832311148f2b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dimensions of the domain: 3-D case.  <a href="a00342.html#ga0c6c8c9cf29134901b832311148f2b64">More...</a><br /></td></tr>
+<tr class="separator:ga0c6c8c9cf29134901b832311148f2b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e293fe603f3854e0b2adfa755874e2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga6e293fe603f3854e0b2adfa755874e2a">setDomain</a> (<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; xmin, <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; xmax)</td></tr>
+<tr class="memdesc:ga6e293fe603f3854e0b2adfa755874e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dimensions of the domain: 3-D case.  <a href="a00342.html#ga6e293fe603f3854e0b2adfa755874e2a">More...</a><br /></td></tr>
+<tr class="separator:ga6e293fe603f3854e0b2adfa755874e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f710af98b9af3b3a076e7932df61c08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8f710af98b9af3b3a076e7932df61c08"></a>
+const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga8f710af98b9af3b3a076e7932df61c08">getXMin</a> () const </td></tr>
+<tr class="memdesc:ga8f710af98b9af3b3a076e7932df61c08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return min. Coordinates of the domain. <br /></td></tr>
+<tr class="separator:ga8f710af98b9af3b3a076e7932df61c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga368ab2e4aa92aaeaa421852da842350d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga368ab2e4aa92aaeaa421852da842350d"></a>
+const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga368ab2e4aa92aaeaa421852da842350d">getXMax</a> () const </td></tr>
+<tr class="memdesc:ga368ab2e4aa92aaeaa421852da842350d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max. Coordinates of the domain. <br /></td></tr>
+<tr class="separator:ga368ab2e4aa92aaeaa421852da842350d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6b564dcefa010a74d10ae72d42fb432"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gad6b564dcefa010a74d10ae72d42fb432">setN</a> (size_t nx, size_t ny=0, size_t nz=0)</td></tr>
+<tr class="memdesc:gad6b564dcefa010a74d10ae72d42fb432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set number of grid intervals in the <code>x</code>, <code>y</code> and <code>z</code>-directions.  <a href="a00342.html#gad6b564dcefa010a74d10ae72d42fb432">More...</a><br /></td></tr>
+<tr class="separator:gad6b564dcefa010a74d10ae72d42fb432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6108ee34e301370c503a4036edaf444"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac6108ee34e301370c503a4036edaf444"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gac6108ee34e301370c503a4036edaf444">getNx</a> () const </td></tr>
+<tr class="memdesc:gac6108ee34e301370c503a4036edaf444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of grid intervals in the <code>x</code>-direction. <br /></td></tr>
+<tr class="separator:gac6108ee34e301370c503a4036edaf444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3faf43ad9af0105239d4c871919556e9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga3faf43ad9af0105239d4c871919556e9">getNy</a> () const </td></tr>
+<tr class="memdesc:ga3faf43ad9af0105239d4c871919556e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of grid intervals in the <code>y</code>-direction.  <a href="a00342.html#ga3faf43ad9af0105239d4c871919556e9">More...</a><br /></td></tr>
+<tr class="separator:ga3faf43ad9af0105239d4c871919556e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bc76639788ffbef4af28d44d9da907d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga8bc76639788ffbef4af28d44d9da907d">getNz</a> () const </td></tr>
+<tr class="memdesc:ga8bc76639788ffbef4af28d44d9da907d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of grid intervals in the z-direction.  <a href="a00342.html#ga8bc76639788ffbef4af28d44d9da907d">More...</a><br /></td></tr>
+<tr class="separator:ga8bc76639788ffbef4af28d44d9da907d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c5d7672afd2798cc7e0aebecc790d3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5c5d7672afd2798cc7e0aebecc790d3c"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga5c5d7672afd2798cc7e0aebecc790d3c">getHx</a> () const </td></tr>
+<tr class="memdesc:ga5c5d7672afd2798cc7e0aebecc790d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return grid size in the x-direction. <br /></td></tr>
+<tr class="separator:ga5c5d7672afd2798cc7e0aebecc790d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a28ec4697078e06a0452f99e79cea9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4a28ec4697078e06a0452f99e79cea9f"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga4a28ec4697078e06a0452f99e79cea9f">getHy</a> () const </td></tr>
+<tr class="memdesc:ga4a28ec4697078e06a0452f99e79cea9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return grid size in the y-direction. <br /></td></tr>
+<tr class="separator:ga4a28ec4697078e06a0452f99e79cea9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa92b82704be79fd55751d2d7d6f5b77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaa92b82704be79fd55751d2d7d6f5b77"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaaa92b82704be79fd55751d2d7d6f5b77">getHz</a> () const </td></tr>
+<tr class="memdesc:gaaa92b82704be79fd55751d2d7d6f5b77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return grid size in the z-direction. <br /></td></tr>
+<tr class="separator:gaaa92b82704be79fd55751d2d7d6f5b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga922f02925c6d7f3f1371287c3bd2f5cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga922f02925c6d7f3f1371287c3bd2f5cc"></a>
+<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga922f02925c6d7f3f1371287c3bd2f5cc">getCoord</a> (size_t i) const </td></tr>
+<tr class="memdesc:ga922f02925c6d7f3f1371287c3bd2f5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates a point with label <code>i</code> in a 1-D grid. <br /></td></tr>
+<tr class="separator:ga922f02925c6d7f3f1371287c3bd2f5cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae89642f6fab3ba14a63cbcd5e2fa3246"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae89642f6fab3ba14a63cbcd5e2fa3246"></a>
+<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gae89642f6fab3ba14a63cbcd5e2fa3246">getCoord</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:gae89642f6fab3ba14a63cbcd5e2fa3246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates a point with label <code>(i,j)</code> in a 2-D grid. <br /></td></tr>
+<tr class="separator:gae89642f6fab3ba14a63cbcd5e2fa3246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabfda8585cf7fa2ffcaef31f11388a31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaabfda8585cf7fa2ffcaef31f11388a31"></a>
+<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaabfda8585cf7fa2ffcaef31f11388a31">getCoord</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:gaabfda8585cf7fa2ffcaef31f11388a31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates a point with label <code>(i,j,k)</code> in a 3-D grid. <br /></td></tr>
+<tr class="separator:gaabfda8585cf7fa2ffcaef31f11388a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa21e3ea3ce6e914be8fdc47d071269d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa21e3ea3ce6e914be8fdc47d071269d9"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaa21e3ea3ce6e914be8fdc47d071269d9">getX</a> (size_t i) const </td></tr>
+<tr class="memdesc:gaa21e3ea3ce6e914be8fdc47d071269d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return x-coordinate of point with index <code>i</code> <br /></td></tr>
+<tr class="separator:gaa21e3ea3ce6e914be8fdc47d071269d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70bea550a19c21b2264826c024628b10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga70bea550a19c21b2264826c024628b10"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga70bea550a19c21b2264826c024628b10">getY</a> (size_t j) const </td></tr>
+<tr class="memdesc:ga70bea550a19c21b2264826c024628b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return y-coordinate of point with index <code>j</code> <br /></td></tr>
+<tr class="separator:ga70bea550a19c21b2264826c024628b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0240c716d0e351dd684147f08c0a4390"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0240c716d0e351dd684147f08c0a4390"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga0240c716d0e351dd684147f08c0a4390">getZ</a> (size_t k) const </td></tr>
+<tr class="memdesc:ga0240c716d0e351dd684147f08c0a4390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return z-coordinate of point with index <code>k</code> <br /></td></tr>
+<tr class="separator:ga0240c716d0e351dd684147f08c0a4390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada4a17e443b900bbf48cd01ae2f13c8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gada4a17e443b900bbf48cd01ae2f13c8c"></a>
+<a class="el" href="a00089.html">Point2D</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gada4a17e443b900bbf48cd01ae2f13c8c">getXY</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:gada4a17e443b900bbf48cd01ae2f13c8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of point with indices <code>(i,j)</code> <br /></td></tr>
+<tr class="separator:gada4a17e443b900bbf48cd01ae2f13c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga770d3dc41442a06792aea5285230c947"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga770d3dc41442a06792aea5285230c947"></a>
+<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga770d3dc41442a06792aea5285230c947">getXYZ</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:ga770d3dc41442a06792aea5285230c947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of point with indices <code>(i,j,k)</code> <br /></td></tr>
+<tr class="separator:ga770d3dc41442a06792aea5285230c947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28a4776b700c9dc74061860f70c09c97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28a4776b700c9dc74061860f70c09c97"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga28a4776b700c9dc74061860f70c09c97">getCenter</a> (size_t i) const </td></tr>
+<tr class="memdesc:ga28a4776b700c9dc74061860f70c09c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of a 1-D cell with indices <code>i</code>, <code>i+1</code> <br /></td></tr>
+<tr class="separator:ga28a4776b700c9dc74061860f70c09c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bae0c310514803bb28fc349506a1408"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6bae0c310514803bb28fc349506a1408"></a>
+<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga6bae0c310514803bb28fc349506a1408">getCenter</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:ga6bae0c310514803bb28fc349506a1408"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of a 2-D cell with indices <code>(i,j)</code>, <code>(i+1,j)</code>, <code>(i+1,j+1)</code>, <code>(i,j+1)</code> <br /></td></tr>
+<tr class="separator:ga6bae0c310514803bb28fc349506a1408"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f90f4f63da3e3669a49586a9362c79c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4f90f4f63da3e3669a49586a9362c79c"></a>
+<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga4f90f4f63da3e3669a49586a9362c79c">getCenter</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:ga4f90f4f63da3e3669a49586a9362c79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of a 3-D cell with indices <code>(i,j,k)</code>, <code>(i+1,j,k)</code>, <code>(i+1,j+1,k)</code>, <code>(i,j+1,k)</code>, <code>(i,j,k+1)</code>, <code>(i+1,j,k+1)</code>, <code>(i+1,j+1,k+1)</code>, <code>(i,j+1,k+1)</code> <br /></td></tr>
+<tr class="separator:ga4f90f4f63da3e3669a49586a9362c79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d8498e490acb140283ba216b5a8be8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga5d8498e490acb140283ba216b5a8be8a">setCode</a> (string exp, int code)</td></tr>
+<tr class="memdesc:ga5d8498e490acb140283ba216b5a8be8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a code for some grid points.  <a href="a00342.html#ga5d8498e490acb140283ba216b5a8be8a">More...</a><br /></td></tr>
+<tr class="separator:ga5d8498e490acb140283ba216b5a8be8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga214f158f212516a7d6a94760feb467f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga214f158f212516a7d6a94760feb467f6">setCode</a> (int side, int code)</td></tr>
+<tr class="memdesc:ga214f158f212516a7d6a94760feb467f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a code for grid points on sides.  <a href="a00342.html#ga214f158f212516a7d6a94760feb467f6">More...</a><br /></td></tr>
+<tr class="separator:ga214f158f212516a7d6a94760feb467f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga822494ad167a04bd6211ee893be42502"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga822494ad167a04bd6211ee893be42502">getCode</a> (int side) const </td></tr>
+<tr class="memdesc:ga822494ad167a04bd6211ee893be42502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code for a side number.  <a href="a00342.html#ga822494ad167a04bd6211ee893be42502">More...</a><br /></td></tr>
+<tr class="separator:ga822494ad167a04bd6211ee893be42502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77f9be7b6ad92b6ad54b4e018f7b91fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga77f9be7b6ad92b6ad54b4e018f7b91fd">getCode</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:ga77f9be7b6ad92b6ad54b4e018f7b91fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code for a grid point.  <a href="a00342.html#ga77f9be7b6ad92b6ad54b4e018f7b91fd">More...</a><br /></td></tr>
+<tr class="separator:ga77f9be7b6ad92b6ad54b4e018f7b91fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c4742d55bb2cd7f12e97aa466cc17cd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga9c4742d55bb2cd7f12e97aa466cc17cd">getCode</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:ga9c4742d55bb2cd7f12e97aa466cc17cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code for a grid point.  <a href="a00342.html#ga9c4742d55bb2cd7f12e97aa466cc17cd">More...</a><br /></td></tr>
+<tr class="separator:ga9c4742d55bb2cd7f12e97aa466cc17cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5113d0202730c14569f3b62b4020906c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5113d0202730c14569f3b62b4020906c"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga5113d0202730c14569f3b62b4020906c">getDim</a> () const </td></tr>
+<tr class="memdesc:ga5113d0202730c14569f3b62b4020906c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return space dimension. <br /></td></tr>
+<tr class="separator:ga5113d0202730c14569f3b62b4020906c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89f7cf12c09343988c846c1bc31a8950"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga89f7cf12c09343988c846c1bc31a8950">Deactivate</a> (size_t i)</td></tr>
+<tr class="memdesc:ga89f7cf12c09343988c846c1bc31a8950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change state of a cell from active to inactive (1-D grid)  <a href="a00342.html#ga89f7cf12c09343988c846c1bc31a8950">More...</a><br /></td></tr>
+<tr class="separator:ga89f7cf12c09343988c846c1bc31a8950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad75e7ed91f3c0c6741741c02616bce7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gad75e7ed91f3c0c6741741c02616bce7b">Deactivate</a> (size_t i, size_t j)</td></tr>
+<tr class="memdesc:gad75e7ed91f3c0c6741741c02616bce7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change state of a cell from active to inactive (2-D grid)  <a href="a00342.html#gad75e7ed91f3c0c6741741c02616bce7b">More...</a><br /></td></tr>
+<tr class="separator:gad75e7ed91f3c0c6741741c02616bce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b422946d495c9d3d8688068ea466c33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga9b422946d495c9d3d8688068ea466c33">Deactivate</a> (size_t i, size_t j, size_t k)</td></tr>
+<tr class="memdesc:ga9b422946d495c9d3d8688068ea466c33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change state of a cell from active to inactive (2-D grid)  <a href="a00342.html#ga9b422946d495c9d3d8688068ea466c33">More...</a><br /></td></tr>
+<tr class="separator:ga9b422946d495c9d3d8688068ea466c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa247b029fd25144ad14ae81c25eff4bb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaa247b029fd25144ad14ae81c25eff4bb">isActive</a> (size_t i) const </td></tr>
+<tr class="memdesc:gaa247b029fd25144ad14ae81c25eff4bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if cell is active or not (1-D grid)  <a href="a00342.html#gaa247b029fd25144ad14ae81c25eff4bb">More...</a><br /></td></tr>
+<tr class="separator:gaa247b029fd25144ad14ae81c25eff4bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad692ac8559707437d922dccbbefd557"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaad692ac8559707437d922dccbbefd557">isActive</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:gaad692ac8559707437d922dccbbefd557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if cell is active or not (2-D grid)  <a href="a00342.html#gaad692ac8559707437d922dccbbefd557">More...</a><br /></td></tr>
+<tr class="separator:gaad692ac8559707437d922dccbbefd557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d755137e2bf3ce1e7caf520a5ee6c38"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga6d755137e2bf3ce1e7caf520a5ee6c38">isActive</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:ga6d755137e2bf3ce1e7caf520a5ee6c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if cell is active or not (3-D grid)  <a href="a00342.html#ga6d755137e2bf3ce1e7caf520a5ee6c38">More...</a><br /></td></tr>
+<tr class="separator:ga6d755137e2bf3ce1e7caf520a5ee6c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Calculate data for Gauss integration. </p>
+<div class="textblock"><p>To manipulate structured grids. </p>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aecd62a41ddc1a71da8acbb12cce50dbc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00044.html">Gauss</a> </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>np</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using number of <a class="el" href="a00044.html" title="Calculate data for Gauss integration. ">Gauss</a> points. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">np</td><td>Number of integration points </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a638c51e12d47a6da324d2c89c7107564"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setTriangle </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html">LocalVect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 7 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>w</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00067.html">LocalVect</a>&lt; <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;, 7 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Choose integration on triangle (7-point formula) </p>
-<p>If this is not selected, <a class="el" href="a00044.html" title="Calculate data for Gauss integration. ">Gauss</a> integration formula on <code>[-1,1]</code> is calculated. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">w</td><td>Array of weights of integration points </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>Array of coordinates of integration points </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 
 </div> <!-- class text -->
 </div> <!-- main menu -->

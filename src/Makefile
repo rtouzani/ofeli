@@ -290,10 +290,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 4.0.1
+PACKAGE_STRING = ofeli 4.1.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 4.0.1
+PACKAGE_VERSION = 4.1.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -303,7 +303,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 4.0.1
+VERSION = 4.1.0
 abs_builddir = /Users/touzani/ofeli/src
 abs_srcdir = /Users/touzani/ofeli/src
 abs_top_builddir = /Users/touzani/ofeli
@@ -382,13 +382,10 @@ FLUID_OBJS = equations/fluid/NSP2DQ41.o \
              equations/fluid/TINS3DT4S.o \
              equations/fluid/NS2DT3BT3.o
 
-INTERFACE_OBJS = equations/interface/FastMarching2D.o \
-                 equations/interface/FMM.o \
-                 equations/interface/FMM2D.o \
-                 equations/interface/FMM3D.o \
-                 equations/interface/FMMSolver.o \
-                 equations/interface/Heap.o \
-                 equations/interface/IPoint.o
+INTERFACE_OBJS = equations/interface/FastMarching.o \
+                 equations/interface/FastMarching1DG.o \
+                 equations/interface/FastMarching2DG.o \
+                 equations/interface/FastMarching3DG.o
 
 LAPLACE_OBJS = equations/laplace/Laplace1DL2.o \
                equations/laplace/Laplace1DL3.o \

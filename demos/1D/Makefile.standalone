@@ -11,7 +11,7 @@ transport:	transport.o
 		`ofeli-config --cxx` `ofeli-config --cflags` -o transport transport.o `ofeli-config --libs`
 
 clean:
-	/bin/rm -f *.o ad1`ofeli-config elliptic heat transport
+	/bin/rm -f *.o elliptic heat transport
 
 
 .cpp.o:

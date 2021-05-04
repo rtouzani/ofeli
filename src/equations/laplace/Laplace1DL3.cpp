@@ -33,7 +33,7 @@
 
 #include "equations/laplace/Laplace1DL3.h"
 #include "shape_functions/Line3.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 

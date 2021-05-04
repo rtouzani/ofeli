@@ -518,6 +518,14 @@ void Vect<T_>::setMesh(Mesh&      m,
 
 
 template<class T_>
+void Vect<T_>::setGrid(Grid& g)
+{
+   setSize(g.getNx()+1,g.getNy()+1,g.getNz()+1);
+   clear();
+}
+
+
+template<class T_>
 size_t Vect<T_>::size() const { return _size; }
 
 

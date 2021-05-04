@@ -36,7 +36,7 @@
 
 #include "solvers/TimeStepping.h"
 #include "mesh/Material.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 
 
@@ -104,9 +104,9 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_eu;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_su;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_ssf;
-   using AbsEqua<T_>::_rho_set;
-   using AbsEqua<T_>::_young_set;
-   using AbsEqua<T_>::_poisson_set;
+   using Equa<T_>::_rho_set;
+   using Equa<T_>::_young_set;
+   using Equa<T_>::_poisson_set;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
@@ -139,7 +139,7 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void setInput(EqDataType    opt,
                   Vect<real_t>& u)
     {
-       AbsEqua<real_t>::setInput(opt,u);
+       Equa<real_t>::setInput(opt,u);
     }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -152,9 +152,9 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     int run(Analysis   a=STATIONARY,
             TimeScheme s=NONE)
     {
-       int ret = AbsEqua<T_>::run(a,s);
+       int ret = Equa<T_>::run(a,s);
        if (_terms&CONTACT && a==STATIONARY)
-          ret = AbsEqua<T_>::run(a,s);
+          ret = Equa<T_>::run(a,s);
        return ret;
     }
 
@@ -172,12 +172,12 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void build()
     {
        static bool matrix_set = false;
-       if (AbsEqua<T_>::_A==nullptr && !matrix_set) {
-          AbsEqua<T_>::setMatrixType(SPARSE);
-          AbsEqua<T_>::setSolver(CG_SOLVER,DILU_PREC);
+       if (Equa<T_>::_A==nullptr && !matrix_set) {
+          Equa<T_>::setMatrixType(SPARSE);
+          Equa<T_>::setSolver(CG_SOLVER,DILU_PREC);
           matrix_set = true;
        }
-       AbsEqua<T_>::_A->clear();
+       Equa<T_>::_A->clear();
        MESH_EL {
           set(the_element);
           if (_terms&MASS)
@@ -189,21 +189,21 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           if (_terms&DILATATION)
              Dilatation();
           eMat = eA0;
-          AbsEqua<T_>::_A->Assembly(The_element,eMat.get());
-          if (AbsEqua<T_>::_bf!=nullptr)
+          Equa<T_>::_A->Assembly(The_element,eMat.get());
+          if (Equa<T_>::_bf!=nullptr)
              BodyRHS();
-          if (AbsEqua<T_>::_bc!=nullptr)
-             this->updateBC(The_element,*AbsEqua<T_>::_bc);
-          AbsEqua<T_>::_b->Assembly(The_element,eRHS.get());
+          if (Equa<T_>::_bc!=nullptr)
+             this->updateBC(The_element,*Equa<T_>::_bc);
+          Equa<T_>::_b->Assembly(The_element,eRHS.get());
        }
-       if (AbsEqua<T_>::_sf!=nullptr) {
+       if (Equa<T_>::_sf!=nullptr) {
           MESH_SD {
              set(the_side);
              if (_terms&CONTACT)
                 Contact(1.e07);
              BoundaryRHS();
-             AbsEqua<T_>::_A->Assembly(The_side,sA0.get());
-             AbsEqua<T_>::_b->Assembly(The_side,sRHS.get());
+             Equa<T_>::_A->Assembly(The_side,sA0.get());
+             Equa<T_>::_b->Assembly(The_side,sRHS.get());
           }
        }
     }
@@ -234,7 +234,7 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
              Dilatation();
           if (_terms&CONTACT)
              Contact(1.e07);
-          if ((_terms&LOAD) && (AbsEqua<T_>::_bf!=nullptr))
+          if ((_terms&LOAD) && (Equa<T_>::_bf!=nullptr))
              BodyRHS();
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
        }
@@ -253,7 +253,7 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     {
        MESH_EL {
           set(the_element);
-          this->ElementVector(*AbsEqua<T_>::_u);
+          this->ElementVector(*Equa<T_>::_u);
           if (_terms&MASS)
              Mass();
           if (_terms&LUMPED_MASS)
@@ -292,10 +292,10 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     int runTransient()
     {
-       *AbsEqua<T_>::_b = 0;
+       *Equa<T_>::_b = 0;
        build();
-       int ret=AbsEqua<T_>::solveLinearSystem(*AbsEqua<T_>::_b,AbsEqua<T_>::_uu);
-       AbsEqua<T_>::_u->insertBC(*_theMesh,AbsEqua<T_>::_uu,*AbsEqua<T_>::_bc);
+       int ret=Equa<T_>::solveLinearSystem(*Equa<T_>::_b,Equa<T_>::_uu);
+       Equa<T_>::_u->insertBC(*_theMesh,Equa<T_>::_uu,*Equa<T_>::_bc);
        return ret;
     }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

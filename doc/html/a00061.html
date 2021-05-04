@@ -53,221 +53,271 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00327.html">OFELI</a></li><li class="navelem"><a class="el" href="a00061.html">LCL2DT</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00061.html">LCL3DT</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a00408.html">List of all members</a>  </div>
+<a href="a00404.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">LCL2DT Class Reference<div class="ingroups"><a class="el" href="a00346.html">OFELI</a><a class="el" href="a00346.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00330.html">Conservation Law Equations</a></div></div>  </div>
+<div class="title">LCL3DT Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00326.html">Conservation Law Equations</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class to solve the linear hyperbolic equation in 2-D by a MUSCL Finite Volume scheme on triangles.  
+<p>Class to solve the linear conservation law equation in 3-D by a MUSCL Finite Volume scheme on tetrahedra.  
  <a href="a00061.html#details">More...</a></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for LCL2DT:</div>
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for LCL3DT:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
  <div class="center">
-  <img src="a00061.png" usemap="#LCL2DT_map" alt=""/>
-  <map id="LCL2DT_map" name="LCL2DT_map">
-<area href="a00075.html" title="Class for 2-D hyperbolic solvers with Muscl scheme. " alt="Muscl2DT" shape="rect" coords="0,56,69,80"/>
-<area href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. " alt="Muscl" shape="rect" coords="0,0,69,24"/>
+  <img src="a00061.png" usemap="#LCL3DT_map" alt=""/>
+  <map id="LCL3DT_map" name="LCL3DT_map">
+<area href="a00075.html" title="Class for 3-D hyperbolic solvers with Muscl scheme using tetrahedra. " alt="Muscl3DT" shape="rect" coords="0,56,69,80"/>
+<area href="a00072.html" title="Parent class for hyperbolic solvers with Muscl scheme. " alt="Muscl" shape="rect" coords="0,0,69,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad0c6873672c58bd8edca7269c35501fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0c6873672c58bd8edca7269c35501fd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ad0c6873672c58bd8edca7269c35501fd">LCL2DT</a> (<a class="el" href="a00071.html">Mesh</a> &amp;m)</td></tr>
-<tr class="memdesc:ad0c6873672c58bd8edca7269c35501fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using <a class="el" href="a00071.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance. <br /></td></tr>
-<tr class="separator:ad0c6873672c58bd8edca7269c35501fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa394738310663e85ca5e4e0f1e973076"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aa394738310663e85ca5e4e0f1e973076">LCL2DT</a> (<a class="el" href="a00071.html">Mesh</a> &amp;m, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;U)</td></tr>
-<tr class="memdesc:aa394738310663e85ca5e4e0f1e973076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh and initial data.  <a href="#aa394738310663e85ca5e4e0f1e973076">More...</a><br /></td></tr>
-<tr class="separator:aa394738310663e85ca5e4e0f1e973076"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa240633aae2754ebe10a78286423283d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa240633aae2754ebe10a78286423283d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aa240633aae2754ebe10a78286423283d">~LCL2DT</a> ()</td></tr>
-<tr class="memdesc:aa240633aae2754ebe10a78286423283d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:aa240633aae2754ebe10a78286423283d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f80d20be42d173f5792925302b153ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f80d20be42d173f5792925302b153ee"></a>
-<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a2f80d20be42d173f5792925302b153ee">getFlux</a> ()</td></tr>
-<tr class="memdesc:a2f80d20be42d173f5792925302b153ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return sidewise flux vector. <br /></td></tr>
-<tr class="separator:a2f80d20be42d173f5792925302b153ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff44e82421a4d97aa6734ba2d240b9d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aff44e82421a4d97aa6734ba2d240b9d6">setInitialCondition</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
+<tr class="memitem:aa7a03b4e541f25470c238de6f62bd25c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7a03b4e541f25470c238de6f62bd25c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aa7a03b4e541f25470c238de6f62bd25c">LCL3DT</a> (<a class="el" href="a00070.html">Mesh</a> &amp;m)</td></tr>
+<tr class="memdesc:aa7a03b4e541f25470c238de6f62bd25c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh. <br /></td></tr>
+<tr class="separator:aa7a03b4e541f25470c238de6f62bd25c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1977d6a932619c3f180e1e07b5de5f41"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a1977d6a932619c3f180e1e07b5de5f41">LCL3DT</a> (<a class="el" href="a00070.html">Mesh</a> &amp;m, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;U)</td></tr>
+<tr class="memdesc:a1977d6a932619c3f180e1e07b5de5f41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh and initial field.  <a href="#a1977d6a932619c3f180e1e07b5de5f41">More...</a><br /></td></tr>
+<tr class="separator:a1977d6a932619c3f180e1e07b5de5f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64f1e55026a233a37ac146836693cbfd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64f1e55026a233a37ac146836693cbfd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a64f1e55026a233a37ac146836693cbfd">~LCL3DT</a> ()</td></tr>
+<tr class="memdesc:a64f1e55026a233a37ac146836693cbfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a64f1e55026a233a37ac146836693cbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff44e82421a4d97aa6734ba2d240b9d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aff44e82421a4d97aa6734ba2d240b9d6">setInitialCondition</a> (<a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
 <tr class="memdesc:aff44e82421a4d97aa6734ba2d240b9d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set elementwise initial condition.  <a href="#aff44e82421a4d97aa6734ba2d240b9d6">More...</a><br /></td></tr>
 <tr class="separator:aff44e82421a4d97aa6734ba2d240b9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad327c49bbdba29883b1bccc77c9d9f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aad327c49bbdba29883b1bccc77c9d9f1">setInitialCondition</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
+<tr class="memitem:aad327c49bbdba29883b1bccc77c9d9f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aad327c49bbdba29883b1bccc77c9d9f1">setInitialCondition</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
 <tr class="memdesc:aad327c49bbdba29883b1bccc77c9d9f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a constant initial condition.  <a href="#aad327c49bbdba29883b1bccc77c9d9f1">More...</a><br /></td></tr>
 <tr class="separator:aad327c49bbdba29883b1bccc77c9d9f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade3afa31152cb0ecad88c3a54da8f93e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade3afa31152cb0ecad88c3a54da8f93e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ade3afa31152cb0ecad88c3a54da8f93e">setReconstruction</a> ()</td></tr>
-<tr class="memdesc:ade3afa31152cb0ecad88c3a54da8f93e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconstruct flux using <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> scheme. <br /></td></tr>
+<tr class="memdesc:ade3afa31152cb0ecad88c3a54da8f93e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconstruct flux using <a class="el" href="a00072.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> scheme. <br /></td></tr>
 <tr class="separator:ade3afa31152cb0ecad88c3a54da8f93e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8c8f582bd6836d2145e823ce5ed5ef4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#af8c8f582bd6836d2145e823ce5ed5ef4">runOneTimeStep</a> ()</td></tr>
-<tr class="memdesc:af8c8f582bd6836d2145e823ce5ed5ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one time step of the linear conservation law.  <a href="#af8c8f582bd6836d2145e823ce5ed5ef4">More...</a><br /></td></tr>
+<tr class="memitem:af8c8f582bd6836d2145e823ce5ed5ef4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8c8f582bd6836d2145e823ce5ed5ef4"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#af8c8f582bd6836d2145e823ce5ed5ef4">runOneTimeStep</a> ()</td></tr>
+<tr class="memdesc:af8c8f582bd6836d2145e823ce5ed5ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one time step. <br /></td></tr>
 <tr class="separator:af8c8f582bd6836d2145e823ce5ed5ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adec7c2621be3fc1b2976caf301921aa0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#adec7c2621be3fc1b2976caf301921aa0">setBC</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
-<tr class="memdesc:adec7c2621be3fc1b2976caf301921aa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dirichlet boundary condition.  <a href="#adec7c2621be3fc1b2976caf301921aa0">More...</a><br /></td></tr>
+<tr class="memitem:adec7c2621be3fc1b2976caf301921aa0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adec7c2621be3fc1b2976caf301921aa0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#adec7c2621be3fc1b2976caf301921aa0">setBC</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
+<tr class="memdesc:adec7c2621be3fc1b2976caf301921aa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dirichlet boundary condition. Assign a constant value <code>u</code> to all boundary sides. <br /></td></tr>
 <tr class="separator:adec7c2621be3fc1b2976caf301921aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f3c5d341436fc66855aa39929a0f0b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a5f3c5d341436fc66855aa39929a0f0b9">setBC</a> (const <a class="el" href="a00097.html">Side</a> &amp;sd, <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
+<tr class="memitem:a5f3c5d341436fc66855aa39929a0f0b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a5f3c5d341436fc66855aa39929a0f0b9">setBC</a> (const <a class="el" href="a00096.html">Side</a> &amp;sd, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
 <tr class="memdesc:a5f3c5d341436fc66855aa39929a0f0b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dirichlet boundary condition.  <a href="#a5f3c5d341436fc66855aa39929a0f0b9">More...</a><br /></td></tr>
 <tr class="separator:a5f3c5d341436fc66855aa39929a0f0b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa41901c2d7ace7211cdc3837de5be7ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aa41901c2d7ace7211cdc3837de5be7ec">setBC</a> (int code, <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
+<tr class="memitem:aa41901c2d7ace7211cdc3837de5be7ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aa41901c2d7ace7211cdc3837de5be7ec">setBC</a> (int code, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
 <tr class="memdesc:aa41901c2d7ace7211cdc3837de5be7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dirichlet boundary condition.  <a href="#aa41901c2d7ace7211cdc3837de5be7ec">More...</a><br /></td></tr>
 <tr class="separator:aa41901c2d7ace7211cdc3837de5be7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b888848a8922bb29f2c7330913390fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a6b888848a8922bb29f2c7330913390fc">setVelocity</a> (const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v)</td></tr>
+<tr class="memitem:a6b888848a8922bb29f2c7330913390fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a6b888848a8922bb29f2c7330913390fc">setVelocity</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v)</td></tr>
 <tr class="memdesc:a6b888848a8922bb29f2c7330913390fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set convection velocity.  <a href="#a6b888848a8922bb29f2c7330913390fc">More...</a><br /></td></tr>
 <tr class="separator:a6b888848a8922bb29f2c7330913390fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad640c03c3542a6b48087ec83386bc04e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ad640c03c3542a6b48087ec83386bc04e">setVelocity</a> (const <a class="el" href="a00067.html">LocalVect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 2 &gt; &amp;v)</td></tr>
-<tr class="memdesc:ad640c03c3542a6b48087ec83386bc04e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set (constant) convection velocity.  <a href="#ad640c03c3542a6b48087ec83386bc04e">More...</a><br /></td></tr>
-<tr class="separator:ad640c03c3542a6b48087ec83386bc04e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0b2936d1dab34e22178dba89b9c9698"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#af0b2936d1dab34e22178dba89b9c9698">Forward</a> (const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;Flux, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;Field)</td></tr>
+<tr class="memitem:a14a4b602851fd592ba56460c05b753a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a14a4b602851fd592ba56460c05b753a3">setVelocity</a> (const <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 3 &gt; &amp;v)</td></tr>
+<tr class="memdesc:a14a4b602851fd592ba56460c05b753a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set (constant) convection velocity.  <a href="#a14a4b602851fd592ba56460c05b753a3">More...</a><br /></td></tr>
+<tr class="separator:a14a4b602851fd592ba56460c05b753a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8db90b95563d822e3bd206aaf265caf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8db90b95563d822e3bd206aaf265caf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ad8db90b95563d822e3bd206aaf265caf">setReferenceLength</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> dx)</td></tr>
+<tr class="memdesc:ad8db90b95563d822e3bd206aaf265caf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign reference length value. <br /></td></tr>
+<tr class="separator:ad8db90b95563d822e3bd206aaf265caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9900927254ccd219a68678d98e123ab0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9900927254ccd219a68678d98e123ab0"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a9900927254ccd219a68678d98e123ab0">getReferenceLength</a> () const </td></tr>
+<tr class="memdesc:a9900927254ccd219a68678d98e123ab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference length. <br /></td></tr>
+<tr class="separator:a9900927254ccd219a68678d98e123ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b2936d1dab34e22178dba89b9c9698"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#af0b2936d1dab34e22178dba89b9c9698">Forward</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;Flux, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;Field)</td></tr>
 <tr class="memdesc:af0b2936d1dab34e22178dba89b9c9698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computation of the primal variable n-&gt;n+1.  <a href="#af0b2936d1dab34e22178dba89b9c9698">More...</a><br /></td></tr>
 <tr class="separator:af0b2936d1dab34e22178dba89b9c9698"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a00075"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00075')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00075.html">Muscl2DT</a></td></tr>
-<tr class="memitem:ab752d3672d6dbdbbf6cf487b35081fd2 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab752d3672d6dbdbbf6cf487b35081fd2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#ab752d3672d6dbdbbf6cf487b35081fd2">Muscl2DT</a> (<a class="el" href="a00071.html">Mesh</a> &amp;m)</td></tr>
-<tr class="memdesc:ab752d3672d6dbdbbf6cf487b35081fd2 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh. <br /></td></tr>
-<tr class="separator:ab752d3672d6dbdbbf6cf487b35081fd2 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a835cc27813122e859dc846a51d0cd733 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a835cc27813122e859dc846a51d0cd733"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a835cc27813122e859dc846a51d0cd733">~Muscl2DT</a> ()</td></tr>
-<tr class="memdesc:a835cc27813122e859dc846a51d0cd733 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a835cc27813122e859dc846a51d0cd733 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#acdf87fe4ecbf7362db40f16e0dd2ac04">setReconstruction</a> (const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;U, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;LU, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;RU, size_t dof)</td></tr>
-<tr class="memdesc:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to reconstruct by the <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> method.  <a href="#acdf87fe4ecbf7362db40f16e0dd2ac04">More...</a><br /></td></tr>
+<tr class="inherit_header pub_methods_a00075"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00075')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00075.html">Muscl3DT</a></td></tr>
+<tr class="memitem:a8d6f15cfac2b4810564a4b9b0c8e0aa6 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d6f15cfac2b4810564a4b9b0c8e0aa6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a8d6f15cfac2b4810564a4b9b0c8e0aa6">Muscl3DT</a> (<a class="el" href="a00070.html">Mesh</a> &amp;m)</td></tr>
+<tr class="memdesc:a8d6f15cfac2b4810564a4b9b0c8e0aa6 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh. <br /></td></tr>
+<tr class="separator:a8d6f15cfac2b4810564a4b9b0c8e0aa6 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd4e4e5ee6784d2eb2913d73a5cbc3ae inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd4e4e5ee6784d2eb2913d73a5cbc3ae"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#acd4e4e5ee6784d2eb2913d73a5cbc3ae">~Muscl3DT</a> ()</td></tr>
+<tr class="memdesc:acd4e4e5ee6784d2eb2913d73a5cbc3ae inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:acd4e4e5ee6784d2eb2913d73a5cbc3ae inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#acdf87fe4ecbf7362db40f16e0dd2ac04">setReconstruction</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;U, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;LU, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;RU, size_t dof)</td></tr>
+<tr class="memdesc:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to reconstruct by the <a class="el" href="a00072.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> method.  <a href="#acdf87fe4ecbf7362db40f16e0dd2ac04">More...</a><br /></td></tr>
 <tr class="separator:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a00073"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00073')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00073.html">Muscl</a></td></tr>
-<tr class="memitem:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa94714c08ef369973220a991cf441768"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#aa94714c08ef369973220a991cf441768">Muscl</a> (<a class="el" href="a00071.html">Mesh</a> &amp;m)</td></tr>
-<tr class="memdesc:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh instance. <br /></td></tr>
-<tr class="separator:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a399fcc278868b8280d19b680e4795231"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a399fcc278868b8280d19b680e4795231">~Muscl</a> ()</td></tr>
-<tr class="memdesc:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a281313b6dd2989a5d26b65ba8c0a15f1">setTimeStep</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> dt)</td></tr>
-<tr class="memdesc:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign time step value.  <a href="#a281313b6dd2989a5d26b65ba8c0a15f1">More...</a><br /></td></tr>
-<tr class="separator:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b86912a2661052ed927bb49716172ea"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a0b86912a2661052ed927bb49716172ea">getTimeStep</a> () const </td></tr>
-<tr class="memdesc:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return time step value. <br /></td></tr>
-<tr class="separator:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a5867d4d97edfe9fb69127e39f57b7bf7">setCFL</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> CFL)</td></tr>
-<tr class="memdesc:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign CFL value.  <a href="#a5867d4d97edfe9fb69127e39f57b7bf7">More...</a><br /></td></tr>
-<tr class="separator:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04501e06c9fa3eb9513dcd86bbfc834e"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a04501e06c9fa3eb9513dcd86bbfc834e">getCFL</a> () const </td></tr>
-<tr class="memdesc:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return CFL value. <br /></td></tr>
-<tr class="separator:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ad8db90b95563d822e3bd206aaf265caf">setReferenceLength</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> dx)</td></tr>
-<tr class="memdesc:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign reference length value.  <a href="#ad8db90b95563d822e3bd206aaf265caf">More...</a><br /></td></tr>
-<tr class="separator:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9900927254ccd219a68678d98e123ab0"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a9900927254ccd219a68678d98e123ab0">getReferenceLength</a> () const </td></tr>
-<tr class="memdesc:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference length. <br /></td></tr>
-<tr class="separator:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a913c6c03741d94f86d65690fd7d5902a"></a>
-<a class="el" href="a00071.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a913c6c03741d94f86d65690fd7d5902a">getMesh</a> () const </td></tr>
-<tr class="memdesc:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to <a class="el" href="a00071.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance. <br /></td></tr>
-<tr class="separator:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#afc81729fb2aa1720f446f48f1c3977ff">setVerbose</a> (int v)</td></tr>
-<tr class="memdesc:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set verbosity parameter.  <a href="#afc81729fb2aa1720f446f48f1c3977ff">More...</a><br /></td></tr>
-<tr class="separator:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#acdf87fe4ecbf7362db40f16e0dd2ac04">setReconstruction</a> (const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;U, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;LU, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;RU, size_t dof)</td></tr>
-<tr class="memdesc:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to reconstruct by the <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> method.  <a href="#acdf87fe4ecbf7362db40f16e0dd2ac04">More...</a><br /></td></tr>
-<tr class="separator:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a167d02731dbb2ae2a7b83a6d0d5fd1b0">setMethod</a> (const <a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0f">Method</a> &amp;s)</td></tr>
-<tr class="memdesc:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a flux solver.  <a href="#a167d02731dbb2ae2a7b83a6d0d5fd1b0">More...</a><br /></td></tr>
-<tr class="separator:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c04c5d6699a205e56fc8409cca056ca"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a3c04c5d6699a205e56fc8409cca056ca">setSolidZoneCode</a> (int c)</td></tr>
-<tr class="memdesc:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a code for solid zone. <br /></td></tr>
-<tr class="separator:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adff0eb56bda2770ec4f41a2a878e29ae"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#adff0eb56bda2770ec4f41a2a878e29ae">getSolidZone</a> () const </td></tr>
-<tr class="memdesc:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return flag for presence of solid zones. <br /></td></tr>
-<tr class="separator:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18a0a509c3f3cee3cd8ce0db63ce4c38"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a18a0a509c3f3cee3cd8ce0db63ce4c38">getSolidZoneCode</a> () const </td></tr>
-<tr class="memdesc:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code of solid zone, 0 if this one is not present. <br /></td></tr>
-<tr class="separator:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a277ad387623172f343400d4430f66fcd">setLimiter</a> (<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29">Limiter</a> l)</td></tr>
-<tr class="memdesc:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a flux limiter.  <a href="#a277ad387623172f343400d4430f66fcd">More...</a><br /></td></tr>
-<tr class="separator:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1221984afa0468aae21095a4f46f462a inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1221984afa0468aae21095a4f46f462a"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a1221984afa0468aae21095a4f46f462a">getMinimumFaceArea</a> () const </td></tr>
+<tr class="memdesc:a1221984afa0468aae21095a4f46f462a inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum area of faces in the mesh. <br /></td></tr>
+<tr class="separator:a1221984afa0468aae21095a4f46f462a inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef82bb2a6ad8a2aa2c0cbff1b02bf5b7 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef82bb2a6ad8a2aa2c0cbff1b02bf5b7"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#aef82bb2a6ad8a2aa2c0cbff1b02bf5b7">getMinimumElementVolume</a> () const </td></tr>
+<tr class="memdesc:aef82bb2a6ad8a2aa2c0cbff1b02bf5b7 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum volume of elements in the mesh. <br /></td></tr>
+<tr class="separator:aef82bb2a6ad8a2aa2c0cbff1b02bf5b7 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45e129467699ac581d58197a1aaad9ac inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45e129467699ac581d58197a1aaad9ac"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a45e129467699ac581d58197a1aaad9ac">getMaximumFaceArea</a> () const </td></tr>
+<tr class="memdesc:a45e129467699ac581d58197a1aaad9ac inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum area of faces in the mesh. <br /></td></tr>
+<tr class="separator:a45e129467699ac581d58197a1aaad9ac inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c87823ec0cde3d8925d805bed2c6d94 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c87823ec0cde3d8925d805bed2c6d94"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a5c87823ec0cde3d8925d805bed2c6d94">getMaximumElementVolume</a> () const </td></tr>
+<tr class="memdesc:a5c87823ec0cde3d8925d805bed2c6d94 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum volume of elements in the mesh. <br /></td></tr>
+<tr class="separator:a5c87823ec0cde3d8925d805bed2c6d94 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5924952e7aa44ed62032b393b7692a53 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5924952e7aa44ed62032b393b7692a53"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a5924952e7aa44ed62032b393b7692a53">getMeanFaceArea</a> () const </td></tr>
+<tr class="memdesc:a5924952e7aa44ed62032b393b7692a53 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return mean area of faces in the mesh. <br /></td></tr>
+<tr class="separator:a5924952e7aa44ed62032b393b7692a53 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b4ba663a1d9cdfa984e1ece0535e6b8 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b4ba663a1d9cdfa984e1ece0535e6b8"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a3b4ba663a1d9cdfa984e1ece0535e6b8">getMeanElementVolume</a> () const </td></tr>
+<tr class="memdesc:a3b4ba663a1d9cdfa984e1ece0535e6b8 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return mean volume of elements in the mesh. <br /></td></tr>
+<tr class="separator:a3b4ba663a1d9cdfa984e1ece0535e6b8 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3075d642d4f1124bd00edb3303611065 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3075d642d4f1124bd00edb3303611065"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a3075d642d4f1124bd00edb3303611065">getMinimumEdgeLength</a> () const </td></tr>
+<tr class="memdesc:a3075d642d4f1124bd00edb3303611065 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum length of edges in the mesh. <br /></td></tr>
+<tr class="separator:a3075d642d4f1124bd00edb3303611065 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaeccdcf417aa5e5e529cc073116afb4 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeaeccdcf417aa5e5e529cc073116afb4"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#aeaeccdcf417aa5e5e529cc073116afb4">getMinimumVolumebyArea</a> () const </td></tr>
+<tr class="memdesc:aeaeccdcf417aa5e5e529cc073116afb4 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum volume by area in the mesh. <br /></td></tr>
+<tr class="separator:aeaeccdcf417aa5e5e529cc073116afb4 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5718cc4224a2673c50295b44034dd828 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5718cc4224a2673c50295b44034dd828"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a5718cc4224a2673c50295b44034dd828">getMaximumEdgeLength</a> () const </td></tr>
+<tr class="memdesc:a5718cc4224a2673c50295b44034dd828 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum length of edges in the mesh. <br /></td></tr>
+<tr class="separator:a5718cc4224a2673c50295b44034dd828 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af447ac9cc9246d11e3ea7ed2dc8c3413 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af447ac9cc9246d11e3ea7ed2dc8c3413"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#af447ac9cc9246d11e3ea7ed2dc8c3413">getTauLim</a> () const </td></tr>
+<tr class="memdesc:af447ac9cc9246d11e3ea7ed2dc8c3413 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of <em>tau</em> lim. <br /></td></tr>
+<tr class="separator:af447ac9cc9246d11e3ea7ed2dc8c3413 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09583833824c8247200abc8551841707 inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09583833824c8247200abc8551841707"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a09583833824c8247200abc8551841707">getComega</a> () const </td></tr>
+<tr class="memdesc:a09583833824c8247200abc8551841707 inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of <em>Comega</em>. <br /></td></tr>
+<tr class="separator:a09583833824c8247200abc8551841707 inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5f414cceb34583beffe0156e07a832d inherit pub_methods_a00075"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5f414cceb34583beffe0156e07a832d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#aa5f414cceb34583beffe0156e07a832d">setbetalim</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> bl)</td></tr>
+<tr class="memdesc:aa5f414cceb34583beffe0156e07a832d inherit pub_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign value of <em>beta</em> lim. <br /></td></tr>
+<tr class="separator:aa5f414cceb34583beffe0156e07a832d inherit pub_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a00072"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00072')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00072.html">Muscl</a></td></tr>
+<tr class="memitem:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa94714c08ef369973220a991cf441768"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#aa94714c08ef369973220a991cf441768">Muscl</a> (<a class="el" href="a00070.html">Mesh</a> &amp;m)</td></tr>
+<tr class="memdesc:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh instance. <br /></td></tr>
+<tr class="separator:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a399fcc278868b8280d19b680e4795231"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a399fcc278868b8280d19b680e4795231">~Muscl</a> ()</td></tr>
+<tr class="memdesc:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a281313b6dd2989a5d26b65ba8c0a15f1">setTimeStep</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> dt)</td></tr>
+<tr class="memdesc:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign time step value.  <a href="#a281313b6dd2989a5d26b65ba8c0a15f1">More...</a><br /></td></tr>
+<tr class="separator:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b86912a2661052ed927bb49716172ea"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a0b86912a2661052ed927bb49716172ea">getTimeStep</a> () const </td></tr>
+<tr class="memdesc:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return time step value. <br /></td></tr>
+<tr class="separator:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a5867d4d97edfe9fb69127e39f57b7bf7">setCFL</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> CFL)</td></tr>
+<tr class="memdesc:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign CFL value.  <a href="#a5867d4d97edfe9fb69127e39f57b7bf7">More...</a><br /></td></tr>
+<tr class="separator:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04501e06c9fa3eb9513dcd86bbfc834e"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a04501e06c9fa3eb9513dcd86bbfc834e">getCFL</a> () const </td></tr>
+<tr class="memdesc:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return CFL value. <br /></td></tr>
+<tr class="separator:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ad8db90b95563d822e3bd206aaf265caf">setReferenceLength</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> dx)</td></tr>
+<tr class="memdesc:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign reference length value.  <a href="#ad8db90b95563d822e3bd206aaf265caf">More...</a><br /></td></tr>
+<tr class="separator:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9900927254ccd219a68678d98e123ab0"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a9900927254ccd219a68678d98e123ab0">getReferenceLength</a> () const </td></tr>
+<tr class="memdesc:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference length. <br /></td></tr>
+<tr class="separator:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a913c6c03741d94f86d65690fd7d5902a"></a>
+<a class="el" href="a00070.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a913c6c03741d94f86d65690fd7d5902a">getMesh</a> () const </td></tr>
+<tr class="memdesc:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance. <br /></td></tr>
+<tr class="separator:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#afc81729fb2aa1720f446f48f1c3977ff">setVerbose</a> (int v)</td></tr>
+<tr class="memdesc:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set verbosity parameter.  <a href="#afc81729fb2aa1720f446f48f1c3977ff">More...</a><br /></td></tr>
+<tr class="separator:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#acdf87fe4ecbf7362db40f16e0dd2ac04">setReconstruction</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;U, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;LU, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;RU, size_t dof)</td></tr>
+<tr class="memdesc:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to reconstruct by the <a class="el" href="a00072.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> method.  <a href="#acdf87fe4ecbf7362db40f16e0dd2ac04">More...</a><br /></td></tr>
+<tr class="separator:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a167d02731dbb2ae2a7b83a6d0d5fd1b0">setMethod</a> (const <a class="el" href="a00072.html#a2a3c0067e44c5ef3210a256d06c16b0f">Method</a> &amp;s)</td></tr>
+<tr class="memdesc:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a flux solver.  <a href="#a167d02731dbb2ae2a7b83a6d0d5fd1b0">More...</a><br /></td></tr>
+<tr class="separator:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c04c5d6699a205e56fc8409cca056ca"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a3c04c5d6699a205e56fc8409cca056ca">setSolidZoneCode</a> (int c)</td></tr>
+<tr class="memdesc:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a code for solid zone. <br /></td></tr>
+<tr class="separator:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adff0eb56bda2770ec4f41a2a878e29ae"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#adff0eb56bda2770ec4f41a2a878e29ae">getSolidZone</a> () const </td></tr>
+<tr class="memdesc:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return flag for presence of solid zones. <br /></td></tr>
+<tr class="separator:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18a0a509c3f3cee3cd8ce0db63ce4c38"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a18a0a509c3f3cee3cd8ce0db63ce4c38">getSolidZoneCode</a> () const </td></tr>
+<tr class="memdesc:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code of solid zone, 0 if this one is not present. <br /></td></tr>
+<tr class="separator:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00072"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a277ad387623172f343400d4430f66fcd">setLimiter</a> (<a class="el" href="a00072.html#a28fd66b0310514194a2fb1d2473e3e29">Limiter</a> l)</td></tr>
+<tr class="memdesc:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00072"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a flux limiter.  <a href="#a277ad387623172f343400d4430f66fcd">More...</a><br /></td></tr>
+<tr class="separator:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_types_a00073"><td colspan="2" onclick="javascript:toggleInherit('pub_types_a00073')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="a00073.html">Muscl</a></td></tr>
-<tr class="memitem:a2a3c0067e44c5ef3210a256d06c16b0f inherit pub_types_a00073"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0f">Method</a> { <br />
-&#160;&#160;<a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0faf60ce3434ebbca1597fe39507e682886">FIRST_ORDER_METHOD</a> = 0, 
+<tr class="inherit_header pub_types_a00072"><td colspan="2" onclick="javascript:toggleInherit('pub_types_a00072')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="a00072.html">Muscl</a></td></tr>
+<tr class="memitem:a2a3c0067e44c5ef3210a256d06c16b0f inherit pub_types_a00072"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a2a3c0067e44c5ef3210a256d06c16b0f">Method</a> { <br />
+&#160;&#160;<a class="el" href="a00072.html#a2a3c0067e44c5ef3210a256d06c16b0faf60ce3434ebbca1597fe39507e682886">FIRST_ORDER_METHOD</a> = 0, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0fa2d33b57b66a950a3b195b8b952749f0e">MULTI_SLOPE_Q_METHOD</a> = 1, 
+&#160;&#160;<a class="el" href="a00072.html#a2a3c0067e44c5ef3210a256d06c16b0fa2d33b57b66a950a3b195b8b952749f0e">MULTI_SLOPE_Q_METHOD</a> = 1, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0fa5c77e985953c5ca565269529ce0d8e2a">MULTI_SLOPE_M_METHOD</a> = 2
+&#160;&#160;<a class="el" href="a00072.html#a2a3c0067e44c5ef3210a256d06c16b0fa5c77e985953c5ca565269529ce0d8e2a">MULTI_SLOPE_M_METHOD</a> = 2
 <br />
- }<tr class="memdesc:a2a3c0067e44c5ef3210a256d06c16b0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration for flux choice.  <a href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0f">More...</a><br /></td></tr>
-<tr class="separator:a2a3c0067e44c5ef3210a256d06c16b0f inherit pub_types_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+ }<tr class="memdesc:a2a3c0067e44c5ef3210a256d06c16b0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration for flux choice.  <a href="a00072.html#a2a3c0067e44c5ef3210a256d06c16b0f">More...</a><br /></td></tr>
+<tr class="separator:a2a3c0067e44c5ef3210a256d06c16b0f inherit pub_types_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </td></tr>
-<tr class="memitem:a28fd66b0310514194a2fb1d2473e3e29 inherit pub_types_a00073"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29">Limiter</a> { <br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29adfd5c45258dd6be86f4aa883a34d1d4a">MINMOD_LIMITER</a> = 0, 
+<tr class="memitem:a28fd66b0310514194a2fb1d2473e3e29 inherit pub_types_a00072"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a28fd66b0310514194a2fb1d2473e3e29">Limiter</a> { <br />
+&#160;&#160;<a class="el" href="a00072.html#a28fd66b0310514194a2fb1d2473e3e29adfd5c45258dd6be86f4aa883a34d1d4a">MINMOD_LIMITER</a> = 0, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29a1eca9d08190ec7bf842a2b86d9768d8e">VANLEER_LIMITER</a> = 1, 
+&#160;&#160;<a class="el" href="a00072.html#a28fd66b0310514194a2fb1d2473e3e29a1eca9d08190ec7bf842a2b86d9768d8e">VANLEER_LIMITER</a> = 1, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29ae40a4b753358942467cfdabc0c8d4072">SUPERBEE_LIMITER</a> = 2, 
+&#160;&#160;<a class="el" href="a00072.html#a28fd66b0310514194a2fb1d2473e3e29ae40a4b753358942467cfdabc0c8d4072">SUPERBEE_LIMITER</a> = 2, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29a45a15baa84818572fa5ef591b139c177">VANALBADA_LIMITER</a> = 3, 
+&#160;&#160;<a class="el" href="a00072.html#a28fd66b0310514194a2fb1d2473e3e29a45a15baa84818572fa5ef591b139c177">VANALBADA_LIMITER</a> = 3, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29a344fb16588c3bd52ecc0166780ebb85b">MAX_LIMITER</a> = 4
+&#160;&#160;<a class="el" href="a00072.html#a28fd66b0310514194a2fb1d2473e3e29a344fb16588c3bd52ecc0166780ebb85b">MAX_LIMITER</a> = 4
 <br />
- }<tr class="memdesc:a28fd66b0310514194a2fb1d2473e3e29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of flux limiting methods.  <a href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29">More...</a><br /></td></tr>
-<tr class="separator:a28fd66b0310514194a2fb1d2473e3e29 inherit pub_types_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+ }<tr class="memdesc:a28fd66b0310514194a2fb1d2473e3e29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of flux limiting methods.  <a href="a00072.html#a28fd66b0310514194a2fb1d2473e3e29">More...</a><br /></td></tr>
+<tr class="separator:a28fd66b0310514194a2fb1d2473e3e29 inherit pub_types_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </td></tr>
-<tr class="memitem:a8b06041d7c1fb05f379714f4312306ec inherit pub_types_a00073"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306ec">SolverType</a> { <br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306ecac3fbd70dfe2f23de50fc1cefc71abc4f">ROE_SOLVER</a> = 0, 
+<tr class="memitem:a8b06041d7c1fb05f379714f4312306ec inherit pub_types_a00072"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a8b06041d7c1fb05f379714f4312306ec">SolverType</a> { <br />
+&#160;&#160;<a class="el" href="a00072.html#a8b06041d7c1fb05f379714f4312306ecac3fbd70dfe2f23de50fc1cefc71abc4f">ROE_SOLVER</a> = 0, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca3736de39783a7c913c5af70a10b7e1ef">VFROE_SOLVER</a> = 1, 
+&#160;&#160;<a class="el" href="a00072.html#a8b06041d7c1fb05f379714f4312306eca3736de39783a7c913c5af70a10b7e1ef">VFROE_SOLVER</a> = 1, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca0ce95685eedaafcc589e18cf8156cd59">LF_SOLVER</a> = 2, 
+&#160;&#160;<a class="el" href="a00072.html#a8b06041d7c1fb05f379714f4312306eca0ce95685eedaafcc589e18cf8156cd59">LF_SOLVER</a> = 2, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306ecaf5d8ff8019d62d1c131d5ba7b5b6f41f">RUSANOV_SOLVER</a> = 3, 
+&#160;&#160;<a class="el" href="a00072.html#a8b06041d7c1fb05f379714f4312306ecaf5d8ff8019d62d1c131d5ba7b5b6f41f">RUSANOV_SOLVER</a> = 3, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca9dcff80dc38b618e178f81fd2c3296c6">HLL_SOLVER</a> = 4, 
+&#160;&#160;<a class="el" href="a00072.html#a8b06041d7c1fb05f379714f4312306eca9dcff80dc38b618e178f81fd2c3296c6">HLL_SOLVER</a> = 4, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca9d2380450b9ff3583fc11146c509d701">HLLC_SOLVER</a> = 5, 
+&#160;&#160;<a class="el" href="a00072.html#a8b06041d7c1fb05f379714f4312306eca9d2380450b9ff3583fc11146c509d701">HLLC_SOLVER</a> = 5, 
 <br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca299f128f211f8830e11962d8a6870bc0">MAX_SOLVER</a> = 6
+&#160;&#160;<a class="el" href="a00072.html#a8b06041d7c1fb05f379714f4312306eca299f128f211f8830e11962d8a6870bc0">MAX_SOLVER</a> = 6
 <br />
- }<tr class="memdesc:a8b06041d7c1fb05f379714f4312306ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of various solvers for the Riemann problem.  <a href="a00073.html#a8b06041d7c1fb05f379714f4312306ec">More...</a><br /></td></tr>
-<tr class="separator:a8b06041d7c1fb05f379714f4312306ec inherit pub_types_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+ }<tr class="memdesc:a8b06041d7c1fb05f379714f4312306ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of various solvers for the Riemann problem.  <a href="a00072.html#a8b06041d7c1fb05f379714f4312306ec">More...</a><br /></td></tr>
+<tr class="separator:a8b06041d7c1fb05f379714f4312306ec inherit pub_types_a00072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </td></tr>
-<tr class="inherit_header pro_methods_a00075"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a00075')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a00075.html">Muscl2DT</a></td></tr>
-<tr class="memitem:a98b1050f09da390896f964fb7a892391 inherit pro_methods_a00075"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html#a98b1050f09da390896f964fb7a892391">Initialize</a> ()</td></tr>
-<tr class="memdesc:a98b1050f09da390896f964fb7a892391 inherit pro_methods_a00075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construction of normals to sides.  <a href="#a98b1050f09da390896f964fb7a892391">More...</a><br /></td></tr>
-<tr class="separator:a98b1050f09da390896f964fb7a892391 inherit pro_methods_a00075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class to solve the linear hyperbolic equation in 2-D by a MUSCL Finite Volume scheme on triangles. </p>
+<div class="textblock"><p>Class to solve the linear conservation law equation in 3-D by a MUSCL Finite Volume scheme on tetrahedra. </p>
 <dl class="section author"><dt>Author</dt><dd>S. Clain, V. Clauzon </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aa394738310663e85ca5e4e0f1e973076"></a>
+<a class="anchor" id="a1977d6a932619c3f180e1e07b5de5f41"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00061.html">LCL2DT</a> </td>
+          <td class="memname"><a class="el" href="a00061.html">LCL3DT</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00071.html">Mesh</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html">Mesh</a> &amp;&#160;</td>
           <td class="paramname"><em>m</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>U</em>&#160;</td>
         </tr>
         <tr>
@@ -278,10 +328,10 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor using mesh and initial data. </p>
+<p>Constructor using mesh and initial field. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>Reference to <a class="el" href="a00071.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>Reference to <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">U</td><td>Vector containing initial (elementwise) solution </td></tr>
   </table>
   </dd>
@@ -297,7 +347,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void setInitialCondition </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>u</em></td><td>)</td>
           <td></td>
         </tr>
@@ -307,7 +357,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Set elementwise initial condition. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td><a class="el" href="a00115.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial condition values </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance containing initial condition values </td></tr>
   </table>
   </dd>
 </dl>
@@ -321,7 +371,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void setInitialCondition </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
           <td class="paramname"><em>u</em></td><td>)</td>
           <td></td>
         </tr>
@@ -338,43 +388,6 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af8c8f582bd6836d2145e823ce5ed5ef4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> runOneTimeStep </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Run one time step of the linear conservation law. </p>
-<dl class="section return"><dt>Returns</dt><dd>Value of the time step </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="adec7c2621be3fc1b2976caf301921aa0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setBC </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>u</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set Dirichlet boundary condition. </p>
-<p>Assign a constant value <code>u</code> to all boundary sides </p>
-
-</div>
-</div>
 <a class="anchor" id="a5f3c5d341436fc66855aa39929a0f0b9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -382,13 +395,13 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void setBC </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00097.html">Side</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00096.html">Side</a> &amp;&#160;</td>
           <td class="paramname"><em>sd</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
           <td class="paramname"><em>u</em>&#160;</td>
         </tr>
         <tr>
@@ -402,7 +415,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Set Dirichlet boundary condition. </p>
 <p>Assign a constant value to a side </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">sd</td><td><a class="el" href="a00097.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> to which value is prescibed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sd</td><td><a class="el" href="a00096.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> to which value is prescibed </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Value to prescribe </td></tr>
   </table>
   </dd>
@@ -423,7 +436,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
           <td class="paramname"><em>u</em>&#160;</td>
         </tr>
         <tr>
@@ -452,7 +465,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void setVelocity </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
         </tr>
@@ -462,21 +475,21 @@ Additional Inherited Members</h2></td></tr>
 <p>Set convection velocity. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td><a class="el" href="a00115.html" title="To handle general purpose vectors. ">Vect</a> instance containing velocity </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance containing velocity </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ad640c03c3542a6b48087ec83386bc04e"></a>
+<a class="anchor" id="a14a4b602851fd592ba56460c05b753a3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void setVelocity </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00067.html">LocalVect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 2 &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 3 &gt; &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
         </tr>
@@ -500,13 +513,13 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void Forward </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>Flux</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>Field</em>&#160;</td>
         </tr>
         <tr>
@@ -518,7 +531,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Computation of the primal variable n-&gt;n+1. </p>
-<p>Vector <em>Flux</em> contains elementwise fluxes issued from the Riemann problem, calculated with, as left element, <b>getNeighborElement(1)</b> and right element <b>getNeighborElement(2)</b> if <b>getNeighborElement(2)</b> doesn't exist, we are on a boundary and we prescribe a symmetry condition </p>
+<p>Vector <code>Flux</code> contains elementwise fluxes issued from the Riemann problem, calculated with, as left element, <b>getNeighborElement(1)</b> and right element <b>getNeighborElement(2)</b> if <b>getNeighborElement(2)</b> doesn't exist, we are on a boundary and we prescribe a symmetry condition </p>
 
 </div>
 </div>

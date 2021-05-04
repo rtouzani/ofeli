@@ -53,7 +53,7 @@ namespace OFELI {
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation()
-                                 : AbsEqua<T_>()
+                                 : Equa<T_>()
 {
    _nb_dof = NEE_/NEN_;
 }
@@ -61,7 +61,7 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation()
 
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh &mesh)
-                                 : AbsEqua<T_>()
+                                 : Equa<T_>()
 {
    if (NEE_/NEN_ != NSE_/NSN_)
       throw OFELIException("In Equation<>::Equation(Mesh): Numbers of element and "
@@ -74,7 +74,7 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh &mesh)
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&     mesh,
                                            Vect<T_>& u)
-                                 : AbsEqua<T_>()
+                                 : Equa<T_>()
 {
    if (NEE_/NEN_ != NSE_/NSN_)
       throw OFELIException("In Equation<>::Equation(Mesh&,Vect<>&): Numbers of "
@@ -91,7 +91,7 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&     mesh,
                                            real_t&   init_time,
                                            real_t&   final_time,
                                            real_t&   time_step)
-                                 : AbsEqua<T_>()
+                                 : Equa<T_>()
 {
    if (NEE_/NEN_ != NSE_/NSN_)
       throw OFELIException("In Equation<>::Equation(Mesh&,...): Numbers of "
@@ -113,12 +113,12 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::initEquation(Mesh&  mesh,
                                                     real_t final_time,
                                                     real_t time_step)
 {
-   AbsEqua<T_>::setMesh(mesh);
+   Equa<T_>::setMesh(mesh);
    _TimeInt.delta = time_step;
    _TimeInt.time = _TimeInt.init = init_time;
    _TimeInt.final = final_time;
-   AbsEqua<T_>::_b = new Vect<T_>(_nb_eq);
-   AbsEqua<T_>::_uu.setSize(_nb_eq);
+   Equa<T_>::_b = new Vect<T_>(_nb_eq);
+   Equa<T_>::_uu.setSize(_nb_eq);
 }
 
 
@@ -267,7 +267,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
 template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<T_,NEN_,NEE_,NSN_,NSE_>::setBodyForce(const Vect<T_>& f)
 {
-   AbsEqua<T_>::_bf = &f;
+   Equa<T_>::_bf = &f;
 }
 
 

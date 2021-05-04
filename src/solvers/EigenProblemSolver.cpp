@@ -29,14 +29,13 @@
 
   ==============================================================================*/
 
-#include "equations/AbsEqua.h"
 #include "solvers/EigenProblemSolver.h"
 #include "linear_algebra/DMatrix_impl.h"
 #include "linear_algebra/DSMatrix_impl.h"
 #include "linear_algebra/SkSMatrix_impl.h"
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/Assembly_impl.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 
 namespace OFELI {
 
@@ -82,8 +81,8 @@ EigenProblemSolver::EigenProblemSolver(DSMatrix<real_t>& A,
 }
 
 
-EigenProblemSolver::EigenProblemSolver(AbsEqua<real_t>& eq,
-                                       bool             lumped)
+EigenProblemSolver::EigenProblemSolver(Equa<real_t>& eq,
+                                       bool          lumped)
                    : _K(nullptr), _M(nullptr),
                      _K_alloc(true), _M_alloc(false), _lM_alloc(true), _diag(true),
                      _max_it(100), _dim(1), _nb_eq(0), _nb_eigv(1), _opt(1),
@@ -160,8 +159,8 @@ void EigenProblemSolver::setMatrix(DSMatrix<real_t>& K)
 }
 
 
-void EigenProblemSolver::setPDE(AbsEqua<real_t>& eq,
-                                bool             lumped)
+void EigenProblemSolver::setPDE(Equa<real_t>& eq,
+                                bool          lumped)
 {
    _theEqua = &eq;
    _theMesh = &(_theEqua->getMesh());

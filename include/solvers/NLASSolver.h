@@ -51,7 +51,7 @@ using std::setw;
 using std::string;
 
 #include "OFELI_Config.h"
-#include "equations/AbsEqua.h"
+#include "equations/Equa.h"
 #include "linear_algebra/Vect.h"
 #include "linear_algebra/Matrix.h"
 #include "solvers/MyNLAS.h"
@@ -212,10 +212,10 @@ class NLASSolver
 
 /** \brief Define a PDE
  *  \details The solver can be used to solve a nonlinear PDE. In this case, the PDE is
- *  defined as an instance of a class inheriting of AbsEqua.
+ *  defined as an instance of a class inheriting of Equa.
  *  @param [in] eq Pointer to equation instance
  */
-    void setPDE(AbsEqua<real_t>& eq);
+    void setPDE(Equa<real_t>& eq);
 
 /** \brief Set initial guess for the iterations
  *  @param [in] u Vector containing initial guess for the unknown
@@ -266,7 +266,7 @@ private:
    };
 
    bool _fct_allocated, _df_computed, _cv, _f_given, _df_given, _u_set, _ab_given;
-   AbsEqua<real_t> *_theEqua;
+   Equa<real_t> *_theEqua;
    int _nl, _max_it, _nl_it, _nb_eq, _it, _nb_it, _fct_type;
    Vect<real_t> *_u, _v, _f, _w;
    real_t _toler, *_x, _y, _a, _b, _g;

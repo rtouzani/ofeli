@@ -65,7 +65,7 @@ class Laplace1DL2 : public Equa_Laplace<real_t,2,2,1,1> {
 
  public :
 
-    using AbsEqua<real_t>::setInput;
+    using Equa<real_t>::setInput;
 
 /// \brief Default constructor
     Laplace1DL2();

@@ -53,99 +53,132 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00327.html">OFELI</a></li><li class="navelem"><a class="el" href="a00091.html">Polygon</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00091.html">Prec</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a00438.html">List of all members</a>  </div>
+<a href="a00434.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Polygon Class Reference<div class="ingroups"><a class="el" href="a00346.html">OFELI</a><a class="el" href="a00346.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00343.html">Finite Element Mesh</a></div></div>  </div>
+<div class="title">Prec&lt; T_ &gt; Class Template Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00341.html">Solver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>To store and treat a polygonal figure.  
+<p>To set a preconditioner.  
  <a href="a00091.html#details">More...</a></p>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for Polygon:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
- <div class="center">
-  <img src="a00091.png" usemap="#Polygon_map" alt=""/>
-  <map id="Polygon_map" name="Polygon_map">
-<area href="a00039.html" title="To store and treat a figure (or shape) information. " alt="Figure" shape="rect" coords="0,0,58,24"/>
-</map>
- </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a15bf0e9badc1110318080057a7f76fce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15bf0e9badc1110318080057a7f76fce"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a15bf0e9badc1110318080057a7f76fce">polygon</a> ()</td></tr>
-<tr class="memdesc:a15bf0e9badc1110318080057a7f76fce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:a15bf0e9badc1110318080057a7f76fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5fdf39c745fba4ea13ef9776cdc14e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#ac5fdf39c745fba4ea13ef9776cdc14e1">Polygon</a> (const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt; &amp;v, int code=1)</td></tr>
-<tr class="memdesc:ac5fdf39c745fba4ea13ef9776cdc14e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac5fdf39c745fba4ea13ef9776cdc14e1">More...</a><br /></td></tr>
-<tr class="separator:ac5fdf39c745fba4ea13ef9776cdc14e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a608f8fc85e0db7062f76c4d568b67f8e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a608f8fc85e0db7062f76c4d568b67f8e">setVertices</a> (const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt; &amp;v)</td></tr>
-<tr class="memdesc:a608f8fc85e0db7062f76c4d568b67f8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign vertices of polygon.  <a href="#a608f8fc85e0db7062f76c4d568b67f8e">More...</a><br /></td></tr>
-<tr class="separator:a608f8fc85e0db7062f76c4d568b67f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5900986f0e62239ca60183f7a86fdd71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a5900986f0e62239ca60183f7a86fdd71">getSignedDistance</a> (const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p) const </td></tr>
-<tr class="memdesc:a5900986f0e62239ca60183f7a86fdd71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return signed distance of a given point from the current polygon.  <a href="#a5900986f0e62239ca60183f7a86fdd71">More...</a><br /></td></tr>
-<tr class="separator:a5900986f0e62239ca60183f7a86fdd71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8b427fab76036113dbc5e82cf1d1ea1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00091.html">Polygon</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#ad8b427fab76036113dbc5e82cf1d1ea1">operator+=</a> (<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; a)</td></tr>
-<tr class="memdesc:ad8b427fab76036113dbc5e82cf1d1ea1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator +=.  <a href="#ad8b427fab76036113dbc5e82cf1d1ea1">More...</a><br /></td></tr>
-<tr class="separator:ad8b427fab76036113dbc5e82cf1d1ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a076543b4d67a0d980311e1ba3606577c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00091.html">Polygon</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a076543b4d67a0d980311e1ba3606577c">operator+=</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a)</td></tr>
-<tr class="memdesc:a076543b4d67a0d980311e1ba3606577c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator *=.  <a href="#a076543b4d67a0d980311e1ba3606577c">More...</a><br /></td></tr>
-<tr class="separator:a076543b4d67a0d980311e1ba3606577c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a00039"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00039')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00039.html">Figure</a></td></tr>
-<tr class="memitem:ae49c513c5bcadb29c0764c1746bfd924 inherit pub_methods_a00039"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae49c513c5bcadb29c0764c1746bfd924"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html#ae49c513c5bcadb29c0764c1746bfd924">Figure</a> ()</td></tr>
-<tr class="memdesc:ae49c513c5bcadb29c0764c1746bfd924 inherit pub_methods_a00039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:ae49c513c5bcadb29c0764c1746bfd924 inherit pub_methods_a00039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0b3ecf250250edd504dd29bf970a7bc inherit pub_methods_a00039"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0b3ecf250250edd504dd29bf970a7bc"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html#ae0b3ecf250250edd504dd29bf970a7bc">Figure</a> (const <a class="el" href="a00039.html">Figure</a> &amp;f)</td></tr>
-<tr class="memdesc:ae0b3ecf250250edd504dd29bf970a7bc inherit pub_methods_a00039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor. <br /></td></tr>
-<tr class="separator:ae0b3ecf250250edd504dd29bf970a7bc inherit pub_methods_a00039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2356b66e5c02f39b568f4c8a7651e36 inherit pub_methods_a00039"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2356b66e5c02f39b568f4c8a7651e36"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html#ac2356b66e5c02f39b568f4c8a7651e36">~Figure</a> ()</td></tr>
-<tr class="memdesc:ac2356b66e5c02f39b568f4c8a7651e36 inherit pub_methods_a00039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:ac2356b66e5c02f39b568f4c8a7651e36 inherit pub_methods_a00039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2520b3fc10894bb8fc4a96014dfb0d08 inherit pub_methods_a00039"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2520b3fc10894bb8fc4a96014dfb0d08"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html#a2520b3fc10894bb8fc4a96014dfb0d08">setCode</a> (int code)</td></tr>
-<tr class="memdesc:a2520b3fc10894bb8fc4a96014dfb0d08 inherit pub_methods_a00039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a code for the domain defined by the figure. <br /></td></tr>
-<tr class="separator:a2520b3fc10894bb8fc4a96014dfb0d08 inherit pub_methods_a00039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba4e541736626476d5685efb0c55ff01 inherit pub_methods_a00039"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba4e541736626476d5685efb0c55ff01"></a>
-<a class="el" href="a00039.html">Figure</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html#aba4e541736626476d5685efb0c55ff01">operator=</a> (const <a class="el" href="a00039.html">Figure</a> &amp;f)</td></tr>
-<tr class="memdesc:aba4e541736626476d5685efb0c55ff01 inherit pub_methods_a00039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator =. <br /></td></tr>
-<tr class="separator:aba4e541736626476d5685efb0c55ff01 inherit pub_methods_a00039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c73c78cfdd388e41c610bddd61e1a35 inherit pub_methods_a00039"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html#a1c73c78cfdd388e41c610bddd61e1a35">getSignedDistance</a> (const <a class="el" href="a00045.html">Grid</a> &amp;g, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;d) const </td></tr>
-<tr class="memdesc:a1c73c78cfdd388e41c610bddd61e1a35 inherit pub_methods_a00039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate signed distance to current figure with respect to grid points.  <a href="#a1c73c78cfdd388e41c610bddd61e1a35">More...</a><br /></td></tr>
-<tr class="separator:a1c73c78cfdd388e41c610bddd61e1a35 inherit pub_methods_a00039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a365c3b4ced8699612dbce7bd450bdfe9 inherit pub_methods_a00039"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html#a365c3b4ced8699612dbce7bd450bdfe9">dLine</a> (const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p, const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a, const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="a00346.html#gaf5cd2eaaceda19772fd904539819158c">b</a>) const </td></tr>
-<tr class="memdesc:a365c3b4ced8699612dbce7bd450bdfe9 inherit pub_methods_a00039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute signed distance from a line.  <a href="#a365c3b4ced8699612dbce7bd450bdfe9">More...</a><br /></td></tr>
-<tr class="separator:a365c3b4ced8699612dbce7bd450bdfe9 inherit pub_methods_a00039"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e355a68c9ee021945bef0d7517c4139"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e355a68c9ee021945bef0d7517c4139"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a6e355a68c9ee021945bef0d7517c4139">Prec</a> ()</td></tr>
+<tr class="memdesc:a6e355a68c9ee021945bef0d7517c4139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:a6e355a68c9ee021945bef0d7517c4139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e510f45ed54a1a75c758b97ef5dfbb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a7e510f45ed54a1a75c758b97ef5dfbb5">Prec</a> (int type)</td></tr>
+<tr class="memdesc:a7e510f45ed54a1a75c758b97ef5dfbb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that chooses preconditioner.  <a href="#a7e510f45ed54a1a75c758b97ef5dfbb5">More...</a><br /></td></tr>
+<tr class="separator:a7e510f45ed54a1a75c758b97ef5dfbb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6da66b2f752cc497228a8069b5d3638e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a6da66b2f752cc497228a8069b5d3638e">Prec</a> (const <a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, int type=<a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
+<tr class="memdesc:a6da66b2f752cc497228a8069b5d3638e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix of the linear system to precondition.  <a href="#a6da66b2f752cc497228a8069b5d3638e">More...</a><br /></td></tr>
+<tr class="separator:a6da66b2f752cc497228a8069b5d3638e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a182e9f2d6391964730c6185bf6126552"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a182e9f2d6391964730c6185bf6126552">Prec</a> (const <a class="el" href="a00069.html">Matrix</a>&lt; T_ &gt; *<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, int type=<a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
+<tr class="memdesc:a182e9f2d6391964730c6185bf6126552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix of the linear system to precondition.  <a href="#a182e9f2d6391964730c6185bf6126552">More...</a><br /></td></tr>
+<tr class="separator:a182e9f2d6391964730c6185bf6126552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bfd7a55a3e6d0c0c1135b46eb7ad898"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bfd7a55a3e6d0c0c1135b46eb7ad898"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a2bfd7a55a3e6d0c0c1135b46eb7ad898">~Prec</a> ()</td></tr>
+<tr class="memdesc:a2bfd7a55a3e6d0c0c1135b46eb7ad898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a2bfd7a55a3e6d0c0c1135b46eb7ad898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd28262b8520203989617fd36f68695c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#afd28262b8520203989617fd36f68695c">setType</a> (int type)</td></tr>
+<tr class="memdesc:afd28262b8520203989617fd36f68695c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define preconditioner type.  <a href="#afd28262b8520203989617fd36f68695c">More...</a><br /></td></tr>
+<tr class="separator:afd28262b8520203989617fd36f68695c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a972c2cb5338f82e2235907611a8a815d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a972c2cb5338f82e2235907611a8a815d">setMatrix</a> (const <a class="el" href="a00069.html">Matrix</a>&lt; T_ &gt; *<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>)</td></tr>
+<tr class="memdesc:a972c2cb5338f82e2235907611a8a815d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define pointer to matrix for preconditioning (if this one is abstract)  <a href="#a972c2cb5338f82e2235907611a8a815d">More...</a><br /></td></tr>
+<tr class="separator:a972c2cb5338f82e2235907611a8a815d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c3c6ea1cfc625154e7f3f5634a92aff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a1c3c6ea1cfc625154e7f3f5634a92aff">setMatrix</a> (const <a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>)</td></tr>
+<tr class="memdesc:a1c3c6ea1cfc625154e7f3f5634a92aff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the matrix for preconditioning.  <a href="#a1c3c6ea1cfc625154e7f3f5634a92aff">More...</a><br /></td></tr>
+<tr class="separator:a1c3c6ea1cfc625154e7f3f5634a92aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfaaaffa4ca4da76c1db8c5a6441c81b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#acfaaaffa4ca4da76c1db8c5a6441c81b">solve</a> (<a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x) const </td></tr>
+<tr class="memdesc:acfaaaffa4ca4da76c1db8c5a6441c81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system with preconditioning matrix.  <a href="#acfaaaffa4ca4da76c1db8c5a6441c81b">More...</a><br /></td></tr>
+<tr class="separator:acfaaaffa4ca4da76c1db8c5a6441c81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab74f16e78bf7027dd48062b755b3eab2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#ab74f16e78bf7027dd48062b755b3eab2">solve</a> (const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x) const </td></tr>
+<tr class="memdesc:ab74f16e78bf7027dd48062b755b3eab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system with preconditioning matrix.  <a href="#ab74f16e78bf7027dd48062b755b3eab2">More...</a><br /></td></tr>
+<tr class="separator:ab74f16e78bf7027dd48062b755b3eab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac89c829bddeaa60016abd9358992011"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#aac89c829bddeaa60016abd9358992011">TransSolve</a> (<a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x) const </td></tr>
+<tr class="memdesc:aac89c829bddeaa60016abd9358992011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system with transposed preconditioning matrix.  <a href="#aac89c829bddeaa60016abd9358992011">More...</a><br /></td></tr>
+<tr class="separator:aac89c829bddeaa60016abd9358992011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b053c303be219b107a664012595558f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a3b053c303be219b107a664012595558f">TransSolve</a> (const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x) const </td></tr>
+<tr class="memdesc:a3b053c303be219b107a664012595558f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system with transposed preconditioning matrix.  <a href="#a3b053c303be219b107a664012595558f">More...</a><br /></td></tr>
+<tr class="separator:a3b053c303be219b107a664012595558f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a064e21a6883f39e078e5066a431cf410"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a064e21a6883f39e078e5066a431cf410"></a>
+T_ &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00091.html#a064e21a6883f39e078e5066a431cf410">getPivot</a> (size_t i) const </td></tr>
+<tr class="memdesc:a064e21a6883f39e078e5066a431cf410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return i-th pivot of preconditioning matrix. <br /></td></tr>
+<tr class="separator:a064e21a6883f39e078e5066a431cf410"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>To store and treat a polygonal figure. </p>
+<div class="textblock"><h3>template&lt;class T_&gt;<br />
+class OFELI::Prec&lt; T_ &gt;</h3>
+
+<p>To set a preconditioner. </p>
+<p>The preconditioner type is chosen in the constructor</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">&lt;T_&gt;</td><td>Data type (real_t, float, complex&lt;real_t&gt;, ...)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ac5fdf39c745fba4ea13ef9776cdc14e1"></a>
+<a class="anchor" id="a7e510f45ed54a1a75c758b97ef5dfbb5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00091.html">Polygon</a> </td>
+          <td class="memname"><a class="el" href="a00091.html">Prec</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor that chooses preconditioner. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Preconditioner type: <ul>
+<li>
+<code>IDENT_PREC</code>: Identity preconditioner (No preconditioning) </li>
+<li>
+<code>DIAG_PREC</code>: Diagonal preconditioner </li>
+<li>
+<code>DILU_PREC</code>: Diagonal Incomplete factorization preconditioner </li>
+<li>
+<code>ILU_PREC</code>: Incomplete factorization preconditioner </li>
+<li>
+<code>SSOR_PREC</code>: SSOR (Symmetric Successive Over Relaxation) preconditioner </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a6da66b2f752cc497228a8069b5d3638e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00091.html">Prec</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>code</em> = <code>1</code>&#160;</td>
+          <td class="paramname"><em>type</em> = <code><a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a></code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -155,11 +188,70 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
       </table>
 </div><div class="memdoc">
 
-<p>Constructor. </p>
+<p>Constructor using matrix of the linear system to precondition. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td><a class="el" href="a00115.html" title="To handle general purpose vectors. ">Vect</a> instance containing list of coordinates of polygon vertices </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>Code to assign to the generated domain (Default value = 1) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to precondition </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Preconditioner type: <ul>
+<li>
+<code>IDENT_PREC</code>: Identity preconditioner (No preconditioning) </li>
+<li>
+<code>DIAG_PREC</code>: Diagonal preconditioner </li>
+<li>
+<code>DILU_PREC</code>: Diagonal Incomplete factorization preconditioner </li>
+<li>
+<code>ILU_PREC</code>: Incomplete factorization preconditioner </li>
+<li>
+<code>SSOR_PREC</code>: SSOR (Symmetric Successive Over Relaxation) preconditioner </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a182e9f2d6391964730c6185bf6126552"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00091.html">Prec</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00069.html">Matrix</a>&lt; T_ &gt; *&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em> = <code><a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor using matrix of the linear system to precondition. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Pointer to abstract <a class="el" href="a00069.html" title="Virtual class to handle matrices for all storage formats. ">Matrix</a> class to precondition </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Preconditioner type: <ul>
+<li>
+<code>IDENT_PREC</code>: Identity preconditioner (No preconditioning) </li>
+<li>
+<code>DIAG_PREC</code>: Diagonal preconditioner </li>
+<li>
+<code>DILU_PREC</code>: Diagonal Incomplete factorization preconditioner </li>
+<li>
+<code>ILU_PREC</code>: Incomplete factorization preconditioner </li>
+<li>
+<code>SSOR_PREC</code>: SSOR (Symmetric Successive Over Relaxation) preconditioner </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -167,99 +259,205 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a608f8fc85e0db7062f76c4d568b67f8e"></a>
+<a class="anchor" id="afd28262b8520203989617fd36f68695c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setVertices </td>
+          <td class="memname">void setType </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v</em></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Assign vertices of polygon. </p>
+<p>Define preconditioner type. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Vector containing vertices coordinates in counter clockwise order </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Preconditioner type: <ul>
+<li>
+<code>IDENT_PREC</code>: Identity preconditioner (No preconditioning) </li>
+<li>
+<code>DIAG_PREC</code>: Diagonal preconditioner </li>
+<li>
+<code>DILU_PREC</code>: Diagonal Incomplete factorization preconditioner </li>
+<li>
+<code>ILU_PREC</code>: Incomplete factorization preconditioner </li>
+<li>
+<code>SSOR_PREC</code>: SSOR (Symmetric Successive Over Relaxation) preconditioner </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a5900986f0e62239ca60183f7a86fdd71"></a>
+<a class="anchor" id="a972c2cb5338f82e2235907611a8a815d"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> getSignedDistance </td>
+          <td class="memname">void setMatrix </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>p</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="a00069.html">Matrix</a>&lt; T_ &gt; *&#160;</td>
+          <td class="paramname"><em>A</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define pointer to matrix for preconditioning (if this one is abstract) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to precondition </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a1c3c6ea1cfc625154e7f3f5634a92aff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setMatrix </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define the matrix for preconditioning. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to precondition (instance of class <a class="el" href="a00101.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="acfaaaffa4ca4da76c1db8c5a6441c81b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void solve </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Return signed distance of a given point from the current polygon. </p>
-<p>The computed distance is negative if <code>p</code> lies in the polygon, negative if it is outside, and 0 on its boundary </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Solve a linear system with preconditioning matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Point&lt;double&gt; instance </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>Right-hand side on input and solution on output. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="a00039.html#a93db4ba70a1377a45693ef18761a320e">Figure</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="ad8b427fab76036113dbc5e82cf1d1ea1"></a>
+<a class="anchor" id="ab74f16e78bf7027dd48062b755b3eab2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00091.html">Polygon</a>&amp; operator+= </td>
+          <td class="memname">void solve </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td>
-          <td class="paramname"><em>a</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Operator +=. </p>
-<p>Translate polygon by a vector <code>a</code> </p>
+<p>Solve a linear system with preconditioning matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Right-hand side </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>Solution vector </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="a076543b4d67a0d980311e1ba3606577c"></a>
+<a class="anchor" id="aac89c829bddeaa60016abd9358992011"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00091.html">Polygon</a>&amp; operator+= </td>
+          <td class="memname">void TransSolve </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>a</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Operator *=. </p>
-<p>Scale polygon by a factor <code>a</code> </p>
+<p>Solve a linear system with transposed preconditioning matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>Right-hand side in input and solution in output. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3b053c303be219b107a664012595558f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TransSolve </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Solve a linear system with transposed preconditioning matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Right-hand side vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>Solution vector </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

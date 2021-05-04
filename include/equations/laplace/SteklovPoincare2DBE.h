@@ -37,7 +37,7 @@
 
 #include "mesh/Mesh.h"
 #include "linear_algebra/Vect.h"
-#include "equations/AbsEqua.h"
+#include "equations/Equa.h"
 
 namespace OFELI {
 /*!
@@ -69,15 +69,15 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class SteklovPoincare2DBE : virtual public AbsEqua<real_t> {
+class SteklovPoincare2DBE : virtual public Equa<real_t> {
 
  public:
 
-    using AbsEqua<real_t>::_A;
-    using AbsEqua<real_t>::_u;
-    using AbsEqua<real_t>::_b;
-    using AbsEqua<real_t>::_uu;
-    using AbsEqua<real_t>::_sf;
+    using Equa<real_t>::_A;
+    using Equa<real_t>::_u;
+    using Equa<real_t>::_b;
+    using Equa<real_t>::_uu;
+    using Equa<real_t>::_sf;
 
 /// \brief Default Constructor
     SteklovPoincare2DBE();

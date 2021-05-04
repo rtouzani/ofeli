@@ -51,13 +51,13 @@
  * \def OFELI_VERSION
  * gives the current version of the library
  */
-#define OFELI_VERSION                 "4.0.1"
+#define OFELI_VERSION                 "4.0.2"
 
 /*!
  * \def OFELI_RELEASE_DATE
  * gives the date (month-year) of current release
  */
-#define OFELI_RELEASE_DATE            "3-2021"
+#define OFELI_RELEASE_DATE            "5-2021"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define MY_RANDOM             55085111

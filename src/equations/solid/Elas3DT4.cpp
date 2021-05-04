@@ -73,9 +73,9 @@ void Elas3DT4::set(const Element* el)
    _el_geo.det = tetra.getDet();
    _el_geo.center = tetra.getCenter();
    ElementNodeCoordinates();
-   if (AbsEqua<real_t>::_u!=nullptr)
+   if (Equa<real_t>::_u!=nullptr)
       ElementNodeVector(*_u,_eu);
-   if (AbsEqua<real_t>::_bf!=nullptr)
+   if (Equa<real_t>::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    _dSh = tetra.DSh();
    if (_rho_set)
@@ -97,9 +97,9 @@ void Elas3DT4::set(const Side* sd)
    Triang3 tr(sd);
    _el_geo.area = tr.getArea();
    SideNodeCoordinates();
-   if (AbsEqua<real_t>::_u!=nullptr)
+   if (Equa<real_t>::_u!=nullptr)
       SideNodeVector(*_u,_su);
-   if (AbsEqua<real_t>::_sf!=nullptr)
+   if (Equa<real_t>::_sf!=nullptr)
       SideVector(*_sf,_ssf);
    sA0 = 0;
    sRHS = 0;

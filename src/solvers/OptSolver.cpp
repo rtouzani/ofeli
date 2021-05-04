@@ -32,7 +32,6 @@
 #include "solvers/OptSolver.h"
 #include "solvers/Optim.h"
 #include "linear_algebra/Vect_impl.h"
-#include <limits>
 #include <algorithm>
 #include "OFELIException.h"
 
@@ -49,8 +48,8 @@ OptSolver::OptSolver()
    _x = new Vect<real_t>(1);
    _lb.setSize(_size);
    _ub.setSize(_size);
-   _lb = -std::numeric_limits<real_t>::max();
-   _ub =  std::numeric_limits<real_t>::max();
+   _lb = -INFINITY;
+   _ub =  INFINITY;
    _var.push_back("x");
    _theDFct.resize(1);
    _theDDFct.resize(1);

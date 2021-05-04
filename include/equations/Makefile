@@ -263,10 +263,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 4.0.1
+PACKAGE_STRING = ofeli 4.1.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 4.0.1
+PACKAGE_VERSION = 4.1.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -276,7 +276,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 4.0.1
+VERSION = 4.1.0
 abs_builddir = /Users/touzani/ofeli/include/equations
 abs_srcdir = /Users/touzani/ofeli/include/equations
 abs_top_builddir = /Users/touzani/ofeli
@@ -332,11 +332,11 @@ AUTOMAKE_OPTIONS = no-dependencies
 SUBDIRS = cl electromagnetics fluid interface laplace solid therm porous
 ssdir = $(pkgincludedir)/equations
 ss_HEADERS = DG.h \
-					AbsEqua.h \
-					AbsEqua_impl.h \
-					Equation.h \
-					Equation_impl.h \
-					EquaUtil.h
+             Equa.h \
+             Equa_impl.h \
+             Equation.h \
+             Equation_impl.h \
+             EquaUtil.h
 
 all: all-recursive
 

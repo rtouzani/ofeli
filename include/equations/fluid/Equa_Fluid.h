@@ -36,8 +36,9 @@
 
 #include "solvers/TimeStepping.h"
 #include "mesh/Material.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
+
 
 namespace OFELI {
 /*!
@@ -91,9 +92,9 @@ class Equa_Fluid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
    using Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC;
-   using AbsEqua<T_>::_rho_set;
-   using AbsEqua<T_>::_mu_set;
-   using AbsEqua<T_>::_beta_set;
+   using Equa<T_>::_rho_set;
+   using Equa<T_>::_mu_set;
+   using Equa<T_>::_beta_set;
 
 
 /// \brief Default constructor.

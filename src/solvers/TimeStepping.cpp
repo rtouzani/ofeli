@@ -31,7 +31,7 @@
 
 #include "solvers/TimeStepping.h"
 #include "solvers/LinearSolver.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/SkMatrix_impl.h"
@@ -162,8 +162,8 @@ void TimeStepping::setScheme()
 }
 
 
-void TimeStepping::setPDE(AbsEqua<real_t>& eq,
-                          bool             nl)
+void TimeStepping::setPDE(Equa<real_t>& eq,
+                          bool          nl)
 {
    DE de;
    de.constant_matrix = false;

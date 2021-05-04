@@ -111,7 +111,7 @@ Grid::Grid(Point<real_t> m,
    _active.resize(_n.x*_n.y);
    for (size_t i=0; i<_n.x; i++)
       for (size_t j=0; j<_n.y; j++)
-          _active[_n.y*i+j] = 1;
+         _active[_n.y*i+j] = 1;
 }
 
 
@@ -124,7 +124,7 @@ Grid::Grid(real_t xm,
            size_t npx,
            size_t npy,
            size_t npz)
-     : _dim(2), _cm(0), _cM(0)
+     : _dim(3), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = npz;
    if (xM <= xm)

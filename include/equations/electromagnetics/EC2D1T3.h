@@ -113,7 +113,7 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
           set(the_element);
           Magnetic(1.);
           Electric();
-          AbsEqua<complex_t>::_A->Assembly(The_element,eMat.get());
+          Equa<complex_t>::_A->Assembly(The_element,eMat.get());
        }
 
        MESH_ND {

@@ -50,8 +50,9 @@ using std::string;
 #include "linear_algebra/Vect.h"
 #include "solvers/LinearSolver.h"
 #include "solvers/Iter.h"
-#include "equations/AbsEqua.h"
+#include "equations/Equa.h"
 #include "io/Fct.h"
+
 
 namespace OFELI {
 /*!
@@ -444,7 +445,7 @@ class ODESolver
       VECTOR_NL      = 3,      /*!< Nonlinear Differential system of equations */
    };
 
-   AbsEqua<real_t> *_theEqua;
+   Equa<real_t> *_theEqua;
    size_t _order, _nb_eq, _nb_ssteps, _step, _sstep;
    int _sc;
    Iteration _s;

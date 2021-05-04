@@ -42,7 +42,7 @@ using std::ostream;
 
 #include "OFELI_Config.h"
 #include "linear_algebra/Vect.h"
-#include "equations/AbsEqua.h"
+#include "equations/Equa.h"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define MAX_NB_DES  10
@@ -55,7 +55,7 @@ namespace OFELI {
  */
 
 template class LinearSolver<real_t>;
-template class AbsEqua<real_t>;
+template class Equa<real_t>;
 
 /*! \file TimeStepping.h
  *  \brief Definition file for class TimeStepping.
@@ -145,8 +145,8 @@ class TimeStepping
  *  @param [in] eq Reference to equation instance
  *  @param [in] nl Toggle to say if the considered equation is linear [Default: <tt>0</tt>] or not
  */
-    void setPDE(AbsEqua<real_t>& eq,
-                bool             nl=false);
+    void setPDE(Equa<real_t>& eq,
+                bool          nl=false);
 
 /** \brief Set intermediate right-hand side vector for the Runge-Kutta method
  *  @param [in] f Vector containing the RHS
@@ -310,7 +310,7 @@ class TimeStepping
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     struct DE {
-       AbsEqua<real_t> *eq;
+       Equa<real_t> *eq;
        Mesh *mesh;
        int  nb_eq, nb_dof;
        Iteration itsolver;

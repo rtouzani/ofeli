@@ -33,7 +33,7 @@
 
 #include "equations/therm/DC1DL2.h"
 #include "shape_functions/Line2.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
@@ -90,7 +90,7 @@ void DC1DL2::set(const Element* el)
 void DC1DL2::setInput(EqDataType    opt,
                       Vect<real_t>& u)
 {
-   AbsEqua<real_t>::setInput(opt,u);
+   Equa<real_t>::setInput(opt,u);
    if (opt==VELOCITY_FIELD)
       _vel = &u;
 }

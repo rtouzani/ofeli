@@ -37,7 +37,7 @@
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/LocalMatrix_impl.h"
 #include "linear_algebra/LocalVect_impl.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 
 namespace OFELI {
@@ -113,7 +113,7 @@ void DC2DT3::set(const Side* sd)
 void DC2DT3::setInput(EqDataType    opt,
                       Vect<real_t>& u)
 {
-   AbsEqua<real_t>::setInput(opt,u);
+   Equa<real_t>::setInput(opt,u);
    if (opt==VELOCITY_FIELD)
       _vel = &u;
 }

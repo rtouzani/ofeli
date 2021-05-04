@@ -916,8 +916,8 @@ void saveField(Vect<real_t>& v,
                break;
 
             case 2:
-               for (size_t i=1; i<=nx; i++) {
-                  for (size_t j=1; j<=ny; j++) {
+               for (size_t i=1; i<=nx; ++i) {
+                  for (size_t j=1; j<=ny; ++j) {
                      fp << "ST(";
                      fp << g.getXY(i  ,j  ).x << "," << g.getXY(i  ,j  ).y << ",0.,";
                      fp << g.getXY(i+1,j  ).x << "," << g.getXY(i+1,j  ).y << ",0.,";
@@ -934,9 +934,9 @@ void saveField(Vect<real_t>& v,
                break;
 
             case 3:
-               for (size_t i=1; i<=nx; i++) {
-                  for (size_t j=1; j<=ny; j++) {
-                     for (size_t k=1; k<=nz; k++) {
+               for (size_t i=1; i<=nx; ++i) {
+                  for (size_t j=1; j<=ny; ++j) {
+                     for (size_t k=1; k<=nz; ++k) {
                         fp << "SH(";
                         fp << g.getXYZ(i  ,j  ,k  ).x << "," << g.getXYZ(i  ,j  ,k  ).y << "," << g.getXYZ(i  ,j  ,k  ).z << ",";
                         fp << g.getXYZ(i+1,j  ,k  ).x << "," << g.getXYZ(i+1,j  ,k  ).y << "," << g.getXYZ(i+1,j  ,k  ).z << ",\n";

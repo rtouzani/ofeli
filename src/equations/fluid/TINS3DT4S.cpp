@@ -29,7 +29,7 @@
 
   ==============================================================================*/
 
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "equations/fluid/TINS3DT4S.h"
 #include "shape_functions/Tetra4.h"
@@ -98,7 +98,7 @@ void TINS3DT4S::init()
 void TINS3DT4S::setInput(EqDataType    opt,
                          Vect<real_t>& u)
 {
-   AbsEqua<real_t>::setInput(opt,u);
+   Equa<real_t>::setInput(opt,u);
    if (opt==PRESSURE_FIELD) {
       _p = &u;
       getPressure();
@@ -300,8 +300,8 @@ void TINS3DT4S::getMomentum()
       Equa_Fluid<real_t,4,12,3,9>::updateBC(The_element,*_bc);
 
 //    Assembly of matrix and R.H.S.
-      AbsEqua<real_t>::_A->Assembly(The_element,eMat.get());
-      AbsEqua<real_t>::_b->Assembly(The_element,eRHS.get());
+      Equa<real_t>::_A->Assembly(The_element,eMat.get());
+      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
    }
 
 // Solve the linear system

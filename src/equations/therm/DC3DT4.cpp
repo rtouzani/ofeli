@@ -37,7 +37,7 @@
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/LocalMatrix_impl.h"
 #include "linear_algebra/LocalVect_impl.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 
 

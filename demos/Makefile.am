@@ -1,5 +1,5 @@
 
-SUBDIRS = 1D laplace thermal solid fluid electromagnetics solvers adapt
+SUBDIRS = 1D laplace thermal solid fluid electromagnetics interface solvers adapt
 
 demosdir = $(datadir)/ofeli/demos
 

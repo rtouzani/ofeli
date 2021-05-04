@@ -106,9 +106,9 @@ am__v_AR_0 = @echo "  AR      " $@;
 am__v_AR_1 = 
 libinterface_a_AR = $(AR) $(ARFLAGS)
 libinterface_a_LIBADD =
-am_libinterface_a_OBJECTS = FastMarching2D.$(OBJEXT) FMM.$(OBJEXT) \
-	FMM2D.$(OBJEXT) FMM3D.$(OBJEXT) FMMSolver.$(OBJEXT) \
-	Heap.$(OBJEXT) IPoint.$(OBJEXT)
+am_libinterface_a_OBJECTS = FastMarching.$(OBJEXT) \
+	FastMarching1DG.$(OBJEXT) FastMarching2DG.$(OBJEXT) \
+	FastMarching3DG.$(OBJEXT)
 libinterface_a_OBJECTS = $(am_libinterface_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -218,10 +218,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 4.0.1
+PACKAGE_STRING = ofeli 4.1.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 4.0.1
+PACKAGE_VERSION = 4.1.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -231,7 +231,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 4.0.1
+VERSION = 4.1.0
 abs_builddir = /Users/touzani/ofeli/src/equations/interface
 abs_srcdir = /Users/touzani/ofeli/src/equations/interface
 abs_top_builddir = /Users/touzani/ofeli
@@ -286,13 +286,10 @@ top_srcdir = ../../..
 noinst_LIBRARIES = libinterface.a
 AUTOMAKE_OPTIONS = no-dependencies
 AM_CPPFLAGS = -std=c++1y
-libinterface_a_SOURCES = FastMarching2D.cpp \
-                         FMM.cpp \
-                         FMM2D.cpp \
-                         FMM3D.cpp \
-                         FMMSolver.cpp \
-                         Heap.cpp \
-                         IPoint.cpp
+libinterface_a_SOURCES = FastMarching.cpp \
+                         FastMarching1DG.cpp \
+                         FastMarching2DG.cpp \
+                         FastMarching3DG.cpp
 
 all: all-am
 

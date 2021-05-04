@@ -85,9 +85,9 @@ void Elas2DQ4::set(const Element* el)
    _el_geo.center = _quad->getCenter();
    PlaneStrain();
    ElementNodeCoordinates();
-   if (AbsEqua<real_t>::_u!=nullptr)
+   if (Equa<real_t>::_u!=nullptr)
       ElementNodeVector(*_u,_eu);
-   if (AbsEqua<real_t>::_bf!=nullptr)
+   if (Equa<real_t>::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
@@ -112,9 +112,9 @@ void Elas2DQ4::set(const Side* sd)
    _g[0] = g.x(1); _g[1] = g.x(2);
    _ww[0] = g.w(1); _ww[1] = g.w(2);
    SideNodeCoordinates();
-   if (AbsEqua<real_t>::_u!=nullptr)
+   if (Equa<real_t>::_u!=nullptr)
       SideNodeVector(*_u,_su);
-   if (AbsEqua<real_t>::_sf!=nullptr)
+   if (Equa<real_t>::_sf!=nullptr)
       SideVector(*_sf,_ssf);
    sMat = 0;
    sRHS = 0;

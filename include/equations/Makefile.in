@@ -332,11 +332,11 @@ AUTOMAKE_OPTIONS = no-dependencies
 SUBDIRS = cl electromagnetics fluid interface laplace solid therm porous
 ssdir = $(pkgincludedir)/equations
 ss_HEADERS = DG.h \
-					AbsEqua.h \
-					AbsEqua_impl.h \
-					Equation.h \
-					Equation_impl.h \
-					EquaUtil.h
+             Equa.h \
+             Equa_impl.h \
+             Equation.h \
+             Equation_impl.h \
+             EquaUtil.h
 
 all: all-recursive
 

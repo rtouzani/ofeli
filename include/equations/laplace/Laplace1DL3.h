@@ -66,7 +66,7 @@ class Laplace1DL3 : virtual public Equa_Laplace<real_t,3,3,1,1> {
 
 public :
 
-    using AbsEqua<real_t>::setInput;
+    using Equa<real_t>::setInput;
 
 /// \brief Default constructor. Initializes an empty equation
     Laplace1DL3();

@@ -49,7 +49,7 @@ using std::setw;
 using std::string;
 
 #include "OFELI_Config.h"
-#include "equations/AbsEqua.h"
+#include "equations/Equa.h"
 #include "linear_algebra/Vect.h"
 #include "MyOpt.h"
 #include "io/Fct.h"

@@ -221,10 +221,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 4.0.1
+PACKAGE_STRING = ofeli 4.1.0
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 4.0.1
+PACKAGE_VERSION = 4.1.0
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -234,7 +234,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 4.0.1
+VERSION = 4.1.0
 abs_builddir = /Users/touzani/ofeli/include/util
 abs_srcdir = /Users/touzani/ofeli/include/util
 abs_top_builddir = /Users/touzani/ofeli
@@ -289,12 +289,13 @@ top_srcdir = ../..
 AUTOMAKE_OPTIONS = no-dependencies
 ssdir = $(pkgincludedir)/util
 ss_HEADERS = banner.h \
-		constants.h \
-		Gauss.h \
-		macros.h \
-		qksort.h \
-		Timer.h \
-		util.h
+             constants.h \
+             Gauss.h \
+             Heap.h \
+             macros.h \
+             qksort.h \
+             Timer.h \
+             util.h
 
 all: all-am
 

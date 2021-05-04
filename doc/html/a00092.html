@@ -53,132 +53,57 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00327.html">OFELI</a></li><li class="navelem"><a class="el" href="a00092.html">Prec</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00092.html">Prescription</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a00439.html">List of all members</a>  </div>
+<a href="a00435.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Prec&lt; T_ &gt; Class Template Reference<div class="ingroups"><a class="el" href="a00346.html">OFELI</a><a class="el" href="a00346.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00345.html">Solver</a></div></div>  </div>
+<div class="title">Prescription Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00334.html">Input/Output</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>To set a preconditioner.  
+<p>To prescribe various types of data by an algebraic expression. Data may consist in boundary conditions, forces, tractions, fluxes, initial condition. All these data types can be defined through an enumerated variable.  
  <a href="a00092.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6e355a68c9ee021945bef0d7517c4139"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e355a68c9ee021945bef0d7517c4139"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a6e355a68c9ee021945bef0d7517c4139">Prec</a> ()</td></tr>
-<tr class="memdesc:a6e355a68c9ee021945bef0d7517c4139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:a6e355a68c9ee021945bef0d7517c4139"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e510f45ed54a1a75c758b97ef5dfbb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a7e510f45ed54a1a75c758b97ef5dfbb5">Prec</a> (int type)</td></tr>
-<tr class="memdesc:a7e510f45ed54a1a75c758b97ef5dfbb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that chooses preconditioner.  <a href="#a7e510f45ed54a1a75c758b97ef5dfbb5">More...</a><br /></td></tr>
-<tr class="separator:a7e510f45ed54a1a75c758b97ef5dfbb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6da66b2f752cc497228a8069b5d3638e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a6da66b2f752cc497228a8069b5d3638e">Prec</a> (const <a class="el" href="a00102.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00346.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, int type=<a class="el" href="a00346.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
-<tr class="memdesc:a6da66b2f752cc497228a8069b5d3638e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix of the linear system to precondition.  <a href="#a6da66b2f752cc497228a8069b5d3638e">More...</a><br /></td></tr>
-<tr class="separator:a6da66b2f752cc497228a8069b5d3638e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a182e9f2d6391964730c6185bf6126552"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a182e9f2d6391964730c6185bf6126552">Prec</a> (const <a class="el" href="a00070.html">Matrix</a>&lt; T_ &gt; *<a class="el" href="a00346.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, int type=<a class="el" href="a00346.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
-<tr class="memdesc:a182e9f2d6391964730c6185bf6126552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix of the linear system to precondition.  <a href="#a182e9f2d6391964730c6185bf6126552">More...</a><br /></td></tr>
-<tr class="separator:a182e9f2d6391964730c6185bf6126552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bfd7a55a3e6d0c0c1135b46eb7ad898"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bfd7a55a3e6d0c0c1135b46eb7ad898"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a2bfd7a55a3e6d0c0c1135b46eb7ad898">~Prec</a> ()</td></tr>
-<tr class="memdesc:a2bfd7a55a3e6d0c0c1135b46eb7ad898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a2bfd7a55a3e6d0c0c1135b46eb7ad898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd28262b8520203989617fd36f68695c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#afd28262b8520203989617fd36f68695c">setType</a> (int type)</td></tr>
-<tr class="memdesc:afd28262b8520203989617fd36f68695c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define preconditioner type.  <a href="#afd28262b8520203989617fd36f68695c">More...</a><br /></td></tr>
-<tr class="separator:afd28262b8520203989617fd36f68695c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a972c2cb5338f82e2235907611a8a815d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a972c2cb5338f82e2235907611a8a815d">setMatrix</a> (const <a class="el" href="a00070.html">Matrix</a>&lt; T_ &gt; *<a class="el" href="a00346.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>)</td></tr>
-<tr class="memdesc:a972c2cb5338f82e2235907611a8a815d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define pointer to matrix for preconditioning (if this one is abstract)  <a href="#a972c2cb5338f82e2235907611a8a815d">More...</a><br /></td></tr>
-<tr class="separator:a972c2cb5338f82e2235907611a8a815d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c3c6ea1cfc625154e7f3f5634a92aff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a1c3c6ea1cfc625154e7f3f5634a92aff">setMatrix</a> (const <a class="el" href="a00102.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00346.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>)</td></tr>
-<tr class="memdesc:a1c3c6ea1cfc625154e7f3f5634a92aff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the matrix for preconditioning.  <a href="#a1c3c6ea1cfc625154e7f3f5634a92aff">More...</a><br /></td></tr>
-<tr class="separator:a1c3c6ea1cfc625154e7f3f5634a92aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfaaaffa4ca4da76c1db8c5a6441c81b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#acfaaaffa4ca4da76c1db8c5a6441c81b">solve</a> (<a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;x) const </td></tr>
-<tr class="memdesc:acfaaaffa4ca4da76c1db8c5a6441c81b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system with preconditioning matrix.  <a href="#acfaaaffa4ca4da76c1db8c5a6441c81b">More...</a><br /></td></tr>
-<tr class="separator:acfaaaffa4ca4da76c1db8c5a6441c81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab74f16e78bf7027dd48062b755b3eab2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#ab74f16e78bf7027dd48062b755b3eab2">solve</a> (const <a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00346.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;x) const </td></tr>
-<tr class="memdesc:ab74f16e78bf7027dd48062b755b3eab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system with preconditioning matrix.  <a href="#ab74f16e78bf7027dd48062b755b3eab2">More...</a><br /></td></tr>
-<tr class="separator:ab74f16e78bf7027dd48062b755b3eab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac89c829bddeaa60016abd9358992011"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#aac89c829bddeaa60016abd9358992011">TransSolve</a> (<a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;x) const </td></tr>
-<tr class="memdesc:aac89c829bddeaa60016abd9358992011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system with transposed preconditioning matrix.  <a href="#aac89c829bddeaa60016abd9358992011">More...</a><br /></td></tr>
-<tr class="separator:aac89c829bddeaa60016abd9358992011"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b053c303be219b107a664012595558f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a3b053c303be219b107a664012595558f">TransSolve</a> (const <a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00346.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;x) const </td></tr>
-<tr class="memdesc:a3b053c303be219b107a664012595558f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve a linear system with transposed preconditioning matrix.  <a href="#a3b053c303be219b107a664012595558f">More...</a><br /></td></tr>
-<tr class="separator:a3b053c303be219b107a664012595558f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a064e21a6883f39e078e5066a431cf410"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a064e21a6883f39e078e5066a431cf410"></a>
-T_ &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a064e21a6883f39e078e5066a431cf410">getPivot</a> (size_t i) const </td></tr>
-<tr class="memdesc:a064e21a6883f39e078e5066a431cf410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return i-th pivot of preconditioning matrix. <br /></td></tr>
-<tr class="separator:a064e21a6883f39e078e5066a431cf410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b0e88c4b2a26e6651cd0a26af580e86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b0e88c4b2a26e6651cd0a26af580e86"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a8b0e88c4b2a26e6651cd0a26af580e86">Prescription</a> ()</td></tr>
+<tr class="memdesc:a8b0e88c4b2a26e6651cd0a26af580e86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:a8b0e88c4b2a26e6651cd0a26af580e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad58136c7aa1df4884d968ee61ce49999"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#ad58136c7aa1df4884d968ee61ce49999">Prescription</a> (<a class="el" href="a00070.html">Mesh</a> &amp;mesh, const std::string &amp;file)</td></tr>
+<tr class="memdesc:ad58136c7aa1df4884d968ee61ce49999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that gives an instance of class <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> and the data file name.  <a href="#ad58136c7aa1df4884d968ee61ce49999">More...</a><br /></td></tr>
+<tr class="separator:ad58136c7aa1df4884d968ee61ce49999"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc32cb0d2029c7e0ee3eeee426c9b61d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc32cb0d2029c7e0ee3eeee426c9b61d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#abc32cb0d2029c7e0ee3eeee426c9b61d">~Prescription</a> ()</td></tr>
+<tr class="memdesc:abc32cb0d2029c7e0ee3eeee426c9b61d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:abc32cb0d2029c7e0ee3eeee426c9b61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a469babb54d7c6a779addd8a46df1b0c3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html#a469babb54d7c6a779addd8a46df1b0c3">get</a> (EqDataType type, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time=0, size_t dof=0)</td></tr>
+<tr class="separator:a469babb54d7c6a779addd8a46df1b0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class T_&gt;<br />
-class OFELI::Prec&lt; T_ &gt;</h3>
-
-<p>To set a preconditioner. </p>
-<p>The preconditioner type is chosen in the constructor</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">&lt;T_&gt;</td><td>Data type (real_t, float, complex&lt;real_t&gt;, ...)</td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>To prescribe various types of data by an algebraic expression. Data may consist in boundary conditions, forces, tractions, fluxes, initial condition. All these data types can be defined through an enumerated variable. </p>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a7e510f45ed54a1a75c758b97ef5dfbb5"></a>
+<a class="anchor" id="ad58136c7aa1df4884d968ee61ce49999"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00092.html">Prec</a> </td>
+          <td class="memname"><a class="el" href="a00092.html">Prescription</a> </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>type</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor that chooses preconditioner. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Preconditioner type: <ul>
-<li>
-<code>IDENT_PREC</code>: Identity preconditioner (No preconditioning) </li>
-<li>
-<code>DIAG_PREC</code>: Diagonal preconditioner </li>
-<li>
-<code>DILU_PREC</code>: Diagonal Incomplete factorization preconditioner </li>
-<li>
-<code>ILU_PREC</code>: Incomplete factorization preconditioner </li>
-<li>
-<code>SSOR_PREC</code>: SSOR (Symmetric Successive Over Relaxation) preconditioner </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a6da66b2f752cc497228a8069b5d3638e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00092.html">Prec</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00102.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html">Mesh</a> &amp;&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>type</em> = <code><a class="el" href="a00346.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a></code>&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -188,70 +113,11 @@ class OFELI::Prec&lt; T_ &gt;</h3>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor using matrix of the linear system to precondition. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor that gives an instance of class <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> and the data file name. </p>
+<p>It reads parameters in <a class="el" href="a00092.html" title="To prescribe various types of data by an algebraic expression. Data may consist in boundary condition...">Prescription</a> Format from this file. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to precondition </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Preconditioner type: <ul>
-<li>
-<code>IDENT_PREC</code>: Identity preconditioner (No preconditioning) </li>
-<li>
-<code>DIAG_PREC</code>: Diagonal preconditioner </li>
-<li>
-<code>DILU_PREC</code>: Diagonal Incomplete factorization preconditioner </li>
-<li>
-<code>ILU_PREC</code>: Incomplete factorization preconditioner </li>
-<li>
-<code>SSOR_PREC</code>: SSOR (Symmetric Successive Over Relaxation) preconditioner </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a182e9f2d6391964730c6185bf6126552"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00092.html">Prec</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00070.html">Matrix</a>&lt; T_ &gt; *&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>type</em> = <code><a class="el" href="a00346.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using matrix of the linear system to precondition. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Pointer to abstract <a class="el" href="a00070.html" title="Virtual class to handle matrices for all storage formats. ">Matrix</a> class to precondition </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Preconditioner type: <ul>
-<li>
-<code>IDENT_PREC</code>: Identity preconditioner (No preconditioning) </li>
-<li>
-<code>DIAG_PREC</code>: Diagonal preconditioner </li>
-<li>
-<code>DILU_PREC</code>: Diagonal Incomplete factorization preconditioner </li>
-<li>
-<code>ILU_PREC</code>: Incomplete factorization preconditioner </li>
-<li>
-<code>SSOR_PREC</code>: SSOR (Symmetric Successive Over Relaxation) preconditioner </li>
-</ul>
-</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mesh</td><td><a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>Name of <a class="el" href="a00092.html" title="To prescribe various types of data by an algebraic expression. Data may consist in boundary condition...">Prescription</a> file </td></tr>
   </table>
   </dd>
 </dl>
@@ -259,202 +125,65 @@ class OFELI::Prec&lt; T_ &gt;</h3>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="afd28262b8520203989617fd36f68695c"></a>
+<a class="anchor" id="a469babb54d7c6a779addd8a46df1b0c3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setType </td>
+          <td class="memname">int get </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>type</em></td><td>)</td>
+          <td class="paramtype">EqDataType&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>time</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dof</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Define preconditioner type. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Read data in the given file and stores in a <a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance for a chosen DOF. The input value type determines the type of data to read. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Preconditioner type: <ul>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of data to seek. To choose among the enumerated values: <ul>
 <li>
-<code>IDENT_PREC</code>: Identity preconditioner (No preconditioning) </li>
+<code>BOUNDARY_CONDITION</code>: Read values for (Dirichlet) boundary conditions </li>
 <li>
-<code>DIAG_PREC</code>: Diagonal preconditioner </li>
+<code>BOUNDARY_FORCE</code>: Read values for boundary force (Neumann boundary condition).<br />
+ The values <code>TRACTION</code> and <code>FLUX</code> have the same effect. </li>
 <li>
-<code>DILU_PREC</code>: Diagonal Incomplete factorization preconditioner </li>
+<code>BODY_FORCE</code>: Read values for body (or volume) forces.<br />
+ The value <code>SOURCE</code> has the same effect. </li>
 <li>
-<code>ILU_PREC</code>: Incomplete factorization preconditioner </li>
+<code>POINT_FORCE</code>: Read values for pointwise forces </li>
 <li>
-<code>SSOR_PREC</code>: SSOR (Symmetric Successive Over Relaxation) preconditioner </li>
+<code>CONTACT_DISTANCE</code>: Read values for contact distance (for contact mechanics) </li>
+<li>
+<code>INITIAL_FIELD</code>: Read values for initial solution </li>
+<li>
+<code>SOLUTION</code>: Read values for a solution vector </li>
 </ul>
 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a972c2cb5338f82e2235907611a8a815d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setMatrix </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00070.html">Matrix</a>&lt; T_ &gt; *&#160;</td>
-          <td class="paramname"><em>A</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Define pointer to matrix for preconditioning (if this one is abstract) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to precondition </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a1c3c6ea1cfc625154e7f3f5634a92aff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setMatrix </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00102.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Define the matrix for preconditioning. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix to precondition (instance of class <a class="el" href="a00102.html" title="To handle matrices in sparse storage format. ">SpMatrix</a>) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="acfaaaffa4ca4da76c1db8c5a6441c81b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void solve </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Solve a linear system with preconditioning matrix. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>Right-hand side on input and solution on output. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ab74f16e78bf7027dd48062b755b3eab2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void solve </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Solve a linear system with preconditioning matrix. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Right-hand side </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>Solution vector </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="aac89c829bddeaa60016abd9358992011"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TransSolve </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Solve a linear system with transposed preconditioning matrix. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>Right-hand side in input and solution in output. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a3b053c303be219b107a664012595558f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TransSolve </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Solve a linear system with transposed preconditioning matrix. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Right-hand side vector </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>Solution vector </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">v</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that is instantiated on input and filled on output </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">time</td><td>Value of time for which data is read [Default: <code>0</code>]. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>DOF to store (Default is <code>0</code>: All DOFs are chosen). </td></tr>
   </table>
   </dd>
 </dl>

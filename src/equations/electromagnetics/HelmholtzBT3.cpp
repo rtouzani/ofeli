@@ -132,18 +132,18 @@ void HelmholtzBT3::build()
    MESH_EL {
       set(the_element);
       LHS();
-      AbsEqua<complex_t>::_A->Assembly(The_element,eMat.get());
-      if (AbsEqua<complex_t>::_bf!=nullptr)
-         BodyRHS(*AbsEqua<complex_t>::_bf);
-      if (AbsEqua<complex_t>::_bc!=nullptr)
-         this->updateBC(*_theElement,*AbsEqua<complex_t>::_bc);
-      AbsEqua<complex_t>::_b->Assembly(The_element,eRHS.get());
+      Equa<complex_t>::_A->Assembly(The_element,eMat.get());
+      if (Equa<complex_t>::_bf!=nullptr)
+         BodyRHS(*Equa<complex_t>::_bf);
+      if (Equa<complex_t>::_bc!=nullptr)
+         this->updateBC(*_theElement,*Equa<complex_t>::_bc);
+      Equa<complex_t>::_b->Assembly(The_element,eRHS.get());
    }
    MESH_SD {
       set(the_side);
-      if (AbsEqua<complex_t>::_sf!=nullptr)
+      if (Equa<complex_t>::_sf!=nullptr)
          BoundaryRHS(*_sf);
-      AbsEqua<complex_t>::_b->Assembly(The_side,sRHS.get());
+      Equa<complex_t>::_b->Assembly(The_side,sRHS.get());
    }
 }
 

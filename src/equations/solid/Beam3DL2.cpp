@@ -129,22 +129,22 @@ void Beam3DL2::getDisp(Vect<real_t>& d)
 
 void Beam3DL2::build()
 {
-   AbsEqua<real_t>::_A->clear();
+   Equa<real_t>::_A->clear();
    MESH_EL {
       set(the_element);
       if (_analysis==TRANSIENT) {
-         ElementVector(*AbsEqua<real_t>::_u);
+         ElementVector(*Equa<real_t>::_u);
          if (_terms&LUMPED_MASS)
             LMass();
          if (_terms&MASS)
             Mass();
       }
       Stiffness();
-      AbsEqua<real_t>::_A->Assembly(The_element,eMat.get());
-      AbsEqua<real_t>::_b->Assembly(The_element,eRHS.get());
+      Equa<real_t>::_A->Assembly(The_element,eMat.get());
+      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
    }
    if (_pf!=nullptr)
-      *AbsEqua<real_t>::_b += *_pf;
+      *Equa<real_t>::_b += *_pf;
 }
 
 

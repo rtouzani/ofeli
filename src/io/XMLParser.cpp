@@ -44,7 +44,7 @@
 #include "shape_functions/Hexa8.h"
 #include "shape_functions/Penta6.h"
 #include "io/Tabulation.h"
-#include "equations/AbsEqua.h"
+#include "equations/Equa.h"
 #include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 

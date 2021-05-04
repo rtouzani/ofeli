@@ -49,6 +49,7 @@ using std::string;
 #include "OFELI_Config.h"
 #include "linear_algebra/Assembly.h"
 #include "linear_algebra/Vect.h"
+#include "linear_algebra/DMatrix.h"
 #include "linear_algebra/DSMatrix.h"
 #include "linear_algebra/SkSMatrix.h"
 
@@ -63,7 +64,7 @@ namespace OFELI {
  *  \brief Definition file for class EigenProblemSolver.
  */
 
-template <class T_> class AbsEqua;
+template <class T_> class Equa;
 
 //-----------------------------------------------------------------------------
 // Class EigenProblemSolver
@@ -148,8 +149,8 @@ class EigenProblemSolver
  *  @param [in] eq Reference to equation instance
  *  @param [in] lumped Mass matrix is lumped (\a true) or not (\a false) [Default: <tt>true</tt>]
  */
-    EigenProblemSolver(AbsEqua<real_t>& eq,
-                       bool             lumped=true);
+    EigenProblemSolver(Equa<real_t>& eq,
+                       bool          lumped=true);
 
 /// \brief Destructor
     ~EigenProblemSolver();
@@ -186,8 +187,8 @@ class EigenProblemSolver
  *  @param [in] eq Reference to equation instance
  *  @param [in] lumped Mass matrix is lumped (\a true) or not (\a false) [Default: <tt>true</tt>]
  */
-    void setPDE(AbsEqua<real_t>& eq,
-                bool             lumped=true);
+    void setPDE(Equa<real_t>& eq,
+                bool          lumped=true);
 
 /** \brief Run the eigenproblem solver
  *  @param [in] nb Number of eigenvalues to be computed. By default, all eigenvalues are computed.
@@ -279,7 +280,7 @@ class EigenProblemSolver
 
  private:
 
-   AbsEqua<real_t>  *_theEqua;
+   Equa<real_t>     *_theEqua;
    Mesh             *_theMesh;
    Matrix<real_t>   *_K, *_M;
    Vect<real_t>     *_lM, _rc, _eigv;

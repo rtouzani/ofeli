@@ -92,7 +92,7 @@ class MyOpt
  *  @param [in] eq Pointer to equation instance
  *  @remark This member function is to be invoked in the user class defining the optimization problem
  */
-    void setEquation(AbsEqua<real_t>* eq)
+    void setEquation(Equa<real_t>* eq)
     {
        _theEqua = eq;
     }
@@ -100,7 +100,7 @@ class MyOpt
 /** \brief Get pointer to equation instance
  *  @return Pointer to equation instance
  */
-    AbsEqua<real_t>* getEquation() const
+    Equa<real_t>* getEquation() const
     {
        return _theEqua;
     }
@@ -108,8 +108,8 @@ class MyOpt
  protected:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   Mesh            *_theMesh;
-   AbsEqua<real_t> *_theEqua;
+   Mesh         *_theMesh;
+   Equa<real_t> *_theEqua;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

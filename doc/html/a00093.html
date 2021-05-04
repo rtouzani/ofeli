@@ -53,71 +53,157 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00327.html">OFELI</a></li><li class="navelem"><a class="el" href="a00093.html">Prescription</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00093.html">Quad4</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a00440.html">List of all members</a>  </div>
+<a href="a00436.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Prescription Class Reference<div class="ingroups"><a class="el" href="a00346.html">OFELI</a><a class="el" href="a00346.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00338.html">Input/Output</a></div></div>  </div>
+<div class="title">Quad4 Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00340.html">Shape Function</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>To prescribe various types of data by an algebraic expression. Data may consist in boundary conditions, forces, tractions, fluxes, initial condition. All these data types can be defined through an enumerated variable.  
+<p>Defines a 4-node quadrilateral finite element using <code>Q<sub>1</sub></code> isoparametric interpolation.  
  <a href="a00093.html#details">More...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for Quad4:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="a00093.png" usemap="#Quad4_map" alt=""/>
+  <map id="Quad4_map" name="Quad4_map">
+<area href="a00040.html" title="Parent class from which inherit all finite element shape classes. " alt="FEShape" shape="rect" coords="0,0,64,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8b0e88c4b2a26e6651cd0a26af580e86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b0e88c4b2a26e6651cd0a26af580e86"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a8b0e88c4b2a26e6651cd0a26af580e86">Prescription</a> ()</td></tr>
-<tr class="memdesc:a8b0e88c4b2a26e6651cd0a26af580e86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:a8b0e88c4b2a26e6651cd0a26af580e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad58136c7aa1df4884d968ee61ce49999"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#ad58136c7aa1df4884d968ee61ce49999">Prescription</a> (<a class="el" href="a00071.html">Mesh</a> &amp;mesh, const std::string &amp;file)</td></tr>
-<tr class="memdesc:ad58136c7aa1df4884d968ee61ce49999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that gives an instance of class <a class="el" href="a00071.html" title="To store and manipulate finite element meshes. ">Mesh</a> and the data file name.  <a href="#ad58136c7aa1df4884d968ee61ce49999">More...</a><br /></td></tr>
-<tr class="separator:ad58136c7aa1df4884d968ee61ce49999"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc32cb0d2029c7e0ee3eeee426c9b61d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc32cb0d2029c7e0ee3eeee426c9b61d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#abc32cb0d2029c7e0ee3eeee426c9b61d">~Prescription</a> ()</td></tr>
-<tr class="memdesc:abc32cb0d2029c7e0ee3eeee426c9b61d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:abc32cb0d2029c7e0ee3eeee426c9b61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a469babb54d7c6a779addd8a46df1b0c3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a469babb54d7c6a779addd8a46df1b0c3">get</a> (EqDataType type, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v, <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time=0, size_t dof=0)</td></tr>
-<tr class="separator:a469babb54d7c6a779addd8a46df1b0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0544c43e9d042bf3c4874393c1316b1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0544c43e9d042bf3c4874393c1316b1a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a0544c43e9d042bf3c4874393c1316b1a">Quad4</a> ()</td></tr>
+<tr class="memdesc:a0544c43e9d042bf3c4874393c1316b1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:a0544c43e9d042bf3c4874393c1316b1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af37209395c223d43dc763b4d01ad01b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#af37209395c223d43dc763b4d01ad01b7">Quad4</a> (const <a class="el" href="a00025.html">Element</a> *element)</td></tr>
+<tr class="memdesc:af37209395c223d43dc763b4d01ad01b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor when data of <a class="el" href="a00025.html" title="To store and treat finite element geometric information. ">Element</a> <code>el</code> are given.  <a href="#af37209395c223d43dc763b4d01ad01b7">More...</a><br /></td></tr>
+<tr class="separator:af37209395c223d43dc763b4d01ad01b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e54563e2fcb0d9ad35dd48580cee7d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a7e54563e2fcb0d9ad35dd48580cee7d4">Quad4</a> (const <a class="el" href="a00096.html">Side</a> *side)</td></tr>
+<tr class="memdesc:a7e54563e2fcb0d9ad35dd48580cee7d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor when data of <a class="el" href="a00096.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> <code>sd</code> are given.  <a href="#a7e54563e2fcb0d9ad35dd48580cee7d4">More...</a><br /></td></tr>
+<tr class="separator:a7e54563e2fcb0d9ad35dd48580cee7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac42b8d9c6791810428f5eac161628ba1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac42b8d9c6791810428f5eac161628ba1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#ac42b8d9c6791810428f5eac161628ba1">~Quad4</a> ()</td></tr>
+<tr class="memdesc:ac42b8d9c6791810428f5eac161628ba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:ac42b8d9c6791810428f5eac161628ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a578b9f2f623966f955548e89ccce995a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a578b9f2f623966f955548e89ccce995a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a578b9f2f623966f955548e89ccce995a">set</a> (const <a class="el" href="a00025.html">Element</a> *el)</td></tr>
+<tr class="memdesc:a578b9f2f623966f955548e89ccce995a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose element by giving its pointer. <br /></td></tr>
+<tr class="separator:a578b9f2f623966f955548e89ccce995a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afef83babf0e3aeb65caca62d7995aaf5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afef83babf0e3aeb65caca62d7995aaf5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#afef83babf0e3aeb65caca62d7995aaf5">set</a> (const <a class="el" href="a00096.html">Side</a> *sd)</td></tr>
+<tr class="memdesc:afef83babf0e3aeb65caca62d7995aaf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose side by giving its pointer. <br /></td></tr>
+<tr class="separator:afef83babf0e3aeb65caca62d7995aaf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3686dcc363945fc9705485b9200fa17e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a3686dcc363945fc9705485b9200fa17e">setLocal</a> (const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;s)</td></tr>
+<tr class="memdesc:a3686dcc363945fc9705485b9200fa17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize local point coordinates in element.  <a href="#a3686dcc363945fc9705485b9200fa17e">More...</a><br /></td></tr>
+<tr class="separator:a3686dcc363945fc9705485b9200fa17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8d5209b5c172d4a687adffe9c2d44d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#ace8d5209b5c172d4a687adffe9c2d44d">atGauss</a> (int n, std::vector&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;sh, std::vector&lt; <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt; &amp;dsh, std::vector&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;w)</td></tr>
+<tr class="memdesc:ace8d5209b5c172d4a687adffe9c2d44d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shape functions and their partial derivatives and integration weights.  <a href="#ace8d5209b5c172d4a687adffe9c2d44d">More...</a><br /></td></tr>
+<tr class="separator:ace8d5209b5c172d4a687adffe9c2d44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a415b01e4f9aa429c2c828d2fd7f0db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a0a415b01e4f9aa429c2c828d2fd7f0db">Grad</a> (const <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 4 &gt; &amp;u, const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;s)</td></tr>
+<tr class="memdesc:a0a415b01e4f9aa429c2c828d2fd7f0db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return gradient of a function defined at element nodes.  <a href="#a0a415b01e4f9aa429c2c828d2fd7f0db">More...</a><br /></td></tr>
+<tr class="separator:a0a415b01e4f9aa429c2c828d2fd7f0db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef875a901767a614557a4aca5e6d08f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef875a901767a614557a4aca5e6d08f9"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#aef875a901767a614557a4aca5e6d08f9">getMaxEdgeLength</a> () const </td></tr>
+<tr class="memdesc:aef875a901767a614557a4aca5e6d08f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximal edge length of quadrilateral. <br /></td></tr>
+<tr class="separator:aef875a901767a614557a4aca5e6d08f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b14e7e0ca32bd24f27519ed8ed0d0c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b14e7e0ca32bd24f27519ed8ed0d0c8"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html#a9b14e7e0ca32bd24f27519ed8ed0d0c8">getMinEdgeLength</a> () const </td></tr>
+<tr class="memdesc:a9b14e7e0ca32bd24f27519ed8ed0d0c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimal edge length of quadrilateral. <br /></td></tr>
+<tr class="separator:a9b14e7e0ca32bd24f27519ed8ed0d0c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a00040"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00040')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00040.html">FEShape</a></td></tr>
+<tr class="memitem:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1a6254740b6e11468dee2abfccc051a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#af1a6254740b6e11468dee2abfccc051a">FEShape</a> ()</td></tr>
+<tr class="memdesc:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#afcb4644a9ace5adbdc1c05efcc72da1f">FEShape</a> (const <a class="el" href="a00025.html">Element</a> *el)</td></tr>
+<tr class="memdesc:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an element.  <a href="#afcb4644a9ace5adbdc1c05efcc72da1f">More...</a><br /></td></tr>
+<tr class="separator:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ad662c28c63e9e8c72fddb76f5028ed61">FEShape</a> (const <a class="el" href="a00096.html">Side</a> *sd)</td></tr>
+<tr class="memdesc:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a side.  <a href="#ad662c28c63e9e8c72fddb76f5028ed61">More...</a><br /></td></tr>
+<tr class="separator:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ba928b2c14260b47beab071c1e347bd"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a3ba928b2c14260b47beab071c1e347bd">~FEShape</a> ()</td></tr>
+<tr class="memdesc:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf13023b750b4a215814cfb805b145da inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf13023b750b4a215814cfb805b145da"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#abf13023b750b4a215814cfb805b145da">Sh</a> (size_t i) const </td></tr>
+<tr class="memdesc:abf13023b750b4a215814cfb805b145da inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return shape function of node <code>i</code> at given point. <br /></td></tr>
+<tr class="separator:abf13023b750b4a215814cfb805b145da inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc79aaeb587148410021052f410d4dc inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a4fc79aaeb587148410021052f410d4dc">Sh</a> (size_t i, <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; s) const </td></tr>
+<tr class="memdesc:a4fc79aaeb587148410021052f410d4dc inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shape function of node <code>i</code> at a given point <code>s</code>.  <a href="#a4fc79aaeb587148410021052f410d4dc">More...</a><br /></td></tr>
+<tr class="separator:a4fc79aaeb587148410021052f410d4dc inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f35cc59cf2218efd06b13c2487f31cc inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a0f35cc59cf2218efd06b13c2487f31cc">getDet</a> () const </td></tr>
+<tr class="memdesc:a0f35cc59cf2218efd06b13c2487f31cc inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return determinant of jacobian.  <a href="#a0f35cc59cf2218efd06b13c2487f31cc">More...</a><br /></td></tr>
+<tr class="separator:a0f35cc59cf2218efd06b13c2487f31cc inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a802168de29d5e265ee01a57fd98793e8 inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a802168de29d5e265ee01a57fd98793e8"></a>
+<a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a802168de29d5e265ee01a57fd98793e8">getCenter</a> () const </td></tr>
+<tr class="memdesc:a802168de29d5e265ee01a57fd98793e8 inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of element. <br /></td></tr>
+<tr class="separator:a802168de29d5e265ee01a57fd98793e8 inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5af4f17aea53c0ab1e8ce2494f23234 inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ad5af4f17aea53c0ab1e8ce2494f23234">getLocalPoint</a> () const </td></tr>
+<tr class="memdesc:ad5af4f17aea53c0ab1e8ce2494f23234 inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize a point in the element.  <a href="#ad5af4f17aea53c0ab1e8ce2494f23234">More...</a><br /></td></tr>
+<tr class="separator:ad5af4f17aea53c0ab1e8ce2494f23234 inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a565411b0254679f383549c1a09bf2352 inherit pub_methods_a00040"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a565411b0254679f383549c1a09bf2352">getLocalPoint</a> (const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;s) const </td></tr>
+<tr class="memdesc:a565411b0254679f383549c1a09bf2352 inherit pub_methods_a00040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize a point in the element.  <a href="#a565411b0254679f383549c1a09bf2352">More...</a><br /></td></tr>
+<tr class="separator:a565411b0254679f383549c1a09bf2352 inherit pub_methods_a00040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>To prescribe various types of data by an algebraic expression. Data may consist in boundary conditions, forces, tractions, fluxes, initial condition. All these data types can be defined through an enumerated variable. </p>
+<div class="textblock"><p>Defines a 4-node quadrilateral finite element using <code>Q<sub>1</sub></code> isoparametric interpolation. </p>
+<p>The reference element is the square <code>[-1,1]x[-1,1]</code>. The user must take care to the fact that determinant of jacobian and other quantities depend on the point in the reference element where they are calculated. For this, before any utilization of shape functions or jacobian, function <b><a class="el" href="a00093.html#a3686dcc363945fc9705485b9200fa17e" title="Initialize local point coordinates in element. ">setLocal()</a></b> must be invoked.</p>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ad58136c7aa1df4884d968ee61ce49999"></a>
+<a class="anchor" id="af37209395c223d43dc763b4d01ad01b7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00093.html">Prescription</a> </td>
+          <td class="memname"><a class="el" href="a00093.html">Quad4</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00071.html">Mesh</a> &amp;&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">const <a class="el" href="a00025.html">Element</a> *&#160;</td>
+          <td class="paramname"><em>element</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor that gives an instance of class <a class="el" href="a00071.html" title="To store and manipulate finite element meshes. ">Mesh</a> and the data file name. </p>
-<p>It reads parameters in <a class="el" href="a00093.html" title="To prescribe various types of data by an algebraic expression. Data may consist in boundary condition...">Prescription</a> Format from this file. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor when data of <a class="el" href="a00025.html" title="To store and treat finite element geometric information. ">Element</a> <code>el</code> are given. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">mesh</td><td><a class="el" href="a00071.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>Name of <a class="el" href="a00093.html" title="To prescribe various types of data by an algebraic expression. Data may consist in boundary condition...">Prescription</a> file </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">element</td><td>Pointer to <a class="el" href="a00025.html" title="To store and treat finite element geometric information. ">Element</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7e54563e2fcb0d9ad35dd48580cee7d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00093.html">Quad4</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00096.html">Side</a> *&#160;</td>
+          <td class="paramname"><em>side</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor when data of <a class="el" href="a00096.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> <code>sd</code> are given. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">side</td><td>Pointer to <a class="el" href="a00096.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -125,33 +211,57 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a469babb54d7c6a779addd8a46df1b0c3"></a>
+<a class="anchor" id="a3686dcc363945fc9705485b9200fa17e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int get </td>
+          <td class="memname">void setLocal </td>
           <td>(</td>
-          <td class="paramtype">EqDataType&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
+          <td class="paramtype">const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize local point coordinates in element. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td><a class="el" href="a00088.html" title="Defines a point with arbitrary type coordinates. ">Point</a> in the reference element This function computes jacobian, shape functions and their partial derivatives at <code>s</code>. Other member functions only return these values. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ace8d5209b5c172d4a687adffe9c2d44d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void atGauss </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>sh</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>time</em> = <code>0</code>, </td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>dsh</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dof</em> = <code>0</code>&#160;</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>w</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -160,33 +270,54 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read data in the given file and stores in a <a class="el" href="a00115.html" title="To handle general purpose vectors. ">Vect</a> instance for a chosen DOF. The input value type determines the type of data to read. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Calculate shape functions and their partial derivatives and integration weights. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of data to seek. To choose among the enumerated values: <ul>
-<li>
-<code>BOUNDARY_CONDITION</code>: Read values for (Dirichlet) boundary conditions </li>
-<li>
-<code>BOUNDARY_FORCE</code>: Read values for boundary force (Neumann boundary condition).<br />
- The values <code>TRACTION</code> and <code>FLUX</code> have the same effect. </li>
-<li>
-<code>BODY_FORCE</code>: Read values for body (or volume) forces.<br />
- The value <code>SOURCE</code> has the same effect. </li>
-<li>
-<code>POINT_FORCE</code>: Read values for pointwise forces </li>
-<li>
-<code>CONTACT_DISTANCE</code>: Read values for contact distance (for contact mechanics) </li>
-<li>
-<code>INITIAL_FIELD</code>: Read values for initial solution </li>
-<li>
-<code>SOLUTION</code>: Read values for a solution vector </li>
-</ul>
-</td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">v</td><td><a class="el" href="a00115.html" title="To handle general purpose vectors. ">Vect</a> instance that is instantiated on input and filled on output </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">time</td><td>Value of time for which data is read [Default: <code>0</code>]. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>DOF to store (Default is <code>0</code>: All DOFs are chosen). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Number of Gauss-Legendre integration points in each direction </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sh</td><td>Vector of shape functions at <a class="el" href="a00043.html" title="Calculate data for Gauss integration. ">Gauss</a> points </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dsh</td><td>Vector of shape function derivatives at <a class="el" href="a00043.html" title="Calculate data for Gauss integration. ">Gauss</a> points </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">w</td><td>Weights of integration formula at <a class="el" href="a00043.html" title="Calculate data for Gauss integration. ">Gauss</a> points </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a0a415b01e4f9aa429c2c828d2fd7f0db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00088.html">Point</a>&lt;<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt; Grad </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 4 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return gradient of a function defined at element nodes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Vector of values at nodes </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Local coordinates (in <code>[-1,1]*[-1,1]</code>) of point where the gradient is evaluated </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value of gradient </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the derivatives of shape functions were not computed before calling this function (by calling setLocal), this function will compute them </dd></dl>
 
 </div>
 </div>

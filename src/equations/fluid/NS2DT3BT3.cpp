@@ -98,10 +98,10 @@ void NS2DT3BT3::build()
       Misc();
       Viscous();
       PressureGradient();
-      if (AbsEqua<real_t>::_bc!=nullptr)
-         Equation<real_t,3,9,2,6>::updateBC(The_element,*AbsEqua<real_t>::_bc);
-      AbsEqua<real_t>::_A->Assembly(The_element,eA0.get());
-      AbsEqua<real_t>::_b->Assembly(The_element,eRHS.get());
+      if (Equa<real_t>::_bc!=nullptr)
+         Equation<real_t,3,9,2,6>::updateBC(The_element,*Equa<real_t>::_bc);
+      Equa<real_t>::_A->Assembly(The_element,eA0.get());
+      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
    }
 }
 

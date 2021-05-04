@@ -53,232 +53,90 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00327.html">OFELI</a></li><li class="navelem"><a class="el" href="a00076.html">Muscl3DT</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00076.html">MyNLAS</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a00423.html">List of all members</a>  </div>
+<a href="a00419.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Muscl3DT Class Reference<div class="ingroups"><a class="el" href="a00346.html">OFELI</a><a class="el" href="a00346.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00330.html">Conservation Law Equations</a></div></div>  </div>
+<div class="title">MyNLAS Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span><div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00341.html">Solver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class for 3-D hyperbolic solvers with <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> scheme using tetrahedra.  
+<p>Abstract class to define by user specified function.  
  <a href="a00076.html#details">More...</a></p>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for Muscl3DT:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
- <div class="center">
-  <img src="a00076.png" usemap="#Muscl3DT_map" alt=""/>
-  <map id="Muscl3DT_map" name="Muscl3DT_map">
-<area href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. " alt="Muscl" shape="rect" coords="39,0,108,24"/>
-<area href="a00050.html" title="Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 3-D..." alt="ICPG3DT" shape="rect" coords="0,112,69,136"/>
-<area href="a00062.html" title="Class to solve the linear conservation law equation in 3-D by a MUSCL Finite Volume scheme on tetrahe..." alt="LCL3DT" shape="rect" coords="79,112,148,136"/>
-</map>
- </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8d6f15cfac2b4810564a4b9b0c8e0aa6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d6f15cfac2b4810564a4b9b0c8e0aa6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a8d6f15cfac2b4810564a4b9b0c8e0aa6">Muscl3DT</a> (<a class="el" href="a00071.html">Mesh</a> &amp;m)</td></tr>
-<tr class="memdesc:a8d6f15cfac2b4810564a4b9b0c8e0aa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh. <br /></td></tr>
-<tr class="separator:a8d6f15cfac2b4810564a4b9b0c8e0aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4e4e5ee6784d2eb2913d73a5cbc3ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd4e4e5ee6784d2eb2913d73a5cbc3ae"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#acd4e4e5ee6784d2eb2913d73a5cbc3ae">~Muscl3DT</a> ()</td></tr>
-<tr class="memdesc:acd4e4e5ee6784d2eb2913d73a5cbc3ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:acd4e4e5ee6784d2eb2913d73a5cbc3ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf87fe4ecbf7362db40f16e0dd2ac04"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#acdf87fe4ecbf7362db40f16e0dd2ac04">setReconstruction</a> (const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;U, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;LU, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;RU, size_t dof)</td></tr>
-<tr class="memdesc:acdf87fe4ecbf7362db40f16e0dd2ac04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to reconstruct by the <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> method.  <a href="#acdf87fe4ecbf7362db40f16e0dd2ac04">More...</a><br /></td></tr>
-<tr class="separator:acdf87fe4ecbf7362db40f16e0dd2ac04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1221984afa0468aae21095a4f46f462a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1221984afa0468aae21095a4f46f462a"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a1221984afa0468aae21095a4f46f462a">getMinimumFaceArea</a> () const </td></tr>
-<tr class="memdesc:a1221984afa0468aae21095a4f46f462a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum area of faces in the mesh. <br /></td></tr>
-<tr class="separator:a1221984afa0468aae21095a4f46f462a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef82bb2a6ad8a2aa2c0cbff1b02bf5b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef82bb2a6ad8a2aa2c0cbff1b02bf5b7"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#aef82bb2a6ad8a2aa2c0cbff1b02bf5b7">getMinimumElementVolume</a> () const </td></tr>
-<tr class="memdesc:aef82bb2a6ad8a2aa2c0cbff1b02bf5b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum volume of elements in the mesh. <br /></td></tr>
-<tr class="separator:aef82bb2a6ad8a2aa2c0cbff1b02bf5b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45e129467699ac581d58197a1aaad9ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45e129467699ac581d58197a1aaad9ac"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a45e129467699ac581d58197a1aaad9ac">getMaximumFaceArea</a> () const </td></tr>
-<tr class="memdesc:a45e129467699ac581d58197a1aaad9ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum area of faces in the mesh. <br /></td></tr>
-<tr class="separator:a45e129467699ac581d58197a1aaad9ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c87823ec0cde3d8925d805bed2c6d94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c87823ec0cde3d8925d805bed2c6d94"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a5c87823ec0cde3d8925d805bed2c6d94">getMaximumElementVolume</a> () const </td></tr>
-<tr class="memdesc:a5c87823ec0cde3d8925d805bed2c6d94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum volume of elements in the mesh. <br /></td></tr>
-<tr class="separator:a5c87823ec0cde3d8925d805bed2c6d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5924952e7aa44ed62032b393b7692a53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5924952e7aa44ed62032b393b7692a53"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a5924952e7aa44ed62032b393b7692a53">getMeanFaceArea</a> () const </td></tr>
-<tr class="memdesc:a5924952e7aa44ed62032b393b7692a53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return mean area of faces in the mesh. <br /></td></tr>
-<tr class="separator:a5924952e7aa44ed62032b393b7692a53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b4ba663a1d9cdfa984e1ece0535e6b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b4ba663a1d9cdfa984e1ece0535e6b8"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a3b4ba663a1d9cdfa984e1ece0535e6b8">getMeanElementVolume</a> () const </td></tr>
-<tr class="memdesc:a3b4ba663a1d9cdfa984e1ece0535e6b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return mean volume of elements in the mesh. <br /></td></tr>
-<tr class="separator:a3b4ba663a1d9cdfa984e1ece0535e6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3075d642d4f1124bd00edb3303611065"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3075d642d4f1124bd00edb3303611065"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a3075d642d4f1124bd00edb3303611065">getMinimumEdgeLength</a> () const </td></tr>
-<tr class="memdesc:a3075d642d4f1124bd00edb3303611065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum length of edges in the mesh. <br /></td></tr>
-<tr class="separator:a3075d642d4f1124bd00edb3303611065"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeaeccdcf417aa5e5e529cc073116afb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeaeccdcf417aa5e5e529cc073116afb4"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#aeaeccdcf417aa5e5e529cc073116afb4">getMinimumVolumebyArea</a> () const </td></tr>
-<tr class="memdesc:aeaeccdcf417aa5e5e529cc073116afb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum volume by area in the mesh. <br /></td></tr>
-<tr class="separator:aeaeccdcf417aa5e5e529cc073116afb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5718cc4224a2673c50295b44034dd828"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5718cc4224a2673c50295b44034dd828"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a5718cc4224a2673c50295b44034dd828">getMaximumEdgeLength</a> () const </td></tr>
-<tr class="memdesc:a5718cc4224a2673c50295b44034dd828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum length of edges in the mesh. <br /></td></tr>
-<tr class="separator:a5718cc4224a2673c50295b44034dd828"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af447ac9cc9246d11e3ea7ed2dc8c3413"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af447ac9cc9246d11e3ea7ed2dc8c3413"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#af447ac9cc9246d11e3ea7ed2dc8c3413">getTauLim</a> () const </td></tr>
-<tr class="memdesc:af447ac9cc9246d11e3ea7ed2dc8c3413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of <em>tau</em> lim. <br /></td></tr>
-<tr class="separator:af447ac9cc9246d11e3ea7ed2dc8c3413"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09583833824c8247200abc8551841707"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09583833824c8247200abc8551841707"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a09583833824c8247200abc8551841707">getComega</a> () const </td></tr>
-<tr class="memdesc:a09583833824c8247200abc8551841707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of <em>Comega</em>. <br /></td></tr>
-<tr class="separator:a09583833824c8247200abc8551841707"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5f414cceb34583beffe0156e07a832d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5f414cceb34583beffe0156e07a832d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#aa5f414cceb34583beffe0156e07a832d">setbetalim</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> bl)</td></tr>
-<tr class="memdesc:aa5f414cceb34583beffe0156e07a832d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign value of <em>beta</em> lim. <br /></td></tr>
-<tr class="separator:aa5f414cceb34583beffe0156e07a832d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a00073"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00073')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00073.html">Muscl</a></td></tr>
-<tr class="memitem:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa94714c08ef369973220a991cf441768"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#aa94714c08ef369973220a991cf441768">Muscl</a> (<a class="el" href="a00071.html">Mesh</a> &amp;m)</td></tr>
-<tr class="memdesc:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh instance. <br /></td></tr>
-<tr class="separator:aa94714c08ef369973220a991cf441768 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a399fcc278868b8280d19b680e4795231"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a399fcc278868b8280d19b680e4795231">~Muscl</a> ()</td></tr>
-<tr class="memdesc:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a399fcc278868b8280d19b680e4795231 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a281313b6dd2989a5d26b65ba8c0a15f1">setTimeStep</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> dt)</td></tr>
-<tr class="memdesc:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign time step value.  <a href="#a281313b6dd2989a5d26b65ba8c0a15f1">More...</a><br /></td></tr>
-<tr class="separator:a281313b6dd2989a5d26b65ba8c0a15f1 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b86912a2661052ed927bb49716172ea"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a0b86912a2661052ed927bb49716172ea">getTimeStep</a> () const </td></tr>
-<tr class="memdesc:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return time step value. <br /></td></tr>
-<tr class="separator:a0b86912a2661052ed927bb49716172ea inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a5867d4d97edfe9fb69127e39f57b7bf7">setCFL</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> CFL)</td></tr>
-<tr class="memdesc:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign CFL value.  <a href="#a5867d4d97edfe9fb69127e39f57b7bf7">More...</a><br /></td></tr>
-<tr class="separator:a5867d4d97edfe9fb69127e39f57b7bf7 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04501e06c9fa3eb9513dcd86bbfc834e"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a04501e06c9fa3eb9513dcd86bbfc834e">getCFL</a> () const </td></tr>
-<tr class="memdesc:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return CFL value. <br /></td></tr>
-<tr class="separator:a04501e06c9fa3eb9513dcd86bbfc834e inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ad8db90b95563d822e3bd206aaf265caf">setReferenceLength</a> (<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> dx)</td></tr>
-<tr class="memdesc:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign reference length value.  <a href="#ad8db90b95563d822e3bd206aaf265caf">More...</a><br /></td></tr>
-<tr class="separator:ad8db90b95563d822e3bd206aaf265caf inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9900927254ccd219a68678d98e123ab0"></a>
-<a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a9900927254ccd219a68678d98e123ab0">getReferenceLength</a> () const </td></tr>
-<tr class="memdesc:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference length. <br /></td></tr>
-<tr class="separator:a9900927254ccd219a68678d98e123ab0 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a913c6c03741d94f86d65690fd7d5902a"></a>
-<a class="el" href="a00071.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a913c6c03741d94f86d65690fd7d5902a">getMesh</a> () const </td></tr>
-<tr class="memdesc:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to <a class="el" href="a00071.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance. <br /></td></tr>
-<tr class="separator:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#afc81729fb2aa1720f446f48f1c3977ff">setVerbose</a> (int v)</td></tr>
-<tr class="memdesc:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set verbosity parameter.  <a href="#afc81729fb2aa1720f446f48f1c3977ff">More...</a><br /></td></tr>
-<tr class="separator:afc81729fb2aa1720f446f48f1c3977ff inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#acdf87fe4ecbf7362db40f16e0dd2ac04">setReconstruction</a> (const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;U, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;LU, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;RU, size_t dof)</td></tr>
-<tr class="memdesc:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to reconstruct by the <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> method.  <a href="#acdf87fe4ecbf7362db40f16e0dd2ac04">More...</a><br /></td></tr>
-<tr class="separator:acdf87fe4ecbf7362db40f16e0dd2ac04 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a167d02731dbb2ae2a7b83a6d0d5fd1b0">setMethod</a> (const <a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0f">Method</a> &amp;s)</td></tr>
-<tr class="memdesc:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a flux solver.  <a href="#a167d02731dbb2ae2a7b83a6d0d5fd1b0">More...</a><br /></td></tr>
-<tr class="separator:a167d02731dbb2ae2a7b83a6d0d5fd1b0 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c04c5d6699a205e56fc8409cca056ca"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a3c04c5d6699a205e56fc8409cca056ca">setSolidZoneCode</a> (int c)</td></tr>
-<tr class="memdesc:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a code for solid zone. <br /></td></tr>
-<tr class="separator:a3c04c5d6699a205e56fc8409cca056ca inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adff0eb56bda2770ec4f41a2a878e29ae"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#adff0eb56bda2770ec4f41a2a878e29ae">getSolidZone</a> () const </td></tr>
-<tr class="memdesc:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return flag for presence of solid zones. <br /></td></tr>
-<tr class="separator:adff0eb56bda2770ec4f41a2a878e29ae inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18a0a509c3f3cee3cd8ce0db63ce4c38"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a18a0a509c3f3cee3cd8ce0db63ce4c38">getSolidZoneCode</a> () const </td></tr>
-<tr class="memdesc:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code of solid zone, 0 if this one is not present. <br /></td></tr>
-<tr class="separator:a18a0a509c3f3cee3cd8ce0db63ce4c38 inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00073"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a277ad387623172f343400d4430f66fcd">setLimiter</a> (<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29">Limiter</a> l)</td></tr>
-<tr class="memdesc:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a flux limiter.  <a href="#a277ad387623172f343400d4430f66fcd">More...</a><br /></td></tr>
-<tr class="separator:a277ad387623172f343400d4430f66fcd inherit pub_methods_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_types_a00073"><td colspan="2" onclick="javascript:toggleInherit('pub_types_a00073')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="a00073.html">Muscl</a></td></tr>
-<tr class="memitem:a2a3c0067e44c5ef3210a256d06c16b0f inherit pub_types_a00073"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0f">Method</a> { <br />
-&#160;&#160;<a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0faf60ce3434ebbca1597fe39507e682886">FIRST_ORDER_METHOD</a> = 0, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0fa2d33b57b66a950a3b195b8b952749f0e">MULTI_SLOPE_Q_METHOD</a> = 1, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0fa5c77e985953c5ca565269529ce0d8e2a">MULTI_SLOPE_M_METHOD</a> = 2
-<br />
- }<tr class="memdesc:a2a3c0067e44c5ef3210a256d06c16b0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration for flux choice.  <a href="a00073.html#a2a3c0067e44c5ef3210a256d06c16b0f">More...</a><br /></td></tr>
-<tr class="separator:a2a3c0067e44c5ef3210a256d06c16b0f inherit pub_types_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</td></tr>
-<tr class="memitem:a28fd66b0310514194a2fb1d2473e3e29 inherit pub_types_a00073"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29">Limiter</a> { <br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29adfd5c45258dd6be86f4aa883a34d1d4a">MINMOD_LIMITER</a> = 0, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29a1eca9d08190ec7bf842a2b86d9768d8e">VANLEER_LIMITER</a> = 1, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29ae40a4b753358942467cfdabc0c8d4072">SUPERBEE_LIMITER</a> = 2, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29a45a15baa84818572fa5ef591b139c177">VANALBADA_LIMITER</a> = 3, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29a344fb16588c3bd52ecc0166780ebb85b">MAX_LIMITER</a> = 4
-<br />
- }<tr class="memdesc:a28fd66b0310514194a2fb1d2473e3e29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of flux limiting methods.  <a href="a00073.html#a28fd66b0310514194a2fb1d2473e3e29">More...</a><br /></td></tr>
-<tr class="separator:a28fd66b0310514194a2fb1d2473e3e29 inherit pub_types_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</td></tr>
-<tr class="memitem:a8b06041d7c1fb05f379714f4312306ec inherit pub_types_a00073"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306ec">SolverType</a> { <br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306ecac3fbd70dfe2f23de50fc1cefc71abc4f">ROE_SOLVER</a> = 0, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca3736de39783a7c913c5af70a10b7e1ef">VFROE_SOLVER</a> = 1, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca0ce95685eedaafcc589e18cf8156cd59">LF_SOLVER</a> = 2, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306ecaf5d8ff8019d62d1c131d5ba7b5b6f41f">RUSANOV_SOLVER</a> = 3, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca9dcff80dc38b618e178f81fd2c3296c6">HLL_SOLVER</a> = 4, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca9d2380450b9ff3583fc11146c509d701">HLLC_SOLVER</a> = 5, 
-<br />
-&#160;&#160;<a class="el" href="a00073.html#a8b06041d7c1fb05f379714f4312306eca299f128f211f8830e11962d8a6870bc0">MAX_SOLVER</a> = 6
-<br />
- }<tr class="memdesc:a8b06041d7c1fb05f379714f4312306ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of various solvers for the Riemann problem.  <a href="a00073.html#a8b06041d7c1fb05f379714f4312306ec">More...</a><br /></td></tr>
-<tr class="separator:a8b06041d7c1fb05f379714f4312306ec inherit pub_types_a00073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</td></tr>
+<tr class="memitem:aa16a84e131e9bc324caf7b0e825d9e9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa16a84e131e9bc324caf7b0e825d9e9f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#aa16a84e131e9bc324caf7b0e825d9e9f">MyNLAS</a> ()</td></tr>
+<tr class="memdesc:aa16a84e131e9bc324caf7b0e825d9e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:aa16a84e131e9bc324caf7b0e825d9e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d78397cd5575f6d40cd537334bee21a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a1d78397cd5575f6d40cd537334bee21a">MyNLAS</a> (const <a class="el" href="a00070.html">Mesh</a> &amp;mesh)</td></tr>
+<tr class="memdesc:a1d78397cd5575f6d40cd537334bee21a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh instance.  <a href="#a1d78397cd5575f6d40cd537334bee21a">More...</a><br /></td></tr>
+<tr class="separator:a1d78397cd5575f6d40cd537334bee21a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab036ce0151a62875a4e53cdb0c2d8d78"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab036ce0151a62875a4e53cdb0c2d8d78"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#ab036ce0151a62875a4e53cdb0c2d8d78">~MyNLAS</a> ()</td></tr>
+<tr class="memdesc:ab036ce0151a62875a4e53cdb0c2d8d78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:ab036ce0151a62875a4e53cdb0c2d8d78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6665ba9fe20cfae949537444dbb6f1c5"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a6665ba9fe20cfae949537444dbb6f1c5">Function</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, int i=1)=0</td></tr>
+<tr class="memdesc:a6665ba9fe20cfae949537444dbb6f1c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual member function to define nonlinear function to zeroe.  <a href="#a6665ba9fe20cfae949537444dbb6f1c5">More...</a><br /></td></tr>
+<tr class="separator:a6665ba9fe20cfae949537444dbb6f1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a025d9db785130fb7753682bb23851327"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a025d9db785130fb7753682bb23851327">Gradient</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, int i=1, int j=1)</td></tr>
+<tr class="memdesc:a025d9db785130fb7753682bb23851327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual member function to define partial derivatives of function.  <a href="#a025d9db785130fb7753682bb23851327">More...</a><br /></td></tr>
+<tr class="separator:a025d9db785130fb7753682bb23851327"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class for 3-D hyperbolic solvers with <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> scheme using tetrahedra. </p>
-<dl class="section author"><dt>Author</dt><dd>S. Clain, V. Clauzon </dd></dl>
+<div class="textblock"><p>Abstract class to define by user specified function. </p>
+<p>The user has to implement a class that inherits from the present one where the virtual functions are implemented.</p>
+<dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="acdf87fe4ecbf7362db40f16e0dd2ac04"></a>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a1d78397cd5575f6d40cd537334bee21a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool setReconstruction </td>
+          <td class="memname"><a class="el" href="a00076.html">MyNLAS</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>U</em>, </td>
+          <td class="paramtype">const <a class="el" href="a00070.html">Mesh</a> &amp;&#160;</td>
+          <td class="paramname"><em>mesh</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor using mesh instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mesh</td><td>Reference to <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a6665ba9fe20cfae949537444dbb6f1c5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Function </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>LU</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00339.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>RU</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dof</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em> = <code>1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -286,18 +144,74 @@ Additional Inherited Members</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Function to reconstruct by the <a class="el" href="a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. ">Muscl</a> method. </p>
+<p>Virtual member function to define nonlinear function to zeroe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">U</td><td>Field to reconstruct </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">LU</td><td>Left gradient vector </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">RU</td><td>Right gradient vector </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Label of dof to reconstruct </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Vector of variables </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>component of function to define [Default: <code>1</code>]. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Value of function </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The component must not be larger than vector size </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a025d9db785130fb7753682bb23851327"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Gradient </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>j</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Virtual member function to define partial derivatives of function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Vector of variables </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Function component [Default: <code>1</code>] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">j</td><td>Index of partial derivative [Default: <code>1</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value of partial derivative </dd></dl>
 
 </div>
 </div>

@@ -34,7 +34,7 @@
 #include "equations/laplace/Laplace2DT3.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 

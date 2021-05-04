@@ -87,9 +87,12 @@
 #include "solvers/LPSolver.h"
 #include "solvers/TimeStepping.h"
 
-/*
-#include "equations/interface/FastMarching2D.h"
 
+#include "equations/interface/FastMarching.h"
+#include "equations/interface/FastMarching1DG.h"
+#include "equations/interface/FastMarching2DG.h"
+#include "equations/interface/FastMarching3DG.h"
+/*
 #include "io/Tabulation.h"
 #include "io/Funct.h"
 

@@ -34,16 +34,15 @@
 
 #include "equations/laplace/SteklovPoincare2DBE.h"
 #include "solvers/GMRes.h"
-#include "equations/AbsEqua_impl.h"
 #include "shape_functions/Triang3.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
 
 namespace OFELI {
 
 SteklovPoincare2DBE::SteklovPoincare2DBE()
-                    : AbsEqua<real_t>(), _ext(1)
+                    : Equa<real_t>(), _ext(1)
 {
    _A = nullptr;
    _b = nullptr;
@@ -51,7 +50,7 @@ SteklovPoincare2DBE::SteklovPoincare2DBE()
 
 
 SteklovPoincare2DBE::SteklovPoincare2DBE(Mesh& ms)
-                    : AbsEqua<real_t>(), _ext(1)
+                    : Equa<real_t>(), _ext(1)
 {
    setMesh(ms);
 }
@@ -59,7 +58,7 @@ SteklovPoincare2DBE::SteklovPoincare2DBE(Mesh& ms)
 
 SteklovPoincare2DBE::SteklovPoincare2DBE(Mesh&         ms,
                                          Vect<real_t>& u)
-                    : AbsEqua<real_t>(), _ext(1)
+                    : Equa<real_t>(), _ext(1)
 {
    setMesh(ms);
    _u = &u;

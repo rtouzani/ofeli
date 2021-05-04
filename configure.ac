@@ -29,7 +29,7 @@ sinclude([VERSION])
 AC_SUBST(VERSION)
 AC_SUBST(RELEASE)
 
-AC_INIT([ofeli], 4.0.1)
+AC_INIT([ofeli], 4.1.0)
 AC_CONFIG_SRCDIR([src/mesh/Mesh.cpp])
 AM_INIT_AUTOMAKE
 
@@ -310,8 +310,8 @@ fi
 util_exes="g2m cmesh cfield vmesh "
 demo_exes="elliptic heat transport "
 demo_exes+="laplace_demo1 laplace_demo2 laplace_demo3 laplace_demo4 "
-demo_exes+="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz ls_demo1 ls_demo2 "
-demo_exes+="ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2 "
+demo_exes+="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d euler-2d Helmholtz fmm_demo "
+demo_exes+="ls_demo1 ls_demo2 ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2 "
 demo_exes+="opt_demo1 opt_demo2 opt_demo3 opt_demo4 opt_demo5 nl_demo1 nl_demo2 nl_demo3 nl_demo4 "
 
 AC_OUTPUT(
@@ -386,6 +386,7 @@ AC_OUTPUT(
    demos/fluid/euler-2d/Makefile
    demos/electromagnetics/Makefile
    demos/electromagnetics/Helmholtz/Makefile
+   demos/interface/Makefile
    demos/solvers/Makefile
    demos/solvers/LS/Makefile
    demos/solvers/ODE/Makefile

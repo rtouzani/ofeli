@@ -38,7 +38,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "equations/laplace/Laplace1DL2.h"
 #include "equations/laplace/Laplace1DL3.h"

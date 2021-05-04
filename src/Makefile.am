@@ -30,13 +30,10 @@ FLUID_OBJS = equations/fluid/NSP2DQ41.o \
              equations/fluid/TINS3DT4S.o \
              equations/fluid/NS2DT3BT3.o
 
-INTERFACE_OBJS = equations/interface/FastMarching2D.o \
-                 equations/interface/FMM.o \
-                 equations/interface/FMM2D.o \
-                 equations/interface/FMM3D.o \
-                 equations/interface/FMMSolver.o \
-                 equations/interface/Heap.o \
-                 equations/interface/IPoint.o
+INTERFACE_OBJS = equations/interface/FastMarching.o \
+                 equations/interface/FastMarching1DG.o \
+                 equations/interface/FastMarching2DG.o \
+                 equations/interface/FastMarching3DG.o
 
 LAPLACE_OBJS = equations/laplace/Laplace1DL2.o \
                equations/laplace/Laplace1DL3.o \

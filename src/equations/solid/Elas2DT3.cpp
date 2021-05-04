@@ -95,7 +95,7 @@ void Elas2DT3::set(const Element* el)
    _dSh = tr.DSh();
    ElementNodeCoordinates();
    ElementNodeVector(*_u,_eu);
-   if (AbsEqua<real_t>::_bf!=nullptr)
+   if (Equa<real_t>::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
@@ -115,7 +115,7 @@ void Elas2DT3::set(const Side* sd)
    _el_geo.length = ln.getLength();
    SideNodeCoordinates();
    SideNodeVector(*_u,_su);
-   if (AbsEqua<real_t>::_sf!=nullptr)
+   if (Equa<real_t>::_sf!=nullptr)
       SideVector(*_sf,_ssf);
    sA0 = 0;
    sRHS = 0;

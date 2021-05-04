@@ -32,7 +32,7 @@
 
 
 #include "equations/therm/DC2DT6.h"
-#include "equations/AbsEqua_impl.h"
+#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
