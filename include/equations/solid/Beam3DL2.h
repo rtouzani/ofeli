@@ -55,11 +55,11 @@ namespace OFELI {
  *  6 degrees of freedom per node and 2-Node line elements.
  */
 
-class Beam3DL2 : virtual public Equa_Solid<real_t,2,12,1,6> {
+class Beam3DL2 : virtual public Equa_Solid<2,12,1,6> {
 
 public :
 
-   using Equation<real_t,2,12,1,6>::_x;
+   using Equation<2,12,1,6>::_x;
 
 /// \brief Default Constructor
     Beam3DL2() {

@@ -47,17 +47,24 @@ EC2D1T3::EC2D1T3()
 
 
 EC2D1T3::EC2D1T3(Mesh& ms)
-        : Equation<complex_t,3,3,2,2>(ms)
+        : Equation<3,6,2,4>(ms)
 {
+   if (Equa::_nb_dof!=2)
+      throw OFELIException("In EC2D1T3::EC2D1T3(..): Nodes must have "
+                            "2 degrees of freedom because of complex-valued formulation.");
    _omega = 1.;
    _volt = 1.;
 }
 
 
-EC2D1T3::EC2D1T3(Mesh&            ms,
-                 Vect<complex_t>& u)
-        : Equation<complex_t,3,3,2,2>(ms,u)
-{ }
+EC2D1T3::EC2D1T3(Mesh&         ms,
+                 Vect<real_t>& u)
+        : Equation<3,6,2,4>(ms,u)
+{
+   if (Equa::_nb_dof!=2)
+      throw OFELIException("In EC2D1T3::EC2D1T3(..): Nodes must have "
+                            "2 degrees of freedom because of complex-valued formulation.");
+}
 
 
 EC2D1T3::~EC2D1T3() { }
@@ -87,8 +94,8 @@ void EC2D1T3::set(const Element* el)
       _Mu = _Mu_fct(_el_geo.center,0.);
    if (_sigma_set)
       _sigma = _sigma_fct(_el_geo.center,0.);
-   eMat = complex_t(0.);
-   eRHS = complex_t(0.);
+   eMat = 0.;
+   eRHS = 0.;
 }
 
 
@@ -99,8 +106,8 @@ void EC2D1T3::set(const Side* sd)
    SideNodeCoordinates();
    _el_geo.center = ln.getCenter();
    _el_geo.length = ln.getLength();
-   sMat = complex_t(0.);
-   sRHS = complex_t(0.);
+   sMat = 0.;
+   sRHS = 0.;
 }
 
 /*
@@ -127,42 +134,58 @@ int EC2D1T3::run()
 
 void EC2D1T3::Magnetic(real_t coef)
 {
-   complex_t c = 0.5*coef*_Mu*_omega*_el_geo.area*OFELI_SIXTH*OFELI_IMAG;
-   complex_t d = coef*_Mu*_omega*_el_geo.area*OFELI_SIXTH*OFELI_IMAG;
-   eMat(1,1) += d; eMat(2,2) += d; eMat(3,3) += d;
-   eMat(1,2) += c; eMat(2,1) += c; eMat(1,3) += c;
-   eMat(3,1) += c; eMat(2,3) += c; eMat(3,2) += c;
+   real_t c = 0.5*coef*_Mu*_omega*_el_geo.area*OFELI_SIXTH;
+   for (size_t i=1; i<=3; ++i) {
+      for (size_t j=1; j<=3; ++j) {
+         eMat(2*i,2*j-1) += c;
+         eMat(2*i,2*j  ) += c;
+      }
+      eMat(2*i,2*i-1) += c;
+      eMat(2*i,2*i  ) += c;
+   }
 }
 
 
 void EC2D1T3::Electric(real_t coef)
 {
-   static real_t d = coef*_el_geo.area/_sigma;
-   for (size_t i=1; i<=3; i++)
-      for (size_t j=1; j<=3; j++)
-         eMat(i,j) += d*(_dSh[i-1],_dSh[j-1]);
+   real_t d = coef*_el_geo.area/_sigma;
+   for (size_t i=1; i<=3; ++i) {
+      for (size_t j=1; j<=3; ++j) {
+         eMat(2*i-1,2*j-1) += d*(_dSh[i-1],_dSh[j-1]);
+         eMat(2*i-1,2*j  ) += d*(_dSh[i-1],_dSh[j-1]);
+         eMat(2*i  ,2*j-1) += d*(_dSh[i-1],_dSh[j-1]);
+         eMat(2*i  ,2*j  ) += d*(_dSh[i-1],_dSh[j-1]);
+      }
+   }
 }
 
 
-complex_t EC2D1T3::IntegMF()
+void EC2D1T3::IntegMF(real_t& vr, real_t& vi)
 {
+   vr = vi = 0.;
    static real_t c = _Mu*_el_geo.area*OFELI_SIXTH;
-   complex_t x=0;
-   for (size_t i=1; i<=3; i++)
-      x += _eu(i)*c;
-   return x;
+   for (size_t i=1; i<=3; ++i) {
+      vr += _eu(2*i-1)*c;
+      vi += _eu(2*i  )*c;
+   }
 }
 
 
-complex_t EC2D1T3::IntegND(const Vect<complex_t>& h)
+void EC2D1T3::IntegND(const Vect<real_t>& h,
+                      real_t&             vr,
+                      real_t&             vi)
 {
    int c1 = (*_theElement)(1)->getCode(1),
        c2 = (*_theElement)(2)->getCode(1),
        c3 = (*_theElement)(3)->getCode(1);
-   complex_t dhx, dhy, xx=0;
-   complex_t h1 = h((*_theElement)(1)->n()),
-             h2 = h((*_theElement)(2)->n()),
-             h3 = h((*_theElement)(3)->n());
+   Point<real_t> dhr, dhi;
+   vr = vi = 0.;
+   real_t h1r = h(2*(*_theElement)(1)->n()-1),
+          h2r = h(2*(*_theElement)(2)->n()-1),
+          h3r = h(2*(*_theElement)(3)->n()-1);
+   real_t h1i = h(2*(*_theElement)(1)->n()),
+          h2i = h(2*(*_theElement)(2)->n()),
+          h3i = h(2*(*_theElement)(3)->n());
    size_t j=0, i1[2], i2[2];
    if (c1==1 && c2==1)
       i1[j] = 1, i2[j] = 2;
@@ -171,15 +194,15 @@ complex_t EC2D1T3::IntegND(const Vect<complex_t>& h)
    if (c3==1 && c1==1)
       i1[j] = 3, i2[j] = 1;
    if (j) {
-      dhx = h1*_dSh[0].x + h2*_dSh[1].x + h3*_dSh[2].x;
-      dhy = h1*_dSh[0].y + h2*_dSh[1].y + h3*_dSh[2].y;
+      dhr = h1r*_dSh[0] + h2r*_dSh[1] + h3r*_dSh[2];
+      dhi = h1i*_dSh[0] + h2i*_dSh[1] + h3i*_dSh[2];
       for (size_t i=0; i<j; i++) {
          real_t n1 = _x[i2[i]-1].y - _x[i1[i]-1].y;
          real_t n2 = _x[i1[i]-1].x - _x[i2[i]-1].x;
-         xx += (n1*dhx + n2*dhy)/_sigma;
+         vr += (n1*dhr.x + n2*dhr.y)/_sigma;
+         vi += (n1*dhi.x + n2*dhi.y)/_sigma;
       }
    }
-   return xx;
 }
 
 
@@ -225,8 +248,8 @@ void EC2D1T3::UpdateMF()
 
 real_t EC2D1T3::Joule()
 {
-   Point<real_t> dhr = _eu(1).real()*_dSh[0] + _eu(2).real()*_dSh[1] + _eu(3).real()*_dSh[2], 
-                 dhi = _eu(1).imag()*_dSh[0] + _eu(2).imag()*_dSh[1] + _eu(3).imag()*_dSh[2];
+   Point<real_t> dhr = _eu(1)*_dSh[0] + _eu(3)*_dSh[1] + _eu(5)*_dSh[2], 
+                 dhi = _eu(2)*_dSh[0] + _eu(4)*_dSh[1] + _eu(6)*_dSh[2];
    return 0.5/(dhr*dhr+dhi*dhi)/_sigma;
 }
 

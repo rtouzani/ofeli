@@ -29,7 +29,7 @@ sinclude([VERSION])
 AC_SUBST(VERSION)
 AC_SUBST(RELEASE)
 
-AC_INIT([ofeli], 4.1.0)
+AC_INIT([ofeli],[4.1.0],[rachid.touzani@uca.fr])
 AC_CONFIG_SRCDIR([src/mesh/Mesh.cpp])
 AM_INIT_AUTOMAKE
 
@@ -39,10 +39,9 @@ AC_MSG_RESULT($VERSION)
 AC_MSG_CHECKING(Release)
 AC_MSG_RESULT($RELEASE)
 
-AM_CONFIG_HEADER(include/config.h)
+AC_CONFIG_HEADERS(include/config.h)
 AM_MAINTAINER_MODE
 
-AC_CYGWIN()
 
 dnl Prevents setting flags.
 CPPFLAGS="-Wall "
@@ -89,7 +88,7 @@ AC_SUBST(MPI_LIBS)
 AC_SUBST(MPI_LDFLAGS)
 
 dnl Checks for programs.
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 AC_PROG_MAKE_SET
 AC_PROG_CC
 AC_PROG_CPP
@@ -111,87 +110,26 @@ AC_TYPE_SIZE_T
 AC_C_CONST
 AC_C_INLINE
 
+#AC_DEFINE([HAVE_GUESSED_CLOCKS_PER_SEC], [], [])
+#AC_DEFINE([HAVE_CLOCKS_PER_SEC], [], [])
 AH_TEMPLATE(HAVE_INLINE,0)
 AH_TEMPLATE(HIDE_INLINE_STATIC,0)
-AH_TEMPLATE(HAVE_CLOCKS_PER_SEC,0)
 AH_TEMPLATE(HAVE_EXIT_SUCCESS_AND_FAILURE,0)
-AH_TEMPLATE(HAVE_GUESSED_CLOCKS_PER_SEC,0)
 
 dnl Check for "extern inline", using a modified version of the test
 dnl for AC_C_INLINE from acspecific.mt
 dnl
 AC_CACHE_CHECK([for extern inline], ac_cv_c_extern_inline,
 [ac_cv_c_extern_inline=no
-AC_TRY_COMPILE([extern $ac_cv_c_inline double foo(double x);
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[extern $ac_cv_c_inline double foo(double x);
 extern $ac_cv_c_inline double foo(double x) { return x + 1.0 ; } ;
-double foo (double x) { return x + 1.0 ; };],
-[  foo(1.0)  ],
-[ac_cv_c_extern_inline="yes"])
+double foo (double x) { return x + 1.0 ; };]], [[  foo(1.0)  ]])],[ac_cv_c_extern_inline="yes"],[])
 ])
 
 if test "$ac_cv_c_extern_inline" != no ; then
    AC_DEFINE(HAVE_INLINE,1)
    AC_SUBST(HAVE_INLINE)
 fi
-
-dnl Checks for header files.
-dnl Checks for typedefs, structures, and compiler characteristics.
-dnl Checks for library functions.
-
-AC_CHECK_FUNCS(clock)
-AC_CACHE_CHECK(for CLOCKS_PER_SEC,
-ac_cv_decl_clocks_per_sec,
-AC_EGREP_CPP(yes,
-[
-#include <time.h>
-#ifdef CLOCKS_PER_SEC
-yes
-#endif
-],
-ac_cv_decl_clocks_per_sec=yes,
-ac_cv_decl_clocks_per_sec=no)
-)
-
-if test "$ac_cv_decl_clocks_per_sec" = yes ; then
-  AC_DEFINE(HAVE_CLOCKS_PER_SEC)
-else
-AC_MSG_CHECKING(whether CLOCKS_PER_SEC is known for $host_os)
-  case "$host" in
-   *-*-sunos4.*)
-        AC_DEFINE(HAVE_GUESSED_CLOCKS_PER_SEC,1000000)
-	AC_MSG_RESULT([yes (microseconds)])
-        ;;
-    *-*-nextstep*)
-	dnl
-	dnl Nextstep3 defines CLK_TCK 64 in /usr/include/ansi/time.h,
-	dnl which seems to agree with observation of clock().
-	dnl
-   AC_DEFINE(HAVE_GUESSED_CLOCKS_PER_SEC,64)
-	AC_MSG_RESULT([yes (15.625 milliseconds)])
-        ;;
-    *)
-        AC_DEFINE(HAVE_GUESSED_CLOCKS_PER_SEC,1000000)
-        AC_MSG_RESULT([no, assuming microseconds])
-        ;;
-  esac
-fi
-
-AC_CACHE_CHECK(for EXIT_SUCCESS and EXIT_FAILURE,
-ac_cv_decl_exit_success_and_failure,
-AC_EGREP_CPP(yes,
-[
-#include <stdlib.h>
-#ifdef EXIT_SUCCESS
-yes
-#endif
-],
-ac_cv_decl_exit_success_and_failure=yes,
-ac_cv_decl_exit_success_and_failure=no)
-)
-
-if test "$ac_cv_decl_exit_success_and_failure" = yes ; then
-  AC_DEFINE(HAVE_EXIT_SUCCESS_AND_FAILURE)
-fi ;
 
 dnl Add copious amounts of debugging with gcc, egcs, etc
 if test "${GXX}" = "yes" ; then
@@ -314,8 +252,7 @@ demo_exes+="std3 stdc2 ttd2 beam truss contact lelas2d lelas3d tiff2 tins2 lh2d 
 demo_exes+="ls_demo1 ls_demo2 ode_demo1 ode_demo2 ode_demo3 ode_demo4 ts_demo1 ts_demo2 eigen_demo1 eigen_demo2 "
 demo_exes+="opt_demo1 opt_demo2 opt_demo3 opt_demo4 opt_demo5 nl_demo1 nl_demo2 nl_demo3 nl_demo4 "
 
-AC_OUTPUT(
-   Makefile
+AC_CONFIG_FILES([Makefile
    include/Makefile
    include/equations/Makefile
    include/equations/cl/Makefile
@@ -402,7 +339,8 @@ AC_OUTPUT(
    doc/presentations/Makefile
    ofeli-config
    test_ofeli.sh
-)
+])
+AC_OUTPUT
 
 echo "********************************************************************"
 echo "OFELI is configured for"

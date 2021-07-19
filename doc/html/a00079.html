@@ -53,7 +53,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00079.html">Node</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00079.html">NLASSolver</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -61,164 +61,123 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a00422.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Node Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00339.html">Finite Element Mesh</a></div></div>  </div>
+<div class="title">NLASSolver Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a> &raquo; <a class="el" href="a00341.html">Solver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>To describe a node.  
+<p>To solve a system of nonlinear algebraic equations of the form f(u) = 0.  
  <a href="a00079.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0d313fac56abd7ebe58a17f1530b879e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a0d313fac56abd7ebe58a17f1530b879e">Node</a> ()</td></tr>
-<tr class="memdesc:a0d313fac56abd7ebe58a17f1530b879e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a0d313fac56abd7ebe58a17f1530b879e">More...</a><br /></td></tr>
-<tr class="separator:a0d313fac56abd7ebe58a17f1530b879e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f7e6895197e9787f6995544bc4fd276"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a6f7e6895197e9787f6995544bc4fd276">Node</a> (size_t label, const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
-<tr class="memdesc:a6f7e6895197e9787f6995544bc4fd276"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with label and coordinates.  <a href="#a6f7e6895197e9787f6995544bc4fd276">More...</a><br /></td></tr>
-<tr class="separator:a6f7e6895197e9787f6995544bc4fd276"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04fdf4ff92e2ddcf357f196b10fa2a4c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04fdf4ff92e2ddcf357f196b10fa2a4c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a04fdf4ff92e2ddcf357f196b10fa2a4c">Node</a> (const <a class="el" href="a00079.html">Node</a> &amp;node)</td></tr>
-<tr class="memdesc:a04fdf4ff92e2ddcf357f196b10fa2a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy Constructor. <br /></td></tr>
-<tr class="separator:a04fdf4ff92e2ddcf357f196b10fa2a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fa6bf60f34f1e3efb0e59333428c9c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6fa6bf60f34f1e3efb0e59333428c9c8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a6fa6bf60f34f1e3efb0e59333428c9c8">~Node</a> ()</td></tr>
-<tr class="memdesc:a6fa6bf60f34f1e3efb0e59333428c9c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a6fa6bf60f34f1e3efb0e59333428c9c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27941e71f0cfa3d287a056b000b5fee6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27941e71f0cfa3d287a056b000b5fee6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a27941e71f0cfa3d287a056b000b5fee6">setLabel</a> (size_t label)</td></tr>
-<tr class="memdesc:a27941e71f0cfa3d287a056b000b5fee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define label of node. <br /></td></tr>
-<tr class="separator:a27941e71f0cfa3d287a056b000b5fee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb53c731048031345289f952f71209f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb53c731048031345289f952f71209f6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#adb53c731048031345289f952f71209f6">setNbDOF</a> (size_t <a class="el" href="a00079.html#a779efe10a8564e80553431bd4d357f7a">n</a>)</td></tr>
-<tr class="memdesc:adb53c731048031345289f952f71209f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define number of DOF. <br /></td></tr>
-<tr class="separator:adb53c731048031345289f952f71209f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afccb14e6bc10f074283b92506c13947d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afccb14e6bc10f074283b92506c13947d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#afccb14e6bc10f074283b92506c13947d">setFirstDOF</a> (size_t <a class="el" href="a00079.html#a779efe10a8564e80553431bd4d357f7a">n</a>)</td></tr>
-<tr class="memdesc:afccb14e6bc10f074283b92506c13947d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define First DOF. <br /></td></tr>
-<tr class="separator:afccb14e6bc10f074283b92506c13947d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83a8351cc27666594d7d7c2850556ccf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a83a8351cc27666594d7d7c2850556ccf">setCode</a> (size_t dof, int code)</td></tr>
-<tr class="memdesc:a83a8351cc27666594d7d7c2850556ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define code for a given DOF of node.  <a href="#a83a8351cc27666594d7d7c2850556ccf">More...</a><br /></td></tr>
-<tr class="separator:a83a8351cc27666594d7d7c2850556ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cc89531e71a30f097c6f4ab9c5a5752"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a0cc89531e71a30f097c6f4ab9c5a5752">setCode</a> (const vector&lt; int &gt; &amp;code)</td></tr>
-<tr class="memdesc:a0cc89531e71a30f097c6f4ab9c5a5752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define codes for all node DOFs.  <a href="#a0cc89531e71a30f097c6f4ab9c5a5752">More...</a><br /></td></tr>
-<tr class="separator:a0cc89531e71a30f097c6f4ab9c5a5752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac386b0da48cbb290493e7d435d14216e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ac386b0da48cbb290493e7d435d14216e">setCode</a> (int *code)</td></tr>
-<tr class="memdesc:ac386b0da48cbb290493e7d435d14216e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define codes for all node DOFs.  <a href="#ac386b0da48cbb290493e7d435d14216e">More...</a><br /></td></tr>
-<tr class="separator:ac386b0da48cbb290493e7d435d14216e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d491abc26d7bf766d507caa8979b178"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a9d491abc26d7bf766d507caa8979b178">setCode</a> (const string &amp;exp, int code, size_t dof=1)</td></tr>
-<tr class="memdesc:a9d491abc26d7bf766d507caa8979b178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define code by a boolean algebraic expression invoking node coordinates.  <a href="#a9d491abc26d7bf766d507caa8979b178">More...</a><br /></td></tr>
-<tr class="separator:a9d491abc26d7bf766d507caa8979b178"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed0d5940309ba25b1f01115bb2cac40c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aed0d5940309ba25b1f01115bb2cac40c">setCoord</a> (size_t i, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> x)</td></tr>
-<tr class="memdesc:aed0d5940309ba25b1f01115bb2cac40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set i-th coordinate.  <a href="#aed0d5940309ba25b1f01115bb2cac40c">More...</a><br /></td></tr>
-<tr class="separator:aed0d5940309ba25b1f01115bb2cac40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1a9657431763667147be7d405317a14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aa1a9657431763667147be7d405317a14">DOF</a> (size_t i, size_t dof)</td></tr>
-<tr class="memdesc:aa1a9657431763667147be7d405317a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define label of DOF.  <a href="#aa1a9657431763667147be7d405317a14">More...</a><br /></td></tr>
-<tr class="separator:aa1a9657431763667147be7d405317a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a256faa817829ee737c4d15145f207cf8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a256faa817829ee737c4d15145f207cf8">setDOF</a> (size_t &amp;first_dof, size_t nb_dof)</td></tr>
-<tr class="memdesc:a256faa817829ee737c4d15145f207cf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define number of DOF.  <a href="#a256faa817829ee737c4d15145f207cf8">More...</a><br /></td></tr>
-<tr class="separator:a256faa817829ee737c4d15145f207cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad742fa16927ed3e44c84a6f0b771a211"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ad742fa16927ed3e44c84a6f0b771a211">setOnBoundary</a> ()</td></tr>
-<tr class="memdesc:ad742fa16927ed3e44c84a6f0b771a211"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set node as boundary node.  <a href="#ad742fa16927ed3e44c84a6f0b771a211">More...</a><br /></td></tr>
-<tr class="separator:ad742fa16927ed3e44c84a6f0b771a211"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a779efe10a8564e80553431bd4d357f7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a779efe10a8564e80553431bd4d357f7a"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a779efe10a8564e80553431bd4d357f7a">n</a> () const </td></tr>
-<tr class="memdesc:a779efe10a8564e80553431bd4d357f7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return label of node. <br /></td></tr>
-<tr class="separator:a779efe10a8564e80553431bd4d357f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2116275419db9f448ca42e80a6de901d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2116275419db9f448ca42e80a6de901d"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a2116275419db9f448ca42e80a6de901d">getNbDOF</a> () const </td></tr>
-<tr class="memdesc:a2116275419db9f448ca42e80a6de901d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of degrees of freedom (DOF) <br /></td></tr>
-<tr class="separator:a2116275419db9f448ca42e80a6de901d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f31f46cb58fb26dc088238f64ac77ea"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4f31f46cb58fb26dc088238f64ac77ea">getCode</a> (size_t dof=1) const </td></tr>
-<tr class="memdesc:a4f31f46cb58fb26dc088238f64ac77ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code for a given DOF of node.  <a href="#a4f31f46cb58fb26dc088238f64ac77ea">More...</a><br /></td></tr>
-<tr class="separator:a4f31f46cb58fb26dc088238f64ac77ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac68075a9f8472513b901373edb354396"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac68075a9f8472513b901373edb354396"></a>
-<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ac68075a9f8472513b901373edb354396">getCoord</a> (size_t i) const </td></tr>
-<tr class="memdesc:ac68075a9f8472513b901373edb354396"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return i-th coordinate of node. i = 1..3. <br /></td></tr>
-<tr class="separator:ac68075a9f8472513b901373edb354396"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4b7437d3083599607af0af5ccc12a3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ad4b7437d3083599607af0af5ccc12a3f">getCoord</a> () const </td></tr>
-<tr class="memdesc:ad4b7437d3083599607af0af5ccc12a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of node.  <a href="#ad4b7437d3083599607af0af5ccc12a3f">More...</a><br /></td></tr>
-<tr class="separator:ad4b7437d3083599607af0af5ccc12a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb835e3119dae4c7818b6ee9a464ff48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb835e3119dae4c7818b6ee9a464ff48"></a>
-<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#acb835e3119dae4c7818b6ee9a464ff48">getX</a> () const </td></tr>
-<tr class="memdesc:acb835e3119dae4c7818b6ee9a464ff48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return x-coordinate of node. <br /></td></tr>
-<tr class="separator:acb835e3119dae4c7818b6ee9a464ff48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a636178be4e1eb52d869afc7b2a2bf291"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a636178be4e1eb52d869afc7b2a2bf291"></a>
-<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a636178be4e1eb52d869afc7b2a2bf291">getY</a> () const </td></tr>
-<tr class="memdesc:a636178be4e1eb52d869afc7b2a2bf291"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return y-coordinate of node. <br /></td></tr>
-<tr class="separator:a636178be4e1eb52d869afc7b2a2bf291"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e147606034b248d7dec47338fa34b73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e147606034b248d7dec47338fa34b73"></a>
-<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a0e147606034b248d7dec47338fa34b73">getZ</a> () const </td></tr>
-<tr class="memdesc:a0e147606034b248d7dec47338fa34b73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return z-coordinate of node. <br /></td></tr>
-<tr class="separator:a0e147606034b248d7dec47338fa34b73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9365e3f7fa00b775486804b220e3482"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aa9365e3f7fa00b775486804b220e3482">getXYZ</a> () const </td></tr>
-<tr class="memdesc:aa9365e3f7fa00b775486804b220e3482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of node.  <a href="#aa9365e3f7fa00b775486804b220e3482">More...</a><br /></td></tr>
-<tr class="separator:aa9365e3f7fa00b775486804b220e3482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae76923b72eccb77811c33d5ba24b74c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae76923b72eccb77811c33d5ba24b74c9"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ae76923b72eccb77811c33d5ba24b74c9">getDOF</a> (size_t i) const </td></tr>
-<tr class="memdesc:ae76923b72eccb77811c33d5ba24b74c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return label of i-th dof. <br /></td></tr>
-<tr class="separator:ae76923b72eccb77811c33d5ba24b74c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a400e23bc5e6a777a0eb7ee1fa7f358bd"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a400e23bc5e6a777a0eb7ee1fa7f358bd">getNbNeigEl</a> () const </td></tr>
-<tr class="memdesc:a400e23bc5e6a777a0eb7ee1fa7f358bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of neighbor elements.  <a href="#a400e23bc5e6a777a0eb7ee1fa7f358bd">More...</a><br /></td></tr>
-<tr class="separator:a400e23bc5e6a777a0eb7ee1fa7f358bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad25e0cc47ade352f9d6a52c87f84fd42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html">Element</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ad25e0cc47ade352f9d6a52c87f84fd42">getNeigEl</a> (size_t i) const </td></tr>
-<tr class="memdesc:ad25e0cc47ade352f9d6a52c87f84fd42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return i-th neighbor element.  <a href="#ad25e0cc47ade352f9d6a52c87f84fd42">More...</a><br /></td></tr>
-<tr class="separator:ad25e0cc47ade352f9d6a52c87f84fd42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad448e5b17055c6870134cb1cb216335d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad448e5b17055c6870134cb1cb216335d"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ad448e5b17055c6870134cb1cb216335d">getFirstDOF</a> () const </td></tr>
-<tr class="memdesc:ad448e5b17055c6870134cb1cb216335d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return label of first DOF of node. <br /></td></tr>
-<tr class="separator:ad448e5b17055c6870134cb1cb216335d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5689b1930efb19d3b947a9a0b385cfe7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a5689b1930efb19d3b947a9a0b385cfe7">isOnBoundary</a> () const </td></tr>
-<tr class="memdesc:a5689b1930efb19d3b947a9a0b385cfe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if node is a boundary node.  <a href="#a5689b1930efb19d3b947a9a0b385cfe7">More...</a><br /></td></tr>
-<tr class="separator:a5689b1930efb19d3b947a9a0b385cfe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09bede292ad1986fef93ecdf07a12389"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09bede292ad1986fef93ecdf07a12389"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a09bede292ad1986fef93ecdf07a12389">Add</a> (<a class="el" href="a00025.html">Element</a> *el)</td></tr>
-<tr class="memdesc:a09bede292ad1986fef93ecdf07a12389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add element pointed by <code>el</code> as neighbor element to node. <br /></td></tr>
-<tr class="separator:a09bede292ad1986fef93ecdf07a12389"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c47f9adbca525f247fe53e4bc945a6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4c47f9adbca525f247fe53e4bc945a6d">setLevel</a> (int level)</td></tr>
-<tr class="memdesc:a4c47f9adbca525f247fe53e4bc945a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a level to current node.  <a href="#a4c47f9adbca525f247fe53e4bc945a6d">More...</a><br /></td></tr>
-<tr class="separator:a4c47f9adbca525f247fe53e4bc945a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79055013a1435362359ad0c0dd95df5f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a79055013a1435362359ad0c0dd95df5f">getLevel</a> () const </td></tr>
-<tr class="memdesc:a79055013a1435362359ad0c0dd95df5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return node level.  <a href="#a79055013a1435362359ad0c0dd95df5f">More...</a><br /></td></tr>
-<tr class="separator:a79055013a1435362359ad0c0dd95df5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a313620706abd07c233e36dc7b45b068f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a313620706abd07c233e36dc7b45b068f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a313620706abd07c233e36dc7b45b068f">NLASSolver</a> ()</td></tr>
+<tr class="memdesc:a313620706abd07c233e36dc7b45b068f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:a313620706abd07c233e36dc7b45b068f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af51b33ccc0b4b0cad6f3611ef720cb87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#af51b33ccc0b4b0cad6f3611ef720cb87">NLASSolver</a> (NonLinearIter nl, int nb_eq=1)</td></tr>
+<tr class="memdesc:af51b33ccc0b4b0cad6f3611ef720cb87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor defining the iterative method to solve the equation.  <a href="#af51b33ccc0b4b0cad6f3611ef720cb87">More...</a><br /></td></tr>
+<tr class="separator:af51b33ccc0b4b0cad6f3611ef720cb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1656b2d822739cb3fb7b323f8079ca0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ac1656b2d822739cb3fb7b323f8079ca0">NLASSolver</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;x, NonLinearIter nl=NEWTON)</td></tr>
+<tr class="memdesc:ac1656b2d822739cb3fb7b323f8079ca0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor defining a one-variable problem.  <a href="#ac1656b2d822739cb3fb7b323f8079ca0">More...</a><br /></td></tr>
+<tr class="separator:ac1656b2d822739cb3fb7b323f8079ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3482f7a630b7d059c1b915176e7f0bc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aa3482f7a630b7d059c1b915176e7f0bc">NLASSolver</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, NonLinearIter nl=NEWTON)</td></tr>
+<tr class="memdesc:aa3482f7a630b7d059c1b915176e7f0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor defining a multi-variable problem.  <a href="#aa3482f7a630b7d059c1b915176e7f0bc">More...</a><br /></td></tr>
+<tr class="separator:aa3482f7a630b7d059c1b915176e7f0bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa95f3a13e864d95497f2749de222c452"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aa95f3a13e864d95497f2749de222c452">NLASSolver</a> (<a class="el" href="a00077.html">MyNLAS</a> &amp;my_nlas, NonLinearIter nl=NEWTON)</td></tr>
+<tr class="memdesc:aa95f3a13e864d95497f2749de222c452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a user defined class.  <a href="#aa95f3a13e864d95497f2749de222c452">More...</a><br /></td></tr>
+<tr class="separator:aa95f3a13e864d95497f2749de222c452"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a983d681b2f47e7b4872a406e634c655e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a983d681b2f47e7b4872a406e634c655e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a983d681b2f47e7b4872a406e634c655e">~NLASSolver</a> ()</td></tr>
+<tr class="memdesc:a983d681b2f47e7b4872a406e634c655e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a983d681b2f47e7b4872a406e634c655e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e6d15777f4c9d95999313bafae5e5e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a9e6d15777f4c9d95999313bafae5e5e7">setMaxIter</a> (int max_it)</td></tr>
+<tr class="memdesc:a9e6d15777f4c9d95999313bafae5e5e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Maximal number of iterations.  <a href="#a9e6d15777f4c9d95999313bafae5e5e7">More...</a><br /></td></tr>
+<tr class="separator:a9e6d15777f4c9d95999313bafae5e5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d0e665f8f92335ec10c4ccf9e9171b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4d0e665f8f92335ec10c4ccf9e9171b7">setTolerance</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:a4d0e665f8f92335ec10c4ccf9e9171b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set tolerance value for convergence.  <a href="#a4d0e665f8f92335ec10c4ccf9e9171b7">More...</a><br /></td></tr>
+<tr class="separator:a4d0e665f8f92335ec10c4ccf9e9171b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed17157b8b5172e30a9132a8eb061c01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed17157b8b5172e30a9132a8eb061c01"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aed17157b8b5172e30a9132a8eb061c01">set</a> (NonLinearIter nl)</td></tr>
+<tr class="memdesc:aed17157b8b5172e30a9132a8eb061c01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define an iterative procedure To be chosen among the enumerated values: <code>BISECTION</code>, <code>REGULA_FALSI</code> or <code>NEWTON</code>. <br /></td></tr>
+<tr class="separator:aed17157b8b5172e30a9132a8eb061c01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aded9896bbfc5b7062a878f049328dbf4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aded9896bbfc5b7062a878f049328dbf4">setFunction</a> (function&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>(<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>)&gt; f)</td></tr>
+<tr class="memdesc:aded9896bbfc5b7062a878f049328dbf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the function associated to the equation to solve.  <a href="#aded9896bbfc5b7062a878f049328dbf4">More...</a><br /></td></tr>
+<tr class="separator:aded9896bbfc5b7062a878f049328dbf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04839207ef8c2248c2a6dd958d287b4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a04839207ef8c2248c2a6dd958d287b4b">setFunction</a> (function&lt; <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;(<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;)&gt; f)</td></tr>
+<tr class="memdesc:a04839207ef8c2248c2a6dd958d287b4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the function associated to the equation to solve.  <a href="#a04839207ef8c2248c2a6dd958d287b4b">More...</a><br /></td></tr>
+<tr class="separator:a04839207ef8c2248c2a6dd958d287b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac63af64b7883d535bb07ab4fee964aaa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ac63af64b7883d535bb07ab4fee964aaa">setGradient</a> (function&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>(<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>)&gt; g)</td></tr>
+<tr class="memdesc:ac63af64b7883d535bb07ab4fee964aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the function associated to the derivative of the equation to solve.  <a href="#ac63af64b7883d535bb07ab4fee964aaa">More...</a><br /></td></tr>
+<tr class="separator:ac63af64b7883d535bb07ab4fee964aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27ce60ec61d8ab6f2514ef763950bfb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a27ce60ec61d8ab6f2514ef763950bfb7">setGradient</a> (function&lt; <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;(<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;)&gt; g)</td></tr>
+<tr class="memdesc:a27ce60ec61d8ab6f2514ef763950bfb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the function associated to the gradient of the equation to solve.  <a href="#a27ce60ec61d8ab6f2514ef763950bfb7">More...</a><br /></td></tr>
+<tr class="separator:a27ce60ec61d8ab6f2514ef763950bfb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31e77e80114a29bc0d792d13162ff26b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a31e77e80114a29bc0d792d13162ff26b">setf</a> (string exp)</td></tr>
+<tr class="memdesc:a31e77e80114a29bc0d792d13162ff26b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set function for which zero is sought (case of one equation)  <a href="#a31e77e80114a29bc0d792d13162ff26b">More...</a><br /></td></tr>
+<tr class="separator:a31e77e80114a29bc0d792d13162ff26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bcbb13ab556eda581413740f79eb6c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a1bcbb13ab556eda581413740f79eb6c9">setDf</a> (string exp, int i=1, int j=1)</td></tr>
+<tr class="memdesc:a1bcbb13ab556eda581413740f79eb6c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pzrtial derivative of function for which zero is sought (case of many equations)  <a href="#a1bcbb13ab556eda581413740f79eb6c9">More...</a><br /></td></tr>
+<tr class="separator:a1bcbb13ab556eda581413740f79eb6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc97b88eb4a8cb2d3aaaf735841562d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#acc97b88eb4a8cb2d3aaaf735841562d1">setPDE</a> (<a class="el" href="a00028.html">Equa</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;eq)</td></tr>
+<tr class="memdesc:acc97b88eb4a8cb2d3aaaf735841562d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a PDE.  <a href="#acc97b88eb4a8cb2d3aaaf735841562d1">More...</a><br /></td></tr>
+<tr class="separator:acc97b88eb4a8cb2d3aaaf735841562d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1cd58fec176472be29a4dfb1be829e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#af1cd58fec176472be29a4dfb1be829e3">setInitial</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
+<tr class="memdesc:af1cd58fec176472be29a4dfb1be829e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial guess for the iterations.  <a href="#af1cd58fec176472be29a4dfb1be829e3">More...</a><br /></td></tr>
+<tr class="separator:af1cd58fec176472be29a4dfb1be829e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54f93b8af463c5ca893fb24a542e4d6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a54f93b8af463c5ca893fb24a542e4d6a">setInitial</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;x)</td></tr>
+<tr class="memdesc:a54f93b8af463c5ca893fb24a542e4d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial guess for a unique unknown.  <a href="#a54f93b8af463c5ca893fb24a542e4d6a">More...</a><br /></td></tr>
+<tr class="separator:a54f93b8af463c5ca893fb24a542e4d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d4f3735e331deb3b35148cdab158de8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a5d4f3735e331deb3b35148cdab158de8">setInitial</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> <a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
+<tr class="memdesc:a5d4f3735e331deb3b35148cdab158de8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial guesses bisection or Regula falsi algorithms.  <a href="#a5d4f3735e331deb3b35148cdab158de8">More...</a><br /></td></tr>
+<tr class="separator:a5d4f3735e331deb3b35148cdab158de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13a43e6d814de94978c515cb084873b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13a43e6d814de94978c515cb084873b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a13a43e6d814de94978c515cb084873b1">run</a> ()</td></tr>
+<tr class="memdesc:a13a43e6d814de94978c515cb084873b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the solution procedure. <br /></td></tr>
+<tr class="separator:a13a43e6d814de94978c515cb084873b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb3d75689bdd8aad7c9e197d4d9bd87a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb3d75689bdd8aad7c9e197d4d9bd87a"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#adb3d75689bdd8aad7c9e197d4d9bd87a">get</a> () const </td></tr>
+<tr class="memdesc:adb3d75689bdd8aad7c9e197d4d9bd87a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solution (Case of a scalar equation) <br /></td></tr>
+<tr class="separator:adb3d75689bdd8aad7c9e197d4d9bd87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cb2189e3379851c95d13a7c7ed8d8d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a2cb2189e3379851c95d13a7c7ed8d8d9">get</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u) const </td></tr>
+<tr class="memdesc:a2cb2189e3379851c95d13a7c7ed8d8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solution (case of a nonlinear system of equations)  <a href="#a2cb2189e3379851c95d13a7c7ed8d8d9">More...</a><br /></td></tr>
+<tr class="separator:a2cb2189e3379851c95d13a7c7ed8d8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b90d074dab10cd5272e6f7b8c6cbb0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b90d074dab10cd5272e6f7b8c6cbb0e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4b90d074dab10cd5272e6f7b8c6cbb0e">getNbIter</a> () const </td></tr>
+<tr class="memdesc:a4b90d074dab10cd5272e6f7b8c6cbb0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of iterations. <br /></td></tr>
+<tr class="separator:a4b90d074dab10cd5272e6f7b8c6cbb0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>To describe a node. </p>
-<p>A node is characterized by its label, its coordinates, its number of degrees of freedom (DOF) and codes that are associated to each DOF.</p>
-<dl class="section remark"><dt>Remarks</dt><dd>Once the mesh is constructed, information on neighboring elements of node can be retrieved (see appropriate member functions). However, the member function getNodeNeighborElements of <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> must have been called before. If this is not the case, the program crashes down since no preliminary checking is done for efficiency reasons. </dd></dl>
+<div class="textblock"><p>To solve a system of nonlinear algebraic equations of the form f(u) = 0. </p>
+<p>Features: </p><ul>
+<li>
+The nonlinear problem is solved by the Newton's method in the general case, and in the one variable case, either by the bisection or the Regula Falsi method </li>
+<li>
+The function and its gradient are given: <ul>
+<li>
+Either by regular expressions </li>
+<li>
+Or by user defined functions </li>
+<li>
+Or by a user defined class. This feature enables defining the function and its gradient through a PDE class for instance </li>
+</ul>
+</li>
+</ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a0d313fac56abd7ebe58a17f1530b879e"></a>
+<a class="anchor" id="af51b33ccc0b4b0cad6f3611ef720cb87"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00079.html">Node</a> </td>
+          <td class="memname"><a class="el" href="a00079.html">NLASSolver</a> </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Default constructor. </p>
-<p>Initialize data to zero </p>
-
-</div>
-</div>
-<a class="anchor" id="a6f7e6895197e9787f6995544bc4fd276"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00079.html">Node</a> </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>label</em>, </td>
+          <td class="paramtype">NonLinearIter&#160;</td>
+          <td class="paramname"><em>nl</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nb_eq</em> = <code>1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -228,11 +187,116 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
       </table>
 </div><div class="memdoc">
 
-<p>Constructor with label and coordinates. </p>
+<p>Constructor defining the iterative method to solve the equation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">label</td><td>Label of node </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Node coordinates </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nl</td><td>Choose an iterative procedure to solve the nonlinear system of equations: To be chosen among the enumerated values: <code>BISECTION</code>, <code>REGULA_FALSI</code> or <code>NEWTON</code>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb_eq</td><td>Number of equations [Default: <code>1</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac1656b2d822739cb3fb7b323f8079ca0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00079.html">NLASSolver</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NonLinearIter&#160;</td>
+          <td class="paramname"><em>nl</em> = <code>NEWTON</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor defining a one-variable problem. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Variable containing on input initial guess and on output solution, if convergence is achieved </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nl</td><td>Iterative procedure to solve the nonlinear system of equations: To be chosen among the enumerated values: <code>BISECTION</code>, <code>REGULA_FALSI</code> or <code>NEWTON</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa3482f7a630b7d059c1b915176e7f0bc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00079.html">NLASSolver</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NonLinearIter&#160;</td>
+          <td class="paramname"><em>nl</em> = <code>NEWTON</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor defining a multi-variable problem. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Variable containing on input initial guess and on output solution, if convergence is achieved </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nl</td><td>Iterative procedure to solve the nonlinear system of equations: The only possible value (default one) in the current version is <code>NEWTON</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa95f3a13e864d95497f2749de222c452"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00079.html">NLASSolver</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00077.html">MyNLAS</a> &amp;&#160;</td>
+          <td class="paramname"><em>my_nlas</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NonLinearIter&#160;</td>
+          <td class="paramname"><em>nl</em> = <code>NEWTON</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor using a user defined class. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">my_nlas</td><td>Reference to instance of user defined class. This class inherits from abstract class <a class="el" href="a00077.html" title="Abstract class to define by user specified function. ">MyNLAS</a>. It must contain the member function <code>Vect&lt;double&gt;</code> Function(const Vect&lt;double&gt;&amp; x) which returns the value of the nonlinear function, as a vector, for a given solution vector <code>x</code>. The user defined class must contain, if the iterative scheme requires it the member function <code>Vect&lt;double&gt;</code> Gradient(const Vect&lt;real_t&gt;&amp; x) which returns the gradient as a <code>n*n</code> vector, each index <code></code>(i,j) containing the j-th partial derivative of the i-th function. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nl</td><td>Iterative procedure to solve the nonlinear system of equations: To be chosen among the enumerated values: <code>BISECTION</code>, <code>REGULA_FALSI</code> or <code>NEWTON</code>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -240,110 +304,186 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a83a8351cc27666594d7d7c2850556ccf"></a>
+<a class="anchor" id="a9e6d15777f4c9d95999313bafae5e5e7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setCode </td>
+          <td class="memname">void setMaxIter </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dof</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>code</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>max_it</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define code for a given DOF of node. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Set Maximal number of iterations. </p>
+<p>Default value of this parameter is 100 </p>
+
+</div>
+</div>
+<a class="anchor" id="a4d0e665f8f92335ec10c4ccf9e9171b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setTolerance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>toler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set tolerance value for convergence. </p>
+<p>Default value of this parameter is 1.e-8 </p>
+
+</div>
+</div>
+<a class="anchor" id="aded9896bbfc5b7062a878f049328dbf4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setFunction </td>
+          <td>(</td>
+          <td class="paramtype">function&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>(<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>)&gt;&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define the function associated to the equation to solve. </p>
+<p>This function can be used in the case where a user defined function is to be given. To be used in the one-variable case. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>DOF index </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>Code to assign to DOF </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Function given as a function of one real variable and returning a real number. This function can be defined by the calling program as a C-function and then cast to an instance of class function </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a0cc89531e71a30f097c6f4ab9c5a5752"></a>
+<a class="anchor" id="a04839207ef8c2248c2a6dd958d287b4b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setCode </td>
+          <td class="memname">void setFunction </td>
           <td>(</td>
-          <td class="paramtype">const vector&lt; int &gt; &amp;&#160;</td>
-          <td class="paramname"><em>code</em></td><td>)</td>
+          <td class="paramtype">function&lt; <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;(<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;)&gt;&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define codes for all node DOFs. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Define the function associated to the equation to solve. </p>
+<p>This function can be used in the case where a user defined function is to be given. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>vector instance that contains code for each DOF of current node </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Function given as a function of many variables, stored in an input vector, and returns a vector. This function can be defined by the calling program as a C-function and then cast to an instance of class function </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ac386b0da48cbb290493e7d435d14216e"></a>
+<a class="anchor" id="ac63af64b7883d535bb07ab4fee964aaa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setCode </td>
+          <td class="memname">void setGradient </td>
           <td>(</td>
-          <td class="paramtype">int *&#160;</td>
-          <td class="paramname"><em>code</em></td><td>)</td>
+          <td class="paramtype">function&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>(<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>)&gt;&#160;</td>
+          <td class="paramname"><em>g</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define codes for all node DOFs. </p>
+<p>Define the function associated to the derivative of the equation to solve. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>C-array that contains code for each DOF of current node </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">g</td><td>Function given as a function of one real variable and returning a real number. This function can be defined by the calling program as a C-function and then cast to an instance of class function </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a9d491abc26d7bf766d507caa8979b178"></a>
+<a class="anchor" id="a27ce60ec61d8ab6f2514ef763950bfb7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setCode </td>
+          <td class="memname">void setGradient </td>
           <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramtype">function&lt; <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;(<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;)&gt;&#160;</td>
+          <td class="paramname"><em>g</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define the function associated to the gradient of the equation to solve. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">g</td><td>Function given as a function of many variables, stored in an input vector. and returns a <code>n*n</code> vector (<br />
+ n is the number of variables). This function can be defined by the calling program as a C-function and then cast to an instance of class function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a31e77e80114a29bc0d792d13162ff26b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setf </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>exp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set function for which zero is sought (case of one equation) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">exp</td><td>Regular expression defining the function using the symbol <code>x</code> as a variable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a1bcbb13ab556eda581413740f79eb6c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setDf </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>exp</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>code</em>, </td>
+          <td class="paramname"><em>i</em> = <code>1</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dof</em> = <code>1</code>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>j</em> = <code>1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -353,33 +493,105 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
       </table>
 </div><div class="memdoc">
 
-<p>Define code by a boolean algebraic expression invoking node coordinates. </p>
+<p>Set pzrtial derivative of function for which zero is sought (case of many equations) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">exp</td><td>Boolean algebraic expression as required by <code>fparser</code> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>Code to assign to node if the algebraic expression is true </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Degree of Freedom for which code is assigned [Default: 1] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">exp</td><td>Regular expression defining the partial derivative. In this expression, the variables are <code>x1</code>, <code>x2</code>, ... <code>x10</code> (up to 10 variables) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Component of function [Default: <code>=1</code>] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">j</td><td>Index of the partial derivative [Default: <code>=1</code>] </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="aed0d5940309ba25b1f01115bb2cac40c"></a>
+<a class="anchor" id="acc97b88eb4a8cb2d3aaaf735841562d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setCoord </td>
+          <td class="memname">void setPDE </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>i</em>, </td>
+          <td class="paramtype"><a class="el" href="a00028.html">Equa</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>eq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define a PDE. </p>
+<p>The solver can be used to solve a nonlinear PDE. In this case, the PDE is defined as an instance of a class inheriting of <a class="el" href="a00028.html" title="Mother abstract class to describe equation. ">Equa</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">eq</td><td>Pointer to equation instance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af1cd58fec176472be29a4dfb1be829e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial guess for the iterations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Vector containing initial guess for the unknown </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a54f93b8af463c5ca893fb24a542e4d6a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial guess for a unique unknown. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Rference to value of initial guess </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a5d4f3735e331deb3b35148cdab158de8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -389,255 +601,40 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
       </table>
 </div><div class="memdoc">
 
-<p>Set i-th coordinate. </p>
+<p>Set initial guesses bisection or Regula falsi algorithms. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Coordinate index (1..3) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Coordinate value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>Value of first initial guess </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Value of second initial guess </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The function has to have opposite signs at these values <code>i.e.</code> f(a)f(b)&lt;0. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function makes sense only in the case of a unique function of one variable </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="aa1a9657431763667147be7d405317a14"></a>
+<a class="anchor" id="a2cb2189e3379851c95d13a7c7ed8d8d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DOF </td>
+          <td class="memname">void get </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>i</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dof</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define label of DOF. </p>
+<p>Return solution (case of a nonlinear system of equations) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>DOF index </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>Label of DOF </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">u</td><td>Vector that contains on output the solution </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="a256faa817829ee737c4d15145f207cf8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setDOF </td>
-          <td>(</td>
-          <td class="paramtype">size_t &amp;&#160;</td>
-          <td class="paramname"><em>first_dof</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>nb_dof</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Define number of DOF. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">first_dof</td><td>Label of the first DOF in input that is actualized </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">nb_dof</td><td>Number of DOF </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ad742fa16927ed3e44c84a6f0b771a211"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setOnBoundary </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set node as boundary node. </p>
-<p>This function is mostly internally used (Especially in class <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a>) </p>
-
-</div>
-</div>
-<a class="anchor" id="a4f31f46cb58fb26dc088238f64ac77ea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int getCode </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dof</em> = <code>1</code></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return code for a given DOF of node. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>label of degree of freedom for which code is to be returned. Default value is 1. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ad4b7437d3083599607af0af5ccc12a3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00088.html">Point</a>&lt;<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt; getCoord </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return coordinates of node. </p>
-<p>Return value is an instance of class <a class="el" href="a00088.html" title="Defines a point with arbitrary type coordinates. ">Point</a> </p>
-
-</div>
-</div>
-<a class="anchor" id="aa9365e3f7fa00b775486804b220e3482"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00088.html">Point</a>&lt;<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt; getXYZ </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return coordinates of node. </p>
-<p>Return value is an instance of class <a class="el" href="a00088.html" title="Defines a point with arbitrary type coordinates. ">Point</a> </p>
-
-</div>
-</div>
-<a class="anchor" id="a400e23bc5e6a777a0eb7ee1fa7f358bd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t getNbNeigEl </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return number of neighbor elements. </p>
-<p>Neighbor elements are those that share node. Note that the returned information is valid only if the <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> member function <b>getNodeNeighborElements()</b> has been invoked before </p>
-
-</div>
-</div>
-<a class="anchor" id="ad25e0cc47ade352f9d6a52c87f84fd42"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00025.html">Element</a>* getNeigEl </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>i</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return i-th neighbor element. </p>
-<p>Note that the returned information is valid only if the <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> member function <b>getNodeNeighborElements()</b> has been invoked before </p>
-
-</div>
-</div>
-<a class="anchor" id="a5689b1930efb19d3b947a9a0b385cfe7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool isOnBoundary </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Say if node is a boundary node. </p>
-<p>Note this information is available only if boundary sides (and nodes) were determined (See class <a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a>). </p>
-
-</div>
-</div>
-<a class="anchor" id="a4c47f9adbca525f247fe53e4bc945a6d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setLevel </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>level</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Assign a level to current node. </p>
-<p>This member function is useful for mesh adaption.<br />
-Default node's level is zero </p>
-
-</div>
-</div>
-<a class="anchor" id="a79055013a1435362359ad0c0dd95df5f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int getLevel </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return node level. </p>
-<p><a class="el" href="a00079.html" title="To describe a node. ">Node</a> level decreases when element is refined (starting from 0). If the level is 0, then the element has no parents </p>
 
 </div>
 </div>

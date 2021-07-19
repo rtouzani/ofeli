@@ -33,14 +33,13 @@
 
 #include "equations/laplace/Laplace1DL3.h"
 #include "shape_functions/Line3.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
 Laplace1DL3::Laplace1DL3()
-            : Equation<real_t,3,3,1,1>()
+            : Equation<3,3,1,1>()
 {
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 1D using P2 finite element." << endl;
@@ -48,7 +47,7 @@ Laplace1DL3::Laplace1DL3()
 
 
 Laplace1DL3::Laplace1DL3(Mesh& ms)
-            : Equation<real_t,3,3,1,1>(ms)
+            : Equation<3,3,1,1>(ms)
 {
    _lsf = _rsf = 0;
    setMatrixType(SPARSE|SYMMETRIC);
@@ -64,7 +63,7 @@ Laplace1DL3::Laplace1DL3(Mesh& ms)
 
 Laplace1DL3::Laplace1DL3(Mesh&         ms,
                          Vect<real_t>& u)
-            : Equation<real_t,3,3,1,1>(ms,u)
+            : Equation<3,3,1,1>(ms,u)
 {
    _u = &u;
    _lsf = _rsf = 0;

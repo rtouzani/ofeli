@@ -392,6 +392,11 @@ class Vect
                  DOFSupport dof_type=NODE_DOF,
                  size_t     nb_dof=0);
 
+/** \brief Define grid class to size vector
+ *  @param [in] g Grid instance
+ */
+    void setGrid(Grid& g);
+
 /// \brief Return vector (global) size
     size_t size() const;
 
@@ -755,7 +760,7 @@ class Vect
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \brief Define a regular expression that initializes vector
- *  \details This member function enables defininga regular expression to assign a value
+ *  \details This member function enables defining a regular expression to assign a value
  *  to all vector entries
  *  @param [in] dof Label of dof for which expression is defined [Default: <tt>1</tt>] 
  */
@@ -1198,7 +1203,6 @@ class Vect
     void dof_select(size_t d, vector<size_t> &dof_list);
     size_t ijk(size_t i, size_t j)           const { return _ny*(i-1)+j-1; }
     size_t ijk(size_t i, size_t j, size_t k) const { return _ny*_nz*(i-1)+_nz*(j-1)+k-1; }
-    void setGrid(Grid& g);
 #if defined (USE_EIGEN)
     VectorX     _v;
 #endif

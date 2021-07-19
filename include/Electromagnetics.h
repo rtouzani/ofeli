@@ -33,8 +33,6 @@
 #ifndef __ELECTROMAGNETICS_H
 #define __ELECTROMAGNETICS_H
 
-#include "equations/Equa_impl.h"
-#include "equations/Equation_impl.h"
 #include "equations/electromagnetics/EC2D1T3.h"
 #include "equations/electromagnetics/EC2D2T3.h"
 #include "equations/electromagnetics/HelmholtzBT3.h"

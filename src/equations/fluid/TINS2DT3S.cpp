@@ -29,7 +29,6 @@
 
   ==============================================================================*/
 
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "equations/fluid/TINS2DT3S.h"
 #include "shape_functions/Triang3.h"
@@ -50,7 +49,7 @@ TINS2DT3S::TINS2DT3S()
 
 
 TINS2DT3S::TINS2DT3S(Mesh& ms)
-          : Equation<real_t,3,6,2,4>(ms), _constant_matrix(false), _p(nullptr)
+          : Equation<3,6,2,4>(ms), _constant_matrix(false), _p(nullptr)
 {
    _TimeInt.step = 0;
    init();
@@ -60,7 +59,7 @@ TINS2DT3S::TINS2DT3S(Mesh& ms)
 
 TINS2DT3S::TINS2DT3S(Mesh&         ms,
                      Vect<real_t>& u)
-          : Equation<real_t,3,6,2,4>(ms,u), _constant_matrix(false), _p(nullptr)
+          : Equation<3,6,2,4>(ms,u), _constant_matrix(false), _p(nullptr)
 {
    _TimeInt.step = 0;
    init();
@@ -97,7 +96,7 @@ void TINS2DT3S::init()
 void TINS2DT3S::setInput(EqDataType    opt,
                          Vect<real_t>& u)
 {
-   Equa<real_t>::setInput(opt,u);
+   Equa::setInput(opt,u);
    if (opt==PRESSURE_FIELD) {
       _p = &u;
       getPressure();
@@ -306,11 +305,11 @@ void TINS2DT3S::getMomentum()
       }
 
 //    Boundary conditions
-      Equa_Fluid<real_t,3,6,2,4>::updateBC(The_element,_bc);
+      Equa_Fluid<3,6,2,4>::updateBC(The_element,_bc);
 
 //    Assembly of matrix and R.H.S.
-      Equa<real_t>::_A->Assembly(The_element,eMat.get());
-      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
+      Equa::_A->Assembly(The_element,eMat.get());
+      Equa::_b->Assembly(The_element,eRHS.get());
    }
 
 // Solve the linear system

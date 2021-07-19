@@ -146,7 +146,7 @@ long FindTriangle(Triangles& Th,
                   int&       inside)
 {
    CurrentTh = &Th;
-   assert(&Th);
+//   assert(&Th);
    I2 I = Th.toI2(R2(Min(Max(Th.pmin.x,x),Th.pmax.x),Min(Max(Th.pmin.y,y),Th.pmax.y))); 
    Icoor2 dete[3];
    Triangle &tb = *Th.FindTriangleContaining(I,dete);
@@ -2068,7 +2068,7 @@ void Triangles::FindSubDomain(int OutSide=0)
          GeometricalEdge &eg = *Gh.subdomains[i].edge;
          subdomains[i].ref = Gh.subdomains[i].ref;
          Edge &e = *GeometricalEdgetoEdge[Gh.Number(eg)];
-         assert(&e);
+//         assert(&e);
          Vertex *v0=e(0), *v1 = e(1);
          Triangle *t = v0->t;
          int sens = Gh.subdomains[i].sens;

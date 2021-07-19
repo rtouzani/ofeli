@@ -149,7 +149,7 @@ class ODESolver
 /** \brief Set the number of equations [Default: <tt>1</tt>]
  *  \details This function is to be used if the default constructor was used
  */
-    void setNbEq(size_t nb_eq) { _nb_eq = 1; }
+    void setNbEq(size_t n);
 
 /** \brief Define coefficients in the case of a scalar differential equation
  *  \details This function enables giving coefficients of the differential
@@ -445,7 +445,6 @@ class ODESolver
       VECTOR_NL      = 3,      /*!< Nonlinear Differential system of equations */
    };
 
-   Equa<real_t> *_theEqua;
    size_t _order, _nb_eq, _nb_ssteps, _step, _sstep;
    int _sc;
    Iteration _s;
@@ -475,8 +474,10 @@ class ODESolver
    static FPtr F[11];
    FPtr _set_f;
 
-   std::map<TimeScheme,int> _sch;
-   void setScheme();
+   std::map<TimeScheme,int> _sch = {{FORWARD_EULER,1},{BACKWARD_EULER,2},{CRANK_NICOLSON,3},
+                                    {HEUN,4},{NEWMARK,5},{LEAP_FROG,6},{AB2,7},
+                                    {ADAMS_BASHFORTH,7},{RK4,8},{RUNGE_KUTTA,8},{RK3_TVD,9},
+                                    {BDF2,10}};
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
    void solveForwardEuler();

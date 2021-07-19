@@ -69,15 +69,15 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class SteklovPoincare2DBE : virtual public Equa<real_t> {
+class SteklovPoincare2DBE : virtual public Equa {
 
  public:
 
-    using Equa<real_t>::_A;
-    using Equa<real_t>::_u;
-    using Equa<real_t>::_b;
-    using Equa<real_t>::_uu;
-    using Equa<real_t>::_sf;
+    using Equa::_A;
+    using Equa::_u;
+    using Equa::_b;
+    using Equa::_uu;
+    using Equa::_sf;
 
 /// \brief Default Constructor
     SteklovPoincare2DBE();

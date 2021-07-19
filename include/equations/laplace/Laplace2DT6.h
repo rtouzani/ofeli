@@ -58,7 +58,7 @@ namespace OFELI {
 class Triang6S;
 class Line3;
   
-class Laplace2DT6 : virtual public Equa_Laplace<real_t,6,6,3,3> {
+class Laplace2DT6 : virtual public Equa_Laplace<6,6,3,3> {
 
  public:
 

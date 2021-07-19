@@ -61,7 +61,7 @@ namespace OFELI {
  */
 
 
-class WaterPorous1D : public Equa_Porous<real_t,2,2,1,1>
+class WaterPorous1D : public Equa_Porous<2,2,1,1>
 {
 
  public:

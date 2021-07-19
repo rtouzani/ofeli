@@ -49,7 +49,7 @@ WaterPorous1D::WaterPorous1D()
 
 
 WaterPorous1D::WaterPorous1D(Mesh&  ms)
-              : Equation<real_t,2,2,1,1>(ms)
+              : Equation< 2,2,1,1>(ms)
 {
    _nb_dof = 1;
    _cw = 1.e-6;

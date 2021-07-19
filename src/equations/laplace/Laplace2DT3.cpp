@@ -34,14 +34,13 @@
 #include "equations/laplace/Laplace2DT3.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
 Laplace2DT3::Laplace2DT3()
-            : Equation<real_t,3,3,2,2>()
+            : Equation<3,3,2,2>()
 {
    _equation_name = "Laplace";
    _finite_element = "2-D, 3-Node Triangles (P1)";
@@ -51,7 +50,7 @@ Laplace2DT3::Laplace2DT3()
 
 
 Laplace2DT3::Laplace2DT3(Mesh& ms)
-            : Equation<real_t,3,3,2,2>(ms)
+            : Equation<3,3,2,2>(ms)
 {
    _equation_name = "Laplace";
    _finite_element = "2-D, 3-Node Triangles (P1)";
@@ -68,7 +67,7 @@ Laplace2DT3::Laplace2DT3(Mesh& ms)
 
 Laplace2DT3::Laplace2DT3(Mesh&         ms,
                          Vect<real_t>& u)
-            : Equation<real_t,3,3,2,2>(ms,u)
+            : Equation<3,3,2,2>(ms,u)
 {
    setMatrixType(SPARSE|SYMMETRIC);
    setSolver(CG_SOLVER,DILU_PREC);
@@ -88,7 +87,7 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
                          Vect<real_t>& Dbc,
                          Vect<real_t>& Nbc,
                          Vect<real_t>& u)
-            : Equation<real_t,3,3,2,2>(ms)
+            : Equation<3,3,2,2>(ms)
 {
    _bf = &b;
    _u = &u;

@@ -1,17 +1,8 @@
 /* include/config.h.  Generated from config.h.in by configure.  */
 /* include/config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define to 1 if you have the `clock' function. */
-#define HAVE_CLOCK 1
-
 /* 0 */
-#define HAVE_CLOCKS_PER_SEC 1
-
-/* 0 */
-#define HAVE_EXIT_SUCCESS_AND_FAILURE 1
-
-/* 0 */
-/* #undef HAVE_GUESSED_CLOCKS_PER_SEC */
+/* #undef HAVE_EXIT_SUCCESS_AND_FAILURE */
 
 /* 0 */
 /* #undef HAVE_INLINE */
@@ -19,11 +10,11 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
-
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -50,7 +41,7 @@
 #define PACKAGE "ofeli"
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT ""
+#define PACKAGE_BUGREPORT "rachid.touzani@uca.fr"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "ofeli"
@@ -67,7 +58,9 @@
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "4.1.0"
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
 /* Version number of package */

@@ -37,7 +37,6 @@
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/LocalMatrix_impl.h"
 #include "linear_algebra/LocalVect_impl.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 
 
@@ -51,7 +50,7 @@ DC3DT4::DC3DT4()
 
 
 DC3DT4::DC3DT4(Mesh& ms) 
-       : Equation<real_t,4,4,3,3>(ms)
+       : Equation<4,4,3,3>(ms)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
@@ -62,7 +61,7 @@ DC3DT4::DC3DT4(Mesh& ms)
 
 DC3DT4::DC3DT4(Mesh&         ms,
                Vect<real_t>& u)
-       : Equation<real_t,4,4,3,3>(ms,u)
+       : Equation<4,4,3,3>(ms,u)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
@@ -84,7 +83,7 @@ void DC3DT4::set(const Element* el)
    _el_geo.center = t.getCenter();
    _dSh = t.DSh();
    ElementNodeCoordinates();
-   ElementVector(*_u);
+   ElementNodeVector(*_u,_eu);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_Cp_set)

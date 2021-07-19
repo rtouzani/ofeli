@@ -29,9 +29,6 @@
 
   ==============================================================================*/
 
-#ifndef __EQUA_IMPL_H
-#define __EQUA_IMPL_H
-
 #include <stdlib.h>
 #include <math.h>
 #include <iostream>
@@ -45,8 +42,8 @@
 #include "solvers/LinearSolver.h"
 #include "util/Gauss.h"
 #include "io/Prescription.h"
-#include "solvers/TimeStepping.h"
-#include "solvers/EigenProblemSolver.h"
+//#include "solvers/TimeStepping.h"
+//#include "solvers/EigenProblemSolver.h"
 #include "linear_algebra/DMatrix_impl.h"
 #include "linear_algebra/DSMatrix_impl.h"
 #include "linear_algebra/SpMatrix_impl.h"
@@ -62,13 +59,14 @@ namespace OFELI {
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 extern Material theMaterial;
+class EigenProblemSolver;
+class TimeStepping;
 
-template<class T_>
-Equa<T_>::Equa()
-         : _theMesh(nullptr), _solver(-1), _nb_fields(1), _eigen(false),
-           _set_matrix(false), _set_solver(false), _analysis(STATIONARY),
-           _A(nullptr), _b(nullptr), _u(nullptr), _bc(nullptr), _bf(nullptr),
-           _sf(nullptr), _pf(nullptr), _v(nullptr)
+Equa::Equa()
+     : _theMesh(nullptr), _solver(-1), _nb_fields(1), _eigen(false),
+       _set_matrix(false), _set_solver(false), _analysis(STATIONARY),
+       _A(nullptr), _b(nullptr), _u(nullptr), _bc(nullptr), _bf(nullptr),
+       _sf(nullptr), _pf(nullptr), _v(nullptr)
 {
    setTimeIntegrationParam();
    _rho_set = _Cp_set = _kappa_set = _mu_set = _sigma_set = _Mu_set = false;
@@ -76,8 +74,7 @@ Equa<T_>::Equa()
 }
 
 
-template<class T_>
-Equa<T_>::~Equa()
+Equa::~Equa()
 {
    if (_A!=nullptr)
       delete _A;
@@ -86,111 +83,97 @@ Equa<T_>::~Equa()
 }
 
 
-template<class T_>
-void Equa<T_>::set_rho(string exp)
+void Equa::set_rho(string exp)
 {
    _rho_fct.set(exp);
    _rho_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_Cp(string exp)
+void Equa::set_Cp(string exp)
 {
    _Cp_fct.set(exp);
    _Cp_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_kappa(string exp)
+void Equa::set_kappa(string exp)
 {
    _kappa_fct.set(exp);
    _kappa_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_mu(string exp)
+void Equa::set_mu(string exp)
 {
    _mu_fct.set(exp);
    _mu_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_sigma(string exp)
+void Equa::set_sigma(string exp)
 {
    _sigma_fct.set(exp);
    _sigma_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_Mu(string exp)
+void Equa::set_Mu(string exp)
 {
    _Mu_fct.set(exp);
    _Mu_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_epsilon(string exp)
+void Equa::set_epsilon(string exp)
 {
    _epsilon_fct.set(exp);
    _epsilon_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_omega(string exp)
+void Equa::set_omega(string exp)
 {
    _omega_fct.set(exp);
    _omega_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_beta(string exp)
+void Equa::set_beta(string exp)
 {
    _beta_fct.set(exp);
    _beta_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_v(string exp)
+void Equa::set_v(string exp)
 {
    _v_fct.set(exp);
    _v_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_young(string exp)
+void Equa::set_young(string exp)
 {
    _young_fct.set(exp);
    _young_set = true;
 }
 
 
-template<class T_>
-void Equa<T_>::set_poisson(string exp)
+void Equa::set_poisson(string exp)
 {
    _poisson_fct.set(exp);
    _poisson_set = true;
 }
 
 
-template<class T_>
-bool Equa<T_>::SolverIsSet() const
+bool Equa::SolverIsSet() const
 {
    return _set_solver;
 }
 
 
-template<class T_>
-void Equa<T_>::setMesh(Mesh &m)
+void Equa::setMesh(Mesh &m)
 {
    _theMesh = &m;
    _theMesh->removeImposedDOF();
@@ -205,52 +188,45 @@ void Equa<T_>::setMesh(Mesh &m)
 }
 
 
-template<class T_>
-Mesh& Equa<T_>::getMesh() const
+Mesh& Equa::getMesh() const
 {
    return *_theMesh;
 }
 
 
-template<class T_>
-void Equa<T_>::build(EigenProblemSolver& e) { }
+void Equa::build(EigenProblemSolver& e) { }
 
 
-template<class T_>
-void Equa<T_>::build(TimeStepping& s) { }
+void Equa::build(TimeStepping& s) { }
 
 
-template<class T_>
-int Equa<T_>::runOneTimeStep()
+int Equa::runOneTimeStep()
 {
    return run(TRANSIENT_ONE_STEP);
 }
 
 
-template<class T_>
-int Equa<T_>::runSteadyState()
+int Equa::runSteadyState()
 {
    return run(STATIONARY);
 }
 
 
-template<class T_>
-int Equa<T_>::runTransient()
+int Equa::runTransient()
 {
    return run(TRANSIENT);
 }
 
 
-template<class T_>
-int Equa<T_>::run(Analysis   a,
-                     TimeScheme s)
+int Equa::run(Analysis   a,
+              TimeScheme s)
 {
    _analysis = a;
    int ret=0;
    if (_u==nullptr)
       throw OFELIException("In Equa<T>::run(Analysis,TimeScheme): No solution vector provided.");
    if (_b==nullptr)
-      _b = new Vect<T_>(_nb_eq);
+      _b = new Vect<real_t>(_nb_eq);
    _b->clear();
    _uu.setSize(_nb_eq);
    if (a==STATIONARY) {
@@ -285,18 +261,16 @@ int Equa<T_>::run(Analysis   a,
 }
 
 
-template<class T_>
-void Equa<T_>::getTangent(Matrix<T_>* Df)
+void Equa::getTangent(Matrix<real_t>* Df)
 {
    _Df = Df;
 }
 
 
-template<class T_>
-void Equa<T_>::setTransient(TimeScheme s,
-                               real_t     p1,
-                               real_t     p2,
-                               real_t     p3)
+void Equa::setTransient(TimeScheme s,
+                        real_t     p1,
+                        real_t     p2,
+                        real_t     p3)
 {
    _TimeInt.scheme = s;
    _TimeInt.time_parameter1 = p1;
@@ -311,31 +285,27 @@ void Equa<T_>::setTransient(TimeScheme s,
 }
 
 
-template<class T_>
-LinearSolver<T_>& Equa<T_>::getLinearSolver()
+LinearSolver<real_t>& Equa::getLinearSolver()
 {
    return _ls;
 }
 
 
 #if defined (USE_PETSC)
-template<class T_>
-PETScMatrix<T_>* Equa<T_>::getMatrix() const
+PETScMatrix<real_t>* Equa::getMatrix() const
 {
    return _A;
 }
 #else
-template<class T_>
-Matrix<T_>* Equa<T_>::getMatrix() const
+Matrix<real_t>* Equa::getMatrix() const
 {
    return _A;
 }
 #endif
 
 
-template<class T_>
-void Equa<T_>::setSolver(Iteration      ls,
-                            Preconditioner pc)
+void Equa::setSolver(Iteration      ls,
+                     Preconditioner pc)
 {
    if (_matrix_type==TRIDIAGONAL)
       ls = DIRECT_SOLVER;
@@ -349,9 +319,8 @@ void Equa<T_>::setSolver(Iteration      ls,
 }
 
 
-template<class T_>
-void Equa<T_>::setLinearSolver(Iteration      ls,
-                                  Preconditioner pc)
+void Equa::setLinearSolver(Iteration      ls,
+                           Preconditioner pc)
 {
    if (_matrix_type==TRIDIAGONAL)
       ls = DIRECT_SOLVER;
@@ -359,58 +328,54 @@ void Equa<T_>::setLinearSolver(Iteration      ls,
 }
 
 
-template<class T_>
-void Equa<T_>::setMatrixType(int t)
+void Equa::setMatrixType(int t)
 {
    _matrix_type = t;
    if (_A!=nullptr)
       delete _A, _A = nullptr;
 #if defined(USE_PETSC)
-   _A = new PETScMatrix<T_>(*_theMesh);
+   _A = new PETScMatrix<real_t>(*_theMesh);
 #else 
    if (_matrix_type&SPARSE)
-      _A = new SpMatrix<T_>(*_theMesh);
+      _A = new SpMatrix<real_t>(*_theMesh);
    else if (_matrix_type&(DENSE&(DENSE|SYMMETRIC)))
-      _A = new DSMatrix<T_>(*_theMesh);
+      _A = new DSMatrix<real_t>(*_theMesh);
    else if (_matrix_type&DENSE)
-      _A = new DMatrix<T_>(*_theMesh);
+      _A = new DMatrix<real_t>(*_theMesh);
    else if (_matrix_type&(SKYLINE&(SKYLINE|SYMMETRIC)))
-      _A = new SkSMatrix<T_>(*_theMesh);
+      _A = new SkSMatrix<real_t>(*_theMesh);
    else if (_matrix_type&SKYLINE)
-      _A = new SkMatrix<T_>(*_theMesh);
+      _A = new SkMatrix<real_t>(*_theMesh);
    else if (_matrix_type&TRIDIAGONAL)
-      _A = new TrMatrix<T_>(_theMesh->getNbEq());
+      _A = new TrMatrix<real_t>(_theMesh->getNbEq());
    else if (_matrix_type&BAND)
-      _A = new BMatrix<T_>;
+      _A = new BMatrix<real_t>;
 #endif
    _ls.setMatrix(_A);
    _set_matrix = true;
 }
 
 
-template<class T_>
-void Equa<T_>::setWithConvection(int f)
+void Equa::setWithConvection(int f)
 {
    f = 0;
 }
 
 
-template<class T_>
-void Equa<T_>::setTerms(PDE_Terms t)
+void Equa::setTerms(PDE_Terms t)
 {
    _terms = t;
 }
 
 
-template<class T_>
 #if defined(USE_PETSC)
-int Equa<T_>::solveLinearSystem(PETScMatrix<T_>* A,
-                                   PETScVect<T_>&   b,
-                                   PETScVect<T_>&   x)
+int Equa::solveLinearSystem(PETScMatrix<real_t>* A,
+                            PETScVect<real_t>&   b,
+                            PETScVect<real_t>&   x)
 #else
-int Equa<T_>::solveLinearSystem(Matrix<T_>* A,
-                                   Vect<T_>&   b,
-                                   Vect<T_>&   x)
+int Equa::solveLinearSystem(Matrix<real_t>* A,
+                            Vect<real_t>&   b,
+                            Vect<real_t>&   x)
 #endif
 {
    _ls.setMatrix(A);
@@ -421,28 +386,25 @@ int Equa<T_>::solveLinearSystem(Matrix<T_>* A,
 }
 
 
-template<class T_>
 #if defined(USE_PETSC)
-int Equa<T_>::solveLinearSystem(PETScVect<T_>& b,
-                                   PETScVect<T_>& x)
+int Equa::solveLinearSystem(PETScVect<real_t>& b,
+                            PETScVect<real_t>& x)
 #else
-int Equa<T_>::solveLinearSystem(Vect<T_>& b,
-                                   Vect<T_>& x)
+int Equa::solveLinearSystem(Vect<real_t>& b,
+                                   Vect<real_t>& x)
 #endif
 {
    return solveLinearSystem(_A,b,x);
 }
 
 
-template<class T_>
-void Equa<T_>::setAnalysis(Analysis a)
+void Equa::setAnalysis(Analysis a)
 {
    _analysis = a;
 }
 
 
-template<class T_>
-void Equa<T_>::setTimeIntegrationParam()
+void Equa::setTimeIntegrationParam()
 {
    _TimeInt.step = 0;
    _TimeInt.init = 0.;
@@ -452,90 +414,78 @@ void Equa<T_>::setTimeIntegrationParam()
 }
     
 
-template<class T_>
-void Equa<T_>::setTimeIndex(size_t step)
+void Equa::setTimeIndex(size_t step)
 {
    _TimeInt.step = step;
 }
 
 
-template<class T_>
-void Equa<T_>::setInitTime(real_t t)
+void Equa::setInitTime(real_t t)
 {
    _TimeInt.init = t;
 }
 
 
-template<class T_>
-void Equa<T_>::setTimeStep(real_t t)
+void Equa::setTimeStep(real_t t)
 {
    _TimeInt.delta = t;
 }
 
 
-template<class T_>
-real_t Equa<T_>::getTimeStep() const
+real_t Equa::getTimeStep() const
 {
    return _TimeInt.delta;
 }
 
 
-template<class T_>
-void Equa<T_>::setTime(real_t t)
+void Equa::setTime(real_t t)
 {
    _TimeInt.time = t;
 }
 
 
-template<class T_>
-void Equa<T_>::setFinalTime(real_t t)
+void Equa::setFinalTime(real_t t)
 {
    _TimeInt.final = t;
 }
 
 
-template<class T_>
-size_t Equa<T_>::getNbFields() const
+size_t Equa::getNbFields() const
 {
    return _nb_fields;
 }
 
 
-template<class T_>
-void Equa<T_>::setTimeIntegration(TimeScheme s)
+void Equa::setTimeIntegration(TimeScheme s)
 {
    _TimeInt.scheme = s;
 }
 
 
-template<class T_>
-TimeScheme Equa<T_>::getTimeIntegration() const
+TimeScheme Equa::getTimeIntegration() const
 {
    return _TimeInt.scheme;
 }
 
 
-template<class T_>
-string Equa<T_>::getEquationName() const
+string Equa::getEquationName() const
 {
    return _equation_name;
 }
 
 
-template<class T_>
-string Equa<T_>::getFiniteElementType() const
+string Equa::getFiniteElementType() const
 {
    return _finite_element;
 }
 
 
-template<class T_>
 #if defined(USE_PETSC)
-void Equa<T_>::setInput(EqDataType     opt,
-                           PETScVect<T_>& u)
+void Equa::setInput(EqDataType     opt,
+                    PETScVect<real_t>& u)
 #else
-void Equa<T_>::setInput(EqDataType opt,
-                           Vect<T_>&  u)
+void Equa::setInput(EqDataType opt,
+                    Vect<real_t>&  u)
 #endif
 {
    if (opt==INITIAL_FIELD || opt==SOLUTION)
@@ -553,30 +503,27 @@ void Equa<T_>::setInput(EqDataType opt,
 }
 
 
-template<class T_>
-void Equa<T_>::set(Prescription& p)
+void Equa::set(Prescription& p)
 {
    _prescription = &p;
 }
 
 
-template<class T_>
-void Equa<T_>::setTolerance(real_t toler)
+void Equa::setTolerance(real_t toler)
 {
    _toler = toler;
 }
 
 
-template<class T_>
 #if defined(USE_PETSC)
-void Equa<T_>::setMatrix(PETScMatrix<T_> &A)
+void Equa::setMatrix(PETScMatrix<real_t> &A)
 {
    _A = &A;
    _matrix_type = SKYLINE|SYMMETRIC;
    _A->setMesh(*_theMesh);
 }
 #else
-void Equa<T_>::setMatrix(SkSMatrix<T_> &A)
+void Equa::setMatrix(SkSMatrix<real_t> &A)
 {
    _A = &A;
    _matrix_type = SKYLINE|SYMMETRIC;
@@ -584,8 +531,7 @@ void Equa<T_>::setMatrix(SkSMatrix<T_> &A)
 }
 
 
-template<class T_>
-void Equa<T_>::setMatrix(SkMatrix<T_> &A)
+void Equa::setMatrix(SkMatrix<real_t> &A)
 {
    _A = &A;
    _matrix_type = SKYLINE;
@@ -593,8 +539,7 @@ void Equa<T_>::setMatrix(SkMatrix<T_> &A)
 }
 
 
-template<class T_>
-void Equa<T_>::setMatrix(SpMatrix<T_> &A)
+void Equa::setMatrix(SpMatrix<real_t> &A)
 {
    _A = &A;
    _matrix_type = SPARSE;
@@ -603,36 +548,31 @@ void Equa<T_>::setMatrix(SpMatrix<T_> &A)
 #endif
 
 
-template<class T_>
-bool Equa<T_>::isConstantMatrix() const
+bool Equa::isConstantMatrix() const
 {
    return _constant_matrix;
 }
 
 
-template<class T_>
-bool Equa<T_>::isConstantMesh() const
+bool Equa::isConstantMesh() const
 {
    return _constant_mesh;
 }
 
 
-template<class T_>
-void Equa<T_>::setConstantMatrix()
+void Equa::setConstantMatrix()
 {
    _constant_matrix = true;
 }
 
 
-template<class T_>
-void Equa<T_>::setConstantMesh()
+void Equa::setConstantMesh()
 {
    _constant_mesh = true;
 }
 
 
-template<class T_>
-void Equa<T_>::setTerms(int opt)
+void Equa::setTerms(int opt)
 {
    _terms = opt;
 }
@@ -640,5 +580,3 @@ void Equa<T_>::setTerms(int opt)
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 } /* namespace OFELI */
-
-#endif

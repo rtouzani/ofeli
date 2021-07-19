@@ -86,8 +86,6 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = @build@
-host_triplet = @host@
 subdir = src/equations
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -109,7 +107,7 @@ libequations_a_DEPENDENCIES = cl/libcl.a \
 	electromagnetics/libelectromagnetics.a fluid/libfluid.a \
 	interface/libinterface.a laplace/liblaplace.a \
 	porous/libporous.a solid/libsolid.a therm/libtherm.a
-am_libequations_a_OBJECTS = DG.$(OBJEXT)
+am_libequations_a_OBJECTS = Equa.$(OBJEXT) DG.$(OBJEXT)
 libequations_a_OBJECTS = $(am_libequations_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -223,7 +221,6 @@ CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
-CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
@@ -232,10 +229,8 @@ DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
-EGREP = @EGREP@
 EIGEN_CFLAGS = @EIGEN_CFLAGS@
 EXEEXT = @EXEEXT@
-GREP = @GREP@
 HAVE_INLINE = @HAVE_INLINE@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -287,22 +282,14 @@ am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
 bindir = @bindir@
-build = @build@
 build_alias = @build_alias@
-build_cpu = @build_cpu@
-build_os = @build_os@
-build_vendor = @build_vendor@
 builddir = @builddir@
 datadir = @datadir@
 datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
-host = @host@
 host_alias = @host_alias@
-host_cpu = @host_cpu@
-host_os = @host_os@
-host_vendor = @host_vendor@
 htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
@@ -318,6 +305,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -330,7 +318,9 @@ noinst_LIBRARIES = libequations.a
 AUTOMAKE_OPTIONS = no-dependencies
 SUBDIRS = cl electromagnetics fluid interface laplace porous solid therm
 AM_CPPFLAGS = -std=c++1y
-libequations_a_SOURCES = DG.cpp
+libequations_a_SOURCES = Equa.cpp \
+                         DG.cpp
+
 libequations_a_LIBADD = \
 			cl/libcl.a \
 			electromagnetics/libelectromagnetics.a \

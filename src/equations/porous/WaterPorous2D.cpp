@@ -50,7 +50,7 @@ WaterPorous2D::WaterPorous2D()
 
 
 WaterPorous2D::WaterPorous2D(Mesh&  ms)
-              : Equation<real_t,3,3,2,2>(ms)
+              : Equation<3,3,2,2>(ms)
 {
    _theMesh = &ms;
    _nb_dof = 1;

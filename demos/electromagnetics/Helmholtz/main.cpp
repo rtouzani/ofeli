@@ -30,8 +30,8 @@ using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
-   void setBC(Vect<complex_t>& bc);
-   void error(const Vect<complex_t>& u);
+   void setBC(Vect<real_t>& bc);
+   void error(const Vect<real_t>& u);
 
    ifstream mf, bcf;
    if (argc < 2) {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
       if (Verbosity > 3)
          cout << "Allocating memory for matrix and R.H.S. ...\n";
-      Vect<complex_t> u(ms), bc(ms);
+      Vect<real_t> u(ms), bc(ms);
 
 //    Read boundary conditions, body and boundary forces
       if (Verbosity > 3)
@@ -94,23 +94,28 @@ int main(int argc, char *argv[])
 }
 
 
-void setBC(Vect<complex_t>& bc)
+void setBC(Vect<real_t>& bc)
 {
    NodeLoop(bc.getMesh()) {
       double x = TheNode.getX(), y = TheNode.getY();
-      if (TheNode.getCode(1)==1)
-         bc(theNodeLabel) = cos(y)*complex_t(cos(2*x),sin(2*x));
+      if (TheNode.getCode(1)==1) {
+         bc(2*theNodeLabel-1) = cos(y)*cos(2*x);
+         bc(2*theNodeLabel  ) = cos(y)*sin(2*x);
+      }
    }
 }
 
 
-void error(const Vect<complex_t>& u)
+void error(const Vect<real_t>& u)
 {
-   double ee=0, e;
+   real_t ee=0, e1, e2;
+   size_t n = 0;
    NodeLoop(u.getMesh()) {
+      n++;
       double x = TheNode.getX(), y = TheNode.getY();
-      e = Abs(cos(y)*complex_t(cos(2*x),sin(2*x)) - u(theNodeLabel));
-      ee += e*e;
+      e1 = cos(y)*cos(2*x) - u(2*theNodeLabel-1);
+      e2 = cos(y)*sin(2*x) - u(2*theNodeLabel);
+      ee += e1*e1 + e2*e2;
    }
-   cout << "Discrete L2 error = " << sqrt(ee/u.size()) << endl;
+   cout << "Discrete L2 error = " << sqrt(ee/n) << endl;
 }

@@ -34,8 +34,6 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include <vector>
-using std::vector;
 
 #include <string>
 using std::string;
@@ -151,6 +149,38 @@ class Tabulation
                     real_t v2,
                     real_t v3);
 
+/// @brief Get the Number of read functions
+/// @return size_t Number of functions
+    size_t getNbFuncts() const { return _nb_funct; }
+
+/** @brief Get number of variables of a given function
+ *  @param [in] n index of function
+ *  @return Number of variables
+ */
+    size_t getNbVar(size_t n) const { return _funct[n-1].NbVar; }
+
+/** @brief Get the name of a read function
+ *  @param [in] n index of function
+ *  @return Name of function
+ */
+    string getFunctName(size_t n) const { return _funct[n-1].Label; }
+
+/** @brief Get minimal value of a variable
+ *  @param [in] n index of function
+ *  @param [in] i index of variable (between 1 and 3)
+ *  @return 
+ */
+    real_t getMinVar(size_t n,
+                     size_t i) const { return _funct[n-1].Min[i-1]; }
+
+/** @brief Get maximal value of a variable
+ *  @param [in] n index of function
+ *  @param [in] i index of variable (between 1 and 3)
+ *  @return 
+ */
+    real_t getMaxVar(size_t n,
+                     size_t i) const { return _funct[n-1].Max[i-1]; }
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream& operator<<(ostream& s, const Tabulation &t);
     friend class XMLParser;
@@ -159,7 +189,7 @@ class Tabulation
  private:
 
    size_t                   _nb_funct;
-   Vect<fct>                _funct;
+   vector<fct>              _funct;
    std::map<string,size_t>  _funct_id;
    void setFunction(string label);
    void setVariable(string label);

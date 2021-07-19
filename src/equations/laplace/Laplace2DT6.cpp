@@ -34,14 +34,13 @@
 #include "equations/laplace/Laplace2DT6.h"
 #include "shape_functions/Triang6S.h"
 #include "shape_functions/Line3.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
 Laplace2DT6::Laplace2DT6()
-            : Equation<real_t,6,6,3,3>()
+            : Equation<6,6,3,3>()
 {
    _equation_name = "Laplace";
    _finite_element = "2-D, 6-Node Triangles (P2)";
@@ -51,7 +50,7 @@ Laplace2DT6::Laplace2DT6()
 
 
 Laplace2DT6::Laplace2DT6(Mesh& ms)
-            : Equation<real_t,6,6,3,3>(ms)
+            : Equation<6,6,3,3>(ms)
 {
    _equation_name = "Laplace";
    _finite_element = "2-D, 6-Node Triangles (P2)";
@@ -68,7 +67,7 @@ Laplace2DT6::Laplace2DT6(Mesh& ms)
 
 Laplace2DT6::Laplace2DT6(Mesh&         ms,
                          Vect<real_t>& u)
-            : Equation<real_t,6,6,3,3>(ms,u)
+            : Equation<6,6,3,3>(ms,u)
 {
    setMatrixType(SPARSE|SYMMETRIC);
    setSolver(CG_SOLVER,DILU_PREC);

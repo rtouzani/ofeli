@@ -53,7 +53,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00083.html">OFELIException</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00083.html">ODESolver</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -61,32 +61,1245 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a00426.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">OFELIException Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00335.html">Utilities</a></div></div>  </div>
+<div class="title">ODESolver Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00341.html">Solver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>To handle exceptions in <a class="el" href="a00324.html" title="A namespace to group all library classes, functions, ... ">OFELI</a>.  
+<p>To solve a system of ordinary differential equations.  
  <a href="a00083.html#details">More...</a></p>
-
-<p>Inherits runtime_error.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:gacd7a732bc4bb145d8d4167ccf89cb051"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacd7a732bc4bb145d8d4167ccf89cb051"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gacd7a732bc4bb145d8d4167ccf89cb051">OFELIException</a> (const std::string &amp;s)</td></tr>
-<tr class="memdesc:gacd7a732bc4bb145d8d4167ccf89cb051"><td class="mdescLeft">&#160;</td><td class="mdescRight">This form will be used most often in a throw. <br /></td></tr>
-<tr class="separator:gacd7a732bc4bb145d8d4167ccf89cb051"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafe2fb758805e119f9f8db227302200b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafe2fb758805e119f9f8db227302200b8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gafe2fb758805e119f9f8db227302200b8">OFELIException</a> ()</td></tr>
-<tr class="memdesc:gafe2fb758805e119f9f8db227302200b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw with no error message. <br /></td></tr>
-<tr class="separator:gafe2fb758805e119f9f8db227302200b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e716223fdfa1868a6a683386da026f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e716223fdfa1868a6a683386da026f6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a2e716223fdfa1868a6a683386da026f6">ODESolver</a> ()</td></tr>
+<tr class="memdesc:a2e716223fdfa1868a6a683386da026f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:a2e716223fdfa1868a6a683386da026f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56d53bea94b3658eea8804466f91fa96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56d53bea94b3658eea8804466f91fa96"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a56d53bea94b3658eea8804466f91fa96">ODESolver</a> (size_t nb_eq)</td></tr>
+<tr class="memdesc:a56d53bea94b3658eea8804466f91fa96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor providing the number of equations. <br /></td></tr>
+<tr class="separator:a56d53bea94b3658eea8804466f91fa96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e05bb6feba76958bec33ba5e4989d42"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a5e05bb6feba76958bec33ba5e4989d42">ODESolver</a> (<a class="el" href="a00342.html#ga672626c8ddef10da0244c15db4085f40">TimeScheme</a> s, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time_step=<a class="el" href="a00338.html#gafe343e984bb2022a960c0285c90ba97d">theTimeStep</a>, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> final_time=<a class="el" href="a00338.html#ga3fb590e5375a439474a2799323b4572b">theFinalTime</a>, size_t nb_eq=1)</td></tr>
+<tr class="memdesc:a5e05bb6feba76958bec33ba5e4989d42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using time discretization data.  <a href="#a5e05bb6feba76958bec33ba5e4989d42">More...</a><br /></td></tr>
+<tr class="separator:a5e05bb6feba76958bec33ba5e4989d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab12de38f58ecf7647758f97c0be1546f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab12de38f58ecf7647758f97c0be1546f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#ab12de38f58ecf7647758f97c0be1546f">~ODESolver</a> ()</td></tr>
+<tr class="memdesc:ab12de38f58ecf7647758f97c0be1546f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:ab12de38f58ecf7647758f97c0be1546f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584a3841c197ddb1ec0494389823d561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a584a3841c197ddb1ec0494389823d561">set</a> (<a class="el" href="a00342.html#ga672626c8ddef10da0244c15db4085f40">TimeScheme</a> s, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time_step=<a class="el" href="a00338.html#gafe343e984bb2022a960c0285c90ba97d">theTimeStep</a>, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> final_time=<a class="el" href="a00338.html#ga3fb590e5375a439474a2799323b4572b">theFinalTime</a>)</td></tr>
+<tr class="memdesc:a584a3841c197ddb1ec0494389823d561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define data of the differential equation or system.  <a href="#a584a3841c197ddb1ec0494389823d561">More...</a><br /></td></tr>
+<tr class="separator:a584a3841c197ddb1ec0494389823d561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b264f305b8fe76a3ae0520e151e47fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a3b264f305b8fe76a3ae0520e151e47fb">setNbEq</a> (size_t nb_eq)</td></tr>
+<tr class="memdesc:a3b264f305b8fe76a3ae0520e151e47fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of equations [Default: <code>1</code>].  <a href="#a3b264f305b8fe76a3ae0520e151e47fb">More...</a><br /></td></tr>
+<tr class="separator:a3b264f305b8fe76a3ae0520e151e47fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ea2722af101302a690f5874e4536748"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a2ea2722af101302a690f5874e4536748">setCoef</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a0, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a1, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a2, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> f)</td></tr>
+<tr class="memdesc:a2ea2722af101302a690f5874e4536748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define coefficients in the case of a scalar differential equation.  <a href="#a2ea2722af101302a690f5874e4536748">More...</a><br /></td></tr>
+<tr class="separator:a2ea2722af101302a690f5874e4536748"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e0120918529bcfdfbb281db4dfff8a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a6e0120918529bcfdfbb281db4dfff8a1">setCoef</a> (string a0, string a1, string a2, string f)</td></tr>
+<tr class="memdesc:a6e0120918529bcfdfbb281db4dfff8a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define coefficients in the case of a scalar differential equation.  <a href="#a6e0120918529bcfdfbb281db4dfff8a1">More...</a><br /></td></tr>
+<tr class="separator:a6e0120918529bcfdfbb281db4dfff8a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8e782375fab63e667ddc3447b9e9a90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#ad8e782375fab63e667ddc3447b9e9a90">setLinear</a> ()</td></tr>
+<tr class="memdesc:ad8e782375fab63e667ddc3447b9e9a90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Claim that ODE is linear.  <a href="#ad8e782375fab63e667ddc3447b9e9a90">More...</a><br /></td></tr>
+<tr class="separator:ad8e782375fab63e667ddc3447b9e9a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e734c537232e7be6f58fd92ce129bd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a8e734c537232e7be6f58fd92ce129bd8">setF</a> (string f)</td></tr>
+<tr class="memdesc:a8e734c537232e7be6f58fd92ce129bd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time derivative, given as an algebraic expression, for a nonlinear ODE.  <a href="#a8e734c537232e7be6f58fd92ce129bd8">More...</a><br /></td></tr>
+<tr class="separator:a8e734c537232e7be6f58fd92ce129bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3132b0abb0f9bf21aeeb616c3a4743df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a3132b0abb0f9bf21aeeb616c3a4743df">setF</a> (string f, int i)</td></tr>
+<tr class="memdesc:a3132b0abb0f9bf21aeeb616c3a4743df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time derivative, given as an algebraic expression, for a nonlinear ODE.  <a href="#a3132b0abb0f9bf21aeeb616c3a4743df">More...</a><br /></td></tr>
+<tr class="separator:a3132b0abb0f9bf21aeeb616c3a4743df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30f3349b451cfe856b895eaac667a56e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a30f3349b451cfe856b895eaac667a56e">setDF</a> (string df, int i, int j)</td></tr>
+<tr class="memdesc:a30f3349b451cfe856b895eaac667a56e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time derivative of the function defining the ODE.  <a href="#a30f3349b451cfe856b895eaac667a56e">More...</a><br /></td></tr>
+<tr class="separator:a30f3349b451cfe856b895eaac667a56e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87d0215e1305be53aa83e8ac80d415ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a87d0215e1305be53aa83e8ac80d415ce">setdFdt</a> (string df, int i)</td></tr>
+<tr class="memdesc:a87d0215e1305be53aa83e8ac80d415ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set time derivative of the function defining the ODE.  <a href="#a87d0215e1305be53aa83e8ac80d415ce">More...</a><br /></td></tr>
+<tr class="separator:a87d0215e1305be53aa83e8ac80d415ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8af5428b41cbdbd33226187aefbcd40c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a8af5428b41cbdbd33226187aefbcd40c">setRK4RHS</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> f)</td></tr>
+<tr class="memdesc:a8af5428b41cbdbd33226187aefbcd40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set intermediate right-hand side vector for the Runge-Kutta method.  <a href="#a8af5428b41cbdbd33226187aefbcd40c">More...</a><br /></td></tr>
+<tr class="separator:a8af5428b41cbdbd33226187aefbcd40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#aa7e53c44ddd0bfff4147278d5c15f3a3">setRK4RHS</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;f)</td></tr>
+<tr class="memdesc:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set intermediate right-hand side vector for the Runge-Kutta method.  <a href="#aa7e53c44ddd0bfff4147278d5c15f3a3">More...</a><br /></td></tr>
+<tr class="separator:aa7e53c44ddd0bfff4147278d5c15f3a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1cd58fec176472be29a4dfb1be829e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#af1cd58fec176472be29a4dfb1be829e3">setInitial</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u)</td></tr>
+<tr class="memdesc:af1cd58fec176472be29a4dfb1be829e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for a first-oder system of differential equations.  <a href="#af1cd58fec176472be29a4dfb1be829e3">More...</a><br /></td></tr>
+<tr class="separator:af1cd58fec176472be29a4dfb1be829e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cc9327aca93f0f3c2ac403d63c6c40c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a8cc9327aca93f0f3c2ac403d63c6c40c">setInitial</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u, int i)</td></tr>
+<tr class="memdesc:a8cc9327aca93f0f3c2ac403d63c6c40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for a first-oder system of differential equations.  <a href="#a8cc9327aca93f0f3c2ac403d63c6c40c">More...</a><br /></td></tr>
+<tr class="separator:a8cc9327aca93f0f3c2ac403d63c6c40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7c3734ad9c03eadfe2287c18de39945"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#ac7c3734ad9c03eadfe2287c18de39945">setInitial</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;u, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v)</td></tr>
+<tr class="memdesc:ac7c3734ad9c03eadfe2287c18de39945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for a second-order system of differential equations.  <a href="#ac7c3734ad9c03eadfe2287c18de39945">More...</a><br /></td></tr>
+<tr class="separator:ac7c3734ad9c03eadfe2287c18de39945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b86e899eb64ac7c5d3716f3d20c2bb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a9b86e899eb64ac7c5d3716f3d20c2bb2">setInitialRHS</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;f)</td></tr>
+<tr class="memdesc:a9b86e899eb64ac7c5d3716f3d20c2bb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial RHS for a system of differential equations.  <a href="#a9b86e899eb64ac7c5d3716f3d20c2bb2">More...</a><br /></td></tr>
+<tr class="separator:a9b86e899eb64ac7c5d3716f3d20c2bb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf3a290348933de3f993096b5607a1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#acbf3a290348933de3f993096b5607a1f">setInitial</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> v)</td></tr>
+<tr class="memdesc:acbf3a290348933de3f993096b5607a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for a second-order ordinary differential equation.  <a href="#acbf3a290348933de3f993096b5607a1f">More...</a><br /></td></tr>
+<tr class="separator:acbf3a290348933de3f993096b5607a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4c629497b2bf3529d0e612cfafd0287"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#aa4c629497b2bf3529d0e612cfafd0287">setInitial</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> u)</td></tr>
+<tr class="memdesc:aa4c629497b2bf3529d0e612cfafd0287"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial condition for a first-order ordinary differential equation.  <a href="#aa4c629497b2bf3529d0e612cfafd0287">More...</a><br /></td></tr>
+<tr class="separator:aa4c629497b2bf3529d0e612cfafd0287"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03b0ab4b60d3d19f73499d6ccf8b5c4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a03b0ab4b60d3d19f73499d6ccf8b5c4c">setInitialRHS</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> f)</td></tr>
+<tr class="memdesc:a03b0ab4b60d3d19f73499d6ccf8b5c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set initial right-hand side for a single differential equation.  <a href="#a03b0ab4b60d3d19f73499d6ccf8b5c4c">More...</a><br /></td></tr>
+<tr class="separator:a03b0ab4b60d3d19f73499d6ccf8b5c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f294036ba5c4c042190a777923aea39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a8f294036ba5c4c042190a777923aea39">setMatrices</a> (<a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;A0, <a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;A1)</td></tr>
+<tr class="memdesc:a8f294036ba5c4c042190a777923aea39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define matrices for a system of first-order ODEs.  <a href="#a8f294036ba5c4c042190a777923aea39">More...</a><br /></td></tr>
+<tr class="separator:a8f294036ba5c4c042190a777923aea39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cb40025ed875f05963306f97f4350aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a5cb40025ed875f05963306f97f4350aa">setMatrices</a> (<a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;A0, <a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;A1, <a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;A2)</td></tr>
+<tr class="memdesc:a5cb40025ed875f05963306f97f4350aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define matrices for a system of second-order ODEs.  <a href="#a5cb40025ed875f05963306f97f4350aa">More...</a><br /></td></tr>
+<tr class="separator:a5cb40025ed875f05963306f97f4350aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af231347a5fe8d3a7419167f917ebfae7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#af231347a5fe8d3a7419167f917ebfae7">seODEVectors</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a0, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a1)</td></tr>
+<tr class="memdesc:af231347a5fe8d3a7419167f917ebfae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define matrices for an implicit nonlinear system of first-order ODEs.  <a href="#af231347a5fe8d3a7419167f917ebfae7">More...</a><br /></td></tr>
+<tr class="separator:af231347a5fe8d3a7419167f917ebfae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbc6aadf8052e73121c0398bd2599924"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#adbc6aadf8052e73121c0398bd2599924">seODEVectors</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a0, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a1, <a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a2)</td></tr>
+<tr class="memdesc:adbc6aadf8052e73121c0398bd2599924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define matrices for an implicit nonlinear system of second-order ODEs.  <a href="#adbc6aadf8052e73121c0398bd2599924">More...</a><br /></td></tr>
+<tr class="separator:adbc6aadf8052e73121c0398bd2599924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dcc6c83ae5f9c7a958e9ba081f8eeb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a4dcc6c83ae5f9c7a958e9ba081f8eeb6">setRHS</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
+<tr class="memdesc:a4dcc6c83ae5f9c7a958e9ba081f8eeb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set right-hand side vector for a system of ODE.  <a href="#a4dcc6c83ae5f9c7a958e9ba081f8eeb6">More...</a><br /></td></tr>
+<tr class="separator:a4dcc6c83ae5f9c7a958e9ba081f8eeb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab51f289a00d4ce4f45d6e811f545cfff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#ab51f289a00d4ce4f45d6e811f545cfff">setRHS</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> f)</td></tr>
+<tr class="memdesc:ab51f289a00d4ce4f45d6e811f545cfff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set right-hand side for a linear ODE.  <a href="#ab51f289a00d4ce4f45d6e811f545cfff">More...</a><br /></td></tr>
+<tr class="separator:ab51f289a00d4ce4f45d6e811f545cfff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dbf209fb629cc8da401e9fe178505e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3dbf209fb629cc8da401e9fe178505e8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a3dbf209fb629cc8da401e9fe178505e8">setRHS</a> (string f)</td></tr>
+<tr class="memdesc:a3dbf209fb629cc8da401e9fe178505e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set right-hand side value for a linear ODE. <br /></td></tr>
+<tr class="separator:a3dbf209fb629cc8da401e9fe178505e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af28f955ff37f212996f60348fd0385"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a0af28f955ff37f212996f60348fd0385">setNewmarkParameters</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> beta, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> gamma)</td></tr>
+<tr class="memdesc:a0af28f955ff37f212996f60348fd0385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define parameters for the Newmarxk scheme.  <a href="#a0af28f955ff37f212996f60348fd0385">More...</a><br /></td></tr>
+<tr class="separator:a0af28f955ff37f212996f60348fd0385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0b215af0339c42514f036bf711ffffd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#ad0b215af0339c42514f036bf711ffffd">setConstantMatrix</a> ()</td></tr>
+<tr class="memdesc:ad0b215af0339c42514f036bf711ffffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say that matrix problem is constant.  <a href="#ad0b215af0339c42514f036bf711ffffd">More...</a><br /></td></tr>
+<tr class="separator:ad0b215af0339c42514f036bf711ffffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0f5cc02d42fd6d2c81ef09d85671670"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#ad0f5cc02d42fd6d2c81ef09d85671670">setNonConstantMatrix</a> ()</td></tr>
+<tr class="memdesc:ad0f5cc02d42fd6d2c81ef09d85671670"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say that matrix problem is variable.  <a href="#ad0f5cc02d42fd6d2c81ef09d85671670">More...</a><br /></td></tr>
+<tr class="separator:ad0f5cc02d42fd6d2c81ef09d85671670"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03025e97482684280a54df4817908825"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a03025e97482684280a54df4817908825">setLinearSolver</a> (<a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s=<a class="el" href="a00342.html#ggad0624a8576d3ca1d4af97479546930eaa8b17dcef7858d58588a474eac2a062b6">DIRECT_SOLVER</a>, <a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
+<tr class="memdesc:a03025e97482684280a54df4817908825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set linear solver data.  <a href="#a03025e97482684280a54df4817908825">More...</a><br /></td></tr>
+<tr class="separator:a03025e97482684280a54df4817908825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e6d15777f4c9d95999313bafae5e5e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a9e6d15777f4c9d95999313bafae5e5e7">setMaxIter</a> (int max_it)</td></tr>
+<tr class="memdesc:a9e6d15777f4c9d95999313bafae5e5e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set maximal number of iterations.  <a href="#a9e6d15777f4c9d95999313bafae5e5e7">More...</a><br /></td></tr>
+<tr class="separator:a9e6d15777f4c9d95999313bafae5e5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d0e665f8f92335ec10c4ccf9e9171b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a4d0e665f8f92335ec10c4ccf9e9171b7">setTolerance</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> toler)</td></tr>
+<tr class="memdesc:a4d0e665f8f92335ec10c4ccf9e9171b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set tolerance value for convergence.  <a href="#a4d0e665f8f92335ec10c4ccf9e9171b7">More...</a><br /></td></tr>
+<tr class="separator:a4d0e665f8f92335ec10c4ccf9e9171b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8c8f582bd6836d2145e823ce5ed5ef4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#af8c8f582bd6836d2145e823ce5ed5ef4">runOneTimeStep</a> ()</td></tr>
+<tr class="memdesc:af8c8f582bd6836d2145e823ce5ed5ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one time step.  <a href="#af8c8f582bd6836d2145e823ce5ed5ef4">More...</a><br /></td></tr>
+<tr class="separator:af8c8f582bd6836d2145e823ce5ed5ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab174fb4127d2dfb1b5e0d57b9e40b617"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#ab174fb4127d2dfb1b5e0d57b9e40b617">run</a> (bool opt=false)</td></tr>
+<tr class="memdesc:ab174fb4127d2dfb1b5e0d57b9e40b617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the time stepping procedure.  <a href="#ab174fb4127d2dfb1b5e0d57b9e40b617">More...</a><br /></td></tr>
+<tr class="separator:ab174fb4127d2dfb1b5e0d57b9e40b617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640c09169976d8e21447b2b2150f7fb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a640c09169976d8e21447b2b2150f7fb9"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a640c09169976d8e21447b2b2150f7fb9">getNbEq</a> () const </td></tr>
+<tr class="memdesc:a640c09169976d8e21447b2b2150f7fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of equations. <br /></td></tr>
+<tr class="separator:a640c09169976d8e21447b2b2150f7fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a799a12990da0e52bb134bf40ee4159e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a799a12990da0e52bb134bf40ee4159e2"></a>
+<a class="el" href="a00065.html">LinearSolver</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a799a12990da0e52bb134bf40ee4159e2">getLSolver</a> ()</td></tr>
+<tr class="memdesc:a799a12990da0e52bb134bf40ee4159e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="a00065.html" title="Class to solve systems of linear equations by iterative methods. ">LinearSolver</a> instance. <br /></td></tr>
+<tr class="separator:a799a12990da0e52bb134bf40ee4159e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261faa1002654dcc823cd64769196b42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a261faa1002654dcc823cd64769196b42">getTimeDerivative</a> (int i=1) const </td></tr>
+<tr class="memdesc:a261faa1002654dcc823cd64769196b42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get time derivative of solution.  <a href="#a261faa1002654dcc823cd64769196b42">More...</a><br /></td></tr>
+<tr class="separator:a261faa1002654dcc823cd64769196b42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40eff94c5c42c3f01b7883b3043b4064"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a40eff94c5c42c3f01b7883b3043b4064">getTimeDerivative</a> (<a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;y) const </td></tr>
+<tr class="memdesc:a40eff94c5c42c3f01b7883b3043b4064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get time derivative of solution (for a system)  <a href="#a40eff94c5c42c3f01b7883b3043b4064">More...</a><br /></td></tr>
+<tr class="separator:a40eff94c5c42c3f01b7883b3043b4064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb3d75689bdd8aad7c9e197d4d9bd87a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb3d75689bdd8aad7c9e197d4d9bd87a"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#adb3d75689bdd8aad7c9e197d4d9bd87a">get</a> () const </td></tr>
+<tr class="memdesc:adb3d75689bdd8aad7c9e197d4d9bd87a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solution in the case of a scalar equation. <br /></td></tr>
+<tr class="separator:adb3d75689bdd8aad7c9e197d4d9bd87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>To handle exceptions in <a class="el" href="a00324.html" title="A namespace to group all library classes, functions, ... ">OFELI</a>. </p>
-<p>This class enables using exceptions in programs using <a class="el" href="a00324.html" title="A namespace to group all library classes, functions, ... ">OFELI</a></p>
+<div class="textblock"><p>To solve a system of ordinary differential equations. </p>
+<p>The class <a class="el" href="a00083.html" title="To solve a system of ordinary differential equations. ">ODESolver</a> enables solving by a numerical scheme a system or ordinary differential equations taking one of the forms: </p><ul>
+<li>
+A linear system of differential equations of the first-order:<br />
+ <b> A<sub>1</sub>(t)u'(t) + A<sub>0</sub>(t)u(t) = f(t) </b> </li>
+<li>
+A linear system of differential equations of the second-order:<br />
+ <b> A<sub>2</sub>(t)u''(t) + A<sub>1</sub>(t)u'(t) + A<sub>0</sub>(t)u(t) = f(t)</b> </li>
+<li>
+A system of ordinary differential equations of the form:<br />
+ <b> u'(t) = f(t,u(t))</b> </li>
+</ul>
+<p>The following time integration schemes can be used: </p><ul>
+<li>
+Forward Euler scheme (value: <em>FORWARD_EULER</em>) for first-order systems </li>
+<li>
+Backward Euler scheme (value: <em>BACKWARD_EULER</em>) for first-order linear systems </li>
+<li>
+Crank-Nicolson (value: <em>CRANK_NICOLSON</em>) for first-order linear systems </li>
+<li>
+Heun (value: <em>HEUN</em>) for first-order systems </li>
+<li>
+2nd Order Adams-Bashforth (value: <em>AB2</em>) for first-order systems </li>
+<li>
+4-th order Runge-Kutta (value: <em>RK4</em>) for first-order systems </li>
+<li>
+2nd order Backward Differentiation Formula (value: <em>BDF2</em>) for linear first-order systems </li>
+<li>
+Newmark (value: <em>NEWMARK</em>) for linear second-order systems with constant matrices </li>
+</ul>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a5e05bb6feba76958bec33ba5e4989d42"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00083.html">ODESolver</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00342.html#ga672626c8ddef10da0244c15db4085f40">TimeScheme</a>&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>time_step</em> = <code><a class="el" href="a00338.html#gafe343e984bb2022a960c0285c90ba97d">theTimeStep</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>final_time</em> = <code><a class="el" href="a00338.html#ga3fb590e5375a439474a2799323b4572b">theFinalTime</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nb_eq</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor using time discretization data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Choice of the scheme: To be chosen in the enumerated variable <em>Scheme</em> (see the presentation of the class) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">time_step</td><td>Value of the time step. This value will be modified if an adaptive method is used. The default value for this parameter if the value given by the global variable <code>theTimeStep</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">final_time</td><td>Value of the final time (time starts at 0). The default value for this parameter is the value given by the global variable <code>theFinalTime</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb_eq</td><td>Number of differential equations (size of the system) [Default: <code>1</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a584a3841c197ddb1ec0494389823d561"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00342.html#ga672626c8ddef10da0244c15db4085f40">TimeScheme</a>&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>time_step</em> = <code><a class="el" href="a00338.html#gafe343e984bb2022a960c0285c90ba97d">theTimeStep</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>final_time</em> = <code><a class="el" href="a00338.html#ga3fb590e5375a439474a2799323b4572b">theFinalTime</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define data of the differential equation or system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Choice of the scheme: To be chosen in the enumerated variable <em>Scheme</em> (see the presentation of the class) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">time_step</td><td>Value of the time step. This value will be modified if an adaptive method is used. The default value for this parameter if the value given by the global variable <code>theTimeStep</code> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">final_time</td><td>Value of the final time (time starts at 0). The default value for this parameter is the value given by the global variable <code>theFinalTime</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3b264f305b8fe76a3ae0520e151e47fb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setNbEq </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>nb_eq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the number of equations [Default: <code>1</code>]. </p>
+<p>This function is to be used if the default constructor was used </p>
+
+</div>
+</div>
+<a class="anchor" id="a2ea2722af101302a690f5874e4536748"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setCoef </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>a0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>a1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>a2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define coefficients in the case of a scalar differential equation. </p>
+<p>This function enables giving coefficients of the differential equation as an algebraic expression of time <em>t</em> (see the function fparse) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a0</td><td>Coefficient of the 0-th order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a1</td><td>Coefficient of the 1-st order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a2</td><td>Coefficient of the 2-nd order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Value of the right-hand side </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Naturally, the equation is of the first order if <em>a2=0</em> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6e0120918529bcfdfbb281db4dfff8a1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setCoef </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>a0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>a1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>a2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define coefficients in the case of a scalar differential equation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a0</td><td>Coefficient of the 0-th order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a1</td><td>Coefficient of the 1-st order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a2</td><td>Coefficient of the 2-nd order term </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Value of the right-hand side </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Naturally, the equation if of the first order if <em>a2=0</em> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad8e782375fab63e667ddc3447b9e9a90"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setLinear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Claim that ODE is linear. </p>
+<p>Claim that the defined ODE (or system of ODEs) is linear </p>
+
+</div>
+</div>
+<a class="anchor" id="a8e734c537232e7be6f58fd92ce129bd8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setF </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set time derivative, given as an algebraic expression, for a nonlinear ODE. </p>
+<p>This function enables prescribing the value of the 1-st derivative for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be used for nonlinear ODEs of the form y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))<br />
+In the case of a system of ODEs, this function can be called once for each equation, given in the order of the unknowns </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Expression of the function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3132b0abb0f9bf21aeeb616c3a4743df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setF </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set time derivative, given as an algebraic expression, for a nonlinear ODE. </p>
+<p>This function enables prescribing the value of the 1-st derivative for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be used for nonlinear ODEs of the form y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))<br />
+This function is to be used for the <code>i</code>-th equation of a system of ODEs </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Expression of the function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of equation. Must be not larger than the number of equations </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a30f3349b451cfe856b895eaac667a56e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setDF </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>df</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set time derivative of the function defining the ODE. </p>
+<p>This function enables prescribing the value of the 1-st derivative for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be used for nonlinear ODEs of the form y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))<br />
+In the case of a system of ODEs, this function can be called once for each equation, given in the order of the unknowns </p>
+
+</div>
+</div>
+<a class="anchor" id="a87d0215e1305be53aa83e8ac80d415ce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setdFdt </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>df</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set time derivative of the function defining the ODE. </p>
+<p>This function enables prescribing the value of the 1-st derivative for a 1st order ODE or the 2nd one for a 2nd-order ODE. It is to be used for nonlinear ODEs of the form y'(t) = f(t,y(t)) or y''(t) = f(t,y(t),y'(t))<br />
+In the case of a system of ODEs, this function can be called once for each equation, given in the order of the unknowns </p>
+
+</div>
+</div>
+<a class="anchor" id="a8af5428b41cbdbd33226187aefbcd40c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setRK4RHS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set intermediate right-hand side vector for the Runge-Kutta method. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Value of right-hand side </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa7e53c44ddd0bfff4147278d5c15f3a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setRK4RHS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set intermediate right-hand side vector for the Runge-Kutta method. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>right-hand side vector </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af1cd58fec176472be29a4dfb1be829e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial condition for a first-oder system of differential equations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Vector containing initial condition for the unknown </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8cc9327aca93f0f3c2ac403d63c6c40c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial condition for a first-oder system of differential equations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Initial condition for an unknown </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of the unknown </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac7c3734ad9c03eadfe2287c18de39945"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial condition for a second-order system of differential equations. </p>
+<p>Giving the right-hand side at initial time is somtimes required for high order methods like Runge-Kutta </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Vector containing initial condition for the unknown </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Vector containing initial condition for the time derivative of the unknown </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a9b86e899eb64ac7c5d3716f3d20c2bb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitialRHS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial RHS for a system of differential equations. </p>
+<p>Giving the right-hand side at initial time is somtimes required for high order methods like Runge-Kutta </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Vector containing right-hand side at initial time. This vector is helpful for high order methods </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="acbf3a290348933de3f993096b5607a1f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>u</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>v</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial condition for a second-order ordinary differential equation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Initial condition (unknown) value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Initial condition (time derivative of the unknown) value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa4c629497b2bf3529d0e612cfafd0287"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitial </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial condition for a first-order ordinary differential equation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u</td><td>Initial condition (unknown) value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a03b0ab4b60d3d19f73499d6ccf8b5c4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setInitialRHS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set initial right-hand side for a single differential equation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Value of right-hand side at initial time. This value is helpful for high order methods </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8f294036ba5c4c042190a777923aea39"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setMatrices </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A1</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define matrices for a system of first-order ODEs. </p>
+<p>Matrices are given as references to class <a class="el" href="a00013.html" title="To handle dense matrices. ">DMatrix</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A0</td><td>Reference to matrix in front of the 0-th order term (no time derivative) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">A1</td><td>Reference to matrix in front of the 1-st order term (first time derivative) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>This function has to be called at each time step </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5cb40025ed875f05963306f97f4350aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setMatrices </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html">DMatrix</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>A2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define matrices for a system of second-order ODEs. </p>
+<p>Matrices are given as references to class <a class="el" href="a00013.html" title="To handle dense matrices. ">DMatrix</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">A0</td><td>Reference to matrix in front of the 0-th order term (no time derivative) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">A1</td><td>Reference to matrix in front of the 1-st order term (first time derivative) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">A2</td><td>Reference to matrix in front of the 2-nd order term (second time derivative) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>This function has to be called at each time step </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af231347a5fe8d3a7419167f917ebfae7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void seODEVectors </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a1</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define matrices for an implicit nonlinear system of first-order ODEs. </p>
+<p>The system has the nonlinear implicit form a1(u)' + a0(u) = 0 Vectors a0, a1 are given as references to class <a class="el" href="a00115.html" title="To handle general purpose vectors. ">Vect</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a0</td><td>Reference to vector in front of the 0-th order term (no time derivative) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a1</td><td>Reference to vector in front of the 1-st order term (first time derivative) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>This function has to be called at each time step </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="adbc6aadf8052e73121c0398bd2599924"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void seODEVectors </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define matrices for an implicit nonlinear system of second-order ODEs. </p>
+<p>The system has the nonlinear implicit form a2(u)'' + a1(u)' + a0(u) = 0 Vectors a0, a1, a2 are given as references to class <a class="el" href="a00115.html" title="To handle general purpose vectors. ">Vect</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a0</td><td>Reference to vector in front of the 0-th order term (no time derivative) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a1</td><td>Reference to vector in front of the 1-st order term (first time derivative) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a2</td><td>Reference to vector in front of the 2-nd order term (second time derivative) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>This function has to be called at each time step </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4dcc6c83ae5f9c7a958e9ba081f8eeb6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setRHS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set right-hand side vector for a system of ODE. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00115.html" title="To handle general purpose vectors. ">Vect</a> instance containing right-hand side for a linear system of ordinary differential equations </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab51f289a00d4ce4f45d6e811f545cfff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setRHS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set right-hand side for a linear ODE. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Value of the right-hand side for a linear ordinary differential equation </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0af28f955ff37f212996f60348fd0385"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setNewmarkParameters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>beta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>gamma</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define parameters for the Newmarxk scheme. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">beta</td><td>Parameter beta [Default: <code>0.25</code>] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">gamma</td><td>Parameter gamma [Default: <code>0.5</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad0b215af0339c42514f036bf711ffffd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setConstantMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Say that matrix problem is constant. </p>
+<p>This is useful if the linear system is solved by a factorization method but has no effect otherwise </p>
+
+</div>
+</div>
+<a class="anchor" id="ad0f5cc02d42fd6d2c81ef09d85671670"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setNonConstantMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Say that matrix problem is variable. </p>
+<p>This is useful if the linear system is solved by a factorization method but has no effect otherwise </p>
+
+</div>
+</div>
+<a class="anchor" id="a03025e97482684280a54df4817908825"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setLinearSolver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a>&#160;</td>
+          <td class="paramname"><em>s</em> = <code><a class="el" href="a00342.html#ggad0624a8576d3ca1d4af97479546930eaa8b17dcef7858d58588a474eac2a062b6">DIRECT_SOLVER</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a>&#160;</td>
+          <td class="paramname"><em>p</em> = <code><a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set linear solver data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Solver identification parameter. To be chosen in the enumeration variable Iteration:<br />
+ DIRECT_SOLVER, CG_SOLVER, CGS_SOLVER, BICG_SOLVER, BICG_STAB_SOLVER, GMRES_SOLVER, QMR_SOLVER [Default: <code>DIRECT_SOLVER</code>] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Preconditioner identification parameter. To be chosen in the enumeration variable Preconditioner:<br />
+IDENT_PREC, DIAG_PREC, ILU_PREC [Default: <code>DIAG_PREC</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The argument <em>p</em> has no effect if the solver is DIRECT_SOLVER </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9e6d15777f4c9d95999313bafae5e5e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setMaxIter </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>max_it</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set maximal number of iterations. </p>
+<p>This function is useful for a non linear ODE (or system of ODEs) if an implicit scheme is used </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximal number of iterations [Default: <code>100</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a4d0e665f8f92335ec10c4ccf9e9171b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setTolerance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>toler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set tolerance value for convergence. </p>
+<p>This function is useful for a non linear ODE (or system of ODEs) if an implicit scheme is used </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">toler</td><td>Tolerance value [Default: <code>1.e-8</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af8c8f582bd6836d2145e823ce5ed5ef4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> runOneTimeStep </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run one time step. </p>
+<dl class="section return"><dt>Returns</dt><dd>Value of new time step if this one is updated </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab174fb4127d2dfb1b5e0d57b9e40b617"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void run </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>opt</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run the time stepping procedure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">opt</td><td>Flag to say if problem matrix is constant while time stepping (true) or not (Default value is false) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This argument is not used if the time stepping scheme is explicit </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a261faa1002654dcc823cd64769196b42"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> getTimeDerivative </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em> = <code>1</code></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get time derivative of solution. </p>
+<p>Return approximate time derivative of solution in the case of a single equation </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Index of component whose time derivative is sought </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Time derivative of the i-th component of the solution </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If we are solving one equation, this parameter is not used. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a40eff94c5c42c3f01b7883b3043b4064"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void getTimeDerivative </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00115.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>y</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get time derivative of solution (for a system) </p>
+<p>Get approximate time derivative of solution in the case of an ODE system </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">y</td><td>Vector containing time derivative of solution </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 
 </div> <!-- class text -->
 </div> <!-- main menu -->

@@ -36,7 +36,6 @@
 
 #include "solvers/TimeStepping.h"
 #include "mesh/Material.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 
 
@@ -58,7 +57,6 @@ namespace OFELI {
  *  \ingroup Solid
  * \brief Abstract class for Solid Mechanics Finite %Element classes.
  *
- * \tparam <T_> data type (double, float, ...)
  * \tparam <NEN> Number of element nodes
  * \tparam <NEE_> Number of element equations
  * \tparam <NSN_> Number of side nodes
@@ -72,41 +70,41 @@ class Side;
 extern Material theMaterial;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+class Equa_Solid : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 {
 
  public:
 
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theMesh;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theElement;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA0;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA1;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA2;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sA0;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eMat;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sMat;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eRHS;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sRHS;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_sides;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_ebf;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_eu;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_su;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_ssf;
-   using Equa<T_>::_rho_set;
-   using Equa<T_>::_young_set;
-   using Equa<T_>::_poisson_set;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theMesh;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theElement;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theSide;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_terms;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_analysis;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_TimeInt;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eA0;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eA1;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eA2;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::sA0;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eMat;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::sMat;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eRHS;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::sRHS;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_sides;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_el_geo;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_ebf;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_eu;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_su;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_ssf;
+   using Equa::_rho_set;
+   using Equa::_young_set;
+   using Equa::_poisson_set;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
@@ -139,22 +137,22 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void setInput(EqDataType    opt,
                   Vect<real_t>& u)
     {
-       Equa<real_t>::setInput(opt,u);
+       Equa::setInput(opt,u);
     }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    virtual void BodyRHS(const Vect<T_>& f) { }
+    virtual void BodyRHS(const Vect<real_t>& f) { }
     virtual void BodyRHS() { }
-    virtual void BoundaryRHS(const Vect<T_>& f) { }
+    virtual void BoundaryRHS(const Vect<real_t>& f) { }
     virtual void BoundaryRHS() { }
     virtual void Periodic(real_t coef=1) { }
     virtual int Contact(real_t coef=1.e07) { return 0; }
     int run(Analysis   a=STATIONARY,
             TimeScheme s=NONE)
     {
-       int ret = Equa<T_>::run(a,s);
+       int ret = Equa::run(a,s);
        if (_terms&CONTACT && a==STATIONARY)
-          ret = Equa<T_>::run(a,s);
+          ret = Equa::run(a,s);
        return ret;
     }
 
@@ -172,12 +170,12 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void build()
     {
        static bool matrix_set = false;
-       if (Equa<T_>::_A==nullptr && !matrix_set) {
-          Equa<T_>::setMatrixType(SPARSE);
-          Equa<T_>::setSolver(CG_SOLVER,DILU_PREC);
+       if (Equa::_A==nullptr && !matrix_set) {
+          Equa::setMatrixType(SPARSE);
+          Equa::setSolver(CG_SOLVER,DILU_PREC);
           matrix_set = true;
        }
-       Equa<T_>::_A->clear();
+       Equa::_A->clear();
        MESH_EL {
           set(the_element);
           if (_terms&MASS)
@@ -189,21 +187,21 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
           if (_terms&DILATATION)
              Dilatation();
           eMat = eA0;
-          Equa<T_>::_A->Assembly(The_element,eMat.get());
-          if (Equa<T_>::_bf!=nullptr)
+          Equa::_A->Assembly(The_element,eMat.get());
+          if (Equa::_bf!=nullptr)
              BodyRHS();
-          if (Equa<T_>::_bc!=nullptr)
-             this->updateBC(The_element,*Equa<T_>::_bc);
-          Equa<T_>::_b->Assembly(The_element,eRHS.get());
+          if (Equa::_bc!=nullptr)
+             this->updateBC(The_element,*Equa::_bc);
+          Equa::_b->Assembly(The_element,eRHS.get());
        }
-       if (Equa<T_>::_sf!=nullptr) {
+       if (Equa::_sf!=nullptr) {
           MESH_SD {
              set(the_side);
              if (_terms&CONTACT)
                 Contact(1.e07);
              BoundaryRHS();
-             Equa<T_>::_A->Assembly(The_side,sA0.get());
-             Equa<T_>::_b->Assembly(The_side,sRHS.get());
+             Equa::_A->Assembly(The_side,sA0.get());
+             Equa::_b->Assembly(The_side,sRHS.get());
           }
        }
     }
@@ -234,7 +232,7 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
              Dilatation();
           if (_terms&CONTACT)
              Contact(1.e07);
-          if ((_terms&LOAD) && (Equa<T_>::_bf!=nullptr))
+          if ((_terms&LOAD) && (Equa::_bf!=nullptr))
              BodyRHS();
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
        }
@@ -253,7 +251,7 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     {
        MESH_EL {
           set(the_element);
-          this->ElementVector(*Equa<T_>::_u);
+          this->ElementVector(*Equa::_u);
           if (_terms&MASS)
              Mass();
           if (_terms&LUMPED_MASS)
@@ -292,10 +290,10 @@ class Equa_Solid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
  */
     int runTransient()
     {
-       *Equa<T_>::_b = 0;
+       *Equa::_b = 0;
        build();
-       int ret=Equa<T_>::solveLinearSystem(*Equa<T_>::_b,Equa<T_>::_uu);
-       Equa<T_>::_u->insertBC(*_theMesh,Equa<T_>::_uu,*Equa<T_>::_bc);
+       int ret=Equa::solveLinearSystem(*Equa::_b,Equa::_uu);
+       Equa::_u->insertBC(*_theMesh,Equa::_uu,*Equa::_bc);
        return ret;
     }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

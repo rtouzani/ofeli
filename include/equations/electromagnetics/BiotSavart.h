@@ -96,10 +96,10 @@ class BiotSavart
  *  the magnetic induction
  *  @param [in] code Only sides with given \a code support current [Default: <tt>0</tt>]
  */
-    BiotSavart(      Mesh&         ms,
+    BiotSavart(Mesh&               ms,
                const Vect<real_t>& J,
-                     Vect<real_t>& B,
-                     int           code=0);
+               Vect<real_t>&       B,
+               int                 code=0);
 
 /** \brief Constructor using mesh and vector of complex current density
  *  \details The current density is assumed piecewise constant
@@ -110,10 +110,10 @@ class BiotSavart
  *  the magnetic induction
  *  @param [in] code Only sides with given <tt>code</tt> support current [Default: <tt>0</tt>]
  */
-    BiotSavart(      Mesh&            ms,
+    BiotSavart(Mesh&                  ms,
                const Vect<complex_t>& J,
-                     Vect<complex_t>& B,
-                     int              code=0);
+               Vect<complex_t>&       B,
+               int                    code=0);
 
 /// \brief Destructor
     ~BiotSavart();

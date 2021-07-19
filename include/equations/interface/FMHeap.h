@@ -155,14 +155,14 @@ class FMHeap
 // Return Left Child
    int l(int parent)
    {
-      int i = (parent<<1) + 1; // 2 * parent + 1
+      size_t i = (parent<<1) + 1; // 2 * parent + 1
       return (i<_heap.size()) ? i : -1;
    }
 
 // Return Right Child
    int r(int parent)
    {
-      int i = (parent<<1) + 2; // 2 * parent + 2
+      size_t i = (parent<<1) + 2; // 2 * parent + 2
       return (i<_heap.size()) ? i : -1;
    }
 
@@ -205,7 +205,7 @@ class FMHeap
 /// Output heap contents
     inline std::ostream& operator<<(std::ostream &s, FMHeap &h)
     {
-       for (size_t i=0; i<h.size(); ++i)
+       for (int i=0; i<h.size(); ++i)
           s << *h[i] << std::endl;
        return s;
     }

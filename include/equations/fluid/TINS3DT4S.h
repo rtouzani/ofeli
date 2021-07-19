@@ -62,7 +62,7 @@ namespace OFELI {
  */
 
 
-class TINS3DT4S : virtual public Equa_Fluid<real_t,4,12,3,9> {
+class TINS3DT4S : virtual public Equa_Fluid<4,12,3,9> {
 
  public:
 

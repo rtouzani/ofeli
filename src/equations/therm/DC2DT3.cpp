@@ -37,7 +37,6 @@
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/LocalMatrix_impl.h"
 #include "linear_algebra/LocalVect_impl.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 
 namespace OFELI {
@@ -52,7 +51,7 @@ DC2DT3::DC2DT3()
 
 
 DC2DT3::DC2DT3(Mesh& ms)
-       : Equation<real_t,3,3,2,2>(ms)
+       : Equation<3,3,2,2>(ms)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "2-D, 3-Node Triangles (P1)";
@@ -64,7 +63,7 @@ DC2DT3::DC2DT3(Mesh& ms)
 
 DC2DT3::DC2DT3(Mesh&         ms,
                Vect<real_t>& u)
-       : Equation<real_t,3,3,2,2>(ms,u)
+       : Equation<3,3,2,2>(ms,u)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "2-D, 3-Node Triangles (P1)";
@@ -113,7 +112,7 @@ void DC2DT3::set(const Side* sd)
 void DC2DT3::setInput(EqDataType    opt,
                       Vect<real_t>& u)
 {
-   Equa<real_t>::setInput(opt,u);
+   Equa::setInput(opt,u);
    if (opt==VELOCITY_FIELD)
       _vel = &u;
 }

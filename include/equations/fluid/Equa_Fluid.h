@@ -36,7 +36,6 @@
 
 #include "solvers/TimeStepping.h"
 #include "mesh/Material.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 
 
@@ -72,34 +71,34 @@ extern Material theMaterial;
  * \copyright GNU Lesser Public License
  */
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-class Equa_Fluid : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_> {
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+class Equa_Fluid : virtual public Equation<NEN_,NEE_,NSN_,NSE_> {
 
  public:
 
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theMesh;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theElement;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_sides;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC;
-   using Equa<T_>::_rho_set;
-   using Equa<T_>::_mu_set;
-   using Equa<T_>::_beta_set;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theMesh;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theElement;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theSide;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_terms;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_analysis;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_TimeInt;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_sides;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_el_geo;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::updateBC;
+   using Equa::_rho_set;
+   using Equa::_mu_set;
+   using Equa::_beta_set;
 
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
-    Equa_Fluid() : Equation<T_,NEN_,NEE_,NSN_,NSE_>()
+    Equa_Fluid() : Equation<NEN_,NEE_,NSN_,NSE_>()
     {
        _terms = 0;
     }

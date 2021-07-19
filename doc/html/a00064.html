@@ -53,7 +53,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00064.html">LinearSolver</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00064.html">Line3</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -61,791 +61,112 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a00407.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">LinearSolver&lt; T_ &gt; Class Template Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00341.html">Solver</a></div></div>  </div>
+<div class="title">Line3 Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00340.html">Shape Function</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class to solve systems of linear equations by iterative methods.  
+<p>To describe a 3-Node quadratic planar line finite element.  
  <a href="a00064.html#details">More...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for Line3:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="a00064.png" usemap="#Line3_map" alt=""/>
+  <map id="Line3_map" name="Line3_map">
+<area href="a00041.html" title="Parent class from which inherit all finite element shape classes. " alt="FEShape" shape="rect" coords="0,0,64,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2ffc285126a28fba1fa2d1c681f261cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a2ffc285126a28fba1fa2d1c681f261cf">LinearSolver</a> ()</td></tr>
-<tr class="memdesc:a2ffc285126a28fba1fa2d1c681f261cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor.  <a href="#a2ffc285126a28fba1fa2d1c681f261cf">More...</a><br /></td></tr>
-<tr class="separator:a2ffc285126a28fba1fa2d1c681f261cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa05c2275c2c8ce808d096b6692c3435d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa05c2275c2c8ce808d096b6692c3435d">LinearSolver</a> (int max_it, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> tolerance)</td></tr>
-<tr class="memdesc:aa05c2275c2c8ce808d096b6692c3435d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with iteration parameters.  <a href="#aa05c2275c2c8ce808d096b6692c3435d">More...</a><br /></td></tr>
-<tr class="separator:aa05c2275c2c8ce808d096b6692c3435d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8b2b6e83de93a53ea4196be5e161e31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#af8b2b6e83de93a53ea4196be5e161e31">LinearSolver</a> (<a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:af8b2b6e83de93a53ea4196be5e161e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix, right-hand side and solution vector.  <a href="#af8b2b6e83de93a53ea4196be5e161e31">More...</a><br /></td></tr>
-<tr class="separator:af8b2b6e83de93a53ea4196be5e161e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a910f0be2f1614e1c069abcd40ec56dd0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a910f0be2f1614e1c069abcd40ec56dd0">LinearSolver</a> (<a class="el" href="a00098.html">SkMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a910f0be2f1614e1c069abcd40ec56dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using skyline-stored matrix, right-hand side and solution vector.  <a href="#a910f0be2f1614e1c069abcd40ec56dd0">More...</a><br /></td></tr>
-<tr class="separator:a910f0be2f1614e1c069abcd40ec56dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98105cac171bf2a1e24c8b5e5a7ff07a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a98105cac171bf2a1e24c8b5e5a7ff07a">LinearSolver</a> (<a class="el" href="a00113.html">TrMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a98105cac171bf2a1e24c8b5e5a7ff07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a tridiagonal matrix, right-hand side and solution vector.  <a href="#a98105cac171bf2a1e24c8b5e5a7ff07a">More...</a><br /></td></tr>
-<tr class="separator:a98105cac171bf2a1e24c8b5e5a7ff07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a042d8d2397760d3906bfe02f0c3f8b13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a042d8d2397760d3906bfe02f0c3f8b13">LinearSolver</a> (<a class="el" href="a00004.html">BMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a042d8d2397760d3906bfe02f0c3f8b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a banded matrix, right-hand side and solution vector.  <a href="#a042d8d2397760d3906bfe02f0c3f8b13">More...</a><br /></td></tr>
-<tr class="separator:a042d8d2397760d3906bfe02f0c3f8b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4260ff178a260a89d52c6a8cc127791d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4260ff178a260a89d52c6a8cc127791d">LinearSolver</a> (<a class="el" href="a00013.html">DMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a4260ff178a260a89d52c6a8cc127791d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a dense matrix, right-hand side and solution vector.  <a href="#a4260ff178a260a89d52c6a8cc127791d">More...</a><br /></td></tr>
-<tr class="separator:a4260ff178a260a89d52c6a8cc127791d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00032bd6c50c55e2fc4a7929480def96"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00032bd6c50c55e2fc4a7929480def96">LinearSolver</a> (<a class="el" href="a00015.html">DSMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a00032bd6c50c55e2fc4a7929480def96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a dense symmetric matrix, right-hand side and solution vector.  <a href="#a00032bd6c50c55e2fc4a7929480def96">More...</a><br /></td></tr>
-<tr class="separator:a00032bd6c50c55e2fc4a7929480def96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3229c9a3116a4b6125ddf3f72e01e0a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a3229c9a3116a4b6125ddf3f72e01e0a8">LinearSolver</a> (<a class="el" href="a00099.html">SkSMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a3229c9a3116a4b6125ddf3f72e01e0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using skyline-stored symmetric matrix, right-hand side and solution vector.  <a href="#a3229c9a3116a4b6125ddf3f72e01e0a8">More...</a><br /></td></tr>
-<tr class="separator:a3229c9a3116a4b6125ddf3f72e01e0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adec04ce22558fc7d208803adc611540f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#adec04ce22558fc7d208803adc611540f">LinearSolver</a> (<a class="el" href="a00098.html">SkMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:adec04ce22558fc7d208803adc611540f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix, right-hand side.  <a href="#adec04ce22558fc7d208803adc611540f">More...</a><br /></td></tr>
-<tr class="separator:adec04ce22558fc7d208803adc611540f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4377168b38ead79c941f43a676aef1a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4377168b38ead79c941f43a676aef1a6"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4377168b38ead79c941f43a676aef1a6">~LinearSolver</a> ()</td></tr>
-<tr class="memdesc:a4377168b38ead79c941f43a676aef1a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a4377168b38ead79c941f43a676aef1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a041af43820d8499c23302b9f8907b45e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a041af43820d8499c23302b9f8907b45e">setMaxIter</a> (int m)</td></tr>
-<tr class="memdesc:a041af43820d8499c23302b9f8907b45e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Maximum number of iterations.  <a href="#a041af43820d8499c23302b9f8907b45e">More...</a><br /></td></tr>
-<tr class="separator:a041af43820d8499c23302b9f8907b45e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb146173a62d5f456421cb22265a536f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb146173a62d5f456421cb22265a536f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#acb146173a62d5f456421cb22265a536f">setTolerance</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> tol)</td></tr>
-<tr class="memdesc:acb146173a62d5f456421cb22265a536f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set tolerance value. <br /></td></tr>
-<tr class="separator:acb146173a62d5f456421cb22265a536f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a070f299c5c83c3d05f3888128fdc6b63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a070f299c5c83c3d05f3888128fdc6b63"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a070f299c5c83c3d05f3888128fdc6b63">setSolution</a> (<a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a070f299c5c83c3d05f3888128fdc6b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set solution vector. <br /></td></tr>
-<tr class="separator:a070f299c5c83c3d05f3888128fdc6b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a577013472d05c14948e4676fed1d69cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a577013472d05c14948e4676fed1d69cc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a577013472d05c14948e4676fed1d69cc">setRHS</a> (<a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>)</td></tr>
-<tr class="memdesc:a577013472d05c14948e4676fed1d69cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set right-hand side vector. <br /></td></tr>
-<tr class="separator:a577013472d05c14948e4676fed1d69cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8cb117dd670df852851829761e0e54d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ad8cb117dd670df852851829761e0e54d">setMatrix</a> (<a class="el" href="a00069.html">OFELI::Matrix</a>&lt; T_ &gt; *<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>)</td></tr>
-<tr class="memdesc:ad8cb117dd670df852851829761e0e54d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a pointer to <a class="el" href="a00069.html" title="Virtual class to handle matrices for all storage formats. ">Matrix</a>.  <a href="#ad8cb117dd670df852851829761e0e54d">More...</a><br /></td></tr>
-<tr class="separator:ad8cb117dd670df852851829761e0e54d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3cf4567b730d01ff143013f1b11522a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ae3cf4567b730d01ff143013f1b11522a">setMatrix</a> (<a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>)</td></tr>
-<tr class="memdesc:ae3cf4567b730d01ff143013f1b11522a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a pointer to matrix.  <a href="#ae3cf4567b730d01ff143013f1b11522a">More...</a><br /></td></tr>
-<tr class="separator:ae3cf4567b730d01ff143013f1b11522a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addc7f35fc3a68cba345a07ed92fa59b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#addc7f35fc3a68cba345a07ed92fa59b2">setMatrix</a> (<a class="el" href="a00098.html">SkMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>)</td></tr>
-<tr class="memdesc:addc7f35fc3a68cba345a07ed92fa59b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a skyline matrix.  <a href="#addc7f35fc3a68cba345a07ed92fa59b2">More...</a><br /></td></tr>
-<tr class="separator:addc7f35fc3a68cba345a07ed92fa59b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad56dc6dab838eee84f6d76995d555638"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ad56dc6dab838eee84f6d76995d555638">set</a> (<a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:ad56dc6dab838eee84f6d76995d555638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix, right-hand side and initial guess.  <a href="#ad56dc6dab838eee84f6d76995d555638">More...</a><br /></td></tr>
-<tr class="separator:ad56dc6dab838eee84f6d76995d555638"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ce77dad890759d85412157e25b3afa4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a0ce77dad890759d85412157e25b3afa4">setSolver</a> (<a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s, <a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
-<tr class="memdesc:a0ce77dad890759d85412157e25b3afa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set solver and preconditioner.  <a href="#a0ce77dad890759d85412157e25b3afa4">More...</a><br /></td></tr>
-<tr class="separator:a0ce77dad890759d85412157e25b3afa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9129625a6b2c52bb928da54e4ff92a19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9129625a6b2c52bb928da54e4ff92a19"></a>
-<a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a9129625a6b2c52bb928da54e4ff92a19">getSolver</a> () const </td></tr>
-<tr class="memdesc:a9129625a6b2c52bb928da54e4ff92a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solver code. <br /></td></tr>
-<tr class="separator:a9129625a6b2c52bb928da54e4ff92a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa411ac7d20e0b21fb5be0baaf6d33c2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa411ac7d20e0b21fb5be0baaf6d33c2d"></a>
-<a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa411ac7d20e0b21fb5be0baaf6d33c2d">getPreconditioner</a> () const </td></tr>
-<tr class="memdesc:aa411ac7d20e0b21fb5be0baaf6d33c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solver preconditioner. <br /></td></tr>
-<tr class="separator:aa411ac7d20e0b21fb5be0baaf6d33c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bfcefd222a9c02f7254140fed80f26c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a1bfcefd222a9c02f7254140fed80f26c">solve</a> (<a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#ga8d83ae0344b0fbb3265762cd97e1b1db">A</a>, const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>, <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;x, <a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s, <a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
-<tr class="memdesc:a1bfcefd222a9c02f7254140fed80f26c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve equations using system data, prescribed solver and preconditioner.  <a href="#a1bfcefd222a9c02f7254140fed80f26c">More...</a><br /></td></tr>
-<tr class="separator:a1bfcefd222a9c02f7254140fed80f26c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeccb35e1c449b861305d1765f86395f4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aeccb35e1c449b861305d1765f86395f4">solve</a> (<a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s, <a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
-<tr class="memdesc:aeccb35e1c449b861305d1765f86395f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve equations using prescribed solver and preconditioner.  <a href="#aeccb35e1c449b861305d1765f86395f4">More...</a><br /></td></tr>
-<tr class="separator:aeccb35e1c449b861305d1765f86395f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ca154b901ce7bb4d4ee1e2cdf7f8a85"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a7ca154b901ce7bb4d4ee1e2cdf7f8a85">solve</a> ()</td></tr>
-<tr class="memdesc:a7ca154b901ce7bb4d4ee1e2cdf7f8a85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve equations all arguments must have been given by other member functions.  <a href="#a7ca154b901ce7bb4d4ee1e2cdf7f8a85">More...</a><br /></td></tr>
-<tr class="separator:a7ca154b901ce7bb4d4ee1e2cdf7f8a85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae221a5369220070666177b57daf4cff2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae221a5369220070666177b57daf4cff2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ae221a5369220070666177b57daf4cff2">setFact</a> ()</td></tr>
-<tr class="memdesc:ae221a5369220070666177b57daf4cff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factorize matrix. <br /></td></tr>
-<tr class="separator:ae221a5369220070666177b57daf4cff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a524aa7001c68e0d79027f735f20e34de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a524aa7001c68e0d79027f735f20e34de"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a524aa7001c68e0d79027f735f20e34de">setNoFact</a> ()</td></tr>
-<tr class="memdesc:a524aa7001c68e0d79027f735f20e34de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do not factorize matrix. <br /></td></tr>
-<tr class="separator:a524aa7001c68e0d79027f735f20e34de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b90d074dab10cd5272e6f7b8c6cbb0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b90d074dab10cd5272e6f7b8c6cbb0e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4b90d074dab10cd5272e6f7b8c6cbb0e">getNbIter</a> () const </td></tr>
-<tr class="memdesc:a4b90d074dab10cd5272e6f7b8c6cbb0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of performed iterations. <br /></td></tr>
-<tr class="separator:a4b90d074dab10cd5272e6f7b8c6cbb0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99475466e181befa6c9945ad6f7b69c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99475466e181befa6c9945ad6f7b69c3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a99475466e181befa6c9945ad6f7b69c3">Line3</a> ()</td></tr>
+<tr class="memdesc:a99475466e181befa6c9945ad6f7b69c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:a99475466e181befa6c9945ad6f7b69c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0e7b53b4e54bc1a6f300551cb2e43b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0e7b53b4e54bc1a6f300551cb2e43b1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa0e7b53b4e54bc1a6f300551cb2e43b1">Line3</a> (const <a class="el" href="a00025.html">Element</a> *el)</td></tr>
+<tr class="memdesc:aa0e7b53b4e54bc1a6f300551cb2e43b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an element. <br /></td></tr>
+<tr class="separator:aa0e7b53b4e54bc1a6f300551cb2e43b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55bcc26c9827bb23af6c4a32d49541ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55bcc26c9827bb23af6c4a32d49541ce"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a55bcc26c9827bb23af6c4a32d49541ce">Line3</a> (const <a class="el" href="a00097.html">Side</a> *sd)</td></tr>
+<tr class="memdesc:a55bcc26c9827bb23af6c4a32d49541ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a side. <br /></td></tr>
+<tr class="separator:a55bcc26c9827bb23af6c4a32d49541ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8368f9346c9049f10c95da3388a0196d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8368f9346c9049f10c95da3388a0196d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a8368f9346c9049f10c95da3388a0196d">~Line3</a> ()</td></tr>
+<tr class="memdesc:a8368f9346c9049f10c95da3388a0196d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a8368f9346c9049f10c95da3388a0196d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19b4776d30b04b5fa427b8e8ce732122"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19b4776d30b04b5fa427b8e8ce732122"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a19b4776d30b04b5fa427b8e8ce732122">setLocal</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> s)</td></tr>
+<tr class="memdesc:a19b4776d30b04b5fa427b8e8ce732122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize local point coordinates in element. <br /></td></tr>
+<tr class="separator:a19b4776d30b04b5fa427b8e8ce732122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bca61134358cac278c05031b7afb0b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html">LocalVect</a>&lt; <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4bca61134358cac278c05031b7afb0b9">DSh</a> () const </td></tr>
+<tr class="memdesc:a4bca61134358cac278c05031b7afb0b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return partial derivatives of shape functions of element nodes.  <a href="#a4bca61134358cac278c05031b7afb0b9">More...</a><br /></td></tr>
+<tr class="separator:a4bca61134358cac278c05031b7afb0b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5af4f17aea53c0ab1e8ce2494f23234"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5af4f17aea53c0ab1e8ce2494f23234"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ad5af4f17aea53c0ab1e8ce2494f23234">getLocalPoint</a> () const </td></tr>
+<tr class="memdesc:ad5af4f17aea53c0ab1e8ce2494f23234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return actual coordinates of localized point. <br /></td></tr>
+<tr class="separator:ad5af4f17aea53c0ab1e8ce2494f23234"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a00041"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00041')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00041.html">FEShape</a></td></tr>
+<tr class="memitem:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1a6254740b6e11468dee2abfccc051a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af1a6254740b6e11468dee2abfccc051a">FEShape</a> ()</td></tr>
+<tr class="memdesc:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#afcb4644a9ace5adbdc1c05efcc72da1f">FEShape</a> (const <a class="el" href="a00025.html">Element</a> *el)</td></tr>
+<tr class="memdesc:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an element.  <a href="#afcb4644a9ace5adbdc1c05efcc72da1f">More...</a><br /></td></tr>
+<tr class="separator:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ad662c28c63e9e8c72fddb76f5028ed61">FEShape</a> (const <a class="el" href="a00097.html">Side</a> *sd)</td></tr>
+<tr class="memdesc:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a side.  <a href="#ad662c28c63e9e8c72fddb76f5028ed61">More...</a><br /></td></tr>
+<tr class="separator:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ba928b2c14260b47beab071c1e347bd"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a3ba928b2c14260b47beab071c1e347bd">~FEShape</a> ()</td></tr>
+<tr class="memdesc:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf13023b750b4a215814cfb805b145da inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf13023b750b4a215814cfb805b145da"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#abf13023b750b4a215814cfb805b145da">Sh</a> (size_t i) const </td></tr>
+<tr class="memdesc:abf13023b750b4a215814cfb805b145da inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return shape function of node <code>i</code> at given point. <br /></td></tr>
+<tr class="separator:abf13023b750b4a215814cfb805b145da inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc79aaeb587148410021052f410d4dc inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a4fc79aaeb587148410021052f410d4dc">Sh</a> (size_t i, <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; s) const </td></tr>
+<tr class="memdesc:a4fc79aaeb587148410021052f410d4dc inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shape function of node <code>i</code> at a given point <code>s</code>.  <a href="#a4fc79aaeb587148410021052f410d4dc">More...</a><br /></td></tr>
+<tr class="separator:a4fc79aaeb587148410021052f410d4dc inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f35cc59cf2218efd06b13c2487f31cc inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a0f35cc59cf2218efd06b13c2487f31cc">getDet</a> () const </td></tr>
+<tr class="memdesc:a0f35cc59cf2218efd06b13c2487f31cc inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return determinant of jacobian.  <a href="#a0f35cc59cf2218efd06b13c2487f31cc">More...</a><br /></td></tr>
+<tr class="separator:a0f35cc59cf2218efd06b13c2487f31cc inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a802168de29d5e265ee01a57fd98793e8 inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a802168de29d5e265ee01a57fd98793e8"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a802168de29d5e265ee01a57fd98793e8">getCenter</a> () const </td></tr>
+<tr class="memdesc:a802168de29d5e265ee01a57fd98793e8 inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of element. <br /></td></tr>
+<tr class="separator:a802168de29d5e265ee01a57fd98793e8 inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5af4f17aea53c0ab1e8ce2494f23234 inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ad5af4f17aea53c0ab1e8ce2494f23234">getLocalPoint</a> () const </td></tr>
+<tr class="memdesc:ad5af4f17aea53c0ab1e8ce2494f23234 inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize a point in the element.  <a href="#ad5af4f17aea53c0ab1e8ce2494f23234">More...</a><br /></td></tr>
+<tr class="separator:ad5af4f17aea53c0ab1e8ce2494f23234 inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a565411b0254679f383549c1a09bf2352 inherit pub_methods_a00041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a565411b0254679f383549c1a09bf2352">getLocalPoint</a> (const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;s) const </td></tr>
+<tr class="memdesc:a565411b0254679f383549c1a09bf2352 inherit pub_methods_a00041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize a point in the element.  <a href="#a565411b0254679f383549c1a09bf2352">More...</a><br /></td></tr>
+<tr class="separator:a565411b0254679f383549c1a09bf2352 inherit pub_methods_a00041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;class T_&gt;<br />
-class OFELI::LinearSolver&lt; T_ &gt;</h3>
-
-<p>Class to solve systems of linear equations by iterative methods. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2ffc285126a28fba1fa2d1c681f261cf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Default Constructor. </p>
-<p>Initializes default parameters and pointers to 0. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa05c2275c2c8ce808d096b6692c3435d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>max_it</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
-          <td class="paramname"><em>tolerance</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor with iteration parameters. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximal number of iterations </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tolerance</td><td>Tolerance for convergence (measured in relative weighted 2-Norm) in input, effective discrepancy in output.</td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>To describe a 3-Node quadratic planar line finite element. </p>
+<p>Defines geometric quantities associated to 3-node quadratic element <code>P<sub>2</sub></code> in the space. The reference element is the segment <code>[-1,1]</code>. The user must take care to the fact that determinant of jacobian and other quantities depend on the point in the reference element where they are calculated. For this, before any utilization of shape functions or jacobian, function <b><a class="el" href="a00064.html#a19b4776d30b04b5fa427b8e8ce732122" title="Initialize local point coordinates in element. ">setLocal()</a></b> must be invoked.<br />
+<a class="el" href="a00025.html" title="To store and treat finite element geometric information. ">Element</a> nodes are ordered as the following: the left one, the central one and the right one.</p>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="af8b2b6e83de93a53ea4196be5e161e31"></a>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a4bca61134358cac278c05031b7afb0b9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using matrix, right-hand side and solution vector. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Reference to instance of class <a class="el" href="a00101.html" title="To handle matrices in sparse storage format. ">SpMatrix</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a910f0be2f1614e1c069abcd40ec56dd0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00098.html">SkMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using skyline-stored matrix, right-hand side and solution vector. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td><a class="el" href="a00098.html" title="To handle square matrices in skyline storage format. ">SkMatrix</a> instance that contains matrix </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a98105cac171bf2a1e24c8b5e5a7ff07a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00113.html">TrMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using a tridiagonal matrix, right-hand side and solution vector. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td><a class="el" href="a00113.html" title="To handle tridiagonal matrices. ">TrMatrix</a> instance that contains matrix </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a042d8d2397760d3906bfe02f0c3f8b13"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00004.html">BMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using a banded matrix, right-hand side and solution vector. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td><a class="el" href="a00004.html" title="To handle band matrices. ">BMatrix</a> instance that contains matrix </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a4260ff178a260a89d52c6a8cc127791d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00013.html">DMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using a dense matrix, right-hand side and solution vector. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td><a class="el" href="a00013.html" title="To handle dense matrices. ">DMatrix</a> instance that contains matrix </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a00032bd6c50c55e2fc4a7929480def96"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html">DSMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using a dense symmetric matrix, right-hand side and solution vector. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td><a class="el" href="a00015.html" title="To handle symmetric dense matrices. ">DSMatrix</a> instance that contains matrix </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a3229c9a3116a4b6125ddf3f72e01e0a8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00099.html">SkSMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using skyline-stored symmetric matrix, right-hand side and solution vector. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td><a class="el" href="a00098.html" title="To handle square matrices in skyline storage format. ">SkMatrix</a> instance that contains matrix </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="adec04ce22558fc7d208803adc611540f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00064.html">LinearSolver</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00098.html">SkMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using matrix, right-hand side. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td><a class="el" href="a00098.html" title="To handle square matrices in skyline storage format. ">SkMatrix</a> instance that contains matrix </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance that contains the initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a041af43820d8499c23302b9f8907b45e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setMaxIter </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>m</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set Maximum number of iterations. </p>
-<p>Default value is 1000 </p>
-
-</div>
-</div>
-<a class="anchor" id="ad8cb117dd670df852851829761e0e54d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setMatrix </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html">OFELI::Matrix</a>&lt; T_ &gt; *&#160;</td>
-          <td class="paramname"><em>A</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set matrix in the case of a pointer to <a class="el" href="a00069.html" title="Virtual class to handle matrices for all storage formats. ">Matrix</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Pointer to abstract <a class="el" href="a00069.html" title="Virtual class to handle matrices for all storage formats. ">Matrix</a> class </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ae3cf4567b730d01ff143013f1b11522a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setMatrix </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set matrix in the case of a pointer to matrix. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Pointer to abstract <a class="el" href="a00069.html" title="Virtual class to handle matrices for all storage formats. ">Matrix</a> class </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="addc7f35fc3a68cba345a07ed92fa59b2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setMatrix </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00098.html">SkMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set matrix in the case of a skyline matrix. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Matrix as instance of class <a class="el" href="a00098.html" title="To handle square matrices in skyline storage format. ">SkMatrix</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ad56dc6dab838eee84f6d76995d555638"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set matrix, right-hand side and initial guess. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Reference to matrix as a <a class="el" href="a00101.html" title="To handle matrices in sparse storage format. ">SpMatrix</a> instance </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Vector containing right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>Vector containing initial guess on input and solution on output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a0ce77dad890759d85412157e25b3afa4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void setSolver </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a>&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a>&#160;</td>
-          <td class="paramname"><em>p</em> = <code><a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set solver and preconditioner. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Solver identification parameter. To be chosen in the enumeration variable Iteration:<br />
- <code>DIRECT_SOLVER</code>, <code>CG_SOLVER</code>, <code>CGS_SOLVER</code>, <code>BICG_SOLVER</code>, <code>BICG_STAB_SOLVER</code>, <code>GMRES_SOLVER</code>, <code>QMR_SOLVER</code> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Preconditioner identification parameter. By default, the diagonal preconditioner is used. To be chosen in the enumeration variable Preconditioner:<br />
-<code>IDENT_PREC</code>, <code>DIAG_PREC</code>, <code>SSOR_PREC</code>, <code>ILU_PREC</code> [Default: <code>ILU_PREC</code>] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>The argument <code>p</code> has no effect if the solver is <code>DIRECT_SOLVER</code> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a1bfcefd222a9c02f7254140fed80f26c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int solve </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00101.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>A</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a>&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a>&#160;</td>
-          <td class="paramname"><em>p</em> = <code><a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Solve equations using system data, prescribed solver and preconditioner. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Reference to matrix as a <a class="el" href="a00101.html" title="To handle matrices in sparse storage format. ">SpMatrix</a> instance </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Vector containing right-hand side </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>Vector containing initial guess on input and solution on output </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Solver identification parameter To be chosen in the enumeration variable Iteration:<br />
- <code>DIRECT_SOLVER</code>, <code>CG_SOLVER</code>, <code>CGS_SOLVER</code>, <code>BICG_SOLVER</code>, <code>BICG_STAB_SOLVER</code>, <code>GMRES_SOLVER</code>, <code>QMR_SOLVER</code> [Default: <code>CGS_SOLVER</code>] </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Preconditioner identification parameter. To be chosen in the enumeration variable Preconditioner:<br />
-<code>IDENT_PREC</code>, <code>DIAG_PREC</code>, <code>SSOR_PREC</code>, <code>ILU_PREC</code>, <code>DILU_PREC</code> [Default: <code>DIAG_PREC</code>] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section remark"><dt>Remarks</dt><dd>The argument <code>p</code> has no effect if the solver is <code>DIRECT_SOLVER</code> </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If the library <code>eigen</code> is used, only the preconditioners <code>IDENT_PREC</code>, <code>DIAG_PREC</code> and <code>ILU_PREC</code> are available. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aeccb35e1c449b861305d1765f86395f4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int solve </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a>&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a>&#160;</td>
-          <td class="paramname"><em>p</em> = <code><a class="el" href="a00342.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Solve equations using prescribed solver and preconditioner. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>Solver identification parameter To be chosen in the enumeration variable Iteration:<br />
- <code>DIRECT_SOLVER</code>, <code>CG_SOLVER</code>, <code>CGS_SOLVER</code>, <code>BICG_SOLVER</code>, <code>BICG_STAB_SOLVER</code>, <code>GMRES_SOLVER</code>, <code>QMR_SOLVER</code> [Default: <code>CGS_SOLVER</code>] </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Preconditioner identification parameter. To be chosen in the enumeration variable Preconditioner:<br />
-<code>IDENT_PREC</code>, <code>DIAG_PREC</code>, <code>SSOR_PREC</code>, <code>DILU_PREC</code>, <code>ILU_PREC</code> [Default: <code>DIAG_PREC</code>] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>The argument <code>p</code> has no effect if the solver is <code>DIRECT_SOLVER</code> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a7ca154b901ce7bb4d4ee1e2cdf7f8a85"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int solve </td>
+          <td class="memname"><a class="el" href="a00067.html">LocalVect</a>&lt;<a class="el" href="a00089.html">Point</a>&lt;<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt;,3&gt; DSh </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Solve equations all arguments must have been given by other member functions. </p>
-<p>Solver and preconditioner parameters must have been set by function setSolver. Otherwise, default values are set. </p>
+<p>Return partial derivatives of shape functions of element nodes. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00067.html" title="Handles small size vectors like element vectors. ">LocalVect</a> instance of partial derivatives of shape functions <em>e.g.</em> <code>dsh(i)</code>.x, <code>dsh(i)</code>.y, are partial derivatives of the <em>i</em>-th shape function. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The local point at which the derivatives are computed must be chosen before by using the member function setLocal </dd></dl>
 
 </div>
 </div>

@@ -60,12 +60,12 @@ namespace OFELI {
  *
  */
 
-class Elas2DT3 : public Equa_Solid<real_t,3,6,2,4>
+class Elas2DT3 : public Equa_Solid<3,6,2,4>
 {
 
  public:
 
-    using Equa_Solid<real_t,3,6,2,4>::run;
+    using Equa_Solid<3,6,2,4>::run;
 
 /// \brief Default Constructor.
 /// \details Constructs an empty equation.

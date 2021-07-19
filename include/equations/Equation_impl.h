@@ -51,17 +51,17 @@ namespace OFELI {
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation()
-                                 : Equa<T_>()
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+Equation<NEN_,NEE_,NSN_,NSE_>::Equation()
+                              : Equa()
 {
    _nb_dof = NEE_/NEN_;
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh &mesh)
-                                 : Equa<T_>()
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+Equation<NEN_,NEE_,NSN_,NSE_>::Equation(Mesh &mesh)
+                              : Equa()
 {
    if (NEE_/NEN_ != NSE_/NSN_)
       throw OFELIException("In Equation<>::Equation(Mesh): Numbers of element and "
@@ -71,10 +71,10 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh &mesh)
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&     mesh,
-                                           Vect<T_>& u)
-                                 : Equa<T_>()
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+Equation<NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&         mesh,
+                                        Vect<real_t>& u)
+                              : Equa()
 {
    if (NEE_/NEN_ != NSE_/NSN_)
       throw OFELIException("In Equation<>::Equation(Mesh&,Vect<>&): Numbers of "
@@ -85,13 +85,13 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&     mesh,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&     mesh,
-                                           Vect<T_>& u,
-                                           real_t&   init_time,
-                                           real_t&   final_time,
-                                           real_t&   time_step)
-                                 : Equa<T_>()
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+Equation<NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&         mesh,
+                                        Vect<real_t>& u,
+                                        real_t&       init_time,
+                                        real_t&       final_time,
+                                        real_t&       time_step)
+                              : Equa()
 {
    if (NEE_/NEN_ != NSE_/NSN_)
       throw OFELIException("In Equation<>::Equation(Mesh&,...): Numbers of "
@@ -102,64 +102,64 @@ Equation<T_,NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&     mesh,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-Equation<T_,NEN_,NEE_,NSN_,NSE_>::~Equation()
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+Equation<NEN_,NEE_,NSN_,NSE_>::~Equation()
 { }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::initEquation(Mesh&  mesh,
-                                                    real_t init_time,
-                                                    real_t final_time,
-                                                    real_t time_step)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::initEquation(Mesh&  mesh,
+                                                 real_t init_time,
+                                                 real_t final_time,
+                                                 real_t time_step)
 {
-   Equa<T_>::setMesh(mesh);
+   Equa::setMesh(mesh);
    _TimeInt.delta = time_step;
    _TimeInt.time = _TimeInt.init = init_time;
    _TimeInt.final = final_time;
-   Equa<T_>::_b = new Vect<T_>(_nb_eq);
-   Equa<T_>::_uu.setSize(_nb_eq);
+   Equa::_b = new Vect<real_t>(_nb_eq);
+   Equa::_uu.setSize(_nb_eq);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::getMatrix(const SpMatrix<T_>& A) const
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::getMatrix(const SpMatrix<real_t>& A) const
 {
    eMat.Localize(_theElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::getMatrix(const SkMatrix<T_>& A) const
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::getMatrix(const SkMatrix<real_t>& A) const
 {
    eMat.Localize(_theElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::getMatrix(const SkSMatrix<T_>& A) const
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::getMatrix(const SkSMatrix<real_t>& A) const
 {
    eMat.Localize(_theElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::getSolution(const Vect<T_>& u) const
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::getSolution(const Vect<real_t>& u) const
 {
    _eu.Localize(_theElement,u);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::getRHS(const Vect<T_>& b) const
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::getRHS(const Vect<real_t>& b) const
 {
    eRHS.Localize(_theElement,b);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&  el,
-                                                const Vect<T_>& bc)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&      el,
+                                             const Vect<real_t>& bc)
 {
    size_t in=1;
    for (size_t i=1; i<=NEN_; ++i) {
@@ -176,9 +176,9 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&  el,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element& el,
-                                                Vect<T_>*      bc)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::updateBC(const Element& el,
+                                             Vect<real_t>*  bc)
 {
    if (bc==nullptr)
       return;
@@ -197,9 +197,9 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element& el,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
-                                              int        dof)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
+                                           int        dof)
 {
    size_t in, jn;
    if (dof_type==NODE_DOF) {
@@ -211,7 +211,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
                   Node *nd2 = (*_theElement)(j);
                   in = nd1->n(), jn = nd2->n();
                   if (in != jn)
-                     eMat(in,jn) = T_(0.);
+                     eMat(in,jn) = 0.;
                }
             }
          }
@@ -224,7 +224,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
                for (size_t j=1; j<=NEN_; j++) {
                   for (size_t l=1; l<=_nb_dof; l++) {
                      if (in != jn && (*_theElement)(i)->getCode(k))
-                        eMat(in,jn) = T_(0.);
+                        eMat(in,jn) = 0.;
                      jn++;
                   }
                }
@@ -241,7 +241,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
             if (sd1->getCode(dof))
                for (size_t j=1; j<=NEN_; j++)
                   if (i != j)
-                     eMat(i,j) = T_(0.);
+                     eMat(i,j) = 0.;
          }
       }
       else {
@@ -253,7 +253,7 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
                      for (size_t l=1; l<=_nb_dof; l++) {
                         size_t jn = _theElement->getPtrSide(j)->getDOF(l);
                         if (in != jn)
-                           eMat(in,jn) = T_(0.);
+                           eMat(in,jn) = 0.;
                      }
                   }
                }
@@ -264,23 +264,23 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::setBodyForce(const Vect<T_>& f)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::setBodyForce(const Vect<real_t>& f)
 {
-   Equa<T_>::_bf = &f;
+   Equa::_bf = &f;
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::setResidue()
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::setResidue()
 {
    eMat.Mult(_eu,eRes);
    eRes -= eRHS;
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::LocalNodeVector(Vect<T_>& b)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::LocalNodeVector(Vect<real_t>& b)
 {
    size_t k = 0;
    for (size_t n=1; n<=NEN_; ++n) {
@@ -291,9 +291,9 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::LocalNodeVector(Vect<T_>& b)
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&     b,
-                                                         LocalVect<T_,NEE_>& be)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<real_t>&     b,
+                                                      LocalVect<real_t,NEE_>& be)
 {
    size_t k = 0;
    for (size_t n=1; n<=NEN_; ++n) {
@@ -304,9 +304,9 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&     b,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideNodeVector(const Vect<T_>&     b,
-                                                      LocalVect<T_,NSE_>& bs)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideNodeVector(const Vect<real_t>&     b,
+                                                   LocalVect<real_t,NSE_>& bs)
 {
    size_t k = 0;
    for (size_t n=1; n<=NSN_; ++n) {
@@ -317,19 +317,19 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideNodeVector(const Vect<T_>&     b,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVectorSingleDOF(const Vect<T_>&     b,
-                                                                  LocalVect<T_,NEN_>& be)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementNodeVectorSingleDOF(const Vect<real_t>&     b,
+                                                               LocalVect<real_t,NEN_>& be)
 {
    for (size_t n=1; n<=NEN_; ++n)
       be(n) = b((*_theElement)(n)->n());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&     b,
-                                                         LocalVect<T_,NEN_>& be,
-                                                         int                 dof)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<real_t>&     b,
+                                                      LocalVect<real_t,NEN_>& be,
+                                                      int                     dof)
 {
    size_t k = 0;
    for (size_t n=1; n<=NEN_; ++n) {
@@ -341,9 +341,9 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeVector(const Vect<T_>&     b,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<T_>&     b,
-                                                         LocalVect<T_,NSE_>& be)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<real_t>&     b,
+                                                      LocalVect<real_t,NSE_>& be)
 {
    size_t k = 0;
    Side *sd;
@@ -356,9 +356,9 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<T_>&     b,
 }
 
 /*
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideNodeVector(const Vect<T_>& b,
-                                                      T_*             sb)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideNodeVector(const Vect<real_t>& b,
+                                                   real_t*             sb)
 {
    size_t k = 0;
    for (size_t n=1; n<=NSN_; ++n) {
@@ -369,10 +369,10 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideNodeVector(const Vect<T_>& b,
    }*/
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
-                                                     DOFSupport      dof_type,
-                                                     int             flag)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<real_t>& b,
+                                                  DOFSupport          dof_type,
+                                                  int                 flag)
 {
    size_t k=0;
    switch (dof_type) {
@@ -418,174 +418,175 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<T_>& b,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<T_>& b,
-                                                  T_*             sb)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<real_t>& b,
+                                               real_t*             sb)
 {
    for (size_t i=0; i<_theSide->getNbDOF(); ++i)
       sb[i] = b(_theSide->getNbDOF()*(_theSide->n()-1)+i+1);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementNodeCoordinates()
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementNodeCoordinates()
 {
    for (size_t n=1; n<=NEN_; n++)
       _x[n-1] = (*_theElement)(n)->getCoord();
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideNodeCoordinates()
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideNodeCoordinates()
 {
    for (size_t n=1; n<=NSN_; n++)
       _x[n-1] = (*_theSide)(n)->getCoord();
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Matrix<T_>* A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Matrix<real_t>* A)
 {
    A->Assembly(TheElement,eMat.get());
 }
 
 
 #if defined (USE_PETSC)
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(PETScMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(PETScMatrix<real_t>& A)
 {
    ElementAssembly(TheElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(PETScMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(PETScMatrix<real_t>& A)
 {
    SideAssembly(TheSide,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(PETScVect<T_>& b)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(PETScVect<real_t>& b)
 {
    ElementAssembly(TheElement,b);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(PETScVect<T_>& b)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<,NEN_,NEE_,NSN_,NSE_>::SideAssembly(PETScVect<real_t>& b)
 {
    SideAssembly(TheSide,b);
 }
 #endif
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&    el,
-                                                       Matrix<T_>* A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&        el,
+                                                    Matrix<real_t>* A)
 {
    A->Assembly(el,eMat.get());
 }
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&      el,
-                                                       SkMatrix<T_>& A)
+
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&          el,
+                                                    SkMatrix<real_t>& A)
 {
    A.Assembly(el,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&       el,
-                                                       SkSMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&           el,
+                                                    SkSMatrix<real_t>& A)
 {
    A.Assembly(el,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&      el,
-                                                       SpMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&          el,
+                                                    SpMatrix<real_t>& A)
 {
    A.Assembly(el,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&     el,
-                                                       BMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&         el,
+                                                    BMatrix<real_t>& A)
 {
    A.Assembly(el,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&      el,
-                                                       TrMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&          el,
+                                                    TrMatrix<real_t>& A)
 {
    A.Assembly(el,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&       sd,
-                                                    Matrix<T_>* A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&           sd,
+                                                 Matrix<real_t>* A)
 {
    A->Assembly(sd,sMat.get());
 }
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&        sd,
-                                                    BMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&            sd,
+                                                 BMatrix<real_t>& A)
 {
    A.Assembly(sd,sMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&         sd,
-                                                    SkMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&             sd,
+                                                 SkMatrix<real_t>& A)
 {
    A.Assembly(sd,sMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&          sd,
-                                                    SkSMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&              sd,
+                                                 SkSMatrix<real_t>& A)
 {
    A.Assembly(sd,sMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&         sd,
-                                                    SpMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&             sd,
+                                                 SpMatrix<real_t>& A)
 {
    A.Assembly(sd,sMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&  el,
-                                                       Vect<T_>& v)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&      el,
+                                                    Vect<real_t>& v)
 {
    v.Assembly(el,eRHS.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&     sd,
-                                                    Vect<T_>& v)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&         sd,
+                                                 Vect<real_t>& v)
 {
    v.Assembly(sd,sRHS.get());
 }
 
 
 #if defined(USE_PETSC)
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&       el,
-                                                const PETScVect<T_>& bc)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&           el,
+                                             const PETScVect<real_t>& bc)
 {
    size_t in = 0;
    for (size_t i=1; i<=NEN_; ++i) {
@@ -607,162 +608,162 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&       el,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::updateBC(const PETScVect<T_>& bc)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::updateBC(const PETScVect<real_t>& bc)
 {
    updateBC(TheElement,bc);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&         el,
-                                                       PETScMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&             el,
+                                                    PETScMatrix<real_t>& A)
 {
    A.Assembly(el,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&            sd,
-                                                    PETScMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&            sd,
+                                                 PETScMatrix<real_t>& A)
 {
    A.Assembly(sd,sMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&       el,
-                                                       PETScVect<T_>& v)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Element&           el,
+                                                    PETScVect<real_t>& v)
 {
    v.Assembly(el,eRHS.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&          sd,
-                                                    PETScVect<T_>& v)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Side&              sd,
+                                                 PETScVect<real_t>& v)
 {
    v.Assembly(sd,sRHS.get());
 }
 #endif
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(BMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(BMatrix<real_t>& A)
 {
    ElementAssembly(TheElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(SkSMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(SkSMatrix<real_t>& A)
 {
    ElementAssembly(TheElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(SkMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(SkMatrix<real_t>& A)
 {
    ElementAssembly(TheElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(SpMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(SpMatrix<real_t>& A)
 {
    ElementAssembly(TheElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(TrMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(TrMatrix<real_t>& A)
 {
    ElementAssembly(TheElement,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(Matrix<T_>* A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(Matrix<real_t>* A)
 {
    A->DGAssembly(TheElement,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(SkSMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(SkSMatrix<real_t>& A)
 {
    A.DGAssembly(TheElement,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(SkMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(SkMatrix<real_t>& A)
 {
    A.DGAssembly(TheElement,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(SpMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(SpMatrix<real_t>& A)
 {
    A.DGAssembly(TheElement,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(TrMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::DGElementAssembly(TrMatrix<real_t>& A)
 {
    A.DGAssembly(TheElement,eMat.get());
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Matrix<T_>* A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Matrix<real_t>* A)
 {
    SideAssembly(TheSide,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(SkSMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(SkSMatrix<real_t>& A)
 {
    SideAssembly(TheSide,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(SkMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(SkMatrix<real_t>& A)
 {
    SideAssembly(TheSide,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(SpMatrix<T_>& A)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(SpMatrix<real_t>& A)
 {
    SideAssembly(TheSide,A);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Vect<T_>& v)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::ElementAssembly(Vect<real_t>& v)
 {
    ElementAssembly(TheElement,v);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::SideAssembly(Vect<T_>& v)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideAssembly(Vect<real_t>& v)
 {
    SideAssembly(TheSide,v);
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Element&  el,
-                                                   const Vect<T_>& x,
-                                                   Vect<T_>&       b)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Element&      el,
+                                                const Vect<real_t>& x,
+                                                Vect<real_t>&       b)
 {
    size_t ii=0, jj=0, ik, jl;
    for (size_t i=1; i<=NEN_; ++i) {
@@ -782,10 +783,10 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Element&  el,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Side&     sd,
-                                                   const Vect<T_>& x,
-                                                   Vect<T_>&       b)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Side&         sd,
+                                                const Vect<real_t>& x,
+                                                Vect<real_t>&       b)
 {
    size_t ii=0, jj=0, ik, jl;
    for (size_t i=1; i<=NSN_; ++i) {
@@ -805,8 +806,8 @@ void Equation<T_,NEN_,NEE_,NSN_,NSE_>::AxbAssembly(const Side&     sd,
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-size_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::getNbNodes() const
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+size_t Equation<NEN_,NEE_,NSN_,NSE_>::getNbNodes() const
 {
    if (_theElement)
       return NEN_;
@@ -815,8 +816,8 @@ size_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::getNbNodes() const
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-size_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::getNbEq() const
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+size_t Equation<NEN_,NEE_,NSN_,NSE_>::getNbEq() const
 {
    if (_theElement)
       return NEE_;
@@ -825,9 +826,9 @@ size_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::getNbEq() const
 }
 
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-real_t Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty(const string& exp,
-                                                             const string& prop)
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+real_t Equation<NEN_,NEE_,NSN_,NSE_>::setMaterialProperty(const string& exp,
+                                                          const string& prop)
 {
    _theFct.set(exp);
    return _theFct(_x,0.);

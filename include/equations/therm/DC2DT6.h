@@ -58,7 +58,7 @@ namespace OFELI {
  *
  */
 
-class DC2DT6 : virtual public Equa_Therm<real_t,6,6,3,3>
+class DC2DT6 : virtual public Equa_Therm<6,6,3,3>
 {
 
  public :

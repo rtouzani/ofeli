@@ -33,7 +33,6 @@
 
 #include "equations/therm/DC1DL2.h"
 #include "shape_functions/Line2.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
@@ -47,7 +46,7 @@ DC1DL2::DC1DL2()
 
 
 DC1DL2::DC1DL2(Mesh& ms)
-       : Equation<real_t,2,2,1,1>(ms)
+       : Equation<2,2,1,1>(ms)
 {
    _theMesh = &ms;
    setMatrixType(TRIDIAGONAL);
@@ -57,7 +56,7 @@ DC1DL2::DC1DL2(Mesh& ms)
 
 DC1DL2::DC1DL2(Mesh&         ms,
                Vect<real_t>& u)
-       : Equation<real_t,2,2,1,1>(ms,u)
+       : Equation<2,2,1,1>(ms,u)
 {
    setMatrixType(TRIDIAGONAL);
    setSolver(DIRECT_SOLVER);
@@ -75,7 +74,7 @@ void DC1DL2::set(const Element* el)
    _el_geo.center = ln.getCenter();
    _dSh = ln.DSh();
    ElementNodeCoordinates();
-   ElementVector(*_u);
+   ElementNodeVector(*_u,_eu);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_Cp_set)
@@ -90,7 +89,7 @@ void DC1DL2::set(const Element* el)
 void DC1DL2::setInput(EqDataType    opt,
                       Vect<real_t>& u)
 {
-   Equa<real_t>::setInput(opt,u);
+   Equa::setInput(opt,u);
    if (opt==VELOCITY_FIELD)
       _vel = &u;
 }

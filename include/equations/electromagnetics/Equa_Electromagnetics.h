@@ -36,11 +36,7 @@
 
 #include "solvers/TimeStepping.h"
 #include "mesh/Material.h"
-
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
-using std::complex;
-using std::abs;
 
 namespace OFELI {
 /*!
@@ -64,7 +60,6 @@ extern Material theMaterial;
  *  \ingroup Electromagnetics
  * \brief Abstract class for Electromagnetics Equation classes.
  *
- * \tparam <T_> data type (double, float, ...)
  * \tparam <NEN> Number of element nodes
  * \tparam <NEE_> Number of element equations
  * \tparam <NSN_> Number of side nodes
@@ -74,31 +69,31 @@ extern Material theMaterial;
  * \copyright GNU Lesser Public License
  */
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_> class Equa_Electromagnetics;
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_> class Equa_Electromagnetics;
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+class Equa_Electromagnetics : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 {
 
  public:
 
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theMesh;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theElement;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_sides;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
-   using Equa<T_>::_Mu_set;
-   using Equa<T_>::_sigma_set;
-   using Equa<T_>::_omega_set;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theMesh;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theElement;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theSide;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_terms;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_analysis;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_TimeInt;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_sides;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_el_geo;
+   using Equa::_Mu_set;
+   using Equa::_sigma_set;
+   using Equa::_omega_set;
 
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -110,10 +105,10 @@ class Equa_Electromagnetics : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
 
     int runTransient()
     {
-       Equa<T_>::_b->clear();
+       Equa::_b->clear();
        build();
-       int ret=Equa<T_>::solveLinearSystem(*Equa<T_>::_b,Equa<T_>::_uu);
-       Equa<T_>::_u->insertBC(*_theMesh,Equa<T_>::_uu,*Equa<T_>::_bc);
+       int ret=Equa::solveLinearSystem(*Equa::_b,Equa::_uu);
+       Equa::_u->insertBC(*_theMesh,Equa::_uu,*Equa::_bc);
        return ret;
     }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

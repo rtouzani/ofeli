@@ -57,12 +57,12 @@ namespace OFELI {
  *
  */
 
-class DC2DT3 : public Equa_Therm<real_t,3,3,2,2>
+class DC2DT3 : public Equa_Therm<3,3,2,2>
 {
 
  public:
 
-    using Equa_Therm<real_t,3,3,2,2>::run;
+    using Equa_Therm<3,3,2,2>::run;
 
 /// \brief Default Constructor.
 /// Constructs an empty equation.
@@ -86,7 +86,7 @@ class DC2DT3 : public Equa_Therm<real_t,3,3,2,2>
            real_t        init_time,
            real_t        final_time,
            real_t        time_step)
-   : Equation<real_t,3,3,2,2>(mesh,b,init_time,final_time,time_step) { }
+   : Equation<3,3,2,2>(mesh,b,init_time,final_time,time_step) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Destructor

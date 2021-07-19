@@ -54,28 +54,28 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-  class DG : public Equation<real_t,3,3,2,2> {
+  class DG : public Equation<3,3,2,2> {
 
  public:
 
-   using Equation<real_t,3,3,2,2>::setMaterialProperty;
-   using Equation<real_t,3,3,2,2>::_theMesh;
-   using Equation<real_t,3,3,2,2>::_theElement;
-   using Equation<real_t,3,3,2,2>::_theSide;
-   using Equation<real_t,3,3,2,2>::_A;
-   using Equation<real_t,3,3,2,2>::_b;
-   using Equation<real_t,3,3,2,2>::_uu;
-   using Equation<real_t,3,3,2,2>::_u;
-   using Equation<real_t,3,3,2,2>::_bc;
-   using Equation<real_t,3,3,2,2>::_bf;
-   using Equation<real_t,3,3,2,2>::_sf;
-   using Equation<real_t,3,3,2,2>::_nb_nodes;
-   using Equation<real_t,3,3,2,2>::_nb_el;
-   using Equation<real_t,3,3,2,2>::_nb_eq;
-   using Equation<real_t,3,3,2,2>::_nb_dof_total;
-   using Equation<real_t,3,3,2,2>::_nb_dof;
-   using Equation<real_t,3,3,2,2>::_el_geo;
-   using Equation<real_t,3,3,2,2>::_dSh;
+   using Equation<3,3,2,2>::setMaterialProperty;
+   using Equation<3,3,2,2>::_theMesh;
+   using Equation<3,3,2,2>::_theElement;
+   using Equation<3,3,2,2>::_theSide;
+   using Equation<3,3,2,2>::_A;
+   using Equation<3,3,2,2>::_b;
+   using Equation<3,3,2,2>::_uu;
+   using Equation<3,3,2,2>::_u;
+   using Equation<3,3,2,2>::_bc;
+   using Equation<3,3,2,2>::_bf;
+   using Equation<3,3,2,2>::_sf;
+   using Equation<3,3,2,2>::_nb_nodes;
+   using Equation<3,3,2,2>::_nb_el;
+   using Equation<3,3,2,2>::_nb_eq;
+   using Equation<3,3,2,2>::_nb_dof_total;
+   using Equation<3,3,2,2>::_nb_dof;
+   using Equation<3,3,2,2>::_el_geo;
+   using Equation<3,3,2,2>::_dSh;
 
 /** \brief Constructor with mesh and degree of the method
  *  @param [in] ms Mesh instance

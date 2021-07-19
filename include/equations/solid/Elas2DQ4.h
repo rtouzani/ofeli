@@ -62,7 +62,7 @@ namespace OFELI {
  *  This makes possible testing different algorithms.
  */
 
-class Elas2DQ4 : virtual public Equa_Solid<real_t,4,8,2,4>
+class Elas2DQ4 : virtual public Equa_Solid<4,8,2,4>
 {
 
  public:

@@ -32,7 +32,6 @@
 #include "solvers/NLASSolver.h"
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/DMatrix_impl.h"
-#include "equations/Equa_impl.h"
 
 namespace OFELI {
 
@@ -125,7 +124,7 @@ void NLASSolver::setInitial(real_t a,
 }
 
 
-void NLASSolver::setPDE(Equa<real_t>& eq)
+void NLASSolver::setPDE(Equa& eq)
 {
    _theEqua = &eq;
    _theMesh = &(_theEqua->getMesh());
@@ -263,6 +262,12 @@ void NLASSolver::set(NonLinearIter nl)
    }
    else
       _nlp = NL[_nl_it+1];
+}
+
+
+void NLASSolver::setNbEq(size_t nb_eq)
+{
+   _nb_eq = nb_eq;
 }
 
 

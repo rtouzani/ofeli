@@ -37,7 +37,7 @@
 namespace OFELI {
 
 Elas3DH8::Elas3DH8(Mesh& ms)
-         : Equation<real_t,8,24,4,12>(ms), _hexa(nullptr), _quad(nullptr)
+         : Equation<8,24,4,12>(ms), _hexa(nullptr), _quad(nullptr)
 { }
 
 
@@ -68,7 +68,7 @@ void Elas3DH8::set(const Element* el)
    _xl[0].z = _xl[1].z = _xl[2].z = _xl[3].z = -1.;
    _xl[4].z = _xl[5].z = _xl[6].z = _xl[7].z =  1.;
    ElementNodeVector(*_u,_eu);
-   if (Equa<real_t>::_bf!=nullptr)
+   if (Equa::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
@@ -89,7 +89,7 @@ void Elas3DH8::set(const Side* sd)
       delete _hexa, _hexa = nullptr;
    SideNodeCoordinates();
    SideNodeVector(*_u,_su);
-   if (Equa<real_t>::_sf!=nullptr)
+   if (Equa::_sf!=nullptr)
       SideVector(*_sf,_ssf);
    sA0 = 0;
    sRHS = 0;

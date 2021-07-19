@@ -55,7 +55,6 @@ namespace OFELI {
  */
 
 template class LinearSolver<real_t>;
-template class Equa<real_t>;
 
 /*! \file TimeStepping.h
  *  \brief Definition file for class TimeStepping.
@@ -145,8 +144,8 @@ class TimeStepping
  *  @param [in] eq Reference to equation instance
  *  @param [in] nl Toggle to say if the considered equation is linear [Default: <tt>0</tt>] or not
  */
-    void setPDE(Equa<real_t>& eq,
-                bool          nl=false);
+    void setPDE(Equa& eq,
+                bool  nl=false);
 
 /** \brief Set intermediate right-hand side vector for the Runge-Kutta method
  *  @param [in] f Vector containing the RHS
@@ -310,7 +309,7 @@ class TimeStepping
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     struct DE {
-       Equa<real_t> *eq;
+       Equa *eq;
        Mesh *mesh;
        int  nb_eq, nb_dof;
        Iteration itsolver;
@@ -425,10 +424,14 @@ class TimeStepping
    void eval(real_t t);
    void insertBC(const Vect<real_t>& b, Vect<real_t>& v);
    void insertBC0(const Vect<real_t>& b, Vect<real_t>& v);
-   map<int,std::string> _scs;
-
-   std::map<TimeScheme,int> _sch;
-   void setScheme();
+   map<int,std::string> _scs = {{STATIONARY,"Stationary"}, {FORWARD_EULER,"Forward Euler"},
+                                {BACKWARD_EULER,"Backward Euler"}, {CRANK_NICOLSON,"Crank-Nicolson"},
+                                {HEUN,"Heun"}, {NEWMARK,"Newmark"}, {LEAP_FROG,"LeapFrog"},
+                                {AB2,"Adams-Bashforth"}, {RK4,"Runge-Kutta 4"}, {RK3_TVD,"Runge-Kutta 3, TVD"},
+                                {BDF2,"BDF 2"}, {BUILTIN,"BuiltIn"}};
+   std::map<TimeScheme,int> _sch = {{FORWARD_EULER,0}, {BACKWARD_EULER,1}, {CRANK_NICOLSON,2},
+                                    {HEUN,3}, {NEWMARK,4}, {LEAP_FROG,5}, {AB2,6}, {RK4,7},
+                                    {RK3_TVD,8}, {BDF2,9},{BUILTIN,10}};
 };
 
 /** \fn ostream & operator<<(ostream& s, TimeStepping &ts)

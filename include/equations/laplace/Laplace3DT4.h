@@ -55,7 +55,7 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class Laplace3DT4 : virtual public Equa_Laplace<real_t,4,4,3,3> {
+class Laplace3DT4 : virtual public Equa_Laplace<4,4,3,3> {
 
  public:
 

@@ -157,6 +157,10 @@ class NLASSolver
  */
     void set(NonLinearIter nl);
 
+/** \brief Define number of equations
+ */
+    void setNbEq(size_t nb_eq);
+
 /** \brief Define the function associated to the equation to solve
  *  \details This function can be used in the case where a user defined function is
  *  to be given. To be used in the one-variable case.
@@ -215,7 +219,7 @@ class NLASSolver
  *  defined as an instance of a class inheriting of Equa.
  *  @param [in] eq Pointer to equation instance
  */
-    void setPDE(Equa<real_t>& eq);
+    void setPDE(Equa& eq);
 
 /** \brief Set initial guess for the iterations
  *  @param [in] u Vector containing initial guess for the unknown
@@ -266,7 +270,7 @@ private:
    };
 
    bool _fct_allocated, _df_computed, _cv, _f_given, _df_given, _u_set, _ab_given;
-   Equa<real_t> *_theEqua;
+   Equa *_theEqua;
    int _nl, _max_it, _nl_it, _nb_eq, _it, _nb_it, _fct_type;
    Vect<real_t> *_u, _v, _f, _w;
    real_t _toler, *_x, _y, _a, _b, _g;

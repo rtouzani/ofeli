@@ -33,7 +33,6 @@
 
 #include "equations/laplace/Laplace1DL2.h"
 #include "shape_functions/Line2.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
@@ -51,7 +50,7 @@ Laplace1DL2::Laplace1DL2()
 
 
 Laplace1DL2::Laplace1DL2(Mesh& ms)
-            : Equation<real_t,2,2,1,1>(ms),
+            : Equation<2,2,1,1>(ms),
               _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
 {
    _theMesh = &ms;
@@ -68,7 +67,7 @@ Laplace1DL2::Laplace1DL2(Mesh& ms)
 
 Laplace1DL2::Laplace1DL2(Mesh&         ms,
                          Vect<real_t>& u)
-            : Equation<real_t,2,2,1,1>(ms,u),
+            : Equation<2,2,1,1>(ms,u),
               _lsf(0), _rsf(0), _is_lbc(false), _is_rbc(false)
 {
    _u = &u; 

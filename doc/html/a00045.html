@@ -53,7 +53,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00045.html">HelmholtzBT3</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00045.html">Grid</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -61,311 +61,171 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a00388.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">HelmholtzBT3 Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00327.html">Electromagnetics</a></div></div>  </div>
+<div class="title">Grid Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00339.html">Finite Element Mesh</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Builds finite element arrays for Helmholtz equations in a bounded media using 3-Node triangles.  
+<p>To manipulate structured grids.  
  <a href="a00045.html#details">More...</a></p>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for HelmholtzBT3:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
- <div class="center">
-  <img src="a00045.png" usemap="#HelmholtzBT3_map" alt=""/>
-  <map id="HelmholtzBT3_map" name="HelmholtzBT3_map">
-<area href="a00029.html" alt="Equa_Electromagnetics&lt; complex_t, 3, 3, 2, 2 &gt;" shape="rect" coords="0,112,306,136"/>
-<area href="a00035.html" alt="Equation&lt; complex_t, NEN_, NEE_, NSN_, NSE_ &gt;" shape="rect" coords="0,56,306,80"/>
-<area href="a00028.html" alt="Equa&lt; complex_t &gt;" shape="rect" coords="0,0,306,24"/>
-</map>
- </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2b76184cd79c5739d85d536d7ee2c833"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b76184cd79c5739d85d536d7ee2c833"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a2b76184cd79c5739d85d536d7ee2c833">HelmholtzBT3</a> ()</td></tr>
-<tr class="memdesc:a2b76184cd79c5739d85d536d7ee2c833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
-<tr class="separator:a2b76184cd79c5739d85d536d7ee2c833"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad172b2da4a7261b16ceff32795796d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#aad172b2da4a7261b16ceff32795796d9">HelmholtzBT3</a> (<a class="el" href="a00070.html">Mesh</a> &amp;ms)</td></tr>
-<tr class="memdesc:aad172b2da4a7261b16ceff32795796d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh data.  <a href="#aad172b2da4a7261b16ceff32795796d9">More...</a><br /></td></tr>
-<tr class="separator:aad172b2da4a7261b16ceff32795796d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3f038e36228e733acb9b38d974dfe3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#ae3f038e36228e733acb9b38d974dfe3c">HelmholtzBT3</a> (<a class="el" href="a00070.html">Mesh</a> &amp;ms, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;u)</td></tr>
-<tr class="memdesc:ae3f038e36228e733acb9b38d974dfe3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh and solution vector.  <a href="#ae3f038e36228e733acb9b38d974dfe3c">More...</a><br /></td></tr>
-<tr class="separator:ae3f038e36228e733acb9b38d974dfe3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a322fba0e4b746fc5605ef5d73dd72758"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a322fba0e4b746fc5605ef5d73dd72758"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a322fba0e4b746fc5605ef5d73dd72758">~HelmholtzBT3</a> ()</td></tr>
-<tr class="memdesc:a322fba0e4b746fc5605ef5d73dd72758"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a322fba0e4b746fc5605ef5d73dd72758"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7740c7ab195c03ac140f1f75f633470f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7740c7ab195c03ac140f1f75f633470f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a7740c7ab195c03ac140f1f75f633470f">build</a> ()</td></tr>
-<tr class="memdesc:a7740c7ab195c03ac140f1f75f633470f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds system of equations. <br /></td></tr>
-<tr class="separator:a7740c7ab195c03ac140f1f75f633470f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a906da27903ef1eb8d13377b70044b2cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a906da27903ef1eb8d13377b70044b2cd"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a906da27903ef1eb8d13377b70044b2cd">LHS</a> ()</td></tr>
-<tr class="memdesc:a906da27903ef1eb8d13377b70044b2cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add element Left-Hand <a class="el" href="a00096.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a>. <br /></td></tr>
-<tr class="separator:a906da27903ef1eb8d13377b70044b2cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88f7f063f1f9662502cd377bfa7ee300"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88f7f063f1f9662502cd377bfa7ee300"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a88f7f063f1f9662502cd377bfa7ee300">BodyRHS</a> (<a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;f)</td></tr>
-<tr class="memdesc:a88f7f063f1f9662502cd377bfa7ee300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add element Right-Hand <a class="el" href="a00096.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a>. <br /></td></tr>
-<tr class="separator:a88f7f063f1f9662502cd377bfa7ee300"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4091d09fa4459eb08ba5115da0da5dc1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4091d09fa4459eb08ba5115da0da5dc1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00045.html#a4091d09fa4459eb08ba5115da0da5dc1">BoundaryRHS</a> (<a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;f)</td></tr>
-<tr class="memdesc:a4091d09fa4459eb08ba5115da0da5dc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add side Right-Hand <a class="el" href="a00096.html" title="To store and treat finite element sides (edges in 2-D or faces in 3-D) ">Side</a>. <br /></td></tr>
-<tr class="separator:a4091d09fa4459eb08ba5115da0da5dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a00035"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00035')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00035.html">Equation&lt; complex_t, NEN_, NEE_, NSN_, NSE_ &gt;</a></td></tr>
-<tr class="memitem:a3fe274315aad1231ebd4a18ad0a66146 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a3fe274315aad1231ebd4a18ad0a66146">Equation</a> ()</td></tr>
-<tr class="separator:a3fe274315aad1231ebd4a18ad0a66146 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b2452352784c6b27f28e1bfa332feb9 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a4b2452352784c6b27f28e1bfa332feb9">Equation</a> (<a class="el" href="a00070.html">Mesh</a> &amp;mesh)</td></tr>
-<tr class="memdesc:a4b2452352784c6b27f28e1bfa332feb9 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with mesh instance.  <a href="#a4b2452352784c6b27f28e1bfa332feb9">More...</a><br /></td></tr>
-<tr class="separator:a4b2452352784c6b27f28e1bfa332feb9 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0300c5200960ab6c77f1a49f6252abad inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a0300c5200960ab6c77f1a49f6252abad">Equation</a> (<a class="el" href="a00070.html">Mesh</a> &amp;mesh, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;u)</td></tr>
-<tr class="memdesc:a0300c5200960ab6c77f1a49f6252abad inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with mesh instance and solution vector.  <a href="#a0300c5200960ab6c77f1a49f6252abad">More...</a><br /></td></tr>
-<tr class="separator:a0300c5200960ab6c77f1a49f6252abad inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4caf715646c27700dd38d5ef32c7046e inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a4caf715646c27700dd38d5ef32c7046e">Equation</a> (<a class="el" href="a00070.html">Mesh</a> &amp;mesh, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;u, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;init_time, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;final_time, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;time_step)</td></tr>
-<tr class="memdesc:a4caf715646c27700dd38d5ef32c7046e inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with mesh instance, matrix and right-hand side.  <a href="#a4caf715646c27700dd38d5ef32c7046e">More...</a><br /></td></tr>
-<tr class="separator:a4caf715646c27700dd38d5ef32c7046e inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a784919e868fde6db57e5166729309ea3 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a784919e868fde6db57e5166729309ea3"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a784919e868fde6db57e5166729309ea3">~Equation</a> ()</td></tr>
-<tr class="memdesc:a784919e868fde6db57e5166729309ea3 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a784919e868fde6db57e5166729309ea3 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ac833b4b2f78ec8581d1d7e9a0c6b6e inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a4ac833b4b2f78ec8581d1d7e9a0c6b6e">updateBC</a> (const <a class="el" href="a00025.html">Element</a> &amp;el, const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;bc)</td></tr>
-<tr class="memdesc:a4ac833b4b2f78ec8581d1d7e9a0c6b6e inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update Right-Hand side by taking into account essential boundary conditions.  <a href="#a4ac833b4b2f78ec8581d1d7e9a0c6b6e">More...</a><br /></td></tr>
-<tr class="separator:a4ac833b4b2f78ec8581d1d7e9a0c6b6e inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16b535a4f4b4efd9ed9f74f003b7ec3c inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a16b535a4f4b4efd9ed9f74f003b7ec3c">DiagBC</a> (DOFSupport dof_type=NODE_DOF, int dof=0)</td></tr>
-<tr class="memdesc:a16b535a4f4b4efd9ed9f74f003b7ec3c inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update element matrix to impose bc by diagonalization technique.  <a href="#a16b535a4f4b4efd9ed9f74f003b7ec3c">More...</a><br /></td></tr>
-<tr class="separator:a16b535a4f4b4efd9ed9f74f003b7ec3c inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad465f03063d31d562a1bbba15e3aa3a7 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ad465f03063d31d562a1bbba15e3aa3a7">LocalNodeVector</a> (<a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b)</td></tr>
-<tr class="memdesc:ad465f03063d31d562a1bbba15e3aa3a7 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Element Vector from a Vect instance.  <a href="#ad465f03063d31d562a1bbba15e3aa3a7">More...</a><br /></td></tr>
-<tr class="separator:ad465f03063d31d562a1bbba15e3aa3a7 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8567a36c74253e53f10549f2232d371 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ad8567a36c74253e53f10549f2232d371">ElementNodeVector</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>, NEE_ &gt; &amp;be)</td></tr>
-<tr class="memdesc:ad8567a36c74253e53f10549f2232d371 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Element Vector from a Vect instance.  <a href="#ad8567a36c74253e53f10549f2232d371">More...</a><br /></td></tr>
-<tr class="separator:ad8567a36c74253e53f10549f2232d371 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38ba4251e26bd6e01c2c3ed4b4261752 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a38ba4251e26bd6e01c2c3ed4b4261752">ElementNodeVector</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>, NEN_ &gt; &amp;be, int dof)</td></tr>
-<tr class="memdesc:a38ba4251e26bd6e01c2c3ed4b4261752 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Element Vector from a Vect instance.  <a href="#a38ba4251e26bd6e01c2c3ed4b4261752">More...</a><br /></td></tr>
-<tr class="separator:a38ba4251e26bd6e01c2c3ed4b4261752 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f6c0c4fff3dd3367bb54bd926b40872 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a6f6c0c4fff3dd3367bb54bd926b40872">SideNodeVector</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>, NSE_ &gt; &amp;bs)</td></tr>
-<tr class="memdesc:a6f6c0c4fff3dd3367bb54bd926b40872 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Side Vector from a Vect instance.  <a href="#a6f6c0c4fff3dd3367bb54bd926b40872">More...</a><br /></td></tr>
-<tr class="separator:a6f6c0c4fff3dd3367bb54bd926b40872 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac45b7f383e17c5ec97b12ac2da2dd56d inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ac45b7f383e17c5ec97b12ac2da2dd56d">SideSideVector</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> *bs)</td></tr>
-<tr class="memdesc:ac45b7f383e17c5ec97b12ac2da2dd56d inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Side Vector from a Vect instance.  <a href="#ac45b7f383e17c5ec97b12ac2da2dd56d">More...</a><br /></td></tr>
-<tr class="separator:ac45b7f383e17c5ec97b12ac2da2dd56d inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a933fc319fca5524536f5ff84e081455f inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a933fc319fca5524536f5ff84e081455f">ElementNodeVectorSingleDOF</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>, NEN_ &gt; &amp;be)</td></tr>
-<tr class="memdesc:a933fc319fca5524536f5ff84e081455f inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Element Vector from a Vect instance.  <a href="#a933fc319fca5524536f5ff84e081455f">More...</a><br /></td></tr>
-<tr class="separator:a933fc319fca5524536f5ff84e081455f inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af941d5652a843d91e01985806c054cb8 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#af941d5652a843d91e01985806c054cb8">ElementSideVector</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>, NSE_ &gt; &amp;be)</td></tr>
-<tr class="memdesc:af941d5652a843d91e01985806c054cb8 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Element Vector from a Vect instance.  <a href="#af941d5652a843d91e01985806c054cb8">More...</a><br /></td></tr>
-<tr class="separator:af941d5652a843d91e01985806c054cb8 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b06b76dc3f8edb241df091a423fc1c0 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a9b06b76dc3f8edb241df091a423fc1c0">ElementVector</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, DOFSupport dof_type=NODE_DOF, int flag=0)</td></tr>
-<tr class="memdesc:a9b06b76dc3f8edb241df091a423fc1c0 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Element Vector.  <a href="#a9b06b76dc3f8edb241df091a423fc1c0">More...</a><br /></td></tr>
-<tr class="separator:a9b06b76dc3f8edb241df091a423fc1c0 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa064cf438df03d08971ae0ce72d315a5 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aa064cf438df03d08971ae0ce72d315a5">SideVector</a> (const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> *sb)</td></tr>
-<tr class="memdesc:aa064cf438df03d08971ae0ce72d315a5 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize Side Vector.  <a href="#aa064cf438df03d08971ae0ce72d315a5">More...</a><br /></td></tr>
-<tr class="separator:aa064cf438df03d08971ae0ce72d315a5 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaffc94bf9a5a3b25a024e524e7a29b1 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aaaffc94bf9a5a3b25a024e524e7a29b1">ElementNodeCoordinates</a> ()</td></tr>
-<tr class="memdesc:aaaffc94bf9a5a3b25a024e524e7a29b1 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize coordinates of element nodes.  <a href="#aaaffc94bf9a5a3b25a024e524e7a29b1">More...</a><br /></td></tr>
-<tr class="separator:aaaffc94bf9a5a3b25a024e524e7a29b1 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70aed9ca4f8d4fcca37357cf3a57518c inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a70aed9ca4f8d4fcca37357cf3a57518c">SideNodeCoordinates</a> ()</td></tr>
-<tr class="memdesc:a70aed9ca4f8d4fcca37357cf3a57518c inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize coordinates of side nodes.  <a href="#a70aed9ca4f8d4fcca37357cf3a57518c">More...</a><br /></td></tr>
-<tr class="separator:a70aed9ca4f8d4fcca37357cf3a57518c inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad59a9403df9fbba51a61d72ebce48320 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ad59a9403df9fbba51a61d72ebce48320">ElementAssembly</a> (<a class="el" href="a00069.html">Matrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; *A)</td></tr>
-<tr class="memdesc:ad59a9403df9fbba51a61d72ebce48320 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one.  <a href="#ad59a9403df9fbba51a61d72ebce48320">More...</a><br /></td></tr>
-<tr class="separator:ad59a9403df9fbba51a61d72ebce48320 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af42a8f0516c0150fd79ed0ff785267af inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#af42a8f0516c0150fd79ed0ff785267af">ElementAssembly</a> (<a class="el" href="a00004.html">BMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:af42a8f0516c0150fd79ed0ff785267af inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one.  <a href="#af42a8f0516c0150fd79ed0ff785267af">More...</a><br /></td></tr>
-<tr class="separator:af42a8f0516c0150fd79ed0ff785267af inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf57accf40afff54d494249bce0fbc21 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aaf57accf40afff54d494249bce0fbc21">ElementAssembly</a> (<a class="el" href="a00099.html">SkSMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:aaf57accf40afff54d494249bce0fbc21 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one.  <a href="#aaf57accf40afff54d494249bce0fbc21">More...</a><br /></td></tr>
-<tr class="separator:aaf57accf40afff54d494249bce0fbc21 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f3ad84a2bc1363ad2c4c5519271a20d inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a9f3ad84a2bc1363ad2c4c5519271a20d">ElementAssembly</a> (<a class="el" href="a00098.html">SkMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:a9f3ad84a2bc1363ad2c4c5519271a20d inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one.  <a href="#a9f3ad84a2bc1363ad2c4c5519271a20d">More...</a><br /></td></tr>
-<tr class="separator:a9f3ad84a2bc1363ad2c4c5519271a20d inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a008601fb69e344d4411355177a85a4c5 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a008601fb69e344d4411355177a85a4c5">ElementAssembly</a> (<a class="el" href="a00101.html">SpMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:a008601fb69e344d4411355177a85a4c5 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one.  <a href="#a008601fb69e344d4411355177a85a4c5">More...</a><br /></td></tr>
-<tr class="separator:a008601fb69e344d4411355177a85a4c5 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8de3dfb90e95646d8addc7ca8601d14 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aa8de3dfb90e95646d8addc7ca8601d14">ElementAssembly</a> (<a class="el" href="a00113.html">TrMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:aa8de3dfb90e95646d8addc7ca8601d14 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one.  <a href="#aa8de3dfb90e95646d8addc7ca8601d14">More...</a><br /></td></tr>
-<tr class="separator:aa8de3dfb90e95646d8addc7ca8601d14 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b7f63d8829e20e59d6372c95f7d4cfe inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a8b7f63d8829e20e59d6372c95f7d4cfe">ElementAssembly</a> (<a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;v)</td></tr>
-<tr class="memdesc:a8b7f63d8829e20e59d6372c95f7d4cfe inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element vector into global one.  <a href="#a8b7f63d8829e20e59d6372c95f7d4cfe">More...</a><br /></td></tr>
-<tr class="separator:a8b7f63d8829e20e59d6372c95f7d4cfe inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1791c0bf907682bc90a08e8c7ec43c78 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a1791c0bf907682bc90a08e8c7ec43c78">DGElementAssembly</a> (<a class="el" href="a00069.html">Matrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; *A)</td></tr>
-<tr class="memdesc:a1791c0bf907682bc90a08e8c7ec43c78 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one for the Discontinuous Galerkin approximation.  <a href="#a1791c0bf907682bc90a08e8c7ec43c78">More...</a><br /></td></tr>
-<tr class="separator:a1791c0bf907682bc90a08e8c7ec43c78 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afab25c97472d20323242035f5523b5a7 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#afab25c97472d20323242035f5523b5a7">DGElementAssembly</a> (<a class="el" href="a00099.html">SkSMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:afab25c97472d20323242035f5523b5a7 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one for the Discontinuous Galerkin approximation.  <a href="#afab25c97472d20323242035f5523b5a7">More...</a><br /></td></tr>
-<tr class="separator:afab25c97472d20323242035f5523b5a7 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1d17822b5474e6851743b88f8581aa6 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ac1d17822b5474e6851743b88f8581aa6">DGElementAssembly</a> (<a class="el" href="a00098.html">SkMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:ac1d17822b5474e6851743b88f8581aa6 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one for the Discontinuous Galerkin approximation.  <a href="#ac1d17822b5474e6851743b88f8581aa6">More...</a><br /></td></tr>
-<tr class="separator:ac1d17822b5474e6851743b88f8581aa6 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab254136e120b81ec8e4e3feda2cc7b63 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ab254136e120b81ec8e4e3feda2cc7b63">DGElementAssembly</a> (<a class="el" href="a00101.html">SpMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:ab254136e120b81ec8e4e3feda2cc7b63 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one for the Discontinuous Galerkin approximation.  <a href="#ab254136e120b81ec8e4e3feda2cc7b63">More...</a><br /></td></tr>
-<tr class="separator:ab254136e120b81ec8e4e3feda2cc7b63 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7255b87c31ac9c9bc4d0b87340474a6 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ab7255b87c31ac9c9bc4d0b87340474a6">DGElementAssembly</a> (<a class="el" href="a00113.html">TrMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:ab7255b87c31ac9c9bc4d0b87340474a6 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble element matrix into global one for the Discontinuous Galerkin approximation.  <a href="#ab7255b87c31ac9c9bc4d0b87340474a6">More...</a><br /></td></tr>
-<tr class="separator:ab7255b87c31ac9c9bc4d0b87340474a6 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a8a98471623e7324a40f70fccd222ab inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a3a8a98471623e7324a40f70fccd222ab">SideAssembly</a> (<a class="el" href="a00069.html">Matrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; *A)</td></tr>
-<tr class="memdesc:a3a8a98471623e7324a40f70fccd222ab inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble side (edge or face) matrix into global one.  <a href="#a3a8a98471623e7324a40f70fccd222ab">More...</a><br /></td></tr>
-<tr class="separator:a3a8a98471623e7324a40f70fccd222ab inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c2db755d082a690965103ccc9f72c76 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a3c2db755d082a690965103ccc9f72c76">SideAssembly</a> (<a class="el" href="a00099.html">SkSMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:a3c2db755d082a690965103ccc9f72c76 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble side (edge or face) matrix into global one.  <a href="#a3c2db755d082a690965103ccc9f72c76">More...</a><br /></td></tr>
-<tr class="separator:a3c2db755d082a690965103ccc9f72c76 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ffabe56418a11c84e51a5dcf08c9074 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a5ffabe56418a11c84e51a5dcf08c9074">SideAssembly</a> (<a class="el" href="a00098.html">SkMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:a5ffabe56418a11c84e51a5dcf08c9074 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble side (edge or face) matrix into global one.  <a href="#a5ffabe56418a11c84e51a5dcf08c9074">More...</a><br /></td></tr>
-<tr class="separator:a5ffabe56418a11c84e51a5dcf08c9074 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89bd21576b89e5399599a81c8fb63869 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a89bd21576b89e5399599a81c8fb63869">SideAssembly</a> (<a class="el" href="a00101.html">SpMatrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;A)</td></tr>
-<tr class="memdesc:a89bd21576b89e5399599a81c8fb63869 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble side (edge or face) matrix into global one.  <a href="#a89bd21576b89e5399599a81c8fb63869">More...</a><br /></td></tr>
-<tr class="separator:a89bd21576b89e5399599a81c8fb63869 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc49390164e9e0bfd35a27d3ac8788ea inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#abc49390164e9e0bfd35a27d3ac8788ea">SideAssembly</a> (<a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;v)</td></tr>
-<tr class="memdesc:abc49390164e9e0bfd35a27d3ac8788ea inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble side (edge or face) vector into global one.  <a href="#abc49390164e9e0bfd35a27d3ac8788ea">More...</a><br /></td></tr>
-<tr class="separator:abc49390164e9e0bfd35a27d3ac8788ea inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cdf53ae3cb2f660b3962999c5fb2725 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a9cdf53ae3cb2f660b3962999c5fb2725">AxbAssembly</a> (const <a class="el" href="a00025.html">Element</a> &amp;el, const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;x, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b)</td></tr>
-<tr class="memdesc:a9cdf53ae3cb2f660b3962999c5fb2725 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble product of element matrix by element vector into global vector.  <a href="#a9cdf53ae3cb2f660b3962999c5fb2725">More...</a><br /></td></tr>
-<tr class="separator:a9cdf53ae3cb2f660b3962999c5fb2725 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f9bb6b7d8a642fa4b339c9d8676a759 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a7f9bb6b7d8a642fa4b339c9d8676a759">AxbAssembly</a> (const <a class="el" href="a00096.html">Side</a> &amp;sd, const <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;x, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b)</td></tr>
-<tr class="memdesc:a7f9bb6b7d8a642fa4b339c9d8676a759 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble product of side matrix by side vector into global vector.  <a href="#a7f9bb6b7d8a642fa4b339c9d8676a759">More...</a><br /></td></tr>
-<tr class="separator:a7f9bb6b7d8a642fa4b339c9d8676a759 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a383bdaccdb906b6dc5242fa692241b7c inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a383bdaccdb906b6dc5242fa692241b7c"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a383bdaccdb906b6dc5242fa692241b7c">getNbNodes</a> () const</td></tr>
-<tr class="memdesc:a383bdaccdb906b6dc5242fa692241b7c inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of element nodes. <br /></td></tr>
-<tr class="separator:a383bdaccdb906b6dc5242fa692241b7c inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a640c09169976d8e21447b2b2150f7fb9 inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a640c09169976d8e21447b2b2150f7fb9"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a640c09169976d8e21447b2b2150f7fb9">getNbEq</a> () const</td></tr>
-<tr class="memdesc:a640c09169976d8e21447b2b2150f7fb9 inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of element equations. <br /></td></tr>
-<tr class="separator:a640c09169976d8e21447b2b2150f7fb9 inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a7bad963394968d24bff5dda9dd51ee inherit pub_methods_a00035"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a5a7bad963394968d24bff5dda9dd51ee">setMaterialProperty</a> (const string &amp;exp, const string &amp;prop)</td></tr>
-<tr class="memdesc:a5a7bad963394968d24bff5dda9dd51ee inherit pub_methods_a00035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a material property by an algebraic expression.  <a href="#a5a7bad963394968d24bff5dda9dd51ee">More...</a><br /></td></tr>
-<tr class="separator:a5a7bad963394968d24bff5dda9dd51ee inherit pub_methods_a00035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a00028"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a00028')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a00028.html">Equa&lt; complex_t &gt;</a></td></tr>
-<tr class="memitem:aae7f04361ea6cc96d59317348467afa6 inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae7f04361ea6cc96d59317348467afa6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#aae7f04361ea6cc96d59317348467afa6">Equa</a> ()</td></tr>
-<tr class="memdesc:aae7f04361ea6cc96d59317348467afa6 inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:aae7f04361ea6cc96d59317348467afa6 inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a678813c91567f705fb361533d9c7f2bc inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a678813c91567f705fb361533d9c7f2bc"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a678813c91567f705fb361533d9c7f2bc">~Equa</a> ()</td></tr>
-<tr class="memdesc:a678813c91567f705fb361533d9c7f2bc inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a678813c91567f705fb361533d9c7f2bc inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82708ffcc31d4d630863187f3f137ee3 inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82708ffcc31d4d630863187f3f137ee3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a82708ffcc31d4d630863187f3f137ee3">setMesh</a> (<a class="el" href="a00070.html">Mesh</a> &amp;m)</td></tr>
-<tr class="memdesc:a82708ffcc31d4d630863187f3f137ee3 inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define mesh and renumber DOFs after removing imposed ones. <br /></td></tr>
-<tr class="separator:a82708ffcc31d4d630863187f3f137ee3 inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a913c6c03741d94f86d65690fd7d5902a">getMesh</a> () const</td></tr>
-<tr class="memdesc:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to Mesh instance.  <a href="#a913c6c03741d94f86d65690fd7d5902a">More...</a><br /></td></tr>
-<tr class="separator:a913c6c03741d94f86d65690fd7d5902a inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2907b96cfd97e563fe4afcae104897e7 inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2907b96cfd97e563fe4afcae104897e7"></a>
-<a class="el" href="a00064.html">LinearSolver</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a2907b96cfd97e563fe4afcae104897e7">getLinearSolver</a> ()</td></tr>
-<tr class="memdesc:a2907b96cfd97e563fe4afcae104897e7 inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to linear solver instance. <br /></td></tr>
-<tr class="separator:a2907b96cfd97e563fe4afcae104897e7 inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32adc1c9586442b7a34ace864e9965b4 inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32adc1c9586442b7a34ace864e9965b4"></a>
-<a class="el" href="a00069.html">Matrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a32adc1c9586442b7a34ace864e9965b4">getMatrix</a> () const</td></tr>
-<tr class="memdesc:a32adc1c9586442b7a34ace864e9965b4 inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to matrix. <br /></td></tr>
-<tr class="separator:a32adc1c9586442b7a34ace864e9965b4 inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa76ba7a5ad0412484df8aeaa34df03a3 inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#aa76ba7a5ad0412484df8aeaa34df03a3">setSolver</a> (<a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> ls, <a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> pc=IDENT_PREC)</td></tr>
-<tr class="memdesc:aa76ba7a5ad0412484df8aeaa34df03a3 inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose solver for the linear system.  <a href="#aa76ba7a5ad0412484df8aeaa34df03a3">More...</a><br /></td></tr>
-<tr class="separator:aa76ba7a5ad0412484df8aeaa34df03a3 inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93bf9d28a75fab8e6f5a3c3d1e6bd415 inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a93bf9d28a75fab8e6f5a3c3d1e6bd415">setLinearSolver</a> (<a class="el" href="a00342.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> ls, <a class="el" href="a00342.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> pc=IDENT_PREC)</td></tr>
-<tr class="memdesc:a93bf9d28a75fab8e6f5a3c3d1e6bd415 inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose solver for the linear system.  <a href="#a93bf9d28a75fab8e6f5a3c3d1e6bd415">More...</a><br /></td></tr>
-<tr class="separator:a93bf9d28a75fab8e6f5a3c3d1e6bd415 inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28dc6e37b3582dfaf59b23135fb06682 inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a28dc6e37b3582dfaf59b23135fb06682">setMatrixType</a> (int t)</td></tr>
-<tr class="memdesc:a28dc6e37b3582dfaf59b23135fb06682 inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose type of matrix.  <a href="#a28dc6e37b3582dfaf59b23135fb06682">More...</a><br /></td></tr>
-<tr class="separator:a28dc6e37b3582dfaf59b23135fb06682 inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82009d8ac9cf2704c73e7a21df585432 inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a82009d8ac9cf2704c73e7a21df585432">solveLinearSystem</a> (<a class="el" href="a00069.html">Matrix</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; *A, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;x)</td></tr>
-<tr class="memdesc:a82009d8ac9cf2704c73e7a21df585432 inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given matrix and right-hand side.  <a href="#a82009d8ac9cf2704c73e7a21df585432">More...</a><br /></td></tr>
-<tr class="separator:a82009d8ac9cf2704c73e7a21df585432 inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad899acb6e502894b296641d95c2efa2a inherit pub_methods_a00028"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ad899acb6e502894b296641d95c2efa2a">solveLinearSystem</a> (<a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;b, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;x)</td></tr>
-<tr class="memdesc:ad899acb6e502894b296641d95c2efa2a inherit pub_methods_a00028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the linear system with given right-hand side.  <a href="#ad899acb6e502894b296641d95c2efa2a">More...</a><br /></td></tr>
-<tr class="separator:ad899acb6e502894b296641d95c2efa2a inherit pub_methods_a00028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_methods_a00029"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a00029')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a00029.html">Equa_Electromagnetics&lt; complex_t, 3, 3, 2, 2 &gt;</a></td></tr>
-<tr class="memitem:aaaae39e158d68b6422749643570ce498 inherit pro_methods_a00029"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaaae39e158d68b6422749643570ce498"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#aaaae39e158d68b6422749643570ce498">MagneticPermeability</a> (const <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;mu)</td></tr>
-<tr class="memdesc:aaaae39e158d68b6422749643570ce498 inherit pro_methods_a00029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set (constant) magnetic permeability. <br /></td></tr>
-<tr class="separator:aaaae39e158d68b6422749643570ce498 inherit pro_methods_a00029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46e1f0f3840c0013e60118f4562895d2 inherit pro_methods_a00029"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46e1f0f3840c0013e60118f4562895d2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a46e1f0f3840c0013e60118f4562895d2">MagneticPermeability</a> (const string &amp;exp)</td></tr>
-<tr class="memdesc:a46e1f0f3840c0013e60118f4562895d2 inherit pro_methods_a00029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set magnetic permeability given by an algebraic expression. <br /></td></tr>
-<tr class="separator:a46e1f0f3840c0013e60118f4562895d2 inherit pro_methods_a00029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fd5e74e2b08cbd9f0a4d21582b18e48 inherit pro_methods_a00029"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5fd5e74e2b08cbd9f0a4d21582b18e48"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a5fd5e74e2b08cbd9f0a4d21582b18e48">ElectricConductivity</a> (const <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &amp;sigma)</td></tr>
-<tr class="memdesc:a5fd5e74e2b08cbd9f0a4d21582b18e48 inherit pro_methods_a00029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set (constant) electric conductivity. <br /></td></tr>
-<tr class="separator:a5fd5e74e2b08cbd9f0a4d21582b18e48 inherit pro_methods_a00029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f0508214458c79b1da012058364ad40 inherit pro_methods_a00029"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f0508214458c79b1da012058364ad40"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a8f0508214458c79b1da012058364ad40">ElectricConductivity</a> (const string &amp;exp)</td></tr>
-<tr class="memdesc:a8f0508214458c79b1da012058364ad40 inherit pro_methods_a00029"><td class="mdescLeft">&#160;</td><td class="mdescRight">set electric conductivity given by an algebraic expression <br /></td></tr>
-<tr class="separator:a8f0508214458c79b1da012058364ad40 inherit pro_methods_a00029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a381ccce0928fbad840a57b054e7eb9b0 inherit pro_methods_a00029"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a381ccce0928fbad840a57b054e7eb9b0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a381ccce0928fbad840a57b054e7eb9b0">setMaterial</a> ()</td></tr>
-<tr class="memdesc:a381ccce0928fbad840a57b054e7eb9b0 inherit pro_methods_a00029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set material properties. <br /></td></tr>
-<tr class="separator:a381ccce0928fbad840a57b054e7eb9b0 inherit pro_methods_a00029"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a335d0339fe70071fcdf4cd5b1c7b5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0a335d0339fe70071fcdf4cd5b1c7b5f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga0a335d0339fe70071fcdf4cd5b1c7b5f">Grid</a> ()</td></tr>
+<tr class="memdesc:ga0a335d0339fe70071fcdf4cd5b1c7b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a default grid with 10 intervals in each direction. <br /></td></tr>
+<tr class="separator:ga0a335d0339fe70071fcdf4cd5b1c7b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef6c769c18847566879724e0641d93ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaef6c769c18847566879724e0641d93ae">Grid</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xm, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xM, size_t npx)</td></tr>
+<tr class="memdesc:gaef6c769c18847566879724e0641d93ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 1-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#gaef6c769c18847566879724e0641d93ae">More...</a><br /></td></tr>
+<tr class="separator:gaef6c769c18847566879724e0641d93ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7f0e09e0868e20292e3b418e0a3fce9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaa7f0e09e0868e20292e3b418e0a3fce9">Grid</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xm, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xM, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ym, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> yM, size_t npx, size_t npy)</td></tr>
+<tr class="memdesc:gaa7f0e09e0868e20292e3b418e0a3fce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 2-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#gaa7f0e09e0868e20292e3b418e0a3fce9">More...</a><br /></td></tr>
+<tr class="separator:gaa7f0e09e0868e20292e3b418e0a3fce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0528674c839ad69c4ab242ddc0dcf655"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga0528674c839ad69c4ab242ddc0dcf655">Grid</a> (<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; m, <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; M, size_t npx, size_t npy)</td></tr>
+<tr class="memdesc:ga0528674c839ad69c4ab242ddc0dcf655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 2-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#ga0528674c839ad69c4ab242ddc0dcf655">More...</a><br /></td></tr>
+<tr class="separator:ga0528674c839ad69c4ab242ddc0dcf655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1eab4d5181c7b7294bca6e650da4f061"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga1eab4d5181c7b7294bca6e650da4f061">Grid</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xm, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xM, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ym, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> yM, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> zm, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> zM, size_t npx, size_t npy, size_t npz)</td></tr>
+<tr class="memdesc:ga1eab4d5181c7b7294bca6e650da4f061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 3-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#ga1eab4d5181c7b7294bca6e650da4f061">More...</a><br /></td></tr>
+<tr class="separator:ga1eab4d5181c7b7294bca6e650da4f061"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae195c690cdc77fe012f139e11a13e25b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gae195c690cdc77fe012f139e11a13e25b">Grid</a> (<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; m, <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; M, size_t npx, size_t npy, size_t npz)</td></tr>
+<tr class="memdesc:gae195c690cdc77fe012f139e11a13e25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a 3-D structured grid given its extremal coordinates and number of intervals.  <a href="a00342.html#gae195c690cdc77fe012f139e11a13e25b">More...</a><br /></td></tr>
+<tr class="separator:gae195c690cdc77fe012f139e11a13e25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f65f5226354bc55b1419cfec3c8bf84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga9f65f5226354bc55b1419cfec3c8bf84">setXMin</a> (const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:ga9f65f5226354bc55b1419cfec3c8bf84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set min. coordinates of the domain.  <a href="a00342.html#ga9f65f5226354bc55b1419cfec3c8bf84">More...</a><br /></td></tr>
+<tr class="separator:ga9f65f5226354bc55b1419cfec3c8bf84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5cd060d87716f96df1fe751da2458ab1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga5cd060d87716f96df1fe751da2458ab1">setXMax</a> (const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="separator:ga5cd060d87716f96df1fe751da2458ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga908ba56330052baa8b0a5507e1e1ab54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga908ba56330052baa8b0a5507e1e1ab54">setDomain</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax)</td></tr>
+<tr class="memdesc:ga908ba56330052baa8b0a5507e1e1ab54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dimensions of the domain: 1-D case.  <a href="a00342.html#ga908ba56330052baa8b0a5507e1e1ab54">More...</a><br /></td></tr>
+<tr class="separator:ga908ba56330052baa8b0a5507e1e1ab54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa946270292476658200512e284668c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaaa946270292476658200512e284668c1">setDomain</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymax)</td></tr>
+<tr class="memdesc:gaaa946270292476658200512e284668c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dimensions of the domain: 2-D case.  <a href="a00342.html#gaaa946270292476658200512e284668c1">More...</a><br /></td></tr>
+<tr class="separator:gaaa946270292476658200512e284668c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c6c8c9cf29134901b832311148f2b64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga0c6c8c9cf29134901b832311148f2b64">setDomain</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> xmax, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> ymax, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> zmin, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> zmax)</td></tr>
+<tr class="memdesc:ga0c6c8c9cf29134901b832311148f2b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dimensions of the domain: 3-D case.  <a href="a00342.html#ga0c6c8c9cf29134901b832311148f2b64">More...</a><br /></td></tr>
+<tr class="separator:ga0c6c8c9cf29134901b832311148f2b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e293fe603f3854e0b2adfa755874e2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga6e293fe603f3854e0b2adfa755874e2a">setDomain</a> (<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; xmin, <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; xmax)</td></tr>
+<tr class="memdesc:ga6e293fe603f3854e0b2adfa755874e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Dimensions of the domain: 3-D case.  <a href="a00342.html#ga6e293fe603f3854e0b2adfa755874e2a">More...</a><br /></td></tr>
+<tr class="separator:ga6e293fe603f3854e0b2adfa755874e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f710af98b9af3b3a076e7932df61c08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8f710af98b9af3b3a076e7932df61c08"></a>
+const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga8f710af98b9af3b3a076e7932df61c08">getXMin</a> () const </td></tr>
+<tr class="memdesc:ga8f710af98b9af3b3a076e7932df61c08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return min. Coordinates of the domain. <br /></td></tr>
+<tr class="separator:ga8f710af98b9af3b3a076e7932df61c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga368ab2e4aa92aaeaa421852da842350d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga368ab2e4aa92aaeaa421852da842350d"></a>
+const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga368ab2e4aa92aaeaa421852da842350d">getXMax</a> () const </td></tr>
+<tr class="memdesc:ga368ab2e4aa92aaeaa421852da842350d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return max. Coordinates of the domain. <br /></td></tr>
+<tr class="separator:ga368ab2e4aa92aaeaa421852da842350d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6b564dcefa010a74d10ae72d42fb432"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gad6b564dcefa010a74d10ae72d42fb432">setN</a> (size_t nx, size_t ny=0, size_t nz=0)</td></tr>
+<tr class="memdesc:gad6b564dcefa010a74d10ae72d42fb432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set number of grid intervals in the <code>x</code>, <code>y</code> and <code>z</code>-directions.  <a href="a00342.html#gad6b564dcefa010a74d10ae72d42fb432">More...</a><br /></td></tr>
+<tr class="separator:gad6b564dcefa010a74d10ae72d42fb432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6108ee34e301370c503a4036edaf444"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac6108ee34e301370c503a4036edaf444"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gac6108ee34e301370c503a4036edaf444">getNx</a> () const </td></tr>
+<tr class="memdesc:gac6108ee34e301370c503a4036edaf444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of grid intervals in the <code>x</code>-direction. <br /></td></tr>
+<tr class="separator:gac6108ee34e301370c503a4036edaf444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3faf43ad9af0105239d4c871919556e9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga3faf43ad9af0105239d4c871919556e9">getNy</a> () const </td></tr>
+<tr class="memdesc:ga3faf43ad9af0105239d4c871919556e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of grid intervals in the <code>y</code>-direction.  <a href="a00342.html#ga3faf43ad9af0105239d4c871919556e9">More...</a><br /></td></tr>
+<tr class="separator:ga3faf43ad9af0105239d4c871919556e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bc76639788ffbef4af28d44d9da907d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga8bc76639788ffbef4af28d44d9da907d">getNz</a> () const </td></tr>
+<tr class="memdesc:ga8bc76639788ffbef4af28d44d9da907d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of grid intervals in the z-direction.  <a href="a00342.html#ga8bc76639788ffbef4af28d44d9da907d">More...</a><br /></td></tr>
+<tr class="separator:ga8bc76639788ffbef4af28d44d9da907d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c5d7672afd2798cc7e0aebecc790d3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5c5d7672afd2798cc7e0aebecc790d3c"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga5c5d7672afd2798cc7e0aebecc790d3c">getHx</a> () const </td></tr>
+<tr class="memdesc:ga5c5d7672afd2798cc7e0aebecc790d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return grid size in the x-direction. <br /></td></tr>
+<tr class="separator:ga5c5d7672afd2798cc7e0aebecc790d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a28ec4697078e06a0452f99e79cea9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4a28ec4697078e06a0452f99e79cea9f"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga4a28ec4697078e06a0452f99e79cea9f">getHy</a> () const </td></tr>
+<tr class="memdesc:ga4a28ec4697078e06a0452f99e79cea9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return grid size in the y-direction. <br /></td></tr>
+<tr class="separator:ga4a28ec4697078e06a0452f99e79cea9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa92b82704be79fd55751d2d7d6f5b77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaa92b82704be79fd55751d2d7d6f5b77"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaaa92b82704be79fd55751d2d7d6f5b77">getHz</a> () const </td></tr>
+<tr class="memdesc:gaaa92b82704be79fd55751d2d7d6f5b77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return grid size in the z-direction. <br /></td></tr>
+<tr class="separator:gaaa92b82704be79fd55751d2d7d6f5b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga922f02925c6d7f3f1371287c3bd2f5cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga922f02925c6d7f3f1371287c3bd2f5cc"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga922f02925c6d7f3f1371287c3bd2f5cc">getCoord</a> (size_t i) const </td></tr>
+<tr class="memdesc:ga922f02925c6d7f3f1371287c3bd2f5cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates a point with label <code>i</code> in a 1-D grid. <br /></td></tr>
+<tr class="separator:ga922f02925c6d7f3f1371287c3bd2f5cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae89642f6fab3ba14a63cbcd5e2fa3246"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae89642f6fab3ba14a63cbcd5e2fa3246"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gae89642f6fab3ba14a63cbcd5e2fa3246">getCoord</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:gae89642f6fab3ba14a63cbcd5e2fa3246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates a point with label <code>(i,j)</code> in a 2-D grid. <br /></td></tr>
+<tr class="separator:gae89642f6fab3ba14a63cbcd5e2fa3246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabfda8585cf7fa2ffcaef31f11388a31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaabfda8585cf7fa2ffcaef31f11388a31"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaabfda8585cf7fa2ffcaef31f11388a31">getCoord</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:gaabfda8585cf7fa2ffcaef31f11388a31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates a point with label <code>(i,j,k)</code> in a 3-D grid. <br /></td></tr>
+<tr class="separator:gaabfda8585cf7fa2ffcaef31f11388a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa21e3ea3ce6e914be8fdc47d071269d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa21e3ea3ce6e914be8fdc47d071269d9"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaa21e3ea3ce6e914be8fdc47d071269d9">getX</a> (size_t i) const </td></tr>
+<tr class="memdesc:gaa21e3ea3ce6e914be8fdc47d071269d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return x-coordinate of point with index <code>i</code> <br /></td></tr>
+<tr class="separator:gaa21e3ea3ce6e914be8fdc47d071269d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70bea550a19c21b2264826c024628b10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga70bea550a19c21b2264826c024628b10"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga70bea550a19c21b2264826c024628b10">getY</a> (size_t j) const </td></tr>
+<tr class="memdesc:ga70bea550a19c21b2264826c024628b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return y-coordinate of point with index <code>j</code> <br /></td></tr>
+<tr class="separator:ga70bea550a19c21b2264826c024628b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0240c716d0e351dd684147f08c0a4390"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0240c716d0e351dd684147f08c0a4390"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga0240c716d0e351dd684147f08c0a4390">getZ</a> (size_t k) const </td></tr>
+<tr class="memdesc:ga0240c716d0e351dd684147f08c0a4390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return z-coordinate of point with index <code>k</code> <br /></td></tr>
+<tr class="separator:ga0240c716d0e351dd684147f08c0a4390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada4a17e443b900bbf48cd01ae2f13c8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gada4a17e443b900bbf48cd01ae2f13c8c"></a>
+<a class="el" href="a00090.html">Point2D</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gada4a17e443b900bbf48cd01ae2f13c8c">getXY</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:gada4a17e443b900bbf48cd01ae2f13c8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of point with indices <code>(i,j)</code> <br /></td></tr>
+<tr class="separator:gada4a17e443b900bbf48cd01ae2f13c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga770d3dc41442a06792aea5285230c947"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga770d3dc41442a06792aea5285230c947"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga770d3dc41442a06792aea5285230c947">getXYZ</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:ga770d3dc41442a06792aea5285230c947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of point with indices <code>(i,j,k)</code> <br /></td></tr>
+<tr class="separator:ga770d3dc41442a06792aea5285230c947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28a4776b700c9dc74061860f70c09c97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28a4776b700c9dc74061860f70c09c97"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga28a4776b700c9dc74061860f70c09c97">getCenter</a> (size_t i) const </td></tr>
+<tr class="memdesc:ga28a4776b700c9dc74061860f70c09c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of a 1-D cell with indices <code>i</code>, <code>i+1</code> <br /></td></tr>
+<tr class="separator:ga28a4776b700c9dc74061860f70c09c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bae0c310514803bb28fc349506a1408"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6bae0c310514803bb28fc349506a1408"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga6bae0c310514803bb28fc349506a1408">getCenter</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:ga6bae0c310514803bb28fc349506a1408"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of a 2-D cell with indices <code>(i,j)</code>, <code>(i+1,j)</code>, <code>(i+1,j+1)</code>, <code>(i,j+1)</code> <br /></td></tr>
+<tr class="separator:ga6bae0c310514803bb28fc349506a1408"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f90f4f63da3e3669a49586a9362c79c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4f90f4f63da3e3669a49586a9362c79c"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga4f90f4f63da3e3669a49586a9362c79c">getCenter</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:ga4f90f4f63da3e3669a49586a9362c79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of a 3-D cell with indices <code>(i,j,k)</code>, <code>(i+1,j,k)</code>, <code>(i+1,j+1,k)</code>, <code>(i,j+1,k)</code>, <code>(i,j,k+1)</code>, <code>(i+1,j,k+1)</code>, <code>(i+1,j+1,k+1)</code>, <code>(i,j+1,k+1)</code> <br /></td></tr>
+<tr class="separator:ga4f90f4f63da3e3669a49586a9362c79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d8498e490acb140283ba216b5a8be8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga5d8498e490acb140283ba216b5a8be8a">setCode</a> (string exp, int code)</td></tr>
+<tr class="memdesc:ga5d8498e490acb140283ba216b5a8be8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a code for some grid points.  <a href="a00342.html#ga5d8498e490acb140283ba216b5a8be8a">More...</a><br /></td></tr>
+<tr class="separator:ga5d8498e490acb140283ba216b5a8be8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga214f158f212516a7d6a94760feb467f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga214f158f212516a7d6a94760feb467f6">setCode</a> (int side, int code)</td></tr>
+<tr class="memdesc:ga214f158f212516a7d6a94760feb467f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a code for grid points on sides.  <a href="a00342.html#ga214f158f212516a7d6a94760feb467f6">More...</a><br /></td></tr>
+<tr class="separator:ga214f158f212516a7d6a94760feb467f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga822494ad167a04bd6211ee893be42502"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga822494ad167a04bd6211ee893be42502">getCode</a> (int side) const </td></tr>
+<tr class="memdesc:ga822494ad167a04bd6211ee893be42502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code for a side number.  <a href="a00342.html#ga822494ad167a04bd6211ee893be42502">More...</a><br /></td></tr>
+<tr class="separator:ga822494ad167a04bd6211ee893be42502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77f9be7b6ad92b6ad54b4e018f7b91fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga77f9be7b6ad92b6ad54b4e018f7b91fd">getCode</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:ga77f9be7b6ad92b6ad54b4e018f7b91fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code for a grid point.  <a href="a00342.html#ga77f9be7b6ad92b6ad54b4e018f7b91fd">More...</a><br /></td></tr>
+<tr class="separator:ga77f9be7b6ad92b6ad54b4e018f7b91fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c4742d55bb2cd7f12e97aa466cc17cd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga9c4742d55bb2cd7f12e97aa466cc17cd">getCode</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:ga9c4742d55bb2cd7f12e97aa466cc17cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return code for a grid point.  <a href="a00342.html#ga9c4742d55bb2cd7f12e97aa466cc17cd">More...</a><br /></td></tr>
+<tr class="separator:ga9c4742d55bb2cd7f12e97aa466cc17cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5113d0202730c14569f3b62b4020906c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5113d0202730c14569f3b62b4020906c"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga5113d0202730c14569f3b62b4020906c">getDim</a> () const </td></tr>
+<tr class="memdesc:ga5113d0202730c14569f3b62b4020906c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return space dimension. <br /></td></tr>
+<tr class="separator:ga5113d0202730c14569f3b62b4020906c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89f7cf12c09343988c846c1bc31a8950"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga89f7cf12c09343988c846c1bc31a8950">Deactivate</a> (size_t i)</td></tr>
+<tr class="memdesc:ga89f7cf12c09343988c846c1bc31a8950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change state of a cell from active to inactive (1-D grid)  <a href="a00342.html#ga89f7cf12c09343988c846c1bc31a8950">More...</a><br /></td></tr>
+<tr class="separator:ga89f7cf12c09343988c846c1bc31a8950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad75e7ed91f3c0c6741741c02616bce7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gad75e7ed91f3c0c6741741c02616bce7b">Deactivate</a> (size_t i, size_t j)</td></tr>
+<tr class="memdesc:gad75e7ed91f3c0c6741741c02616bce7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change state of a cell from active to inactive (2-D grid)  <a href="a00342.html#gad75e7ed91f3c0c6741741c02616bce7b">More...</a><br /></td></tr>
+<tr class="separator:gad75e7ed91f3c0c6741741c02616bce7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b422946d495c9d3d8688068ea466c33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga9b422946d495c9d3d8688068ea466c33">Deactivate</a> (size_t i, size_t j, size_t k)</td></tr>
+<tr class="memdesc:ga9b422946d495c9d3d8688068ea466c33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change state of a cell from active to inactive (2-D grid)  <a href="a00342.html#ga9b422946d495c9d3d8688068ea466c33">More...</a><br /></td></tr>
+<tr class="separator:ga9b422946d495c9d3d8688068ea466c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa247b029fd25144ad14ae81c25eff4bb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaa247b029fd25144ad14ae81c25eff4bb">isActive</a> (size_t i) const </td></tr>
+<tr class="memdesc:gaa247b029fd25144ad14ae81c25eff4bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if cell is active or not (1-D grid)  <a href="a00342.html#gaa247b029fd25144ad14ae81c25eff4bb">More...</a><br /></td></tr>
+<tr class="separator:gaa247b029fd25144ad14ae81c25eff4bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad692ac8559707437d922dccbbefd557"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#gaad692ac8559707437d922dccbbefd557">isActive</a> (size_t i, size_t j) const </td></tr>
+<tr class="memdesc:gaad692ac8559707437d922dccbbefd557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if cell is active or not (2-D grid)  <a href="a00342.html#gaad692ac8559707437d922dccbbefd557">More...</a><br /></td></tr>
+<tr class="separator:gaad692ac8559707437d922dccbbefd557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d755137e2bf3ce1e7caf520a5ee6c38"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html#ga6d755137e2bf3ce1e7caf520a5ee6c38">isActive</a> (size_t i, size_t j, size_t k) const </td></tr>
+<tr class="memdesc:ga6d755137e2bf3ce1e7caf520a5ee6c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if cell is active or not (3-D grid)  <a href="a00342.html#ga6d755137e2bf3ce1e7caf520a5ee6c38">More...</a><br /></td></tr>
+<tr class="separator:ga6d755137e2bf3ce1e7caf520a5ee6c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Builds finite element arrays for Helmholtz equations in a bounded media using 3-Node triangles. </p>
-<p>Problem being formulated in time harmonics, the solution is complex valued.</p>
+<div class="textblock"><p>To manipulate structured grids. </p>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aad172b2da4a7261b16ceff32795796d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00045.html">HelmholtzBT3</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00070.html">Mesh</a> &amp;&#160;</td>
-          <td class="paramname"><em>ms</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using mesh data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ms</td><td><a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ae3f038e36228e733acb9b38d974dfe3c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00045.html">HelmholtzBT3</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00070.html">Mesh</a> &amp;&#160;</td>
-          <td class="paramname"><em>ms</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>u</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor using mesh and solution vector. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ms</td><td><a class="el" href="a00070.html" title="To store and manipulate finite element meshes. ">Mesh</a> instance </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">u</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance containing solution </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 
 </div> <!-- class text -->
 </div> <!-- main menu -->

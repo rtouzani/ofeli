@@ -27,11 +27,12 @@
 
                        Class DC3DAT3 : Diffusion-Convection Element
                          using 3-Node Triangular Finite element
-                            in Axisymmetric geometries
+                             in Axisymmetric geometries
 
   ==============================================================================*/
 
 
+#include "equations/Equation_impl.h"
 #include "equations/therm/DC3DAT3.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Line2.h"
@@ -47,7 +48,7 @@ DC3DAT3::DC3DAT3()
 
 
 DC3DAT3::DC3DAT3(Mesh& ms) 
-       : Equation<real_t,3,3,2,2>(ms)
+       : Equation<3,3,2,2>(ms)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "2-D, 3-Node Axisymmetric Triangles (P1)";
@@ -59,7 +60,7 @@ DC3DAT3::DC3DAT3(Mesh& ms)
 
 DC3DAT3::DC3DAT3(Mesh&         ms,
                  Vect<real_t>& u)
-        : Equation<real_t,3,3,2,2>(ms,u)
+        : Equation<3,3,2,2>(ms,u)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "2-D, 3-Node Axisymmetric Triangles (P1)";
@@ -81,7 +82,8 @@ void DC3DAT3::set(const Element* el)
    _el_geo.center = tr.getCenter();
    _dSh = tr.DSh();
    ElementNodeCoordinates();
-   ElementVector(*_u);
+   ElementNodeVector(*_u,_eu);
+   _r[0] = _x[0].x, _r[1] = _x[1].x, _r[2] = _x[2].x;
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_Cp_set)
@@ -99,7 +101,7 @@ void DC3DAT3::set(const Side* sd)
    Line2 ln(sd);
    SideNodeCoordinates();
    _el_geo.length = ln.getLength();
-   _r[0] = _x[0].x; _r[1] = _x[1].x;
+   _r[0] = _x[0].x, _r[1] = _x[1].x;
    sMat = 0;
    sRHS = 0;
 }

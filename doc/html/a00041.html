@@ -53,7 +53,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00041.html">Figure</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00041.html">FEShape</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -61,178 +61,210 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a00384.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Figure Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00339.html">Finite Element Mesh</a></div></div>  </div>
+<div class="title">FEShape Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00340.html">Shape Function</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>To store and treat a figure (or shape) information.  
+<p>Parent class from which inherit all finite element shape classes.  
  <a href="a00041.html#details">More...</a></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for Figure:</div>
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for FEShape:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
  <div class="center">
-  <img src="a00041.png" usemap="#Figure_map" alt=""/>
-  <map id="Figure_map" name="Figure_map">
-<area href="a00005.html" title="To store and treat a brick (parallelepiped) figure. " alt="Brick" shape="rect" coords="0,56,68,80"/>
-<area href="a00006.html" title="To store and treat a circular figure. " alt="Circle" shape="rect" coords="78,56,146,80"/>
-<area href="a00027.html" title="To store and treat an ellipsoidal figure. " alt="Ellipse" shape="rect" coords="156,56,224,80"/>
-<area href="a00090.html" title="To store and treat a polygonal figure. " alt="Polygon" shape="rect" coords="234,56,302,80"/>
-<area href="a00095.html" title="To store and treat a rectangular figure. " alt="Rectangle" shape="rect" coords="312,56,380,80"/>
-<area href="a00100.html" title="To store and treat a sphere. " alt="Sphere" shape="rect" coords="390,56,458,80"/>
-<area href="a00112.html" title="To store and treat a triangle. " alt="Triangle" shape="rect" coords="468,56,536,80"/>
+  <img src="a00041.png" usemap="#FEShape_map" alt=""/>
+  <map id="FEShape_map" name="FEShape_map">
+<area href="a00047.html" title="Defines a three-dimensional 8-node hexahedral finite element using Q1-isoparametric interpolation..." alt="Hexa8" shape="rect" coords="0,56,64,80"/>
+<area href="a00063.html" title="To describe a 2-Node planar line finite element. " alt="Line2" shape="rect" coords="74,56,138,80"/>
+<area href="a00064.html" title="To describe a 3-Node quadratic planar line finite element. " alt="Line3" shape="rect" coords="148,56,212,80"/>
+<area href="a00087.html" title="Defines a 6-node pentahedral finite element using P1 interpolation in local coordinates (s..." alt="Penta6" shape="rect" coords="222,56,286,80"/>
+<area href="a00094.html" title="Defines a 4-node quadrilateral finite element using Q1 isoparametric interpolation. " alt="Quad4" shape="rect" coords="296,56,360,80"/>
+<area href="a00105.html" title="Defines a three-dimensional 4-node tetrahedral finite element using P1 interpolation. " alt="Tetra4" shape="rect" coords="370,56,434,80"/>
+<area href="a00112.html" title="Defines a triangle. The reference element is the rectangle triangle with two unit edges..." alt="triangle" shape="rect" coords="444,56,508,80"/>
+<area href="a00110.html" title="Defines a 3-Node (P1) triangle. " alt="Triang3" shape="rect" coords="407,112,471,136"/>
+<area href="a00111.html" title="Defines a 6-Node straight triangular finite element using P2 interpolation. " alt="Triang6S" shape="rect" coords="481,112,545,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae49c513c5bcadb29c0764c1746bfd924"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae49c513c5bcadb29c0764c1746bfd924"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ae49c513c5bcadb29c0764c1746bfd924">Figure</a> ()</td></tr>
-<tr class="memdesc:ae49c513c5bcadb29c0764c1746bfd924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:ae49c513c5bcadb29c0764c1746bfd924"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0b3ecf250250edd504dd29bf970a7bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0b3ecf250250edd504dd29bf970a7bc"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ae0b3ecf250250edd504dd29bf970a7bc">Figure</a> (const <a class="el" href="a00041.html">Figure</a> &amp;f)</td></tr>
-<tr class="memdesc:ae0b3ecf250250edd504dd29bf970a7bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor. <br /></td></tr>
-<tr class="separator:ae0b3ecf250250edd504dd29bf970a7bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2356b66e5c02f39b568f4c8a7651e36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2356b66e5c02f39b568f4c8a7651e36"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ac2356b66e5c02f39b568f4c8a7651e36">~Figure</a> ()</td></tr>
-<tr class="memdesc:ac2356b66e5c02f39b568f4c8a7651e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:ac2356b66e5c02f39b568f4c8a7651e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2520b3fc10894bb8fc4a96014dfb0d08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2520b3fc10894bb8fc4a96014dfb0d08"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a2520b3fc10894bb8fc4a96014dfb0d08">setCode</a> (int code)</td></tr>
-<tr class="memdesc:a2520b3fc10894bb8fc4a96014dfb0d08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a code for the domain defined by the figure. <br /></td></tr>
-<tr class="separator:a2520b3fc10894bb8fc4a96014dfb0d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93db4ba70a1377a45693ef18761a320e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a93db4ba70a1377a45693ef18761a320e">getSignedDistance</a> (const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p) const </td></tr>
-<tr class="memdesc:a93db4ba70a1377a45693ef18761a320e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return signed distance from a given point to current figure.  <a href="#a93db4ba70a1377a45693ef18761a320e">More...</a><br /></td></tr>
-<tr class="separator:a93db4ba70a1377a45693ef18761a320e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba4e541736626476d5685efb0c55ff01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba4e541736626476d5685efb0c55ff01"></a>
-<a class="el" href="a00041.html">Figure</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aba4e541736626476d5685efb0c55ff01">operator=</a> (const <a class="el" href="a00041.html">Figure</a> &amp;f)</td></tr>
-<tr class="memdesc:aba4e541736626476d5685efb0c55ff01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator =. <br /></td></tr>
-<tr class="separator:aba4e541736626476d5685efb0c55ff01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c73c78cfdd388e41c610bddd61e1a35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a1c73c78cfdd388e41c610bddd61e1a35">getSignedDistance</a> (const <a class="el" href="a00044.html">Grid</a> &amp;g, <a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;d) const </td></tr>
-<tr class="memdesc:a1c73c78cfdd388e41c610bddd61e1a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate signed distance to current figure with respect to grid points.  <a href="#a1c73c78cfdd388e41c610bddd61e1a35">More...</a><br /></td></tr>
-<tr class="separator:a1c73c78cfdd388e41c610bddd61e1a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a365c3b4ced8699612dbce7bd450bdfe9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a365c3b4ced8699612dbce7bd450bdfe9">dLine</a> (const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p, const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;a, const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="a00342.html#gaf5cd2eaaceda19772fd904539819158c">b</a>) const </td></tr>
-<tr class="memdesc:a365c3b4ced8699612dbce7bd450bdfe9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute signed distance from a line.  <a href="#a365c3b4ced8699612dbce7bd450bdfe9">More...</a><br /></td></tr>
-<tr class="separator:a365c3b4ced8699612dbce7bd450bdfe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1a6254740b6e11468dee2abfccc051a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1a6254740b6e11468dee2abfccc051a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af1a6254740b6e11468dee2abfccc051a">FEShape</a> ()</td></tr>
+<tr class="memdesc:af1a6254740b6e11468dee2abfccc051a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="separator:af1a6254740b6e11468dee2abfccc051a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb4644a9ace5adbdc1c05efcc72da1f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#afcb4644a9ace5adbdc1c05efcc72da1f">FEShape</a> (const <a class="el" href="a00025.html">Element</a> *el)</td></tr>
+<tr class="memdesc:afcb4644a9ace5adbdc1c05efcc72da1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an element.  <a href="#afcb4644a9ace5adbdc1c05efcc72da1f">More...</a><br /></td></tr>
+<tr class="separator:afcb4644a9ace5adbdc1c05efcc72da1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad662c28c63e9e8c72fddb76f5028ed61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ad662c28c63e9e8c72fddb76f5028ed61">FEShape</a> (const <a class="el" href="a00097.html">Side</a> *sd)</td></tr>
+<tr class="memdesc:ad662c28c63e9e8c72fddb76f5028ed61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a side.  <a href="#ad662c28c63e9e8c72fddb76f5028ed61">More...</a><br /></td></tr>
+<tr class="separator:ad662c28c63e9e8c72fddb76f5028ed61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ba928b2c14260b47beab071c1e347bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ba928b2c14260b47beab071c1e347bd"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a3ba928b2c14260b47beab071c1e347bd">~FEShape</a> ()</td></tr>
+<tr class="memdesc:a3ba928b2c14260b47beab071c1e347bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a3ba928b2c14260b47beab071c1e347bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf13023b750b4a215814cfb805b145da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf13023b750b4a215814cfb805b145da"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#abf13023b750b4a215814cfb805b145da">Sh</a> (size_t i) const </td></tr>
+<tr class="memdesc:abf13023b750b4a215814cfb805b145da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return shape function of node <code>i</code> at given point. <br /></td></tr>
+<tr class="separator:abf13023b750b4a215814cfb805b145da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc79aaeb587148410021052f410d4dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a4fc79aaeb587148410021052f410d4dc">Sh</a> (size_t i, <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; s) const </td></tr>
+<tr class="memdesc:a4fc79aaeb587148410021052f410d4dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shape function of node <code>i</code> at a given point <code>s</code>.  <a href="#a4fc79aaeb587148410021052f410d4dc">More...</a><br /></td></tr>
+<tr class="separator:a4fc79aaeb587148410021052f410d4dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f35cc59cf2218efd06b13c2487f31cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a0f35cc59cf2218efd06b13c2487f31cc">getDet</a> () const </td></tr>
+<tr class="memdesc:a0f35cc59cf2218efd06b13c2487f31cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return determinant of jacobian.  <a href="#a0f35cc59cf2218efd06b13c2487f31cc">More...</a><br /></td></tr>
+<tr class="separator:a0f35cc59cf2218efd06b13c2487f31cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a802168de29d5e265ee01a57fd98793e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a802168de29d5e265ee01a57fd98793e8"></a>
+<a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a802168de29d5e265ee01a57fd98793e8">getCenter</a> () const </td></tr>
+<tr class="memdesc:a802168de29d5e265ee01a57fd98793e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of element. <br /></td></tr>
+<tr class="separator:a802168de29d5e265ee01a57fd98793e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5af4f17aea53c0ab1e8ce2494f23234"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ad5af4f17aea53c0ab1e8ce2494f23234">getLocalPoint</a> () const </td></tr>
+<tr class="memdesc:ad5af4f17aea53c0ab1e8ce2494f23234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize a point in the element.  <a href="#ad5af4f17aea53c0ab1e8ce2494f23234">More...</a><br /></td></tr>
+<tr class="separator:ad5af4f17aea53c0ab1e8ce2494f23234"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a565411b0254679f383549c1a09bf2352"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a565411b0254679f383549c1a09bf2352">getLocalPoint</a> (const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;s) const </td></tr>
+<tr class="memdesc:a565411b0254679f383549c1a09bf2352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize a point in the element.  <a href="#a565411b0254679f383549c1a09bf2352">More...</a><br /></td></tr>
+<tr class="separator:a565411b0254679f383549c1a09bf2352"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>To store and treat a figure (or shape) information. </p>
-<p>This class is essentially useful to construct data for mesh generators and for distance calculations.</p>
+<div class="textblock"><p>Parent class from which inherit all finite element shape classes. </p>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a93db4ba70a1377a45693ef18761a320e"></a>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="afcb4644a9ace5adbdc1c05efcc72da1f"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> getSignedDistance </td>
+          <td class="memname"><a class="el" href="a00041.html">FEShape</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>p</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="a00025.html">Element</a> *&#160;</td>
+          <td class="paramname"><em>el</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for an element. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">el</td><td>Pointer to element </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad662c28c63e9e8c72fddb76f5028ed61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00041.html">FEShape</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00097.html">Side</a> *&#160;</td>
+          <td class="paramname"><em>sd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for a side. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">sd</td><td>Pointer to side </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a4fc79aaeb587148410021052f410d4dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> Sh </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate shape function of node <code>i</code> at a given point <code>s</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Local node label </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td><a class="el" href="a00089.html" title="Defines a point with arbitrary type coordinates. ">Point</a> in the reference triangle where the shape function is evaluated </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0f35cc59cf2218efd06b13c2487f31cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> getDet </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Return signed distance from a given point to current figure. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td><a class="el" href="a00088.html" title="Defines a point with arbitrary type coordinates. ">Point</a> instance from which distance is computed </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Reimplemented in <a class="el" href="a00090.html#a5900986f0e62239ca60183f7a86fdd71">Polygon</a>, <a class="el" href="a00112.html#a5900986f0e62239ca60183f7a86fdd71">Triangle</a>, <a class="el" href="a00027.html#a5900986f0e62239ca60183f7a86fdd71">Ellipse</a>, <a class="el" href="a00100.html#a5900986f0e62239ca60183f7a86fdd71">Sphere</a>, <a class="el" href="a00006.html#a5900986f0e62239ca60183f7a86fdd71">Circle</a>, <a class="el" href="a00005.html#a5900986f0e62239ca60183f7a86fdd71">Brick</a>, and <a class="el" href="a00095.html#a5900986f0e62239ca60183f7a86fdd71">Rectangle</a>.</p>
+<p>Return determinant of jacobian. </p>
+<p>If the transformation (Reference element -&gt; Actual element) is not affine, member function <b>setLocal()</b> must have been called before in order to calcuate relevant quantities. </p>
 
 </div>
 </div>
-<a class="anchor" id="a1c73c78cfdd388e41c610bddd61e1a35"></a>
+<a class="anchor" id="ad5af4f17aea53c0ab1e8ce2494f23234"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void getSignedDistance </td>
+          <td class="memname"><a class="el" href="a00089.html">Point</a>&lt;<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt; getLocalPoint </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00044.html">Grid</a> &amp;&#160;</td>
-          <td class="paramname"><em>g</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00114.html">Vect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>d</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calculate signed distance to current figure with respect to grid points. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">g</td><td><a class="el" href="a00044.html" title="To manipulate structured grids. ">Grid</a> instance </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">d</td><td><a class="el" href="a00114.html" title="To handle general purpose vectors. ">Vect</a> instance containing calculated distance from each grid index to <a class="el" href="a00041.html" title="To store and treat a figure (or shape) information. ">Figure</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section remark"><dt>Remarks</dt><dd>Vector <code>d</code> doesn't need to be sized before invoking this function </dd></dl>
+<p>Localize a point in the element. </p>
+<p>Return actual coordinates in the reference element. If the transformation (Reference element -&gt; Actual element) is not affine, member function <b>setLocal()</b> must have been called before in order to calcuate relevant quantities. </p>
 
 </div>
 </div>
-<a class="anchor" id="a365c3b4ced8699612dbce7bd450bdfe9"></a>
+<a class="anchor" id="a565411b0254679f383549c1a09bf2352"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> dLine </td>
+          <td class="memname"><a class="el" href="a00089.html">Point</a>&lt;<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&gt; getLocalPoint </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>a</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramtype">const <a class="el" href="a00089.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compute signed distance from a line. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td><a class="el" href="a00088.html" title="Defines a point with arbitrary type coordinates. ">Point</a> for which distance is computed </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>First vertex of line </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Second vertex of line </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Signed distance </dd></dl>
+<p>Localize a point in the element. </p>
+<p>Return actual coordinates where <code>s</code> are coordinates in the reference element. </p>
 
 </div>
 </div>

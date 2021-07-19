@@ -38,7 +38,6 @@
 
 #include "equations/electromagnetics/Equa_Electromagnetics.h"
 
-using std::complex;
 
 namespace OFELI {
 /*!
@@ -56,19 +55,21 @@ namespace OFELI {
  *  \brief Builds finite element arrays for Helmholtz equations in a bounded media
  *  using 3-Node triangles.
  *
- *  \details Problem being formulated in time harmonics, the solution is complex valued.
+ *  \details Problem being formulated in time harmonics, the solution is complex-valued
+ *  but stored in 2-degree of freedom real-valued vector.
+ *  Therefore, mesh must be defined with 2 degrees of freedom per node
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
 
-class HelmholtzBT3 : virtual public Equa_Electromagnetics<complex_t,3,3,2,2>
+class HelmholtzBT3 : virtual public Equa_Electromagnetics<3,6,2,4>
 {
 
  public:
 
 /// \brief Default Constructor
-    HelmholtzBT3() { }
+    HelmholtzBT3();
 
 /** \brief Constructor using mesh data
  *  @param [in] ms Mesh instance
@@ -79,8 +80,8 @@ class HelmholtzBT3 : virtual public Equa_Electromagnetics<complex_t,3,3,2,2>
  *  @param [in] ms Mesh instance
  *  @param [in,out] u Vect instance containing solution
  */
-    HelmholtzBT3(Mesh&            ms,
-                 Vect<complex_t>& u);
+    HelmholtzBT3(Mesh&         ms,
+                 Vect<real_t>& u);
 
 /// \brief Destructor
     ~HelmholtzBT3();
@@ -92,10 +93,10 @@ class HelmholtzBT3 : virtual public Equa_Electromagnetics<complex_t,3,3,2,2>
     void LHS();
 
 /// \brief Add element Right-Hand Side
-    void BodyRHS(Vect<complex_t>& f);
+    void BodyRHS(Vect<real_t>& f);
 
 /// \brief Add side Right-Hand Side
-    void BoundaryRHS(Vect<complex_t>& f);
+    void BoundaryRHS(Vect<real_t>& f);
 
  private:
    void set(const Element* el);

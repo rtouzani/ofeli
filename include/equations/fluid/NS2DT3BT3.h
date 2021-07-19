@@ -57,7 +57,7 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class NS2DT3BT3 : virtual public Equa_Fluid<real_t,3,9,2,6> {
+class NS2DT3BT3 : virtual public Equa_Fluid<3,9,2,6> {
 
  public :
 

@@ -57,7 +57,7 @@ namespace OFELI {
  *  This makes possible testing different algorithms.
  */
 
-class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
+class DC1DL2 : public Equa_Therm<2,2,1,1>
 {
 
  public:
@@ -84,7 +84,7 @@ class DC1DL2 : public Equa_Therm<real_t,2,2,1,1>
            real_t&       init_time,
            real_t&       final_time,
            real_t&       time_step)
-    : Equation<real_t,2,2,1,1>(mesh,b,init_time,final_time,time_step) { }
+    : Equation<2,2,1,1>(mesh,b,init_time,final_time,time_step) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Destructor

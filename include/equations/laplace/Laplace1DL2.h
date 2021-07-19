@@ -61,11 +61,11 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class Laplace1DL2 : public Equa_Laplace<real_t,2,2,1,1> {
+class Laplace1DL2 : public Equa_Laplace<2,2,1,1> {
 
  public :
 
-    using Equa<real_t>::setInput;
+    using Equa::setInput;
 
 /// \brief Default constructor
     Laplace1DL2();

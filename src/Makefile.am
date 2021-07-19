@@ -6,7 +6,8 @@ SUBDIRS = linear_algebra mesh io post shape_functions solvers util equations
 
 libofeli_a_SOURCES =
 
-EQUATIONS_OBJS = equations/DG.o
+EQUATIONS_OBJS = equations/Equa.o \
+                 equations/DG.o
 
 CL_OBJS = equations/cl/Muscl.o \
           equations/cl/Muscl1D.o \

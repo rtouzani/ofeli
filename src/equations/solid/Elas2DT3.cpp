@@ -45,7 +45,7 @@ Elas2DT3::Elas2DT3()
 
 
 Elas2DT3::Elas2DT3(Mesh& ms) 
-         : Equation<real_t,3,6,2,4>(ms)
+         : Equation<3,6,2,4>(ms)
 {
    _equation_name = "Linearized Elasticity";
    _finite_element = "2-D, 3-Node Triangles (P1)";
@@ -64,7 +64,7 @@ Elas2DT3::Elas2DT3(Mesh& ms)
 
 Elas2DT3::Elas2DT3(Mesh&         ms,
                    Vect<real_t>& u) 
-         : Equation<real_t,3,6,2,4>(ms,u)
+         : Equation<3,6,2,4>(ms,u)
 {
    _equation_name = "Linearized Elasticity";
    _finite_element = "2-D, 3-Node Triangles (P1)";
@@ -95,7 +95,7 @@ void Elas2DT3::set(const Element* el)
    _dSh = tr.DSh();
    ElementNodeCoordinates();
    ElementNodeVector(*_u,_eu);
-   if (Equa<real_t>::_bf!=nullptr)
+   if (Equa::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
@@ -115,7 +115,7 @@ void Elas2DT3::set(const Side* sd)
    _el_geo.length = ln.getLength();
    SideNodeCoordinates();
    SideNodeVector(*_u,_su);
-   if (Equa<real_t>::_sf!=nullptr)
+   if (Equa::_sf!=nullptr)
       SideVector(*_sf,_ssf);
    sA0 = 0;
    sRHS = 0;

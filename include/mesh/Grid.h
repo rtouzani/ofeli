@@ -207,6 +207,9 @@ class Grid
               size_t ny=0,
               size_t nz=0);
 
+/// \brief Set number of degrees of freedom for a node [Default: <tt>1</tt>]
+    void setNbDOF(size_t n);
+
 /// \brief Return number of grid intervals in the <tt>x</tt>-direction.
     size_t getNx() const { return _n.x; }
 
@@ -238,6 +241,12 @@ class Grid
     Point<real_t> getCoord(size_t i,
                            size_t j,
                            size_t k) const;
+
+/// \brief Return total number of grid nodes
+    size_t getNbNodes() const { return _nb_nodes; }
+
+/// \brief Return total number of dof
+    size_t getNbDOF() const { return _nb_nodes*_nb_dof; }
 
 /// \brief Return x-coordinate of point with index <tt>i</tt>
     real_t getX(size_t i) const;
@@ -372,7 +381,7 @@ class Grid
        { return _active[_n.y*_n.z*(i-1)+_n.z*(j-1)+k-1]; }
 
   private:
-    size_t _dim;
+    size_t _dim, _nb_nodes, _nb_dof;
     Point<real_t> _xmin, _xmax, _h;
     Point<size_t> _n;
     Point<int> _cm, _cM;

@@ -33,11 +33,11 @@
 #ifndef __FAST_MARCHING_3DG_H
 #define __FAST_MARCHING_3DG_H
 
-#include "equations/Equa_impl.h"
 #include "equations/interface/FMHeap.h"
 #include "mesh/Grid.h"
 #include "linear_algebra/Vect.h"
 #include "util/util.h"
+#include "equations/Equa.h"
 
 /*!
  * \file FastMarching3DG.h
@@ -51,20 +51,24 @@ namespace OFELI {
  */
 
 /*! 
- * \class FastMarching
+ * \class FastMarching3DG
  * \brief class for the fast marching algorithm on 3-D uniform grids
  *
  * \details This class implements the Fast Marching method to solve
  * the eikonal equation in a 3-D uniform grid.
  * In other words, the class solves the partial differential equation
- *    |\nabla u|F = 1
- * with u = 0 on the interface, where \c F is the velocity 
+ *    |&nabla;T|F = 1
+ * with T = 0 on the interface, where \c F is the velocity 
  */
 
-class FastMarching3DG : virtual public Equa<real_t>
+class FastMarching3DG : virtual public Equa
 {
 
  public:
+
+   using Equa::_u;
+   using Equa::_v;
+   using Equa::_b;
 
 /*!
  * \brief Default Constructor
@@ -102,12 +106,12 @@ class FastMarching3DG : virtual public Equa<real_t>
  * </ul>
  * \param [in] F Vector containing propagation speed at grid nodes
  */
-    FastMarching3DG(const Grid&         g,
-                    Vect<real_t>&       T,
-                    const Vect<real_t>& F);
+    FastMarching3DG(const Grid&   g,
+                    Vect<real_t>& T,
+                    Vect<real_t>& F);
 
 /// \brief Destructor
-    ~FastMarching3DG() { }
+    ~FastMarching3DG();
 
 /**
  * @brief Define grid and solution vector
@@ -139,13 +143,13 @@ class FastMarching3DG : virtual public Equa<real_t>
  * </ul>
  * @param [in] F Vector containing propagation speed at grid nodes
  */
-    void set(const Grid&         g,
-             Vect<real_t>&       T,
-             const Vect<real_t>& F);
+    void set(const Grid&   g,
+             Vect<real_t>& T,
+             Vect<real_t>& F);
 
 
-/** Execute Fast Marching Procedure
- *  Once this function is invoked, the vector \c T in the constructor or in the member function \c set
+/** \brief Execute Fast Marching Procedure
+ *  \details Once this function is invoked, the vector \c T in the constructor or in the member function \c set
  *  contains the solution
  *  @return Return value:
  *  <ul>
@@ -160,31 +164,22 @@ class FastMarching3DG : virtual public Equa<real_t>
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Check consistency by computing the discrete residual.
-/// \details This function returns residual error (||\nabla u|^2|F|-1|)
+/// \details This function returns residual error (||&nabla;u|<sup>2</sup>|F|<sup>2</sup>-1|)
     real_t getResidual();
-
-/**
- * @brief Extend speed vector to whole domain
- * 
- * @param[out] v Vector containing speed at each grid node
- */
-   void ExtendSpeed(Vect<real_t>& v);
 
  private:
 
    FMHeap _Narrow;
    Pt *_p, *_np;
-   vector<Pt> _u;
+   vector<Pt> _U;
    vector<Pt *> _neigs;
    const Grid *_theGrid;
-   Vect<real_t> *_T, _F;
    size_t _nx, _ny, _nz;
    real_t _hx, _hy, _hz;
    void init();
    real_t eval();
-   int Neigs();
-   void UpdateExt(int i, int j, int k, Vect<real_t>& v);
-   int IJK(int i, int j, int k) const { return (_ny+1)*(_nz+1)*(i-1)+(_nz+1)*(j-1)+k-1; }
+   size_t Neigs();
+   size_t IJK(int i, int j, int k) const { return (_ny+1)*(_nz+1)*(i-1)+(_nz+1)*(j-1)+k-1; }
 };
 
 /*! @} End of Doxygen Groups */

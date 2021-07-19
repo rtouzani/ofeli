@@ -75,7 +75,6 @@ ODESolver::ODESolver()
             _linear(false), _a0(false), _a1(false), _a2(false), _constant_matrix(false), _regex(false),
             _explicit(false), _init(false), _lhs(false), _rhs(false), _time(0.), _beta(0.25), _gamma(0.5)
 {
-   setScheme();
 }
 
 
@@ -85,33 +84,7 @@ ODESolver::ODESolver(size_t nb_eq)
             _a0(false), _a1(false), _a2(false), _constant_matrix(false), _regex(false), _explicit(false),
             _init(false), _lhs(false), _rhs(false), _time(0.), _beta(0.25), _gamma(0.5)
 {
-   setScheme();
-   _type = SCALAR_NL;
-   if (_nb_eq>1)
-      _type = VECTOR_LINEAR;
-   _x.setSize(_nb_eq);
-   _u.setSize(_nb_eq);
-   _v.setSize(_nb_eq);
-   _b.setSize(_nb_eq);
-   _f0.setSize(_nb_eq);
-   _f1.setSize(_nb_eq);
-   _f01.setSize(_nb_eq);
-   _f2.setSize(_nb_eq);
-   _vF1.setSize(_nb_eq);
-   _vF2.setSize(_nb_eq);
-   _ddu.setSize(_nb_eq);
-   _dudt.setSize(_nb_eq);
-   _theF.resize(_nb_eq);
-   _theDF.resize(_nb_eq*_nb_eq);
-   _thedFdt.resize(_nb_eq);
-   _xv.resize(_nb_eq+1);
-   _var.push_back("t");
-   if (_nb_eq==1)
-      _var.push_back("y");
-   else {
-      for (size_t j=1; j<=_nb_eq; ++j)
-         _var.push_back("y"+to_string(j));
-   }
+   setNbEq(_nb_eq);
 }
 
 
@@ -125,8 +98,26 @@ ODESolver::ODESolver(TimeScheme s,
             _init(false), _lhs(false), _rhs(false), _time_step(time_step), _time(0.), _final_time(final_time),
             _beta(0.25), _gamma(0.5)
 {
-   setScheme();
    set(s,time_step,final_time);
+   setNbEq(_nb_eq);
+}
+
+
+ODESolver::~ODESolver()
+{
+   if (_fct_allocated) {
+      for (size_t i=0; i<_nb_eq; ++i) {
+         delete _theF[i];
+         delete _theDF[i];
+         delete _thedFdt[i];
+      }
+   }
+}
+
+
+void ODESolver::setNbEq(size_t n)
+{
+   _nb_eq = n;
    _x.setSize(_nb_eq);
    _u.setSize(_nb_eq);
    _v.setSize(_nb_eq);
@@ -156,33 +147,6 @@ ODESolver::ODESolver(TimeScheme s,
       for (size_t j=1; j<=_nb_eq; ++j)
          _var.push_back("y"+to_string(j));
    }
-}
-
-
-ODESolver::~ODESolver()
-{
-   if (_fct_allocated) {
-      for (size_t i=0; i<_nb_eq; ++i) {
-         delete _theF[i];
-         delete _theDF[i];
-         delete _thedFdt[i];
-      }
-   }
-}
-
-
-void ODESolver::setScheme()
-{
-   _sch[FORWARD_EULER] = 1;
-   _sch[BACKWARD_EULER] = 2;
-   _sch[CRANK_NICOLSON] = 3;
-   _sch[HEUN] = 4;
-   _sch[NEWMARK] = 5;
-   _sch[LEAP_FROG] = 6;
-   _sch[AB2] = _sch[ADAMS_BASHFORTH] = 7;
-   _sch[RK4] = _sch[RUNGE_KUTTA] = 8;
-   _sch[RK3_TVD] = 9;
-   _sch[BDF2] = 10;
 }
 
 
@@ -265,8 +229,6 @@ void ODESolver::setF(string f)
    static size_t i=0;
    if (i+1>_nb_eq)
       throw OFELIException("In ODESolver::setF(string):\nToo many function definitions.");
-   if (_step==1)
-      i = 0;
    _dF_computed = true;
    _theF[i++] = new Fct(f,_var);
    _fct_allocated = true;
@@ -311,8 +273,6 @@ void ODESolver::setF(Fct& f)
    static size_t i=0;
    if (i+1>_nb_eq)
       throw OFELIException("In ODESolver::setF(Fct):\nToo many function definitions.");
-   if (_step==1)
-      i = 0;
    _dF_computed = true;
    _theF[i++] = &f;
    _fct_allocated = false;

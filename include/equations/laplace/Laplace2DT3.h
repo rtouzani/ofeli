@@ -58,11 +58,11 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class Laplace2DT3 : virtual public Equa_Laplace<real_t,3,3,2,2> {
+class Laplace2DT3 : virtual public Equa_Laplace<3,3,2,2> {
 
  public:
 
-   using Equation<real_t,3,3,2,2>::_dSh;
+   using Equation<3,3,2,2>::_dSh;
 
 /// \brief Default constructor.
     Laplace2DT3();

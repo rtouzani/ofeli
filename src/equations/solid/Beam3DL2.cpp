@@ -36,7 +36,7 @@
 namespace OFELI {
 
 Beam3DL2::Beam3DL2(Mesh& ms)
-         : Equation<real_t,2,12,1,6>(ms)
+         : Equation<2,12,1,6>(ms)
 {
    _equation_name = "Beam equation";
    _finite_element = "2-D, 2-Node lines (P1)";
@@ -47,7 +47,7 @@ Beam3DL2::Beam3DL2(Mesh& ms)
 
 Beam3DL2::Beam3DL2(Mesh&         ms,
                    Vect<real_t>& u)
-         : Equation<real_t,2,12,1,6>(ms,u)
+         : Equation<2,12,1,6>(ms,u)
 {
    _equation_name = "Beam equation";
    _finite_element = "2-D, 2-Node lines (P1)";
@@ -129,22 +129,22 @@ void Beam3DL2::getDisp(Vect<real_t>& d)
 
 void Beam3DL2::build()
 {
-   Equa<real_t>::_A->clear();
+   Equa::_A->clear();
    MESH_EL {
       set(the_element);
       if (_analysis==TRANSIENT) {
-         ElementVector(*Equa<real_t>::_u);
+         ElementVector(*Equa::_u);
          if (_terms&LUMPED_MASS)
             LMass();
          if (_terms&MASS)
             Mass();
       }
       Stiffness();
-      Equa<real_t>::_A->Assembly(The_element,eMat.get());
-      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
+      Equa::_A->Assembly(The_element,eMat.get());
+      Equa::_b->Assembly(The_element,eRHS.get());
    }
    if (_pf!=nullptr)
-      *Equa<real_t>::_b += *_pf;
+      *Equa::_b += *_pf;
 }
 
 

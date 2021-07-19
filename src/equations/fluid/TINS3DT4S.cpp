@@ -29,7 +29,6 @@
 
   ==============================================================================*/
 
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "equations/fluid/TINS3DT4S.h"
 #include "shape_functions/Tetra4.h"
@@ -50,7 +49,7 @@ TINS3DT4S::TINS3DT4S()
 
 
 TINS3DT4S::TINS3DT4S(Mesh& ms)
-          : Equation<real_t,4,12,3,9>(ms), _constant_matrix(true)
+          : Equation<4,12,3,9>(ms), _constant_matrix(true)
 {
    _TimeInt.step = 0;
    init();
@@ -60,7 +59,7 @@ TINS3DT4S::TINS3DT4S(Mesh& ms)
 
 TINS3DT4S::TINS3DT4S(Mesh&         ms,
                      Vect<real_t>& u)
-          : Equation<real_t,4,12,3,9>(ms,u), _constant_matrix(true)
+          : Equation<4,12,3,9>(ms,u), _constant_matrix(true)
 {
    _TimeInt.step = 0;
    init();
@@ -98,7 +97,7 @@ void TINS3DT4S::init()
 void TINS3DT4S::setInput(EqDataType    opt,
                          Vect<real_t>& u)
 {
-   Equa<real_t>::setInput(opt,u);
+   Equa::setInput(opt,u);
    if (opt==PRESSURE_FIELD) {
       _p = &u;
       getPressure();
@@ -297,11 +296,11 @@ void TINS3DT4S::getMomentum()
       }
 
 //    Boundary conditions
-      Equa_Fluid<real_t,4,12,3,9>::updateBC(The_element,*_bc);
+      Equa_Fluid<4,12,3,9>::updateBC(The_element,*_bc);
 
 //    Assembly of matrix and R.H.S.
-      Equa<real_t>::_A->Assembly(The_element,eMat.get());
-      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
+      Equa::_A->Assembly(The_element,eMat.get());
+      Equa::_b->Assembly(The_element,eRHS.get());
    }
 
 // Solve the linear system

@@ -44,7 +44,6 @@
 #include "shape_functions/Hexa8.h"
 #include "shape_functions/Penta6.h"
 #include "io/Tabulation.h"
-#include "equations/Equa.h"
 #include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 
@@ -922,12 +921,12 @@ void XMLParser::read_tab(const StringMap::iterator& i)
       else if (i->first=="nb_pts") {
          size_t k = atoi((i->second).c_str());
          if (_scan==false)
-            _theTabulation->_funct(_nb_funct).Np[_nb_var-1] = k;
+            _theTabulation->_funct[_nb_funct-1].Np[_nb_var-1] = k;
       }
       else if (i->first=="min")
-         _theTabulation->_funct(_nb_funct).Min[_nb_var-1] = atof((i->second).c_str());    
+         _theTabulation->_funct[_nb_funct-1].Min[_nb_var-1] = atof((i->second).c_str());    
       else if (i->first=="max")
-         _theTabulation->_funct(_nb_funct).Max[_nb_var-1] = atof((i->second).c_str());    
+         _theTabulation->_funct[_nb_funct-1].Max[_nb_var-1] = atof((i->second).c_str());    
    }
 
    else if (_tag_name=="Data") {
@@ -1562,7 +1561,7 @@ void XMLParser::read_tab_data(const vector<string>&     tokens,
    _theTabulation->setSizes();
    size_t i=1;
    while (it!=tokens.end())
-      _theTabulation->_funct(_nb_funct).Val(i++) = atof((*it++).c_str());
+      _theTabulation->_funct[_nb_funct-1].Val(i++) = atof((*it++).c_str());
 }
 
 

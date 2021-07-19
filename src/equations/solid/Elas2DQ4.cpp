@@ -39,7 +39,7 @@
 namespace OFELI {
 
 Elas2DQ4::Elas2DQ4(Mesh& ms)
-         : Equation<real_t,4,8,2,4>(ms), _quad(nullptr), _ln(nullptr)
+         : Equation<4,8,2,4>(ms), _quad(nullptr), _ln(nullptr)
 {
    _equation_name = "Linearized elasticity";
    _finite_element = "2-D, 4-Node quadrilaterals (Q1)";
@@ -51,7 +51,7 @@ Elas2DQ4::Elas2DQ4(Mesh& ms)
 
 Elas2DQ4::Elas2DQ4(Mesh&         ms,
                    Vect<real_t>& u)
-         : Equation<real_t,4,8,2,4>(ms,u), _quad(nullptr), _ln(nullptr)
+         : Equation<4,8,2,4>(ms,u), _quad(nullptr), _ln(nullptr)
 {
    _equation_name = "Linearized elasticity";
    _finite_element = "2-D, 4-Node quadrilaterals (Q1)";
@@ -85,9 +85,9 @@ void Elas2DQ4::set(const Element* el)
    _el_geo.center = _quad->getCenter();
    PlaneStrain();
    ElementNodeCoordinates();
-   if (Equa<real_t>::_u!=nullptr)
+   if (Equa::_u!=nullptr)
       ElementNodeVector(*_u,_eu);
-   if (Equa<real_t>::_bf!=nullptr)
+   if (Equa::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
@@ -112,9 +112,9 @@ void Elas2DQ4::set(const Side* sd)
    _g[0] = g.x(1); _g[1] = g.x(2);
    _ww[0] = g.w(1); _ww[1] = g.w(2);
    SideNodeCoordinates();
-   if (Equa<real_t>::_u!=nullptr)
+   if (Equa::_u!=nullptr)
       SideNodeVector(*_u,_su);
-   if (Equa<real_t>::_sf!=nullptr)
+   if (Equa::_sf!=nullptr)
       SideVector(*_sf,_ssf);
    sMat = 0;
    sRHS = 0;

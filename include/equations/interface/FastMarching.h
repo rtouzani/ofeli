@@ -56,11 +56,11 @@ namespace OFELI {
  * \details This class implements the Fast Marching method to solve
  * the eikonal equation in a uniform grid (1-D, 2-D or 3-D).
  * In other words, the class solves the partial differential equation
- *    |\nabla u|F = 1
+ *    |&nabla;u|F = 1
  * with u = 0 on the interface, where \c F is the velocity 
  */
 
-class FastMarching : virtual public Equa<real_t>
+class FastMarching : virtual public Equa
 {
 
  public:
@@ -101,9 +101,9 @@ class FastMarching : virtual public Equa<real_t>
  * </ul>
  * \param [in] F Vector containing propagation speed at grid nodes
  */
-    FastMarching(const Grid&         g,
-                 Vect<real_t>&       T,
-                 const Vect<real_t>& F);
+    FastMarching(const Grid&   g,
+                 Vect<real_t>& T,
+                 Vect<real_t>& F);
 
 /// \brief Destructor
     ~FastMarching();
@@ -138,14 +138,13 @@ class FastMarching : virtual public Equa<real_t>
  * </ul>
  * @param [in] F Vector containing propagation speed at grid nodes
  */
-    void set(const Grid&         g,
-             Vect<real_t>&       T,
-             const Vect<real_t>& F);
+    void set(const Grid&   g,
+             Vect<real_t>& T,
+             Vect<real_t>& F);
 
-
-/** Execute Fast Marching Procedure
- *  Once this function is invoked, the vector \c T in the constructor or in the member function \c set
- *  contains the solution
+/** \brief Execute Fast Marching Procedure
+ *  \details Once this function is invoked, the vector \c T in the constructor or in the member function \c set
+ *  contains the solution.
  *  @return Return value:
  *  <ul>
  *    <li> = 0 if solution has been normally computed
@@ -159,15 +158,8 @@ class FastMarching : virtual public Equa<real_t>
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Check consistency by computing the discrete residual.
-/// \details This function returns residual error (||\nabla u|^2|F|-1|)
+/// \details This function returns residual error (||&nabla; u|^2|F|-1|)
     real_t getResidual();
-
-/**
- * @brief Extend speed vector to whole domain
- * 
- * @param[out] v Vector containing speed at each grid node
- */
-   void ExtendSpeed(Vect<real_t>& v);
    
  private:
 

@@ -39,7 +39,7 @@
 namespace OFELI {
 
 NS2DT3BT3::NS2DT3BT3(Mesh& ms)
-          : Equation<real_t,3,9,2,6>(ms)
+          : Equation<3,9,2,6>(ms)
 {
    _equation_name = "Navier-Stokes";
    _finite_element = "2-D, P1+Bubble/P1";
@@ -49,7 +49,7 @@ NS2DT3BT3::NS2DT3BT3(Mesh& ms)
 
 NS2DT3BT3::NS2DT3BT3(Mesh&         ms,
                      Vect<real_t>& u)
-          : Equation<real_t,3,9,2,6>(ms,u)
+          : Equation<3,9,2,6>(ms,u)
 {
    _equation_name = "Navier-Stokes";
    _finite_element = "2-D, P1+Bubble/P1";
@@ -98,10 +98,10 @@ void NS2DT3BT3::build()
       Misc();
       Viscous();
       PressureGradient();
-      if (Equa<real_t>::_bc!=nullptr)
-         Equation<real_t,3,9,2,6>::updateBC(The_element,*Equa<real_t>::_bc);
-      Equa<real_t>::_A->Assembly(The_element,eA0.get());
-      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
+      if (Equa::_bc!=nullptr)
+         Equation<3,9,2,6>::updateBC(The_element,*Equa::_bc);
+      Equa::_A->Assembly(The_element,eA0.get());
+      Equa::_b->Assembly(The_element,eRHS.get());
    }
 }
 

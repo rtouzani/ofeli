@@ -53,7 +53,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00043.html">Gauss</a></li>  </ul>
+<li class="navelem"><a class="el" href="a00324.html">OFELI</a></li><li class="navelem"><a class="el" href="a00043.html">Funct</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -61,87 +61,104 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a00386.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Gauss Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00335.html">Utilities</a></div></div>  </div>
+<div class="title">Funct Class Reference<div class="ingroups"><a class="el" href="a00342.html">OFELI</a><a class="el" href="a00342.html">OFELI</a> &raquo;  &#124; <a class="el" href="a00335.html">Utilities</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Calculate data for Gauss integration.  
+<p>A simple class to parse real valued functions.  
  <a href="a00043.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af9f3b1e7a7b3a7c9f04b9eea81ea836b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9f3b1e7a7b3a7c9f04b9eea81ea836b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#af9f3b1e7a7b3a7c9f04b9eea81ea836b">Gauss</a> ()</td></tr>
-<tr class="memdesc:af9f3b1e7a7b3a7c9f04b9eea81ea836b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
-<tr class="separator:af9f3b1e7a7b3a7c9f04b9eea81ea836b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecd62a41ddc1a71da8acbb12cce50dbc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aecd62a41ddc1a71da8acbb12cce50dbc">Gauss</a> (size_t np)</td></tr>
-<tr class="memdesc:aecd62a41ddc1a71da8acbb12cce50dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using number of <a class="el" href="a00043.html" title="Calculate data for Gauss integration. ">Gauss</a> points.  <a href="#aecd62a41ddc1a71da8acbb12cce50dbc">More...</a><br /></td></tr>
-<tr class="separator:aecd62a41ddc1a71da8acbb12cce50dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6a8dae6b91358b3ab30e78d8e666866"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6a8dae6b91358b3ab30e78d8e666866"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ae6a8dae6b91358b3ab30e78d8e666866">setNbPoints</a> (size_t np)</td></tr>
-<tr class="memdesc:ae6a8dae6b91358b3ab30e78d8e666866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set number of integration points. <br /></td></tr>
-<tr class="separator:ae6a8dae6b91358b3ab30e78d8e666866"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a638c51e12d47a6da324d2c89c7107564"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a638c51e12d47a6da324d2c89c7107564">setTriangle</a> (<a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 7 &gt; &amp;<a class="el" href="a00043.html#a554924d779d783548a139da9d76fa44e">w</a>, <a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;, 7 &gt; &amp;<a class="el" href="a00043.html#a186ff0a045ae2f0e2f4a81c905b47441">x</a>)</td></tr>
-<tr class="memdesc:a638c51e12d47a6da324d2c89c7107564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose integration on triangle (7-point formula)  <a href="#a638c51e12d47a6da324d2c89c7107564">More...</a><br /></td></tr>
-<tr class="separator:a638c51e12d47a6da324d2c89c7107564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a186ff0a045ae2f0e2f4a81c905b47441"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a186ff0a045ae2f0e2f4a81c905b47441"></a>
-<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a186ff0a045ae2f0e2f4a81c905b47441">x</a> (size_t i) const </td></tr>
-<tr class="memdesc:a186ff0a045ae2f0e2f4a81c905b47441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinate of <code>i</code>-th Gauss-Legendre point. <br /></td></tr>
-<tr class="separator:a186ff0a045ae2f0e2f4a81c905b47441"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b4e5fe97f01383c65adc14bc62f060d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b4e5fe97f01383c65adc14bc62f060d"></a>
-const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a5b4e5fe97f01383c65adc14bc62f060d">xt</a> (size_t i) const </td></tr>
-<tr class="memdesc:a5b4e5fe97f01383c65adc14bc62f060d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of points in the reference triangle. <br /></td></tr>
-<tr class="separator:a5b4e5fe97f01383c65adc14bc62f060d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a554924d779d783548a139da9d76fa44e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a554924d779d783548a139da9d76fa44e"></a>
-<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a554924d779d783548a139da9d76fa44e">w</a> (size_t i) const </td></tr>
-<tr class="memdesc:a554924d779d783548a139da9d76fa44e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return weight of <code>i</code>-th Gauss-Legendre point. <br /></td></tr>
-<tr class="separator:a554924d779d783548a139da9d76fa44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe03ac0da5bff295fa386268e7c797cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe03ac0da5bff295fa386268e7c797cb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abe03ac0da5bff295fa386268e7c797cb">Funct</a> ()</td></tr>
+<tr class="memdesc:abe03ac0da5bff295fa386268e7c797cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:abe03ac0da5bff295fa386268e7c797cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf6d56e8c561d144b79300e6620505de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#adf6d56e8c561d144b79300e6620505de">Funct</a> (string v)</td></tr>
+<tr class="memdesc:adf6d56e8c561d144b79300e6620505de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a function of one variable.  <a href="#adf6d56e8c561d144b79300e6620505de">More...</a><br /></td></tr>
+<tr class="separator:adf6d56e8c561d144b79300e6620505de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedd04f72c3fba91b1a2f5265d6884c09"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aedd04f72c3fba91b1a2f5265d6884c09">Funct</a> (string v1, string v2)</td></tr>
+<tr class="memdesc:aedd04f72c3fba91b1a2f5265d6884c09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a function of two variables.  <a href="#aedd04f72c3fba91b1a2f5265d6884c09">More...</a><br /></td></tr>
+<tr class="separator:aedd04f72c3fba91b1a2f5265d6884c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae114b99f60acdc0896646e0827c1a4f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ae114b99f60acdc0896646e0827c1a4f6">Funct</a> (string v1, string v2, string v3)</td></tr>
+<tr class="memdesc:ae114b99f60acdc0896646e0827c1a4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a function of three variables.  <a href="#ae114b99f60acdc0896646e0827c1a4f6">More...</a><br /></td></tr>
+<tr class="separator:ae114b99f60acdc0896646e0827c1a4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acea0fa65a813312f3274af0da5b18cf2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#acea0fa65a813312f3274af0da5b18cf2">Funct</a> (string v1, string v2, string v3, string v4)</td></tr>
+<tr class="memdesc:acea0fa65a813312f3274af0da5b18cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a function of four variables.  <a href="#acea0fa65a813312f3274af0da5b18cf2">More...</a><br /></td></tr>
+<tr class="separator:acea0fa65a813312f3274af0da5b18cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40596da4552f3566e68ea206ec5ac8e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40596da4552f3566e68ea206ec5ac8e6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a40596da4552f3566e68ea206ec5ac8e6">~Funct</a> ()</td></tr>
+<tr class="memdesc:a40596da4552f3566e68ea206ec5ac8e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:a40596da4552f3566e68ea206ec5ac8e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf0e81997b2ceb0133e6fb1ea852e00d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf0e81997b2ceb0133e6fb1ea852e00d"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abf0e81997b2ceb0133e6fb1ea852e00d">operator()</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> x) const </td></tr>
+<tr class="memdesc:abf0e81997b2ceb0133e6fb1ea852e00d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator () to evaluate the function with one variable <code>x</code> <br /></td></tr>
+<tr class="separator:abf0e81997b2ceb0133e6fb1ea852e00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8a8ca8b11521dc887dbf5d2c518a139"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8a8ca8b11521dc887dbf5d2c518a139"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aa8a8ca8b11521dc887dbf5d2c518a139">operator()</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> x, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> y) const </td></tr>
+<tr class="memdesc:aa8a8ca8b11521dc887dbf5d2c518a139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator () to evaluate the function with two variables <code>x</code>, <code>y</code> <br /></td></tr>
+<tr class="separator:aa8a8ca8b11521dc887dbf5d2c518a139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4023f95345b9aa971f7d5b418412e95d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4023f95345b9aa971f7d5b418412e95d"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a4023f95345b9aa971f7d5b418412e95d">operator()</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> x, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> y, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> z) const </td></tr>
+<tr class="memdesc:a4023f95345b9aa971f7d5b418412e95d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator () to evaluate the function with three variables <code>x</code>, <code>y</code>, <code>z</code> <br /></td></tr>
+<tr class="separator:a4023f95345b9aa971f7d5b418412e95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66c3918d6706199e773e82f18781e210"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66c3918d6706199e773e82f18781e210"></a>
+<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a66c3918d6706199e773e82f18781e210">operator()</a> (<a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> x, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> y, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> z, <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> t) const </td></tr>
+<tr class="memdesc:a66c3918d6706199e773e82f18781e210"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator () to evaluate the function with four variables <code>x</code>, <code>y</code>, <code>z</code> <br /></td></tr>
+<tr class="separator:a66c3918d6706199e773e82f18781e210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4453a426c6c40242c09961a8dd7bc62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ac4453a426c6c40242c09961a8dd7bc62">operator=</a> (string e)</td></tr>
+<tr class="memdesc:ac4453a426c6c40242c09961a8dd7bc62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator =.  <a href="#ac4453a426c6c40242c09961a8dd7bc62">More...</a><br /></td></tr>
+<tr class="separator:ac4453a426c6c40242c09961a8dd7bc62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Calculate data for Gauss integration. </p>
+<div class="textblock"><p>A simple class to parse real valued functions. </p>
+<p>Functions must have 1, 2, 3 or at most 4 variables. </p><dl class="section warning"><dt>Warning</dt><dd>Data in the file must be listed in the following order: <pre class="fragment">   for x=x_0,...,x_I
+       for y=y_0,...,y_J
+           for z=z_0,...,z_K
+               read v(x,y,z)
+</pre></dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aecd62a41ddc1a71da8acbb12cce50dbc"></a>
+<a class="anchor" id="adf6d56e8c561d144b79300e6620505de"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00043.html">Gauss</a> </td>
+          <td class="memname"><a class="el" href="a00043.html">Funct</a> </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>np</em></td><td>)</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor using number of <a class="el" href="a00043.html" title="Calculate data for Gauss integration. ">Gauss</a> points. </p>
+<p>Constructor for a function of one variable. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">np</td><td>Number of integration points </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Name of the variable </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a638c51e12d47a6da324d2c89c7107564"></a>
+<a class="anchor" id="aedd04f72c3fba91b1a2f5265d6884c09"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setTriangle </td>
+          <td class="memname"><a class="el" href="a00043.html">Funct</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>, 7 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>w</em>, </td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00066.html">LocalVect</a>&lt; <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt;, 7 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>&#160;</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v2</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -151,11 +168,127 @@ const <a class="el" href="a00088.html">Point</a>&lt; <a class="el" href="a00335.
       </table>
 </div><div class="memdoc">
 
-<p>Choose integration on triangle (7-point formula) </p>
-<p>If this is not selected, <a class="el" href="a00043.html" title="Calculate data for Gauss integration. ">Gauss</a> integration formula on <code>[-1,1]</code> is calculated. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructor for a function of two variables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">w</td><td>Array of weights of integration points </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>Array of coordinates of integration points </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v1</td><td>Name of the first variable </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v2</td><td>Name of the second variable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae114b99f60acdc0896646e0827c1a4f6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00043.html">Funct</a> </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v3</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for a function of three variables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">v1</td><td>Name of the first variable </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v2</td><td>Name of the second variable </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v3</td><td>Name of the third variable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="acea0fa65a813312f3274af0da5b18cf2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00043.html">Funct</a> </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>v4</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor for a function of four variables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">v1</td><td>Name of the first variable </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v2</td><td>Name of the second variable </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v3</td><td>Name of the third variable </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v4</td><td>Name of the fourth variable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ac4453a426c6c40242c09961a8dd7bc62"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void operator= </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>e</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Operator =. </p>
+<p>Define the function by an algebraic expression </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">e</td><td>Algebraic expression defining the function. </td></tr>
   </table>
   </dd>
 </dl>

@@ -38,8 +38,6 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "equations/Equa_impl.h"
-#include "equations/Equation_impl.h"
 #include "equations/fluid/NSP2DQ41.h"
 #include "equations/fluid/TINS2DT3S.h"
 #include "equations/fluid/TINS3DT4S.h"

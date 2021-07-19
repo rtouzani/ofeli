@@ -39,7 +39,7 @@ using std::to_string;
 namespace OFELI {
 
 Grid::Grid()
-     : _dim(2), _n(10), _cm(0), _cM(0)
+     : _dim(2), _nb_nodes(0), _nb_dof(1), _n(10), _cm(0), _cM(0)
 {
 }
 
@@ -58,6 +58,7 @@ Grid::Grid(real_t xm,
    _xmin.y = _xmax.y = _xmin.z = _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _active.resize(_n.x);
+   _nb_nodes = _n.x + 1;
    for (size_t i=0; i<_n.x; i++)
       _active[i] = 1;
 }
@@ -69,7 +70,7 @@ Grid::Grid(real_t xm,
            real_t yM,
            size_t npx,
            size_t npy)
-     : _dim(2), _cm(0), _cM(0)
+     : _dim(2), _nb_dof(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = 0;
    _h.z = 0;
@@ -84,6 +85,7 @@ Grid::Grid(real_t xm,
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
    _active.resize(_n.x*_n.y);
+   _nb_nodes = (_n.x+1)*(_n.y+1);
    for (size_t i=0; i<_n.x; i++)
       for (size_t j=0; j<_n.y; j++)
           _active[_n.y*i+j] = 1;
@@ -94,7 +96,7 @@ Grid::Grid(Point<real_t> m,
            Point<real_t> M,
            size_t        npx,
            size_t        npy)
-      : _dim(2), _cm(0), _cM(0)
+      : _dim(2), _nb_dof(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = 0;
    _h.z = 0;
@@ -108,6 +110,7 @@ Grid::Grid(Point<real_t> m,
    _xmin.z = _xmax.z = 0;
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
+   _nb_nodes = (_n.x+1)*(_n.y+1);
    _active.resize(_n.x*_n.y);
    for (size_t i=0; i<_n.x; i++)
       for (size_t j=0; j<_n.y; j++)
@@ -124,7 +127,7 @@ Grid::Grid(real_t xm,
            size_t npx,
            size_t npy,
            size_t npz)
-     : _dim(3), _cm(0), _cM(0)
+     : _dim(3), _nb_dof(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = npz;
    if (xM <= xm)
@@ -141,6 +144,7 @@ Grid::Grid(real_t xm,
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
    _h.z = (_xmax.z-_xmin.z)/_n.z;
+   _nb_nodes = (_n.x+1)*(_n.y+1)*(_n.z+1);
    _active.resize(_n.x*_n.y*_n.z);
    for (size_t i=0; i<_n.x; i++)
       for (size_t j=0; j<_n.y; j++)
@@ -154,7 +158,7 @@ Grid::Grid(Point<real_t> m,
            size_t        npx,
            size_t        npy,
            size_t        npz)
-     : _dim(3), _cm(0), _cM(0)
+     : _dim(3), _nb_dof(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = npz;
    if (npz==0)
@@ -174,11 +178,18 @@ Grid::Grid(Point<real_t> m,
    _h.x = (_xmax.x-_xmin.x)/_n.x;
    _h.y = (_xmax.y-_xmin.y)/_n.y;
    _h.z = (_xmax.z-_xmin.z)/_n.z;
+   _nb_nodes = (_n.x+1)*(_n.y+1)*(_n.z+1);
    _active.resize(_n.x*_n.y*_n.z);
    for (size_t i=0; i<_n.x; i++)
       for (size_t j=0; j<_n.y; j++)
          for (size_t k=0; k<_n.z; k++)
             _active[_n.y*_n.z*i+_n.z*j+k] = 1;
+}
+
+
+void Grid::setNbDOF(size_t n)
+{
+   _nb_dof = n;
 }
 
 
@@ -197,12 +208,14 @@ void Grid::setN(size_t nx,
       for (size_t i=0; i<_n.x; i++)
          for (size_t j=0; j<_n.y; j++)
             _active[_n.y*i+j] = 1;
+      _nb_nodes = (_n.x+1)*(_n.y+1);
    }
    if (ny==0) {
       _dim = 1;
       _active.resize(_n.x);
       for (size_t i=0; i<_n.x; i++)
           _active[i] = 1;
+      _nb_nodes = (_n.x+1);
    }
    if (_dim==3) {
       _active.resize(_n.x*_n.y*_n.z);
@@ -210,6 +223,7 @@ void Grid::setN(size_t nx,
          for (size_t j=0; j<_n.y; j++)
             for (size_t k=0; k<_n.z; k++)
                _active[_n.y*_n.z*i+_n.z*j+k] = 1;
+      _nb_nodes = (_n.x+1)*(_n.y+1)*(_n.z+1);
    }
    if (_h==0)
       throw OFELIException("Grid::setN(size_t,size_t,size_t): Grid size must be given first.");

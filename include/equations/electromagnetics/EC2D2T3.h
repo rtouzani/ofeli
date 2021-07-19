@@ -64,7 +64,10 @@ namespace OFELI {
  * \copyright GNU Lesser Public License
  */
 
-class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
+using std::complex;
+
+
+class EC2D2T3 : virtual public Equa_Electromagnetics<3,6,2,4>
 {
 
  public :
@@ -118,7 +121,7 @@ class EC2D2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
    Point<real_t> _N1, _N2, _M1, _M2;
    size_t        _ns, _nt, _i1, _j1, _i2, _j2;
    size_t _log_det(const Point<real_t> &ck, const Point<real_t> &cl);
-   complex_t _ablog(size_t det, complex_t a, complex_t b, real_t t);
+   complex<real_t> _ablog(size_t det, complex<real_t> a, complex<real_t> b, real_t t);
    void _Lkl(const Point<real_t> &uk, const Point<real_t> &vk,
              const Point<real_t> &ul, const Point<real_t> &vl,
              real_t &d1, real_t &d2);

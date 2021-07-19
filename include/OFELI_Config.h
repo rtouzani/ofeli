@@ -51,7 +51,7 @@
  * \def OFELI_VERSION
  * gives the current version of the library
  */
-#define OFELI_VERSION                 "4.0.2"
+#define OFELI_VERSION                 "4.1.1"
 
 /*!
  * \def OFELI_RELEASE_DATE

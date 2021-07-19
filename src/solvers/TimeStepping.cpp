@@ -31,7 +31,6 @@
 
 #include "solvers/TimeStepping.h"
 #include "solvers/LinearSolver.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/SkMatrix_impl.h"
@@ -118,7 +117,6 @@ TimeStepping::TimeStepping() :
               _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5), _nl_toler(1.e-6),
               _max_nl_it(100)
 {
-   setScheme();
 }
 
 
@@ -128,7 +126,6 @@ TimeStepping::TimeStepping(TimeScheme s,
               _order(0), _step(0), _nb_des(0), _ind(0), _time_step(0.1), _time(0.),
               _final_time(1.), _beta(0.25), _gamma(0.5), _nl_toler(1.e-6), _max_nl_it(100)
 {
-   setScheme();
    set(s,time_step,final_time);
 }
 
@@ -141,29 +138,8 @@ TimeStepping::~TimeStepping()
 }
 
 
-void TimeStepping::setScheme()
-{
-   _sch[FORWARD_EULER] = 0;
-   _sch[BACKWARD_EULER] = 1;
-   _sch[CRANK_NICOLSON] = 2;
-   _sch[HEUN] = 3;
-   _sch[NEWMARK] = 4;
-   _sch[LEAP_FROG] = 5;
-   _sch[AB2] = 6;
-   _sch[RK4] = 7;
-   _sch[RK3_TVD] = 8;
-   _sch[BDF2] = 9;
-   _sch[BUILTIN] = 10;
-   _scs = {{STATIONARY,"Stationary"}, {FORWARD_EULER,"Forward Euler"},
-           {BACKWARD_EULER,"Backward Euler"}, {CRANK_NICOLSON,"Crank-Nicolson"},
-           {HEUN,"Heun"}, {NEWMARK,"Newmark"}, {LEAP_FROG,"LeapFrog"},
-           {AB2,"Adams-Bashforth"}, {RK4,"Runge-Kutta 4"}, {RK3_TVD,"Runge-Kutta 3, TVD"},
-           {BDF2,"BDF 2"}, {BUILTIN,"BuiltIn"}};
-}
-
-
-void TimeStepping::setPDE(Equa<real_t>& eq,
-                          bool          nl)
+void TimeStepping::setPDE(Equa& eq,
+                          bool  nl)
 {
    DE de;
    de.constant_matrix = false;

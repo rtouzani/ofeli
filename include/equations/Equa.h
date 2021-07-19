@@ -180,8 +180,6 @@ struct ElementGeom {
  * \ingroup Equation
  * \brief Mother abstract class to describe equation.
  *
- * \tparam <T_> Data type (real_t, float, complex<real_t>, ...)
- *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
@@ -189,7 +187,6 @@ struct ElementGeom {
 class TimeStepping;
 
 
-template<class T_>
 class Equa
 {
 
@@ -234,7 +231,7 @@ class Equa
  *  \details 
  *  @param [in] Df
  */
-    void getTangent(Matrix<T_>* Df);
+    void getTangent(Matrix<real_t>* Df);
 
 /** \brief Set transient analysis settings
  *  \details Define a set of parameters for time integration
@@ -250,13 +247,13 @@ class Equa
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Return reference to linear solver instance
-    LinearSolver<T_> &getLinearSolver();
+    LinearSolver<real_t> &getLinearSolver();
 
 /// \brief Return pointer to matrix
 #if defined (USE_PETSC)
-    PETScMatrix<T_> *getMatrix() const;
+    PETScMatrix<real_t> *getMatrix() const;
 #else
-    Matrix<T_> *getMatrix() const;
+    Matrix<real_t> *getMatrix() const;
 #endif
 
 /** \brief Choose solver for the linear system
@@ -339,13 +336,13 @@ class Equa
  *  @param [in,out] x Vector containing initial guess of solution on input, actual solution on output
  */
 #if defined(USE_PETSC)
-    int solveLinearSystem(PETScMatrix<T_>* A,
-                          PETScVect<T_>&   b,
-                          PETScVect<T_>&   x);
+    int solveLinearSystem(PETScMatrix<real_t>* A,
+                          PETScVect<real_t>&   b,
+                          PETScVect<real_t>&   x);
 #else
-    int solveLinearSystem(Matrix<T_>* A,
-                          Vect<T_>&   b,
-                          Vect<T_>&   x);
+    int solveLinearSystem(Matrix<real_t>* A,
+                          Vect<real_t>&   b,
+                          Vect<real_t>&   x);
 #endif
 
 /** \brief Solve the linear system with given right-hand side
@@ -353,11 +350,11 @@ class Equa
  *  @param [in,out] x Vector containing initial guess of solution on input, actual solution on output
  */
 #if defined(USE_PETSC)
-    int solveLinearSystem(PETScVect<T_>& b,
-                          PETScVect<T_>& x);
+    int solveLinearSystem(PETScVect<real_t>& b,
+                          PETScVect<real_t>& x);
 #else
-    int solveLinearSystem(Vect<T_>& b,
-                          Vect<T_>& x);
+    int solveLinearSystem(Vect<real_t>& b,
+                          Vect<real_t>& x);
 #endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -409,10 +406,10 @@ class Equa
  */
 #if defined(USE_PETSC)
     virtual void setInput(EqDataType     opt,
-                          PETScVect<T_>& u);
+                          PETScVect<real_t>& u);
 #else
     virtual void setInput(EqDataType opt,
-                          Vect<T_>&  u);
+                          Vect<real_t>&  u);
 #endif
 
 /// \brief Set prescription
@@ -441,20 +438,20 @@ class Equa
    Fct                    _epsilon_fct, _omega_fct, _beta_fct, _v_fct, _young_fct, _poisson_fct;
    Fct                    _theFct;
    real_t                 _ex, _ey, _ez, _et;
-   LinearSolver<T_>       _ls;
+   LinearSolver<real_t>   _ls;
    real_t                 _toler;
    Prescription           *_prescription;
    TimeIntegration        _TimeInt;
    Analysis               _analysis;
    vector<Point<real_t> > _dSh;
    vector<real_t>         _sh, _wg;
-   T_                     _body_source, _bound_source;
+   real_t                 _body_source, _bound_source;
 #if defined(USE_PETSC)
-   PETScMatrix<T_>        *_A, *_CM, *_Df;
-   PETScVect<T_>          *_b, *_u, *_bc, *_bf, *_sf, *_pf, *_v, *_w, *_LM, _uu;
+   PETScMatrix<real_t>    *_A, *_CM, *_Df;
+   PETScVect<real_t>      *_b, *_u, *_bc, *_bf, *_sf, *_pf, *_v, *_w, *_LM, _uu;
 #else
-   Matrix<T_>             *_A, *_CM, *_Df;
-   Vect<T_>               *_b, *_u, *_bc, *_bf, *_sf, *_pf, *_v, *_w, *_LM, _uu;
+   Matrix<real_t>         *_A, *_CM, *_Df;
+   Vect<real_t>           *_b, *_u, *_bc, *_bf, *_sf, *_pf, *_v, *_w, *_LM, _uu;
 #endif
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -462,11 +459,11 @@ class Equa
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #if defined(USE_PETSC)
-   void setMatrix(PETScMatrix<T_> &A);
+   void setMatrix(PETScMatrix<real_t> &A);
 #else
-   void setMatrix(SkSMatrix<T_> &A);
-   void setMatrix(SkMatrix<T_> &A);
-   void setMatrix(SpMatrix<T_> &A);
+   void setMatrix(SkSMatrix<real_t> &A);
+   void setMatrix(SkMatrix<real_t> &A);
+   void setMatrix(SpMatrix<real_t> &A);
 #endif
 
    bool SolverIsSet() const;

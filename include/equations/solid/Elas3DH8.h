@@ -63,7 +63,7 @@ namespace OFELI {
  *
  */
 
-class Elas3DH8 : virtual public Equa_Solid<double,8,24,4,12>
+class Elas3DH8 : virtual public Equa_Solid<8,24,4,12>
 {
 
 public :

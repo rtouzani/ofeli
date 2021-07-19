@@ -20,7 +20,7 @@
 void errexit(char *f_str,...)
 {
   va_list argp;
-  char out1[250], out2[250];
+  char out1[260], out2[300];
 
   va_start(argp, f_str);
   vsprintf(out1, f_str, argp);

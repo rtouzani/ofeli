@@ -8,7 +8,6 @@ ssdir = $(pkgincludedir)/equations
 
 ss_HEADERS = DG.h \
              Equa.h \
-             Equa_impl.h \
              Equation.h \
              Equation_impl.h \
              EquaUtil.h

@@ -56,9 +56,9 @@ FastMarching::FastMarching(const Grid&   g,
 }
 
 
-FastMarching::FastMarching(const Grid&         g,
-                           Vect<real_t>&       T,
-                           const Vect<real_t>& F)
+FastMarching::FastMarching(const Grid&   g,
+                           Vect<real_t>& T,
+                           Vect<real_t>& F)
              : _theFMM1D(nullptr), _theFMM2D(nullptr), _theFMM3D(nullptr)
 {
    _dim = g.getDim();
@@ -100,9 +100,9 @@ void FastMarching::set(const Grid&   g,
 }
 
 
-void FastMarching::set(const Grid&         g,
-                       Vect<real_t>&       T,
-                       const Vect<real_t>& F)
+void FastMarching::set(const Grid&   g,
+                       Vect<real_t>& T,
+                       Vect<real_t>& F)
 {
    if (_dim==1 && _theFMM1D==nullptr) {
       _theFMM1D = new FastMarching1DG;
@@ -142,17 +142,6 @@ real_t FastMarching::getResidual()
    else if (_dim==3)
       res = _theFMM3D->getResidual();
    return res;
-}
-
-
-void FastMarching::ExtendSpeed(Vect<real_t>& v)
-{
-   if (_dim==1)
-      _theFMM1D->ExtendSpeed(v);
-   else if (_dim==2)
-      _theFMM2D->ExtendSpeed(v);
-   else if (_dim==3)
-      _theFMM3D->ExtendSpeed(v);
 }
 
 } /* namespace OFELI */

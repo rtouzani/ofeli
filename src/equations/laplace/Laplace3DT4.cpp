@@ -34,14 +34,13 @@
 #include "equations/laplace/Laplace3DT4.h"
 #include "shape_functions/Tetra4.h"
 #include "shape_functions/Triang3.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
 
 Laplace3DT4::Laplace3DT4()
-            : Equation<real_t,4,4,3,3>()
+            : Equation<4,4,3,3>()
 {
    _equation_name = "Laplace";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
@@ -51,7 +50,7 @@ Laplace3DT4::Laplace3DT4()
 
 
 Laplace3DT4::Laplace3DT4(Mesh& ms)
-            : Equation<real_t,4,4,3,3>(ms)
+            : Equation<4,4,3,3>(ms)
 {
    _equation_name = "Laplace";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";
@@ -67,7 +66,7 @@ Laplace3DT4::Laplace3DT4(Mesh& ms)
 
 Laplace3DT4::Laplace3DT4(Mesh&         ms,
                          Vect<real_t>& u)
-            : Equation<real_t,4,4,3,3>(ms,u)
+            : Equation<4,4,3,3>(ms,u)
 {
    _equation_name = "Laplace";
    _finite_element = "3-D, 4-Node Tetrahedra (P1)";

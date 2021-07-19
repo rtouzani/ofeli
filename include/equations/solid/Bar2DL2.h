@@ -57,7 +57,7 @@ namespace OFELI {
  *  This makes possible testing different algorithms.
  */
 
-class Bar2DL2 : public Equa_Solid<real_t,2,4,1,2>
+class Bar2DL2 : public Equa_Solid<2,4,1,2>
 {
 
  public :

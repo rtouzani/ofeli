@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
       cout << "\nSolution stored in file 'plot.dat'" << endl;
       double h = (b-a)/n;
       ofstream fs("plot.dat");
-      for (size_t i=0; i<=n; ++i) 
+      for (int i=0; i<=n; ++i) 
          fs << i*h << "  " << y[i] << endl;
    } CATCH_EXCEPTION
 

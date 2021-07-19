@@ -57,7 +57,7 @@ namespace OFELI {
  *
  */
 
-class Elas3DT4 : virtual public Equa_Solid<real_t,4,12,3,9>
+class Elas3DT4 : virtual public Equa_Solid<4,12,3,9>
 {
 
  public :

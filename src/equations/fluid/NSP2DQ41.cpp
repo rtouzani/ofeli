@@ -41,7 +41,7 @@ namespace OFELI {
 
 
 NSP2DQ41::NSP2DQ41(Mesh& ms)
-         : Equation<real_t,4,8,2,4>(ms), _p(nullptr), _quad(nullptr), _ln(nullptr),
+         : Equation<4,8,2,4>(ms), _p(nullptr), _quad(nullptr), _ln(nullptr),
            _penal(1.e07)
 {
   //   setMatrixType(SPARSE);
@@ -56,7 +56,7 @@ NSP2DQ41::NSP2DQ41(Mesh& ms)
 
 NSP2DQ41::NSP2DQ41(Mesh&         ms,
                    Vect<real_t>& u)
-         : Equation<real_t,4,8,2,4>(ms,u), _p(nullptr), _quad(nullptr), _ln(nullptr),
+         : Equation<4,8,2,4>(ms,u), _p(nullptr), _quad(nullptr), _ln(nullptr),
            _penal(1.e07)
 {
    //   setMatrixType(SPARSE);
@@ -125,7 +125,7 @@ void NSP2DQ41::set(const Side *sd)
 void NSP2DQ41::setInput(EqDataType    opt,
                         Vect<real_t>& u)
 {
-   Equa<real_t>::setInput(opt,u);
+   Equa::setInput(opt,u);
    if (opt==PRESSURE_FIELD)
       _p = &u;
 }
@@ -337,18 +337,18 @@ void NSP2DQ41::build()
          Viscous();
       if (_terms&CONVECTION)
          RHS_Convection();
-      if (_terms&BODY_FORCE && Equa<real_t>::_bf!=nullptr)
-         BodyRHS(*Equa<real_t>::_bf);
-      Equation<real_t,4,8,2,4>::updateBC(The_element,Equa<real_t>::_bc);
-      Equa<real_t>::_A->Assembly(The_element,eMat.get());
-      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
+      if (_terms&BODY_FORCE && Equa::_bf!=nullptr)
+         BodyRHS(*Equa::_bf);
+      Equation<4,8,2,4>::updateBC(The_element,Equa::_bc);
+      Equa::_A->Assembly(The_element,eMat.get());
+      Equa::_b->Assembly(The_element,eRHS.get());
    }
    MESH_SD {
       set(the_side);
       ElementSideVector(*_u,_su);
-      if (_terms&TRACTION && Equa<real_t>::_sf!=nullptr)
-         BoundaryRHS(*Equa<real_t>::_sf);
-      Equa<real_t>::_b->Assembly(The_side,sRHS.get());
+      if (_terms&TRACTION && Equa::_sf!=nullptr)
+         BoundaryRHS(*Equa::_sf);
+      Equa::_b->Assembly(The_side,sRHS.get());
    }
 }
 
@@ -356,7 +356,7 @@ void NSP2DQ41::build()
 int NSP2DQ41::runOneTimeStep()
 {
    build();
-   int ret = solveLinearSystem(Equa<real_t>::_A,*_b,_uu);
+   int ret = solveLinearSystem(Equa::_A,*_b,_uu);
    if (_bc == nullptr)
       _u->insertBC(*_theMesh,_uu);
    else

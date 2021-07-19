@@ -41,19 +41,29 @@ namespace OFELI {
 
 
 EC2D2T3::EC2D2T3()
-        : Equation<real_t,3,6,2,4>()
+        : Equation<3,6,2,4>()
 { }
 
 
 EC2D2T3::EC2D2T3(Mesh& ms)
-        : Equation<real_t,3,6,2,4>(ms)
-{ }
+        : Equation<3,6,2,4>(ms)
+{ 
+   if (Equa::_nb_dof!=2)
+      throw OFELIException("In EC2D2T3::EC2D2T3(..): Nodes must have "
+                            "2 degrees of freedom because of complex-valued formulation.");
+
+}
 
 
 EC2D2T3::EC2D2T3(Mesh&         ms,
                  Vect<real_t>& u)
-        : Equation<real_t,3,6,2,4>(ms,u)
-{ }
+        : Equation<3,6,2,4>(ms,u)
+{
+   if (Equa::_nb_dof!=2)
+      throw OFELIException("In EC2D2T3::EC2D2T3(..): Nodes must have "
+                            "2 degrees of freedom because of complex-valued formulation.");
+
+}
 
 
 EC2D2T3::EC2D2T3(const Side* sd1,
@@ -218,16 +228,16 @@ size_t EC2D2T3::_log_det(const Point<real_t>& ck,
 }
 
 
-complex<real_t> EC2D2T3::_ablog(size_t    det,
-                                complex_t a,
-                                complex_t b,
-                                real_t    t)
+complex<real_t> EC2D2T3::_ablog(size_t          det,
+                                complex<real_t> a,
+                                complex<real_t> b,
+                                real_t          t)
 /*-----------------------------------------------------------------------
       ablog = a*b*(log(a)-t)
   -----------------------------------------------------------------------*/
 {
-   if (a==complex_t(0))
-      return complex_t(0);
+   if (a==complex<real_t>(0))
+      return complex<real_t>(0);
    real_t dd = 0.;
    if (det==3 && a.imag()<0)
       dd = 2*OFELI_PI;
@@ -235,7 +245,7 @@ complex<real_t> EC2D2T3::_ablog(size_t    det,
       dd = -2*OFELI_PI;
    if (det==2 && a.imag()<0 && a.real()<0)
       dd = 2*OFELI_PI;
-   return a*b*(Log(a)+complex_t(0,dd)-complex_t(t,0));
+   return a*b*(Log(a)+complex<real_t>(0,dd)-complex<real_t>(t,0));
 }
 
 

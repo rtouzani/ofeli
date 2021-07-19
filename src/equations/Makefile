@@ -86,8 +86,6 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = i386-apple-darwin19.6.0
-host_triplet = i386-apple-darwin19.6.0
 subdir = src/equations
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/VERSION $(top_srcdir)/configure.ac
@@ -109,7 +107,7 @@ libequations_a_DEPENDENCIES = cl/libcl.a \
 	electromagnetics/libelectromagnetics.a fluid/libfluid.a \
 	interface/libinterface.a laplace/liblaplace.a \
 	porous/libporous.a solid/libsolid.a therm/libtherm.a
-am_libequations_a_OBJECTS = DG.$(OBJEXT)
+am_libequations_a_OBJECTS = Equa.$(OBJEXT) DG.$(OBJEXT)
 libequations_a_OBJECTS = $(am_libequations_a_OBJECTS)
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -223,7 +221,6 @@ CFLAGS =
 CPP = gcc -E
 CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
 CXX = g++
-CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS =  
 CYGPATH_W = echo
@@ -232,10 +229,8 @@ DEPDIR = .deps
 ECHO_C = \c
 ECHO_N = 
 ECHO_T = 
-EGREP = /usr/bin/grep -E
 EIGEN_CFLAGS = -I${prefix}/include/eigen3 
 EXEEXT = 
-GREP = /usr/bin/grep
 HAVE_INLINE = 
 INSTALL = /opt/local/bin/ginstall -c
 INSTALL_DATA = ${INSTALL} -m 644
@@ -259,7 +254,7 @@ OFELI_LDFLAGS = -L${exec_prefix}/lib
 OFELI_LIB = -lofeli
 OFELI_LIBS = -lofeli 
 PACKAGE = ofeli
-PACKAGE_BUGREPORT = 
+PACKAGE_BUGREPORT = rachid.touzani@uca.fr
 PACKAGE_NAME = ofeli
 PACKAGE_STRING = ofeli 4.1.0
 PACKAGE_TARNAME = ofeli
@@ -287,22 +282,14 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = i386-apple-darwin19.6.0
 build_alias = 
-build_cpu = i386
-build_os = darwin19.6.0
-build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = i386-apple-darwin19.6.0
 host_alias = 
-host_cpu = i386
-host_os = darwin19.6.0
-host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
@@ -318,6 +305,7 @@ pdfdir = ${docdir}
 prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
+runstatedir = ${localstatedir}/run
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
@@ -330,7 +318,9 @@ noinst_LIBRARIES = libequations.a
 AUTOMAKE_OPTIONS = no-dependencies
 SUBDIRS = cl electromagnetics fluid interface laplace porous solid therm
 AM_CPPFLAGS = -std=c++1y
-libequations_a_SOURCES = DG.cpp
+libequations_a_SOURCES = Equa.cpp \
+                         DG.cpp
+
 libequations_a_LIBADD = \
 			cl/libcl.a \
 			electromagnetics/libelectromagnetics.a \

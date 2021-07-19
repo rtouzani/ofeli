@@ -21,7 +21,7 @@
    GNU Lesser General Public License for more details.
 
    You should have received a copy of the GNU Lesser General Public License
-   along with OFELI. If not, see <http://www.gnu.org/licenses/>.
+‡   along with OFELI. If not, see <http://www.gnu.org/licenses/>.
 
   ==============================================================================
        Template utilities functions for finite element equations classes
@@ -140,9 +140,9 @@ size_t getNbEq() const
 template < class T_, class E_ >
 void ElementVect(const E_&       e,
                  const Vect<T_>& b,
-                       Vect<T_>& p,
-                       int       dof,
-                       int       dof_type)
+                 Vect<T_>&       p,
+                 int             dof,
+                 int             dof_type)
 {
    size_t k = 0;
    if (dof_type==NODE_DOF) {
@@ -178,7 +178,7 @@ void ElementVect(const E_&       e,
 template < class T_, class E_ >
 void SideVect(const E_&       e,
               const Vect<T_>& b,
-                    Vect<T_>& p)
+              Vect<T_>&       p)
 {
    Node *nd;
    size_t k = 0;

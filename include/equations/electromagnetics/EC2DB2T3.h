@@ -49,7 +49,7 @@ namespace OFELI {
  */
 
 
-class EC2DB2T3 : virtual public Equa_Electromagnetics<real_t,3,6,2,4>
+class EC2DB2T3 : virtual public Equa_Electromagnetics<3,6,2,4>
 {
 
  public:

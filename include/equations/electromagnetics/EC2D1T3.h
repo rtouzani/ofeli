@@ -35,7 +35,6 @@
 #ifndef __EC2D1T3_H
 #define __EC2D1T3_H
 
-
 #include "equations/electromagnetics/Equa_Electromagnetics.h"
 
 namespace OFELI {
@@ -57,19 +56,22 @@ namespace OFELI {
  *  Magnetic field is constant in the vacuum, and then zero in the outer vacuum.\n
  *  Uses 3-Node triangles.
  *
- *  The unknown is the time-harmonic magnetic induction (complex valued).
+ *  The unknown is the time-harmonic magnetic induction (complex valued)
+ *  but stored in 2-degree of freedom real-valued vector.
+ *  Therefore, mesh must be defined with 2 degrees of freedom per node
+
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
  */
 
-class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
+class EC2D1T3 : public Equa_Electromagnetics<3,6,2,4>
 {
 
  public :
 
-   using Equation<complex_t,3,3,2,2>::_A;
-   using Equation<complex_t,3,3,2,2>::_b;
+   using Equation<3,6,2,4>::_A;
+   using Equation<3,6,2,4>::_b;
 
 /// \brief Default constructor
     EC2D1T3();
@@ -83,8 +85,8 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
  *  @param [in] ms Mesh instance
  *  @param [in,out] u Reference to solution vector instance
  */
-    EC2D1T3(Mesh&            ms,
-            Vect<complex_t>& u);
+    EC2D1T3(Mesh&         ms,
+            Vect<real_t>& u);
 
 /// \brief Destructor
     ~EC2D1T3();
@@ -113,7 +115,7 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
           set(the_element);
           Magnetic(1.);
           Electric();
-          Equa<complex_t>::_A->Assembly(The_element,eMat.get());
+          Equa::_A->Assembly(The_element,eMat.get());
        }
 
        MESH_ND {
@@ -142,14 +144,16 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
     real_t Joule();
 
 /// \brief Add element integral contribution
-    complex_t IntegMF();
+    void IntegMF(real_t& vr, real_t& vi);
 
 /** \brief Compute integral of normal derivative on edge
  *  @param [in] h Vect instance containing magnetic field at nodes
  *  @note This member function is to be called within each element, it detects
  *  boundary sides as the ones with nonzero code
  */
-    complex_t IntegND(const Vect<complex_t>& h);
+    void IntegND(const Vect<real_t>& h,
+                 real_t&             vr,
+                 real_t&             vi);
 
 /// \brief Add contribution to vacuum area calculation
     real_t VacuumArea();
@@ -158,6 +162,7 @@ class EC2D1T3 : public Equa_Electromagnetics<complex_t,3,3,2,2>
     real_t _omega, _volt, _current;
     void set(const Element* el);
     void set(const Side* el);
+    void checkComplex();
 
 };
 

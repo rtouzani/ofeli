@@ -64,46 +64,45 @@ extern Material theMaterial;
  *  \ingroup Therm
  * \brief Abstract class for Heat transfer Finite %Element classes.
  *
- * \tparam <T_> data type (real_t, float, ...)
  * \tparam <NEN> Number of element nodes
  * \tparam <NEE_> Number of element equations
  * \tparam <NSN_> Number of side nodes
  * \tparam <NSE_> Number of side equations
  */
 
-template<class T_, size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+class Equa_Therm : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 {
 
  public:
 
-   using Equa<T_>::setInput;
-   using Equa<T_>::setTerms;
-   using Equa<T_>::_u;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theMesh;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theElement;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_theSide;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_terms;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_analysis;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_TimeInt;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_eu;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA0;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eA1;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sA0;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eMat;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::eRHS;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::sRHS;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_sides;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_el;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_eq;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_nb_dof;
-   using Equation<T_,NEN_,NEE_,NSN_,NSE_>::_el_geo;
-   using Equa<T_>::_rho_set;
-   using Equa<T_>::_Cp_set;
-   using Equa<T_>::_kappa_set;
+   using Equa::setInput;
+   using Equa::setTerms;
+   using Equa::_u;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theMesh;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theElement;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_theSide;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_terms;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_analysis;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_TimeInt;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_eu;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eA0;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eA1;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::sA0;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eMat;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::eRHS;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::sRHS;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_nodes;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_sides;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_el;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_eq;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_dof_total;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_nb_dof;
+   using Equation<NEN_,NEE_,NSN_,NSE_>::_el_geo;
+   using Equa::_rho_set;
+   using Equa::_Cp_set;
+   using Equa::_kappa_set;
 
 /// \brief Default constructor.
 /// \details Constructs an empty equation.
@@ -164,16 +163,16 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     void build()
     {
        static bool matrix_set = false;
-       real_t dti = 1./Equa<T_>::_TimeInt.delta;
-       if (Equa<T_>::_A==nullptr && !matrix_set) {
-          Equa<T_>::setMatrixType(SPARSE);
+       real_t dti = 1./Equa::_TimeInt.delta;
+       if (Equa::_A==nullptr && !matrix_set) {
+          Equa::setMatrixType(SPARSE);
           if (_terms&CONVECTION)
-             Equa<real_t>::setSolver(BICG_STAB_SOLVER,DILU_PREC);
+             Equa::setSolver(BICG_STAB_SOLVER,DILU_PREC);
           else
-             Equa<T_>::setSolver(CG_SOLVER,DILU_PREC);
+             Equa::setSolver(CG_SOLVER,DILU_PREC);
           matrix_set = true;
        }
-       Equa<T_>::_A->clear();
+       Equa::_A->clear();
        _TimeInt.theta = 1;
        if (_TimeInt.scheme==FORWARD_EULER)
           _TimeInt.theta = 0;
@@ -196,25 +195,25 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
              eMat = dti*eA1;
           else if (_TimeInt.scheme==CRANK_NICOLSON)
              eMat = dti*eA1 + 0.5*eA0;
-          Equa<T_>::_A->Assembly(The_element,eMat.get());
-          if (Equa<T_>::_bf!=nullptr)
-             BodyRHS(*Equa<T_>::_bf);
-          if (Equa<T_>::_bc!=nullptr)
-             this->updateBC(The_element,*Equa<T_>::_bc);
+          Equa::_A->Assembly(The_element,eMat.get());
+          if (Equa::_bf!=nullptr)
+             BodyRHS(*Equa::_bf);
+          if (Equa::_bc!=nullptr)
+             this->updateBC(The_element,*Equa::_bc);
           if (_TimeInt.scheme==BACKWARD_EULER)
              eRHS += dti*eA1*_eu;
           else if (_TimeInt.scheme==FORWARD_EULER)
              eRHS += (dti*eA1-eA0)*_eu;
           else if (_TimeInt.scheme==CRANK_NICOLSON)
              eRHS += (dti*eA1-0.5*eA0)*_eu;
-          Equa<T_>::_b->Assembly(The_element,eRHS.get());
+          Equa::_b->Assembly(The_element,eRHS.get());
        }
-       if (Equa<T_>::_sf!=nullptr) {
+       if (Equa::_sf!=nullptr) {
           MESH_BD_SD {
              set(the_side);
-             BoundaryRHS(*Equa<T_>::_sf);
-             Equa<T_>::_A->Assembly(The_side,sA0.get());
-             Equa<T_>::_b->Assembly(The_side,sRHS.get());
+             BoundaryRHS(*Equa::_sf);
+             Equa::_A->Assembly(The_side,sA0.get());
+             Equa::_b->Assembly(The_side,sRHS.get());
           }
        }
     }
@@ -243,16 +242,16 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
              Diffusion();
           if (_terms&CONVECTION)
              Convection();
-          if (_terms&SOURCE && Equa<T_>::_bf!=nullptr)
-             BodyRHS(*Equa<T_>::_bf);
+          if (_terms&SOURCE && Equa::_bf!=nullptr)
+             BodyRHS(*Equa::_bf);
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get());
        }
-       if (Equa<T_>::_sf!=nullptr) {
+       if (Equa::_sf!=nullptr) {
           MESH_SD {
              if (The_side.isReferenced()) {
                 set(the_side);
-                if (_terms&FLUX && Equa<T_>::_sf!=nullptr)
-                   BoundaryRHS(*Equa<T_>::_sf);
+                if (_terms&FLUX && Equa::_sf!=nullptr)
+                   BoundaryRHS(*Equa::_sf);
                 s.SAssembly(The_side,sRHS.get());
              }
           }
@@ -266,7 +265,7 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     {
        MESH_EL {
           set(the_element);
-          this->ElementVector(*Equa<T_>::_u);
+          this->ElementVector(*Equa::_u);
           if (_terms&CAPACITY)
              Capacity(1.);
           if (_terms&LUMPED_CAPACITY)
@@ -305,9 +304,9 @@ class Equa_Therm : virtual public Equation<T_,NEN_,NEE_,NSN_,NSE_>
     }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    bool    _stab, _rho_is_set, _cp_is_set, _conductivity_is_set;
-    real_t  _diff, _rho, _cp, _coef;
-   Vect<T_> *_vel;
+    bool         _stab, _rho_is_set, _cp_is_set, _conductivity_is_set;
+    real_t       _diff, _rho, _cp, _coef;
+    Vect<real_t> *_vel;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

@@ -32,7 +32,6 @@
 
 
 #include "equations/therm/DC2DT6.h"
-#include "equations/Equa_impl.h"
 #include "equations/Equation_impl.h"
 #include "linear_algebra/Vect_impl.h"
 
@@ -46,7 +45,7 @@ DC2DT6::DC2DT6()
 
 
 DC2DT6::DC2DT6(Mesh& ms) 
-       : Equation<real_t,6,6,3,3>(ms)
+       : Equation<6,6,3,3>(ms)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "2-D, 6-Node Triangles (P2)";
@@ -58,7 +57,7 @@ DC2DT6::DC2DT6(Mesh& ms)
 
 DC2DT6::DC2DT6(Mesh&         ms,
                Vect<real_t>& u)
-       : Equation<real_t,6,6,3,3>(ms,u)
+       : Equation<6,6,3,3>(ms,u)
 {
    _equation_name = "Diffusion/Convection";
    _finite_element = "2-D, 6-Node Triangles (P2)";
@@ -67,7 +66,7 @@ DC2DT6::DC2DT6(Mesh&         ms,
    setSolver(BICG_STAB_SOLVER,DILU_PREC);
 }
 
-  
+
 void DC2DT6::set(const Element* el)
 {
    _theElement = el, _theSide = nullptr;
@@ -77,7 +76,7 @@ void DC2DT6::set(const Element* el)
    _el_geo.center = tr.getCenter();
    ElementNodeCoordinates();
    tr.atMidEdges(_dSh,_wg);
-   ElementVector(*_u);
+   ElementNodeVector(*_u,_eu);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);
    if (_Cp_set)

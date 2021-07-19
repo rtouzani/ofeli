@@ -57,14 +57,18 @@ namespace OFELI {
  * \details This class implements the Fast Marching method to solve
  * the eikonal equation in a 1-D uniform grid.
  * In other words, the class solves the partial differential equation
- *    |\nabla u|F = 1
- * with u = 0 on the interface, where \c F is the velocity 
+ *    |T'|F = 1
+ * with T = 0 on the interface, where \c F is the velocity 
  */
 
-class FastMarching1DG : virtual public Equa<real_t>
+class FastMarching1DG : virtual public Equa
 {
 
  public:
+
+   using Equa::_u;
+   using Equa::_v;
+   using Equa::_b;
 
 /*!
  * \brief Default Constructor
@@ -102,12 +106,12 @@ class FastMarching1DG : virtual public Equa<real_t>
  * </ul>
  * \param [in] F Vector containing propagation speed at grid nodes
  */
-    FastMarching1DG(const Grid&         g,
-                    Vect<real_t>&       T,
-                    const Vect<real_t>& F);
+    FastMarching1DG(const Grid&   g,
+                    Vect<real_t>& T,
+                    Vect<real_t>& F);
 
 /// \brief Destructor
-    ~FastMarching1DG() { }
+    ~FastMarching1DG();
 
 /**
  * @brief Define grid and solution vector
@@ -139,14 +143,13 @@ class FastMarching1DG : virtual public Equa<real_t>
  * </ul>
  * @param [in] F Vector containing propagation speed at grid nodes
  */
-    void set(const Grid&         g,
-             Vect<real_t>&       T,
-             const Vect<real_t>& F);
+    void set(const Grid&   g,
+             Vect<real_t>& T,
+             Vect<real_t>& F);
 
-
-/** Execute Fast Marching Procedure
- *  Once this function is invoked, the vector \c phi in the constructor or in the member function \c set
- *  contains the solution
+/** \brief Execute Fast Marching Procedure
+ *  \details Once this function is invoked, the vector \c phi in the constructor or in the member function \c set
+ *  contains the solution.
  *  @return Return value:
  *  <ul>
  *    <li> = 0 if solution has been normally computed
@@ -160,30 +163,21 @@ class FastMarching1DG : virtual public Equa<real_t>
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Check consistency by computing the discrete residual.
-/// \details This function returns residual error (||\nabla u|^2|F|-1|)
+/// \details This function returns residual error (||T'F|-1|)
     real_t getResidual();
-
-/**
- * @brief Extend speed vector to whole domain
- * 
- * @param[out] v Vector containing speed at each grid node
- */
-   void ExtendSpeed(Vect<real_t>& v);
    
  private:
 
    FMHeap _Narrow;
    Pt *_p, *_np;
-   vector<Pt> _u;
+   vector<Pt> _U;
    vector<Pt *> _neigs;
    const Grid *_theGrid;
-   Vect<real_t> *_T, _F;
    size_t _nx;
    real_t _hx;
    void init();
    real_t eval();
-   int Neigs();
-   void UpdateExt(int i, Vect<real_t>& v);
+   size_t Neigs();
 };
 
 /*! @} End of Doxygen Groups */

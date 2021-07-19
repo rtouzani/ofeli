@@ -39,9 +39,18 @@
 
 namespace OFELI {
 
-HelmholtzBT3::HelmholtzBT3(Mesh& ms)
-             : Equation<complex_t,3,3,2,2>(ms)
+HelmholtzBT3::HelmholtzBT3()
+             : Equation<3,6,2,4>()
 {
+}
+
+
+HelmholtzBT3::HelmholtzBT3(Mesh& ms)
+             : Equation<3,6,2,4>(ms)
+{
+   if (Equa::_nb_dof!=2)
+      throw OFELIException("In HelmholtzBT3::HelmholtzBT3(..): Nodes must have "
+                            "2 degrees of freedom because of complex-valued formulation.");
    _omega = 1.;
    _equation_name = "Helmholtz equation in a bounded domain";
    _finite_element = "2-D, 3-Node Triangles (P1)";
@@ -51,10 +60,13 @@ HelmholtzBT3::HelmholtzBT3(Mesh& ms)
 }
 
 
-HelmholtzBT3::HelmholtzBT3(Mesh&            ms,
-                           Vect<complex_t>& u)
-             : Equation<complex_t,3,3,2,2>(ms,u)
+HelmholtzBT3::HelmholtzBT3(Mesh&         ms,
+                           Vect<real_t>& u)
+             : Equation<3,6,2,4>(ms,u)
 {
+   if (Equa::_nb_dof!=2)
+      throw OFELIException("In HelmholtzBT3::HelmholtzBT3(..): Nodes must have "
+                            "2 degrees of freedom because of complex-valued formulation.");
    _omega = 1.;
    _equation_name = "Helmholtz equation in a bounded domain";
    _finite_element = "2-D, 3-Node Triangles (P1)";
@@ -81,8 +93,8 @@ void HelmholtzBT3::set(const Element* el)
    ElementNodeVector(*_u,_eu);
    if (_omega_set)
       _omega = _omega_fct(_el_geo.center,0.);
-   eMat = complex_t(0);
-   eRHS = complex_t(0);
+   eMat = 0.;
+   eRHS = 0.;
 }
 
 
@@ -92,8 +104,8 @@ void HelmholtzBT3::set(const Side* sd)
    Line2 ln(sd);
    SideNodeCoordinates();
    _el_geo.length = ln.getLength();
-   sMat = complex_t(0);
-   sRHS = complex_t(0);
+   sMat = 0.;
+   sRHS = 0.;
 }
 
 
@@ -102,27 +114,34 @@ void HelmholtzBT3::LHS()
    real_t c = _omega*_el_geo.area*OFELI_TWELVETH;
    for (size_t i=1; i<=3; i++) {
       Point<real_t> a = _el_geo.area*_dSh[i-1];
-      for (size_t j=1; j<=3; j++)
-         eMat(i,j) += (a,_dSh[j-1]) - c;
-      eMat(i,i) -= c;
+      for (size_t j=1; j<=3; j++) {
+         eMat(2*i-1,2*j-1) = (a,_dSh[j-1]) - c;
+         eMat(2*i  ,2*j  ) = (a,_dSh[j-1]) - c;
+      }
+      eMat(2*i-1,2*i-1) -= c;
+      eMat(2*i  ,2*i  ) -= c;
    }
    eA0 = eMat;
 }
 
 
-void HelmholtzBT3::BodyRHS(Vect<complex_t>& f)
+void HelmholtzBT3::BodyRHS(Vect<real_t>& f)
 {
    real_t c = OFELI_THIRD*_el_geo.area;
-   for (size_t i=1; i<=3; i++)
-      eRHS(i) += c*f((*_theElement)(i)->n());
+   for (size_t i=1; i<=3; i++) {
+      eRHS(2*i-1) += c*f(2*(*_theElement)(i)->n()-1);
+      eRHS(2*i  ) += c*f(2*(*_theElement)(i)->n()  );
+   }
 }
 
 
-void HelmholtzBT3::BoundaryRHS(Vect<complex_t>& f)
+void HelmholtzBT3::BoundaryRHS(Vect<real_t>& f)
 {
    if (_theSide->getCode(1)>0) {
-      sRHS(1) += 0.5*_el_geo.length*f((*_theSide)(1)->n());
-      sRHS(2) += 0.5*_el_geo.length*f((*_theSide)(2)->n());
+      sRHS(1) += 0.5*_el_geo.length*f(2*(*_theSide)(1)->n()-1);
+      sRHS(2) += 0.5*_el_geo.length*f(2*(*_theSide)(1)->n()  );
+      sRHS(3) += 0.5*_el_geo.length*f(2*(*_theSide)(2)->n()-1);
+      sRHS(4) += 0.5*_el_geo.length*f(2*(*_theSide)(2)->n()  );
    }
 }
 
@@ -132,18 +151,18 @@ void HelmholtzBT3::build()
    MESH_EL {
       set(the_element);
       LHS();
-      Equa<complex_t>::_A->Assembly(The_element,eMat.get());
-      if (Equa<complex_t>::_bf!=nullptr)
-         BodyRHS(*Equa<complex_t>::_bf);
-      if (Equa<complex_t>::_bc!=nullptr)
-         this->updateBC(*_theElement,*Equa<complex_t>::_bc);
-      Equa<complex_t>::_b->Assembly(The_element,eRHS.get());
+      Equa::_A->Assembly(The_element,eMat.get());
+      if (Equa::_bf!=nullptr)
+         BodyRHS(*Equa::_bf);
+      if (Equa::_bc!=nullptr)
+         this->updateBC(*_theElement,*Equa::_bc);
+      Equa::_b->Assembly(The_element,eRHS.get());
    }
    MESH_SD {
       set(the_side);
-      if (Equa<complex_t>::_sf!=nullptr)
+      if (Equa::_sf!=nullptr)
          BoundaryRHS(*_sf);
-      Equa<complex_t>::_b->Assembly(The_side,sRHS.get());
+      Equa::_b->Assembly(The_side,sRHS.get());
    }
 }
 

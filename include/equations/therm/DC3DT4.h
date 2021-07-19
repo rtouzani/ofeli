@@ -57,7 +57,7 @@ namespace OFELI {
  */
 
 
-class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
+class DC3DT4 : public Equa_Therm<4,4,3,3>
 {
 
  public:
@@ -84,7 +84,7 @@ class DC3DT4 : public Equa_Therm<real_t,4,4,3,3>
            real_t        init_time,
            real_t        final_time,
            real_t        time_step)
-   : Equation<real_t,4,4,3,3>(mesh,b,init_time,final_time,time_step) { }
+   : Equation<4,4,3,3>(mesh,b,init_time,final_time,time_step) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Destructor

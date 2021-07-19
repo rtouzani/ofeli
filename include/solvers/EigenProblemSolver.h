@@ -64,7 +64,7 @@ namespace OFELI {
  *  \brief Definition file for class EigenProblemSolver.
  */
 
-template <class T_> class Equa;
+class Equa;
 
 //-----------------------------------------------------------------------------
 // Class EigenProblemSolver
@@ -149,8 +149,8 @@ class EigenProblemSolver
  *  @param [in] eq Reference to equation instance
  *  @param [in] lumped Mass matrix is lumped (\a true) or not (\a false) [Default: <tt>true</tt>]
  */
-    EigenProblemSolver(Equa<real_t>& eq,
-                       bool          lumped=true);
+    EigenProblemSolver(Equa& eq,
+                       bool  lumped=true);
 
 /// \brief Destructor
     ~EigenProblemSolver();
@@ -187,8 +187,8 @@ class EigenProblemSolver
  *  @param [in] eq Reference to equation instance
  *  @param [in] lumped Mass matrix is lumped (\a true) or not (\a false) [Default: <tt>true</tt>]
  */
-    void setPDE(Equa<real_t>& eq,
-                bool          lumped=true);
+    void setPDE(Equa& eq,
+                bool  lumped=true);
 
 /** \brief Run the eigenproblem solver
  *  @param [in] nb Number of eigenvalues to be computed. By default, all eigenvalues are computed.
@@ -280,7 +280,7 @@ class EigenProblemSolver
 
  private:
 
-   Equa<real_t>     *_theEqua;
+   Equa             *_theEqua;
    Mesh             *_theMesh;
    Matrix<real_t>   *_K, *_M;
    Vect<real_t>     *_lM, _rc, _eigv;

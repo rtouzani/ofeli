@@ -37,7 +37,7 @@
 namespace OFELI {
 
 Bar2DL2::Bar2DL2(Mesh& ms) 
-        : Equation<real_t,2,4,1,2>(ms)
+        : Equation<2,4,1,2>(ms)
 {
    _equation_name = "Truss";
    _finite_element = "2-D, 2-Node Bar (P1)";
@@ -49,7 +49,7 @@ Bar2DL2::Bar2DL2(Mesh& ms)
 
 Bar2DL2::Bar2DL2(Mesh&         ms,
                  Vect<real_t>& u)
-        : Equation<real_t,2,4,1,2>(ms,u)
+        : Equation<2,4,1,2>(ms,u)
 {
    _equation_name = "Truss";
    _finite_element = "2-D, 2-Node Bar (P1)";
@@ -127,7 +127,7 @@ void Bar2DL2::BodyRHS(const Vect<real_t>& f)
 
 void Bar2DL2::build()
 {
-   *Equa<real_t>::_A = 0;
+   *Equa::_A = 0;
    MESH_EL {
       set(the_element);
       if (_analysis==TRANSIENT) {
@@ -137,8 +137,8 @@ void Bar2DL2::build()
             Mass();
       }
       Stiffness();
-      Equa<real_t>::_A->Assembly(The_element,eA0.get());
-      Equa<real_t>::_b->Assembly(The_element,eRHS.get());
+      Equa::_A->Assembly(The_element,eA0.get());
+      Equa::_b->Assembly(The_element,eRHS.get());
    }
    if (_pf!=nullptr)
       Load();
