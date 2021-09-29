@@ -29,7 +29,7 @@ sinclude([VERSION])
 AC_SUBST(VERSION)
 AC_SUBST(RELEASE)
 
-AC_INIT([ofeli],[4.1.0],[rachid.touzani@uca.fr])
+AC_INIT([ofeli],[4.1.1],[rachid.touzani@uca.fr])
 AC_CONFIG_SRCDIR([src/mesh/Mesh.cpp])
 AM_INIT_AUTOMAKE
 
@@ -183,11 +183,16 @@ AC_MSG_CHECKING(for release build)
 AC_ARG_ENABLE(release,[  --enable-release        compile for release])
 AC_MSG_RESULT([$enable_release])
 if test "x$enable_release" = "xyes" ; then
-CPPFLAGS="${CPPFLAGS} -O3 -DNDEBUG"
-CFLAGS="${CFLAGS} -O3 -DNDEBUG"
+#CPPFLAGS="${CPPFLAGS} -O3 -DNDEBUG"
+#CFLAGS="${CFLAGS} -O3 -DNDEBUG"
+#if test "${GXX}" = "yes" ; then
+#CPPFLAGS="${CPPFLAGS} -ffast-math -fstrict-aliasing"
+#CFLAGS="${CFLAGS} -ffast-math -fstrict-aliasing"
+CPPFLAGS="${CPPFLAGS} -fPIE -Ofast -mtune=native -D_REENTRANT -DNDEBUG"
+CFLAGS="${CFLAGS} -fPIE -Ofast -mtune=native -D_REENTRANT -DNDEBUG"
 if test "${GXX}" = "yes" ; then
-CPPFLAGS="${CPPFLAGS} -ffast-math -fstrict-aliasing"
-CFLAGS="${CFLAGS} -ffast-math -fstrict-aliasing"
+CPPFLAGS="${CPPFLAGS} -fstrict-aliasing -fno-strict-overflow"
+CFLAGS="${CFLAGS} -fstrict-aliasing -fno-strict-overflow"
 fi
 fi
  

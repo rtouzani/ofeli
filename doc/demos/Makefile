@@ -160,7 +160,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS =  
 CPP = gcc -E
-CPPFLAGS = -Wall  -O3 -DNDEBUG -ffast-math -fstrict-aliasing
+CPPFLAGS = -Wall  -fPIE -Ofast -mtune=native -D_REENTRANT -DNDEBUG -fstrict-aliasing -fno-strict-overflow
 CXX = g++
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS =  
@@ -197,10 +197,10 @@ OFELI_LIBS = -lofeli
 PACKAGE = ofeli
 PACKAGE_BUGREPORT = rachid.touzani@uca.fr
 PACKAGE_NAME = ofeli
-PACKAGE_STRING = ofeli 4.1.0
+PACKAGE_STRING = ofeli 4.1.1
 PACKAGE_TARNAME = ofeli
 PACKAGE_URL = 
-PACKAGE_VERSION = 4.1.0
+PACKAGE_VERSION = 4.1.1
 PATH_SEPARATOR = :
 PETSC_CFLAGS = -I${prefix}/include/petsc 
 PETSC_LDFLAGS = 
@@ -210,7 +210,7 @@ RELEASE =
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
-VERSION = 4.1.0
+VERSION = 4.1.1
 abs_builddir = /Users/touzani/ofeli/doc/demos
 abs_srcdir = /Users/touzani/ofeli/doc/demos
 abs_top_builddir = /Users/touzani/ofeli

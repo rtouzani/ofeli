@@ -1,13 +1,13 @@
 // Gmsh Geometry file for meshing the unit cube
-
-Point(1) = {0, 0, 0, 0.5};
-Point(2) = {1, 0, 0, 0.5};
-Point(3) = {1, 1, 0, 0.5};
-Point(4) = {0, 1, 0, 0.5};
-Point(5) = {0, 0, 1, 0.5};
-Point(6) = {1, 0, 1, 0.5};
-Point(7) = {1, 1, 1, 0.5};
-Point(8) = {0, 1, 1, 0.5};
+h=0.1;
+Point(1) = {0, 0, 0, h};
+Point(2) = {1, 0, 0, h};
+Point(3) = {1, 1, 0, h};
+Point(4) = {0, 1, 0, h};
+Point(5) = {0, 0, 1, h};
+Point(6) = {1, 0, 1, h};
+Point(7) = {1, 1, 1, h};
+Point(8) = {0, 1, 1, h};
 Line(1) = {8, 7};
 Line(2) = {7, 6};
 Line(3) = {6, 5};
