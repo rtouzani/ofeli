@@ -192,6 +192,19 @@ class Vect
          size_t ny,
          size_t nz);
 
+/** \brief Constructor of a 4-D index vector.
+ *  \details This constructor can be used for instance for a 4-D grid vector
+ *  @param [in] nx Size for the first index
+ *  @param [in] ny Size for the second index
+ *  @param [in] nz Size for the third index
+ *  @param [in] nt Size for the fourth index
+ *  @remark The size of resulting vector is nx*ny*nz*nt
+ */
+    Vect(size_t nx,
+         size_t ny,
+         size_t nz,
+         size_t nt);
+
 /** \brief Create an instance of class Vect as an image of a C/C++ array.
  *  @param [in] n Dimension of vector to construct
  *  @param [in] x C-array to copy
@@ -400,15 +413,17 @@ class Vect
 /// \brief Return vector (global) size
     size_t size() const;
 
-/** \brief Set vector size (for 1-D, 2-D or 3-D cases)
+/** \brief Set vector size (for 1-D, 2-D or 3-D cases and 3-D + time)
  *  \details This function allocates memory for the vector but does not initialize its components
  *  @param [in] nx Number of grid points in <tt>x</tt>-direction
  *  @param [in] ny Number of grid points in <tt>y</tt>-direction [Default: <tt>1</tt>]
  *  @param [in] nz Number of grid points in <tt>z</tt>-direction [Default: <tt>1</tt>]
+ *  @param [in] nt Number of grid points in <tt>t</tt>-direction [Default: <tt>1</tt>]
  */
     void setSize(size_t nx,
                  size_t ny=1,
-                 size_t nz=1);
+                 size_t nz=1,
+                 size_t nt=1);
 
 /** \brief Set vector size
  *  \details This function allocates memory for the vector but does not initialize its components
@@ -526,6 +541,9 @@ class Vect
 /// \brief Return number of grid points in the <tt>z</tt>-direction if grid indexing is set
     size_t getNz() const;
 
+/// \brief Return number of grid points in the <tt>t</tt>-direction if grid indexing is set
+    size_t getNt() const;
+
 /** \brief Assign a given function (given by an interpretable algebraic expression) of indices 
  *  components of vector.
  *  \details This function enable assigning a value to vector entries as function of indices 
@@ -533,6 +551,14 @@ class Vect
  *  <tt>j</tt> and/or <tt>k</tt>.
  */
     void setIJK(const string& exp);
+
+/** \brief Assign a given function (given by an interpretable algebraic expression) of indices 
+ *  components of vector.
+ *  \details This function enable assigning a value to vector entries as function of indices 
+ *  @param [in] exp  Regular algebraic expression to assign. It must involve the variables <tt>i</tt>,
+ *  <tt>j</tt>, <tt>k</tt> and/or <tt>l</tt>.
+ */
+    void setIJKL(const string& exp);
 
 /** \brief Assign a given value to components of vector with given code
  *  \details Vector components are assumed nodewise
@@ -1071,6 +1097,30 @@ class Vect
                   size_t j,
                   size_t k) const;
 
+/** \brief Operator <tt>()</tt> with 4-D indexing (Non constant version).
+ *  @param [in] i first index in vector (Number of vector components in the <tt>x</tt>-grid)
+ *  @param [in] j second index in vector (Number of vector components in the <tt>y</tt>-grid)
+ *  @param [in] k third index in vector (Number of vector components in the <tt>z</tt>-grid)
+ *  @param [in] l fourth index in vector (Number of vector components in the <tt>t</tt>-grid)
+ *  <tt>v(i,j,k,l)</tt> starts at <tt>v(1,1,1,1)</tt> to <tt>v(getNx(),getNy(),getNz(),getNt())</tt>
+ */
+    T_ &operator()(size_t i,
+                   size_t j,
+                   size_t k,
+                   size_t l);
+
+/** \brief Operator <tt>()</tt> with 4-D indexing (Constant version).
+ *  @param [in] i first index in vector (Number of vector components in the <tt>x</tt>-grid)
+ *  @param [in] j second index in vector (Number of vector components in the <tt>y</tt>-grid)
+ *  @param [in] k third index in vector (Number of vector components in the <tt>z</tt>-grid)
+ *  @param [in] l third index in vector (Number of vector components in the <tt>t</tt>-grid)
+ *  <tt>v(i,j,k,l)</tt> starts at <tt>v(1,1,1,1)</tt> to <tt>v(getNx(),getNy(),getNz(),getNt())</tt>
+ */
+    T_ operator()(size_t i,
+                  size_t j,
+                  size_t k,
+                  size_t l) const;
+
 /// \brief Operator <tt>=</tt> between vectors
     Vect<T_> & operator=(const Vect<T_>& v);
 
@@ -1190,7 +1240,7 @@ class Vect
  private:
 
     DOFSupport _dof_type;
-    size_t _size, _nx, _ny, _nz, _nb, _nb_dof;
+    size_t _size, _nx, _ny, _nz, _nt, _nb, _nb_dof;
     int    _dg_degree;
     bool   _grid, _with_mesh, _with_regex[10];
     Mesh   *_theMesh;
@@ -1201,10 +1251,9 @@ class Vect
     const vector<string> _var_ijkt {"i","j","k","t"};
     Fct _theFct;
     void dof_select(size_t d, vector<size_t> &dof_list);
-    size_t ijk(size_t i, size_t j)           const { return _ny*(i-1)+j-1; }
-    size_t ijk(size_t i, size_t j, size_t k) const { return _ny*_nz*(i-1)+_nz*(j-1)+k-1; }
+    size_t loc(size_t i, size_t j=1, size_t k=1, size_t l=1) const { return _ny*_nz*_nt*(i-1)+_nz*_nt*(j-1)+_nt*(k-1)+l-1; }
 #if defined (USE_EIGEN)
-    VectorX     _v;
+    VectorX _v;
 #endif
 
 };

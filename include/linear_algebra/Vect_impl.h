@@ -532,10 +532,11 @@ size_t Vect<T_>::size() const { return _size; }
 template<class T_>
 void Vect<T_>::setSize(size_t nx,
                        size_t ny,
-                       size_t nz)
+                       size_t nz,
+                       size_t nt)
 {
-   _nx = nx, _ny = ny, _nz = nz;
-   _size = _nx*_ny*_nz;
+   _nx = nx, _ny = ny, _nz = nz, _nt = nt;
+   _size = _nx*_ny*_nz*_nt;
 #if defined (USE_EIGEN)
    _v.conservativeResize(_size,1);
    clear();
@@ -760,6 +761,28 @@ size_t Vect<T_>::getNy() const { return _ny; }
 
 template<class T_>
 size_t Vect<T_>::getNz() const { return _nz; }
+
+
+template<class T_>
+size_t Vect<T_>::getNt() const { return _nt; }
+
+
+template <class T_>
+void Vect<T_>::setIJKL(const string& exp)
+{
+   _theFct.set(exp,_var_ijkt);
+   vector<real_t> xv(4);
+   for (size_t i=1; i<=_nx; ++i) {
+      for (size_t j=1; j<=_ny; ++j) {
+         for (size_t k=1; k<=_nz; ++k) {
+            for (size_t l=1; l<=_nt; ++l) {
+               xv[0] = i, xv[1] = j, xv[2] = k, xv[3] = _time;
+               set(i,j,k,l,_theFct(xv));
+            }
+	 }
+      }
+   }
+}
 
 
 template <class T_>
@@ -1885,9 +1908,9 @@ void Vect<T_>::set(size_t i,
    assert(j>0 && j<=_ny);
 #endif
 #if defined (USE_EIGEN)
-   _v(ijk(i,j)) = val;
+   _v(loc(i,j)) = val;
 #else
-   (*this)[ijk(i,j)] = val;
+   (*this)[loc(i,j)] = val;
 #endif
 }
 
@@ -1904,9 +1927,9 @@ void Vect<T_>::set(size_t i,
    assert(k>0 && k<=_nz);
 #endif
 #if defined (USE_EIGEN)
-   _v(ijk(i,j,k)) = val;
+   _v(loc(i,j,k)) = val;
 #else
-   (*this)[ijk(i,j,k)] = val;
+   (*this)[loc(i,j,k)] = val;
 #endif
 }
 
@@ -1936,7 +1959,7 @@ void Vect<T_>::add(size_t i,
    assert(j>0 && j<=_ny);
 #endif
 #if defined (USE_EIGEN)
-   _v(ijk(i,j)) += val;
+   _v(loc(i,j)) += val;
 #else
    (*this)(i,j) += val;
 #endif
@@ -1955,9 +1978,9 @@ void Vect<T_>::add(size_t i,
    assert(k>0 && k<=_nz);
 #endif
 #if defined (USE_EIGEN)
-   _v(ijk(i,j)) = val;
+   _v(loc(i,j)) = val;
 #else
-   (*this)[ijk(i,j,k)] += val;
+   (*this)[loc(i,j,k)] += val;
 #endif
 }
 
@@ -2057,9 +2080,9 @@ T_ &Vect<T_>::operator()(size_t i,
    assert(j>0 && j<=_ny);
 #endif
 #if defined (USE_EIGEN)
-   return _v(ijk(i,j));
+   return _v(loc(i,j));
 #else
-   return (*this)[ijk(i,j)];
+   return (*this)[loc(i,j)];
 #endif
 }
 
@@ -2073,9 +2096,9 @@ T_ Vect<T_>::operator()(size_t i,
    assert(j>0 && j<=_ny);
 #endif
 #if defined (USE_EIGEN)
-   return _v(ijk(i,j));
+   return _v(loc(i,j));
 #else
-   return (*this)[ijk(i,j)];
+   return (*this)[loc(i,j)];
 #endif
 }
 
@@ -2091,9 +2114,9 @@ T_ &Vect<T_>::operator()(size_t i,
    assert(k>0 && k<=_nz);
 #endif
 #if defined (USE_EIGEN)
-   return _v(ijk(i,j,k));
+   return _v(loc(i,j,k));
 #else
-   return (*this)[ijk(i,j,k)];
+   return (*this)[loc(i,j,k)];
 #endif
 }
 
@@ -2109,9 +2132,49 @@ T_ Vect<T_>::operator()(size_t i,
    assert(k>0 && k<=_nz);
 #endif
 #if defined (USE_EIGEN)
-   return _v(ijk(i,j,k));
+   return _v(loc(i,j,k));
 #else
-   return (*this)[ijk(i,j,k)];
+   return (*this)[loc(i,j,k)];
+#endif
+}
+
+
+template<class T_>
+T_ &Vect<T_>::operator()(size_t i,
+                         size_t j,
+                         size_t k,
+                         size_t l)
+{
+#ifdef _OFELI_RANGE_CHECK
+   assert(i>0 && i<=_nx);
+   assert(j>0 && j<=_ny);
+   assert(k>0 && k<=_nz);
+   assert(l>0 && l<=_nt);
+#endif
+#if defined (USE_EIGEN)
+   return _v(loc(i,j,k,l));
+#else
+   return (*this)[loc(i,j,k,l)];
+#endif
+}
+
+
+template<class T_>
+T_ Vect<T_>::operator()(size_t i,
+                        size_t j,
+                        size_t k,
+                        size_t l) const
+{
+#ifdef _OFELI_RANGE_CHECK
+   assert(i>0 && i<=_nx);
+   assert(j>0 && j<=_ny);
+   assert(k>0 && k<=_nz);
+   assert(l>0 && l<=_nt);
+#endif
+#if defined (USE_EIGEN)
+   return _v(loc(i,j,k,l));
+#else
+   return (*this)[loc(i,j,k,l)];
 #endif
 }
 

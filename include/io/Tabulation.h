@@ -59,7 +59,8 @@ namespace OFELI {
  * \details This class enables reading a tabulated function of one to three variables and 
  * calculating the value of the function using piecewise multilinear interpolation.\n
  * The file defining the function is an XML file where any function is introduced via the
- * tag "Function". 
+ * tag "Function".
+ * The abcissae are uniformly distributed.
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
@@ -114,40 +115,55 @@ class Tabulation
  *  @return Computed value of the function
  */
     real_t getValue(string funct,
-                    real_t v);
+                    real_t x);
 
 /** \brief Return the derivative of the function at a given point.
  *  \details Case of a function of one variable
  *  @param [in] funct Name of the function to be evaluated, as read from input file
- *  @param [in] v Value of the variable
+ *  @param [in] x Value of the variable
  *  @return Derivative value
  */
     real_t getDerivative(string funct,
-                         real_t v);
+                         real_t x);
 
 /** \brief Return the calculated value of the function.
  *  \details Case of a function of two variables
  *  @param [in] funct Name of the function to be evaluated, as read from input file
- *  @param [in] v1 Value of the first variable
- *  @param [in] v2 Value of the second variable
+ *  @param [in] x Value of the first variable
+ *  @param [in] y Value of the second variable
  *  @return Computed value of the function
  */
     real_t getValue(string funct,
-                    real_t v1,
-                    real_t v2);
+                    real_t x,
+                    real_t y);
 
 /** \brief Return the calculated value of the function.
  *  \details Case of a function of three variables
  *  @param [in] funct Name of the funct to be evaluated, as read from input file
- *  @param [in] v1 Value of the first variable
- *  @param [in] v2 Value of the second variable
- *  @param [in] v3 Value of the third variable
+ *  @param [in] x Value of the first variable
+ *  @param [in] y Value of the second variable
+ *  @param [in] z Value of the third variable
  *  @return Computed value of the function
  */
     real_t getValue(string funct,
-                    real_t v1,
-                    real_t v2,
-                    real_t v3);
+                    real_t x,
+                    real_t y,
+                    real_t z);
+
+/** \brief Return the calculated value of the function.
+ *  \details Case of a function of three variables
+ *  @param [in] funct Name of the funct to be evaluated, as read from input file
+ *  @param [in] x Value of the first variable
+ *  @param [in] y Value of the second variable
+ *  @param [in] z Value of the third variable
+ *  @param [in] t Value of the fourth variable
+ *  @return Computed value of the function
+ */
+    real_t getValue(string funct,
+                    real_t x,
+                    real_t y,
+                    real_t z,
+                    real_t t);
 
 /// @brief Get the Number of read functions
 /// @return size_t Number of functions
@@ -157,21 +173,28 @@ class Tabulation
  *  @param [in] n index of function
  *  @return Number of variables
  */
-    size_t getNbVar(size_t n) const { return _funct[n-1].NbVar; }
+    size_t getNbVar(size_t n) const { return Funct[n-1].NbVar; }
 
 /** @brief Get the name of a read function
  *  @param [in] n index of function
  *  @return Name of function
  */
-    string getFunctName(size_t n) const { return _funct[n-1].Label; }
+    string getFunctName(size_t n) const { return Funct[n-1].Label; }
+
+/** @brief Get number of points defining tabulation
+ *  @param [in] n index of function (Starting from 1)
+ *  @param [in] i index of variable (Between 1 and 3)
+ *  @return Size
+ */
+    size_t getSize(size_t n, size_t i) const { return Funct[n-1].Np[i-1]; }
 
 /** @brief Get minimal value of a variable
  *  @param [in] n index of function
- *  @param [in] i index of variable (between 1 and 3)
- *  @return 
+ *  @param [in] i index of variable (Between 1 and 3)
+ *  @return Minimal value
  */
     real_t getMinVar(size_t n,
-                     size_t i) const { return _funct[n-1].Min[i-1]; }
+                     size_t i) const { return Funct[n-1].Min[i-1]; }
 
 /** @brief Get maximal value of a variable
  *  @param [in] n index of function
@@ -179,17 +202,17 @@ class Tabulation
  *  @return 
  */
     real_t getMaxVar(size_t n,
-                     size_t i) const { return _funct[n-1].Max[i-1]; }
+                     size_t i) const { return Funct[n-1].Max[i-1]; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream& operator<<(ostream& s, const Tabulation &t);
     friend class XMLParser;
+    vector<fct> Funct;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:
 
    size_t                   _nb_funct;
-   vector<fct>              _funct;
    std::map<string,size_t>  _funct_id;
    void setFunction(string label);
    void setVariable(string label);

@@ -918,15 +918,15 @@ void XMLParser::read_tab(const StringMap::iterator& i)
          _theTabulation->setVariable(i->second);
          _nb_var++; 
       }
-      else if (i->first=="nb_pts") {
-         size_t k = atoi((i->second).c_str());
+      else if (i->first=="nb_points") {
+         _tab_size = atoi((i->second).c_str());
          if (_scan==false)
-            _theTabulation->_funct[_nb_funct-1].Np[_nb_var-1] = k;
+            _theTabulation->Funct[_nb_funct-1].Np[_nb_var-1] = _tab_size;
       }
       else if (i->first=="min")
-         _theTabulation->_funct[_nb_funct-1].Min[_nb_var-1] = atof((i->second).c_str());    
+         _theTabulation->Funct[_nb_funct-1].Min[_nb_var-1] = atof((i->second).c_str());    
       else if (i->first=="max")
-         _theTabulation->_funct[_nb_funct-1].Max[_nb_var-1] = atof((i->second).c_str());    
+         _theTabulation->Funct[_nb_funct-1].Max[_nb_var-1] = atof((i->second).c_str());    
    }
 
    else if (_tag_name=="Data") {
@@ -1395,7 +1395,7 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
                      while (it!=tokens.end()) {
                         _time = atof((*it++).c_str());
                         if (_time==_sought_time || _sought_time==-1.0) {
-			  _v->setMesh(*_theMesh,_dof_support,_nb_dof);
+                           _v->setMesh(*_theMesh,_dof_support,_nb_dof);
                            _v->setName(_name);
                            _v->setTime(_time);
                            for (size_t n=1; n<=_v->getNb(); n++)
@@ -1477,7 +1477,6 @@ void XMLParser::read_const_field_data(const vector<string>&     tokens,
 
 void XMLParser::read_const_field_data()
 {
-   vector<string> tokens;
    vector<string>::iterator it;
    if (_scan) {
       _ft->push_back(_time);
@@ -1542,7 +1541,7 @@ void XMLParser::read_exp_field_data(const vector<string>&     tokens,
       if ((_name==_sought_name || _sought_name=="ANYTHING") &&
           (_time==_sought_time || _sought_time==-1.0) && _set_field) {
          _v->setTime(_time);
-	 _theFct.set(*it++);
+         _theFct.set(*it++);
          for (size_t n=1; n<=_v->getNb(); n++) {
             if (_dof==0)
                for (size_t k=1; k<=_v->getNbDOF(); k++)
@@ -1559,9 +1558,9 @@ void XMLParser::read_tab_data(const vector<string>&     tokens,
                               vector<string>::iterator& it)
 {
    _theTabulation->setSizes();
-   size_t i=1;
+   size_t i=0;
    while (it!=tokens.end())
-      _theTabulation->_funct[_nb_funct-1].Val(i++) = atof((*it++).c_str());
+      _theTabulation->Funct[_nb_funct-1].Val(++i) = atof((*it++).c_str());
 }
 
 
