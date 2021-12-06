@@ -29,7 +29,7 @@ sinclude([VERSION])
 AC_SUBST(VERSION)
 AC_SUBST(RELEASE)
 
-AC_INIT([ofeli],[4.1.1],[rachid.touzani@uca.fr])
+AC_INIT([ofeli],[4.1.2],[rachid.touzani@uca.fr])
 AC_CONFIG_SRCDIR([src/mesh/Mesh.cpp])
 AM_INIT_AUTOMAKE
 

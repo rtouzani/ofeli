@@ -442,10 +442,14 @@ void NLASSolver::solveSecant()
    if (_nb_eq==1) {
       if (Verbosity>2)
          cout << "Initial guess: " << *_x << endl;
-      _g = Gradient(*_x);
       while (++_it < _max_it) {
-         if (fabs(_g)<OFELI_EPSMCH)
-            throw OFELIException("In NLASSolver::solveSecant(): Null derivative.");
+         _g = Gradient(*_x);
+         if (fabs(_g)<OFELI_EPSMCH) {
+            if (_it==1)
+               _g = 1.;
+            else
+               throw OFELIException("In NLASSolver::solveSecant(): Null derivative.");
+         }
          _y = *_x - Function(*_x)/_g;
          if (Verbosity>1)
             cout << "Iteration " << _it+1 << ", Solution: : " << _y << endl;
@@ -506,8 +510,12 @@ void NLASSolver::solveNewton()
          cout << "Initial guess: " << *_x << endl;
       while (++_it < _max_it) {
          _g = Gradient(*_x);
-         if (fabs(_g)<OFELI_EPSMCH)
-            throw OFELIException("In NLASSolver::solveNewton(): Null derivative.");
+         if (fabs(_g)<OFELI_EPSMCH) {
+            if (_it==1)
+               _g = 1.;
+            else
+               throw OFELIException("In NLASSolver::solveNewton(): Null derivative.");
+         }
          _y = *_x - Function(*_x)/_g;
          if (Verbosity>1)
             cout << "Iteration " << _it+1 << ", Solution: " << _y << endl;

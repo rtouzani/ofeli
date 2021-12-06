@@ -9,18 +9,16 @@ AUX_DIST = config.guess \
            ltmain.sh \
            mdate-sh \
            missing \
-           mkinstalldirs \
-           install-sdk.sh \
-           README-sdk
+           mkinstalldirs
 
 AUX_DIST_EXTRA = readline.m4 \
                  sys_errlist.m4 \
                  sys_siglist.m4
 
-EXTRA_DIST = bootstrap ChangeLog
+EXTRA_DIST = bootstrap ChangeLog install-sdk.sh README-sdk
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = doc include src util material demos
-bin_SCRIPTS = ofeli-config test_ofeli.sh
+bin_SCRIPTS = ofeli-config test_ofeli.sh install-sdk.sh
 
 MAINTAINERCLEANFILES = aclocal.m4 configure $(AUX_DIST)
 

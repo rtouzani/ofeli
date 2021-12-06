@@ -67,7 +67,7 @@ Vect<T_>::Vect() :
 #if !defined (USE_EIGEN)
           vector<T_>(),
 #endif
-          _dof_type(NODE_DOF), _size(0), _nx(0), _ny(1), _nz(1), _nb_dof(1),
+          _dof_type(NODE_DOF), _size(0), _nx(0), _ny(1), _nz(1), _nt(1), _nb_dof(1),
           _dg_degree(-1), _grid(true), _with_mesh(false), _theMesh(nullptr),
           _name("#"), _time(0)
 {
@@ -81,7 +81,7 @@ Vect<T_>:: Vect(size_t n) :
 #if !defined (USE_EIGEN)
            vector<T_>(n),
 #endif
-           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nb_dof(1), _dg_degree(-1),
+           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nt(1), _nb_dof(1), _dg_degree(-1),
            _grid(true), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -102,7 +102,7 @@ Vect<T_>::Vect(size_t nx,
 #if !defined (USE_EIGEN)
           vector<T_>(nx*ny),
 #endif
-          _dof_type(NODE_DOF), _size(nx*ny), _nx(nx), _ny(ny), _nz(1), _nb_dof(1), _dg_degree(-1),
+          _dof_type(NODE_DOF), _size(nx*ny), _nx(nx), _ny(ny), _nz(1), _nt(1), _nb_dof(1), _dg_degree(-1),
           _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -123,7 +123,7 @@ Vect<T_>::Vect(size_t nx,
 #if !defined (USE_EIGEN)
           vector<T_>(nx*ny*nz),
 #endif
-          _dof_type(NODE_DOF), _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz),
+          _dof_type(NODE_DOF), _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz), _nt(1),
           _nb_dof(1), _dg_degree(-1),
           _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
@@ -145,7 +145,7 @@ Vect<T_>::Vect(size_t n,
 #if !defined (USE_EIGEN)
            vector<T_>(n),
 #endif
-           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1),
+           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nt(1),
            _nb_dof(1), _dg_degree(-1),
            _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
@@ -229,7 +229,7 @@ Vect<T_>::Vect(const Side*     sd,
 #if !defined (USE_EIGEN)
            vector<T_>(),
 #endif
-           _nx(sd->getNbNodes()), _ny(v._nb_dof), _nz(1),
+           _nx(sd->getNbNodes()), _ny(v._nb_dof), _nz(1), _nt(1), 
            _nb(sd->getNbNodes()), _nb_dof(v._nb_dof), _dg_degree(-1),
            _grid(false), _with_mesh(false), _name(v._name), _time(v._time)
 {
@@ -252,7 +252,7 @@ Vect<T_>::Vect(const Vect<T_>& v,
 #if !defined (USE_EIGEN)
            vector<T_>(bc.size()),
 #endif
-           _dof_type(v._dof_type), _size(v._nb*v._nb), _nx(v._nb), _ny(v._nb_dof), _nz(1),
+           _dof_type(v._dof_type), _size(v._nb*v._nb), _nx(v._nb), _ny(v._nb_dof), _nz(1), _nt(1),
            _nb(v._nb), _nb_dof(v._nb_dof),
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
@@ -279,7 +279,7 @@ Vect<T_>::Vect(const Vect<T_>& v,
                size_t          nb_dof,
                size_t          first_dof)
          : _dof_type(v._dof_type), _size(v._size), _nx(v._nx), _ny(v._ny), _nz(v._nz),
-           _nb(v._nb), _nb_dof(v._nb_dof),
+           _nt(1), _nb(v._nb), _nb_dof(v._nb_dof),
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
@@ -299,7 +299,7 @@ Vect<T_>::Vect(const Vect<T_>& v)
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
-   setSize(v._nx,v._ny,v._nz);
+   setSize(v._nx,v._ny,v._nz,v._nt);
    for (size_t i=1; i<=_size; i++)
       set(i,v[i-1]);
    for (size_t i=0; i<10; ++i)
@@ -325,6 +325,11 @@ Vect<T_>::Vect(const Vect<T_>& v,
    }
    else if (n==3) {
       setSize(1,1,v._nz);
+      for (size_t k=1; k<=_nz; k++)
+         set(k,v(1,1,k));
+   }
+   else if (n==4) {
+      setSize(1,1,1,v._nt);
       for (size_t k=1; k<=_nz; k++)
          set(k,v(1,1,k));
    }
@@ -381,7 +386,7 @@ void Vect<T_>::dof_select(size_t          d,
 #if defined (USE_EIGEN)
 template<class T_>
 Vect<T_>::Vect(const VectorX& v)
-         : _size(v.size()), _nx(_size), _ny(1), _nz(1), _dof_type(NONE), _nb_dof(1),
+         : _size(v.size()), _nx(_size), _ny(1), _nz(1), _nt(1), _dof_type(NONE), _nb_dof(1),
            _grid(true), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
    for (size_t i=0; i<10; ++i)
@@ -479,7 +484,7 @@ template <class T_>
 void Vect<T_>::set(const Vect<real_t>& x,
                    const string&       exp)
 {
-   setSize(x._nx,x._ny,x._nz);
+   setSize(x._nx,x._ny,x._nz,x._nt);
    _theFct.set(exp,_var_xit);
    vector<real_t> xv(3);
    for (size_t i=0; i<_size; i++) {
@@ -555,8 +560,8 @@ template<class T_>
 void Vect<T_>::resize(size_t n,
                       T_     v)
 {
-   _nx = n, _ny = _nz = 1;
-   _size = _nx*_ny*_nz;
+   _nx = n, _ny = _nz = _nt = 1;
+   _size = _nx*_ny*_nz*_nt;
 #if defined (USE_EIGEN)
    _v.conservativeResize(_size,1);
    for (size_t i=1; i<=_size; i++)
@@ -2199,10 +2204,10 @@ Vect<T_> &Vect<T_>::operator=(const Vect<T_>& v)
    _nb_dof = v._nb_dof;
    _nb = v._nb;
    _grid = v._grid;
-   _nx = v._nx; _ny = v._ny; _nz = v._nz;
+   _nx = v._nx, _ny = v._ny, _nz = v._nz, _nt = v._nt;
    _size = v._size;
 #if defined (USE_EIGEN)
-   setSize(_nx,_ny,_nz);
+   setSize(_nx,_ny,_nz,_nt);
    for (size_t i=0; i<_size; i++)
       (*this)[i] = v[i];
 #else

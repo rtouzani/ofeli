@@ -173,16 +173,16 @@ struct Point {
     }
 
 /// \brief Return squared euclidean norm of vector
-    double NNorm() const { return (x*x + y*y + z*z); }
+    real_t NNorm() const { return (x*x + y*y + z*z); }
 
 /// \brief Return norm (length) of vector
-    double Norm() const { return sqrt(NNorm()); }
+    real_t Norm() const { return sqrt(NNorm()); }
 
 /// \brief Normalize vector.
 /// \details Divide vector components by its 2-norm
     void Normalize()
     {
-       double n=Norm();
+       real_t n=Norm();
        if (n==0)
           return;
        x /= n;
@@ -191,17 +191,17 @@ struct Point {
     }
 
 /// \brief Return Director (Normalized vector)
-    Point<double> Director(const Point<double>& p) const
+    Point<real_t> Director(const Point<real_t>& p) const
     {
-       double n=p.Norm();
-       return Point<double>(p.x/n,p.y/n,p.z/n);
+       real_t n=p.Norm();
+       return Point<real_t>(p.x/n,p.y/n,p.z/n);
     }
 
 /// \brief Return <tt>true</tt> if current point is close to instance <tt>a</tt> 
 /// (up to tolerance <tt>toler</tt>)
 /// \details Default value for <tt>toler</tt> is the <tt>OFELI_TOLERANCE</tt> constant.
-    bool isCloseTo(const Point<double>& a,
-                   double               toler=OFELI_TOLERANCE) const
+    bool isCloseTo(const Point<real_t>& a,
+                   real_t               toler=OFELI_TOLERANCE) const
     {
        return areClose(*this,a,toler);
     }
@@ -395,10 +395,10 @@ Point<T_> operator/ (const Point<T_>& b,
 
 /// \fn Point<double> CrossProduct(const Point<double> &lp, const Point<double> &rp)
 /// \brief Return Cross product of two vectors <tt>lp</tt> and <tt>rp</tt>
-inline Point<double> CrossProduct(const Point<double>& lp,
-                                  const Point<double>& rp)
+inline Point<real_t> CrossProduct(const Point<real_t>& lp,
+                                  const Point<real_t>& rp)
 {
-   return Point<double>(lp.y*rp.z-lp.z*rp.y,lp.z*rp.x-lp.x*rp.z,lp.x*rp.y-lp.y*rp.x);
+   return Point<real_t>(lp.y*rp.z-lp.z*rp.y,lp.z*rp.x-lp.x*rp.z,lp.x*rp.y-lp.y*rp.x);
 }
 
 /** \fn bool areClose(const Point<double> &a, const Point<double> &b, double toler=OFELI_EPSMCH)
@@ -408,9 +408,9 @@ inline Point<double> CrossProduct(const Point<double>& lp,
  *  \author Rachid Touzani
  *  \copyright GNU Lesser Public License
  */
-inline bool areClose(const Point<double>& a,
-                     const Point<double>& b,
-                     double               toler=OFELI_TOLERANCE)
+inline bool areClose(const Point<real_t>& a,
+                     const Point<real_t>& b,
+                     real_t               toler=OFELI_TOLERANCE)
 {
    if (((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z)) < toler*toler)
       return true;
@@ -425,8 +425,8 @@ inline bool areClose(const Point<double>& a,
  *  \author Rachid Touzani
  *  \copyright GNU Lesser Public License
  */
-inline double SqrDistance(const Point<double>& a,
-                          const Point<double>& b)
+inline real_t SqrDistance(const Point<real_t>& a,
+                          const Point<real_t>& b)
 {
    return ((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y) + (a.z-b.z)*(a.z-b.z));
 }
@@ -438,8 +438,8 @@ inline double SqrDistance(const Point<double>& a,
  *  \author Rachid Touzani
  *  \copyright GNU Lesser Public License
  */
-inline double Distance(const Point<double>& a,
-                       const Point<double>& b)
+inline real_t Distance(const Point<real_t>& a,
+                       const Point<real_t>& b)
 {
    return sqrt(SqrDistance(a,b));
 }
