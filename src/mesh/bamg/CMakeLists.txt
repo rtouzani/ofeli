@@ -1,0 +1,1 @@
+target_sources(${PROJECT_NAME} PRIVATE bamg.cpp Mesh2.cpp MeshGeom.cpp Meshio.cpp MeshQuad.cpp MeshRead.cpp MeshWrite.cpp Metric.cpp QuadTree.cpp SetOfE4.cpp)

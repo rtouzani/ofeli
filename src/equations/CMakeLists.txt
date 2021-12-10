@@ -1,0 +1,10 @@
+target_sources(${PROJECT_NAME} PRIVATE DG.cpp Equa.cpp)
+
+add_subdirectory(cl)
+add_subdirectory(electromagnetics)
+add_subdirectory(fluid)
+add_subdirectory(interface)
+add_subdirectory(laplace)
+add_subdirectory(porous)
+add_subdirectory(solid)
+add_subdirectory(therm)

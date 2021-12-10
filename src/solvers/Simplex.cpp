@@ -34,7 +34,7 @@ using std::ostream;
 using std::endl;
 using std::cerr;
 
-#include "solvers/simplex.h"
+#include "solvers/Simplex.h"
 #include "linear_algebra/Vect_impl.h"
 
 #include <iostream>

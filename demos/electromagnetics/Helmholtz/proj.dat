@@ -8,6 +8,6 @@
 <Project name="proj">
    <verbose value="3"/>
    <parameter label="omega" value="628"/>
-   <mesh_file value="proj.m"/>
+   <mesh_file value="proj.m"/>  <!--/home/martin/Documents/is-git/libraries/ofeli/demos/electromagnetics/Helmholtz/proj.m -->
 </Project>
 </OFELI_File>

@@ -1,0 +1,3 @@
+add_subdirectory(1D)
+add_subdirectory(adapt)
+add_subdirectory(electromagnetics)

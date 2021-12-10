@@ -30,7 +30,7 @@
   ==============================================================================*/
 
 #include "solvers/LPSolver.h"
-#include "solvers/simplex.h"
+#include "solvers/Simplex.h"
 #include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 

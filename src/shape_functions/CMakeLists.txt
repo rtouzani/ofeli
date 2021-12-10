@@ -1,0 +1,1 @@
+target_sources(${PROJECT_NAME} PRIVATE Hexa8.cpp Line2.cpp Line3.cpp Penta6.cpp Quad4.cpp Tetra4.cpp Triang3.cpp Triang6S.cpp)

@@ -47,7 +47,7 @@ using std::setw;
 using std::string;
 
 #include "OFELI_Config.h"
-#include "solvers/simplex.h"
+#include "solvers/Simplex.h"
 
 namespace OFELI {
 
