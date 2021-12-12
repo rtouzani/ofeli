@@ -1,0 +1,5 @@
+add_subdirectory(beam)
+add_subdirectory(contact)
+add_subdirectory(lelas2d)
+add_subdirectory(lelas3d)
+add_subdirectory(truss)
