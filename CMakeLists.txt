@@ -8,19 +8,27 @@ project(
 set(CMAKE_BUILD_TYPE "Release")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 11)
-#set(CMAKE_INSTALL_PREFIX "./")
-set(CMAKE_INSTALL_LIBDIR "/home/martin/Documents/github/ofeli")
-set(CMAKE_INSTALL_INCLUDEDIR "/home/martin/Documents/github/ofeli/includers")
 
 option(BUILD_TESTS "Build test programs" OFF)
 
 add_definitions(-Wall)
+
+include(GNUInstallDirs)
+
+set(CMAKE_INSTALL_BINDIR ${CMAKE_INSTALL_PREFIX}/bin)
+set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_PREFIX}/lib)
+set(CMAKE_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include)
+set(CMAKE_INSTALL_MATDIR ${CMAKE_INSTALL_PREFIX}/material)
 
 include_directories(include)
 
 add_subdirectory(src)
 add_subdirectory(demos)
 add_subdirectory(util)
+add_subdirectory(doc)
 
-install(TARGETS ofeli LIBRARY DESTINATION CMAKE_INSTALL_LIBDIR)
-install(TARGETS ofeli PUBLIC_HEADER DESTINATION CMAKE_INSTALL_INCLUDEDIR)
+file(COPY test_ofeli.sh DESTINATION .)
+
+install(TARGETS ofeli LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY material/ DESTINATION ${CMAKE_INSTALL_MATDIR})

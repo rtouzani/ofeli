@@ -8,3 +8,5 @@ target_link_libraries(heat ofeli)
 
 add_executable(transport transport.cpp)
 target_link_libraries(transport ofeli)
+
+install(TARGETS elliptic heat transport RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/${PROJECT_NAME})
