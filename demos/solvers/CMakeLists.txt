@@ -1,3 +1,5 @@
+include_directories(OPTIM)
+
 add_subdirectory(EIGEN)
 add_subdirectory(LS)
 add_subdirectory(NLAS)

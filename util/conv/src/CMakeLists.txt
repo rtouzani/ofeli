@@ -1,4 +1,4 @@
-project(conv)
+project(src)
 
 add_executable(cfield cfield.cpp)
 target_link_libraries(cfield ofeli)
