@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 
    cout << "\n\n";
    cout << "cmesh, A Program to convert various formats of mesh files\n";
-   cout << "cmesh, version 2.0, Copyright (c) 1998 - 2021  Rachid Touzani\n\n";
+   cout << "cmesh, version 2.0, Copyright (c) 1998 - 2022  Rachid Touzani\n\n";
    cout << "This program is free software: you can redistribute it and/or modify\n";
    cout << "it under the terms of the GNU Lesser General Public License as published by\n";
    cout << "the Free Software Foundation, either version 3 of the License, or\n";

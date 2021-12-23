@@ -1,5 +1,5 @@
 dnl ------------------------------------------------------------------------------
-dnl OFELI - Copyright (C) 1998-2021 Rachid Touzani
+dnl OFELI - Copyright (C) 1998-2022 Rachid Touzani
 
 dnl This file is part of OFELI.
 
@@ -29,7 +29,7 @@ sinclude([VERSION])
 AC_SUBST(VERSION)
 AC_SUBST(RELEASE)
 
-AC_INIT([ofeli],[4.1.2],[rachid.touzani@uca.fr])
+AC_INIT([ofeli],[4.1.3],[rachid.touzani@uca.fr])
 AC_CONFIG_SRCDIR([src/mesh/Mesh.cpp])
 AM_INIT_AUTOMAKE
 

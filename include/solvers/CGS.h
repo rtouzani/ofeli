@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -68,7 +68,7 @@ namespace OFELI {
  *  The global variable Verbosity enables choosing output message level
  *  <ul>
  *    <li> Verbosity < 2 : No output message
- *    <li> Verbosity > 1 : Notify executing the function CG
+ *    <li> Verbosity > 1 : Notify executing the function CGS
  *    <li> Verbosity > 2 : Notify convergence with number of performed iterations or divergence
  *    <li> Verbosity > 3 : Output each iteration number and residual
  *    <li> Verbosity > 6 : Print final solution if convergence
