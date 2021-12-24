@@ -37,20 +37,21 @@ make -j$(nproc)
 make install
 ```
 
-> **NOTE:**  If you want to modify the installation destination, specify the following macros at build step:
+> **NOTE:**  If you want to modify the installation destination, specify the following macro at build step:
 >
-> - CMAKE_INSTALL_LIBDIR
+> - CMAKE_INSTALL_PREFIX
 >
-> - CMAKE_INSTALL_BINDIR
->
-> - CMAKE_INSTALL_INCLUDEDIR
 >
 > Example: 
 >```bash
->   cmake .. \
->       -DCMAKE_INSTALL_LIBDIR=/path/to/libdir \
->       -DCMAKE_INSTALL_BINDIR=/path/to/bindir \
->       -DCMAKE_INSTALL_INCLUDEDIR=/path/to/includedir
+>   cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/installfolder 
 >```
 >After this you should be able to install the library with the `make install` command in you desired location.
+> 
+> To run the demos we recommend to define the following environment variable: 
+>```bash
+>export OFELI_PATH_MATERIAL=/path/to/installfolder/material
+>```
+>
+
 
