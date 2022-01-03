@@ -9,7 +9,7 @@
 
   ------------------------------------------------------------------------------
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 {
    if (argc < 2) {
       cout << "\nUsage: " << argv[0] << " <parameter_file>\n";
-      return 0;
+      return EXIT_FAILURE;
    }
 
    IPF data("lelas2d - 1.1 ",argv[1]);
@@ -101,5 +101,5 @@ int main(int argc, char *argv[])
       Vect<double> st, vm;
       eq.Stress(st,vm);
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }

@@ -1,0 +1,5 @@
+<map id="Muscl1D" name="Muscl1D">
+<area shape="rect" id="node3" href="$a00048.html" title="Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 1&#45;D..." alt="" coords="5,155,77,181"/>
+<area shape="rect" id="node4" href="$a00060.html" title="Class to solve the linear conservation law (Hyperbolic equation) in 1&#45;D by a MUSCL Finite Volume sche..." alt="" coords="102,155,165,181"/>
+<area shape="rect" id="node2" href="$a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. " alt="" coords="58,5,115,32"/>
+</map>

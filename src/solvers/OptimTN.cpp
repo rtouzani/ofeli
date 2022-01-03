@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -974,8 +974,8 @@ int linder(OptSolver&            opt,
 {
    size_t n=x.size();
    int tst, flag=0;
-   real_t oldf, gmin, step, xmin=0., a, b, e, b1, gtest1, gtest2;
-   real_t fw, gw, scxbnd, xw, tol;
+   real_t oldf=0., gmin=0., step=0., xmin=0., a=0., b=0., e=0., b1=0., gtest1=0., gtest2=0.;
+   real_t fw=0., gw=0., scxbnd=0., xw=0., tol=0.;
 
    int lsprnt=0, nprnt=10000;
    real_t rtsmll=sqrt(sm), big=1./sm;

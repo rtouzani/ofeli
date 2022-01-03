@@ -5,7 +5,7 @@
 
   ------------------------------------------------------------------------------
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
    ifstream mf, bcf;
    if (argc < 2) {
      cout << "\nUsage: " << argv[0] << " <parameter_file>\n";
-     return 0;
+     return EXIT_FAILURE;
    }
 
    IPF data("Helmholtz - 1.0",argv[1]);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
  
       error(u);
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }
 
 

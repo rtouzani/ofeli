@@ -6,7 +6,7 @@
  
  ==============================================================================
 
-  Copyright (C) 1998 - 2021 Rachid Touzani
+  Copyright (C) 1998 - 2022 Rachid Touzani
 
   This file is part of OFELI.
 
@@ -60,5 +60,5 @@ int main(int argc, char *argv[])
       cout << "Solution: " << os.getSolution() << endl;
    } CATCH_EXCEPTION
 
-   return 0;
+   return EXIT_SUCCESS;
 }

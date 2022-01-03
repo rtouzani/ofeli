@@ -1,3 +1,6 @@
 News in 4.0.2
 - Added: A demo program for optimization solvers: The Brachistochrone problem.
 
+New 5.0.0
+  This is a major release: Installation uses Cmake.
+  

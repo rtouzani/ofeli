@@ -15,7 +15,7 @@
 </head>
 <body>
 <p align="center">
-  <img src="../im/ofeli.gif" alt="OFELI's Logo" width="300" height="90">
+  <img src="../ofeli.gif" alt="OFELI's Logo" width="300" height="90">
 </p>
 <p align="center"><font color="#203F5B" size="4" face="verdana,Helvetica">
 <b>An Object Oriented Finite Element Library</b></font></p>
@@ -48,46 +48,39 @@
   <div class="summary">
 <a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">Laplace equation<div class="ingroups"><a class="el" href="a00342.html">OFELI</a></div></div>  </div>
+<div class="title">Porous Media problems<div class="ingroups"><a class="el" href="a00341.html">OFELI</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Laplace and Poisson equations.  
+<p>Porous Media equation classes.  
 <a href="#details">More...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for Porous Media problems:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<center><table><tr><td><img src="a00330.png" border="0" alt="" usemap="#a00330"/>
+<map name="a00330" id="a00330">
+<area shape="rect" id="node1" href="a00341.html" title="OFELI" alt="" coords="5,5,65,32"/>
+</map>
+</td></tr></table></center>
+</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html">Equa_Laplace&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class for classes about the Laplace equation.  <a href="a00031.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html">Laplace1DL2</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equation for a 1-D elliptic equation using the 2-Node line element (<code>P<sub>1</sub></code>).  <a href="a00055.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html">Laplace1DL3</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equation for the 1-D elliptic equation using the 3-Node line (<code>P<sub>2</sub></code>).  <a href="a00056.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html">Laplace2DT3</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equation for the Laplace equation using the 2-D triangle element (<code>P<sub>1</sub></code>).  <a href="a00057.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00058.html">Laplace2DT6</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equation for the Laplace equation using the 2-D triangle element (<code>P<sub>2</sub></code>).  <a href="a00058.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html">LaplaceDG2DP1</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build and solve the linear system for the Poisson problem using the <a class="el" href="a00012.html" title="Enables preliminary operations and utilities for the Discontinous Galerkin method. ">DG</a> P<sub>1</sub> 2-D triangle element.  <a href="a00059.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html">SteklovPoincare2DBE</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solver of the Steklov Poincare problem in 2-D geometries using piecewie constant boundary elemen.  <a href="a00103.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class for Porous Media Finite Element classes.  <a href="a00032.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Laplace and Poisson equations. </p>
+<p>Porous Media equation classes. </p>
 </div><!-- contents -->
 
 </div> <!-- class text -->
 </div> <!-- main menu -->
 <!-- Google Search -->
-<br><br>
-<br></p>
+<!-- <br><br>
+<br></p>-->
 <div id="foot_bar">
   Copyright &copy; 1998-2021 Rachid Touzani&nbsp;
 </div>

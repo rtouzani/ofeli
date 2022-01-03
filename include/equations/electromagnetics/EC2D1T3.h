@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -148,6 +148,8 @@ class EC2D1T3 : public Equa_Electromagnetics<3,6,2,4>
 
 /** \brief Compute integral of normal derivative on edge
  *  @param [in] h Vect instance containing magnetic field at nodes
+ *  @param [in] vr Real part of the integral
+ *  @param [in] vi Imaginary part of the integral
  *  @note This member function is to be called within each element, it detects
  *  boundary sides as the ones with nonzero code
  */

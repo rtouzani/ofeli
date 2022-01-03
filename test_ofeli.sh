@@ -1,7 +1,36 @@
 #!/bin/sh
 
-# test_ofeli.sh 
-# A script to test OFELI
+# ==============================================================================
+#
+#                                    O  F  E  L  I
+#
+#                           Object  Finite  Element  Library
+#
+# ==============================================================================
+#
+#   Copyright (C) 1998 - 2022 Rachid Touzani
+#
+#   This file is part of OFELI.
+#
+#   OFELI is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Lesser General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   OFELI is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Lesser General Public License for more details.
+#
+#   You should have received a copy of the GNU Lesser General Public License
+#   along with OFELI. If not, see <http://www.gnu.org/licenses/>.
+#
+# ==============================================================================
+#
+#                 A script to test various ofeli applications
+#                           (Demos and utilities)
+#
+# ==============================================================================
 
 echo "Testing OFELI Demos and Utilities ..."
 
@@ -311,32 +340,32 @@ if test "$ans" = "y" ; then
    ./ad2 1
 fi
 
-cd ../../
+cd ../../util/cmesh
 echo "================================================================="
 echo "Testing OFELI Utilities ..."
 echo "-----------------------------------------------------------------"
 
-cd util/conv/examples
 echo "Test mesh conversion utility (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
-   ../src/cmesh --input disk.bamg --from bamg --to ofeli
+   ./cmesh --input disk.bamg --from bamg --to ofeli
 fi
 
 echo "Test field conversion utility (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
-   ../src/cfield -m cavity.m -i cavity.s -f gmsh
+   cd ../cfield
+   ./cfield -m cavity.m -i cavity.s -f gmsh
 fi
 
-cd ../../g2m
 echo "Test mesh generation utility (y/n) ? \c"
 read ans
 if test "$ans" = "y" ; then
+   cd ../g2m
    ./g2m -d test.dom -o test.m
 fi
 
-cd ../..
+cd ..
 echo "==========================================================================="
 echo "OFELI Testing completed"
 echo "==========================================================================="

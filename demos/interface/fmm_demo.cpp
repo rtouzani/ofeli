@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
 // Free pointer and exit
    delete g;
-   return 0;
+   return EXIT_SUCCESS;
 }
 
 

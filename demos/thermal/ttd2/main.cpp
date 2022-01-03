@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 // Expand arguments
    if (argc < 2) {
       cout << "\nUsage: " << argv[0] << " <parameter_file>\n";
-      return 0;
+      return EXIT_FAILURE;
    }
 
    IPF data("ttd2 - 1.2",argv[1]);
@@ -126,5 +126,5 @@ int main(int argc, char *argv[])
       error(theTime,ms,u);
    } CATCH_EXCEPTION
 
-   return 0;
+   return EXIT_SUCCESS;
 }

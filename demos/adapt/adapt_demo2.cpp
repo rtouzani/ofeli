@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
       cout << " Usage: ad2 <opt>" << endl;
       cout << " opt = 0: Rectangle test (file: rect.dom)" << endl;
       cout << " opt = 1: L-shaped domain test (file: L.dom)" << endl;
-      exit(1);
+      return EXIT_FAILURE;
    }
 
    try {
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 //    New solution
       saveField(v,"v.pos",GMSH);
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }
 
 

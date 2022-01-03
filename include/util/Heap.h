@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -176,8 +176,6 @@ std::ostream& operator<<(std::ostream &s, Heap<T_> &bh)
 }
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-/*! @} End of Doxygen Groups */
 
 } /* namespace OFELI */
 

@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 // Expand arguments
    if (argc < 2) {
       cout << "\nUsage: " << argv[0] << " <param_file>\n";
-      return 0;
+      return EXIT_FAILURE;
    }
 
    IPF data("std3 - 1.0",argv[1]);
@@ -116,5 +116,5 @@ int main(int argc, char *argv[])
          saveField(u,"beam.pos",GMSH);
       }
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }

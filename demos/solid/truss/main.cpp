@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 {
    if (argc < 2) {
       cout << "\nUsage: " << argv[0] << " <project_file>\n";
-      return 0;
+      return EXIT_FAILURE;
    }
    IPF data("truss",argv[1]);
    int output_flag = data.getOutput();
@@ -93,5 +93,5 @@ int main(int argc, char *argv[])
       DeformMesh(ms,u,40);
       ms.put(data.getProject()+"-1.m");
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }

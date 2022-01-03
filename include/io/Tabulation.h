@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -111,7 +111,7 @@ class Tabulation
 /** \brief Return the calculated value of the function.
  *  \details Case of a function of one variable
  *  @param [in] funct Name of the function to be evaluated, as read from input file
- *  @param [in] v Value of the variable
+ *  @param [in] x Value of the variable
  *  @return Computed value of the function
  */
     real_t getValue(string funct,

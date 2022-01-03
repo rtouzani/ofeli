@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -33,6 +33,7 @@
 #ifndef __LOCAL_MATRIX_H
 #define __LOCAL_MATRIX_H
 
+#include <valarray>
 #include "OFELI_Config.h"
 
 namespace OFELI {
@@ -65,7 +66,7 @@ class Element;
 template<class T_> class SkMatrix;
 template<class T_> class SkSMatrix;
 template<class T_> class SpMatrix;
- template<class T_,size_t N_> class LocalVect;
+template<class T_,size_t N_> class LocalVect;
 
 template<class T_, size_t NR_, size_t NC_> class LocalMatrix
 {
@@ -251,8 +252,8 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
     T_ *get();
 
  private:
-    size_t _length;
-    T_ _a[NR_*NC_];
+    size_t            _length;
+    std::valarray<T_> _a;
 };
 
 

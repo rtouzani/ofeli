@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This program is free software; you can redistribute it and/or modify it under
    the terms of the GNU General Public License as published by the Free
@@ -66,5 +66,5 @@ int main(int argc, char *argv[])
       }
       cout << "Nb. of iterations: " << e.getNbIter() << endl;
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }

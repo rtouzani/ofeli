@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 {
    if (argc < 2) {
       cout << "Usage: ad1 <domain_file>" << endl;
-      exit(1);
+      return EXIT_FAILURE;
    }
 
 // Generate background mesh
@@ -68,5 +68,5 @@ int main(int argc, char **argv)
       saveField(v,"v.pos",GMSH);
       cout << ma;
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }

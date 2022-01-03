@@ -1,0 +1,12 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$a00073.html" title="Parent class for hyperbolic solvers with Muscl scheme. " alt="" coords="5,132,63,159"/>
+<area shape="rect" id="node2" href="$a00074.html" title="Class for 1&#45;D hyperbolic solvers with Muscl scheme. " alt="" coords="115,56,189,83"/>
+<area shape="rect" id="node5" href="$a00075.html" title="Class for 2&#45;D hyperbolic solvers with Muscl scheme. " alt="" coords="111,132,193,159"/>
+<area shape="rect" id="node8" href="$a00076.html" title="Class for 3&#45;D hyperbolic solvers with Muscl scheme using tetrahedra. " alt="" coords="111,208,193,235"/>
+<area shape="rect" id="node3" href="$a00048.html" title="Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 1&#45;D..." alt="" coords="245,5,317,32"/>
+<area shape="rect" id="node4" href="$a00060.html" title="Class to solve the linear conservation law (Hyperbolic equation) in 1&#45;D by a MUSCL Finite Volume sche..." alt="" coords="250,56,313,83"/>
+<area shape="rect" id="node6" href="$a00049.html" title="Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 2&#45;D..." alt="" coords="241,107,321,133"/>
+<area shape="rect" id="node7" href="$a00061.html" title="Class to solve the linear hyperbolic equation in 2&#45;D by a MUSCL Finite Volume scheme on triangles..." alt="" coords="246,157,317,184"/>
+<area shape="rect" id="node9" href="$a00050.html" title="Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 3&#45;D..." alt="" coords="241,208,321,235"/>
+<area shape="rect" id="node10" href="$a00062.html" title="Class to solve the linear conservation law equation in 3&#45;D by a MUSCL Finite Volume scheme on tetrahe..." alt="" coords="246,259,317,285"/>
+</map>

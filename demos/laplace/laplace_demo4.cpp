@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 // Expand arguments
    if (argc < 2) {
       cout << "\nUsage: " << argv[0] << " <project_file>\n";
-      return 0;
+      return EXIT_FAILURE;
    }
    IPF data("laplace_demo4 - 1.0",argv[1]); 
    cout << endl << endl;
@@ -71,5 +71,5 @@ int main(int argc, char *argv[])
       cout << "L2 solution norm: " << u.Norm(WNORM2) << endl;
 
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }

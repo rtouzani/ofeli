@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,6 +34,7 @@
 #ifndef __EQUATION_H
 #define __EQUATION_H
 
+#include <valarray>
 #include "equations/Equa.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "linear_algebra/LocalVect.h"
@@ -207,8 +208,8 @@ class Equation : virtual public Equa
  *  @param [out] bs Local constant value of vector at given side. 
  *  @remark All degrees of freedom are transferred to the local vector
  */
-    void SideSideVector(const Vect<real_t>& b,
-                        real_t*             bs);
+    void SideSideVector(const Vect<real_t>&    b,
+                        std::valarray<real_t>& bs);
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
@@ -269,8 +270,8 @@ class Equation : virtual public Equa
  *  @remark This member function is to be used if a constructor with Side was invoked.
  *  It uses the Side pointer <tt>_theSide</tt>
  */
-    void SideVector(const Vect<real_t>& b,
-                    real_t*             sb);
+    void SideVector(const Vect<real_t>&     b,
+                    std::valarray<real_t>& sb);
 
 /** \brief Localize coordinates of element nodes
  *  \details Coordinates are stored in array <tt>_x[0], _x[1], ...</tt> which
@@ -502,7 +503,7 @@ class Equation : virtual public Equa
     LocalVect<Point<real_t>,NEN_> _x;
     LocalVect<real_t,NEE_>        _eu, _ebf;
     LocalVect<real_t,NSE_>        _su;
-    real_t                        _ssf[MAX_NBDOF_NODE];
+    std::valarray<real_t>         _ssf;
     void updateBC(const Element& el,
                   Vect<real_t>*  bc=nullptr);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

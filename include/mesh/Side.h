@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -78,7 +78,11 @@ class Element;
  * function \b getPtrNode(). The string defining the element shape must be chosen
  * according to the following list:
  *
- *  \htmlinclude "SideDescription.html"
+ *  Shape            Shape name     Dimension    Min. number of nodes
+ *  Line             line             3                 2
+ *  Triangle         tria             3                 3
+ *  Quadrilateral    quad             3                 4
+ * 
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License

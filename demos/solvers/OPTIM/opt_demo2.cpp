@@ -6,7 +6,7 @@
  
  ==============================================================================
 
-  Copyright (C) 1998 - 2021 Rachid Touzani
+  Copyright (C) 1998 - 2022 Rachid Touzani
 
   This file is part of OFELI.
 
@@ -63,5 +63,5 @@ int main()
       cout << "\nSolution:\n" << x;
    } CATCH_EXCEPTION
 
-   return 0;
+   return EXIT_SUCCESS;
 }

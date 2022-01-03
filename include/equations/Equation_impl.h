@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -419,9 +419,10 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<real_t>& b,
 
 
 template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<real_t>& b,
-                                               real_t*             sb)
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<real_t>&    b,
+                                               std::valarray<real_t>& sb)
 {
+   sb.resize(NSE_/NSN_);
    for (size_t i=0; i<_theSide->getNbDOF(); ++i)
       sb[i] = b(_theSide->getNbDOF()*(_theSide->n()-1)+i+1);
 }

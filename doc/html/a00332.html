@@ -15,7 +15,7 @@
 </head>
 <body>
 <p align="center">
-  <img src="../im/ofeli.gif" alt="OFELI's Logo" width="300" height="90">
+  <img src="../ofeli.gif" alt="OFELI's Logo" width="300" height="90">
 </p>
 <p align="center"><font color="#203F5B" size="4" face="verdana,Helvetica">
 <b>An Object Oriented Finite Element Library</b></font></p>
@@ -48,46 +48,57 @@
   <div class="summary">
 <a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">Solid Mechanics<div class="ingroups"><a class="el" href="a00342.html">OFELI</a></div></div>  </div>
+<div class="title">Heat Transfer<div class="ingroups"><a class="el" href="a00341.html">OFELI</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Solid Mechanics finite element equations.  
+<p>Heat Transfer equations.  
 <a href="#details">More...</a></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for Heat Transfer:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<center><table><tr><td><img src="a00332.png" border="0" alt="" usemap="#a00332"/>
+<map name="a00332" id="a00332">
+<area shape="rect" id="node1" href="a00341.html" title="OFELI" alt="" coords="5,48,65,74"/>
+</map>
+</td></tr></table></center>
+</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00001.html">Bar2DL2</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equations for Planar Elastic Bar element with 2 DOF (Degrees of Freedom) per node.  <a href="a00001.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00007.html">DC1DL2</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for thermal diffusion and convection in 1-D using 2-Node elements.  <a href="a00007.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00002.html">Beam3DL2</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equations for 3-D beam equations using 2-node lines.  <a href="a00002.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html">DC2DT3</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for thermal diffusion and convection in 2-D domains using 3-Node triangles.  <a href="a00008.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html">Elas2DQ4</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equations for 2-D linearized elasticity using 4-node quadrilaterals.  <a href="a00021.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html">DC2DT6</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for thermal diffusion and convection in 2-D domains using 6-Node triangles.  <a href="a00009.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html">Elas2DT3</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equations for 2-D linearized elasticity using 3-node triangles.  <a href="a00022.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html">DC3DAT3</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for thermal diffusion and convection in 3-D domains with axisymmetry using 3-Node triangles.  <a href="a00010.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html">Elas3DH8</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equations for 3-D linearized elasticity using 8-node hexahedra.  <a href="a00023.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00011.html">DC3DT4</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds finite element arrays for thermal diffusion and convection in 3-D domains using 4-Node tetrahedra.  <a href="a00011.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html">Elas3DT4</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To build element equations for 3-D linearized elasticity using 4-node tetrahedra.  <a href="a00024.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class for Heat transfer Finite Element classes.  <a href="a00034.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html">Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class for Solid Mechanics Finite Element classes.  <a href="a00033.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00088.html">PhaseChange</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class enables defining phase change laws for a given material.  <a href="a00088.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Solid Mechanics finite element equations. </p>
+<p>Heat Transfer equations. </p>
 </div><!-- contents -->
 
 </div> <!-- class text -->
 </div> <!-- main menu -->
 <!-- Google Search -->
-<br><br>
-<br></p>
+<!-- <br><br>
+<br></p>-->
 <div id="foot_bar">
   Copyright &copy; 1998-2021 Rachid Touzani&nbsp;
 </div>

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This program is free software; you can redistribute it and/or modify it under
    the terms of the GNU General Public License as published by the Free
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 // Expand arguments
    if (argc < 2) {
       cout << "Usage: " << argv[0] << " <project_file>" << endl;
-      return 0;
+      return EXIT_FAILURE;
    }
 
    try {
@@ -65,5 +65,5 @@ int main(int argc, char *argv[])
          saveField(v,ms,data.getPlotFile(i),GMSH);
       }
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }

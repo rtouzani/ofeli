@@ -9,7 +9,7 @@
 
   ------------------------------------------------------------------------------
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
    void set_init(Vect<double> &u);
    if (argc == 1) {
       cout << "Usage: " << argv[0] << " <parameter file>" << endl;
-      exit(1);
+      return EXIT_FAILURE;
    }
 
    try {
@@ -81,15 +81,14 @@ int main(int argc, char *argv[])
          eq.setBC(1,0.);                // reflection condition for the boundary side
          theTimeStep = eq.runOneTimeStep();
          if (theStep%time_mod==0) {
-            cout << "Saving step " << setw(8) << theStep << " at time " 
-                 << theTime+theTimeStep << endl;
+            cout << "Saving step " << theStep << " at time " << theTime+theTimeStep << endl;
             U.setTime(theTime+theTimeStep);
             pp.P0toP1(u,U);
             ff.put(U);
          }
       }
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }
 
 void set_init(Vect<double> &u)

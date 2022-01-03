@@ -15,7 +15,7 @@
 </head>
 <body>
 <p align="center">
-  <img src="../im/ofeli.gif" alt="OFELI's Logo" width="300" height="90">
+  <img src="../ofeli.gif" alt="OFELI's Logo" width="300" height="90">
 </p>
 <p align="center"><font color="#203F5B" size="4" face="verdana,Helvetica">
 <b>An Object Oriented Finite Element Library</b></font></p>
@@ -47,7 +47,7 @@
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -123,10 +123,10 @@
 , <a class="el" href="a00022.html#aa6d7e87afcbeea4276573c9576d8d6ca">Elas2DT3</a>
 , <a class="el" href="a00023.html#aa6d7e87afcbeea4276573c9576d8d6ca">Elas3DH8</a>
 , <a class="el" href="a00024.html#a02b9344d3bbc428a4b8cc5671a559e41">Elas3DT4</a>
-, <a class="el" href="a00031.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Laplace&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00032.html#a4a93a6ae518606a36e7a099ac170483c">Equa_Porous&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00034.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Therm&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00046.html#a88f7f063f1f9662502cd377bfa7ee300">HelmholtzBT3</a>
+, <a class="el" href="a00031.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00032.html#a4a93a6ae518606a36e7a099ac170483c">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00034.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00046.html#aac55e919159ab10e1684465f60673c39">HelmholtzBT3</a>
 , <a class="el" href="a00055.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace1DL2</a>
 , <a class="el" href="a00056.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace1DL3</a>
 , <a class="el" href="a00057.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace2DT3</a>
@@ -142,10 +142,10 @@
 , <a class="el" href="a00022.html#a4b5383e9159556cc1d0f949da2a5f128">Elas2DT3</a>
 , <a class="el" href="a00023.html#a9f47743e35b40517037f6c007312461c">Elas3DH8</a>
 , <a class="el" href="a00024.html#a4b5383e9159556cc1d0f949da2a5f128">Elas3DT4</a>
-, <a class="el" href="a00031.html#a4898e17d7619a02fda1a011da624b3af">Equa_Laplace&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00032.html#a0c6ef2f4383b0dbf335c197f290f508f">Equa_Porous&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00034.html#ab08651853053c5bff38e8fe3737fdc4c">Equa_Therm&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00046.html#a4091d09fa4459eb08ba5115da0da5dc1">HelmholtzBT3</a>
+, <a class="el" href="a00031.html#a4898e17d7619a02fda1a011da624b3af">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00032.html#a0c6ef2f4383b0dbf335c197f290f508f">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00034.html#ab08651853053c5bff38e8fe3737fdc4c">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00046.html#a2f3d840f010177c6e08e0e4d1f8b0a08">HelmholtzBT3</a>
 , <a class="el" href="a00055.html#a9f47743e35b40517037f6c007312461c">Laplace1DL2</a>
 , <a class="el" href="a00056.html#a735f7f78ccee2864d719a9aba4bea313">Laplace1DL3</a>
 , <a class="el" href="a00057.html#a735f7f78ccee2864d719a9aba4bea313">Laplace2DT3</a>
@@ -159,16 +159,16 @@
 : <a class="el" href="a00001.html#a7740c7ab195c03ac140f1f75f633470f">Bar2DL2</a>
 , <a class="el" href="a00002.html#a7740c7ab195c03ac140f1f75f633470f">Beam3DL2</a>
 , <a class="el" href="a00016.html#a7740c7ab195c03ac140f1f75f633470f">EC2D1T3</a>
-, <a class="el" href="a00031.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Laplace&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00032.html#a3d205a8b8188a1e0d1e07091b775bbe7">Equa_Porous&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00034.html#a707e4f7e7fe3140fd7a6fefe4774f03d">Equa_Therm&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00031.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00032.html#a3d205a8b8188a1e0d1e07091b775bbe7">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00034.html#a707e4f7e7fe3140fd7a6fefe4774f03d">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
 , <a class="el" href="a00046.html#a7740c7ab195c03ac140f1f75f633470f">HelmholtzBT3</a>
 , <a class="el" href="a00059.html#a7740c7ab195c03ac140f1f75f633470f">LaplaceDG2DP1</a>
 , <a class="el" href="a00082.html#a7740c7ab195c03ac140f1f75f633470f">NSP2DQ41</a>
 </li>
 <li>buildEigen()
 : <a class="el" href="a00002.html#aaf07a32713fc7f788131f6eef3b5e0db">Beam3DL2</a>
-, <a class="el" href="a00031.html#a4d5573c96d55640c2dbd525966a0cf8d">Equa_Laplace&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00031.html#a4d5573c96d55640c2dbd525966a0cf8d">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
 , <a class="el" href="a00055.html#aa29ea1739165c677b1353892bfaff103">Laplace1DL2</a>
 , <a class="el" href="a00057.html#aa29ea1739165c677b1353892bfaff103">Laplace2DT3</a>
 , <a class="el" href="a00058.html#aa29ea1739165c677b1353892bfaff103">Laplace2DT6</a>
@@ -179,8 +179,8 @@
 </div> <!-- class text -->
 </div> <!-- main menu -->
 <!-- Google Search -->
-<br><br>
-<br></p>
+<!-- <br><br>
+<br></p>-->
 <div id="foot_bar">
   Copyright &copy; 1998-2021 Rachid Touzani&nbsp;
 </div>

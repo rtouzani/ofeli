@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -47,6 +47,7 @@ template<class T_,size_t N_>
 LocalVect<T_,N_>::LocalVect()
                  : _el(nullptr), _sd(nullptr)
 {
+   _v.resize(N_);
    for (size_t i=0; i<N_; ++i)
       _v[i] = 0;
 }
@@ -56,6 +57,7 @@ template<class T_,size_t N_>
 LocalVect<T_,N_>::LocalVect(const T_ *a)
                  : _el(nullptr), _sd(nullptr)
 {
+   _v.resize(N_);
    for (size_t i=0; i<N_; ++i)
       _v[i] = a[i];
 }
@@ -64,18 +66,24 @@ LocalVect<T_,N_>::LocalVect(const T_ *a)
 template<class T_,size_t N_>
 LocalVect<T_,N_>::LocalVect(const Element *el)
                  : _el(el), _sd(nullptr)
-{ }
+{
+   _v.resize(N_);
+
+}
 
 
 template<class T_,size_t N_>
 LocalVect<T_,N_>::LocalVect(const Side *sd)
                  : _el(nullptr), _sd(sd)
-{ }
+{
+   _v.resize(N_);
+}
 
 
 template<class T_,size_t N_>
 LocalVect<T_,N_>::LocalVect(const LocalVect<T_,N_>& v)
 {
+   _v.resize(N_);
    for (size_t i=0; i<N_; ++i)
       _v[i] = v[i];
    _el = v._el;
@@ -88,6 +96,7 @@ LocalVect<T_,N_>::LocalVect(const Element*  el,
                             const Vect<T_>& v,
                             int             opt)
 {
+   _v.resize(N_);
    if (opt==0)
       Localize(el,v);
    else {
@@ -112,6 +121,7 @@ LocalVect<T_,N_>::LocalVect(const Side*     sd,
                             const Vect<T_>& v,
                             int             opt)
 {
+   _v.resize(N_);
    if (opt==0)
       Localize(sd,v);
    else {
@@ -318,7 +328,7 @@ LocalVect<T_,N_>& LocalVect<T_,N_>::operator/=(const T_& a)
 
 
 template<class T_,size_t N_>
-T_* LocalVect<T_,N_>::get() { return _v; }
+T_* LocalVect<T_,N_>::get() { return &_v[0]; }
 
 
 template<class T_,size_t N_>

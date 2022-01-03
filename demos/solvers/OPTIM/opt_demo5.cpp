@@ -10,7 +10,7 @@
 
   ------------------------------------------------------------------------------
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -78,5 +78,5 @@ int main()
    s.run();
    cout << "Solution\n" << x;
    cout << "Optimal objective: " << s.getObjective() << endl;
-   return 0;
+   return EXIT_SUCCESS;
 }

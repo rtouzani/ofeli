@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 // Expand arguments
    if (argc < 2) {
       cout << "\nUsage: " << argv[0] << " <param_file>\n";
-      return 0;
+      return EXIT_FAILURE;
    }
    IPF data("stdc2 - 2.0",argv[1]); 
    cout << endl << endl;
@@ -104,5 +104,5 @@ int main(int argc, char *argv[])
       if (data.getPlot())
          saveField(u,data.getPlotFile(),GMSH);
    } CATCH_EXCEPTION
-   return 0;
+   return EXIT_SUCCESS;
 }

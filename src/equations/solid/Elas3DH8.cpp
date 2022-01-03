@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -211,10 +211,10 @@ void Elas3DH8::BoundaryRHS(const Vect<real_t>& f)
 
 void Elas3DH8::BoundaryRHS()
 {
-   for (size_t i=1; i<=4; i++) {
-      for (size_t k=1; k<=3; k++) {
+   for (size_t i=0; i<4; ++i) {
+      for (size_t k=1; k<=3; ++k) {
          if (_theSide->getCode(k) != CONTACT)
-            sRHS(3*(i-1)+k) += _el_geo.area*_ssf[3*(i-1)+k-1];
+            sRHS(3*i+k) += _el_geo.area*_ssf[k-1];
       }
    }
 }

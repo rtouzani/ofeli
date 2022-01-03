@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -65,10 +65,16 @@ class Mesh;
  *  Class Element enables defining an element of a finite element mesh. The element is given in
  *  particular by its shape and a list of nodes. Each node can be accessed by the
  *  member function getPtrNode. Moreover, class Mesh can generate for each element its list of sides.
- *  The string that defines the element shape must be chosen according to the following list :
+ *  The string that defines the element shape must be chosen according to the following list:
  *
- *  \htmlinclude "ElementDescription.html"
- *
+ *  Shape            Shape name     Dimension    Min. number of nodes
+ *  Line             line             2                 2
+ *  Triangle         tria             2                 3
+ *  Quadrilateral    quad             2                 4
+ *  Tetrahedron      tetra            3                 4
+ *  Pentahedron      penta            3                 6
+ *  Hexahedron       hexa             3                 8
+ * 
  *  @remark Once a Mesh instance is constructed, one has access for each Element of the mesh
  *  to pointers to element sides provided the member function getAllSides of Mesh has been
  *  invoked. With this, an element can be tested to see if it is on the boundary, i.e. if it

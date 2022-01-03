@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -46,18 +46,6 @@
  *
  * All these macros can be modified before compiling the library.
  */
-
-/*!
- * \def OFELI_VERSION
- * gives the current version of the library
- */
-#define OFELI_VERSION                 "4.1.2"
-
-/*!
- * \def OFELI_RELEASE_DATE
- * gives the date (month-year) of current release
- */
-#define OFELI_RELEASE_DATE            "12-2021"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define MY_RANDOM             55085111
@@ -359,7 +347,7 @@ enum NonLinearIter {
 };
 
 #ifdef WIN32
-#define PATH_MATERIAL "c:\\Program Files\\ofeli-"OFELI_VERSION"\\material\\"
+#define PATH_MATERIAL "c:\\Program Files\\ofeli\\material\\"
 #else
 #include "datadir.h"
 #endif

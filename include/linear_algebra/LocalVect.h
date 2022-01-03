@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,6 +34,7 @@
 #define __LOCAL_VECT_H
 
 #include "OFELI_Config.h"
+#include <valarray>
 #include "linear_algebra/Vect.h"
 
 namespace OFELI {
@@ -249,7 +250,7 @@ public:
 
  private:
 
-   T_            _v[N_];
+   std::valarray<T_> _v;
    const Element *_el;
    const Side    *_sd;
 };

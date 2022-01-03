@@ -15,7 +15,7 @@
 </head>
 <body>
 <p align="center">
-  <img src="../im/ofeli.gif" alt="OFELI's Logo" width="300" height="90">
+  <img src="../ofeli.gif" alt="OFELI's Logo" width="300" height="90">
 </p>
 <p align="center"><font color="#203F5B" size="4" face="verdana,Helvetica">
 <b>An Object Oriented Finite Element Library</b></font></p>
@@ -47,7 +47,7 @@
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -99,7 +99,7 @@
 : <a class="el" href="a00016.html#ae96fba287155ef1ab77778cb006efcc3">EC2D1T3</a>
 </li>
 <li>MagneticPermeability()
-: <a class="el" href="a00029.html#aaaae39e158d68b6422749643570ce498">Equa_Electromagnetics&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
+: <a class="el" href="a00029.html#aaaae39e158d68b6422749643570ce498">Equa_Electromagnetics&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
 , <a class="el" href="a00069.html#a974e2b766202f75b17bd5968dcb22d38">Material</a>
 </li>
 <li>MagneticPressure()
@@ -111,8 +111,8 @@
 , <a class="el" href="a00021.html#a6973a1f3ad79ae2b5211c3ec81c6f678">Elas2DQ4</a>
 , <a class="el" href="a00022.html#a6973a1f3ad79ae2b5211c3ec81c6f678">Elas2DT3</a>
 , <a class="el" href="a00023.html#a6973a1f3ad79ae2b5211c3ec81c6f678">Elas3DH8</a>
-, <a class="el" href="a00032.html#a4b5788aa0557f7b6698712490fe5dbfa">Equa_Porous&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
-, <a class="el" href="a00033.html#a6d344362c30ab9e83665623bb793e0d6">Equa_Solid&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00032.html#a4b5788aa0557f7b6698712490fe5dbfa">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
+, <a class="el" href="a00033.html#a6d344362c30ab9e83665623bb793e0d6">Equa_Solid&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
 , <a class="el" href="a00116.html#a3e80867e15ab5fd5f7fb377b1c964246">WaterPorous2D</a>
 </li>
 <li>Material()
@@ -138,11 +138,11 @@
 : <a class="el" href="a00072.html#aa6117ab54bf0fa3873ca8df4b3394df1">MeshAdapt</a>
 </li>
 <li>Mobility()
-: <a class="el" href="a00032.html#acceb9ec981656f82b38c1a7552d73bfe">Equa_Porous&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
+: <a class="el" href="a00032.html#acceb9ec981656f82b38c1a7552d73bfe">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
 , <a class="el" href="a00116.html#abf6c16b31e45652f96b74a2a40c4d7d8">WaterPorous2D</a>
 </li>
 <li>Mu()
-: <a class="el" href="a00032.html#a361540d92ccffb977940130e35ffcd3a">Equa_Porous&lt; T_, NEN_, NEE_, NSN_, NSE_ &gt;</a>
+: <a class="el" href="a00032.html#a361540d92ccffb977940130e35ffcd3a">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>
 </li>
 <li>Mult()
 : <a class="el" href="a00004.html#af3a7c8856e21eb23fa804f0d2f6e893b">BMatrix&lt; T_ &gt;</a>
@@ -152,8 +152,8 @@
 , <a class="el" href="a00070.html#a203735f477738474b7fa91bd96284a33">Matrix&lt; T_ &gt;</a>
 , <a class="el" href="a00099.html#af3a7c8856e21eb23fa804f0d2f6e893b">SkMatrix&lt; T_ &gt;</a>
 , <a class="el" href="a00100.html#af3a7c8856e21eb23fa804f0d2f6e893b">SkSMatrix&lt; T_ &gt;</a>
-, <a class="el" href="a00342.html#gaf3a7c8856e21eb23fa804f0d2f6e893b">SpMatrix&lt; T_ &gt;</a>
-, <a class="el" href="a00342.html#gaf3a7c8856e21eb23fa804f0d2f6e893b">TrMatrix&lt; T_ &gt;</a>
+, <a class="el" href="a00341.html#gaf3a7c8856e21eb23fa804f0d2f6e893b">SpMatrix&lt; T_ &gt;</a>
+, <a class="el" href="a00341.html#gaf3a7c8856e21eb23fa804f0d2f6e893b">TrMatrix&lt; T_ &gt;</a>
 </li>
 <li>MultAdd()
 : <a class="el" href="a00004.html#a891baacc01ccea53b33d0da6fd57d653">BMatrix&lt; T_ &gt;</a>
@@ -163,8 +163,8 @@
 , <a class="el" href="a00070.html#a4de5f97fbbb24b50dc41e838620db33f">Matrix&lt; T_ &gt;</a>
 , <a class="el" href="a00099.html#a891baacc01ccea53b33d0da6fd57d653">SkMatrix&lt; T_ &gt;</a>
 , <a class="el" href="a00100.html#a891baacc01ccea53b33d0da6fd57d653">SkSMatrix&lt; T_ &gt;</a>
-, <a class="el" href="a00342.html#ga182aa2a623c3a9e200cc74350c173c9b">SpMatrix&lt; T_ &gt;</a>
-, <a class="el" href="a00342.html#ga182aa2a623c3a9e200cc74350c173c9b">TrMatrix&lt; T_ &gt;</a>
+, <a class="el" href="a00341.html#ga182aa2a623c3a9e200cc74350c173c9b">SpMatrix&lt; T_ &gt;</a>
+, <a class="el" href="a00341.html#ga182aa2a623c3a9e200cc74350c173c9b">TrMatrix&lt; T_ &gt;</a>
 , <a class="el" href="a00115.html#ad0f90653534fc8b2f68aee497de6ca0a">Vect&lt; T_ &gt;</a>
 </li>
 <li>MultAddScal()
@@ -194,8 +194,8 @@
 </div> <!-- class text -->
 </div> <!-- main menu -->
 <!-- Google Search -->
-<br><br>
-<br></p>
+<!-- <br><br>
+<br></p>-->
 <div id="foot_bar">
   Copyright &copy; 1998-2021 Rachid Touzani&nbsp;
 </div>

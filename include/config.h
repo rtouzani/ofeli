@@ -47,7 +47,7 @@
 #define PACKAGE_NAME "ofeli"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "ofeli 4.1.2"
+#define PACKAGE_STRING "ofeli 4.1.3"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "ofeli"
@@ -56,7 +56,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "4.1.2"
+#define PACKAGE_VERSION "4.1.3"
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
@@ -64,7 +64,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "4.1.2"
+#define VERSION "4.1.3"
 
 /* Define to empty if `const' does not conform to ANSI C. */
 /* #undef const */

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2021 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,6 +50,7 @@ template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_>::LocalMatrix()
 {
    _length = NR_ * NC_;
+   _a.resize(_length); 
 }
 
 
@@ -57,6 +58,7 @@ template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_>::LocalMatrix(const LocalMatrix<T_,NR_,NC_>& m)
 {
    _length = m._length;
+   _a.resize(_length); 
    for (size_t k=0; k<_length; k++)
       _a[k] = m._a[k];
 }
@@ -65,19 +67,31 @@ LocalMatrix<T_,NR_,NC_>::LocalMatrix(const LocalMatrix<T_,NR_,NC_>& m)
 template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*            el,
                                      const SpMatrix<T_>& a)
-{ Localize(el,a); }
+{
+   _length = NR_ * NC_;
+   _a.resize(_length); 
+   Localize(el,a);
+}
 
 
 template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*            el,
                                      const SkMatrix<T_>& a)
-{ Localize(el,a); }
+{
+   _length = NR_ * NC_;
+   _a.resize(_length); 
+   Localize(el,a);
+}
 
 
 template<class T_,size_t NR_,size_t NC_>
 LocalMatrix<T_,NR_,NC_>::LocalMatrix(Element*             el,
                                      const SkSMatrix<T_>& a)
-{ Localize(el,a); }
+{
+   _length = NR_ * NC_;
+   _a.resize(_length); 
+   Localize(el,a);
+}
 
 
 template<class T_,size_t NR_,size_t NC_>
@@ -367,7 +381,9 @@ T_ LocalMatrix<T_,NR_,NC_>::getInnerProduct(const LocalVect<T_,NC_>& x,
 
 template<class T_,size_t NR_,size_t NC_>
 T_* LocalMatrix<T_,NR_,NC_>::get()
-{ return _a; }
+{ 
+   return &_a[0]; 
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////

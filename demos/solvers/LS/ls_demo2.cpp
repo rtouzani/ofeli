@@ -6,7 +6,7 @@
  
  ==============================================================================
 
-  Copyright (C) 1998 - 2021 Rachid Touzani
+  Copyright (C) 1998 - 2022 Rachid Touzani
 
   This file is part of OFELI.
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 // Read and output mesh data
    if (argc<=1) {
       cout << "Usage: " << argv[0] << " <mesh_file>" << endl;
-      exit(1);
+      return EXIT_FAILURE;
    }
    Verbosity = 4;
 
@@ -66,5 +66,5 @@ int main(int argc, char *argv[])
       cout << "You can plot this using GMSH" << endl;
    } CATCH_EXCEPTION
 
-   return 0;
+   return EXIT_SUCCESS;
 }
