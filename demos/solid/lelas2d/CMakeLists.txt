@@ -38,7 +38,7 @@ file (COPY
       DESTINATION .
      )
 
-install (TARGETS lelas2d RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (lelas2d lelas2d beam.dat)
 
 install (FILES README.md
                main.cpp

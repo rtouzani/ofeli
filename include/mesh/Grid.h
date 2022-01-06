@@ -142,6 +142,9 @@ class Grid
  */
     Grid(Point<real_t> m, Point<real_t> M, size_t npx, size_t npy, size_t npz);
 
+/// \brief Destructor
+    ~Grid() { }
+
 /// \brief Set min. coordinates of the domain.
 /// @param [in] x Minimal values of coordinates
     void setXMin(const Point<real_t>& x) { _xmin = x; }

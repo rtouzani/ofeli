@@ -35,7 +35,8 @@ target_link_libraries (ad2 ofeli)
 
 file (COPY L.dom rect.dom DESTINATION .)
 
-install (TARGETS ad1 ad2 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (ad1 ad1 rect.dom)
+add_test (ad2 ad2 rect.dom)
 
 install (FILES
          README.md

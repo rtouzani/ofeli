@@ -32,7 +32,7 @@ target_link_libraries (lelas3d ofeli)
 
 file (COPY beam.dat beam.m DESTINATION .)
 
-install (TARGETS lelas3d RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (lelas3d lelas3d beam.dat)
 
 install (FILES README.md
                main.cpp

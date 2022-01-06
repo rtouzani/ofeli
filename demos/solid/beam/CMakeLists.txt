@@ -32,7 +32,7 @@ target_link_libraries (beam ofeli)
 
 file (COPY beam.dat DESTINATION .)
 
-install (TARGETS beam RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (beam beam beam.dat)
 
 install (FILES README.md
                main.cpp

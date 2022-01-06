@@ -36,7 +36,7 @@ file (COPY
       DESTINATION .
      )
 
-install (TARGETS tiff2 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (tiff2 tiff2 cavity.dat)
 
 install (FILES
          README.md

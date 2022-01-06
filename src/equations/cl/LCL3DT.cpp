@@ -50,7 +50,8 @@ LCL3DT::LCL3DT(Mesh& m) : Muscl3DT(m)
 {
    _init_alloc = true;
    init();
-   _U = new Vect<real_t>(*_theMesh);
+   _u.setMesh(*_theMesh,ELEMENT_DOF,1);
+   _U = &_u;
 }
 
 
@@ -66,8 +67,6 @@ LCL3DT::LCL3DT(Mesh&         m,
 
 LCL3DT::~LCL3DT()
 {
-   if (_init_alloc)
-      delete _U;
 }
 
 
@@ -96,10 +95,8 @@ void LCL3DT::setInitialCondition(real_t u)
 
 void LCL3DT::setReconstruction()
 {
-   if (Muscl3DT::setReconstruction(*_U,_LU,_RU,1)) {
-      cerr << "ERROR: reconstruction of u failed" << endl;
-      exit(3);
-   }
+   if (Muscl3DT::setReconstruction(*_U,_LU,_RU,1))
+      throw OFELIException("In LCL3DT::setReconstruction(): Reconstruction of u failed.");
 }
 
 

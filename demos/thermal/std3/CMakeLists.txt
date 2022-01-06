@@ -5,7 +5,7 @@ target_link_libraries(std3 ofeli)
 
 file(COPY beam.dat beam.m DESTINATION .)
 
-install(TARGETS std3 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (std3 std3 beam.dat)
 
 install (FILES README.md
                main.cpp

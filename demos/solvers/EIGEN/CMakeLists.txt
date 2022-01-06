@@ -35,7 +35,8 @@ target_link_libraries (eigen_demo2 ofeli)
 
 file (COPY eigen_demo2.dat test.m DESTINATION .)
 
-install (TARGETS eigen_demo1 eigen_demo2 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (eigen1 eigen_demo1)
+add_test (eigen2 eigen_demo2 eigen_demo2.dat)
 
 install (FILES README.md
                eigen_demo1.cpp

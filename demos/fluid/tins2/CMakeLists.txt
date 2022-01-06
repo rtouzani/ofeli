@@ -41,7 +41,7 @@ file (COPY
       DESTINATION .
      )
 
-install (TARGETS tins2 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (tins2 tins2 cavity.dat)
 
 install (FILES
          README.md

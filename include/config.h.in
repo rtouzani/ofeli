@@ -1,4 +1,36 @@
-/* include/config.h.in.  Generated from configure.ac by autoheader.  */
+/*==============================================================================
+
+                                    O  F  E  L  I
+
+                           Object  Finite  Element  Library
+
+  ==============================================================================
+
+   Copyright (C) 1998 - 2022 Rachid Touzani
+
+   This file is part of OFELI.
+
+   OFELI is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   OFELI is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public License
+   along with OFELI. If not, see <http://www.gnu.org/licenses/>.
+
+  ==============================================================================
+
+               Configuration file to set various parameters
+
+  ==============================================================================*/
+
+#cmakedefine MATERIAL_ENABLE
+#cmakedefine PATH_MATERIAL "@PATH_MATERIAL@"
 
 /* 0 */
 #undef HAVE_EXIT_SUCCESS_AND_FAILURE
@@ -33,37 +65,10 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* 0 */
-#undef HIDE_INLINE_STATIC
-
-/* Name of package */
-#undef PACKAGE
-
-/* Define to the address where bug reports for this package should be sent. */
-#undef PACKAGE_BUGREPORT
-
-/* Define to the full name of this package. */
-#undef PACKAGE_NAME
-
-/* Define to the full name and version of this package. */
-#undef PACKAGE_STRING
-
-/* Define to the one symbol short name of this package. */
-#undef PACKAGE_TARNAME
-
-/* Define to the home page for this package. */
-#undef PACKAGE_URL
-
-/* Define to the version of this package. */
-#undef PACKAGE_VERSION
-
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #undef STDC_HEADERS
-
-/* Version number of package */
-#undef VERSION
 
 /* Define to empty if `const' does not conform to ANSI C. */
 #undef const

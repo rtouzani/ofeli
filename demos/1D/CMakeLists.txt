@@ -36,11 +36,9 @@ target_link_libraries (heat ofeli)
 add_executable (transport transport.cpp)
 target_link_libraries (transport ofeli)
 
-install (TARGETS elliptic
-                 heat
-                 transport
-         RUNTIME DESTINATION ${INSTALL_BINDIR}
-        )
+add_test (1D-1 elliptic)
+add_test (1D-2 heat 10 0.1)
+add_test (1D-3 transport 10 0.1)
 
 install (FILES
          README.md

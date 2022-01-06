@@ -31,7 +31,6 @@ add_executable (cfield cfield.cpp)
 target_link_libraries (cfield ofeli)
 
 file (COPY cavity.m
-           cavity.p
            cavity.pos
            cavity.s
            spider_tecplot.dat
@@ -39,11 +38,12 @@ file (COPY cavity.m
        DESTINATION .
       )
 
+add_test (cfield cfield -f gmsh -m cavity.m -i cavity.s -o cavity.pos)
+
 install (TARGETS cfield RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install (FILES README.md  
               cavity.m
-              cavity.p
               cavity.pos
               cavity.s
               spider_tecplot.dat

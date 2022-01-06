@@ -32,7 +32,7 @@ target_link_libraries (euler2d ofeli)
 
 file (COPY proj.dat rectangle.m DESTINATION .)
 
-install (TARGETS euler2d RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (euler2d euler2d proj.dat)
 
 install (FILES
          README.md

@@ -52,11 +52,10 @@ file (COPY
       DESTINATION .
      )
 
-install (TARGETS laplace_demo1
-                 laplace_demo2
-                 laplace_demo3
-                 laplace_demo4
-         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (laplace1 laplace_demo1 proj2.dat)
+add_test (laplace2 laplace_demo2 proj2.dat)
+add_test (laplace3 laplace_demo3 proj3.dat)
+add_test (laplace4 laplace_demo4 proj.dat)
 
 install (FILES README.md
                laplace_demo1.cpp

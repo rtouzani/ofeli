@@ -87,13 +87,8 @@ inline void banner(const string &prog=" ")
       cout << "under certain conditions. Details are distributed with the software." << endl << endl;
       cout << "====================================================================" << endl;
    }
-   std::ifstream ff("../VERSION");
-   string version, date;
-   ff >> version;
-   ff >> date;
-   ff.close();
-   cout << "version : " << version << endl;
-   cout << "Date of Release " << date << endl;
+   cout << "Release: " << OFELI_VERSION << endl;
+   cout << "Date of Release: " << OFELI_DATE << endl;
    cout << "---------------------------------------------------" << endl;
    cout << "Date of latest library building : " << __DATE__ << endl;
    cout << "====================================================================" << endl;

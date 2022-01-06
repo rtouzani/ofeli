@@ -25,6 +25,8 @@
 #
 # ==============================================================================
 
+include (CTest)
+
 add_subdirectory (1D)
 add_subdirectory (adapt)
 add_subdirectory (electromagnetics)
@@ -35,3 +37,10 @@ add_subdirectory (porous)
 add_subdirectory (solid)
 add_subdirectory (solvers)
 add_subdirectory (thermal)
+
+add_custom_target (demos
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                   COMMENT "Running demos..."
+                  )
+
+message (STATUS "Setting up testsuite - Done")

@@ -48,6 +48,8 @@ file (COPY README.md
        DESTINATION .
       )
 
+add_test (cmesh cmesh --input disk.bamg --from bamg --to ofeli)
+
 install (FILES README.md
                A.ele
                A.node

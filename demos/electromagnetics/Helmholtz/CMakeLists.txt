@@ -32,7 +32,7 @@ target_link_libraries (helmholtz ofeli)
 
 file (COPY proj.dat proj.m DESTINATION .)
 
-install (TARGETS helmholtz RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (helmholtz helmholtz proj.dat)
 
 install (FILES
          README.md

@@ -37,7 +37,7 @@ file (COPY
       DESTINATION .
      )
 
-install(TARGETS contact RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (contact contact beam.dat)
 
 install (FILES README.md
                main.cpp

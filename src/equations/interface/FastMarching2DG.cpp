@@ -39,7 +39,6 @@ namespace OFELI {
 FastMarching2DG::FastMarching2DG()
                 : _nx(0), _ny(0)
 {
-   _b = nullptr;
 }
 
 
@@ -55,14 +54,12 @@ FastMarching2DG::FastMarching2DG(const Grid&   g,
                                  Vect<real_t>& F)
 {
    set(g,T,F);
-   _b = &F;
+   _b = F;
 }
 
 
 FastMarching2DG::~FastMarching2DG()
 {
-   if (_b!=nullptr)
-      delete _b;
 }
 
 
@@ -75,9 +72,9 @@ void FastMarching2DG::set(const Grid&   g,
    _nx = _theGrid->getNx(), _ny = _theGrid->getNy();
    _hx = _theGrid->getHx(), _hy = _theGrid->getHy();
    _u = &T;
-   _b = new Vect<real_t>(_nx+1,_ny+1);
+   _b.setSize(_nx+1,_ny+1);
    _U.resize((_nx+1)*(_ny+1));
-   *_b = 1.;
+   _b = 1.;
 }
 
 
@@ -86,7 +83,7 @@ void FastMarching2DG::set(const Grid&   g,
                           Vect<real_t>& F)
 {
    set(g,T);
-   *_b = F;
+   _b = F;
 }
 
 
@@ -209,7 +206,7 @@ real_t FastMarching2DG::eval()
       b = 0., vy = 0.;
    else if (j>1 && j<=_ny)
       vy = fmin(_U[IJ(i,j-1)].v,_U[IJ(i,j+1)].v);
-   int ret = MaxQuad(a+b,-a*vx-b*vy,a*vx*vx+b*vy*vy-1./((*_b)(i,j)*(*_b)(i,j)),x);
+   int ret = MaxQuad(a+b,-a*vx-b*vy,a*vx*vx+b*vy*vy-1./(_b(i,j)*_b(i,j)),x);
    if (ret==0)
       _np->v = x;
    return ret;
@@ -223,7 +220,7 @@ real_t FastMarching2DG::getResidual()
       for (size_t j=1; j<=_ny; ++j) {
          ux = 0.5/_hx*((*_u)(i+1,j)-(*_u)(i,j) + (*_u)(i+1,j+1)-(*_u)(i,j+1));
          uy = 0.5/_hy*((*_u)(i,j+1)-(*_u)(i,j) + (*_u)(i+1,j+1)-(*_u)(i+1,j));
-         err += fabs(ux*ux + uy*uy - 1./((*_b)(i,j)*(*_b)(i,j)));
+         err += fabs(ux*ux + uy*uy - 1./(_b(i,j)*_b(i,j)));
       }
    }
    return err/(_nx*_ny);

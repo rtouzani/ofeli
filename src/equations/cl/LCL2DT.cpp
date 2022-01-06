@@ -53,8 +53,8 @@ LCL2DT::LCL2DT(Mesh& m)
        : Muscl2DT(m)
 {
    init();
-   _init_alloc = true;
-   _U = new Vect<real_t>(*_theMesh,ELEMENT_DOF,1);
+   _u.setMesh(*_theMesh,ELEMENT_DOF,1);
+   _U = &_u;
 }
 
 
@@ -62,9 +62,13 @@ LCL2DT::LCL2DT(Mesh&         m,
                Vect<real_t>& U)
        : Muscl2DT(m)
 {
-   _init_alloc = false;
    init();
    _U = &U;
+}
+
+
+LCL2DT::~LCL2DT()
+{
 }
 
 
@@ -80,16 +84,9 @@ void LCL2DT::init()
 }
 
 
-LCL2DT::~LCL2DT()
-{
-   if (_init_alloc)
-      delete _U;
-}
-
-
 void LCL2DT::setInitialCondition(Vect<real_t>& u)
 {
-   *_U = u;
+   _U = &u;
 }
 
 
@@ -101,10 +98,8 @@ void LCL2DT::setInitialCondition(real_t u)
 
 void LCL2DT::setReconstruction()
 {
-   if (Muscl2DT::setReconstruction(*_U,_LU,_RU,1)) {
-      cerr << "ERROR: Reconstruction of u failed" << endl;
-      exit(3);
-   }
+   if (Muscl2DT::setReconstruction(*_U,_LU,_RU,1))
+      throw OFELIException("In LCL2DT::setReconstruction(): Reconstruction of u failed.");
 };
 
 
@@ -184,7 +179,7 @@ void LCL2DT::forward()
 
 
 void LCL2DT::Forward(const Vect<real_t>& Flux,
-                           Vect<real_t>& Field)
+                     Vect<real_t>&       Field)
 {
    MESH_SD {
       size_t n = side_label;

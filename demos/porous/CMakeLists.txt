@@ -31,12 +31,6 @@ project (porous)
 #target_link_libraries (elliptic ofeli)
 
 
-#install (TARGETS elliptic
-#                 heat
-#                 transport
-#         RUNTIME DESTINATION ${INSTALL_BINDIR}
-#        )
-
 #install (FILES
 #         README.md
 #         elliptic.cpp

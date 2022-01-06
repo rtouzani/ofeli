@@ -39,7 +39,6 @@ namespace OFELI {
 FastMarching1DG::FastMarching1DG()
                 : _nx(0)
 {
-   _b = nullptr;
 }
 
 
@@ -55,14 +54,12 @@ FastMarching1DG::FastMarching1DG(const Grid&   g,
                                  Vect<real_t>& F)
 {
    set(g,T);
-   _b = &F;
+   _b = F;
 }
 
 
 FastMarching1DG::~FastMarching1DG()
 {
-   if (_b!=nullptr)
-      delete _b;
 }
 
 
@@ -75,9 +72,9 @@ void FastMarching1DG::set(const Grid&   g,
    _nx = _theGrid->getNx();
    _hx = _theGrid->getHx();
    _u = &T;
-   _b = new Vect<real_t>(_nx+1);
+   _b.setSize(_nx+1);
    _U.resize(_nx+1);
-   *_b = 1.;
+   _b = 1.;
 }
 
 
@@ -86,7 +83,7 @@ void FastMarching1DG::set(const Grid&   g,
                           Vect<real_t>& F)
 {
    set(g,T);
-   *_b = F;
+   _b = F;
 }
 
 
@@ -185,7 +182,7 @@ real_t FastMarching1DG::eval()
       a = 0., vx = 0.;
    else if (i>1 && i<=_nx)
       vx = fmin(_U[i-2].v,_U[i].v);
-   int ret = MaxQuad(a,-a*vx,a*vx*vx-1./((*_b)(i)*(*_b)(i)),x);
+   int ret = MaxQuad(a,-a*vx,a*vx*vx-1./(_b(i)*_b(i)),x);
    if (ret==0)
       _np->v = x;
    return ret;
@@ -197,7 +194,7 @@ real_t FastMarching1DG::getResidual()
    real_t err=0., ux=0.;
    for (size_t i=1; i<=_nx; ++i) {
       ux = 1.0/_hx*((*_u)(i+1)-(*_u)(i));
-      err += fabs(ux*ux - 1./((*_b)(i)*(*_b)(i)));
+      err += fabs(ux*ux - 1./(_b(i)*_b(i)));
    }
    return err/_nx;
 }

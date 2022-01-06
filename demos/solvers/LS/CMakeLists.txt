@@ -35,7 +35,8 @@ target_link_libraries (ls_demo2 ofeli)
 
 file (COPY mesh.m DESTINATION .)
 
-install (TARGETS ls_demo1 ls_demo2 RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (ls1 ls_demo1 10)
+add_test (ls2 ls_demo2 mesh.m)
 
 install (FILES README.md
                ls_demo1.cpp

@@ -146,7 +146,7 @@ class LCL3DT : public Muscl3DT {
 protected:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    Vect<real_t> *_U, _LU, _RU, _FU, _v;
+    Vect<real_t> *_U, _LU, _RU, _FU, _u, _v;
     void init();
     real_t getFluxUpwind();
     real_t getRiemannUpwind(size_t s);

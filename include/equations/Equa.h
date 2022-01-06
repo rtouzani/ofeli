@@ -419,7 +419,7 @@ class Equa
 /// \brief Choose tolerance value
     void setTolerance(real_t toler);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
-   
+
  protected:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    Mesh                   *_theMesh;

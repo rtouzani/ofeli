@@ -151,7 +151,7 @@ public:
     void _Init();
     real_t getFluxUpwind();
     real_t computeRiemannUpwind(size_t);
-    Vect<real_t> *_U, _LU, _RU, _FU, _v;
+    Vect<real_t> *_U, _LU, _RU, _FU, _u, _v;
     real_t _ReferenceLength;
     bool _alloc_init;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

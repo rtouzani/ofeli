@@ -31,10 +31,7 @@
 
 #pragma once
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
+#include "config.h"
 #include <stdexcept>
 #include "util/constants.h"
 #include "util/macros.h"
@@ -346,11 +343,11 @@ enum NonLinearIter {
    NEWTON        =  4,    /*!< Newton's method                           */
 };
 
-#ifdef WIN32
-#define PATH_MATERIAL "c:\\Program Files\\ofeli\\material\\"
-#else
-#include "datadir.h"
-#endif
+//#ifdef WIN32
+//#define PATH_MATERIAL "c:\\Program Files\\ofeli\\material\\"
+//#else
+//#define PATH_MATERIAL "/usr/local/share/ofeli/material"
+//#endif
 
 
 #if defined(_MSC_VER) && !defined(__MWERKS__)

@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
       int time_mod = proj.getPlot();
       Mesh ms(proj.getMeshFile());
       ms.getAllSides();
-      Vect<double> u(ms,1,ELEMENT_DOF);
+      Vect<double> u(ms,ELEMENT_DOF,1);
       LCL2DT eq(ms,u);
       Reconstruction pp(ms);
 

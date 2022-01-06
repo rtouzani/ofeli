@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
    cout << "A PROGRAM TO TEST A 1-D LINEAR TRANSPORT EQUATION" << endl << endl;
    if (argc<3) {
       cout << "Usage: " << argv[0] << " <nx> <dt>" << endl;
-      exit(1);
+      return EXIT_FAILURE;
    }
    ofstream pf("output.dat");
 

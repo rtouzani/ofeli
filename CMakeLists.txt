@@ -70,6 +70,7 @@ message (STATUS "Building release ${PROJECT_NAME}-${OFELI_VERSION}, ${OFELI_VERS
 set (CMAKE_BUILD_TYPE "Release")
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set (CMAKE_CXX_STANDARD 11)
+enable_testing ()
 
 option (BUILD_TESTS "Build test programs" OFF)
 
@@ -87,13 +88,21 @@ set (INSTALL_MATDIR ${INSTALL_OFELIDIR}/material)
 set (INSTALL_DEMODIR ${INSTALL_OFELIDIR}/demos)
 set (INSTALL_UTILDIR ${INSTALL_OFELIDIR}/util)
 
-include_directories (include)
+# Define path for material data
+#
+option (MATERIAL_ENABLE "Enable Material Path" ON)
+if (MATERIAL_ENABLE)
+  set (PATH_MATERIAL "${INSTALL_MATDIR}")
+endif ()
+configure_file (${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+file (APPEND ${CMAKE_CURRENT_BINARY_DIR}/config.h "\n\n#define OFELI_VERSION \"${OFELI_VERSION}\"\n")
+file (APPEND ${CMAKE_CURRENT_BINARY_DIR}/config.h "#define OFELI_DATE \"${OFELI_VERSION_DATE}\"")
+
+include_directories (include ${CMAKE_CURRENT_BINARY_DIR})
 add_subdirectory (src)
 add_subdirectory (include)
 add_subdirectory (demos)
 add_subdirectory (util)
-
-file (COPY test_ofeli.sh DESTINATION .)
 
 # Directories to install
 install (TARGETS ofeli LIBRARY DESTINATION ${INSTALL_LIBDIR})
@@ -102,7 +111,6 @@ install (DIRECTORY doc/ DESTINATION ${INSTALL_DOCDIR})
 install (DIRECTORY material/ DESTINATION ${INSTALL_MATDIR})
 install (DIRECTORY demos/ DESTINATION ${INSTALL_DEMODIR})
 install (DIRECTORY util/ DESTINATION ${INSTALL_UTILDIR})
-install (PROGRAMS test_ofeli.sh DESTINATION ${INSTALL_BINDIR})
 
 # Preparing Cpack
 include (${CMAKE_SOURCE_DIR}/cmake/setup_cpack.cmake)

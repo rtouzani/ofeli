@@ -50,7 +50,8 @@ LCL1D::LCL1D(Mesh &m) : Muscl1D(m)
 {
    _Init();
    _init_alloc = true;
-   _U = new Vect<double>(*_theMesh);
+   _u.setMesh(*_theMesh,ELEMENT_DOF,1);
+   _U = &_u;
 }
 
 
@@ -77,8 +78,6 @@ void LCL1D::_Init()
 
 LCL1D::~LCL1D()
 {
-   if (_init_alloc)
-      delete _U;
 }
 
 
@@ -96,10 +95,8 @@ void LCL1D::setInitialCondition(double u)
 
 void LCL1D::setReconstruction()
 {
-   if (Muscl1D::setReconstruction(*_U,_LU,_RU,1)) {
-      throw OFELIException("LCL1D::setReconstruction(): reconstruction of u failed");
-      exit(3);
-   }
+   if (Muscl1D::setReconstruction(*_U,_LU,_RU,1))
+      throw OFELIException("In LCL1D::setReconstruction(): reconstruction of u failed");
 };
 
 

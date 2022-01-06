@@ -47,14 +47,12 @@ target_link_libraries (opt_demo6 ofeli)
 
 file (COPY test.dat test.m DESTINATION .)
 
-install (TARGETS
-         opt_demo1
-         opt_demo2
-         opt_demo3
-         opt_demo4
-         opt_demo5
-         opt_demo6
-         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (opt1 opt_demo1)
+add_test (opt1 opt_demo2)
+add_test (opt1 opt_demo3 test.dat)
+add_test (opt1 opt_demo4)
+add_test (opt1 opt_demo5)
+add_test (opt1 opt_demo6)
 
 install (FILES README.md
                opt_demo1.cpp

@@ -43,7 +43,7 @@ file (COPY
       DESTINATION .
      )
 
-install (TARGETS truss RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (truss truss truss.dat)
 
 install (FILES README.md
                main.cpp

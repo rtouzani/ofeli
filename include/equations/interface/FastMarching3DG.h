@@ -68,7 +68,6 @@ class FastMarching3DG : virtual public Equa
 
    using Equa::_u;
    using Equa::_v;
-   using Equa::_b;
 
 /*!
  * \brief Default Constructor
@@ -171,6 +170,7 @@ class FastMarching3DG : virtual public Equa
 
    FMHeap _Narrow;
    Pt *_p, *_np;
+   Vect<real_t> _b;
    vector<Pt> _U;
    vector<Pt *> _neigs;
    const Grid *_theGrid;

@@ -5,17 +5,22 @@ int main(int argc, char* argv[])
 {
    void initial(int option, Grid *g, Vect<double> &u);
    const int nx=60, ny=60, nz=60;
-   cout << "Choice of demo examples\n";
-   cout << "1. 2-D example of 1 point obstacle\n";
-   cout << "2. 2-D example of a rectangular interface\n";
-   cout << "3. 3-D example of a spherical interface" << endl;
-   cout << "0. Exit" << endl;
-      
-   int option;
-   cout << "Enter your choice: ";
-   cin >> option;
-   if (option==0 || option>3)
-      exit(1);
+   int option = 0;
+   if (argc>1) 
+      option = atoi(argv[1]);
+   else {
+      cout << "Choice of demo examples\n";
+      cout << "1. 2-D example of 1 point obstacle\n";
+      cout << "2. 2-D example of a rectangular interface\n";
+      cout << "3. 3-D example of a spherical interface\n";
+      cout << "0. Exit" << endl;
+      cout << "Enter your choice: ";
+      cin >> option;
+   }
+   if (option==0)
+      return EXIT_SUCCESS;
+   if (option>3)
+      return EXIT_FAILURE;
 
 // Define a grid
    Grid *g;

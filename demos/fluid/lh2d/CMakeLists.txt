@@ -32,7 +32,7 @@ target_link_libraries (lh2d ofeli)
 
 file (COPY proj.dat rectangle.m rectangle.v DESTINATION .)
 
-install (TARGETS lh2d RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+add_test (lh2d lh2d proj.dat)
 
 install (FILES
          README.md

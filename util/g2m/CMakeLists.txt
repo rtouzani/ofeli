@@ -35,6 +35,8 @@ file (COPY test.dom
        DESTINATION .
       )
 
+add_test (g2m g2m -d test.dom -o test.m)
+
 install (FILES README.md test.dom
          DESTINATION ${INSTALL_UTILDIR}/${PROJECT_NAME}
         )
