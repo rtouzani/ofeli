@@ -31,19 +31,3 @@ configure_file (
                 ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
                 ${CMAKE_CURRENT_BINARY_DIR}/config.h
                )
-
-#
-# Add a rule for how to install the header files:
-#install (DIRECTORY ofeli
-#         DESTINATION ${INSTALL_INCLUDE_DIR}
-#         COMPONENT library
-#         FILES_MATCHING PATTERN "*.h"
-#        )
-
-# Install all generated header files, too:
-#
-#install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/ofeli
-#         DESTINATION ${OFELI_INCLUDE_DIR}
-#         COMPONENT library
-#         FILES_MATCHING PATTERN "*.h"
-#        )

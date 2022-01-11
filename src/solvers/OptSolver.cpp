@@ -2,7 +2,7 @@
 
                                     O  F  E  L  I
 
-                      u      Object  Finite  Element  Library
+                            Object  Finite  Element  Library
 
   ==============================================================================
 
@@ -40,10 +40,11 @@ using std::to_string;
 namespace OFELI {
 
 OptSolver::OptSolver()
-          : _size(1), _nb_in_const(0), _nb_eq_const(0), _nb_obj_eval(0), _nb_grad_eval(0),
-            _max_eval(100000), _max_it(1000), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
-            _obj_type(0), _x_set(true), _method_set(false),
-            _fct_allocated(false), _grad_allocated(false), _hessian_allocated(false)
+          : _size(1), _nb_in_const(0), _nb_eq_const(0), _nb_obj_eval(0),
+            _nb_grad_eval(0), _max_eval(100000), _max_it(1000), _toler(1.e-10),
+            _sa_opt(false), _tn_opt(false), _obj_type(0), _x_set(true),
+            _method_set(false), _fct_allocated(false), _grad_allocated(false),
+            _hessian_allocated(false)
 {
    _x = new Vect<real_t>(1);
    _lb.setSize(_size);
@@ -58,9 +59,9 @@ OptSolver::OptSolver()
 
 
 OptSolver::OptSolver(Vect<real_t>& x)
-          : _size(x.size()), _nb_in_const(0), _nb_eq_const(0), _nb_obj_eval(0), _nb_grad_eval(0),
-            _max_eval(100000), _max_it(1000), _x(&x), _toler(1.e-10), _sa_opt(false), _tn_opt(false),
-            _obj_type(0), _x_set(false), _method_set(false),
+          : _size(x.size()), _nb_in_const(0), _nb_eq_const(0), _nb_obj_eval(0),
+            _nb_grad_eval(0), _max_eval(100000), _max_it(1000), _x(&x), _toler(1.e-10),
+            _sa_opt(false), _tn_opt(false), _obj_type(0), _x_set(false), _method_set(false),
             _fct_allocated(false), _grad_allocated(false), _hessian_allocated(false)
 {
    set(x);
@@ -212,11 +213,9 @@ void OptSolver::Gradient(Vect<real_t>& x,
       _opt->Gradient(x,g);
 }
 
-
 void OptSolver::setObjective(string exp)
 {
    _theFct = new Fct(exp,_var);
-   _fct.set(exp,_var);
    _type = EXPRESSION;
    _fct_allocated = true;
    _grad_computed = true;
@@ -240,7 +239,6 @@ void OptSolver::setObjective(function<real_t(Vect<real_t>)> f)
 void OptSolver::setObjective(Fct& f)
 {
    _theFct = &f;
-   _fct = f;
    _type = FCT;
    _grad_computed = true;
 }
@@ -480,7 +478,7 @@ int OptSolver::run(real_t toler,
 
 real_t OptSolver::getObjective()
 {
-   return _fct(*_x);
+   return (*_theFct)(*_x);
 }
 
 

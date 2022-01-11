@@ -26,17 +26,17 @@
 #  ==============================================================================
 
 target_sources (${PROJECT_NAME} PRIVATE
-                BSpline.cpp
-                EigenProblemSolver.cpp
-                LPSolver.cpp
-                NLASSolver.cpp
-                ODESolver.cpp
-                OptimNM.cpp
-                OptimPG.cpp
-                OptimSA.cpp
-                OptimTN.cpp
-                OptSolver.cpp
-                simplex.cpp
-                Solver.cpp
-                TimeStepping.cpp
-               )
+                         BSpline.cpp
+                         EigenProblemSolver.cpp
+                         LPSolver.cpp
+                         NLASSolver.cpp
+                         ODESolver.cpp
+                         OptimNM.cpp
+                         OptimPG.cpp
+                         OptimSA.cpp
+                         OptimTN.cpp
+                         OptSolver.cpp
+                         simplex.cpp
+                         Solver.cpp
+                         TimeStepping.cpp
+                        )
