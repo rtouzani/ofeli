@@ -36,15 +36,15 @@
 namespace OFELI {
 
 Tabulation::Tabulation()
+           : _uniform(true), _nb_funct(0)
 {
-   _nb_funct = 0;
    Funct.resize(10);
 }
 
 
 Tabulation::Tabulation(string file)
+           : _uniform(true), _nb_funct(0)
 {
-   _nb_funct = 0;
    Funct.resize(10);
    setFile(file);
 }

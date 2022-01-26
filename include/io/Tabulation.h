@@ -212,6 +212,7 @@ class Tabulation
 
  private:
 
+   bool                     _uniform;
    size_t                   _nb_funct;
    std::map<string,size_t>  _funct_id;
    void setFunction(string label);

@@ -43,7 +43,7 @@ set (OFELI_PACKAGE_DESCRIPTION
      "An object finite element library"
     )
 
-# Set up ofeli Version
+# Set up ofeli version
 
 file (STRINGS "${CMAKE_SOURCE_DIR}/VERSION" _version LIMIT_COUNT 2)
 set (OFELI_VERSION "${_version}")
@@ -112,9 +112,6 @@ install (DIRECTORY material/ DESTINATION ${INSTALL_MATDIR})
 install (DIRECTORY demos/ DESTINATION ${INSTALL_DEMODIR})
 install (DIRECTORY util/ DESTINATION ${INSTALL_UTILDIR})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h DESTINATION ${INSTALL_INCLUDEDIR})
-
-# Preparing Cpack
-include (${CMAKE_SOURCE_DIR}/cmake/setup_cpack.cmake)
 
 # uninstall target
 if (NOT TARGET uninstall)

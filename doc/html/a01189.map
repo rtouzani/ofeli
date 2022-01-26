@@ -1,0 +1,10 @@
+<map id="Figure" name="Figure">
+<area shape="rect" id="node1" title="To store and treat a figure (or shape) information." alt="" coords="253,5,311,32"/>
+<area shape="rect" id="node2" href="$a01198.html" title="To store and treat a brick (parallelepiped) figure." alt="" coords="5,80,57,107"/>
+<area shape="rect" id="node3" href="$a01202.html" title="To store and treat a circular figure." alt="" coords="82,80,138,107"/>
+<area shape="rect" id="node4" href="$a01210.html" title="To store and treat an ellipsoidal figure." alt="" coords="162,80,223,107"/>
+<area shape="rect" id="node5" href="$a01218.html" title="To store and treat a polygonal figure." alt="" coords="247,80,317,107"/>
+<area shape="rect" id="node6" href="$a01194.html" title="To store and treat a rectangular figure." alt="" coords="341,80,423,107"/>
+<area shape="rect" id="node7" href="$a01206.html" title="To store and treat a sphere." alt="" coords="447,80,509,107"/>
+<area shape="rect" id="node8" href="$a01214.html" title="To store and treat a triangle." alt="" coords="533,80,601,107"/>
+</map>

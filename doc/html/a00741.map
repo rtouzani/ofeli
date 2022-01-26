@@ -1,0 +1,6 @@
+<map id="Muscl3DT" name="Muscl3DT">
+<area shape="rect" id="node1" title="Class for 3&#45;D hyperbolic solvers with Muscl scheme using tetrahedra." alt="" coords="53,80,136,107"/>
+<area shape="rect" id="node3" href="$a00710.html" title="Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 3&#45;D." alt="" coords="5,155,85,181"/>
+<area shape="rect" id="node4" href="$a00722.html" title="Class to solve the linear conservation law equation in 3&#45;D by a MUSCL Finite Volume scheme on tetrahe..." alt="" coords="110,155,181,181"/>
+<area shape="rect" id="node2" href="$a00726.html" title="Parent class for hyperbolic solvers with Muscl scheme." alt="" coords="66,5,123,32"/>
+</map>

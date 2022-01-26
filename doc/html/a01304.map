@@ -1,0 +1,4 @@
+<map id="Tetra4" name="Tetra4">
+<area shape="rect" id="node1" title="Defines a three&#45;dimensional 4&#45;node tetrahedral finite element using P1 interpolation." alt="" coords="14,80,73,107"/>
+<area shape="rect" id="node2" href="$a01278.html" title="Parent class from which inherit all finite element shape classes." alt="" coords="5,5,81,32"/>
+</map>

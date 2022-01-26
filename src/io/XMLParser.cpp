@@ -242,6 +242,24 @@ int XMLParser::get(Tabulation& t)
 }
 
 
+int XMLParser::getArray(Vect<real_t>& A)
+{
+   _theArray = &A;
+   _set_mesh = _set_field = _set_domain = false;
+   _scan = 0;
+   _theMesh = nullptr;
+   _type = FUNCTION;
+   if (parse(_xml)) {
+      if (Verbosity>10)
+         cout << "Parse done." << endl;
+      return 0;
+   }
+   else
+      throw OFELIException("In XMLParser::getArray(Vect): Failed to parse XML file.");
+   return 0;
+}
+
+
 int XMLParser::get(IPF& ipf)
 {
    _ik1 = _ik2 = _dk1 = _dk2 = _ck = _mk = _pk = _dk = 0;
@@ -1569,7 +1587,7 @@ void XMLParser::parse_exp(size_t n,
 {
    Point<real_t> c;
    if (_dof_support==NODE_DOF)
-      c = _theMesh->getPtrNode(n)->getCoord();
+      c = (*_theMesh)[n]->getCoord();
    else if (_dof_support==SIDE_DOF) {
       theSide = _theMesh->getPtrSide(n);
       if (theSide->getShape()==LINE)
@@ -1580,7 +1598,7 @@ void XMLParser::parse_exp(size_t n,
          c = Quad4(theSide).getCenter();
    }
    else if (_dof_support==ELEMENT_DOF) {
-      theElement = _theMesh->getPtrElement(n);
+      theElement = (*_theMesh)(n);
       if (theElement->getShape()==LINE)
          c = Line2(theElement).getCenter();
       else if (theElement->getShape()==TRIANGLE)

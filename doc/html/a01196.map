@@ -1,0 +1,4 @@
+<map id="Brick" name="Brick">
+<area shape="rect" id="node1" title="To store and treat a brick (parallelepiped) figure." alt="" coords="9,80,61,107"/>
+<area shape="rect" id="node2" href="$a01190.html" title="To store and treat a figure (or shape) information." alt="" coords="5,5,64,32"/>
+</map>

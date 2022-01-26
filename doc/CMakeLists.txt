@@ -39,6 +39,7 @@ if (DOXYGEN_FOUND)
 
     file (COPY citing.html
                copyright.html
+               ofeli.cfg
                demos.html
                download.html
                extlib.html
@@ -49,27 +50,52 @@ if (DOXYGEN_FOUND)
                news.html
                overview.html
                presentations.html
-               header.tex
                doxygen.css
                head.css
                tabs.css
                logo.png
                ofeli.pdf
-               refguide.pdf
                userguide.pdf
           DESTINATION .
          )
 
-    set (DOXYGEN_IN ofeli.cfg.in)
-    set (DOXYGEN_OUT ofeli.cfg)
+    set (DOXYGEN_PROJECT_NAME "OFELI")
+    set (DOXYGEN_PROJECT_BRIEF "The OFELI Library")
+    set (DOXYGEN_PROJECT_LOGO logo.png)
+    set (DOXYGEN_EXCLUDE_PATTERNS "${PROJECT_SOURCE_DIR}/build/*")
+    set (DOXYGEN_FULL_PATH_NAMES NO)
+    set (DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
+    set (DOXYGEN_WARN_NO_PARAMDOC YES)
+    set (DOXYGEN_INPUT "${PROJECT_SOURCE_DIR}/include")
+    set (DOXYGEN_GENERATE_HTML YES)
+    set (DOXYGEN_HTML_OUTPUT html)
+    set (DOXYGEN_HIDE_UNDOC_MEMBERS YES)
+    set (DOXYGEN_HIDE_UNDOC_CLASSES YES)
+    set (DOXYGEN_HIDE_FRIEND_COMPOUNDS YES)
+    set (DOXYGEN_HIDE_SCOPE_NAMES YES)
+    set (DOXYGEN_INLINE_INFO NO)
+    set (DOXYGEN_IMAGE_PATH im)
+    set (DOXYGEN_HTML_HEADER header.html)
+    set (DOXYGEN_HTML_FOOTER footer.html)
+    set (DOXYGEN_BINARY_TOC YES)
+    set (DOXYGEN_TOC_EXPAND YES)
 
-    configure_file (${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    set (DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+    message ("Doxygen build started")
+
+    doxygen_add_docs (
+                      docs
+                      ${PROJECT_SOURCE_DIR}
+                      COMMENT "Generate man pages"
+                     )
+
     add_custom_target (doc_doxygen ALL
-                       COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+                       COMMAND ${DOXYGEN_EXECUTABLE} 
                        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                        COMMENT "Generating API documentation with Doxygen"
-                       VERBATIM
+                       VERBATIM 
                       )
+
     install (DIRECTORY html/ DESTINATION ${INSTALL_DOCDIR}/html)
 else (DOXYGEN_FOUND)
       message (FATAL_ERROR "Could not find doxygen to build documentation")

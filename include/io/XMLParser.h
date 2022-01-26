@@ -136,6 +136,8 @@ class XMLParser : public Parser
 
    int get(Tabulation& t);
 
+   int getArray(Vect<real_t>& A);
+
    int getMaterial();
 
    int get(int           type,
@@ -157,7 +159,7 @@ class XMLParser : public Parser
    size_t _ik1, _ik2, _dk1, _dk2, _ck, _mk, _pk, _dk, _nb_var, _nx, _ny, _nz;
    DOFSupport _dof_support;
    mutable Mesh *_theMesh;
-   Vect<real_t> *_v;
+   Vect<real_t> *_v, *_theArray;
    XMLParser *_parser;
    IPF *_ipf;
    Domain *_theDomain;

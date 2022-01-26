@@ -1,0 +1,5 @@
+<map id="Triang6S" name="Triang6S">
+<area shape="rect" id="node1" title="Defines a 6&#45;Node straight triangular finite element using P2 interpolation." alt="" coords="6,155,81,181"/>
+<area shape="rect" id="node2" href="$a01282.html" title="Defines a triangle. The reference element is the rectangle triangle with two unit edges." alt="" coords="11,80,75,107"/>
+<area shape="rect" id="node3" href="$a01278.html" title="Parent class from which inherit all finite element shape classes." alt="" coords="5,5,81,32"/>
+</map>
