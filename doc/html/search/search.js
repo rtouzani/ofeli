@@ -1,3 +1,8 @@
+var searchResultsText=["Sorry, no documents matching your query.","Found <b>1</b> document matching your query.","Found <b>$num</b> documents matching your query. Showing best matches first."];
+var serverUrl="";
+var tagMap = {
+};
+
 /*
  @licstart  The following is the entire license notice for the JavaScript code in this file.
 
@@ -152,3 +157,13 @@ function searchFor(query,page,count) {
   });
 }
 /* @license-end */
+
+$(document).ready(function() {
+  var query = trim(getURLParameter('query'));
+  if (query) {
+    searchFor(query,0,20);
+  } else {
+    var results = $('#results');
+    results.html('<p>Sorry, no documents matching your query.</p>');
+  }
+});

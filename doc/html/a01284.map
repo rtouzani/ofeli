@@ -1,4 +1,0 @@
-<map id="Hexa8" name="Hexa8">
-<area shape="rect" id="node1" title="Defines a three&#45;dimensional 8&#45;node hexahedral finite element using Q1&#45;isoparametric interpolation." alt="" coords="13,80,73,107"/>
-<area shape="rect" id="node2" href="$a01278.html" title="Parent class from which inherit all finite element shape classes." alt="" coords="5,5,81,32"/>
-</map>

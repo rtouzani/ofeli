@@ -169,7 +169,6 @@ template<class T_> class Prec
  private:
    vector<T_>         _pivot;
    const SpMatrix<T_> *_a;
-   SpMatrix<T_>       _aa;
    size_t             _size, _length;
    vector<size_t>     _id, _row_ptr, _col_ind;
    int                _type;

@@ -1,6 +1,0 @@
-<map id="NSP2DQ41" name="NSP2DQ41">
-<area shape="rect" id="node1" title="Builds finite element arrays for incompressible Navier&#45;Stokes equations in 2&#45;D domains using Q1/P0 el..." alt="" coords="41,244,132,271"/>
-<area shape="rect" id="node2" href="$a00782.html" title=" " alt="" coords="5,169,168,196"/>
-<area shape="rect" id="node3" href="$a00778.html" title="Abstract class for all equation classes." alt="" coords="8,80,165,121"/>
-<area shape="rect" id="node4" href="$a00774.html" title="Mother abstract class to describe equation." alt="" coords="61,5,113,32"/>
-</map>

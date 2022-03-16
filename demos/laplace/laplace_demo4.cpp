@@ -71,5 +71,6 @@ int main(int argc, char *argv[])
       cout << "L2 solution norm: " << u.Norm(WNORM2) << endl;
 
    } CATCH_EXCEPTION
+
    return EXIT_SUCCESS;
 }

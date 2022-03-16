@@ -259,16 +259,34 @@ void Elas2DQ4::BoundaryRHS()
 
 void Elas2DQ4::BoundaryRHS(const Vect<real_t>& sf)
 {
-   for (size_t k=0; k<2; k++) {
-      real_t fx=0., fy=0.;
-      for (size_t i=1; i<=2; i++) {
-         fx += _ln->Sh(i,_g[k])*sf(2*_theSide->n()-1);
-         fy += _ln->Sh(i,_g[k])*sf(2*_theSide->n()  );
+   if (_theSide->getCode(1)>0 || _theSide->getCode(2)>0) {
+      if (sf.getDOFType()==NODE_DOF) {
+         for (size_t k=0; k<2; k++) {
+            real_t fx=0., fy=0.;
+            for (size_t i=1; i<=2; i++) {
+               fx += _ln->Sh(i,_g[k])*sf(2*(*_theSide)(i)->n()-1);
+               fy += _ln->Sh(i,_g[k])*sf(2*(*_theSide)(i)->n()  );
+            }
+            real_t c=0.5*_ww[k]*_ln->getLength();
+            for (size_t i=1; i<=2; i++) {
+               sRHS(2*i-1) += c*fx*_ln->Sh(i,_g[k]);
+               sRHS(2*i  ) += c*fy*_ln->Sh(i,_g[k]);
+            }
+         }
       }
-      real_t c=0.5*_ww[k]*_ln->getLength();
-      for (size_t i=1; i<=2; i++) {
-         sRHS(2*i-1) += c*fx*_ln->Sh(i,_g[k]);
-         sRHS(2*i  ) += c*fy*_ln->Sh(i,_g[k]);
+      else if (sf.getDOFType()==SIDE_DOF) {
+         for (size_t k=0; k<2; k++) {
+            real_t fx=0., fy=0.;
+            for (size_t i=1; i<=2; i++) {
+               fx += _ln->Sh(i,_g[k])*sf(2*_theSide->n()-1);
+               fy += _ln->Sh(i,_g[k])*sf(2*_theSide->n()  );
+            }
+            real_t c=0.5*_ww[k]*_ln->getLength();
+            for (size_t i=1; i<=2; i++) {
+               sRHS(2*i-1) += c*fx*_ln->Sh(i,_g[k]);
+               sRHS(2*i  ) += c*fy*_ln->Sh(i,_g[k]);
+            }
+         }
       }
    }
 }

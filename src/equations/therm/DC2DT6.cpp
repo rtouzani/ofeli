@@ -159,14 +159,21 @@ void DC2DT6::BodyRHS(const Vect<real_t>& f)
 
 void DC2DT6::BoundaryRHS(const Vect<real_t>& f)
 {
-   Line3 ln(_theSide);
-   real_t c = OFELI_THIRD*ln.getDet();
-   ln.setLocal(-1.0);
-   sRHS(1) += c*f((*_theSide)(1)->n());
-   ln.setLocal(0.0);
-   sRHS(2) += c*f((*_theSide)(2)->n());
-   ln.setLocal(1.0);
-   sRHS(3) += 4*c*f((*_theSide)(3)->n());
+   if (_theSide->getCode(1)>0) {
+      Line3 ln(_theSide);
+      real_t c = OFELI_THIRD*ln.getDet();
+      if (f.getDOFType()==NODE_DOF) {
+         sRHS(1) += c*f((*_theSide)(1)->n());
+         sRHS(2) += c*f((*_theSide)(2)->n());
+         sRHS(3) += 4*c*f((*_theSide)(3)->n());
+      }
+      else if (f.getDOFType()==SIDE_DOF) {
+         real_t z = c*f(_theSide->n());
+         sRHS(1) += z;
+         sRHS(2) += z;
+         sRHS(3) += 4*z;
+      }
+   }
 }
 
 } /* namespace OFELI */

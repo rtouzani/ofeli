@@ -1,6 +1,0 @@
-<map id="Muscl2DT" name="Muscl2DT">
-<area shape="rect" id="node1" title="Class for 2&#45;D hyperbolic solvers with Muscl scheme." alt="" coords="53,80,136,107"/>
-<area shape="rect" id="node3" href="$a00706.html" title="Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 2&#45;D." alt="" coords="5,155,85,181"/>
-<area shape="rect" id="node4" href="$a00718.html" title="Class to solve the linear hyperbolic equation in 2&#45;D by a MUSCL Finite Volume scheme on triangles." alt="" coords="110,155,181,181"/>
-<area shape="rect" id="node2" href="$a00726.html" title="Parent class for hyperbolic solvers with Muscl scheme." alt="" coords="66,5,123,32"/>
-</map>

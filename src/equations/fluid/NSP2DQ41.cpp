@@ -278,6 +278,28 @@ void NSP2DQ41::BodyRHS(Vect<real_t>& f)
 
 void NSP2DQ41::BoundaryRHS(Vect<real_t>& f)
 {
+   if (_theSide->getCode(1)>0) {
+      real_t z = 0.5*_el_geo.length;
+      if (f.getDOFType()==NODE_DOF) {
+         sRHS(1) += z*f(2*(*_theSide)(1)->n()-1);
+         sRHS(3) += z*f(2*(*_theSide)(2)->n()-1);
+      }
+      else if (f.getDOFType()==SIDE_DOF) {
+         sRHS(1) += z*f(2*_theSide->n()-1);
+         sRHS(3) += z*f(2*_theSide->n()-1);
+      }
+   }
+   if (_theSide->getCode(2)>0) {
+      real_t z = 0.5*_el_geo.length;
+      if (f.getDOFType()==NODE_DOF) {
+         sRHS(2) += z*f(2*(*_theSide)(1)->n());
+         sRHS(4) += z*f(2*(*_theSide)(2)->n());
+      }
+      else if (f.getDOFType()==SIDE_DOF) {
+         sRHS(2) += z*f(2*_theSide->n());
+         sRHS(4) += z*f(2*_theSide->n());
+      }
+   }
 }
 
 

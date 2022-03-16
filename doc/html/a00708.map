@@ -1,5 +1,0 @@
-<map id="ICPG3DT" name="ICPG3DT">
-<area shape="rect" id="node1" title="Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 3&#45;D." alt="" coords="7,155,87,181"/>
-<area shape="rect" id="node2" href="$a00742.html" title="Class for 3&#45;D hyperbolic solvers with Muscl scheme using tetrahedra." alt="" coords="5,80,88,107"/>
-<area shape="rect" id="node3" href="$a00726.html" title="Parent class for hyperbolic solvers with Muscl scheme." alt="" coords="18,5,75,32"/>
-</map>

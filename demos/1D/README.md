@@ -1,7 +1,8 @@
 
-Here is a list of simple demo programs in 1D using OFELI:
+This folder contains a list of simple demo programs in 1D using OFELI.
+The library ofeli must have been installed before running these tests.
 
-- An elliptic 2-point value problem: elliptic
+1. An elliptic 2-point value problem: elliptic
 
 A demo program to solve a 1D elliptic equation and compute discretization error.
 To execute the program, type
@@ -30,3 +31,9 @@ To execute the program, type
 
 where nx is the number of space discretization points and dt is the time step.
 
+As an example, here is the command line to create the executable
+'elliptic':
+
+         g++ -std=c++1y -I$CMAKE_INSTALL_PREFIX/include/ofeli elliptic.cpp -lofeli
+
+where $CMAKE_INSTALL_PREFIX is the defined prefix path (or the default one).

@@ -58,10 +58,6 @@ Laplace3DT4::Laplace3DT4(Mesh& ms)
    setSolver(CG_SOLVER,DILU_PREC);
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 3D using P1 finite element tetrahedron." << endl;
-   if (Verbosity>1) {
-      cout << "Matrix stored in sparse format." << endl;
-      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
-   }
 }
 
 Laplace3DT4::Laplace3DT4(Mesh&         ms,
@@ -74,10 +70,6 @@ Laplace3DT4::Laplace3DT4(Mesh&         ms,
    setSolver(CG_SOLVER,DILU_PREC);
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 3D using P1 finite element tetrahedron." << endl;
-   if (Verbosity>1) {
-      cout << "Matrix stored in sparse format." << endl;
-      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
-   }
 }
 
 
@@ -141,9 +133,17 @@ void Laplace3DT4::BoundaryRHS(const Vect<real_t>& h)
 {
    if (_theSide->getCode(1)>0) {
       real_t c = OFELI_THIRD*_el_geo.area;
-      sRHS(1) += c*h((*_theSide)(1)->n());
-      sRHS(2) += c*h((*_theSide)(2)->n());
-      sRHS(3) += c*h((*_theSide)(3)->n());
+      if (h.getDOFType()==NODE_DOF) {
+         sRHS(1) += c*h((*_theSide)(1)->n());
+         sRHS(2) += c*h((*_theSide)(2)->n());
+         sRHS(3) += c*h((*_theSide)(3)->n());
+      }
+      else if (h.getDOFType()==SIDE_DOF) {
+         real_t z = c*h(_theSide->n());
+         sRHS(1) += z;
+         sRHS(2) += z;
+         sRHS(3) += z;
+      }
    }
 }
 

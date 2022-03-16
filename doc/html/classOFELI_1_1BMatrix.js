@@ -1,0 +1,27 @@
+var classOFELI_1_1BMatrix =
+[
+    [ "BMatrix", "classOFELI_1_1BMatrix.html#a01c006d7468dd53986b09e00517bbc8e", null ],
+    [ "BMatrix", "classOFELI_1_1BMatrix.html#a5ca2e039cf9e7ee37f210599244d8e2c", null ],
+    [ "BMatrix", "classOFELI_1_1BMatrix.html#a9e0f9be2e913bf5a6c302f140fd4a74c", null ],
+    [ "~BMatrix", "classOFELI_1_1BMatrix.html#a70546d5bdbc7c8c4e814580bec939a60", null ],
+    [ "add", "classOFELI_1_1BMatrix.html#a17592a65d5fb95d42c07f724dabad759", null ],
+    [ "Axpy", "classOFELI_1_1BMatrix.html#a16fc87ee384a1c0a8f82befbb8c182a4", null ],
+    [ "Axpy", "classOFELI_1_1BMatrix.html#a8c474f5353d595009b1f4328cebaaebe", null ],
+    [ "get", "classOFELI_1_1BMatrix.html#a9b901ab6d955335f6b9edcabbc59d1d1", null ],
+    [ "get", "classOFELI_1_1BMatrix.html#a173c0f972c4eeca07b426587bc2108e5", null ],
+    [ "Mult", "classOFELI_1_1BMatrix.html#abd45ada90fcf5f88e65ba7a50e36ce49", null ],
+    [ "MultAdd", "classOFELI_1_1BMatrix.html#af37985f443ba4d2746059438dfb62b6c", null ],
+    [ "MultAdd", "classOFELI_1_1BMatrix.html#a7687aa6aa85cfe87635a1c3e56625876", null ],
+    [ "operator()", "classOFELI_1_1BMatrix.html#aacbbe150d69a1246cb76f24419cae7ac", null ],
+    [ "operator()", "classOFELI_1_1BMatrix.html#a78adc6c13ad0f1d1dedacffe0e80ce63", null ],
+    [ "operator*=", "classOFELI_1_1BMatrix.html#a5556d95853233dc0f9b7c0addfe2302f", null ],
+    [ "operator+=", "classOFELI_1_1BMatrix.html#ac836f165981e2a5c3575272f13e12e2d", null ],
+    [ "operator=", "classOFELI_1_1BMatrix.html#a9909ead413f8772b8b26ac31756e7995", null ],
+    [ "operator=", "classOFELI_1_1BMatrix.html#ae48f2908e85698af033e60bfb2790eeb", null ],
+    [ "set", "classOFELI_1_1BMatrix.html#a61cf373a94a5fedbca306e016bc489c9", null ],
+    [ "setLU", "classOFELI_1_1BMatrix.html#a254526dadd3fc5f1ffa120bfb2357f23", null ],
+    [ "setSize", "classOFELI_1_1BMatrix.html#aeefa0af831aaed8252e71726b01c7d63", null ],
+    [ "solve", "classOFELI_1_1BMatrix.html#a60abf009c8cdb7ca5f86cf266752cb97", null ],
+    [ "solve", "classOFELI_1_1BMatrix.html#abf3df464c1118a2063447c9765725a2e", null ],
+    [ "TMult", "classOFELI_1_1BMatrix.html#aedfc628db3de37e35aee052137aab9b3", null ]
+];

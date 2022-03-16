@@ -99,6 +99,49 @@ int Prescription::get(EqDataType    type,
 }
 
 
+Vect<real_t> &Prescription::get(EqDataType type,
+                                real_t     time,
+                                size_t     dof)
+{
+   _time = time;
+   PrescriptionPar par;
+   par.dof = dof;
+   _v = new Vect<real_t>(*_theMesh);
+   _v->clear();
+   XMLParser p(_file,*_theMesh,XMLParser::PRESCRIBE);
+   p.get(type,_p);
+   _theFct.resize(_p.size());
+   for (size_t k=0; k<_p.size(); k++) {
+      _theFct[k].set(_p[k].fct);
+      if (dof) {
+         if (type==BOUNDARY_CONDITION)
+            get_boundary_condition(k,dof);
+         else if (type==BOUNDARY_FORCE || type==TRACTION || type==FLUX)
+            get_boundary_force(k,dof);
+         else if (type==INITIAL_FIELD || type==BODY_FORCE || type==SOLUTION)
+            get_vector(k,dof);
+         else if (type==POINT_FORCE)
+            get_point_force(k,dof);
+         else
+            throw OFELIException("In Prescription::get(int,real_t,size_t): Type "+std::to_string(type)+" not found.");
+      }
+      else {
+         if (type==BOUNDARY_CONDITION)
+            get_boundary_condition(k);
+         else if (type==BOUNDARY_FORCE || type==TRACTION || type==FLUX)
+            get_boundary_force(k);
+         else if (type==INITIAL_FIELD || type==BODY_FORCE || type==SOLUTION)
+            get_vector(k);
+         else if (type==POINT_FORCE)
+            get_point_force(k);
+         else
+            throw OFELIException("In Prescription::get(int,real_t,size_t): Type "+std::to_string(type)+" not found.");
+      }
+   }
+   return *_v;
+}
+
+
 void Prescription::get_point_force(size_t k)
 {
    bool p = _p[k].bx || _p[k].by || _p[k].bz;

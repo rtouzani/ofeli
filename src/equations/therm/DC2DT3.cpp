@@ -263,9 +263,17 @@ void DC2DT3::BoundaryRHS(real_t flux)
 
 void DC2DT3::BoundaryRHS(const Vect<real_t>& f)
 {
-   real_t c = 0.5*_el_geo.length;
-   for (size_t i=1; i<=2; i++)
-      sRHS(i) += c*f((*_theSide)(i)->n());
+   if (_theSide->getCode(1)>0) {
+      real_t c = 0.5*_el_geo.length;
+      if (f.getDOFType()==NODE_DOF) {
+         sRHS(1) += c*f((*_theSide)(1)->n());
+         sRHS(2) += c*f((*_theSide)(2)->n());
+      }
+      else if (f.getDOFType()==SIDE_DOF) {
+         sRHS(1) += c*f(_theSide->n());
+         sRHS(2) += c*f(_theSide->n());
+      }
+   }
 }
 
 

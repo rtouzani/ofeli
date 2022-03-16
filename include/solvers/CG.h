@@ -104,7 +104,7 @@ int CG(const SpMatrix<T_>& A,
        int                 max_it,
        real_t              toler)
 {
-   if (Verbosity>2)
+   if (Verbosity>3)
       cout << "Running preconditioned CG method ..." << endl;
    size_t size=x.size();
    real_t res, nrm=b.getNorm2();

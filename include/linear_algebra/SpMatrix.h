@@ -512,9 +512,11 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  <tt>n</tt> if the <tt>n</tt>-th pivot is null.
  */
 #ifdef USE_EIGEN
-    int ILUFactorize(const SpMatrix<T_>& A);
+    int ILUFactorize(vector<size_t>& id,
+                     vector<T_>&     pivot) const;
 #else
-    int ILUFactorize(const SpMatrix<T_>& A);
+    int ILUFactorize(vector<size_t>& id,
+                     vector<T_>&     pivot) const;
 #endif
 
 /** \brief Solve a linear system with an diagonal incompletely factorized matrix
@@ -533,8 +535,10 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [out] x Vect instance containing on output the solution
  */
 #ifndef USE_EIGEN
-    void ILUSolve(const Vect<T_>& b,
-                  Vect<T_>&       x) const;
+    void ILUSolve(const vector<size_t>& id,
+                  const vector<T_>&     pivot,
+                  const Vect<T_>&       b,
+                  Vect<T_>&             x) const;
 #endif
 
 /** \brief Solve a linear system with an incompletely factorized matrix

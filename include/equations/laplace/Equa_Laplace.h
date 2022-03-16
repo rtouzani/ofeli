@@ -123,7 +123,7 @@ class Equa_Laplace : virtual public Equation<NEN_,NEE_,NSN_,NSE_> {
           _b->Assembly(*_theElement,eRHS.get());
        }
        if (_sf!=nullptr) {
-          MESH_BD_SD {
+          MESH_SD {
              set(the_side);
              if (_sf!=nullptr)
                 BoundaryRHS(*_sf);

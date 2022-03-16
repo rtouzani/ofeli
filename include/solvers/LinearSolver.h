@@ -343,7 +343,7 @@ template<class T_> class LinearSolver
  */
     int solve()
     {
-       int ret=0;
+          int ret=0;
        _nb_it = 0;
        if (!_matrix_set)
           throw OFELIException("In LinearSolver::solve(): No matrix has been defined.");

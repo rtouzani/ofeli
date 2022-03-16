@@ -58,10 +58,6 @@ Laplace1DL2::Laplace1DL2(Mesh& ms)
    setSolver(DIRECT_SOLVER);
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 1D using P1 finite element." << endl;
-   if (Verbosity>1) {
-      cout << "Matrix is stored in tridiagonal storage." << endl;
-      cout << "Linear system is solved by direct solver." << endl;
-   }
 }
 
 
@@ -76,10 +72,6 @@ Laplace1DL2::Laplace1DL2(Mesh&         ms,
    setSolver(DIRECT_SOLVER);
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 1D using P1 finite element." << endl;
-   if (Verbosity>1) {
-      cout << "Matrix is stored in tridiagonal storage." << endl;
-      cout << "Linear system is solved by direct solver." << endl;
-   }
 }
 
 

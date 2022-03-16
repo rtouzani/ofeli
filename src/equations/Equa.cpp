@@ -185,6 +185,8 @@ void Equa::setMesh(Mesh &m)
    _nb_eq = _theMesh->getNbEq();
    setMatrixType(SPARSE|SYMMETRIC);
    setSolver(CG_SOLVER,DILU_PREC);
+   _its = CG_SOLVER;
+   _prec = DILU_PREC;
 }
 
 
@@ -307,24 +309,21 @@ Matrix<real_t>* Equa::getMatrix() const
 void Equa::setSolver(Iteration      ls,
                      Preconditioner pc)
 {
-   if (_matrix_type==TRIDIAGONAL)
-      ls = DIRECT_SOLVER;
-   if (ls==DIRECT_SOLVER && _matrix_type==SPARSE)
-      throw OFELIException("In Equa::setSolver(Iteration,Preconditioner): "
-                           "Choices of solver and storage modes are incompatible.");
-   if (!_set_matrix)
+   _its = ls;
+   _prec = pc;
+   if (_matrix_type==TRIDIAGONAL) {
+      _its = DIRECT_SOLVER;
+      setMatrixType(TRIDIAGONAL);
+      _ls.setSolver(_its,_prec);
+      _set_solver = true;
+      return;
+   }
+   if (_its==DIRECT_SOLVER)
+      setMatrixType(SKYLINE);
+   else
       setMatrixType(SPARSE);
-   _ls.setSolver(ls,pc);
+   _ls.setSolver(_its,_prec);
    _set_solver = true;
-}
-
-
-void Equa::setLinearSolver(Iteration      ls,
-                           Preconditioner pc)
-{
-   if (_matrix_type==TRIDIAGONAL)
-      ls = DIRECT_SOLVER;
-   setSolver(ls,pc);
 }
 
 
@@ -378,11 +377,44 @@ int Equa::solveLinearSystem(Matrix<real_t>* A,
                             Vect<real_t>&   x)
 #endif
 {
+   if (_matrix_type&(SPARSE&(SPARSE|SYMMETRIC)) && _its==DIRECT_SOLVER)
+      throw OFELIException("In Equa::solveLinearSystem(A,b,x): "
+                           "Linear solver and matrix storage format are incompatible.");
    _ls.setMatrix(A);
    _ls.setRHS(b);
    _ls.setSolution(x);
    int ret = _ls.solve();
    return ret;
+}
+
+void Equa::LinearSystemInfo()
+{
+   if (_matrix_type&(SKYLINE&(SKYLINE|SYMMETRIC)))
+      cout << "Matrix is stored in skyline format." << endl;
+   if (_its==DIRECT_SOLVER)
+      cout << "Linear system solver: Direct solver" << endl;
+   else if (_its==CG_SOLVER)
+      cout << "Linear system solver: Conjugate Gradient method." << endl;
+   else if (_its==CGS_SOLVER)
+      cout << "Linear system solver: Squared Conjugate Gradient method." << endl;
+   else if (_its==BICG_SOLVER)
+      cout << "Linear system solver: Bi-Conjugate Gradient method." << endl;
+   else if (_its==BICG_STAB_SOLVER)
+      cout << "Linear system solver: Bi-Conjugate Stabilized Gradient method." << endl;
+   else if (_its==GMRES_SOLVER)
+      cout << "Linear system solver: GMRES method." << endl;
+   if (_its==DIRECT_SOLVER)
+      return;
+   if (_prec==IDENT_PREC)
+      cout << "Preconditioner: Identity." << endl;
+   else if (_prec==DIAG_PREC)
+      cout << "Preconditioner: Diagonal." << endl;
+   else if (_prec==DILU_PREC)
+      cout << "Preconditioner: Diagonal Incomplete LU factorization." << endl;
+   else if (_prec==ILU_PREC)
+      cout << "Preconditioner: Incomplete LU factorization." << endl;
+   else if (_prec==SSOR_PREC)
+      cout << "Preconditioner: Symmetric Successive Over Relaxation." << endl;
 }
 
 

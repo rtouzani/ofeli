@@ -11,7 +11,7 @@
 
   ------------------------------------------------------------------------------
 
-   Copyright (C) 1998 - 2018 Rachid Touzani
+   Copyright (C) 1998 - 2022 Rachid Touzani
 
    This file is part of OFELI.
 

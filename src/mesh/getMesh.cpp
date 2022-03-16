@@ -542,8 +542,7 @@ void getGmsh(string file,
              size_t nb_dof)
 {
    string        kw, w;
-   int           nb_nodes, nb_elements;
-   int           n[10];
+   int           nb_nodes, nb_elements, n[10];
    size_t        dim=0;
    real_t        d[100];
    Node          *nd;
@@ -552,10 +551,10 @@ void getGmsh(string file,
    int           code[MAX_NBDOF_NODE];
    Vect<El>      elem;
    Vect<int>     sdim;
-   static vector<int> nb_en = { 2, 3, 4, 4, 8, 6, 5, 3, 6, 9, 10, 27, 18, 14, 1, 8, 20, 15 };
-   static vector<int> sh = { LINE, TRIANGLE, QUADRILATERAL, TETRAHEDRON, HEXAHEDRON, PRISM, PYRAMID,
-                             LINE, TRIANGLE, QUADRILATERAL, TETRAHEDRON, HEXAHEDRON, PRISM, PYRAMID,
-                             POINT, QUADRILATERAL, HEXAHEDRON, PRISM };
+   static const vector<int> nb_en { 2, 3, 4, 4, 8, 6, 5, 3, 6, 9, 10, 27, 18, 14, 1, 8, 20, 15 };
+   static const vector<int> sh { LINE, TRIANGLE, QUADRILATERAL, TETRAHEDRON, HEXAHEDRON, PRISM, PYRAMID,
+                                 LINE, TRIANGLE, QUADRILATERAL, TETRAHEDRON, HEXAHEDRON, PRISM, PYRAMID,
+                                 POINT, QUADRILATERAL, HEXAHEDRON, PRISM };
 
 // Read in file
    ifstream pf;
@@ -569,6 +568,7 @@ void getGmsh(string file,
       throw OFELIException("getGmsh(...): Keyword MeshFormat not found in file "+file);
    pf >> d[0] >> n[0] >> n[1];
    pf >> kw;
+   int format = int(d[0]);
    if (kw!="$EndMeshFormat")
       throw OFELIException("getGmsh(...): Keyword EndMeshFormat not found in file "+file);
 
@@ -585,7 +585,6 @@ void getGmsh(string file,
    }
 
 // Entities
-
    map<int,int> Pcode, Ccode, Scode, Vcode;
    if (kw=="$Entities") {
       pf >> n[0] >> n[1] >> n[2] >> n[3];
@@ -646,8 +645,7 @@ void getGmsh(string file,
    }
 
 // Partitioned Entities
-
-   pf >> kw;
+//   pf >> kw;
    if (kw=="$PartitionedEntities") {
       pf >> n[0] >> n[1];
       for (int i=0; i<n[1]; ++i)
@@ -665,30 +663,48 @@ void getGmsh(string file,
 
    if (kw!="$Nodes")
       throw OFELIException("getGmsh(...): Keyword Nodes not found in file "+file);
-   pf >> n[0] >> nb_nodes >> n[1] >> n[2];
-   int m=0, nm=0;
    vector<Nd> nod;
    Nd nn;
-   for (int i=0; i<n[0]; ++i) {
-      pf >> n[1] >> n[2] >> n[3] >> n[4];
-      int cc = 0;
-      if (n[1]==0)
-         cc = Pcode[n[2]];
-      else if (n[1]==1)
-         cc = (Ccode[n[2]]>=0) ? Ccode[n[2]] : 0; 
-      else if (n[1]==2 && dim==3)
-         cc = (Scode[n[2]]>=0) ? Scode[n[2]] : 0; 
-      else if (n[1]==3 && dim==2)
-         cc = Vcode[n[1]];
-      if (n[3])
-         throw OFELIException("getGmsh(...): parametric not implemented.");
-      for (int j=0; j<n[4]; ++j)
-         pf >> n[7];
-      for (int j=0; j<n[4]; ++j) {
-         pf >> nn.x[0] >> nn.x[1] >> nn.x[2];
-         nn.n = ++nm, ++m;
-         nn.cc = (cc<0) ? 0 : cc;
+   int m = 0;
+   if (format==2) {
+      pf >> nb_nodes;
+      int nm=0;
+      for (int i=0; i<nb_nodes; ++i) {
+         dim = 3;
+         pf >> n[0] >> nn.x[0] >> nn.x[1] >> nn.x[2];
+         if (nn.x[2]==0.) {
+            dim = 2;
+            if (nn.x[1]==0.)
+               dim = 1;
+         }
+         nn.n = n[0];
          nod.push_back(nn);
+      }
+   }
+   else if (format==4) {
+      pf >> n[0] >> nb_nodes >> n[1] >> n[2];
+      int m=0, nm=0;
+      for (int i=0; i<n[0]; ++i) {
+         pf >> n[1] >> n[2] >> n[3] >> n[4];
+         int cc = 0;
+         if (n[1]==0)
+            cc = Pcode[n[2]];
+         else if (n[1]==1)
+            cc = (Ccode[n[2]]>=0) ? Ccode[n[2]] : 0; 
+         else if (n[1]==2 && dim==3)
+            cc = (Scode[n[2]]>=0) ? Scode[n[2]] : 0; 
+         else if (n[1]==3 && dim==2)
+            cc = Vcode[n[1]];
+         if (n[3])
+            throw OFELIException("getGmsh(...): parametric not implemented.");
+         for (int j=0; j<n[4]; ++j)
+            pf >> n[7];
+         for (int j=0; j<n[4]; ++j) {
+            pf >> nn.x[0] >> nn.x[1] >> nn.x[2];
+            nn.n = ++nm, ++m;
+            nn.cc = (cc<0) ? 0 : cc;
+            nod.push_back(nn);
+         }
       }
    }
    pf >> kw;
@@ -698,43 +714,48 @@ void getGmsh(string file,
    pf >> kw;
    if (kw!="$Elements")
       throw OFELIException("getGmsh(...): Keyword Elements not found in file "+file);
-   pf >> n[0] >> nb_elements >> n[1] >> n[2];
    vector<El> elements, sides;
    El ell;
    size_t nse=0, ne=0, ns=0;
-   for (int i=0; i<n[0]; ++i) {
-      pf >> n[3] >> n[4] >> n[5] >> n[6];
-      ell.dim = n[3];
-      for (int k=0; k<n[6]; ++k) {
-         pf >> n[7];
-         nse++;
-         ell.shape = sh[n[5]-1];
-         ell.nb_nodes = nb_en[n[5]-1];
-         for (size_t i=0; i<ell.nb_nodes; ++i) {
-            pf >> m;
-            ell.node[i] = nod[m-1].n;
-         }
-         if (ell.dim==dim) {
-            ++ne;
-            ell.region = 1;
-            if (dim==1)
-               ell.region = Ccode[n[4]];
-            else if (dim==2)
-               ell.region = Scode[n[4]];
-            else if (dim==3)
-               ell.region = Vcode[n[4]];
-            elements.push_back(ell);
-         }
-         if (ell.dim==dim-1) {
-            ++ns;
-            ell.region = 0;
-            if (dim==1)
-               ell.region = Pcode[n[4]];
-            else if (dim==2)
-               ell.region = (Ccode[n[4]]>=0) ? 0 : -Ccode[n[4]]; 
-            else if (dim==3)
-               ell.region = (Scode[n[4]]>=0) ? 0 : -Scode[n[4]]; 
-            sides.push_back(ell);
+   if (format==2) {
+      pf >> nb_elements;
+   }
+   else if (format==4) {
+      pf >> n[0] >> nb_elements >> n[1] >> n[2];
+      for (int i=0; i<n[0]; ++i) {
+         pf >> n[3] >> n[4] >> n[5] >> n[6];
+         ell.dim = n[3];
+         for (int k=0; k<n[6]; ++k) {
+            pf >> n[7];
+            nse++;
+            ell.shape = sh[n[5]-1];
+            ell.nb_nodes = nb_en[n[5]-1];
+            for (size_t i=0; i<ell.nb_nodes; ++i) {
+               pf >> m;
+               ell.node[i] = nod[m-1].n;
+            }
+            if (ell.dim==dim) {
+               ++ne;
+               ell.region = 1;
+               if (dim==1)
+                  ell.region = Ccode[n[4]];
+               else if (dim==2)
+                  ell.region = Scode[n[4]];
+               else if (dim==3)
+                  ell.region = Vcode[n[4]];
+               elements.push_back(ell);
+            }
+            if (ell.dim==dim-1) {
+               ++ns;
+               ell.region = 0;
+               if (dim==1)
+                  ell.region = Pcode[n[4]];
+               else if (dim==2)
+                  ell.region = (Ccode[n[4]]>=0) ? 0 : -Ccode[n[4]]; 
+               else if (dim==3)
+                  ell.region = (Scode[n[4]]>=0) ? 0 : -Scode[n[4]]; 
+               sides.push_back(ell);
+            }
          }
       }
    }
@@ -742,7 +763,7 @@ void getGmsh(string file,
    if (kw!="$EndElements")
       throw OFELIException("getGmsh(...): Keywords EndElements not found in file "+file);
 
-// Build a mesh instance
+// Build Mesh instance
    mesh.setDim(dim);
    size_t first_dof = 1, nbn = 0;
    for (int j=0; j<nb_nodes; ++j) {
@@ -776,6 +797,7 @@ void getGmsh(string file,
    }
    pf.close();
    cout << "Generated mesh:\n";
+   cout << "Space dimension:    " << dim << endl;
    cout << "Number of nodes:    " << nbn << endl;
    cout << "Number of elements: " << elements.size() << endl;
    cout << "Number of sides:    " << sides.size() << endl;

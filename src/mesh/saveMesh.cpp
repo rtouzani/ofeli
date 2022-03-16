@@ -84,36 +84,106 @@ void saveMesh(const string&      file,
 }
 
 
+int getType(Element& e)
+{
+   int t = 0, sh = e.getShape(), n = e.getNbNodes();
+   if (sh==LINE) {
+      if (n==2)
+         t = 1;
+      else if (n==3)
+         t = 8;
+   }
+   else if (sh==TRIANGLE) {
+      if (n==3)
+         t = 2;
+      else if (n==6)
+         t = 9;
+   }
+   else if (sh==QUADRILATERAL) {
+      if (n==4)
+         t = 3;
+      else if (n==9)
+         t = 10;
+   }
+   else if (sh==TETRAHEDRON) {
+      if (n==4)
+         t = 4;
+      else if (n==10)
+         t = 11;
+   }
+   else if (sh==HEXAHEDRON) {
+      if (n==8)
+         t = 5;
+      else if (n==27)
+         t = 12;
+   }
+   else if (sh==PENTAHEDRON) {
+      if (n==6)
+         t = 6;
+      else if (n==18)
+         t = 13;
+   }
+   return t;
+}
+
+
+int getType(Side& s)
+{
+   int t = 0, sh = s.getShape(), n = s.getNbNodes();
+   if (sh==LINE) {
+      if (n==2)
+         t = 1;
+      else if (n==3)
+         t = 8;
+   }
+   else if (sh==TRIANGLE) {
+      if (n==3)
+         t = 2;
+      else if (n==6)
+         t = 9;
+   }
+   else if (sh==QUADRILATERAL) {
+      if (n==4)
+         t = 3;
+      else if (n==9)
+         t = 10;
+   }
+   return t;
+}
+
+
 void saveGmsh(const string& file,
               const Mesh&   mesh)
 {
-  static vector<int> type = { 0, 0, 1, 2, 3, 4, 5, 6 };
+   static vector<int> type = { 0, 0, 1, 2, 3, 4, 5, 6 };
    size_t i;
    ofstream pf(file.c_str());
    if (pf.fail())
       throw OFELIException("saveGmsh(string,Mesh): cannot open file " + file);
 
-   pf << "$NOD\n" << mesh.getNbNodes() << endl;
+   pf << "$MeshFormat\n2.2  0  8\n$EndMeshFormat" << endl;
+   size_t n = 0;
+   size_t nd = mesh.getNbNodes(), ne = mesh.getNbElements(), ns = mesh.getNbSides();
+   pf << "$Nodes\n" << nd << endl;
    node_loop(&mesh)
       pf << node_label << "  " << the_node->getX() << "  "
          << the_node->getY() << "  " << the_node->getZ() << endl;
-   pf << "$ENDNOD" << endl;
-   pf << "$ELM\n" << mesh.getNbElements() << endl;
+   pf << "$EndNodes" << endl;
+   if (ne+ns>0)
+      pf << "$Elements\n" << ne+ns << endl;
    element_loop(&mesh) {
-      pf << element_label << "  " << type[The_element.getShape()] << "  " << The_element.getCode() << "  0  "
-         << The_element.getNbNodes();
+      pf << ++n << " " << getType(The_element) << " 2 " << The_element.getCode() << " 1";
       for (i=1; i<=The_element.getNbNodes(); i++)
-         pf << "  " << The_element.getNodeLabel(i);
+         pf << " " << The_element(i)->n();
       pf << endl;
    }
    side_loop(&mesh) {
-      pf << side_label << "  " << type[The_side.getShape()]-1 << "  " << The_side.getCode(1) << "  0  "
-         << The_side.getNbNodes();
+      pf << ++n << " " << getType(The_side) << " 2 " << The_side.getCode() << " 1";
       for (i=1; i<=The_side.getNbNodes(); i++)
-         pf << "  " << The_side.getNodeLabel(i);
+         pf << " " << The_side(i)->n();
       pf << endl;
    }
-   pf << "$ENDELM" << endl;
+   pf << "$EndElements" << endl;
    pf.close();
 }
 

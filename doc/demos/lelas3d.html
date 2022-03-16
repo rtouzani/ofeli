@@ -18,7 +18,6 @@
 <p align="center"><a href="../index.html"><img src="../im/ofeli.gif" width="150" border="0"></a></p>
 
 <center>
-  <div id="cse" style="width: 60%;">Loading</div>
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
   <script type="text/javascript"> 
      google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
@@ -132,19 +131,20 @@
 &nbsp;
 
 <div id="mainmenu">
-<div class="text">
-
- <div class="tabs">
-   <ul class="tablist">
-   <li><a href="../index.html"><span>Home</span></a>
-   <li><a href="../overview.html"><span>Overview</span></a>
-   <li><a href="../html/index.html"><span>Class Documentation</span></a>
-   <li><a href="../fformats.html"><span>File Formats</span></a>
-   <li class="current"><a href="../demos.html"><span>Demo Codes</span></a>
- </div>
-
- </div>
- </div>
+   <div class="text">
+     <div class="tabs">
+         <ul class="tablist">
+           <li><a href="../index.html"><span>Home</span></a></li>
+           <li><a href="../installation.html"><span>Installation</span></a></li>
+           <li><a href="../html/index.html"><span>Class Documentation</span></a></li>
+           <li><a href="../citing.html"><span>Citing OFELI</span></a></li>
+           <li><a href="../fformats.html"><span>File Formats</span></a></li>
+           <li class="current"><a href="../demos.html"><span>Demo Codes</span></a></li>
+           <li><a href="../extlib.html"><span>External Libraries</span></a></li>
+         </ul>
+      </div>
+   </div>
+</div>
 
 &nbsp;
 <p>
@@ -161,120 +161,27 @@
 <p>
 <SPAN class=TEXT>
 This code solves three-dimensional linearized elastostatics problems. Its main structure is exactly the same
-as the <a href="lelas2d.html">2-D code</a>.
+as the <a href="lelas2d.html">2-D code</a>. So we will only outline the main differences with the former example.
 </SPAN>
 
 <ul type=square>
-<li><SPAN class=TEXT>We start by defining an instance of class <span class=VAR>
-<a href="../html/classOFELI_1_1IPF.html">IPF</a></span> to deal with project data.
-We extract useful information from this instance: An output flag to deal with output level
-and a save flag to say if the solution is to be saved in file. We then construct the 
-<span class=VAR><a href="../html/classOFELI_1_1Mesh.html">Mesh</a></span> and the 
-<span class=VAR><a href="../html/classOFELI_1_1Prescription.html">Prescription</a></span> instances.
-Note that the second argument in the mesh constructor means that imposed boundary conditions are to be removed
-from the list of unknowns. This is important in view of using iterative methods.
+<li><SPAN class=TEXT>First we invoke the 3-D elasticity equation, <it>i.e.</it>  class 
+    <span class=VAR><a href="../html/classOFELI_1_1Elas3DT4.html">Elas3DT4</a></span>.
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   IPF data("lelas3d - 1.2",argv[1]);
-   int verbose = data.getVerbose(), output_flag = data.getOutput(), save_flag = data.getSave();
-   Mesh ms(data.getMeshFile(),true);
-   int nb_dof = ms.getDim();
-   Prescription p(ms,data.getDataFile());
-</font></pre>
+<pre><font color="blue" size=3>   Elas3DT4 eq(ms,u);</font></pre>
 </td></tr></table>
 </SPAN></p>
 
 <li><SPAN class=TEXT>
-The linear system uses a symmetric matrix. For this, we we use an instance of class 
-<span class=VAR><a href="../html/classOFELI_1_1SpMatrix.html">SpMatrix&lt;double&gt;</a></span>.
-Then we declare a vector <span class=VAR>b</span> and <span class=VAR>u</span> that will contain respectively
-the right-hand side and the solution:
+Next, before calling the member function <span class=VAR>run</span> to solve the problem, we choose to use an iterative
+solver of the linear system. Here we use the Conjugate Gradient method with the Diagonal Incomplete LU preconditioner:
 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
 <tr><td>
-<pre><font color="blue" size=3>   SpMatrix&lt;double&gt; A(ms);
-   Vect&lt;double&gt; b(ms.getNbEq()), u(ms.getNbEq());
-</font></pre>
+<pre><font color="blue" size=3>   eq.setSolver(CG_SOLVER,DILU_PREC);</font></pre>
 </td></tr></table>
 </SPAN></p>
 
-<li><SPAN class=TEXT>
-We then declare boundary conditions and loads. This is done by using
-class <span class=var><a href="../html/classOFELI_1_1Prescription.html">Prescription</a></span>. Dirichlet boundary 
-conditions are stored in vector <span class=VAR>bc</span>, and
-body forces (ditributed loads) are in vector <span class=VAR>body_f</span>.
-All these vectors can then by initialized from data as read in class 
-<span class=VAR><a href="../html/classOFELI_1_1Prescription.html">Prescription</a></span>.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   Vect&lt;double&gt; bc(ms), body_f(ms), bound_f(ms);
-   p.get(BOUNDARY_CONDITION,bc,0);
-   p.get(BODY_FORCE,body_f,0);
-   p.get(BOUNDARY_FORCE,bound_f,0);
-</font></pre>
-</td></tr></table>
-</SPAN></p>
-
-<li><SPAN class=TEXT>The global matrix and right-hand side are filled
-by looping over elements. For each element, an instance of class 
-<span class=VAR><a href="../html/classOFELI_1_1Elas3DT4.html">Elas3DT4</a></span>
-is considered. This class deals with tetrahedral elements. Deviatoric and dilatational
-terms are constructed separately. The other member functions have already been considered
-in previous lessons. Note that we use the member function <span class=VAR>updateBC</span>
-that takes into account boundary conditions at the element level.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   MeshElements(ms) {
-      Elas3DT4 eq(theElement);
-      eq.Deviator();
-      eq.Dilatation();
-      eq.BodyRHS(body_f);
-      eq.updateBC(BCVect&lt;double&gt;(bc));
-      eq.ElementAssembly(A);
-      eq.ElementAssembly(b);
-   }
-</font></pre>
-</td></tr></table>
-</SPAN></p>
-
-<li><SPAN class=TEXT>We now solve the linear system by using the Conjugate Gradient method
-using the diagonal preconditioner.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   CG(A,Prec&lt;double&gt;(A,DIAG_PREC),b,u,1000,toler,1);
-</font></pre>
-</td></tr></table></p>
-and then construct the solution vector containing boundary conditions:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   Vect&lt;double&gt; uf(ms);
-   uf.insertBC(u,bc);
-   if (output_flag > 0)
-      cout &lt;&lt; uf;
-</font></pre>
-</td></tr></table></p>
-
-</SPAN></p>
-
-<li type=square><SPAN class=TEXT>We save the resulting displacement vector
-for plotting or any other purpose. For this, the class
-<span class=VAR><a href="../html/classOFELI_1_1IOField.html">IOField</a></span>
-is used.<br>
-It is also classical in solid mechanics
-to represent the deformed domain. Here the function <span class=VAR>DeformMesh</span>
-enables doing this. We then save the deformed mesh.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   if (save_flag) {
-      IOField pf(data.getPlotFile(),IOField::OUT);
-      pf.put(uf);
-      DeformMesh(ms,uf,1);
-      ms.put(data.getProject()+"-1.m");
-   }
-</font></pre>
-</td></tr></table>
-</SPAN>
-
-</SPAN>
 </ul></p>
 
 &nbsp;&nbsp;
@@ -293,7 +200,6 @@ Let us run this program with the data presented in the following project file:
 &lt;/info&gt;
 &lt;Project name="beam"&gt;
    &lt;verbose&gt;1&lt;/verbose&gt;
-   &lt;output&gt;0&lt;/output&gt;
    &lt;save&gt;1&lt;/save&gt;
    &lt;plot&gt;1&lt;/plot&gt;
    &lt;init&gt;1&lt;/init&gt;
@@ -302,6 +208,7 @@ Let us run this program with the data presented in the following project file:
 &lt;/Project&gt;
 &lt;Prescription&gt;
    &lt;BodyForce dof="3"&gt;-1.0&lt;/BodyForce&gt;
+   &lt;Traction code="7" dof="1"&gt;10000&lt;/Traction&gt;
 &lt;/Prescription&gt;
 &lt;/OFELI_File&gt;</font></pre>
 </td></tr></table></p>
@@ -321,7 +228,7 @@ beam.</span>
 
 &nbsp;
 <div id="foot_bar">
-        Copyright &copy; 1998-2021 Rachid Touzani&nbsp;
+        Copyright &copy; 1998-2022 Rachid Touzani&nbsp;
 </div>
 
 </body>

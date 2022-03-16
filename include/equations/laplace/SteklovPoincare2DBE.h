@@ -78,6 +78,7 @@ class SteklovPoincare2DBE : virtual public Equa {
     using Equa::_b;
     using Equa::_uu;
     using Equa::_sf;
+    using Equa::_ls;
 
 /// \brief Default Constructor
     SteklovPoincare2DBE();

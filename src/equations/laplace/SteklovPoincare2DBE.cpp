@@ -85,8 +85,7 @@ real_t SteklovPoincare2DBE::single_layer(size_t               j,
 real_t SteklovPoincare2DBE::double_layer(size_t               j,
                                          const Point<real_t>& z) const
 {
-   real_t t = _nn[j]*z;
-   return -0.25/OFELI_PI*t*I3(0.25*_h*_h,z*_ttg[j],z.NNorm()); 
+   return -0.25/OFELI_PI*(_nn[j],z)*I3(0.25*_h*_h,z*_ttg[j],z.NNorm()); 
 }
 
 
@@ -103,10 +102,12 @@ void SteklovPoincare2DBE::setMesh(Mesh& ms)
    util();
    if (_A!=nullptr)
       delete _A;
+   setMatrixType(SPARSE);
    _A = new SpMatrix<real_t>(_nb_eq,_nb_eq);
-   _ls.setMatrix(_A);
+   LinearSolver<real_t>& ls = getLinearSolver();
+   ls.setMatrix(_A);
    _set_matrix = true;
-   setSolver(GMRES_SOLVER,DIAG_PREC);
+   _ls.setSolver(GMRES_SOLVER,DIAG_PREC);
    if (_b!=nullptr)
       delete _b;
    _b = new Vect<real_t>(_nb_eq);

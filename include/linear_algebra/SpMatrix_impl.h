@@ -400,8 +400,6 @@ void SpMatrix<T_>::Diagonal(const T_& a)
 }
 
 
-
-
 template<>
 inline void SpMatrix<real_t>::Laplace2D(size_t nx,
                                         size_t ny)
@@ -1017,7 +1015,7 @@ int SpMatrix<T_>::Factor()
 #ifdef USE_EIGEN
 template<class T_>
 int SpMatrix<T_>::DILUFactorize(vector<size_t>& id,
-                                    vector<T_>&     pivot) const;
+                                vector<T_>& pivot) const;
 #else
 template<class T_>
 int SpMatrix<T_>::DILUFactorize(vector<size_t>& id,
@@ -1059,68 +1057,17 @@ int SpMatrix<T_>::DILUFactorize(vector<size_t>& id,
 
 #ifdef USE_EIGEN
 template<class T_>
-int SpMatrix<T_>::ILUFactorize(const SpMatrix<T_>& A);
+int SpMatrix<T_>::ILUFactorize(vector<size_t>& id,
+                               vector<T_>& pivot) const
+{
+   return DILUFactorize(id,pivot);
+}
 #else
 template<class T_>
-int SpMatrix<T_>::ILUFactorize(const SpMatrix<T_>& A)
+int SpMatrix<T_>::ILUFactorize(vector<size_t>& id,
+                               vector<T_>& pivot) const
 {
-   _nb_rows = A._nb_rows, _nb_cols = A._nb_cols;
-   _size = A._size, _length = A._length;
-   _row_ptr = A._row_ptr; _col_ind = A._col_ind;
-   _lnnz = (_length-_nb_rows)/2, _unnz = (_length+_nb_rows)/2;
-   _aL.resize(_lnnz); _aU.resize(_unnz);
-   _l_col_ind.resize(_lnnz);
-   _u_col_ind.resize(_unnz);
-   _l_row_ptr.resize(_nb_rows+1);
-   _u_row_ptr.resize(_nb_rows+1);
-   _l_row_ptr[0] = _u_row_ptr[0] = 0;
-
-   for (size_t i=0; i<_nb_rows; i++) {
-      _l_row_ptr[i+1] = _l_row_ptr[i];
-      _u_row_ptr[i+1] = _u_row_ptr[i];
-      for (size_t j=A._row_ptr[i]; j<A._row_ptr[i+1]; j++) {
-         if (A._col_ind[j]<i+1) {
-            size_t k=_l_row_ptr[i+1]++;
-            _aL[k] = A._a[j];
-            _l_col_ind[k] = A._col_ind[j];
-         }
-         else {
-            size_t k=_u_row_ptr[i+1]++;
-            _aU[k] = A._a[j];
-            _u_col_ind[k] = A._col_ind[j];
-         }
-      }
-   }
-   for (size_t i=1; i<_nb_rows; i++) {
-      for (size_t j=_l_row_ptr[i]; j<_l_row_ptr[i+1]; j++) {
-         size_t pn=_u_row_ptr[_col_ind[j]-1], qn=j+1, rn=_u_row_ptr[i];
-         T_ p = (_aL[j]/=_aU[pn]);
-         for (pn++; pn<_u_row_ptr[_l_col_ind[j]] && _u_col_ind[pn]<i+1; pn++) {
-            while (qn<_l_row_ptr[i+1] && _l_col_ind[qn]<_u_col_ind[pn])
-               qn++;
-            if (qn<_l_row_ptr[i+1] && _u_col_ind[pn]==_l_col_ind[qn])
-               _aL[qn] -= p*_aU[pn];
-         }
-         for (; pn<_u_row_ptr[_l_col_ind[j]]; pn++) {
-            while (rn<_u_row_ptr[i+1] && _u_col_ind[rn]<_u_col_ind[pn])
-               rn++;
-            if (rn<_u_row_ptr[i+1] && _u_col_ind[pn]==_u_col_ind[rn])
-               _aU[rn] -= p*_aU[pn];
-         }
-      }
-   }
-
-   size_t k=0, kl=0, ku=0;
-   _a.resize(_length);
-   for (size_t i=0; i<_nb_rows; i++) {
-      for (size_t j=_row_ptr[i]; j<_row_ptr[i+1]; j++) {
-         if (_col_ind[j]<i+1)
-            _a[k++] = _aL[kl++];
-         else
-            _a[k++] = _aU[ku++];
-      }
-   }
-   return 0;
+   return DILUFactorize(id,pivot);
 }
 #endif
 
@@ -1151,21 +1098,12 @@ void SpMatrix<T_>::DILUSolve(const vector<size_t>& id,
 
 #ifndef USE_EIGEN
 template<class T_>
-void SpMatrix<T_>::ILUSolve(const Vect<T_>& b,
-                            Vect<T_>&       x) const
+void SpMatrix<T_>::ILUSolve(const vector<size_t>& id,
+                            const vector<T_>&     pivot,
+                            const Vect<T_>&       b,
+                            Vect<T_>&             x) const
 {
-   for (size_t i=0; i<_size; i++) {
-      T_ s=0;
-      for (size_t j=_l_row_ptr[i]; j<_l_row_ptr[i+1]; j++)
-         s += _aL[_l_col_ind[j]-1]*b[_l_col_ind[j]-1];
-      x[i] = b[i] - s;
-   }
-   for (int i=int(_size)-1; i>=0; i--) {
-      T_ s=0;
-      for (size_t j=_l_row_ptr[i]; j<_l_row_ptr[i+1]; j++)
-         s += _aU[_u_col_ind[j]-1]*x[_u_col_ind[j]-1];
-      x[i] = (x[i]-s)/_aU[_u_col_ind[_l_row_ptr[i]]-1];
-   }
+   DILUSolve(id,pivot,b,x);
 }
 #endif
 

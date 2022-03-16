@@ -281,31 +281,6 @@ class Equa
     void setSolver(Iteration      ls,
                    Preconditioner pc=IDENT_PREC);
 
-/** \brief Choose solver for the linear system
- *  @param [in] ls Solver of the linear system.
- *  To choose among the enumerated values: <tt>DIRECT_SOLVER</tt>, <tt>CG_SOLVER</tt>,
- *  <tt>GMRES_SOLVER</tt>
- *  <ul>
- *    <li> <tt>DIRECT_SOLVER</tt>, Use a facorization solver [default]
- *    <li> <tt>CG_SOLVER</tt>, Conjugate Gradient iterative solver
- *    <li> <tt>CGS_SOLVER</tt>, Squared Conjugate Gradient iterative solver
- *    <li> <tt>BICG_SOLVER</tt>, BiConjugate Gradient iterative solver
- *    <li> <tt>BICG_STAB_SOLVER</tt>, BiConjugate Gradient Stabilized iterative solver
- *    <li> <tt>GMRES_SOLVER</tt>, GMRES iterative solver
- *    <li> <tt>QMR_SOLVER</tt>, QMR iterative solver
- *  </ul>
- *  @param [in] pc Preconditioner to associate to the iterative solver.
- *  If the direct solver was chosen for the first argument this argument is not used.
- *  Otherwise choose among the enumerated values:
- *  <ul> 
- *    <li> <tt>IDENT_PREC</tt>, Identity preconditioner (no preconditioning [default])
- *    <li> <tt>DIAG_PREC</tt>, Diagonal preconditioner
- *    <li> <tt>ILU_PREC</tt>, Incomplete LU factorization preconditioner
- *  </ul>
- */
-    void setLinearSolver(Iteration      ls,
-                         Preconditioner pc=IDENT_PREC);
-
 /** \brief Choose type of matrix
  *  @param [in] t Type of the used matrix.
  *  To choose among the enumerated values: <tt>SKYLINE</tt>, <tt>SPARSE</tt>, <tt>DIAGONAL</tt>
@@ -420,6 +395,9 @@ class Equa
     void setTolerance(real_t toler);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+/// \brief Print info on linear system solver
+    void LinearSystemInfo();
+
  protected:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    Mesh                   *_theMesh;
@@ -428,6 +406,8 @@ class Equa
    int                    _matrix_type, _solver, _max_it;
    size_t                 _nb_fields, _nb_eigv;
    EigenProblemSolver     _ev;
+   Iteration              _its;
+   Preconditioner         _prec;
    bool                   _eigen;
    bool                   _constant_matrix, _constant_mesh, _set_matrix, _set_solver;
    int                    _sol_type, _init_type, _bc_type, _bf_type, _sf_type;

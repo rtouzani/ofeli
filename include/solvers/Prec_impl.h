@@ -152,7 +152,7 @@ void Prec<T_>::setMatrix(const Matrix<T_>* A)
           break;
 
       case ILU_PREC:
-          _aa.ILUFactorize(*_a);
+          _a->ILUFactorize(_id,_pivot);
           break;
 
       case SSOR_PREC:
@@ -186,7 +186,7 @@ void Prec<T_>::setMatrix(const SpMatrix<T_>& A)
          break;
 
       case ILU_PREC:
-         _aa.ILUFactorize(*_a);
+         _a->ILUFactorize(_id,_pivot);
          break;
 
       case SSOR_PREC:
@@ -213,7 +213,7 @@ void Prec<T_>::solve(Vect<T_>& x) const
          break;
 
       case ILU_PREC:
-         _aa.ILUSolve(b,x);
+         _a->ILUSolve(_id,_pivot,b,x);
          break;
 
       case SSOR_PREC:
@@ -245,7 +245,7 @@ void Prec<T_>::solve(const Vect<T_>& b,
          break;
 
       case ILU_PREC:
-         _aa.ILUSolve(b,x);
+         _a->ILUSolve(_id,_pivot,b,x);
          break;
 
       case SSOR_PREC:

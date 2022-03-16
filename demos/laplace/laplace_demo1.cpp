@@ -55,10 +55,11 @@ int main(int argc, char *argv[])
       Mesh ms(data.getMeshFile());
 
 //    Declare problem data
-      Vect<double> bc(ms), bf(ms);
+      Vect<double> bc(ms), bf(ms), sf(ms);
       Prescription p(ms,data.getPrescriptionFile());
       p.get(BOUNDARY_CONDITION,bc);
       p.get(SOURCE,bf);
+      p.get(FLUX,sf);
 
 //    Declare problem solution and instantiate equation
       Vect<double> u(ms);
@@ -67,6 +68,8 @@ int main(int argc, char *argv[])
 //    Prescribe data
       eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(SOURCE,bf);
+      eq.setSolver(CG_SOLVER,SSOR_PREC);
+      eq.LinearSystemInfo();
 
 //    Solve problem
       eq.run();

@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
       eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(BODY_FORCE,body_f);
       eq.setInput(TRACTION,bound_f);
+      eq.setSolver(CG_SOLVER,DILU_PREC);
       eq.run();
 
 #if defined(USE_PETSC)

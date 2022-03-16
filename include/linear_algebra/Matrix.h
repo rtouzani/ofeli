@@ -88,8 +88,8 @@ enum Iteration {
 enum Preconditioner {
    IDENT_PREC       = 0,   /*!< Identity (No preconditioning)                           */
    DIAG_PREC        = 1,   /*!< Diagonal preconditioner                                 */
-   DILU_PREC        = 2,   /*!< ILU (Incomplete factorization) preconditioner           */
-   ILU_PREC         = 3,   /*!< DILU (Diagonal Incomplete factorization) preconditioner */
+   DILU_PREC        = 2,   /*!< DILU (Diagonal Incomplete factorization) preconditioner */
+   ILU_PREC         = 3,   /*!< ILU (Incomplete factorization) preconditioner           */
    SSOR_PREC        = 4    /*!< SSOR preconditioner                                     */
 };
 

@@ -39,12 +39,13 @@
 
 #include <stdexcept>
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
 namespace OFELI {
 /*!
  *  \addtogroup OFELI
  *  @{
  */
-
 
 /*!
  * \class OFELIException
@@ -67,6 +68,8 @@ class OFELIException : public std::runtime_error
 /// \brief Throw with no error message.
     OFELIException() : std::runtime_error("Exception thrown in OFELI:\n") { }; 
 };
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 } /* namespace OFELI */
 

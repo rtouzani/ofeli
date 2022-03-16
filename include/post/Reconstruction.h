@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                           Definition of for class 'PostProcess'
+                      Definition of for class 'Reconstruction'
 
   ==============================================================================*/
 
@@ -89,7 +89,7 @@ class Reconstruction
     void P0toP1(const Vect<real_t>& u,
                 Vect<real_t>&       v);
 
-/** \brief Smooth an Discontinuous P1 field to obtain a nodewise (Continuous P<sub>1</sub>)
+/** \brief Smooth a discontinuous P1 field to obtain a nodewise (Continuous P<sub>1</sub>)
  *  field by L<sup>2</sup> projection
  *  @param [in] u Vect instance that contains field to smooth
  *  @param [out] v Vect instance that contains on output smoothed field

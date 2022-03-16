@@ -54,10 +54,6 @@ Laplace1DL3::Laplace1DL3(Mesh& ms)
    setSolver(CG_SOLVER,DILU_PREC);
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 1D using P2 finite element." << endl;
-   if (Verbosity>1) {
-      cout << "Matrix is stored in sparse format." << endl;
-      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
-   }
 }
 
 
@@ -71,10 +67,6 @@ Laplace1DL3::Laplace1DL3(Mesh&         ms,
    setSolver(CG_SOLVER,DILU_PREC);
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 1D using P1 finite element." << endl;
-   if (Verbosity>1) {
-      cout << "Matrix is stored in sparse format." << endl;
-      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
-   }
 }
 
 

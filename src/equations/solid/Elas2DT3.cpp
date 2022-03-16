@@ -255,16 +255,27 @@ void Elas2DT3::BodyRHS(const Vect<real_t>& f)
 
 void Elas2DT3::BoundaryRHS(const Vect<real_t>& f)
 {
-   real_t c = 0.5*_el_geo.length;
-   real_t fx = c*f(_theSide->n(),1);
-   real_t fy = c*f(_theSide->n(),2);
-   if (_theSide->getCode(1) != CONTACT) {
-      sRHS(1) += fx;
-      sRHS(3) += fx;
+   if (_theSide->getCode(1)>0) {
+      real_t z = 0.5*_el_geo.length;
+      if (f.getDOFType()==NODE_DOF) {
+         sRHS(1) += z*f(2*(*_theSide)(1)->n()-1);
+         sRHS(3) += z*f(2*(*_theSide)(2)->n()-1);
+      }
+      else if (f.getDOFType()==SIDE_DOF) {
+         sRHS(1) += z*f(2*_theSide->n()-1);
+         sRHS(3) += z*f(2*_theSide->n()-1);
+      }
    }
-   if (_theSide->getCode(2) != CONTACT) {
-      sRHS(2) += fy;
-      sRHS(4) += fy;
+   if (_theSide->getCode(2)>0) {
+      real_t z = 0.5*_el_geo.length;
+      if (f.getDOFType()==NODE_DOF) {
+         sRHS(2) += z*f(2*(*_theSide)(1)->n());
+         sRHS(4) += z*f(2*(*_theSide)(2)->n());
+      }
+      else if (f.getDOFType()==SIDE_DOF) {
+         sRHS(2) += z*f(2*_theSide->n());
+         sRHS(4) += z*f(2*_theSide->n());
+      }
    }
 }
 

@@ -61,25 +61,23 @@ int main(int argc, char *argv[])
       IOField pff(proj.getMeshFile(),proj.getString("p_file"),mesh,IOField::OUT);
 
       Vect<double> u(mesh,NODE_DOF,"Velocity"), p(mesh,NODE_DOF,"Pressure",1);
-      Vect<double> bc(mesh), bf(mesh), sf(mesh);
+      //      Vect<double> bc(mesh), bf(mesh);
       TINS2DT3S eq(mesh);
       eq.Reynolds(Re);
       eq.setTolerance(proj.getTolerance());
       Prescription pr(mesh,proj.getDataFile());
       pr.get(INITIAL_FIELD,u);
-      pr.get(BOUNDARY_CONDITION,bc,0.);
       eq.setInput(INITIAL_FIELD,u);
-      eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(PRESSURE_FIELD,p);
 
 //    Loop on time steps
       TimeLoop {
          if (Verbosity)
             cout << "\nPerforming step: " << theStep << ", time: " << theTime << endl;
-         pr.get(BOUNDARY_CONDITION,bc,theTime);
-         eq.setInput(BOUNDARY_CONDITION,bc);
-         pr.get(BODY_FORCE,bf,theTime);
-         eq.setInput(BODY_FORCE,bf);
+	 //         pr.get(BOUNDARY_CONDITION,bc,theTime);
+         eq.setInput(BOUNDARY_CONDITION,pr.get(BOUNDARY_CONDITION,theTime));
+	 //         pr.get(BODY_FORCE,bf,theTime);
+         eq.setInput(BODY_FORCE,pr.get(BODY_FORCE,theTime));
          eq.runOneTimeStep();
          if (plot_flag>0 && theStep%plot_flag==0) {
             p.setTime(theTime); u.setTime(theTime);

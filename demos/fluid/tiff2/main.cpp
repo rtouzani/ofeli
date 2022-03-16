@@ -69,10 +69,10 @@ int main(int argc, char *argv[])
 
 //    Declare problem data (boundary conditions, body forces)
       Vect<double> u(ms), bc(ms), p(ms,NODE_DOF,1);
-      cout << "**** "<<p.getNbDOF()<<endl;
       Prescription pr(ms,data.getDataFile());
       pr.get(BOUNDARY_CONDITION,bc);
       u.setName("Velocity");
+      p.setName("Pressure");
 
       IOField v_file(data.getMeshFile(),data.getString("v_file"),ms,IOField::OUT);
       IOField p_file(data.getMeshFile(),data.getString("p_file"),ms,IOField::OUT);
@@ -94,6 +94,8 @@ int main(int argc, char *argv[])
          eq.runOneTimeStep();
 
 //       Store solution
+         u.setTime(theTime);
+         p.setTime(theTime);
          if (save_flag) {
             v_file.put(u);
             p_file.put(p);

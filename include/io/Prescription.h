@@ -114,6 +114,26 @@ class Prescription
             real_t        time=0,
             size_t        dof=0);
 
+/** Read data in the given file and returns as a Vect instance for a chosen DOF.
+ *  The input value type determines the type of data to read.
+ *  @param [in] type Type of data to seek. To choose among the enumerated values:
+ *  <ul>
+ *    <li><tt>BOUNDARY_CONDITION</tt>: Read values for (Dirichlet) boundary conditions
+ *    <li><tt>BOUNDARY_FORCE</tt>: Read values for boundary force (Neumann boundary condition).\n
+ *       The values <tt>TRACTION</tt> and <tt>FLUX</tt> have the same effect.
+ *    <li><tt>BODY_FORCE</tt>: Read values for body (or volume) forces.\n
+ *       The value <tt>SOURCE</tt> has the same effect.
+ *    <li><tt>POINT_FORCE</tt>: Read values for pointwise forces
+ *    <li><tt>CONTACT_DISTANCE</tt>: Read values for contact distance (for contact mechanics)
+ *    <li><tt>INITIAL_FIELD</tt>: Read values for initial solution
+ *    <li><tt>SOLUTION</tt>: Read values for a solution vector
+ *  @param [in] time Value of time for which data is read [Default: <tt>0</tt>].
+ *  @param [in] dof DOF to store (Default is <tt>0</tt>: All DOFs are chosen).
+ */
+    Vect<real_t> &get(EqDataType type,
+                      real_t     time=0,
+                      size_t     dof=0);
+
  private:
 
    std::ifstream *_if;

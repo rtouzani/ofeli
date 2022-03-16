@@ -54,14 +54,10 @@ Laplace2DT3::Laplace2DT3(Mesh& ms)
 {
    _equation_name = "Laplace";
    _finite_element = "2-D, 3-Node Triangles (P1)";
-   setMatrixType(SPARSE);
-   setSolver(CG_SOLVER,DILU_PREC);
+   setMatrixType(SKYLINE|SYMMETRIC);
+   setSolver(DIRECT_SOLVER);
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 2D using P1 finite element triangle." << endl;
-   if (Verbosity>1) {
-      cout << "Matrix is stored in sparse format." << endl;
-      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
-   }
 }
 
 
@@ -69,16 +65,12 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
                          Vect<real_t>& u)
             : Equation<3,3,2,2>(ms,u)
 {
-   setMatrixType(SPARSE|SYMMETRIC);
-   setSolver(CG_SOLVER,DILU_PREC);
+   setMatrixType(SKYLINE|SYMMETRIC);
+   setSolver(DIRECT_SOLVER);
    _equation_name = "Laplace";
    _finite_element = "2-D, 3-Node Triangles (P1)";
    if (Verbosity>0)
       cout << "Solving the Laplace equation in 2D using P1 finite element triangle." << endl;
-   if (Verbosity>1) {
-      cout << "Matrix is stored in sparse format." << endl;
-      cout << "Linear system is solved by Conjugate Gradient with DILU preconditioner." << endl;
-   }
 }
 
 
@@ -154,8 +146,15 @@ void Laplace2DT3::BodyRHS(const Vect<real_t>& f)
 void Laplace2DT3::BoundaryRHS(const Vect<real_t>& h)
 {
    if (_theSide->getCode(1)>0) {
-      sRHS(1) += 0.5*_el_geo.length*h((*_theSide)(1)->n());
-      sRHS(2) += 0.5*_el_geo.length*h((*_theSide)(2)->n());
+      real_t z = 0.5*_el_geo.length;
+      if (h.getDOFType()==NODE_DOF) {
+         sRHS(1) += z*h((*_theSide)(1)->n());
+         sRHS(2) += z*h((*_theSide)(2)->n());
+      }
+      else if (h.getDOFType()==SIDE_DOF) {
+         sRHS(1) += z*h(_theSide->n());
+         sRHS(2) += z*h(_theSide->n());
+      }
    }
 }
 

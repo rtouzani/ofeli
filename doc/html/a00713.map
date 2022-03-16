@@ -1,5 +1,0 @@
-<map id="LCL1D" name="LCL1D">
-<area shape="rect" id="node1" title="Class to solve the linear conservation law (Hyperbolic equation) in 1&#45;D by a MUSCL Finite Volume sche..." alt="" coords="11,155,74,181"/>
-<area shape="rect" id="node2" href="$a00734.html" title="Class for 1&#45;D hyperbolic solvers with Muscl scheme." alt="" coords="5,80,80,107"/>
-<area shape="rect" id="node3" href="$a00726.html" title="Parent class for hyperbolic solvers with Muscl scheme." alt="" coords="14,5,71,32"/>
-</map>

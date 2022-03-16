@@ -47,8 +47,8 @@ if (DOXYGEN_FOUND)
                footer.html
                header.html
                index.html
+               installation.html
                news.html
-               overview.html
                presentations.html
                doxygen.css
                head.css
