@@ -67,7 +67,7 @@ Vect<T_>::Vect() :
 #if !defined (USE_EIGEN)
           vector<T_>(),
 #endif
-          _dof_type(NODE_DOF), _size(0), _nx(0), _ny(1), _nz(1), _nt(1), _nb_dof(1),
+          _dof_type(NODE_DOF), _size(0), _nx(0), _ny(1), _nz(1), _nt(1), _nb_dof(1), _nc(1),
           _dg_degree(-1), _grid(true), _with_mesh(false), _theMesh(nullptr),
           _name("#"), _time(0)
 {
@@ -81,7 +81,7 @@ Vect<T_>:: Vect(size_t n) :
 #if !defined (USE_EIGEN)
            vector<T_>(n),
 #endif
-           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nt(1), _nb_dof(1), _dg_degree(-1),
+           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nt(1), _nb_dof(1), _nc(1), _dg_degree(-1),
            _grid(true), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -102,7 +102,7 @@ Vect<T_>::Vect(size_t nx,
 #if !defined (USE_EIGEN)
           vector<T_>(nx*ny),
 #endif
-          _dof_type(NODE_DOF), _size(nx*ny), _nx(nx), _ny(ny), _nz(1), _nt(1), _nb_dof(1), _dg_degree(-1),
+          _dof_type(NODE_DOF), _size(nx*ny), _nx(nx), _ny(ny), _nz(1), _nt(1), _nb_dof(1), _nc(1), _dg_degree(-1),
           _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -124,7 +124,7 @@ Vect<T_>::Vect(size_t nx,
           vector<T_>(nx*ny*nz),
 #endif
           _dof_type(NODE_DOF), _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz), _nt(1),
-          _nb_dof(1), _dg_degree(-1),
+          _nb_dof(1), _nc(1), _dg_degree(-1),
           _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
@@ -146,8 +146,8 @@ Vect<T_>::Vect(size_t n,
            vector<T_>(n),
 #endif
            _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nt(1),
-           _nb_dof(1), _dg_degree(-1),
-           _grid(false), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
+           _nb_dof(1), _nc(1), _dg_degree(-1), _grid(false), _with_mesh(false), _theMesh(nullptr),
+           _name("#"), _time(0)
 {
 #if defined (USE_EIGEN)
    _v.conservativeResize(_size);
@@ -208,8 +208,8 @@ Vect<T_>::Vect(const Element*  el,
 #if !defined (USE_EIGEN)
           vector<T_>(),
 #endif
-          _nx(el->getNbNodes()), _ny(v._ny), _nz(1),
-          _nb(el->getNbNodes()), _nb_dof(v._nb_dof), _dg_degree(-1),
+          _nx(el->getNbNodes()), _ny(v._ny), _nz(1), _nt(1),
+          _nb(el->getNbNodes()), _nb_dof(v._nb_dof), _nc(2), _dg_degree(-1),
           _grid(false), _with_mesh(false), _name(v._name), _time(v._time)
 {
    setSize(_nx,_ny);
@@ -229,8 +229,8 @@ Vect<T_>::Vect(const Side*     sd,
 #if !defined (USE_EIGEN)
            vector<T_>(),
 #endif
-           _nx(sd->getNbNodes()), _ny(v._nb_dof), _nz(1), _nt(1), 
-           _nb(sd->getNbNodes()), _nb_dof(v._nb_dof), _dg_degree(-1),
+           _nx(sd->getNbNodes()), _ny(v._nb_dof), _nz(1), _nt(1),
+           _nb(sd->getNbNodes()), _nb_dof(v._nb_dof), _nc(2), _dg_degree(-1),
            _grid(false), _with_mesh(false), _name(v._name), _time(v._time)
 {
    setSize(_nx,_ny);
@@ -252,8 +252,8 @@ Vect<T_>::Vect(const Vect<T_>& v,
 #if !defined (USE_EIGEN)
            vector<T_>(bc.size()),
 #endif
-           _dof_type(v._dof_type), _size(v._nb*v._nb), _nx(v._nb), _ny(v._nb_dof), _nz(1), _nt(1),
-           _nb(v._nb), _nb_dof(v._nb_dof),
+           _dof_type(v._dof_type), _size(v._nb*v._nb), _nx(v._nb), _ny(v._nb_dof), 
+           _nz(1), _nt(1), _nb(v._nb), _nb_dof(v._nb_dof), _nc(2), 
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
@@ -279,7 +279,7 @@ Vect<T_>::Vect(const Vect<T_>& v,
                size_t          nb_dof,
                size_t          first_dof)
          : _dof_type(v._dof_type), _size(v._size), _nx(v._nx), _ny(v._ny), _nz(v._nz),
-           _nt(1), _nb(v._nb), _nb_dof(v._nb_dof),
+           _nt(1), _nb(v._nb), _nb_dof(v._nb_dof), _nc(2),
            _dg_degree(v._dg_degree), _grid(v._grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
@@ -300,6 +300,7 @@ Vect<T_>::Vect(const Vect<T_>& v)
            _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
    setSize(v._nx,v._ny,v._nz,v._nt);
+   _nc = v._nc;
    for (size_t i=1; i<=_size; i++)
       set(i,v[i-1]);
    for (size_t i=0; i<10; ++i)
@@ -310,29 +311,8 @@ Vect<T_>::Vect(const Vect<T_>& v)
 template<class T_>
 Vect<T_>::Vect(const Vect<T_>& v,
                size_t          n)
-         : _nb_dof(v._nb_dof), _grid(v._grid), _with_mesh(v._with_mesh),
-           _theMesh(v._theMesh), _name(v._name), _time(v._time)
 {
-   if (n==1) {
-      setSize(v._nx,1,1);
-      for (size_t i=1; i<=_nx; i++)
-         set(i,v(i,1,1));
-   }
-   else if (n==2) {
-      setSize(1,v._ny,1);
-      for (size_t j=1; j<=_ny; j++)
-         set(j,v(1,j,1));
-   }
-   else if (n==3) {
-      setSize(1,1,v._nz);
-      for (size_t k=1; k<=_nz; k++)
-         set(k,v(1,1,k));
-   }
-   else if (n==4) {
-      setSize(1,1,1,v._nt);
-      for (size_t k=1; k<=_nz; k++)
-         set(k,v(1,1,k));
-   }
+   select(v,n);
    for (size_t i=0; i<10; ++i)
       _with_regex[i] = false;
 }
@@ -397,6 +377,75 @@ Vect<T_>::Vect(const VectorX& v)
 
 template<class T_>
 Vect<T_>::~Vect() { }
+
+
+template<class T_>
+void Vect<T_>::select(const Vect<T_>& v,
+                      size_t          n)
+{
+   _nb_dof = v._nb_dof;
+   _grid = v._grid;
+   _with_mesh = v._with_mesh;
+   _theMesh = v._theMesh;
+   _name = v._name;
+    _time = v._time;
+   if (n==1) {
+      setSize(v._nx,1,1);
+      for (size_t i=1; i<=_nx; i++)
+         set(i,v(i,1,1));
+   }
+   else if (n==2) {
+      setSize(1,v._ny,1);
+      for (size_t j=1; j<=_ny; j++)
+         set(j,v(1,j,1));
+   }
+   else if (n==3) {
+      setSize(1,1,v._nz);
+      for (size_t k=1; k<=_nz; k++)
+         set(k,v(1,1,k));
+   }
+   else if (n==4) {
+      setSize(1,1,1,v._nt);
+      for (size_t k=1; k<=_nz; k++)
+         set(k,v(1,1,k));
+   }
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
+}
+
+
+template<class T_>
+Vect<T_> Vect<T_>::select(size_t n)
+{
+   Vect<T_> v(_size);
+   _nb_dof = v._nb_dof;
+   _grid = v._grid;
+   _with_mesh = v._with_mesh;
+   _theMesh = v._theMesh;
+   _name = v._name;
+    _time = v._time;
+   if (n==1) {
+      setSize(v._nx,1,1);
+      for (size_t i=1; i<=_nx; i++)
+         set(i,v(i,1,1));
+   }
+   else if (n==2) {
+      setSize(1,v._ny,1);
+      for (size_t j=1; j<=_ny; j++)
+         set(j,v(1,j,1));
+   }
+   else if (n==3) {
+      setSize(1,1,v._nz);
+      for (size_t k=1; k<=_nz; k++)
+         set(k,v(1,1,k));
+   }
+   else if (n==4) {
+      setSize(1,1,1,v._nt);
+      for (size_t k=1; k<=_nz; k++)
+         set(k,v(1,1,k));
+   }
+   return v;
+}
 
 
 template<class T_>

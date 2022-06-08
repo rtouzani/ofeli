@@ -945,11 +945,11 @@ void ODESolver::solveRK3_TVD()
       throw OFELIException("In ODESolver::solveRK3_TVD(): Runge-Kutta scheme is valid "
                            "for first order equations only.");
    if (_type==SCALAR_LINEAR) {
-      real_t t = _time - _time_step;
+//      real_t t = _time - _time_step;
       real_t y1 = _y0 + _time_step*(_d1 - _c0*_y0);
-      t += _time_step;
+//      t += _time_step;
       real_t y2 = 0.75*_y0 + 0.25*y1 + 0.25*_time_step*(_d01 - _c0*y1);
-      t -= 0.5*_time_step;
+//      t -= 0.5*_time_step;
       _y2 = _y1 = OFELI_THIRD*(_y0 + 2*y2 + 2*_time_step*(_d2 - _c0*y2));
       _dydt = 0;
       _y0 = _y1;

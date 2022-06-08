@@ -119,6 +119,8 @@ namespace OFELI {
 #define side_label (the_side->n())
 #define edge_label (the_edge->n())
 
+#define SQR(x) ((x)*(x))
+
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \def ElementLoop(m)

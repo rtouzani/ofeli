@@ -43,6 +43,7 @@ using std::vector;
 #include "io/xmlsp/xmlsp.h"
 #include "io/Prescription.h"
 #include "linear_algebra/Vect.h"
+#include "linear_algebra/DMatrix.h"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -67,11 +68,12 @@ class XMLParser : public Parser
     DOMAIN_   =  0,
     MESH      =  1,
     FIELD     =  2,
-    PROJECT   =  3,
-    INPUT     =  4,
-    MATERIAL  =  5,
-    PRESCRIBE =  6,
-    FUNCTION  =  7
+    MATRIX    =  3,
+    PROJECT   =  4,
+    INPUT     =  5,
+    MATERIAL  =  6,
+    PRESCRIBE =  7,
+    FUNCTION  =  8
  };
 
  enum {
@@ -136,6 +138,10 @@ class XMLParser : public Parser
 
    int get(Tabulation& t);
 
+   int get(DMatrix<real_t>& A);
+
+   int get(Matrix<real_t>* A);
+
    int getArray(Vect<real_t>& A);
 
    int getMaterial();
@@ -148,14 +154,14 @@ class XMLParser : public Parser
 
  protected:
    std::ifstream _is;
-   bool _is_opened, _is_closed, _set_mesh, _set_field, _set_file, _set_prescription;
+   bool _is_opened, _is_closed, _set_mesh, _set_field, _set_file, _set_prescription, _set_matrix;
    bool _set_domain, _prescription_opened, _compact, _value;
    real_t _x, _y, _z, _time, _sought_time, _scan_steps, _val;
    int _access, _type, _cm, _format, _var, _code;
    EqDataType _prescription_type;
    string _file, _mesh_file, _el_shape, _sd_shape, _name, _sought_name, _tag_name, _xml, _mat;
    size_t _dof, _label, _nb_dof, _dim, _nb_nodes, _nb_elements, _nb_sides, _nb_edges, _tab_size;
-   size_t _scan, _nb_el_nodes, _nb_sd_nodes, _nb_mat, _all_steps, _nb_funct;
+   size_t _scan, _nb_el_nodes, _nb_sd_nodes, _nb_mat, _all_steps, _nb_funct , _nb_rows, _nb_cols;
    size_t _ik1, _ik2, _dk1, _dk2, _ck, _mk, _pk, _dk, _nb_var, _nx, _ny, _nz;
    DOFSupport _dof_support;
    mutable Mesh *_theMesh;
@@ -164,6 +170,7 @@ class XMLParser : public Parser
    IPF *_ipf;
    Domain *_theDomain;
    Tabulation *_theTabulation;
+   Matrix<real_t> *_theMatrix;
    PrescriptionPar _par;
    vector<PrescriptionPar> *_vp;
    vector<real_t> *_ft;
@@ -198,6 +205,8 @@ class XMLParser : public Parser
    void read_prescribe_data(const vector<string> &tokens, vector<string>::iterator &it);
    void read_tab(const StringMap::iterator &i);
    void read_tab_data(const vector<string> &tokens, std::vector<string>::iterator &it);
+   void read_matrix(const StringMap::iterator &i);
+   void read_matrix_data(const vector<string> &tokens, std::vector<string>::iterator &it);
 
  private:
    int _rtype;

@@ -33,15 +33,20 @@ target_link_libraries (eigen_demo1 ofeli)
 add_executable (eigen_demo2 eigen_demo2.cpp)
 target_link_libraries (eigen_demo2 ofeli)
 
-file (COPY eigen_demo2.dat test.m DESTINATION .)
+add_executable (eigen_demo3 eigen_demo3.cpp)
+target_link_libraries (eigen_demo3 ofeli)
+
+file (COPY eigen_demo3.dat test.m DESTINATION .)
 
 add_test (eigen1 eigen_demo1)
-add_test (eigen2 eigen_demo2 eigen_demo2.dat)
+add_test (eigen2 eigen_demo2)
+add_test (eigen3 eigen_demo3 eigen_demo3.dat)
 
 install (FILES README.md
                eigen_demo1.cpp
                eigen_demo2.cpp
-               eigen_demo2.dat
+               eigen_demo3.cpp
+               eigen_demo3.dat
                test.m
          DESTINATION ${INSTALL_DEMODIR}/solvers/${PROJECT_NAME}
         )

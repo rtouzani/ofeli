@@ -119,7 +119,7 @@ class Matrix
 
 /// \brief Default constructor
 /// \details Initializes a zero-size matrix.
-  Matrix();
+    Matrix();
 
 /// \brief Copy Constructor
     Matrix(const Matrix<T_> &m);
@@ -190,6 +190,15 @@ class Matrix
 
     void init_set_mesh(Mesh&  mesh,
                        size_t dof=0);
+
+    virtual void setSize(size_t nr,
+                         size_t nc) { }
+
+    virtual void setSize(size_t nr) { }
+
+    virtual void setSize(size_t size,
+                         int    ld,
+                         int    ud) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

@@ -114,7 +114,7 @@ void saveMesh(const string&      file,
  *  <a href="http://www.geuz.org/gmsh/">Gmsh</a> format.
  *
  *  \note \b Gmsh is a free mesh generator that can be downloaded from the site: http://www.geuz.org/gmsh/
- *  @param [out] file Output file in \b Gmsh format.
+ *  @param [in] file Output file in \b Gmsh format.
  *  @param [in] mesh Mesh instance to save.
  *
  * \author Rachid Touzani

@@ -1712,7 +1712,7 @@ void Domain::removeUnusedNodes()
    _theMesh = new Mesh;
    _theMesh->setDim(ms.getDim());
    size_t n=0;
-   for (size_t i=1; i<=ms.getNbNodes(); i++) {
+   for (size_t i=1; i<=ms.getNbNodes(); ++i) {
       size_t in=ms[i]->n()-1;
       nd[in] = nullptr;
       if (used[in]>0) {

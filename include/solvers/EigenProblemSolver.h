@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                      Definition of class 'EigenProblemSolver'
+                   Definition of class 'EigenProblemSolver'
 
   ==============================================================================*/
 
@@ -85,6 +85,11 @@ class Equa;
  * \copyright GNU Lesser Public License
  */
 
+enum EigenMethod {
+   SUBSPACE = 1, /*!< Subspace iteration method (for symmetric matrices)  */
+   QR       = 2, /*!< QR reduction method (Martin, Parlett, Peters, Reinsch and Wilkinson.)                         */
+};
+
 class EigenProblemSolver
 {
 
@@ -95,9 +100,21 @@ class EigenProblemSolver
 /// \brief Default constructor
     EigenProblemSolver();
 
+/** \brief Constructor for a dense unsymmetric matrix that computes the eigenvalues.
+ *  \details This constructor solves in place the eigenvalues problem and stores
+ *  them in a vector.
+ *  The eigenvectors can be obtained by calling the member function getEigenVector.
+ *  Eigenvalue extraction uses the reduction to Hessenberg form of the matrix.
+ *  @param [in] A Matrix for which eigenmodes are sought.
+ *  @param [in] eigv Switch to compute or not eigenvectors [Default: <tt>false</tt>]
+ *  @remark All eigenvalues are extracted.
+ */
+    EigenProblemSolver(DMatrix<real_t>& A,
+                       bool             eigv=false);
+
 /** \brief Constructor for a dense symmetric matrix that computes the eigenvalues.
  *  \details This constructor solves in place the eigenvalues problem and stores
- *  them in a vector (No need to use the function runSubSpace).
+ *  them in a vector.
  *  The eigenvectors can be obtained by calling the member function getEigenVector.
  *  @param [in] K Matrix for which eigenmodes are sought.
  *  @param [in] n Number of eigenvalues to extract. By default all eigenvalues are 
@@ -130,12 +147,12 @@ class EigenProblemSolver
                        Vect<real_t>&      M,
                        int                n=0);
 
-/** \brief Constructor for a dense matrix that compute the eigenvalues
+/** \brief Constructor for a dense symmetric matrix that compute the eigenvalues
  *  \details This constructor solves in place the eigenvalues problem and stores
- *  them in a vector (No need to use the function runSubSpace).
+ *  them in a vector. Extraction of eigenvalues and eigenvectors uses the subspace iteration method.
  *  The eigenvectors can be obtained by calling the member function getEigenVector.
  *  @param [in] A Matrix for which eigenmodes are sought.
- *  @param [in] ev Vector containing all computed eigenvalues sorted increasingly.
+ *  @param [in] ev Vector containing all computed (real) eigenvalues.
  *  @param [in] n Number of eigenvalues to extract. By default all eigenvalues are 
  *  computed.
  *  @remark The vector ev does not need to be sized before.
@@ -143,6 +160,23 @@ class EigenProblemSolver
     EigenProblemSolver(DSMatrix<real_t>& A,
                        Vect<real_t>&     ev,
                        int               n=0);
+
+/** \brief Constructor for a dense matrix that compute the eigenvalues
+ *  \details This constructor solves in place the eigenvalues problem and stores
+ *  them separately in real and imaginary part vectors.
+ *  Extraction of eigenvalues and eigenvectors uses the QR method after transforming the matrix
+ *  in Hessenberg form.
+ *  The eigenvectors can be obtained by calling the member function getEigenVector.
+ *  @param [in] A Matrix for which eigenmodes are sought.
+ *  @param [in] evr Vector containing real parts of eigenvalues.
+ *  @param [in] evr Vector containing imaginary parts of eigenvalues.
+ *  @param [in] eigv Switch to say if eigenvectors are to be computed [Default: <tt>false</tt>].
+ *  @remark The vectors \c evr and \c evi do not need to be sized before.
+ */
+    EigenProblemSolver(DMatrix<real_t>& A,
+                       Vect<real_t>&    evr,
+                       Vect<real_t>&    evi,
+                       bool             eigv=false);
 
 /** \brief Consrtuctor using partial differential equation
  *  \details The used equation class must have been constructed using the Mesh instance
@@ -156,6 +190,19 @@ class EigenProblemSolver
     ~EigenProblemSolver();
 
 //-------------------------------   MODIFIERS  ---------------------------------
+
+/**
+ * @brief Set numerical method for eigenvalue computation
+ * 
+ * @param [in] m Numerical method to compute eigenvalues:
+ *   <ul>
+ *     <li> SUBSPACE: Subspace iteration method (Valid for symmetric matrices only)
+ *     <li> QR:       QR method (Reduction to Hessenberg form)
+ *   </ul> 
+ * @param [in] sym Boolean variable to say if matrix is symmetric or not
+ */
+   void set(EigenMethod m,
+            bool        sym);
 
 /** \brief Set matrix instances (Symmetric matrices).
  *  \details This function is to be used when the default constructor is applied.
@@ -178,9 +225,16 @@ class EigenProblemSolver
 /** \brief Set matrix instance (Symmetric matrix).
  *  \details This function is to be used when the default constructor is applied.
  *  Case of a standard (not generalized) eigen problem is to be solved
- *  @param [in] K Stiffness matrix instance
+ *  @param [in] K Matrix instance
  */
     void setMatrix(DSMatrix<real_t>& K);
+
+/** \brief Set matrix instance
+ *  \details This function is to be used when the default constructor is applied.
+ *  Case of a standard (not generalized) eigen problem is to be solved
+ *  @param [in] K Matrix instance
+ */
+    void setMatrix(DMatrix<real_t>& K);
 
 /** \brief Define partial differential equation to solve
  *  \details The used equation class must have been constructed using the Mesh instance
@@ -192,8 +246,10 @@ class EigenProblemSolver
 
 /** \brief Run the eigenproblem solver
  *  @param [in] nb Number of eigenvalues to be computed. By default, all eigenvalues are computed.
+ *  @param [in] opt Toggle to compute or not corresponding eigenvectors. By default, no eigenvectors extracted.
  */
-    int run(int nb=0);
+    int run(int  nb=0,
+            bool opt=false);
 
 /** \brief Assemble element arrays into global matrices
  *  \details This member function is to be called from finite element equation
@@ -246,7 +302,7 @@ class EigenProblemSolver
     void setMaxIter(int max_it) { _max_it = max_it; }
 
 /// \brief set tolerance value
-///  @param [in] eps Convergence tolerance for eigenvalues [Default: 1.e-8]
+/// @param [in] eps Convergence tolerance for eigenvalues [Default: 1.e-8]
     void setTolerance(real_t eps) { _epsj = _epsv = eps; }
 
 //-----------------------------   INSPECTORS  ----------------------------------
@@ -263,15 +319,29 @@ class EigenProblemSolver
 /// \brief Return actual number of performed iterations
     int getNbIter() const { return int(_max_it); }
 
-/// \brief Return the n-th eigenvalue
-    real_t getEigenValue(int n) const;
+/** \brief Return the n-th eigenvalue
+ *  @param [in] n Index of eigenvalue (must be > 0)
+ *  @param [in] i i=1: Real part, i=2: Imaginary part. [Default: 1]
+ *  @return Eigenvalue
+ */
+    real_t getEigenValue(int n,
+			 int i=1) const;
 
 /** \brief Return the n-th eigenvector
  *  @param [in] n Label of eigenvector (They are stored in ascending order of eigenvalues)
- *  @param [in,out] v Vect instance where the eigenvector is stored.
+ *  @param [out] v Vect instance where the eigenvector is stored.
  */
     void getEigenVector(int           n,
                         Vect<real_t>& v) const;
+
+/** \brief Return the n-th eigenvector in the case of complex eigenvectors
+ *  @param [in] n Label of eigenvector (They are stored in the order of eigenvalues)
+ *  @param [out] vr Vect instance where the real part of the eigenvector is stored.
+ *  @param [out] vi Vect instance where the imaginary part of the eigenvector is stored.
+ */
+    void getEigenVector(int           n,
+                        Vect<real_t>& vr,
+                        Vect<real_t>& vi) const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream & operator<<(ostream&                  s,
@@ -283,16 +353,60 @@ class EigenProblemSolver
    Equa             *_theEqua;
    Mesh             *_theMesh;
    Matrix<real_t>   *_K, *_M;
-   Vect<real_t>     *_lM, _rc, _eigv;
-   DMatrix<real_t>  _ev;
+   Vect<real_t>     *_lM, _rc, _evr, _evi, _evec;
    DSMatrix<real_t> _pK, _pM;
+   DMatrix<real_t>  _ev;
    bool             _K_alloc, _M_alloc, _lM_alloc, _diag;
    size_t           _max_it, _dim, _nb_eq, _nb_eigv;
-   int              _opt;
+   int              _opt, _low, _high;
    real_t           _epsv, _epsj;
+   EigenMethod      _method;
+   bool             _sym, _eigv;
 
    int init();
    void Mxv(const Vect<real_t>& b, Vect<real_t>& c);
+
+/*  Balance the matrix so that the rows with zero entries
+ *  off the diagonal are isolated and the remaining columns and rows
+ *  are resized to have one norm close to 1.                          
+ */
+   void balance(Vect<real_t>& scal);
+ 
+// Reverse the balancing of balance for the eigenvactors
+   void balance_back(const Vect<real_t>& scal);
+
+// Transform the matrix to upper Hessenberg form
+   void elmhes(Vect<int>& perm);
+
+// Copy the Hessenberg matrix stored in mat to h
+   void elmtrans(const Vect<int>& perm);
+
+/* Reduce matrix to upper Hessenberg form by Householder transformations. 
+ * All details of the transformations are stored in the remaining triangle 
+ * of the Hessenberg matrix and in vector d.
+ */
+   void orthes(Vect<real_t>& d);
+
+/* Compute the matrix v of accumulated transformations from the
+ * information left by the Householder reduction of matrix mat to upper
+ * Hessenberg form below the Hessenberg matrix in A and in the
+ * vector d. The contents of the latter are destroyed.
+*/
+   void orttrans(Vect<real_t>& d);
+
+// Compute the eigenvectors for the eigenvalues found in hqr2
+   int hqrvec();
+
+// Compute the eigenvalues and (if opt==true) the eigenvectors of an
+// upper Hessenberg matrix
+   int hqr2(Vect<int>& cnt);
+
+// norm_1 normalizes the one norm of the column vectors in v.
+// (special attention to complex vectors in v  is given)
+   void norm_2();
+
+   int eigen(int ortho, int ev_norm);
+
 };
 
 /// \fn ostream & operator<<(ostream& s, const EigenProblemSolver &es)

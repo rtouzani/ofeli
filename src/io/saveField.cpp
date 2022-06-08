@@ -1344,7 +1344,7 @@ void saveGmsh(Mesh&  mesh,
                   pf << endl;
                }
             }
-	    pf << "};" << endl;
+            pf << "};" << endl;
          }
          pf << "};" << endl;
          break;

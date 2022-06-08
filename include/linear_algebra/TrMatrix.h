@@ -136,7 +136,6 @@ class TrMatrix : public Matrix<T_>
 /// @param [in] size Number of rows and columns.
     void setSize(size_t size);
 
-
 /// \brief Multiply matrix by vector <tt>x</tt> and add result to <tt>y</tt>.
     void MultAdd(const Vect<T_>& x, Vect<T_>& y) const;
 
