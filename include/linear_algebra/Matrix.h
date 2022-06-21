@@ -182,6 +182,8 @@ class Matrix
     void setDiagonal(Mesh& mesh);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void setName(string name);
+
     virtual void setGraph(const Vect<RC>& I,
                           int             opt=1) = 0;
 
@@ -575,6 +577,7 @@ class Matrix
    real_t              _penal;
    int                 _set_nodes, _set_elements, _set_sides, _is_diagonal;
    Mesh                *_theMesh;
+   string              _name;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

@@ -1007,6 +1007,8 @@ void XMLParser::read_matrix(const StringMap::iterator& i)
          _nb_rows = atoi((i->second).c_str());
       if (i->first=="nb_cols" || i->first=="nb_columns")
          _nb_cols = atoi((i->second).c_str());
+      if (i->first=="name")
+         _name = i->second;
    }
 }
 
@@ -1330,6 +1332,7 @@ void XMLParser::read_field(const StringMap::iterator& i)
 
 bool XMLParser::on_cdata(string cdata)
 {
+   _name = "";
    vector<string> tokens;
    {
       string buf;
@@ -1645,6 +1648,8 @@ void XMLParser::read_tab_data(const vector<string>&     tokens,
 void XMLParser::read_matrix_data(const vector<string>&     tokens,
                                  vector<string>::iterator& it)
 {
+   if (_name!="")
+      _theMatrix->setName(_name);
    _theMatrix->setSize(_nb_rows,_nb_cols);
    size_t i=1, j=0;
    while (it!=tokens.end()) {

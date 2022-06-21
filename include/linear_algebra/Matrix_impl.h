@@ -46,14 +46,14 @@ namespace OFELI {
 template<class T_>
 Matrix<T_>::Matrix()
            : _nb_rows(0), _nb_cols(0), _size(0), _length(0), _zero(T_(0)),
-             _penal(1.e20), _is_diagonal(false)
+             _penal(1.e20), _is_diagonal(false), _name("M")
 { }
 
 
 template<class T_>
 Matrix<T_>::Matrix(const Matrix<T_> &m)
            : _nb_rows(m._nb_rows), _nb_cols(m._nb_cols), _size(m._size), _length(m._length),
-             _zero(T_(0)), _penal(m._penal), _is_diagonal(m._is_diagonal)
+             _zero(T_(0)), _penal(m._penal), _is_diagonal(m._is_diagonal), _name(m._name)
 {
    _ch.resize(_size);
    _diag.setSize(_size);
@@ -77,6 +77,10 @@ size_t Matrix<T_>::getNbRows() const { return _nb_rows; }
 
 template<class T_>
 size_t Matrix<T_>::getNbColumns() const { return _nb_cols; }
+
+
+template<class T_>
+void Matrix<T_>::setName(string name) { _name = name; }
 
 
 template<class T_>

@@ -35,6 +35,7 @@
 
 #include "OFELI_Config.h"
 #include "mesh/Grid.h"
+#include "linear_algebra/Matrix.h"
 
 #ifdef USE_PETSC
 #include "linear_algebra/petsc/PETScVect.h"
@@ -328,6 +329,12 @@ template<class T_> class Vect;
                   string input_file,
                   string output_file,
                   int    f=1);
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void saveMatrix(const Matrix<real_t>* A,
+                    string                file);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

@@ -204,6 +204,22 @@ class EigenProblemSolver
    void set(EigenMethod m,
             bool        sym);
 
+/** \brief Set pointer to matrix instance.
+ *  \details This function is to be used when the default constructor is applied.
+ *  Case where the mass matrix is consistent.
+ *  @param [in] A Stiffness matrix pointer
+ */
+    void setMatrix(Matrix<real_t>* K);
+
+/** \brief Set pointers to matrix instances.
+ *  \details This function is to be used when the default constructor is applied.
+ *  Case where the mass matrix is consistent.
+ *  @param [in] K Stiffness matrix instance pointer
+ *  @param [in] M Mass matrix instance pointer
+ */
+    void setMatrix(Matrix<real_t>* K,
+                   Matrix<real_t>* M);
+
 /** \brief Set matrix instances (Symmetric matrices).
  *  \details This function is to be used when the default constructor is applied.
  *  Case where the mass matrix is consistent.
@@ -235,6 +251,17 @@ class EigenProblemSolver
  *  @param [in] K Matrix instance
  */
     void setMatrix(DMatrix<real_t>& K);
+
+/** \brief Set number of extracted eigenvalues
+ *  \details This function is useful for the subspace method only.
+ *  @param [in] n Number of eigenvalues to compute. Must be at most equal to the matrix size
+ */
+    void setNbEigv(int n);
+
+/** \brief Switch to compute (or not) eigenvectors as well
+ *  \details This function is useful for the QR method. BY default eigenvectors are not extracted.
+ */
+    void setEigenVectors();
 
 /** \brief Define partial differential equation to solve
  *  \details The used equation class must have been constructed using the Mesh instance

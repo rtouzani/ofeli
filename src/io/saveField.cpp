@@ -1447,4 +1447,25 @@ void getfields(string                   file,
    io.get(ms,u,name);
 }
 
+
+void saveMatrix(const Matrix<real_t>* A,
+                string                file)
+{
+   ofstream of(file.c_str(),ios::out);
+   of.setf(ios::right|ios::scientific);
+   of << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>" << endl;
+   of << "<OFELI_File>" << endl;
+   of << "<info>\n   <title></title>" << endl;
+   of << "   <date>" << __DATE__ << "</date>" << endl;
+   of << "   <author></author>\n</info>" << endl;
+   size_t nr = A->getNbRows(), nc=A->getNbColumns();
+   of << "<Matrix nb_rows=\"" << nr << "\" nb_cols=\"" << nc << "\">" << endl;
+   for (size_t i=1; i<=nr; ++i) {
+      for (size_t j=1; j<=nc; ++j)
+         of << "  " << (*A)(i,j);
+      of << endl;
+   }
+   of << "</Matrix>\n</OFELI_File>" << endl;
+}
+
 } /* namespace OFELI */

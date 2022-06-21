@@ -172,6 +172,18 @@ EigenProblemSolver::~EigenProblemSolver()
 }
 
 
+void EigenProblemSolver::setNbEigv(int n)
+{
+    _nb_eigv = n;
+}
+
+
+void EigenProblemSolver::setEigenVectors()
+{
+   _eigv = true;
+}
+
+
 void EigenProblemSolver::set(EigenMethod m,
                              bool        sym)
 {
@@ -179,6 +191,24 @@ void EigenProblemSolver::set(EigenMethod m,
    _sym = sym;
    if (m==SUBSPACE && sym==false)
       throw OFELIException("In EigenProblemSolver::set(..): This method is not valid for unsymmetric matrices");
+}
+
+
+void EigenProblemSolver::setMatrix(Matrix<real_t>* A)
+{
+   _K = A;
+   _nb_eq = _K->getNbRows();
+   _diag = false;
+}
+
+
+void EigenProblemSolver::setMatrix(Matrix<real_t>* K,
+                                   Matrix<real_t>* M)
+{
+   _K = K;
+   _M = M;
+   _nb_eq = _K->getNbRows();
+   _diag = false;
 }
 
 
