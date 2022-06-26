@@ -1,0 +1,73 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"util/cmesh/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 33,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 53,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"util/cmesh/cmesh"
+			],
+			"targetId" : "cmesh::@2b73dd4c52e2fc60a3f7",
+			"targetIndex" : 32,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/util/cmesh",
+			"paths" : 
+			[
+				"util/cmesh/README.md",
+				"util/cmesh/A.ele",
+				"util/cmesh/A.node",
+				"util/cmesh/beam.m",
+				"util/cmesh/cube.ele",
+				"util/cmesh/cube.node",
+				"util/cmesh/cube.vol",
+				"util/cmesh/disk.bamg",
+				"util/cmesh/disk.m",
+				"util/cmesh/gear.ele",
+				"util/cmesh/gear.node",
+				"util/cmesh/l.bamg",
+				"util/cmesh/torus.neu"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "util/cmesh",
+		"source" : "util/cmesh"
+	}
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>											
+<OFELI_File>											
+  <info>											
+    <title>Mesh for flow over a step</title>
+    <date>29/9/2017</date>
+    <author>R. Touzani</author>
+  </info>
+  <Project name="Step">	
+    <Domain dim="2">
+       <vertex>     0.0      1.0     11   0.05</vertex>
+       <vertex>     3.0      1.0     11   0.05</vertex>
+       <vertex>     3.0      0.0     11   0.05</vertex>
+       <vertex>    10.0      0.0     11   0.05</vertex>
+       <vertex>    10.0      3.0     11   0.05</vertex>
+       <vertex>     0.0      3.0     11   0.05</vertex>
+       <line>   1   2  11 </line>
+       <line>   2   3  11 </line>
+       <line>   3   4  11 </line>
+       <line>   4   5  01 </line>
+       <line>   5   6  11 </line>
+       <line>   6   1  21 </line>
+       <SubDomain>   2   1   0   </SubDomain>
+    </Domain>
+  </Project>											
+</OFELI_File>											

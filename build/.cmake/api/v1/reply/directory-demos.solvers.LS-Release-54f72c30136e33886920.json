@@ -1,0 +1,46 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/solvers/LS/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 41,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/solvers/LS",
+			"paths" : 
+			[
+				"demos/solvers/LS/README.md",
+				"demos/solvers/LS/ls_demo1.cpp",
+				"demos/solvers/LS/ls_demo2.cpp",
+				"demos/solvers/LS/mesh.m"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/solvers/LS",
+		"source" : "demos/solvers/LS"
+	}
+}

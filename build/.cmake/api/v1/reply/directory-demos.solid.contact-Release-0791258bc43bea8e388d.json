@@ -1,0 +1,47 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/solid/contact/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 42,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/solid/contact",
+			"paths" : 
+			[
+				"demos/solid/contact/README.md",
+				"demos/solid/contact/main.cpp",
+				"demos/solid/contact/beam.dat",
+				"demos/solid/contact/beam.m",
+				"demos/solid/contact/MyMaterial.md"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/solid/contact",
+		"source" : "demos/solid/contact"
+	}
+}

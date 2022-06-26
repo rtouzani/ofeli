@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date>September 22, 2008</date>
+   <author>S. Clain</author>
+</info>
+
+<Project name="rectangle">
+   <mesh_file>rectangle.m</mesh_file>
+   <max_time value="6"/>
+   <parameter label="vf" value="rectangle.v"/>
+   <plot_file>rectangle.t</plot_file>
+   <plot value="20" />
+   <parameter label="CFL" value="0.3" />
+   <parameter label="bc" value="1.0" />
+</Project>
+</OFELI_File>

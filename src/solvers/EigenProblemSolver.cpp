@@ -683,7 +683,7 @@ int EigenProblemSolver::checkSturm(int& nb_found,
 real_t EigenProblemSolver::getEigenValue(int n,
                                          int i) const
 {
-   if (n<=0 || n>_nb_eigv)
+   if (n<=0 || n>int(_nb_eigv))
       throw OFELIException("In EigenProblemSolver::getEigenValue(n,i): Illegal value of n");
    if (i!=1 && i!=2)
       throw OFELIException("In EigenProblemSolver::getEigenValue(n,i): Illegal value of i");
@@ -734,14 +734,14 @@ void EigenProblemSolver::getEigenVector(int           n,
    else {
       vr.setSize(_nb_eq);
       vi.setSize(_nb_eq);
-      for (int i=1; i<=_nb_eq; ++i)
+      for (size_t i=1; i<=_nb_eq; ++i)
          vr(i) = _evec(i,n);
       if (_evi(n)>0.0) {
-         for (int i=1; i<=_nb_eq; ++i)
+         for (size_t i=1; i<=_nb_eq; ++i)
             vi(i) = _evec(i,n+1);
       }
       else if (_evi(n)<0.0) {
-         for (int i=1; i<=_nb_eq; ++i)
+         for (size_t i=1; i<=_nb_eq; ++i)
             vi(i) = -_evec(i,n+1);
       }
    }
@@ -752,7 +752,7 @@ void EigenProblemSolver::balance(Vect<real_t>& scale)
 {
    const real_t b2 = 2.0;
    bool iter=false;
-   int k=_nb_eq-1, m=0;
+   int k=int(_nb_eq)-1, m=0;
    do {
       iter = false;
       for (int j=k; j>=0; j--) {
@@ -1275,20 +1275,20 @@ int EigenProblemSolver::hqr2(Vect<int>& cnt)
 
 void EigenProblemSolver::norm_2()
 {
-   for (int j=1; j<=_nb_eq; ++j) {
+   for (size_t j=1; j<=_nb_eq; ++j) {
       real_t xn = 0.;
       if (_evi(j)==0.0) {
-         for (int i=1; i<=_nb_eq; ++i)
+         for (size_t i=1; i<=_nb_eq; ++i)
             xn += SQR(_evec(i,j));
          xn = sqrt(xn);
          for (int i=1; i<=_nb_eq; ++i)
             _evec(i,j) /= xn;
       }
       else {
-         for (int i=1; i<=_nb_eq; ++i)
+         for (size_t i=1; i<=_nb_eq; ++i)
             xn += SQR(_evec(i,j)) + SQR(_evec(i,j+1));
          xn = sqrt(xn);
-         for (int i=1; i<=_nb_eq; ++i) {
+         for (size_t i=1; i<=_nb_eq; ++i) {
             _evec(i,j  ) /= xn;
             _evec(i,j+1) /= xn;
          }
@@ -1301,7 +1301,7 @@ void EigenProblemSolver::norm_2()
 int EigenProblemSolver::eigen(int ortho,
                               int ev_norm)
 {
-   if (_nb_eq<1)
+   if (_nb_eq==0)
       return 1;
 
    if (_nb_eq==1) {
@@ -1357,13 +1357,13 @@ ostream& operator<<(ostream&                  s,
    if (Verbosity>2) {
       Vect<real_t> vr(es._nb_eq), vi(es._nb_eq);
       s.setf(ios::scientific);
-      for (int i=1; i<=es._nb_eq; i++) {
+      for (size_t i=1; i<=es._nb_eq; i++) {
          s << "\nEigenvalue #" << i << ": " 
            << out_complex(es._evr(i),es._evi(i)) << endl;
          if (Verbosity>5 && es._eigv) {
             s << "Eigen vector:" << endl;
             es.getEigenVector(i,vr,vi);
-            for (int j=1; j<=es._nb_eq; j++)
+            for (size_t j=1; j<=es._nb_eq; j++)
                s << setw(8) << j << " " << setprecision(8) 
                  << setw(8) << out_complex(vr(j),vi(j)) << endl;
          }

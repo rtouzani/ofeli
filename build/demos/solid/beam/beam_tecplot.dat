@@ -1,0 +1,20 @@
+TITLE = " "
+VARIABLES = "X", "Y", "Z"
+ZONE N=9, E=8, F=FEPOINT, ET=LINESEG
+               nan                nan                nan 
+               nan                nan                inf 
+               nan                nan                inf 
+               nan                nan                inf 
+               nan                nan                inf 
+               nan                nan                inf 
+               nan                nan                inf 
+               nan                nan                inf 
+               nan                nan                inf 
+1  2  
+2  3  
+3  4  
+4  5  
+5  6  
+6  7  
+7  8  
+8  9  

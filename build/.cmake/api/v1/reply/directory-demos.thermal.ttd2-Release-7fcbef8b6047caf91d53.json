@@ -1,0 +1,50 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/thermal/ttd2/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/thermal/ttd2",
+			"paths" : 
+			[
+				"demos/thermal/ttd2/README.md",
+				"demos/thermal/ttd2/main.cpp",
+				"demos/thermal/ttd2/error.cpp",
+				"demos/thermal/ttd2/proj-5x10.m",
+				"demos/thermal/ttd2/proj-5x20.m",
+				"demos/thermal/ttd2/proj-5x40.m",
+				"demos/thermal/ttd2/proj-5x80.m",
+				"demos/thermal/ttd2/proj.dat"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/thermal/ttd2",
+		"source" : "demos/thermal/ttd2"
+	}
+}

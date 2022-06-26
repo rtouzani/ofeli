@@ -629,6 +629,13 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga0a00003814ee8095a2c39d1d5cba08fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c89e2f95eb1149cbab804231338c2d5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga8c89e2f95eb1149cbab804231338c2d5">EigenMethod</a> { <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga8c89e2f95eb1149cbab804231338c2d5a36232ea128af26ab5ad326e3734299e7">SUBSPACE</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga8c89e2f95eb1149cbab804231338c2d5a427d8933c3f220f92b96cd2fe4a08351">QR</a> = 2
+<br />
+ }</td></tr>
+<tr class="separator:ga8c89e2f95eb1149cbab804231338c2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6182f91e9b5b2e053c56e00a35de854"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#gac6182f91e9b5b2e053c56e00a35de854">IntegrationScheme</a> { <br />
 &#160;&#160;<a class="el" href="group__OFELI.html#ggac6182f91e9b5b2e053c56e00a35de854a7ef7eba8bae1abe4bccc081d83c21ec2">LEFT_RECTANGLE</a> = 0
 , <br />
@@ -1361,6 +1368,10 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Sgn</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a)</td></tr>
 <tr class="memdesc:ga9cea09d745dfd5da9d06a67fdea3bafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return sign of <code>a</code>: <code>-1</code> or <code>1</code>. <br /></td></tr>
 <tr class="separator:ga9cea09d745dfd5da9d06a67fdea3bafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a8c09e3b27a4a08a60b02054d901cd3"><td class="memItemLeft" align="right" valign="top">
+<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Sgn</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> <a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>)</td></tr>
+<tr class="memdesc:ga5a8c09e3b27a4a08a60b02054d901cd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <code>|a|</code> if <code>b&gt;0</code>, <code>-|a|</code> if not. <br /></td></tr>
+<tr class="separator:ga5a8c09e3b27a4a08a60b02054d901cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9316f5c420694e0ef052c15fd7838822"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Abs2</b> (<a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> a)</td></tr>
 <tr class="memdesc:ga9316f5c420694e0ef052c15fd7838822"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return square of modulus of complex number <code>a</code> <br /></td></tr>
@@ -1379,7 +1390,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Sgn</b> (<a class="el"
 <tr class="separator:ga05890aa3f761cc5390e93535b020db78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab826b7c64138601293cd22b7cb126c84"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Abs</b> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p)</td></tr>
-<tr class="memdesc:gab826b7c64138601293cd22b7cb126c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Norm of vector <code>a</code> <br /></td></tr>
+<tr class="memdesc:gab826b7c64138601293cd22b7cb126c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return norm of vector <code>a</code> <br /></td></tr>
 <tr class="separator:gab826b7c64138601293cd22b7cb126c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga87522edc935d4d9881f64e3c7efbaee4"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Conjg</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a)</td></tr>

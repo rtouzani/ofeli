@@ -5,7 +5,7 @@ var classOFELI_1_1Equa =
     [ "getLinearSolver", "classOFELI_1_1Equa.html#afe60bd5ead25485a978264584d10bf4c", null ],
     [ "getMatrix", "classOFELI_1_1Equa.html#afc12eef96402127dfff92558262c07b8", null ],
     [ "getMesh", "classOFELI_1_1Equa.html#a33d260bca42fe66a8536f2eac63adc64", null ],
-    [ "setLinearSolver", "classOFELI_1_1Equa.html#a93bf9d28a75fab8e6f5a3c3d1e6bd415", null ],
+    [ "LinearSystemInfo", "classOFELI_1_1Equa.html#ad25e8a8874756b7211620a56e04666c7", null ],
     [ "setMatrixType", "classOFELI_1_1Equa.html#a28dc6e37b3582dfaf59b23135fb06682", null ],
     [ "setMesh", "classOFELI_1_1Equa.html#a82708ffcc31d4d630863187f3f137ee3", null ],
     [ "setSolver", "classOFELI_1_1Equa.html#aa76ba7a5ad0412484df8aeaa34df03a3", null ],

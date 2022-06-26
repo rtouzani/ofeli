@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date></date>
+   <author></author>
+</info>
+<Project name="truss">
+   <mesh_file value="PrattBridge.m"/>
+   <verbose value="1"/>
+   <output value="1"/>
+   <save value="1"/>
+   <plot value="1"/>
+   <init value="1"/>
+   <parameter label="section">0.1</parameter>
+   <plot_file>truss.d</plot_file>
+</Project>
+<Prescription>
+   <PointForce x="2.0" dof="2">-5.0</PointForce>
+</Prescription>
+</OFELI_File>

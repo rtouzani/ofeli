@@ -1,0 +1,56 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/laplace/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 60,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/laplace",
+			"paths" : 
+			[
+				"demos/laplace/README.md",
+				"demos/laplace/laplace_demo1.cpp",
+				"demos/laplace/laplace_demo2.cpp",
+				"demos/laplace/laplace_demo3.cpp",
+				"demos/laplace/laplace_demo4.cpp",
+				"demos/laplace/annulus.geo",
+				"demos/laplace/annulus.m",
+				"demos/laplace/cube.geo",
+				"demos/laplace/cube.m",
+				"demos/laplace/proj.dat",
+				"demos/laplace/proj2.dat",
+				"demos/laplace/proj3.dat",
+				"demos/laplace/square.geo",
+				"demos/laplace/square.m"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/laplace",
+		"source" : "demos/laplace"
+	}
+}
