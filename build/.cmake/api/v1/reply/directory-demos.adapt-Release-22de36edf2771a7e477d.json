@@ -1,0 +1,47 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/adapt/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 41,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/adapt",
+			"paths" : 
+			[
+				"demos/adapt/README.md",
+				"demos/adapt/adapt_demo1.cpp",
+				"demos/adapt/adapt_demo2.cpp",
+				"demos/adapt/L.dom",
+				"demos/adapt/rect.dom"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/adapt",
+		"source" : "demos/adapt"
+	}
+}

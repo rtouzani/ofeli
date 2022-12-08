@@ -1,0 +1,51 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/solvers/OPTIM/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 57,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/solvers/OPTIM",
+			"paths" : 
+			[
+				"demos/solvers/OPTIM/README.md",
+				"demos/solvers/OPTIM/opt_demo1.cpp",
+				"demos/solvers/OPTIM/opt_demo2.cpp",
+				"demos/solvers/OPTIM/opt_demo3.cpp",
+				"demos/solvers/OPTIM/opt_demo4.cpp",
+				"demos/solvers/OPTIM/opt_demo5.cpp",
+				"demos/solvers/OPTIM/opt_demo6.cpp",
+				"demos/solvers/OPTIM/test.dat",
+				"demos/solvers/OPTIM/test.m"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/solvers/OPTIM",
+		"source" : "demos/solvers/OPTIM"
+	}
+}

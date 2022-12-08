@@ -1,0 +1,53 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/solid/truss/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 48,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/solid/truss",
+			"paths" : 
+			[
+				"demos/solid/truss/README.md",
+				"demos/solid/truss/main.cpp",
+				"demos/solid/truss/bridge.dat",
+				"demos/solid/truss/HoweBridge.m",
+				"demos/solid/truss/PrattBridge.m",
+				"demos/solid/truss/tower1.dat",
+				"demos/solid/truss/tower1.m",
+				"demos/solid/truss/tower2.dat",
+				"demos/solid/truss/tower2.m",
+				"demos/solid/truss/truss.dat",
+				"demos/solid/truss/truss.m"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/solid/truss",
+		"source" : "demos/solid/truss"
+	}
+}

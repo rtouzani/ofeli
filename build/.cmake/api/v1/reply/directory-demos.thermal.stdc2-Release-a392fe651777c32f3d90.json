@@ -1,0 +1,47 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/thermal/stdc2/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 10,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/thermal/stdc2",
+			"paths" : 
+			[
+				"demos/thermal/stdc2/README.md",
+				"demos/thermal/stdc2/main.cpp",
+				"demos/thermal/stdc2/proj.dat",
+				"demos/thermal/stdc2/proj.m",
+				"demos/thermal/stdc2/proj.v"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/thermal/stdc2",
+		"source" : "demos/thermal/stdc2"
+	}
+}

@@ -1,0 +1,46 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"demos/thermal/std3/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 10,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/usr/local/share/ofeli/demos/thermal/std3",
+			"paths" : 
+			[
+				"demos/thermal/std3/README.md",
+				"demos/thermal/std3/main.cpp",
+				"demos/thermal/std3/beam.dat",
+				"demos/thermal/std3/beam.m"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "demos/thermal/std3",
+		"source" : "demos/thermal/std3"
+	}
+}
