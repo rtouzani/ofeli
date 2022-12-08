@@ -6,7 +6,7 @@
  
  ==============================================================================
 
-  Copyright (C) 1998 - 2022 Rachid Touzani
+  Copyright (C) 1998 - 2023 Rachid Touzani
 
   This file is part of OFELI.
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
       b(n) = n+1;
 
 //    Solve the linear system by Gauss elimination
-      LinearSolver<double> ls(A,b,x);
+      LinearSolver ls(A,b,x);
       ls.setSolver(DIRECT_SOLVER);
       ls.solve();
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -36,6 +36,7 @@
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/LocalVect_impl.h"
 #include "linear_algebra/Assembly_impl.h"
+#include "solvers/CG.h"
 #include <algorithm>
 
 using std::cout;

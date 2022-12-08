@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -321,20 +321,19 @@ int LocalMatrix<T_,NR_,NC_>::Factor()
 template<class T_,size_t NR_,size_t NC_>
 int LocalMatrix<T_,NR_,NC_>::solve(LocalVect<T_,NR_>& b)
 {
-   int i, j;
    if (NR_!=NC_)
       throw OFELIException("In LocalMatrix::Factor(): Can't solve with a rectangle matrix.");
-   for (i=0; i<int(NR_); i++) {
+   for (size_t i=0; i<NR_; ++i) {
       T_ s = 0;
-      for (j=0; j<i; j++)
+      for (size_t j=0; j<i; ++j)
          s += _a[NR_*i+j] * b[j];
       b[i] -= s;
    }
-   for (i=NR_-1; i>-1; i--) {
+   for (int i=int(NR_-1); i>-1; i--) {
       if (Abs(_a[NR_*i+i]) < OFELI_EPSMCH)
          throw OFELIException("In LocalMatrix::Solve(b): The "+to_string(i+1)+"-th diagonal entry is too small.");
       b[i] /= _a[NR_*i+i];
-      for (j=0; j<i; j++)
+      for (int j=0; j<i; j++)
          b[j] -= b[i] * _a[NR_*j+i];
    }
    return 0;
@@ -447,7 +446,7 @@ LocalMatrix<T_,NR_,NC_> operator-(const LocalMatrix<T_,NR_,NC_>& x,
                                   const LocalMatrix<T_,NR_,NC_>& y)
 {
    LocalMatrix<T_,NR_,NC_> z;
-   for (size_t i=0; i<NR_; ++i)
+   for (size_t i=1; i<=NR_; ++i)
       for (size_t j=1; j<=NC_; ++j)
          z(i,j) = x(i,j) - y(i,j);
    return z;

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -136,7 +136,6 @@ class TrMatrix : public Matrix<T_>
 /// @param [in] size Number of rows and columns.
     void setSize(size_t size);
 
-
 /// \brief Multiply matrix by vector <tt>x</tt> and add result to <tt>y</tt>.
     void MultAdd(const Vect<T_>& x, Vect<T_>& y) const;
 
@@ -177,6 +176,10 @@ class TrMatrix : public Matrix<T_>
 /// \brief Add constant <tt>val</tt> value to an entry <tt>(i,j)</tt> of the matrix.
     void add(size_t    i,
              size_t    j,
+             const T_& val);
+
+/// \brief Add <tt>val</tt> to entry <tt>i</tt>.
+    void add(size_t    i,
              const T_& val);
 
 /** \brief Operator () (Constant version).

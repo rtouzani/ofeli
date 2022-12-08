@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -114,7 +114,7 @@ void saveMesh(const string&      file,
  *  <a href="http://www.geuz.org/gmsh/">Gmsh</a> format.
  *
  *  \note \b Gmsh is a free mesh generator that can be downloaded from the site: http://www.geuz.org/gmsh/
- *  @param [out] file Output file in \b Gmsh format.
+ *  @param [in] file Output file in \b Gmsh format.
  *  @param [in] mesh Mesh instance to save.
  *
  * \author Rachid Touzani
@@ -203,7 +203,7 @@ void saveVTK(const string& file,
  * \copyright GNU Lesser Public License
  */
 void saveBamg(const string& file,
-              Mesh&         mesh);
+              const Mesh&   mesh);
               
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

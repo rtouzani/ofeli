@@ -3022,6 +3022,38 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::setNbEigv</field>
+    <field name="args">(int n)</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#a1d8989efc7e98556ba20fbdaa98ff078</field>
+    <field name="keywords"></field>
+    <field name="text">Set number of extracted eigenvalues This function is useful for the subspace method only n Number of eigenvalues to compute Must be at most equal to the matrix size</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::getEigenValue</field>
+    <field name="args">(int n, int i=1) const</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#a2149e0ac0c10d03310834b084572aa84</field>
+    <field name="keywords"></field>
+    <field name="text">Return the n-th eigenvalue n Index of eigenvalue must be 0 i i 1 Real part i 2 Imaginary part Default 1 Eigenvalue</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::EigenProblemSolver</field>
+    <field name="args">(DMatrix&lt; real_t &gt; &amp;A, bool eigv=false)</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#a276821531cf6f90e18a70fb0d3565aed</field>
+    <field name="keywords"></field>
+    <field name="text">Constructor for a dense unsymmetric matrix that computes the eigenvalues This constructor solves in place the eigenvalues problem and stores them in a vector The eigenvectors can be obtained by calling the member function getEigenVector Eigenvalue extraction uses the reduction to Hessenberg form of the matrix A Matrix for which eigenmodes are sought eigv Switch to compute or not eigenvectors Default false All eigenvalues are extracted</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::set</field>
+    <field name="args">(EigenMethod m, bool sym)</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#a448c660f6646a802de4442d8ffceeee2</field>
+    <field name="keywords"></field>
+    <field name="text">Set numerical method for eigenvalue computation m Numerical method to compute eigenvalues SUBSPACE Subspace iteration method Valid for symmetric matrices only QR QR method Reduction to Hessenberg form sym Boolean variable to say if matrix is symmetric or not</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::EigenProblemSolver::setMatrix</field>
     <field name="args">(SkSMatrix&lt; real_t &gt; &amp;K, SkSMatrix&lt; real_t &gt; &amp;M)</field>
     <field name="url">classOFELI_1_1EigenProblemSolver.html#a4a55cb096a0f0507409268249ebd74cb</field>
@@ -3046,19 +3078,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::getEigenVector</field>
+    <field name="args">(int n, Vect&lt; real_t &gt; &amp;vr, Vect&lt; real_t &gt; &amp;vi) const</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#a6061edbf1f75ab71aa82061759f41faf</field>
+    <field name="keywords"></field>
+    <field name="text">Return the n-th eigenvector in the case of complex eigenvectors n Label of eigenvector They are stored in the order of eigenvalues vr Vect instance where the real part of the eigenvector is stored vi Vect instance where the imaginary part of the eigenvector is stored</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::EigenProblemSolver::EigenProblemSolver</field>
     <field name="args">(SkSMatrix&lt; real_t &gt; &amp;K, Vect&lt; real_t &gt; &amp;M, int n=0)</field>
     <field name="url">classOFELI_1_1EigenProblemSolver.html#a747fde51fa6461c5491e2d477dace469</field>
     <field name="keywords"></field>
     <field name="text">Constructor for Symmetric Skyline Matrices K matrix M Diagonal matrix stored as a Vect instance n Number of eigenvalues to extract By default all eigenvalues are computed The generalized eigenvalue problem is defined by Kx aMx where K and M are referred to as stiffness and mass matrix</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::EigenProblemSolver::run</field>
-    <field name="args">(int nb=0)</field>
-    <field name="url">classOFELI_1_1EigenProblemSolver.html#a7df7b30a01eb8c179b1a9edbe57ad4de</field>
-    <field name="keywords"></field>
-    <field name="text">Run the eigenproblem solver nb Number of eigenvalues to be computed By default all eigenvalues are computed</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3078,19 +3110,27 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::EigenProblemSolver</field>
+    <field name="args">(DMatrix&lt; real_t &gt; &amp;A, Vect&lt; real_t &gt; &amp;evr, Vect&lt; real_t &gt; &amp;evi, bool eigv=false)</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#a8803de9d9d7dc547d4b683a7c04805b0</field>
+    <field name="keywords"></field>
+    <field name="text">Constructor for a dense matrix that compute the eigenvalues This constructor solves in place the eigenvalues problem and stores them separately in real and imaginary part vectors Extraction of eigenvalues and eigenvectors uses the QR method after transforming the matrix in Hessenberg form The eigenvectors can be obtained by calling the member function getEigenVector A Matrix for which eigenmodes are sought evr Vector containing real parts of eigenvalues evr Vector containing imaginary parts of eigenvalues eigv Switch to say if eigenvectors are to be computed Default false The vectors evr and evi do not need to be sized before</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::setMatrix</field>
+    <field name="args">(Matrix&lt; real_t &gt; *K, Matrix&lt; real_t &gt; *M)</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#a8e69c9a65665a815ec38e61c3a949924</field>
+    <field name="keywords"></field>
+    <field name="text">Set pointers to matrix instances This function is to be used when the default constructor is applied Case where the mass matrix is consistent K Stiffness matrix instance pointer M Mass matrix instance pointer</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::EigenProblemSolver::setTolerance</field>
     <field name="args">(real_t eps)</field>
     <field name="url">classOFELI_1_1EigenProblemSolver.html#a947407f933798b110a9135a64e2443af</field>
     <field name="keywords"></field>
     <field name="text">set tolerance value eps Convergence tolerance for eigenvalues Default 1.e 8</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::EigenProblemSolver::getEigenValue</field>
-    <field name="args">(int n) const</field>
-    <field name="url">classOFELI_1_1EigenProblemSolver.html#a970e9743b63cab2032f3cec84ef26054</field>
-    <field name="keywords"></field>
-    <field name="text">Return the n-th eigenvalue</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3114,7 +3154,15 @@
     <field name="args">(DSMatrix&lt; real_t &gt; &amp;K, int n=0)</field>
     <field name="url">classOFELI_1_1EigenProblemSolver.html#aaad2bcba948bb965950a6c89302c12dc</field>
     <field name="keywords"></field>
-    <field name="text">Constructor for a dense symmetric matrix that computes the eigenvalues This constructor solves in place the eigenvalues problem and stores them in a vector No need to use the function runSubSpace The eigenvectors can be obtained by calling the member function getEigenVector K Matrix for which eigenmodes are sought n Number of eigenvalues to extract By default all eigenvalues are computed</field>
+    <field name="text">Constructor for a dense symmetric matrix that computes the eigenvalues This constructor solves in place the eigenvalues problem and stores them in a vector The eigenvectors can be obtained by calling the member function getEigenVector K Matrix for which eigenmodes are sought n Number of eigenvalues to extract By default all eigenvalues are computed</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::setEigenVectors</field>
+    <field name="args">()</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#ab8b165bd0da7329b393b2a06c24da966</field>
+    <field name="keywords"></field>
+    <field name="text">Switch to compute or not eigenvectors as well This function is useful for the QR method BY default eigenvectors are not extracted</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3122,7 +3170,7 @@
     <field name="args">(DSMatrix&lt; real_t &gt; &amp;A, Vect&lt; real_t &gt; &amp;ev, int n=0)</field>
     <field name="url">classOFELI_1_1EigenProblemSolver.html#aca9a7e31a62e24a0dbb402cc1f79d909</field>
     <field name="keywords"></field>
-    <field name="text">Constructor for a dense matrix that compute the eigenvalues This constructor solves in place the eigenvalues problem and stores them in a vector No need to use the function runSubSpace The eigenvectors can be obtained by calling the member function getEigenVector A Matrix for which eigenmodes are sought ev Vector containing all computed eigenvalues sorted increasingly n Number of eigenvalues to extract By default all eigenvalues are computed The vector ev does not need to be sized before</field>
+    <field name="text">Constructor for a dense symmetric matrix that compute the eigenvalues This constructor solves in place the eigenvalues problem and stores them in a vector Extraction of eigenvalues and eigenvectors uses the subspace iteration method The eigenvectors can be obtained by calling the member function getEigenVector A Matrix for which eigenmodes are sought ev Vector containing all computed real eigenvalues n Number of eigenvalues to extract By default all eigenvalues are computed The vector ev does not need to be sized before</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3131,6 +3179,22 @@
     <field name="url">classOFELI_1_1EigenProblemSolver.html#acc93ccb4c00d9710e21d93aaa8784392</field>
     <field name="keywords"></field>
     <field name="text">Define partial differential equation to solve The used equation class must have been constructed using the Mesh instance eq Reference to equation instance lumped Mass matrix is lumped true or not false Default true</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::run</field>
+    <field name="args">(int nb=0, bool opt=false)</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#acf64d91bdeb5343f45cc1dd595aec042</field>
+    <field name="keywords"></field>
+    <field name="text">Run the eigenproblem solver nb Number of eigenvalues to be computed By default all eigenvalues are computed opt Toggle to compute or not corresponding eigenvectors By default no eigenvectors extracted</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::setMatrix</field>
+    <field name="args">(DMatrix&lt; real_t &gt; &amp;K)</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#ad2b7e137bd6ade3323782d9ad4bb7866</field>
+    <field name="keywords"></field>
+    <field name="text">Set matrix instance This function is to be used when the default constructor is applied Case of a standard not generalized eigen problem is to be solved K Matrix instance</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3146,7 +3210,7 @@
     <field name="args">(DSMatrix&lt; real_t &gt; &amp;K)</field>
     <field name="url">classOFELI_1_1EigenProblemSolver.html#adb558b1d4548becf6e9929897d1d5145</field>
     <field name="keywords"></field>
-    <field name="text">Set matrix instance Symmetric matrix This function is to be used when the default constructor is applied Case of a standard not generalized eigen problem is to be solved K Stiffness matrix instance</field>
+    <field name="text">Set matrix instance Symmetric matrix This function is to be used when the default constructor is applied Case of a standard not generalized eigen problem is to be solved K Matrix instance</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3171,6 +3235,14 @@
     <field name="url">classOFELI_1_1EigenProblemSolver.html#afd0ed5b503aaab27ab0c8382f786dfa6</field>
     <field name="keywords"></field>
     <field name="text">Return the n-th eigenvector n Label of eigenvector They are stored in ascending order of eigenvalues v Vect instance where the eigenvector is stored</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::EigenProblemSolver::setMatrix</field>
+    <field name="args">(Matrix&lt; real_t &gt; *K)</field>
+    <field name="url">classOFELI_1_1EigenProblemSolver.html#afd54fd03f5862f86bfdefdbaba689a08</field>
+    <field name="keywords"></field>
+    <field name="text">Set pointer to matrix instance This function is to be used when the default constructor is applied Case where the mass matrix is consistent A Stiffness matrix pointer</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -4382,14 +4454,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Equa::setLinearSolver</field>
-    <field name="args">(Iteration ls, Preconditioner pc=IDENT_PREC)</field>
-    <field name="url">classOFELI_1_1Equa.html#a93bf9d28a75fab8e6f5a3c3d1e6bd415</field>
-    <field name="keywords"></field>
-    <field name="text">Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system ls Solver of the linear system To choose among the enumerated values DIRECT_SOLVER CG_SOLVER GMRES_SOLVER DIRECT_SOLVER Use a facorization solver default CG_SOLVER Conjugate Gradient iterative solver CGS_SOLVER Squared Conjugate Gradient iterative solver BICG_SOLVER BiConjugate Gradient iterative solver BICG_STAB_SOLVER BiConjugate Gradient Stabilized iterative solver GMRES_SOLVER GMRES iterative solver QMR_SOLVER QMR iterative solver pc Preconditioner to associate to the iterative solver If the direct solver was chosen for the first argument this argument is not used Otherwise choose among the enumerated values IDENT_PREC Identity preconditioner no preconditioning default DIAG_PREC Diagonal preconditioner ILU_PREC Incomplete LU factorization preconditioner Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system Choose solver for the linear system</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Equa::setSolver</field>
     <field name="args">(Iteration ls, Preconditioner pc=IDENT_PREC)</field>
     <field name="url">classOFELI_1_1Equa.html#aa76ba7a5ad0412484df8aeaa34df03a3</field>
@@ -4411,6 +4475,14 @@
     <field name="url">classOFELI_1_1Equa.html#abff1dbe8f0d9a00693a159e6af5b60d1</field>
     <field name="keywords"></field>
     <field name="text">Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side A Pointer to matrix of the system b Vector containing right-hand side x Vector containing initial guess of solution on input actual solution on output Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side Solve the linear system with given matrix and right-hand side</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Equa::LinearSystemInfo</field>
+    <field name="args">()</field>
+    <field name="url">classOFELI_1_1Equa.html#ad25e8a8874756b7211620a56e04666c7</field>
+    <field name="keywords"></field>
+    <field name="text">Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver Print info on linear system solver</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -13879,6 +13951,14 @@
     <field name="text">Constructor that gives an instance of class Mesh and the data file name It reads parameters in Prescription Format from this file mesh Mesh instance file Name of Prescription file</field>
   </doc>
   <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Prescription::get</field>
+    <field name="args">(EqDataType type, real_t time=0, size_t dof=0)</field>
+    <field name="url">classOFELI_1_1Prescription.html#adf6cf4ca1c2e3e44fad87c02e65bb60d</field>
+    <field name="keywords"></field>
+    <field name="text">Read data in the given file and returns as a Vect instance for a chosen DOF The input value type determines the type of data to read type Type of data to seek To choose among the enumerated values BOUNDARY_CONDITION Read values for Dirichlet boundary conditions BOUNDARY_FORCE Read values for boundary force Neumann boundary condition The values TRACTION and FLUX have the same effect BODY_FORCE Read values for body or volume forces The value SOURCE has the same effect POINT_FORCE Read values for pointwise forces CONTACT_DISTANCE Read values for contact distance for contact mechanics INITIAL_FIELD Read values for initial solution SOLUTION Read values for a solution vector time Value of time for which data is read Default 0 dof DOF to store Default is 0 All DOFs are chosen</field>
+  </doc>
+  <doc>
     <field name="type">class</field>
     <field name="name">OFELI::Quad4</field>
     <field name="url">classOFELI_1_1Quad4.html</field>
@@ -16391,6 +16471,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::Vect::select</field>
+    <field name="args">(size_t n)</field>
+    <field name="url">classOFELI_1_1Vect.html#a3bbf8feae9c7f46273e575512b332171</field>
+    <field name="keywords"></field>
+    <field name="text">Return vector with selected one component from a given multicomponent vector n Component to extract must be 1 and 4 or Vector with selected component</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::Vect::add</field>
     <field name="args">(size_t i, size_t j, T_ val)</field>
     <field name="url">classOFELI_1_1Vect.html#a40e372694e8ff67cfb2224b8dad767aa</field>
@@ -16580,6 +16668,14 @@
     <field name="url">classOFELI_1_1Vect.html#a7a1a5c6a60a5a3c371d6d3bbe0aa164e</field>
     <field name="keywords"></field>
     <field name="text">Operator Assign a constant to vector entries a Value to set</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Vect::select</field>
+    <field name="args">(const Vect&lt; T_ &gt; &amp;v, size_t n)</field>
+    <field name="url">classOFELI_1_1Vect.html#a7bf473f1f7579f6a18f209ab69491e72</field>
+    <field name="keywords"></field>
+    <field name="text">Select one component from a given multicomponent vector v Vect instance to extract from n Component to extract must be 1 and 4 or</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -19872,6 +19968,20 @@
   </doc>
   <doc>
     <field name="type">enumvalue</field>
+    <field name="name">OFELI::SUBSPACE</field>
+    <field name="url">group__OFELI.html#gga8c89e2f95eb1149cbab804231338c2d5a36232ea128af26ab5ad326e3734299e7</field>
+    <field name="keywords"></field>
+    <field name="text">Subspace iteration method for symmetric matrices</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::QR</field>
+    <field name="url">group__OFELI.html#gga8c89e2f95eb1149cbab804231338c2d5a427d8933c3f220f92b96cd2fe4a08351</field>
+    <field name="keywords"></field>
+    <field name="text">QR reduction method Martin Parlett Peters Reinsch and Wilkinson</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
     <field name="name">OFELI::TRAPEZOIDAL</field>
     <field name="url">group__OFELI.html#ggac6182f91e9b5b2e053c56e00a35de854a492124afa39e48a6ceb6b989957e8e65</field>
     <field name="keywords"></field>
@@ -20029,7 +20139,7 @@
     <field name="name">OFELI::DILU_PREC</field>
     <field name="url">group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a3ae9f68ad4f36c3958a792106d2ddbe7</field>
     <field name="keywords"></field>
-    <field name="text">ILU Incomplete factorization preconditioner</field>
+    <field name="text">DILU Diagonal Incomplete factorization preconditioner</field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
@@ -20043,7 +20153,7 @@
     <field name="name">OFELI::ILU_PREC</field>
     <field name="url">group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a4a328187223e216450bbcecbc37b2701</field>
     <field name="keywords"></field>
-    <field name="text">DILU Diagonal Incomplete factorization preconditioner</field>
+    <field name="text">ILU Incomplete factorization preconditioner</field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
@@ -20615,6 +20725,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::Sgn</field>
+    <field name="args">(real_t a, real_t b)</field>
+    <field name="url">group__Util.html#ga5a8c09e3b27a4a08a60b02054d901cd3</field>
+    <field name="keywords"></field>
+    <field name="text">Return if b 0 if not Return if b 0 if not Return if b 0 if not</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::saveField</field>
     <field name="args">(Vect&lt; real_t &gt; &amp;v, const Grid &amp;g, string output_file, int opt)</field>
     <field name="url">group__Util.html#ga5b3a2e3d67035b6cd7ef6049349b9c45</field>
@@ -21090,7 +21208,7 @@
     <field name="args">(const Point&lt; real_t &gt; &amp;p)</field>
     <field name="url">group__Util.html#gab826b7c64138601293cd22b7cb126c84</field>
     <field name="keywords"></field>
-    <field name="text">Return Norm of vector a Return Norm of vector a Return Norm of vector a</field>
+    <field name="text">Return norm of vector a Return norm of vector a Return norm of vector a</field>
   </doc>
   <doc>
     <field name="type">function</field>

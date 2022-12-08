@@ -304,7 +304,7 @@ int Triangles::SplitElement(int choice)
    Edge *newedges = new Edge [newnbe];
    SetOfEdges4 *edge4 = new SetOfEdges4(nbe,nbv);
 
-   long k=nbv, kk=0, kvb=NbVertexOnBThEdge, kvg=NbVerticesOnGeomEdge, ie=0;
+   long k=nbv, kvb=NbVertexOnBThEdge, kvg=NbVerticesOnGeomEdge, ie=0;
    Edge **edgesGtoB=0;
    if (withBackground)
       edgesGtoB = BTh.MakeGeometricalEdgeToEdge();
@@ -318,7 +318,6 @@ int Triangles::SplitElement(int choice)
       newedges[ie].adj[0] = newedges + (edges[i].adj[0]-edges);
       newedges[ie].adj[1] = newedges + ie +1;
       R2 A = edges[i][0],B = edges[i][1];
-      kk += (i == edge4->addtrie(Number(edges[i][0]),Number(edges[i][1])));
       if (ong) { 
          if (withBackground) {
             assert(edgesGtoB); 

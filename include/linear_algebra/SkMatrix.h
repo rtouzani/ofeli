@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -388,6 +388,10 @@ class SkMatrix : public Matrix<T_>
 /// \brief Return entry <tt>(i,j)</tt> of matrix if this one is stored, 0 else
     T_ get(size_t i,
            size_t j) const;
+
+/// \brief Add <tt>val</tt> to entry <tt>i</tt>.
+    void add(size_t    i,
+             const T_& val);
 
  private:
     int _dof;

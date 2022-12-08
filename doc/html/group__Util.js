@@ -237,6 +237,7 @@ var group__Util =
     [ "OFELI::Scale", "group__Util.html#gab1612da30bd970a11338b2f644944270", null ],
     [ "OFELI::Scale", "group__Util.html#gac5fe0746c6ea3e261528f8277ce0d5fa", null ],
     [ "OFELI::Sgn", "group__Util.html#ga9cea09d745dfd5da9d06a67fdea3bafb", null ],
+    [ "OFELI::Sgn", "group__Util.html#ga5a8c09e3b27a4a08a60b02054d901cd3", null ],
     [ "OFELI::Sqr", "group__Util.html#ga0e608840c25efd68c3f1be0d5a97a3b8", null ],
     [ "OFELI::SqrDistance", "group__Util.html#ga48a42ee356ff6844e98c14f0a3b1f203", null ],
     [ "OFELI::SqrDistance", "group__Util.html#gac16aefa7baaded1b711c9b1502efd87f", null ],

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -144,7 +144,7 @@ template<class T_>
 void DMatrix<T_>::setDiag()
 {
    for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,_a[_nb_cols*i+i]);
+      _diag[i] = _a[_nb_cols*i+i];
 }
 
 
@@ -153,7 +153,7 @@ void DMatrix<T_>::setDiag(const T_& a)
 {
    _is_diagonal = true;
    for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,a);
+      _diag[i] = a;
    for (size_t i=0; i<_nb_rows; i++)
       _a[_nb_cols*i+i] = a;
 }
@@ -164,7 +164,7 @@ void DMatrix<T_>::setDiag(const vector<T_>& d)
 {
    _is_diagonal = true;
    for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,d[i]);
+      _diag[i] = d[i];
    for (size_t i=0; i<_nb_rows; i++)
       _a[_nb_cols*i+i] = d[i];
 }
@@ -325,7 +325,8 @@ template<class T_>
 void DMatrix<T_>::Axpy(T_                 a,
                        const DMatrix<T_>& m)
 {
-   Axpy(a,m._a,_a);
+   for (size_t i=0; i<_length; i++)
+      _a[i] += a*m._a[i];
 }
 
 
@@ -632,9 +633,17 @@ DMatrix<T_>& DMatrix<T_>::operator-=(const T_& x)
 
 
 template<class T_>
-T_* DMatrix<T_>::getArray() const
+void DMatrix<T_>::add(size_t    i,
+                      const T_& val)
 {
-   return _a;
+   _a[i-1] += val;
+}
+
+
+template<class T_>
+const T_* DMatrix<T_>::getArray()
+{
+   return &_a[0];
 }
 
 

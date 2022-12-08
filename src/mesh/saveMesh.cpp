@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 1998 - 2022 Rachid Touzani
+    Copyright (C) 1998 - 2023 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -61,24 +61,36 @@ void saveMesh(const string&      file,
          break;
 
       case OFELI_FF:
+         mesh.put(file);
          break;
 
       case EASYMESH:
+         throw OFELIException("saveMesh(string,Mesh,int): No saving to Easymesh format available");
          break;
 
       case GAMBIT:
+         throw OFELIException("saveMesh(string,Mesh,int): No saving to Gambit format available");
          break;
 
       case BAMG:
+         if (mesh.getNbSides()==0) {
+            throw OFELIException("saveMesh(string,Mesh,int): Mesh sides must be extracted before "
+                                 "converting to Bamg format");
+            return;
+         }
+         saveBamg(file,mesh);
          break;
 
       case NETGEN:
+         throw OFELIException("saveMesh(string,Mesh,int): No saving to Netgen format available");
          break;
 
       case TETGEN:
+         throw OFELIException("saveMesh(string,Mesh,int): No saving to Tetgen format available");
          break;
 
       case TRIANGLE_FF:
+         throw OFELIException("saveMesh(string,Mesh,int): No saving to Triangle format available");
          break;
    }
 }
@@ -155,7 +167,7 @@ int getType(Side& s)
 void saveGmsh(const string& file,
               const Mesh&   mesh)
 {
-   static vector<int> type = { 0, 0, 1, 2, 3, 4, 5, 6 };
+   static vector<int> type {0,0,1,2,3,4,5,6};
    size_t i;
    ofstream pf(file.c_str());
    if (pf.fail())
@@ -163,7 +175,7 @@ void saveGmsh(const string& file,
 
    pf << "$MeshFormat\n2.2  0  8\n$EndMeshFormat" << endl;
    size_t n = 0;
-   size_t nd = mesh.getNbNodes(), ne = mesh.getNbElements(), ns = mesh.getNbSides();
+   size_t nd=mesh.getNbNodes(), ne=mesh.getNbElements(), ns=mesh.getNbSides();
    pf << "$Nodes\n" << nd << endl;
    node_loop(&mesh)
       pf << node_label << "  " << the_node->getX() << "  "
@@ -196,21 +208,14 @@ void saveGnuplot(const string& file,
    ofstream pf(file.c_str());
    if (pf.fail())
       throw OFELIException("saveGnuplot(string,Mesh): Cannot open file " + file);
-   size_t n, m;
 
    const Node *nd;
+   std::map<int,int> sh = {{LINE,2},{QUADRILATERAL,4},{TRIANGLE,3}};
    element_loop(&mesh) {
-      m = 0;
-      if (The_element.getShape()==LINE)
-         m = 2;
-      if (The_element.getShape()==QUADRILATERAL)
-         m = 4;
-      if (The_element.getShape()==TRIANGLE)
-         m = 3;
-      if (!m)
+      size_t m = sh[The_element.getShape()];
+      if (m==0)
          throw OFELIException("saveGnuplot(string,Mesh): Illegal element geometry.");
-
-      for (n=1; n<=m; n++) {
+      for (size_t n=1; n<=m; n++) {
          nd = The_element(n);
          pf << std::setprecision(5) << setw(18) << nd->getX()
             << std::setprecision(5) << setw(18) << nd->getY() << endl;
@@ -251,7 +256,7 @@ void saveTecplot(const string& file,
                  const Mesh&   mesh)
 {
    string shape;
-   static vector<string> sh = { "", "point", "line", "tria", "quad", "tetra", "hexa", "penta" };
+   static vector<string> sh {"","point","line","tria","quad","tetra","hexa","penta"};
    ofstream pf(file.c_str());
    if (pf.fail())
       throw OFELIException("saveTecplot(string,Mesh): Cannot open file " + file);
@@ -326,8 +331,8 @@ void saveVTK(const string& file,
 {
    size_t m=0, size, i;
    ofstream pf(file.c_str());
-   static vector<int> nnd = { 0, 1, 2, 3, 4, 4, 8, 6 };
-   static vector<int> etype = { 0, 3, 5, 9, 10, 12, 13 };
+   static vector<int> nnd {0,1,2,3,4,4,8,6};
+   static vector<int> etype {0,3,5,9,10,12,13};
    if (pf.fail())
       throw OFELIException("saveVTK(string,Mesh): Cannot open file " + file);
 
@@ -366,9 +371,8 @@ void saveVTK(const string& file,
 
 
 void saveBamg(const string& file,
-              Mesh&         mesh)
+              const Mesh&   mesh)
 {
-   mesh.getAllSides();
    ofstream of(file.c_str());
    of << "MeshVersionFormatted  0\n\nDimension\n2\n" << endl;
    of << "Vertices\n" << mesh.getNbNodes() << endl;

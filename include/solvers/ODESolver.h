@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -410,7 +410,7 @@ class ODESolver
     size_t getNbEq() const { return _nb_eq; }
 
 /// \brief Return LinearSolver instance
-    LinearSolver<real_t> &getLSolver() { return _ls; }
+    LinearSolver &getLSolver() { return _ls; }
 
 /** \brief Get time derivative of solution
  *  \details Return approximate time derivative of solution in the case
@@ -461,7 +461,7 @@ class ODESolver
    vector<Fct> _theC;
    vector<real_t> _xv;
    real_t _beta, _gamma;
-   LinearSolver<real_t> _ls;
+   LinearSolver _ls;
    DEType _type;
    Iter<real_t> _iter;
 

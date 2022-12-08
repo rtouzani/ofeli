@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -45,6 +45,7 @@
 #include "shape_functions/Penta6.h"
 #include "io/Tabulation.h"
 #include "linear_algebra/Vect_impl.h"
+#include "linear_algebra/DMatrix_impl.h"
 #include "OFELIException.h"
 
 namespace OFELI {
@@ -53,18 +54,18 @@ extern Material theMaterial;
 
 XMLParser::XMLParser()
           : _is_opened(false), _set_mesh(false), _set_field(false),
-            _set_file(false), _set_prescription(false), _set_domain(false),
+            _set_file(false), _set_prescription(false), _set_matrix(false), _set_domain(false),
             _prescription_opened(false), _nb_dof(1), _dim(2), _nb_nodes(0),
             _nb_elements(0), _nb_sides(0), _nb_edges(0), _scan(0), _nb_mat(0),
-	    _dof_support(NODE_DOF), _theMesh(nullptr), _v(nullptr), _parser(nullptr), _ipf(nullptr)
+            _dof_support(NODE_DOF), _theMesh(nullptr), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 { }
 
 
 XMLParser::XMLParser(string file,
                      int    type)
           : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
-            _set_domain(false), _prescription_opened(false), _type(type),
-            _file(file), _nb_dof(1), _dim(2), _nb_nodes(0), _nb_elements(0), _nb_sides(0),
+            _set_prescription(false), _set_matrix(false), _set_domain(false), _prescription_opened(false),
+            _type(type), _file(file), _nb_dof(1), _dim(2), _nb_nodes(0), _nb_elements(0), _nb_sides(0),
             _nb_edges(0), _scan(0), _nb_mat(0), _dof_support(NODE_DOF), _theMesh(nullptr),
             _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
@@ -78,8 +79,8 @@ XMLParser::XMLParser(string file,
                      int    type,
                      int    format)
           : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
-            _set_domain(false), _prescription_opened(false), _type(type),
-            _format(format), _file(file), _nb_dof(1), _scan(0), _nb_mat(0), _dof_support(NODE_DOF),
+            _set_prescription(false), _set_matrix(false), _set_domain(false), _prescription_opened(false),
+            _type(type), _format(format), _file(file), _nb_dof(1), _scan(0), _nb_mat(0), _dof_support(NODE_DOF),
             _theMesh(&ms), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    _nb_nodes = _theMesh->getNbNodes();
@@ -95,7 +96,8 @@ XMLParser::XMLParser(string file,
 
 XMLParser::XMLParser(const XMLParser& p)
           : _is_opened(p._is_opened), _is_closed(p._is_closed), _set_mesh(p._set_mesh),
-            _set_field(p._set_field), _set_file(p._set_file), _set_domain(p._set_domain),
+            _set_field(p._set_field), _set_file(p._set_file), _set_prescription(p._set_prescription),
+            _set_matrix(p._set_matrix), _set_domain(p._set_domain),
             _time(p._time), _sought_time(p._sought_time), _type(p._type),
             _format(p._format), _file(p._file), _mesh_file(p._mesh_file),
             _sought_name(p._sought_name), _tag_name(p._tag_name), _xml(p._xml), _mat(p._mat),
@@ -238,6 +240,42 @@ int XMLParser::get(Tabulation& t)
    }
    else
       throw OFELIException("In XMLParser::get(Tabulation): Failed to parse XML file.");
+   return 0;
+}
+
+
+int XMLParser::get(DMatrix<real_t>& A)
+{
+   _type = MATRIX;
+   _theMatrix = &A;
+   _set_matrix = true;
+   _scan = 0;
+   _theMesh = nullptr;
+   if (parse(_xml)) {
+      if (Verbosity>10)
+         cout << "Parse done." << endl;
+      return 0;
+   }
+   else
+      throw OFELIException("In XMLParser::get(DMatrix): Failed to parse XML file.");
+   return 0;
+}
+
+
+int XMLParser::get(Matrix<real_t>* A)
+{
+   _type = MATRIX;
+   _theMatrix = A;
+   _set_matrix = true;
+   _scan = 0;
+   _theMesh = nullptr;
+   if (parse(_xml)) {
+      if (Verbosity>10)
+         cout << "Parse done." << endl;
+      return 0;
+   }
+   else
+      throw OFELIException("In XMLParser::get(DMatrix): Failed to parse XML file.");
    return 0;
 }
 
@@ -561,6 +599,11 @@ bool XMLParser::on_tag_open(string     tag_name,
       if (_set_field) {
          _type = FIELD;
          read_field(i);
+      }
+
+      if (_set_matrix) {
+         _type = MATRIX;
+         read_matrix(i);
       }
 
       //      if (_material)
@@ -955,6 +998,21 @@ void XMLParser::read_tab(const StringMap::iterator& i)
 }
 
 
+void XMLParser::read_matrix(const StringMap::iterator& i)
+{
+   if (_tag_name=="Matrix") {
+      if (_scan)
+         cout << "Found a matrix:" << endl;
+      if (i->first=="nb_rows")
+         _nb_rows = atoi((i->second).c_str());
+      if (i->first=="nb_cols" || i->first=="nb_columns")
+         _nb_cols = atoi((i->second).c_str());
+      if (i->first=="name")
+         _name = i->second;
+   }
+}
+
+
 void XMLParser::read_mat(const StringMap::iterator& i)
 {
    if (_scan)
@@ -1274,6 +1332,7 @@ void XMLParser::read_field(const StringMap::iterator& i)
 
 bool XMLParser::on_cdata(string cdata)
 {
+   _name = "";
    vector<string> tokens;
    {
       string buf;
@@ -1322,6 +1381,10 @@ bool XMLParser::on_cdata(string cdata)
       if (_tag_name=="Data")
          read_tab_data(tokens,it);
    }
+
+// Tabulated functions
+   else if (_type==MATRIX)
+      read_matrix_data(tokens,it);
 
    else
       ;
@@ -1579,6 +1642,23 @@ void XMLParser::read_tab_data(const vector<string>&     tokens,
    size_t i=0;
    while (it!=tokens.end())
       _theTabulation->Funct[_nb_funct-1].Val(++i) = atof((*it++).c_str());
+}
+
+
+void XMLParser::read_matrix_data(const vector<string>&     tokens,
+                                 vector<string>::iterator& it)
+{
+   if (_name!="")
+      _theMatrix->setName(_name);
+   _theMatrix->setSize(_nb_rows,_nb_cols);
+   size_t i=1, j=0;
+   while (it!=tokens.end()) {
+      if (++j>_nb_cols && i<_nb_rows)
+         i++, j = 1;
+      if (i>_nb_rows)
+         throw OFELIException("In XMLParser::read_matrix_data(..): Insufficient number of matrix entries.");
+      (*_theMatrix)(i,j) = atof((*it++).c_str());
+   }
 }
 
 

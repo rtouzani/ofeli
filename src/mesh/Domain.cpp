@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -1712,7 +1712,7 @@ void Domain::removeUnusedNodes()
    _theMesh = new Mesh;
    _theMesh->setDim(ms.getDim());
    size_t n=0;
-   for (size_t i=1; i<=ms.getNbNodes(); i++) {
+   for (size_t i=1; i<=ms.getNbNodes(); ++i) {
       size_t in=ms[i]->n()-1;
       nd[in] = nullptr;
       if (used[in]>0) {

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -543,6 +543,7 @@ void getGmsh(string file,
 {
    string        kw, w;
    int           nb_nodes, nb_elements, n[10];
+//   bool          isPoint=false, isCurve=false, isSurf=false, isVol=false;
    size_t        dim=0;
    real_t        d[100];
    Node          *nd;
@@ -561,7 +562,7 @@ void getGmsh(string file,
    pf.open(file.c_str());
    if (pf.fail())
      throw OFELIException("getGmsh(...): Can't open file "+file);
-   
+
 // Mesh Format
    pf >> kw;
    if (kw!="$MeshFormat")
@@ -602,6 +603,7 @@ void getGmsh(string file,
             pf >> d[j];
             Pcode[n[4]] = d[j];
          }
+//         isPoint = true;
       }
 
 //    Curves
@@ -614,9 +616,10 @@ void getGmsh(string file,
          pf >> n[5];
          for (int j=0; j<n[5]; ++j)
             pf >> d[j];
+//         isCurve = true;
       }
 
-//    Surfaces
+//    Surfaces    
       for (int i=0; i<n[2]; ++i) {
          pf >> n[4] >> d[0] >> d[1] >> d[2] >> d[3] >> d[4] >> d[5] >> n[5];
          for (int j=0; j<n[5]; ++j) {
@@ -626,6 +629,7 @@ void getGmsh(string file,
          pf >> n[5];
          for (int j=0; j<n[5]; ++j)
             pf >> d[j];
+//         isSurf = true;
       }
 
 //    Volumes
@@ -638,6 +642,7 @@ void getGmsh(string file,
          pf >> n[5];
          for (int j=0; j<n[5]; ++j)
             pf >> d[j];
+//         isVol = true;
       }
       pf >> kw;
       if (kw!="$EndEntities")
@@ -645,7 +650,8 @@ void getGmsh(string file,
    }
 
 // Partitioned Entities
-//   pf >> kw;
+   if (format>2)
+      pf >> kw;
    if (kw=="$PartitionedEntities") {
       pf >> n[0] >> n[1];
       for (int i=0; i<n[1]; ++i)
@@ -668,7 +674,6 @@ void getGmsh(string file,
    int m = 0;
    if (format==2) {
       pf >> nb_nodes;
-      int nm=0;
       for (int i=0; i<nb_nodes; ++i) {
          dim = 3;
          pf >> n[0] >> nn.x[0] >> nn.x[1] >> nn.x[2];
@@ -718,7 +723,43 @@ void getGmsh(string file,
    El ell;
    size_t nse=0, ne=0, ns=0;
    if (format==2) {
+      int tag[10];
       pf >> nb_elements;
+      for (int i=0; i<nb_elements; ++i) { 
+         pf >> n[0] >> n[1] >> n[2];
+         ell.dim = 3;
+         if (n[1]==1 || n[1]==8)
+            ell.dim = 1;
+         else if (n[1]==2 || n[1]==3 || n[1]==9 || n[1]==10)
+            ell.dim = 2;
+         ell.shape = sh[n[1]-1];
+         ell.nb_nodes = nb_en[n[1]-1];
+         for (int j=0; j<n[2]; ++j)
+            pf >> tag[j];
+         for (size_t j=0; j<ell.nb_nodes; ++j) {
+            pf >> m;
+            ell.node[j] = nod[m-1].n;
+         }
+         if (ell.dim==dim) {
+            ++ne;
+            ell.region = tag[0];
+            elements.push_back(ell);
+         }
+         else if (ell.dim==dim-1) {
+            if (tag[0]>10000) {
+               int cd = tag[0] - 10000;
+               if (cd>0) {
+                  ++ns;
+                  ell.region = cd;
+                  sides.push_back(ell);
+               }
+            }
+            else {
+               for (size_t i=0; i<ell.nb_nodes; ++i)
+                  nod[ell.node[i]-1].cc = tag[0];
+            }
+         }
+      }
    }
    else if (format==4) {
       pf >> n[0] >> nb_elements >> n[1] >> n[2];
@@ -808,7 +849,7 @@ void getMatlab(string file,
                Mesh&  mesh,
                size_t nb_dof)
 {
-   size_t i, j, k, nb_nodes, nb_elements, nb_sides, nbc;
+   size_t nb_nodes, nb_elements, nb_sides, nbc;
    int code[MAX_NBDOF_NODE];
    ifstream mf;
    mf.open(file.c_str());
@@ -818,49 +859,49 @@ void getMatlab(string file,
    mf >> nb_nodes;
    Vect<Point<real_t> > x(nb_nodes);
    Vect<int> c(nb_nodes);
-   for (i=0; i<nb_nodes; i++)
+   for (size_t i=0; i<nb_nodes; i++)
       mf >> x[i].x >> x[i].y;
 
    mf >> nb_sides;
    Vect<float> e(7,nb_sides);
    Vect<size_t> cs(nb_sides);
-   for (i=1; i<=nb_sides; i++)
-      for (j=1; j<=7; j++)
+   for (size_t i=1; i<=nb_sides; i++)
+      for (size_t j=1; j<=7; j++)
          mf >> e(j,i);
 
    mf >> nb_elements;
    Vect<size_t> t(4,nb_elements);
-   for (i=1; i<=nb_elements; i++)
-      for (j=1; j<=4; j++)
+   for (size_t i=1; i<=nb_elements; i++)
+      for (size_t j=1; j<=4; j++)
          mf >> t(j,i);
 
    mf >> nbc;
    size_t N, M, l;
    string g;
-   for (i=1; i<=nbc; i++) {
+   for (size_t i=1; i<=nbc; ++i) {
       mf >> N >> M;
-      for (j=1; j<=N*N; j++)
+      for (size_t j=1; j<=N*N; ++j)
          mf >> l;
-      for (j=1; j<=N; j++)
+      for (size_t j=1; j<=N; ++j)
          mf >> l;
-      for (j=1; j<=M*N; j++)
+      for (size_t j=1; j<=M*N; ++j)
          mf >> l;
-      for (j=1; j<=M; j++)
+      for (size_t j=1; j<=M; ++j)
          mf >> l;
-      for (j=1; j<=N*N; j++)
+      for (size_t j=1; j<=N*N; ++j)
          mf >> g;
-      for (j=1; j<=N; j++) {
+      for (size_t j=1; j<=N; ++j) {
          mf >> g;
-         for (k=1; k<=nb_sides; k++) {
+         for (size_t k=1; k<=nb_sides; ++k) {
             if (e(5,k)==i && M==0)
                cs[k-1] = stringTo<int>(g);
          }
       }
-      for (j=1; j<=M*N; j++)
+      for (size_t j=1; j<=M*N; j++)
          mf >> g;
-      for (j=1; j<=M; j++) {
+      for (size_t j=1; j<=M; j++) {
          mf >> g;
-         for (k=1; k<=nb_sides; k++) {
+         for (size_t k=1; k<=nb_sides; ++k) {
             if (e(5,k)==i)
                c[size_t(e(1,k))-1] = c[size_t(e(2,k))-1] = stringTo<int>(g);
          }
@@ -869,26 +910,26 @@ void getMatlab(string file,
 
    mesh.setDim(2);
    size_t first_dof = 1;
-   for (i=0; i<nb_nodes; i++) {
+   for (size_t i=0; i<nb_nodes; ++i) {
       theNode = new Node(i+1,x[i]);
       TheNode.setDOF(first_dof,nb_dof);
       DOFCode(c[i],nb_dof,code);
       TheNode.setCode(code);
       mesh.Add(theNode);
    }
-   for (i=1; i<=nb_elements; i++) {
+   for (size_t i=1; i<=nb_elements; ++i) {
       theElement = new Element(i,TRIANGLE,t(4,i));
-      for (j=1; j<=3; j++)
+      for (size_t j=1; j<=3; ++j)
          TheElement.Add(mesh[t(j,i)]);
          mesh.Add(theElement);
    }
-   for (i=1; i<=nb_sides; i++) {
+   for (size_t i=1; i<=nb_sides; ++i) {
       theSide = new Side(i,"line");
       TheSide.Add(mesh[size_t(e(1,i))]);
       TheSide.Add(mesh[size_t(e(2,i))]);
       DOFCode(cs[i-1],nb_dof,code);
       TheSide.setNbDOF(nb_dof);
-      for (size_t j=0; j<nb_dof; j++)
+      for (size_t j=0; j<nb_dof; ++j)
          TheSide.setCode(j+1,code[j]);
       mesh.Add(theSide);
    }
@@ -1156,7 +1197,7 @@ void getTetgen(string file,
       throw OFELIException("getTetgen(...): File " + file + ".ele not found.");
    ef >> nb_elements >> k >> i;
    vector<El> elem(nb_elements);
-   for (j=0; j<nb_elements; j++) {
+   for (j=0; j<nb_elements; ++j) {
       ef >> i >> n1 >> n2 >> n3 >> n4;
       elem[j].n = i;
       if (k==4)
@@ -1168,9 +1209,9 @@ void getTetgen(string file,
 
    mesh.setDim(dim);
    size_t first_dof = 1;
-   for (j=0; j<nb_nodes; j++) {
+   for (j=0; j<nb_nodes; ++j) {
       theNode = new Node(num[nod[j].n-1],nod[j].x);
-      for (k=0; k<nb_dof; k++)
+      for (k=0; k<nb_dof; ++k)
          code[k] = nod[j].code[k];
       TheNode.setDOF(first_dof,nb_dof);
       TheNode.setCode(code);
@@ -1178,13 +1219,13 @@ void getTetgen(string file,
    }
 
    size_t ks=1, ke=1;
-   for (j=0; j<nb_elements; j++) {
+   for (j=0; j<nb_elements; ++j) {
       int cd = elem[j].region;
 
       if (elem[j].shape==POINT) {
          theNode = mesh[num[elem[j].n-1]];
          DOFCode(cd,nb_dof,code);
-         for (k=0; k<nb_dof; k++)
+         for (k=0; k<nb_dof; ++k)
             TheNode.setCode(k+1,code[k]);
       }
 
@@ -1194,10 +1235,10 @@ void getTetgen(string file,
             for (i=0; i<2; i++)
                TheSide.Add(mesh[num[elem[j].node[i]-1]]);
             if (cd%2 == 1) {
-               for (i=0; i<TheSide.getNbNodes(); i++) {
+               for (i=0; i<TheSide.getNbNodes(); ++i) {
                   theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
-                  for (k=0; k<nb_dof; k++)
+                  for (k=0; k<nb_dof; ++k)
                      TheNode.setCode(k+1,code[k]);
                }
                delete theSide;
@@ -1206,7 +1247,7 @@ void getTetgen(string file,
                ks++;
                TheSide.setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
-               for (k=0; k<nb_dof; k++)
+               for (k=0; k<nb_dof; ++k)
                   TheSide.setCode(k+1,code[k]);
                mesh.Add(theSide);
             }
@@ -1231,17 +1272,17 @@ void getTetgen(string file,
             for (i=0; i<3; i++)
                TheSide.Add(mesh[num[elem[j].node[i]-1]]);
             if (cd%2 == 1) {
-               for (i=0; i<TheSide.getNbNodes(); i++) {
+               for (i=0; i<TheSide.getNbNodes(); ++i) {
                   theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
-                  for (k=0; k<nb_dof; k++)
+                  for (k=0; k<nb_dof; ++k)
                      TheNode.setCode(k+1,code[k]);
                }
             }
             else {
                TheSide.setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
-               for (k=0; k<nb_dof; k++)
+               for (k=0; k<nb_dof; ++k)
                   TheSide.setCode(k+1,code[k]);
                mesh.Add(theSide);
             }
@@ -1254,39 +1295,39 @@ void getTetgen(string file,
                for (i=0; i<TheSide.getNbNodes(); i++) {
                   theNode = TheSide(i+1);
                   DOFCode(cd,nb_dof,code);
-                  for (k=0; k<nb_dof; k++)
+                  for (k=0; k<nb_dof; ++k)
                      TheNode.setCode(k+1,code[k]);
                }
             }
             else {
                TheSide.setNbDOF(nb_dof);
                DOFCode(cd,nb_dof,code);
-               for (k=0; k<nb_dof; k++)
+               for (k=0; k<nb_dof; ++k)
                   TheSide.setCode(k+1,code[k]);
                mesh.Add(theSide);
             }
          }
          else if (elem[j].shape==TETRAHEDRON) {
             theElement = new Element(ke++,TETRAHEDRON,cd);
-            for (i=0; i<4; i++)
+            for (i=0; i<4; ++i)
                TheElement.Add(mesh[num[elem[j].node[i]-1]]);
             mesh.Add(theElement);
          }
          else if (elem[j].shape==HEXAHEDRON) {
             theElement = new Element(ke++,HEXAHEDRON,cd);
-            for (i=0; i<8; i++)
+            for (i=0; i<8; ++i)
                TheElement.Add(mesh[num[elem[j].node[i]-1]]);
             mesh.Add(theElement);
          }
          else if (elem[j].shape==PRISM) {
             theElement = new Element(ke++,PRISM,cd);
-            for (i=0; i<6; i++)
+            for (i=0; i<6; ++i)
                TheElement.Add(mesh[num[elem[j].node[i]-1]]);
             mesh.Add(theElement);
          }
          else if (elem[j].shape==PYRAMID) {
             theElement = new Element(ke++,PYRAMID,cd);
-            for (i=0; i<5; i++)
+            for (i=0; i<5; ++i)
                TheElement.Add(mesh[num[elem[j].node[i]-1]]);
             mesh.Add(theElement);
          }
@@ -1315,14 +1356,14 @@ void getTriangle(string file,
    size_t first_dof = 1;
    size_t nz=0, nb_nodes, n, na, nm;
    nf >> nb_nodes >> n >> na >> nm;
-   for (size_t i=0; i<nb_nodes; i++) {
+   for (size_t i=0; i<nb_nodes; ++i) {
       nf >> n;
       if (i==0 && n==0)
          nz = 1;
       real_t xx, yy;
       nf >> xx >> yy;
       real_t attr;
-      for (size_t j=0; j<na; j++)
+      for (size_t j=0; j<na; ++j)
          nf >> attr;
       int mark = 0;
       if (nm>0)
@@ -1339,23 +1380,23 @@ void getTriangle(string file,
    size_t nb_elements, nbn;
    ef >> nb_elements >> nbn >> na;
    nz = 0;
-   for (size_t i=0; i<nb_elements; i++) {
+   for (size_t i=0; i<nb_elements; ++i) {
       ef >> n;
       if (i==0 && n==0)
          nz = 1;
       int mark = 0;
-      for (size_t j=0; j<nbn; j++) {
+      for (size_t j=0; j<nbn; ++j) {
          ef >> mark;
          ne[j] = mark;
       }
       real_t attr;
-      for (size_t j=0; j<na; j++)
+      for (size_t j=0; j<na; ++j)
          ef >> attr;
       mark = int(attr);
       if (nz>0)
          n++;
       theElement = new Element(n,TRIANGLE,mark);
-      for (size_t j=0; j<nbn; j++)
+      for (size_t j=0; j<nbn; ++j)
          TheElement.Add(mesh[ne[j]]);
       mesh.Add(theElement);
    }
@@ -1364,14 +1405,14 @@ void getTriangle(string file,
    if (!sf.fail()) {
       size_t nz=0, nb_sides;
       sf >> nb_sides >> nm;
-      for (size_t i=0; i<nb_sides; i++) {
+      for (size_t i=0; i<nb_sides; ++i) {
          sf >> n >> ne[0] >> ne[1];
          if (i==0 && n==0)
             nz = 1;
          if (nz>0)
             n++;
          real_t attr;
-         for (size_t j=0; j<nm; j++)
+         for (size_t j=0; j<nm; ++j)
             sf >> attr;
          int mark = int(attr);
          DOFCode(mark, nb_dof, code);
@@ -1379,7 +1420,7 @@ void getTriangle(string file,
          TheSide.Add(mesh[ne[0]]);
          TheSide.Add(mesh[ne[1]]);
          TheSide.setNbDOF(nb_dof);
-         for (size_t j=0; j<nb_dof; j++)
+         for (size_t j=0; j<nb_dof; ++j)
             TheSide.setCode(j+1,code[j]);
          mesh.Add(theSide);
       }

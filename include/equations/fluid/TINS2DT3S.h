@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -26,8 +26,8 @@
   ==============================================================================
 
                             Definition of class TINS2DT3S
-                for 2-D Transient Incompressible Navier-Stokes Equations
-                using P1 Stabilized elements for velocity, P1 for pressure
+              for 2-D Transient Incompressible Navier-Stokes Equations
+             using P1 Stabilized elements for velocity, P1 for pressure
        Time integration is done using a second-order fractional step method
 
   ==============================================================================*/
@@ -39,6 +39,7 @@
 
 #include "equations/fluid/Equa_Fluid.h"
 #include "linear_algebra/Vect.h"
+#include "solvers/Prec.h"
 
 namespace OFELI {
 /*!

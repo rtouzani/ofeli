@@ -107,6 +107,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abc32cb0d2029c7e0ee3eeee426c9b61d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a469babb54d7c6a779addd8a46df1b0c3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Prescription.html#a469babb54d7c6a779addd8a46df1b0c3">get</a> (<a class="el" href="OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6">EqDataType</a> type, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time=0, size_t dof=0)</td></tr>
 <tr class="separator:a469babb54d7c6a779addd8a46df1b0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf6cf4ca1c2e3e44fad87c02e65bb60d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Prescription.html#adf6cf4ca1c2e3e44fad87c02e65bb60d">get</a> (<a class="el" href="OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6">EqDataType</a> type, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time=0, size_t dof=0)</td></tr>
+<tr class="separator:adf6cf4ca1c2e3e44fad87c02e65bb60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >To prescribe various types of data by an algebraic expression. Data may consist in boundary conditions, forces, tractions, fluxes, initial condition. All these data types can be defined through an enumerated variable. </p>
@@ -151,8 +153,68 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="adf6cf4ca1c2e3e44fad87c02e65bb60d" name="adf6cf4ca1c2e3e44fad87c02e65bb60d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf6cf4ca1c2e3e44fad87c02e65bb60d">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp; get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6">EqDataType</a>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td>
+          <td class="paramname"><em>time</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dof</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Read data in the given file and returns as a <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors.">Vect</a> instance for a chosen DOF. The input value type determines the type of data to read. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of data to seek. To choose among the enumerated values: <ul>
+<li>
+<code>BOUNDARY_CONDITION</code>: Read values for (Dirichlet) boundary conditions </li>
+<li>
+<code>BOUNDARY_FORCE</code>: Read values for boundary force (Neumann boundary condition).<br  />
+ The values <code>TRACTION</code> and <code>FLUX</code> have the same effect. </li>
+<li>
+<code>BODY_FORCE</code>: Read values for body (or volume) forces.<br  />
+ The value <code>SOURCE</code> has the same effect. </li>
+<li>
+<code>POINT_FORCE</code>: Read values for pointwise forces </li>
+<li>
+<code>CONTACT_DISTANCE</code>: Read values for contact distance (for contact mechanics) </li>
+<li>
+<code>INITIAL_FIELD</code>: Read values for initial solution </li>
+<li>
+<code>SOLUTION</code>: Read values for a solution vector </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">time</td><td>Value of time for which data is read [Default: <code>0</code>]. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dof</td><td>DOF to store (Default is <code>0</code>: All DOFs are chosen). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a469babb54d7c6a779addd8a46df1b0c3" name="a469babb54d7c6a779addd8a46df1b0c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a469babb54d7c6a779addd8a46df1b0c3">&#9670;&nbsp;</a></span>get()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a469babb54d7c6a779addd8a46df1b0c3">&#9670;&nbsp;</a></span>get() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

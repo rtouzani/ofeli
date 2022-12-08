@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -39,11 +39,8 @@
 #include "mesh/Element.h"
 #include "mesh/Side.h"
 #include "mesh/Material.h"
-#include "solvers/LinearSolver.h"
 #include "util/Gauss.h"
 #include "io/Prescription.h"
-//#include "solvers/TimeStepping.h"
-//#include "solvers/EigenProblemSolver.h"
 #include "linear_algebra/DMatrix_impl.h"
 #include "linear_algebra/DSMatrix_impl.h"
 #include "linear_algebra/SpMatrix_impl.h"
@@ -287,7 +284,7 @@ void Equa::setTransient(TimeScheme s,
 }
 
 
-LinearSolver<real_t>& Equa::getLinearSolver()
+LinearSolver& Equa::getLinearSolver()
 {
    return _ls;
 }

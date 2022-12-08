@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -623,6 +623,10 @@ void saveField(const Vect<real_t>& v,
    if (nb_dof>1)
       scalar = false;
    ofstream fp(output_file.c_str());
+   map<int,int> sh = {{LINE,2},{TRIANGLE,3},{QUADRILATERAL,4},{TETRAHEDRON,4},
+                      {HEXAHEDRON,8},{PENTAHEDRON,6}};
+   map<int,int> sh1 = {{LINE,2},{TRIANGLE,5},{QUADRILATERAL,9},{TETRAHEDRON,10},
+                      {HEXAHEDRON,12},{PENTAHEDRON,13}};
    fp.setf(ios::right|ios::scientific);
 
    switch (opt) {
@@ -636,12 +640,7 @@ void saveField(const Vect<real_t>& v,
             break;
          }
          element_loop(&mesh) {
-            m = 0;
-            switch(The_element.getShape()) {
-               case LINE:          m = 2; break;
-               case TRIANGLE:      m = 3; break;
-               case QUADRILATERAL: m = 4; break;
-            }
+            m = sh[The_element.getShape()];
             for (n=1; n<=m; n++) {
                Node *nd = The_element(n);
                fp << setprecision(4) << setw(18) << nd->getX() << " "
@@ -658,17 +657,8 @@ void saveField(const Vect<real_t>& v,
       case VTK:
       {
          size_t size = 0;
-         element_loop(&mesh) {
-            switch(The_element.getShape()) {
-               case LINE:          m = 2; break;
-               case TRIANGLE:      m = 3; break;
-               case QUADRILATERAL: m = 4; break;
-               case TETRAHEDRON:   m = 4; break;
-               case HEXAHEDRON:    m = 8; break;
-               case PENTAHEDRON:   m = 6; break;
-            }
-            size += m+1;
-         }
+         element_loop(&mesh)
+            size += sh[The_element.getShape()]+1;
          fp << "# vtk DataFile Version 2.0\nImported from OFELI files\nASCII" << endl;
          fp << "DATASET UNSTRUCTURED_GRID\nPOINTS " << mesh.getNbNodes() << " double" << endl;
          node_loop(&mesh) {
@@ -677,14 +667,7 @@ void saveField(const Vect<real_t>& v,
          }
          fp << "\nCELLS " << mesh.getNbElements() << " " << size << endl;
          element_loop(&mesh) {
-            switch (The_element.getShape()) {
-               case LINE:          m = 2; break;
-               case TRIANGLE:      m = 3; break;
-               case QUADRILATERAL: m = 4; break;
-               case TETRAHEDRON:   m = 4; break;
-               case HEXAHEDRON:    m = 8; break;
-               case PENTAHEDRON:   m = 6; break;
-            }
+            m = sh[The_element.getShape()];
             fp << setw(9) << m;
             for (i=0; i<m; i++)
                fp << setw(9) << The_element(i+1)->n()-1;
@@ -693,15 +676,7 @@ void saveField(const Vect<real_t>& v,
          fp << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
          k = 0;
          element_loop(&mesh) {
-            switch(The_element.getShape()) {
-               case LINE:          m =  3; break;
-               case TRIANGLE:      m =  5; break;
-               case QUADRILATERAL: m =  9; break;
-               case TETRAHEDRON:   m = 10; break;
-               case HEXAHEDRON:    m = 12; break;
-               case PENTAHEDRON:   m = 13; break;
-            }
-            fp << setw(4) << m;
+            fp << setw(4) << sh1[The_element.getShape()];
             if (++k%30 == 0)
                fp << endl;
          }
@@ -826,14 +801,9 @@ void saveField(const Vect<real_t>& v,
 
       case TECPLOT:
       {
-         string shape;
-         switch(mesh.getShape()) {
-            case LINE:           shape = "LINESEG";       break;
-            case TRIANGLE:       shape = "TRIANGLE";      break;
-            case QUADRILATERAL:  shape = "QUADRILATERAL"; break;
-            case TETRAHEDRON:    shape = "TETRAHEDRON";   break;
-            case HEXAHEDRON:     shape = "BRICK";         break;
-         }
+         map<int,string> sh = {{LINE,"LINESEG"},{TRIANGLE,"TRIANGLE"},{QUADRILATERAL,"QUADRILATERAL"},
+                               {TETRAHEDRON,"TETRAHEDRON"},{HEXAHEDRON,"BRICK"}};
+         string shape = sh[mesh.getShape()];
          fp << "TITLE = \" \"\n" << endl;
          fp << "VARIABLES = \"X\", \"Y\"";
          if (mesh.getDim()==3)
@@ -1099,24 +1069,13 @@ void saveTecplot(Mesh&  mesh,
 {
    size_t nb_dof=0;
    cout << "Converting file: " << input_file << " to Tecplot format." << endl;
-   vector<vector<real_t> > field;
+   vector<vector<real_t> > v;
    vector<real_t> tm;
    string name;
-   getfields(input_file,mesh,nb_dof,tm,field,name);
-   string shape;
-   if (mesh.getShape()==LINE)
-      shape = "LINESEG";
-   else if (mesh.getShape()==QUADRILATERAL)
-      shape = "QUADRILATERAL";
-   else if (mesh.getShape()==TRIANGLE)
-      shape = "TRIANGLE";
-   else if (mesh.getShape()==TETRAHEDRON)
-      shape = "TETRAHEDRON";
-   else if (mesh.getShape()==HEXAHEDRON)
-      shape = "BRICK";
-   else
-      ;
-
+   getfields(input_file,mesh,nb_dof,tm,v,name);
+   map<int,string> sh = {{LINE,"LINESEG"},{TRIANGLE,"TRIANGLE"},{QUADRILATERAL,"QUADRILATERAL"},
+                         {TETRAHEDRON,"TETRAHEDRON"},{HEXAHEDRON,"BRICK"}};
+   string shape = sh[mesh.getShape()];
    ofstream fp(output_file.c_str());
    fp.setf(ios::right|ios::scientific);
    size_t count = 0, nb_time = tm.size();
@@ -1155,13 +1114,13 @@ void saveTecplot(Mesh&  mesh,
                for (size_t i=1; i<=mesh.getDim(); i++)
                   fp << "  " << The_node.getCoord(i);
             for (size_t j=0; j<nb_dof; j++)
-               fp << "  " << field[n][nb_dof*(node_label-1)+j];
+               fp << "  " << v[n][nb_dof*(node_label-1)+j];
             fp << endl;
          }
          if (count==0) {
             element_loop(&mesh) {
-               for (n=1; n<=The_element.getNbNodes(); n++)
-                  fp << setw(10) << The_element(n)->n();
+               for (size_t i=1; i<=The_element.getNbNodes(); i++)
+                  fp << setw(10) << The_element(i)->n();
                fp << endl;
             }
          }
@@ -1187,11 +1146,11 @@ void saveVTK(Mesh&  mesh,
              string output_file,
              int    f)
 {
-  if (f<=0)
-     return;
+   if (f<=0)
+      return;
 
    ofstream *pf=nullptr;
-   size_t m=0, k=0, nb_dof;
+   size_t k=0, nb_dof;
    string of;
 
    cout << "Converting file: " << input_file << " to VTK format." << endl;
@@ -1206,21 +1165,10 @@ void saveVTK(Mesh&  mesh,
    if (nb_dof>1)
       scalar = false;
    size_t size=0, nb_time=tm.size();
-   element_loop(&mesh) {
-      int s = The_element.getShape();
-      if (s==LINE)
-         m = 2;
-      else if (s==TRIANGLE)
-         m = 3;
-      else if (s==QUADRILATERAL || s==TETRAHEDRON)
-         m = 4;
-      else if (s==HEXAHEDRON)
-         m = 8;
-      else if (s==PENTAHEDRON)
-         m = 6;
-      else ;
-      size += m + 1;
-   }
+   map<int,int> sh = {{LINE,2},{TRIANGLE,3},{QUADRILATERAL,4},{TETRAHEDRON,4},
+                      {HEXAHEDRON,8},{PENTAHEDRON,6}};
+   element_loop(&mesh)
+      size += sh[The_element.getShape()] + 1;
    for (size_t n=0; n<nb_time; n+=f) {
       nb_st++;
       string tt = "Time=" + to_string(tm[n]);
@@ -1237,36 +1185,17 @@ void saveVTK(Mesh&  mesh,
          *pf << The_node.getX() << "  " << The_node.getY() << "  " << The_node.getZ() << endl;
       *pf << "\nCELLS " << mesh.getNbElements() << setw(10) << size << endl;
       element_loop(&mesh) {
-         int s = The_element.getShape();
-         if (s==LINE)
-            m = 2;
-         else if (s==TRIANGLE)
-            m = 3;
-         else if (s==QUADRILATERAL || s==TETRAHEDRON)
-            m = 4;
-         else if (s==HEXAHEDRON)
-            m = 8;
-         else if (s==PENTAHEDRON)
-            m = 6;
-         else
-            ;
-         *pf << setw(8) << m;
-         for (size_t i=0; i<m; i++)
+         *pf << setw(8) << sh[The_element.getShape()];
+         for (size_t i=0; i<sh[The_element.getShape()]; i++)
            *pf << setw(10) << The_element(i+1)->n()-1;
          *pf << endl;
       }
       *pf << "\nCELL_TYPES  " << mesh.getNbElements() << endl;
       k = 0;
+      sh = {{LINE,3},{TRIANGLE,5},{QUADRILATERAL,9},{TETRAHEDRON,10},
+            {HEXAHEDRON,12},{PENTAHEDRON,13}};
       element_loop(&mesh) {
-         switch (The_element.getShape()) {
-            case LINE:            m =  3; break;
-            case TRIANGLE:        m =  5; break;
-            case QUADRILATERAL:   m =  9; break;
-            case TETRAHEDRON:     m = 10; break;
-            case HEXAHEDRON:      m = 12; break;
-            case PENTAHEDRON:     m = 13; break;
-         }
-         *pf << setw(4) << m;
+         *pf << setw(4) << sh[The_element.getShape()];
          if (++k%30 == 0)
             *pf << endl;
       }
@@ -1315,16 +1244,16 @@ void saveGmsh(Mesh&  mesh,
    pf << setprecision(16);
 
    cout << "Converting file: " << input_file << " to Gmsh format." << endl;
-   vector<vector<real_t> > field;
+   vector<vector<real_t> > v;
    vector<real_t> tm;
    string name;
-   getfields(input_file,mesh,nb_dof,tm,field,name);
+   getfields(input_file,mesh,nb_dof,tm,v,name);
    char tt = 'S';
    if (nb_dof == mesh.getDim())
       tt = 'V';
 
    pf << "View \"" << name << "\" {" << endl;
-   size_t nb_st=0, nb_time=tm.size();
+   size_t nb_time=tm.size();
 
    switch (mesh.getDim()) {
 
@@ -1333,18 +1262,13 @@ void saveGmsh(Mesh&  mesh,
             pf << "SL(";
             pf << The_element(1)->getX() <<  ", 0., 0., "
                << The_element(2)->getX() <<  ", 0., 0. ) {" << endl;
-            for (size_t n=0; n<nb_time-1; ++n) {
-               if ((n+1)%f==0) {
-                  if (The_element.n()==1)
-                     nb_st++;
-                  pf << field[n][The_element(1)->n()-1] << ","
-                     << field[n][The_element(2)->n()-1];
-                  if (n<nb_time-1)
-                     pf << ",";
-                  pf << endl;
-               }
+            for (size_t n=0; n<nb_time; n+=f) {
+               pf << v[n][The_element(1)->n()-1] << "," << v[n][The_element(2)->n()-1];
+               if (n<nb_time-1)
+                  pf << ",";
+               pf << endl;
             }
-	    pf << "};" << endl;
+            pf << "};" << endl;
          }
          pf << "};" << endl;
          break;
@@ -1359,19 +1283,19 @@ void saveGmsh(Mesh&  mesh,
             for (size_t k=1; k<nb_en; ++k)
                pf << The_element(k)->getX() << "," << The_element(k)->getY() << ",0.,";
             pf << The_element(nb_en)->getX() << "," << The_element(nb_en)->getY() << ",0.) {" << endl;
-            for (size_t n=0; n<nb_time; ++n) {
-               if ((n+1)%f==0) {
-                  if (The_element.n()==1)
-                     nb_st++;
-                  for (size_t k=1; k<=nb_en; ++k) {
-                     pf << field[n][nb_dof*(The_element(k)->n()-1)];
-                     if (nb_dof > 1)
-                        pf << "," << field[n][nb_dof*(The_element(k)->n()-1)+1] << ",0.0";
-                     if (n<nb_time-1 || k<nb_en)
-                        pf << ",";
-                  }
-                  pf << endl;
+            for (size_t n=0; n<nb_time; n+=f) {
+               for (size_t k=1; k<nb_en; ++k) {
+                  pf << v[n][nb_dof*(The_element(k)->n()-1)];
+                  if (nb_dof > 1)
+                     pf << "," << v[n][nb_dof*(The_element(k)->n()-1)+1] << ",0.0";
+                  pf << ",";
                }
+               pf << v[n][nb_dof*(The_element(nb_en)->n()-1)];
+               if (nb_dof > 1)
+                  pf << "," << v[n][nb_dof*(The_element(nb_en)->n()-1)+1] << ",0.0";
+               if (n<nb_time-1 && n+f<nb_time)
+                  pf << ",";
+               pf << endl;
             }
             pf << "};" << endl;
          }
@@ -1397,26 +1321,26 @@ void saveGmsh(Mesh&  mesh,
             pf << The_element(nb_en)->getX() << ","
                << The_element(nb_en)->getY() << ","
                << The_element(nb_en)->getZ() << ") {" << endl;
-            for (size_t n=0; n<nb_time; ++n) {
-               if ((n+1)%f==0) {
-                  if (The_element.n()==1)
-                     nb_st++;                 
-                  for (size_t k=1; k<=nb_en; ++k) {
-                     pf << field[n][nb_dof*(The_element(k)->n()-1)];
-                     if (nb_dof > 1)
-                        pf << "," << field[n][nb_dof*(The_element(k)->n()-1)+1] << ","
-                           << field[n][nb_dof*(The_element(k)->n()-1)+2] << endl;
-                     if (n<nb_time-1 || k<nb_en)
-                        pf << ",";
-                  }
+            for (size_t n=0; n<nb_time; n+=f) {
+               for (size_t k=1; k<nb_en; ++k) {
+                  pf << v[n][nb_dof*(The_element(k)->n()-1)];
+                  if (nb_dof > 1)
+                     pf << "," << v[n][nb_dof*(The_element(k)->n()-1)+1] << ","
+                        << v[n][nb_dof*(The_element(k)->n()-1)+2] << endl;
+                  pf << ",";
                }
+               pf << v[n][nb_dof*(The_element(nb_en)->n()-1)];
+               if (nb_dof > 1)
+                  pf << "," << v[n][nb_dof*(The_element(nb_en)->n()-1)+1] << ","
+                     << v[n][nb_dof*(The_element(nb_en)->n()-1)+2] << endl;
+               if (n<nb_time-1 && n+f<nb_time)
+                  pf << ",";
             }
             pf << "};" << endl;
          }
          pf << "};" << endl;
          break;
    }
-   cout << "Number of stored time steps: " << nb_st << endl;
 }
 
 
@@ -1445,6 +1369,27 @@ void getfields(string                   file,
    IOField io(file,ms,IOField::IN);
    u.resize(n);
    io.get(ms,u,name);
+}
+
+
+void saveMatrix(const Matrix<real_t>* A,
+                string                file)
+{
+   ofstream of(file.c_str(),ios::out);
+   of.setf(ios::right|ios::scientific);
+   of << "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>" << endl;
+   of << "<OFELI_File>" << endl;
+   of << "<info>\n   <title></title>" << endl;
+   of << "   <date>" << __DATE__ << "</date>" << endl;
+   of << "   <author></author>\n</info>" << endl;
+   size_t nr = A->getNbRows(), nc=A->getNbColumns();
+   of << "<Matrix nb_rows=\"" << nr << "\" nb_cols=\"" << nc << "\">" << endl;
+   for (size_t i=1; i<=nr; ++i) {
+      for (size_t j=1; j<=nc; ++j)
+         of << "  " << (*A)(i,j);
+      of << endl;
+   }
+   of << "</Matrix>\n</OFELI_File>" << endl;
 }
 
 } /* namespace OFELI */

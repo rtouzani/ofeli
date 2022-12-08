@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -247,7 +247,7 @@ class Equa
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Return reference to linear solver instance
-    LinearSolver<real_t> &getLinearSolver();
+    LinearSolver &getLinearSolver();
 
 /// \brief Return pointer to matrix
 #if defined (USE_PETSC)
@@ -418,7 +418,7 @@ class Equa
    Fct                    _epsilon_fct, _omega_fct, _beta_fct, _v_fct, _young_fct, _poisson_fct;
    Fct                    _theFct;
    real_t                 _ex, _ey, _ez, _et;
-   LinearSolver<real_t>   _ls;
+   LinearSolver           _ls;
    real_t                 _toler;
    Prescription           *_prescription;
    TimeIntegration        _TimeInt;

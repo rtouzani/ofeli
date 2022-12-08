@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -119,7 +119,7 @@ class Matrix
 
 /// \brief Default constructor
 /// \details Initializes a zero-size matrix.
-  Matrix();
+    Matrix();
 
 /// \brief Copy Constructor
     Matrix(const Matrix<T_> &m);
@@ -182,6 +182,8 @@ class Matrix
     void setDiagonal(Mesh& mesh);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void setName(string name);
+
     virtual void setGraph(const Vect<RC>& I,
                           int             opt=1) = 0;
 
@@ -190,6 +192,15 @@ class Matrix
 
     void init_set_mesh(Mesh&  mesh,
                        size_t dof=0);
+
+    virtual void setSize(size_t nr,
+                         size_t nc) { }
+
+    virtual void setSize(size_t nr) { }
+
+    virtual void setSize(size_t size,
+                         int    ld,
+                         int    ud) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -393,13 +404,17 @@ class Matrix
     void PrescribeSide();
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void Constraint(const Mesh& mesh);
+    void Constraint(Mesh& mesh);
     void Constraint();
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Add <tt>val</tt> to entry <tt>(i,j)</tt>.
     virtual void add(size_t    i,
                      size_t    j,
+                     const T_& val) = 0;
+
+/// \brief Add <tt>val</tt> to entry <tt>i</tt>.
+    virtual void add(size_t    i,
                      const T_& val) = 0;
 
 /// \brief Factorize matrix. Available only if the storage class enables it.
@@ -566,6 +581,7 @@ class Matrix
    real_t              _penal;
    int                 _set_nodes, _set_elements, _set_sides, _is_diagonal;
    Mesh                *_theMesh;
+   string              _name;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

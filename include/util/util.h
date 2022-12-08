@@ -1,6 +1,12 @@
 /*==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+                                    O  F  E  L  I
+
+                           Object  Finite  Element  Library
+
+  ==============================================================================
+
+   Copyright (C) 1998 - 2023 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -52,6 +58,13 @@ namespace OFELI {
 inline int Sgn(real_t a) { return (((a) > 0) ? (1) : -(1)); }
 
 
+/** \fn real_t Sgn(real_t a, real_t b)
+ * \ingroup Util
+ * \brief Return \c |a| if \c b>0, \c -|a| if not
+ */
+inline real_t Sgn(real_t a, real_t b) { return ((b) >= 0.0 ? std::abs(a) : -std::abs(a)); }
+
+
 /** \fn real_t Abs2(complex_t a)
  *  \ingroup Util
  *  \brief Return square of modulus of complex number <tt>a</tt>
@@ -82,7 +95,7 @@ inline real_t Abs(complex_t a) { return sqrt(Abs2(a)); }
 
 /** \fn real_t Abs(const Point<real_t>& p)
  *  \ingroup Util
- *  \brief Return Norm of vector <tt>a</tt>
+ *  \brief Return norm of vector <tt>a</tt>
  */
 inline real_t Abs(const Point<real_t>& p) { return p.Norm(); }
 
@@ -101,6 +114,47 @@ inline real_t Conjg(real_t a) { return a; }
 inline complex_t Conjg(complex_t a) { return complex_t(a.real(),-a.imag()); }
 
 
+/** \fn string complex_string(real_t x, real_t y)
+ *  \ingroup Util
+ *  \brief Return string to conviently display a complex number
+ *  @param [in] z Complex number
+ */
+inline string out_complex(complex_t z)
+{
+   std::ostringstream out;  
+   if (z.imag()==0.0) {
+      out << z.real();
+      return out.str();
+   }
+   string ss = " + ";
+   if (z.imag()<0.0)
+      ss = " - ";
+   out << z.real() << ss << std::abs(z.imag()) << " I";
+   return out.str();
+}
+
+
+/** \fn string complex_string(real_t x, real_t y)
+ *  \ingroup Util
+ *  \brief Return string to conviently display a complex number
+ *  @param [in] x Real part
+ *  @param [in] y Imaginary part
+ */
+inline string out_complex(real_t x, real_t y)
+{
+   std::ostringstream out;  
+   if (y==0.0) {
+      out << x;
+      return out.str();
+   }
+   string ss = " + ";
+   if (y<0.0)
+      ss = " - ";
+   out << x << ss << std::abs(y) << " I";
+   return out.str();
+}
+
+
 /** \fn real_t Max(real_t a, real_t b, real_t c)
  *  \ingroup Util
  *  \brief Return maximum value of real numbers <tt>a</tt>, <tt>b</tt> and <tt>c</tt>
@@ -115,6 +169,30 @@ inline real_t Max(real_t a,
  * \brief Return Kronecker delta of <tt>i</tt> and <tt>j</tt>. 
  */
 inline int Kronecker(int i, int j) { return ((i==j) ? 1 : 0); }
+
+
+/** \fn const T_& Max(const T_& a, const T_& b)
+ *  \ingroup Util
+ *  \brief Return maximum value of elements <tt>a</tt> and <tt>b</tt>
+ */
+template<class T_>
+const T_& Max(const T_& a,
+              const T_& b)
+{
+   return (a < b) ? b : a;
+}
+
+
+/** \fn const T_& Min(const T_& a, const T_& b)
+ *  \ingroup Util
+ *  \brief Return minimum value of elements <tt>a</tt> and <tt>b</tt>
+ */
+template<class T_>
+const T_& Min(const T_& a,
+              const T_& b)
+{
+   return (a > b) ? b : a;
+}
 
 
 /** \fn int Max(int a, int b, int c)
@@ -291,10 +369,10 @@ inline void Xpy(const vector<T_>& x,
  *  \details <tt>n</tt> is the arrays size.
  */
 template<class T_>
-inline void Axpy(size_t n,
-                 T_     a,
-                 T_*    x,
-                 T_*    y)
+void Axpy(size_t n,
+          T_     a,
+          T_*    x,
+          T_*    y)
 {
    for (size_t i=0; i<n; ++i)
       y[i] += a*x[i];
@@ -307,24 +385,9 @@ inline void Axpy(size_t n,
  *  \details <tt>x</tt> and <tt>y</tt> are instances of class vector<T_>
  */
 template<class T_>
-inline void Axpy(T_                a,
-                 const vector<T_>& x,
-                 vector<T_>&       y)
-{
-   for (size_t i=0; i<x.size(); i++)
-      y[i] += a*x[i];
-}
-
-
-/** \fn void Axpy(T_ a, const Vect<T_>& x, Vect<T_>& y)
- *  \ingroup Util
- *  \brief Multiply vector <tt>x</tt> by <tt>a</tt> and add result to <tt>y</tt>
- *  \details <tt>x</tt> and <tt>y</tt> are instances of class Vect<T_>
- */
-template<class T_>
-inline void Axpy(T_              a,
-                 const Vect<T_>& x,
-                 Vect<T_>&       y)
+void Axpy(T_                a,
+          const vector<T_>& x,
+          vector<T_>&       y)
 {
    for (size_t i=0; i<x.size(); i++)
       y[i] += a*x[i];
@@ -586,7 +649,6 @@ T_ stringTo(const std::string& s)
 }
 
 
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /** \fn void RTrim(char* s)
  *  \ingroup Util
@@ -594,8 +656,7 @@ T_ stringTo(const std::string& s)
  */
 inline void RTrim(char* s)
 {
-   size_t i = 0;
-   size_t l = string(s).length() - 1;
+   size_t i=0, l=string(s).length()-1;
    if (l > 0) {
       i = l;
       while (s[i] == ' ')
@@ -624,6 +685,7 @@ inline void LTrim(char* s)
    }
 }
 
+
 /** \fn void Trim(char* s)
  *  \ingroup Util
  *  \brief Function to remove blanks at the beginning and end of a string.
@@ -642,6 +704,7 @@ inline void Swap(T_& a,
    a = b;
    b = t;
 }
+
 
 inline std::string zeros(size_t m,
                          size_t n=3)
@@ -684,7 +747,6 @@ inline int MaxQuad(const real_t& a, const real_t& b, const real_t& c, real_t& x)
    x = fmax((-b-d)/a,(-b+d)/a);
    return 0;
 }
-
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */

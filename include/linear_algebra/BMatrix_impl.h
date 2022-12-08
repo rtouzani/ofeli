@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -279,6 +279,14 @@ BMatrix<T_>& BMatrix<T_>::operator+=(const T_& x)
       for (int j=0; j<_ld+_ud+1; ++j)
          _a[i][j] += x;
    return *this;
+}
+
+
+template<class T_>
+void BMatrix<T_>::add(size_t    i,
+                      const T_& val)
+{
+   _a[i-1][0] += val;
 }
 
 

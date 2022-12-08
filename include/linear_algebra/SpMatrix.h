@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -615,6 +615,10 @@ template<class T_> class SpMatrix : public Matrix<T_>
  */
     T_ get(size_t i,
            size_t j) const;
+
+/// \brief Add <tt>val</tt> to entry <tt>i</tt>.
+    void add(size_t    i,
+             const T_& val);
 
 #ifdef USE_EIGEN
 /// \brief Return reference to the matrix instance in Eigen library

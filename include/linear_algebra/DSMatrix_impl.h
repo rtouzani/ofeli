@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -229,7 +229,7 @@ void DSMatrix<T_>::setDiag(const T_& a)
 {
    _is_diagonal = true;
    for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,a);
+      _diag[i] = a;
    for (size_t i=0; i<_nb_rows; i++)
       _a[i*(i-1)/2+i-1] = a;
 }
@@ -240,7 +240,7 @@ void DSMatrix<T_>::setDiag(const vector<T_>& d)
 {
    _is_diagonal = true;
    for (size_t i=0; i<_size; i++)
-      _diag.set(i+1,d[i]);
+      _diag[i] = d[i];
    for (size_t i=0; i<_nb_rows; i++)
       _a[i*(i-1)/2+i-1] = d[i];
 }
@@ -301,8 +301,8 @@ DSMatrix<T_>& DSMatrix<T_>::operator=(const T_& x)
 template<class T_>
 DSMatrix<T_>& DSMatrix<T_>::operator+=(const T_& x)
 {
-   for (size_t i=1; i<=_length; ++i)
-      _a.add(i,x);
+   for (size_t i=0; i<_length; ++i)
+      _a[i] += x;
    return *this;
 }
 
@@ -310,8 +310,8 @@ DSMatrix<T_>& DSMatrix<T_>::operator+=(const T_& x)
 template<class T_>
 DSMatrix<T_>& DSMatrix<T_>::operator-=(const T_& x)
 {
-   for (size_t i=1; i<=_length; ++i)
-      _a.add(i,-x);
+   for (size_t i=0; i<_length; ++i)
+      _a[i] -= x;
    return *this;
 }
 
@@ -389,7 +389,8 @@ template<class T_>
 void DSMatrix<T_>::Axpy(T_                  a,
                         const DSMatrix<T_>& m)
 {
-   _a += a * m._a;
+   for (size_t i=0; i<_length; ++i)
+      _a[i] += a * m._a[i];
 }
 
 
@@ -443,9 +444,9 @@ int DSMatrix<T_>::solve(const Vect<T_>& b,
 
 
 template<class T_>
-T_* DSMatrix<T_>::getArray() const
+const T_* DSMatrix<T_>::getArray()
 {
-   return _a;
+   return &_a[0];
 }
 
 
@@ -457,6 +458,14 @@ T_ DSMatrix<T_>::get(size_t i,
       return _a[i*(i-1)/2+j-1];
    else
       return _a[j*(j-1)/2+i-1];
+}
+
+
+template<class T_>
+void DSMatrix<T_>::add(size_t    i,
+                       const T_& val)
+{
+   _a[i-1] += val;
 }
 
 

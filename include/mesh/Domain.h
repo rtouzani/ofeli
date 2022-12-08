@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -80,6 +80,7 @@ struct Vertex : public Point<real_t> {
    real_t h;
    size_t label;
    int code;
+   Vertex() : h(0.1), label(1), code(0) { }
 };
 
 struct Ln {
@@ -90,15 +91,16 @@ struct Ln {
    vector<Point<real_t> > node;
 };
 
-typedef struct {
+struct Cont {
    size_t nb, first_line;
    vector<int> orientation;
    vector<size_t> line;
-} Cont;
+   Cont() : nb(0), first_line(0) { }
+};
 
-typedef struct { int code, contour, line, type, orient; } Sd;
-typedef struct { size_t i, j; int dc, nc; } LP;
-typedef struct { size_t n1, n2, n3, n4; int code; } El;
+struct Sd { int code, contour, line, type, orient; }d;
+struct LP { size_t i, j; int dc, nc; };
+struct El { size_t n1, n2, n3, n4; int code; };
 
  public:
 

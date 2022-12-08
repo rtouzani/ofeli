@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -46,17 +46,17 @@ namespace OFELI {
 template<class T_>
 Matrix<T_>::Matrix()
            : _nb_rows(0), _nb_cols(0), _size(0), _length(0), _zero(T_(0)),
-             _penal(1.e20), _is_diagonal(false)
+             _penal(1.e20), _is_diagonal(false), _name("M")
 { }
 
 
 template<class T_>
 Matrix<T_>::Matrix(const Matrix<T_> &m)
            : _nb_rows(m._nb_rows), _nb_cols(m._nb_cols), _size(m._size), _length(m._length),
-             _zero(T_(0)), _penal(m._penal), _is_diagonal(m._is_diagonal)
+             _zero(T_(0)), _penal(m._penal), _is_diagonal(m._is_diagonal), _name(m._name)
 {
    _ch.resize(_size);
-   _diag.setSize(_size);
+   _diag.resize(_size);
    _ch = m._ch;
    _diag = m._diag;
    _theMesh = m._theMesh;
@@ -80,6 +80,10 @@ size_t Matrix<T_>::getNbColumns() const { return _nb_cols; }
 
 
 template<class T_>
+void Matrix<T_>::setName(string name) { _name = name; }
+
+
+template<class T_>
 void Matrix<T_>::setPenal(real_t p) { _penal = p; }
 
 
@@ -92,7 +96,7 @@ void Matrix<T_>::setDiagonal()
    for (size_t i=1; i<_size; i++)
       _ch[i] = i+1;
    _a.resize(_size);
-   clear(_a);
+   _a.clear();
    _dof = 0;
    _length = _nb_rows = _nb_cols = _size;
    _is_diagonal = true;
@@ -117,7 +121,7 @@ void Matrix<T_>::setDiagonal(Mesh& mesh)
    for (size_t i=1; i<_size; i++)
       _ch[i] = i+1;
    _a.resize(_size);
-   clear(_a);
+   _a.clear();
    _dof = 0;
    _length = _nb_rows = _nb_cols = _size;
    _is_diagonal = true;
@@ -497,7 +501,7 @@ void Matrix<T_>::PrescribeSide()
 
 
 template<class T_>
-void Matrix<T_>::Constraint(const Mesh& mesh)
+void Matrix<T_>::Constraint(Mesh& mesh)
 {
    Prescribe(mesh);
 }
@@ -596,8 +600,8 @@ Matrix<T_>& Matrix<T_>::operator=(Matrix<T_>& m)
 template<class T_>
 Matrix<T_>& Matrix<T_>::operator+=(const Matrix<T_>& m)
 {
-   for (size_t i=1; i<=_length; ++i)
-      _a.add(i,m._a[i-1]);
+   for (size_t i=0; i<_length; ++i)
+      _a[i] += m._a[i];
    return *this;
 }
 

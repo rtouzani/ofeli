@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -381,11 +381,15 @@ public:
 
 /// \brief Return C-Array
 /// \details Skyline of matrix is stored row by row.
-    T_ *get() const;
+    T_ *get();
 
 /// \brief Assign a value to the i-th entry of C-array containing matrix
     void set(size_t i,
              T_     x);
+
+/// \brief Add <tt>val</tt> to entry <tt>i</tt>.
+    void add(size_t    i,
+             const T_& val);
 
 /// \brief Return entry <tt>(i,j)</tt> of matrix if this one is stored, <tt>0</tt> else
     T_ get(size_t i,

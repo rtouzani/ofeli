@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This program is free software; you can redistribute it and/or modify it under
    the terms of the GNU General Public License as published by the Free
@@ -20,50 +20,43 @@
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the :
 
-   Free Software Foqundation
+   Free Software Foundation
    Inc., 59 Temple Place - Suite 330
    Boston, MA  02111-1307, USA
 
   ==============================================================================
 
-                 An example of a Finite Element Code using OFELI
+                       An example of the eigenproblem solver
 
-            Solution of an eigenvalue problem for the Laplace equation
-                         in 2-D using P1 finite elements
+      Solution of an eigenvalue problem for a given dense unsymmetric matrix
 
   ==============================================================================*/
 
 #include "OFELI.h"
-#include "Laplace.h"
 
 using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
-// Expand arguments
-   if (argc < 2) {
-      cout << "Usage: " << argv[0] << " <project_file>" << endl;
-      return EXIT_FAILURE;
-   }
+   banner("eigen_demo2");
+   const int n = 4;
 
+// Define the matrix
    try {
-      banner("eigen_demo2");
-      IPF data(argv[1]);
-      int nb = data.getInteger("nb");
-      Mesh ms(data.getMeshFile());
+      DMatrix<double> A(n,n);
+      A = 0;
+      A(1,1) =  2.0; A(1,2) = -1.0;
+      A(2,1) = -1.0; A(2,2) =  2.0; A(2,3) = -1.0;
+      A(3,2) = -1.0; A(3,3) =  2.0; A(3,4) = -1.0;
+      A(4,1) =  1.0; A(4,2) =  1.0; A(4,3) =  1.0; A(4,4) = 4.0;
 
 //    Solve the eigenvalue problem
-      Laplace2DT3 eq(ms);
-      EigenProblemSolver e(eq);
-      e.run(nb);
+      Vect<double> evr, evi;
+      EigenProblemSolver e(A,true);
 
-//    Output eigenvalues, save eigenvectors for Gmsh post-processing
-      Vect<double> v(ms);
-      for (int i=1; i<=nb; i++) {
-         cout << "Eigenvalue #" << i << ": " << e.getEigenValue(i) << endl;
-         e.getEigenVector(i,v);
-         saveField(v,ms,data.getPlotFile(i),GMSH);
-      }
+//    Output eigenvalues and eigenvectors
+      Verbosity = 10;
+      cout << e;
    } CATCH_EXCEPTION
    return EXIT_SUCCESS;
 }

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -332,6 +332,21 @@ class Vect
  */
     void set(const T_* v,
              size_t    n);
+
+
+/** \brief Select one component from a given multicomponent vector
+ *  @param [in] v Vect instance to extract from
+ *  @param [in] n Component to extract (must be > 1 and < 4 or).
+ */
+    void select(const Vect<T_>& v,
+                size_t          n);
+
+
+/** \brief Return vector with selected one component from a given multicomponent vector
+ *  @param [in] n Component to extract (must be > 1 and < 4 or).
+ *  @return Vector with selected component
+ */
+    Vect<T_> select(size_t n);
 
 /** \brief Initialize vector with another Vect instance
  *  @param [in] v Vect instance to extract from
@@ -1240,7 +1255,7 @@ class Vect
  private:
 
     DOFSupport _dof_type;
-    size_t _size, _nx, _ny, _nz, _nt, _nb, _nb_dof;
+    size_t _size, _nx, _ny, _nz, _nt, _nb, _nb_dof, _nc;
     int    _dg_degree;
     bool   _grid, _with_mesh, _with_regex[10];
     Mesh   *_theMesh;

@@ -3109,14 +3109,12 @@ void Triangles::FillHoleInMesh()
       _quadtree->Add(*v1);
 	
 //    Add vertices one by one
-      long NbSwap=0;
       for (long icount=2; icount<nbvb; icount++) {
          Vertex *vi = ordre[icount];
          Icoor2 dete[3];
          Triangle *tcvi = FindTriangleContaining(vi->i,dete);
          _quadtree->Add(*vi);
          Add(*vi,tcvi,dete);
-         NbSwap += vi->Optim(1,1);
       }
 
 //    Inforce the boundary 

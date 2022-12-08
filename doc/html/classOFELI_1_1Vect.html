@@ -153,6 +153,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ace847de83f86cb6a02920d61c0d88db1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#ace847de83f86cb6a02920d61c0d88db1">set</a> (const T_ *v, size_t n)</td></tr>
 <tr class="memdesc:ace847de83f86cb6a02920d61c0d88db1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize vector with a c-array.  <a href="classOFELI_1_1Vect.html#ace847de83f86cb6a02920d61c0d88db1">More...</a><br /></td></tr>
 <tr class="separator:ace847de83f86cb6a02920d61c0d88db1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bf473f1f7579f6a18f209ab69491e72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a7bf473f1f7579f6a18f209ab69491e72">select</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v, size_t n)</td></tr>
+<tr class="memdesc:a7bf473f1f7579f6a18f209ab69491e72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select one component from a given multicomponent vector.  <a href="classOFELI_1_1Vect.html#a7bf473f1f7579f6a18f209ab69491e72">More...</a><br /></td></tr>
+<tr class="separator:a7bf473f1f7579f6a18f209ab69491e72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bbf8feae9c7f46273e575512b332171"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a3bbf8feae9c7f46273e575512b332171">select</a> (size_t n)</td></tr>
+<tr class="memdesc:a3bbf8feae9c7f46273e575512b332171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return vector with selected one component from a given multicomponent vector.  <a href="classOFELI_1_1Vect.html#a3bbf8feae9c7f46273e575512b332171">More...</a><br /></td></tr>
+<tr class="separator:a3bbf8feae9c7f46273e575512b332171"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5595086707af7c13445534949ada6abc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a5595086707af7c13445534949ada6abc">select</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;v, size_t nb_dof=0, size_t first_dof=1)</td></tr>
 <tr class="memdesc:a5595086707af7c13445534949ada6abc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize vector with another <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors.">Vect</a> instance.  <a href="classOFELI_1_1Vect.html#a5595086707af7c13445534949ada6abc">More...</a><br /></td></tr>
 <tr class="separator:a5595086707af7c13445534949ada6abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2717,8 +2723,45 @@ The <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpos
 
 </div>
 </div>
+<a id="a7bf473f1f7579f6a18f209ab69491e72" name="a7bf473f1f7579f6a18f209ab69491e72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bf473f1f7579f6a18f209ab69491e72">&#9670;&nbsp;</a></span>select() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void select </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Select one component from a given multicomponent vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors.">Vect</a> instance to extract from </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Component to extract (must be &gt; 1 and &lt; 4 or). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a5595086707af7c13445534949ada6abc" name="a5595086707af7c13445534949ada6abc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5595086707af7c13445534949ada6abc">&#9670;&nbsp;</a></span>select()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5595086707af7c13445534949ada6abc">&#9670;&nbsp;</a></span>select() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2758,6 +2801,33 @@ The <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpos
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a3bbf8feae9c7f46273e575512b332171" name="a3bbf8feae9c7f46273e575512b332171"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bbf8feae9c7f46273e575512b332171">&#9670;&nbsp;</a></span>select() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; select </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>n</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return vector with selected one component from a given multicomponent vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Component to extract (must be &gt; 1 and &lt; 4 or). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector with selected component </dd></dl>
 
 </div>
 </div>

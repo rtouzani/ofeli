@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -118,6 +118,8 @@ namespace OFELI {
 #define node_label (the_node->n())
 #define side_label (the_side->n())
 #define edge_label (the_edge->n())
+
+#define SQR(x) ((x)*(x))
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

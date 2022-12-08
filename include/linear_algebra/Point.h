@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -70,9 +70,14 @@ struct Point {
 /// \brief Default constructor
     Point() { x = y = z = T_(0); }
 
-/// \brief Constructor that assigns <tt>a</tt>, <tt>b</tt> to <tt>x</tt>-, <tt>y</tt>- and <tt>z</tt>-coordinates respectively.
-/// \details Default values for <tt>b</tt> and <tt>c</tt> are <tt>0</tt>
-    Point(T_ a, T_ b=T_(0), T_ c=T_(0)) { x = a; y = b; z = c; }
+/// \brief Constructor that assigns <tt>a</tt> to first coordinate.
+    Point(T_ a) { x = a; y = z = T_(0); }
+
+/// \brief Constructor that assigns <tt>a</tt> and <tt>b</tt> to first and second coordinates respectively.
+    Point(T_ a, T_ b) { x = a; y = b; z = T_(0); }
+
+/// \brief Constructor that assigns <tt>a</tt>, <tt>b</tt> and <tt>c</tt> to first, second and third coordinates respectively.
+  Point(T_ a, T_ b, T_ c) { x = a; y = b; z = c; }
 
 /// \brief Copy constructor
     Point(const Point<T_>& p) { x = p.x; y = p.y; z = p.z; }

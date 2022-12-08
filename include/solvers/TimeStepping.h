@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -54,7 +54,7 @@ namespace OFELI {
  *  @{
  */
 
-template class LinearSolver<real_t>;
+class LinearSolver;
 
 /*! \file TimeStepping.h
  *  \brief Definition file for class TimeStepping.
@@ -137,7 +137,7 @@ class TimeStepping
 /** \brief Set reference to LinearSolver instance
  *  @param [in] ls Reference to LinearSolver instance
  */
-    void setLinearSolver(LinearSolver<real_t>& ls) { _ls = &ls; }
+    void setLinearSolver(LinearSolver& ls) { _ls = &ls; }
 
 /** \brief Define partial differential equation to solve
  *  \details The used equation class must have been constructed using the Mesh instance
@@ -300,7 +300,7 @@ class TimeStepping
 //-----------------------------   INSPECTORS  ----------------------------------
 
 /// \brief Return LinearSolver instance
-    LinearSolver<real_t> &getLSolver() { return *_ls; }
+    LinearSolver &getLSolver() { return *_ls; }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend std::ostream & operator<<(std::ostream& s,
@@ -331,7 +331,7 @@ class TimeStepping
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;
    real_t _beta, _gamma, _nl_toler;
    int _max_nl_it;
-   LinearSolver<real_t> *_ls;
+   LinearSolver *_ls;
 
    typedef void (TimeStepping::* TSPtr)();
    static TSPtr TS[12];

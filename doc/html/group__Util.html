@@ -430,6 +430,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>areClose</b> (const <
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Sgn</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a)</td></tr>
 <tr class="memdesc:ga9cea09d745dfd5da9d06a67fdea3bafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return sign of <code>a</code>: <code>-1</code> or <code>1</code>. <br /></td></tr>
 <tr class="separator:ga9cea09d745dfd5da9d06a67fdea3bafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a8c09e3b27a4a08a60b02054d901cd3"><td class="memItemLeft" align="right" valign="top"><a id="ga5a8c09e3b27a4a08a60b02054d901cd3" name="ga5a8c09e3b27a4a08a60b02054d901cd3"></a>
+<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Sgn</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> <a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>)</td></tr>
+<tr class="memdesc:ga5a8c09e3b27a4a08a60b02054d901cd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <code>|a|</code> if <code>b&gt;0</code>, <code>-|a|</code> if not. <br /></td></tr>
+<tr class="separator:ga5a8c09e3b27a4a08a60b02054d901cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9316f5c420694e0ef052c15fd7838822"><td class="memItemLeft" align="right" valign="top"><a id="ga9316f5c420694e0ef052c15fd7838822" name="ga9316f5c420694e0ef052c15fd7838822"></a>
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Abs2</b> (<a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> a)</td></tr>
 <tr class="memdesc:ga9316f5c420694e0ef052c15fd7838822"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return square of modulus of complex number <code>a</code> <br /></td></tr>
@@ -448,7 +452,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Sgn</b> (<a class="el"
 <tr class="separator:ga05890aa3f761cc5390e93535b020db78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab826b7c64138601293cd22b7cb126c84"><td class="memItemLeft" align="right" valign="top"><a id="gab826b7c64138601293cd22b7cb126c84" name="gab826b7c64138601293cd22b7cb126c84"></a>
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Abs</b> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;p)</td></tr>
-<tr class="memdesc:gab826b7c64138601293cd22b7cb126c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Norm of vector <code>a</code> <br /></td></tr>
+<tr class="memdesc:gab826b7c64138601293cd22b7cb126c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return norm of vector <code>a</code> <br /></td></tr>
 <tr class="separator:gab826b7c64138601293cd22b7cb126c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga87522edc935d4d9881f64e3c7efbaee4"><td class="memItemLeft" align="right" valign="top"><a id="ga87522edc935d4d9881f64e3c7efbaee4" name="ga87522edc935d4d9881f64e3c7efbaee4"></a>
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Conjg</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a)</td></tr>
@@ -3333,7 +3337,7 @@ template&lt;class T_ &gt; </td></tr>
 <dl class="section note"><dt>Note</dt><dd><b>Gmsh</b> is a free mesh generator that can be downloaded from the site: <a href="http://www.geuz.org/gmsh/">http://www.geuz.org/gmsh/</a> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">file</td><td>Output file in <b>Gmsh</b> format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>Output file in <b>Gmsh</b> format. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">mesh</td><td><a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes.">Mesh</a> instance to save.</td></tr>
   </table>
   </dd>

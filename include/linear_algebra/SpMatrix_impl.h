@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,8 +50,6 @@ typedef Triplet<real_t>                    Tr;
 #endif
 
 namespace OFELI {
-
-template<class T_> class LinearSolver;
 
 template<class T_>
 SpMatrix<T_>::SpMatrix()
@@ -1160,7 +1158,7 @@ int SpMatrix<T_>::solve(const Vect<T_>& b,
 {
    if (_solver==DIRECT_SOLVER)
       throw OFELIException("In SpMatrix::solve(...): No solver provided.");
-   LinearSolver<T_> ls(*this,b,x);
+   LinearSolver ls(*this,b,x);
    return ls.solve(_solver,_prec);
 }
 
@@ -1231,6 +1229,14 @@ int SpMatrix<T_>::_col_index(size_t i, size_t j) const
    return -1;
 }
 #endif
+
+
+template<class T_>
+void SpMatrix<T_>::add(size_t    i,
+                       const T_& val)
+{
+   _a[i-1] += val;
+}
 
 
 template<>

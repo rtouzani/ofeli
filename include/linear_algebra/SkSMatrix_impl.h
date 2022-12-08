@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -33,10 +33,12 @@
 #ifndef __SKSMATRIX_IMPL_H
 #define __SKSMATRIX_IMPL_H
 
+
 #include "linear_algebra/SkSMatrix.h"
 #include "linear_algebra/GraphOfMatrix.h"
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/Matrix_impl.h"
+#include "util/util.h"
 
 namespace OFELI {
 
@@ -125,7 +127,7 @@ SkSMatrix<T_>::SkSMatrix(const Vect<size_t>& I,
    }
    for (size_t i=0; i<n; i++) {
       if (I[i]>J[i])
-         _ch[I[i]-1] = std::max(static_cast<unsigned>(abs(int(I[i])-int(J[i]))),_ch[I[i]-1]);
+         _ch[I[i]-1] = Max<unsigned>(static_cast<unsigned>(std::abs(int(I[i])-int(J[i]))),_ch[I[i]-1]);
    }
    _ch[0] = 0;
    for (size_t i=1; i<_size; ++i)
@@ -148,7 +150,7 @@ SkSMatrix<T_>::SkSMatrix(const Vect<size_t>& I,
    std::vector<RC> pp(n);
    _size = 0;
    for (i=0; i<n; i++) {
-      _size = std::max(_size,I[i]);
+      _size = Max(_size,I[i]);
       pp[i] = RC(I[i]-1,J[i]-1);
    }
    _ch.resize(_size,0);
@@ -160,7 +162,7 @@ SkSMatrix<T_>::SkSMatrix(const Vect<size_t>& I,
    }
    for (i=0; i<n; i++)
       if (I[i]>J[i])
-         _ch[I[i]-1] = std::max(static_cast<unsigned>(abs(int(I[i])-int(J[i]))),_ch[I[i]-1]);
+         _ch[I[i]-1] = Max<unsigned>(static_cast<unsigned>(abs(int(I[i])-int(J[i]))),_ch[I[i]-1]);
    _ch[0] = 0;
    for (i=1; i<_size; ++i)
       _ch[i] += _ch[i-1] + 1;
@@ -355,7 +357,8 @@ template<class T_>
 void SkSMatrix<T_>::Axpy(T_                   a,
                          const SkSMatrix<T_>& m)
 {
-   _a += a * m._a;
+   for (size_t i=0; i<_length; i++)
+      _a[i] += a * m._a[i];
 }
 
 
@@ -634,9 +637,9 @@ int SkSMatrix<T_>::solve(const Vect<T_>& b,
 
 
 template<class T_>
-T_ *SkSMatrix<T_>::get() const
+T_ *SkSMatrix<T_>::get()
 {
-   return _a;
+   return &_a[0];
 }
 
 
@@ -656,6 +659,14 @@ T_ SkSMatrix<T_>::get(size_t i,
       return _a[_ch[i-1]+j-i];
    else
       return _a[_ch[j-1]+i-j];
+}
+
+
+template<class T_>
+void SkSMatrix<T_>::add(size_t    i,
+                        const T_& val)
+{
+   _a[i-1] += val;
 }
 
 

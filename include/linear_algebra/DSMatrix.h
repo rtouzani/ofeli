@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -273,6 +273,10 @@ class DSMatrix : public Matrix<T_>
     void Axpy(T_                  a,
               const DSMatrix<T_>& m);
  
+/// \brief Add <tt>val</tt> to entry <tt>i</tt>.
+    void add(size_t    i,
+             const T_& val);
+
 /** \brief Add to matrix the product of a matrix by a scalar
  *  @param [in] a Scalar to premultiply
  *  @param [in] m %Matrix by which <tt>a</tt> is multiplied. The result is added
@@ -321,7 +325,7 @@ class DSMatrix : public Matrix<T_>
  *  Matrix is stored row by row.
  *  Only lower triangle is stored.
  */
-    T_ *getArray() const;
+    const T_ *getArray();
 
 /// \brief Return entry <tt>(i,j)</tt> of matrix
     T_ get(size_t i,

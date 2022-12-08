@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -402,6 +402,14 @@ T_& SkMatrix<T_>::operator()(size_t i,
       throw OFELIException("In SkMatrix::Operator(): Index pair (" + to_string(i) + "," +
                             to_string(j) + ") not compatible with skyline structure");
    return _temp;
+}
+
+
+template<class T_>
+void SkMatrix<T_>::add(size_t    i,
+                       const T_& val)
+{
+   _a[i-1] += val;
 }
 
 

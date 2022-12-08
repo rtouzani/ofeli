@@ -8,7 +8,7 @@
 
    This file is part of the OFELI Library
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -104,7 +104,7 @@ void SteklovPoincare2DBE::setMesh(Mesh& ms)
       delete _A;
    setMatrixType(SPARSE);
    _A = new SpMatrix<real_t>(_nb_eq,_nb_eq);
-   LinearSolver<real_t>& ls = getLinearSolver();
+   LinearSolver& ls = getLinearSolver();
    ls.setMatrix(_A);
    _set_matrix = true;
    _ls.setSolver(GMRES_SOLVER,DIAG_PREC);

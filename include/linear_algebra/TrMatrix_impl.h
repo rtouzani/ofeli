@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2022 Rachid Touzani
+   Copyright (C) 1998 - 2023 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -238,6 +238,14 @@ void TrMatrix<T_>::add(size_t    i,
       _a[3*i-3] += val;
    else if (i==j-1)
       _a[3*i-1] += val;
+}
+
+
+template<class T_>
+void TrMatrix<T_>::add(size_t    i,
+                       const T_& val)
+{
+   _a[i-1] += val;
 }
 
 
