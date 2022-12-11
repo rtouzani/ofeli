@@ -1186,7 +1186,7 @@ void saveVTK(Mesh&  mesh,
       *pf << "\nCELLS " << mesh.getNbElements() << setw(10) << size << endl;
       element_loop(&mesh) {
          *pf << setw(8) << sh[The_element.getShape()];
-         for (size_t i=0; i<sh[The_element.getShape()]; i++)
+         for (int i=0; i<sh[The_element.getShape()]; i++)
            *pf << setw(10) << The_element(i+1)->n()-1;
          *pf << endl;
       }

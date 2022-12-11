@@ -102,12 +102,12 @@ void SteklovPoincare2DBE::setMesh(Mesh& ms)
    util();
    if (_A!=nullptr)
       delete _A;
-   setMatrixType(SPARSE);
+   _matrix_type = SPARSE;
    _A = new SpMatrix<real_t>(_nb_eq,_nb_eq);
-   LinearSolver& ls = getLinearSolver();
-   ls.setMatrix(_A);
+   _ls.setMatrix(_A);
+   _its = GMRES_SOLVER, _prec = DIAG_PREC;
    _set_matrix = true;
-   _ls.setSolver(GMRES_SOLVER,DIAG_PREC);
+   _ls.setSolver(_its,_prec);
    if (_b!=nullptr)
       delete _b;
    _b = new Vect<real_t>(_nb_eq);

@@ -56,43 +56,43 @@ echo "--------------------------"
 case $SYSTEM in
 
     MacOSX)
-        mkdir -p ${RELEASE}-${SYSTEM}
-        mkdir -p ${RELEASE}-${SYSTEM}/bin
-        mkdir -p ${RELEASE}-${SYSTEM}/lib
-        mkdir -p ${RELEASE}-${SYSTEM}/include
-        mkdir -p ${RELEASE}-${SYSTEM}/material
-        cp ${PREFIX}/lib/libofeli.a ${RELEASE}-${SYSTEM}/lib/.
-        cp ${PREFIX}/bin/cmesh ${RELEASE}-${SYSTEM}/bin/.
-        cp ${PREFIX}/bin/cfield ${RELEASE}-${SYSTEM}/bin/.
-        cp ${PREFIX}/bin/g2m ${RELEASE}-${SYSTEM}/bin/.
-        cp ${PREFIX}/bin/vmesh ${RELEASE}-${SYSTEM}/bin/.
-        cp ${PREFIX}/share/ofeli/material/* ${RELEASE}-${SYSTEM}/material/.
-        cp -rf ${PREFIX}/include/ofeli/* ${RELEASE}-${SYSTEM}/include/.
-        cp ofeli/install.sh ${RELEASE}-${SYSTEM}/install.sh
-        cp ofeli/README-sdk.md ${RELEASE}-${SYSTEM}/README.md
-        find ${RELEASE}-${SYSTEM}/ -name "CMakeLists.txt" -exec rm {} \;
-        tar czf ${RELEASE}-${SYSTEM}.tar.gz ${RELEASE}-${SYSTEM}/
-        rm -rf ${RELEASE}-${SYSTEM}
+        mkdir -p ${RELEASE}
+        mkdir -p ${RELEASE}/bin
+        mkdir -p ${RELEASE}/lib
+        mkdir -p ${RELEASE}/include
+        mkdir -p ${RELEASE}/material
+        cp ${PREFIX}/lib/libofeli.a ${RELEASE}/lib/.
+        cp ${PREFIX}/bin/cmesh ${RELEASE}/bin/.
+        cp ${PREFIX}/bin/cfield ${RELEASE}/bin/.
+        cp ${PREFIX}/bin/g2m ${RELEASE}/bin/.
+        cp ${PREFIX}/bin/vmesh ${RELEASE}/bin/.
+        cp ${PREFIX}/share/ofeli/material/* ${RELEASE}/material/.
+        cp -rf ${PREFIX}/include/ofeli/* ${RELEASE}/include/.
+        cp ofeli/install.sh ${RELEASE}/install.sh
+        cp ofeli/README-sdk.md ${RELEASE}/README.md
+        find ${RELEASE}/ -name "CMakeLists.txt" -exec rm {} \;
+        tar czf ${RELEASE}-${SYSTEM}.tar.gz ${RELEASE}/
+        rm -rf ${RELEASE}
         ;;
 
     Linux64)
-        mkdir -p ${RELEASE}-${SYSTEM}
-        mkdir -p ${RELEASE}-${SYSTEM}/bin
-        mkdir -p ${RELEASE}-${SYSTEM}/lib
-        mkdir -p ${RELEASE}-${SYSTEM}/include
-        mkdir -p ${RELEASE}-${SYSTEM}/material
-        cp ${PREFIX}/lib/libofeli.a ${RELEASE}-${SYSTEM}/lib/.
-        cp ${PREFIX}/bin/cmesh ${RELEASE}-${SYSTEM}/bin/.
-        cp ${PREFIX}/bin/cfield ${RELEASE}-${SYSTEM}/bin/.
-        cp ${PREFIX}/bin/g2m ${RELEASE}-${SYSTEM}/bin/.
-        cp ${PREFIX}/bin/vmesh ${RELEASE}-${SYSTEM}/bin/.
-        cp ${PREFIX}/share/ofeli/material/* ${RELEASE}-${SYSTEM}/material/.
-        cp -rf ${PREFIX}/include/ofeli/* ${RELEASE}-${SYSTEM}/include/.
-        cp ofeli/install.sh ${RELEASE}-${SYSTEM}/install.sh
-        cp ofeli/README-sdk.md ${RELEASE}-${SYSTEM}/README.md
-        find ${RELEASE}-${SYSTEM}/ -name "CMakeLists.txt" -exec rm {} \;
-        tar czf ${RELEASE}-${SYSTEM}.tar.gz ${RELEASE}-${SYSTEM}/
-        rm -rf ${RELEASE}-${SYSTEM}
+        mkdir -p ${RELEASE}
+        mkdir -p ${RELEASE}/bin
+        mkdir -p ${RELEASE}/lib
+        mkdir -p ${RELEASE}/include
+        mkdir -p ${RELEASE}/material
+        cp ${PREFIX}/lib/libofeli.a ${RELEASE}/lib/.
+        cp ${PREFIX}/bin/cmesh ${RELEASE}/bin/.
+        cp ${PREFIX}/bin/cfield ${RELEASE}/bin/.
+        cp ${PREFIX}/bin/g2m ${RELEASE}/bin/.
+        cp ${PREFIX}/bin/vmesh ${RELEASE}/bin/.
+        cp ${PREFIX}/share/ofeli/material/* ${RELEASE}/material/.
+        cp -rf ${PREFIX}/include/ofeli/* ${RELEASE}/include/.
+        cp ofeli/install.sh ${RELEASE}/install.sh
+        cp ofeli/README-sdk.md ${RELEASE}/README.md
+        find ${RELEASE}/ -name "CMakeLists.txt" -exec rm {} \;
+        tar czf ${RELEASE}-${SYSTEM}.tar.gz ${RELEASE}/
+        rm -rf ${RELEASE}
         ;;
 
     Win64)

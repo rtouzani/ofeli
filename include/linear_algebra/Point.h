@@ -77,7 +77,7 @@ struct Point {
     Point(T_ a, T_ b) { x = a; y = b; z = T_(0); }
 
 /// \brief Constructor that assigns <tt>a</tt>, <tt>b</tt> and <tt>c</tt> to first, second and third coordinates respectively.
-  Point(T_ a, T_ b, T_ c) { x = a; y = b; z = c; }
+    Point(T_ a, T_ b, T_ c) { x = a; y = b; z = c; }
 
 /// \brief Copy constructor
     Point(const Point<T_>& p) { x = p.x; y = p.y; z = p.z; }
@@ -222,13 +222,7 @@ struct Point {
     }
 
 /// \brief First coordinate
-    T_ x;
-
-/// \brief Second coordinate
-    T_ y;
-
-/// \brief Third coordinate
-    T_ z;
+  T_ x, y, z;
 
 };
 

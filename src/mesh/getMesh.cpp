@@ -921,7 +921,7 @@ void getMatlab(string file,
       theElement = new Element(i,TRIANGLE,t(4,i));
       for (size_t j=1; j<=3; ++j)
          TheElement.Add(mesh[t(j,i)]);
-         mesh.Add(theElement);
+      mesh.Add(theElement);
    }
    for (size_t i=1; i<=nb_sides; ++i) {
       theSide = new Side(i,"line");

@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++ -O3 -DNDEBUG -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/tins2.dir/main.cpp.o -o tins2  ../../../src/libofeli.a 
