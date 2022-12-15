@@ -3,6 +3,7 @@ var classOFELI_1_1Matrix =
     [ "Matrix", "classOFELI_1_1Matrix.html#a3aede62f513da27e6f61ae7a972b4f96", null ],
     [ "Matrix", "classOFELI_1_1Matrix.html#a4a08c31941b608d62de67b028e19ca8d", null ],
     [ "~Matrix", "classOFELI_1_1Matrix.html#a50937512a2aece401826a35ccdf69f3b", null ],
+    [ "add", "classOFELI_1_1Matrix.html#ae72516cc39020b9e670f6934e8a6b1cf", null ],
     [ "add", "classOFELI_1_1Matrix.html#a8afb24c3d7982f994ea2c4a50444ed86", null ],
     [ "Assembly", "classOFELI_1_1Matrix.html#aae8f063011ae37198a6c96ad00da6188", null ],
     [ "Assembly", "classOFELI_1_1Matrix.html#a377c96d9edc5455d8b81d7f2e75a7437", null ],

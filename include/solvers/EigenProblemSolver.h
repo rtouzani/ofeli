@@ -169,7 +169,7 @@ class EigenProblemSolver
  *  The eigenvectors can be obtained by calling the member function getEigenVector.
  *  @param [in] A Matrix for which eigenmodes are sought.
  *  @param [in] evr Vector containing real parts of eigenvalues.
- *  @param [in] evr Vector containing imaginary parts of eigenvalues.
+ *  @param [in] evi Vector containing imaginary parts of eigenvalues.
  *  @param [in] eigv Switch to say if eigenvectors are to be computed [Default: <tt>false</tt>].
  *  @remark The vectors \c evr and \c evi do not need to be sized before.
  */
@@ -207,7 +207,7 @@ class EigenProblemSolver
 /** \brief Set pointer to matrix instance.
  *  \details This function is to be used when the default constructor is applied.
  *  Case where the mass matrix is consistent.
- *  @param [in] A Stiffness matrix pointer
+ *  @param [in] K Stiffness matrix pointer
  */
     void setMatrix(Matrix<real_t>* K);
 

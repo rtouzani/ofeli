@@ -114,9 +114,9 @@ inline real_t Conjg(real_t a) { return a; }
 inline complex_t Conjg(complex_t a) { return complex_t(a.real(),-a.imag()); }
 
 
-/** \fn string complex_string(real_t x, real_t y)
+/** \fn string out_complex(complex_t z)
  *  \ingroup Util
- *  \brief Return string to conviently display a complex number
+ *  \brief Return string to conveniently display a complex number
  *  @param [in] z Complex number
  */
 inline string out_complex(complex_t z)
@@ -630,7 +630,7 @@ inline bool Equal(real_t x,
 inline char itoc(int i)
 {
    static char buf[10];
-   sprintf(buf,"%d",i);
+   snprintf(buf,10,"%d",i);
    return buf[0];
 }
 

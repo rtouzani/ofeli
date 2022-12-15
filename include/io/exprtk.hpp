@@ -20175,7 +20175,8 @@ namespace exprtk
          {
             set_error(
                make_error(parser_error::e_syntax,
-                          "ERR000 - Empty expression!",
+//                          "ERR000 - Empty expression!",
+                          "Empty expression!",
                           exprtk_error_location));
 
             return false;
@@ -20191,7 +20192,8 @@ namespace exprtk
          {
             set_error(
                make_error(parser_error::e_syntax,
-                          "ERR001 - Empty expression!",
+//                          "ERR001 - Empty expression!",
+                          "Empty expression!",
                           exprtk_error_location));
 
             return false;
@@ -20238,7 +20240,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR002 - Invalid expression encountered",
+//                             "ERR002 - Invalid expression encountered",
+                             "Invalid expression encountered",
                              exprtk_error_location));
             }
 
@@ -20340,7 +20343,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_token,
                                    bracket_checker_ptr->error_token(),
-                                   "ERR004 - Mismatched brackets: '" + bracket_checker_ptr->error_token().value + "'",
+//                                   "ERR004 - Mismatched brackets: '" + bracket_checker_ptr->error_token().value + "'",
+                                   "Mismatched brackets: '" + bracket_checker_ptr->error_token().value + "'",
                                    exprtk_error_location));
                   }
                   else if (0 != (numeric_checker_ptr = dynamic_cast<lexer::helper::numeric_checker*>(helper_assembly_.error_token_scanner)))
@@ -20352,7 +20356,8 @@ namespace exprtk
                         set_error(
                            make_error(parser_error::e_token,
                                       error_token,
-                                      "ERR005 - Invalid numeric token: '" + error_token.value + "'",
+//                                      "ERR005 - Invalid numeric token: '" + error_token.value + "'",
+                                      "Invalid numeric token: '" + error_token.value + "'",
                                       exprtk_error_location));
                      }
 
@@ -20370,7 +20375,8 @@ namespace exprtk
                         set_error(
                            make_error(parser_error::e_token,
                                       error_token.first,
-                                      "ERR006 - Invalid token sequence: '" +
+//                                      "ERR006 - Invalid token sequence: '" +
+                                      "Invalid token sequence: '" +
                                       error_token.first.value  + "' and '" +
                                       error_token.second.value + "'",
                                       exprtk_error_location));
@@ -20390,7 +20396,8 @@ namespace exprtk
                         set_error(
                            make_error(parser_error::e_token,
                                       error_token.first,
-                                      "ERR007 - Invalid token sequence: '" +
+//                                      "ERR007 - Invalid token sequence: '" +
+                                      "Invalid token sequence: '" +
                                       error_token.first.value  + "' and '" +
                                       error_token.second.value + "'",
                                       exprtk_error_location));
@@ -20586,7 +20593,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR008 - Invalid expression encountered",
+//                                "ERR008 - Invalid expression encountered",
+                                "Invalid expression encountered",
                                 exprtk_error_location));
                }
 
@@ -20823,7 +20831,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              prev_token,
-                             "ERR009 - Invalid or disabled logic operation '" + details::to_str(current_state.operation) + "'",
+//                             "ERR009 - Invalid or disabled logic operation '" + details::to_str(current_state.operation) + "'",
+                             "Invalid or disabled logic operation '" + details::to_str(current_state.operation) + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -20835,7 +20844,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              prev_token,
-                             "ERR010 - Invalid or disabled arithmetic operation '" + details::to_str(current_state.operation) + "'",
+//                             "ERR010 - Invalid or disabled arithmetic operation '" + details::to_str(current_state.operation) + "'",
+                             "Invalid or disabled arithmetic operation '" + details::to_str(current_state.operation) + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -20847,7 +20857,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              prev_token,
-                             "ERR011 - Invalid inequality operation '" + details::to_str(current_state.operation) + "'",
+//                             "ERR011 - Invalid inequality operation '" + details::to_str(current_state.operation) + "'",
+                             "Invalid inequality operation '" + details::to_str(current_state.operation) + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -20859,7 +20870,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              prev_token,
-                             "ERR012 - Invalid or disabled assignment operation '" + details::to_str(current_state.operation) + "'",
+//                             "ERR012 - Invalid or disabled assignment operation '" + details::to_str(current_state.operation) + "'",
+                             "Invalid or disabled assignment operation '" + details::to_str(current_state.operation) + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -20878,7 +20890,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 prev_token,
-                                "ERR013 - Return statements cannot be part of sub-expressions",
+//                                "ERR013 - Return statements cannot be part of sub-expressions",
+                                "Return statements cannot be part of sub-expressions",
                                 exprtk_error_location));
 
                   return error_node();
@@ -20901,7 +20914,8 @@ namespace exprtk
                                 prev_token,
                                 !synthesis_error_.empty() ?
                                 synthesis_error_ :
-                                "ERR014 - General parsing error at token: '" + prev_token.value + "'",
+//                                "ERR014 - General parsing error at token: '" + prev_token.value + "'",
+                                "General parsing error at token: '" + prev_token.value + "'",
                                 exprtk_error_location));
                }
 
@@ -20971,7 +20985,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR015 - Failed to find variable node in symbol table",
+//                                "ERR015 - Failed to find variable node in symbol table",
+                                "Failed to find variable node in symbol table",
                                 exprtk_error_location));
 
                   free_node(node_allocator_,node);
@@ -21151,7 +21166,8 @@ namespace exprtk
                          set_error(
                             make_error(parser_error::e_syntax,
                                        current_token(),
-                                       "ERR016 - Invalid number of parameters for function: '" + function_name + "'",
+//                                       "ERR016 - Invalid number of parameters for function: '" + function_name + "'",
+                                       "Invalid number of parameters for function: '" + function_name + "'",
                                        exprtk_error_location));
 
                          return error_node();
@@ -21165,7 +21181,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR017 - Failed to generate call to function: '" + function_name + "'",
+//                          "ERR017 - Failed to generate call to function: '" + function_name + "'",
+                          "Failed to generate call to function: '" + function_name + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -21184,7 +21201,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR018 - Expecting ifunction '" + function_name + "' to have non-zero parameter count",
+//                          "ERR018 - Expecting ifunction '" + function_name + "' to have non-zero parameter count",
+                          "Expecting ifunction '" + function_name + "' to have non-zero parameter count",
                           exprtk_error_location));
 
             return error_node();
@@ -21207,7 +21225,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR019 - Expecting argument list for function: '" + function_name + "'",
+//                          "ERR019 - Expecting argument list for function: '" + function_name + "'",
+                          "Expecting argument list for function: '" + function_name + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -21222,7 +21241,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR020 - Failed to parse argument " + details::to_str(i) + " for function: '" + function_name + "'",
+//                             "ERR020 - Failed to parse argument " + details::to_str(i) + " for function: '" + function_name + "'",
+                             "Failed to parse argument " + details::to_str(i) + " for function: '" + function_name + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -21234,7 +21254,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR021 - Invalid number of arguments for function: '" + function_name + "'",
+//                                "ERR021 - Invalid number of arguments for function: '" + function_name + "'",
+                                "Invalid number of arguments for function: '" + function_name + "'",
                                 exprtk_error_location));
 
                   return error_node();
@@ -21247,7 +21268,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR022 - Invalid number of arguments for function: '" + function_name + "'",
+//                          "ERR022 - Invalid number of arguments for function: '" + function_name + "'",
+                          "Invalid number of arguments for function: '" + function_name + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -21276,7 +21298,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR023 - Expecting '()' to proceed call to function: '" + function_name + "'",
+//                          "ERR023 - Expecting '()' to proceed call to function: '" + function_name + "'",
+                          "Expecting '()' to proceed call to function: '" + function_name + "'",
                           exprtk_error_location));
 
             free_node(node_allocator_,result);
@@ -21301,7 +21324,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR024 - Expected a '(' at start of function call to '" + function_name  +
+//                          "ERR024 - Expected a '(' at start of function call to '" + function_name  +
+                          "Expected a '(' at start of function call to '" + function_name  +
                           "', instead got: '" + current_token().value + "'",
                           exprtk_error_location));
 
@@ -21313,7 +21337,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR025 - Expected at least one input parameter for function call '" + function_name + "'",
+//                          "ERR025 - Expected at least one input parameter for function call '" + function_name + "'",
+                          "Expected at least one input parameter for function call '" + function_name + "'",
                           exprtk_error_location));
 
             return 0;
@@ -21339,7 +21364,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR026 - Expected a ',' between function input parameters, instead got: '" + current_token().value + "'",
+//                             "ERR026 - Expected a ',' between function input parameters, instead got: '" + current_token().value + "'",
+                             "Expected a ',' between function input parameters, instead got: '" + current_token().value + "'",
                              exprtk_error_location));
 
                return 0;
@@ -21351,7 +21377,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR027 - Invalid number of input parameters passed to function '" + function_name  + "'",
+//                          "ERR027 - Invalid number of input parameters passed to function '" + function_name  + "'",
+                          "Invalid number of input parameters passed to function '" + function_name  + "'",
                           exprtk_error_location));
 
             return 0;
@@ -21374,7 +21401,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           diagnostic_token,
-                          "ERR028 - No entry found for base operation: " + operation_name,
+//                          "ERR028 - No entry found for base operation: " + operation_name,
+                          "No entry found for base operation: " + operation_name,
                           exprtk_error_location));
 
             return error_node();
@@ -21421,7 +21449,8 @@ namespace exprtk
          set_error(
             make_error(parser_error::e_syntax,
                        diagnostic_token,
-                       "ERR029 - Invalid number of input parameters for call to function: '" + operation_name + "'",
+//                       "ERR029 - Invalid number of input parameters for call to function: '" + operation_name + "'",
+                       "Invalid number of input parameters for call to function: '" + operation_name + "'",
                        exprtk_error_location));
 
          return error_node();
@@ -21441,7 +21470,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR030 - Expected ',' between if-statement condition and consequent",
+//                          "ERR030 - Expected ',' between if-statement condition and consequent",
+                          "Expected ',' between if-statement condition and consequent",
                           exprtk_error_location));
             result = false;
          }
@@ -21459,7 +21489,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR032 - Expected ',' between if-statement consequent and alternative",
+//                          "ERR032 - Expected ',' between if-statement consequent and alternative",
+                          "Expected ',' between if-statement consequent and alternative",
                           exprtk_error_location));
             result = false;
          }
@@ -21468,7 +21499,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR033 - Failed to parse alternative for if-statement",
+//                          "ERR033 - Failed to parse alternative for if-statement",
+                          "Failed to parse alternative for if-statement",
                           exprtk_error_location));
             result = false;
          }
@@ -21477,7 +21509,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR034 - Expected ')' at the end of if-statement",
+//                          "ERR034 - Expected ')' at the end of if-statement",
+                          "Expected ')' at the end of if-statement",
                           exprtk_error_location));
             result = false;
          }
@@ -21499,7 +21532,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR035 - Return types of ternary if-statement differ",
+//                             "ERR035 - Return types of ternary if-statement differ",
+                             "Return types of ternary if-statement differ",
                              exprtk_error_location));
 
                result = false;
@@ -21534,7 +21568,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR036 - Failed to parse body of consequent for if-statement",
+//                             "ERR036 - Failed to parse body of consequent for if-statement",
+                             "Failed to parse body of consequent for if-statement",
                              exprtk_error_location));
 
                result = false;
@@ -21557,7 +21592,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR037 - Expected ';' at the end of the consequent for if-statement",
+//                                "ERR037 - Expected ';' at the end of the consequent for if-statement",
+                                "Expected ';' at the end of the consequent for if-statement",
                                 exprtk_error_location));
 
                   result = false;
@@ -21568,7 +21604,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR038 - Failed to parse body of consequent for if-statement",
+//                             "ERR038 - Failed to parse body of consequent for if-statement",
+                             "Failed to parse body of consequent for if-statement",
                              exprtk_error_location));
 
                result = false;
@@ -21588,7 +21625,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR039 - Failed to parse body of the 'else' for if-statement",
+//                                   "ERR039 - Failed to parse body of the 'else' for if-statement",
+                                   "Failed to parse body of the 'else' for if-statement",
                                    exprtk_error_location));
 
                      result = false;
@@ -21601,7 +21639,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR040 - Failed to parse body of if-else statement",
+//                                   "ERR040 - Failed to parse body of if-else statement",
+                                   "Failed to parse body of if-else statement",
                                    exprtk_error_location));
 
                      result = false;
@@ -21614,7 +21653,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR041 - Expected ';' at the end of the 'else-if' for the if-statement",
+//                                   "ERR041 - Expected ';' at the end of the 'else-if' for the if-statement",
+                                   "Expected ';' at the end of the 'else-if' for the if-statement",
                                    exprtk_error_location));
 
                      result = false;
@@ -21625,7 +21665,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR042 - Failed to parse body of the 'else' for if-statement",
+//                                "ERR042 - Failed to parse body of the 'else' for if-statement",
+                                "Failed to parse body of the 'else' for if-statement",
                                 exprtk_error_location));
 
                   result = false;
@@ -21650,7 +21691,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR043 - Return types of ternary if-statement differ",
+//                             "ERR043 - Return types of ternary if-statement differ",
+                             "Return types of ternary if-statement differ",
                              exprtk_error_location));
 
                result = false;
@@ -21682,7 +21724,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR044 - Expected '(' at start of if-statement, instead got: '" + current_token().value + "'",
+//                          "ERR044 - Expected '(' at start of if-statement, instead got: '" + current_token().value + "'",
+                          "Expected '(' at start of if-statement, instead got: '" + current_token().value + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -21692,7 +21735,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR045 - Failed to parse condition for if-statement",
+//                          "ERR045 - Failed to parse condition for if-statement",
+                          "Failed to parse condition for if-statement",
                           exprtk_error_location));
 
             return error_node();
@@ -21724,7 +21768,8 @@ namespace exprtk
          set_error(
             make_error(parser_error::e_syntax,
                        current_token(),
-                       "ERR046 - Invalid if-statement",
+//                       "ERR046 - Invalid if-statement",
+                       "Invalid if-statement",
                        exprtk_error_location));
 
          free_node(node_allocator_,condition);
@@ -21745,7 +21790,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR047 - Encountered invalid condition branch for ternary if-statement",
+//                          "ERR047 - Encountered invalid condition branch for ternary if-statement",
+                          "Encountered invalid condition branch for ternary if-statement",
                           exprtk_error_location));
 
             return error_node();
@@ -21755,7 +21801,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR048 - Expected '?' after condition of ternary if-statement",
+//                          "ERR048 - Expected '?' after condition of ternary if-statement",
+                          "Expected '?' after condition of ternary if-statement",
                           exprtk_error_location));
 
             result = false;
@@ -21765,7 +21812,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR049 - Failed to parse consequent for ternary if-statement",
+//                          "ERR049 - Failed to parse consequent for ternary if-statement",
+                          "Failed to parse consequent for ternary if-statement",
                           exprtk_error_location));
 
             result = false;
@@ -21775,7 +21823,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR050 - Expected ':' between ternary if-statement consequent and alternative",
+//                          "ERR050 - Expected ':' between ternary if-statement consequent and alternative",
+                          "Expected ':' between ternary if-statement consequent and alternative",
                           exprtk_error_location));
 
             result = false;
@@ -21785,7 +21834,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR051 - Failed to parse alternative for ternary if-statement",
+//                          "ERR051 - Failed to parse alternative for ternary if-statement",
+                          "Failed to parse alternative for ternary if-statement",
                           exprtk_error_location));
 
             result = false;
@@ -21808,7 +21858,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR052 - Return types of ternary if-statement differ",
+//                             "ERR052 - Return types of ternary if-statement differ",
+                             "Return types of ternary if-statement differ",
                              exprtk_error_location));
 
                result = false;
@@ -21836,7 +21887,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR053 - Invalid or disabled logic operation 'not'",
+//                          "ERR053 - Invalid or disabled logic operation 'not'",
+                          "Invalid or disabled logic operation 'not'",
                           exprtk_error_location));
 
             return error_node();
@@ -21861,7 +21913,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR054 - Expected '(' at start of while-loop condition statement",
+//                          "ERR054 - Expected '(' at start of while-loop condition statement",
+                          "Expected '(' at start of while-loop condition statement",
                           exprtk_error_location));
 
             return error_node();
@@ -21871,7 +21924,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR055 - Failed to parse condition for while-loop",
+//                          "ERR055 - Failed to parse condition for while-loop",
+                          "Failed to parse condition for while-loop",
                           exprtk_error_location));
 
             return error_node();
@@ -21881,7 +21935,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR056 - Expected ')' at end of while-loop condition statement",
+//                          "ERR056 - Expected ')' at end of while-loop condition statement",
+                          "Expected ')' at end of while-loop condition statement",
                           exprtk_error_location));
 
             result = false;
@@ -21896,7 +21951,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR057 - Failed to parse body of while-loop"));
+//                             "ERR057 - Failed to parse body of while-loop"));
+                             "Failed to parse body of while-loop"));
                result = false;
             }
             else if (0 == (result_node = expression_generator_.while_loop(condition,
@@ -21906,7 +21962,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR058 - Failed to synthesize while-loop",
+//                             "ERR058 - Failed to synthesize while-loop",
+                             "Failed to synthesize while-loop",
                              exprtk_error_location));
 
                result = false;
@@ -21982,7 +22039,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR059 - Expected '" + token_t::to_str(seperator) + "' in body of repeat until loop",
+//                                "ERR059 - Expected '" + token_t::to_str(seperator) + "' in body of repeat until loop",
+                                "Expected '" + token_t::to_str(seperator) + "' in body of repeat until loop",
                                 exprtk_error_location));
 
                   return error_node();
@@ -22006,7 +22064,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR060 - Failed to parse body of repeat until loop",
+//                             "ERR060 - Failed to parse body of repeat until loop",
+                             "Failed to parse body of repeat until loop",
                              exprtk_error_location));
 
                return error_node();
@@ -22020,7 +22079,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR061 - Expected '(' before condition statement of repeat until loop",
+//                          "ERR061 - Expected '(' before condition statement of repeat until loop",
+                          "Expected '(' before condition statement of repeat until loop",
                           exprtk_error_location));
 
             free_node(node_allocator_,branch);
@@ -22034,7 +22094,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR062 - Failed to parse condition for repeat until loop",
+//                          "ERR062 - Failed to parse condition for repeat until loop",
+                          "Failed to parse condition for repeat until loop",
                           exprtk_error_location));
 
             free_node(node_allocator_,branch);
@@ -22046,7 +22107,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR063 - Expected ')' after condition of repeat until loop",
+//                          "ERR063 - Expected ')' after condition of repeat until loop",
+                          "Expected ')' after condition of repeat until loop",
                           exprtk_error_location));
 
             free_node(node_allocator_,    branch);
@@ -22067,7 +22129,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR064 - Failed to synthesize repeat until loop",
+//                          "ERR064 - Failed to synthesize repeat until loop",
+                          "Failed to synthesize repeat until loop",
                           exprtk_error_location));
 
             free_node(node_allocator_,condition);
@@ -22102,7 +22165,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR065 - Expected '(' at start of for-loop",
+//                          "ERR065 - Expected '(' at start of for-loop",
+                          "Expected '(' at start of for-loop",
                           exprtk_error_location));
 
             return error_node();
@@ -22122,7 +22186,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR066 - Expected a variable at the start of initialiser section of for-loop",
+//                                "ERR066 - Expected a variable at the start of initialiser section of for-loop",
+                                "Expected a variable at the start of initialiser section of for-loop",
                                 exprtk_error_location));
 
                   return error_node();
@@ -22132,7 +22197,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR067 - Expected variable assignment of initialiser section of for-loop",
+//                                "ERR067 - Expected variable assignment of initialiser section of for-loop",
+                                "Expected variable assignment of initialiser section of for-loop",
                                 exprtk_error_location));
 
                   return error_node();
@@ -22147,7 +22213,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR068 - For-loop variable '" + loop_counter_symbol+ "' is being shadowed by a previous declaration",
+//                                "ERR068 - For-loop variable '" + loop_counter_symbol+ "' is being shadowed by a previous declaration",
+                                "For-loop variable '" + loop_counter_symbol+ "' is being shadowed by a previous declaration",
                                 exprtk_error_location));
 
                   return error_node();
@@ -22179,7 +22246,8 @@ namespace exprtk
                         set_error(
                            make_error(parser_error::e_syntax,
                                       current_token(),
-                                      "ERR069 - Failed to add new local variable '" + loop_counter_symbol + "' to SEM",
+//                                      "ERR069 - Failed to add new local variable '" + loop_counter_symbol + "' to SEM",
+                                      "Failed to add new local variable '" + loop_counter_symbol + "' to SEM",
                                       exprtk_error_location));
 
                         sem_.free_element(nse);
@@ -22201,7 +22269,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR070 - Failed to parse initialiser of for-loop",
+//                             "ERR070 - Failed to parse initialiser of for-loop",
+                             "Failed to parse initialiser of for-loop",
                              exprtk_error_location));
 
                result = false;
@@ -22211,7 +22280,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR071 - Expected ';' after initialiser of for-loop",
+//                             "ERR071 - Expected ';' after initialiser of for-loop",
+                             "Expected ';' after initialiser of for-loop",
                              exprtk_error_location));
 
                result = false;
@@ -22225,7 +22295,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR072 - Failed to parse condition of for-loop",
+//                             "ERR072 - Failed to parse condition of for-loop",
+                             "Failed to parse condition of for-loop",
                              exprtk_error_location));
 
                result = false;
@@ -22235,7 +22306,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR073 - Expected ';' after condition section of for-loop",
+//                             "ERR073 - Expected ';' after condition section of for-loop",
+                             "Expected ';' after condition section of for-loop",
                              exprtk_error_location));
 
                result = false;
@@ -22249,7 +22321,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR074 - Failed to parse incrementor of for-loop",
+//                             "ERR074 - Failed to parse incrementor of for-loop",
+                             "Failed to parse incrementor of for-loop",
                              exprtk_error_location));
 
                result = false;
@@ -22259,7 +22332,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR075 - Expected ')' after incrementor section of for-loop",
+//                             "ERR075 - Expected ')' after incrementor section of for-loop",
+                             "Expected ')' after incrementor section of for-loop",
                              exprtk_error_location));
 
                result = false;
@@ -22275,7 +22349,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR076 - Failed to parse body of for-loop",
+//                             "ERR076 - Failed to parse body of for-loop",
+                             "Failed to parse body of for-loop",
                              exprtk_error_location));
 
                result = false;
@@ -22325,7 +22400,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR077 - Expected keyword 'switch'",
+//                          "ERR077 - Expected keyword 'switch'",
+                          "Expected keyword 'switch'",
                           exprtk_error_location));
 
             return error_node();
@@ -22340,7 +22416,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR078 - Expected '{' for call to switch statement",
+//                          "ERR078 - Expected '{' for call to switch statement",
+                          "Expected '{' for call to switch statement",
                           exprtk_error_location));
 
             return error_node();
@@ -22353,7 +22430,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR079 - Expected either a 'case' or 'default' statement",
+//                             "ERR079 - Expected either a 'case' or 'default' statement",
+                             "Expected either a 'case' or 'default' statement",
                              exprtk_error_location));
 
                return error_node();
@@ -22370,7 +22448,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR080 - Expected ':' for case of switch statement",
+//                             "ERR080 - Expected ':' for case of switch statement",
+                             "Expected ':' for case of switch statement",
                              exprtk_error_location));
 
                return error_node();
@@ -22385,7 +22464,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR081 - Expected ';' at end of case for switch statement",
+//                             "ERR081 - Expected ';' at end of case for switch statement",
+                             "Expected ';' at end of case for switch statement",
                              exprtk_error_location));
 
                return error_node();
@@ -22411,7 +22491,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR082 - Expected ':' for default of switch statement",
+//                                "ERR082 - Expected ':' for default of switch statement",
+                                "Expected ':' for default of switch statement",
                                 exprtk_error_location));
 
                   return error_node();
@@ -22433,7 +22514,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR083 - Expected ';' at end of default for switch statement",
+//                                "ERR083 - Expected ';' at end of default for switch statement",
+                                "Expected ';' at end of default for switch statement",
                                 exprtk_error_location));
 
                   return error_node();
@@ -22449,7 +22531,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR084 - Expected '}' at end of switch statement",
+//                          "ERR084 - Expected '}' at end of switch statement",
+                          "Expected '}' at end of switch statement",
                           exprtk_error_location));
 
             return error_node();
@@ -22471,7 +22554,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR085 - Expected token '[*]'",
+//                          "ERR085 - Expected token '[*]'",
+                          "Expected token '[*]'",
                           exprtk_error_location));
 
             return error_node();
@@ -22486,7 +22570,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR086 - Expected '{' for call to [*] statement",
+//                          "ERR086 - Expected '{' for call to [*] statement",
+                          "Expected '{' for call to [*] statement",
                           exprtk_error_location));
 
             return error_node();
@@ -22499,7 +22584,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR087 - Expected a 'case' statement for multi-switch",
+//                             "ERR087 - Expected a 'case' statement for multi-switch",
+                             "Expected a 'case' statement for multi-switch",
                              exprtk_error_location));
 
                return error_node();
@@ -22517,7 +22603,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR088 - Expected ':' for case of [*] statement",
+//                             "ERR088 - Expected ':' for case of [*] statement",
+                             "Expected ':' for case of [*] statement",
                              exprtk_error_location));
 
                return error_node();
@@ -22533,7 +22620,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR089 - Expected ';' at end of case for [*] statement",
+//                             "ERR089 - Expected ';' at end of case for [*] statement",
+                             "Expected ';' at end of case for [*] statement",
                              exprtk_error_location));
 
                return error_node();
@@ -22562,7 +22650,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR090 - Expected '}' at end of [*] statement",
+//                          "ERR090 - Expected '}' at end of [*] statement",
+                          "Expected '}' at end of [*] statement",
                           exprtk_error_location));
 
             return error_node();
@@ -22603,7 +22692,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR091 - Unsupported vararg function: " + symbol,
+//                          "ERR091 - Unsupported vararg function: " + symbol,
+                          "Unsupported vararg function: " + symbol,
                           exprtk_error_location));
 
             return error_node();
@@ -22620,7 +22710,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR092 - Expected '(' for call to vararg function: " + symbol,
+//                          "ERR092 - Expected '(' for call to vararg function: " + symbol,
+                          "Expected '(' for call to vararg function: " + symbol,
                           exprtk_error_location));
 
             return error_node();
@@ -22642,7 +22733,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR093 - Expected ',' for call to vararg function: " + symbol,
+//                             "ERR093 - Expected ',' for call to vararg function: " + symbol,
+                             "Expected ',' for call to vararg function: " + symbol,
                              exprtk_error_location));
 
                return error_node();
@@ -22663,7 +22755,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR094 - Expected '[' as start of string range definition",
+//                          "ERR094 - Expected '[' as start of string range definition",
+                          "Expected '[' as start of string range definition",
                           exprtk_error_location));
 
             free_node(node_allocator_,expression);
@@ -22691,7 +22784,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR095 - Failed to generate string range node",
+//                          "ERR095 - Failed to generate string range node",
+                          "Failed to generate string range node",
                           exprtk_error_location));
 
             free_node(node_allocator_,expression);
@@ -22827,7 +22921,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR096 - Expected '" + token_t::to_str(close_bracket) + "' for call to multi-sequence" +
+//                             "ERR096 - Expected '" + token_t::to_str(close_bracket) + "' for call to multi-sequence" +
+                             "Expected '" + token_t::to_str(close_bracket) + "' for call to multi-sequence" +
                              ((!source.empty()) ? std::string(" section of " + source): ""),
                              exprtk_error_location));
 
@@ -22874,7 +22969,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR097 - Expected '" + details::to_str(seperator) + "' for call to multi-sequence section of " + source,
+//                             "ERR097 - Expected '" + details::to_str(seperator) + "' for call to multi-sequence section of " + source,
+                             "Expected '" + details::to_str(seperator) + "' for call to multi-sequence section of " + source,
                              exprtk_error_location));
 
                return error_node();
@@ -22908,7 +23004,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR098 - Expected '[' for start of range",
+//                          "ERR098 - Expected '[' for start of range",
+                          "Expected '[' for start of range",
                           exprtk_error_location));
 
             return false;
@@ -22929,7 +23026,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR099 - Failed parse begin section of range",
+//                             "ERR099 - Failed parse begin section of range",
+                             "Failed parse begin section of range",
                              exprtk_error_location));
 
                return false;
@@ -22952,7 +23050,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR100 - Range lower bound less than zero! Constraint: r0 >= 0",
+//                                "ERR100 - Range lower bound less than zero! Constraint: r0 >= 0",
+                                "Range lower bound less than zero! Constraint: r0 >= 0",
                                 exprtk_error_location));
 
                   return false;
@@ -22969,7 +23068,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR101 - Expected ':' for break  in range",
+//                             "ERR101 - Expected ':' for break  in range",
+                             "Expected ':' for break  in range",
                              exprtk_error_location));
 
                rp.free();
@@ -22992,7 +23092,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR102 - Failed parse end section of range",
+//                             "ERR102 - Failed parse end section of range",
+                             "Failed parse end section of range",
                              exprtk_error_location));
 
                rp.free();
@@ -23017,7 +23118,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR103 - Range upper bound less than zero! Constraint: r1 >= 0",
+//                                "ERR103 - Range upper bound less than zero! Constraint: r1 >= 0",
+                                "Range upper bound less than zero! Constraint: r1 >= 0",
                                 exprtk_error_location));
 
                   return false;
@@ -23034,7 +23136,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR104 - Expected ']' for start of range",
+//                             "ERR104 - Expected ']' for start of range",
+                             "Expected ']' for start of range",
                              exprtk_error_location));
 
                rp.free();
@@ -23055,7 +23158,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR105 - Invalid range, Constraint: r0 <= r1",
+//                             "ERR105 - Invalid range, Constraint: r0 <= r1",
+                             "Invalid range, Constraint: r0 <= r1",
                              exprtk_error_location));
 
                return false;
@@ -23096,7 +23200,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR106 - Unknown string symbol",
+//                             "ERR106 - Unknown string symbol",
+                             "Unknown string symbol",
                              exprtk_error_location));
 
                return error_node();
@@ -23210,7 +23315,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR107 - Overflow in range for string: '" + const_str + "'[" +
+//                             "ERR107 - Overflow in range for string: '" + const_str + "'[" +
+                             "Overflow in range for string: '" + const_str + "'[" +
                              (rp.n0_c.first ? details::to_str(static_cast<int>(rp.n0_c.second)) : "?") + ":" +
                              (rp.n1_c.first ? details::to_str(static_cast<int>(rp.n1_c.second)) : "?") + "]",
                              exprtk_error_location));
@@ -23254,7 +23360,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR108 - Symbol '" + symbol+ " not a vector",
+//                             "ERR108 - Symbol '" + symbol+ " not a vector",
+                             "Symbol '" + symbol+ " not a vector",
                              exprtk_error_location));
 
                return error_node();
@@ -23280,7 +23387,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR109 - Failed to parse index for vector: '" + symbol + "'",
+//                          "ERR109 - Failed to parse index for vector: '" + symbol + "'",
+                          "Failed to parse index for vector: '" + symbol + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -23290,7 +23398,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR110 - Expected ']' for index of vector: '" + symbol + "'",
+//                          "ERR110 - Expected ']' for index of vector: '" + symbol + "'",
+                          "Expected ']' for index of vector: '" + symbol + "'",
                           exprtk_error_location));
 
             free_node(node_allocator_,index_expr);
@@ -23309,7 +23418,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR111 - Index of " + details::to_str(index) + " out of range for "
+//                             "ERR111 - Index of " + details::to_str(index) + " out of range for "
+                             "Index of " + details::to_str(index) + " out of range for "
                              "vector '" + symbol + "' of size " + details::to_str(vec_size),
                              exprtk_error_location));
 
@@ -23341,7 +23451,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR112 - Zero parameter call to vararg function: "
+//                                "ERR112 - Zero parameter call to vararg function: "
+                                "Zero parameter call to vararg function: "
                                 + vararg_function_name + " not allowed",
                                 exprtk_error_location));
 
@@ -23366,7 +23477,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR113 - Expected ',' for call to vararg function: "
+//                                   "ERR113 - Expected ',' for call to vararg function: "
+                                   "Expected ',' for call to vararg function: "
                                    + vararg_function_name,
                                    exprtk_error_location));
 
@@ -23380,7 +23492,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR114 - Zero parameter call to vararg function: "
+//                          "ERR114 - Zero parameter call to vararg function: "
+                          "Zero parameter call to vararg function: "
                           + vararg_function_name + " not allowed",
                           exprtk_error_location));
 
@@ -23392,7 +23505,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR115 - Invalid number of parameters to call to vararg function: "
+//                          "ERR115 - Invalid number of parameters to call to vararg function: "
+                          "Invalid number of parameters to call to vararg function: "
                           + vararg_function_name + ", require at least "
                           + details::to_str(static_cast<int>(vararg_function->min_num_args())) + " parameters",
                           exprtk_error_location));
@@ -23404,7 +23518,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR116 - Invalid number of parameters to call to vararg function: "
+//                          "ERR116 - Invalid number of parameters to call to vararg function: "
+                          "Invalid number of parameters to call to vararg function: "
                           + vararg_function_name + ", require no more than "
                           + details::to_str(static_cast<int>(vararg_function->max_num_args())) + " parameters",
                           exprtk_error_location));
@@ -23487,7 +23602,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 parser_.current_token(),
-                                "ERR117 - Failed parameter type check for function '" + function_name_ + "', "
+//                                "ERR117 - Failed parameter type check for function '" + function_name_ + "', "
+                                "Failed parameter type check for function '" + function_name_ + "', "
                                 "Expected '" + function_definition_list_[0].param_seq +
                                 "'  call set: '" + param_seq + "'",
                                 exprtk_error_location));
@@ -23509,7 +23625,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 parser_.current_token(),
-                                "ERR118 - Failed parameter type check for function '" + function_name_ + "', "
+//                                "ERR118 - Failed parameter type check for function '" + function_name_ + "', "
+                                "Failed parameter type check for function '" + function_name_ + "', "
                                 "Best match: '" + function_definition_list_[max_diff_index].param_seq +
                                 "'  call set: '" + param_seq + "'",
                                 exprtk_error_location));
@@ -23651,7 +23768,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    parser_.current_token(),
-                                   "ERR119 - Invalid parameter sequence of '" + param_seq_list[i] +
+//                                   "ERR119 - Invalid parameter sequence of '" + param_seq_list[i] +
+                                   "Invalid parameter sequence of '" + param_seq_list[i] +
                                    "' for function: " + function_name_,
                                    exprtk_error_location));
                   return;
@@ -23667,7 +23785,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    parser_.current_token(),
-                                   "ERR120 - Function '" + function_name_ + "' has a parameter sequence conflict between " +
+//                                   "ERR120 - Function '" + function_name_ + "' has a parameter sequence conflict between " +
+                                   "Function '" + function_name_ + "' has a parameter sequence conflict between " +
                                    "pseq_idx[" + details::to_str(seq_itr->second) + "] and" +
                                    "pseq_idx[" + details::to_str(i) + "] " +
                                    "param seq: " + param_seq_list[i],
@@ -23706,7 +23825,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR121 - Type checker instantiation failure for generic function: " + function_name,
+//                          "ERR121 - Type checker instantiation failure for generic function: " + function_name,
+                          "Type checker instantiation failure for generic function: " + function_name,
                           exprtk_error_location));
 
             return error_node();
@@ -23724,7 +23844,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR122 - Zero parameter call to generic function: "
+//                                "ERR122 - Zero parameter call to generic function: "
+                                "Zero parameter call to generic function: "
                                 + function_name + " not allowed",
                                 exprtk_error_location));
 
@@ -23756,7 +23877,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR123 - Expected ',' for call to generic function: " + function_name,
+//                                   "ERR123 - Expected ',' for call to generic function: " + function_name,
+                                   "Expected ',' for call to generic function: " + function_name,
                                    exprtk_error_location));
 
                      return error_node();
@@ -23773,7 +23895,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR124 - Zero parameter call to generic function: "
+//                          "ERR124 - Zero parameter call to generic function: "
+                          "Zero parameter call to generic function: "
                           + function_name + " not allowed",
                           exprtk_error_location));
 
@@ -23790,7 +23913,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR125 - Invalid input parameter sequence for call to generic function: " + function_name,
+//                          "ERR125 - Invalid input parameter sequence for call to generic function: " + function_name,
+                          "Invalid input parameter sequence for call to generic function: " + function_name,
                           exprtk_error_location));
 
             return error_node();
@@ -23828,7 +23952,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR126 - Zero parameter call to generic function: "
+//                                "ERR126 - Zero parameter call to generic function: "
+                                "Zero parameter call to generic function: "
                                 + function_name + " not allowed",
                                 exprtk_error_location));
 
@@ -23860,7 +23985,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR127 - Expected ',' for call to string function: " + function_name,
+//                                   "ERR127 - Expected ',' for call to string function: " + function_name,
+                                   "Expected ',' for call to string function: " + function_name,
                                    exprtk_error_location));
 
                      return false;
@@ -23907,7 +24033,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR128 - Invalid input parameter sequence for call to string function: " + function_name,
+//                          "ERR128 - Invalid input parameter sequence for call to string function: " + function_name,
+                          "Invalid input parameter sequence for call to string function: " + function_name,
                           exprtk_error_location));
 
             return error_node();
@@ -23959,7 +24086,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR129 - Invalid input parameter sequence for call to overloaded function: " + function_name,
+//                          "ERR129 - Invalid input parameter sequence for call to overloaded function: " + function_name,
+                          "Invalid input parameter sequence for call to overloaded function: " + function_name,
                           exprtk_error_location));
 
             return error_node();
@@ -23990,7 +24118,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR130 - Invalid return type for call to overloaded function: " + function_name,
+//                          "ERR130 - Invalid return type for call to overloaded function: " + function_name,
+                          "Invalid return type for call to overloaded function: " + function_name,
                           exprtk_error_location));
          }
 
@@ -24018,7 +24147,8 @@ namespace exprtk
                p.set_error(
                     make_error(parser_error::e_syntax,
                                p.current_token(),
-                               "ERR131 - Expected '(' for special function '" + sf_name + "'",
+//                               "ERR131 - Expected '(' for special function '" + sf_name + "'",
+                               "Expected '(' for special function '" + sf_name + "'",
                                exprtk_error_location));
 
                return error_node();
@@ -24039,7 +24169,8 @@ namespace exprtk
                      p.set_error(
                           make_error(parser_error::e_syntax,
                                      p.current_token(),
-                                     "ERR132 - Expected ',' before next parameter of special function '" + sf_name + "'",
+//                                     "ERR132 - Expected ',' before next parameter of special function '" + sf_name + "'",
+                                     "Expected ',' before next parameter of special function '" + sf_name + "'",
                                      exprtk_error_location));
 
                      return p.error_node();
@@ -24052,7 +24183,8 @@ namespace exprtk
                p.set_error(
                     make_error(parser_error::e_syntax,
                                p.current_token(),
-                               "ERR133 - Invalid number of parameters for special function '" + sf_name + "'",
+//                               "ERR133 - Invalid number of parameters for special function '" + sf_name + "'",
+                               "Invalid number of parameters for special function '" + sf_name + "'",
                                exprtk_error_location));
 
                return p.error_node();
@@ -24079,7 +24211,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_token,
                           current_token(),
-                          "ERR134 - Invalid special function[1]: " + sf_name,
+//                          "ERR134 - Invalid special function[1]: " + sf_name,
+                          "Invalid special function[1]: " + sf_name,
                           exprtk_error_location));
 
             return error_node();
@@ -24093,7 +24226,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_token,
                           current_token(),
-                          "ERR135 - Invalid special function[2]: " + sf_name,
+//                          "ERR135 - Invalid special function[2]: " + sf_name,
+                          "Invalid special function[2]: " + sf_name,
                           exprtk_error_location));
 
             return error_node();
@@ -24125,7 +24259,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR136 - Break call within a break call is not allowed",
+//                          "ERR136 - Break call within a break call is not allowed",
+                          "Break call within a break call is not allowed",
                           exprtk_error_location));
 
             return error_node();
@@ -24148,7 +24283,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR137 - Failed to parse return expression for 'break' statement",
+//                                "ERR137 - Failed to parse return expression for 'break' statement",
+                                "Failed to parse return expression for 'break' statement",
                                 exprtk_error_location));
 
                   return error_node();
@@ -24158,7 +24294,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR138 - Expected ']' at the completion of break's return expression",
+//                                "ERR138 - Expected ']' at the completion of break's return expression",
+                                "Expected ']' at the completion of break's return expression",
                                 exprtk_error_location));
 
                   free_node(node_allocator_,return_expr);
@@ -24176,7 +24313,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR139 - Invalid use of 'break', allowed only in the scope of a loop",
+//                          "ERR139 - Invalid use of 'break', allowed only in the scope of a loop",
+                          "Invalid use of 'break', allowed only in the scope of a loop",
                           exprtk_error_location));
          }
 
@@ -24199,7 +24337,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR140 - Invalid use of 'continue', allowed only in the scope of a loop",
+//                          "ERR140 - Invalid use of 'continue', allowed only in the scope of a loop",
+                          "Invalid use of 'continue', allowed only in the scope of a loop",
                           exprtk_error_location));
 
             return error_node();
@@ -24216,7 +24355,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR141 - Expected '[' as part of vector size definition",
+//                          "ERR141 - Expected '[' as part of vector size definition",
+                          "Expected '[' as part of vector size definition",
                           exprtk_error_location));
 
             return error_node();
@@ -24226,7 +24366,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR142 - Failed to determine size of vector '" + vec_name + "'",
+//                          "ERR142 - Failed to determine size of vector '" + vec_name + "'",
+                          "Failed to determine size of vector '" + vec_name + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -24238,7 +24379,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR143 - Expected a literal number as size of vector '" + vec_name + "'",
+//                          "ERR143 - Expected a literal number as size of vector '" + vec_name + "'",
+                          "Expected a literal number as size of vector '" + vec_name + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -24260,7 +24402,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR144 - Invalid vector size. Must be an integer in the range [0,2e9], size: " +
+//                          "ERR144 - Invalid vector size. Must be an integer in the range [0,2e9], size: " +
+                          "Invalid vector size. Must be an integer in the range [0,2e9], size: " +
                           details::to_str(details::numeric::to_int32(vector_size)),
                           exprtk_error_location));
 
@@ -24280,7 +24423,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR145 - Expected ']' as part of vector size definition",
+//                          "ERR145 - Expected ']' as part of vector size definition",
+                          "Expected ']' as part of vector size definition",
                           exprtk_error_location));
 
             return error_node();
@@ -24292,7 +24436,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR146 - Expected ':=' as part of vector definition",
+//                             "ERR146 - Expected ':=' as part of vector definition",
+                             "Expected ':=' as part of vector definition",
                              exprtk_error_location));
 
                return error_node();
@@ -24306,7 +24451,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR147 - Failed to parse single vector initialiser",
+//                                "ERR147 - Failed to parse single vector initialiser",
+                                "Failed to parse single vector initialiser",
                                 exprtk_error_location));
 
                   return error_node();
@@ -24319,7 +24465,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR148 - Expected ']' to close single value vector initialiser",
+//                                "ERR148 - Expected ']' to close single value vector initialiser",
+                                "Expected ']' to close single value vector initialiser",
                                 exprtk_error_location));
 
                   return error_node();
@@ -24366,7 +24513,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR149 - Expected '{' as part of vector initialiser list",
+//                                   "ERR149 - Expected '{' as part of vector initialiser list",
+                                   "Expected '{' as part of vector initialiser list",
                                    exprtk_error_location));
 
                      return error_node();
@@ -24386,7 +24534,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR150 - Expected '{' as part of vector initialiser list",
+//                                   "ERR150 - Expected '{' as part of vector initialiser list",
+                                   "Expected '{' as part of vector initialiser list",
                                    exprtk_error_location));
 
                      return error_node();
@@ -24404,7 +24553,8 @@ namespace exprtk
                      set_error(
                         make_error(parser_error::e_syntax,
                                    current_token(),
-                                   "ERR151 - Expected ',' between vector initialisers",
+//                                   "ERR151 - Expected ',' between vector initialisers",
+                                   "Expected ',' between vector initialisers",
                                    exprtk_error_location));
 
                      return error_node();
@@ -24426,7 +24576,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR152 - Expected ';' at end of vector definition",
+//                                "ERR152 - Expected ';' at end of vector definition",
+                                "Expected ';' at end of vector definition",
                                 exprtk_error_location));
 
                   return error_node();
@@ -24438,7 +24589,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR153 - Initialiser list larger than the number of elements in the vector: '" + vec_name + "'",
+//                             "ERR153 - Initialiser list larger than the number of elements in the vector: '" + vec_name + "'",
+                             "Initialiser list larger than the number of elements in the vector: '" + vec_name + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -24458,7 +24610,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR154 - Illegal redefinition of local vector: '" + vec_name + "'",
+//                             "ERR154 - Illegal redefinition of local vector: '" + vec_name + "'",
+                             "Illegal redefinition of local vector: '" + vec_name + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -24492,7 +24645,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR155 - Failed to add new local vector '" + vec_name + "' to SEM",
+//                             "ERR155 - Failed to add new local vector '" + vec_name + "' to SEM",
+                             "Failed to add new local vector '" + vec_name + "' to SEM",
                              exprtk_error_location));
 
                sem_.free_element(nse);
@@ -24551,7 +24705,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR156 - Illegal redefinition of local variable: '" + str_name + "'",
+//                             "ERR156 - Illegal redefinition of local variable: '" + str_name + "'",
+                             "Illegal redefinition of local variable: '" + str_name + "'",
                              exprtk_error_location));
 
                free_node(node_allocator_,initialisation_expression);
@@ -24583,7 +24738,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR157 - Failed to add new local string variable '" + str_name + "' to SEM",
+//                             "ERR157 - Failed to add new local string variable '" + str_name + "' to SEM",
+                             "Failed to add new local string variable '" + str_name + "' to SEM",
                              exprtk_error_location));
 
                free_node(node_allocator_,initialisation_expression);
@@ -24629,7 +24785,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR158 - Illegal variable definition",
+//                          "ERR158 - Illegal variable definition",
+                          "Illegal variable definition",
                           exprtk_error_location));
 
             return error_node();
@@ -24650,7 +24807,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR159 - Expected a symbol for variable definition",
+//                          "ERR159 - Expected a symbol for variable definition",
+                          "Expected a symbol for variable definition",
                           exprtk_error_location));
 
             return error_node();
@@ -24660,7 +24818,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR160 - Illegal redefinition of reserved keyword: '" + var_name + "'",
+//                          "ERR160 - Illegal redefinition of reserved keyword: '" + var_name + "'",
+                          "Illegal redefinition of reserved keyword: '" + var_name + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -24670,7 +24829,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR161 - Illegal redefinition of variable '" + var_name + "'",
+//                          "ERR161 - Illegal redefinition of variable '" + var_name + "'",
+                          "Illegal redefinition of variable '" + var_name + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -24680,7 +24840,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR162 - Illegal redefinition of local variable: '" + var_name + "'",
+//                          "ERR162 - Illegal redefinition of local variable: '" + var_name + "'",
+                          "Illegal redefinition of local variable: '" + var_name + "'",
                           exprtk_error_location));
 
             return error_node();
@@ -24700,7 +24861,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR163 - Failed to parse initialisation expression",
+//                             "ERR163 - Failed to parse initialisation expression",
+                             "Failed to parse initialisation expression",
                              exprtk_error_location));
 
                return error_node();
@@ -24718,7 +24880,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR164 - Expected ';' after variable definition",
+//                             "ERR164 - Expected ';' after variable definition",
+                             "Expected ';' after variable definition",
                              exprtk_error_location));
 
                free_node(node_allocator_,initialisation_expression);
@@ -24746,7 +24909,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR165 - Illegal redefinition of local variable: '" + var_name + "'",
+//                             "ERR165 - Illegal redefinition of local variable: '" + var_name + "'",
+                             "Illegal redefinition of local variable: '" + var_name + "'",
                              exprtk_error_location));
 
                free_node(node_allocator_, initialisation_expression);
@@ -24778,7 +24942,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR166 - Failed to add new local variable '" + var_name + "' to SEM",
+//                             "ERR166 - Failed to add new local variable '" + var_name + "' to SEM",
+                             "Failed to add new local variable '" + var_name + "' to SEM",
                              exprtk_error_location));
 
                free_node(node_allocator_, initialisation_expression);
@@ -24815,7 +24980,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR167 - Expected a '{}' for uninitialised var definition",
+//                          "ERR167 - Expected a '{}' for uninitialised var definition",
+                          "Expected a '{}' for uninitialised var definition",
                           exprtk_error_location));
 
             return error_node();
@@ -24825,7 +24991,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR168 - Expected ';' after uninitialised variable definition",
+//                          "ERR168 - Expected ';' after uninitialised variable definition",
+                          "Expected ';' after uninitialised variable definition",
                           exprtk_error_location));
 
             return error_node();
@@ -24842,7 +25009,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR169 - Illegal redefinition of local variable: '" + var_name + "'",
+//                             "ERR169 - Illegal redefinition of local variable: '" + var_name + "'",
+                             "Illegal redefinition of local variable: '" + var_name + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -24872,7 +25040,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR170 - Failed to add new local variable '" + var_name + "' to SEM",
+//                             "ERR170 - Failed to add new local variable '" + var_name + "' to SEM",
+                             "Failed to add new local variable '" + var_name + "' to SEM",
                              exprtk_error_location));
 
                sem_.free_element(nse);
@@ -24905,7 +25074,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR171 - Expected '(' at start of swap statement",
+//                          "ERR171 - Expected '(' at start of swap statement",
+                          "Expected '(' at start of swap statement",
                           exprtk_error_location));
 
             return error_node();
@@ -24924,7 +25094,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR172 - Expected a symbol for variable or vector element definition",
+//                          "ERR172 - Expected a symbol for variable or vector element definition",
+                          "Expected a symbol for variable or vector element definition",
                           exprtk_error_location));
 
             return error_node();
@@ -24936,7 +25107,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR173 - First parameter to swap is an invalid vector element: '" + var0_name + "'",
+//                             "ERR173 - First parameter to swap is an invalid vector element: '" + var0_name + "'",
+                             "First parameter to swap is an invalid vector element: '" + var0_name + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -24969,7 +25141,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR174 - First parameter to swap is an invalid variable: '" + var0_name + "'",
+//                             "ERR174 - First parameter to swap is an invalid variable: '" + var0_name + "'",
+                             "First parameter to swap is an invalid variable: '" + var0_name + "'",
                              exprtk_error_location));
 
                return error_node();
@@ -24983,7 +25156,8 @@ namespace exprtk
             set_error(
                 make_error(parser_error::e_syntax,
                            current_token(),
-                           "ERR175 - Expected ',' between parameters to swap",
+//                           "ERR175 - Expected ',' between parameters to swap",
+                           "Expected ',' between parameters to swap",
                            exprtk_error_location));
 
             if (variable0_generated)
@@ -25018,7 +25192,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR177 - Second parameter to swap is an invalid vector element: '" + var1_name + "'",
+//                             "ERR177 - Second parameter to swap is an invalid vector element: '" + var1_name + "'",
+                             "Second parameter to swap is an invalid vector element: '" + var1_name + "'",
                              exprtk_error_location));
 
                if (variable0_generated)
@@ -25056,7 +25231,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR178 - Second parameter to swap is an invalid variable: '" + var1_name + "'",
+//                             "ERR178 - Second parameter to swap is an invalid variable: '" + var1_name + "'",
+                             "Second parameter to swap is an invalid variable: '" + var1_name + "'",
                              exprtk_error_location));
 
                if (variable0_generated)
@@ -25075,7 +25251,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR179 - Expected ')' at end of swap statement",
+//                          "ERR179 - Expected ')' at end of swap statement",
+                          "Expected ')' at end of swap statement",
                           exprtk_error_location));
 
             if (variable0_generated)
@@ -25132,7 +25309,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR180 - Return call within a return call is not allowed",
+//                          "ERR180 - Return call within a return call is not allowed",
+                          "Return call within a return call is not allowed",
                           exprtk_error_location));
 
             return error_node();
@@ -25156,7 +25334,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR181 - Expected '[' at start of return statement",
+//                          "ERR181 - Expected '[' at start of return statement",
+                          "Expected '[' at start of return statement",
                           exprtk_error_location));
 
             return error_node();
@@ -25179,7 +25358,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR182 - Expected ',' between values during call to return",
+//                                "ERR182 - Expected ',' between values during call to return",
+                                "Expected ',' between values during call to return",
                                 exprtk_error_location));
 
                   return error_node();
@@ -25191,7 +25371,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR183 - Zero parameter return statement not allowed",
+//                          "ERR183 - Zero parameter return statement not allowed",
+                          "Zero parameter return statement not allowed",
                           exprtk_error_location));
 
             return error_node();
@@ -25259,7 +25440,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR185 - Invalid sequence of variable '"+ symbol + "' and bracket",
+//                             "ERR185 - Invalid sequence of variable '"+ symbol + "' and bracket",
+                             "Invalid sequence of variable '"+ symbol + "' and bracket",
                              exprtk_error_location));
 
                return false;
@@ -25307,7 +25489,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR186 - Invalid sequence of brackets",
+//                             "ERR186 - Invalid sequence of brackets",
+                             "Invalid sequence of brackets",
                              exprtk_error_location));
 
                return false;
@@ -25404,7 +25587,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR187 - Failed to generate node for function: '" + symbol + "'",
+//                                "ERR187 - Failed to generate node for function: '" + symbol + "'",
+                                "Failed to generate node for function: '" + symbol + "'",
                                 exprtk_error_location));
 
                   return error_node();
@@ -25430,7 +25614,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR188 - Failed to generate node for vararg function: '" + symbol + "'",
+//                                "ERR188 - Failed to generate node for vararg function: '" + symbol + "'",
+                                "Failed to generate node for vararg function: '" + symbol + "'",
                                 exprtk_error_location));
 
                   return error_node();
@@ -25456,7 +25641,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR189 - Failed to generate node for generic function: '" + symbol + "'",
+//                                "ERR189 - Failed to generate node for generic function: '" + symbol + "'",
+                                "Failed to generate node for generic function: '" + symbol + "'",
                                 exprtk_error_location));
 
                   return error_node();
@@ -25483,7 +25669,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR190 - Failed to generate node for string function: '" + symbol + "'",
+//                                "ERR190 - Failed to generate node for string function: '" + symbol + "'",
+                                "Failed to generate node for string function: '" + symbol + "'",
                                 exprtk_error_location));
 
                   return error_node();
@@ -25509,7 +25696,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR191 - Failed to generate node for overload function: '" + symbol + "'",
+//                                "ERR191 - Failed to generate node for overload function: '" + symbol + "'",
+                                "Failed to generate node for overload function: '" + symbol + "'",
                                 exprtk_error_location));
 
                   return error_node();
@@ -25535,7 +25723,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_syntax,
                                 current_token(),
-                                "ERR192 - Invalid use of reserved symbol '" + symbol + "'",
+//                                "ERR192 - Invalid use of reserved symbol '" + symbol + "'",
+                                "Invalid use of reserved symbol '" + symbol + "'",
                                 exprtk_error_location));
 
                   return error_node();
@@ -25598,7 +25787,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_symtab,
                                 current_token(),
-                                "ERR193 - Failed to create variable: '" + symbol + "'" +
+//                                "ERR193 - Failed to create variable: '" + symbol + "'" +
+                                "Failed to create variable: '" + symbol + "'" +
                                 (error_message.empty() ? "" : " - " + error_message),
                                 exprtk_error_location));
 
@@ -25618,7 +25808,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_symtab,
                                 current_token(),
-                                "ERR194 - Failed to resolve symbol: '" + symbol + "'" +
+//                                "ERR194 - Failed to resolve symbol: '" + symbol + "'" +
+                                "Failed to resolve symbol: '" + symbol + "'" +
                                 (error_message.empty() ? "" : " - " + error_message),
                                 exprtk_error_location));
                }
@@ -25630,7 +25821,8 @@ namespace exprtk
          set_error(
             make_error(parser_error::e_syntax,
                        current_token(),
-                       "ERR195 - Undefined symbol: '" + symbol + "'",
+//                       "ERR195 - Undefined symbol: '" + symbol + "'",
+                       "Undefined symbol: '" + symbol + "'",
                        exprtk_error_location));
 
          return error_node();
@@ -25742,7 +25934,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_symtab,
                           current_token(),
-                          "ERR196 - Variable or function detected, yet symbol-table is invalid, Symbol: " + current_token().value,
+//                          "ERR196 - Variable or function detected, yet symbol-table is invalid, Symbol: " + current_token().value,
+                          "Variable or function detected, yet symbol-table is invalid, Symbol: " + current_token().value,
                           exprtk_error_location));
 
             return error_node();
@@ -25766,7 +25959,8 @@ namespace exprtk
                   set_error(
                      make_error(parser_error::e_numeric,
                                 current_token(),
-                                "ERR197 - Failed generate node for scalar: '" + current_token().value + "'",
+//                                "ERR197 - Failed generate node for scalar: '" + current_token().value + "'",
+                                "Failed to generate node for scalar: '" + current_token().value + "'",
                                 exprtk_error_location));
 
                   return error_node();
@@ -25780,7 +25974,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_numeric,
                              current_token(),
-                             "ERR198 - Failed to convert '" + current_token().value + "' to a number",
+//                             "ERR198 - Failed to convert '" + current_token().value + "' to a number",
+                             "Failed to convert '" + current_token().value + "' to a number",
                              exprtk_error_location));
 
                return error_node();
@@ -25807,7 +26002,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR199 - Expected ')' instead of: '" + current_token().value + "'",
+//                             "ERR199 - Expected ')' instead of: '" + current_token().value + "'",
+                             "Expected ')' instead of: '" + current_token().value + "'",
                              exprtk_error_location));
 
                free_node(node_allocator_,branch);
@@ -25832,6 +26028,7 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
+//                             "ERR200 - Expected ']' instead of: '" + current_token().value + "'",
                              "ERR200 - Expected ']' instead of: '" + current_token().value + "'",
                              exprtk_error_location));
 
@@ -25857,7 +26054,8 @@ namespace exprtk
                set_error(
                   make_error(parser_error::e_syntax,
                              current_token(),
-                             "ERR201 - Expected '}' instead of: '" + current_token().value + "'",
+//                             "ERR201 - Expected '}' instead of: '" + current_token().value + "'",
+                             "Expected '}' instead of: '" + current_token().value + "'",
                              exprtk_error_location));
 
                free_node(node_allocator_,branch);
@@ -25897,7 +26095,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR202 - Premature end of expression[1]",
+//                          "ERR202 - Premature end of expression[1]",
+                          "Premature end of expression[1]",
                           exprtk_error_location));
 
             return error_node();
@@ -25907,7 +26106,8 @@ namespace exprtk
             set_error(
                make_error(parser_error::e_syntax,
                           current_token(),
-                          "ERR203 - Premature end of expression[2]",
+//                          "ERR203 - Premature end of expression[2]",
+                          "Premature end of expression[2]",
                           exprtk_error_location));
 
             return error_node();

@@ -49,6 +49,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::BMatrix::add</field>
+    <field name="args">(size_t i, const T_ &amp;val)</field>
+    <field name="url">classOFELI_1_1BMatrix.html#a3c7b029cbe1aca9bea7623ae99274795</field>
+    <field name="keywords"></field>
+    <field name="text">Add val to entry i</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::BMatrix::operator*=</field>
     <field name="args">(const T_ &amp;x)</field>
     <field name="url">classOFELI_1_1BMatrix.html#a5556d95853233dc0f9b7c0addfe2302f</field>
@@ -1597,14 +1605,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::DMatrix::getArray</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1DMatrix.html#a22d15e47bd2eedb4fadbfc8a0d002a29</field>
-    <field name="keywords"></field>
-    <field name="text">Return matrix as C-Array Matrix is stored row by row</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::DMatrix::operator*=</field>
     <field name="args">(const T_ &amp;x)</field>
     <field name="url">classOFELI_1_1DMatrix.html#a2480412e70224a4a2fcd82c07b8e3c7b</field>
@@ -1634,6 +1634,22 @@
     <field name="url">classOFELI_1_1DMatrix.html#a319bbf8d06ba03d57f8fdda82680cb45</field>
     <field name="keywords"></field>
     <field name="text">Operator Subtract constant value x from matrix entries</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::DMatrix::getArray</field>
+    <field name="args">()</field>
+    <field name="url">classOFELI_1_1DMatrix.html#a373b436e2bac687e3794bea128f69e99</field>
+    <field name="keywords"></field>
+    <field name="text">Return matrix as C-Array Matrix is stored row by row</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::DMatrix::add</field>
+    <field name="args">(size_t i, const T_ &amp;val)</field>
+    <field name="url">classOFELI_1_1DMatrix.html#a3c7b029cbe1aca9bea7623ae99274795</field>
+    <field name="keywords"></field>
+    <field name="text">Add val to entry i</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -1964,14 +1980,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::DSMatrix::getArray</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1DSMatrix.html#a22d15e47bd2eedb4fadbfc8a0d002a29</field>
-    <field name="keywords"></field>
-    <field name="text">Return matrix as C-Array Matrix is stored row by row Only lower triangle is stored</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::DSMatrix::solve</field>
     <field name="args">(const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, bool fact=true)</field>
     <field name="url">classOFELI_1_1DSMatrix.html#a27c662f32ce66be2efa47871358fcf10</field>
@@ -1985,6 +1993,22 @@
     <field name="url">classOFELI_1_1DSMatrix.html#a33b1df1ede7b017fa8f0569e94e19617</field>
     <field name="keywords"></field>
     <field name="text">Operator Subtract constant value x from to all matrix entries</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::DSMatrix::getArray</field>
+    <field name="args">()</field>
+    <field name="url">classOFELI_1_1DSMatrix.html#a373b436e2bac687e3794bea128f69e99</field>
+    <field name="keywords"></field>
+    <field name="text">Return matrix as C-Array Matrix is stored row by row Only lower triangle is stored</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::DSMatrix::add</field>
+    <field name="args">(size_t i, const T_ &amp;val)</field>
+    <field name="url">classOFELI_1_1DSMatrix.html#a3c7b029cbe1aca9bea7623ae99274795</field>
+    <field name="keywords"></field>
+    <field name="text">Add val to entry i</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3114,7 +3138,7 @@
     <field name="args">(DMatrix&lt; real_t &gt; &amp;A, Vect&lt; real_t &gt; &amp;evr, Vect&lt; real_t &gt; &amp;evi, bool eigv=false)</field>
     <field name="url">classOFELI_1_1EigenProblemSolver.html#a8803de9d9d7dc547d4b683a7c04805b0</field>
     <field name="keywords"></field>
-    <field name="text">Constructor for a dense matrix that compute the eigenvalues This constructor solves in place the eigenvalues problem and stores them separately in real and imaginary part vectors Extraction of eigenvalues and eigenvectors uses the QR method after transforming the matrix in Hessenberg form The eigenvectors can be obtained by calling the member function getEigenVector A Matrix for which eigenmodes are sought evr Vector containing real parts of eigenvalues evr Vector containing imaginary parts of eigenvalues eigv Switch to say if eigenvectors are to be computed Default false The vectors evr and evi do not need to be sized before</field>
+    <field name="text">Constructor for a dense matrix that compute the eigenvalues This constructor solves in place the eigenvalues problem and stores them separately in real and imaginary part vectors Extraction of eigenvalues and eigenvectors uses the QR method after transforming the matrix in Hessenberg form The eigenvectors can be obtained by calling the member function getEigenVector A Matrix for which eigenmodes are sought evr Vector containing real parts of eigenvalues evi Vector containing imaginary parts of eigenvalues eigv Switch to say if eigenvectors are to be computed Default false The vectors evr and evi do not need to be sized before</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3242,7 +3266,7 @@
     <field name="args">(Matrix&lt; real_t &gt; *K)</field>
     <field name="url">classOFELI_1_1EigenProblemSolver.html#afd54fd03f5862f86bfdefdbaba689a08</field>
     <field name="keywords"></field>
-    <field name="text">Set pointer to matrix instance This function is to be used when the default constructor is applied Case where the mass matrix is consistent A Stiffness matrix pointer</field>
+    <field name="text">Set pointer to matrix instance This function is to be used when the default constructor is applied Case where the mass matrix is consistent K Stiffness matrix pointer</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -4430,6 +4454,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::Equa::getLinearSolver</field>
+    <field name="args">()</field>
+    <field name="url">classOFELI_1_1Equa.html#a4988b63cdeb08773e2bffc3591ac3bdb</field>
+    <field name="keywords"></field>
+    <field name="text">Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::Equa::~Equa</field>
     <field name="args">()</field>
     <field name="url">classOFELI_1_1Equa.html#a678813c91567f705fb361533d9c7f2bc</field>
@@ -4491,14 +4523,6 @@
     <field name="url">classOFELI_1_1Equa.html#afc12eef96402127dfff92558262c07b8</field>
     <field name="keywords"></field>
     <field name="text">Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix Return pointer to matrix</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Equa::getLinearSolver</field>
-    <field name="args">()</field>
-    <field name="url">classOFELI_1_1Equa.html#afe60bd5ead25485a978264584d10bf4c</field>
-    <field name="keywords"></field>
-    <field name="text">Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance Return reference to linear solver instance</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -8692,15 +8716,7 @@
     <field name="name">OFELI::LinearSolver</field>
     <field name="url">classOFELI_1_1LinearSolver.html</field>
     <field name="keywords"></field>
-    <field name="text">Class to solve systems of linear equations by iterative methods</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::LinearSolver</field>
-    <field name="args">(DSMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a00032bd6c50c55e2fc4a7929480def96</field>
-    <field name="keywords"></field>
-    <field name="text">Constructor using a dense symmetric matrix right-hand side and solution vector A DSMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
+    <field name="text">Class to solve systems of linear equations by direct or iterative methods Rachid Touzani GNU Lesser Public License</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -8712,22 +8728,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::LinearSolver</field>
-    <field name="args">(BMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a042d8d2397760d3906bfe02f0c3f8b13</field>
-    <field name="keywords"></field>
-    <field name="text">Constructor using a banded matrix right-hand side and solution vector A BMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::setSolution</field>
-    <field name="args">(Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a070f299c5c83c3d05f3888128fdc6b63</field>
-    <field name="keywords"></field>
-    <field name="text">Set solution vector</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::LinearSolver::setSolver</field>
     <field name="args">(Iteration s, Preconditioner p=DIAG_PREC)</field>
     <field name="url">classOFELI_1_1LinearSolver.html#a0ce77dad890759d85412157e25b3afa4</field>
@@ -8736,11 +8736,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::solve</field>
-    <field name="args">(SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, Iteration s, Preconditioner p=DIAG_PREC)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a1bfcefd222a9c02f7254140fed80f26c</field>
+    <field name="name">OFELI::LinearSolver::set</field>
+    <field name="args">(SpMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a123b92215a30f2a96fcf276d7c784560</field>
     <field name="keywords"></field>
-    <field name="text">Solve equations using system data prescribed solver and preconditioner A Reference to matrix as a SpMatrix instance b Vector containing right-hand side x Vector containing initial guess on input and solution on output s Solver identification parameter To be chosen in the enumeration variable Iteration DIRECT_SOLVER CG_SOLVER CGS_SOLVER BICG_SOLVER BICG_STAB_SOLVER GMRES_SOLVER QMR_SOLVER Default CGS_SOLVER p Preconditioner identification parameter To be chosen in the enumeration variable Preconditioner IDENT_PREC DIAG_PREC SSOR_PREC ILU_PREC DILU_PREC Default DIAG_PREC The argument p has no effect if the solver is DIRECT_SOLVER If the library eigen is used only the preconditioners IDENT_PREC DIAG_PREC and ILU_PREC are available</field>
+    <field name="text">Set matrix right-hand side and initial guess A Reference to matrix as a SpMatrix instance b Vector containing right-hand side x Vector containing initial guess on input and solution on output</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::LinearSolver</field>
+    <field name="args">(SkMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a23ee0c3b96b4fd8d37d1168269c8bcb3</field>
+    <field name="keywords"></field>
+    <field name="text">Constructor using skyline-stored matrix right-hand side and solution vector A SkMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -8752,27 +8760,35 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::LinearSolver</field>
-    <field name="args">(SkSMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a3229c9a3116a4b6125ddf3f72e01e0a8</field>
-    <field name="keywords"></field>
-    <field name="text">Constructor using skyline-stored symmetric matrix right-hand side and solution vector A SkMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::LinearSolver</field>
-    <field name="args">(DMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a4260ff178a260a89d52c6a8cc127791d</field>
-    <field name="keywords"></field>
-    <field name="text">Constructor using a dense matrix right-hand side and solution vector A DMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::LinearSolver::~LinearSolver</field>
     <field name="args">()</field>
     <field name="url">classOFELI_1_1LinearSolver.html#a4377168b38ead79c941f43a676aef1a6</field>
     <field name="keywords"></field>
     <field name="text">Destructor</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::LinearSolver</field>
+    <field name="args">(TrMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a4a888d91e883f61e00688dbeeb563090</field>
+    <field name="keywords"></field>
+    <field name="text">Constructor using a tridiagonal matrix right-hand side and solution vector A TrMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::setRHS</field>
+    <field name="args">(Vect&lt; real_t &gt; &amp;b)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a4dcc6c83ae5f9c7a958e9ba081f8eeb6</field>
+    <field name="keywords"></field>
+    <field name="text">Set right-hand side vector</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::LinearSolver</field>
+    <field name="args">(DMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a4fc7a7277d77fa6864579f93f24a5452</field>
+    <field name="keywords"></field>
+    <field name="text">Constructor using a dense matrix right-hand side and solution vector A DMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -8784,11 +8800,27 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::setRHS</field>
-    <field name="args">(Vect&lt; T_ &gt; &amp;b)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a577013472d05c14948e4676fed1d69cc</field>
+    <field name="name">OFELI::LinearSolver::LinearSolver</field>
+    <field name="args">(SpMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a667de1344de8be63f691d7f4dbee8552</field>
     <field name="keywords"></field>
-    <field name="text">Set right-hand side vector</field>
+    <field name="text">Constructor using matrix right-hand side and solution vector A Reference to instance of class SpMatrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::setSolution</field>
+    <field name="args">(Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a68b4fe7e02423a8303b1f29f59d68f6d</field>
+    <field name="keywords"></field>
+    <field name="text">Set solution vector</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::setMatrix</field>
+    <field name="args">(SpMatrix&lt; real_t &gt; &amp;A)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a699a6a90e87a5d43862cf1d697694910</field>
+    <field name="keywords"></field>
+    <field name="text">Set matrix in the case of a pointer to matrix A Pointer to abstract Matrix class</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -8808,19 +8840,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::LinearSolver</field>
-    <field name="args">(SkMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a910f0be2f1614e1c069abcd40ec56dd0</field>
+    <field name="name">OFELI::LinearSolver::solve</field>
+    <field name="args">(SpMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x, Iteration s, Preconditioner p=DIAG_PREC)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a871aab66bc28aff405a88d5073679060</field>
     <field name="keywords"></field>
-    <field name="text">Constructor using skyline-stored matrix right-hand side and solution vector A SkMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
+    <field name="text">Solve equations using system data prescribed solver and preconditioner A Reference to matrix as a SpMatrix instance b Vector containing right-hand side x Vector containing initial guess on input and solution on output s Solver identification parameter To be chosen in the enumeration variable Iteration DIRECT_SOLVER CG_SOLVER CGS_SOLVER BICG_SOLVER BICG_STAB_SOLVER GMRES_SOLVER QMR_SOLVER Default CGS_SOLVER p Preconditioner identification parameter To be chosen in the enumeration variable Preconditioner IDENT_PREC DIAG_PREC SSOR_PREC ILU_PREC DILU_PREC Default DIAG_PREC The argument p has no effect if the solver is DIRECT_SOLVER If the library eigen is used only the preconditioners IDENT_PREC DIAG_PREC and ILU_PREC are available</field>
   </doc>
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::LinearSolver::LinearSolver</field>
-    <field name="args">(TrMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#a98105cac171bf2a1e24c8b5e5a7ff07a</field>
+    <field name="args">(SkMatrix&lt; real_t &gt; &amp;A, Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#a8b0b8945edf33ef2604e1cc8b272a0b8</field>
     <field name="keywords"></field>
-    <field name="text">Constructor using a tridiagonal matrix right-hand side and solution vector A TrMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
+    <field name="text">Constructor using matrix right-hand side A SkMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains the initial guess on input and solution on output</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -8828,7 +8860,23 @@
     <field name="args">(int max_it, real_t tolerance)</field>
     <field name="url">classOFELI_1_1LinearSolver.html#aa05c2275c2c8ce808d096b6692c3435d</field>
     <field name="keywords"></field>
-    <field name="text">Constructor with iteration parameters max_it Maximal number of iterations tolerance Tolerance for convergence measured in relative weighted 2 Norm in input effective discrepancy in output Rachid Touzani GNU Lesser Public License</field>
+    <field name="text">Constructor with iteration parameters max_it Maximal number of iterations tolerance Tolerance for convergence measured in relative weighted 2 Norm in input effective discrepancy in output</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::setMatrix</field>
+    <field name="args">(SkMatrix&lt; real_t &gt; &amp;A)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#aa81ed8f868e5119ab178b961fbae77ea</field>
+    <field name="keywords"></field>
+    <field name="text">Set matrix in the case of a skyline matrix A Matrix as instance of class SkMatrix</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::LinearSolver</field>
+    <field name="args">(DSMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#ab115627ef927c548cfed5de1cf4b1af1</field>
+    <field name="keywords"></field>
+    <field name="text">Constructor using a dense symmetric matrix right-hand side and solution vector A DSMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -8840,43 +8888,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::LinearSolver</field>
+    <field name="args">(SkSMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#ad14f342a5a142ffa5299bc8f4dd9237c</field>
+    <field name="keywords"></field>
+    <field name="text">Constructor using skyline-stored symmetric matrix right-hand side and solution vector A SkMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::LinearSolver::getNbIter</field>
     <field name="args">() const</field>
     <field name="url">classOFELI_1_1LinearSolver.html#ad427a5facfbd7f505f7dd7ff9d512c20</field>
     <field name="keywords"></field>
     <field name="text">Get number of performed iterations</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::set</field>
-    <field name="args">(SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#ad56dc6dab838eee84f6d76995d555638</field>
-    <field name="keywords"></field>
-    <field name="text">Set matrix right-hand side and initial guess A Reference to matrix as a SpMatrix instance b Vector containing right-hand side x Vector containing initial guess on input and solution on output</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::setMatrix</field>
-    <field name="args">(OFELI::Matrix&lt; T_ &gt; *A)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#ad8cb117dd670df852851829761e0e54d</field>
-    <field name="keywords"></field>
-    <field name="text">Set matrix in the case of a pointer to Matrix A Pointer to abstract Matrix class</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::setMatrix</field>
-    <field name="args">(SkMatrix&lt; T_ &gt; &amp;A)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#addc7f35fc3a68cba345a07ed92fa59b2</field>
-    <field name="keywords"></field>
-    <field name="text">Set matrix in the case of a skyline matrix A Matrix as instance of class SkMatrix</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::LinearSolver</field>
-    <field name="args">(SkMatrix&lt; T_ &gt; &amp;A, Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#adec04ce22558fc7d208803adc611540f</field>
-    <field name="keywords"></field>
-    <field name="text">Constructor using matrix right-hand side A SkMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains the initial guess on input and solution on output</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -8888,19 +8912,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::LinearSolver::setMatrix</field>
-    <field name="args">(SpMatrix&lt; T_ &gt; &amp;A)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#ae3cf4567b730d01ff143013f1b11522a</field>
-    <field name="keywords"></field>
-    <field name="text">Set matrix in the case of a pointer to matrix A Pointer to abstract Matrix class</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::LinearSolver::solve</field>
     <field name="args">(Iteration s, Preconditioner p=DIAG_PREC)</field>
     <field name="url">classOFELI_1_1LinearSolver.html#aeccb35e1c449b861305d1765f86395f4</field>
     <field name="keywords"></field>
     <field name="text">Solve equations using prescribed solver and preconditioner s Solver identification parameter To be chosen in the enumeration variable Iteration DIRECT_SOLVER CG_SOLVER CGS_SOLVER BICG_SOLVER BICG_STAB_SOLVER GMRES_SOLVER QMR_SOLVER Default CGS_SOLVER p Preconditioner identification parameter To be chosen in the enumeration variable Preconditioner IDENT_PREC DIAG_PREC SSOR_PREC DILU_PREC ILU_PREC Default DIAG_PREC The argument p has no effect if the solver is DIRECT_SOLVER</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearSolver::setMatrix</field>
+    <field name="args">(Matrix&lt; real_t &gt; *A)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#af43f6ce1527384dce2dc2c78e401ad69</field>
+    <field name="keywords"></field>
+    <field name="text">Set matrix in the case of a pointer to Matrix A Pointer to abstract Matrix class</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -8913,10 +8937,10 @@
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::LinearSolver::LinearSolver</field>
-    <field name="args">(SpMatrix&lt; T_ &gt; &amp;A, const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x)</field>
-    <field name="url">classOFELI_1_1LinearSolver.html#af8b2b6e83de93a53ea4196be5e161e31</field>
+    <field name="args">(BMatrix&lt; real_t &gt; &amp;A, const Vect&lt; real_t &gt; &amp;b, Vect&lt; real_t &gt; &amp;x)</field>
+    <field name="url">classOFELI_1_1LinearSolver.html#afe536027cf7d1709627393d06a4367f0</field>
     <field name="keywords"></field>
-    <field name="text">Constructor using matrix right-hand side and solution vector A Reference to instance of class SpMatrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
+    <field name="text">Constructor using a banded matrix right-hand side and solution vector A BMatrix instance that contains matrix b Vect instance that contains the right-hand side x Vect instance that contains initial guess on input and solution on output</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -10105,6 +10129,14 @@
     <field name="url">classOFELI_1_1Matrix.html#adcabe33df61561c7a84e5a4eaa2626e0</field>
     <field name="keywords"></field>
     <field name="text">Operator Constant version Operator Constant version Operator Constant version Operator Constant version Returns k th stored element in matrix Index k starts at 0 Operator Constant version Operator Constant version Operator Constant version Operator Constant version</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Matrix::add</field>
+    <field name="args">(size_t i, const T_ &amp;val)=0</field>
+    <field name="url">classOFELI_1_1Matrix.html#ae72516cc39020b9e670f6934e8a6b1cf</field>
+    <field name="keywords"></field>
+    <field name="text">Add val to entry i Add val to entry i Add val to entry i Add val to entry i Add val to entry i Add val to entry i Add val to entry i Add val to entry i</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12765,14 +12797,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::ODESolver::getLSolver</field>
-    <field name="args">()</field>
-    <field name="url">classOFELI_1_1ODESolver.html#a0cde53893aeae1a5cbeb16f4ee6ec739</field>
-    <field name="keywords"></field>
-    <field name="text">Return LinearSolver instance</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::ODESolver::ODESolver</field>
     <field name="args">()</field>
     <field name="url">classOFELI_1_1ODESolver.html#a2e716223fdfa1868a6a683386da026f6</field>
@@ -12978,6 +13002,14 @@
     <field name="url">classOFELI_1_1ODESolver.html#ab12de38f58ecf7647758f97c0be1546f</field>
     <field name="keywords"></field>
     <field name="text">Destructor</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::ODESolver::getLSolver</field>
+    <field name="args">()</field>
+    <field name="url">classOFELI_1_1ODESolver.html#ab16f3efb733621d8147325ddc52fff1f</field>
+    <field name="keywords"></field>
+    <field name="text">Return LinearSolver instance</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -14798,6 +14830,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::SkMatrix::add</field>
+    <field name="args">(size_t i, const T_ &amp;val)</field>
+    <field name="url">classOFELI_1_1SkMatrix.html#a3c7b029cbe1aca9bea7623ae99274795</field>
+    <field name="keywords"></field>
+    <field name="text">Add val to entry i</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::SkMatrix::operator+=</field>
     <field name="args">(const SkMatrix&lt; T_ &gt; &amp;m)</field>
     <field name="url">classOFELI_1_1SkMatrix.html#a4cde5c0c715bec83b6a3bc6f92aaf5c1</field>
@@ -15053,6 +15093,22 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::SkSMatrix::add</field>
+    <field name="args">(size_t i, const T_ &amp;val)</field>
+    <field name="url">classOFELI_1_1SkSMatrix.html#a3c7b029cbe1aca9bea7623ae99274795</field>
+    <field name="keywords"></field>
+    <field name="text">Add val to entry i</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::SkSMatrix::get</field>
+    <field name="args">()</field>
+    <field name="url">classOFELI_1_1SkSMatrix.html#a5aeba722bfc5e1d62b0e76fa41cfd15c</field>
+    <field name="keywords"></field>
+    <field name="text">Return C-Array Skyline of matrix is stored row by row</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::SkSMatrix::set</field>
     <field name="args">(size_t i, size_t j, const T_ &amp;val)</field>
     <field name="url">classOFELI_1_1SkSMatrix.html#a61cf373a94a5fedbca306e016bc489c9</field>
@@ -15122,14 +15178,6 @@
     <field name="url">classOFELI_1_1SkSMatrix.html#a8e1479c625b5775da8680be39e249035</field>
     <field name="keywords"></field>
     <field name="text">Constructor that initializes a dense symmetric matrix Normally for a dense matrix this is not the right class size Number of matrix rows and columns is_diagonal Boolean to select if the matrix is diagonal or not Default false</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::SkSMatrix::get</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1SkSMatrix.html#a9b901ab6d955335f6b9edcabbc59d1d1</field>
-    <field name="keywords"></field>
-    <field name="text">Return C-Array Skyline of matrix is stored row by row</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -15693,14 +15741,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::TimeStepping::getLSolver</field>
-    <field name="args">()</field>
-    <field name="url">classOFELI_1_1TimeStepping.html#a0cde53893aeae1a5cbeb16f4ee6ec739</field>
-    <field name="keywords"></field>
-    <field name="text">Return LinearSolver instance</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::TimeStepping::SAssembly</field>
     <field name="args">(const Side &amp;sd, real_t *b, real_t *A=nullptr)</field>
     <field name="url">classOFELI_1_1TimeStepping.html#a109a9cc4bff9dfa026d796527fd050d0</field>
@@ -15789,6 +15829,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::TimeStepping::getLSolver</field>
+    <field name="args">()</field>
+    <field name="url">classOFELI_1_1TimeStepping.html#ab16f3efb733621d8147325ddc52fff1f</field>
+    <field name="keywords"></field>
+    <field name="text">Return LinearSolver instance</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::TimeStepping::run</field>
     <field name="args">(bool opt=false)</field>
     <field name="url">classOFELI_1_1TimeStepping.html#ab174fb4127d2dfb1b5e0d57b9e40b617</field>
@@ -15854,8 +15902,8 @@
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::TimeStepping::setLinearSolver</field>
-    <field name="args">(LinearSolver&lt; real_t &gt; &amp;ls)</field>
-    <field name="url">classOFELI_1_1TimeStepping.html#ae57f4d9db61b62a0b973ee0a543d4ae6</field>
+    <field name="args">(LinearSolver &amp;ls)</field>
+    <field name="url">classOFELI_1_1TimeStepping.html#aeb1c00c88db605d4d11f23de7c711136</field>
     <field name="keywords"></field>
     <field name="text">Set reference to LinearSolver instance ls Reference to LinearSolver instance</field>
   </doc>
@@ -18596,6 +18644,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::SpMatrix::add</field>
+    <field name="args">(size_t i, const T_ &amp;val)</field>
+    <field name="url">group__OFELI.html#ga3c7b029cbe1aca9bea7623ae99274795</field>
+    <field name="keywords"></field>
+    <field name="text">Add val to entry i Add val to entry i Add val to entry i Add val to entry i</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::SpMatrix::SpMatrix</field>
     <field name="args">(const Vect&lt; RC &gt; &amp;I, int opt=1)</field>
     <field name="url">group__OFELI.html#ga3d295a9f131b8224c1bbf0736cd17b71</field>
@@ -20725,6 +20781,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::out_complex</field>
+    <field name="args">(complex_t z)</field>
+    <field name="url">group__Util.html#ga59eb409d42989d222155ddae256ffd84</field>
+    <field name="keywords"></field>
+    <field name="text">Return string to conveniently display a complex number z Complex number Return string to conveniently display a complex number</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::Sgn</field>
     <field name="args">(real_t a, real_t b)</field>
     <field name="url">group__Util.html#ga5a8c09e3b27a4a08a60b02054d901cd3</field>
@@ -21239,7 +21303,7 @@
     <field name="args">(real_t a, real_t b, real_t c)</field>
     <field name="url">group__Util.html#gabba700bd4adb73e09290b38e7e942fda</field>
     <field name="keywords"></field>
-    <field name="text">Return minimum value of real numbers a b and c Return minimum value of real numbers a b and c</field>
+    <field name="text">Return minimum value of real numbers a b and c Return minimum value of real numbers a b and c Return minimum value of real numbers a b and c</field>
   </doc>
   <doc>
     <field name="type">define</field>
@@ -21345,6 +21409,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::Min</field>
+    <field name="args">(const T_ &amp;a, const T_ &amp;b)</field>
+    <field name="url">group__Util.html#gacdedb66eae003989d80fbb4ec3d942ba</field>
+    <field name="keywords"></field>
+    <field name="text">Return minimum value of elements a and b Return minimum value of elements a and b</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::operator+</field>
     <field name="args">(const Point&lt; T_ &gt; &amp;a, const Point&lt; T_ &gt; &amp;b)</field>
     <field name="url">group__Util.html#gace92b07689adff31f8942f4df8de6170</field>
@@ -21366,14 +21438,6 @@
     <field name="url">group__Util.html#gadc7b1b71eb13b1240a62d57321b05ede</field>
     <field name="keywords"></field>
     <field name="text">Operator Return point b divided by integer constant a Rachid Touzani GNU Lesser Public License Operator Return point b divided by integer constant a Rachid Touzani GNU Lesser Public License Operator</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::saveBamg</field>
-    <field name="args">(const string &amp;file, Mesh &amp;mesh)</field>
-    <field name="url">group__Util.html#gadfddd5711305fde526a2dd952277a9fa</field>
-    <field name="keywords"></field>
-    <field name="text">This function outputs a Mesh instance in a file in Bamg format file Name of a file written in the Bamg format Bamg is a 2 D mesh generator It allows to construct adapted meshes from a given metric It was developed at INRIA France Available information can be found in the site mesh Mesh instance Rachid Touzani GNU Lesser Public License This function outputs a Mesh instance in a file in Bamg format</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -21417,14 +21481,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Axpy</field>
-    <field name="args">(T_ a, const Vect&lt; T_ &gt; &amp;x, Vect&lt; T_ &gt; &amp;y)</field>
-    <field name="url">group__Util.html#gaedb2ff7d9c35e8ed53c36c3754c08a90</field>
-    <field name="keywords"></field>
-    <field name="text">Multiply vector x by a and add result to y x and y are instances of class Vect&lt;T_&gt; Multiply vector x by a and add result to y x and y are instances of class Vect&lt;T_&gt; Multiply vector x by a and add result to y</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Min</field>
     <field name="args">(int a, int b, int c, int d)</field>
     <field name="url">group__Util.html#gaeddf4f977caf32a9f7ec438162144bfe</field>
@@ -21454,6 +21510,14 @@
     <field name="url">group__Util.html#gaf8b0bdf9b36caa8f787962c6894b4033</field>
     <field name="keywords"></field>
     <field name="text">Output point coordinates Rachid Touzani GNU Lesser Public License Output point coordinates Rachid Touzani GNU Lesser Public License Output point coordinates</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Max</field>
+    <field name="args">(const T_ &amp;a, const T_ &amp;b)</field>
+    <field name="url">group__Util.html#gaf9593d7c3fb3ede50368c8c49b9116c6</field>
+    <field name="keywords"></field>
+    <field name="text">Return maximum value of elements a and b Return maximum value of elements a and b Return maximum value of elements a and b</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -21928,10 +21992,10 @@
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::Point::Point</field>
-    <field name="args">(T_ a, T_ b=T_(0), T_ c=T_(0))</field>
-    <field name="url">structOFELI_1_1Point.html#a0a111944170c34f6c9322b0f8a3a3fa5</field>
+    <field name="args">(T_ a, T_ b)</field>
+    <field name="url">structOFELI_1_1Point.html#a04b5110a71aa5b6898df9685db07b05f</field>
     <field name="keywords"></field>
-    <field name="text">Constructor that assigns a b to x y and z coordinates respectively Default values for b and c are 0</field>
+    <field name="text">Constructor that assigns a and b to first and second coordinates respectively</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -21942,11 +22006,20 @@
     <field name="text">Operator Non constant version Values i 0 1 2 correspond to x y and z respectively</field>
   </doc>
   <doc>
-    <field name="type">variable</field>
-    <field name="name">OFELI::Point::z</field>
-    <field name="url">structOFELI_1_1Point.html#a28ebcfb48d1adbaee6863174eaeeec7f</field>
+    <field name="type">function</field>
+    <field name="name">OFELI::Point::Point</field>
+    <field name="args">(T_ a, T_ b, T_ c)</field>
+    <field name="url">structOFELI_1_1Point.html#a262428068397a4fc4dd5e2114aa6f934</field>
     <field name="keywords"></field>
-    <field name="text">Third coordinate</field>
+    <field name="text">Constructor that assigns a b and c to first second and third coordinates respectively</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Point::Point</field>
+    <field name="args">(T_ a)</field>
+    <field name="url">structOFELI_1_1Point.html#a285884bad11d65cafbaf29b7a45f34a7</field>
+    <field name="keywords"></field>
+    <field name="text">Constructor that assigns a to first coordinate</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -22074,13 +22147,6 @@
     <field name="url">structOFELI_1_1Point.html#aadfb6f988b54d139519153f072ff39d8</field>
     <field name="keywords"></field>
     <field name="text">Return true if current point is close to instance a up to tolerance toler Default value for toler is the OFELI_TOLERANCE constant</field>
-  </doc>
-  <doc>
-    <field name="type">variable</field>
-    <field name="name">OFELI::Point::y</field>
-    <field name="url">structOFELI_1_1Point.html#ab4943c75e718fe503722ac7d26c746a6</field>
-    <field name="keywords"></field>
-    <field name="text">Second coordinate</field>
   </doc>
   <doc>
     <field name="type">function</field>

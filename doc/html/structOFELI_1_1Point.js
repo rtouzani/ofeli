@@ -1,7 +1,9 @@
 var structOFELI_1_1Point =
 [
     [ "Point", "structOFELI_1_1Point.html#ae08c5f0c5b4c75a3e0f33dada5f2fcba", null ],
-    [ "Point", "structOFELI_1_1Point.html#a0a111944170c34f6c9322b0f8a3a3fa5", null ],
+    [ "Point", "structOFELI_1_1Point.html#a285884bad11d65cafbaf29b7a45f34a7", null ],
+    [ "Point", "structOFELI_1_1Point.html#a04b5110a71aa5b6898df9685db07b05f", null ],
+    [ "Point", "structOFELI_1_1Point.html#a262428068397a4fc4dd5e2114aa6f934", null ],
     [ "Point", "structOFELI_1_1Point.html#a45c9461a79a79f8d1b8048153bcb1690", null ],
     [ "Director", "structOFELI_1_1Point.html#a68442d4f5b53982d7eb5ec6786390493", null ],
     [ "isCloseTo", "structOFELI_1_1Point.html#aadfb6f988b54d139519153f072ff39d8", null ],
@@ -22,7 +24,5 @@ var structOFELI_1_1Point =
     [ "operator==", "structOFELI_1_1Point.html#a6bfbffd75a16c4341412f1de1e1212e8", null ],
     [ "operator[]", "structOFELI_1_1Point.html#a1527071fae7fa1cabc15f3b17e256c16", null ],
     [ "operator[]", "structOFELI_1_1Point.html#af31a0b730772ebb128e3ca20ee860a05", null ],
-    [ "x", "structOFELI_1_1Point.html#a4333b1040efe8cd32f7c76bfc2269e0d", null ],
-    [ "y", "structOFELI_1_1Point.html#ab4943c75e718fe503722ac7d26c746a6", null ],
-    [ "z", "structOFELI_1_1Point.html#a28ebcfb48d1adbaee6863174eaeeec7f", null ]
+    [ "x", "structOFELI_1_1Point.html#a4333b1040efe8cd32f7c76bfc2269e0d", null ]
 ];

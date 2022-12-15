@@ -287,7 +287,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">To describe a 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> quadratic planar line finite element.  <a href="classOFELI_1_1Line3.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve systems of linear equations by iterative methods.  <a href="classOFELI_1_1LinearSolver.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve systems of linear equations by direct or iterative methods.  <a href="classOFELI_1_1LinearSolver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LocalMatrix.html">LocalMatrix</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles small size matrices like element matrices, with a priori known size.  <a href="classOFELI_1_1LocalMatrix.html#details">More...</a><br /></td></tr>
@@ -1253,9 +1253,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
 <tr class="memitem:gaa493ea0fe59c8bbac65b3e12897ad6ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#gaa493ea0fe59c8bbac65b3e12897ad6ba">saveVTK</a> (const string &amp;file, const <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh)</td></tr>
 <tr class="memdesc:gaa493ea0fe59c8bbac65b3e12897ad6ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function outputs a <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes.">Mesh</a> instance in a file in <a href="http://public.kitware.com/VTK/">VTK</a> format.  <a href="group__Util.html#gaa493ea0fe59c8bbac65b3e12897ad6ba">More...</a><br /></td></tr>
 <tr class="separator:gaa493ea0fe59c8bbac65b3e12897ad6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadfddd5711305fde526a2dd952277a9fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#gadfddd5711305fde526a2dd952277a9fa">saveBamg</a> (const string &amp;file, <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh)</td></tr>
-<tr class="memdesc:gadfddd5711305fde526a2dd952277a9fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function outputs a <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes.">Mesh</a> instance in a file in <a href="http://raweb.inria.fr/rapportsactivite/RA2002/gamma/uid25.html">Bamg</a> format.  <a href="group__Util.html#gadfddd5711305fde526a2dd952277a9fa">More...</a><br /></td></tr>
-<tr class="separator:gadfddd5711305fde526a2dd952277a9fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga814c02c7e063f4024ce0e6f58f8cb757"><td class="memItemLeft" align="right" valign="top">ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#ga814c02c7e063f4024ce0e6f58f8cb757">operator&lt;&lt;</a> (ostream &amp;s, const <a class="el" href="classOFELI_1_1Side.html">Side</a> &amp;sd)</td></tr>
 <tr class="memdesc:ga814c02c7e063f4024ce0e6f58f8cb757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output side data.  <a href="group__Mesh.html#ga814c02c7e063f4024ce0e6f58f8cb757">More...</a><br /></td></tr>
 <tr class="separator:ga814c02c7e063f4024ce0e6f58f8cb757"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1400,6 +1397,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Sgn</b> (<a class="el"
 <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Conjg</b> (<a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> a)</td></tr>
 <tr class="memdesc:gac9f3134776987b68e52815c39e4587be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return complex conjugate of complex number <code>a</code> <br /></td></tr>
 <tr class="separator:gac9f3134776987b68e52815c39e4587be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59eb409d42989d222155ddae256ffd84"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Util.html#ga59eb409d42989d222155ddae256ffd84">out_complex</a> (<a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> z)</td></tr>
+<tr class="memdesc:ga59eb409d42989d222155ddae256ffd84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return string to conveniently display a complex number.  <a href="group__Util.html#ga59eb409d42989d222155ddae256ffd84">More...</a><br /></td></tr>
+<tr class="separator:ga59eb409d42989d222155ddae256ffd84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac2ff7fd69a14f64439f7824c8ae863c1"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Max</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> <a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> c)</td></tr>
 <tr class="memdesc:gac2ff7fd69a14f64439f7824c8ae863c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum value of real numbers <code>a</code>, <code>b</code> and <code>c</code> <br /></td></tr>
@@ -1408,6 +1408,16 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Sgn</b> (<a class="el"
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Kronecker</b> (int i, int j)</td></tr>
 <tr class="memdesc:ga0861d18665802b79b083521aea0e4507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Kronecker delta of <code>i</code> and <code>j</code>. <br /></td></tr>
 <tr class="separator:ga0861d18665802b79b083521aea0e4507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9593d7c3fb3ede50368c8c49b9116c6"><td class="memTemplParams" colspan="2">
+template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:gaf9593d7c3fb3ede50368c8c49b9116c6"><td class="memTemplItemLeft" align="right" valign="top">const T_ &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Max</b> (const T_ &amp;a, const T_ &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>)</td></tr>
+<tr class="memdesc:gaf9593d7c3fb3ede50368c8c49b9116c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum value of elements <code>a</code> and <code>b</code> <br /></td></tr>
+<tr class="separator:gaf9593d7c3fb3ede50368c8c49b9116c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacdedb66eae003989d80fbb4ec3d942ba"><td class="memTemplParams" colspan="2">
+template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:gacdedb66eae003989d80fbb4ec3d942ba"><td class="memTemplItemLeft" align="right" valign="top">const T_ &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Min</b> (const T_ &amp;a, const T_ &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>)</td></tr>
+<tr class="memdesc:gacdedb66eae003989d80fbb4ec3d942ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum value of elements <code>a</code> and <code>b</code> <br /></td></tr>
+<tr class="separator:gacdedb66eae003989d80fbb4ec3d942ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6e623f45aa8421c5cf22c5d07b01bd43"><td class="memItemLeft" align="right" valign="top">
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Max</b> (int a, int <a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, int c)</td></tr>
 <tr class="memdesc:ga6e623f45aa8421c5cf22c5d07b01bd43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum value of integer numbers <code>a</code>, <code>b</code> and <code>c</code> <br /></td></tr>
@@ -1478,10 +1488,6 @@ template&lt;class T_ &gt; </td></tr>
 <tr class="memitem:ga3522099fc7a9baeb716885d1b1c6b928"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga3522099fc7a9baeb716885d1b1c6b928">Axpy</a> (T_ a, const vector&lt; T_ &gt; &amp;x, vector&lt; T_ &gt; &amp;y)</td></tr>
 <tr class="memdesc:ga3522099fc7a9baeb716885d1b1c6b928"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply vector <code>x</code> by <code>a</code> and add result to <code>y</code>  <a href="group__Util.html#ga3522099fc7a9baeb716885d1b1c6b928">More...</a><br /></td></tr>
 <tr class="separator:ga3522099fc7a9baeb716885d1b1c6b928"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedb2ff7d9c35e8ed53c36c3754c08a90"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:gaedb2ff7d9c35e8ed53c36c3754c08a90"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#gaedb2ff7d9c35e8ed53c36c3754c08a90">Axpy</a> (T_ a, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;y)</td></tr>
-<tr class="memdesc:gaedb2ff7d9c35e8ed53c36c3754c08a90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply vector <code>x</code> by <code>a</code> and add result to <code>y</code>  <a href="group__Util.html#gaedb2ff7d9c35e8ed53c36c3754c08a90">More...</a><br /></td></tr>
-<tr class="separator:gaedb2ff7d9c35e8ed53c36c3754c08a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7fdea537191eeb55189826f5f07edbaa"><td class="memTemplParams" colspan="2">
 template&lt;class T_ &gt; </td></tr>
 <tr class="memitem:ga7fdea537191eeb55189826f5f07edbaa"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Copy</b> (size_t n, T_ *x, T_ *y)</td></tr>
@@ -1767,7 +1773,7 @@ Variables</h2></td></tr>
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2022 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2023 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

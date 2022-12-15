@@ -121,6 +121,12 @@ int Fct::set(const string&         n,
 }
 
 
+int Fct::getErrorCode() const
+{
+   return 1-err;
+}
+
+
 int Fct::set(const string& exp,
              const string& v,
              int           opt)

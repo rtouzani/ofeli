@@ -108,9 +108,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a584a3841c197ddb1ec0494389823d561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#a584a3841c197ddb1ec0494389823d561">set</a> (<a class="el" href="group__OFELI.html#ga672626c8ddef10da0244c15db4085f40">TimeScheme</a> s, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> time_step=<a class="el" href="group__Global.html#gafe343e984bb2022a960c0285c90ba97d">theTimeStep</a>, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> final_time=<a class="el" href="group__Global.html#ga3fb590e5375a439474a2799323b4572b">theFinalTime</a>)</td></tr>
 <tr class="memdesc:a584a3841c197ddb1ec0494389823d561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define data of the differential equation or system.  <a href="classOFELI_1_1TimeStepping.html#a584a3841c197ddb1ec0494389823d561">More...</a><br /></td></tr>
 <tr class="separator:a584a3841c197ddb1ec0494389823d561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae57f4d9db61b62a0b973ee0a543d4ae6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#ae57f4d9db61b62a0b973ee0a543d4ae6">setLinearSolver</a> (<a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;ls)</td></tr>
-<tr class="memdesc:ae57f4d9db61b62a0b973ee0a543d4ae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set reference to <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by iterative methods.">LinearSolver</a> instance.  <a href="classOFELI_1_1TimeStepping.html#ae57f4d9db61b62a0b973ee0a543d4ae6">More...</a><br /></td></tr>
-<tr class="separator:ae57f4d9db61b62a0b973ee0a543d4ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb1c00c88db605d4d11f23de7c711136"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#aeb1c00c88db605d4d11f23de7c711136">setLinearSolver</a> (<a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> &amp;ls)</td></tr>
+<tr class="memdesc:aeb1c00c88db605d4d11f23de7c711136"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set reference to <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by direct or iterative methods.">LinearSolver</a> instance.  <a href="classOFELI_1_1TimeStepping.html#aeb1c00c88db605d4d11f23de7c711136">More...</a><br /></td></tr>
+<tr class="separator:aeb1c00c88db605d4d11f23de7c711136"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f289a3c4ea8e816689810ed2659f520"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#a5f289a3c4ea8e816689810ed2659f520">setPDE</a> (<a class="el" href="classOFELI_1_1Equa.html">Equa</a> &amp;eq, bool nl=false)</td></tr>
 <tr class="memdesc:a5f289a3c4ea8e816689810ed2659f520"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define partial differential equation to solve.  <a href="classOFELI_1_1TimeStepping.html#a5f289a3c4ea8e816689810ed2659f520">More...</a><br /></td></tr>
 <tr class="separator:a5f289a3c4ea8e816689810ed2659f520"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,10 +173,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setBC</b> (<a class="
 <tr class="memitem:a109a9cc4bff9dfa026d796527fd050d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1TimeStepping.html#a109a9cc4bff9dfa026d796527fd050d0">SAssembly</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> &amp;sd, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> *<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> *<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>=nullptr)</td></tr>
 <tr class="memdesc:a109a9cc4bff9dfa026d796527fd050d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble side arrays into global matrix and right-hand side.  <a href="classOFELI_1_1TimeStepping.html#a109a9cc4bff9dfa026d796527fd050d0">More...</a><br /></td></tr>
 <tr class="separator:a109a9cc4bff9dfa026d796527fd050d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cde53893aeae1a5cbeb16f4ee6ec739"><td class="memItemLeft" align="right" valign="top"><a id="a0cde53893aeae1a5cbeb16f4ee6ec739" name="a0cde53893aeae1a5cbeb16f4ee6ec739"></a>
-<a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getLSolver</b> ()</td></tr>
-<tr class="memdesc:a0cde53893aeae1a5cbeb16f4ee6ec739"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by iterative methods.">LinearSolver</a> instance. <br /></td></tr>
-<tr class="separator:a0cde53893aeae1a5cbeb16f4ee6ec739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab16f3efb733621d8147325ddc52fff1f"><td class="memItemLeft" align="right" valign="top"><a id="ab16f3efb733621d8147325ddc52fff1f" name="ab16f3efb733621d8147325ddc52fff1f"></a>
+<a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getLSolver</b> ()</td></tr>
+<tr class="memdesc:ab16f3efb733621d8147325ddc52fff1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by direct or iterative methods.">LinearSolver</a> instance. <br /></td></tr>
+<tr class="separator:ab16f3efb733621d8147325ddc52fff1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >To solve time stepping problems, i.e. systems of linear ordinary differential equations of the form [A2]{y"} + [A1]{y'} + [A0]{y} = {b}. </p>
@@ -630,8 +630,8 @@ IDENT_PREC, DIAG_PREC, ILU_PREC [Default: <code>DIAG_PREC</code>] </td></tr>
 
 </div>
 </div>
-<a id="ae57f4d9db61b62a0b973ee0a543d4ae6" name="ae57f4d9db61b62a0b973ee0a543d4ae6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae57f4d9db61b62a0b973ee0a543d4ae6">&#9670;&nbsp;</a></span>setLinearSolver() <span class="overload">[2/2]</span></h2>
+<a id="aeb1c00c88db605d4d11f23de7c711136" name="aeb1c00c88db605d4d11f23de7c711136"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb1c00c88db605d4d11f23de7c711136">&#9670;&nbsp;</a></span>setLinearSolver() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -639,17 +639,17 @@ IDENT_PREC, DIAG_PREC, ILU_PREC [Default: <code>DIAG_PREC</code>] </td></tr>
         <tr>
           <td class="memname">void setLinearSolver </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>ls</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set reference to <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by iterative methods.">LinearSolver</a> instance. </p>
+<p>Set reference to <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by direct or iterative methods.">LinearSolver</a> instance. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ls</td><td>Reference to <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by iterative methods.">LinearSolver</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ls</td><td>Reference to <a class="el" href="classOFELI_1_1LinearSolver.html" title="Class to solve systems of linear equations by direct or iterative methods.">LinearSolver</a> instance </td></tr>
   </table>
   </dd>
 </dl>
@@ -1029,7 +1029,7 @@ IDENT_PREC, DIAG_PREC, ILU_PREC [Default: <code>DIAG_PREC</code>] </td></tr>
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2022 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2023 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

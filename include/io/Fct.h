@@ -81,6 +81,7 @@ class Fct {
    real_t D(real_t x);
    real_t D(const vector<real_t>& x, size_t i);
    int check();
+   int getErrorCode() const;
    string name, expr;
    vector<string> var;
    size_t nb_var;

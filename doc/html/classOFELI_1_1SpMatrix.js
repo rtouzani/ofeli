@@ -12,6 +12,7 @@ var classOFELI_1_1SpMatrix =
     [ "SpMatrix", "group__OFELI.html#gadb1afe7db840241160f2f896fa24a08d", null ],
     [ "SpMatrix", "group__OFELI.html#ga42a459de96e7e110a3c31fc73df559cd", null ],
     [ "~SpMatrix", "group__OFELI.html#ga73db26aec81b831490a6b9bd06d8201e", null ],
+    [ "add", "group__OFELI.html#ga3c7b029cbe1aca9bea7623ae99274795", null ],
     [ "add", "group__OFELI.html#ga17592a65d5fb95d42c07f724dabad759", null ],
     [ "Axpy", "group__OFELI.html#gac7ecd57722b088d883cdb26ac2887270", null ],
     [ "Axpy", "group__OFELI.html#ga33e92450a126af2dabdae55f0a7f77ea", null ],

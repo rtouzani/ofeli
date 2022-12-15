@@ -3,7 +3,7 @@ var group__Equation =
     [ "Equa", "classOFELI_1_1Equa.html", [
       [ "Equa", "classOFELI_1_1Equa.html#aae7f04361ea6cc96d59317348467afa6", null ],
       [ "~Equa", "classOFELI_1_1Equa.html#a678813c91567f705fb361533d9c7f2bc", null ],
-      [ "getLinearSolver", "classOFELI_1_1Equa.html#afe60bd5ead25485a978264584d10bf4c", null ],
+      [ "getLinearSolver", "classOFELI_1_1Equa.html#a4988b63cdeb08773e2bffc3591ac3bdb", null ],
       [ "getMatrix", "classOFELI_1_1Equa.html#afc12eef96402127dfff92558262c07b8", null ],
       [ "getMesh", "classOFELI_1_1Equa.html#a33d260bca42fe66a8536f2eac63adc64", null ],
       [ "LinearSystemInfo", "classOFELI_1_1Equa.html#ad25e8a8874756b7211620a56e04666c7", null ],

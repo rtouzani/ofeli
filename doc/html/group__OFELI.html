@@ -776,8 +776,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Iter.html">Iter&lt; T_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to drive an iterative process.  <a href="classOFELI_1_1Iter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver&lt; T_ &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve systems of linear equations by iterative methods.  <a href="classOFELI_1_1LinearSolver.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class to solve systems of linear equations by direct or iterative methods.  <a href="classOFELI_1_1LinearSolver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1MyNLAS.html">MyNLAS</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract class to define by user specified function.  <a href="classOFELI_1_1MyNLAS.html#details">More...</a><br /></td></tr>
@@ -1522,6 +1522,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <tr class="memitem:ga173c0f972c4eeca07b426587bc2108e5"><td class="memItemLeft" align="right" valign="top">T_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga173c0f972c4eeca07b426587bc2108e5">get</a> (size_t i, size_t j) const</td></tr>
 <tr class="memdesc:ga173c0f972c4eeca07b426587bc2108e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return entry <code>(i,j)</code> of matrix if this one is stored, <code>0</code> otherwise.  <a href="group__OFELI.html#ga173c0f972c4eeca07b426587bc2108e5">More...</a><br /></td></tr>
 <tr class="separator:ga173c0f972c4eeca07b426587bc2108e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c7b029cbe1aca9bea7623ae99274795"><td class="memItemLeft" align="right" valign="top"><a id="ga3c7b029cbe1aca9bea7623ae99274795" name="ga3c7b029cbe1aca9bea7623ae99274795"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (size_t i, const T_ &amp;val)</td></tr>
+<tr class="memdesc:ga3c7b029cbe1aca9bea7623ae99274795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>val</code> to entry <code>i</code>. <br /></td></tr>
+<tr class="separator:ga3c7b029cbe1aca9bea7623ae99274795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1b449ad0ff199290abe764a3fcef0eeb"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
 <tr class="memitem:ga1b449ad0ff199290abe764a3fcef0eeb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VectMat.html#ga1b449ad0ff199290abe764a3fcef0eeb">operator*</a> (const <a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>)</td></tr>
 <tr class="memdesc:ga1b449ad0ff199290abe764a3fcef0eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator * (Multiply vector by matrix and return resulting vector.  <a href="group__VectMat.html#ga1b449ad0ff199290abe764a3fcef0eeb">More...</a><br /></td></tr>
@@ -1593,6 +1597,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (size_t i, si
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (size_t i, size_t j, const T_ &amp;val)</td></tr>
 <tr class="memdesc:ga17592a65d5fb95d42c07f724dabad759"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add constant <code>val</code> value to an entry <code>(i,j)</code> of the matrix. <br /></td></tr>
 <tr class="separator:ga17592a65d5fb95d42c07f724dabad759"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c7b029cbe1aca9bea7623ae99274795"><td class="memItemLeft" align="right" valign="top"><a id="ga3c7b029cbe1aca9bea7623ae99274795" name="ga3c7b029cbe1aca9bea7623ae99274795"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (size_t i, const T_ &amp;val)</td></tr>
+<tr class="memdesc:ga3c7b029cbe1aca9bea7623ae99274795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>val</code> to entry <code>i</code>. <br /></td></tr>
+<tr class="separator:ga3c7b029cbe1aca9bea7623ae99274795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga78adc6c13ad0f1d1dedacffe0e80ce63"><td class="memItemLeft" align="right" valign="top">T_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga78adc6c13ad0f1d1dedacffe0e80ce63">operator()</a> (size_t i, size_t j) const</td></tr>
 <tr class="memdesc:ga78adc6c13ad0f1d1dedacffe0e80ce63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator () (Constant version).  <a href="group__OFELI.html#ga78adc6c13ad0f1d1dedacffe0e80ce63">More...</a><br /></td></tr>
 <tr class="separator:ga78adc6c13ad0f1d1dedacffe0e80ce63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1969,10 +1977,19 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
 <a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Conjg</b> (<a class="el" href="group__Util.html#ga7a290272a0e3fa68da99df83e1643226">complex_t</a> a)</td></tr>
 <tr class="memdesc:gac9f3134776987b68e52815c39e4587be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return complex conjugate of complex number <code>a</code> <br /></td></tr>
 <tr class="separator:gac9f3134776987b68e52815c39e4587be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9593d7c3fb3ede50368c8c49b9116c6"><td class="memTemplParams" colspan="2"><a id="gaf9593d7c3fb3ede50368c8c49b9116c6" name="gaf9593d7c3fb3ede50368c8c49b9116c6"></a>
+template&lt;class T_ &gt; </td></tr>
+<tr class="memitem:gaf9593d7c3fb3ede50368c8c49b9116c6"><td class="memTemplItemLeft" align="right" valign="top">const T_ &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Max</b> (const T_ &amp;a, const T_ &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>)</td></tr>
+<tr class="memdesc:gaf9593d7c3fb3ede50368c8c49b9116c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum value of elements <code>a</code> and <code>b</code> <br /></td></tr>
+<tr class="separator:gaf9593d7c3fb3ede50368c8c49b9116c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6e623f45aa8421c5cf22c5d07b01bd43"><td class="memItemLeft" align="right" valign="top"><a id="ga6e623f45aa8421c5cf22c5d07b01bd43" name="ga6e623f45aa8421c5cf22c5d07b01bd43"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Max</b> (int a, int <a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, int c)</td></tr>
 <tr class="memdesc:ga6e623f45aa8421c5cf22c5d07b01bd43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum value of integer numbers <code>a</code>, <code>b</code> and <code>c</code> <br /></td></tr>
 <tr class="separator:ga6e623f45aa8421c5cf22c5d07b01bd43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabba700bd4adb73e09290b38e7e942fda"><td class="memItemLeft" align="right" valign="top"><a id="gabba700bd4adb73e09290b38e7e942fda" name="gabba700bd4adb73e09290b38e7e942fda"></a>
+<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Min</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> a, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> <a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> c)</td></tr>
+<tr class="memdesc:gabba700bd4adb73e09290b38e7e942fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum value of real numbers <code>a</code>, <code>b</code> and <code>c</code> <br /></td></tr>
+<tr class="separator:gabba700bd4adb73e09290b38e7e942fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf19dd808250d4b4933dca2b6bce26109"><td class="memItemLeft" align="right" valign="top"><a id="gaf19dd808250d4b4933dca2b6bce26109" name="gaf19dd808250d4b4933dca2b6bce26109"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>Min</b> (int a, int <a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, int c)</td></tr>
 <tr class="memdesc:gaf19dd808250d4b4933dca2b6bce26109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimum value of integer numbers <code>a</code>, <code>b</code> and <code>c</code> <br /></td></tr>
@@ -2017,10 +2034,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>Min</b> (int a, int <a
 <tr class="memitem:ga3522099fc7a9baeb716885d1b1c6b928"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#ga3522099fc7a9baeb716885d1b1c6b928">Axpy</a> (T_ a, const vector&lt; T_ &gt; &amp;x, vector&lt; T_ &gt; &amp;y)</td></tr>
 <tr class="memdesc:ga3522099fc7a9baeb716885d1b1c6b928"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply vector <code>x</code> by <code>a</code> and add result to <code>y</code>  <a href="group__Util.html#ga3522099fc7a9baeb716885d1b1c6b928">More...</a><br /></td></tr>
 <tr class="separator:ga3522099fc7a9baeb716885d1b1c6b928"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedb2ff7d9c35e8ed53c36c3754c08a90"><td class="memTemplParams" colspan="2">template&lt;class T_ &gt; </td></tr>
-<tr class="memitem:gaedb2ff7d9c35e8ed53c36c3754c08a90"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Util.html#gaedb2ff7d9c35e8ed53c36c3754c08a90">Axpy</a> (T_ a, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;y)</td></tr>
-<tr class="memdesc:gaedb2ff7d9c35e8ed53c36c3754c08a90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply vector <code>x</code> by <code>a</code> and add result to <code>y</code>  <a href="group__Util.html#gaedb2ff7d9c35e8ed53c36c3754c08a90">More...</a><br /></td></tr>
-<tr class="separator:gaedb2ff7d9c35e8ed53c36c3754c08a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7fdea537191eeb55189826f5f07edbaa"><td class="memTemplParams" colspan="2"><a id="ga7fdea537191eeb55189826f5f07edbaa" name="ga7fdea537191eeb55189826f5f07edbaa"></a>
 template&lt;class T_ &gt; </td></tr>
 <tr class="memitem:ga7fdea537191eeb55189826f5f07edbaa"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Copy</b> (size_t n, T_ *x, T_ *y)</td></tr>
@@ -3568,7 +3581,7 @@ Number of rows is extracted from vector <code>row_ptr</code>. </td></tr>
 </div>
 </div>
 <a id="ga1f1e3c8ab6d85d14518ff7424f4f99cc" name="ga1f1e3c8ab6d85d14518ff7424f4f99cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1f1e3c8ab6d85d14518ff7424f4f99cc">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[1/7]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1f1e3c8ab6d85d14518ff7424f4f99cc">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3611,7 +3624,7 @@ Number of rows is extracted from vector <code>row_ptr</code>. </td></tr>
 </div>
 </div>
 <a id="gac7ecd57722b088d883cdb26ac2887270" name="gac7ecd57722b088d883cdb26ac2887270"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac7ecd57722b088d883cdb26ac2887270">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[2/7]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gac7ecd57722b088d883cdb26ac2887270">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3658,7 +3671,7 @@ Number of rows is extracted from vector <code>row_ptr</code>. </td></tr>
 </div>
 </div>
 <a id="gac7ecd57722b088d883cdb26ac2887270" name="gac7ecd57722b088d883cdb26ac2887270"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac7ecd57722b088d883cdb26ac2887270">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[3/7]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gac7ecd57722b088d883cdb26ac2887270">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3705,7 +3718,7 @@ Number of rows is extracted from vector <code>row_ptr</code>. </td></tr>
 </div>
 </div>
 <a id="ga33e92450a126af2dabdae55f0a7f77ea" name="ga33e92450a126af2dabdae55f0a7f77ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga33e92450a126af2dabdae55f0a7f77ea">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[4/7]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga33e92450a126af2dabdae55f0a7f77ea">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3742,7 +3755,7 @@ Number of rows is extracted from vector <code>row_ptr</code>. </td></tr>
 </div>
 </div>
 <a id="ga3b826b1a0e56d2a7994d829c8c32a089" name="ga3b826b1a0e56d2a7994d829c8c32a089"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3b826b1a0e56d2a7994d829c8c32a089">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[5/7]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3b826b1a0e56d2a7994d829c8c32a089">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -3778,45 +3791,8 @@ Number of rows is extracted from vector <code>row_ptr</code>. </td></tr>
 
 </div>
 </div>
-<a id="gaedb2ff7d9c35e8ed53c36c3754c08a90" name="gaedb2ff7d9c35e8ed53c36c3754c08a90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaedb2ff7d9c35e8ed53c36c3754c08a90">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[6/7]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Axpy </td>
-          <td>(</td>
-          <td class="paramtype">T_&#160;</td>
-          <td class="paramname"><em>a</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Multiply vector <code>x</code> by <code>a</code> and add result to <code>y</code> </p>
-<p ><code>x</code> and <code>y</code> are instances of class Vect&lt;T_&gt; </p>
-
-</div>
-</div>
 <a id="ga3522099fc7a9baeb716885d1b1c6b928" name="ga3522099fc7a9baeb716885d1b1c6b928"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3522099fc7a9baeb716885d1b1c6b928">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[7/7]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3522099fc7a9baeb716885d1b1c6b928">&#9670;&nbsp;</a></span>Axpy() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -10720,7 +10696,7 @@ Tolerance is <code>1.e-8</code> </li>
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2022 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2023 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

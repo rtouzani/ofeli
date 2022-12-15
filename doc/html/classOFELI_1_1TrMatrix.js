@@ -4,6 +4,7 @@ var classOFELI_1_1TrMatrix =
     [ "TrMatrix", "group__OFELI.html#ga24676057e126b92328fa706c094fda0b", null ],
     [ "TrMatrix", "group__OFELI.html#gac857b1007a8066b0304572925028d8ba", null ],
     [ "~TrMatrix", "group__OFELI.html#ga2584dd5ded61125880eb0a303975a86d", null ],
+    [ "add", "group__OFELI.html#ga3c7b029cbe1aca9bea7623ae99274795", null ],
     [ "add", "group__OFELI.html#ga17592a65d5fb95d42c07f724dabad759", null ],
     [ "Axpy", "group__OFELI.html#gac7ecd57722b088d883cdb26ac2887270", null ],
     [ "Axpy", "group__OFELI.html#ga3b826b1a0e56d2a7994d829c8c32a089", null ],

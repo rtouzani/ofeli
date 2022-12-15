@@ -206,13 +206,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setDiag</b> ()</td></
 <tr class="memitem:a27c662f32ce66be2efa47871358fcf10"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkSMatrix.html#a27c662f32ce66be2efa47871358fcf10">solve</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, bool fact=true)</td></tr>
 <tr class="memdesc:a27c662f32ce66be2efa47871358fcf10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve linear system.  <a href="classOFELI_1_1SkSMatrix.html#a27c662f32ce66be2efa47871358fcf10">More...</a><br /></td></tr>
 <tr class="separator:a27c662f32ce66be2efa47871358fcf10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b901ab6d955335f6b9edcabbc59d1d1"><td class="memItemLeft" align="right" valign="top">T_ *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkSMatrix.html#a9b901ab6d955335f6b9edcabbc59d1d1">get</a> () const</td></tr>
-<tr class="memdesc:a9b901ab6d955335f6b9edcabbc59d1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return C-Array.  <a href="classOFELI_1_1SkSMatrix.html#a9b901ab6d955335f6b9edcabbc59d1d1">More...</a><br /></td></tr>
-<tr class="separator:a9b901ab6d955335f6b9edcabbc59d1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aeba722bfc5e1d62b0e76fa41cfd15c"><td class="memItemLeft" align="right" valign="top">T_ *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkSMatrix.html#a5aeba722bfc5e1d62b0e76fa41cfd15c">get</a> ()</td></tr>
+<tr class="memdesc:a5aeba722bfc5e1d62b0e76fa41cfd15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return C-Array.  <a href="classOFELI_1_1SkSMatrix.html#a5aeba722bfc5e1d62b0e76fa41cfd15c">More...</a><br /></td></tr>
+<tr class="separator:a5aeba722bfc5e1d62b0e76fa41cfd15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a182f1806e243a5baed9d2e8a1c1ef067"><td class="memItemLeft" align="right" valign="top"><a id="a182f1806e243a5baed9d2e8a1c1ef067" name="a182f1806e243a5baed9d2e8a1c1ef067"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (size_t i, T_ x)</td></tr>
 <tr class="memdesc:a182f1806e243a5baed9d2e8a1c1ef067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a value to the i-th entry of C-array containing matrix. <br /></td></tr>
 <tr class="separator:a182f1806e243a5baed9d2e8a1c1ef067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c7b029cbe1aca9bea7623ae99274795"><td class="memItemLeft" align="right" valign="top"><a id="a3c7b029cbe1aca9bea7623ae99274795" name="a3c7b029cbe1aca9bea7623ae99274795"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (size_t i, const T_ &amp;val)</td></tr>
+<tr class="memdesc:a3c7b029cbe1aca9bea7623ae99274795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>val</code> to entry <code>i</code>. <br /></td></tr>
+<tr class="separator:a3c7b029cbe1aca9bea7623ae99274795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a173c0f972c4eeca07b426587bc2108e5"><td class="memItemLeft" align="right" valign="top"><a id="a173c0f972c4eeca07b426587bc2108e5" name="a173c0f972c4eeca07b426587bc2108e5"></a>
 T_&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (size_t i, size_t j) const</td></tr>
 <tr class="memdesc:a173c0f972c4eeca07b426587bc2108e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return entry <code>(i,j)</code> of matrix if this one is stored, <code>0</code> else. <br /></td></tr>
@@ -306,6 +310,10 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()<
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (size_t i, size_t j, const T_ &amp;val)=0</td></tr>
 <tr class="memdesc:a8afb24c3d7982f994ea2c4a50444ed86 inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>val</code> to entry <code>(i,j)</code>. <br /></td></tr>
 <tr class="separator:a8afb24c3d7982f994ea2c4a50444ed86 inherit pub_methods_classOFELI_1_1Matrix"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae72516cc39020b9e670f6934e8a6b1cf inherit pub_methods_classOFELI_1_1Matrix"><td class="memItemLeft" align="right" valign="top"><a id="ae72516cc39020b9e670f6934e8a6b1cf" name="ae72516cc39020b9e670f6934e8a6b1cf"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (size_t i, const T_ &amp;val)=0</td></tr>
+<tr class="memdesc:ae72516cc39020b9e670f6934e8a6b1cf inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>val</code> to entry <code>i</code>. <br /></td></tr>
+<tr class="separator:ae72516cc39020b9e670f6934e8a6b1cf inherit pub_methods_classOFELI_1_1Matrix"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9f6b1105cb4953c3f56b5c51ed4b046 inherit pub_methods_classOFELI_1_1Matrix"><td class="memItemLeft" align="right" valign="top"><a id="ab9f6b1105cb4953c3f56b5c51ed4b046" name="ab9f6b1105cb4953c3f56b5c51ed4b046"></a>
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>Factor</b> ()=0</td></tr>
 <tr class="memdesc:ab9f6b1105cb4953c3f56b5c51ed4b046 inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factorize matrix. Available only if the storage class enables it. <br /></td></tr>
@@ -774,8 +782,8 @@ class OFELI::SkSMatrix&lt; T_ &gt;</div><p >To handle symmetric matrices in skyl
 
 </div>
 </div>
-<a id="a9b901ab6d955335f6b9edcabbc59d1d1" name="a9b901ab6d955335f6b9edcabbc59d1d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b901ab6d955335f6b9edcabbc59d1d1">&#9670;&nbsp;</a></span>get()</h2>
+<a id="a5aeba722bfc5e1d62b0e76fa41cfd15c" name="a5aeba722bfc5e1d62b0e76fa41cfd15c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aeba722bfc5e1d62b0e76fa41cfd15c">&#9670;&nbsp;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -784,7 +792,7 @@ class OFELI::SkSMatrix&lt; T_ &gt;</div><p >To handle symmetric matrices in skyl
           <td class="memname">T_ * get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1609,7 +1617,7 @@ Solution is performed only is factorization has previouly been invoked. </dd></d
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2022 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2023 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>

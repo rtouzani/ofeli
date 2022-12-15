@@ -6,6 +6,7 @@ var classOFELI_1_1SkMatrix =
     [ "SkMatrix", "classOFELI_1_1SkMatrix.html#a121935e79901139daf7a4576b4f3a2b8", null ],
     [ "SkMatrix", "classOFELI_1_1SkMatrix.html#a520953c4bb457c42e419412d8e8e713d", null ],
     [ "~SkMatrix", "classOFELI_1_1SkMatrix.html#adab7bac07980d8559413234bab7609d2", null ],
+    [ "add", "classOFELI_1_1SkMatrix.html#a3c7b029cbe1aca9bea7623ae99274795", null ],
     [ "add", "classOFELI_1_1SkMatrix.html#a17592a65d5fb95d42c07f724dabad759", null ],
     [ "Axpy", "classOFELI_1_1SkMatrix.html#ac7ecd57722b088d883cdb26ac2887270", null ],
     [ "Axpy", "classOFELI_1_1SkMatrix.html#a80c9b6644398a05cd10cfdfa0a83ddc2", null ],

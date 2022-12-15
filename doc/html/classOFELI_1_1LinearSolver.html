@@ -83,11 +83,11 @@ $(document).ready(function(){initNavTree('classOFELI_1_1LinearSolver.html',''); 
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classOFELI_1_1LinearSolver-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">LinearSolver&lt; T_ &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a> &#124; <a class="el" href="group__OFELI.html">OFELI</a> &raquo; <a class="el" href="group__Solver.html">Solver</a></div></div></div>
+  <div class="headertitle"><div class="title">LinearSolver Class Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a> &#124; <a class="el" href="group__OFELI.html">OFELI</a> &raquo; <a class="el" href="group__Solver.html">Solver</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Class to solve systems of linear equations by iterative methods.  
+<p>Class to solve systems of linear equations by direct or iterative methods.  
  <a href="classOFELI_1_1LinearSolver.html#details">More...</a></p>
 
 <p><code>#include &lt;LinearSolver.h&gt;</code></p>
@@ -100,30 +100,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa05c2275c2c8ce808d096b6692c3435d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#aa05c2275c2c8ce808d096b6692c3435d">LinearSolver</a> (int max_it, <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> tolerance)</td></tr>
 <tr class="memdesc:aa05c2275c2c8ce808d096b6692c3435d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with iteration parameters.  <a href="classOFELI_1_1LinearSolver.html#aa05c2275c2c8ce808d096b6692c3435d">More...</a><br /></td></tr>
 <tr class="separator:aa05c2275c2c8ce808d096b6692c3435d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8b2b6e83de93a53ea4196be5e161e31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#af8b2b6e83de93a53ea4196be5e161e31">LinearSolver</a> (<a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:af8b2b6e83de93a53ea4196be5e161e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#af8b2b6e83de93a53ea4196be5e161e31">More...</a><br /></td></tr>
-<tr class="separator:af8b2b6e83de93a53ea4196be5e161e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a910f0be2f1614e1c069abcd40ec56dd0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a910f0be2f1614e1c069abcd40ec56dd0">LinearSolver</a> (<a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a910f0be2f1614e1c069abcd40ec56dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using skyline-stored matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a910f0be2f1614e1c069abcd40ec56dd0">More...</a><br /></td></tr>
-<tr class="separator:a910f0be2f1614e1c069abcd40ec56dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98105cac171bf2a1e24c8b5e5a7ff07a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a98105cac171bf2a1e24c8b5e5a7ff07a">LinearSolver</a> (<a class="el" href="classOFELI_1_1TrMatrix.html">TrMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a98105cac171bf2a1e24c8b5e5a7ff07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a tridiagonal matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a98105cac171bf2a1e24c8b5e5a7ff07a">More...</a><br /></td></tr>
-<tr class="separator:a98105cac171bf2a1e24c8b5e5a7ff07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a042d8d2397760d3906bfe02f0c3f8b13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a042d8d2397760d3906bfe02f0c3f8b13">LinearSolver</a> (<a class="el" href="classOFELI_1_1BMatrix.html">BMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a042d8d2397760d3906bfe02f0c3f8b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a banded matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a042d8d2397760d3906bfe02f0c3f8b13">More...</a><br /></td></tr>
-<tr class="separator:a042d8d2397760d3906bfe02f0c3f8b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4260ff178a260a89d52c6a8cc127791d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a4260ff178a260a89d52c6a8cc127791d">LinearSolver</a> (<a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a4260ff178a260a89d52c6a8cc127791d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a dense matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a4260ff178a260a89d52c6a8cc127791d">More...</a><br /></td></tr>
-<tr class="separator:a4260ff178a260a89d52c6a8cc127791d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00032bd6c50c55e2fc4a7929480def96"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a00032bd6c50c55e2fc4a7929480def96">LinearSolver</a> (<a class="el" href="classOFELI_1_1DSMatrix.html">DSMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a00032bd6c50c55e2fc4a7929480def96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a dense symmetric matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a00032bd6c50c55e2fc4a7929480def96">More...</a><br /></td></tr>
-<tr class="separator:a00032bd6c50c55e2fc4a7929480def96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3229c9a3116a4b6125ddf3f72e01e0a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a3229c9a3116a4b6125ddf3f72e01e0a8">LinearSolver</a> (<a class="el" href="classOFELI_1_1SkSMatrix.html">SkSMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a3229c9a3116a4b6125ddf3f72e01e0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using skyline-stored symmetric matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a3229c9a3116a4b6125ddf3f72e01e0a8">More...</a><br /></td></tr>
-<tr class="separator:a3229c9a3116a4b6125ddf3f72e01e0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adec04ce22558fc7d208803adc611540f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#adec04ce22558fc7d208803adc611540f">LinearSolver</a> (<a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:adec04ce22558fc7d208803adc611540f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix, right-hand side.  <a href="classOFELI_1_1LinearSolver.html#adec04ce22558fc7d208803adc611540f">More...</a><br /></td></tr>
-<tr class="separator:adec04ce22558fc7d208803adc611540f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a667de1344de8be63f691d7f4dbee8552"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a667de1344de8be63f691d7f4dbee8552">LinearSolver</a> (<a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:a667de1344de8be63f691d7f4dbee8552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a667de1344de8be63f691d7f4dbee8552">More...</a><br /></td></tr>
+<tr class="separator:a667de1344de8be63f691d7f4dbee8552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23ee0c3b96b4fd8d37d1168269c8bcb3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a23ee0c3b96b4fd8d37d1168269c8bcb3">LinearSolver</a> (<a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:a23ee0c3b96b4fd8d37d1168269c8bcb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using skyline-stored matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a23ee0c3b96b4fd8d37d1168269c8bcb3">More...</a><br /></td></tr>
+<tr class="separator:a23ee0c3b96b4fd8d37d1168269c8bcb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a888d91e883f61e00688dbeeb563090"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a4a888d91e883f61e00688dbeeb563090">LinearSolver</a> (<a class="el" href="classOFELI_1_1TrMatrix.html">TrMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:a4a888d91e883f61e00688dbeeb563090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a tridiagonal matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a4a888d91e883f61e00688dbeeb563090">More...</a><br /></td></tr>
+<tr class="separator:a4a888d91e883f61e00688dbeeb563090"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe536027cf7d1709627393d06a4367f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#afe536027cf7d1709627393d06a4367f0">LinearSolver</a> (<a class="el" href="classOFELI_1_1BMatrix.html">BMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:afe536027cf7d1709627393d06a4367f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a banded matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#afe536027cf7d1709627393d06a4367f0">More...</a><br /></td></tr>
+<tr class="separator:afe536027cf7d1709627393d06a4367f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc7a7277d77fa6864579f93f24a5452"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a4fc7a7277d77fa6864579f93f24a5452">LinearSolver</a> (<a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:a4fc7a7277d77fa6864579f93f24a5452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a dense matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#a4fc7a7277d77fa6864579f93f24a5452">More...</a><br /></td></tr>
+<tr class="separator:a4fc7a7277d77fa6864579f93f24a5452"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab115627ef927c548cfed5de1cf4b1af1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#ab115627ef927c548cfed5de1cf4b1af1">LinearSolver</a> (<a class="el" href="classOFELI_1_1DSMatrix.html">DSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:ab115627ef927c548cfed5de1cf4b1af1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using a dense symmetric matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#ab115627ef927c548cfed5de1cf4b1af1">More...</a><br /></td></tr>
+<tr class="separator:ab115627ef927c548cfed5de1cf4b1af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad14f342a5a142ffa5299bc8f4dd9237c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#ad14f342a5a142ffa5299bc8f4dd9237c">LinearSolver</a> (<a class="el" href="classOFELI_1_1SkSMatrix.html">SkSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:ad14f342a5a142ffa5299bc8f4dd9237c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using skyline-stored symmetric matrix, right-hand side and solution vector.  <a href="classOFELI_1_1LinearSolver.html#ad14f342a5a142ffa5299bc8f4dd9237c">More...</a><br /></td></tr>
+<tr class="separator:ad14f342a5a142ffa5299bc8f4dd9237c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b0b8945edf33ef2604e1cc8b272a0b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a8b0b8945edf33ef2604e1cc8b272a0b8">LinearSolver</a> (<a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:a8b0b8945edf33ef2604e1cc8b272a0b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using matrix, right-hand side.  <a href="classOFELI_1_1LinearSolver.html#a8b0b8945edf33ef2604e1cc8b272a0b8">More...</a><br /></td></tr>
+<tr class="separator:a8b0b8945edf33ef2604e1cc8b272a0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4377168b38ead79c941f43a676aef1a6"><td class="memItemLeft" align="right" valign="top"><a id="a4377168b38ead79c941f43a676aef1a6" name="a4377168b38ead79c941f43a676aef1a6"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~LinearSolver</b> ()</td></tr>
 <tr class="memdesc:a4377168b38ead79c941f43a676aef1a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
@@ -135,26 +135,26 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~LinearSolver</b> 
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setTolerance</b> (<a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> tol)</td></tr>
 <tr class="memdesc:acb146173a62d5f456421cb22265a536f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set tolerance value. <br /></td></tr>
 <tr class="separator:acb146173a62d5f456421cb22265a536f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a070f299c5c83c3d05f3888128fdc6b63"><td class="memItemLeft" align="right" valign="top"><a id="a070f299c5c83c3d05f3888128fdc6b63" name="a070f299c5c83c3d05f3888128fdc6b63"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSolution</b> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:a070f299c5c83c3d05f3888128fdc6b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set solution vector. <br /></td></tr>
-<tr class="separator:a070f299c5c83c3d05f3888128fdc6b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a577013472d05c14948e4676fed1d69cc"><td class="memItemLeft" align="right" valign="top"><a id="a577013472d05c14948e4676fed1d69cc" name="a577013472d05c14948e4676fed1d69cc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setRHS</b> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>)</td></tr>
-<tr class="memdesc:a577013472d05c14948e4676fed1d69cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set right-hand side vector. <br /></td></tr>
-<tr class="separator:a577013472d05c14948e4676fed1d69cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8cb117dd670df852851829761e0e54d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#ad8cb117dd670df852851829761e0e54d">setMatrix</a> (<a class="el" href="classOFELI_1_1Matrix.html">OFELI::Matrix</a>&lt; T_ &gt; *<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>)</td></tr>
-<tr class="memdesc:ad8cb117dd670df852851829761e0e54d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a pointer to <a class="el" href="classOFELI_1_1Matrix.html" title="Virtual class to handle matrices for all storage formats.">Matrix</a>.  <a href="classOFELI_1_1LinearSolver.html#ad8cb117dd670df852851829761e0e54d">More...</a><br /></td></tr>
-<tr class="separator:ad8cb117dd670df852851829761e0e54d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3cf4567b730d01ff143013f1b11522a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#ae3cf4567b730d01ff143013f1b11522a">setMatrix</a> (<a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>)</td></tr>
-<tr class="memdesc:ae3cf4567b730d01ff143013f1b11522a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a pointer to matrix.  <a href="classOFELI_1_1LinearSolver.html#ae3cf4567b730d01ff143013f1b11522a">More...</a><br /></td></tr>
-<tr class="separator:ae3cf4567b730d01ff143013f1b11522a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addc7f35fc3a68cba345a07ed92fa59b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#addc7f35fc3a68cba345a07ed92fa59b2">setMatrix</a> (<a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>)</td></tr>
-<tr class="memdesc:addc7f35fc3a68cba345a07ed92fa59b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a skyline matrix.  <a href="classOFELI_1_1LinearSolver.html#addc7f35fc3a68cba345a07ed92fa59b2">More...</a><br /></td></tr>
-<tr class="separator:addc7f35fc3a68cba345a07ed92fa59b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad56dc6dab838eee84f6d76995d555638"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#ad56dc6dab838eee84f6d76995d555638">set</a> (<a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x)</td></tr>
-<tr class="memdesc:ad56dc6dab838eee84f6d76995d555638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix, right-hand side and initial guess.  <a href="classOFELI_1_1LinearSolver.html#ad56dc6dab838eee84f6d76995d555638">More...</a><br /></td></tr>
-<tr class="separator:ad56dc6dab838eee84f6d76995d555638"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68b4fe7e02423a8303b1f29f59d68f6d"><td class="memItemLeft" align="right" valign="top"><a id="a68b4fe7e02423a8303b1f29f59d68f6d" name="a68b4fe7e02423a8303b1f29f59d68f6d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setSolution</b> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:a68b4fe7e02423a8303b1f29f59d68f6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set solution vector. <br /></td></tr>
+<tr class="separator:a68b4fe7e02423a8303b1f29f59d68f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dcc6c83ae5f9c7a958e9ba081f8eeb6"><td class="memItemLeft" align="right" valign="top"><a id="a4dcc6c83ae5f9c7a958e9ba081f8eeb6" name="a4dcc6c83ae5f9c7a958e9ba081f8eeb6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setRHS</b> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>)</td></tr>
+<tr class="memdesc:a4dcc6c83ae5f9c7a958e9ba081f8eeb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set right-hand side vector. <br /></td></tr>
+<tr class="separator:a4dcc6c83ae5f9c7a958e9ba081f8eeb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af43f6ce1527384dce2dc2c78e401ad69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#af43f6ce1527384dce2dc2c78e401ad69">setMatrix</a> (<a class="el" href="classOFELI_1_1Matrix.html">Matrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; *<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>)</td></tr>
+<tr class="memdesc:af43f6ce1527384dce2dc2c78e401ad69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a pointer to <a class="el" href="classOFELI_1_1Matrix.html" title="Virtual class to handle matrices for all storage formats.">Matrix</a>.  <a href="classOFELI_1_1LinearSolver.html#af43f6ce1527384dce2dc2c78e401ad69">More...</a><br /></td></tr>
+<tr class="separator:af43f6ce1527384dce2dc2c78e401ad69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a699a6a90e87a5d43862cf1d697694910"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a699a6a90e87a5d43862cf1d697694910">setMatrix</a> (<a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>)</td></tr>
+<tr class="memdesc:a699a6a90e87a5d43862cf1d697694910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a pointer to matrix.  <a href="classOFELI_1_1LinearSolver.html#a699a6a90e87a5d43862cf1d697694910">More...</a><br /></td></tr>
+<tr class="separator:a699a6a90e87a5d43862cf1d697694910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa81ed8f868e5119ab178b961fbae77ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#aa81ed8f868e5119ab178b961fbae77ea">setMatrix</a> (<a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>)</td></tr>
+<tr class="memdesc:aa81ed8f868e5119ab178b961fbae77ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix in the case of a skyline matrix.  <a href="classOFELI_1_1LinearSolver.html#aa81ed8f868e5119ab178b961fbae77ea">More...</a><br /></td></tr>
+<tr class="separator:aa81ed8f868e5119ab178b961fbae77ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a123b92215a30f2a96fcf276d7c784560"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a123b92215a30f2a96fcf276d7c784560">set</a> (<a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x)</td></tr>
+<tr class="memdesc:a123b92215a30f2a96fcf276d7c784560"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set matrix, right-hand side and initial guess.  <a href="classOFELI_1_1LinearSolver.html#a123b92215a30f2a96fcf276d7c784560">More...</a><br /></td></tr>
+<tr class="separator:a123b92215a30f2a96fcf276d7c784560"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ce77dad890759d85412157e25b3afa4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a0ce77dad890759d85412157e25b3afa4">setSolver</a> (<a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
 <tr class="memdesc:a0ce77dad890759d85412157e25b3afa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set solver and preconditioner.  <a href="classOFELI_1_1LinearSolver.html#a0ce77dad890759d85412157e25b3afa4">More...</a><br /></td></tr>
 <tr class="separator:a0ce77dad890759d85412157e25b3afa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,9 +166,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setRHS</b> (<a class=
 <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getPreconditioner</b> () const</td></tr>
 <tr class="memdesc:a854df1c2a7677feb0c8810b564262c16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solver preconditioner. <br /></td></tr>
 <tr class="separator:a854df1c2a7677feb0c8810b564262c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bfcefd222a9c02f7254140fed80f26c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a1bfcefd222a9c02f7254140fed80f26c">solve</a> (<a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;x, <a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
-<tr class="memdesc:a1bfcefd222a9c02f7254140fed80f26c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve equations using system data, prescribed solver and preconditioner.  <a href="classOFELI_1_1LinearSolver.html#a1bfcefd222a9c02f7254140fed80f26c">More...</a><br /></td></tr>
-<tr class="separator:a1bfcefd222a9c02f7254140fed80f26c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871aab66bc28aff405a88d5073679060"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#a871aab66bc28aff405a88d5073679060">solve</a> (<a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga675e3e25901ad18edd16ee1e513a6117">A</a>, const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;<a class="el" href="group__OFELI.html#ga5278b62762b07839461e05a3db0a2047">b</a>, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, <a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
+<tr class="memdesc:a871aab66bc28aff405a88d5073679060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve equations using system data, prescribed solver and preconditioner.  <a href="classOFELI_1_1LinearSolver.html#a871aab66bc28aff405a88d5073679060">More...</a><br /></td></tr>
+<tr class="separator:a871aab66bc28aff405a88d5073679060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeccb35e1c449b861305d1765f86395f4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1LinearSolver.html#aeccb35e1c449b861305d1765f86395f4">solve</a> (<a class="el" href="group__OFELI.html#gad0624a8576d3ca1d4af97479546930ea">Iteration</a> s, <a class="el" href="group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38">Preconditioner</a> p=<a class="el" href="group__OFELI.html#ggadac1c2aa74e98e485c02f73279b71a38a4268260ca0a19ecd998e62462ccde34e">DIAG_PREC</a>)</td></tr>
 <tr class="memdesc:aeccb35e1c449b861305d1765f86395f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve equations using prescribed solver and preconditioner.  <a href="classOFELI_1_1LinearSolver.html#aeccb35e1c449b861305d1765f86395f4">More...</a><br /></td></tr>
 <tr class="separator:aeccb35e1c449b861305d1765f86395f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,8 +189,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>getNbIter</b> () const
 <tr class="separator:ad427a5facfbd7f505f7dd7ff9d512c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;class T_&gt;<br />
-class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear equations by iterative methods. </p>
+<div class="textblock"><p >Class to solve systems of linear equations by direct or iterative methods. </p>
+<dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2ffc285126a28fba1fa2d1c681f261cf" name="a2ffc285126a28fba1fa2d1c681f261cf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2ffc285126a28fba1fa2d1c681f261cf">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[1/10]</span></h2>
@@ -242,17 +243,15 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">max_it</td><td>Maximal number of iterations </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tolerance</td><td>Tolerance for convergence (measured in relative weighted 2-Norm) in input, effective discrepancy in output.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tolerance</td><td>Tolerance for convergence (measured in relative weighted 2-Norm) in input, effective discrepancy in output. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
 
 </div>
 </div>
-<a id="af8b2b6e83de93a53ea4196be5e161e31" name="af8b2b6e83de93a53ea4196be5e161e31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8b2b6e83de93a53ea4196be5e161e31">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[3/10]</span></h2>
+<a id="a667de1344de8be63f691d7f4dbee8552" name="a667de1344de8be63f691d7f4dbee8552"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a667de1344de8be63f691d7f4dbee8552">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[3/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,19 +259,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -295,8 +294,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="a910f0be2f1614e1c069abcd40ec56dd0" name="a910f0be2f1614e1c069abcd40ec56dd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a910f0be2f1614e1c069abcd40ec56dd0">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[4/10]</span></h2>
+<a id="a23ee0c3b96b4fd8d37d1168269c8bcb3" name="a23ee0c3b96b4fd8d37d1168269c8bcb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23ee0c3b96b4fd8d37d1168269c8bcb3">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[4/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -304,19 +303,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -339,8 +338,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="a98105cac171bf2a1e24c8b5e5a7ff07a" name="a98105cac171bf2a1e24c8b5e5a7ff07a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98105cac171bf2a1e24c8b5e5a7ff07a">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[5/10]</span></h2>
+<a id="a4a888d91e883f61e00688dbeeb563090" name="a4a888d91e883f61e00688dbeeb563090"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a888d91e883f61e00688dbeeb563090">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[5/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -348,19 +347,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1TrMatrix.html">TrMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1TrMatrix.html">TrMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -383,8 +382,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="a042d8d2397760d3906bfe02f0c3f8b13" name="a042d8d2397760d3906bfe02f0c3f8b13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a042d8d2397760d3906bfe02f0c3f8b13">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[6/10]</span></h2>
+<a id="afe536027cf7d1709627393d06a4367f0" name="afe536027cf7d1709627393d06a4367f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe536027cf7d1709627393d06a4367f0">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[6/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -392,19 +391,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1BMatrix.html">BMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1BMatrix.html">BMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -427,8 +426,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="a4260ff178a260a89d52c6a8cc127791d" name="a4260ff178a260a89d52c6a8cc127791d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4260ff178a260a89d52c6a8cc127791d">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[7/10]</span></h2>
+<a id="a4fc7a7277d77fa6864579f93f24a5452" name="a4fc7a7277d77fa6864579f93f24a5452"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc7a7277d77fa6864579f93f24a5452">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[7/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -436,19 +435,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1DMatrix.html">DMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -471,8 +470,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="a00032bd6c50c55e2fc4a7929480def96" name="a00032bd6c50c55e2fc4a7929480def96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00032bd6c50c55e2fc4a7929480def96">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[8/10]</span></h2>
+<a id="ab115627ef927c548cfed5de1cf4b1af1" name="ab115627ef927c548cfed5de1cf4b1af1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab115627ef927c548cfed5de1cf4b1af1">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[8/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,19 +479,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1DSMatrix.html">DSMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1DSMatrix.html">DSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -515,8 +514,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="a3229c9a3116a4b6125ddf3f72e01e0a8" name="a3229c9a3116a4b6125ddf3f72e01e0a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3229c9a3116a4b6125ddf3f72e01e0a8">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[9/10]</span></h2>
+<a id="ad14f342a5a142ffa5299bc8f4dd9237c" name="ad14f342a5a142ffa5299bc8f4dd9237c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad14f342a5a142ffa5299bc8f4dd9237c">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[9/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -524,19 +523,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1SkSMatrix.html">SkSMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1SkSMatrix.html">SkSMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -559,8 +558,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="adec04ce22558fc7d208803adc611540f" name="adec04ce22558fc7d208803adc611540f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adec04ce22558fc7d208803adc611540f">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[10/10]</span></h2>
+<a id="a8b0b8945edf33ef2604e1cc8b272a0b8" name="a8b0b8945edf33ef2604e1cc8b272a0b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b0b8945edf33ef2604e1cc8b272a0b8">&#9670;&nbsp;</a></span>LinearSolver() <span class="overload">[10/10]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -568,19 +567,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1LinearSolver.html">LinearSolver</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -604,8 +603,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad56dc6dab838eee84f6d76995d555638" name="ad56dc6dab838eee84f6d76995d555638"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad56dc6dab838eee84f6d76995d555638">&#9670;&nbsp;</a></span>set()</h2>
+<a id="a123b92215a30f2a96fcf276d7c784560" name="a123b92215a30f2a96fcf276d7c784560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a123b92215a30f2a96fcf276d7c784560">&#9670;&nbsp;</a></span>set()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -613,19 +612,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname">void set </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -648,8 +647,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="ad8cb117dd670df852851829761e0e54d" name="ad8cb117dd670df852851829761e0e54d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8cb117dd670df852851829761e0e54d">&#9670;&nbsp;</a></span>setMatrix() <span class="overload">[1/3]</span></h2>
+<a id="af43f6ce1527384dce2dc2c78e401ad69" name="af43f6ce1527384dce2dc2c78e401ad69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af43f6ce1527384dce2dc2c78e401ad69">&#9670;&nbsp;</a></span>setMatrix() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -657,7 +656,7 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname">void setMatrix </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Matrix.html">OFELI::Matrix</a>&lt; T_ &gt; *&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Matrix.html">Matrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; *&#160;</td>
           <td class="paramname"><em>A</em></td><td>)</td>
           <td></td>
         </tr>
@@ -674,8 +673,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="addc7f35fc3a68cba345a07ed92fa59b2" name="addc7f35fc3a68cba345a07ed92fa59b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addc7f35fc3a68cba345a07ed92fa59b2">&#9670;&nbsp;</a></span>setMatrix() <span class="overload">[2/3]</span></h2>
+<a id="aa81ed8f868e5119ab178b961fbae77ea" name="aa81ed8f868e5119ab178b961fbae77ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa81ed8f868e5119ab178b961fbae77ea">&#9670;&nbsp;</a></span>setMatrix() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -683,7 +682,7 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname">void setMatrix </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em></td><td>)</td>
           <td></td>
         </tr>
@@ -700,8 +699,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="ae3cf4567b730d01ff143013f1b11522a" name="ae3cf4567b730d01ff143013f1b11522a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3cf4567b730d01ff143013f1b11522a">&#9670;&nbsp;</a></span>setMatrix() <span class="overload">[3/3]</span></h2>
+<a id="a699a6a90e87a5d43862cf1d697694910" name="a699a6a90e87a5d43862cf1d697694910"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a699a6a90e87a5d43862cf1d697694910">&#9670;&nbsp;</a></span>setMatrix() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -709,7 +708,7 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname">void setMatrix </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em></td><td>)</td>
           <td></td>
         </tr>
@@ -847,8 +846,8 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 
 </div>
 </div>
-<a id="a1bfcefd222a9c02f7254140fed80f26c" name="a1bfcefd222a9c02f7254140fed80f26c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1bfcefd222a9c02f7254140fed80f26c">&#9670;&nbsp;</a></span>solve() <span class="overload">[3/3]</span></h2>
+<a id="a871aab66bc28aff405a88d5073679060" name="a871aab66bc28aff405a88d5073679060"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a871aab66bc28aff405a88d5073679060">&#9670;&nbsp;</a></span>solve() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -856,19 +855,19 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
         <tr>
           <td class="memname">int solve </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1SpMatrix.html">SpMatrix</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; T_ &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
@@ -1029,7 +1028,7 @@ class OFELI::LinearSolver&lt; T_ &gt;</div><p >Class to solve systems of linear 
 <!-- End of Google Search Box -->
 <br><br><br></p>
 <div id="foot_bar">
-  Copyright &copy; 1998-2022 Rachid Touzani&nbsp;
+  Copyright &copy; 1998-2023 Rachid Touzani&nbsp;
 </div>
 </div> <!-- main -->
 </body>
