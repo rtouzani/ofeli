@@ -42,8 +42,6 @@ Hexa8::Hexa8()
 {
    _sh.resize(8);
    _dsh.resize(8);
-   _node.resize(8);
-   _x.resize(8);
    _el = nullptr;
 }
 
@@ -56,12 +54,10 @@ Hexa8::Hexa8(const Element* el)
    _label = el->n();
    _sh.resize(8);
    _dsh.resize(8);
-   _node.resize(8);
-   _x.resize(8);
    for (size_t i=0; i<8; i++) {
       Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _det = 0.0;
    _el = el;

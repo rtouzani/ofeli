@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-              Definition of class Grid for structured 2-D and 3-D grids
+             Definition of class Grid for structured 2-D and 3-D grids
 
   ==============================================================================*/
 

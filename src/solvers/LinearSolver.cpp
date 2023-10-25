@@ -278,7 +278,7 @@ int LinearSolver::solve()
          ret = im.iterations();
       }
       else
-         throw OFELIException("In LinearSOlver::solve(Iteration,Preconditioner): "
+         throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
                               "This preconditioner is not available in the eigen library.");
    }
    else
@@ -292,7 +292,7 @@ int LinearSolver::solve()
       case DIRECT_SOLVER:
          if (_fact)
             _A->Factor();
-         _nb_it = _A->solve(*_b,*_x);
+         ret = _A->solve(*_b,*_x);
          break;
 
       case CG_SOLVER:
@@ -316,7 +316,9 @@ int LinearSolver::solve()
          break;
    }
 #endif
-   return _nb_it;
+   if (_nb_it<0)
+      ret = -_nb_it;
+   return ret;
 }
 
 /*! @} End of Doxygen Groups */

@@ -343,7 +343,7 @@ real_t TimeStepping::runOneTimeStep()
          if (de.bc != nullptr)
             de.eq->setInput(BOUNDARY_CONDITION,*de.bc);
          de.eq->runOneTimeStep();
-	 break;
+         break;
       }
       if (de.bc != nullptr)
          de.eq->setInput(BOUNDARY_CONDITION,*de.bc);
@@ -1059,7 +1059,11 @@ void TimeStepping::AssembleNewmark(const Element& el,
       size_t k=0;
       for (size_t i=0; i<n; i++) {
          for (size_t j=0; j<n; j++, k++)
-            eb[i] -= eA1[k]*edu[j] + eA0[k]*eu[j];
+            eb[i] -= eA0[k]*eu[j];
+      }
+      for (size_t i=0; i<n; i++) {
+         for (size_t j=0; j<n; j++, k++)
+            eb[i] -= eA1[k]*edu[j];
       }
       element_assembly(el,eA2,eb,de.D,de.b);
    }
@@ -1239,6 +1243,8 @@ void TimeStepping::PreSolve_Newmark()
    if (_step==1 && _sstep==1)
       de.D = 0;
    if (_sstep>1) {
+      if (de.du==nullptr)
+         throw OFELIException("In TimeStepping::PreSolve_Newmark(): Incorrect initial data.");
       de.v = de.u + _time_step*(*de.du) + (_time_step*_time_step*(0.5-_beta))*de.ddu;
       *de.du += ((1-_gamma)*_time_step)*de.ddu;
    }

@@ -83,8 +83,8 @@ Laplace2DT3::Laplace2DT3(Mesh&         ms,
 {
    _bf = &b;
    _u = &u;
-   setMatrixType(SPARSE|SYMMETRIC);
-   setSolver(CG_SOLVER,DILU_PREC);
+   setMatrixType(SKYLINE|SYMMETRIC);
+   setSolver(DIRECT_SOLVER);
    _bc = &Dbc;
    _sf = &Nbc;
 }

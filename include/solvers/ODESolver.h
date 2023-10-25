@@ -431,6 +431,21 @@ class ODESolver
 /// \brief Return solution in the case of a scalar equation
     real_t get() const { return _y2; }
 
+/**
+ * \brief Get phase portrait vectors
+ * \details This function gets vectors containing solution and its time
+ * derivative to determine phase portraite of the ode.
+ * The function is valid for a single ode only.
+ * 
+ * @param x Vector containing solution of the ode at each computed time step
+ * @param v Vector containing discrete time derivative of the ode at each
+ * computed time step
+ * @param i Component for which the phase is extracted [Dafault: <tt>1</tt>]
+ */
+    void getPhase(Vect<real_t>& x,
+                  Vect<real_t>& v,
+                  size_t        i=1);
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     friend ostream & operator<<(ostream&         s,
                                 const ODESolver& de);
@@ -453,6 +468,7 @@ class ODESolver
    bool _linear, _a0, _a1, _a2, _constant_matrix, _regex, _explicit, _init, _lhs, _rhs, _rhsF;
    Vect<real_t> _x, _u, _v, *_w, _f0, _f1, _f2, _b, _f01, _f, *_bc, _bb, _vv, _dudt;
    Vect<real_t> *_du, _ddu, _dv, _ddv, _vF1, _vF2, _vF, _vDF1, _D, _k1, _k2, _k3, _k4;
+   vector<Vect<real_t> > _y, _dy;
    DMatrix<real_t> *_A0, *_A1, *_A2;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2;
    real_t _y0, _y1, _dy1, _y2, _dy2, _ddy, _d0, _d1, _d2, _d01, _dydt;
@@ -461,6 +477,7 @@ class ODESolver
    vector<Fct> _theC;
    vector<real_t> _xv;
    real_t _beta, _gamma;
+   size_t _nb_fct_def, _rhs_count;
    LinearSolver _ls;
    DEType _type;
    Iter<real_t> _iter;

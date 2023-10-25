@@ -60,12 +60,8 @@ template<class T_> class Vect;
  *  @param [in] v Vect instance to save
  *  @param [in] output_file Output file where to save the vector
  *  @param [in] opt Option to choose file format to save. This is to be chosen
- *  among enumerated values:
- *  GMSH
- *  GNUPLOT
- *  MATLAB
- *  TECPLOT
- *  VTK
+ *  among enumerated values: <tt>GMSH</tt>, <tt>GNUPLOT</tt>, <tt>MATLAB</tt>, 
+ *  <tt>TECPLOT</tt>, <tt>VTK</tt>
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License

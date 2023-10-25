@@ -6,6 +6,7 @@ var classOFELI_1_1LocalMatrix =
     [ "LocalMatrix", "classOFELI_1_1LocalMatrix.html#abb9d1f75f5c13663fd12b100e8ed28ae", null ],
     [ "LocalMatrix", "classOFELI_1_1LocalMatrix.html#ad2cb938de19b7469fa59e568cb282a47", null ],
     [ "~LocalMatrix", "classOFELI_1_1LocalMatrix.html#af6fd3022afda52421affb40a572ae5aa", null ],
+    [ "clear", "classOFELI_1_1LocalMatrix.html#ac8bb3912a3ce86b15842e79d0b421204", null ],
     [ "Factor", "classOFELI_1_1LocalMatrix.html#a1e2d4ab2fe26e23da6138707672c9b2e", null ],
     [ "FactorAndSolve", "classOFELI_1_1LocalMatrix.html#aea982c95525a789d4a1a75fcd65c6416", null ],
     [ "get", "classOFELI_1_1LocalMatrix.html#a5aeba722bfc5e1d62b0e76fa41cfd15c", null ],

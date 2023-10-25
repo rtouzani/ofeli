@@ -103,6 +103,7 @@ add_subdirectory (src)
 add_subdirectory (include)
 add_subdirectory (demos)
 add_subdirectory (util)
+include_directories ([${WorkspaceFolder}/include)
 
 # Directories to install
 install (TARGETS ofeli LIBRARY DESTINATION ${INSTALL_LIBDIR})

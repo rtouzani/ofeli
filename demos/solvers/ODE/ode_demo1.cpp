@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
    theTimeStep = atof(argv[1]);
 
 // Declare equation, give initial solution and give coefficients defining the ode
-// Use the Runge-Kutta scheme (you can modify this)
+// Use the Forward Euler scheme (you can modify this)
    try {
       ODESolver ode(FORWARD_EULER);
 

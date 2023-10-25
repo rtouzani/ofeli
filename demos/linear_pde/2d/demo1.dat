@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+    <title>An example for the Laplace equation</title>
+    <date>September 1, 2023</date>
+    <author>R. Touzani</author>
+</info>
+<Project name="proj">
+  <mesh_file>mesh1.m</mesh_file>
+</Project>
+<Prescription>
+  <BoundaryCondition code="1">exp(x)*sin(y) + exp(y)*cos(x)</BoundaryCondition>
+  <Source>0.</Source>
+  <Solution>exp(x)*sin(y) + exp(y)*cos(x)</Solution>
+</Prescription>
+</OFELI_File>

@@ -16,6 +16,7 @@ var classOFELI_1_1Matrix =
     [ "getColInd", "classOFELI_1_1Matrix.html#a78ca89abdc8f4d25f6bb9aa3e0e7d08c", null ],
     [ "getDiag", "classOFELI_1_1Matrix.html#a65a7993114ae4172f90f90a34b27d49c", null ],
     [ "getLength", "classOFELI_1_1Matrix.html#a2b6d58f963410c52b1e972b849617ff3", null ],
+    [ "getName", "classOFELI_1_1Matrix.html#a134d85a189d667e7a481614c1aa67860", null ],
     [ "getNbColumns", "classOFELI_1_1Matrix.html#ad30b65e768e3f5e37341c8499c0ca69d", null ],
     [ "getNbRows", "classOFELI_1_1Matrix.html#af0536df9ea10635856f008d21d125f32", null ],
     [ "getRowPtr", "classOFELI_1_1Matrix.html#aa18dac37f25a34f20e16d92b0c08562a", null ],

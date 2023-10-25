@@ -341,7 +341,6 @@ class Vect
     void select(const Vect<T_>& v,
                 size_t          n);
 
-
 /** \brief Return vector with selected one component from a given multicomponent vector
  *  @param [in] n Component to extract (must be > 1 and < 4 or).
  *  @return Vector with selected component
@@ -470,12 +469,6 @@ class Vect
  */
     void setDG(int degree=1);
 
-/** \brief Say if vector is constructed for a grid
- *  \details Vectors constructed for grids are defined with the help of a Grid instance
- *  @return true if vector is constructed with a Grid instance
- */
-    bool isGrid() const;
-
 /// \brief Return vector number of degrees of freedom
     size_t getNbDOF() const;
 
@@ -485,9 +478,16 @@ class Vect
 /// \brief Return Mesh instance
     Mesh &getMesh() const;
 
+/// \brief Return Grid instance
+    Grid &getGrid() const;
+
 /// \brief Return <tt>true</tt> if vector contains a Mesh pointer, <tt>false</tt> if not
 /// \details A Vect instance can be constructed using mesh information 
     bool WithMesh() const;
+
+/// \brief Return <tt>true</tt> if vector contains a Grid pointer, <tt>false</tt> if not
+/// \details A Vect instance can be constructed using grid information 
+    bool WithGrid() const;
 
 /** Return DOF type of vector
  *  @return dof_type Type of degrees of freedom. Value among the enumerated
@@ -502,7 +502,7 @@ class Vect
     real_t getTime() const;
 
 /// \brief Set name of vector
-    void setName(string name);
+    void setName(const string& name);
 
 /// \brief Get name of vector
     string getName() const;
@@ -1257,8 +1257,9 @@ class Vect
     DOFSupport _dof_type;
     size_t _size, _nx, _ny, _nz, _nt, _nb, _nb_dof, _nc;
     int    _dg_degree;
-    bool   _grid, _with_mesh, _with_regex[10];
+    bool   _with_grid, _with_mesh, _with_regex[10];
     Mesh   *_theMesh;
+    Grid   *_theGrid;
     string _name, _regex[10];
     real_t _time;
     const vector<string> _var {"x","y","z","t"};

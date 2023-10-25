@@ -100,6 +100,14 @@ LocalMatrix<T_,NR_,NC_>::~LocalMatrix()
 
 
 template<class T_,size_t NR_,size_t NC_>
+void LocalMatrix<T_,NR_,NC_>::clear()
+{
+   for (size_t i=0; i<NR_*NC_; i++)
+      _a[i] = T_(0);
+}
+
+
+template<class T_,size_t NR_,size_t NC_>
 T_& LocalMatrix<T_,NR_,NC_>::operator()(size_t i,
                                         size_t j)
 {

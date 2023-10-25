@@ -74,27 +74,25 @@ enum MatrixType {
  * \brief Choose iterative solver for the linear system
  */
 enum Iteration {
-   DIRECT_SOLVER    = 0,   /*!< Direct solver           */
-   CG_SOLVER        = 1,   /*!< CG Method               */
-   CGS_SOLVER       = 2,   /*!< CGS Metod               */
-   BICG_SOLVER      = 3,   /*!< BiCG Method             */
-   BICG_STAB_SOLVER = 4,   /*!< BiCGStab Method         */
-   GMRES_SOLVER     = 5    /*!< GMRes Method            */ 
+   DIRECT_SOLVER    = 1,   /*!< Direct solver           */
+   CG_SOLVER        = 2,   /*!< CG Method               */
+   CGS_SOLVER       = 3,   /*!< CGS Metod               */
+   BICG_SOLVER      = 4,   /*!< BiCG Method             */
+   BICG_STAB_SOLVER = 5,   /*!< BiCGStab Method         */
+   GMRES_SOLVER     = 6    /*!< GMRes Method            */ 
 };
 
 /*! \enum Preconditioner
  * \brief Choose preconditioner for the linear system
  */
 enum Preconditioner {
-   IDENT_PREC       = 0,   /*!< Identity (No preconditioning)                           */
-   DIAG_PREC        = 1,   /*!< Diagonal preconditioner                                 */
-   DILU_PREC        = 2,   /*!< DILU (Diagonal Incomplete factorization) preconditioner */
-   ILU_PREC         = 3,   /*!< ILU (Incomplete factorization) preconditioner           */
-   SSOR_PREC        = 4    /*!< SSOR preconditioner                                     */
+   IDENT_PREC       = 1,   /*!< Identity (No preconditioning)                           */
+   DIAG_PREC        = 2,   /*!< Diagonal preconditioner                                 */
+   DILU_PREC        = 3,   /*!< DILU (Diagonal Incomplete factorization) preconditioner */
+   ILU_PREC         = 4,   /*!< ILU (Incomplete factorization) preconditioner           */
+   SSOR_PREC        = 5    /*!< SSOR preconditioner                                     */
 };
 
-
-//template<class T_> class DMatrix;
  
 /*! \class Matrix
  *  \brief Virtual class to handle matrices for all storage formats.
@@ -139,6 +137,9 @@ class Matrix
 /// \brief Return number of columns.
     size_t getNbColumns() const;
 
+/// \brief Return name of matrix.
+    string getName() const;
+
 /// \brief Set Penalty Parameter (For boundary condition prescription).
     void setPenal(real_t p);
 
@@ -182,7 +183,7 @@ class Matrix
     void setDiagonal(Mesh& mesh);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void setName(string name);
+    void setName(const string& name);
 
     virtual void setGraph(const Vect<RC>& I,
                           int             opt=1) = 0;

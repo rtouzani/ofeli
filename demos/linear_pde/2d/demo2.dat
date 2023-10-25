@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+    <title>An example for a parabolic equation</title>
+    <date>September 30, 2023</date>
+    <author>R. Touzani</author>
+</info>
+<Project name="proj">
+   <mesh_file>mesh2.m</mesh_file>
+   <plot_file>2D2.pos</plot_file>
+   <time_step>0.01</time_step>
+   <max_time>1.0</max_time>
+   <verbose>2</verbose>
+   <output>0</output>
+   <save>1</save>
+</Project>
+</OFELI_File>

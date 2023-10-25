@@ -7,6 +7,7 @@ var classOFELI_1_1ODESolver =
     [ "get", "classOFELI_1_1ODESolver.html#ad9f7cc68beb74fedbedde34c7fb10887", null ],
     [ "getLSolver", "classOFELI_1_1ODESolver.html#ab16f3efb733621d8147325ddc52fff1f", null ],
     [ "getNbEq", "classOFELI_1_1ODESolver.html#a7e81ee9c88f36ed678b711aaf77fcfb1", null ],
+    [ "getPhase", "classOFELI_1_1ODESolver.html#a2dd3d2023075edaec285442848f4d25b", null ],
     [ "getTimeDerivative", "classOFELI_1_1ODESolver.html#a8b50b99be10cf64ab5ac8d015b9b8987", null ],
     [ "getTimeDerivative", "classOFELI_1_1ODESolver.html#aa934ebccdb8f713e8fe079c8c7f2342d", null ],
     [ "run", "classOFELI_1_1ODESolver.html#ab174fb4127d2dfb1b5e0d57b9e40b617", null ],

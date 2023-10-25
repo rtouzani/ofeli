@@ -39,8 +39,6 @@ namespace OFELI {
 Penta6::Penta6()
 {
    _sh.resize(6);
-   _node.resize(6);
-   _x.resize(6);
    _dshl.resize(6);
    _dsh.resize(6);
    _localized = false;
@@ -53,14 +51,12 @@ Penta6::Penta6(const Element* el)
       throw OFELIException("Penta6::Penta6(Element *): Illegal number of element nodes: " +
                            std::to_string(el->getNbNodes()));
    _sh.resize(6);
-   _node.resize(6);
-   _x.resize(6);
    _dshl.resize(6);
    _dsh.resize(6);
    for (size_t i=0; i<6; i++) {
       Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _det = 0.0;
    _label = el->n();
@@ -73,8 +69,8 @@ void Penta6::set(const Element* el)
 {
    for (size_t i=0; i<6; i++) {
       Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _det = 0.0;
    _label = el->n();

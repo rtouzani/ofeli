@@ -38,6 +38,7 @@
 #include "equations/Equa.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "linear_algebra/LocalVect.h"
+#include "linear_algebra/SpaceTime.h"
 
 
 namespace OFELI {
@@ -496,16 +497,19 @@ class Equation : virtual public Equa
  protected:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    size_t                        _label;
-    const Element*                _theElement;
-    const Side*                   _theSide;
-    ElementGeom                   _el_geo;
-    LocalVect<Point<real_t>,NEN_> _x;
-    LocalVect<real_t,NEE_>        _eu, _ebf;
-    LocalVect<real_t,NSE_>        _su;
-    std::valarray<real_t>         _ssf;
+    size_t                               _label;
+    const Element*                       _theElement;
+    const Side*                          _theSide;
+    ElementGeom                          _el_geo;
+    LocalVect<Point<real_t>,NEN_>        _x;
+    LocalVect<real_t,NEE_>               _eu, _ebf;
+    LocalVect<real_t,NSE_>               _su;
+    std::valarray<real_t>                _ssf;
     void updateBC(const Element& el,
                   Vect<real_t>*  bc=nullptr);
+    void updateBC(const Element& el,
+                  real_t*        A,
+                  Vect<real_t>&  bc);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

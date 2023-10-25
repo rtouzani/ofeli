@@ -34,6 +34,7 @@ var classOFELI_1_1Vect =
     [ "getFFT", "classOFELI_1_1Vect.html#a20654e9e92da22b740c7dc48dd5874d9", null ],
     [ "getGradient", "classOFELI_1_1Vect.html#ab4371b03bc62514d6bb86d61372c54aa", null ],
     [ "getGradient", "classOFELI_1_1Vect.html#af28323e0c7691a37d7e338908e8c5dc1", null ],
+    [ "getGrid", "classOFELI_1_1Vect.html#a65bb5166998595d66b2ce28a87dc2c46", null ],
     [ "getInvFFT", "classOFELI_1_1Vect.html#ae19efa23199572c9930c800cf0855dad", null ],
     [ "getMax", "classOFELI_1_1Vect.html#a2ee04821fb9d4976701ca76d1a67a75d", null ],
     [ "getMesh", "classOFELI_1_1Vect.html#a33d260bca42fe66a8536f2eac63adc64", null ],
@@ -57,7 +58,6 @@ var classOFELI_1_1Vect =
     [ "insertBC", "classOFELI_1_1Vect.html#a895554f9c712da8df521d3ccd78937db", null ],
     [ "insertBC", "classOFELI_1_1Vect.html#a2bf3781e849a60a884abbaa66eff3ed4", null ],
     [ "insertBC", "classOFELI_1_1Vect.html#a9b00900f0b1070c202072e777280be92", null ],
-    [ "isGrid", "classOFELI_1_1Vect.html#a46846bc2c17c27813b753285e8bd148e", null ],
     [ "MultAdd", "classOFELI_1_1Vect.html#a2aec937327784ab7cb2d911e4fc9fbab", null ],
     [ "Norm", "classOFELI_1_1Vect.html#ab8672face78a895a146197d78a895a12", null ],
     [ "operator()", "classOFELI_1_1Vect.html#a521ccbffbfc8f6ceabb86a09da68f864", null ],
@@ -100,7 +100,7 @@ var classOFELI_1_1Vect =
     [ "setIJK", "classOFELI_1_1Vect.html#a5f98706508f51b38628eb74a17c36b4a", null ],
     [ "setIJKL", "classOFELI_1_1Vect.html#a5686b4f2f33b6877445c0c375635c885", null ],
     [ "setMesh", "classOFELI_1_1Vect.html#ab60b041f7019e4ff9b32a86180844795", null ],
-    [ "setName", "classOFELI_1_1Vect.html#a4eaf7a54a9d929af6602c086d9dfb4a5", null ],
+    [ "setName", "classOFELI_1_1Vect.html#a5cc832820942d741e86edc84afbdcf88", null ],
     [ "setNodeBC", "classOFELI_1_1Vect.html#a68f770c5fa4c8ce7510fdc8166c5bc35", null ],
     [ "setNodeBC", "classOFELI_1_1Vect.html#ae2807596586406ad3642a8593512cd56", null ],
     [ "setNodeBC", "classOFELI_1_1Vect.html#a2fe2d17f5ed6f1c5958dc4d6539462e8", null ],
@@ -121,5 +121,6 @@ var classOFELI_1_1Vect =
     [ "setUniform", "classOFELI_1_1Vect.html#aa74190fbaa94ac9ed6d7f9218dd64c8a", null ],
     [ "size", "classOFELI_1_1Vect.html#a259cb5a711406a8c3e5d937eb9350cca", null ],
     [ "transferBC", "classOFELI_1_1Vect.html#a9627c869a561014b0bf376f16f909af5", null ],
+    [ "WithGrid", "classOFELI_1_1Vect.html#a34e3651aa04472dd2b319c05fc1ccd13", null ],
     [ "WithMesh", "classOFELI_1_1Vect.html#adbe5435915dea54c0407879712a4391a", null ]
 ];

@@ -41,8 +41,6 @@ namespace OFELI {
 Tetra4::Tetra4()
 {
    _sh.resize(4);
-   _node.resize(4);
-   _x.resize(4);
    _dsh.resize(4);
    _dshl.resize(4);
    _el = nullptr;
@@ -61,15 +59,13 @@ Tetra4::Tetra4(const Element* el)
 void Tetra4::set(const Element* el)
 {
    _label = el->n();
-   _node.resize(4);
    _sh.resize(4);
    _dsh.resize(4);
-   _x.resize(4);
    _dshl.resize(4);
    for (size_t i=0; i<4; i++) {
       Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    CalculateShape();
    _c = 0.25*(_x[0] + _x[1] + _x[2] + _x[3]);

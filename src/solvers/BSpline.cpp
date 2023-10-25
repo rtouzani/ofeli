@@ -30,9 +30,9 @@
   ==============================================================================*/
 
 #include "solvers/BSpline.h"
+#include "linear_algebra/Vect_impl.h"
 
 namespace OFELI {
-
 
 void BSpline(size_t                n,
              size_t                t,
@@ -65,23 +65,23 @@ real_t blend(size_t              k,
 {
    real_t value;
    if (t==1) {
-      if ((u[k]<=v) && (v<u[k+1]))
-         value = 1;
+      if (u[k]<=v && v<u[k+1])
+         value = 1.0;
       else
-         value = 0;
+         value = 0.0;
    }
    else {
-      if ((u[k+t-1]==u[k]) && (u[k+t]==u[k+1]))
-         value = 0;
+      if (u[k+t-1]==u[k] && u[k+t]==u[k+1])
+         value = 0.0;
       else
          if (u[k+t-1]==u[k])
-            value = (u[k+t]-v) / (u[k+t]-u[k+1]) * blend(k+1,t-1,u,v);
+            value = (u[k+t]-v)/(u[k+t]-u[k+1])*blend(k+1,t-1,u,v);
          else
             if (u[k+t]==u[k+1])
-               value = (v-u[k]) / (u[k+t-1]-u[k]) * blend(k,t-1,u,v);
+               value = (v-u[k])/(u[k+t-1]-u[k])*blend(k,t-1,u,v);
             else
-               value = (v-u[k]) / (u[k+t-1]-u[k]) * blend(k,t-1,u,v) +
-                       (u[k+t]-v) / (u[k+t]-u[k+1]) * blend(k+1,t-1,u,v);
+               value = (v-u[k])/(u[k+t-1]-u[k])*blend(k,t-1,u,v) +
+                       (u[k+t]-v)/(u[k+t]-u[k+1])*blend(k+1,t-1,u,v);
    }
    return value;
 }
@@ -95,7 +95,7 @@ void compute_intervals(Vect<size_t>& u,
       if (j<t)
          u[j] = 0;
       else
-         if ((t<=j) && (j<=n))
+         if (t<=j && j<=n)
             u[j] = j-t+1;
          else
 //          if n-t=-2 then we're screwed, everything goes to 0
@@ -114,11 +114,11 @@ void compute_point(const Vect<size_t>&         u,
 {
    real_t temp;
 // initialize the variables that will hold our outputted point
-   output = 0;
+   output = 0.0;
    for (size_t k=0; k<=n; k++) {
       temp = blend(k,t,u,v);
 //    same blend is used for each dimension coordinate
-      output += control[k] * temp;
+      output += control[k]*temp;
    }
 }
 

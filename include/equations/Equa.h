@@ -45,6 +45,7 @@
 #endif
 
 #include "mesh/Mesh.h"
+#include "mesh/Grid.h"
 #include "io/Prescription.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "linear_algebra/LocalVect.h"
@@ -90,7 +91,25 @@ enum PDE_Terms {
    HEAT_FLUX           =  0x08000000,     /*!< Boundary heat flux term                 */
    CONTACT             =  0x10000000,     /*!< Signorini contact                       */
    BUOYANCY            =  0x20000000,     /*!< Buoyancy force term                     */
-   LORENTZ_FORCE       =  0x40000000      /*!< Lorentz force term                      */
+   LORENTZ_FORCE       =  0x40000000,     /*!< Lorentz force term                      */
+   DAMPING             =  0x80000000      /*!< Damping term                            */
+};
+
+
+/*! \enum GENERIC_PDE_Terms
+ * Enumerate variable that selects various terms in a generic partial differential equation
+ */
+enum GENERIC_PDE_Terms {
+   NOTERM       =  0x00000000,     /*!< No term (empty equation)                      */
+   L00          =  0x00001000,     /*!< 0th order in time and space, to LHS           */
+   L10          =  0x00002000,     /*!< 1st order in time, 0th order in space, to LHS */
+   L20          =  0x00004000,     /*!< 2nd order in time, 0th order in space, to LHS */
+   L01          =  0x00008000,     /*!< 0th order in time, 1st order in space, to LHS */
+   L02          =  0x00010000,     /*!< 0th order in time, 2nd order in space, to LHS */
+   L11          =  0x00020000,     /*!< 1st order in time, 1st order in space, to LHS */
+   BODY_RHS     =  0x00040000,     /*!< Given right-hand side on domain               */
+   BOUNDARY_RHS =  0x00080000,     /*!< Given right-hand side on boundary             */
+   NEUMANN      =  0x00008000,     /*!< Neumann boundary condition                    */
 };
 
 
@@ -154,6 +173,35 @@ enum FEType {
    FE_3D_8N                      /*!< 3-D elements, 8-Nodes (Q1)              */
 };
 
+/*! \enum PDECoefType
+ * Choose PDE Coefficient
+ */
+enum PDECoefType {
+    C00                    =  0,   /*!    */
+    C10                    =  1,   /*!    */
+    C01                    =  2,   /*!    */
+    C20                    =  3,   /*!    */
+    C02                    =  4,   /*!    */
+    RHO                    =  5,   /*!    */
+    DENSITY                =  5,   /*!    */
+    CP                     =  6,   /*!    */
+    KAPPA                  =  7,   /*!    */
+    THERMAL_CONDUCTIVITY   =  7,   /*!    */
+    MU                     =  8,   /*!    */
+    DYNAMIC_VISCOSITY      =  8,   /*!    */
+    SIGMA                  =  9,   /*!    */
+    ELECTRIC_CONDUCTIVITY  =  9,   /*!    */
+    MMU                    = 10,   /*!    */
+    MAGNETIC_PERMEABILITY  = 10,   /*!    */
+    EPSILON                = 11,   /*!    */
+    ELECTRIC_PERMITTIVITY  = 11,   /*!    */
+    OMEGA                  = 12,   /*!    */
+    ANGULAR_FREQUENCY      = 12,   /*!    */
+    BETA                   = 13,   /*!    */
+    VV                     = 14,   /*!    */
+    YOUNG                  = 15,   /*!    */
+    POISSON                = 16    /*!    */
+};
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 /*! \struct TimeIntegration
@@ -303,6 +351,9 @@ class Equa
     void set_v(string exp);
     void set_young(string exp);
     void set_poisson(string exp);
+    virtual void set_00(real_t a=1.0) { }
+    virtual void set_00(Fct& f) { }
+    virtual void set_00(const string& f) { }
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Solve the linear system with given matrix and right-hand side
@@ -387,12 +438,28 @@ class Equa
                           Vect<real_t>&  u);
 #endif
 
-/// \brief Set prescription
-/// @param [in] p Prescription instance
     void set(Prescription& p);
-
-/// \brief Choose tolerance value
     void setTolerance(real_t toler);
+    void setPDECoef(PDECoefType t,
+                    real_t      a);
+    void setPDECoef(PDECoefType   t,
+                    const string& s);
+    void setPDECoef(PDECoefType t,
+                    Fct&        f);
+    real_t getPDECoef(PDECoefType      c,
+                      const SpaceTime& p);
+    Vect<real_t> getPDECoefV(PDECoefType      c,
+                             const SpaceTime& p);
+    real_t getPDECoef(PDECoefType c,
+                      real_t      x,
+                      real_t      y,
+                      real_t      z,
+                      real_t      t);
+    Vect<real_t> getPDECoefV(PDECoefType c,
+                             real_t      x,
+                             real_t      y,
+                             real_t      z,
+                             real_t      t);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Print info on linear system solver
@@ -401,8 +468,12 @@ class Equa
  protected:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
    Mesh                   *_theMesh;
+   Grid                   *_theGrid;
    size_t                 _nb_nodes, _nb_sides, _nb_boundary_sides, _nb_el, _nb_eq, _nb_dof, _nb_dof_total;
+   size_t                 _ngx, _ngy, _ngz;
+   real_t                 _hx, _hy, _hz;
    int                    _field_type, _terms;
+   GENERIC_PDE_Terms      _gterms;
    int                    _matrix_type, _solver, _max_it;
    size_t                 _nb_fields, _nb_eigv;
    EigenProblemSolver     _ev;
@@ -417,6 +488,11 @@ class Equa
    Fct                    _rho_fct, _Cp_fct, _kappa_fct, _mu_fct, _sigma_fct, _Mu_fct;
    Fct                    _epsilon_fct, _omega_fct, _beta_fct, _v_fct, _young_fct, _poisson_fct;
    Fct                    _theFct;
+   std::map<PDECoefType,real_t>        _coef_value;
+   std::map<PDECoefType,Vect<real_t>*> _coef_vector;
+   std::map<PDECoefType,string>        _coef_string;
+   std::map<PDECoefType,Fct *>         _coef_fct;
+   std::map<PDECoefType,int>           _set_coef;
    real_t                 _ex, _ey, _ez, _et;
    LinearSolver           _ls;
    real_t                 _toler;

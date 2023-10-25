@@ -85,6 +85,9 @@ class Equa;
  * \copyright GNU Lesser Public License
  */
 
+/*! \enum EigenMethod
+ * \brief Enumerate methods to solve the eigenvalue problem
+ */
 enum EigenMethod {
    SUBSPACE = 1, /*!< Subspace iteration method (for symmetric matrices)  */
    QR       = 2, /*!< QR reduction method (Martin, Parlett, Peters, Reinsch and Wilkinson.)                         */

@@ -212,6 +212,7 @@ var group__Util =
     [ "OFELI::operator==", "group__Util.html#gab1396ce3d22c336e66da25ce5bf95e51", null ],
     [ "OFELI::operator==", "group__Util.html#gab334355b2809c4cce395850150ca2f73", null ],
     [ "OFELI::out_complex", "group__Util.html#ga59eb409d42989d222155ddae256ffd84", null ],
+    [ "OFELI::out_complex", "group__Util.html#ga964634dadc51c4019d409e308c1e29cd", null ],
     [ "OFELI::qksort", "group__Util.html#ga6b566af8e802c04236ed2e05562627d3", null ],
     [ "OFELI::qksort", "group__Util.html#gafc523446bc621715dbbddcc05e1c3471", null ],
     [ "OFELI::QuickSort", "group__Util.html#ga0537c31de11778392ea8cfd10669d83a", null ],

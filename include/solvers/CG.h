@@ -211,6 +211,66 @@ int CG(const Matrix<T_>* A,
    SpMatrix<T_> &AA = MAT(SpMatrix<T_>,A);
    return CG(AA,prec,b,x,max_it,toler);
 }
+
+template<class T_>
+int CG(const DMatrix<T_>& A,
+       const Prec<T_>&    P,
+       const Vect<T_>&    b,
+       Vect<T_>&          x,
+       int                max_it,
+       real_t             toler)
+{
+   if (Verbosity>3)
+      cout << "Running preconditioned CG method ..." << endl;
+   size_t size=x.size();
+   real_t res, nrm=b.getNorm2();
+   T_ rho=0, rho_1=T_(1), beta=0;
+   if (nrm==0)
+      nrm = 1;
+   Vect<T_> r(size), p(size), q(size), z(size);
+   r = b - A*x;
+   if ((res=r.getNorm2()/nrm) <= toler) {
+      if (Verbosity>2)
+         cout << "Convergence after 0 iterations." << endl;
+      if (Verbosity>6)
+         cout << "Solution:\n" << x;
+      return 0;
+   }
+
+   int it=0;
+   for (it=1; it<=max_it; it++) {
+      P.solve(r,z);
+      rho = (r,z);
+      if (it==1)
+         p = z;
+      else {
+         beta = rho/rho_1;
+         p = z + beta*p;
+      }
+      q = A*p;
+      T_ alpha = rho/(p,q);
+      x += alpha * p;
+      r -= alpha * q;
+      res = r.getNorm2()/nrm;
+
+      if (Verbosity>3)
+         cout << "Iteration: " << setw(4) << it << ", ... Residual: " << res << endl;
+      if (Verbosity>10)
+         cout << "Solution at iteration " << it << ": \n" << x;
+      if (res<=toler) {
+         toler = res;
+         if (Verbosity>2)
+            cout << "Convergence after " << it << " iterations." << endl;
+         if (Verbosity>6)
+            cout << "Solution:\n" << x;
+         return it;
+      }
+      rho_1 = rho;
+   }
+   if (Verbosity>2)
+      cout << "No Convergence after " << it << " iterations." << endl;
+   return -it;
+}
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */

@@ -47,8 +47,9 @@ NLASSolver::NLPtr NLASSolver::NL [] = {
 
 NLASSolver::NLASSolver()
            : _fct_allocated(false), _df_computed(false), _cv(false), _f_given(false), _df_given(false),
-             _u_set(true), _ab_given(false), _theEqua(nullptr), _nl(int(NEWTON)), _max_it(100), _nb_eq(0),
-             _fct_type(FUNCTION), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr)
+             _u_set(true), _ab_given(false), _theEqua(nullptr), _nl(int(NEWTON)), _max_it(100),
+             _fct_type(FUNCTION), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr),
+             _nb_eq(0), _nb_fct_def(0)
 {
    _Df = nullptr;
    _u = new Vect<real_t>(1);
@@ -56,10 +57,11 @@ NLASSolver::NLASSolver()
 
 
 NLASSolver::NLASSolver(NonLinearIter nl,
-                       int           nb_eq)
+                       size_t        nb_eq)
            : _fct_allocated(false), _df_computed(false), _cv(false), _f_given(false), _df_given(false),
-	     _u_set(false), _ab_given(false), _theEqua(nullptr), _max_it(100), _nb_eq(nb_eq),
-             _fct_type(FUNCTION), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr)
+             _u_set(false), _ab_given(false), _theEqua(nullptr), _max_it(100),
+             _fct_type(FUNCTION), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr),
+             _nb_eq(nb_eq), _nb_fct_def(0)
 {
    set(nl);
 }
@@ -69,7 +71,7 @@ NLASSolver::NLASSolver(real_t&       x,
                        NonLinearIter nl)
            : _fct_allocated(false), _df_computed(false), _cv(false), _f_given(false), _df_given(false), 
              _u_set(false), _ab_given(false), _theEqua(nullptr), _max_it(100), _nb_eq(1), _fct_type(FUNCTION),
-             _toler(1.e-8), _x(&x), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr)
+             _toler(1.e-8), _x(&x), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr), _nb_fct_def(0)
 {
    set(nl);
 }
@@ -78,8 +80,8 @@ NLASSolver::NLASSolver(real_t&       x,
 NLASSolver::NLASSolver(Vect<real_t>& u,
                        NonLinearIter nl)
            : _fct_allocated(false), _df_computed(false), _cv(false), _f_given(false), _df_given(false),
-             _u_set(false),_ab_given(false), _theEqua(nullptr), _nl(int(nl)), _max_it(100), _nb_eq(u.size()),
-             _fct_type(FUNCTION), _u(&u), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr)
+             _u_set(false),_ab_given(false), _theEqua(nullptr), _nl(int(nl)), _max_it(100),
+             _fct_type(FUNCTION), _u(&u), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr),  _nb_eq(u.size()), _nb_fct_def(0)
 {
    _my_nlas = nullptr;
    _v.setSize(_nb_eq);
@@ -92,7 +94,7 @@ NLASSolver::NLASSolver(MyNLAS&       my_nlas,
                        NonLinearIter nl)
            : _fct_allocated(false), _cv(false), _f_given(false), _df_given(false), _u_set(false),
              _ab_given(false), _theEqua(nullptr), _nl(int(nl)), _max_it(100), _nb_eq(0), _fct_type(FUNCTION),
-             _toler(1.e-8), _Df(nullptr), _theMesh(nullptr)
+             _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _nb_fct_def(0)
 {
    _my_nlas = nullptr;
    set(nl);
@@ -104,7 +106,7 @@ NLASSolver::~NLASSolver()
    if (_u_set)
       delete _u;
    if (_fct_allocated) {
-      for (int i=0; i<_nb_eq; ++i) {
+      for (size_t i=0; i<_nb_eq; ++i) {
          delete _theFct[i];
          delete _theDFct[i];
       }
@@ -171,23 +173,22 @@ void NLASSolver::setGradient(function<Vect<real_t>(Vect<real_t>)> g)
 
 void NLASSolver::setf(Fct& f)
 {
-   static int i=0;
-   if (i+1>_nb_eq)
+   if (_nb_fct_def+1>_nb_eq)
       throw OFELIException("In NLASSolver::setf(Fct):\nToo many function definitions.");
-   if (i==0) {
+   if (_nb_fct_def==0) {
       _fct_type = EXPRESSION;
       _f_given = true;
       _theFct.resize(_nb_eq);
       _theDFct.resize(_nb_eq*_nb_eq);
       _df_computed = _df_given = true;
    }
-   _theFct[i++] = &f;
+   _theFct[_nb_fct_def++] = &f;
 }
 
 
-void NLASSolver::setDf(Fct& df,
-                       int  i,
-                       int  j)
+void NLASSolver::setDf(Fct&   df,
+                       size_t i,
+                       size_t j)
 {
    if (_f_given==false)
       throw OFELIException("In NLASSolver::setDf(Fct,i,j):\nFunction must be given first.");
@@ -205,10 +206,9 @@ void NLASSolver::setDf(Fct& df,
 
 void NLASSolver::setf(string exp)
 {
-   static int i=0;
-   if (i+1>_nb_eq)
+   if (_nb_fct_def+1>_nb_eq)
       throw OFELIException("In NLASSolver::setf(string):\nToo many function definitions.");
-   if (i==0) {
+   if (_nb_fct_def==0) {
       _fct_type = EXPRESSION;
       _f_given = true;
       _theFct.resize(_nb_eq);
@@ -222,7 +222,7 @@ void NLASSolver::setf(string exp)
       for (int j=0; j<_nb_eq; ++j)
          var[j] = "x" + to_string(j+1);
    }
-   _theFct[i++] = new Fct(exp,var);
+   _theFct[_nb_fct_def++] = new Fct(exp,var);
    _fct_allocated = true;
 }
 
@@ -342,13 +342,14 @@ void NLASSolver::Gradient(const Vect<real_t>& x,
 }
 
 
-void NLASSolver::run()
+int NLASSolver::run()
 {
    if (Verbosity > 0)
       cout << "Running the nonlinear solver ... " << endl;
    if (Verbosity > 1)
       cout << "Running iterations ..." << endl;
    (this->*_nlp)();
+   return 0;
 }
 
 

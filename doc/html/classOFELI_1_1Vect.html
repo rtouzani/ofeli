@@ -199,9 +199,6 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const</
 <tr class="memitem:a7d7317a28c3fd047820dfcf32d6743fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a7d7317a28c3fd047820dfcf32d6743fc">setDG</a> (int degree=1)</td></tr>
 <tr class="memdesc:a7d7317a28c3fd047820dfcf32d6743fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Discontinuous Galerkin type vector.  <a href="classOFELI_1_1Vect.html#a7d7317a28c3fd047820dfcf32d6743fc">More...</a><br /></td></tr>
 <tr class="separator:a7d7317a28c3fd047820dfcf32d6743fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46846bc2c17c27813b753285e8bd148e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a46846bc2c17c27813b753285e8bd148e">isGrid</a> () const</td></tr>
-<tr class="memdesc:a46846bc2c17c27813b753285e8bd148e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Say if vector is constructed for a grid.  <a href="classOFELI_1_1Vect.html#a46846bc2c17c27813b753285e8bd148e">More...</a><br /></td></tr>
-<tr class="separator:a46846bc2c17c27813b753285e8bd148e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e702838dc1b95944fd571e804950aa3"><td class="memItemLeft" align="right" valign="top"><a id="a2e702838dc1b95944fd571e804950aa3" name="a2e702838dc1b95944fd571e804950aa3"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNbDOF</b> () const</td></tr>
 <tr class="memdesc:a2e702838dc1b95944fd571e804950aa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return vector number of degrees of freedom. <br /></td></tr>
@@ -214,9 +211,16 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNb</b> () const<
 <a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getMesh</b> () const</td></tr>
 <tr class="memdesc:a33d260bca42fe66a8536f2eac63adc64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes.">Mesh</a> instance. <br /></td></tr>
 <tr class="separator:a33d260bca42fe66a8536f2eac63adc64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65bb5166998595d66b2ce28a87dc2c46"><td class="memItemLeft" align="right" valign="top"><a id="a65bb5166998595d66b2ce28a87dc2c46" name="a65bb5166998595d66b2ce28a87dc2c46"></a>
+<a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getGrid</b> () const</td></tr>
+<tr class="memdesc:a65bb5166998595d66b2ce28a87dc2c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids.">Grid</a> instance. <br /></td></tr>
+<tr class="separator:a65bb5166998595d66b2ce28a87dc2c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbe5435915dea54c0407879712a4391a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#adbe5435915dea54c0407879712a4391a">WithMesh</a> () const</td></tr>
 <tr class="memdesc:adbe5435915dea54c0407879712a4391a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <code>true</code> if vector contains a <a class="el" href="classOFELI_1_1Mesh.html" title="To store and manipulate finite element meshes.">Mesh</a> pointer, <code>false</code> if not.  <a href="classOFELI_1_1Vect.html#adbe5435915dea54c0407879712a4391a">More...</a><br /></td></tr>
 <tr class="separator:adbe5435915dea54c0407879712a4391a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34e3651aa04472dd2b319c05fc1ccd13"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#a34e3651aa04472dd2b319c05fc1ccd13">WithGrid</a> () const</td></tr>
+<tr class="memdesc:a34e3651aa04472dd2b319c05fc1ccd13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <code>true</code> if vector contains a <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids.">Grid</a> pointer, <code>false</code> if not.  <a href="classOFELI_1_1Vect.html#a34e3651aa04472dd2b319c05fc1ccd13">More...</a><br /></td></tr>
+<tr class="separator:a34e3651aa04472dd2b319c05fc1ccd13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcebc57c317d0be7c29e9bbe0480053c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="OFELI__Config_8h.html#a75f99f88d846522a874cf86992b7c806">DOFSupport</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Vect.html#afcebc57c317d0be7c29e9bbe0480053c">getDOFType</a> () const</td></tr>
 <tr class="separator:afcebc57c317d0be7c29e9bbe0480053c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af910aabb8c41158f77202936fa117182"><td class="memItemLeft" align="right" valign="top"><a id="af910aabb8c41158f77202936fa117182" name="af910aabb8c41158f77202936fa117182"></a>
@@ -227,10 +231,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setTime</b> (<a class
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getTime</b> () const</td></tr>
 <tr class="memdesc:ae01a616f806c6e6916fd869aa09e8869"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get time value for vector. <br /></td></tr>
 <tr class="separator:ae01a616f806c6e6916fd869aa09e8869"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eaf7a54a9d929af6602c086d9dfb4a5"><td class="memItemLeft" align="right" valign="top"><a id="a4eaf7a54a9d929af6602c086d9dfb4a5" name="a4eaf7a54a9d929af6602c086d9dfb4a5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setName</b> (string name)</td></tr>
-<tr class="memdesc:a4eaf7a54a9d929af6602c086d9dfb4a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set name of vector. <br /></td></tr>
-<tr class="separator:a4eaf7a54a9d929af6602c086d9dfb4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cc832820942d741e86edc84afbdcf88"><td class="memItemLeft" align="right" valign="top"><a id="a5cc832820942d741e86edc84afbdcf88" name="a5cc832820942d741e86edc84afbdcf88"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setName</b> (const string &amp;name)</td></tr>
+<tr class="memdesc:a5cc832820942d741e86edc84afbdcf88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set name of vector. <br /></td></tr>
+<tr class="separator:a5cc832820942d741e86edc84afbdcf88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a134d85a189d667e7a481614c1aa67860"><td class="memItemLeft" align="right" valign="top"><a id="a134d85a189d667e7a481614c1aa67860" name="a134d85a189d667e7a481614c1aa67860"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const</td></tr>
 <tr class="memdesc:a134d85a189d667e7a481614c1aa67860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get name of vector. <br /></td></tr>
@@ -1901,26 +1905,6 @@ The <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpos
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a46846bc2c17c27813b753285e8bd148e" name="a46846bc2c17c27813b753285e8bd148e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46846bc2c17c27813b753285e8bd148e">&#9670;&nbsp;</a></span>isGrid()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool isGrid </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Say if vector is constructed for a grid. </p>
-<p >Vectors constructed for grids are defined with the help of a <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids.">Grid</a> instance </p><dl class="section return"><dt>Returns</dt><dd>true if vector is constructed with a <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids.">Grid</a> instance </dd></dl>
 
 </div>
 </div>
@@ -4132,6 +4116,27 @@ The <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpos
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a34e3651aa04472dd2b319c05fc1ccd13" name="a34e3651aa04472dd2b319c05fc1ccd13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34e3651aa04472dd2b319c05fc1ccd13">&#9670;&nbsp;</a></span>WithGrid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool WithGrid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return <code>true</code> if vector contains a <a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids.">Grid</a> pointer, <code>false</code> if not. </p>
+<p >A <a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors.">Vect</a> instance can be constructed using grid information <br  />
+ </p>
 
 </div>
 </div>

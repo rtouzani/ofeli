@@ -32,6 +32,7 @@ var annotated_dup =
       [ "Equa_Electromagnetics", "classOFELI_1_1Equa__Electromagnetics.html", "classOFELI_1_1Equa__Electromagnetics" ],
       [ "Equa_Fluid", "classOFELI_1_1Equa__Fluid.html", "classOFELI_1_1Equa__Fluid" ],
       [ "Equa_Laplace", "classOFELI_1_1Equa__Laplace.html", "classOFELI_1_1Equa__Laplace" ],
+      [ "Equa_LinearPDE", "classOFELI_1_1Equa__LinearPDE.html", "classOFELI_1_1Equa__LinearPDE" ],
       [ "Equa_Porous", "classOFELI_1_1Equa__Porous.html", "classOFELI_1_1Equa__Porous" ],
       [ "Equa_Solid", "classOFELI_1_1Equa__Solid.html", "classOFELI_1_1Equa__Solid" ],
       [ "Equa_Therm", "classOFELI_1_1Equa__Therm.html", "classOFELI_1_1Equa__Therm" ],
@@ -65,6 +66,8 @@ var annotated_dup =
       [ "LCL3DT", "classOFELI_1_1LCL3DT.html", "classOFELI_1_1LCL3DT" ],
       [ "Line2", "classOFELI_1_1Line2.html", "classOFELI_1_1Line2" ],
       [ "Line3", "classOFELI_1_1Line3.html", "classOFELI_1_1Line3" ],
+      [ "LinearPDE1D", "classOFELI_1_1LinearPDE1D.html", "classOFELI_1_1LinearPDE1D" ],
+      [ "LinearPDE2D", "classOFELI_1_1LinearPDE2D.html", "classOFELI_1_1LinearPDE2D" ],
       [ "LinearSolver", "classOFELI_1_1LinearSolver.html", "classOFELI_1_1LinearSolver" ],
       [ "LocalMatrix", "classOFELI_1_1LocalMatrix.html", "classOFELI_1_1LocalMatrix" ],
       [ "LocalVect", "classOFELI_1_1LocalVect.html", "classOFELI_1_1LocalVect" ],
@@ -92,6 +95,7 @@ var annotated_dup =
       [ "Point2D", "structOFELI_1_1Point2D.html", "structOFELI_1_1Point2D" ],
       [ "Polygon", "classOFELI_1_1Polygon.html", "classOFELI_1_1Polygon" ],
       [ "Prec", "classOFELI_1_1Prec.html", "classOFELI_1_1Prec" ],
+      [ "Pres2DT3", "classOFELI_1_1Pres2DT3.html", "classOFELI_1_1Pres2DT3" ],
       [ "Prescription", "classOFELI_1_1Prescription.html", "classOFELI_1_1Prescription" ],
       [ "Quad4", "classOFELI_1_1Quad4.html", "classOFELI_1_1Quad4" ],
       [ "Reconstruction", "classOFELI_1_1Reconstruction.html", "classOFELI_1_1Reconstruction" ],
@@ -116,5 +120,7 @@ var annotated_dup =
       [ "TrMatrix", "classOFELI_1_1TrMatrix.html", "classOFELI_1_1TrMatrix" ],
       [ "Vect", "classOFELI_1_1Vect.html", "classOFELI_1_1Vect" ],
       [ "WaterPorous2D", "classOFELI_1_1WaterPorous2D.html", "classOFELI_1_1WaterPorous2D" ]
-    ] ]
+    ] ],
+    [ "Equa_Wave", "classEqua__Wave.html", null ],
+    [ "PRES1DL2", "classPRES1DL2.html", null ]
 ];

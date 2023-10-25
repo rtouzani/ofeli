@@ -30,6 +30,7 @@ target_sources (${PROJECT_NAME} PRIVATE
                 Equa.cpp
                )
 
+add_subdirectory (acoustics)
 add_subdirectory (cl)
 add_subdirectory (electromagnetics)
 add_subdirectory (fluid)
@@ -38,3 +39,4 @@ add_subdirectory (laplace)
 add_subdirectory (porous)
 add_subdirectory (solid)
 add_subdirectory (therm)
+add_subdirectory (generic)

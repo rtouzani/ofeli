@@ -39,10 +39,6 @@ namespace OFELI {
 
 Line2::Line2()
 {
-   _sh.resize(2);
-   _dsh.resize(2);
-   _node.resize(2);
-   _x.resize(2);
    _sd = nullptr;
    _el = nullptr;
 }
@@ -53,14 +49,10 @@ Line2::Line2(const Element* el)
    if (el->getNbNodes() != 2)
       throw OFELIException("Line2::Line2(Element *): Illegal number of element nodes: " +
                            to_string(el->getNbNodes()));
-   _sh.resize(2);
-   _dsh.resize(2);
-   _node.resize(2);
-   _x.resize(2);
-   for (size_t i=0; i<2; i++) {
-      Node *node = el->getPtrNode(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+   for (size_t i=1; i<=2; i++) {
+     Node *node = (*el)(i);
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _c = 0.5*(_x[0]+_x[1]);
    _el = el;
@@ -69,8 +61,10 @@ Line2::Line2(const Element* el)
    _det = dl.Norm();
    if (_det == 0.0)
       throw OFELIException("Line2::Line2(Element *): Determinant of jacobian is null");
+   _sh.resize(2);
+   _dsh.resize(2);
    _dsh[0].x = -0.5/_det;
-   _dsh[0].x =  0.5/_det;
+   _dsh[1].x =  0.5/_det;
    _length = 2*_det;
 }
 
@@ -80,14 +74,10 @@ Line2::Line2(const Side* side)
    if (side->getNbNodes() != 2)
       throw OFELIException("Line2::Line2(Side *): Illegal number of side nodes: " +
                            to_string(side->getNbNodes()));
-   _sh.resize(2);
-   _dsh.resize(2);
-   _node.resize(2);
-   _x.resize(2);
-   for (size_t i=0; i<2; i++) {
-      Node *node = side->getPtrNode(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+   for (size_t i=1; i<=2; i++) {
+      Node *node = (*side)(i);
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _c = 0.5*(_x[0] + _x[1]);
    _sd = side;
@@ -96,22 +86,22 @@ Line2::Line2(const Side* side)
    _det = dl.Norm();
    if (_det == 0.0)
       throw OFELIException("Line2::Line2(Side *): Determinant of jacobian is null");
+   _sh.resize(2);
+   _dsh.resize(2);
    _dsh[0].x = -0.5/_det;
-   _dsh[0].x =  0.5/_det;
+   _dsh[1].x =  0.5/_det;
    _length = 2*_det;
 }
-   
-   
+
+
 Line2::Line2(const Edge* edge)
 {
    _sh.resize(2);
-   _node.resize(2);
    _dsh.resize(2);
-   _x.resize(2);
-   for (size_t i=0; i<2; i++) {
-      Node *node = edge->getPtrNode(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+   for (size_t i=1; i<=2; i++) {
+      Node *node = (*edge)(i);
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _c = 0.5*(_x[0] + _x[1]);
    _ed = edge;
@@ -122,7 +112,7 @@ Line2::Line2(const Edge* edge)
    if (_det == 0.0)
       throw OFELIException("Line2::Line2(Edge *): Determinant of jacobian is null");
    _dsh[0].x = -0.5/_det;
-   _dsh[0].x =  0.5/_det;
+   _dsh[1].x =  0.5/_det;
    _length = 2*_det;
 }
    

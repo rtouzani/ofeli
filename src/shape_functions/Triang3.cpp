@@ -38,20 +38,16 @@ namespace OFELI {
 
 Triang3::Triang3()
 {
-   _sh.resize(3);
-   _node.resize(3);
-   _x.resize(3);
-   _dsh.resize(3);
+   _el = nullptr; _sd = nullptr;
 }
 
-   
+
 Triang3::Triang3(const Element* el)
 {
    if (el->getNbNodes() != 3)
       throw OFELIException("Triang3::Triang3(Element *): Illegal number of element nodes: " +
                            std::to_string(el->getNbNodes()));
    _el = el; _sd = nullptr;
-   _dsh.resize(3);
    set(el);
 }
 
@@ -62,7 +58,6 @@ Triang3::Triang3(const Side* sd)
       throw OFELIException("Triang3::Triang3(Side *): Illegal number of side nodes: " +
                            std::to_string(sd->getNbNodes()));
    _el = nullptr; _sd = sd;
-   _dsh.resize(3);
    set(sd);
 }
 
@@ -72,13 +67,10 @@ Triang3::~Triang3() { }
 
 void Triang3::set(const Element* el)
 {
-   _sh.resize(3);
-   _node.resize(3);
-   _x.resize(3);
-   for (size_t i=0; i<3; i++) {
-      Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+   for (size_t i=1; i<=3; i++) {
+      Node *node = (*el)(i);
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _h1 = Distance(_x[0],_x[1]),
    _h2 = Distance(_x[1],_x[2]),
@@ -90,6 +82,8 @@ void Triang3::set(const Element* el)
    if (_det==0.0)
       throw OFELIException("Triang3::set(Element *): Determinant of jacobian is null");
    _c = (_x[0]+_x[1]+_x[2])*OFELI_THIRD;
+   _sh.resize(3);
+   _dsh.resize(3);
    _dsh[0].x = (_x[1].y - _x[2].y)/_det;
    _dsh[0].y = (_x[2].x - _x[1].x)/_det;
    _dsh[1].x = (_x[2].y - _x[0].y)/_det;
@@ -101,15 +95,12 @@ void Triang3::set(const Element* el)
 
 void Triang3::set(const Side* sd)
 {
-   _sh.resize(3);
-   _node.resize(3);
-   _x.resize(3);
-   _x[0] = (*sd)(1)->getCoord();
-   _x[1] = (*sd)(2)->getCoord();
-   _x[2] = (*sd)(3)->getCoord();
-   _node[0] = (*sd)(1)->n();
-   _node[1] = (*sd)(2)->n();
-   _node[2] = (*sd)(3)->n();
+   _x.push_back((*sd)(1)->getCoord());
+   _x.push_back((*sd)(2)->getCoord());
+   _x.push_back((*sd)(3)->getCoord());
+   _node.push_back((*sd)(1)->n());
+   _node.push_back((*sd)(2)->n());
+   _node.push_back((*sd)(3)->n());
    _h1 = Distance(_x[0],_x[1]),
    _h2 = Distance(_x[1],_x[2]),
    _h3 = Distance(_x[2],_x[0]);
@@ -119,6 +110,8 @@ void Triang3::set(const Side* sd)
    _det = sqrt(a*a + b*b + c*c);
    _area = 0.5*_det;
    _c = (_x[0]+_x[1]+_x[2])*OFELI_THIRD;
+   _sh.resize(3);
+   _dsh.resize(3);
    _dsh[0].x = (_x[1].y - _x[2].y)/_det, _dsh[0].y = (_x[2].x - _x[1].x)/_det;
    _dsh[1].x = (_x[2].y - _x[0].y)/_det, _dsh[1].y = (_x[0].x - _x[2].x)/_det;
    _dsh[2].x = (_x[0].y - _x[1].y)/_det, _dsh[2].y = (_x[1].x - _x[0].x)/_det;

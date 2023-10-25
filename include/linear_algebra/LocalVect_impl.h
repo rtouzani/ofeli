@@ -137,6 +137,14 @@ LocalVect<T_,N_>::~LocalVect() { }
 
 
 template<class T_,size_t N_>
+void LocalVect<T_,N_>::clear()
+{
+   for (size_t i=0; i<N_; i++)
+      _v[i] = T_(0);
+}
+
+
+template<class T_,size_t N_>
 void LocalVect<T_,N_>::getLocal(const Element&  el,
                                 const Vect<T_>& v,
                                 int             type)

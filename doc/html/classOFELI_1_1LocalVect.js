@@ -9,6 +9,7 @@ var classOFELI_1_1LocalVect =
     [ "LocalVect", "classOFELI_1_1LocalVect.html#a3a8a69d64f0ab0cab4201a665f14f260", null ],
     [ "LocalVect", "classOFELI_1_1LocalVect.html#a925727802157cff6df2686c7b31177f7", null ],
     [ "~LocalVect", "classOFELI_1_1LocalVect.html#a0468c56aeed8c024d5a609b99162b74a", null ],
+    [ "clear", "classOFELI_1_1LocalVect.html#ac8bb3912a3ce86b15842e79d0b421204", null ],
     [ "El", "classOFELI_1_1LocalVect.html#ae029cbc570a21c7b0ea09d27883c2613", null ],
     [ "get", "classOFELI_1_1LocalVect.html#a5aeba722bfc5e1d62b0e76fa41cfd15c", null ],
     [ "getLocal", "classOFELI_1_1LocalVect.html#aba6e067afa946a45652dfccd7aeb6393", null ],

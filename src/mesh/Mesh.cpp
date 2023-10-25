@@ -90,7 +90,7 @@ Mesh::Mesh(const string& file,
            int           opt,
            int           nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0), _dim(2),
-       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0), _no_imposed_dof(false),
+       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0), _no_imposed_dof(bc),
        _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false)
@@ -103,7 +103,6 @@ Mesh::Mesh(const string& file,
       ff = GNUPLOT;
    else
       ff = OFELI_FF;
-   _no_imposed_dof = bc;
    _set_nodes = true;
    _set_sides = _set_edges = _set_elements = false;
    get(file,ff,nb_dof);
@@ -113,32 +112,38 @@ Mesh::Mesh(const string& file,
 
 Mesh::Mesh(real_t xmax,
            size_t nb_el,
+	   bool   bc,
            size_t p,
-           size_t nb_dof)
+           size_t nb_dof,
+           int    c1,
+           int    c2)
      : _nb_nodes(0), _nb_boundary_nodes(2), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0),
        _nb_edges(0), _dim(1), _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0),
-       _no_imposed_dof(false), _is_structured(false), _all_sides_created(false),
+       _no_imposed_dof(bc), _is_structured(false), _all_sides_created(false),
        _boundary_sides_created(false), _all_edges_created(false), _boundary_edges_created(false),
        _boundary_nodes_created(false), _node_neighbor_elements_created(false),
        _element_neighbor_elements_created(false)
 {
-   set1D(0.,xmax,nb_el,p,nb_dof);
+   set1D(0.,xmax,nb_el,p,nb_dof,c1,c2);
 }
 
 
 Mesh::Mesh(real_t xmin,
            real_t xmax,
            size_t nb_el,
+	   bool   bc,
            size_t p,
-           size_t nb_dof)
+           size_t nb_dof,
+           int    c1,
+           int    c2)
      : _nb_nodes(0), _nb_boundary_nodes(2), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0),
        _nb_edges(0), _dim(1), _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0),
-       _no_imposed_dof(false), _is_structured(false), _all_sides_created(false),
+       _no_imposed_dof(bc), _is_structured(false), _all_sides_created(false),
        _boundary_sides_created(false), _all_edges_created(false), _boundary_edges_created(false),
        _boundary_nodes_created(false), _node_neighbor_elements_created(false),
        _element_neighbor_elements_created(false)
 {
-   set1D(xmin,xmax,nb_el,p,nb_dof);
+   set1D(xmin,xmax,nb_el,p,nb_dof,c1,c2);
 }
 
 
@@ -1020,9 +1025,13 @@ void Mesh::set1D(real_t xmin,
                  real_t xmax,
                  size_t nb_el,
                  size_t p,
-                 size_t nb_dof)
+                 size_t nb_dof,
+                 int    c1,
+                 int    c2)
 {
    size_t NbN = nb_el*p + 1;
+   _set_nodes = true;
+   _set_sides = _set_edges = _set_elements = false;
 
 // Insert nodes
    real_t xx=xmin, h=(xmax-xmin)/real_t(nb_el);
@@ -1033,6 +1042,10 @@ void Mesh::set1D(real_t xmin,
       nd->setNbDOF(nb_dof);
       for (size_t i=0; i<nb_dof; i++)
          _code[i] = 0;
+      if (nnd==1)
+         _code[0] = c1;
+      if (nnd==NbN)
+         _code[0] = c2;
       nd->setDOF(_first_dof,nb_dof);
       nd->setCode(_code);
       Add(nd);
@@ -1068,6 +1081,8 @@ void Mesh::set1D(real_t xmin,
    if (theNodes[0]->getCode(1)==0)
       The_side.setCode(1,2);
    Add(the_side);
+   if (_no_imposed_dof)
+      NumberEquations();
 }
 
 
@@ -1379,7 +1394,7 @@ size_t Mesh::NumberEquations(size_t dof,
    
 // Node supported d.o.f.
    if (dof_type == NODE_DOF) {
-      if (_no_imposed_dof==true) {
+      if (_no_imposed_dof) {
          if (Verbosity > 6)
             cout << "Eliminating imposed d.o.f. from list of equations ..." << endl;
          node_loop(this) {

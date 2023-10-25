@@ -170,9 +170,6 @@ class triangle : public FEShape
 /// \brief Default Constructor
     triangle()
     {
-      _sh.resize(3);
-      _node.resize(3);
-      _x.resize(3);
     }
 
 /// \brief Constructor for an element.

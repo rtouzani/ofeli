@@ -178,6 +178,10 @@ public:
                   const Vect<T_>& v,
                   size_t          k=0);
 
+/// \brief Clear vector
+/// \details Set all vector entries to zero
+    void clear();
+
 /// \brief Operator <tt>[]</tt> (Non constant version).
 /// \details <tt>v[i]</tt> starts at <tt>v[0]</tt> to <tt>v[size()-1]</tt>
     T_ &operator[](size_t i);

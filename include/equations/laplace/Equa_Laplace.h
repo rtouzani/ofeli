@@ -135,9 +135,8 @@ class Equa_Laplace : virtual public Equation<NEN_,NEE_,NSN_,NSE_> {
 /// \brief Build matrices for an eigenvalue problem
     virtual void buildEigen(int opt=0) { }
 
-/** \brief Build the linear system for an eigenvalue problem
- *  @param [in] e Reference to used EigenProblemSolver instance
- */
+/// \brief Build the linear system for an eigenvalue problem
+///  @param [in] e Reference to used EigenProblemSolver instance
     void build(EigenProblemSolver& e)
     {
        MESH_EL {

@@ -112,7 +112,6 @@ class Equa_Therm : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
        _analysis = STEADY_STATE;
        _TimeInt.scheme = NONE;
        _rho_is_set = _cp_is_set = _conductivity_is_set = false;
-       _terms = DIFFUSION;
     }
 
 /// \brief Destructor

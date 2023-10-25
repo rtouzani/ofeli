@@ -101,7 +101,7 @@ class NLASSolver
  *  @param [in] nb_eq Number of equations [Default: <tt>1</tt>]
  */
     NLASSolver(NonLinearIter nl,
-               int           nb_eq=1);
+               size_t        nb_eq=1);
 
 /** \brief Constructor defining a one-variable problem
  *  @param [in] x Variable containing on input initial guess and on output
@@ -201,7 +201,7 @@ class NLASSolver
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setf(Fct& f);
-    void setDf(Fct& df, int i=1, int j=1);
+    void setDf(Fct& df, size_t i=1, size_t j=1);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Set pzrtial derivative of function for which zero is sought (case of many equations)
@@ -243,7 +243,7 @@ class NLASSolver
                     real_t b);
 
 /// \brief Run the solution procedure
-    void run();
+    int run();
 
 //-----------------------------   INSPECTORS  ----------------------------------
 
@@ -271,12 +271,13 @@ private:
 
    bool _fct_allocated, _df_computed, _cv, _f_given, _df_given, _u_set, _ab_given;
    Equa *_theEqua;
-   int _nl, _max_it, _nl_it, _nb_eq, _it, _nb_it, _fct_type;
+   int _nl, _max_it, _nl_it, _it, _nb_it, _fct_type;
    Vect<real_t> *_u, _v, _f, _w;
    real_t _toler, *_x, _y, _a, _b, _g;
    Matrix<real_t> *_Df;
    Mesh *_theMesh;
    MyNLAS *_my_nlas;
+   size_t _nb_eq, _nb_fct_def;
    function<real_t(real_t)> _fct1, _grad1; 
    function<Vect<real_t>(Vect<real_t>)> _fct, _grad;
    vector<Fct *> _theFct, _theDFct;

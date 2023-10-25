@@ -13,6 +13,16 @@ var hierarchy =
           [ "LaplaceDG2DP1", "classOFELI_1_1LaplaceDG2DP1.html", null ]
         ] ]
       ] ],
+      [ "Equation< NEN_, NEN_, NSN_, NSN_ >", "classOFELI_1_1Equation.html", [
+        [ "Equa_LinearPDE< 2, 1 >", "classOFELI_1_1Equa__LinearPDE.html", [
+          [ "LinearPDE1D", "classOFELI_1_1LinearPDE1D.html", null ]
+        ] ],
+        [ "Equa_LinearPDE< 3, 2 >", "classOFELI_1_1Equa__LinearPDE.html", [
+          [ "LinearPDE2D", "classOFELI_1_1LinearPDE2D.html", null ]
+        ] ],
+        [ "Equa_LinearPDE< 4, 3 >", "classOFELI_1_1Equa__LinearPDE.html", null ],
+        [ "Equa_LinearPDE< NEN_, NSN_ >", "classOFELI_1_1Equa__LinearPDE.html", null ]
+      ] ],
       [ "Equation< NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equation.html", [
         [ "Equa_Electromagnetics< 3, 6, 2, 4 >", "classOFELI_1_1Equa__Electromagnetics.html", [
           [ "EC2D1T3", "classOFELI_1_1EC2D1T3.html", null ],
@@ -89,6 +99,7 @@ var hierarchy =
       [ "FastMarching3DG", "classOFELI_1_1FastMarching3DG.html", null ],
       [ "SteklovPoincare2DBE", "classOFELI_1_1SteklovPoincare2DBE.html", null ]
     ] ],
+    [ "Equa_Wave", "classEqua__Wave.html", null ],
     [ "Estimator", "classOFELI_1_1Estimator.html", null ],
     [ "FEShape", "classOFELI_1_1FEShape.html", [
       [ "Hexa8", "classOFELI_1_1Hexa8.html", null ],
@@ -176,6 +187,7 @@ var hierarchy =
     [ "Point< size_t >", "structOFELI_1_1Point.html", null ],
     [ "Prec< T_ >", "classOFELI_1_1Prec.html", null ],
     [ "Prec< real_t >", "classOFELI_1_1Prec.html", null ],
+    [ "PRES1DL2", "classPRES1DL2.html", null ],
     [ "Prescription", "classOFELI_1_1Prescription.html", null ],
     [ "Reconstruction", "classOFELI_1_1Reconstruction.html", null ],
     [ "Side", "classOFELI_1_1Side.html", null ],

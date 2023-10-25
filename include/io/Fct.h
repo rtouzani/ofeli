@@ -40,6 +40,7 @@ using std::vector;
 
 #include "OFELI_Config.h"
 #include "linear_algebra/Point.h"
+#include "linear_algebra/SpaceTime.h"
 
 namespace exprtk {
    template <typename T> class parser;
@@ -71,12 +72,14 @@ class Fct {
    int set(const string& exp, int opt=0);
    int set(const string& exp, const string &v, int opt=0);
    int set(const string& n, const string &exp, const vector<string>& v, int opt=0);
+   void setName(const string& n);
    real_t operator()(real_t x);
    real_t operator()(real_t x, real_t y);
    real_t operator()(real_t x, real_t y, real_t z);
    real_t operator()(real_t x, real_t y, real_t z, real_t t);
    real_t operator()(const Point<real_t>& x);
    real_t operator()(const Point<real_t>& x, real_t t);
+   real_t operator()(const SpaceTime& p);
    real_t operator()(const vector<real_t>& x);
    real_t D(real_t x);
    real_t D(const vector<real_t>& x, size_t i);
@@ -92,7 +95,7 @@ class Fct {
    exprtk::parser<real_t> *_p;
    exprtk::symbol_table<real_t> *_st;
    exprtk::expression<real_t> *_ex;
-   vector<real_t> *_xvar;
+   vector<real_t> _xvar;
    void add_constants();
    bool exp_ok, var_ok;
    int err;

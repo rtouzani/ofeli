@@ -146,6 +146,10 @@ template<class T_, size_t NR_, size_t NC_> class LocalMatrix
 /// \details Copy instance <tt>m</tt> into current instance.
     LocalMatrix<T_,NR_,NC_> & operator=(const LocalMatrix<T_,NR_,NC_>& m);
 
+/// \brief Clear matrix
+/// \details Set all matrix entries to zero
+    void clear();
+
 /// \brief Operator <tt>=</tt>
 /// \details Assign matrix to identity times <tt>x</tt>
     LocalMatrix<T_,NR_,NC_> & operator=(const T_& x);

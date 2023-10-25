@@ -147,6 +147,12 @@ namespace OFELI {
  */
 #define OFELI_IMAG std::complex<double>(0.,1.);
 
+/*! \def LIGHT_SPEED
+ *  \ingroup Util
+ * = Speed of light in SI units
+ */
+#define LIGHT_SPEED 299792458.2;
+
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */
 

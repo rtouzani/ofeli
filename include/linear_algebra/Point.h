@@ -86,12 +86,12 @@ struct Point {
 /// \details Values <tt>i = 1, 2, 3</tt> correspond to <tt>x</tt>, <tt>y</tt> and <tt>z</tt> respectively
     T_ &operator()(size_t i) 
     {
-       if (i==2)
-          return y;
-       else if (i==3)
-          return z;
-       else
-          return x;
+       switch (i) {
+         case 1: return x;
+         case 2: return y;
+         case 3: return z;
+       }
+       return x;
     }
 
 /// \brief Operator <tt>()</tt>: Constant version.
@@ -99,36 +99,36 @@ struct Point {
 /// respectively
     const T_ &operator()(size_t i) const
     {
-       if (i==2)
-          return y;
-       else if (i==3)
-          return z;
-       else
-          return x;
+       switch (i) {
+         case 1: return x;
+         case 2: return y;
+         case 3: return z;
+       }
+       return x;
     }
 
 /// \brief Operator <tt>[]</tt>: Non constant version.
 /// \details Values <tt>i = 0, 1, 2</tt> correspond to <tt>x</tt>, <tt>y</tt> and <tt>z</tt> respectively
     T_ &operator[](size_t i)
     {
-       if (i==1)
-          return y;
-       else if (i==2)
-          return z;
-       else
-          return x;
+       switch (i) {
+         case 0: return x;
+         case 1: return y;
+         case 2: return z;
+       }
+       return x;
     }
 
 /// \brief Operator <tt>[]</tt>: Constant version.
 /// \details Values <tt>i = 0, 1, 2</tt> correspond to <tt>x</tt>, <tt>y</tt> and <tt>z</tt> respectively
     const T_ &operator[](size_t i) const
     {
-       if (i==1)
-          return y;
-       else if (i==2)
-          return z;
-       else
-          return x;
+       switch (i) {
+         case 0: return x;
+         case 1: return y;
+         case 2: return z;
+       }
+       return x;
     }
 
 /// \brief Operator <tt>+=</tt>
@@ -222,7 +222,7 @@ struct Point {
     }
 
 /// \brief First coordinate
-  T_ x, y, z;
+    T_ x, y, z;
 
 };
 

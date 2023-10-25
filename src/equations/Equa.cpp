@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                  Implementation of abstract class 'Equa'
+                      Implementation of class 'Equa'
 
   ==============================================================================*/
 
@@ -161,6 +161,124 @@ void Equa::set_poisson(string exp)
 {
    _poisson_fct.set(exp);
    _poisson_set = true;
+}
+
+
+void Equa::setPDECoef(PDECoefType t,
+                      real_t      a)
+{
+   _coef_value[t] = a;
+   _set_coef[t] = 1;
+}
+
+
+void Equa::setPDECoef(PDECoefType   t,
+                      const string& s)
+{
+   _coef_string[t] = s;
+   _set_coef[t] = 2;
+}
+
+
+void Equa::setPDECoef(PDECoefType t,
+                      Fct&        f)
+{
+   _coef_fct[t] = &f;
+   _set_coef[t] = 3;
+}
+
+
+real_t Equa::getPDECoef(PDECoefType      c,
+                        const SpaceTime& p)
+{
+   real_t v = 0.0;
+   switch (_set_coef[c])
+   {
+      case 0:
+         v = _coef_value[c];
+         break;
+
+      case 1:
+         v = 0.;
+         break;
+
+      case 3:
+         v = (*_coef_fct[c])(p.x,p.y,p.z,p.t);
+         break;
+   }
+   return v;
+}
+
+
+real_t Equa::getPDECoef(PDECoefType c,
+                        real_t      x,
+                        real_t      y,
+                        real_t      z,
+                        real_t      t)
+{
+   real_t v = 0.0;
+   switch (_set_coef[c])
+   {
+      case 0:
+         v = _coef_value[c];
+         break;
+
+      case 1:
+         v = 0.;
+         break;
+
+      case 3:
+         v = (*_coef_fct[c])(x,y,z,t);
+         break;
+   }
+   return v;
+}
+
+
+Vect<real_t> Equa::getPDECoefV(PDECoefType      c,
+                               const SpaceTime& p)
+{
+   Vect<real_t> v;
+   switch (_set_coef[c])
+   {
+      case 0:
+         break;
+
+      case 1:
+         break;
+
+      case 2:
+         break;
+
+      case 3:
+         break;
+   }
+   return v;
+}
+
+
+Vect<real_t> Equa::getPDECoefV(PDECoefType   c,
+                               real_t        x,
+                               real_t        y,
+                               real_t        z,
+                               real_t        t)
+{
+   Vect<real_t> v;
+   switch (_set_coef[c])
+   {
+      case 0:
+         break;
+
+      case 1:
+         break;
+
+      case 2:
+         break;
+
+      case 3:
+         break;
+   }
+   return v;
 }
 
 
@@ -380,8 +498,7 @@ int Equa::solveLinearSystem(Matrix<real_t>* A,
    _ls.setMatrix(A);
    _ls.setRHS(b);
    _ls.setSolution(x);
-   int ret = _ls.solve();
-   return ret;
+   return _ls.solve();
 }
 
 void Equa::LinearSystemInfo()
@@ -420,7 +537,7 @@ int Equa::solveLinearSystem(PETScVect<real_t>& b,
                             PETScVect<real_t>& x)
 #else
 int Equa::solveLinearSystem(Vect<real_t>& b,
-                                   Vect<real_t>& x)
+                            Vect<real_t>& x)
 #endif
 {
    return solveLinearSystem(_A,b,x);
@@ -510,11 +627,11 @@ string Equa::getFiniteElementType() const
 
 
 #if defined(USE_PETSC)
-void Equa::setInput(EqDataType     opt,
+void Equa::setInput(EqDataType         opt,
                     PETScVect<real_t>& u)
 #else
-void Equa::setInput(EqDataType opt,
-                    Vect<real_t>&  u)
+void Equa::setInput(EqDataType    opt,
+                    Vect<real_t>& u)
 #endif
 {
    if (opt==INITIAL_FIELD || opt==SOLUTION)

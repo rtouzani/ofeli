@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+    <title>Finite Element Mesh of a beam</title>
+    <date>January 1, 2009</date>
+    <author>R. Touzani</author>
+</info>
+<Project name="proj">
+   <mesh_file>proj-5x20.m</mesh_file>
+   <plot_file>proj.pl</plot_file>
+   <time_step>0.01</time_step>
+   <max_time>1.0</max_time>
+   <verbose>3</verbose>
+   <output>0</output>
+   <save>1</save>
+</Project>
+<Prescription>
+   <BoundaryCondition code="1">-tanh(10)*(exp(t)-1)</BoundaryCondition>
+   <BoundaryCondition code="2"> tanh(10)*(exp(t)-1)</BoundaryCondition>
+   <Source>tanh(10*y)*(exp(t)+200*(exp(t)-1)/(cosh(10*y)*cosh(10*y)))</Source>
+</Prescription>
+</OFELI_File>

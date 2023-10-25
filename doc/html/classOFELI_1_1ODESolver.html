@@ -227,6 +227,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNbEq</b> () cons
 <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> () const</td></tr>
 <tr class="memdesc:ad9f7cc68beb74fedbedde34c7fb10887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return solution in the case of a scalar equation. <br /></td></tr>
 <tr class="separator:ad9f7cc68beb74fedbedde34c7fb10887"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dd3d2023075edaec285442848f4d25b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1ODESolver.html#a2dd3d2023075edaec285442848f4d25b">getPhase</a> (<a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;x, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;v, size_t i=1)</td></tr>
+<tr class="memdesc:a2dd3d2023075edaec285442848f4d25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get phase portrait vectors.  <a href="classOFELI_1_1ODESolver.html#a2dd3d2023075edaec285442848f4d25b">More...</a><br /></td></tr>
+<tr class="separator:a2dd3d2023075edaec285442848f4d25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >To solve a system of ordinary differential equations. </p>
@@ -314,6 +317,51 @@ Newmark (value: <em>NEWMARK</em>) for linear second-order systems with constant 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2dd3d2023075edaec285442848f4d25b" name="a2dd3d2023075edaec285442848f4d25b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dd3d2023075edaec285442848f4d25b">&#9670;&nbsp;</a></span>getPhase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void getPhase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; <a class="el" href="group__Util.html#gaccfeb6b1e8cf41731fde610549bee67c">real_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>i</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get phase portrait vectors. </p>
+<p >This function gets vectors containing solution and its time derivative to determine phase portraite of the ode. The function is valid for a single ode only.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Vector containing solution of the ode at each computed time step </td></tr>
+    <tr><td class="paramname">v</td><td>Vector containing discrete time derivative of the ode at each computed time step </td></tr>
+    <tr><td class="paramname">i</td><td>Component for which the phase is extracted [Dafault: <code>1</code>] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a8b50b99be10cf64ab5ac8d015b9b8987" name="a8b50b99be10cf64ab5ac8d015b9b8987"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8b50b99be10cf64ab5ac8d015b9b8987">&#9670;&nbsp;</a></span>getTimeDerivative() <span class="overload">[1/2]</span></h2>
 

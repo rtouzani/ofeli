@@ -249,6 +249,7 @@ int XMLParser::get(DMatrix<real_t>& A)
    _type = MATRIX;
    _theMatrix = &A;
    _set_matrix = true;
+   _name = "";
    _scan = 0;
    _theMesh = nullptr;
    if (parse(_xml)) {
@@ -632,7 +633,7 @@ void XMLParser::read_project(const StringMap::iterator& i)
             cout << "Verbosity parameter set." << endl;
          else {
             if (i->first=="value")
-               _ipf->_verbose = atoi((i->second).c_str());
+               _ipf->_verbose = stoi(i->second);
          }
       }
       else if (_tag_name=="material_code") {
@@ -640,7 +641,7 @@ void XMLParser::read_project(const StringMap::iterator& i)
             cout << "Material code and name given." << endl;
          else {
             if (i->first=="code")
-               _code = atoi((i->second).c_str());
+               _code = stoi(i->second);
             if (i->first=="material" || i->first=="value")
                mat = i->second;
             theMaterial.set(_code,mat);
@@ -651,7 +652,7 @@ void XMLParser::read_project(const StringMap::iterator& i)
             cout << "Output parameter selected." << endl;
          else {
             if (i->first=="value")
-               _ipf->_output = atoi((i->second).c_str());
+               _ipf->_output = stoi(i->second);
          }
       }
       else if (_tag_name=="save") {
@@ -659,7 +660,7 @@ void XMLParser::read_project(const StringMap::iterator& i)
             cout << "Save parameter selected." << endl;
          else {
             if (i->first=="value")
-               _ipf->_save = atoi((i->second).c_str());
+               _ipf->_save = stoi(i->second);
          }
       }
       else if (_tag_name=="plot") {
@@ -667,80 +668,80 @@ void XMLParser::read_project(const StringMap::iterator& i)
             cout << "Frequency for plotting save parameter selected." << endl;
          else {
             if (i->first=="value")
-               _ipf->_plot = atoi((i->second).c_str());
+               _ipf->_plot = stoi(i->second);
          }
       }
       else if (_tag_name=="bc") {
          if (_scan>1) 
             cout << "Boundary condition toggle selected." << endl;
          else
-            _ipf->_bc = atoi((i->second).c_str());
+            _ipf->_bc = stoi(i->second);
       }
       else if (_tag_name=="bf") {
          if (_scan>1) 
             cout << "Body force toggle selected." << endl;
          else
-            _ipf->_bf = atoi((i->second).c_str());
+            _ipf->_bf = stoi(i->second);
       }
       else if (_tag_name=="sf") {
          if (_scan>1) 
             cout << "Boundary force toggle selected." << endl;
          else
-            _ipf->_sf = atoi((i->second).c_str());
+            _ipf->_sf = stoi(i->second);
       }
       else if (_tag_name=="init") {
          if (_scan>1) 
             cout << "Initial solution toggle selected." << endl;
          else
-            _ipf->_ini = atoi((i->second).c_str());
+            _ipf->_ini = stoi(i->second);
       }
       else if (_tag_name=="prescription") {
          if (_scan>1) 
             cout << "Prescription toggle selected." << endl;
          else
-            _ipf->_data = atoi((i->second).c_str());
+            _ipf->_data = stoi(i->second);
       }
       else if (_tag_name=="nb_steps") {
          if (_scan>1) 
             cout << "Number of time steps parameter selected." << endl;
          else
-            _ipf->_nb_steps = atoi((i->second).c_str());
+            _ipf->_nb_steps = stoi(i->second);
       }
       else if (_tag_name=="nb_iter") {
          if (_scan>1) 
             cout << "Number of iterations parameter selected." << endl;
          else
-            _ipf->_nb_iter = atoi((i->second).c_str());
+            _ipf->_nb_iter = stoi(i->second);
       }
       else if (_tag_name=="time_step") {
          if (_scan>1) 
             cout << "Time step parameter selected." << endl;
          else
-            _ipf->_time_step = atof((i->second).c_str());
+            _ipf->_time_step = stof(i->second);
       }
       else if (_tag_name=="max_time") {
          if (_scan>1) 
             cout << "Maximal time parameter selected." << endl;
          else
-            _ipf->_max_time = atof((i->second).c_str());
+            _ipf->_max_time = stof(i->second);
       }
       else if (_tag_name=="tolerance") {
          if (_scan>1) 
             cout << "Tolerance parameter selected." << endl;
          else
-            _ipf->_tolerance = atof((i->second).c_str());
+            _ipf->_tolerance = stof(i->second);
       }
       else if (_tag_name=="int" || _tag_name=="integer") {
          if (_scan>1) 
             cout << "Extra integer parameter selected." << endl;
          else
-            _ipf->_int_par[_ik1++] = atoi((i->second).c_str());
+            _ipf->_int_par[_ik1++] = stoi(i->second);
       }
       else if (_tag_name=="double") {
          if (_scan>1) 
             cout << "Extra double parameter selected." << endl;
          else
-            _ipf->_real_par[_dk1++] = atof((i->second).c_str());
+            _ipf->_real_par[_dk1++] = stof(i->second);
       }
       else if (_tag_name=="string") {
          if (_scan>1) 
@@ -754,9 +755,9 @@ void XMLParser::read_project(const StringMap::iterator& i)
             cout << "Extra complex parameter selected." << endl;
          else {
             if (i->first=="real")
-               _ipf->_complex_par[_ck] += complex_t(atof((i->second).c_str()));
+               _ipf->_complex_par[_ck] += complex_t(stof(i->second));
             if (i->first=="imag")
-               _ipf->_complex_par[_ck++] += complex_t(0.,atof((i->second).c_str()));
+               _ipf->_complex_par[_ck++] += complex_t(0.,stof(i->second));
          }
       }
       else if (_tag_name=="domain_file") {
@@ -903,7 +904,7 @@ void XMLParser::read_project(const StringMap::iterator& i)
          if (i->first=="label")
             _ipf->_array_label.push_back(i->second);
          if (i->first=="size")
-            _ipf->_array_size.push_back(atoi((i->second).c_str()));
+            _ipf->_array_size.push_back(stoi(i->second));
          if (i->first=="ext" || i->first=="extension")
             _ipf->_array_ext.push_back(i->second);
       }
@@ -915,12 +916,12 @@ void XMLParser::read_domain(const StringMap::iterator& i)
 {
    if (_tag_name=="Domain") {
       if (i->first=="dim") {
-         _dim = atoi((i->second).c_str());
+         _dim = stoi(i->second);
          if (_scan==false)
             _theDomain->_dim = _dim;
       }
       else if (i->first=="nb_dof") {
-         _nb_dof = atoi((i->second).c_str());
+         _nb_dof = stoi(i->second);
          if (_scan==false)
             _theDomain->_nb_dof = _nb_dof;
       }
@@ -932,15 +933,15 @@ void XMLParser::read_domain(const StringMap::iterator& i)
       real_t x[3]={0,0,0}, h;
       int code=0;
       if (i->first=="x")
-         x[0] = atof((i->second).c_str());
+         x[0] = stof(i->second);
       if (i->first=="y")
-         x[1] = atof((i->second).c_str());
+         x[1] = stof(i->second);
       if (i->first=="z")
-         x[2] = atof((i->second).c_str());
+         x[2] = stof(i->second);
       if (i->first=="code")
-         code = atoi((i->second).c_str());
+         code = stoi(i->second);
       if (i->first=="h") {
-         h = atof((i->second).c_str());
+         h = stof(i->second);
          _theDomain->insertVertex(x[0],x[1],h,code);
       }
    }
@@ -980,14 +981,14 @@ void XMLParser::read_tab(const StringMap::iterator& i)
          _nb_var++; 
       }
       else if (i->first=="nb_points") {
-         _tab_size = atoi((i->second).c_str());
+         _tab_size = stoi(i->second);
          if (_scan==false)
             _theTabulation->Funct[_nb_funct-1].Np[_nb_var-1] = _tab_size;
       }
       else if (i->first=="min")
-         _theTabulation->Funct[_nb_funct-1].Min[_nb_var-1] = atof((i->second).c_str());    
+         _theTabulation->Funct[_nb_funct-1].Min[_nb_var-1] = stof(i->second);    
       else if (i->first=="max")
-         _theTabulation->Funct[_nb_funct-1].Max[_nb_var-1] = atof((i->second).c_str());    
+         _theTabulation->Funct[_nb_funct-1].Max[_nb_var-1] = stof(i->second);    
    }
 
    else if (_tag_name=="Data") {
@@ -1004,11 +1005,13 @@ void XMLParser::read_matrix(const StringMap::iterator& i)
       if (_scan)
          cout << "Found a matrix:" << endl;
       if (i->first=="nb_rows")
-         _nb_rows = atoi((i->second).c_str());
+         _nb_rows = stoi(i->second);
       if (i->first=="nb_cols" || i->first=="nb_columns")
-         _nb_cols = atoi((i->second).c_str());
-      if (i->first=="name")
+         _nb_cols = stoi(i->second);
+      if (i->first=="name") {
          _name = i->second;
+         _theMatrix->setName(_name);
+      }
    }
 }
 
@@ -1044,7 +1047,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._density[_nb_mat].exist = true;
          theMaterial._density[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._density[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._density[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="SpecificHeat") {
@@ -1054,7 +1057,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._specific_heat[_nb_mat].exist = true;
          theMaterial._specific_heat[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._specific_heat[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._specific_heat[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="ThermalConductivity") {
@@ -1064,7 +1067,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._thermal_conductivity[_nb_mat].exist = true;
          theMaterial._thermal_conductivity[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._thermal_conductivity[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._thermal_conductivity[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="MeltingTemperature") {
@@ -1074,7 +1077,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._melting_temperature[_nb_mat].exist = true;
          theMaterial._melting_temperature[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._melting_temperature[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._melting_temperature[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="EvaporationTemperature") {
@@ -1084,7 +1087,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._evaporation_temperature[_nb_mat].exist = true;
          theMaterial._evaporation_temperature[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._evaporation_temperature[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._evaporation_temperature[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="ThermalExpansion") {
@@ -1094,7 +1097,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._thermal_expansion[_nb_mat].exist = true;
          theMaterial._thermal_expansion[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._thermal_expansion[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._thermal_expansion[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="LatentHeatMelting") {
@@ -1104,7 +1107,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._latent_heat_melting[_nb_mat].exist = true;
          theMaterial._latent_heat_melting[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._latent_heat_melting[_nb_mat-1].value = atof((i->second).c_str());
+            theMaterial._latent_heat_melting[_nb_mat-1].value = stof(i->second);
       }
    }
    else if (_tag_name=="LatentHeatEvaporation") {
@@ -1114,7 +1117,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._latent_heat_evaporation[_nb_mat].exist = true;
          theMaterial._latent_heat_evaporation[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._latent_heat_evaporation[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._latent_heat_evaporation[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="DielectricConstant") {
@@ -1124,7 +1127,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._dielectric_constant[_nb_mat].exist = true;
          theMaterial._dielectric_constant[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._dielectric_constant[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._dielectric_constant[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="ElectricConductivity") {
@@ -1134,7 +1137,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._electric_conductivity[_nb_mat].exist = true;
          theMaterial._electric_conductivity[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._electric_conductivity[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._electric_conductivity[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="ElectricResistivity") {
@@ -1144,7 +1147,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._electric_resistivity[_nb_mat].exist = true;
          theMaterial._electric_resistivity[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._electric_resistivity[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._electric_resistivity[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="MagneticPermeability") {
@@ -1154,7 +1157,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._magnetic_permeability[_nb_mat].exist = true;
          theMaterial._magnetic_permeability[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._magnetic_permeability[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._magnetic_permeability[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="Viscosity") {
@@ -1164,7 +1167,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._viscosity[_nb_mat].exist = true;
          theMaterial._viscosity[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._viscosity[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._viscosity[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="YoungModulus") {
@@ -1174,7 +1177,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._young_modulus[_nb_mat].exist = true;
          theMaterial._young_modulus[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._young_modulus[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._young_modulus[_nb_mat].value = stof(i->second);
       }
    }
    else if (_tag_name=="PoissonRatio") {
@@ -1184,7 +1187,7 @@ void XMLParser::read_mat(const StringMap::iterator& i)
          theMaterial._poisson_ratio[_nb_mat].exist = true;
          theMaterial._poisson_ratio[_nb_mat].type = BY_VALUE;
          if (i->first=="value")
-            theMaterial._poisson_ratio[_nb_mat].value = atof((i->second).c_str());
+            theMaterial._poisson_ratio[_nb_mat].value = stof(i->second);
       }
    }
    else
@@ -1216,12 +1219,12 @@ void XMLParser::read_mesh(const StringMap::iterator& i)
       if (i->first=="file" && _scan==0)
          new XMLParser(i->second,*_theMesh);
       else if (i->first=="dim") {
-         _dim = atoi((i->second).c_str());
+         _dim = stoi(i->second);
          if (_scan==false)
             _theMesh->setDim(_dim);
       }
       else if (i->first=="nb_dof")
-         _nb_dof = atoi((i->second).c_str());
+         _nb_dof = stoi(i->second);
       if (_scan)
          cout << "Found a finite element mesh:" << endl;
    }
@@ -1230,14 +1233,14 @@ void XMLParser::read_mesh(const StringMap::iterator& i)
       if (i->first=="shape")
          _el_shape = i->second;
       if (i->first=="nodes")
-         _nb_el_nodes = atoi((i->second).c_str());
+         _nb_el_nodes = stoi(i->second);
    }
 
    else if (_tag_name=="Sides") {
       if (i->first=="shape")
          _sd_shape = i->second;
       if (i->first=="nodes")
-         _nb_sd_nodes = atoi((i->second).c_str());
+         _nb_sd_nodes = stoi(i->second);
    }
 
    else if (_tag_name=="Material") {
@@ -1263,15 +1266,15 @@ void XMLParser::read_prescription(const StringMap::iterator& i)
    if (i->first=="code")
       _par.code = BoundaryConditionCode(bccs,bcc,i->second);
    else if (i->first=="dof")
-      _par.dof = atoi((i->second).c_str());
+      _par.dof = stoi(i->second);
    else if (i->first=="x")
-      _par.x = atof((i->second).c_str()), _par.bx = true;
+      _par.x = stof(i->second), _par.bx = true;
    else if (i->first=="y")
-      _par.y = atof((i->second).c_str()), _par.by = true;
+      _par.y = stof(i->second), _par.by = true;
    else if (i->first=="z")
-      _par.z = atof((i->second).c_str()), _par.bz = true;
+      _par.z = stof(i->second), _par.bz = true;
    else if (i->first=="time")
-      _par.t = atof((i->second).c_str()), _par.bt = true;
+      _par.t = stof(i->second), _par.bt = true;
    else if (i->first=="value") {
    }
    else
@@ -1302,30 +1305,30 @@ void XMLParser::read_field(const StringMap::iterator& i)
             ;
       }
       else if (i->first=="nb_dof")
-         _nb_dof = atoi((i->second).c_str());
+         _nb_dof = stoi(i->second);
       if (i->first=="nx")
-         _nx = atoi((i->second).c_str());
+         _nx = stoi(i->second);
       if (i->first=="ny")
-         _ny = atoi((i->second).c_str());
+         _ny = stoi(i->second);
       if (i->first=="nz")
-         _nz = atoi((i->second).c_str());
+         _nz = stoi(i->second);
    }
    if (_tag_name=="Step") {
       _compact = false;
       if (i->first=="time")
-         _time = atof((i->second).c_str());
+         _time = stof(i->second);
    }
    else if (_tag_name=="constant" || _tag_name=="const") {
       _dof = 0;
       if (i->first=="value")
-         _val = atof((i->second).c_str());
+         _val = stof(i->second);
       else if (i->first=="dof")
-         _dof = atoi((i->second).c_str());
+         _dof = stoi(i->second);
    }
    else if (_tag_name=="expression" || _tag_name=="expr") {
       _dof = 0;
       if (i->first=="dof")
-         _dof = atoi((i->second).c_str());
+         _dof = stoi(i->second);
    }
 }
 
@@ -1354,7 +1357,7 @@ bool XMLParser::on_cdata(string cdata)
 // Material in mesh data
    else if (_tag_name=="Material" && _set_mesh) {
       while (it!=tokens.end()) {
-         _cm = atoi((*it++).c_str());
+         _cm = stoi(*it++);
          _mat = *it++;
          _nb_mat = theMaterial.set(_cm,_mat);
       }
@@ -1422,7 +1425,7 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
    if (_scan) {
       if (_compact) {
          while (it!=tokens.end()) {
-            _time = atof((*it++).c_str());
+            _time = stof(*it++);
             _ft->push_back(_time);
             for (size_t n=0; n<nb; n++)
                *it++;
@@ -1449,9 +1452,9 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
       if (_all_steps>0 && _compact) {
          size_t i = 0;
          while (it!=tokens.end()) {
-            _time = atof((*it++).c_str());
+            _time = stof(*it++);
             for (size_t j=0; j<nb; j++)
-               (*_V)[i].push_back(atof((*it++).c_str()));
+               (*_V)[i].push_back(stof(*it++));
             i++;
          }
       }
@@ -1466,7 +1469,7 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
                      for (size_t i=1; i<=_nx; i++) {
                         for (size_t j=1; j<=_ny; j++) {
                            for (size_t k=1; k<=_nz; k++)
-                              (*_v)(i,j,k) = atof((*it++).c_str());
+                              (*_v)(i,j,k) = stof(*it++);
                         }
                      }
                   }
@@ -1474,14 +1477,14 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
                else {
                   if (nb > 0) {
                      while (it!=tokens.end()) {
-                        _time = atof((*it++).c_str());
+                        _time = stof(*it++);
                         if (_time==_sought_time || _sought_time==-1.0) {
                            _v->setMesh(*_theMesh,_dof_support,_nb_dof);
                            _v->setName(_name);
                            _v->setTime(_time);
                            for (size_t n=1; n<=_v->getNb(); n++)
                               for (size_t k=1; k<=_nb_dof; k++)
-                                 (*_v)(n,k) = atof((*it++).c_str());
+                                 (*_v)(n,k) = stof(*it++);
                         }
                         else {
                            for (size_t n=1; n<=_v->getNb()*_nb_dof; n++)
@@ -1491,9 +1494,9 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
                   }
                   else {
                      vector<real_t> V;
-                     _time = atof((*it++).c_str());
+                     _time = stof(*it++);
                      while (it!=tokens.end())
-                        V.push_back(atof((*it++).c_str()));
+                        V.push_back(stof(*it++));
                      _v->setSize(V.size());
                      for (size_t i=0; i<V.size(); i++)
                         (*_v)[i] = V[i];
@@ -1509,7 +1512,7 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
                _v->setTime(_time);
                for (size_t n=1; n<=_v->getNb(); n++)
                   for (size_t k=1; k<=_nb_dof; k++)
-                     (*_v)(n,k) = atof((*it++).c_str());
+                     (*_v)(n,k) = stof(*it++);
             }
          }
       }
@@ -1543,7 +1546,7 @@ void XMLParser::read_const_field_data(const vector<string>&     tokens,
       if ((_name==_sought_name || _sought_name=="ANYTHING") &&
           (_time==_sought_time || _sought_time==-1.0) && _set_field) {
          _v->setTime(_time);
-         _val = atof((*it++).c_str());
+         _val = stof(*it++);
          for (size_t k=1; k<=_v->getNb(); k++) {
             if (_dof==0)
                for (size_t l=1; l<=_v->getNbDOF(); l++)
@@ -1582,7 +1585,7 @@ void XMLParser::read_const_field_data()
       if ((_name==_sought_name || _sought_name=="ANYTHING") &&
           (_time==_sought_time || _sought_time==-1.0) && _set_field) {
          _v->setTime(_time);
-         _val = atof((*it++).c_str());
+         _val = stof(*it++);
          for (size_t k=1; k<=_v->getNb(); k++) {
             if (_dof==0) {
                for (size_t l=1; l<=_v->getNbDOF(); l++)
@@ -1641,15 +1644,13 @@ void XMLParser::read_tab_data(const vector<string>&     tokens,
    _theTabulation->setSizes();
    size_t i=0;
    while (it!=tokens.end())
-      _theTabulation->Funct[_nb_funct-1].Val(++i) = atof((*it++).c_str());
+      _theTabulation->Funct[_nb_funct-1].Val(++i) = stof(*it++);
 }
 
 
 void XMLParser::read_matrix_data(const vector<string>&     tokens,
                                  vector<string>::iterator& it)
 {
-   if (_name!="")
-      _theMatrix->setName(_name);
    _theMatrix->setSize(_nb_rows,_nb_cols);
    size_t i=1, j=0;
    while (it!=tokens.end()) {
@@ -1657,7 +1658,7 @@ void XMLParser::read_matrix_data(const vector<string>&     tokens,
          i++, j = 1;
       if (i>_nb_rows)
          throw OFELIException("In XMLParser::read_matrix_data(..): Insufficient number of matrix entries.");
-      (*_theMatrix)(i,j) = atof((*it++).c_str());
+      (*_theMatrix)(i,j) = stof(*it++);
    }
 }
 
@@ -1706,7 +1707,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._density[_nb_mat].exist = true;
          theMaterial._density[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._density[_nb_mat].value = atoi(it->c_str());
+            theMaterial._density[_nb_mat].value = stoi(*it);
       }
    }
    else if (_tag_name=="SpecificHeat") {
@@ -1716,7 +1717,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._specific_heat[_nb_mat].exist = true;
          theMaterial._specific_heat[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._specific_heat[_nb_mat].value = atof(it->c_str());
+            theMaterial._specific_heat[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="ThermalConductivity") {
@@ -1726,7 +1727,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._thermal_conductivity[_nb_mat].exist = true;
          theMaterial._thermal_conductivity[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._thermal_conductivity[_nb_mat].value = atof(it->c_str());
+            theMaterial._thermal_conductivity[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="MeltingTemperature") {
@@ -1736,7 +1737,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._melting_temperature[_nb_mat].exist = true;
          theMaterial._melting_temperature[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._melting_temperature[_nb_mat].value = atof(it->c_str());
+            theMaterial._melting_temperature[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="EvaporationTemperature") {
@@ -1746,7 +1747,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._evaporation_temperature[_nb_mat].exist = true;
          theMaterial._evaporation_temperature[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._evaporation_temperature[_nb_mat].value = atof(it->c_str());
+            theMaterial._evaporation_temperature[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="ThermalExpansion") {
@@ -1756,7 +1757,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._thermal_expansion[_nb_mat].exist = true;
          theMaterial._thermal_expansion[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._thermal_expansion[_nb_mat].value = atof(it->c_str());
+            theMaterial._thermal_expansion[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="LatentHeatMelting") {
@@ -1766,7 +1767,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._latent_heat_melting[_nb_mat].exist = true;
          theMaterial._latent_heat_melting[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._latent_heat_melting[_nb_mat].value = atof(it->c_str());
+            theMaterial._latent_heat_melting[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="LatentHeatEvaporation") {
@@ -1776,7 +1777,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._latent_heat_evaporation[_nb_mat].exist = true;
          theMaterial._latent_heat_evaporation[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._latent_heat_evaporation[_nb_mat].value = atof(it->c_str());
+            theMaterial._latent_heat_evaporation[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="DielectricConstant") {
@@ -1786,7 +1787,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._dielectric_constant[_nb_mat].exist = true;
          theMaterial._dielectric_constant[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._dielectric_constant[_nb_mat].value = atof(it->c_str());
+            theMaterial._dielectric_constant[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="ElectricConductivity") {
@@ -1796,7 +1797,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._electric_conductivity[_nb_mat].exist = true;
          theMaterial._electric_conductivity[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._electric_conductivity[_nb_mat].value = atof(it->c_str());
+            theMaterial._electric_conductivity[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="ElectricResistivity") {
@@ -1806,7 +1807,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._electric_resistivity[_nb_mat].exist = true;
          theMaterial._electric_resistivity[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._electric_resistivity[_nb_mat].value = atof(it->c_str());
+            theMaterial._electric_resistivity[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="MagneticPermeability") {
@@ -1816,7 +1817,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._magnetic_permeability[_nb_mat].exist = true;
          theMaterial._magnetic_permeability[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._magnetic_permeability[_nb_mat].value = atof(it->c_str());
+            theMaterial._magnetic_permeability[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="Viscosity") {
@@ -1826,7 +1827,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._viscosity[_nb_mat].exist = true;
          theMaterial._viscosity[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._viscosity[_nb_mat].value = atof(it->c_str());
+            theMaterial._viscosity[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="YoungModulus") {
@@ -1836,7 +1837,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._young_modulus[_nb_mat].exist = true;
          theMaterial._young_modulus[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._young_modulus[_nb_mat].value = atof(it->c_str());
+            theMaterial._young_modulus[_nb_mat].value = stof(*it);
       }
    }
    else if (_tag_name=="PoissonRatio") {
@@ -1846,7 +1847,7 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
          theMaterial._poisson_ratio[_nb_mat].exist = true;
          theMaterial._poisson_ratio[_nb_mat].type = BY_VALUE;
          if (it!=tokens.end())
-            theMaterial._poisson_ratio[_nb_mat].value = atof(it->c_str());
+            theMaterial._poisson_ratio[_nb_mat].value = stof(*it);
       }
    }
    else
@@ -1859,7 +1860,7 @@ void XMLParser::read_project_data(const vector<string>&     tokens,
 {
    if (_tag_name=="verbose") {
       if (it!=tokens.end())
-         _ipf->_verbose = atoi(it->c_str());
+         _ipf->_verbose = stoi(*it);
    }
    else if (_tag_name=="material_code") {
       if (it!=tokens.end())
@@ -1871,59 +1872,59 @@ void XMLParser::read_project_data(const vector<string>&     tokens,
    }
    else if (_tag_name=="save") {
       if (it!=tokens.end())
-         _ipf->_save = atoi(it->c_str());
+         _ipf->_save = stoi(*it);
    }
    else if (_tag_name=="plot") {
       if (it!=tokens.end())
-         _ipf->_plot = atoi(it->c_str());
+         _ipf->_plot = stoi(*it);
    }
    else if (_tag_name=="bc") {
       if (it!=tokens.end())
-         _ipf->_bc = atoi(it->c_str());
+         _ipf->_bc = stoi(*it);
    }
    else if (_tag_name=="bf") {
       if (it!=tokens.end())
-         _ipf->_bf = atoi(it->c_str());
+         _ipf->_bf = stoi(*it);
    }
    else if (_tag_name=="sf") {
       if (it!=tokens.end())
-         _ipf->_sf = atoi(it->c_str());
+         _ipf->_sf = stoi(*it);
    }
    else if (_tag_name=="init") {
       if (it!=tokens.end())
-         _ipf->_ini = atoi(it->c_str());
+         _ipf->_ini = stoi(*it);
    }
    else if (_tag_name=="data") {
       if (it!=tokens.end())
-         _ipf->_data = atoi(it->c_str());
+         _ipf->_data = stoi(*it);
    }
    else if (_tag_name=="nb_steps") {
       if (it!=tokens.end())
-         _ipf->_nb_steps = atoi(it->c_str());
+         _ipf->_nb_steps = stoi(*it);
    }
    else if (_tag_name=="nb_iter") {
       if (it!=tokens.end())
-         _ipf->_nb_iter = atoi(it->c_str());
+         _ipf->_nb_iter = stoi(*it);
    }
    else if (_tag_name=="time_step") {
       if (it!=tokens.end())
-         _ipf->_time_step = atof(it->c_str());
+         _ipf->_time_step = stof(*it);
    }
    else if (_tag_name=="max_time") {
       if (it!=tokens.end())
-         _ipf->_max_time = atof(it->c_str());
+         _ipf->_max_time = stof(*it);
    }
    else if (_tag_name=="tolerance") {
       if (it!=tokens.end())
-         _ipf->_tolerance = atof(it->c_str());
+         _ipf->_tolerance = stof(*it);
    }
    else if (_tag_name=="int") {
       if (it!=tokens.end())
-         _ipf->_int_par[_ik1++] = atoi(it->c_str());
+         _ipf->_int_par[_ik1++] = stoi(*it);
    }
    else if (_tag_name=="double") {
       if (it!=tokens.end())
-         _ipf->_real_par[_dk1++] = atoi(it->c_str());
+         _ipf->_real_par[_dk1++] = stoi(*it);
    }
    else if (_tag_name=="string") {
       if (it!=tokens.end())
@@ -1931,8 +1932,8 @@ void XMLParser::read_project_data(const vector<string>&     tokens,
    }
    else if (_tag_name=="complex") {
       while (it!=tokens.end()) {
-         _ipf->_complex_par[_ck]  = complex_t(atof((*it++).c_str()));
-         _ipf->_complex_par[_ck] += complex_t(0.,atof((*it++).c_str()));
+         _ipf->_complex_par[_ck]  = complex_t(stof(*it++));
+         _ipf->_complex_par[_ck] += complex_t(0.,stof(*it++));
       }
       _ck++;
    }
@@ -1951,7 +1952,7 @@ void XMLParser::read_project_data(const vector<string>&     tokens,
    else if (_tag_name=="init_file") {
       if (it!=tokens.end())
          _ipf->_init_file = *it;
-   } 
+   }
    else if (_tag_name=="restart_file") {
       if (it!=tokens.end())
          _ipf->_restart_file = *it;
@@ -2023,7 +2024,7 @@ void XMLParser::read_project_data(const vector<string>&     tokens,
    else if (_tag_name=="array") {
       size_t k = 0;
       while (it!=tokens.end() && _scan==0)
-         (_ipf->_array_value[k++]).push_back(atof((*it++).c_str()));
+         (_ipf->_array_value[k++]).push_back(stof(*it++));
       _ipf->_array_size.push_back(k);
    }
    else ;
@@ -2038,17 +2039,17 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
       while (it!=tokens.end()) {
          real_t x[3];
          for (size_t j=0; j<_dim; j++)
-            x[j] = atof((*it++).c_str());
-         int c1 = atoi((*it++).c_str());
-         real_t h = atof((*it++).c_str());
+            x[j] = stof(*it++);
+         int c1 = stoi(*it++);
+         real_t h = stof(*it++);
          _theDomain->insertVertex(x[0],x[1],h,c1);
       }
    }
    else if (_tag_name=="line" && _set_domain) {
       while (it!=tokens.end()) {
-         size_t v1 = atoi((*it++).c_str());
-         size_t v2 = atoi((*it++).c_str());
-         int dc = atoi((*it++).c_str()), nc = 0;
+         size_t v1 = stoi(*it++);
+         size_t v2 = stoi(*it++);
+         int dc = stoi(*it++), nc = 0;
          if (dc<0)
             nc = -dc, dc = 0;
          _theDomain->insertLine(v1,v2,dc,nc);
@@ -2056,55 +2057,55 @@ void XMLParser::read_domain_data(const vector<string>&     tokens,
    }
    else if (_tag_name=="circle" && _set_domain) {
       while (it!=tokens.end()) {
-         size_t n1 = atoi((*it++).c_str());
-         size_t n2 = atoi((*it++).c_str());
-         size_t n3 = atoi((*it++).c_str());
-         int dc = atoi((*it++).c_str()), nc = dc;
+         size_t n1 = stoi(*it++);
+         size_t n2 = stoi(*it++);
+         size_t n3 = stoi(*it++);
+         int dc = stoi(*it++), nc = dc;
          _theDomain->insertCircle(n1,n2,n3,dc,nc);
       }
    }
    else if (_tag_name=="contour" && _set_domain) {
       c.clear();
       while (it!=tokens.end())
-         c.push_back(atoi((*it++).c_str()));
+         c.push_back(stoi(*it++));
       _theDomain->insertContour(c);
    }
    else if (_tag_name=="hole" && _set_domain) {
       c.clear();
       while (it!=tokens.end())
-         c.push_back(atoi((*it++).c_str()));
+         c.push_back(stoi(*it++));
       _theDomain->insertHole(c);
    }
    else if (_tag_name=="RequiredVertex" && _set_domain) {
       while (it!=tokens.end())
-         _theDomain->insertRequiredVertex(atoi((*it++).c_str()));
+         _theDomain->insertRequiredVertex(stoi(*it++));
    }
    else if (_tag_name=="RequiredEdge" && _set_domain) {
       while (it!=tokens.end())
-         _theDomain->insertRequiredEdge(atoi((*it++).c_str()));
+         _theDomain->insertRequiredEdge(stoi(*it++));
    }
    else if ((_tag_name=="subdomain"||_tag_name=="SubDomain") && _set_domain) {
       while (it!=tokens.end()) {
-         size_t ln = atoi((*it++).c_str());
-         int orient = atoi((*it++).c_str());
-         int ref = atoi((*it++).c_str());
+         size_t ln = stoi(*it++);
+         int orient = stoi(*it++);
+         int ref = stoi(*it++);
          _theDomain->insertSubDomain(ln,orient,ref);
       }
    }
    else if (_tag_name=="rectangle" && _set_domain) {
       real_t x[4];
       while (it!=tokens.end()) {
-         x[0] = atof((*it++).c_str());
-         x[1] = atof((*it++).c_str());
-         x[2] = atof((*it++).c_str());
-         x[3] = atof((*it++).c_str());
-         size_t n1 = atoi((*it++).c_str());
-         size_t n2 = atoi((*it++).c_str());
-         real_t r = atof((*it++).c_str());
-         int c1 = atoi((*it++).c_str());
-         int c2 = atoi((*it++).c_str());
-         int c3 = atoi((*it++).c_str());
-         int c4 = atoi((*it++).c_str());
+         x[0] = stof(*it++);
+         x[1] = stof(*it++);
+         x[2] = stof(*it++);
+         x[3] = stof(*it++);
+         size_t n1 = stoi(*it++);
+         size_t n2 = stoi(*it++);
+         real_t r = stof(*it++);
+         int c1 = stoi(*it++);
+         int c2 = stoi(*it++);
+         int c3 = stoi(*it++);
+         int c4 = stoi(*it++);
          string file = *it++;
          _theDomain->Rectangle(x,n1,n2,r,c1,c2,c3,c4);
          _theMesh->put(file);
@@ -2124,7 +2125,7 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
 // Material
    if (_tag_name=="Material") {
       while (it!=tokens.end()) {
-         int n = atoi((*it++).c_str());
+         int n = stoi(*it++);
          string name = *it++;
          _nb_mat = theMaterial.set(n,name);
       }
@@ -2135,12 +2136,12 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
       _nb_nodes = 0;
       while (it!=tokens.end()) {
          Point<real_t> a;
-         a.x = atof((*it++).c_str());
+         a.x = stof(*it++);
          if (_dim > 1)
-            a.y = atof((*it++).c_str());
+            a.y = stof(*it++);
          if (_dim > 2)
-            a.z = atof((*it++).c_str());
-         int mark = atoi((*it++).c_str());
+            a.z = stof(*it++);
+         int mark = stoi(*it++);
          _nb_nodes++;
          if (_scan==0) {
             Node *nd = new Node(_nb_nodes,a);
@@ -2161,8 +2162,8 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
       while (it!=tokens.end()) {
          int nnd[20];
          for (size_t j=0; j<_nb_el_nodes; j++)
-            nnd[j] = atoi((*it++).c_str());
-         int code = atoi((*it++).c_str());
+            nnd[j] = stoi(*it++);
+         int code = stoi(*it++);
          _nb_elements++;
          if (_scan==0) {
             Element *el = new Element(_nb_elements,_el_shape,code);
@@ -2181,8 +2182,8 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
       while (it!=tokens.end()) {
          int nnd[8];
          for (size_t j=0; j<_nb_sd_nodes; j++)
-            nnd[j] = atoi((*it++).c_str());
-         int mark = atoi((*it++).c_str());
+            nnd[j] = stoi(*it++);
+         int mark = stoi(*it++);
          _nb_sides++;
          if (_scan==0) {
             Side *sd = new Side(_nb_sides,_sd_shape);

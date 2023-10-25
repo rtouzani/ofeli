@@ -210,10 +210,9 @@ class FMHeap
        return s;
     }
 
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
 /*! @} End of Doxygen Groups */
-
 } /* namespace OFELI */
+
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #endif

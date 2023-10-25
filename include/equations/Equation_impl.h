@@ -178,6 +178,25 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::updateBC(const Element&      el,
 
 template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<NEN_,NEE_,NSN_,NSE_>::updateBC(const Element& el,
+                                             real_t*        A,
+                                             Vect<real_t>&  bc)
+{
+   size_t in=1, ik=0;
+   for (size_t i=1; i<=NEN_; ++i) {
+      for (size_t k=1; k<=_nb_dof; ++k, ++in) {
+         for (size_t j=1; j<=NEN_; ++j) {
+            for (size_t l=1; l<=_nb_dof; ++l, ++ik) {
+               if (el(j)->getCode(l) > 0)
+                  eRHS(in) -= A[ik] * bc(el(j)->n(),l);
+            }
+         }
+      }
+   }
+}
+
+
+template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
+void Equation<NEN_,NEE_,NSN_,NSE_>::updateBC(const Element& el,
                                              Vect<real_t>*  bc)
 {
    if (bc==nullptr)

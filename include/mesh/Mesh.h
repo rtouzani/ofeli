@@ -136,20 +136,29 @@ class Mesh
  *  @param [in] xmin Value of xmin
  *  @param [in] xmax Value of xmax
  *  @param [in] nb_el Number of elements to generate
- *  @param [in] p Degree of finite element polynomial (Default = 1)
- *  @param [in] nb_dof Number of degrees of freedom for each node (Default = 1)
+ *  @param [in] bc Flag to remove (true) or not (false) imposed Degrees of Freedom [default: false]
+ *  @param [in] p Degree of finite element polynomial [default: 1]
+ *  @param [in] nb_dof Number of degrees of freedom for each node [default: 1]
+ *  @param [in] c1 Code to assign to first node (at \c x=xmin) [default: 0]
+ *  @param [in] c2 Code to assign to last node (at \c x=xmax) [default: 0]
  */
     Mesh(real_t xmin,
          real_t xmax,
          size_t nb_el,
+         bool   bc=false,
          size_t p=1,
-         size_t nb_dof=1);
+         size_t nb_dof=1,
+         int    c1=0,
+         int    c2=0);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     Mesh(real_t xmax,
          size_t nb_el,
+         bool   bc=false,
          size_t p=1,
-         size_t nb_dof=1);
+         size_t nb_dof=1,
+         int    c1=0,
+         int    c2=0);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Constructor for a uniform finite difference grid given by and instance of class Grid.
@@ -1012,7 +1021,7 @@ class Mesh
     string            _mat[MAX_NB_MATERIALS];
     unsigned long     _available_memory;
 
-    void set1D(real_t xmin, real_t xmax, size_t nb_el, size_t p, size_t nb_dof);
+    void set1D(real_t xmin, real_t xmax, size_t nb_el, size_t p, size_t nb_dof, int c1, int c2);
     void FindSideNeighbors();
     void RenumberNodes(size_t m=GRAPH_MEMORY);
     void RenumberNodes(vector<size_t> &perm, size_t m=GRAPH_MEMORY);

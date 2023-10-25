@@ -44,8 +44,6 @@ Quad4::Quad4()
 {
    _sh.resize(4);
    _dsh.resize(4);
-   _node.resize(4);
-   _x.resize(4);
    _dshl.resize(4);
    _el = nullptr;
    _sd = nullptr;
@@ -60,13 +58,11 @@ Quad4::Quad4(const Element* el)
                            std::to_string(el->getNbNodes()));
    _sh.resize(4);
    _dsh.resize(4);
-   _node.resize(4);
-   _x.resize(4);
    _dshl.resize(4);
    for (size_t i=0; i<4; i++) {
       Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _det = 0.0;
    _label = el->n();
@@ -83,14 +79,11 @@ Quad4::Quad4(const Side* side)
                            std::to_string(side->getNbNodes()));
    _sh.resize(4);
    _dsh.resize(4);
-   _node.resize(4);
-   _x.resize(4);
-   _dshl.resize(4);
    _dsh.resize(4);
    for (size_t i=0; i<4; i++) {
       Node *node = (*side)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _det = 0.0;
    _label = side->n();
@@ -104,8 +97,8 @@ void Quad4::set(const Element* el)
 {
    for (size_t i=0; i<4; i++) {
       Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _det = 0.0;
    _label = el->n();
@@ -118,8 +111,8 @@ void Quad4::set(const Side* sd)
 {
    for (size_t i=0; i<4; i++) {
       Node *node = (*sd)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _det = 0.0;
    _label = sd->n();
@@ -135,7 +128,6 @@ void Quad4::setLocal(const Point<real_t>& s)
    _sh[1] = 0.25*(1.+s.x)*(1.-s.y);
    _sh[2] = 0.25*(1.+s.x)*(1.+s.y);
    _sh[3] = 0.25*(1.-s.x)*(1.+s.y);
-
    _dsh[0].x = -0.25*(1.-s.y); 
    _dsh[1].x =  0.25*(1.-s.y);
    _dsh[2].x =  0.25*(1.+s.y); 

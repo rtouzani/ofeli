@@ -80,7 +80,11 @@ size_t Matrix<T_>::getNbColumns() const { return _nb_cols; }
 
 
 template<class T_>
-void Matrix<T_>::setName(string name) { _name = name; }
+void Matrix<T_>::setName(const string& name) { _name = name; }
+
+
+template<class T_>
+string Matrix<T_>::getName() const { return _name; }
 
 
 template<class T_>

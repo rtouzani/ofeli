@@ -134,7 +134,7 @@ inline string out_complex(complex_t z)
 }
 
 
-/** \fn string complex_string(real_t x, real_t y)
+/** \fn string out_complex(real_t x, real_t y)
  *  \ingroup Util
  *  \brief Return string to conviently display a complex number
  *  @param [in] x Real part

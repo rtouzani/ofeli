@@ -28,8 +28,8 @@
   ==============================================================================*/
 
 
-#ifndef __FEEQUA_UTIL_H
-#define __FEEQUA_UTIL_H
+#ifndef __EQUA_UTIL_H
+#define __EQUA_UTIL_H
 
 #include <float.h>
 #include <stdlib.h>

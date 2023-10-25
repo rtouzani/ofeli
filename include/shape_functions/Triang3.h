@@ -64,9 +64,6 @@ class Side;
 
 class Triang3 : public triangle
 {
-
-   using FEShape::_el;
-   using FEShape::_sd;
  
 public:
 

@@ -40,8 +40,6 @@ using std::to_string;
 Line3::Line3()
 {
    _sh.resize(3);
-   _node.resize(3);
-   _x.resize(3);
    _dshl.resize(3);
    _el = nullptr;
    _sd = nullptr;
@@ -54,14 +52,12 @@ Line3::Line3(const Element* el)
       throw OFELIException("Line3::Line3(Element *): Illegal number of element nodes: " +
                            to_string(el->getNbNodes()));
    _sh.resize(3);
-   _node.resize(3);
-   _x.resize(3);
    _dshl.resize(3);
    _label = el->n();
-   for (size_t i=0; i<3; i++) {
-      Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+   for (size_t i=1; i<=3; i++) {
+      Node *node = (*el)(i);
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    Point<real_t> dxdl = (_x[2]-_x[0]);
    _det = 0.5*dxdl.Norm();
@@ -78,14 +74,12 @@ Line3::Line3(const Side *sd)
       throw OFELIException("Line3::Line3(Side *): Illegal number of side nodes: " +
                            to_string(sd->getNbNodes()));
    _sh.resize(3);
-   _node.resize(3);
-   _x.resize(3);
    _dshl.resize(3);
    _label = sd->n();
-   for (size_t i=0; i<3; i++) {
-      Node *node = (*sd)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+   for (size_t i=1; i<=3; i++) {
+      Node *node = (*sd)(i);
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    Point<real_t> dxdl = _x[2] - _x[0];
    _det = 0.5*dxdl.Norm();

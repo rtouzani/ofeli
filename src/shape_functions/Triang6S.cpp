@@ -41,8 +41,6 @@ namespace OFELI {
 Triang6S::Triang6S()
 {
    _sh.resize(6);
-   _node.resize(6);
-   _x.resize(6);
    _dshl.resize(6);
 }
 
@@ -55,13 +53,11 @@ Triang6S::Triang6S(const Element* el)
                           + std::to_string(el->getNbNodes()));
    _sh.resize(6);
    _dsh.resize(6);
-   _node.resize(6);
-   _x.resize(6);
    _dshl.resize(6);
    for (size_t i=0; i<6; i++) {
       Node *node = (*el)(i+1);
-      _x[i] = node->getCoord();
-      _node[i] = node->n();
+      _x.push_back(node->getCoord());
+      _node.push_back(node->n());
    }
    _x21 = _x[1] - _x[0];
    _x31 = _x[2] - _x[0];
