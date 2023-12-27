@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -234,7 +234,6 @@ struct ElementGeom {
 
 class TimeStepping;
 
-
 class Equa
 {
 
@@ -441,7 +440,7 @@ class Equa
     void set(Prescription& p);
     void setTolerance(real_t toler);
     void setPDECoef(PDECoefType t,
-                    real_t      a);
+                    real_t      a=1.0);
     void setPDECoef(PDECoefType   t,
                     const string& s);
     void setPDECoef(PDECoefType t,
@@ -473,7 +472,7 @@ class Equa
    size_t                 _ngx, _ngy, _ngz;
    real_t                 _hx, _hy, _hz;
    int                    _field_type, _terms;
-   GENERIC_PDE_Terms      _gterms;
+   int                    _gterms;
    int                    _matrix_type, _solver, _max_it;
    size_t                 _nb_fields, _nb_eigv;
    EigenProblemSolver     _ev;
@@ -492,6 +491,7 @@ class Equa
    std::map<PDECoefType,Vect<real_t>*> _coef_vector;
    std::map<PDECoefType,string>        _coef_string;
    std::map<PDECoefType,Fct *>         _coef_fct;
+   std::map<PDECoefType,Fct>           _CFct;
    std::map<PDECoefType,int>           _set_coef;
    real_t                 _ex, _ey, _ez, _et;
    LinearSolver           _ls;

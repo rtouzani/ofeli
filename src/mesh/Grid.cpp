@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -32,6 +32,7 @@
 #include "mesh/Grid.h"
 #include "mesh/MeshUtil.h"
 #include "linear_algebra/GraphOfMatrix.h"
+#include "linear_algebra/Vect_impl.h"
 #include "OFELIException.h"
 
 using std::to_string;
@@ -39,7 +40,7 @@ using std::to_string;
 namespace OFELI {
 
 Grid::Grid()
-     : _dim(2), _nb_nodes(0), _nb_dof(1), _n(10), _cm(0), _cM(0)
+     : _uniform(true), _dim(2), _nb_nodes(0), _nb_dof(1), _n(10), _cm(0), _cM(0)
 {
 }
 
@@ -47,7 +48,7 @@ Grid::Grid()
 Grid::Grid(real_t xm,
            real_t xM,
            size_t npx)
-      : _dim(1), _cm(0), _cM(0)
+     : _uniform(true), _dim(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = _n.z = 0;
    _h.y = _h.z = 0;
@@ -61,6 +62,9 @@ Grid::Grid(real_t xm,
    _nb_nodes = _n.x + 1;
    for (size_t i=0; i<_n.x; i++)
       _active[i] = 1;
+   _x.setSize(_n.x+1);
+   for (size_t i=0; i<=_n.x; ++i)
+      _x[i] = _xmin.x+(_xmax.x-_xmin.x)*(i-1)/_n.x;
 }
 
 
@@ -70,7 +74,7 @@ Grid::Grid(real_t xm,
            real_t yM,
            size_t npx,
            size_t npy)
-     : _dim(2), _nb_dof(1), _cm(0), _cM(0)
+     : _uniform(true), _dim(2), _nb_dof(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = 0;
    _h.z = 0;
@@ -89,6 +93,12 @@ Grid::Grid(real_t xm,
    for (size_t i=0; i<_n.x; i++)
       for (size_t j=0; j<_n.y; j++)
           _active[_n.y*i+j] = 1;
+   _x.setSize(_n.x+1);
+   _y.setSize(_n.y+1);
+   for (size_t i=0; i<=_n.x; ++i)
+      _x[i] = _xmin.x+(_xmax.x-_xmin.x)*(i-1)/_n.x;
+   for (size_t j=0; j<=_n.y; ++j)
+      _y[j] = _xmin.y+(_xmax.y-_xmin.y)*(j-1)/_n.y;
 }
 
 
@@ -96,7 +106,7 @@ Grid::Grid(Point<real_t> m,
            Point<real_t> M,
            size_t        npx,
            size_t        npy)
-      : _dim(2), _nb_dof(1), _cm(0), _cM(0)
+      : _uniform(true), _dim(2), _nb_dof(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = 0;
    _h.z = 0;
@@ -115,6 +125,12 @@ Grid::Grid(Point<real_t> m,
    for (size_t i=0; i<_n.x; i++)
       for (size_t j=0; j<_n.y; j++)
          _active[_n.y*i+j] = 1;
+   _x.setSize(_n.x+1);
+   _y.setSize(_n.y+1);
+   for (size_t i=0; i<=_n.x; ++i)
+      _x[i] = _xmin.x+(_xmax.x-_xmin.x)*(i-1)/_n.x;
+   for (size_t j=0; j<=_n.y; ++j)
+      _y[j] = _xmin.y+(_xmax.y-_xmin.y)*(j-1)/_n.y;
 }
 
 
@@ -127,7 +143,7 @@ Grid::Grid(real_t xm,
            size_t npx,
            size_t npy,
            size_t npz)
-     : _dim(3), _nb_dof(1), _cm(0), _cM(0)
+     : _uniform(true), _dim(3), _nb_dof(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = npz;
    if (xM <= xm)
@@ -150,6 +166,15 @@ Grid::Grid(real_t xm,
       for (size_t j=0; j<_n.y; j++)
          for (size_t k=0; k<_n.z; k++)
             _active[_n.y*_n.z*i+_n.z*j+k] = 1;
+   _x.setSize(_n.x+1);
+   _y.setSize(_n.y+1);
+   _z.setSize(_n.z+1);
+   for (size_t i=0; i<=_n.x; ++i)
+      _x[i] = _xmin.x+(_xmax.x-_xmin.x)*(i-1)/_n.x;
+   for (size_t j=0; j<=_n.y; ++j)
+      _y[j] = _xmin.y+(_xmax.y-_xmin.y)*(j-1)/_n.y;
+   for (size_t k=0; k<=_n.z; ++k)
+      _z[k] = _xmin.z+(_xmax.z-_xmin.z)*(k-1)/_n.z;
 }
 
 
@@ -158,7 +183,7 @@ Grid::Grid(Point<real_t> m,
            size_t        npx,
            size_t        npy,
            size_t        npz)
-     : _dim(3), _nb_dof(1), _cm(0), _cM(0)
+     : _uniform(true), _dim(3), _nb_dof(1), _cm(0), _cM(0)
 {
    _n.x = npx; _n.y = npy; _n.z = npz;
    if (npz==0)
@@ -184,6 +209,42 @@ Grid::Grid(Point<real_t> m,
       for (size_t j=0; j<_n.y; j++)
          for (size_t k=0; k<_n.z; k++)
             _active[_n.y*_n.z*i+_n.z*j+k] = 1;
+   _x.setSize(_n.x+1);
+   _y.setSize(_n.y+1);
+   _z.setSize(_n.z+1);
+   for (size_t i=0; i<=_n.x; ++i)
+      _x[i] = _xmin.x+(_xmax.x-_xmin.x)*(i-1)/_n.x;
+   for (size_t j=0; j<=_n.y; ++j)
+      _y[j] = _xmin.y+(_xmax.y-_xmin.y)*(j-1)/_n.y;
+   for (size_t k=0; k<=_n.z; ++k)
+      _z[k] = _xmin.z+(_xmax.z-_xmin.z)*(k-1)/_n.z;
+}
+
+
+void Grid::setX(const Vect<real_t>& x)
+{
+   _x = x;
+   _uniform = false;
+}
+
+
+void Grid::setXY(const Vect<real_t>& x,
+                 const Vect<real_t>& y)
+{
+   _x = x;
+   _y = y;
+   _uniform = false;
+}
+
+
+void Grid::setXYZ(const Vect<real_t>& x,
+                  const Vect<real_t>& y,
+                  const Vect<real_t>& z)
+{
+   _x = x;
+   _y = y;
+   _z = z;
+   _uniform = false;
 }
 
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -55,6 +55,8 @@ namespace OFELI {
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
+static std::vector<string> XYZT {"x","y","z","t"};
+
 extern Material theMaterial;
 class EigenProblemSolver;
 class TimeStepping;
@@ -68,6 +70,7 @@ Equa::Equa()
    setTimeIntegrationParam();
    _rho_set = _Cp_set = _kappa_set = _mu_set = _sigma_set = _Mu_set = false;
    _epsilon_set = _omega_set = _beta_set = _v_set = _young_set = _poisson_set = false;
+   _gterms = NOTERM;
 }
 
 
@@ -168,15 +171,35 @@ void Equa::setPDECoef(PDECoefType t,
                       real_t      a)
 {
    _coef_value[t] = a;
-   _set_coef[t] = 1;
+   _set_coef[t] = 0;
+   if (t==C00)
+      _gterms = (_gterms|L00);
+   else if (t==C10)
+      _gterms = (_gterms|L10);
+   else if (t==C01)
+      _gterms = (_gterms|L01);
+   else if (t==C20)
+      _gterms = (_gterms|L20);
+   else if (t==C02)
+      _gterms = (_gterms|L02);
 }
 
 
 void Equa::setPDECoef(PDECoefType   t,
                       const string& s)
 {
-   _coef_string[t] = s;
-   _set_coef[t] = 2;
+   _set_coef[t] = 1;
+   _CFct[t].set(s,XYZT);
+   if (t==C00)
+      _gterms = (_gterms|L00);
+   else if (t==C10)
+      _gterms = (_gterms|L10);
+   else if (t==C01)
+      _gterms = (_gterms|L01);
+   else if (t==C20)
+      _gterms = (_gterms|L20);
+   else if (t==C02)
+      _gterms = (_gterms|L02);
 }
 
 
@@ -184,7 +207,17 @@ void Equa::setPDECoef(PDECoefType t,
                       Fct&        f)
 {
    _coef_fct[t] = &f;
-   _set_coef[t] = 3;
+   _set_coef[t] = 2;
+   if (t==C00)
+      _gterms = (_gterms|L00);
+   else if (t==C10)
+      _gterms = (_gterms|L10);
+   else if (t==C01)
+      _gterms = (_gterms|L01);
+   else if (t==C20)
+      _gterms = (_gterms|L20);
+   else if (t==C02)
+      _gterms = (_gterms|L02);
 }
 
 
@@ -199,13 +232,23 @@ real_t Equa::getPDECoef(PDECoefType      c,
          break;
 
       case 1:
-         v = 0.;
+         v = _CFct[c](p.x,p.y,p.z,p.t);
          break;
 
-      case 3:
+      case 2:
          v = (*_coef_fct[c])(p.x,p.y,p.z,p.t);
          break;
    }
+   if (c==C00)
+      _gterms = (_gterms|L00);
+   else if (c==C10)
+      _gterms = (_gterms|L10);
+   else if (c==C01)
+      _gterms = (_gterms|L01);
+   else if (c==C20)
+      _gterms = (_gterms|L20);
+   else if (c==C02)
+      _gterms = (_gterms|L02);
    return v;
 }
 
@@ -341,7 +384,7 @@ int Equa::run(Analysis   a,
    _analysis = a;
    int ret=0;
    if (_u==nullptr)
-      throw OFELIException("In Equa<T>::run(Analysis,TimeScheme): No solution vector provided.");
+      throw OFELIException("In Equa::run(Analysis,TimeScheme): No solution vector provided.");
    if (_b==nullptr)
       _b = new Vect<real_t>(_nb_eq);
    _b->clear();

@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
 //    Instantiate equation, set terms, data and then solve equation
       LinearPDE2D eq(ms,u);
-      eq.set_02();
+      eq.setPDECoef(C02);
       eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(SOURCE,bf);
       eq.run();

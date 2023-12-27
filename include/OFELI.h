@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -28,7 +28,6 @@
                  Header file that includes headers of kernel classes
 
   ==============================================================================*/
-
 
 #ifndef __OFELI_H
 #define __OFELI_H
@@ -86,7 +85,8 @@
 #include "solvers/NLASSolver.h"
 #include "solvers/LPSolver.h"
 #include "solvers/TimeStepping.h"
-
+#include "solvers/FuncApprox.h"
+#include "solvers/LeastSquare.h"
 
 #include "equations/interface/FastMarching.h"
 #include "equations/interface/FastMarching1DG.h"

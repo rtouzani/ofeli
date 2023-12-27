@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -72,7 +72,9 @@ class Fct {
    int set(const string& exp, int opt=0);
    int set(const string& exp, const string &v, int opt=0);
    int set(const string& n, const string &exp, const vector<string>& v, int opt=0);
-   void setName(const string& n);
+   void setVar(const string& v);
+   void setVar(const vector<string>& v);
+   void setName(const string& n) { _name = n; }
    real_t operator()(real_t x);
    real_t operator()(real_t x, real_t y);
    real_t operator()(real_t x, real_t y, real_t z);
@@ -81,13 +83,14 @@ class Fct {
    real_t operator()(const Point<real_t>& x, real_t t);
    real_t operator()(const SpaceTime& p);
    real_t operator()(const vector<real_t>& x);
+   string getExpression() const;
+   string getName() const { return _name; }
+   size_t getNbVar() const { return _nb_var; }
+   string getVar(size_t i) const { return _var[i-1]; }
    real_t D(real_t x);
    real_t D(const vector<real_t>& x, size_t i);
    int check();
    int getErrorCode() const;
-   string name, expr;
-   vector<string> var;
-   size_t nb_var;
    friend std::ostream& operator<<(std::ostream& s, const Fct& f);
 
  private:
@@ -97,9 +100,12 @@ class Fct {
    exprtk::expression<real_t> *_ex;
    vector<real_t> _xvar;
    void add_constants();
-   bool exp_ok, var_ok;
+   string _name;
+   size_t _nb_var;
+   bool _exp_ok, _var_ok;
    int err;
-   string error_message;
+   vector<string> _var;
+   string _expr, error_message;
 };
 
 } /* namespace OFELI */

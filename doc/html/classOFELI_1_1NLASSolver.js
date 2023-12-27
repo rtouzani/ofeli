@@ -1,7 +1,7 @@
 var classOFELI_1_1NLASSolver =
 [
     [ "NLASSolver", "classOFELI_1_1NLASSolver.html#a313620706abd07c233e36dc7b45b068f", null ],
-    [ "NLASSolver", "classOFELI_1_1NLASSolver.html#af51b33ccc0b4b0cad6f3611ef720cb87", null ],
+    [ "NLASSolver", "classOFELI_1_1NLASSolver.html#ad029742cd608e67f5099883c9827466c", null ],
     [ "NLASSolver", "classOFELI_1_1NLASSolver.html#ac1656b2d822739cb3fb7b323f8079ca0", null ],
     [ "NLASSolver", "classOFELI_1_1NLASSolver.html#aa3482f7a630b7d059c1b915176e7f0bc", null ],
     [ "NLASSolver", "classOFELI_1_1NLASSolver.html#aa95f3a13e864d95497f2749de222c452", null ],
@@ -11,7 +11,7 @@ var classOFELI_1_1NLASSolver =
     [ "getNbIter", "classOFELI_1_1NLASSolver.html#ad427a5facfbd7f505f7dd7ff9d512c20", null ],
     [ "run", "classOFELI_1_1NLASSolver.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
     [ "set", "classOFELI_1_1NLASSolver.html#aed17157b8b5172e30a9132a8eb061c01", null ],
-    [ "setDf", "classOFELI_1_1NLASSolver.html#a1bcbb13ab556eda581413740f79eb6c9", null ],
+    [ "setDf", "classOFELI_1_1NLASSolver.html#a783547375c07a319c5930db740b374c1", null ],
     [ "setf", "classOFELI_1_1NLASSolver.html#a31e77e80114a29bc0d792d13162ff26b", null ],
     [ "setFunction", "classOFELI_1_1NLASSolver.html#aded9896bbfc5b7062a878f049328dbf4", null ],
     [ "setFunction", "classOFELI_1_1NLASSolver.html#a04839207ef8c2248c2a6dd958d287b4b", null ],

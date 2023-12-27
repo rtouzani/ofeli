@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -237,11 +237,11 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
       }
       else {
          size_t in=1;
-         for (size_t i=1; i<=NEN_; i++) {
-            for (size_t k=1; k<=_nb_dof; k++) {
+         for (size_t i=1; i<=NEN_; ++i) {
+            for (size_t k=1; k<=_nb_dof; ++k) {
                size_t jn = 1;
-               for (size_t j=1; j<=NEN_; j++) {
-                  for (size_t l=1; l<=_nb_dof; l++) {
+               for (size_t j=1; j<=NEN_; ++j) {
+                  for (size_t l=1; l<=_nb_dof; ++l) {
                      if (in != jn && (*_theElement)(i)->getCode(k))
                         eMat(in,jn) = 0.;
                      jn++;
@@ -255,21 +255,21 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
 
    else if (dof_type==SIDE_DOF) {
       if (dof) {
-         for (size_t i=1; i<=NEN_; i++) {
+         for (size_t i=1; i<=NEN_; ++i) {
             Side *sd1 = _theElement->getPtrSide(i);
             if (sd1->getCode(dof))
-               for (size_t j=1; j<=NEN_; j++)
+               for (size_t j=1; j<=NEN_; ++j)
                   if (i != j)
                      eMat(i,j) = 0.;
          }
       }
       else {
-         for (size_t i=1; i<=NEN_; i++) {
-            for (size_t k=1; k<=_nb_dof; k++) {
+         for (size_t i=1; i<=NEN_; ++i) {
+            for (size_t k=1; k<=_nb_dof; ++k) {
                if (_theElement->getPtrSide(i)->getCode(k)) {
                   size_t in = (*_theElement)(i)->getDOF(k);
-                  for (size_t j=1; j<=NEN_; j++) {
-                     for (size_t l=1; l<=_nb_dof; l++) {
+                  for (size_t j=1; j<=NEN_; ++j) {
+                     for (size_t l=1; l<=_nb_dof; ++l) {
                         size_t jn = _theElement->getPtrSide(j)->getDOF(l);
                         if (in != jn)
                            eMat(in,jn) = 0.;
@@ -304,7 +304,7 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::LocalNodeVector(Vect<real_t>& b)
    size_t k = 0;
    for (size_t n=1; n<=NEN_; ++n) {
       size_t nd = (*_theElement)(n)->n();
-      for (size_t j=1; j<=_nb_dof; j++)
+      for (size_t j=1; j<=_nb_dof; ++j)
          _eu[k++] = b(nd,j);
    }
 }
@@ -368,7 +368,7 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<real_t>&     b,
    Side *sd;
    for (size_t n=1; n<=NSE_; ++n) {
       sd = _theElement->getPtrSide(n);
-      for (size_t j=1; j<=sd->getNbDOF(); j++)
+      for (size_t j=1; j<=sd->getNbDOF(); ++j)
          if (sd->getDOF(j))
             be[k++] = b(sd->getDOF(j));
    }
@@ -400,7 +400,7 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<real_t>& b,
          if (flag==0) {
             for (size_t n=1; n<=NEN_; ++n) {
                Node *nd = (*_theElement)(n);
-               for (size_t j=1; j<=nd->getNbDOF(); j++)
+               for (size_t j=1; j<=nd->getNbDOF(); ++j)
                   if (nd->getDOF(j))
                      _eu[k++] = b(nd->getDOF(j));
             }
@@ -416,15 +416,15 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<real_t>& b,
 
       case SIDE_DOF:
          if (flag==0) {
-            for (size_t n=1; n<=NEN_; n++) {
+            for (size_t n=1; n<=NEN_; ++n) {
                Side *sd=_theElement->getPtrSide(n);
-               for (size_t j=1; j<=sd->getNbDOF(); j++)
+               for (size_t j=1; j<=sd->getNbDOF(); ++j)
                   if (sd->getDOF(j))
                      _eu[k++] = b(sd->getDOF(j));
             }
          }
          else {
-            for (size_t n=1; n<=NEN_; n++) {
+            for (size_t n=1; n<=NEN_; ++n) {
                Side *sd=_theElement->getPtrSide(n);
                if (sd->getDOF(flag))
                   _su[k++] = b(sd->getDOF(flag));
@@ -450,7 +450,7 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<real_t>&    b,
 template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<NEN_,NEE_,NSN_,NSE_>::ElementNodeCoordinates()
 {
-   for (size_t n=1; n<=NEN_; n++)
+   for (size_t n=1; n<=NEN_; ++n)
       _x[n-1] = (*_theElement)(n)->getCoord();
 }
 
@@ -458,7 +458,7 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::ElementNodeCoordinates()
 template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<NEN_,NEE_,NSN_,NSE_>::SideNodeCoordinates()
 {
-   for (size_t n=1; n<=NSN_; n++)
+   for (size_t n=1; n<=NSN_; ++n)
       _x[n-1] = (*_theSide)(n)->getCoord();
 }
 

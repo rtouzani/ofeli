@@ -71,15 +71,14 @@ var group__Equation =
       [ "setSolution", "classOFELI_1_1Estimator.html#af6fe5bb0ec25b8e2fec7331f7ea33afb", null ],
       [ "setType", "classOFELI_1_1Estimator.html#a97ceb23cb630a1d1e445d786bc04edf9", null ]
     ] ],
-    [ "OFELI::element_assembly", "group__Equation.html#ga5196cbacca486311a018f33717b4c697", null ],
-    [ "OFELI::element_assembly", "group__Equation.html#ga363fdfdc50f1efdfe62be86b991b5252", null ],
-    [ "OFELI::element_assembly", "group__Equation.html#ga3958e7128e6bb653e831b78b9a032ff2", null ],
-    [ "OFELI::element_assembly", "group__Equation.html#gafaa49315c672f500e012c2ade1fdebb3", null ],
-    [ "OFELI::element_assembly", "group__Equation.html#ga6a4f8e95d21ba585acf772e445f4ab9d", null ],
-    [ "OFELI::element_assembly", "group__Equation.html#ga3ab579500de8769de3b183cea42dce14", null ],
-    [ "OFELI::operator<<", "group__Equation.html#ga44e2443560a775ae725a62597f036caa", null ],
-    [ "OFELI::side_assembly", "group__Equation.html#gae67cc928e5b6ad1298348b3de27e61f2", null ],
-    [ "OFELI::side_assembly", "group__Equation.html#gaaee6ce61574dcd9923e54b97a2a60a87", null ],
-    [ "OFELI::side_assembly", "group__Equation.html#gadb888bcd56b25d968de26cbe2330f050", null ],
-    [ "OFELI::side_assembly", "group__Equation.html#ga09b2cd612110a8fb93417512cf2d141d", null ]
+    [ "element_assembly", "group__Equation.html#ga5196cbacca486311a018f33717b4c697", null ],
+    [ "element_assembly", "group__Equation.html#ga363fdfdc50f1efdfe62be86b991b5252", null ],
+    [ "element_assembly", "group__Equation.html#ga3958e7128e6bb653e831b78b9a032ff2", null ],
+    [ "element_assembly", "group__Equation.html#gafaa49315c672f500e012c2ade1fdebb3", null ],
+    [ "element_assembly", "group__Equation.html#ga6a4f8e95d21ba585acf772e445f4ab9d", null ],
+    [ "element_assembly", "group__Equation.html#ga3ab579500de8769de3b183cea42dce14", null ],
+    [ "side_assembly", "group__Equation.html#gae67cc928e5b6ad1298348b3de27e61f2", null ],
+    [ "side_assembly", "group__Equation.html#gaaee6ce61574dcd9923e54b97a2a60a87", null ],
+    [ "side_assembly", "group__Equation.html#gadb888bcd56b25d968de26cbe2330f050", null ],
+    [ "side_assembly", "group__Equation.html#ga09b2cd612110a8fb93417512cf2d141d", null ]
 ];

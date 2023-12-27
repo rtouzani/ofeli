@@ -80,8 +80,8 @@ int main(int argc, char *argv[])
          ts.setBC(1,"tanh(10*y)*(exp(t)-1)");
 
 //       Set pde terms for the heat equation
-         eq.set_10();
-         eq.set_02();
+         eq.setPDECoef(C10);
+         eq.setPDECoef(C02);
 
 //       Run the time step: The solution is stored in vector u
          ts.runOneTimeStep();

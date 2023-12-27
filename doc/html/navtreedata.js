@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "OFELI", "index.html", [
-    [ "Modules", "modules.html", "modules" ],
+    [ "Topics", "topics.html", "topics" ],
     [ "Namespace Members", "namespacemembers.html", [
       [ "All", "namespacemembers.html", "namespacemembers_dup" ],
       [ "Functions", "namespacemembers_func.html", "namespacemembers_func" ],
@@ -43,12 +43,11 @@ var NAVTREE =
         [ "Variables", "functions_vars.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
         [ "Enumerator", "functions_eval.html", null ],
-        [ "Related Functions", "functions_rela.html", null ]
+        [ "Related Symbols", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "File Members", "globals.html", [
       [ "All", "globals.html", null ],
-      [ "Typedefs", "globals_type.html", null ],
       [ "Enumerations", "globals_enum.html", null ],
       [ "Enumerator", "globals_eval.html", null ],
       [ "Macros", "globals_defs.html", null ]
@@ -58,28 +57,29 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"classOFELI_1_1DC2DT3.html#a190841f9068f20d5cd91c05451f5d06d",
-"classOFELI_1_1DSMatrix.html#a373b436e2bac687e3794bea128f69e99",
-"classOFELI_1_1EdgeList.html#abc3e92499595b690f4d4645e0163df96",
-"classOFELI_1_1Element.html#a45628b3145186a0b7cb844d9d4b9bf4a",
-"classOFELI_1_1Equa__Porous.html#a381ccce0928fbad840a57b054e7eb9b0",
-"classOFELI_1_1Figure.html#a740ca39646f05723f2f96ab62a232b36",
-"classOFELI_1_1ICPG3DT.html#a5b8af818f36967c7bd2c32ebf1994f0b",
-"classOFELI_1_1LCL3DT.html",
-"classOFELI_1_1LinearSolver.html#a2ffc285126a28fba1fa2d1c681f261cf",
-"classOFELI_1_1Material.html#aefe5b8a4ac082d0580c6350d1159c4e6",
-"classOFELI_1_1Mesh.html#ac035d942f03b755dc0d579abae913597",
-"classOFELI_1_1Muscl3DT.html",
-"classOFELI_1_1ODESolver.html#aa934ebccdb8f713e8fe079c8c7f2342d",
-"classOFELI_1_1Quad4.html#a3686dcc363945fc9705485b9200fa17e",
-"classOFELI_1_1SkSMatrix.html#a1440fb43bd9362adbd384a4288af3c9c",
-"classOFELI_1_1Triang3.html#a1cfa0bb751174eb2bb35e3b662d31415",
-"classOFELI_1_1Vect.html#abd742447a661c711a5a5d30244d09270",
-"group__Mesh.html#ga6623077f3ff9428e25bff64fbca84848",
-"group__OFELI.html#gafc7ec0aad8474cb94287d2cf4135861b",
-"group__Util.html#ga9521258cd402bc03434680840008d0ba",
-"structOFELI_1_1Point.html#a471500ba016dcd9a5c4664b21f7db080"
+"BMatrix_8h.html",
+"classOFELI_1_1BiotSavart.html#a00f113e94b3293722dc771c0cf134b81",
+"classOFELI_1_1DMatrix.html",
+"classOFELI_1_1EC2D1T3.html#a2037770b94084f7dc2089fe3c9f799e6",
+"classOFELI_1_1Elas2DT3.html#a8212309e844b62adb46c2414a95b95a9",
+"classOFELI_1_1Equa__Electromagnetics.html",
+"classOFELI_1_1Equation.html#a7503bc123551fd9f80fd41ae6d5af940",
+"classOFELI_1_1ICPG1D.html#aac2db55abd4847a6e578f47f17c61f93",
+"classOFELI_1_1IPF.html#ac0ea3036604869a38b62eab32cf7c4ab",
+"classOFELI_1_1LaplaceDG2DP1.html#aab2ca661840b8b0b504a193da13f89c1",
+"classOFELI_1_1LocalVect.html#a3c8308956518b689b591d524df71cb73",
+"classOFELI_1_1Mesh.html#a5750242d0acee0978dba9bf1261914cd",
+"classOFELI_1_1MeshAdapt.html#aa62c330442ea095207dc45d7daaa3528",
+"classOFELI_1_1Node.html#a48f131bb560f3d39a42a67f42dfef23a",
+"classOFELI_1_1Penta6.html#a370d6f43c91d2f4f8469a4b4f2c707a9",
+"classOFELI_1_1Side.html#ac089244b160bad5ca0e20e6f92cd2fef",
+"classOFELI_1_1TINS3DT4S.html#a557a93fc3a7a3e72dc95556446d26913",
+"classOFELI_1_1Vect.html#a40e372694e8ff67cfb2224b8dad767aa",
+"functions_func_h.html",
+"group__OFELI.html#ga417ee6ae3a4e5a6748df5c796a562f5c",
+"group__OFELI.html#ggacc6ad8472c2abfd2f63e100474b977f9ab2be0eb731e585ab86387902f0871ff1",
+"group__Util.html#gac5fe0746c6ea3e261528f8277ce0d5fa",
+"structOFELI_1_1Point2D.html#a4c803ac5c9a58584fcc3b3f20b98a126"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -10,7 +10,7 @@
 
   ------------------------------------------------------------------------------
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
       p.get(BOUNDARY_CONDITION,bc);
       p.get(SOURCE,bf);
       p.get(FLUX,sf);
+      bc = 1;
 
 //    Declare problem solution and instantiate equation
       Vect<double> u(ms);

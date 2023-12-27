@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -51,6 +51,7 @@ using std::string;
 #include "mesh/Node.h"
 #include "mesh/Element.h"
 #include "mesh/Side.h"
+#include "linear_algebra/Vect.h"
 
 namespace OFELI {
 /*!
@@ -209,6 +210,30 @@ class Grid
     void setN(size_t nx,
               size_t ny=0,
               size_t nz=0);
+
+/**
+ * \brief Set node x-coordinates of grid
+ * \details This function is to be used to define a nonuniform grid
+ * @param [in] x Vector of x-coordinates of nodes
+ */
+   void setX(const Vect<real_t>& x);
+
+/**
+ * \brief Set node x- and y-coordinates of grid
+ * \details This function is to be used to define a nonuniform grid
+ * @param [in] x Vector of x-coordinates of nodes
+ * @param [in] y Vector of y-coordinates of nodes
+ */
+   void setXY(const Vect<real_t>& x, const Vect<real_t>& y);
+
+/**
+ * \brief Set node x-, y- and z-coordinates of grid
+ * \details This function is to be used to define a nonuniform grid
+ * @param [in] x Vector of x-coordinates of nodes
+ * @param [in] y Vector of y-coordinates of nodes
+ * @param [in] z Vector of z-coordinates of nodes
+ */
+   void setXYZ(const Vect<real_t>& x, const Vect<real_t>& y, const Vect<real_t>& z);
 
 /// \brief Set number of degrees of freedom for a node [Default: <tt>1</tt>]
     void setNbDOF(size_t n);
@@ -384,11 +409,13 @@ class Grid
        { return _active[_n.y*_n.z*(i-1)+_n.z*(j-1)+k-1]; }
 
   private:
+    bool _uniform;
     size_t _dim, _nb_nodes, _nb_dof;
     Point<real_t> _xmin, _xmax, _h;
     Point<size_t> _n;
     Point<int> _cm, _cM;
-    vector<int> _active;
+    Vect<int> _active;
+    Vect<real_t> _x, _y, _z;
 };
 
 /** \fn ostream & operator<<(ostream& s, const Grid &g)

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -190,9 +190,7 @@ struct Point {
        real_t n=Norm();
        if (n==0)
           return;
-       x /= n;
-       y /= n;
-       z /= n;
+       x /= n, y /= n, z /= n;
     }
 
 /// \brief Return Director (Normalized vector)
@@ -221,7 +219,7 @@ struct Point {
        return (x*p.x + y*p.y + z*p.z);
     }
 
-/// \brief First coordinate
+/// \brief Point coordinates
     T_ x, y, z;
 
 };

@@ -49,14 +49,16 @@ int main(int argc, char *argv[])
    Mesh ms(0.,L,N,true,1,1,1,1);
    Vect<double> u(ms), f(ms), bc(ms);
 
-// Declare problem data (matrix, rhs, boundary conditions, body forces)
    try {
+//    Declare problem data (matrix, rhs, boundary conditions, body forces)
       f.set("(16*pi*pi+x)*sin(4*pi*x)");
       LinearPDE1D eq(ms,u);
-      eq.set_02();
-      eq.set_00("x");
+      eq.setPDECoef(C02,1.);
+      eq.setPDECoef(C00,"x");
       eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(SOURCE,f);
+
+//    Solve problem
       eq.run();
 
 //    Output solution and error

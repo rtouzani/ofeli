@@ -82,9 +82,9 @@ int main(int argc, char *argv[])
          ts.setRHS("sin(2*pi*x)*exp(-t)*(4*pi*pi-1)");
          ts.setBC(1,"0.");
 
-//       Set pde terms for the heat equation
-         eq.set_10();
-         eq.set_02();
+//       Set pde coefficients (=1) for the heat equation terms
+         eq.setPDECoef(C10);
+         eq.setPDECoef(C02);
 
 //       Run the time step: The solution is stored in vector u
          ts.runOneTimeStep();

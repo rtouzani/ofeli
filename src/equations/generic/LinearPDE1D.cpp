@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,6 +50,8 @@ LinearPDE1D::LinearPDE1D()
 LinearPDE1D::LinearPDE1D(Mesh& ms)
             : Equation<2,2,1,1>(ms)
 {
+   _equation_name = "Linear PDE";
+   _finite_element = "1-D, 2-Node Lines (P1)";
    _theMesh = &ms;
    setMatrixType(TRIDIAGONAL);
    setSolver(DIRECT_SOLVER);
@@ -62,6 +64,8 @@ LinearPDE1D::LinearPDE1D(Mesh&         ms,
                          Vect<real_t>& u)
             : Equation<2,2,1,1>(ms,u)
 {
+   _equation_name = "Linear PDE";
+   _finite_element = "1-D, 2-Node Lines (P1)";
    setMatrixType(TRIDIAGONAL);
    setSolver(DIRECT_SOLVER);
    _lump = true;

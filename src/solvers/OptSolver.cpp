@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -322,9 +322,8 @@ void OptSolver::setIneqConstraint(Fct&   f,
 {
    if (_theFct==nullptr)
       throw OFELIException("In OptSolver::setIneqConstraint(f,penal): setObjective must be called first");
-   string s = _theFct->expr + " + " + to_string(0.5*penal) + "*max(" + f.expr + ",0.)^2";
-   vector<string> var = _theFct->var;
-   _theFct->set(s,var);
+   string s = _theFct->getExpression() + " + " + to_string(0.5*penal) + "*max(" + f.getExpression() + ",0.)^2";
+   _theFct->set(s);
    _nb_in_const++;
 }
 
@@ -334,9 +333,8 @@ void OptSolver::setEqConstraint(Fct&   f,
 {
    if (_theFct==nullptr)
       throw OFELIException("In OptSolver::setEqConstraint(f,penal): setObjective must be called first");
-   string s = _theFct->expr + " + " + to_string(0.5*penal) + "*(" + f.expr + ")^2";
-   vector<string> var = _theFct->var;
-   _theFct->set(s,var);
+   string s = _theFct->getExpression() + " + " + to_string(0.5*penal) + "*(" + f.getExpression() + ")^2";
+   _theFct->set(s);
    _nb_eq_const++;
 }
 
@@ -346,9 +344,8 @@ void OptSolver::setIneqConstraint(string exp,
 {
    if (_theFct==nullptr)
       throw OFELIException("In OptSolver::setIneqConstraint(exp,penal): setObjective must be called first");
-   string s = _theFct->expr + " + " + to_string(0.5*penal) + "*max(" + exp + ",0.)^2";
-   vector<string> var = _theFct->var;
-   _theFct->set(s,var);
+   string s = _theFct->getExpression() + " + " + to_string(0.5*penal) + "*max(" + exp + ",0.)^2";
+   _theFct->set(s);
    _nb_in_const++;
 }
 
@@ -358,9 +355,8 @@ void OptSolver::setEqConstraint(string exp,
 {
    if (_theFct==nullptr)
       throw OFELIException("In OptSolver::setEqConstraint(exp,penal): setObjective must be called first");
-   string s = _theFct->expr + " + " + to_string(0.5*penal) + "*(" + exp + ")^2";
-   vector<string> var = _theFct->var;
-   _theFct->set(s,var);
+   string s = _theFct->getExpression() + " + " + to_string(0.5*penal) + "*(" + exp + ")^2";
+   _theFct->set(s);
    _nb_eq_const++;
 }
 

@@ -1,14 +1,17 @@
-var classOFELI_1_1Triangle =
+var classOFELI_1_1triangle =
 [
-    [ "Triangle", "classOFELI_1_1Triangle.html#a56e2160d21ceb4ff81a0c7dee1335dc7", null ],
-    [ "Triangle", "classOFELI_1_1Triangle.html#aecc1f3751955b2ab6b9b4fe942969727", null ],
-    [ "dLine", "classOFELI_1_1Triangle.html#a740ca39646f05723f2f96ab62a232b36", null ],
-    [ "getSignedDistance", "classOFELI_1_1Triangle.html#a2252be7c4949c4a2bd3ee24a4fdfd722", null ],
-    [ "getSignedDistance", "classOFELI_1_1Triangle.html#a59bcb59a9fd6e717fa480630c7d3b57a", null ],
-    [ "getSignedDistance", "classOFELI_1_1Triangle.html#a6c92f703c9cacfbfc0158713655d844a", null ],
-    [ "operator+=", "classOFELI_1_1Triangle.html#a40712cc582cf94c03cc1e30e8ab717fc", null ],
-    [ "operator+=", "classOFELI_1_1Triangle.html#aac06304fc37e96f1dd95a4724b6437be", null ],
-    [ "setVertex1", "classOFELI_1_1Triangle.html#a0ba1f49fcf3885160bfc0f96a76c8c74", null ],
-    [ "setVertex2", "classOFELI_1_1Triangle.html#a47212dd56493513e1b90d5d7f1478905", null ],
-    [ "setVertex3", "classOFELI_1_1Triangle.html#aa4f5e68d497201d1e12f30030a2efc00", null ]
+    [ "triangle", "classOFELI_1_1triangle.html#aee18579fe54e859a60b719481c024adb", null ],
+    [ "triangle", "classOFELI_1_1triangle.html#a1b9973d57f98cf47364d3831b011b610", null ],
+    [ "triangle", "classOFELI_1_1triangle.html#ad2a357d65aef4a524ae63a11801f9b12", null ],
+    [ "~triangle", "classOFELI_1_1triangle.html#aa90c33c4ab76e39be4b39f3eaaa232ef", null ],
+    [ "getArea", "classOFELI_1_1triangle.html#a6c6c22a4828902098b5e2d99309f74e9", null ],
+    [ "getCenter", "classOFELI_1_1triangle.html#a29518c54ba3a66576ee2859724fc88cd", null ],
+    [ "getCircumcenter", "classOFELI_1_1triangle.html#a308c380e011cbe1ad5b93d351b41ffdf", null ],
+    [ "getCircumRadius", "classOFELI_1_1triangle.html#a785f6dd02cd055fd0198900b139cb711", null ],
+    [ "getInRadius", "classOFELI_1_1triangle.html#afdd44adb228f1ffb8c6d270576cd4f79", null ],
+    [ "getMaxEdgeLength", "classOFELI_1_1triangle.html#a25ca31b393289f740e8ed58b06a30cd3", null ],
+    [ "getMinEdgeLength", "classOFELI_1_1triangle.html#a3b36d8923b27960cb53038075675ebaf", null ],
+    [ "getRefCoord", "classOFELI_1_1triangle.html#abff50ca550f56e9a0468549a7081df4c", null ],
+    [ "isIn", "classOFELI_1_1triangle.html#a97ecf0b3b6b8ff4a52dc88effc6e6067", null ],
+    [ "isStrictlyIn", "classOFELI_1_1triangle.html#af751dd4345c2727431fce3e2d2d20c24", null ]
 ];

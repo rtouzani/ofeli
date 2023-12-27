@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -59,9 +59,8 @@ NLASSolver::NLASSolver()
 NLASSolver::NLASSolver(NonLinearIter nl,
                        size_t        nb_eq)
            : _fct_allocated(false), _df_computed(false), _cv(false), _f_given(false), _df_given(false),
-             _u_set(false), _ab_given(false), _theEqua(nullptr), _max_it(100),
-             _fct_type(FUNCTION), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr),
-             _nb_eq(nb_eq), _nb_fct_def(0)
+             _u_set(false), _ab_given(false), _theEqua(nullptr), _max_it(100), _fct_type(FUNCTION), 
+             _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr), _nb_eq(nb_eq), _nb_fct_def(0)
 {
    set(nl);
 }
@@ -70,8 +69,9 @@ NLASSolver::NLASSolver(NonLinearIter nl,
 NLASSolver::NLASSolver(real_t&       x,
                        NonLinearIter nl)
            : _fct_allocated(false), _df_computed(false), _cv(false), _f_given(false), _df_given(false), 
-             _u_set(false), _ab_given(false), _theEqua(nullptr), _max_it(100), _nb_eq(1), _fct_type(FUNCTION),
-             _toler(1.e-8), _x(&x), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr), _nb_fct_def(0)
+             _u_set(false), _ab_given(false), _theEqua(nullptr), _max_it(100), _fct_type(FUNCTION),
+             _toler(1.e-8), _x(&x), _Df(nullptr), _theMesh(nullptr), _my_nlas(nullptr), _nb_eq(1),
+             _nb_fct_def(0)
 {
    set(nl);
 }
@@ -81,7 +81,8 @@ NLASSolver::NLASSolver(Vect<real_t>& u,
                        NonLinearIter nl)
            : _fct_allocated(false), _df_computed(false), _cv(false), _f_given(false), _df_given(false),
              _u_set(false),_ab_given(false), _theEqua(nullptr), _nl(int(nl)), _max_it(100),
-             _fct_type(FUNCTION), _u(&u), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr),  _nb_eq(u.size()), _nb_fct_def(0)
+             _fct_type(FUNCTION), _u(&u), _toler(1.e-8), _Df(nullptr), _theMesh(nullptr),  _nb_eq(u.size()),
+             _nb_fct_def(0)
 {
    _my_nlas = nullptr;
    _v.setSize(_nb_eq);
@@ -93,8 +94,8 @@ NLASSolver::NLASSolver(Vect<real_t>& u,
 NLASSolver::NLASSolver(MyNLAS&       my_nlas,
                        NonLinearIter nl)
            : _fct_allocated(false), _cv(false), _f_given(false), _df_given(false), _u_set(false),
-             _ab_given(false), _theEqua(nullptr), _nl(int(nl)), _max_it(100), _nb_eq(0), _fct_type(FUNCTION),
-             _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _nb_fct_def(0)
+             _ab_given(false), _theEqua(nullptr), _nl(int(nl)), _max_it(100), _fct_type(FUNCTION),
+             _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _nb_eq(0), _nb_fct_def(0)
 {
    _my_nlas = nullptr;
    set(nl);
@@ -195,7 +196,7 @@ void NLASSolver::setDf(Fct&   df,
    if (_nl!=NEWTON && _nl!=SECANT)
       throw OFELIException("In NLASSolver::setDf(Fct,i,j):\n"
                            "Providing the gradient is useless for the chosen algorithm.");
-   if (i<=0 || j>int(_nb_eq) || j>int(_nb_eq) || j<=0)
+   if (i==0 || j>_nb_eq || j>_nb_eq || j==0)
       throw OFELIException("In NLASSolver::setDf(Fct,i,j):\n"
                            "Index (" + to_string(i) + "," + to_string(j) + ") is out of bounds");
    _theDFct[_nb_eq*(i-1)+j-1] = &df;
@@ -219,7 +220,7 @@ void NLASSolver::setf(string exp)
    if (_nb_eq==1)
       var[0] = "x";
    else {
-      for (int j=0; j<_nb_eq; ++j)
+      for (size_t j=0; j<_nb_eq; ++j)
          var[j] = "x" + to_string(j+1);
    }
    _theFct[_nb_fct_def++] = new Fct(exp,var);
@@ -228,23 +229,24 @@ void NLASSolver::setf(string exp)
 
 
 void NLASSolver::setDf(string exp,
-                       int    i,
-                       int    j)
+                       size_t i,
+                       size_t j)
 {
    if (_f_given==false)
       throw OFELIException("In NLASSolver::setDf(exp,i,j):\nFunction must be given first.");
    if (_nl!=NEWTON && _nl!=SECANT)
       throw OFELIException("In NLASSolver::setDf(exp,i,j):\n"
                            "Providing the gradient is useless for the chosen algorithm.");
-   if (i<=0 || j>int(_nb_eq) || j>int(_nb_eq) || j<=0)
+   if (i==0 || j>_nb_eq || j>_nb_eq || j==0)
       throw OFELIException("In NLASSolver::setDf(exp,i,j):\n"
                            "Index (" + to_string(i) + "," + to_string(j) + ") is out of bounds");
    vector<string> var(_nb_eq);
    if (_nb_eq==1)
       var[0] = "x";
-   else
-      for (int j=0; j<_nb_eq; ++j)
+   else {
+      for (size_t j=0; j<_nb_eq; ++j)
          var[j] = "x" + to_string(j+1);
+   }
    _theDFct[_nb_eq*(i-1)+j-1] = new Fct(exp,var);
    _fct_allocated = true;
    _df_computed = false;
@@ -325,8 +327,8 @@ real_t NLASSolver::Gradient(real_t x)
 
 
 void NLASSolver::Gradient(const Vect<real_t>& x,
-                          int                 i,
-                          int                 j)
+                          size_t              i,
+                          size_t              j)
 {
    if (_fct_type==EXPRESSION) {
       if (_df_computed)
@@ -467,15 +469,15 @@ void NLASSolver::solveSecant()
    else {
       Vect<real_t> b(_nb_eq);
       _Df = new DMatrix<real_t>(_nb_eq);
-      for (int i=1; i<=_nb_eq; ++i) {
+      for (size_t i=1; i<=_nb_eq; ++i) {
          b(i) = -Function(*_u,i);
-         for (int j=1; j<=_nb_eq; j++)
+         for (size_t j=1; j<=_nb_eq; j++)
             Gradient(*_u,i,j);
       }
       while (++_it < _max_it) {
-         for (int i=1; i<=_nb_eq; ++i) {
+         for (size_t i=1; i<=_nb_eq; ++i) {
             b(i) = -Function(*_u,i);
-            for (int j=1; j<=_nb_eq; j++)
+            for (size_t j=1; j<=_nb_eq; j++)
                Gradient(*_u,i,j);
          }
          _Df->solve(b,_v);
@@ -535,9 +537,9 @@ void NLASSolver::solveNewton()
       Vect<real_t> b(_nb_eq);
       while (++_it < _max_it) {
          _Df->reset();
-         for (int i=1; i<=_nb_eq; ++i) {
+         for (size_t i=1; i<=_nb_eq; ++i) {
             b(i) = -Function(*_u,i);
-            for (int j=1; j<=_nb_eq; j++)
+            for (size_t j=1; j<=_nb_eq; j++)
                Gradient(*_u,i,j);
          }
          _Df->solve(b,_v);

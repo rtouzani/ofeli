@@ -46,6 +46,9 @@ var classOFELI_1_1Grid =
     [ "setDomain", "group__OFELI.html#ga0c6c8c9cf29134901b832311148f2b64", null ],
     [ "setN", "group__OFELI.html#gad6b564dcefa010a74d10ae72d42fb432", null ],
     [ "setNbDOF", "group__OFELI.html#gadb53c731048031345289f952f71209f6", null ],
+    [ "setX", "group__OFELI.html#ga39a572506205e17b5459af94ac724fca", null ],
     [ "setXMax", "group__OFELI.html#ga5cd060d87716f96df1fe751da2458ab1", null ],
-    [ "setXMin", "group__OFELI.html#ga9f65f5226354bc55b1419cfec3c8bf84", null ]
+    [ "setXMin", "group__OFELI.html#ga9f65f5226354bc55b1419cfec3c8bf84", null ],
+    [ "setXY", "group__OFELI.html#ga7482fc5e189c21ccd803852742b441b3", null ],
+    [ "setXYZ", "group__OFELI.html#gacbaf13c4c8f77a9bb95c2e003d477174", null ]
 ];

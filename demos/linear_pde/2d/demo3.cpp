@@ -81,8 +81,8 @@ int main(int argc, char *argv[])
          ts.setBC(1,"1.");
 
 //       Set pde terms for the heat equation
-         eq.set_20();
-         eq.set_02();
+         eq.setPDECoef(C20);
+         eq.setPDECoef(C02);
 
 //       Run the time step: The solution is stored in vector u
          ts.runOneTimeStep();

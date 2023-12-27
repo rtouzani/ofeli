@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -56,9 +56,8 @@ IOField::IOField(const string& file,
    _is_opened = false;
    _ipf = nullptr;
    _set_mesh = false;
-   _set_field = true;
+   _set_vector = true;
    _set_file = true;
-   _scan = false;
    _nb_dof = 1;
    _dof_support = NONE;
    _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
@@ -80,9 +79,8 @@ IOField::IOField(const string& file,
    _is_opened = false;
    _ipf = nullptr;
    _set_mesh = false;
-   _set_field = true;
+   _set_vector = true;
    _set_file = true;
-   _scan = false;
    _nb_dof = 1;
    _dof_support = NONE;
    _nb_nodes = _nb_elements = _nb_sides = _nb_edges = 0;
@@ -105,9 +103,8 @@ IOField::IOField(const string& mesh_file,
    _is_opened = false;
    _ipf = nullptr;
    _set_mesh = true;
-   _set_field = true;
+   _set_vector = true;
    _set_file = true;
-   _scan = false;
    _nb_dof = 1;
    _dof_support = NODE_DOF;
    _nb_nodes = _theMesh->getNbNodes();
@@ -134,9 +131,8 @@ IOField::IOField(const string& file,
    _is_opened = false;
    _ipf = nullptr;
    _set_mesh = true;
-   _set_field = true;
+   _set_vector = true;
    _set_file = true;
-   _scan = false;
    _nb_dof = 1;
    _dof_support = NODE_DOF;
    _nb_nodes = _theMesh->getNbNodes();

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
    This file is part of OFELI.
    OFELI is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -635,6 +635,19 @@ inline char itoc(int i)
 }
 
 
+/** \fn string toString(const T_ x)
+ *  \ingroup Util
+ *  \brief Function to convert any value to a string
+ */
+template <class T_>
+std::string toString(const T_ x)
+{
+   std::stringstream s;
+   s << x;
+   return s.str();
+}
+
+
 /** \fn T_ stringTo(const std::string& s)
  *  \ingroup Util
  *  \brief Function to convert a string to a template type parameter.
@@ -738,6 +751,7 @@ static inline std::string& trim(std::string& str, const std::string& chars = "\t
    return ltrim(rtrim(str, chars), chars);
 }
 
+
 inline int MaxQuad(const real_t& a, const real_t& b, const real_t& c, real_t& x)
 {
    real_t d = b*b - a*c;
@@ -747,6 +761,32 @@ inline int MaxQuad(const real_t& a, const real_t& b, const real_t& c, real_t& x)
    x = fmax((-b-d)/a,(-b+d)/a);
    return 0;
 }
+
+
+inline std::string sstring(real_t x)
+{
+   std::string sgn = " + ";
+   if (x<0.)
+      sgn = " - ";
+   return (sgn + toString(fabs(x)));
+}
+
+
+inline std::string MonomialExpression(real_t a, string p, int k=0)
+{
+   string st="", s=" + ";
+   if (a==0.0)
+      return st;
+   if (k==0)
+      s = "";
+   if (a<0. && k>0) {
+      s = " - ";
+      a = fabs(a);
+   }
+   st = s + toString(a) + "*" + p;
+   return st;
+}
+
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */

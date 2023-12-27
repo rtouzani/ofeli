@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -211,8 +211,8 @@ class NLASSolver
  *  @param [in] j Index of the partial derivative [Default: <tt>=1</tt>]
  */
     void setDf(string exp,
-               int    i=1,
-               int    j=1);
+               size_t i=1,
+               size_t j=1);
 
 /** \brief Define a PDE
  *  \details The solver can be used to solve a nonlinear PDE. In this case, the PDE is
@@ -287,7 +287,7 @@ private:
 
    real_t Function(const Vect<real_t>& u, int i=1);
    real_t Function(real_t x);
-   void Gradient(const Vect<real_t>& u, int i=1, int j=1);
+   void Gradient(const Vect<real_t>& u, size_t i=1, size_t j=1);
    real_t Gradient(real_t x);
    void solveBisection();
    void solveRegulaFalsi();

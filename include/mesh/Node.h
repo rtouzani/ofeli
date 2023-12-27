@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -79,8 +79,7 @@ class Mesh;
  * reasons.
  */
 
-
-class Node
+ class Node
 {
 
  public:

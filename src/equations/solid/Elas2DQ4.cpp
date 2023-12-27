@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -96,6 +96,7 @@ void Elas2DQ4::set(const Element* el)
    if (_poisson_set)
       _poisson = _poisson_fct(_el_geo.center,_TimeInt.time);
    eA0 = 0, eA1 = 0, eA2 = 0;
+   eMat = 0;
    eRHS = 0;
 }
 
@@ -194,6 +195,7 @@ void Elas2DQ4::Deviator(real_t coef)
          }
       }
    }
+   eMat += eA0;
 }
 
 
@@ -212,6 +214,7 @@ void Elas2DQ4::Dilatation(real_t coef)
          }
       }
    }
+   eMat += eA0;
 }
 
 

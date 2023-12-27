@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -620,15 +620,15 @@ class Mesh
 
 /// \brief Initialize list of mesh nodes using the input vector
 /// @param [in] nl vector instance that contains the list of pointers to nodes
-    void setList(const std::vector<Node *>& nl);
+    void setList(const vector<Node *>& nl);
 
 /// \brief Initialize list of mesh elements using the input vector
 /// @param [in] el vector instance that contains the list of pointers to elements
-    void setList(const std::vector<Element *>& el);
+    void setList(const vector<Element *>& el);
 
 /// \brief Initialize list of mesh sides using the input vector
 /// @param [in] sl vector instance that contains the list of pointers to sides
-    void setList(const std::vector<Side *>& sl);
+    void setList(const vector<Side *>& sl);
 
 /** \brief Rescale mesh by multiplying node coordinates by constants
  *  \details This function can be used e.g. for changing coordinate units
@@ -967,10 +967,10 @@ class Mesh
     int getShape() const;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    std::vector<Node *>    theNodes, theBoundaryNodes, theMarkedNodes;
-    std::vector<Element *> theElements;
-    std::vector<Side *>    theSides, theBoundarySides, theInternalSides;
-    std::vector<Edge *>    theEdges, theBoundaryEdges;
+    vector<Node *>    theNodes, theBoundaryNodes, theMarkedNodes;
+    vector<Element *> theElements;
+    vector<Side *>    theSides, theBoundarySides, theInternalSides;
+    vector<Edge *>    theEdges, theBoundaryEdges;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
  
 //---------------------------------  OPERATORS  --------------------------------

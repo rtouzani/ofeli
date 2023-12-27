@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -90,7 +90,8 @@ Mesh::Mesh(const string& file,
            int           opt,
            int           nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0), _dim(2),
-       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0), _no_imposed_dof(bc),
+       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0), _set_nodes(true), _set_sides(false),
+       _set_elements(false), _set_edges(false), _no_imposed_dof(bc),
        _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false)
@@ -103,8 +104,6 @@ Mesh::Mesh(const string& file,
       ff = GNUPLOT;
    else
       ff = OFELI_FF;
-   _set_nodes = true;
-   _set_sides = _set_edges = _set_elements = false;
    get(file,ff,nb_dof);
    string mat = theMaterial.getName(1);
 }
@@ -112,13 +111,14 @@ Mesh::Mesh(const string& file,
 
 Mesh::Mesh(real_t xmax,
            size_t nb_el,
-	   bool   bc,
+           bool   bc,
            size_t p,
            size_t nb_dof,
            int    c1,
            int    c2)
      : _nb_nodes(0), _nb_boundary_nodes(2), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0),
        _nb_edges(0), _dim(1), _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0),
+       _set_nodes(true), _set_sides(false), _set_elements(false), _set_edges(false),
        _no_imposed_dof(bc), _is_structured(false), _all_sides_created(false),
        _boundary_sides_created(false), _all_edges_created(false), _boundary_edges_created(false),
        _boundary_nodes_created(false), _node_neighbor_elements_created(false),
@@ -131,13 +131,14 @@ Mesh::Mesh(real_t xmax,
 Mesh::Mesh(real_t xmin,
            real_t xmax,
            size_t nb_el,
-	   bool   bc,
+           bool   bc,
            size_t p,
            size_t nb_dof,
            int    c1,
            int    c2)
      : _nb_nodes(0), _nb_boundary_nodes(2), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0),
        _nb_edges(0), _dim(1), _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(0),
+       _set_nodes(true), _set_sides(false), _set_elements(false), _set_edges(false),
        _no_imposed_dof(bc), _is_structured(false), _all_sides_created(false),
        _boundary_sides_created(false), _all_edges_created(false), _boundary_edges_created(false),
        _boundary_nodes_created(false), _node_neighbor_elements_created(false),
@@ -150,14 +151,14 @@ Mesh::Mesh(real_t xmin,
 Mesh::Mesh(const Grid& g,
            int         opt)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0), _dim(3),
-       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), _no_imposed_dof(false),
+       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), 
+       _set_nodes(true), _set_sides(false), _set_elements(false), _set_edges(false), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false)
 {
    Node *nd;
    Element *el;
-   size_t i, j, k;
    size_t nx=g.getNx(), ny=g.getNy(), nz=g.getNz();
    Vect<size_t> nn;
    setNodesForDOF();
@@ -175,7 +176,7 @@ Mesh::Mesh(const Grid& g,
       case 1:
          nn.setSize(nx+1);
          nn = 0;
-         for (i=1; i<=nx+1; i++) {
+         for (size_t i=1; i<=nx+1; ++i) {
             nn(i) = ++n;
             nd = new Node(nn(i),g.getCoord(i));
             _code[0] = g.getCode(i);
@@ -189,21 +190,21 @@ Mesh::Mesh(const Grid& g,
       case 2:
          nn.setSize(nx+1,ny+1);
          nn = 0;
-         for (i=1; i<=nx; i++) {
-            for (j=1; j<=ny; j++) {
+         for (size_t i=1; i<=nx; ++i) {
+            for (size_t j=1; j<=ny; ++j) {
                if (g.isActive(i,j))
                   nn(i,j) = nn(i+1,j) = nn(i+1,j+1) = nn(i,j+1) = 1;
             }
          }
          m = 0;
-         for (i=1; i<=nx+1; i++) {
-            for (j=1; j<=ny+1; j++) {
+         for (size_t i=1; i<=nx+1; ++i) {
+            for (size_t j=1; j<=ny+1; ++j) {
                if (nn(i,j))
                   nn(i,j) = ++m;
             }
          }
-         for (i=1; i<=nx+1; i++) {
-            for (j=1; j<=ny+1; j++) {
+         for (size_t i=1; i<=nx+1; ++i) {
+            for (size_t j=1; j<=ny+1; ++j) {
                if (nn(i,j)) {
                   nd = new Node(++n,g.getCoord(i,j));
                   _code[0] = g.getCode(i,j);
@@ -219,9 +220,9 @@ Mesh::Mesh(const Grid& g,
       case 3:
          nn.setSize(nx+1,ny+1,nz+1);
          nn = 0;
-         for (i=1; i<=nx; i++) {
-            for (j=1; j<=ny; j++) {
-               for (k=1; k<=nz; k++) {
+         for (size_t i=1; i<=nx; ++i) {
+            for (size_t j=1; j<=ny; ++j) {
+               for (size_t k=1; k<=nz; ++k) {
                   if (g.isActive(i,j,k)) {
                      nn(i  ,j,k) = nn(i  ,j,k+1) = nn(i  ,j+1,k) = nn(i  ,j+1,k+1) = 1;
                      nn(i+1,j,k) = nn(i+1,j,k+1) = nn(i+1,j+1,k) = nn(i+1,j+1,k+1) = 1;
@@ -230,17 +231,17 @@ Mesh::Mesh(const Grid& g,
             }
          }
          m = 0;
-         for (i=1; i<=nx+1; i++) {
-            for (j=1; j<=ny+1; j++) {
-               for (k=1; k<=nz+1; k++) {
+         for (size_t i=1; i<=nx+1; ++i) {
+            for (size_t j=1; j<=ny+1; ++j) {
+               for (size_t k=1; k<=nz+1; ++k) {
                   if (nn(i,j,k))
                      nn(i,j,k) = ++m;
                }
             }
          }
-         for (i=1; i<=nx+1; i++) {
-            for (j=1; j<=ny+1; j++) {
-               for (k=1; k<=nz+1; k++) {
+         for (size_t i=1; i<=nx+1; ++i) {
+            for (size_t j=1; j<=ny+1; ++j) {
+               for (size_t k=1; k<=nz+1; ++k) {
                   if (nn(i,j,k)) {
                      nd = new Node(++n,g.getCoord(i,j,k));
                      _code[0] = g.getCode(i,j,k);
@@ -260,7 +261,7 @@ Mesh::Mesh(const Grid& g,
    switch (_dim) {
 
       case 1:
-         for (i=1; i<=nx; i++) {
+         for (size_t i=1; i<=nx; ++i) {
             el = new Element(++ne,LINE,1);
             el->Add(theNodes[i-1]);
             el->Add(theNodes[i]);
@@ -270,8 +271,8 @@ Mesh::Mesh(const Grid& g,
 
       case 2:
          if (opt==QUADRILATERAL) {
-            for (j=1; j<=ny; j++) {
-               for (i=1; i<=nx; i++) {
+            for (size_t j=1; j<=ny; ++j) {
+               for (size_t i=1; i<=nx; ++i) {
                   if (g.isActive(i,j)) {
                      el = new Element(++ne,QUADRILATERAL,1);
                      el->Add(theNodes[nn(i  ,j  )-1]);
@@ -284,8 +285,8 @@ Mesh::Mesh(const Grid& g,
             }
          }
          else if (opt==TRIANGLE) {
-           for (i=1; i<=nx; i++) {
-               for (j=1; j<=ny; j++) {
+           for (size_t i=1; i<=nx; ++i) {
+               for (size_t j=1; j<=ny; ++j) {
                   if (g.isActive(i,j)) {
                      el = new Element(++ne,TRIANGLE,1);
                      el->Add(theNodes[nn(i  ,j  )-1]);
@@ -305,9 +306,9 @@ Mesh::Mesh(const Grid& g,
 
       case 3:
          if (opt==HEXAHEDRON) {
-            for (k=1; k<=nz; k++) {
-               for (j=1; j<=ny; j++) {
-                  for (i=1; i<=nx; i++) {
+            for (size_t k=1; k<=nz; ++k) {
+               for (size_t j=1; j<=ny; ++j) {
+                  for (size_t i=1; i<=nx; ++i) {
                      if (g.isActive(i,j,k)) {
                         the_element = new Element(++ne,HEXAHEDRON,1);
                         The_element.Add(theNodes[nn(i  ,j  ,k  )-1]);
@@ -336,12 +337,13 @@ Mesh::Mesh(const Grid& g,
            int         shape,
            int         opt)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0),
-       _dim(3), _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), _no_imposed_dof(false),
+       _dim(3), _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1),
+       _set_nodes(true), _set_sides(false), _set_elements(false), _set_edges(false), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false)
 {
-   size_t i, j, k, n1, n2;
+   size_t n1, n2;
    size_t nx=g.getNx(), ny=g.getNy(), nz=g.getNz();
    setNodesForDOF();
    size_t n=0, ne=0;
@@ -357,7 +359,7 @@ Mesh::Mesh(const Grid& g,
    switch (_dim) {
 
       case 1:
-         for (i=1; i<=nx; i++) {
+         for (size_t i=1; i<=nx; ++i) {
             Point<real_t> x = 0.5*(g.getCoord(i)+g.getCoord(i+1));
             the_node = new Node(++n,x);
             _code[0] = g.getCode(i);
@@ -369,9 +371,9 @@ Mesh::Mesh(const Grid& g,
          break;
 
       case 2:
-         for (i=1; i<=nx; i++) {
-            for (j=1; j<=ny; j++) {
-              Point<real_t> x = 0.5*(g.getCoord(i,j)+g.getCoord(i+1,j+1));
+         for (size_t i=1; i<=nx; ++i) {
+            for (size_t j=1; j<=ny; ++j) {
+               Point<real_t> x = 0.5*(g.getCoord(i,j)+g.getCoord(i+1,j+1));
                the_node = new Node(++n,x);
                _code[0] = g.getCode(i,j);
                The_node.setNbDOF(1);
@@ -383,9 +385,9 @@ Mesh::Mesh(const Grid& g,
          break;
 
       case 3:
-         for (i=1; i<=nx; i++) {
-            for (j=1; j<=ny; j++) {
-               for (k=1; k<=nz; k++) {
+         for (size_t i=1; i<=nx; ++i) {
+            for (size_t j=1; j<=ny; ++j) {
+               for (size_t k=1; k<=nz; ++k) {
                  Point<real_t> x = 0.5*(g.getCoord(i,j,k)+g.getCoord(i+1,j+1,k+1));
                   the_node = new Node(++n,x);
                   _code[0] = g.getCode(i,j,k);
@@ -405,7 +407,7 @@ Mesh::Mesh(const Grid& g,
    switch (_dim) {
 
       case 1:
-         for (i=1; i<=nx-1; i++) {
+         for (size_t i=1; i<=nx-1; ++i) {
             the_element = new Element(++ne,LINE,1);
             The_element.Add(theNodes[i-1]);
             The_element.Add(theNodes[i]);
@@ -415,8 +417,8 @@ Mesh::Mesh(const Grid& g,
 
       case 2:
          if (shape==QUADRILATERAL) {
-            for (j=1; j<=ny-1; j++) {
-               for (i=1; i<=nx-1; i++) {
+            for (size_t j=1; j<=ny-1; ++j) {
+               for (size_t i=1; i<=nx-1; ++i) {
                   n1 = nn + i - 1;
                   the_element = new Element(++ne,QUADRILATERAL,1);
                   The_element.Add(theNodes[n1-1]);
@@ -429,8 +431,8 @@ Mesh::Mesh(const Grid& g,
             }
          }
          else if (shape==TRIANGLE) {
-            for (i=1; i<=nx-1; i++) {
-               for (j=1; j<=ny-1; j++) {
+            for (size_t i=1; i<=nx-1; ++i) {
+               for (size_t j=1; j<=ny-1; ++j) {
                   n1 = nn + i - 1;
                   the_element = new Element(++ne,TRIANGLE,1);
                   The_element.Add(theNodes[n1-1]);
@@ -450,9 +452,9 @@ Mesh::Mesh(const Grid& g,
 
       case 3:
          if (shape==HEXAHEDRON) {
-            for (k=1; k<=nz-1; k++) {
-               for (j=1; j<=ny-1; j++) {
-                  for (i=1; i<=nx-1; i++) {
+            for (size_t k=1; k<=nz-1; ++k) {
+               for (size_t j=1; j<=ny-1; ++j) {
+                  for (size_t i=1; i<=nx-1; ++i) {
                      n1 = nn + i - 1;
                      n2 = n1 + (nx+1)*(ny+1);
                      the_element = new Element(++ne,HEXAHEDRON,1);
@@ -487,7 +489,8 @@ Mesh::Mesh(real_t xmin,
            int    p,
            size_t nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0), _dim(1),
-       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), _no_imposed_dof(false),
+       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), _set_nodes(true), _set_sides(false),
+       _set_elements(false), _set_edges(false), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false)
@@ -554,7 +557,8 @@ Mesh::Mesh(real_t xmin,
            int    opt,
            size_t nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0), _dim(2),
-       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), _no_imposed_dof(false), _is_structured(true),
+       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), _set_nodes(true), _set_sides(false),
+       _set_elements(false), _set_edges(false), _no_imposed_dof(false), _is_structured(true),
        _all_sides_created(false), _boundary_sides_created(false), _all_edges_created(false),
        _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false)
@@ -565,9 +569,9 @@ Mesh::Mesh(real_t xmin,
    Point<real_t> x(xmin,ymin);
    real_t hx=(xmax-xmin)/nx, hy=(ymax-ymin)/ny;
 
-   for (size_t i=0; i<=nx; i++) {
+   for (size_t i=0; i<=nx; ++i) {
       x.y = ymin;
-      for (size_t j=0; j<=ny; j++) {
+      for (size_t j=0; j<=ny; ++j) {
          n++;
          the_node = new Node(n,x);
          The_node.setNbDOF(nb_dof);
@@ -619,7 +623,7 @@ Mesh::Mesh(real_t xmin,
    size_t is=1;
    n =  1;
    if (cx0<0) {
-      for (size_t j=1; j<=ny; j++) {
+      for (size_t j=1; j<=ny; ++j) {
          the_side = new Side(is++,LINE);
          The_side.Add(getPtrNode(n));
          The_side.Add(getPtrNode(n+1));
@@ -631,7 +635,7 @@ Mesh::Mesh(real_t xmin,
    }
    n = nx*(ny+1) + 1;
    if (cxN<0) {
-      for (size_t j=1; j<=ny; j++) {
+      for (size_t j=1; j<=ny; ++j) {
          the_side = new Side(is++,LINE);
          The_side.Add(getPtrNode(n));
          The_side.Add(getPtrNode(n+1));
@@ -643,7 +647,7 @@ Mesh::Mesh(real_t xmin,
    }
    n = 1;
    if (cy0<0) {
-      for (size_t i=1; i<=nx; i++) {
+      for (size_t i=1; i<=nx; ++i) {
          the_side = new Side(is++,LINE);
          The_side.Add(getPtrNode(n));
          The_side.Add(getPtrNode(n+ny+1));
@@ -655,7 +659,7 @@ Mesh::Mesh(real_t xmin,
    }
    n = ny + 1;
    if (cyN<0) {
-      for (size_t i=1; i<=nx; i++) {
+      for (size_t i=1; i<=nx; ++i) {
          the_side = new Side(is++,LINE);
          The_side.Add(getPtrNode(n));
          The_side.Add(getPtrNode(n+ny+1));
@@ -689,7 +693,8 @@ Mesh::Mesh(real_t xmin,
            int    opt,
            size_t nb_dof)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0), _dim(3),
-       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), _no_imposed_dof(false),
+       _nb_dof(0), _nb_vertices(0), _first_dof(1), _nb_mat(1), _set_nodes(true), _set_sides(false),
+       _set_elements(false), _set_edges(false), _no_imposed_dof(false),
        _is_structured(true), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false)
@@ -726,15 +731,15 @@ Mesh::Mesh(real_t xmin,
 
    n = 0;
    size_t ne=0, nn=(nx+1)*(ny+1);
-   for (size_t k=1; k<=nz; k++) {
-      for (size_t j=1; j<=ny; j++) {
+   for (size_t k=1; k<=nz; ++k) {
+      for (size_t j=1; j<=ny; ++j) {
          for (size_t i=1; i<=nx; i++) {
             Node *nd[8] = { theNodes[n], theNodes[n+1], theNodes[n+nx+2], theNodes[n+nx+1],
                             theNodes[n+nn], theNodes[n+nn+1], theNodes[n+nn+nx+2],
                             theNodes[n+nn+nx+1] };
             if (opt==HEXAHEDRON) {
                the_element = new Element(++ne,HEXAHEDRON,1);
-               for (size_t i=0; i<8; i++)
+               for (size_t i=0; i<8; ++i)
                   The_element.Add(nd[i]);
                n++;
                Add(the_element);
@@ -776,7 +781,7 @@ Mesh::Mesh(real_t xmin,
 
    size_t is=1;
    n = 1;
-   for (size_t j=1; j<=ny; j++) {
+   for (size_t j=1; j<=ny; ++j) {
       the_side = new Side(is++,LINE);
       The_side.Add(getPtrNode(n));
       The_side.Add(getPtrNode(n+1));
@@ -788,7 +793,7 @@ Mesh::Mesh(real_t xmin,
       }
    }
    n = nx*(ny+1) + 1;
-   for (size_t j=1; j<=ny; j++) {
+   for (size_t j=1; j<=ny; ++j) {
       the_side = new Side(is++,LINE);
       The_side.Add(getPtrNode(n));
       The_side.Add(getPtrNode(n+1));
@@ -800,7 +805,7 @@ Mesh::Mesh(real_t xmin,
       }
    }
    n = 1;
-   for (size_t i=1; i<=nx; i++) {
+   for (size_t i=1; i<=nx; ++i) {
       the_side = new Side(is++,LINE);
       The_side.Add(getPtrNode(n));
       The_side.Add(getPtrNode(n+ny+1));
@@ -812,7 +817,7 @@ Mesh::Mesh(real_t xmin,
       }
    }
    n = ny + 1;
-   for (size_t i=1; i<=nx; i++) {
+   for (size_t i=1; i<=nx; ++i) {
       the_side = new Side(is++,LINE);
       The_side.Add(getPtrNode(n));
       The_side.Add(getPtrNode(n+ny+1));
@@ -837,7 +842,8 @@ Mesh::Mesh(const Mesh& ms)
        _nb_vertices(ms._nb_vertices), _first_dof(ms._first_dof), _nb_eq(ms._nb_eq),
        _nb_mat(ms._nb_mat), _max_nb_nodes(ms._max_nb_nodes), _max_nb_elements(ms._max_nb_elements),
        _max_nb_sides(ms._max_nb_sides), _max_nb_edges(ms._max_nb_edges),
-       _no_imposed_dof(ms._no_imposed_dof), _is_structured(ms._is_structured),
+       _set_nodes(ms._set_nodes), _set_sides(ms._set_sides), _set_elements(ms._set_elements),
+       _set_edges(ms._set_edges), _no_imposed_dof(ms._no_imposed_dof), _is_structured(ms._is_structured),
        _all_sides_created(ms._all_sides_created), _boundary_sides_created(ms._boundary_sides_created),
        _all_edges_created(ms._all_edges_created), _boundary_edges_created(ms._boundary_edges_created),
        _boundary_nodes_created(ms._boundary_nodes_created),
@@ -880,7 +886,7 @@ Mesh::Mesh(const Mesh& ms)
    }
 
    _nb_mat = ms._nb_mat;
-   for (size_t k=0; k<_nb_mat; k++) {
+   for (size_t k=0; k<_nb_mat; ++k) {
       _code_mat[k] = ms._code_mat[k];
       _mat[k] = ms._mat[k];
    }
@@ -895,7 +901,8 @@ Mesh::Mesh(const Mesh&          m,
            const Point<real_t>& x_bl,
            const Point<real_t>& x_tr)
      : _nb_nodes(0), _nb_elements(0), _nb_sides(0), _nb_boundary_sides(0), _nb_edges(0), _dim(2), _nb_dof(0),
-       _nb_vertices(0), _first_dof(1), _nb_mat(1), _no_imposed_dof(false),
+       _nb_vertices(0), _first_dof(1), _nb_mat(1), _set_nodes(true), _set_sides(false), _set_elements(false),
+       _set_edges(false), _no_imposed_dof(false),
        _is_structured(false), _all_sides_created(false), _boundary_sides_created(false),
        _all_edges_created(false), _boundary_edges_created(false), _boundary_nodes_created(false),
        _node_neighbor_elements_created(false), _element_neighbor_elements_created(false)
@@ -926,7 +933,7 @@ Mesh::Mesh(const Mesh&          m,
    label = 1;
    element_loop(&m) {
       size_t in=0;
-      for (size_t i=1; i<=the_element->getNbNodes(); i++) {
+      for (size_t i=1; i<=the_element->getNbNodes(); ++i) {
          Point<real_t> a = (*the_element)(i)->getCoord();
          if (a.x>=x_bl.x && a.y>=x_bl.y && a.x<=x_tr.x && a.y <= x_tr.y)
             in++;
@@ -935,7 +942,7 @@ Mesh::Mesh(const Mesh&          m,
          Element *el = new Element(*the_element);
          el->setLabel(label++);
          _element_old_label[el->n()-1] = element_label;
-         for (size_t i=1; i<=el->getNbNodes(); i++)
+         for (size_t i=1; i<=el->getNbNodes(); ++i)
             el->Replace(i,getPtrNode(_node_new_label[el->getNodeLabel(i)-1]));
          Add(el);
       }
@@ -970,7 +977,7 @@ Mesh::Mesh(const Mesh& mesh,
       node_loop(&mesh) {
          nd = new Node(The_node);
          nd->setNbDOF(nb_dof);
-         for (size_t i=0; i<nb_dof; i++)
+         for (size_t i=0; i<nb_dof; ++i)
             nd->setCode(i+1,the_node->getCode(dof1+i));
          nd->setDOF(_first_dof,nb_dof);
          Add(nd);
@@ -984,7 +991,7 @@ Mesh::Mesh(const Mesh& mesh,
    if (opt==SIDE_DOF) {
       side_loop(&mesh) {
          sd = new Side(The_side);
-         for (size_t i=0; i<nb_dof; i++)
+         for (size_t i=0; i<nb_dof; ++i)
             sd->setCode(i+1,the_side->getCode(dof1+i));
          sd->setDOF(_first_dof,nb_dof);
          Add(sd);
@@ -1002,22 +1009,6 @@ Mesh::~Mesh()
 {
    if (Verbosity>5)
       cout << "Removing Mesh instance ..." << endl;
-   /*   for (size_t i=0; i<_nodes.size(); i++) {
-      if (_nodes[i])
-         delete _nodes[i];
-   }
-   for (size_t i=0; i<_elements.size(); i++) {
-      if (_elements[i])
-         delete _elements[i];
-   }
-   for (size_t i=0; i<Sides.size(); i++) {
-      if (Sides[i])
-         delete Sides[i];
-   }
-   for (size_t i=0; i<_edges.size(); i++) {
-      if (_edges[i])
-         delete _edges[i];
-         }*/
 }
 
 
@@ -1030,17 +1021,15 @@ void Mesh::set1D(real_t xmin,
                  int    c2)
 {
    size_t NbN = nb_el*p + 1;
-   _set_nodes = true;
-   _set_sides = _set_edges = _set_elements = false;
 
 // Insert nodes
    real_t xx=xmin, h=(xmax-xmin)/real_t(nb_el);
    size_t nn=1;
-   for (size_t nnd=1; nnd<=NbN; nnd++) {
+   for (size_t nnd=1; nnd<=NbN; ++nnd) {
       Point<real_t> x(xx);
       Node *nd = new Node(nn++,x);
       nd->setNbDOF(nb_dof);
-      for (size_t i=0; i<nb_dof; i++)
+      for (size_t i=0; i<nb_dof; ++i)
          _code[i] = 0;
       if (nnd==1)
          _code[0] = c1;
@@ -1055,9 +1044,9 @@ void Mesh::set1D(real_t xmin,
 
 // Insert elements
    nn = 0;
-   for (size_t nne=1; nne<=nb_el; nne++) {
+   for (size_t nne=1; nne<=nb_el; ++nne) {
       Element *el = new Element(nne,LINE,1);
-      for (size_t i=1; i<=p+1; i++)
+      for (size_t i=1; i<=p+1; ++i)
          el->Add(theNodes[nn++]);
       nn--;
       el->setCode(1);
@@ -1198,17 +1187,14 @@ void Mesh::Deform(const Vect<real_t>& u,
 void Mesh::inCoarse(Mesh& ms,
                     bool  test_el)
 {
-   size_t i;
    real_t x[3], y[3];
-
-   for (i=0; i<_nb_nodes; i++)
+   for (size_t i=0; i<_nb_nodes; ++i)
       _node_in_coarse_element.push_back(nullptr);
-
    element_loop(&ms) {
       if (The_element.getShape() != TRIANGLE)
          throw OFELIException("Mesh::inCoarse(Mesh,bool): Element "+to_string(element_label) +
                               " is not a triangle.");
-      for (i=0; i<3; i++) {
+      for (size_t i=0; i<3; ++i) {
          x[i] = (The_element)(i+1)->getCoord(1);
          y[i] = (The_element)(i+1)->getCoord(2);
       }
@@ -1225,7 +1211,7 @@ void Mesh::inCoarse(Mesh& ms,
       if (test_el)
          element_loop(this) {
             size_t host = 0;
-            for (size_t k=0; k<3; k++) {
+            for (size_t k=0; k<3; ++k) {
                if (the_element==_node_in_coarse_element[(The_element)(k+1)->n()-1])
                   host++;
             }
@@ -1239,17 +1225,15 @@ void Mesh::inCoarse(Mesh& ms,
 void Mesh::inFine(Mesh& ms,
                   bool  test_el)
 {
-   size_t i;
    real_t x[3], y[3];
-
-   for (i=0; i<_nb_nodes; i++)
+   for (size_t i=0; i<_nb_nodes; ++i)
       _node_in_fine_element.push_back(nullptr);
 
    element_loop(&ms) {
       if (The_element.getShape() != TRIANGLE)
          throw OFELIException("Mesh::inFine(Mesh,bool): This function is valid for "
                               "triangles only.");
-      for (i=0; i<3; i++) {
+      for (size_t i=0; i<3; ++i) {
          x[i] = The_element(i+1)->getCoord(1);
          y[i] = The_element(i+1)->getCoord(2);
       }
@@ -1266,7 +1250,7 @@ void Mesh::inFine(Mesh& ms,
       if (test_el)
          element_loop(this) {
             size_t host = 0;
-            for (size_t k=0; k<3; k++) {
+            for (size_t k=0; k<3; ++k) {
                if (the_element==_node_in_fine_element[The_element(k+1)->n()-1])
                   host++;
             }
@@ -1316,7 +1300,7 @@ Point<real_t> Mesh::getMaxCoord() const
    if (_dim > 2)
       a.z = getPtrNode(1)->getCoord(3);
 
-   for (size_t i=2; i<=_nb_nodes; i++) {
+   for (size_t i=2; i<=_nb_nodes; ++i) {
       nd = getPtrNode(i);
       t = nd->getCoord(1);
       if (t > a.x)
@@ -1348,7 +1332,7 @@ Point<real_t> Mesh::getMinCoord() const
    if (_dim > 2)
       a.z = getPtrNode(1)->getCoord(3);
 
-   for (size_t i=2; i<=_nb_nodes; i++) {
+   for (size_t i=2; i<=_nb_nodes; ++i) {
       nd = getPtrNode(i);
       t = nd->getCoord(1);
       if (t < a.x)
@@ -1398,7 +1382,7 @@ size_t Mesh::NumberEquations(size_t dof,
          if (Verbosity > 6)
             cout << "Eliminating imposed d.o.f. from list of equations ..." << endl;
          node_loop(this) {
-            for (size_t i=1; i<=The_node.getNbDOF(); i++) {
+            for (size_t i=1; i<=The_node.getNbDOF(); ++i) {
                if (The_node.getCode(i) != c)
                   The_node._dof[i-1] = ++_nb_eq;
                else
@@ -1413,7 +1397,7 @@ size_t Mesh::NumberEquations(size_t dof,
          node_loop(this) {
             if (dof)
                The_node._dof[0] = ++_nb_eq;
-            for (size_t i=1; i<=The_node.getNbDOF(); i++)
+            for (size_t i=1; i<=The_node.getNbDOF(); ++i)
                The_node._dof[i-1] = ++_nb_eq;
             _nb_dof = _nb_eq;
          }
@@ -1429,8 +1413,8 @@ size_t Mesh::NumberEquations(size_t dof,
             cout << "Numbering side supported d.o.f. ..." << endl;
          size_t l=0;
          side_loop(this) {
-            for (size_t k=1; k<=_nb_side_nodes; k++) {
-               for (size_t i=1; i<=the_side->getNbDOF(); i++) {
+            for (size_t k=1; k<=_nb_side_nodes; ++k) {
+               for (size_t i=1; i<=the_side->getNbDOF(); ++i) {
                   if (the_side->getCode(i) != c)
                      the_side->_dof[l++] = ++_nb_eq;
                   else
@@ -1467,7 +1451,7 @@ size_t Mesh::NumberEquations(size_t dof,
             cout << "Eliminating imposed d.o.f. from list of equations ..." << endl;
          if (dof) {
             edge_loop(this)
-               for (size_t i=1; i<=The_edge.getNbDOF(); i++)
+               for (size_t i=1; i<=The_edge.getNbDOF(); ++i)
                   if (The_edge.getCode(i) != c)
                      The_edge.DOF(i,++_nb_eq);
                   else
@@ -1495,7 +1479,7 @@ size_t Mesh::NumberEquations(size_t dof,
                The_element.setDOF(dof,++_nb_eq);
          else
             element_loop(this)
-               for (size_t i=1; i<=The_element.getNbDOF(); i++)
+               for (size_t i=1; i<=The_element.getNbDOF(); ++i)
                   The_element.setDOF(i,++_nb_eq);
       }
    }
@@ -1523,7 +1507,7 @@ size_t Mesh::NumberEquations(size_t dof)
          if (Verbosity > 6)
             cout << "Eliminating imposed d.o.f. from list of equations ..." << endl;
          node_loop(this) {
-            for (size_t i=1; i<=the_node->getNbDOF(); i++) {
+            for (size_t i=1; i<=the_node->getNbDOF(); ++i) {
                if (The_node.getCode(i) == 0)
                   The_node._dof[i-1] = ++_nb_eq;
                else
@@ -1539,7 +1523,7 @@ size_t Mesh::NumberEquations(size_t dof)
             if (dof)
                The_node._dof[0] = ++_nb_eq;
             else {
-               for (size_t i=1; i<=The_node.getNbDOF(); i++)
+               for (size_t i=1; i<=The_node.getNbDOF(); ++i)
                   The_node._dof[i-1] = ++_nb_eq;
             }
             _nb_dof = _nb_eq;
@@ -1556,14 +1540,14 @@ size_t Mesh::NumberEquations(size_t dof)
             cout << "Numbering side supported d.o.f. ..." << endl;
          size_t l=0;
          side_loop(this) {
-            for (size_t k=1; k<=_nb_side_nodes; k++) {
-               for (size_t i=1; i<=the_side->getNbDOF(); i++) {
+            for (size_t k=1; k<=_nb_side_nodes; ++k) {
+               for (size_t i=1; i<=the_side->getNbDOF(); ++i) {
                   if (The_side.getCode(i) <= 0)
                      The_side._dof[l++] = ++_nb_eq;
                   else
                      The_side._dof[l++] = 0;
                   _nb_dof++;
-	       }
+               }
             }
          }
       }
@@ -1590,7 +1574,7 @@ size_t Mesh::NumberEquations(size_t dof)
          }
          else {
             edge_loop(this) {
-               for (size_t i=1; i<=the_edge->getNbDOF(); i++)
+               for (size_t i=1; i<=the_edge->getNbDOF(); ++i)
                   if (The_edge.getCode(i) == 0)
                      The_edge.DOF(i,++_nb_eq);
                   else
@@ -1604,7 +1588,7 @@ size_t Mesh::NumberEquations(size_t dof)
          Edge *ed;
          if (dof) {
             for (topEdge(); (ed=getEdge());)
-               for (size_t i=1; i<=ed->getNbDOF(); i++)
+               for (size_t i=1; i<=ed->getNbDOF(); ++i)
                   if (ed->getCode(i) == 0)
                      ed->DOF(i,++_nb_eq);
                   else
@@ -1631,7 +1615,7 @@ size_t Mesh::NumberEquations(size_t dof)
                The_element.setDOF(dof,++_nb_eq);
          else
             element_loop(this)
-               for (size_t i=1; i<=the_element->getNbDOF(); i++)
+               for (size_t i=1; i<=the_element->getNbDOF(); ++i)
                   The_element.setDOF(i,++_nb_eq);
          _nb_dof = _nb_eq;
       }
@@ -1656,7 +1640,7 @@ void Mesh::selectDOF(int    dof_type,
          if (Verbosity > 6)
             cout << "Eliminating imposed d.o.f. from list of equations ..." << endl;
          node_loop(this) {
-            for (size_t i=dof1; i<=dof2; i++) {
+            for (size_t i=dof1; i<=dof2; ++i) {
                if (The_node.getCode(i) == 0) {
                   The_node._dof[i-1] = ++_nb_eq;
                   _dof_nbeq[dof1-1]++;
@@ -1684,8 +1668,8 @@ void Mesh::selectDOF(int    dof_type,
             cout << "Numbering side supported d.o.f. ..." << endl;
          size_t l=0;
          side_loop(this) {
-            for (size_t k=1; k<=_nb_side_nodes; k++) {
-               for (size_t i=dof1; i<=dof2; i++) {
+            for (size_t k=1; k<=_nb_side_nodes; ++k) {
+               for (size_t i=dof1; i<=dof2; ++i) {
                   if (The_side.getCode(i) <= 0) {
                      The_side._dof[l++] = ++_nb_eq;
                      _dof_nbeq[dof1-1]++;
@@ -1715,7 +1699,7 @@ void Mesh::selectDOF(int    dof_type,
          if (Verbosity > 6)
             cout << "Numbering edge supported d.o.f. ..." << endl;
          edge_loop(this) {
-            for (size_t i=dof1; i<=dof2; i++)
+            for (size_t i=dof1; i<=dof2; ++i)
                if (The_edge.getCode(i) == 0) {
                   The_edge.DOF(i,++_nb_eq);
                   _dof_nbeq[dof1-1]++;
@@ -1728,7 +1712,7 @@ void Mesh::selectDOF(int    dof_type,
          if (Verbosity > 6)
             cout << "Eliminating imposed d.o.f. from list of equations ..." << endl;
          edge_loop(this) {
-            for (size_t i=dof1; i<=dof2; i++) {
+            for (size_t i=dof1; i<=dof2; ++i) {
                if (The_edge.getCode(i) == 0) {
                   The_edge.DOF(i,++_nb_eq);
                   _dof_nbeq[dof1-1]++;
@@ -1747,7 +1731,7 @@ void Mesh::selectDOF(int    dof_type,
          if (Verbosity > 6)
             cout << "Numbering element supported d.o.f. ..." << endl;
          element_loop(this)
-            for (size_t i=dof1; i<=dof2; i++) {
+            for (size_t i=dof1; i<=dof2; ++i) {
                The_element.setDOF(i,++_nb_eq);
               _dof_nbeq[dof1-1]++;
             }
@@ -1766,7 +1750,7 @@ int Mesh::getAllSides(int opt)
       return _nb_sides;
    theBoundarySides.clear();
 
-   size_t k, ns=0, i;
+   size_t ns=0;
    vector<vector<size_t> > nsd;
    int sh;
    if (Verbosity > 1)
@@ -1784,7 +1768,7 @@ int Mesh::getAllSides(int opt)
       if (_dim==3 && The_element.getShape()!=TETRAHEDRON)
          throw OFELIException("Mesh::getAllSides(): Member function is not valid for this element type.");
       ns = init_side_node_numbering(The_element.getShape(),nsd,sh);
-      for (i=0; i<The_element.getNbSides(); i++) {
+      for (size_t i=0; i<The_element.getNbSides(); ++i) {
          size_t i1 = The_element(nsd[i][0])->n(),
                 i2 = The_element(nsd[i][1])->n(),
                 i3 = 0, i4 = 0;
@@ -1800,7 +1784,7 @@ int Mesh::getAllSides(int opt)
    }
 
    sides.erase(sides.begin()+nb_all_sides,sides.end());
-   for (i=0; i<nb_all_sides; i++)
+   for (size_t i=0; i<nb_all_sides; ++i)
       order_side_nodes(ns,sides[i]);
    vector<ND>::iterator it = sides.begin()+nb_all_sides;
    sort(sides.begin(),it,compare_sides);
@@ -1809,12 +1793,12 @@ int Mesh::getAllSides(int opt)
    sides.erase(new_end,sides.end());
    _nb_sides = 0;
    theSides.clear();
-   for (i=0; i<sides.size(); i++) {
+   for (size_t i=0; i<sides.size(); ++i) {
       sh = LINE;
       if (sides[i].n==3)
          sh = TRIANGLE;
       Side *sd = new Side(i+1,sh);
-      for (k=0; k<sides[i].n; k++)
+      for (size_t k=0; k<sides[i].n; ++k)
          sd->Add(getPtrNode(sides[i].nd[k]));
       sd->setNbDOF(getPtrNode(sides[i].nd[0])->getNbDOF());
 
@@ -1871,14 +1855,14 @@ int Mesh::getAllSides(int opt)
    size_t n=1;
    side_loop(this) {
       The_side.setFirstDOF(n);
-      for (size_t i=1; i<=The_side.getNbDOF(); i++)
+      for (size_t i=1; i<=The_side.getNbDOF(); ++i)
          The_side.DOF(i,n++);
    }
 
 // Mark nodes on boundary
    side_loop(this) {
       if (The_side.isOnBoundary())
-         for (size_t j=1; j<=The_side.getNbNodes(); j++)
+         for (size_t j=1; j<=The_side.getNbNodes(); ++j)
             getPtrNode(The_side.getNodeLabel(j))->setOnBoundary();
    }
 
@@ -1890,7 +1874,7 @@ int Mesh::getAllSides(int opt)
          ss1.nd[2] = The_side(3)->n();
       if (The_side.getNbNodes()>3)
          ss1.nd[3] = The_side(4)->n();
-      for (i=0; i<nbss; i++) {
+      for (size_t i=0; i<nbss; ++i) {
          Side *sd = SL[i];
          ss2.nd[0] = sd->getNodeLabel(1);
          ss2.nd[1] = sd->getNodeLabel(2);
@@ -1925,7 +1909,6 @@ int Mesh::getAllEdges()
       return 0;
    }
    getAllSides();
-   size_t i;
    if (Verbosity > 1)
       cout << "Creating all mesh edges ..." << endl;
    size_t nb_all_edges = 0;
@@ -1945,7 +1928,7 @@ int Mesh::getAllEdges()
    side_loop(this) {
       if (The_side.getShape()!=TRIANGLE)
          throw OFELIException("Mesh::getAllEdges(): Edges can be created for triangular faces only");
-      for (i=0; i<3; i++) {
+      for (size_t i=0; i<3; ++i) {
          eed = ND(The_side(nsd[i][0])->n(),The_side(nsd[i][1])->n(),0,0);
          eed.e1 = side_label;
          eed.e2 = 0;
@@ -1954,7 +1937,7 @@ int Mesh::getAllEdges()
       }
    }
    edges.erase(edges.begin()+nb_all_edges,edges.end());
-   for (i=0; i<nb_all_edges; i++)
+   for (size_t i=0; i<nb_all_edges; ++i)
       order_edge_nodes(edges[i]);
    vector<ND>::iterator it = edges.begin()+nb_all_edges;
    sort(edges.begin(),it,compare_sides);
@@ -1963,7 +1946,7 @@ int Mesh::getAllEdges()
    edges.erase(new_end,edges.end());
    _nb_edges = 0;
    theEdges.clear();
-   for (i=0; i<edges.size(); i++) {
+   for (size_t i=0; i<edges.size(); ++i) {
       Edge *ed = new Edge(i+1);
       ed->Add(getPtrNode(edges[i].nd[0]));
       ed->Add(getPtrNode(edges[i].nd[1]));
@@ -1987,7 +1970,7 @@ int Mesh::getAllEdges()
    size_t n = 1;
    edge_loop(this) {
       The_edge.setFirstDOF(n);
-      for (size_t i=1; i<=the_edge->getNbDOF(); i++)
+      for (size_t i=1; i<=the_edge->getNbDOF(); ++i)
          The_edge.DOF(i,n++);
    }
 
@@ -2004,7 +1987,7 @@ int Mesh::getAllEdges()
    edge_loop(this) {
       ss1.nd[0] = the_edge->getNodeLabel(1);
       ss1.nd[1] = the_edge->getNodeLabel(2);
-      for (i=0; i<nbss; i++) {
+      for (size_t i=0; i<nbss; ++i) {
          Edge *ed = SL[i];
          ss2.nd[0] = ed->getNodeLabel(1);
          ss2.nd[1] = ed->getNodeLabel(2);
@@ -2051,7 +2034,7 @@ int Mesh::getBoundarySides()
 {
    if (_boundary_sides_created == true)
       return _nb_boundary_sides;
-   size_t k, ns=0, i;
+   size_t ns=0;
    vector<vector<size_t> > nsd;
    int sh;
    if (Verbosity > 1)
@@ -2064,12 +2047,10 @@ int Mesh::getBoundarySides()
    size_t nbss = _nb_sides;
 
 // Add all mesh sides
-   size_t i3, i4;
    nb_all_sides = 0;
-
    vector<size_t> s(2);
    element_loop(this) {
-     for (size_t i=1; i<=3; i++) {
+     for (size_t i=1; i<=3; ++i) {
         s[0] = The_element(i)->n(), s[1] = The_element(i%3+1)->n();
         side_loop(this) {
            if (The_side.getNeighborElement(1)==nullptr) {
@@ -2086,8 +2067,8 @@ int Mesh::getBoundarySides()
       if (_dim==3 && the_element->getShape() != TETRAHEDRON)
          throw OFELIException("Mesh::getBoundarySides(): Member function not valid for this element type.");
       ns = init_side_node_numbering(the_element->getShape(), nsd, sh);
-      for (i=0; i<The_element.getNbSides(); i++) {
-         i3 = i4 = 0;
+      for (size_t i=0; i<The_element.getNbSides(); ++i) {
+         size_t i3 = 0, i4 = 0;
          if (ns>2)
             i3 = The_element(nsd[i][2])->n();
          if (ns > 3)
@@ -2099,7 +2080,7 @@ int Mesh::getBoundarySides()
       }
    }
 
-   for (i=0; i<nb_all_sides; i++)
+   for (size_t i=0; i<nb_all_sides; ++i)
       order_side_nodes(ns,sides[i]);
    vector<ND>::iterator it = sides.begin() + nb_all_sides;
    sort(sides.begin(),it,compare_sides);
@@ -2108,9 +2089,9 @@ int Mesh::getBoundarySides()
    size_t nns = remove_internal_sides(sides);
 
    _nb_sides = 0;
-   for (i=0; i<nns; i++) {
+   for (size_t i=0; i<nns; ++i) {
       Side *sd = new Side(i+1,sh);
-      for (k=0; k<sides[i].n; k++)
+      for (size_t k=0; k<sides[i].n; ++k)
          sd->Add(getPtrNode(sides[i].nd[k]));
       sd->setNbDOF(getPtrNode(sides[i].nd[0])->getNbDOF());
       if (sides[i].e1)
@@ -2150,7 +2131,7 @@ int Mesh::getBoundarySides()
          ss1.nd[2] = The_side(3)->n();
       if (The_side.getNbNodes()>3)
          ss1.nd[3] = The_side(4)->n();
-      for (i=0; i<nbss; i++) {
+      for (size_t i=0; i<nbss; ++i) {
          Side *sd = SL[i];
          ss2.nd[0] = (*sd)(1)->n();
          ss2.nd[1] = (*sd)(2)->n();
@@ -2161,7 +2142,7 @@ int Mesh::getBoundarySides()
          order_side_nodes(sd->getNbNodes(),ss2);
          if (ss1==ss2) {
             The_side.setNbDOF(sd->getNbDOF());
-            for (size_t j=1; j<=the_side->getNbDOF(); j++)
+            for (size_t j=1; j<=the_side->getNbDOF(); ++j)
                The_side.setCode(j,sd->getCode(j));
          }
       }
@@ -2207,13 +2188,10 @@ void Mesh::getNodeNeighborElements()
    }
    if (Verbosity > 1)
       cout << "Creating node neighbor elements ..." << endl;
-/*   mesh_elements(*this)
-      for (size_t i=1; i<=the_element->getNbNodes(); i++)
-         The_element(i)->Neig();*/
    node_loop(this)
       The_node.Add();
    element_loop(this)
-      for (size_t i=1; i<=The_element.getNbNodes(); i++)
+      for (size_t i=1; i<=The_element.getNbNodes(); ++i)
          The_element(i)->Add(the_element);
    _node_neighbor_elements_created = true;
 }
@@ -2234,11 +2212,11 @@ void Mesh::getElementNeighborElements()
       Element *el1=The_side.getNeighborElement(1),
               *el2=The_side.getNeighborElement(2);
       if (el1 && el2) {
-         for (size_t k=1; k<=el1->getNbSides(); k++)
+         for (size_t k=1; k<=el1->getNbSides(); ++k)
             if (el1->getPtrSide(k))
                if (el1->getSideLabel(k)==n)
                  el1->set(el2,k);
-         for (size_t k=1; k<=el2->getNbSides(); k++)
+         for (size_t k=1; k<=el2->getNbSides(); ++k)
             if (el2->getPtrSide(k))
                if (el2->getSideLabel(k)==n)
                   el2->set(el1,k);
@@ -2255,7 +2233,7 @@ void Mesh::setDiscontinuous(size_t p)
    size_t k=1;
    _nb_nodes = 0;
    element_loop(this) {
-      for (size_t i=1; i<=The_element.getNbNodes(); i++) {
+      for (size_t i=1; i<=The_element.getNbNodes(); ++i) {
          The_element(i)->setLabel(k++);
          _nb_nodes++;
       }
@@ -2313,12 +2291,12 @@ void Mesh::AddMidNodes(int g)
       size_t nb_dof = std::max(The_side(1)->getNbDOF(),The_side(2)->getNbDOF());
       Node *nd = new Node(mid_label++,x);
       nd->setNbDOF(nb_dof);
-      for (size_t i=0; i<The_side(1)->getNbDOF(); i++)
+      for (size_t i=0; i<The_side(1)->getNbDOF(); ++i)
          code[i] = std::min(The_side(1)->getCode(i+1),The_side(2)->getCode(i+1));
       if (The_side.isOnBoundary())
          nd->setOnBoundary();
       else {
-         for (size_t i=0; i<The_side(1)->getNbDOF(); i++)
+         for (size_t i=0; i<The_side(1)->getNbDOF(); ++i)
             code[i] = 0;
       }
       nd->setCode(code);
@@ -2330,12 +2308,12 @@ void Mesh::AddMidNodes(int g)
    element_loop(this) {
       if (g) {
          x = 0;
-         for (size_t j=1; j<=the_element->getNbNodes(); j++)
+         for (size_t j=1; j<=the_element->getNbNodes(); ++j)
             x += The_element(j)->getCoord();
          x /= the_element->getNbNodes();
          Node *nd = new Node(mid_label++,x);
          nd->setNbDOF(The_element(1)->getNbDOF());
-         for (size_t i=0; i<The_element(1)->getNbDOF(); i++)
+         for (size_t i=0; i<The_element(1)->getNbDOF(); ++i)
             code[i] = The_element(1)->getCode(i+1);
          nd->setCode(code);
          nd->setDOF(_first_dof,The_element(1)->getNbDOF());
@@ -2344,7 +2322,7 @@ void Mesh::AddMidNodes(int g)
       }
       size_t m1=The_element(1)->n(), m2=The_element(2)->n(), m3=The_element(3)->n();
       while (the_element->getNbNodes()!=6) {
-         for (size_t j=1; j<=the_element->getNbSides(); j++) {
+         for (size_t j=1; j<=the_element->getNbSides(); ++j) {
             Side *sd = the_element->getPtrSide(j);
             size_t n1=sd->getNodeLabel(1), n2=sd->getNodeLabel(2);
             if ((n1==m1 && n2==m2) || (n1==m2 && n2==m1))
@@ -2434,21 +2412,21 @@ void Mesh::Rescale(real_t sx,
 
 void Mesh::getList(vector<Node *>& nl) const
 {
-   for (size_t i=0; i<_nb_nodes; i++)
+   for (size_t i=0; i<_nb_nodes; ++i)
       nl.push_back(theNodes[i]);
 }
 
 
 void Mesh::getList(vector<Element *>& el) const
 {
-   for (size_t i=0; i<_nb_elements; i++)
+   for (size_t i=0; i<_nb_elements; ++i)
       el.push_back(theElements[i]);
 }
 
 
 void Mesh::getList(vector<Side *>& sl) const
 {
-   for (size_t i=0; i<_nb_sides; i++)
+   for (size_t i=0; i<_nb_sides; ++i)
       sl.push_back(theSides[i]);
 }
 
@@ -2457,7 +2435,7 @@ void Mesh::setList(const vector<Node *>& nl)
 {
    theNodes.clear();
    _nb_nodes = 0;
-   for (size_t i=0; i<nl.size(); i++)
+   for (size_t i=0; i<nl.size(); ++i)
       Add(nl[i]);
 }
 
@@ -2466,7 +2444,7 @@ void Mesh::setList(const vector<Element *>& el)
 {
    theElements.clear();
    _nb_elements = 0;
-   for (size_t i=0; i<el.size(); i++)
+   for (size_t i=0; i<el.size(); ++i)
       Add(el[i]);
 }
 
@@ -2475,14 +2453,14 @@ void Mesh::setList(const vector<Side *>& sl)
 {
    theSides.clear();
    _nb_sides = 0;
-   for (size_t i=0; i<sl.size(); i++)
+   for (size_t i=0; i<sl.size(); ++i)
       Add(sl[i]);
 }
 
 
 void Mesh::checkNodeLabels()
 {
-   for (size_t i=0; i<_nb_nodes; i++) {
+   for (size_t i=0; i<_nb_nodes; ++i) {
       if (theNodes[i]->n()>_nb_nodes)
          throw OFELIException("Mesh::checkNodeLabels(): The node label: " + to_string(theNodes[i]->n()) + 
                               " exceeds the total number of nodes.");
@@ -2494,7 +2472,7 @@ void Mesh::checkNodeLabels()
 
 void Mesh::checkElementLabels()
 {
-   for (size_t i=0; i<_nb_elements; i++) {
+   for (size_t i=0; i<_nb_elements; ++i) {
       if (theElements[i]->n()>_nb_elements)
          throw OFELIException("Mesh::checkElementLabels(): The element label: " + to_string(theElements[i]->n()) + 
                               " exceeds the total number of elements.");
@@ -2506,7 +2484,7 @@ void Mesh::checkElementLabels()
 
 void Mesh::checkSideLabels()
 {
-   for (size_t i=0; i<_nb_sides; i++) {
+   for (size_t i=0; i<_nb_sides; ++i) {
       if (theSides[i]->n()>_nb_sides)
          throw OFELIException("Mesh::checkSideLabels(): The side label: " + to_string(theSides[i]->n()) + 
                               " exceeds the total number of sides.");
@@ -2525,16 +2503,16 @@ void Mesh::AddNodes(int p)
    getAllSides();
 
    vector<int> code;
-   size_t nb_dof, i, mid_label=_nb_nodes+1;
+   size_t nb_dof, mid_label=_nb_nodes+1;
    Point<real_t> x;
 
    side_loop(this) {
-       for (int k=0; k<p-1; k++) {
+       for (int k=0; k<p-1; ++k) {
           x = ((p-1)*The_side(1)->getCoord() + The_side(2)->getCoord())/real_t(p);
           nb_dof = std::max(The_side(1)->getNbDOF(),The_side(2)->getNbDOF());
           Node *nd = new Node(mid_label++,x);
           nd->setNbDOF(nb_dof);
-          for (i=0; i<The_side(1)->getNbDOF(); i++)
+          for (size_t i=0; i<The_side(1)->getNbDOF(); ++i)
              code.push_back(std::min(The_side(1)->getCode(i+1),The_side(2)->getCode(i+1)));
           nd->setCode(code);
           nd->setDOF(_first_dof,nb_dof);
@@ -2546,12 +2524,12 @@ void Mesh::AddNodes(int p)
    code.clear();
    element_loop(this) {
       x = 0;
-      for (size_t j=1; j<=the_element->getNbNodes(); j++)
+      for (size_t j=1; j<=the_element->getNbNodes(); ++j)
          x += The_element(j)->getCoord();
       x /= the_element->getNbNodes();
       Node *nd = new Node(mid_label++,x);
       nd->setNbDOF(The_element(1)->getNbDOF());
-      for (i=0; i<The_element(1)->getNbDOF(); i++)
+      for (size_t i=0; i<The_element(1)->getNbDOF(); ++i)
          code.push_back(The_element(1)->getCode(i+1));
       nd->setCode(code);
       nd->setDOF(_first_dof,The_element(1)->getNbDOF());
@@ -2620,7 +2598,7 @@ void Mesh::RenumberNodes(size_t m)
    size_t n;
    Node *nd;
    vector<Node *> NL(theNodes);
-   for (size_t j=0; j<_nb_nodes; j++) {
+   for (size_t j=0; j<_nb_nodes; ++j) {
       nd = NL[j];
       n = nd->n();
       nd->setLabel(nn[n-1]);
@@ -2653,35 +2631,26 @@ void Mesh::RenumberNodes(vector<size_t>& perm,
    size_t n;
    Node *nd;
    vector<Node *> NL(theNodes);
-   for (size_t j=0; j<_nb_nodes; j++) {
+   for (size_t j=0; j<_nb_nodes; ++j) {
       nd = NL[j];
       n = nd->n();
       nd->setLabel(nn[n-1]);
       theNodes[nn[n-1]-1] = nd;
    }
    NumberEquations();
-   for (size_t i=0; i<_nb_nodes; i++)
+   for (size_t i=0; i<_nb_nodes; ++i)
       perm[i] = nn[i];
 }
 
 
 void Mesh::get(const string &mesh_file)
 {
-   size_t i;
    string shape, mat_name, code_string;
    Point<real_t> x;
    if (Verbosity > 1)
       cout << "Getting mesh data from file: " << mesh_file << " ..." << endl;
-   vector<string> bc_code_string;
-   bc_code_string.push_back("PERIODIC_A");
-   bc_code_string.push_back("PERIODIC_B");
-   bc_code_string.push_back("CONTACT");
-   bc_code_string.push_back("CONTACT_M");
-   bc_code_string.push_back("CONTACT_S");
-   bc_code_string.push_back("SLIP");
-   vector<string> material_code_string(1);
-   material_code_string[0] = "GENERIC";
-   _dim = 0;
+   static vector<string> bc_code_string {"PERIODIC_A","PERIODIC_B","CONTACT","CONTACT_M","CONTACT_S","SLIP"};
+   static vector<string> material_code_string {"GENERIC"};
    XMLParser p(mesh_file);
    p.get(*this);
    checkElementLabels();
@@ -2695,7 +2664,7 @@ void Mesh::get(const string &mesh_file)
    _nb_marked_nodes = 0;
    node_loop(this) {
       bool mark = false;
-      for (i=1; i<=The_node.getNbDOF(); i++) {
+      for (size_t i=1; i<=The_node.getNbDOF(); ++i) {
          if (The_node.getCode(i)>0)
             mark = true;
       }
@@ -2711,24 +2680,44 @@ void Mesh::get(const string& mesh_file,
                int           ff, 
                int           nb_dof)
 {
-   if (ff==OFELI_FF)
-      get(mesh_file);
-   else if (ff==GMSH)
-      getGmsh(mesh_file,*this,nb_dof);
-   else if (ff==MATLAB)
-      getMatlab(mesh_file,*this,nb_dof);
-   else if (ff==EASYMESH)
-      getEasymesh(mesh_file,*this,nb_dof);
-   else if (ff==GAMBIT)
-      getGambit(mesh_file,*this,nb_dof);
-   else if (ff==BAMG)
-      getBamg(mesh_file,*this,nb_dof);
-   else if (ff==NETGEN)
-      getNetgen(mesh_file,*this,nb_dof);
-   else if (ff==TRIANGLE_FF)
-      getTriangle(mesh_file,*this,nb_dof);
-   else
-      throw OFELIException("Mesh::get(string,int,int): Unknown file format "+to_string(ff));
+   switch (ff) {
+   
+      case OFELI_FF:
+         get(mesh_file);
+         break;
+   
+      case GMSH:
+         getGmsh(mesh_file,*this,nb_dof);
+         break;
+   
+      case MATLAB:
+         getMatlab(mesh_file,*this,nb_dof);
+         break;
+   
+      case EASYMESH:
+         getEasymesh(mesh_file,*this,nb_dof);
+         break;
+   
+      case GAMBIT:
+         getGambit(mesh_file,*this,nb_dof);
+         break;
+   
+      case BAMG:
+         getBamg(mesh_file,*this,nb_dof);
+         break;
+   
+      case NETGEN:
+         getNetgen(mesh_file,*this,nb_dof);
+         break;
+   
+      case TRIANGLE_FF:
+         getTriangle(mesh_file,*this,nb_dof);
+         break;
+   
+      default:
+         throw OFELIException("Mesh::get(string,int,int): Unknown file format "+to_string(ff));
+         break;
+   }
    NumberEquations();
    element_loop(this)
       theMaterial.check(The_element.getCode());
@@ -2754,8 +2743,8 @@ void Mesh::put(const string& file) const
    ofstream fp;
    size_t i;
    int sign, m;
-   string sh[11] = {"none","point","line","triangle","quadrilateral","tetrahedron",
-                    "hexahedron","pentahedron"};
+   vector<string> sh {"none","point","line","triangle","quadrilateral","tetrahedron",
+                      "hexahedron","pentahedron"};
    fp.open(file.c_str(),ios::out);
    if (Verbosity > 1)
       cout << "Saving mesh data in XML file: " << file << " ..." << endl;
@@ -2863,7 +2852,7 @@ unsigned long Mesh::FindGraph(vector<long>&   xadj,
                   ++xadj[ii];
                   goto L9;
                }
-	       size_t l;
+               size_t l;
                for (l=k; l<=m-1; ++l) {
                   int jtest = adjncy[l-1] - jj;
                   if (jtest < 0)
@@ -2929,9 +2918,9 @@ void Mesh::GenRCM(vector<long>&   xadj,
    for (size_t i=0; i<_nb_nodes; ++i) {
       if (mask[i] != 0) {
          size_t root=i+1;
-	 long nlvl;
+	      long nlvl;
          FindRoot(root,xadj,adjncy,mask,nlvl,xls,perm+num-1);
-	 size_t ccsize = 0;
+	      size_t ccsize = 0;
          RCM(root,xadj,adjncy,mask,perm+num-1,ccsize,xls);
          num += ccsize;
          if (num > _nb_nodes)

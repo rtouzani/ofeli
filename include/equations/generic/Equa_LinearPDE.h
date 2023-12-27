@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -72,6 +72,7 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
    using Equa::setInput;
    using Equa::setTerms;
    using Equa::_u;
+   using Equa::_gterms;
    using Equation<NEN_,NEN_,NSN_,NSN_>::_theMesh;
    using Equation<NEN_,NEN_,NSN_,NSN_>::_theElement;
    using Equation<NEN_,NEN_,NSN_,NSN_>::_theSide;
@@ -97,12 +98,11 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
 /// \details Constructs an empty equation.
     Equa_LinearPDE()
     {
-       _gterms = NOTERM;
        _analysis = STEADY_STATE;
        _TimeInt.scheme = NONE;
        _type00 = _type10 = _type01 = _type20 = _type02 = 1;
        _c00 = _c10 = _c01 = _c20 = _c02 = 1.0;
-       _gterms = L02;
+       _gterms = NOTERM;
     }
 
 /// \brief Destructor
@@ -260,7 +260,7 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
              Mat_01();
           if (_gterms&L02)
              Mat_02();
-          if (Equa::_bf!=nullptr)
+          if (_gterms&SOURCE && Equa::_bf!=nullptr)
              BodyRHS(*Equa::_bf);
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
        }
@@ -306,7 +306,7 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
    Fct _f00, _f10, _f01, _f20, _f02;
    Point<real_t> _d01, _d02;
    Vect<real_t> _e01, _e02;
-   int _type00, _type10, _type01, _type20, _type02, _gterms;
+   int _type00, _type10, _type01, _type20, _type02;
    const vector<string> _var {"x","y","z","t"};
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

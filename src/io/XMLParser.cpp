@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2023 Rachid Touzani
+   Copyright (C) 1998 - 2024 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -29,12 +29,12 @@
 
   ==============================================================================*/
 
-
 #include "io/XMLParser.h"
 #include "util/macros.h"
 #include "mesh/Domain.h"
 #include "mesh/Mesh.h"
 #include "mesh/MeshUtil.h"
+#include "mesh/Grid.h"
 #include "io/IPF.h"
 #include "mesh/Material.h"
 #include "shape_functions/Line2.h"
@@ -53,20 +53,21 @@ namespace OFELI {
 extern Material theMaterial;
 
 XMLParser::XMLParser()
-          : _is_opened(false), _set_mesh(false), _set_field(false),
+          : _is_opened(false), _set_mesh(false), _set_grid(false), _set_vector(false),
             _set_file(false), _set_prescription(false), _set_matrix(false), _set_domain(false),
             _prescription_opened(false), _nb_dof(1), _dim(2), _nb_nodes(0),
-            _nb_elements(0), _nb_sides(0), _nb_edges(0), _scan(0), _nb_mat(0),
-            _dof_support(NODE_DOF), _theMesh(nullptr), _v(nullptr), _parser(nullptr), _ipf(nullptr)
+            _nb_elements(0), _nb_sides(0), _nb_edges(0), _scan(false), _nb_mat(0),
+            _dof_support(NODE_DOF), _theMesh(nullptr), _theGrid(nullptr), _v(nullptr),
+            _parser(nullptr), _ipf(nullptr)
 { }
 
 
 XMLParser::XMLParser(string file,
                      int    type)
-          : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
+          : _is_opened(false), _set_mesh(true), _set_grid(false), _set_vector(false), _set_file(true),
             _set_prescription(false), _set_matrix(false), _set_domain(false), _prescription_opened(false),
             _type(type), _file(file), _nb_dof(1), _dim(2), _nb_nodes(0), _nb_elements(0), _nb_sides(0),
-            _nb_edges(0), _scan(0), _nb_mat(0), _dof_support(NODE_DOF), _theMesh(nullptr),
+            _nb_edges(0), _scan(false), _nb_mat(0), _dof_support(NODE_DOF), _theMesh(nullptr), _theGrid(nullptr),
             _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    open();
@@ -78,10 +79,10 @@ XMLParser::XMLParser(string file,
                      Mesh&  ms,
                      int    type,
                      int    format)
-          : _is_opened(false), _set_mesh(true), _set_field(false), _set_file(true),
+          : _is_opened(false), _set_mesh(true), _set_grid(false), _set_vector(false), _set_file(true),
             _set_prescription(false), _set_matrix(false), _set_domain(false), _prescription_opened(false),
-            _type(type), _format(format), _file(file), _nb_dof(1), _scan(0), _nb_mat(0), _dof_support(NODE_DOF),
-            _theMesh(&ms), _v(nullptr), _parser(nullptr), _ipf(nullptr)
+            _type(type), _format(format), _file(file), _nb_dof(1), _scan(false), _nb_mat(0), _dof_support(NODE_DOF),
+            _theMesh(&ms), _theGrid(nullptr), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    _nb_nodes = _theMesh->getNbNodes();
    _nb_elements = _theMesh->getNbElements();
@@ -89,21 +90,39 @@ XMLParser::XMLParser(string file,
    _nb_edges = _theMesh->getNbEdges();
    _dim = _theMesh->getDim();
    open();
-   if (type==MESH)
+   if (type==MESH_)
       get(ms);
 }
 
 
+XMLParser::XMLParser(string file,
+                     Grid&  g,
+                     int    format)
+          : _is_opened(false), _set_mesh(false), _set_grid(true), _set_vector(false), _set_file(true),
+            _set_prescription(false), _set_matrix(false), _set_domain(false), _prescription_opened(false),
+            _type(GRID), _format(format), _file(file), _nb_dof(1), _nb_mat(0), _dof_support(NODE_DOF),
+            _theMesh(nullptr), _theGrid(&g), _v(nullptr), _parser(nullptr), _ipf(nullptr)
+{
+   _nb_nodes = _theMesh->getNbNodes();
+   _nb_elements = _theMesh->getNbElements();
+   _nb_sides = _theMesh->getNbSides();
+   _nb_edges = _theMesh->getNbEdges();
+   _scan = false;
+   _dim = _theMesh->getDim();
+   open();
+}
+
+
 XMLParser::XMLParser(const XMLParser& p)
-          : _is_opened(p._is_opened), _is_closed(p._is_closed), _set_mesh(p._set_mesh),
-            _set_field(p._set_field), _set_file(p._set_file), _set_prescription(p._set_prescription),
+          : _is_opened(p._is_opened), _is_closed(p._is_closed), _set_mesh(p._set_mesh), _set_grid(p._set_grid), 
+            _set_vector(p._set_vector), _set_file(p._set_file), _set_prescription(p._set_prescription),
             _set_matrix(p._set_matrix), _set_domain(p._set_domain),
             _time(p._time), _sought_time(p._sought_time), _type(p._type),
             _format(p._format), _file(p._file), _mesh_file(p._mesh_file),
             _sought_name(p._sought_name), _tag_name(p._tag_name), _xml(p._xml), _mat(p._mat),
             _nb_dof(p._nb_dof), _dim(p._dim), _nb_nodes(p._nb_nodes), _nb_elements(p._nb_elements),
             _nb_sides(p._nb_sides), _nb_edges(p._nb_edges), _scan(p._scan), _nb_el_nodes(p._nb_el_nodes),
-            _nb_sd_nodes(p._nb_sd_nodes), _dof_support(p._dof_support),_theMesh(p._theMesh),
+            _nb_sd_nodes(p._nb_sd_nodes), _dof_support(p._dof_support),_theMesh(p._theMesh), _theGrid(nullptr),
             _v(p._v), _parser(p._parser), _ipf(p._ipf)
 { }
 
@@ -116,6 +135,12 @@ void XMLParser::set(Mesh& ms,
 {
    _theMesh = &ms;
    _format = format;
+}
+
+
+void XMLParser::set(Grid& gr)
+{
+   _theGrid = &gr;
 }
 
 
@@ -158,49 +183,37 @@ void XMLParser::open()
 }
 
 
-int XMLParser::scan(size_t ind)
+int XMLParser::scan()
 {
-   if (Verbosity>10 || _scan>1) {
-      cout << "Scanning xml file: " << _file << endl;
-      cout << "----------------------------------------------------------------------" << endl;
-   }
-   _scan = ind;
-   _set_mesh = _set_field = true;
+   _scan = true;
+   _set_mesh = _set_vector = true;
    if (parse(_xml)) {
-      if (Verbosity>10 || _scan>1)
+      if (Verbosity>10)
          cout << "Parse done" << endl;
       _scan = false;
-      cout << "----------------------------------------------------------------------" << endl;
-      cout << "Scanning complete." << endl;
       return 0;
    }
    else
-      throw OFELIException("In XMLParser::scan(size_t): Failed to parse XML file.");
+      throw OFELIException("In XMLParser::scan(): Failed to parse XML file.");
    return -1;
 }
 
 
 int XMLParser::scan(vector<real_t>& t,
-                    int             type,
-                    size_t          ind)
+                    int             type)
 {
-   _scan = ind;
+   _scan = true;
    _set_mesh = _set_prescription = false;
-   _set_field = true;
+   _set_vector = true;
+   _type = VECTOR;
    _ft = &t;
    _ft->clear();
    _rtype = type;
    _compact = true;
-   if (parse(_xml)) {
-      if (Verbosity>10 || _scan>1) {
-         cout << "Parse done" << endl;
-         cout << "----------------------------------------------------------------------" << endl;
-         cout << "Scanning complete." << endl;
-      }
+   if (parse(_xml))
       return 0;
-   }
    else
-      throw OFELIException("In XMLParser::scan(vector<real_t>,int,size_t): Failed to parse XML file.");
+      throw OFELIException("In XMLParser::scan(vector<real_t>,int): Failed to parse XML file.");
    return -1;
 }
 
@@ -208,9 +221,9 @@ int XMLParser::scan(vector<real_t>& t,
 int XMLParser::get(Domain& dm)
 {
    _theDomain = &dm;
-   _set_mesh = _set_field = false;
+   _set_mesh = _set_vector = false;
    _set_domain = true;
-   _scan = 0;
+   _scan = false;
    _theMesh = nullptr;
    _type = DOMAIN_;
    _theDomain->_nb_dof = 1;
@@ -229,8 +242,8 @@ int XMLParser::get(Domain& dm)
 int XMLParser::get(Tabulation& t)
 {
    _theTabulation = &t;
-   _set_mesh = _set_field = _set_domain = false;
-   _scan = 0;
+   _set_mesh = _set_vector = _set_domain = false;
+   _scan = false;
    _theMesh = nullptr;
    _type = FUNCTION;
    if (parse(_xml)) {
@@ -249,8 +262,8 @@ int XMLParser::get(DMatrix<real_t>& A)
    _type = MATRIX;
    _theMatrix = &A;
    _set_matrix = true;
+   _scan = false;
    _name = "";
-   _scan = 0;
    _theMesh = nullptr;
    if (parse(_xml)) {
       if (Verbosity>10)
@@ -268,7 +281,7 @@ int XMLParser::get(Matrix<real_t>* A)
    _type = MATRIX;
    _theMatrix = A;
    _set_matrix = true;
-   _scan = 0;
+   _scan = false;
    _theMesh = nullptr;
    if (parse(_xml)) {
       if (Verbosity>10)
@@ -284,8 +297,8 @@ int XMLParser::get(Matrix<real_t>* A)
 int XMLParser::getArray(Vect<real_t>& A)
 {
    _theArray = &A;
-   _set_mesh = _set_field = _set_domain = false;
-   _scan = 0;
+   _set_mesh = _set_vector = _set_domain = false;
+   _scan = false;
    _theMesh = nullptr;
    _type = FUNCTION;
    if (parse(_xml)) {
@@ -303,8 +316,8 @@ int XMLParser::get(IPF& ipf)
 {
    _ik1 = _ik2 = _dk1 = _dk2 = _ck = _mk = _pk = _dk = 0;
    _ipf = &ipf;
-   _set_mesh = _set_field = false;
-   _scan = 0;
+   _scan = false;
+   _set_mesh = _set_vector = false;
    _theMesh = nullptr;
    if (parse(_xml)) {
       if (Verbosity>10)
@@ -319,8 +332,8 @@ int XMLParser::get(IPF& ipf)
 
 int XMLParser::getMaterial()
 {
-   _set_mesh = _set_field = false;
-   _scan = 0;
+   _set_mesh = _set_vector = false;
+   _scan = false;
    _theMesh = nullptr;
    if (parse(_xml)) {
       if (Verbosity>10)
@@ -337,10 +350,10 @@ int XMLParser::get(EqDataType               type,
                    vector<PrescriptionPar>& p)
 {
    _prescription_type = type;
+   _scan = false;
    _vp = &p;
    _vp->clear();
-   _set_mesh = _set_field = false;
-   _scan = 0;
+   _set_mesh = _set_vector = false;
    _compact = true;
    if (parse(_xml)) {
       if (Verbosity>10)
@@ -357,8 +370,8 @@ int XMLParser::get(Mesh& ms,
                    int   format)
 {
    _set_mesh = true;
-   _set_field = false;
-   _scan = 0;
+   _set_vector = false;
+   _scan = false;
    _theMesh = &ms;
    _nb_nodes = _theMesh->getNbNodes();
    _nb_elements = _theMesh->getNbElements();
@@ -380,10 +393,11 @@ int XMLParser::get(Vect<real_t>& v,
                    const string& name)
 {
    _set_mesh = false;
-   _set_field = true;
+   _set_vector = true;
+   _scan = false;
    _sought_name = name;
    _sought_time = -1.0;
-   _scan = 0;
+   _nx = _ny = _nz = _nt = 0;
    _compact = true;
    _v = &v;
    _all_steps = 0;
@@ -393,7 +407,7 @@ int XMLParser::get(Vect<real_t>& v,
       _theMesh = &(_v->getMesh());
    _nb_dof = 1;
    _v->setName(_name);
-   _nx = v.getNx(), _ny = v.getNy(), _nz = v.getNz();
+   _type = VECTOR;
    if (parse(_xml)) {
       if (Verbosity>10)
          cout << "Parse done" << endl;
@@ -411,10 +425,10 @@ int XMLParser::get(Vect<real_t>& v,
                    int           format)
 {
    _set_mesh = false;
-   _set_field = true;
+   _set_vector = true;
+   _scan = false;
    _sought_time = time;
    _sought_name = name;
-   _scan = 0;
    _v = &v;
    _theMesh = nullptr;
    if (_v->WithMesh())
@@ -443,11 +457,10 @@ int XMLParser::get(Mesh&         ms,
                    string        name,
                    int           format)
 {
-   _set_mesh = true;
-   _set_field = true;
+   _set_mesh = _set_vector = true;
+   _scan = false;
    _sought_time = time;
    _sought_name = name;
-   _scan = 0;
    _v = &v;
    _theMesh = &ms;
    _nb_nodes = _theMesh->getNbNodes();
@@ -478,17 +491,17 @@ int XMLParser::get(Mesh&                    ms,
                    vector<vector<real_t> >& v,
                    string&                  name)
 {
-   _set_mesh = _set_field = true;
+   _set_mesh = _set_vector = true;
+   _scan = false;
    _theMesh = &ms;
    _nb_nodes = _theMesh->getNbNodes();
    _nb_elements = _theMesh->getNbElements();
    _nb_sides = _theMesh->getNbSides();
    _nb_edges = _theMesh->getNbEdges();
-   _scan = 0;
    _V = &v;
    _all_steps = 1;
    _compact = true;
-   _type = FIELD;
+   _type = VECTOR;
    if (parse(_xml)) {
       if (Verbosity>10)
          cout << "Parse done" << endl;
@@ -496,7 +509,63 @@ int XMLParser::get(Mesh&                    ms,
       return 0;
    }
    else
-      throw OFELIException("In XMLParser::get(Mesh,vector<vector<real_t> >): Failed to parse XML file.");
+      throw OFELIException("In XMLParser::get(Mesh,vector<vector<real_t> >,string): Failed to parse XML file.");
+   return 0;
+}
+
+
+int XMLParser::get(Grid&         gr,
+                   Vect<real_t>& v,
+                   real_t        time,
+                   string        name,
+                   int           format)
+{
+   _set_mesh = _set_grid = _set_vector = true;
+   _scan = false;
+   _sought_time = time;
+   _sought_name = name;
+   _v = &v;
+   _theGrid = &gr;
+   _nx = _theGrid->getNx(), _ny = _theGrid->getNy(), _nz = _theGrid->getNz();
+   _format = format;
+   _compact = true;
+   _all_steps = 0;
+   _nb_dof = v.getNbDOF();
+   _name = v.getName();
+   _v->setGrid(*_theGrid);
+   _v->setName(_name);
+   if (parse(_xml)) {
+      if (Verbosity>10)
+         cout << "Parse done" << endl;
+      return 0;
+   }
+   else
+      throw OFELIException("In XMLParser::get(Grid,Vect<real_t>,real_t,string,int): Failed to parse XML file.");
+   return 0;
+}
+
+
+int XMLParser::get(Grid&                    gr,
+                   vector<vector<real_t> >& v,
+                   string&                  name)
+{
+   _set_grid = _set_vector = true;
+   _set_mesh = false;
+   _scan = false;
+   _theGrid = &gr;
+   _nx = _theGrid->getNx(), _ny = _theGrid->getNy(), _nz = _theGrid->getNz();
+   _V = &v;
+   _all_steps = 1;
+   _compact = true;
+   _type = VECTOR;
+   if (parse(_xml)) {
+      if (Verbosity>10)
+         cout << "Parse done" << endl;
+      name = _name;
+      return 0;
+   }
+   else
+      throw OFELIException("In XMLParser::get(Grid,vector<vector<real_t> >,string): Failed to parse XML file.");
    return 0;
 }
 
@@ -513,435 +582,218 @@ bool XMLParser::on_tag_open(string     tag_name,
 {
    _nb_el_nodes = 0;
    _tag_name = tag_name;
-   if (_tag_name=="Domain") {
+   if (_tag_name=="Domain")
       _set_domain = true;
-      if (_scan>1)
-         cout << "Found a domain description." << endl;
-   }
-
-   else if (_tag_name=="Material") {
-      if (_scan>0)
-         cout << "Found a material description." << endl;
-   }
 
    else if (_tag_name=="Prescription") {
       _set_prescription = true;
-      if (_scan>1)
-         cout << "Found a prescription." << endl;
-      else {
-         _par.code = 0;
-         _par.dof = 1;
-         _par.bx = _par.by = _par.bz = _par.bt = false;
-      }
+      _par.code = 0;
+      _par.dof = 1;
+      _par.bx = _par.by = _par.bz = _par.bt = false;
    }
 
-   else if (_tag_name=="Solution") {
-      if (_scan>2)
-         cout << "-> Prescription of exact solution" << endl;
-      else
-         _par.type = SOLUTION;
-   }
+   else if (_tag_name=="Solution")
+      _par.type = SOLUTION;
 
-   else if (_tag_name=="BoundaryCondition") {
-      if (_scan>2)
-         cout << "-> Prescription of a boundary condition" << endl;
-      else
-         _par.type = BOUNDARY_CONDITION;
-   }
+   else if (_tag_name=="BoundaryCondition")
+      _par.type = BOUNDARY_CONDITION;
 
-   else if (_tag_name=="BodyForce" || _tag_name=="Source") {
-      if (_scan>2)
-         cout << "-> Prescription of a body force" << endl;
-      else
-         _par.type = BODY_FORCE;
-   }
+   else if (_tag_name=="BodyForce" || _tag_name=="Source")
+      _par.type = BODY_FORCE;
 
-   else if (_tag_name=="PointForce") {
-      if (_scan>2)
-         cout << "-> Prescription of a pointwise force" << endl;
-      else
-         _par.type = POINT_FORCE;
-   }
+   else if (_tag_name=="PointForce")
+      _par.type = POINT_FORCE;
 
-   else if (_tag_name=="Flux" || _tag_name=="Traction"|| _tag_name=="BoundaryForce") {
-      if (_scan>2)
-         cout << "-> Prescription of a boundary force" << endl;
-      else
-         _par.type = BOUNDARY_FORCE;
-   }
+   else if (_tag_name=="Flux" || _tag_name=="Traction" || _tag_name=="BoundaryForce")
+      _par.type = BOUNDARY_FORCE;
 
-   else if (_tag_name=="Initial") {
-      if (_scan>2)
-         cout << "-> Prescription of an initial field" << endl;
-      else
-         _par.type = INITIAL_FIELD;
-   }
-
-   else if (_tag_name=="Function") {
-      if (_scan>2)
-         cout << "-> Definition of a tabulation" << endl;
-   }
+   else if (_tag_name=="Initial")
+      _par.type = INITIAL_FIELD;
 
    else
       _par.type = NO_TYPE;
 
-   for (StringMap::iterator i=attributes.begin(); i!=attributes.end(); i++) {
-      if (_ipf && _scan==0) {
-         if (_type==PROJECT)
-            read_project(i);
-      }
+   for (const auto &a : attributes) {
+
+      if (_ipf && _type==PROJECT)
+         read_project(a);
 
       if (_set_domain && _type==DOMAIN_)
-         read_domain(i);
+         read_domain(a);
 
-      if (_set_mesh && _type==MESH)
-         read_mesh(i);
+      if (_set_mesh && _type==MESH_)
+         read_mesh(a);
 
-      if (_set_field) {
-         _type = FIELD;
-         read_field(i);
-      }
+      if (_set_vector)
+         read_vect(a);
 
-      if (_set_matrix) {
-         _type = MATRIX;
-         read_matrix(i);
-      }
+      if (_set_matrix)
+         read_matrix(a);
 
       //      if (_material)
-      //         read_mat(i);
+      //         read_mat(a);
 
       if (_type==PRESCRIBE && _set_prescription)
-         read_prescription(i);
+         read_prescription(a);
 
       if (_type==FUNCTION)
-         read_tab(i);
+         read_tab(a);
    }
    return true;
 }
 
 
-void XMLParser::read_project(const StringMap::iterator& i)
+void XMLParser::read_project(const SString& a)
 {
    string mat;
    if (_tag_name=="Project") {
-      if (i->first=="name")
-         _ipf->_project = i->second;
+      if (a.first=="name")
+         _ipf->_project = a.second;
    }
-   if (i->first=="value") {
+   if (a.first=="value") {
       if (_tag_name=="verbose") {
-         if (_scan>1) 
-            cout << "Verbosity parameter set." << endl;
-         else {
-            if (i->first=="value")
-               _ipf->_verbose = stoi(i->second);
-         }
+         if (a.first=="value")
+            _ipf->_verbose = stoi(a.second);
       }
       else if (_tag_name=="material_code") {
-         if (_scan>1) 
-            cout << "Material code and name given." << endl;
-         else {
-            if (i->first=="code")
-               _code = stoi(i->second);
-            if (i->first=="material" || i->first=="value")
-               mat = i->second;
-            theMaterial.set(_code,mat);
-         }
+         if (a.first=="code")
+            _code = stoi(a.second);
+         if (a.first=="material" || a.first=="value")
+            mat = a.second;
+         theMaterial.set(_code,mat);
       }
       else if (_tag_name=="output") {
-         if (_scan>1) 
-            cout << "Output parameter selected." << endl;
-         else {
-            if (i->first=="value")
-               _ipf->_output = stoi(i->second);
-         }
+         if (a.first=="value")
+            _ipf->_output = stoi(a.second);
       }
       else if (_tag_name=="save") {
-         if (_scan>1) 
-            cout << "Save parameter selected." << endl;
-         else {
-            if (i->first=="value")
-               _ipf->_save = stoi(i->second);
-         }
+         if (a.first=="value")
+            _ipf->_save = stoi(a.second);
       }
       else if (_tag_name=="plot") {
-         if (_scan>1) 
-            cout << "Frequency for plotting save parameter selected." << endl;
-         else {
-            if (i->first=="value")
-               _ipf->_plot = stoi(i->second);
-         }
+         if (a.first=="value")
+            _ipf->_plot = stoi(a.second);
       }
-      else if (_tag_name=="bc") {
-         if (_scan>1) 
-            cout << "Boundary condition toggle selected." << endl;
-         else
-            _ipf->_bc = stoi(i->second);
-      }
-      else if (_tag_name=="bf") {
-         if (_scan>1) 
-            cout << "Body force toggle selected." << endl;
-         else
-            _ipf->_bf = stoi(i->second);
-      }
-      else if (_tag_name=="sf") {
-         if (_scan>1) 
-            cout << "Boundary force toggle selected." << endl;
-         else
-            _ipf->_sf = stoi(i->second);
-      }
-      else if (_tag_name=="init") {
-         if (_scan>1) 
-            cout << "Initial solution toggle selected." << endl;
-         else
-            _ipf->_ini = stoi(i->second);
-      }
-      else if (_tag_name=="prescription") {
-         if (_scan>1) 
-            cout << "Prescription toggle selected." << endl;
-         else
-            _ipf->_data = stoi(i->second);
-      }
-      else if (_tag_name=="nb_steps") {
-         if (_scan>1) 
-            cout << "Number of time steps parameter selected." << endl;
-         else
-            _ipf->_nb_steps = stoi(i->second);
-      }
-      else if (_tag_name=="nb_iter") {
-         if (_scan>1) 
-            cout << "Number of iterations parameter selected." << endl;
-         else
-            _ipf->_nb_iter = stoi(i->second);
-      }
-      else if (_tag_name=="time_step") {
-         if (_scan>1) 
-            cout << "Time step parameter selected." << endl;
-         else
-            _ipf->_time_step = stof(i->second);
-      }
-      else if (_tag_name=="max_time") {
-         if (_scan>1) 
-            cout << "Maximal time parameter selected." << endl;
-         else
-            _ipf->_max_time = stof(i->second);
-      }
-      else if (_tag_name=="tolerance") {
-         if (_scan>1) 
-            cout << "Tolerance parameter selected." << endl;
-         else
-            _ipf->_tolerance = stof(i->second);
-      }
-      else if (_tag_name=="int" || _tag_name=="integer") {
-         if (_scan>1) 
-            cout << "Extra integer parameter selected." << endl;
-         else
-            _ipf->_int_par[_ik1++] = stoi(i->second);
-      }
-      else if (_tag_name=="double") {
-         if (_scan>1) 
-            cout << "Extra double parameter selected." << endl;
-         else
-            _ipf->_real_par[_dk1++] = stof(i->second);
-      }
+      else if (_tag_name=="bc")
+         _ipf->_bc = stoi(a.second);
+      else if (_tag_name=="bf")
+         _ipf->_bf = stoi(a.second);
+      else if (_tag_name=="sf")
+         _ipf->_sf = stoi(a.second);
+      else if (_tag_name=="init")
+         _ipf->_ini = stoi(a.second);
+      else if (_tag_name=="prescription")
+         _ipf->_data = stoi(a.second);
+      else if (_tag_name=="nb_steps")
+         _ipf->_nb_steps = stoi(a.second);
+      else if (_tag_name=="nb_iter")
+         _ipf->_nb_iter = stoi(a.second);
+      else if (_tag_name=="time_step")
+         _ipf->_time_step = stof(a.second);
+      else if (_tag_name=="max_time")
+         _ipf->_max_time = stof(a.second);
+      else if (_tag_name=="tolerance")
+         _ipf->_tolerance = stof(a.second);
+      else if (_tag_name=="int" || _tag_name=="integer")
+         _ipf->_int_par[_ik1++] = stoi(a.second);
+      else if (_tag_name=="double")
+         _ipf->_real_par[_dk1++] = stof(a.second);
       else if (_tag_name=="string") {
-         if (_scan>1) 
-            cout << "Extra string parameter selected." << endl;
-         else
-            if (i->first=="value")
-               _ipf->_string_par[_dk2++] = i->second;
+         if (a.first=="value")
+            _ipf->_string_par[_dk2++] = a.second;
       }
       else if (_tag_name=="complex") {
-         if (_scan>1)
-            cout << "Extra complex parameter selected." << endl;
-         else {
-            if (i->first=="real")
-               _ipf->_complex_par[_ck] += complex_t(stof(i->second));
-            if (i->first=="imag")
-               _ipf->_complex_par[_ck++] += complex_t(0.,stof(i->second));
-         }
+         if (a.first=="real")
+            _ipf->_complex_par[_ck] += complex_t(stof(a.second));
+         if (a.first=="imag")
+            _ipf->_complex_par[_ck++] += complex_t(0.,stof(a.second));
       }
-      else if (_tag_name=="domain_file") {
-         if (_scan>1)
-            cout << "Domain file name given." << endl;
-         else
-            _ipf->_domain_file = i->second;
-      }
-      else if (_tag_name=="mesh_file") {
-         if (_scan>1)
-            cout << "Mesh file name given." << endl;
-         else
-            _ipf->_mesh_file[_mk++] = i->second;
-      }
-      else if (_tag_name=="init_file") {
-         if (_scan>1)
-            cout << "Initial field file name given." << endl;
-         else
-            _ipf->_init_file = i->second;
-      }
-      else if (_tag_name=="restart_file") {
-         if (_scan>1) 
-            cout << "Restart file name given." << endl;
-         else
-            _ipf->_restart_file = i->second;
-      }
-      else if (_tag_name=="bc_file") {
-         if (_scan>1) 
-            cout << "Boundary condition file name given." << endl;
-         else
-            _ipf->_bc_file = i->second;
-      }
-      else if (_tag_name=="bf_file") {
-         if (_scan>1) 
-            cout << "Body force file name given." << endl;
-         else
-            _ipf->_bf_file = i->second;
-      }
-      else if (_tag_name=="sf_file") {
-         if (_scan>1) 
-            cout << "Boundary force file name given." << endl;
-         else
-            _ipf->_sf_file = i->second;
-      }
-      else if (_tag_name=="save_file") {
-         if (_scan>1) 
-            cout << "Save file name given." << endl;
-         else
-            _ipf->_save_file = i->second;
-      }
-      else if (_tag_name=="plot_file") {
-         if (_scan>1) 
-            cout << "Plot file name given." << endl;
-         else
-            _ipf->_plot_file[_pk++] = i->second;
-      }
-      else if (_tag_name=="prescription_file") {
-         if (_scan>1)
-            cout << "Prescription file name given." << endl;
-         else
-            _ipf->_data_file[_dk++] = i->second;
-      }
-      else if (_tag_name=="aux_file") {
-         if (_scan>1) 
-            cout << "Auxiliary file name given." << endl;
-         else
-            _ipf->_aux_file[_ik2++] = i->second;
-      }
-      else if (_tag_name=="density") {
-         if (_scan>1) 
-            cout << "Density value given." << endl;
-         else
-            _ipf->_mp._density = i->second;
-      }
-      else if (_tag_name=="electric_conductivity") {
-         if (_scan>1) 
-            cout << "Electric conductivity value given." << endl;
-         else
-            _ipf->_mp._electric_cond = i->second;
-      }
-      else if (_tag_name=="electric_permittivity") { 
-         if (_scan>1) 
-            cout << "Electric permittivity value given." << endl;
-         else
-            _ipf->_mp._electric_perm = i->second;
-      }
-      else if (_tag_name=="magnetic_permeability") {
-         if (_scan>1) 
-            cout << "Magnetic permeability value given." << endl;
-         else
-            _ipf->_mp._magnetic_perm = i->second;
-      }
-      else if (_tag_name=="poisson_ratio") {
-         if (_scan>1) 
-            cout << "Poisson ratio value given." << endl;
-         else
-            _ipf->_mp._poisson = i->second;
-      }
-      else if (_tag_name=="thermal_conductivity") {
-         if (_scan>1) 
-            cout << "Thermal conductivity value given." << endl;
-         else
-            _ipf->_mp._thermal_cond = i->second;
-      }
-      else if (_tag_name=="rho_cp") {
-         if (_scan>1) 
-            cout << "Value of density x specific heat given." << endl;
-         else
-            _ipf->_mp._rho_cp = i->second;
-      }
-      else if (_tag_name=="viscosity") {
-         if (_scan>1) 
-            cout << "Viscosity value given." << endl;
-         else
-            _ipf->_mp._visc = i->second;
-      }
-      else if (_tag_name=="young_modulus") {
-         if (_scan>1) 
-            cout << "Young modulus value given." << endl;
-         else
-            _ipf->_mp._young = i->second;
-      }
+      else if (_tag_name=="domain_file")
+         _ipf->_domain_file = a.second;
+      else if (_tag_name=="mesh_file")
+         _ipf->_mesh_file[_mk++] = a.second;
+      else if (_tag_name=="init_file")
+         _ipf->_init_file = a.second;
+      else if (_tag_name=="restart_file")
+         _ipf->_restart_file = a.second;
+      else if (_tag_name=="bc_file")
+         _ipf->_bc_file = a.second;
+      else if (_tag_name=="bf_file")
+         _ipf->_bf_file = a.second;
+      else if (_tag_name=="sf_file")
+         _ipf->_sf_file = a.second;
+      else if (_tag_name=="save_file")
+         _ipf->_save_file = a.second;
+      else if (_tag_name=="plot_file")
+         _ipf->_plot_file[_pk++] = a.second;
+      else if (_tag_name=="prescription_file")
+         _ipf->_data_file[_dk++] = a.second;
+      else if (_tag_name=="aux_file")
+         _ipf->_aux_file[_ik2++] = a.second;
+      else if (_tag_name=="density")
+         _ipf->_mp._density = a.second;
+      else if (_tag_name=="electric_conductivity")
+         _ipf->_mp._electric_cond = a.second;
+      else if (_tag_name=="electric_permittivity") 
+         _ipf->_mp._electric_perm = a.second;
+      else if (_tag_name=="magnetic_permeability")
+         _ipf->_mp._magnetic_perm = a.second;
+      else if (_tag_name=="poisson_ratio")
+         _ipf->_mp._poisson = a.second;
+      else if (_tag_name=="thermal_conductivity")
+         _ipf->_mp._thermal_cond = a.second;
+      else if (_tag_name=="rho_cp")
+         _ipf->_mp._rho_cp = a.second;
+      else if (_tag_name=="viscosity")
+         _ipf->_mp._visc = a.second;
+      else if (_tag_name=="young_modulus")
+         _ipf->_mp._young = a.second;
       else
          ;
    }
 
    if (_tag_name=="parameter" || _tag_name=="param") {
-      if (_scan>1)
-         cout << "keyword parameter selected." << endl;
-      else {
-         if (i->first=="label")
-            _ipf->_param_label.push_back(i->second);
-         if (i->first=="value")
-            _ipf->_param_value.push_back(i->second);
-         if (i->first=="ext" || i->first=="extension")
-            _ipf->_param_ext.push_back(i->second);
-      }
+      if (a.first=="label")
+         _ipf->_param_label.push_back(a.second);
+      if (a.first=="value")
+         _ipf->_param_value.push_back(a.second);
+      if (a.first=="ext" || a.first=="extension")
+         _ipf->_param_ext.push_back(a.second);
    }
 
    if (_tag_name=="array") {
-      if (_scan>1)
-         cout << "keyword array selected." << endl;
-      else {
-         if (i->first=="label")
-            _ipf->_array_label.push_back(i->second);
-         if (i->first=="size")
-            _ipf->_array_size.push_back(stoi(i->second));
-         if (i->first=="ext" || i->first=="extension")
-            _ipf->_array_ext.push_back(i->second);
-      }
+      if (a.first=="label")
+         _ipf->_array_label.push_back(a.second);
+      if (a.first=="size")
+         _ipf->_array_size.push_back(stoi(a.second));
+      if (a.first=="ext" || a.first=="extension")
+         _ipf->_array_ext.push_back(a.second);
    }
 }
 
 
-void XMLParser::read_domain(const StringMap::iterator& i)
+void XMLParser::read_domain(const SString& a)
 {
    if (_tag_name=="Domain") {
-      if (i->first=="dim") {
-         _dim = stoi(i->second);
-         if (_scan==false)
-            _theDomain->_dim = _dim;
-      }
-      else if (i->first=="nb_dof") {
-         _nb_dof = stoi(i->second);
-         if (_scan==false)
-            _theDomain->_nb_dof = _nb_dof;
-      }
-      if (_scan)
-         cout << "Found a domain:" << endl;
+      if (a.first=="dim")
+         _theDomain->_dim = _dim = stoi(a.second);
+      else if (a.first=="nb_dof")
+         _theDomain->_nb_dof = _nb_dof = stoi(a.second);
    }
 
    else if (_tag_name=="vertex") {
       real_t x[3]={0,0,0}, h;
       int code=0;
-      if (i->first=="x")
-         x[0] = stof(i->second);
-      if (i->first=="y")
-         x[1] = stof(i->second);
-      if (i->first=="z")
-         x[2] = stof(i->second);
-      if (i->first=="code")
-         code = stoi(i->second);
-      if (i->first=="h") {
-         h = stof(i->second);
+      if (a.first=="x")
+         x[0] = stof(a.second);
+      if (a.first=="y")
+         x[1] = stof(a.second);
+      if (a.first=="z")
+         x[2] = stof(a.second);
+      if (a.first=="code")
+         code = stoi(a.second);
+      if (a.first=="h") {
+         h = stof(a.second);
          _theDomain->insertVertex(x[0],x[1],h,code);
       }
    }
@@ -963,32 +815,29 @@ void XMLParser::read_domain(const StringMap::iterator& i)
 }
 
 
-void XMLParser::read_tab(const StringMap::iterator& i)
+void XMLParser::read_tab(const SString& a)
 {
    if (_tag_name=="Function") {
-      if (_scan)
-         cout << "Found a tabulated function:" << endl;
-      if (i->first=="name") {
-         _theTabulation->setFunction(i->second);
+      if (a.first=="name") {
+         _theTabulation->setFunction(a.second);
          _nb_funct = _theTabulation->_nb_funct;
          _nb_var = 0;
       }
    }
 
    else if (_tag_name=="Variable") {
-      if (i->first=="label") {
-         _theTabulation->setVariable(i->second);
+      if (a.first=="label") {
+         _theTabulation->setVariable(a.second);
          _nb_var++; 
       }
-      else if (i->first=="nb_points") {
-         _tab_size = stoi(i->second);
-         if (_scan==false)
-            _theTabulation->Funct[_nb_funct-1].Np[_nb_var-1] = _tab_size;
+      else if (a.first=="nb_points") {
+         _tab_size = stoi(a.second);
+         _theTabulation->Funct[_nb_funct-1].Np[_nb_var-1] = _tab_size;
       }
-      else if (i->first=="min")
-         _theTabulation->Funct[_nb_funct-1].Min[_nb_var-1] = stof(i->second);    
-      else if (i->first=="max")
-         _theTabulation->Funct[_nb_funct-1].Max[_nb_var-1] = stof(i->second);    
+      else if (a.first=="min")
+         _theTabulation->Funct[_nb_funct-1].Min[_nb_var-1] = stof(a.second);    
+      else if (a.first=="max")
+         _theTabulation->Funct[_nb_funct-1].Max[_nb_var-1] = stof(a.second);    
    }
 
    else if (_tag_name=="Data") {
@@ -999,30 +848,29 @@ void XMLParser::read_tab(const StringMap::iterator& i)
 }
 
 
-void XMLParser::read_matrix(const StringMap::iterator& i)
+void XMLParser::read_matrix(const SString& a)
 {
+   _type = MATRIX;
    if (_tag_name=="Matrix") {
-      if (_scan)
-         cout << "Found a matrix:" << endl;
-      if (i->first=="nb_rows")
-         _nb_rows = stoi(i->second);
-      if (i->first=="nb_cols" || i->first=="nb_columns")
-         _nb_cols = stoi(i->second);
-      if (i->first=="name") {
-         _name = i->second;
+      if (a.first=="nb_rows")
+         _nb_rows = stoi(a.second);
+      if (a.first=="nb_cols" || a.first=="nb_columns")
+         _nb_cols = stoi(a.second);
+      if (a.first=="name") {
+         _name = a.second;
          _theMatrix->setName(_name);
       }
    }
 }
 
 
-void XMLParser::read_mat(const StringMap::iterator& i)
+void XMLParser::read_mat(const SString& a)
 {
    if (_scan)
       return;
    if (_tag_name=="Material") {
-      if (i->first=="name") {
-         theMaterial._name = i->second;
+      if (a.first=="name") {
+         theMaterial._name = a.second;
          theMaterial._density[_nb_mat].exist = false;
          theMaterial._specific_heat[_nb_mat].exist = false;
          theMaterial._thermal_conductivity[_nb_mat].exist = false;
@@ -1041,206 +889,146 @@ void XMLParser::read_mat(const StringMap::iterator& i)
       }
    }
    if (_tag_name=="Density") {
-      if (_scan>1)
-         cout << "   Found density value." << endl;
-      if (_scan==0) {
-         theMaterial._density[_nb_mat].exist = true;
-         theMaterial._density[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._density[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._density[_nb_mat].exist = true;
+      theMaterial._density[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._density[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="SpecificHeat") {
-      if (_scan>1)
-         cout << "   Found specific heat value." << endl;
-      if (_scan==0) {
-         theMaterial._specific_heat[_nb_mat].exist = true;
-         theMaterial._specific_heat[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._specific_heat[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._specific_heat[_nb_mat].exist = true;
+      theMaterial._specific_heat[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._specific_heat[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="ThermalConductivity") {
-      if (_scan>1)
-         cout << "   Found thermal conductivity value." << endl;
-      if (_scan==0) {
-         theMaterial._thermal_conductivity[_nb_mat].exist = true;
-         theMaterial._thermal_conductivity[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._thermal_conductivity[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._thermal_conductivity[_nb_mat].exist = true;
+      theMaterial._thermal_conductivity[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._thermal_conductivity[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="MeltingTemperature") {
-      if (_scan>1)
-         cout << "   Found melting temperature value." << endl;
-      if (_scan==0) {
-         theMaterial._melting_temperature[_nb_mat].exist = true;
-         theMaterial._melting_temperature[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._melting_temperature[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._melting_temperature[_nb_mat].exist = true;
+      theMaterial._melting_temperature[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._melting_temperature[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="EvaporationTemperature") {
-      if (_scan>1)
-         cout << "   Found evaporation temperature value." << endl;
-      if (_scan==0) {
-         theMaterial._evaporation_temperature[_nb_mat].exist = true;
-         theMaterial._evaporation_temperature[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._evaporation_temperature[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._evaporation_temperature[_nb_mat].exist = true;
+      theMaterial._evaporation_temperature[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._evaporation_temperature[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="ThermalExpansion") {
-      if (_scan>1)
-         cout << "   Found thermal expansion value." << endl;
-      if (_scan==0) {
-         theMaterial._thermal_expansion[_nb_mat].exist = true;
-         theMaterial._thermal_expansion[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._thermal_expansion[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._thermal_expansion[_nb_mat].exist = true;
+      theMaterial._thermal_expansion[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._thermal_expansion[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="LatentHeatMelting") {
-      if (_scan>1)
-         cout << "   Found latent heat for melting value." << endl;
-      if (_scan==0) {
-         theMaterial._latent_heat_melting[_nb_mat].exist = true;
-         theMaterial._latent_heat_melting[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._latent_heat_melting[_nb_mat-1].value = stof(i->second);
-      }
+      theMaterial._latent_heat_melting[_nb_mat].exist = true;
+      theMaterial._latent_heat_melting[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._latent_heat_melting[_nb_mat-1].value = stof(a.second);
    }
    else if (_tag_name=="LatentHeatEvaporation") {
-      if (_scan>1)
-         cout << "   Found latent heat for evaporation value." << endl;
-      if (_scan==0) {
-         theMaterial._latent_heat_evaporation[_nb_mat].exist = true;
-         theMaterial._latent_heat_evaporation[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._latent_heat_evaporation[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._latent_heat_evaporation[_nb_mat].exist = true;
+      theMaterial._latent_heat_evaporation[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._latent_heat_evaporation[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="DielectricConstant") {
-      if (_scan>1)
-         cout << "   Found dielectric constant value." << endl;
-      if (_scan==0) {
-         theMaterial._dielectric_constant[_nb_mat].exist = true;
-         theMaterial._dielectric_constant[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._dielectric_constant[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._dielectric_constant[_nb_mat].exist = true;
+      theMaterial._dielectric_constant[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._dielectric_constant[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="ElectricConductivity") {
-      if (_scan>1)
-         cout << "   Found electric conductivity value." << endl;
-      if (_scan==0) {
-         theMaterial._electric_conductivity[_nb_mat].exist = true;
-         theMaterial._electric_conductivity[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._electric_conductivity[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._electric_conductivity[_nb_mat].exist = true;
+      theMaterial._electric_conductivity[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._electric_conductivity[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="ElectricResistivity") {
-      if (_scan>1)
-         cout << "   Found electric resistivity value." << endl;
-      if (_scan==0) {
-         theMaterial._electric_resistivity[_nb_mat].exist = true;
-         theMaterial._electric_resistivity[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._electric_resistivity[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._electric_resistivity[_nb_mat].exist = true;
+      theMaterial._electric_resistivity[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._electric_resistivity[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="MagneticPermeability") {
-      if (_scan>1)
-         cout << "   Found magnetic permeability value." << endl;
-      if (_scan==0) {
-         theMaterial._magnetic_permeability[_nb_mat].exist = true;
-         theMaterial._magnetic_permeability[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._magnetic_permeability[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._magnetic_permeability[_nb_mat].exist = true;
+      theMaterial._magnetic_permeability[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._magnetic_permeability[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="Viscosity") {
-      if (_scan>1)
-         cout << "   Found viscosity value." << endl;
-      if (_scan==0) {
-         theMaterial._viscosity[_nb_mat].exist = true;
-         theMaterial._viscosity[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._viscosity[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._viscosity[_nb_mat].exist = true;
+      theMaterial._viscosity[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._viscosity[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="YoungModulus") {
-      if (_scan>1)
-         cout << "   Found Young modulus value." << endl;
-      if (_scan==0) {
-         theMaterial._young_modulus[_nb_mat].exist = true;
-         theMaterial._young_modulus[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._young_modulus[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._young_modulus[_nb_mat].exist = true;
+      theMaterial._young_modulus[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._young_modulus[_nb_mat].value = stof(a.second);
    }
    else if (_tag_name=="PoissonRatio") {
-      if (_scan>1)
-         cout << "   Found Poisson ratio value." << endl;
-      if (_scan==0) {
-         theMaterial._poisson_ratio[_nb_mat].exist = true;
-         theMaterial._poisson_ratio[_nb_mat].type = BY_VALUE;
-         if (i->first=="value")
-            theMaterial._poisson_ratio[_nb_mat].value = stof(i->second);
-      }
+      theMaterial._poisson_ratio[_nb_mat].exist = true;
+      theMaterial._poisson_ratio[_nb_mat].type = BY_VALUE;
+      if (a.first=="value")
+         theMaterial._poisson_ratio[_nb_mat].value = stof(a.second);
    }
    else
       ;
 }
 
 
-void XMLParser::read_mesh(const StringMap::iterator& i)
+void XMLParser::read_mesh(const SString& a)
 {
+   _type = MESH_;
    if (_tag_name=="Mesh") {
-      if (_dim==1) {
-         _el_shape = "line";
-         _nb_el_nodes = 2;
+      if (a.first=="file" &&_scan==false)
+         new XMLParser(a.second,*_theMesh);
+      else if (a.first=="dim") {
+         _dim = stoi(a.second);
+         _theMesh->setDim(_dim);
+         switch (_dim) {
+            case 1:
+               _el_shape = "line";
+               _nb_el_nodes = 2;
+               break;
+            case 2:
+               _el_shape = "triangle";
+               _nb_el_nodes = 3;
+               _sd_shape = "line";
+               _nb_sd_nodes = 2;
+               break;
+            case 3:
+               _el_shape = "tetrahedron";
+               _nb_el_nodes = 4;
+               _sd_shape = "triangle";
+               _nb_sd_nodes = 3;
+               break;
+            default:
+               break;
+         }
       }
-      else if (_dim==2) {
-         _el_shape = "triangle";
-         _nb_el_nodes = 3;
-         _sd_shape = "line";
-         _nb_sd_nodes = 2;
-      }
-      else if (_dim==3) {
-         _el_shape = "tetrahedron";
-         _nb_el_nodes = 4;
-         _sd_shape = "triangle";
-         _nb_sd_nodes = 3;
-      }
-      else
-         ;
-      if (i->first=="file" && _scan==0)
-         new XMLParser(i->second,*_theMesh);
-      else if (i->first=="dim") {
-         _dim = stoi(i->second);
-         if (_scan==false)
-            _theMesh->setDim(_dim);
-      }
-      else if (i->first=="nb_dof")
-         _nb_dof = stoi(i->second);
-      if (_scan)
-         cout << "Found a finite element mesh:" << endl;
+      else if (a.first=="nb_dof")
+         _nb_dof = stoi(a.second);
    }
 
    else if (_tag_name=="Elements") {
-      if (i->first=="shape")
-         _el_shape = i->second;
-      if (i->first=="nodes")
-         _nb_el_nodes = stoi(i->second);
+      if (a.first=="shape")
+         _el_shape = a.second;
+      if (a.first=="nodes")
+         _nb_el_nodes = stoi(a.second);
    }
 
    else if (_tag_name=="Sides") {
-      if (i->first=="shape")
-         _sd_shape = i->second;
-      if (i->first=="nodes")
-         _nb_sd_nodes = stoi(i->second);
+      if (a.first=="shape")
+         _sd_shape = a.second;
+      if (a.first=="nodes")
+         _nb_sd_nodes = stoi(a.second);
    }
 
    else if (_tag_name=="Material") {
@@ -1251,84 +1039,86 @@ void XMLParser::read_mesh(const StringMap::iterator& i)
 }
 
 
-void XMLParser::read_prescription(const StringMap::iterator& i)
+void XMLParser::read_prescription(const pair<string,string>& a)
 {
-   vector<string> bccs(6);
-   bccs[0] = "PERIODIC_A"; bccs[1] = "PERIODIC_B"; bccs[2] = "CONTACT";
-   bccs[3] = "CONTACT_M"; bccs[4] = "CONTACT_S"; bccs[5] = "SLIP";
+   static vector<string> bccs {"PERIODIC_A","PERIODIC_B","CONTACT","CONTACT_M","CONTACT_S","SLIP"};
    int bcc[6] = {9999,-9999,9998,9997,-9997,9996};
  
-   if (i->first=="file" && _scan==0)
-      new XMLParser(i->second,*_theMesh);
-   if (_scan)
-      cout << "Found a prescription:" << endl;
+   if (a.first=="file" && _scan==false)
+      new XMLParser(a.second,*_theMesh);
 
-   if (i->first=="code")
-      _par.code = BoundaryConditionCode(bccs,bcc,i->second);
-   else if (i->first=="dof")
-      _par.dof = stoi(i->second);
-   else if (i->first=="x")
-      _par.x = stof(i->second), _par.bx = true;
-   else if (i->first=="y")
-      _par.y = stof(i->second), _par.by = true;
-   else if (i->first=="z")
-      _par.z = stof(i->second), _par.bz = true;
-   else if (i->first=="time")
-      _par.t = stof(i->second), _par.bt = true;
-   else if (i->first=="value") {
+   if (a.first=="code")
+      _par.code = BoundaryConditionCode(bccs,bcc,a.second);
+   else if (a.first=="dof")
+      _par.dof = stoi(a.second);
+   else if (a.first=="x")
+      _par.x = stof(a.second), _par.bx = true;
+   else if (a.first=="y")
+      _par.y = stof(a.second), _par.by = true;
+   else if (a.first=="z")
+      _par.z = stof(a.second), _par.bz = true;
+   else if (a.first=="time")
+      _par.t = stof(a.second), _par.bt = true;
+   else if (a.first=="value") {
    }
    else
       ;
 }
 
 
-void XMLParser::read_field(const StringMap::iterator& i)
+void XMLParser::read_vect(const SString& a)
 {
-   if (_tag_name=="Field" && (_type==MESH||_type==FIELD)) {
-      if (i->first=="file" && _scan==0) {
-         _parser = new XMLParser(i->second);
+   _vect_size = 0;
+   if (_tag_name=="Vector" && (_type==MESH_||_type==GRID||_type==VECTOR)) {
+      if (a.first=="file" && !_scan) {
+         _parser = new XMLParser(a.second);
          _parser->set(*_theMesh);
          _parser->_v = _v;
       }
-      else if (i->first=="name")
-         _name = i->second;
-      else if (i->first=="type") {
-         if (i->second=="Node")
+      else if (a.first=="name")
+         _name = a.second;
+      else if (a.first=="type") {
+         if (a.second=="Node")
             _dof_support = NODE_DOF;
-         else if (i->second=="Element")
+         else if (a.second=="Element")
             _dof_support = ELEMENT_DOF;
-         else if (i->second=="Side")
+         else if (a.second=="Side")
             _dof_support = SIDE_DOF;
-         else if (i->second=="Edge")
+         else if (a.second=="Edge")
             _dof_support = EDGE_DOF;
          else
             ;
       }
-      else if (i->first=="nb_dof")
-         _nb_dof = stoi(i->second);
-      if (i->first=="nx")
-         _nx = stoi(i->second);
-      if (i->first=="ny")
-         _ny = stoi(i->second);
-      if (i->first=="nz")
-         _nz = stoi(i->second);
+      else if (a.first=="nb_dof")
+         _nb_dof = stoi(a.second);
+      else if (a.first=="nx")
+         _nx = stoi(a.second);
+      else if (a.first=="ny")
+         _ny = stoi(a.second);
+      else if (a.first=="nz")
+         _nz = stoi(a.second);
+      else if (a.first=="nt")
+         _nt = stoi(a.second);
+      else if (a.first=="size")
+         _vect_size = stoi(a.second);
+      
    }
    if (_tag_name=="Step") {
       _compact = false;
-      if (i->first=="time")
-         _time = stof(i->second);
+      if (a.first=="time")
+         _time = stof(a.second);
    }
    else if (_tag_name=="constant" || _tag_name=="const") {
       _dof = 0;
-      if (i->first=="value")
-         _val = stof(i->second);
-      else if (i->first=="dof")
-         _dof = stoi(i->second);
+      if (a.first=="value")
+         _val = stof(a.second);
+      else if (a.first=="dof")
+         _dof = stoi(a.second);
    }
    else if (_tag_name=="expression" || _tag_name=="expr") {
       _dof = 0;
-      if (i->first=="dof")
-         _dof = stoi(i->second);
+      if (a.first=="dof")
+         _dof = stoi(a.second);
    }
 }
 
@@ -1348,7 +1138,7 @@ bool XMLParser::on_cdata(string cdata)
    if (_type==PROJECT)
       read_project_data(tokens,it);
 
-   else if (_type==MESH)
+   else if (_type==MESH_)
       read_mesh_data(tokens,it);
 
    else if (_type==DOMAIN_)
@@ -1371,21 +1161,21 @@ bool XMLParser::on_cdata(string cdata)
    else if (_type==PRESCRIBE && _set_prescription && _prescription_type==_par.type)
       read_prescribe_data(tokens,it);
 
-// Field
-   else if ((_tag_name=="Step"||(_tag_name=="Field"&&_compact)) && _set_field)
-      read_field_data(tokens,it);
-   else if ((_tag_name=="constant"||_tag_name=="const") && _set_field)
-      read_const_field_data(tokens,it);
-   else if ((_tag_name=="expression"||_tag_name=="expr") && _set_field)
-      read_exp_field_data(tokens,it);
+// Vector
+   else if ((_tag_name=="Step"||(_tag_name=="Field"&&_compact)||(_tag_name=="Vector"&&_compact)) && _set_vector)
+      read_vect_data(tokens,it);
+   else if ((_tag_name=="constant"||_tag_name=="const") && _set_vector)
+      read_const_vect_data(tokens,it);
+   else if ((_tag_name=="expression"||_tag_name=="expr") && _set_vector)
+      read_exp_vect_data(tokens,it);
 
-// Tabulated functions
+// Tabulated function
    else if (_type==FUNCTION) {
       if (_tag_name=="Data")
          read_tab_data(tokens,it);
    }
 
-// Tabulated functions
+// Matrix
    else if (_type==MATRIX)
       read_matrix_data(tokens,it);
 
@@ -1405,8 +1195,8 @@ void XMLParser::read_prescribe_data(const vector<string>&     tokens,
 }
 
 
-void XMLParser::read_field_data(const vector<string>&     tokens,
-                                vector<string>::iterator& it)
+void XMLParser::read_vect_data(const vector<string>&     tokens,
+                               vector<string>::iterator& it)
 {
    size_t nb = 0;
    if (_theMesh) {
@@ -1433,206 +1223,151 @@ void XMLParser::read_field_data(const vector<string>&     tokens,
       }
       else
          _ft->push_back(_time);
-      if (_dof_support==NODE_DOF)
-         cout << "Found a nodewise field vector, Name: " << _name << ", Time = " 
-              << _time << ", Nb. of DOF: " << _nb_dof << endl;
-      else if (_dof_support==ELEMENT_DOF)
-         cout << "Found an elementwise field vector, Name: " << _name << ", Time = "
-              << _time << ", Nb. of DOF: " << _nb_dof << endl;
-      else if (_dof_support==SIDE_DOF)
-         cout << "Found a sidewise field vector, Name: " << _name << ", Time = "
-              << _time << ", Nb. of DOF: " << _nb_dof << endl;
-      else if (_dof_support==EDGE_DOF)
-         cout << "Found an edgewise field vector, Name: " << _name << ", Time = "
-              << _time << ", Nb. of DOF: " << _nb_dof << endl;
-      else
-         ;
+      return;
+   }
+   if (_all_steps>0 && _compact) {
+      size_t i = 0;
+      while (it!=tokens.end()) {
+         _time = stof(*it++);
+         for (size_t j=0; j<nb; j++)
+            (*_V)[i].push_back(stof(*it++));
+         i++;
+      }
    }
    else {
-      if (_all_steps>0 && _compact) {
-         size_t i = 0;
-         while (it!=tokens.end()) {
-            _time = stof(*it++);
-            for (size_t j=0; j<nb; j++)
-               (*_V)[i].push_back(stof(*it++));
-            i++;
-         }
-      }
-      else {
-         if (_compact) {
-            if ((_name==_sought_name || _sought_name=="ANYTHING") && _set_field) {
-               if (_nx > 0) {
+      if (_compact) {
+         if ((_name==_sought_name || _sought_name=="ANYTHING") && _set_vector) {
+            if (_nx>0) {
+               if (_ny==0) {
+                  _vect_size = _nx;
+                  _v->setSize(_nx);
+                  for (size_t i=0; i<_vect_size; ++i)
+                     (*_v)[i] = stof(*it++);
+               }
+               else if (_nz==0) {
+                  _vect_size = _nx*_ny;
+                  _v->setSize(_nx,_ny);
+                  for (size_t i=0; i<_vect_size; ++i)
+                     (*_v)[i] = stof(*it++);
+               }
+               else if (_nt==0) {
+                  _vect_size = _nx*_ny*_nz;
                   _v->setSize(_nx,_ny,_nz);
+                  for (size_t i=0; i<_vect_size; ++i)
+                     (*_v)[i] = stof(*it++);
+               }
+               else {
+                  _vect_size = _nx*_ny*_nz*_nt;
+                  _v->setSize(_nx,_ny,_nz,_nt);
+                  for (size_t i=0; i<_vect_size; ++i)
+                     (*_v)[i] = stof(*it++);
+               }
+            }
+            else {
+               if (nb > 0) {
                   while (it!=tokens.end()) {
-                     if (_sought_time >= 0)
-                        _time = atof((*it++).c_str());
-                     for (size_t i=1; i<=_nx; i++) {
-                        for (size_t j=1; j<=_ny; j++) {
-                           for (size_t k=1; k<=_nz; k++)
-                              (*_v)(i,j,k) = stof(*it++);
-                        }
+                     _time = stof(*it++);
+                     if (_time==_sought_time || _sought_time==-1.0) {
+                        _v->setMesh(*_theMesh,_dof_support,_nb_dof);
+                        _v->setName(_name);
+                        _v->setTime(_time);
+                        for (size_t n=1; n<=_v->getNb(); ++n)
+                           for (size_t k=1; k<=_nb_dof; ++k)
+                              (*_v)(n,k) = stof(*it++);
+                     }
+                     else {
+                        for (size_t n=1; n<=_v->getNb()*_nb_dof; ++n)
+                           *it++;
                      }
                   }
                }
                else {
-                  if (nb > 0) {
-                     while (it!=tokens.end()) {
-                        _time = stof(*it++);
-                        if (_time==_sought_time || _sought_time==-1.0) {
-                           _v->setMesh(*_theMesh,_dof_support,_nb_dof);
-                           _v->setName(_name);
-                           _v->setTime(_time);
-                           for (size_t n=1; n<=_v->getNb(); n++)
-                              for (size_t k=1; k<=_nb_dof; k++)
-                                 (*_v)(n,k) = stof(*it++);
-                        }
-                        else {
-                           for (size_t n=1; n<=_v->getNb()*_nb_dof; n++)
-                              *it++;
-                        }
-                     }
-                  }
-                  else {
-                     vector<real_t> V;
-                     _time = stof(*it++);
-                     while (it!=tokens.end())
-                        V.push_back(stof(*it++));
-                     _v->setSize(V.size());
-                     for (size_t i=0; i<V.size(); i++)
-                        (*_v)[i] = V[i];
-                  }
+                  vector<real_t> V;
+                  _time = stof(*it++);
+                  while (it!=tokens.end())
+                     V.push_back(stof(*it++));
+                  _v->setSize(V.size());
+                  for (size_t i=0; i<V.size(); ++i)
+                     (*_v)[i] = V[i];
                }
             }
          }
-         else {
-            if ((_name==_sought_name || _sought_name=="ANYTHING") &&
-                (_time==_sought_time || _sought_time==-1.0) && _set_field) {
-               _v->setMesh(*_theMesh,_dof_support,_nb_dof);
-               _v->setName(_name);
-               _v->setTime(_time);
-               for (size_t n=1; n<=_v->getNb(); n++)
-                  for (size_t k=1; k<=_nb_dof; k++)
-                     (*_v)(n,k) = stof(*it++);
-            }
+      }
+      else {
+         if ((_name==_sought_name || _sought_name=="ANYTHING") &&
+             (_time==_sought_time || _sought_time==-1.0) && _set_vector) {
+            _v->setMesh(*_theMesh,_dof_support,_nb_dof);
+            _v->setName(_name);
+            _v->setTime(_time);
+            for (size_t n=1; n<=_v->getNb(); ++n)
+               for (size_t k=1; k<=_nb_dof; ++k)
+                  (*_v)(n,k) = stof(*it++);
          }
       }
    }
 }
 
 
-void XMLParser::read_const_field_data(const vector<string>&     tokens,
-                                      vector<string>::iterator& it)
+void XMLParser::read_const_vect_data(const vector<string>&     tokens,
+                                     vector<string>::iterator& it)
+{
+   if ((_name==_sought_name || _sought_name=="ANYTHING") &&
+       (_time==_sought_time || _sought_time==-1.0) && _set_vector) {
+      _v->setTime(_time);
+      _val = stof(*it++);
+      for (size_t k=1; k<=_v->getNb(); k++) {
+         if (_dof==0)
+            for (size_t l=1; l<=_v->getNbDOF(); l++)
+               (*_v)(k,l) = _val;
+         else
+            (*_v)(k,_dof) = _val;
+      }
+   }
+}
+
+
+void XMLParser::read_const_vect_data()
 {
    if (_scan) {
       _ft->push_back(_time);
-      if (_scan>1) {
-         if (_dof_support==NODE_DOF)
-            cout << "Found a nodewise field vector, Name: " << _name << ", Time = " 
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==ELEMENT_DOF)
-            cout << "Found an elementwise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==SIDE_DOF)
-            cout << "Found a sidewise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==EDGE_DOF)
-            cout << "Found an edgewise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else
-            ;
-      }
+      return;
    }
-   else {
-      if ((_name==_sought_name || _sought_name=="ANYTHING") &&
-          (_time==_sought_time || _sought_time==-1.0) && _set_field) {
-         _v->setTime(_time);
-         _val = stof(*it++);
-         for (size_t k=1; k<=_v->getNb(); k++) {
-            if (_dof==0)
-               for (size_t l=1; l<=_v->getNbDOF(); l++)
-                  (*_v)(k,l) = _val;
-            else
-               (*_v)(k,_dof) = _val;
-         }
-      }
-   }
-}
 
-
-void XMLParser::read_const_field_data()
-{
    vector<string>::iterator it;
-   if (_scan) {
-      _ft->push_back(_time);
-      if (_scan>1) {
-         if (_dof_support==NODE_DOF)
-            cout << "Found a nodewise field vector, Name: " << _name << ", Time = " 
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==ELEMENT_DOF)
-            cout << "Found an elementwise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==SIDE_DOF)
-            cout << "Found a sidewise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==EDGE_DOF)
-            cout << "Found an edgewise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else
-            ;
-      }
-   }
-   else {
-      if ((_name==_sought_name || _sought_name=="ANYTHING") &&
-          (_time==_sought_time || _sought_time==-1.0) && _set_field) {
-         _v->setTime(_time);
-         _val = stof(*it++);
-         for (size_t k=1; k<=_v->getNb(); k++) {
-            if (_dof==0) {
-               for (size_t l=1; l<=_v->getNbDOF(); l++)
-                  (*_v)(k,l) = _val;
-            }
-            else
-               (*_v)(k,_dof) = _val;
+   if ((_name==_sought_name || _sought_name=="ANYTHING") &&
+       (_time==_sought_time || _sought_time==-1.0) && _set_vector) {
+      _v->setTime(_time);
+      _val = stof(*it++);
+      for (size_t k=1; k<=_v->getNb(); k++) {
+         if (_dof==0) {
+            for (size_t l=1; l<=_v->getNbDOF(); l++)
+               (*_v)(k,l) = _val;
          }
+         else
+            (*_v)(k,_dof) = _val;
       }
    }
 }
 
 
-void XMLParser::read_exp_field_data(const vector<string>&     tokens,
-                                    vector<string>::iterator& it)
+void XMLParser::read_exp_vect_data(const vector<string>&     tokens,
+                                   vector<string>::iterator& it)
 {
    if (_scan) {
       _ft->push_back(_time);
-      if (_scan>1) {
-         if (_dof_support==NODE_DOF)
-            cout << "Found a nodewise field vector, Name: " << _name << ", Time = " 
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==ELEMENT_DOF)
-            cout << "Found an elementwise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==SIDE_DOF)
-            cout << "Found a sidewise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else if (_dof_support==EDGE_DOF)
-            cout << "Found an edgewise field vector, Name: " << _name << ", Time = "
-                 << _time << ", Nb. of DOF: " << _nb_dof << endl;
-         else
-            ;
-      }
+      return;
    }
-   else {
-      if ((_name==_sought_name || _sought_name=="ANYTHING") &&
-          (_time==_sought_time || _sought_time==-1.0) && _set_field) {
-         _v->setTime(_time);
-         _theFct.set(*it++);
-         for (size_t n=1; n<=_v->getNb(); n++) {
-            if (_dof==0)
-               for (size_t k=1; k<=_v->getNbDOF(); k++)
-                  parse_exp(n,k);
-            else
-               parse_exp(n,_dof);
-         }
+
+   if ((_name==_sought_name || _sought_name=="ANYTHING") &&
+       (_time==_sought_time || _sought_time==-1.0) && _set_vector) {
+      _v->setTime(_time);
+      _theFct.set(*it++);
+      for (size_t n=1; n<=_v->getNb(); n++) {
+         if (_dof==0)
+            for (size_t k=1; k<=_v->getNbDOF(); k++)
+               parse_exp(n,k);
+         else
+            parse_exp(n,_dof);
       }
    }
 }
@@ -1701,154 +1436,94 @@ void XMLParser::read_mat_data(const vector<string>&     tokens,
                               vector<string>::iterator& it)
 {
    if (_tag_name=="Density") {
-      if (_scan)
-         cout << "   Density is given." << endl;
-      else {
-         theMaterial._density[_nb_mat].exist = true;
-         theMaterial._density[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._density[_nb_mat].value = stoi(*it);
-      }
+      theMaterial._density[_nb_mat].exist = true;
+      theMaterial._density[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._density[_nb_mat].value = stoi(*it);
    }
    else if (_tag_name=="SpecificHeat") {
-      if (_scan)
-         cout << "   Specific heat is given." << endl;
-      else {
-         theMaterial._specific_heat[_nb_mat].exist = true;
-         theMaterial._specific_heat[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._specific_heat[_nb_mat].value = stof(*it);
-      }
+      theMaterial._specific_heat[_nb_mat].exist = true;
+      theMaterial._specific_heat[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._specific_heat[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="ThermalConductivity") {
-      if (_scan)
-         cout << "   Thermal conductivity is given." << endl;
-      else {
-         theMaterial._thermal_conductivity[_nb_mat].exist = true;
-         theMaterial._thermal_conductivity[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._thermal_conductivity[_nb_mat].value = stof(*it);
-      }
+      theMaterial._thermal_conductivity[_nb_mat].exist = true;
+      theMaterial._thermal_conductivity[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._thermal_conductivity[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="MeltingTemperature") {
-      if (_scan)
-         cout << "   Melting temperature is given." << endl;
-      else {
-         theMaterial._melting_temperature[_nb_mat].exist = true;
-         theMaterial._melting_temperature[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._melting_temperature[_nb_mat].value = stof(*it);
-      }
+      theMaterial._melting_temperature[_nb_mat].exist = true;
+      theMaterial._melting_temperature[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._melting_temperature[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="EvaporationTemperature") {
-      if (_scan)
-         cout << "   Evaporation temperature is given." << endl;
-      else {
-         theMaterial._evaporation_temperature[_nb_mat].exist = true;
-         theMaterial._evaporation_temperature[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._evaporation_temperature[_nb_mat].value = stof(*it);
-      }
+      theMaterial._evaporation_temperature[_nb_mat].exist = true;
+      theMaterial._evaporation_temperature[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._evaporation_temperature[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="ThermalExpansion") {
-      if (_scan)
-         cout << "   Thermal expansion is given." << endl;
-      else {
-         theMaterial._thermal_expansion[_nb_mat].exist = true;
-         theMaterial._thermal_expansion[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._thermal_expansion[_nb_mat].value = stof(*it);
-      }
+      theMaterial._thermal_expansion[_nb_mat].exist = true;
+      theMaterial._thermal_expansion[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._thermal_expansion[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="LatentHeatMelting") {
-      if (_scan)
-         cout << "   Latent heat for melting is given." << endl;
-      else {
-         theMaterial._latent_heat_melting[_nb_mat].exist = true;
-         theMaterial._latent_heat_melting[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._latent_heat_melting[_nb_mat].value = stof(*it);
-      }
+      theMaterial._latent_heat_melting[_nb_mat].exist = true;
+      theMaterial._latent_heat_melting[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._latent_heat_melting[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="LatentHeatEvaporation") {
-      if (_scan)
-         cout << "   Latent heat for evaporation is given." << endl;
-      else {
-         theMaterial._latent_heat_evaporation[_nb_mat].exist = true;
-         theMaterial._latent_heat_evaporation[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._latent_heat_evaporation[_nb_mat].value = stof(*it);
-      }
+      theMaterial._latent_heat_evaporation[_nb_mat].exist = true;
+      theMaterial._latent_heat_evaporation[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._latent_heat_evaporation[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="DielectricConstant") {
-      if (_scan)
-         cout << "   Dielectric constant is given." << endl;
-      else {
-         theMaterial._dielectric_constant[_nb_mat].exist = true;
-         theMaterial._dielectric_constant[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._dielectric_constant[_nb_mat].value = stof(*it);
-      }
+      theMaterial._dielectric_constant[_nb_mat].exist = true;
+      theMaterial._dielectric_constant[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._dielectric_constant[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="ElectricConductivity") {
-      if (_scan)
-         cout << "   Electric conductivity is given." << endl;
-      else {
-         theMaterial._electric_conductivity[_nb_mat].exist = true;
-         theMaterial._electric_conductivity[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._electric_conductivity[_nb_mat].value = stof(*it);
-      }
+      theMaterial._electric_conductivity[_nb_mat].exist = true;
+      theMaterial._electric_conductivity[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._electric_conductivity[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="ElectricResistivity") {
-      if (_scan)
-         cout << "   Electric resistivity is given." << endl;
-      else {
-         theMaterial._electric_resistivity[_nb_mat].exist = true;
-         theMaterial._electric_resistivity[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._electric_resistivity[_nb_mat].value = stof(*it);
-      }
+      theMaterial._electric_resistivity[_nb_mat].exist = true;
+      theMaterial._electric_resistivity[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._electric_resistivity[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="MagneticPermeability") {
-      if (_scan)
-         cout << "   Magnetic permeability is given." << endl;
-      else {
-         theMaterial._magnetic_permeability[_nb_mat].exist = true;
-         theMaterial._magnetic_permeability[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._magnetic_permeability[_nb_mat].value = stof(*it);
-      }
+      theMaterial._magnetic_permeability[_nb_mat].exist = true;
+      theMaterial._magnetic_permeability[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._magnetic_permeability[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="Viscosity") {
-      if (_scan)
-         cout << "   Viscosity is given." << endl;
-      else {
-         theMaterial._viscosity[_nb_mat].exist = true;
-         theMaterial._viscosity[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._viscosity[_nb_mat].value = stof(*it);
-      }
+      theMaterial._viscosity[_nb_mat].exist = true;
+      theMaterial._viscosity[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._viscosity[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="YoungModulus") {
-      if (_scan)
-         cout << "   Young modulus is given." << endl;
-      else {
-         theMaterial._young_modulus[_nb_mat].exist = true;
-         theMaterial._young_modulus[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._young_modulus[_nb_mat].value = stof(*it);
-      }
+      theMaterial._young_modulus[_nb_mat].exist = true;
+      theMaterial._young_modulus[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._young_modulus[_nb_mat].value = stof(*it);
    }
    else if (_tag_name=="PoissonRatio") {
-      if (_scan)
-         cout << "   Poisson ratio is given." << endl;
-      else {
-         theMaterial._poisson_ratio[_nb_mat].exist = true;
-         theMaterial._poisson_ratio[_nb_mat].type = BY_VALUE;
-         if (it!=tokens.end())
-            theMaterial._poisson_ratio[_nb_mat].value = stof(*it);
-      }
+      theMaterial._poisson_ratio[_nb_mat].exist = true;
+      theMaterial._poisson_ratio[_nb_mat].type = BY_VALUE;
+      if (it!=tokens.end())
+         theMaterial._poisson_ratio[_nb_mat].value = stof(*it);
    }
    else
       ;
@@ -2023,7 +1698,7 @@ void XMLParser::read_project_data(const vector<string>&     tokens,
    }
    else if (_tag_name=="array") {
       size_t k = 0;
-      while (it!=tokens.end() && _scan==0)
+      while (it!=tokens.end() && _scan==false)
          (_ipf->_array_value[k++]).push_back(stof(*it++));
       _ipf->_array_size.push_back(k);
    }
@@ -2143,7 +1818,7 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
             a.z = stof(*it++);
          int mark = stoi(*it++);
          _nb_nodes++;
-         if (_scan==0) {
+         if (_scan==false) {
             Node *nd = new Node(_nb_nodes,a);
             nd->setNbDOF(_nb_dof);
             nd->setDOF(first_dof,_nb_dof);
@@ -2152,8 +1827,6 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
             _theMesh->Add(nd);
          }
       }
-      if (_scan)
-         cout << setw(8) << _nb_nodes << " nodes" << endl;
    }
 
 // Elements
@@ -2165,15 +1838,13 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
             nnd[j] = stoi(*it++);
          int code = stoi(*it++);
          _nb_elements++;
-         if (_scan==0) {
+         if (_scan==false) {
             Element *el = new Element(_nb_elements,_el_shape,code);
             for (size_t k=0; k<_nb_el_nodes; k++)
                el->Add((*_theMesh)[nnd[k]]);
             _theMesh->Add(el);
          }
       }
-      if (_scan)
-         cout << setw(8) << _nb_elements << " elements" << endl;
    }
 
 // Sides
@@ -2185,7 +1856,7 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
             nnd[j] = stoi(*it++);
          int mark = stoi(*it++);
          _nb_sides++;
-         if (_scan==0) {
+         if (_scan==false) {
             Side *sd = new Side(_nb_sides,_sd_shape);
             for (size_t k=0; k<_nb_sd_nodes; k++)
                sd->Add((*_theMesh)[nnd[k]]);
@@ -2197,8 +1868,6 @@ void XMLParser::read_mesh_data(const vector<string>&     tokens,
             _theMesh->Add(sd);
          }
       }
-      if (_scan)
-         cout << setw(8) << _nb_sides << " sides" << endl;
    }
 }
 
@@ -2208,7 +1877,7 @@ bool XMLParser::on_tag_close(string tag_name)
    if (Verbosity>10)
       cout << "CLOSING TAG: " << tag_name << endl;
    if (tag_name=="Constant" || tag_name=="Const") {
-      read_const_field_data();
+      read_const_vect_data();
    }
    if (tag_name=="Prescription")
       _set_prescription = false;

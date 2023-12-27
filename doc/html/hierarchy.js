@@ -122,14 +122,17 @@ var hierarchy =
       [ "Sphere", "classOFELI_1_1Sphere.html", null ],
       [ "Triangle", "classOFELI_1_1Triangle.html", null ]
     ] ],
+    [ "FuncApprox", "classOFELI_1_1FuncApprox.html", null ],
     [ "Funct", "classOFELI_1_1Funct.html", null ],
     [ "Gauss", "classOFELI_1_1Gauss.html", null ],
+    [ "GeoModel", "classOFELI_1_1GeoModel.html", null ],
     [ "Grid", "classOFELI_1_1Grid.html", null ],
     [ "Integration", "classOFELI_1_1Integration.html", null ],
     [ "IOField", "classOFELI_1_1IOField.html", null ],
     [ "IPF", "classOFELI_1_1IPF.html", null ],
     [ "Iter< T_ >", "classOFELI_1_1Iter.html", null ],
     [ "Iter< real_t >", "classOFELI_1_1Iter.html", null ],
+    [ "LeastSquare", "classOFELI_1_1LeastSquare.html", null ],
     [ "LinearSolver", "classOFELI_1_1LinearSolver.html", null ],
     [ "LocalMatrix< T_, NR_, NC_ >", "classOFELI_1_1LocalMatrix.html", null ],
     [ "LocalMatrix< real_t, 2, 2 >", "classOFELI_1_1LocalMatrix.html", null ],
@@ -141,6 +144,10 @@ var hierarchy =
     [ "LPSolver", "classOFELI_1_1LPSolver.html", null ],
     [ "Material", "classOFELI_1_1Material.html", null ],
     [ "Matrix< T_ >", "classOFELI_1_1Matrix.html", [
+      [ "BMatrix< real_t >", "classOFELI_1_1BMatrix.html", null ],
+      [ "DMatrix< real_t >", "classOFELI_1_1DMatrix.html", null ],
+      [ "DSMatrix< real_t >", "classOFELI_1_1DSMatrix.html", null ],
+      [ "SpMatrix< real_t >", "classOFELI_1_1SpMatrix.html", null ],
       [ "BMatrix< T_ >", "classOFELI_1_1BMatrix.html", null ],
       [ "DMatrix< T_ >", "classOFELI_1_1DMatrix.html", null ],
       [ "DSMatrix< T_ >", "classOFELI_1_1DSMatrix.html", null ],
@@ -149,12 +156,7 @@ var hierarchy =
       [ "SpMatrix< T_ >", "classOFELI_1_1SpMatrix.html", null ],
       [ "TrMatrix< T_ >", "classOFELI_1_1TrMatrix.html", null ]
     ] ],
-    [ "Matrix< real_t >", "classOFELI_1_1Matrix.html", [
-      [ "BMatrix< real_t >", "classOFELI_1_1BMatrix.html", null ],
-      [ "DMatrix< real_t >", "classOFELI_1_1DMatrix.html", null ],
-      [ "DSMatrix< real_t >", "classOFELI_1_1DSMatrix.html", null ],
-      [ "SpMatrix< real_t >", "classOFELI_1_1SpMatrix.html", null ]
-    ] ],
+    [ "Matrix< real_t >", "classOFELI_1_1Matrix.html", null ],
     [ "Mesh", "classOFELI_1_1Mesh.html", null ],
     [ "MeshAdapt", "classOFELI_1_1MeshAdapt.html", null ],
     [ "Muscl", "classOFELI_1_1Muscl.html", [
@@ -192,11 +194,13 @@ var hierarchy =
     [ "Reconstruction", "classOFELI_1_1Reconstruction.html", null ],
     [ "Side", "classOFELI_1_1Side.html", null ],
     [ "SideList", "classOFELI_1_1SideList.html", null ],
+    [ "SpaceTime", "structOFELI_1_1SpaceTime.html", null ],
     [ "Tabulation", "classOFELI_1_1Tabulation.html", null ],
     [ "Timer", "classOFELI_1_1Timer.html", null ],
     [ "TimeStepping", "classOFELI_1_1TimeStepping.html", null ],
     [ "Vect< T_ >", "classOFELI_1_1Vect.html", null ],
     [ "Vect< complex_t >", "classOFELI_1_1Vect.html", null ],
+    [ "Vect< int >", "classOFELI_1_1Vect.html", null ],
     [ "Vect< OFELI::Point< real_t > >", "classOFELI_1_1Vect.html", null ],
     [ "Vect< real_t >", "classOFELI_1_1Vect.html", null ]
 ];
