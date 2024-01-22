@@ -120,7 +120,7 @@ void ICPG1D::setInitialCondition_shock_tube(const LocalVect<real_t,3>& BcG,
 // Two differents zones (for shock tube initial solution)
    MESH_EL {
       size_t n = theElementLabel;
-      Triang3 tria(theElement);
+      Triang3 tria(the_element);
       if (tria.getCenter().x<x0) {
          (*_r)(n) = BcG[0];
          (*_v)(n) = BcG[1];
@@ -138,7 +138,7 @@ void ICPG1D::setInitialCondition_shock_tube(const LocalVect<real_t,3>& BcG,
 void ICPG1D::setInitialCondition(const LocalVect<real_t,3>& U)
 {
    MESH_EL {
-      size_t n = theElementLabel;
+      size_t n = the_element->n();
       (*_r)(n) = U[0];
       (*_v)(n) = U[1];
       (*_p)(n) = U[2];
@@ -696,7 +696,7 @@ void ICPG1D::setBC(int    code,
 void ICPG1D::setBC(real_t u)
 {
    MESH_SD
-      setBC(*theSide,u);
+      setBC(*the_side,u);
 }
 
 
@@ -796,7 +796,7 @@ void ICPG1D::setInOutflowBC(const LocalVect<real_t,3>& u)
 void ICPG1D::fromPrimalToConservative()
 {
    MESH_EL {
-      size_t n = theElementLabel;
+      size_t n = the_element->n();
       real_t rho = (*_r)(n);
       (*_p)(n) = (*_p)(n)/(_Gamma-1.) + 0.5*rho*(*_v)(n)*(*_v)(n);
       (*_v)(n) *= rho;
@@ -807,7 +807,7 @@ void ICPG1D::fromPrimalToConservative()
 void ICPG1D::fromConservativeToPrimal()
 {
    MESH_EL {
-      size_t n = theElementLabel;
+      size_t n = the_element->n();
       (*_v)(n) /= (*_r)(n);
       (*_p)(n) = ((*_p)(n) - 0.5*(*_r)(n)*(*_v)(n)*(*_v)(n))*(_Gamma-1.) ;
    }
@@ -823,8 +823,8 @@ void ICPG1D::forward()
 
 // Warning: v is now rU and p is now E
    MESH_SD {
-      ns = theSide->n();
-      elg = theSide->getNeighborElement(1);
+      ns = the_side->n();
+      elg = the_side->getNeighborElement(1);
       ng = elg->n();
       rate = _Lrate(ns) * _TimeStep;
       (*_r)(ng) -=_Fr(ns) * rate;
@@ -832,8 +832,8 @@ void ICPG1D::forward()
          cerr << "Warning: Negative density, Fr = " << _Fr(ns,1)*rate << endl;
       (*_v)(ng) -= _FrU(ns)*rate;
       (*_p)(ng) -= _FE(ns) *rate;
-      if (!theSide->isOnBoundary()) {
-         eld = theSide->getNeighborElement(2);
+      if (!the_side->isOnBoundary()) {
+         eld = the_side->getNeighborElement(2);
          nd = eld->n();
          rate = _Rrate(ns)*_TimeStep;
          (*_r)(nd) += _Fr(ns)*rate;
@@ -854,7 +854,7 @@ void ICPG1D::Forward(const Vect<real_t>& flux,
    size_t ns, ln, rn;
    real_t rate;
    MESH_SD {
-      ns = theSideLabel;
+      ns = the_side->n();
       lel = TheSide.getNeighborElement(1);
       ln = lel->n();
       rate = _Lrate(ns)*_TimeStep;

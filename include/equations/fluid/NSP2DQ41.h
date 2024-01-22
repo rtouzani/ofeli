@@ -89,10 +89,10 @@ class NSP2DQ41 : virtual public Equa_Fluid<4,8,2,4>
  *  @param [in] opt Parameter that selects data type for input. This parameter
  *  is to be chosen in the enumerated variable EqDataType
  *  @param [in] u Vect instance that contains input vector data
- *  List of data types contains <tt>INITIAL_FIELD</tt>, <tt>BOUNDARY_CONDITION_DATA</tt>, 
- *  <tt>SOURCE_DATA</tt> or <tt>FLUX</tt> with obvious meaning
+ *  List of data types contains <tt>INITIAL</tt>, <tt>BOUNDARY_CONDITION_DATA</tt>, 
+ *  <tt>SOURCE</tt> or <tt>FLUX</tt> with obvious meaning
  */
-    void setInput(EqDataType    opt,
+    void setInput(EType         opt,
                   Vect<real_t>& u);
 
 /** \brief Add contribution of periodic boundary condition (by a penalty technique).

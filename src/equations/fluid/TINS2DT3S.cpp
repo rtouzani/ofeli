@@ -86,7 +86,7 @@ void TINS2DT3S::init()
    PressureMatrix();
 #if !defined(USE_EIGEN)
    _PP.setType(DILU_PREC);
-   //   _PP.setMatrix(_PM);
+   _PP.setMatrix(_PM);
 #endif
    _q.setSize(_nb_nodes);
    _c.setSize(_nb_nodes,2);
@@ -94,11 +94,11 @@ void TINS2DT3S::init()
 }
 
 
-void TINS2DT3S::setInput(EqDataType    opt,
+void TINS2DT3S::setInput(EType         opt,
                          Vect<real_t>& u)
 {
    Equa::setInput(opt,u);
-   if (opt==PRESSURE_FIELD) {
+   if (opt==EType::PRESSURE) {
       _p = &u;
       getPressure();
       updateVelocity();
@@ -114,7 +114,7 @@ void TINS2DT3S::set(Element* el)
       setMaterial();
       _Re = 1.0;
    }
-   _ne = element_label;
+   _ne = el->n();
    Triang3 tr(el);
    _el_geo.det = tr.getDet();
    _el_geo.center = tr.getCenter();
@@ -209,9 +209,9 @@ void TINS2DT3S::PressureMatrix()
    MESH_EL {
       set(the_element);
       real_t a=0.5*_TimeInt.delta*_el_geo.det;
-      for (size_t i=0; i<3; i++) {
+      for (size_t i=0; i<3; ++i) {
          _MM(_en[i]) += _cd/_TimeInt.delta;
-         for (size_t j=0; j<3; j++) {
+         for (size_t j=0; j<3; ++j) {
             _PM.add(_en[i],_en[j],a*(_dSh[i],_dSh[j]));
             Dx.add(_en[i],_en[j],_dSh[j].x*_el_geo.det);
             Dy.add(_en[i],_en[j],_dSh[j].y*_el_geo.det);

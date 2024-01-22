@@ -72,14 +72,14 @@ int main(int argc, char *argv[])
       if (Verbosity > 1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
       Vect<double> u(ms), bc(ms), bf(ms);
-      p.get(BOUNDARY_CONDITION,bc,0);
-      p.get(POINT_FORCE,bf);
+      p.getBoundaryCondition(bc,0);
+      p.getPointForce(bf);
 
 //    Run
       Beam3DL2 eq(ms,u);
       eq.set(0.1,0.1,0.1);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(POINT_FORCE,bf);
+      eq.setBoundaryCondition(bc);
+      eq.setPointForce(bf);
       eq.run();
 
 //    Output solution

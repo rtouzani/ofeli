@@ -866,91 +866,76 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga3757febaa4d0638468a11bb96593f8da" id="r_ga3757febaa4d0638468a11bb96593f8da"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga3757febaa4d0638468a11bb96593f8da">PDE_Terms</a> { <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daabff007b8366c6ab06e1b0c5644455687">CONSISTENT_MASS</a> = 0x00001000
+<tr class="memitem:ga76756c7eef4f22bb13ac06f6c8c197cb" id="r_ga76756c7eef4f22bb13ac06f6c8c197cb"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga76756c7eef4f22bb13ac06f6c8c197cb">PDE_Terms</a> : int { <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaaf8a806916cc39b1a027246e06a64aae">NOTERM</a> = 0x00000000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa7b9aa2a958e5f880122b85b34aaded2c">LUMPED_MASS</a> = 0x00002000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba25fde2868c4dc4355fb7e9ddfd8122e5">CONSISTENT_MASS</a> = 0x00000010
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa1c910486b66cf1ccce2ef81d4318227f">MASS</a> = 0x00002000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba8bfd09658c7d48cc60f6840cd439dc30">CONSISTENT_CAPACITY</a> = 0x00000010
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daab7dda006facfb86f75aa6e0210a77448">CAPACITY</a> = 0x00004000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba1b2e5127f418cd952f9fb0fa050b6709">LUMPED_MASS</a> = 0x00000020
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa9adacbe252e3e2a535200ec3146a4dd2">CONSISTENT_CAPACITY</a> = 0x00004000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbacb6c2c4b3c8f95f9b58ad13f0a97245d">MASS</a> = 0x00000020
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daab0cd85fc68e58a11327458019cc6e7f3">LUMPED_CAPACITY</a> = 0x00008000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbab0f7435a7395b8a2d88240e7d1c5c690">LUMPED_CAPACITY</a> = 0x00000020
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daaf5dcdbc91041cc8ab41973956078c70d">VISCOSITY</a> = 0x00010000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba5b3bc952620c21981c4b3b304fbd74f8">CAPACITY</a> = 0x00000020
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa1fa87e583599b3a51cceb6ebcac684c2">STIFFNESS</a> = 0x00020000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba13d621435dde53f9c38dce061f879e4b">VISCOSITY</a> = 0x00000040
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa64b145492a27539220bb4a4cb95af90c">DIFFUSION</a> = 0x00040000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaa231c1d74fe18f9e82224588887d1971">STIFFNESS</a> = 0x00000080
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa8ae33843a530a8915f1852770b05809d">MOBILITY</a> = 0x00040000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac9f4e4b1345e4e958a307bf67ae358a7">DIFFUSION</a> = 0x00000100
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa718e0728cf596ce66dfc59137a21a626">CONVECTION</a> = 0x00080000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbadf9db257294a6f11ff6ce0e2d9448616">MOBILITY</a> = 0x00000200
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad1a05a357ad745786854148cbe300731">DEVIATORIC</a> = 0x00100000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba9a585672110a5dc4cb56372c6639dea1">CONVECTION</a> = 0x00000400
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa50322e2201a5452e2b1b8a3f11b8856b">DILATATION</a> = 0x00200000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba9e13c8a493c18000a283832b179b3dc4">DEVIATORIC</a> = 0x00000800
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa904fa7835cb04ae9b123743acb18a38c">ELECTRIC</a> = 0x00400000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba57ee47bd02e9623eada587253bc69514">DILATATION</a> = 0x00001000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad599a8c2a5528be97720bbc9c8888b00">MAGNETIC</a> = 0x00800000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba596b9c4b008256066d216f9eb4426497">ELECTRIC</a> = 0x00002000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa972dbcdf74cff71e20bdcfb53be9c391">LOAD</a> = 0x01000000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaf842701a27bcc1bf7de20c30600718d3">MAGNETIC</a> = 0x00004000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daae1672dcb581fbe92c1fde565d9e7fe3a">HEAT_SOURCE</a> = 0x02000000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba63e637d5f9aca5de88c627c9c534968e">BODY_RHS</a> = 0x00008000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daac0bc0fe4f9fa2d1860ff064e6ed558f0">BOUNDARY_TRACTION</a> = 0x04000000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba615d2885ef7576cedd9aafbb2578f028">LOAD</a> = 0x00008000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa971f1c6045acd204579feb9e41166d44">HEAT_FLUX</a> = 0x08000000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbae60b4854b44ccfb2d92aa6f035171bb4">SOURCE</a> = 0x00008000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa6f7d7c84f5e891c3d7b4b588cd628b7e">CONTACT</a> = 0x10000000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba548795c463d0ada94cb952eca426176e">BOUNDARY_RHS</a> = 0x00010000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daaf866b10be5649b84572070945df67941">BUOYANCY</a> = 0x20000000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba2f2dd8d12511598975b5475371963bd4">NEUMANN</a> = 0x00010000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa71380580d4d097129850744ca55920e4">LORENTZ_FORCE</a> = 0x40000000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbae098247bc6652dd88c76644b275260ed">FLUX</a> = 0x00010000
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad2e95162fef170a20cbd9b1f493bc89e">DAMPING</a> = 0x80000000
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac10ff580f320cb720c4b30be43df7e82">BOUNDARY_TRACTION</a> = 0x00010000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac0241eae411627c19ba9835b6d194b1c">CONTACT</a> = 0x00020000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba30a029b093634f0a681bc122f6130eaa">BUOYANCY</a> = 0x00040000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba7fae9e7bebe4a4c30ae01b7bedcb3928">LORENTZ_FORCE</a> = 0x00080000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaea33eb7e054446cf1e471808d2a46e71">DAMPING</a> = 0x00100000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaa299c58fcdd0752beab4049168288705">L00</a> = 0x00200000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba90e317300449f3f0b77b5331ec0cf0f7">L10</a> = 0x00400000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba09162d0433d739b5b19e2cc1676f6b90">L20</a> = 0x00800000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba7879f640467664d3c1242457da8cfe75">L01</a> = 0x01000000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbab480d6f94dc9b3085740406fc26ce917">L02</a> = 0x02000000
+, <br />
+&#160;&#160;<a class="el" href="group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba8e7ee9b50b48be2b02231b9bd3509b7c">L11</a> = 0x04000000
 <br />
  }</td></tr>
-<tr class="separator:ga3757febaa4d0638468a11bb96593f8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga018f378896bd00774734cea2dd643e53" id="r_ga018f378896bd00774734cea2dd643e53"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga018f378896bd00774734cea2dd643e53">GENERIC_PDE_Terms</a> { <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53a4eedd7beaeddf5ef96812fba45619da1">NOTERM</a> = 0x00000000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53aeb55b92810c2af45b5c8dd611b4a95e8">L00</a> = 0x00001000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53ab77a6f0b4a2893981e1155d8278adcb0">L10</a> = 0x00002000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53a35af1f9b1e8c71d6099cd3efe4907750">L20</a> = 0x00004000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53ad4686a237c98434b30b93e366f89b53a">L01</a> = 0x00008000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53a4249de896cbed7202749e79169dd30b7">L02</a> = 0x00010000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53a164ef4d5adf57cfcc7a441ac1ef6f3e2">L11</a> = 0x00020000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53a2a6002ae7b00722681e2d27919ca74d1">BODY_RHS</a> = 0x00040000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53ac8d875c03198d1daa4a10f02ce08f9a1">BOUNDARY_RHS</a> = 0x00080000
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga018f378896bd00774734cea2dd643e53ae58d114453737f3084aa5c645eba3412">NEUMANN</a> = 0x00008000
-<br />
- }</td></tr>
-<tr class="separator:ga018f378896bd00774734cea2dd643e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ga76756c7eef4f22bb13ac06f6c8c197cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3915e2ca621626d1d2797d8365196f1b" id="r_ga3915e2ca621626d1d2797d8365196f1b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga3915e2ca621626d1d2797d8365196f1b">Analysis</a> { <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1bac84bd0ee013c388bd7cc8139be7206a2">STATIONARY</a> = 0
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1ba69ecc1a10183e7d50f0fc8250fb1ba73">STEADY_STATE</a> = 0
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1ba189628bd9c66ada3fb11593230091ad4">TRANSIENT</a> = 1
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1baf48c46569bd47443a7884f4f929498b6">TRANSIENT_ONE_STEP</a> = 2
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1ba6ef8a480aeb43698dffee7100e741521">OPTIMIZATION</a> = 3
-, <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1bac3892dc70e4f10d83174a21b0fe8f4ab">EIGEN</a> = 4
-<br />
  }</td></tr>
 <tr class="separator:ga3915e2ca621626d1d2797d8365196f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga672626c8ddef10da0244c15db4085f40" id="r_ga672626c8ddef10da0244c15db4085f40"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga672626c8ddef10da0244c15db4085f40">TimeScheme</a> { <br />
@@ -968,11 +953,11 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="group__OFELI.html#gga672626c8ddef10da0244c15db4085f40ac624788afc3b839c11a13cc4dbbaff57">LEAP_FROG</a> = 6
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a88e6af20a0ce84e04718516b7c911ef3">ADAMS_BASHFORTH</a> = 7
+&#160;&#160;<b>ADAMS_BASHFORTH</b>
 , <br />
 &#160;&#160;<a class="el" href="group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a91271a0b286e0d50cda54284c7febd2f">AB2</a> = 7
 , <br />
-&#160;&#160;<a class="el" href="group__OFELI.html#gga672626c8ddef10da0244c15db4085f40ae4d8522f5abcb1ebce2c9b3dde324ace">RUNGE_KUTTA</a> = 8
+&#160;&#160;<b>RUNGE_KUTTA</b>
 , <br />
 &#160;&#160;<a class="el" href="group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a5df275d4d2ef6e60437567adc263d488">RK4</a> = 8
 , <br />
@@ -999,7 +984,7 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga31f830fd5deccf18a6e312b026bbe13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62536dd8609c49611ad03866df7cde66" id="r_ga62536dd8609c49611ad03866df7cde66"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga62536dd8609c49611ad03866df7cde66">PDECoefType</a> </td></tr>
+<tr class="memitem:ga62536dd8609c49611ad03866df7cde66" id="r_ga62536dd8609c49611ad03866df7cde66"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#ga62536dd8609c49611ad03866df7cde66">PDECoefType</a> </td></tr>
 <tr class="separator:ga62536dd8609c49611ad03866df7cde66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad8aff9e545a5f496a179a16667431478" id="r_gad8aff9e545a5f496a179a16667431478"><td class="memItemLeft" align="right" valign="top"><a id="gad8aff9e545a5f496a179a16667431478" name="gad8aff9e545a5f496a179a16667431478"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__OFELI.html#gad8aff9e545a5f496a179a16667431478">AccessType</a> </td></tr>
 <tr class="memdesc:gad8aff9e545a5f496a179a16667431478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerated values for file access type. <br /></td></tr>
@@ -2386,10 +2371,7 @@ template&lt;class T_ &gt; </td></tr>
 </div><div class="memdoc">
 <p>Selects Analysis type </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3915e2ca621626d1d2797d8365196f1bac84bd0ee013c388bd7cc8139be7206a2" name="gga3915e2ca621626d1d2797d8365196f1bac84bd0ee013c388bd7cc8139be7206a2"></a>STATIONARY&#160;</td><td class="fielddoc"><p>Steady State analysis <br  />
- </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga3915e2ca621626d1d2797d8365196f1ba69ecc1a10183e7d50f0fc8250fb1ba73" name="gga3915e2ca621626d1d2797d8365196f1ba69ecc1a10183e7d50f0fc8250fb1ba73"></a>STEADY_STATE&#160;</td><td class="fielddoc"><p>Steady state analysis <br  />
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3915e2ca621626d1d2797d8365196f1ba69ecc1a10183e7d50f0fc8250fb1ba73" name="gga3915e2ca621626d1d2797d8365196f1ba69ecc1a10183e7d50f0fc8250fb1ba73"></a>STEADY_STATE&#160;</td><td class="fielddoc"><p>Steady State analysis <br  />
  </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga3915e2ca621626d1d2797d8365196f1ba189628bd9c66ada3fb11593230091ad4" name="gga3915e2ca621626d1d2797d8365196f1ba189628bd9c66ada3fb11593230091ad4"></a>TRANSIENT&#160;</td><td class="fielddoc"><p>Transient problem <br  />
@@ -2493,48 +2475,6 @@ template&lt;class T_ &gt; </td></tr>
  </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga31f830fd5deccf18a6e312b026bbe13ba57de6aadb8f48f2c4c20861f28f839b5" name="gga31f830fd5deccf18a6e312b026bbe13ba57de6aadb8f48f2c4c20861f28f839b5"></a>FE_3D_8N&#160;</td><td class="fielddoc"><p>3-D elements, 8-Nodes (Q1) <br  />
- </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga018f378896bd00774734cea2dd643e53" name="ga018f378896bd00774734cea2dd643e53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga018f378896bd00774734cea2dd643e53">&#9670;&#160;</a></span>GENERIC_PDE_Terms</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__OFELI.html#ga018f378896bd00774734cea2dd643e53">GENERIC_PDE_Terms</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enumerate variable that selects various terms in a generic partial differential equation </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53a4eedd7beaeddf5ef96812fba45619da1" name="gga018f378896bd00774734cea2dd643e53a4eedd7beaeddf5ef96812fba45619da1"></a>NOTERM&#160;</td><td class="fielddoc"><p>No term (empty equation) <br  />
- </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53aeb55b92810c2af45b5c8dd611b4a95e8" name="gga018f378896bd00774734cea2dd643e53aeb55b92810c2af45b5c8dd611b4a95e8"></a>L00&#160;</td><td class="fielddoc"><p>0th order in time and space, to LHS <br  />
- </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53ab77a6f0b4a2893981e1155d8278adcb0" name="gga018f378896bd00774734cea2dd643e53ab77a6f0b4a2893981e1155d8278adcb0"></a>L10&#160;</td><td class="fielddoc"><p>1st order in time, 0th order in space, to LHS </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53a35af1f9b1e8c71d6099cd3efe4907750" name="gga018f378896bd00774734cea2dd643e53a35af1f9b1e8c71d6099cd3efe4907750"></a>L20&#160;</td><td class="fielddoc"><p>2nd order in time, 0th order in space, to LHS </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53ad4686a237c98434b30b93e366f89b53a" name="gga018f378896bd00774734cea2dd643e53ad4686a237c98434b30b93e366f89b53a"></a>L01&#160;</td><td class="fielddoc"><p>0th order in time, 1st order in space, to LHS </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53a4249de896cbed7202749e79169dd30b7" name="gga018f378896bd00774734cea2dd643e53a4249de896cbed7202749e79169dd30b7"></a>L02&#160;</td><td class="fielddoc"><p>0th order in time, 2nd order in space, to LHS </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53a164ef4d5adf57cfcc7a441ac1ef6f3e2" name="gga018f378896bd00774734cea2dd643e53a164ef4d5adf57cfcc7a441ac1ef6f3e2"></a>L11&#160;</td><td class="fielddoc"><p>1st order in time, 1st order in space, to LHS </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53a2a6002ae7b00722681e2d27919ca74d1" name="gga018f378896bd00774734cea2dd643e53a2a6002ae7b00722681e2d27919ca74d1"></a>BODY_RHS&#160;</td><td class="fielddoc"><p>Given right-hand side on domain <br  />
- </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53ac8d875c03198d1daa4a10f02ce08f9a1" name="gga018f378896bd00774734cea2dd643e53ac8d875c03198d1daa4a10f02ce08f9a1"></a>BOUNDARY_RHS&#160;</td><td class="fielddoc"><p>Given right-hand side on boundary <br  />
- </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga018f378896bd00774734cea2dd643e53ae58d114453737f3084aa5c645eba3412" name="gga018f378896bd00774734cea2dd643e53ae58d114453737f3084aa5c645eba3412"></a>NEUMANN&#160;</td><td class="fielddoc"><p>Neumann boundary condition <br  />
  </p>
 </td></tr>
 </table>
@@ -2655,87 +2595,120 @@ template&lt;class T_ &gt; </td></tr>
 
 </div>
 </div>
-<a id="ga3757febaa4d0638468a11bb96593f8da" name="ga3757febaa4d0638468a11bb96593f8da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3757febaa4d0638468a11bb96593f8da">&#9670;&#160;</a></span>PDE_Terms</h2>
+<a id="ga76756c7eef4f22bb13ac06f6c8c197cb" name="ga76756c7eef4f22bb13ac06f6c8c197cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga76756c7eef4f22bb13ac06f6c8c197cb">&#9670;&#160;</a></span>PDE_Terms</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group__OFELI.html#ga3757febaa4d0638468a11bb96593f8da">PDE_Terms</a></td>
+          <td class="memname">enum class <a class="el" href="group__OFELI.html#ga76756c7eef4f22bb13ac06f6c8c197cb">PDE_Terms</a> : int</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Enumerate variable that selects various terms in partial differential equations </p>
+<p>Enumerate class to select various terms in partial differential equations </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daabff007b8366c6ab06e1b0c5644455687" name="gga3757febaa4d0638468a11bb96593f8daabff007b8366c6ab06e1b0c5644455687"></a>CONSISTENT_MASS&#160;</td><td class="fielddoc"><p>Consistent mass term <br  />
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbaaf8a806916cc39b1a027246e06a64aae" name="gga76756c7eef4f22bb13ac06f6c8c197cbaaf8a806916cc39b1a027246e06a64aae"></a>NOTERM&#160;</td><td class="fielddoc"><p>No term (empty equation) <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa7b9aa2a958e5f880122b85b34aaded2c" name="gga3757febaa4d0638468a11bb96593f8daa7b9aa2a958e5f880122b85b34aaded2c"></a>LUMPED_MASS&#160;</td><td class="fielddoc"><p>Lumped mass term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba25fde2868c4dc4355fb7e9ddfd8122e5" name="gga76756c7eef4f22bb13ac06f6c8c197cba25fde2868c4dc4355fb7e9ddfd8122e5"></a>CONSISTENT_MASS&#160;</td><td class="fielddoc"><p>Consistent mass (or capacity) term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa1c910486b66cf1ccce2ef81d4318227f" name="gga3757febaa4d0638468a11bb96593f8daa1c910486b66cf1ccce2ef81d4318227f"></a>MASS&#160;</td><td class="fielddoc"><p>Consistent mass term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba8bfd09658c7d48cc60f6840cd439dc30" name="gga76756c7eef4f22bb13ac06f6c8c197cba8bfd09658c7d48cc60f6840cd439dc30"></a>CONSISTENT_CAPACITY&#160;</td><td class="fielddoc"><p>Consistent mass (or capacity) term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daab7dda006facfb86f75aa6e0210a77448" name="gga3757febaa4d0638468a11bb96593f8daab7dda006facfb86f75aa6e0210a77448"></a>CAPACITY&#160;</td><td class="fielddoc"><p>Consistent capacity term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba1b2e5127f418cd952f9fb0fa050b6709" name="gga76756c7eef4f22bb13ac06f6c8c197cba1b2e5127f418cd952f9fb0fa050b6709"></a>LUMPED_MASS&#160;</td><td class="fielddoc"><p>Lumped mass (or capacity) term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa9adacbe252e3e2a535200ec3146a4dd2" name="gga3757febaa4d0638468a11bb96593f8daa9adacbe252e3e2a535200ec3146a4dd2"></a>CONSISTENT_CAPACITY&#160;</td><td class="fielddoc"><p>Consistent capacity term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbacb6c2c4b3c8f95f9b58ad13f0a97245d" name="gga76756c7eef4f22bb13ac06f6c8c197cbacb6c2c4b3c8f95f9b58ad13f0a97245d"></a>MASS&#160;</td><td class="fielddoc"><p>Lumped mass (or capacity) term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daab0cd85fc68e58a11327458019cc6e7f3" name="gga3757febaa4d0638468a11bb96593f8daab0cd85fc68e58a11327458019cc6e7f3"></a>LUMPED_CAPACITY&#160;</td><td class="fielddoc"><p>Lumped capacity term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbab0f7435a7395b8a2d88240e7d1c5c690" name="gga76756c7eef4f22bb13ac06f6c8c197cbab0f7435a7395b8a2d88240e7d1c5c690"></a>LUMPED_CAPACITY&#160;</td><td class="fielddoc"><p>Lumped mass (or capacity) term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daaf5dcdbc91041cc8ab41973956078c70d" name="gga3757febaa4d0638468a11bb96593f8daaf5dcdbc91041cc8ab41973956078c70d"></a>VISCOSITY&#160;</td><td class="fielddoc"><p>Viscosity term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba5b3bc952620c21981c4b3b304fbd74f8" name="gga76756c7eef4f22bb13ac06f6c8c197cba5b3bc952620c21981c4b3b304fbd74f8"></a>CAPACITY&#160;</td><td class="fielddoc"><p>Lumped mass (or capacity) term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa1fa87e583599b3a51cceb6ebcac684c2" name="gga3757febaa4d0638468a11bb96593f8daa1fa87e583599b3a51cceb6ebcac684c2"></a>STIFFNESS&#160;</td><td class="fielddoc"><p>Stiffness term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba13d621435dde53f9c38dce061f879e4b" name="gga76756c7eef4f22bb13ac06f6c8c197cba13d621435dde53f9c38dce061f879e4b"></a>VISCOSITY&#160;</td><td class="fielddoc"><p>Viscosity term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa64b145492a27539220bb4a4cb95af90c" name="gga3757febaa4d0638468a11bb96593f8daa64b145492a27539220bb4a4cb95af90c"></a>DIFFUSION&#160;</td><td class="fielddoc"><p>Diffusion term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbaa231c1d74fe18f9e82224588887d1971" name="gga76756c7eef4f22bb13ac06f6c8c197cbaa231c1d74fe18f9e82224588887d1971"></a>STIFFNESS&#160;</td><td class="fielddoc"><p>Stiffness term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa8ae33843a530a8915f1852770b05809d" name="gga3757febaa4d0638468a11bb96593f8daa8ae33843a530a8915f1852770b05809d"></a>MOBILITY&#160;</td><td class="fielddoc"><p>Mobility term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbac9f4e4b1345e4e958a307bf67ae358a7" name="gga76756c7eef4f22bb13ac06f6c8c197cbac9f4e4b1345e4e958a307bf67ae358a7"></a>DIFFUSION&#160;</td><td class="fielddoc"><p>Diffusion term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa718e0728cf596ce66dfc59137a21a626" name="gga3757febaa4d0638468a11bb96593f8daa718e0728cf596ce66dfc59137a21a626"></a>CONVECTION&#160;</td><td class="fielddoc"><p>Convection term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbadf9db257294a6f11ff6ce0e2d9448616" name="gga76756c7eef4f22bb13ac06f6c8c197cbadf9db257294a6f11ff6ce0e2d9448616"></a>MOBILITY&#160;</td><td class="fielddoc"><p>Mobility term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daad1a05a357ad745786854148cbe300731" name="gga3757febaa4d0638468a11bb96593f8daad1a05a357ad745786854148cbe300731"></a>DEVIATORIC&#160;</td><td class="fielddoc"><p>Deviatoric term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba9a585672110a5dc4cb56372c6639dea1" name="gga76756c7eef4f22bb13ac06f6c8c197cba9a585672110a5dc4cb56372c6639dea1"></a>CONVECTION&#160;</td><td class="fielddoc"><p>Convection term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa50322e2201a5452e2b1b8a3f11b8856b" name="gga3757febaa4d0638468a11bb96593f8daa50322e2201a5452e2b1b8a3f11b8856b"></a>DILATATION&#160;</td><td class="fielddoc"><p>Dilatational term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba9e13c8a493c18000a283832b179b3dc4" name="gga76756c7eef4f22bb13ac06f6c8c197cba9e13c8a493c18000a283832b179b3dc4"></a>DEVIATORIC&#160;</td><td class="fielddoc"><p>Deviatoric term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa904fa7835cb04ae9b123743acb18a38c" name="gga3757febaa4d0638468a11bb96593f8daa904fa7835cb04ae9b123743acb18a38c"></a>ELECTRIC&#160;</td><td class="fielddoc"><p>Electric term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba57ee47bd02e9623eada587253bc69514" name="gga76756c7eef4f22bb13ac06f6c8c197cba57ee47bd02e9623eada587253bc69514"></a>DILATATION&#160;</td><td class="fielddoc"><p>Dilatational term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daad599a8c2a5528be97720bbc9c8888b00" name="gga3757febaa4d0638468a11bb96593f8daad599a8c2a5528be97720bbc9c8888b00"></a>MAGNETIC&#160;</td><td class="fielddoc"><p>Magnetic term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba596b9c4b008256066d216f9eb4426497" name="gga76756c7eef4f22bb13ac06f6c8c197cba596b9c4b008256066d216f9eb4426497"></a>ELECTRIC&#160;</td><td class="fielddoc"><p>Electric term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa972dbcdf74cff71e20bdcfb53be9c391" name="gga3757febaa4d0638468a11bb96593f8daa972dbcdf74cff71e20bdcfb53be9c391"></a>LOAD&#160;</td><td class="fielddoc"><p>Body load term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbaf842701a27bcc1bf7de20c30600718d3" name="gga76756c7eef4f22bb13ac06f6c8c197cbaf842701a27bcc1bf7de20c30600718d3"></a>MAGNETIC&#160;</td><td class="fielddoc"><p>Magnetic term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daae1672dcb581fbe92c1fde565d9e7fe3a" name="gga3757febaa4d0638468a11bb96593f8daae1672dcb581fbe92c1fde565d9e7fe3a"></a>HEAT_SOURCE&#160;</td><td class="fielddoc"><p>Body heat source term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba63e637d5f9aca5de88c627c9c534968e" name="gga76756c7eef4f22bb13ac06f6c8c197cba63e637d5f9aca5de88c627c9c534968e"></a>BODY_RHS&#160;</td><td class="fielddoc"><p>Body load term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daac0bc0fe4f9fa2d1860ff064e6ed558f0" name="gga3757febaa4d0638468a11bb96593f8daac0bc0fe4f9fa2d1860ff064e6ed558f0"></a>BOUNDARY_TRACTION&#160;</td><td class="fielddoc"><p>Boundary traction (pressure) term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba615d2885ef7576cedd9aafbb2578f028" name="gga76756c7eef4f22bb13ac06f6c8c197cba615d2885ef7576cedd9aafbb2578f028"></a>LOAD&#160;</td><td class="fielddoc"><p>Body load term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa971f1c6045acd204579feb9e41166d44" name="gga3757febaa4d0638468a11bb96593f8daa971f1c6045acd204579feb9e41166d44"></a>HEAT_FLUX&#160;</td><td class="fielddoc"><p>Boundary heat flux term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbae60b4854b44ccfb2d92aa6f035171bb4" name="gga76756c7eef4f22bb13ac06f6c8c197cbae60b4854b44ccfb2d92aa6f035171bb4"></a>SOURCE&#160;</td><td class="fielddoc"><p>Body load term <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa6f7d7c84f5e891c3d7b4b588cd628b7e" name="gga3757febaa4d0638468a11bb96593f8daa6f7d7c84f5e891c3d7b4b588cd628b7e"></a>CONTACT&#160;</td><td class="fielddoc"><p>Signorini contact <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba548795c463d0ada94cb952eca426176e" name="gga76756c7eef4f22bb13ac06f6c8c197cba548795c463d0ada94cb952eca426176e"></a>BOUNDARY_RHS&#160;</td><td class="fielddoc"><p>Given right-hand side on boundary <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daaf866b10be5649b84572070945df67941" name="gga3757febaa4d0638468a11bb96593f8daaf866b10be5649b84572070945df67941"></a>BUOYANCY&#160;</td><td class="fielddoc"><p>Buoyancy force term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba2f2dd8d12511598975b5475371963bd4" name="gga76756c7eef4f22bb13ac06f6c8c197cba2f2dd8d12511598975b5475371963bd4"></a>NEUMANN&#160;</td><td class="fielddoc"><p>Given right-hand side on boundary <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daa71380580d4d097129850744ca55920e4" name="gga3757febaa4d0638468a11bb96593f8daa71380580d4d097129850744ca55920e4"></a>LORENTZ_FORCE&#160;</td><td class="fielddoc"><p>Lorentz force term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbae098247bc6652dd88c76644b275260ed" name="gga76756c7eef4f22bb13ac06f6c8c197cbae098247bc6652dd88c76644b275260ed"></a>FLUX&#160;</td><td class="fielddoc"><p>Given right-hand side on boundary <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga3757febaa4d0638468a11bb96593f8daad2e95162fef170a20cbd9b1f493bc89e" name="gga3757febaa4d0638468a11bb96593f8daad2e95162fef170a20cbd9b1f493bc89e"></a>DAMPING&#160;</td><td class="fielddoc"><p>Damping term <br  />
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbac10ff580f320cb720c4b30be43df7e82" name="gga76756c7eef4f22bb13ac06f6c8c197cbac10ff580f320cb720c4b30be43df7e82"></a>BOUNDARY_TRACTION&#160;</td><td class="fielddoc"><p>Given right-hand side on boundary <br  />
  </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbac0241eae411627c19ba9835b6d194b1c" name="gga76756c7eef4f22bb13ac06f6c8c197cbac0241eae411627c19ba9835b6d194b1c"></a>CONTACT&#160;</td><td class="fielddoc"><p>Signorini contact <br  />
+ </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba30a029b093634f0a681bc122f6130eaa" name="gga76756c7eef4f22bb13ac06f6c8c197cba30a029b093634f0a681bc122f6130eaa"></a>BUOYANCY&#160;</td><td class="fielddoc"><p>Buoyancy force term <br  />
+ </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba7fae9e7bebe4a4c30ae01b7bedcb3928" name="gga76756c7eef4f22bb13ac06f6c8c197cba7fae9e7bebe4a4c30ae01b7bedcb3928"></a>LORENTZ_FORCE&#160;</td><td class="fielddoc"><p>Lorentz force term <br  />
+ </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbaea33eb7e054446cf1e471808d2a46e71" name="gga76756c7eef4f22bb13ac06f6c8c197cbaea33eb7e054446cf1e471808d2a46e71"></a>DAMPING&#160;</td><td class="fielddoc"><p>Damping term <br  />
+ </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbaa299c58fcdd0752beab4049168288705" name="gga76756c7eef4f22bb13ac06f6c8c197cbaa299c58fcdd0752beab4049168288705"></a>L00&#160;</td><td class="fielddoc"><p>0th order in time and space, to LHS <br  />
+ </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba90e317300449f3f0b77b5331ec0cf0f7" name="gga76756c7eef4f22bb13ac06f6c8c197cba90e317300449f3f0b77b5331ec0cf0f7"></a>L10&#160;</td><td class="fielddoc"><p>1st order in time, 0th order in space, to LHS </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba09162d0433d739b5b19e2cc1676f6b90" name="gga76756c7eef4f22bb13ac06f6c8c197cba09162d0433d739b5b19e2cc1676f6b90"></a>L20&#160;</td><td class="fielddoc"><p>2nd order in time, 0th order in space, to LHS </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba7879f640467664d3c1242457da8cfe75" name="gga76756c7eef4f22bb13ac06f6c8c197cba7879f640467664d3c1242457da8cfe75"></a>L01&#160;</td><td class="fielddoc"><p>0th order in time, 1st order in space, to LHS </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cbab480d6f94dc9b3085740406fc26ce917" name="gga76756c7eef4f22bb13ac06f6c8c197cbab480d6f94dc9b3085740406fc26ce917"></a>L02&#160;</td><td class="fielddoc"><p>0th order in time, 2nd order in space, to LHS </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga76756c7eef4f22bb13ac06f6c8c197cba8e7ee9b50b48be2b02231b9bd3509b7c" name="gga76756c7eef4f22bb13ac06f6c8c197cba8e7ee9b50b48be2b02231b9bd3509b7c"></a>L11&#160;</td><td class="fielddoc"><p>1st order in time, 1st order in space, to LHS </p>
 </td></tr>
 </table>
 
@@ -2746,11 +2719,19 @@ template&lt;class T_ &gt; </td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group__OFELI.html#ga62536dd8609c49611ad03866df7cde66">PDECoefType</a></td>
+          <td class="memname">enum class <a class="el" href="group__OFELI.html#ga62536dd8609c49611ad03866df7cde66">PDECoefType</a></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Choose PDE Coefficient </p>
 
@@ -2822,16 +2803,10 @@ template&lt;class T_ &gt; </td></tr>
 <tr><td class="fieldname"><a id="gga672626c8ddef10da0244c15db4085f40ac624788afc3b839c11a13cc4dbbaff57" name="gga672626c8ddef10da0244c15db4085f40ac624788afc3b839c11a13cc4dbbaff57"></a>LEAP_FROG&#160;</td><td class="fielddoc"><p>Leap Frog scheme <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga672626c8ddef10da0244c15db4085f40a88e6af20a0ce84e04718516b7c911ef3" name="gga672626c8ddef10da0244c15db4085f40a88e6af20a0ce84e04718516b7c911ef3"></a>ADAMS_BASHFORTH&#160;</td><td class="fielddoc"><p>Adams-Bashforth scheme (2nd Order) <br  />
- </p>
-</td></tr>
 <tr><td class="fieldname"><a id="gga672626c8ddef10da0244c15db4085f40a91271a0b286e0d50cda54284c7febd2f" name="gga672626c8ddef10da0244c15db4085f40a91271a0b286e0d50cda54284c7febd2f"></a>AB2&#160;</td><td class="fielddoc"><p>Adams-Bashforth scheme (2nd Order) <br  />
  </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga672626c8ddef10da0244c15db4085f40ae4d8522f5abcb1ebce2c9b3dde324ace" name="gga672626c8ddef10da0244c15db4085f40ae4d8522f5abcb1ebce2c9b3dde324ace"></a>RUNGE_KUTTA&#160;</td><td class="fielddoc"><p>4-th Order Runge-Kutta scheme (4th Order) <br  />
- </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga672626c8ddef10da0244c15db4085f40a5df275d4d2ef6e60437567adc263d488" name="gga672626c8ddef10da0244c15db4085f40a5df275d4d2ef6e60437567adc263d488"></a>RK4&#160;</td><td class="fielddoc"><p>4-th Order Runge-Kutta scheme <br  />
+<tr><td class="fieldname"><a id="gga672626c8ddef10da0244c15db4085f40a5df275d4d2ef6e60437567adc263d488" name="gga672626c8ddef10da0244c15db4085f40a5df275d4d2ef6e60437567adc263d488"></a>RK4&#160;</td><td class="fielddoc"><p>4-th Order Runge-Kutta scheme (4th Order) <br  />
  </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga672626c8ddef10da0244c15db4085f40a17e2f23cb60e09ba554a7681ec8acd3c" name="gga672626c8ddef10da0244c15db4085f40a17e2f23cb60e09ba554a7681ec8acd3c"></a>RK3_TVD&#160;</td><td class="fielddoc"><p>3-rd Order Runge-Kutta TVD scheme <br  />

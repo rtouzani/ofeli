@@ -13,7 +13,7 @@ var group__Therm =
       [ "Diffusion", "classOFELI_1_1DC1DL2.html#ac301bba6a75b942c88f797628c141e2c", null ],
       [ "Flux", "classOFELI_1_1DC1DL2.html#a3a400c339dbb1f35a8179cbc99ed2f29", null ],
       [ "LCapacity", "classOFELI_1_1DC1DL2.html#af02cfd6af8e4585dd9f17f97597136c5", null ],
-      [ "setInput", "classOFELI_1_1DC1DL2.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1DC1DL2.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "DC2DT3", "classOFELI_1_1DC2DT3.html", [
       [ "DC2DT3", "classOFELI_1_1DC2DT3.html#acabdf8aaecac9892a332089d48492921", null ],
@@ -37,7 +37,7 @@ var group__Therm =
       [ "LCapacity", "classOFELI_1_1DC2DT3.html#af02cfd6af8e4585dd9f17f97597136c5", null ],
       [ "LinearExchange", "classOFELI_1_1DC2DT3.html#a8e09c99e4cfc4b0035d9e6b46d19d7ec", null ],
       [ "Periodic", "classOFELI_1_1DC2DT3.html#af669369716d638f14a268133981dbb17", null ],
-      [ "setInput", "classOFELI_1_1DC2DT3.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1DC2DT3.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "DC2DT6", "classOFELI_1_1DC2DT6.html", [
       [ "DC2DT6", "classOFELI_1_1DC2DT6.html#a9a921747bcf0f5b5dac83bdaa65853f5", null ],

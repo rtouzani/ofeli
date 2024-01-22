@@ -150,11 +150,8 @@ int FastMarching2DG::run()
 {
    init();
    int ret = 0;
-   int nb = _Narrow.size();
    for (int n=0; n<_Narrow.size(); ++n) {
       _p = _Narrow[n];
-      if (_p->state==Pt::FROZEN)
-         nb--;
       _p->state = Pt::FROZEN;
       Neigs();
       for (auto const& N: _neigs) {
@@ -164,13 +161,9 @@ int FastMarching2DG::run()
             if (_Narrow.find(_np)<0) {
                _np->state = Pt::ALIVE;
                _Narrow.insert(_np);
-               nb++;
             }
-            else {
-               if (_np->state!=Pt::FROZEN)
-                  nb--;
+            else
                _np->state = Pt::FROZEN;
-            }
          }
       }
    }

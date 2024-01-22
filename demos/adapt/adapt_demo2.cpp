@@ -101,8 +101,8 @@ void solve(Mesh&         ms,
            Vect<double>& u)
 {
    DC2DT3 eq(ms,u);
-   eq.setInput(BOUNDARY_CONDITION,bc);
-   eq.setInput(SOURCE,f);
+   eq.setBoundaryCondition(bc);
+   eq.setBodyForce(f);
    eq.run();
 }
 

@@ -87,9 +87,9 @@ int main(int argc, char *argv[])
       if (Verbosity>1)
          cout << "Reading boundary conditions, body and boundary sources ...\n";
       Vect<double> bc(ms), bf(ms), sf(ms,BOUNDARY_SIDE_DOF,1);
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(BODY_FORCE,bf);
-      p.get(BOUNDARY_FORCE,sf,0);
+      p.get(EType::BOUNDARY_CONDITION,bc);
+      p.get(EType::BODY_FORCE,bf);
+      p.get(EType::BOUNDARY_FORCE,sf,0);
 
 //    Instantiating equation
       if (Verbosity>1)
@@ -97,10 +97,10 @@ int main(int argc, char *argv[])
       DC3DT4 eq(ms,u);
       if (Verbosity>1)
          cout << "Setting equation data ..." << endl;
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(SOURCE,bf);
-      eq.setInput(FLUX,sf);
-      eq.setTerms(DIFFUSION);
+      eq.setBoundaryCondition(bc);
+      eq.setBodyForce(bf);
+      eq.setFlux(sf);
+      eq.setTerms(PDE_Terms::DIFFUSION);
       eq.setSolver(CG_SOLVER,DILU_PREC);
 
 //    Run solution

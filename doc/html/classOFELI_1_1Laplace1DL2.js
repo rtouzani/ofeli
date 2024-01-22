@@ -8,6 +8,6 @@ var classOFELI_1_1Laplace1DL2 =
     [ "BoundaryRHS", "classOFELI_1_1Laplace1DL2.html#a9f47743e35b40517037f6c007312461c", null ],
     [ "buildEigen", "classOFELI_1_1Laplace1DL2.html#aa29ea1739165c677b1353892bfaff103", null ],
     [ "LHS", "classOFELI_1_1Laplace1DL2.html#a906da27903ef1eb8d13377b70044b2cd", null ],
-    [ "setBoundaryCondition", "classOFELI_1_1Laplace1DL2.html#a7dbff391c42f944084726308b2dfc6c9", null ],
-    [ "setTraction", "classOFELI_1_1Laplace1DL2.html#a3e1a15dfa223d5f15304da0aba78ee6d", null ]
+    [ "setBC1D", "classOFELI_1_1Laplace1DL2.html#a9044d18b5ec1c4aea6a48181bcf5f35a", null ],
+    [ "setNeumann1D", "classOFELI_1_1Laplace1DL2.html#a9a2ff293661184b5e8e89c94c37a0d2b", null ]
 ];

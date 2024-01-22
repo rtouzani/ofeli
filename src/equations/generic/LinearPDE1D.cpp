@@ -92,7 +92,7 @@ void LinearPDE1D::set(const Element* el)
 void LinearPDE1D::Mat_00(real_t coef)
 {
    real_t c = OFELI_SIXTH*_el_geo.length*coef;
-   c *= getPDECoef(C00,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+   c *= getPDECoef(PDECoefType::C00,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
    eA0(1,1) += 2*c;
    eA0(2,2) += 2*c;
    eA0(1,2) +=   c;
@@ -104,13 +104,13 @@ void LinearPDE1D::Mat_10(real_t coef)
 {
    if (_lump) {
       real_t c = 0.5*_el_geo.length*coef;
-      c *= getPDECoef(C10,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+      c *= getPDECoef(PDECoefType::C10,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
       eA1(1,1) += c;
       eA1(2,2) += c;
    }
    else {
       real_t c = OFELI_SIXTH*_el_geo.length*coef;
-      c *= getPDECoef(C10,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+      c *= getPDECoef(PDECoefType::C10,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
       eA1(1,1) += 2*c;
       eA1(2,2) += 2*c;
       eA1(1,2) +=   c;
@@ -123,13 +123,13 @@ void LinearPDE1D::Mat_20(real_t coef)
 {
    if (_lump) {
       real_t c = 0.5*_el_geo.length*coef;
-      c *= getPDECoef(C20,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+      c *= getPDECoef(PDECoefType::C20,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
       eA2(1,1) += c;
       eA2(2,2) += c;
    }
    else {
       real_t c = OFELI_SIXTH*_el_geo.length*coef;
-      c *= getPDECoef(C20,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+      c *= getPDECoef(PDECoefType::C20,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
       eA2(1,1) += 2*c;
       eA2(2,2) += 2*c;
       eA2(1,2) +=   c;
@@ -141,7 +141,7 @@ void LinearPDE1D::Mat_20(real_t coef)
 void LinearPDE1D::Mat_02(real_t coef)
 {
    real_t c = coef*_el_geo.length;
-   c *= getPDECoef(C02,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+   c *= getPDECoef(PDECoefType::C02,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
    eA0(1,1) += c*_dSh[0].x*_dSh[0].x;
    eA0(1,2) += c*_dSh[0].x*_dSh[1].x;
    eA0(2,1) += c*_dSh[1].x*_dSh[0].x;
@@ -151,7 +151,7 @@ void LinearPDE1D::Mat_02(real_t coef)
 
 void LinearPDE1D::Mat_01(real_t coef)
 {
-   real_t c01 = getPDECoef(C01,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+   real_t c01 = getPDECoef(PDECoefType::C01,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
    real_t c = 0.25*_el_geo.length*c01*coef;
    eA0(1,1) += c*_dSh[0].x;
    eA0(1,2) += c*_dSh[1].x;

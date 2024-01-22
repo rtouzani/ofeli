@@ -989,7 +989,7 @@ void GridToMesh(Grid&               g,
    size_t dim = m.getDim();
    int nx=g.getNx(), ny=g.getNy(), nz=g.getNz();
    int i, j, k;
-   Point<real_t> h = Point<real_t>(g.getHx(),g.getHy(),g.getHz());
+   Point<real_t> h(g.getHx(),g.getHy(),g.getHz());
 
    node_loop(&m) {
       size_t n = node_label;
@@ -1021,7 +1021,7 @@ void GridToMesh(Grid&               g,
                u(n,dof) += (1-s.x)*s.y*ug(i,j+1);
             if (i<=nx && j<=ny)
                u(n,dof) += s.x*s.y*ug(i+1,j+1);
-	 }
+         }
       }
       if (dim==3) {
          k = std::min(1+int((x.z-g.getXMin().z)/h.z),nz+1);
@@ -1085,7 +1085,6 @@ void MeshToMesh(Mesh&                m1,
    Grid g;
    g.setDomain(xmin,xmax);
    g.setN(nx,ny,nz);
-      //   Vect<real_t> ug((nx+1)*(ny+1)*(nz+1)*u1.getNbDOF());
    Vect<real_t> ug(nx+1,ny+1,nz+1);
 
    if (u1.getDOFType()==NODE_DOF) {

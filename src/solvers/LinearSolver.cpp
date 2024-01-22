@@ -292,6 +292,7 @@ int LinearSolver::solve()
       case DIRECT_SOLVER:
          if (_fact)
             _A->Factor();
+         _fact = 1;
          ret = _A->solve(*_b,*_x);
          break;
 

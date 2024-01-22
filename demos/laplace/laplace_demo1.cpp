@@ -57,18 +57,17 @@ int main(int argc, char *argv[])
 //    Declare problem data
       Vect<double> bc(ms), bf(ms), sf(ms);
       Prescription p(ms,data.getPrescriptionFile());
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(SOURCE,bf);
-      p.get(FLUX,sf);
-      bc = 1;
+      p.getBoundaryCondition(bc);
+      p.getBodyForce(bf);
+      p.getFlux(sf);
 
 //    Declare problem solution and instantiate equation
       Vect<double> u(ms);
       Laplace2DT3 eq(ms,u);
 
 //    Prescribe data
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(SOURCE,bf);
+      eq.setBoundaryCondition(bc);
+      eq.setSource(bf);
       eq.setSolver(CG_SOLVER,SSOR_PREC);
       eq.LinearSystemInfo();
 
@@ -78,8 +77,9 @@ int main(int argc, char *argv[])
 
 //    Get analytical solution and compute error
       Vect<double> sol(ms);
-      p.get(SOLUTION,sol);
+      p.getSolution(sol);
       cout << "L2-Error: " << (u-sol).Norm(WNORM2) << endl;
-  } CATCH_EXCEPTION
+
+   } CATCH_EXCEPTION
    return EXIT_SUCCESS;
 }

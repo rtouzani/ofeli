@@ -27,7 +27,7 @@
 
                        A demo program for mesh adaptation
 
-          This program illustrate a 2-D mesh adaptation example where
+          This program illustrates a 2-D mesh adaptation example where
               the mesh is adapted to a given solution vector
 
   ==============================================================================*/
@@ -47,6 +47,7 @@ int main(int argc, char **argv)
       Domain dom(argv[1]);
       MeshAdapt ma(dom);
       Mesh &ms = ma.getMesh();
+
 //    Background mesh stored in file 'mesh1.m'
       ms.put("mesh1.m");
 

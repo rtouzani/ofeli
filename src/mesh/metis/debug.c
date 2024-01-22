@@ -43,7 +43,7 @@ int ComputeCut(GraphType *graph, idxtype *where)
 **************************************************************************/
 int CheckBnd(GraphType *graph) 
 {
-   int i, j, nvtxs, nbnd;
+   int i, j, nvtxs;
    idxtype *xadj, *adjncy, *where, *bndptr, *bndind=0;
    nvtxs = graph->nvtxs;
    xadj = graph->xadj;
@@ -51,13 +51,11 @@ int CheckBnd(GraphType *graph)
    where = graph->where;
    bndptr = graph->bndptr;
    bndind = graph->bndind;
-   for (nbnd=0, i=0; i<nvtxs; i++) {
+   for (i=0; i<nvtxs; i++) {
       if (xadj[i+1]-xadj[i] == 0)
-         nbnd++;   /* Islands are considered to be boundary vertices */
 
       for (j=xadj[i]; j<xadj[i+1]; j++) {
          if (where[i] != where[adjncy[j]]) {
-            nbnd++;
             if (bndptr[i]==-1)
                printf("Warning in ChekBnd: bndptr[%d] is equal to -1\n",i);
             if (bndind[bndptr[i]]!=i)
@@ -66,10 +64,8 @@ int CheckBnd(GraphType *graph)
          }
       }
    }
-   ASSERTP(nbnd == graph->nbnd, ("%d %d\n", nbnd, graph->nbnd));
    return 1;
 }
-
 
 
 /*************************************************************************
@@ -77,7 +73,7 @@ int CheckBnd(GraphType *graph)
 **************************************************************************/
 int CheckBnd2(GraphType *graph) 
 {
-   int i, j, nvtxs, nbnd, id, ed;
+   int j, nvtxs, id, ed;
    idxtype *xadj, *adjncy, *where, *bndptr, *bndind;
 
    nvtxs = graph->nvtxs;
@@ -87,7 +83,7 @@ int CheckBnd2(GraphType *graph)
    bndptr = graph->bndptr;
    bndind = graph->bndind;
 
-   for (nbnd=0, i=0; i<nvtxs; i++) {
+   for (int i=0; i<nvtxs; i++) {
       id = ed = 0;
       for (j=xadj[i]; j<xadj[i+1]; j++) {
          if (where[i] != where[adjncy[j]]) 
@@ -96,7 +92,6 @@ int CheckBnd2(GraphType *graph)
             id += graph->adjwgt[j];
       }
       if (ed - id >= 0 && xadj[i] < xadj[i+1]) {
-         nbnd++;
          if (bndptr[i]==-1)
             printf("Warning in ChekBnd2: bndptr[%d] is equal to -1\n",i);
          if (bndind[bndptr[i]]!=i)

@@ -6,6 +6,6 @@ var classOFELI_1_1NSP2DQ41 =
     [ "build", "classOFELI_1_1NSP2DQ41.html#a7740c7ab195c03ac140f1f75f633470f", null ],
     [ "Periodic", "classOFELI_1_1NSP2DQ41.html#af669369716d638f14a268133981dbb17", null ],
     [ "runOneTimeStep", "classOFELI_1_1NSP2DQ41.html#a97ceb92f009f5eee1340388708fd5939", null ],
-    [ "setInput", "classOFELI_1_1NSP2DQ41.html#af84606c2cecfcef03d6820a323ffbdcc", null ],
+    [ "setInput", "classOFELI_1_1NSP2DQ41.html#affbdc0fae478891f2b9f63607004026f", null ],
     [ "setPenalty", "classOFELI_1_1NSP2DQ41.html#aef525ad3a42dedd8346b084b3e303272", null ]
 ];

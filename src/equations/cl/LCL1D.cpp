@@ -150,7 +150,7 @@ double LCL1D::getFluxUpwind()
 {
    double lambda_max=1.e-9;
    MESH_SD
-      lambda_max = max(computeRiemannUpwind(theSideLabel),lambda_max);
+      lambda_max = max(computeRiemannUpwind(side_label),lambda_max);
    return lambda_max;
 }
 
@@ -159,9 +159,9 @@ void LCL1D::forward()
 {
    MESH_SD {
       size_t n = theSideLabel;
-      (*_U)(theSide->getNeighborElement(1)->n()) -= _FU(n)*_Lrate(n)*_TimeStep;
-      if (!theSide->isOnBoundary())
-         (*_U)(theSide->getNeighborElement(2)->n()) += _FU(n)*_Rrate(n)*_TimeStep;
+      (*_U)(the_side->getNeighborElement(1)->n()) -= _FU(n)*_Lrate(n)*_TimeStep;
+      if (!the_side->isOnBoundary())
+         (*_U)(the_side->getNeighborElement(2)->n()) += _FU(n)*_Rrate(n)*_TimeStep;
    }
 }
 
@@ -179,9 +179,9 @@ void LCL1D::Forward(const Vect<double> &Flux, Vect<double> &Field)
 {
    MESH_SD {
       size_t n = theSideLabel;
-      Field(theSide->getNeighborElement(1)->n()) -= Flux(n)*_Lrate(n)*_TimeStep;
+      Field(the_side->getNeighborElement(1)->n()) -= Flux(n)*_Lrate(n)*_TimeStep;
       if (!theSide->isOnBoundary())
-         Field(theSide->getNeighborElement(2)->n()) += Flux(n)*_Rrate(n)*_TimeStep;
+         Field(the_side->getNeighborElement(2)->n()) += Flux(n)*_Rrate(n)*_TimeStep;
    }
 }
 

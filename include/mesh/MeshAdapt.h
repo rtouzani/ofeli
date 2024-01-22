@@ -109,7 +109,8 @@ class MeshAdapt
     Domain &getDomain() const { return *_domain; }
 
 /// \brief Get reference to current mesh
-    Mesh &getMesh() const { return *_ms[_iter-1]; }
+//    Mesh &getMesh() const { return *_ms[_iter-1]; }
+    Mesh &getMesh() const { return *_theMesh; }
 
 /// \brief Set reference to Domain instance
     void set(Domain &dom);
@@ -307,7 +308,7 @@ class MeshAdapt
  private:
 
    vector<Mesh *> _ms;
-   Mesh _theMesh;
+   Mesh *_theMesh;
    const Vect<real_t> *_u;
    int    _nb_Jacobi, _nb_smooth, _allquad;
    size_t _nb_nodes, _nb_elements, _max_nb_vertices, _iter, _nb_subdiv;

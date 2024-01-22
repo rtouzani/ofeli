@@ -219,7 +219,7 @@ class DC2DT3 : public Equa_Therm<3,3,2,2>
  *  </ul>
  *  @param [in] u Vector containing input data
  */
-    void setInput(EqDataType    opt,
+    void setInput(EType         opt,
                   Vect<real_t>& u);
 
 /** \brief Set Joule heating term as source

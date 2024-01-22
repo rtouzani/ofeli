@@ -109,11 +109,11 @@ void DC2DT3::set(const Side* sd)
 }
 
 
-void DC2DT3::setInput(EqDataType    opt,
+void DC2DT3::setInput(EType         opt,
                       Vect<real_t>& u)
 {
    Equa::setInput(opt,u);
-   if (opt==VELOCITY_FIELD)
+   if (opt==EType::VELOCITY)
       _vel = &u;
 }
 

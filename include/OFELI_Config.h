@@ -243,6 +243,43 @@ enum FieldName {
    MOMENTUM                     =  11,    ///< Momentum
 };
 
+/*! \enum EType
+ * Enumerate variable that selects equation data type
+ */
+enum class EType {
+      NO_TYPE            =  0,    /*!< No type prescribed                          */
+      DDOMAIN            =  1,    /*!< Domain                                      */
+      MESH               =  2,    /*!< Finite element mesh                         */
+      GRID               =  3,    /*!< Grid                                        */
+      VECTOR             =  4,    /*!< Vector or Field                             */
+      MATRIX             =  5,    /*!< Matrix                                      */
+      PROJECT            =  6,    /*!< Project name                                */
+      INPUT              =  7,    /*!< Input                                       */
+      MATERIAL           =  8,    /*!< Material data                               */
+      PRESCRIBE          =  9,    /*!< Prescribe data                              */
+      FUNCTION           = 10,    /*!< Function to define a tabulation             */
+      INITIAL            = 11,    /*!< Initial condition or solution               */
+      SOLUTION           = 11,    /*!< Initial condition or solution               */
+      BOUNDARY_CONDITION = 12,    /*!< Boundary condition data                     */
+      DIRICHLET          = 12,    /*!< Boundary condition data                     */
+      BODY_FORCE         = 13,    /*!< Body force data                             */
+      SOURCE             = 13,    /*!< Body force data                             */
+      BOUNDARY_FORCE     = 14,    /*!< Body force data                             */
+      FLUX               = 14,    /*!< Body force data                             */
+      TRACTION           = 14,    /*!< Body force data                             */
+      NEUMANN            = 14,    /*!< Body force data                             */
+      POINT_FORCE        = 15,    /*!< Localized (at point) force                  */
+      AUX_INPUT_FIELD_1  = 16,    /*!< Auxiliary input field 1                     */
+      AUX_INPUT_FIELD_2  = 17,    /*!< Auxiliary input field 2                     */
+      AUX_INPUT_FIELD_3  = 18,    /*!< Auxiliary input field 3                     */
+      AUX_INPUT_FIELD_4  = 19,    /*!< Auxiliary input field 4                     */
+      DISPLACEMENT       = 20,    /*!< A displacement field                        */
+      VELOCITY           = 21,    /*!< A velocity field                            */
+      PRESSURE           = 22,    /*!< A pressure field                            */
+      TEMPERATURE        = 23     /*!< A temperature field                         */
+};
+
+
 /*! \enum DOFSupport
  * \brief Choose Support of degrees of freedom
  */
@@ -253,36 +290,6 @@ enum DOFSupport {
     SIDE_DOF          = 3,   ///< DOFs are supported by sides
     BOUNDARY_SIDE_DOF = 4,   ///< DOFs are supported by sides
     EDGE_DOF          = 5    ///< DOFs are supported by edges
-};
-
-
-/*! \enum EqDataType
- * Enumerate variable that selects equation data type
- */
-enum EqDataType {
-   NO_TYPE                      =    0,    /*!< No type prescribed                     */
-   INITIAL                      =    1,    /*!< Initial condition                      */
-   INITIAL_FIELD                =    1,    /*!< Initial condition                      */
-   SOLUTION                     =    1,    /*!< Solution vector (same as Initial)      */
-   INITIAL_AUX_1                =    2,    /*!< Initial auxiliary field                */
-   INITIAL_AUX_2                =    3,    /*!< Initial auxiliary field                */
-   INITIAL_AUX_3                =    4,    /*!< Initial auxiliary field                */
-   INITIAL_AUX_4                =    5,    /*!< Initial auxiliary field                */
-   BOUNDARY_CONDITION           =    6,    /*!< Boundary condition data                */
-   BODY_FORCE                   =    7,    /*!< Body force data                        */
-   SOURCE                       =    7,    /*!< Source data (same as Body force)       */
-   POINT_FORCE                  =    8,    /*!< Localized (at point) force             */
-   BOUNDARY_FORCE               =    9,    /*!< Boundary force data                    */
-   FLUX                         =    9,    /*!< Flux data (same as Boundary force)     */
-   TRACTION                     =    9,    /*!< Traction data (same as Boundary force) */
-   AUX_INPUT_FIELD_1            =   10,    /*!< Auxiliary input field 1                */
-   AUX_INPUT_FIELD_2            =   11,    /*!< Auxiliary input field 2                */
-   AUX_INPUT_FIELD_3            =   11,    /*!< Auxiliary input field 3                */
-   AUX_INPUT_FIELD_4            =   12,    /*!< Auxiliary input field 4                */
-   DISPLACEMENT_FIELD           =   13,    /*!< A displacement field                   */
-   VELOCITY_FIELD               =   14,    /*!< A velocity field                       */
-   PRESSURE_FIELD               =   15,    /*!< A pressure field                       */
-   TEMPERATURE_FIELD            =   16,    /*!< A temperature field                    */
 };
 
 

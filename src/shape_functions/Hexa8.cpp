@@ -122,7 +122,7 @@ void Hexa8::atGauss(int                          n,
 {
    dsh.resize(8*n*n*n);
    w.resize(n*n*n);
-   real_t wg[n];
+   vector<real_t> wg(n);
    size_t ijk = 0;
    Gauss g(2);
    Point<real_t> xg(g.x(1),g.x(2),g.x(3));
@@ -146,7 +146,7 @@ void Hexa8::atGauss(int                  n,
 {
    sh.resize(8*n*n*n);
    w.resize(n*n*n);
-   real_t wg[n];
+   vector<real_t> wg(n);
    size_t ijk = 0;
    Gauss g(n);
    Point<real_t> xg(g.x(1),g.x(2),g.x(3));

@@ -615,7 +615,6 @@ void saveField(const Vect<real_t>& v,
                int                 opt)
 {
    bool mts = false;
-   static int ts = 0;
    size_t i, k, n, m=0;
    bool scalar = true;
    size_t nb_dof = v.getNbDOF();
@@ -845,7 +844,6 @@ void saveField(const Vect<real_t>& v,
       case MATLAB:
          break;
    }
-   ts++;
    fp.close();
 }
 

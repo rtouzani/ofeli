@@ -141,9 +141,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af45bbe0442fb57521bf5a98dd628e3a5" id="r_af45bbe0442fb57521bf5a98dd628e3a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Pres2DT3.html#af45bbe0442fb57521bf5a98dd628e3a5">Grad</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; real_t &gt; &amp;u) const</td></tr>
 <tr class="memdesc:af45bbe0442fb57521bf5a98dd628e3a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return gradient of a vector in element.  <br /></td></tr>
 <tr class="separator:af45bbe0442fb57521bf5a98dd628e3a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af84606c2cecfcef03d6820a323ffbdcc" id="r_af84606c2cecfcef03d6820a323ffbdcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Pres2DT3.html#af84606c2cecfcef03d6820a323ffbdcc">setInput</a> (<a class="el" href="OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6">EqDataType</a> opt, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; real_t &gt; &amp;u)</td></tr>
-<tr class="memdesc:af84606c2cecfcef03d6820a323ffbdcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set equation input data.  <br /></td></tr>
-<tr class="separator:af84606c2cecfcef03d6820a323ffbdcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affbdc0fae478891f2b9f63607004026f" id="r_affbdc0fae478891f2b9f63607004026f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Pres2DT3.html#affbdc0fae478891f2b9f63607004026f">setInput</a> (<a class="el" href="OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1">EType</a> opt, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; real_t &gt; &amp;u)</td></tr>
+<tr class="memdesc:affbdc0fae478891f2b9f63607004026f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set equation input data.  <br /></td></tr>
+<tr class="separator:affbdc0fae478891f2b9f63607004026f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Builds finite element arrays for wave propagation in 2-D using 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> elements. </p>
@@ -447,8 +447,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af84606c2cecfcef03d6820a323ffbdcc" name="af84606c2cecfcef03d6820a323ffbdcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af84606c2cecfcef03d6820a323ffbdcc">&#9670;&#160;</a></span>setInput()</h2>
+<a id="affbdc0fae478891f2b9f63607004026f" name="affbdc0fae478891f2b9f63607004026f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affbdc0fae478891f2b9f63607004026f">&#9670;&#160;</a></span>setInput()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -456,7 +456,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void setInput </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6">EqDataType</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1">EType</a>&#160;</td>
           <td class="paramname"><em>opt</em>, </td>
         </tr>
         <tr>
@@ -482,9 +482,9 @@ Public Member Functions</h2></td></tr>
 <li>
 <code>BOUNDARY_CONDITION_DATA</code>: Boundary condition (Dirichlet) </li>
 <li>
-<code>SOURCE_DATA</code>: Heat source </li>
+<code>SOURCE</code>: Heat source </li>
 <li>
-<code>FLUX_DATA</code>: Heat flux (Neumann boundary condition) </li>
+<code>FLUX</code>: Heat flux (Neumann boundary condition) </li>
 <li>
 <code>SPEED</code>: Speed vector (for the convection term) </li>
 </ul>

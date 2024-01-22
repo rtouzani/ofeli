@@ -51,8 +51,8 @@ var group__Equation =
       [ "SideAssembly", "classOFELI_1_1Equation.html#af9d06a4645a4d1b67a31c90bd6c3eb01", null ],
       [ "SideNodeCoordinates", "classOFELI_1_1Equation.html#a70aed9ca4f8d4fcca37357cf3a57518c", null ],
       [ "SideNodeVector", "classOFELI_1_1Equation.html#ac9aedef9e0deffefe6ca5e8e31c8673d", null ],
-      [ "SideSideVector", "classOFELI_1_1Equation.html#a8756bcf0d1f7118d2c408b08b6baab76", null ],
-      [ "SideVector", "classOFELI_1_1Equation.html#a5c89b061a87c14143b3e38040a779ccf", null ],
+      [ "SideSideVector", "classOFELI_1_1Equation.html#a4ee6babe8a6192e5c084d67e9222e75c", null ],
+      [ "SideVector", "classOFELI_1_1Equation.html#a6be31ebb6ca711fe8ce0514b0955cc2b", null ],
       [ "updateBC", "classOFELI_1_1Equation.html#a9ece7667be8c650b6e1ee623749ad492", null ]
     ] ],
     [ "Estimator", "classOFELI_1_1Estimator.html", [

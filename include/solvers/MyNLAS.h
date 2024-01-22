@@ -95,7 +95,7 @@ class MyNLAS
     virtual real_t Gradient(const Vect<real_t>& x,
                             int                 i=1,
                             int                 j=1)
-    { return 0.; }
+    { i = j = 1; return 0.; }
 
  protected:
 

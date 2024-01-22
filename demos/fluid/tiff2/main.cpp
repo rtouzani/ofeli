@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 //    Declare problem data (boundary conditions, body forces)
       Vect<double> u(ms), bc(ms), p(ms,NODE_DOF,1);
       Prescription pr(ms,data.getDataFile());
-      pr.get(BOUNDARY_CONDITION,bc);
+      pr.getBoundaryCondition(bc);
       u.setName("Velocity");
       p.setName("Pressure");
 
@@ -81,8 +81,8 @@ int main(int argc, char *argv[])
 //    --------------------
 
       NSP2DQ41 eq(ms,u);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(PRESSURE_FIELD,p);
+      eq.setBoundaryCondition(bc);
+      eq.setInput(EType::PRESSURE,p);
 
       TimeLoop {
 

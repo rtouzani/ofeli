@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
 //    Declare problem data
       Vect<double> bc(ms), bf(ms);
       Prescription p(ms,data.getPrescriptionFile());
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(SOURCE,bf);
+      p.getBoundaryCondition(bc);
+      p.getBodyForce(bf);
 
 
 //    Declare problem solution and instantiate equation
@@ -69,15 +69,15 @@ int main(int argc, char *argv[])
       Laplace2DT6 eq(ms,u);
 
 //    Prescribe data
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(SOURCE,bf);
+      eq.setBoundaryCondition(bc);
+      eq.setBodyForce(bf);
 
 //    Solve problem
       eq.run();
 
 //    Get analytical solution and compute error
       Vect<double> sol(ms);
-      p.get(SOLUTION,sol);
+      p.getSolution(sol);
       cout << "L2-Error: " << (u-sol).Norm(WNORM2) << endl;
 
    } CATCH_EXCEPTION

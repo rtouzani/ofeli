@@ -56,16 +56,16 @@ int main(int argc, char *argv[])
 //    Declare problem data
       Vect<double> bc(ms), f(ms);
       Prescription p(ms,data.getDataFile());
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(SOURCE,f);
+      p.getBoundaryCondition(bc);
+      p.getBodyForce(f);
 
 //    Declare problem solution and instantiate equation
       Vect<double> u(ms);
       Laplace3DT4 eq(ms,u);
 
 //    Prescribe data
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(SOURCE,f);
+      eq.setBoundaryCondition(bc);
+      eq.setBodyForce(f);
 
 //    Solve problem
       eq.run();
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 
 //    Get analytical solution and compute error
       Vect<double> v(ms);
-      p.get(SOLUTION,v);
+      p.getInitial(v);
       cout << "L2-Error: " << (u-v).Norm(WNORM2) << endl;
 
    } CATCH_EXCEPTION

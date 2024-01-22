@@ -218,7 +218,7 @@ ostream& operator<<(ostream&         s,
    }
    s << endl << "Average Error: " << r.getAverage() << endl;
    s << "Relative Errors in Elements" << endl << endl;
-   node_loop(&(r.getMesh())) {
+   element_loop(&(r.getMesh())) {
       s << setw(6) << element_label << "   ";
       s << setprecision(8) << setw(18) << (r._el_I(element_label)-r.getAverage())/r.getAverage() << endl;
    }

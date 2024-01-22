@@ -78,7 +78,7 @@ void Pres1DL2::set(const Element* el)
 }
 
 
-void Pres1DL2::setInput(EqDataType    opt,
+void Pres1DL2::setInput(EType         opt,
                         Vect<real_t>& u)
 {
    Equa::setInput(opt,u);

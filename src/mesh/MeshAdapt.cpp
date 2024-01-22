@@ -38,7 +38,6 @@ using std::to_string;
 
 namespace OFELI {
 
-
 MeshAdapt::MeshAdapt()
 {
    setDefault();
@@ -60,8 +59,7 @@ MeshAdapt::MeshAdapt(Mesh& ms)
 
 void MeshAdapt::setDefault()
 {
-   _nb_Jacobi = 3;
-   _nb_smooth = 3;
+   _nb_Jacobi = _nb_smooth = 3;
    _abs_error = true;
    _err = 0.004;
    _geo_err = 0.1;
@@ -164,7 +162,7 @@ int MeshAdapt::run(const Vect<real_t>& u,
    saveMbb("MeshAdapt.bb",u);
    getSolutionMbb("MeshAdapt.bb");
    int ret = run();
-   v.setMesh(_theMesh);
+   v.setMesh(*_theMesh);
    MeshToMesh(u,v,_nb_subdiv,_nb_subdiv,0);
    remove("MeshAdapt.bb");
    return ret;
@@ -286,8 +284,7 @@ int MeshAdapt::run()
       if (_set_mbb) {
          solMbb = ReadbbFile(_mbb_file.c_str(),nbsolbb,lsolbb,2,2);
          if (lsolbb != BTh.nbv) {
-            cerr << "fatal error nbsol " << nbsolbb << " " << lsolbb << " =! "
-		 << BTh.nbv << endl;
+            cerr << "fatal error nbsol " << nbsolbb << " " << lsolbb << " =! " << BTh.nbv << endl;
             cerr << "size of sol incorrect" << endl;
             MeshError(99);
          }
@@ -422,12 +419,11 @@ int MeshAdapt::run()
    }
    _ms.push_back(new Mesh);
    getBamg(_output_mesh_file,*_ms[_iter]);
-   _theMesh = *_ms[_iter];
-   _theMesh *= _scale_fact;
+   _theMesh = _ms[_iter];
+   *_theMesh *= _scale_fact;
    _nb_nodes = _ms[_iter]->getNbNodes();
    _nb_elements = _ms[_iter]->getNbElements();
-   _iter++;
-   if (_iter>1) {
+   if (++_iter>1) {
       for (size_t i=0; i<=_iter; i++)
          remove(string("mesh."+to_string(i)+".bamg").c_str());
       remove("mesh.geo");
@@ -457,7 +453,7 @@ void MeshAdapt::getSolution(Vect<real_t>& u,
 void MeshAdapt::Interpolate(const Vect<real_t>& u,
                             Vect<real_t>&       v)
 {
-   v.setMesh(_theMesh);
+   v.setMesh(*_theMesh);
    MeshToMesh(u,v,_nb_subdiv,_nb_subdiv,0);
 }
 

@@ -730,174 +730,6 @@
   </doc>
   <doc>
     <field name="type">enum</field>
-    <field name="name">EqDataType</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6</field>
-    <field name="keywords">EqDataType</field>
-    <field name="text">Enumerate variable that selects equation data type</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">SOURCE</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a0159491ea913604389155db907e0d1c0</field>
-    <field name="keywords">SOURCE SOURCE</field>
-    <field name="text">Source data same as Body force</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">TEMPERATURE_FIELD</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a0993661268a76c46163098276498c905</field>
-    <field name="keywords">TEMPERATURE_FIELD TEMPERATURE_FIELD</field>
-    <field name="text">A temperature field</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">SOLUTION</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a0a57d2bc6d4da43c5fdb8c9293764d8d</field>
-    <field name="keywords">SOLUTION SOLUTION</field>
-    <field name="text">Solution vector same as Initial</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">DISPLACEMENT_FIELD</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a25708ee73a0fcaa99ad2c4e671413019</field>
-    <field name="keywords">DISPLACEMENT_FIELD DISPLACEMENT_FIELD</field>
-    <field name="text">A displacement field</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">AUX_INPUT_FIELD_2</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a2dcbe0dd297127c82bcf3743425412b8</field>
-    <field name="keywords">AUX_INPUT_FIELD_2 AUX_INPUT_FIELD_2</field>
-    <field name="text">Auxiliary input field 2</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">AUX_INPUT_FIELD_1</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a44c55bd2eabae4733919776e484aa44c</field>
-    <field name="keywords">AUX_INPUT_FIELD_1 AUX_INPUT_FIELD_1</field>
-    <field name="text">Auxiliary input field 1</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">PRESSURE_FIELD</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a5e9caa144ca1e144ccf0f8a26a94e3d8</field>
-    <field name="keywords">PRESSURE_FIELD PRESSURE_FIELD</field>
-    <field name="text">A pressure field</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">INITIAL_AUX_3</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a607a5770d29e88a43b7afd329213dffc</field>
-    <field name="keywords">INITIAL_AUX_3 INITIAL_AUX_3</field>
-    <field name="text">Initial auxiliary field</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">INITIAL</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a7116db6906963fd0720c4a85be250cf4</field>
-    <field name="keywords">INITIAL INITIAL</field>
-    <field name="text">Initial condition</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">AUX_INPUT_FIELD_4</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a8569a2cfad16d87c13b8aa9c5f25da48</field>
-    <field name="keywords">AUX_INPUT_FIELD_4 AUX_INPUT_FIELD_4</field>
-    <field name="text">Auxiliary input field 4</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">AUX_INPUT_FIELD_3</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a8681ead3c505065584ae7202d7b2cefe</field>
-    <field name="keywords">AUX_INPUT_FIELD_3 AUX_INPUT_FIELD_3</field>
-    <field name="text">Auxiliary input field 3</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">BOUNDARY_FORCE</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6a951d9ae210650ebf34836cbdb772e34e</field>
-    <field name="keywords">BOUNDARY_FORCE BOUNDARY_FORCE</field>
-    <field name="text">Boundary force data</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">FLUX</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6aa76c44edb76686fa1bbda9ebe69c7857</field>
-    <field name="keywords">FLUX FLUX</field>
-    <field name="text">Flux data same as Boundary force</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">VELOCITY_FIELD</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6aabd7953ec566344d6edddee8c6260544</field>
-    <field name="keywords">VELOCITY_FIELD VELOCITY_FIELD</field>
-    <field name="text">A velocity field</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">TRACTION</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6ab33ad96999df7704b08592a28943c260</field>
-    <field name="keywords">TRACTION TRACTION</field>
-    <field name="text">Traction data same as Boundary force</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">NO_TYPE</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6ab7edd9ce665944b457c9862d412f80cc</field>
-    <field name="keywords">NO_TYPE NO_TYPE</field>
-    <field name="text">No type prescribed</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">POINT_FORCE</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6abbbf5b847439232f01a7f9bfcf70fbb0</field>
-    <field name="keywords">POINT_FORCE POINT_FORCE</field>
-    <field name="text">Localized at point force</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">INITIAL_AUX_4</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6ac8eb55222fc6fd5513a4ffd7eeb7b049</field>
-    <field name="keywords">INITIAL_AUX_4 INITIAL_AUX_4</field>
-    <field name="text">Initial auxiliary field</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">INITIAL_FIELD</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6acb893c2453b97395f4125073d9e3b742</field>
-    <field name="keywords">INITIAL_FIELD INITIAL_FIELD</field>
-    <field name="text">Initial condition</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">INITIAL_AUX_1</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6ad44d739c9448e43b2bfed35735dc06bf</field>
-    <field name="keywords">INITIAL_AUX_1 INITIAL_AUX_1</field>
-    <field name="text">Initial auxiliary field</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">BOUNDARY_CONDITION</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6addd8e8ecf2b4fe59bf655c1cfc67bb30</field>
-    <field name="keywords">BOUNDARY_CONDITION BOUNDARY_CONDITION</field>
-    <field name="text">Boundary condition data</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">INITIAL_AUX_2</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6aeef4912faf6d08b6af41bf8eca8e56ba</field>
-    <field name="keywords">INITIAL_AUX_2 INITIAL_AUX_2</field>
-    <field name="text">Initial auxiliary field</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">BODY_FORCE</field>
-    <field name="url">OFELI__Config_8h.html#a42582cc9e68e05cf30ccad02e4ba8ff6af8c1841ed2b2d4e99067e4d90186b3e6</field>
-    <field name="keywords">BODY_FORCE BODY_FORCE</field>
-    <field name="text">Body force data</field>
-  </doc>
-  <doc>
-    <field name="type">enum</field>
     <field name="name">FieldName</field>
     <field name="url">OFELI__Config_8h.html#a4425e9e63e7d0d0c4cb1d33abdb5511b</field>
     <field name="keywords">FieldName</field>
@@ -1168,6 +1000,223 @@
     <field name="url">OFELI__Config_8h.html#ab6f9e7ed61a436ab70e8c9cbf9b7c62faf71a361c3c01786c90e8a3fec55401c1</field>
     <field name="keywords">SECANT SECANT</field>
     <field name="text">Secant method</field>
+  </doc>
+  <doc>
+    <field name="type">enum</field>
+    <field name="name">EType</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1</field>
+    <field name="keywords">EType</field>
+    <field name="text">Enumerate variable that selects equation data type</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::DDOMAIN</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a03d51e91bbc2c91a216f629421451e07</field>
+    <field name="keywords">DDOMAIN EType::DDOMAIN DDOMAIN EType::DDOMAIN</field>
+    <field name="text">Domain</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::PROJECT</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a1781f676dedf5767f3243db0a9738b35</field>
+    <field name="keywords">PROJECT EType::PROJECT PROJECT EType::PROJECT</field>
+    <field name="text">Project name</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::BOUNDARY_CONDITION</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a1c0e98648dbdf04718b19825477a25d6</field>
+    <field name="keywords">BOUNDARY_CONDITION EType::BOUNDARY_CONDITION BOUNDARY_CONDITION EType::BOUNDARY_CONDITION</field>
+    <field name="text">Boundary condition data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::NO_TYPE</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a245d11a3709454cc69b2de7911073d57</field>
+    <field name="keywords">NO_TYPE EType::NO_TYPE NO_TYPE EType::NO_TYPE</field>
+    <field name="text">No type prescribed</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::BOUNDARY_FORCE</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a28e7e0b368f58eca4691ded0f034757f</field>
+    <field name="keywords">BOUNDARY_FORCE EType::BOUNDARY_FORCE BOUNDARY_FORCE EType::BOUNDARY_FORCE</field>
+    <field name="text">Body force data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::NEUMANN</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a2f2dd8d12511598975b5475371963bd4</field>
+    <field name="keywords">NEUMANN EType::NEUMANN NEUMANN EType::NEUMANN</field>
+    <field name="text">Body force data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::MATRIX</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a38ef5fe49a654647519ee8c498c49664</field>
+    <field name="keywords">MATRIX EType::MATRIX MATRIX EType::MATRIX</field>
+    <field name="text">Matrix</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::DISPLACEMENT</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a588d9cf9baadd390793d7bd46ae3d3a8</field>
+    <field name="keywords">DISPLACEMENT EType::DISPLACEMENT DISPLACEMENT EType::DISPLACEMENT</field>
+    <field name="text">A displacement field</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::MESH</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a5b65fe46c5dd90ebcec69c472c3be1d9</field>
+    <field name="keywords">MESH EType::MESH MESH EType::MESH</field>
+    <field name="text">Finite element mesh</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::PRESSURE</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a6753182d0065061a189bb834145e8cd1</field>
+    <field name="keywords">PRESSURE EType::PRESSURE PRESSURE EType::PRESSURE</field>
+    <field name="text">A pressure field</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::FUNCTION</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a6a72a6a776662a244f82d31e9274a07b</field>
+    <field name="keywords">FUNCTION EType::FUNCTION FUNCTION EType::FUNCTION</field>
+    <field name="text">Function to define a tabulation</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::VELOCITY</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a7b4354bded455eb379e3c764806cda7b</field>
+    <field name="keywords">VELOCITY EType::VELOCITY VELOCITY EType::VELOCITY</field>
+    <field name="text">A velocity field</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::VECTOR</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a87752381b583740610f1dfeb07fdad7e</field>
+    <field name="keywords">VECTOR EType::VECTOR VECTOR EType::VECTOR</field>
+    <field name="text">Vector or Field</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::INITIAL</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a91d26e4b2b105c74655093c9becd30b7</field>
+    <field name="keywords">INITIAL EType::INITIAL INITIAL EType::INITIAL</field>
+    <field name="text">Initial condition or solution</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::TRACTION</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1a9431394e39c2d1232d9c4bb4396f9e59</field>
+    <field name="keywords">TRACTION EType::TRACTION TRACTION EType::TRACTION</field>
+    <field name="text">Body force data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::PRESCRIBE</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1aa5b960d0e18bfaab76689569bdb5d15b</field>
+    <field name="keywords">PRESCRIBE EType::PRESCRIBE PRESCRIBE EType::PRESCRIBE</field>
+    <field name="text">Prescribe data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::INPUT</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1aa84cc046d48610b05c21fd3670d0c829</field>
+    <field name="keywords">INPUT EType::INPUT INPUT EType::INPUT</field>
+    <field name="text">Input</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::TEMPERATURE</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ab976538812ef6e3e5881e245d5fc3c76</field>
+    <field name="keywords">TEMPERATURE EType::TEMPERATURE TEMPERATURE EType::TEMPERATURE</field>
+    <field name="text">A temperature field</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::GRID</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1abc899ea5d6a94a8e4e60c16244919ba0</field>
+    <field name="keywords">GRID EType::GRID GRID EType::GRID</field>
+    <field name="text">Grid</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::AUX_INPUT_FIELD_2</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1abe6ece5efccdbe5007a8c056a70ba3b6</field>
+    <field name="keywords">AUX_INPUT_FIELD_2 EType::AUX_INPUT_FIELD_2 AUX_INPUT_FIELD_2 EType::AUX_INPUT_FIELD_2</field>
+    <field name="text">Auxiliary input field 2</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::AUX_INPUT_FIELD_1</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ac43b6761e79d82112a05f3545fa62f6c</field>
+    <field name="keywords">AUX_INPUT_FIELD_1 EType::AUX_INPUT_FIELD_1 AUX_INPUT_FIELD_1 EType::AUX_INPUT_FIELD_1</field>
+    <field name="text">Auxiliary input field 1</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::MATERIAL</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ac740ce1ae95095daaa5eb2362f3151b3</field>
+    <field name="keywords">MATERIAL EType::MATERIAL MATERIAL EType::MATERIAL</field>
+    <field name="text">Material data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::BODY_FORCE</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ad4bc67443f9000c0647fe7d6b8fc0e83</field>
+    <field name="keywords">BODY_FORCE EType::BODY_FORCE BODY_FORCE EType::BODY_FORCE</field>
+    <field name="text">Body force data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::FLUX</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ae098247bc6652dd88c76644b275260ed</field>
+    <field name="keywords">FLUX EType::FLUX FLUX EType::FLUX</field>
+    <field name="text">Body force data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::DIRICHLET</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ae151350b63efc6c3bbe2e3f0d27863ba</field>
+    <field name="keywords">DIRICHLET EType::DIRICHLET DIRICHLET EType::DIRICHLET</field>
+    <field name="text">Boundary condition data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::AUX_INPUT_FIELD_3</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ae23ce51267779bce4ce2a3e340e2eee7</field>
+    <field name="keywords">AUX_INPUT_FIELD_3 EType::AUX_INPUT_FIELD_3 AUX_INPUT_FIELD_3 EType::AUX_INPUT_FIELD_3</field>
+    <field name="text">Auxiliary input field 3</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::SOLUTION</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ae3d87c0113dc985c598feb409a45c552</field>
+    <field name="keywords">SOLUTION EType::SOLUTION SOLUTION EType::SOLUTION</field>
+    <field name="text">Initial condition or solution</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::SOURCE</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ae60b4854b44ccfb2d92aa6f035171bb4</field>
+    <field name="keywords">SOURCE EType::SOURCE SOURCE EType::SOURCE</field>
+    <field name="text">Body force data</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::AUX_INPUT_FIELD_4</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1ae867b0ca963689e0d972e176e70fdb29</field>
+    <field name="keywords">AUX_INPUT_FIELD_4 EType::AUX_INPUT_FIELD_4 AUX_INPUT_FIELD_4 EType::AUX_INPUT_FIELD_4</field>
+    <field name="text">Auxiliary input field 4</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">EType::POINT_FORCE</field>
+    <field name="url">OFELI__Config_8h.html#ad5d0e87f61ba99c47a539492df7917a1af700f8b37d34639300825d0e1296c233</field>
+    <field name="keywords">POINT_FORCE EType::POINT_FORCE POINT_FORCE EType::POINT_FORCE</field>
+    <field name="text">Localized at point force</field>
   </doc>
   <doc>
     <field name="type">file</field>
@@ -2335,19 +2384,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::DC1DL2::setInput</field>
-    <field name="args">(EqDataType opt, Vect&lt; real_t &gt; &amp;u)</field>
-    <field name="url">classOFELI_1_1DC1DL2.html#af84606c2cecfcef03d6820a323ffbdcc</field>
-    <field name="keywords">setInput OFELI::DC1DL2::setInput DC1DL2</field>
-    <field name="text">Set equation input data opt Parameter that selects data type for input This parameter is to be chosen in the enumerated variable EqDataType INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE_DATA Heat source FLUX_DATA Heat flux Neumann boundary condition VELOCITY Velocity vector for the convection term u Vector containing input data</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::DC1DL2::Capacity</field>
     <field name="args">(real_t coef=1)</field>
     <field name="url">classOFELI_1_1DC1DL2.html#afa459b7f5bba5e1bc897a81c13dcee77</field>
     <field name="keywords">Capacity OFELI::DC1DL2::Capacity DC1DL2</field>
     <field name="text">Add Consistent capacity matrix to element matrix after multiplying it by coefficient coef coef Coefficient to multiply by added term default 1</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::DC1DL2::setInput</field>
+    <field name="args">(EType opt, Vect&lt; real_t &gt; &amp;u)</field>
+    <field name="url">classOFELI_1_1DC1DL2.html#affbdc0fae478891f2b9f63607004026f</field>
+    <field name="keywords">setInput OFELI::DC1DL2::setInput DC1DL2</field>
+    <field name="text">Set equation input data opt Parameter that selects data type for input This parameter is to be chosen in the enumerated variable EqDataType INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE_DATA Heat source FLUX_DATA Heat flux Neumann boundary condition VELOCITY Velocity vector for the convection term u Vector containing input data</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -2510,14 +2559,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::DC2DT3::setInput</field>
-    <field name="args">(EqDataType opt, Vect&lt; real_t &gt; &amp;u)</field>
-    <field name="url">classOFELI_1_1DC2DT3.html#af84606c2cecfcef03d6820a323ffbdcc</field>
-    <field name="keywords">setInput OFELI::DC2DT3::setInput DC2DT3</field>
-    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE_DATA Heat source FLUX_DATA Heat flux Neumann boundary condition VELOCITY_FIELD Velocity vector for the convection term u Vector containing input data</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::DC2DT3::Capacity</field>
     <field name="args">(real_t coef=1)</field>
     <field name="url">classOFELI_1_1DC2DT3.html#afa459b7f5bba5e1bc897a81c13dcee77</field>
@@ -2531,6 +2572,14 @@
     <field name="url">classOFELI_1_1DC2DT3.html#afc20edadf93d2135ee9873e1bd7deb4c</field>
     <field name="keywords">BoundaryRHS OFELI::DC2DT3::BoundaryRHS DC2DT3</field>
     <field name="text">Add boundary right-hand side flux to right hand side flux Vector containing source at side nodes</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::DC2DT3::setInput</field>
+    <field name="args">(EType opt, Vect&lt; real_t &gt; &amp;u)</field>
+    <field name="url">classOFELI_1_1DC2DT3.html#affbdc0fae478891f2b9f63607004026f</field>
+    <field name="keywords">setInput OFELI::DC2DT3::setInput DC2DT3</field>
+    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE_DATA Heat source FLUX_DATA Heat flux Neumann boundary condition VELOCITY_FIELD Velocity vector for the convection term u Vector containing input data</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -5269,27 +5318,11 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Element::Add</field>
-    <field name="args">(Node *node, int n)</field>
-    <field name="url">classOFELI_1_1Element.html#a17bb9ce00e07504878aeea34bfdd494c</field>
-    <field name="keywords">Add OFELI::Element::Add Element</field>
-    <field name="text">Insert a node and set its local node number node in Pointer to Node instance n Element node number to assign</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Element::getNeighborElement</field>
     <field name="args">(size_t i) const</field>
     <field name="url">classOFELI_1_1Element.html#a20df322863db29638b90ec7aedc4c1d5</field>
     <field name="keywords">getNeighborElement OFELI::Element::getNeighborElement Element</field>
     <field name="text">Return pointer to element Neighboring element i Index of element to look for This method returns valid information only if the Mesh member function Mesh::getElementNeighborElements() has been called before</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Element::Add</field>
-    <field name="args">(Side *sd, int k)</field>
-    <field name="url">classOFELI_1_1Element.html#a265de652c2de5280416ffd80e1c63af3</field>
-    <field name="keywords">Add OFELI::Element::Add Element</field>
-    <field name="text">Assign Side to Element with assigned local label sd Pointer to Side instance k Local label</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -6549,8 +6582,8 @@
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::Equa_Solid::setInput</field>
-    <field name="args">(EqDataType opt, Vect&lt; real_t &gt; &amp;u)</field>
-    <field name="url">classOFELI_1_1Equa__Solid.html#af84606c2cecfcef03d6820a323ffbdcc</field>
+    <field name="args">(EType opt, Vect&lt; real_t &gt; &amp;u)</field>
+    <field name="url">classOFELI_1_1Equa__Solid.html#affbdc0fae478891f2b9f63607004026f</field>
     <field name="keywords">setInput OFELI::Equa_Solid::setInput Equa_Solid&lt; NEN_, NEE_, NSN_, NSE_ &gt; setInput OFELI::Equa_Solid&lt; 2, 4, 1, 2 &gt;::setInput Equa_Solid&lt; 2, 4, 1, 2 &gt; setInput OFELI::Equa_Solid&lt; 2, 12, 1, 6 &gt;::setInput Equa_Solid&lt; 2, 12, 1, 6 &gt; setInput OFELI::Equa_Solid&lt; 4, 8, 2, 4 &gt;::setInput Equa_Solid&lt; 4, 8, 2, 4 &gt; setInput OFELI::Equa_Solid&lt; 3, 6, 2, 4 &gt;::setInput Equa_Solid&lt; 3, 6, 2, 4 &gt; setInput OFELI::Equa_Solid&lt; 8, 24, 4, 12 &gt;::setInput Equa_Solid&lt; 8, 24, 4, 12 &gt; setInput OFELI::Equa_Solid&lt; 4, 12, 3, 9 &gt;::setInput Equa_Solid&lt; 4, 12, 3, 9 &gt;</field>
     <field name="text">Set specific input data to solid mechanics Set specific input data to solid mechanics Set specific input data to solid mechanics Set specific input data to solid mechanics Set specific input data to solid mechanics Set specific input data to solid mechanics Set specific input data to solid mechanics</field>
   </doc>
@@ -6818,6 +6851,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::Equation::SideSideVector</field>
+    <field name="args">(const Vect&lt; real_t &gt; &amp;b, vector&lt; real_t &gt; &amp;bs)</field>
+    <field name="url">classOFELI_1_1Equation.html#a4ee6babe8a6192e5c084d67e9222e75c</field>
+    <field name="keywords">SideSideVector OFELI::Equation::SideSideVector Equation&lt; NEN_, NEE_, NSN_, NSE_ &gt; SideSideVector OFELI::Equation&lt; 3, 3, 2, 2 &gt;::SideSideVector Equation&lt; 3, 3, 2, 2 &gt; SideSideVector OFELI::Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;::SideSideVector Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;</field>
+    <field name="text">Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance b Global vector to be localized bs Local constant value of vector at given side All degrees of freedom are transferred to the local vector Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::Equation::ElementAssembly</field>
     <field name="args">(SkMatrix&lt; real_t &gt; &amp;A)</field>
     <field name="url">classOFELI_1_1Equation.html#a51e8b0bceebcf635f57e1a9df6ecba1c</field>
@@ -6850,14 +6891,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Equation::SideVector</field>
-    <field name="args">(const Vect&lt; real_t &gt; &amp;b, std::valarray&lt; real_t &gt; &amp;sb)</field>
-    <field name="url">classOFELI_1_1Equation.html#a5c89b061a87c14143b3e38040a779ccf</field>
-    <field name="keywords">SideVector OFELI::Equation::SideVector Equation&lt; NEN_, NEE_, NSN_, NSE_ &gt; SideVector OFELI::Equation&lt; 3, 3, 2, 2 &gt;::SideVector Equation&lt; 3, 3, 2, 2 &gt; SideVector OFELI::Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;::SideVector Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;</field>
-    <field name="text">Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector b Global vector to be localized NODE_DOF DOFs are supported by nodes default ELEMENT_DOF DOFs are supported by elements SIDE_DOF DOFs are supported by sides BOUNDARY_SIDE_DOF DOFs are supported by boundary sides sb Array in which local vector is stored The resulting local vector can be accessed by attribute ePrev This member function is to be used if a constructor with Side was invoked It uses the Side pointer _theSide Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Equation::SideAssembly</field>
     <field name="args">(SkSMatrix&lt; real_t &gt; &amp;A)</field>
     <field name="url">classOFELI_1_1Equation.html#a5fcc041aab78edb6cc1b69bc924fc4d0</field>
@@ -6871,6 +6904,14 @@
     <field name="url">classOFELI_1_1Equation.html#a60f96fa2c6a0ca515551883faf7ad3b6</field>
     <field name="keywords">DGElementAssembly OFELI::Equation::DGElementAssembly Equation&lt; NEN_, NEE_, NSN_, NSE_ &gt; DGElementAssembly OFELI::Equation&lt; 3, 3, 2, 2 &gt;::DGElementAssembly Equation&lt; 3, 3, 2, 2 &gt; DGElementAssembly OFELI::Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;::DGElementAssembly Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;</field>
     <field name="text">Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation A Global matrix stored as an SpMatrix instance The element pointer is given by the global variable theElement Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation Assemble element matrix into global one for the Discontinuous Galerkin approximation</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Equation::SideVector</field>
+    <field name="args">(const Vect&lt; real_t &gt; &amp;b, vector&lt; real_t &gt; &amp;sb)</field>
+    <field name="url">classOFELI_1_1Equation.html#a6be31ebb6ca711fe8ce0514b0955cc2b</field>
+    <field name="keywords">SideVector OFELI::Equation::SideVector Equation&lt; NEN_, NEE_, NSN_, NSE_ &gt; SideVector OFELI::Equation&lt; 3, 3, 2, 2 &gt;::SideVector Equation&lt; 3, 3, 2, 2 &gt; SideVector OFELI::Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;::SideVector Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;</field>
+    <field name="text">Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector b Global vector to be localized NODE_DOF DOFs are supported by nodes default ELEMENT_DOF DOFs are supported by elements SIDE_DOF DOFs are supported by sides BOUNDARY_SIDE_DOF DOFs are supported by boundary sides sb Array in which local vector is stored The resulting local vector can be accessed by attribute ePrev This member function is to be used if a constructor with Side was invoked It uses the Side pointer _theSide Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector Localize Side Vector</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -6903,14 +6944,6 @@
     <field name="url">classOFELI_1_1Equation.html#a7e81ee9c88f36ed678b711aaf77fcfb1</field>
     <field name="keywords">getNbEq OFELI::Equation::getNbEq Equation&lt; NEN_, NEE_, NSN_, NSE_ &gt; getNbEq OFELI::Equation&lt; 3, 3, 2, 2 &gt;::getNbEq Equation&lt; 3, 3, 2, 2 &gt; getNbEq OFELI::Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;::getNbEq Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;</field>
     <field name="text">Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations Return number of element equations</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Equation::SideSideVector</field>
-    <field name="args">(const Vect&lt; real_t &gt; &amp;b, std::valarray&lt; real_t &gt; &amp;bs)</field>
-    <field name="url">classOFELI_1_1Equation.html#a8756bcf0d1f7118d2c408b08b6baab76</field>
-    <field name="keywords">SideSideVector OFELI::Equation::SideSideVector Equation&lt; NEN_, NEE_, NSN_, NSE_ &gt; SideSideVector OFELI::Equation&lt; 3, 3, 2, 2 &gt;::SideSideVector Equation&lt; 3, 3, 2, 2 &gt; SideSideVector OFELI::Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;::SideSideVector Equation&lt; NEN_, NEN_, NSN_, NSN_ &gt;</field>
-    <field name="text">Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance b Global vector to be localized bs Local constant value of vector at given side All degrees of freedom are transferred to the local vector Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance Localize Side Vector from a Vect instance</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -9792,14 +9825,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Laplace1DL2::setTraction</field>
-    <field name="args">(real_t f, int lr)</field>
-    <field name="url">classOFELI_1_1Laplace1DL2.html#a3e1a15dfa223d5f15304da0aba78ee6d</field>
-    <field name="keywords">setTraction OFELI::Laplace1DL2::setTraction Laplace1DL2</field>
-    <field name="text">Set Traction data f Value of traction Neumann boundary condition lr Option to choose location of the traction 1 Left end 1 Right end</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Laplace1DL2::~Laplace1DL2</field>
     <field name="args">()</field>
     <field name="url">classOFELI_1_1Laplace1DL2.html#a5478ca9494fb3f8ae3eb3efc072aeb7f</field>
@@ -9808,10 +9833,10 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Laplace1DL2::setBoundaryCondition</field>
+    <field name="name">OFELI::Laplace1DL2::setBC1D</field>
     <field name="args">(real_t f, int lr)</field>
-    <field name="url">classOFELI_1_1Laplace1DL2.html#a7dbff391c42f944084726308b2dfc6c9</field>
-    <field name="keywords">setBoundaryCondition OFELI::Laplace1DL2::setBoundaryCondition Laplace1DL2</field>
+    <field name="url">classOFELI_1_1Laplace1DL2.html#a9044d18b5ec1c4aea6a48181bcf5f35a</field>
+    <field name="keywords">setBC1D OFELI::Laplace1DL2::setBC1D Laplace1DL2</field>
     <field name="text">Set Dirichlet boundary data f Value to assign lr Option to choose location of the value 1 Left end 1 Right end</field>
   </doc>
   <doc>
@@ -9829,6 +9854,14 @@
     <field name="url">classOFELI_1_1Laplace1DL2.html#a99491e895db140230776a3316c9e129e</field>
     <field name="keywords">Laplace1DL2 OFELI::Laplace1DL2::Laplace1DL2 Laplace1DL2</field>
     <field name="text">Default constructor</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Laplace1DL2::setNeumann1D</field>
+    <field name="args">(real_t f, int lr)</field>
+    <field name="url">classOFELI_1_1Laplace1DL2.html#a9a2ff293661184b5e8e89c94c37a0d2b</field>
+    <field name="keywords">setNeumann1D OFELI::Laplace1DL2::setNeumann1D Laplace1DL2</field>
+    <field name="text">Set Traction data f Value of traction Neumann boundary condition lr Option to choose location of the traction 1 Left end 1 Right end</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -9879,14 +9912,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Laplace1DL3::setTraction</field>
-    <field name="args">(real_t f, int lr)</field>
-    <field name="url">classOFELI_1_1Laplace1DL3.html#a3e1a15dfa223d5f15304da0aba78ee6d</field>
-    <field name="keywords">setTraction OFELI::Laplace1DL3::setTraction Laplace1DL3</field>
-    <field name="text">Set Traction data f Value of traction Neumann boundary condition lr Option to choose location of the traction 1 Left end 1 Right end</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Laplace1DL3::BoundaryRHS</field>
     <field name="args">(const Vect&lt; real_t &gt; &amp;h)</field>
     <field name="url">classOFELI_1_1Laplace1DL3.html#a735f7f78ccee2864d719a9aba4bea313</field>
@@ -9908,6 +9933,14 @@
     <field name="url">classOFELI_1_1Laplace1DL3.html#a906da27903ef1eb8d13377b70044b2cd</field>
     <field name="keywords">LHS OFELI::Laplace1DL3::LHS Laplace1DL3</field>
     <field name="text">Compute element matrix</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Laplace1DL3::setNeumann1D</field>
+    <field name="args">(real_t f, int lr)</field>
+    <field name="url">classOFELI_1_1Laplace1DL3.html#a9a2ff293661184b5e8e89c94c37a0d2b</field>
+    <field name="keywords">setNeumann1D OFELI::Laplace1DL3::setNeumann1D Laplace1DL3</field>
+    <field name="text">Set Traction data f Value of traction Neumann boundary condition lr Option to choose location of the traction 1 Left end 1 Right end</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -10559,19 +10592,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::LinearPDE2D::setInput</field>
-    <field name="args">(EqDataType opt, Vect&lt; real_t &gt; &amp;u)</field>
-    <field name="url">classOFELI_1_1LinearPDE2D.html#af84606c2cecfcef03d6820a323ffbdcc</field>
-    <field name="keywords">setInput OFELI::LinearPDE2D::setInput LinearPDE2D</field>
-    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE_DATA Heat source FLUX_DATA Heat flux Neumann boundary condition u Vector containing input data</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::LinearPDE2D::BoundaryRHS</field>
     <field name="args">(real_t flux)</field>
     <field name="url">classOFELI_1_1LinearPDE2D.html#afc20edadf93d2135ee9873e1bd7deb4c</field>
     <field name="keywords">BoundaryRHS OFELI::LinearPDE2D::BoundaryRHS LinearPDE2D</field>
     <field name="text">Add boundary right-hand side flux to right hand side flux Vector containing source at side nodes</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::LinearPDE2D::setInput</field>
+    <field name="args">(EType opt, Vect&lt; real_t &gt; &amp;u)</field>
+    <field name="url">classOFELI_1_1LinearPDE2D.html#affbdc0fae478891f2b9f63607004026f</field>
+    <field name="keywords">setInput OFELI::LinearPDE2D::setInput LinearPDE2D</field>
+    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE_DATA Heat source FLUX_DATA Heat flux Neumann boundary condition u Vector containing input data</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -12088,14 +12121,6 @@
     <field name="text">Return number of sides</field>
   </doc>
   <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::setList</field>
-    <field name="args">(const std::vector&lt; Element * &gt; &amp;el)</field>
-    <field name="url">classOFELI_1_1Mesh.html#a03027ba41beda56941cfcdf87be028dc</field>
-    <field name="keywords">setList OFELI::Mesh::setList Mesh</field>
-    <field name="text">Initialize list of mesh elements using the input vector el vector instance that contains the list of pointers to elements</field>
-  </doc>
-  <doc>
     <field name="type">friend</field>
     <field name="name">OFELI::Mesh::Refine</field>
     <field name="args">(Mesh &amp;in_mesh, Mesh &amp;out_mesh)</field>
@@ -12153,14 +12178,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topBoundaryEdge</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a167cc779bbbf5174789b82bef59134ff</field>
-    <field name="keywords">topBoundaryEdge OFELI::Mesh::topBoundaryEdge Mesh</field>
-    <field name="text">Reset list of boundary edges at its top position Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::Mesh</field>
     <field name="args">(const Mesh &amp;ms)</field>
     <field name="url">classOFELI_1_1Mesh.html#a1845285156a077d03c74852052b35326</field>
@@ -12193,27 +12210,11 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getMarkedNode</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a2d18f54fe751e85f57d7ddc034eb6b8d</field>
-    <field name="keywords">getMarkedNode OFELI::Mesh::getMarkedNode Mesh</field>
-    <field name="text">Return pointer to current marked node and move to next one Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::getNbDOF</field>
     <field name="args">() const</field>
     <field name="url">classOFELI_1_1Mesh.html#a2e702838dc1b95944fd571e804950aa3</field>
     <field name="keywords">getNbDOF OFELI::Mesh::getNbDOF Mesh</field>
     <field name="text">Return total number of degrees of freedom DOF</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getEdge</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a2faa548c3422cf881439dbbe65ee3b39</field>
-    <field name="keywords">getEdge OFELI::Mesh::getEdge Mesh</field>
-    <field name="text">Return pointer to current edge and move to next one Non constant version</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12265,14 +12266,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topBoundaryNode</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a4156380c25827a2484bf5ece13cb7e18</field>
-    <field name="keywords">topBoundaryNode OFELI::Mesh::topBoundaryNode Mesh</field>
-    <field name="text">Reset list of boundary nodes at its top position Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::SidesAreDOF</field>
     <field name="args">() const</field>
     <field name="url">classOFELI_1_1Mesh.html#a42f2ea7287439b9314794451f6391b6a</field>
@@ -12318,6 +12311,14 @@
     <field name="url">classOFELI_1_1Mesh.html#a51ecc02663c02bd188ddb6af8375de0d</field>
     <field name="keywords">getElementLabel OFELI::Mesh::getElementLabel Mesh</field>
     <field name="text">Return label of i th element i Element index</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Mesh::setList</field>
+    <field name="args">(const vector&lt; Node * &gt; &amp;nl)</field>
+    <field name="url">classOFELI_1_1Mesh.html#a53b21a99ba617b960ff0e2114499d7d4</field>
+    <field name="keywords">setList OFELI::Mesh::setList Mesh</field>
+    <field name="text">Initialize list of mesh nodes using the input vector nl vector instance that contains the list of pointers to nodes</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12417,14 +12418,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getBoundaryNode</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a669ed953ebf4e38e945865cd99851f21</field>
-    <field name="keywords">getBoundaryNode OFELI::Mesh::getBoundaryNode Mesh</field>
-    <field name="text">Return pointer to current boundary node and move to next one Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::getElementNeighborElements</field>
     <field name="args">()</field>
     <field name="url">classOFELI_1_1Mesh.html#a67998519cd2f088f31d6804deae57aa9</field>
@@ -12470,14 +12463,6 @@
     <field name="url">classOFELI_1_1Mesh.html#a6eb0cc516b2bbe482a89117f49d8ebef</field>
     <field name="keywords">getSide OFELI::Mesh::getSide Mesh</field>
     <field name="text">Return reference to side with label i</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getInternalSide</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a6fb20b4cb6493bfc6c34414da6d812a4</field>
-    <field name="keywords">getInternalSide OFELI::Mesh::getInternalSide Mesh</field>
-    <field name="text">Return pointer to current internal side and move to next one Non constant version</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12601,14 +12586,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getActiveElement</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a8ebcb1d01715b48743d9eace20eaa830</field>
-    <field name="keywords">getActiveElement OFELI::Mesh::getActiveElement Mesh</field>
-    <field name="text">Return pointer to current element and move to next one Non constant version This function returns pointer to the current element only is this one is active Otherwise it goes to the next active element To be used when adaptive meshing is involved</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::Rescale</field>
     <field name="args">(real_t sx, real_t sy=0., real_t sz=0.)</field>
     <field name="url">classOFELI_1_1Mesh.html#a8f5d423e94df044fb460a00678a0d174</field>
@@ -12622,14 +12599,6 @@
     <field name="url">classOFELI_1_1Mesh.html#a913747d999d4ae8545a5126e5ef7302b</field>
     <field name="keywords">RenumberEdge OFELI::Mesh::RenumberEdge Mesh</field>
     <field name="text">Renumber an edge n1 Old label n2 New label</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topEdge</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a9209fc14f8dec6cc3eb0e56e13fb99aa</field>
-    <field name="keywords">topEdge OFELI::Mesh::topEdge Mesh</field>
-    <field name="text">Reset list of edges at its top position Non constant version</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12657,14 +12626,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getElement</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a99e894cefe970ae27984bc2f671b4e31</field>
-    <field name="keywords">getElement OFELI::Mesh::getElement Mesh</field>
-    <field name="text">Return pointer to current element and move to next one Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::getShape</field>
     <field name="args">() const</field>
     <field name="url">classOFELI_1_1Mesh.html#a9e8217afff8e1b47ba6901bfea655a3d</field>
@@ -12678,14 +12639,6 @@
     <field name="url">classOFELI_1_1Mesh.html#a9fc50f2792f8fb7a89890350fb2b6d54</field>
     <field name="keywords">Mesh OFELI::Mesh::Mesh Mesh</field>
     <field name="text">Constructor for a uniform 3 D structured finite element mesh The domain is the parallepiped xmin xmax x(ymin,ymax) x(zmin,zmax) xmin Minimal x-coordinate xmax Maximal x-coordinate ymin Minimal y-coordinate ymax Maximal y-coordinate zmin Minimal z-coordinate zmax Maximal z-coordinate nx Number of subintervals on the x-axis ny Number of subintervals on the y-axis nz Number of subintervals on the z-axis cx0 Code for nodes generated on the line x xmin if 0 for sides on this line if 0 cxN Code for nodes generated on the line x xmax if 0 for sides on this line if 0 cy0 Code for nodes generated on the line y ymin if 0 for sides on this line if 0 cyN Code for nodes generated on the line y ymax if 0 for sides on this line if 0 cz0 Code for nodes generated on the line z zmin if 0 for sides on this line if 0 czN Code for nodes generated on the line z zmax if 0 for sides on this line if 0 opt Flag to generate elements as well if not zero Default 0 If the flag is not 0 it can take one of the enumerated values HEXAHEDRON or TETRAHEDRON with obvious meaning nb_dof Number of degrees of freedom per node Default 1 The option opt can be set to 0 if the user intends to use finite differences</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getSide</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#a9ff652eee1b6402315f5c76cb7ff8f35</field>
-    <field name="keywords">getSide OFELI::Mesh::getSide Mesh</field>
-    <field name="text">Return pointer to current side and move to next one Non constant version</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12745,27 +12698,11 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topMarkedNode</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#aab5d6e5d65e44f21240661e24c0b56a9</field>
-    <field name="keywords">topMarkedNode OFELI::Mesh::topMarkedNode Mesh</field>
-    <field name="text">Reset list of marked nodes at its top position Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::getNbElements</field>
     <field name="args">() const</field>
     <field name="url">classOFELI_1_1Mesh.html#aab9792e6965078cdc27a88ae80cf0e67</field>
     <field name="keywords">getNbElements OFELI::Mesh::getNbElements Mesh</field>
     <field name="text">Return number of elements</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topSide</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#aada7dd443055b62ef97d5f3ecadad353</field>
-    <field name="keywords">topSide OFELI::Mesh::topSide Mesh</field>
-    <field name="text">Reset list of sides at its top position Non constant version</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12793,11 +12730,11 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topBoundarySide</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#ab75b12bea27430b70a48dbd47fd5e08d</field>
-    <field name="keywords">topBoundarySide OFELI::Mesh::topBoundarySide Mesh</field>
-    <field name="text">Reset list of boundary sides at its top position Non constant version</field>
+    <field name="name">OFELI::Mesh::setList</field>
+    <field name="args">(const vector&lt; Element * &gt; &amp;el)</field>
+    <field name="url">classOFELI_1_1Mesh.html#ab833fd39579edc49e8476cf3093dbaa1</field>
+    <field name="keywords">setList OFELI::Mesh::setList Mesh</field>
+    <field name="text">Initialize list of mesh elements using the input vector el vector instance that contains the list of pointers to elements</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12833,27 +12770,11 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getElement</field>
-    <field name="args">(size_t i) const</field>
-    <field name="url">classOFELI_1_1Mesh.html#ac06673a61cfaf595c3ca51f0e2f785c9</field>
-    <field name="keywords">getElement OFELI::Mesh::getElement Mesh</field>
-    <field name="text">Return reference to element with label i</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::getEdgeLabel</field>
     <field name="args">(size_t i) const</field>
     <field name="url">classOFELI_1_1Mesh.html#ac129e2eeac817721c013c262d5f4b227</field>
     <field name="keywords">getEdgeLabel OFELI::Mesh::getEdgeLabel Mesh</field>
     <field name="text">Return label of i th edge i Edge index</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getEdge</field>
-    <field name="args">(size_t i) const</field>
-    <field name="url">classOFELI_1_1Mesh.html#ac20fbbf09a81a14c6badc76e98fa03b1</field>
-    <field name="keywords">getEdge OFELI::Mesh::getEdge Mesh</field>
-    <field name="text">Return reference to edge with label i</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12889,27 +12810,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::Mesh::setList</field>
+    <field name="args">(const vector&lt; Side * &gt; &amp;sl)</field>
+    <field name="url">classOFELI_1_1Mesh.html#acb87cbf578f1333b21a6920877411e7f</field>
+    <field name="keywords">setList OFELI::Mesh::setList Mesh</field>
+    <field name="text">Initialize list of mesh sides using the input vector sl vector instance that contains the list of pointers to sides</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::Mesh::NumberEquations</field>
     <field name="args">(size_t dof=0)</field>
     <field name="url">classOFELI_1_1Mesh.html#acde4624c86afc0583d28a3201dca8a2a</field>
     <field name="keywords">NumberEquations OFELI::Mesh::NumberEquations Mesh</field>
     <field name="text">Renumber Equations dof Label of degree of freedom for which numbering is performed Default value 0 means that all degrees of freedom are taken into account</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topInternalSide</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#ad310368a67e0bcd6e0097c16ff98c410</field>
-    <field name="keywords">topInternalSide OFELI::Mesh::topInternalSide Mesh</field>
-    <field name="text">Reset list of intrenal sides at its top position Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getBoundarySide</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#add8b09b6be7a236fe9f77d948a11583f</field>
-    <field name="keywords">getBoundarySide OFELI::Mesh::getBoundarySide Mesh</field>
-    <field name="text">Return pointer to current boundary side and move to next one Non constant version</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -12985,38 +12898,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getNode</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#af0c9954b4c46448061cbcdbd9253bfb8</field>
-    <field name="keywords">getNode OFELI::Mesh::getNode Mesh</field>
-    <field name="text">Return pointer to current node and move to next one Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topNode</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#af25915c5583515a81f246cec43f77c06</field>
-    <field name="keywords">topNode OFELI::Mesh::topNode Mesh</field>
-    <field name="text">Reset list of nodes at its top position Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::topElement</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#af451d563be2435e9f2af83c61e2816ab</field>
-    <field name="keywords">topElement OFELI::Mesh::topElement Mesh</field>
-    <field name="text">Reset list of elements at its top position Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::setList</field>
-    <field name="args">(const std::vector&lt; Side * &gt; &amp;sl)</field>
-    <field name="url">classOFELI_1_1Mesh.html#af63b89378377f08e029d36482283d024</field>
-    <field name="keywords">setList OFELI::Mesh::setList Mesh</field>
-    <field name="text">Initialize list of mesh sides using the input vector sl vector instance that contains the list of pointers to sides</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Mesh::Delete</field>
     <field name="args">(Element *el)</field>
     <field name="url">classOFELI_1_1Mesh.html#afa95fd1ae859f8619ca5067d340ac596</field>
@@ -13046,22 +12927,6 @@
     <field name="url">classOFELI_1_1Mesh.html#afed7b70c4fdfcb1fe06b0eb3c1ad4c96</field>
     <field name="keywords">setPointInDomain OFELI::Mesh::setPointInDomain Mesh</field>
     <field name="text">Define a point in the domain This function makes sense only if boundary mesh is given without internal mesh Case of Boundary Elements x Coordinates of point to define</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::getBoundaryEdge</field>
-    <field name="args">() const</field>
-    <field name="url">classOFELI_1_1Mesh.html#aff805728aea7d4a633dc14174420838b</field>
-    <field name="keywords">getBoundaryEdge OFELI::Mesh::getBoundaryEdge Mesh</field>
-    <field name="text">Return pointer to current boundary edge and move to next one Non constant version</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
-    <field name="name">OFELI::Mesh::setList</field>
-    <field name="args">(const std::vector&lt; Node * &gt; &amp;nl)</field>
-    <field name="url">classOFELI_1_1Mesh.html#affa9ff1260d158f3ccf06c3e412e9b99</field>
-    <field name="keywords">setList OFELI::Mesh::setList Mesh</field>
-    <field name="text">Initialize list of mesh nodes using the input vector nl vector instance that contains the list of pointers to nodes</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -14303,10 +14168,10 @@
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::NSP2DQ41::setInput</field>
-    <field name="args">(EqDataType opt, Vect&lt; real_t &gt; &amp;u)</field>
-    <field name="url">classOFELI_1_1NSP2DQ41.html#af84606c2cecfcef03d6820a323ffbdcc</field>
+    <field name="args">(EType opt, Vect&lt; real_t &gt; &amp;u)</field>
+    <field name="url">classOFELI_1_1NSP2DQ41.html#affbdc0fae478891f2b9f63607004026f</field>
     <field name="keywords">setInput OFELI::NSP2DQ41::setInput NSP2DQ41</field>
-    <field name="text">Set equation input data opt Parameter that selects data type for input This parameter is to be chosen in the enumerated variable EqDataType u Vect instance that contains input vector data List of data types contains INITIAL_FIELD BOUNDARY_CONDITION_DATA SOURCE_DATA or FLUX with obvious meaning</field>
+    <field name="text">Set equation input data opt Parameter that selects data type for input This parameter is to be chosen in the enumerated variable EqDataType u Vect instance that contains input vector data List of data types contains INITIAL BOUNDARY_CONDITION_DATA SOURCE or FLUX with obvious meaning</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -15974,19 +15839,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Pres2DT3::setInput</field>
-    <field name="args">(EqDataType opt, Vect&lt; real_t &gt; &amp;u)</field>
-    <field name="url">classOFELI_1_1Pres2DT3.html#af84606c2cecfcef03d6820a323ffbdcc</field>
-    <field name="keywords">setInput OFELI::Pres2DT3::setInput Pres2DT3</field>
-    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE_DATA Heat source FLUX_DATA Heat flux Neumann boundary condition SPEED Speed vector for the convection term u Vector containing input data</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::Pres2DT3::BoundaryRHS</field>
     <field name="args">(real_t flux)</field>
     <field name="url">classOFELI_1_1Pres2DT3.html#afc20edadf93d2135ee9873e1bd7deb4c</field>
     <field name="keywords">BoundaryRHS OFELI::Pres2DT3::BoundaryRHS Pres2DT3</field>
     <field name="text">Add boundary right-hand side flux to right hand side flux Vector containing source at side nodes</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Pres2DT3::setInput</field>
+    <field name="args">(EType opt, Vect&lt; real_t &gt; &amp;u)</field>
+    <field name="url">classOFELI_1_1Pres2DT3.html#affbdc0fae478891f2b9f63607004026f</field>
+    <field name="keywords">setInput OFELI::Pres2DT3::setInput Pres2DT3</field>
+    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE Heat source FLUX Heat flux Neumann boundary condition SPEED Speed vector for the convection term u Vector containing input data</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -15997,11 +15862,11 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Prescription::get</field>
-    <field name="args">(EqDataType type, Vect&lt; real_t &gt; &amp;v, real_t time=0, size_t dof=0)</field>
-    <field name="url">classOFELI_1_1Prescription.html#a469babb54d7c6a779addd8a46df1b0c3</field>
-    <field name="keywords">get OFELI::Prescription::get Prescription</field>
-    <field name="text">Read data in the given file and stores in a Vect instance for a chosen DOF The input value type determines the type of data to read type Type of data to seek To choose among the enumerated values BOUNDARY_CONDITION Read values for Dirichlet boundary conditions BOUNDARY_FORCE Read values for boundary force Neumann boundary condition The values TRACTION and FLUX have the same effect BODY_FORCE Read values for body or volume forces The value SOURCE has the same effect POINT_FORCE Read values for pointwise forces CONTACT_DISTANCE Read values for contact distance for contact mechanics INITIAL_FIELD Read values for initial solution SOLUTION Read values for a solution vector v Vect instance that is instantiated on input and filled on output time Value of time for which data is read Default 0 dof DOF to store Default is 0 All DOFs are chosen</field>
+    <field name="name">OFELI::Prescription::Prescription</field>
+    <field name="args">(Mesh &amp;mesh, const string &amp;file)</field>
+    <field name="url">classOFELI_1_1Prescription.html#a729b1e5dbc77119240896102a237a1b9</field>
+    <field name="keywords">Prescription OFELI::Prescription::Prescription Prescription</field>
+    <field name="text">Constructor that gives an instance of class Mesh and the data file name It reads parameters in Prescription Format from this file mesh Mesh instance file Name of Prescription file</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -16021,19 +15886,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::Prescription::Prescription</field>
-    <field name="args">(Mesh &amp;mesh, const std::string &amp;file)</field>
-    <field name="url">classOFELI_1_1Prescription.html#ad58136c7aa1df4884d968ee61ce49999</field>
-    <field name="keywords">Prescription OFELI::Prescription::Prescription Prescription</field>
-    <field name="text">Constructor that gives an instance of class Mesh and the data file name It reads parameters in Prescription Format from this file mesh Mesh instance file Name of Prescription file</field>
+    <field name="name">OFELI::Prescription::get</field>
+    <field name="args">(EType type, real_t time=0, size_t dof=0)</field>
+    <field name="url">classOFELI_1_1Prescription.html#abdd520052d2df1b7110b785099533c64</field>
+    <field name="keywords">get OFELI::Prescription::get Prescription</field>
+    <field name="text">Read data in the given file and returns as a Vect instance for a chosen DOF The input value type determines the type of data to read type Type of data to seek To choose among the enumerated values BOUNDARY_CONDITION Read values for Dirichlet boundary conditions BOUNDARY_FORCE Read values for boundary force Neumann boundary condition The values TRACTION and FLUX have the same effect BODY_FORCE Read values for body or volume forces The value SOURCE has the same effect POINT_FORCE Read values for pointwise forces CONTACT_DISTANCE Read values for contact distance for contact mechanics INITIAL_FIELD Read values for initial solution SOLUTION Read values for a solution vector time Value of time for which data is read Default 0 dof DOF to store Default is 0 All DOFs are chosen</field>
   </doc>
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::Prescription::get</field>
-    <field name="args">(EqDataType type, real_t time=0, size_t dof=0)</field>
-    <field name="url">classOFELI_1_1Prescription.html#adf6cf4ca1c2e3e44fad87c02e65bb60d</field>
+    <field name="args">(EType type, Vect&lt; real_t &gt; &amp;v, real_t time=0, size_t dof=0)</field>
+    <field name="url">classOFELI_1_1Prescription.html#ac84aa2218cd13af55c4519a43a36809e</field>
     <field name="keywords">get OFELI::Prescription::get Prescription</field>
-    <field name="text">Read data in the given file and returns as a Vect instance for a chosen DOF The input value type determines the type of data to read type Type of data to seek To choose among the enumerated values BOUNDARY_CONDITION Read values for Dirichlet boundary conditions BOUNDARY_FORCE Read values for boundary force Neumann boundary condition The values TRACTION and FLUX have the same effect BODY_FORCE Read values for body or volume forces The value SOURCE has the same effect POINT_FORCE Read values for pointwise forces CONTACT_DISTANCE Read values for contact distance for contact mechanics INITIAL_FIELD Read values for initial solution SOLUTION Read values for a solution vector time Value of time for which data is read Default 0 dof DOF to store Default is 0 All DOFs are chosen</field>
+    <field name="text">Read data in the given file and stores in a Vect instance for a chosen DOF The input value type determines the type of data to read type Type of data to seek To choose among the enumerated values BOUNDARY_CONDITION Read values for Dirichlet boundary conditions BOUNDARY_FORCE Read values for boundary force Neumann boundary condition The values TRACTION and FLUX have the same effect BODY_FORCE Read values for body or volume forces The value SOURCE has the same effect POINT_FORCE Read values for pointwise forces CONTACT_DISTANCE Read values for contact distance for contact mechanics INITIAL Read values for initial solution SOLUTION Read values for a solution vector v Vect instance that is instantiated on input and filled on output time Value of time for which data is read Default 0 dof DOF to store Default is 0 All DOFs are chosen</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -17567,10 +17432,10 @@
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::TINS2DT3S::setInput</field>
-    <field name="args">(EqDataType opt, Vect&lt; real_t &gt; &amp;u)</field>
-    <field name="url">classOFELI_1_1TINS2DT3S.html#af84606c2cecfcef03d6820a323ffbdcc</field>
+    <field name="args">(EType opt, Vect&lt; real_t &gt; &amp;u)</field>
+    <field name="url">classOFELI_1_1TINS2DT3S.html#affbdc0fae478891f2b9f63607004026f</field>
     <field name="keywords">setInput OFELI::TINS2DT3S::setInput TINS2DT3S</field>
-    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL_FIELD Initial temperature BOUNDARY_CONDITION Boundary condition Dirichlet SOURCE Body force applied to fluid TRACTION Heat flux Neumann boundary condition VELOCITY_FIELD Velocity vector for the convection term u Vector containing input data Vect instance</field>
+    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL Initial temperature BOUNDARY_CONDITION Boundary condition Dirichlet SOURCE Body force applied to fluid TRACTION Heat flux Neumann boundary condition VELOCITY Velocity vector for the convection term u Vector containing input data Vect instance</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -17630,10 +17495,10 @@
   <doc>
     <field name="type">function</field>
     <field name="name">OFELI::TINS3DT4S::setInput</field>
-    <field name="args">(EqDataType opt, Vect&lt; real_t &gt; &amp;u)</field>
-    <field name="url">classOFELI_1_1TINS3DT4S.html#af84606c2cecfcef03d6820a323ffbdcc</field>
+    <field name="args">(EType opt, Vect&lt; real_t &gt; &amp;u)</field>
+    <field name="url">classOFELI_1_1TINS3DT4S.html#affbdc0fae478891f2b9f63607004026f</field>
     <field name="keywords">setInput OFELI::TINS3DT4S::setInput TINS3DT4S</field>
-    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL_FIELD Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE_DATA Heat source FLUX_DATA Heat flux Neumann boundary condition NOT IMPLEMENTED VELOCITY_FIELD Velocity vector for the convection term u Vector containing input data Vect instance</field>
+    <field name="text">Set equation input data opt Parameter to select type of input enumerated values INITIAL Initial temperature BOUNDARY_CONDITION_DATA Boundary condition Dirichlet SOURCE Heat source FLUX Heat flux Neumann boundary condition NOT IMPLEMENTED VELOCITY Velocity vector for the convection term u Vector containing input data Vect instance</field>
   </doc>
   <doc>
     <field name="type">class</field>
@@ -20075,6 +19940,14 @@
     <field name="text">Maximum number of nodes by element Maximum number of nodes by element</field>
   </doc>
   <doc>
+    <field name="type">define</field>
+    <field name="name">ElementNodeLoop</field>
+    <field name="args">(el, nd)</field>
+    <field name="url">group__Mesh.html#ga7b3d530cadc2ae26340c1176e953f7bd</field>
+    <field name="keywords">ElementNodeLoop</field>
+    <field name="text">A macro to loop on element nodes el Instance of Element nd Pointer to pointed node</field>
+  </doc>
+  <doc>
     <field name="type">function</field>
     <field name="name">OFELI::NodeInSide</field>
     <field name="args">(const Node *nd, const Side *sd)</field>
@@ -20337,14 +20210,6 @@
     <field name="text">Return average measure length or area of sides of given mesh Return average measure length or area of sides of given mesh m Reference to mesh instance Use this function only if sides are present in the mesh and for 2 D meshes Rachid Touzani GNU Lesser Public License Return average measure length or area of sides of given mesh</field>
   </doc>
   <doc>
-    <field name="type">define</field>
-    <field name="name">ActiveElementLoop</field>
-    <field name="args">(m)</field>
-    <field name="url">group__Mesh.html#gadd7f89be5e3e35cabd6566f3e2e71319</field>
-    <field name="keywords">ActiveElementLoop</field>
-    <field name="text">A macro to loop on mesh active elements m Instance of Mesh Each iteration updates the pointer theElement to current Element This macro is necessary only if adaptive meshing is used</field>
-  </doc>
-  <doc>
     <field name="type">function</field>
     <field name="name">OFELI::DeformMesh</field>
     <field name="args">(Mesh &amp;mesh, const Vect&lt; real_t &gt; &amp;u, real_t rate=0.2)</field>
@@ -20424,18 +20289,19 @@
     <field name="text">Output edge data Output edge data Output edge data Output edge data</field>
   </doc>
   <doc>
+    <field name="type">define</field>
+    <field name="name">ElementSideLoop</field>
+    <field name="args">(el, sd)</field>
+    <field name="url">group__Mesh.html#gaf9dbbba985121c95914821dc4fc99905</field>
+    <field name="keywords">ElementSideLoop</field>
+    <field name="text">A macro to loop on element sides el Instance of Element nd Pointer to pointed side</field>
+  </doc>
+  <doc>
     <field name="type">group</field>
     <field name="name">OFELI</field>
     <field name="url">group__OFELI.html</field>
     <field name="keywords">OFELI</field>
     <field name="text"></field>
-  </doc>
-  <doc>
-    <field name="type">enum</field>
-    <field name="name">OFELI::GENERIC_PDE_Terms</field>
-    <field name="url">group__OFELI.html#ga018f378896bd00774734cea2dd643e53</field>
-    <field name="keywords">GENERIC_PDE_Terms OFELI::GENERIC_PDE_Terms OFELI</field>
-    <field name="text">Enumerate variable that selects various terms in a generic partial differential equation</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -20778,13 +20644,6 @@
     <field name="url">group__OFELI.html#ga35d6cc5fdf1cbb7a1cc7f2fe908fb96c</field>
     <field name="keywords">getFunctName OFELI::Tabulation::getFunctName Tabulation</field>
     <field name="text">Get the name of a read function n index of function Name of function Get the name of a read function</field>
-  </doc>
-  <doc>
-    <field name="type">enum</field>
-    <field name="name">OFELI::PDE_Terms</field>
-    <field name="url">group__OFELI.html#ga3757febaa4d0638468a11bb96593f8da</field>
-    <field name="keywords">PDE_Terms OFELI::PDE_Terms OFELI</field>
-    <field name="text">Enumerate variable that selects various terms in partial differential equations</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -21166,6 +21025,13 @@
     <field name="url">group__OFELI.html#ga75adb8e69a3fe0158b5298fce60f17d9</field>
     <field name="keywords">put OFELI::IOField::put IOField</field>
     <field name="text">Store mesh in file Store mesh in file</field>
+  </doc>
+  <doc>
+    <field name="type">enum</field>
+    <field name="name">OFELI::PDE_Terms</field>
+    <field name="url">group__OFELI.html#ga76756c7eef4f22bb13ac06f6c8c197cb</field>
+    <field name="keywords">PDE_Terms OFELI::PDE_Terms OFELI</field>
+    <field name="text">Enumerate class to select various terms in partial differential equations</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -22107,76 +21973,6 @@
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::L11</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53a164ef4d5adf57cfcc7a441ac1ef6f3e2</field>
-    <field name="keywords">L11 OFELI::L11 OFELI L11 OFELI::L11 OFELI</field>
-    <field name="text">1 st order in time 1 st order in space to LHS</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::BODY_RHS</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53a2a6002ae7b00722681e2d27919ca74d1</field>
-    <field name="keywords">BODY_RHS OFELI::BODY_RHS OFELI BODY_RHS OFELI::BODY_RHS OFELI</field>
-    <field name="text">Given right-hand side on domain</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::L20</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53a35af1f9b1e8c71d6099cd3efe4907750</field>
-    <field name="keywords">L20 OFELI::L20 OFELI L20 OFELI::L20 OFELI</field>
-    <field name="text">2 nd order in time 0 th order in space to LHS</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::L02</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53a4249de896cbed7202749e79169dd30b7</field>
-    <field name="keywords">L02 OFELI::L02 OFELI L02 OFELI::L02 OFELI</field>
-    <field name="text">0 th order in time 2 nd order in space to LHS</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::NOTERM</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53a4eedd7beaeddf5ef96812fba45619da1</field>
-    <field name="keywords">NOTERM OFELI::NOTERM OFELI NOTERM OFELI::NOTERM OFELI</field>
-    <field name="text">No term empty equation</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::L10</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53ab77a6f0b4a2893981e1155d8278adcb0</field>
-    <field name="keywords">L10 OFELI::L10 OFELI L10 OFELI::L10 OFELI</field>
-    <field name="text">1 st order in time 0 th order in space to LHS</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::BOUNDARY_RHS</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53ac8d875c03198d1daa4a10f02ce08f9a1</field>
-    <field name="keywords">BOUNDARY_RHS OFELI::BOUNDARY_RHS OFELI BOUNDARY_RHS OFELI::BOUNDARY_RHS OFELI</field>
-    <field name="text">Given right-hand side on boundary</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::L01</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53ad4686a237c98434b30b93e366f89b53a</field>
-    <field name="keywords">L01 OFELI::L01 OFELI L01 OFELI::L01 OFELI</field>
-    <field name="text">0 th order in time 1 st order in space to LHS</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::NEUMANN</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53ae58d114453737f3084aa5c645eba3412</field>
-    <field name="keywords">NEUMANN OFELI::NEUMANN OFELI NEUMANN OFELI::NEUMANN OFELI</field>
-    <field name="text">Neumann boundary condition</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::L00</field>
-    <field name="url">group__OFELI.html#gga018f378896bd00774734cea2dd643e53aeb55b92810c2af45b5c8dd611b4a95e8</field>
-    <field name="keywords">L00 OFELI::L00 OFELI L00 OFELI::L00 OFELI</field>
-    <field name="text">0 th order in time and space to LHS</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
     <field name="name">OFELI::PERIODIC_A</field>
     <field name="url">group__OFELI.html#gga0a00003814ee8095a2c39d1d5cba08faa003e94a435ea42747befbc8b1e13a7c7</field>
     <field name="keywords">PERIODIC_A OFELI::PERIODIC_A OFELI PERIODIC_A OFELI::PERIODIC_A OFELI</field>
@@ -22261,167 +22057,6 @@
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::MASS</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa1c910486b66cf1ccce2ef81d4318227f</field>
-    <field name="keywords">MASS OFELI::MASS OFELI MASS OFELI::MASS OFELI</field>
-    <field name="text">Consistent mass term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::STIFFNESS</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa1fa87e583599b3a51cceb6ebcac684c2</field>
-    <field name="keywords">STIFFNESS OFELI::STIFFNESS OFELI STIFFNESS OFELI::STIFFNESS OFELI</field>
-    <field name="text">Stiffness term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::DILATATION</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa50322e2201a5452e2b1b8a3f11b8856b</field>
-    <field name="keywords">DILATATION OFELI::DILATATION OFELI DILATATION OFELI::DILATATION OFELI</field>
-    <field name="text">Dilatational term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::DIFFUSION</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa64b145492a27539220bb4a4cb95af90c</field>
-    <field name="keywords">DIFFUSION OFELI::DIFFUSION OFELI DIFFUSION OFELI::DIFFUSION OFELI</field>
-    <field name="text">Diffusion term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::CONTACT</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa6f7d7c84f5e891c3d7b4b588cd628b7e</field>
-    <field name="keywords">CONTACT OFELI::CONTACT OFELI CONTACT OFELI::CONTACT OFELI</field>
-    <field name="text">Signorini contact</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::LORENTZ_FORCE</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa71380580d4d097129850744ca55920e4</field>
-    <field name="keywords">LORENTZ_FORCE OFELI::LORENTZ_FORCE OFELI LORENTZ_FORCE OFELI::LORENTZ_FORCE OFELI</field>
-    <field name="text">Lorentz force term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::CONVECTION</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa718e0728cf596ce66dfc59137a21a626</field>
-    <field name="keywords">CONVECTION OFELI::CONVECTION OFELI CONVECTION OFELI::CONVECTION OFELI</field>
-    <field name="text">Convection term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::LUMPED_MASS</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa7b9aa2a958e5f880122b85b34aaded2c</field>
-    <field name="keywords">LUMPED_MASS OFELI::LUMPED_MASS OFELI LUMPED_MASS OFELI::LUMPED_MASS OFELI</field>
-    <field name="text">Lumped mass term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::MOBILITY</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa8ae33843a530a8915f1852770b05809d</field>
-    <field name="keywords">MOBILITY OFELI::MOBILITY OFELI MOBILITY OFELI::MOBILITY OFELI</field>
-    <field name="text">Mobility term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::ELECTRIC</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa904fa7835cb04ae9b123743acb18a38c</field>
-    <field name="keywords">ELECTRIC OFELI::ELECTRIC OFELI ELECTRIC OFELI::ELECTRIC OFELI</field>
-    <field name="text">Electric term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::HEAT_FLUX</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa971f1c6045acd204579feb9e41166d44</field>
-    <field name="keywords">HEAT_FLUX OFELI::HEAT_FLUX OFELI HEAT_FLUX OFELI::HEAT_FLUX OFELI</field>
-    <field name="text">Boundary heat flux term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::LOAD</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa972dbcdf74cff71e20bdcfb53be9c391</field>
-    <field name="keywords">LOAD OFELI::LOAD OFELI LOAD OFELI::LOAD OFELI</field>
-    <field name="text">Body load term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::CONSISTENT_CAPACITY</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa9adacbe252e3e2a535200ec3146a4dd2</field>
-    <field name="keywords">CONSISTENT_CAPACITY OFELI::CONSISTENT_CAPACITY OFELI CONSISTENT_CAPACITY OFELI::CONSISTENT_CAPACITY OFELI</field>
-    <field name="text">Consistent capacity term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::LUMPED_CAPACITY</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daab0cd85fc68e58a11327458019cc6e7f3</field>
-    <field name="keywords">LUMPED_CAPACITY OFELI::LUMPED_CAPACITY OFELI LUMPED_CAPACITY OFELI::LUMPED_CAPACITY OFELI</field>
-    <field name="text">Lumped capacity term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::CAPACITY</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daab7dda006facfb86f75aa6e0210a77448</field>
-    <field name="keywords">CAPACITY OFELI::CAPACITY OFELI CAPACITY OFELI::CAPACITY OFELI</field>
-    <field name="text">Consistent capacity term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::CONSISTENT_MASS</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daabff007b8366c6ab06e1b0c5644455687</field>
-    <field name="keywords">CONSISTENT_MASS OFELI::CONSISTENT_MASS OFELI CONSISTENT_MASS OFELI::CONSISTENT_MASS OFELI</field>
-    <field name="text">Consistent mass term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::BOUNDARY_TRACTION</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daac0bc0fe4f9fa2d1860ff064e6ed558f0</field>
-    <field name="keywords">BOUNDARY_TRACTION OFELI::BOUNDARY_TRACTION OFELI BOUNDARY_TRACTION OFELI::BOUNDARY_TRACTION OFELI</field>
-    <field name="text">Boundary traction pressure term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::DEVIATORIC</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad1a05a357ad745786854148cbe300731</field>
-    <field name="keywords">DEVIATORIC OFELI::DEVIATORIC OFELI DEVIATORIC OFELI::DEVIATORIC OFELI</field>
-    <field name="text">Deviatoric term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::DAMPING</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad2e95162fef170a20cbd9b1f493bc89e</field>
-    <field name="keywords">DAMPING OFELI::DAMPING OFELI DAMPING OFELI::DAMPING OFELI</field>
-    <field name="text">Damping term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::MAGNETIC</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad599a8c2a5528be97720bbc9c8888b00</field>
-    <field name="keywords">MAGNETIC OFELI::MAGNETIC OFELI MAGNETIC OFELI::MAGNETIC OFELI</field>
-    <field name="text">Magnetic term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::HEAT_SOURCE</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daae1672dcb581fbe92c1fde565d9e7fe3a</field>
-    <field name="keywords">HEAT_SOURCE OFELI::HEAT_SOURCE OFELI HEAT_SOURCE OFELI::HEAT_SOURCE OFELI</field>
-    <field name="text">Body heat source term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::VISCOSITY</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daaf5dcdbc91041cc8ab41973956078c70d</field>
-    <field name="keywords">VISCOSITY OFELI::VISCOSITY OFELI VISCOSITY OFELI::VISCOSITY OFELI</field>
-    <field name="text">Viscosity term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
-    <field name="name">OFELI::BUOYANCY</field>
-    <field name="url">group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daaf866b10be5649b84572070945df67941</field>
-    <field name="keywords">BUOYANCY OFELI::BUOYANCY OFELI BUOYANCY OFELI::BUOYANCY OFELI</field>
-    <field name="text">Buoyancy force term</field>
-  </doc>
-  <doc>
-    <field name="type">enumvalue</field>
     <field name="name">OFELI::TRANSIENT</field>
     <field name="url">group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1ba189628bd9c66ada3fb11593230091ad4</field>
     <field name="keywords">TRANSIENT OFELI::TRANSIENT OFELI TRANSIENT OFELI::TRANSIENT OFELI</field>
@@ -22432,7 +22067,7 @@
     <field name="name">OFELI::STEADY_STATE</field>
     <field name="url">group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1ba69ecc1a10183e7d50f0fc8250fb1ba73</field>
     <field name="keywords">STEADY_STATE OFELI::STEADY_STATE OFELI STEADY_STATE OFELI::STEADY_STATE OFELI</field>
-    <field name="text">Steady state analysis</field>
+    <field name="text">Steady State analysis</field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
@@ -22452,8 +22087,8 @@
     <field name="type">enumvalue</field>
     <field name="name">OFELI::STATIONARY</field>
     <field name="url">group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1bac84bd0ee013c388bd7cc8139be7206a2</field>
-    <field name="keywords">STATIONARY OFELI::STATIONARY OFELI STATIONARY OFELI::STATIONARY OFELI</field>
-    <field name="text">Steady State analysis</field>
+    <field name="keywords">STATIONARY OFELI::STATIONARY OFELI</field>
+    <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
@@ -22464,170 +22099,170 @@
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::ANGULAR_FREQUENCY</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a0776753cf26578b063fb4bd9d9eef3c5</field>
-    <field name="keywords">ANGULAR_FREQUENCY OFELI::ANGULAR_FREQUENCY OFELI</field>
+    <field name="name">OFELI::PDECoefType::MAGNETIC_PERMEABILITY</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a046b8cddb3ba54b1ab50e1e79b0c9f3c</field>
+    <field name="keywords">MAGNETIC_PERMEABILITY OFELI::PDECoefType::MAGNETIC_PERMEABILITY OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::ELECTRIC_PERMITTIVITY</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a14138a17c687b95f93555de6f23efeb7</field>
-    <field name="keywords">ELECTRIC_PERMITTIVITY OFELI::ELECTRIC_PERMITTIVITY OFELI</field>
+    <field name="name">OFELI::PDECoefType::C01</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a06b15c098025a23be964680f0b735ce1</field>
+    <field name="keywords">C01 OFELI::PDECoefType::C01 OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::EPSILON</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a1fa5920d8d419e0b8036e2dbada9a882</field>
-    <field name="keywords">EPSILON OFELI::EPSILON OFELI</field>
+    <field name="name">OFELI::PDECoefType::SIGMA</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a0b1c668dfc6023057dda34a2684e557a</field>
+    <field name="keywords">SIGMA OFELI::PDECoefType::SIGMA OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::C02</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a201d3417f9556041ede319423b96c6b1</field>
-    <field name="keywords">C02 OFELI::C02 OFELI</field>
+    <field name="name">OFELI::PDECoefType::VISCOSITY</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a13d621435dde53f9c38dce061f879e4b</field>
+    <field name="keywords">VISCOSITY OFELI::PDECoefType::VISCOSITY OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::CP</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a25487d7f5fe12adac99dd54c982b89fb</field>
-    <field name="keywords">CP OFELI::CP OFELI</field>
+    <field name="name">OFELI::PDECoefType::OMEGA</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a1d408da87e4c838f8915be22bc56387c</field>
+    <field name="keywords">OMEGA OFELI::PDECoefType::OMEGA OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::ELECTRIC_CONDUCTIVITY</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a3611bcf9b2da00c8286a7bb7d3277bb4</field>
-    <field name="keywords">ELECTRIC_CONDUCTIVITY OFELI::ELECTRIC_CONDUCTIVITY OFELI</field>
+    <field name="name">OFELI::PDECoefType::THERMAL_CONDUCTIVITY</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a33e36166fd9b3c5d0e1ebc35053f3cb6</field>
+    <field name="keywords">THERMAL_CONDUCTIVITY OFELI::PDECoefType::THERMAL_CONDUCTIVITY OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::POISSON</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a3c63a0a4bd06418b4de7b2730bb12552</field>
-    <field name="keywords">POISSON OFELI::POISSON OFELI</field>
+    <field name="name">OFELI::PDECoefType::BETA</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a36b84f8e3fba5bf993e3ba352d62d146</field>
+    <field name="keywords">BETA OFELI::PDECoefType::BETA OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::C10</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a561c7886c8c962cd1cfbe5224aba0433</field>
-    <field name="keywords">C10 OFELI::C10 OFELI</field>
+    <field name="name">OFELI::PDECoefType::MMU</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a3c372f8694cac8646be0e75149c4396f</field>
+    <field name="keywords">MMU OFELI::PDECoefType::MMU OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::C20</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a6c44f7aea8d42ec9882868a318b3e4d1</field>
-    <field name="keywords">C20 OFELI::C20 OFELI</field>
+    <field name="name">OFELI::PDECoefType::C20</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a412ebb2097d7532320e593d56b9c8d3b</field>
+    <field name="keywords">C20 OFELI::PDECoefType::C20 OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::C00</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a744b56171f60c413fa330544e4313a65</field>
-    <field name="keywords">C00 OFELI::C00 OFELI</field>
+    <field name="name">OFELI::PDECoefType::EPSILON</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a48d3e3d06977ae5b32d170485108630a</field>
+    <field name="keywords">EPSILON OFELI::PDECoefType::EPSILON OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::RHO</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a76cd220ddca9eb0056c1b87b495ec583</field>
-    <field name="keywords">RHO OFELI::RHO OFELI</field>
+    <field name="name">OFELI::PDECoefType::KAPPA</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a55b8000cc76d015e79c6faf29593a5b6</field>
+    <field name="keywords">KAPPA OFELI::PDECoefType::KAPPA OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::C01</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a78b3960a210c67998150d1f30d666469</field>
-    <field name="keywords">C01 OFELI::C01 OFELI</field>
+    <field name="name">OFELI::PDECoefType::DYNAMIC_VISCOSITY</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a55f6bded27a824d99e13fedb71719f4d</field>
+    <field name="keywords">DYNAMIC_VISCOSITY OFELI::PDECoefType::DYNAMIC_VISCOSITY OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::MAGNETIC_PERMEABILITY</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a8a02be1b6b62570e8cf6a5708d362539</field>
-    <field name="keywords">MAGNETIC_PERMEABILITY OFELI::MAGNETIC_PERMEABILITY OFELI</field>
+    <field name="name">OFELI::PDECoefType::YOUNG</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a85f61422ff6569131e86ce73f232e0d3</field>
+    <field name="keywords">YOUNG OFELI::PDECoefType::YOUNG OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::MMU</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a8cf9ec5ee02f2225cf6387f0a4887f03</field>
-    <field name="keywords">MMU OFELI::MMU OFELI</field>
+    <field name="name">OFELI::PDECoefType::POISSON</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a92a9a9519a6a4f5edd0b2694fe1c9122</field>
+    <field name="keywords">POISSON OFELI::PDECoefType::POISSON OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::VV</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a9914e76c7304d3934461c9e7d3d3b75e</field>
-    <field name="keywords">VV OFELI::VV OFELI</field>
+    <field name="name">OFELI::PDECoefType::ELECTRIC_PERMITTIVITY</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a98f3aefe271c857936a3facc3ba311c1</field>
+    <field name="keywords">ELECTRIC_PERMITTIVITY OFELI::PDECoefType::ELECTRIC_PERMITTIVITY OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::DENSITY</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66a9d2cc316ab2e6e5637281696bebc6ffd</field>
-    <field name="keywords">DENSITY OFELI::DENSITY OFELI</field>
+    <field name="name">OFELI::PDECoefType::C00</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66aa80a5c578c72b49a367e90e395996834</field>
+    <field name="keywords">C00 OFELI::PDECoefType::C00 OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::MU</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66aa1803642d3771f8cb9bf7b914c702a63</field>
-    <field name="keywords">MU OFELI::MU OFELI</field>
+    <field name="name">OFELI::PDECoefType::ANGULAR_FREQUENCY</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66aae33ab2f168af23bfe9f9b03da2492a0</field>
+    <field name="keywords">ANGULAR_FREQUENCY OFELI::PDECoefType::ANGULAR_FREQUENCY OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::YOUNG</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66aad9191f6428a9b614bd67c424fb98af0</field>
-    <field name="keywords">YOUNG OFELI::YOUNG OFELI</field>
+    <field name="name">OFELI::PDECoefType::CP</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66ab78cc6909042016daaa04d83bac97e90</field>
+    <field name="keywords">CP OFELI::PDECoefType::CP OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::DYNAMIC_VISCOSITY</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66ab09dd3c596acc10b3065773a7a542061</field>
-    <field name="keywords">DYNAMIC_VISCOSITY OFELI::DYNAMIC_VISCOSITY OFELI</field>
+    <field name="name">OFELI::PDECoefType::DENSITY</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66ab7fbdcfe60bed91ec158ce4369512109</field>
+    <field name="keywords">DENSITY OFELI::PDECoefType::DENSITY OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::SIGMA</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66ad3071ccb5d54bbadcd61b726d215b10f</field>
-    <field name="keywords">SIGMA OFELI::SIGMA OFELI</field>
+    <field name="name">OFELI::PDECoefType::VV</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66ac0055fa4cdc19a2690bfee3643413a7d</field>
+    <field name="keywords">VV OFELI::PDECoefType::VV OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::OMEGA</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66aeb97ad3cfbb1aea712efc95367c2b29d</field>
-    <field name="keywords">OMEGA OFELI::OMEGA OFELI</field>
+    <field name="name">OFELI::PDECoefType::ELECTRIC_CONDUCTIVITY</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66acb9e4a73f3e42f232155914e8a8b651c</field>
+    <field name="keywords">ELECTRIC_CONDUCTIVITY OFELI::PDECoefType::ELECTRIC_CONDUCTIVITY OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::THERMAL_CONDUCTIVITY</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66afb320726abaa7e7089ed24f295d285ff</field>
-    <field name="keywords">THERMAL_CONDUCTIVITY OFELI::THERMAL_CONDUCTIVITY OFELI</field>
+    <field name="name">OFELI::PDECoefType::C10</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66ada1627473e75135af30e0f041c93607a</field>
+    <field name="keywords">C10 OFELI::PDECoefType::C10 OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::BETA</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66afbaa3fc38bba7fcfaffd6e5d346288c9</field>
-    <field name="keywords">BETA OFELI::BETA OFELI</field>
+    <field name="name">OFELI::PDECoefType::C02</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66ae0a6eee6b13d760618954b429446c6b6</field>
+    <field name="keywords">C02 OFELI::PDECoefType::C02 OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
-    <field name="name">OFELI::KAPPA</field>
-    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66afd1932aac72efd275d1db54b771468c4</field>
-    <field name="keywords">KAPPA OFELI::KAPPA OFELI</field>
+    <field name="name">OFELI::PDECoefType::RHO</field>
+    <field name="url">group__OFELI.html#gga62536dd8609c49611ad03866df7cde66af9aa08bdd53c7d265d4f22edc92ec26d</field>
+    <field name="keywords">RHO OFELI::PDECoefType::RHO OFELI</field>
     <field name="text"></field>
   </doc>
   <doc>
@@ -22656,7 +22291,7 @@
     <field name="name">OFELI::RK4</field>
     <field name="url">group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a5df275d4d2ef6e60437567adc263d488</field>
     <field name="keywords">RK4 OFELI::RK4 OFELI RK4 OFELI::RK4 OFELI</field>
-    <field name="text">4 th Order Runge-Kutta scheme</field>
+    <field name="text">4 th Order Runge-Kutta scheme 4 th Order</field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
@@ -22676,8 +22311,8 @@
     <field name="type">enumvalue</field>
     <field name="name">OFELI::ADAMS_BASHFORTH</field>
     <field name="url">group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a88e6af20a0ce84e04718516b7c911ef3</field>
-    <field name="keywords">ADAMS_BASHFORTH OFELI::ADAMS_BASHFORTH OFELI ADAMS_BASHFORTH OFELI::ADAMS_BASHFORTH OFELI</field>
-    <field name="text">Adams-Bashforth scheme 2 nd Order</field>
+    <field name="keywords">ADAMS_BASHFORTH OFELI::ADAMS_BASHFORTH OFELI</field>
+    <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
@@ -22718,8 +22353,8 @@
     <field name="type">enumvalue</field>
     <field name="name">OFELI::RUNGE_KUTTA</field>
     <field name="url">group__OFELI.html#gga672626c8ddef10da0244c15db4085f40ae4d8522f5abcb1ebce2c9b3dde324ace</field>
-    <field name="keywords">RUNGE_KUTTA OFELI::RUNGE_KUTTA OFELI RUNGE_KUTTA OFELI::RUNGE_KUTTA OFELI</field>
-    <field name="text">4 th Order Runge-Kutta scheme 4 th Order</field>
+    <field name="keywords">RUNGE_KUTTA OFELI::RUNGE_KUTTA OFELI</field>
+    <field name="text"></field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
@@ -22727,6 +22362,237 @@
     <field name="url">group__OFELI.html#gga672626c8ddef10da0244c15db4085f40ae7886dfb157f796fc69f25417aa681d2</field>
     <field name="keywords">BDF2 OFELI::BDF2 OFELI BDF2 OFELI::BDF2 OFELI</field>
     <field name="text">Backward Difference Formula 2 nd Order</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::L20</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba09162d0433d739b5b19e2cc1676f6b90</field>
+    <field name="keywords">L20 OFELI::PDE_Terms::L20 OFELI L20 OFELI::PDE_Terms::L20 OFELI</field>
+    <field name="text">2 nd order in time 0 th order in space to LHS</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::VISCOSITY</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba13d621435dde53f9c38dce061f879e4b</field>
+    <field name="keywords">VISCOSITY OFELI::PDE_Terms::VISCOSITY OFELI VISCOSITY OFELI::PDE_Terms::VISCOSITY OFELI</field>
+    <field name="text">Viscosity term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::LUMPED_MASS</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba1b2e5127f418cd952f9fb0fa050b6709</field>
+    <field name="keywords">LUMPED_MASS OFELI::PDE_Terms::LUMPED_MASS OFELI LUMPED_MASS OFELI::PDE_Terms::LUMPED_MASS OFELI</field>
+    <field name="text">Lumped mass or capacity term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::CONSISTENT_MASS</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba25fde2868c4dc4355fb7e9ddfd8122e5</field>
+    <field name="keywords">CONSISTENT_MASS OFELI::PDE_Terms::CONSISTENT_MASS OFELI CONSISTENT_MASS OFELI::PDE_Terms::CONSISTENT_MASS OFELI</field>
+    <field name="text">Consistent mass or capacity term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::NEUMANN</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba2f2dd8d12511598975b5475371963bd4</field>
+    <field name="keywords">NEUMANN OFELI::PDE_Terms::NEUMANN OFELI NEUMANN OFELI::PDE_Terms::NEUMANN OFELI</field>
+    <field name="text">Given right-hand side on boundary</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::BUOYANCY</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba30a029b093634f0a681bc122f6130eaa</field>
+    <field name="keywords">BUOYANCY OFELI::PDE_Terms::BUOYANCY OFELI BUOYANCY OFELI::PDE_Terms::BUOYANCY OFELI</field>
+    <field name="text">Buoyancy force term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::BOUNDARY_RHS</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba548795c463d0ada94cb952eca426176e</field>
+    <field name="keywords">BOUNDARY_RHS OFELI::PDE_Terms::BOUNDARY_RHS OFELI BOUNDARY_RHS OFELI::PDE_Terms::BOUNDARY_RHS OFELI</field>
+    <field name="text">Given right-hand side on boundary</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::DILATATION</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba57ee47bd02e9623eada587253bc69514</field>
+    <field name="keywords">DILATATION OFELI::PDE_Terms::DILATATION OFELI DILATATION OFELI::PDE_Terms::DILATATION OFELI</field>
+    <field name="text">Dilatational term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::ELECTRIC</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba596b9c4b008256066d216f9eb4426497</field>
+    <field name="keywords">ELECTRIC OFELI::PDE_Terms::ELECTRIC OFELI ELECTRIC OFELI::PDE_Terms::ELECTRIC OFELI</field>
+    <field name="text">Electric term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::CAPACITY</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba5b3bc952620c21981c4b3b304fbd74f8</field>
+    <field name="keywords">CAPACITY OFELI::PDE_Terms::CAPACITY OFELI CAPACITY OFELI::PDE_Terms::CAPACITY OFELI</field>
+    <field name="text">Lumped mass or capacity term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::LOAD</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba615d2885ef7576cedd9aafbb2578f028</field>
+    <field name="keywords">LOAD OFELI::PDE_Terms::LOAD OFELI LOAD OFELI::PDE_Terms::LOAD OFELI</field>
+    <field name="text">Body load term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::BODY_RHS</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba63e637d5f9aca5de88c627c9c534968e</field>
+    <field name="keywords">BODY_RHS OFELI::PDE_Terms::BODY_RHS OFELI BODY_RHS OFELI::PDE_Terms::BODY_RHS OFELI</field>
+    <field name="text">Body load term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::L01</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba7879f640467664d3c1242457da8cfe75</field>
+    <field name="keywords">L01 OFELI::PDE_Terms::L01 OFELI L01 OFELI::PDE_Terms::L01 OFELI</field>
+    <field name="text">0 th order in time 1 st order in space to LHS</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::LORENTZ_FORCE</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba7fae9e7bebe4a4c30ae01b7bedcb3928</field>
+    <field name="keywords">LORENTZ_FORCE OFELI::PDE_Terms::LORENTZ_FORCE OFELI LORENTZ_FORCE OFELI::PDE_Terms::LORENTZ_FORCE OFELI</field>
+    <field name="text">Lorentz force term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::CONSISTENT_CAPACITY</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba8bfd09658c7d48cc60f6840cd439dc30</field>
+    <field name="keywords">CONSISTENT_CAPACITY OFELI::PDE_Terms::CONSISTENT_CAPACITY OFELI CONSISTENT_CAPACITY OFELI::PDE_Terms::CONSISTENT_CAPACITY OFELI</field>
+    <field name="text">Consistent mass or capacity term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::L11</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba8e7ee9b50b48be2b02231b9bd3509b7c</field>
+    <field name="keywords">L11 OFELI::PDE_Terms::L11 OFELI L11 OFELI::PDE_Terms::L11 OFELI</field>
+    <field name="text">1 st order in time 1 st order in space to LHS</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::L10</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba90e317300449f3f0b77b5331ec0cf0f7</field>
+    <field name="keywords">L10 OFELI::PDE_Terms::L10 OFELI L10 OFELI::PDE_Terms::L10 OFELI</field>
+    <field name="text">1 st order in time 0 th order in space to LHS</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::CONVECTION</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba9a585672110a5dc4cb56372c6639dea1</field>
+    <field name="keywords">CONVECTION OFELI::PDE_Terms::CONVECTION OFELI CONVECTION OFELI::PDE_Terms::CONVECTION OFELI</field>
+    <field name="text">Convection term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::DEVIATORIC</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba9e13c8a493c18000a283832b179b3dc4</field>
+    <field name="keywords">DEVIATORIC OFELI::PDE_Terms::DEVIATORIC OFELI DEVIATORIC OFELI::PDE_Terms::DEVIATORIC OFELI</field>
+    <field name="text">Deviatoric term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::STIFFNESS</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaa231c1d74fe18f9e82224588887d1971</field>
+    <field name="keywords">STIFFNESS OFELI::PDE_Terms::STIFFNESS OFELI STIFFNESS OFELI::PDE_Terms::STIFFNESS OFELI</field>
+    <field name="text">Stiffness term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::L00</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaa299c58fcdd0752beab4049168288705</field>
+    <field name="keywords">L00 OFELI::PDE_Terms::L00 OFELI L00 OFELI::PDE_Terms::L00 OFELI</field>
+    <field name="text">0 th order in time and space to LHS</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::NOTERM</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaaf8a806916cc39b1a027246e06a64aae</field>
+    <field name="keywords">NOTERM OFELI::PDE_Terms::NOTERM OFELI NOTERM OFELI::PDE_Terms::NOTERM OFELI</field>
+    <field name="text">No term empty equation</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::LUMPED_CAPACITY</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbab0f7435a7395b8a2d88240e7d1c5c690</field>
+    <field name="keywords">LUMPED_CAPACITY OFELI::PDE_Terms::LUMPED_CAPACITY OFELI LUMPED_CAPACITY OFELI::PDE_Terms::LUMPED_CAPACITY OFELI</field>
+    <field name="text">Lumped mass or capacity term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::L02</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbab480d6f94dc9b3085740406fc26ce917</field>
+    <field name="keywords">L02 OFELI::PDE_Terms::L02 OFELI L02 OFELI::PDE_Terms::L02 OFELI</field>
+    <field name="text">0 th order in time 2 nd order in space to LHS</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::CONTACT</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac0241eae411627c19ba9835b6d194b1c</field>
+    <field name="keywords">CONTACT OFELI::PDE_Terms::CONTACT OFELI CONTACT OFELI::PDE_Terms::CONTACT OFELI</field>
+    <field name="text">Signorini contact</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::BOUNDARY_TRACTION</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac10ff580f320cb720c4b30be43df7e82</field>
+    <field name="keywords">BOUNDARY_TRACTION OFELI::PDE_Terms::BOUNDARY_TRACTION OFELI BOUNDARY_TRACTION OFELI::PDE_Terms::BOUNDARY_TRACTION OFELI</field>
+    <field name="text">Given right-hand side on boundary</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::DIFFUSION</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac9f4e4b1345e4e958a307bf67ae358a7</field>
+    <field name="keywords">DIFFUSION OFELI::PDE_Terms::DIFFUSION OFELI DIFFUSION OFELI::PDE_Terms::DIFFUSION OFELI</field>
+    <field name="text">Diffusion term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::MASS</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbacb6c2c4b3c8f95f9b58ad13f0a97245d</field>
+    <field name="keywords">MASS OFELI::PDE_Terms::MASS OFELI MASS OFELI::PDE_Terms::MASS OFELI</field>
+    <field name="text">Lumped mass or capacity term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::MOBILITY</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbadf9db257294a6f11ff6ce0e2d9448616</field>
+    <field name="keywords">MOBILITY OFELI::PDE_Terms::MOBILITY OFELI MOBILITY OFELI::PDE_Terms::MOBILITY OFELI</field>
+    <field name="text">Mobility term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::FLUX</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbae098247bc6652dd88c76644b275260ed</field>
+    <field name="keywords">FLUX OFELI::PDE_Terms::FLUX OFELI FLUX OFELI::PDE_Terms::FLUX OFELI</field>
+    <field name="text">Given right-hand side on boundary</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::SOURCE</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbae60b4854b44ccfb2d92aa6f035171bb4</field>
+    <field name="keywords">SOURCE OFELI::PDE_Terms::SOURCE OFELI SOURCE OFELI::PDE_Terms::SOURCE OFELI</field>
+    <field name="text">Body load term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::DAMPING</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaea33eb7e054446cf1e471808d2a46e71</field>
+    <field name="keywords">DAMPING OFELI::PDE_Terms::DAMPING OFELI DAMPING OFELI::PDE_Terms::DAMPING OFELI</field>
+    <field name="text">Damping term</field>
+  </doc>
+  <doc>
+    <field name="type">enumvalue</field>
+    <field name="name">OFELI::PDE_Terms::MAGNETIC</field>
+    <field name="url">group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaf842701a27bcc1bf7de20c30600718d3</field>
+    <field name="keywords">MAGNETIC OFELI::PDE_Terms::MAGNETIC OFELI MAGNETIC OFELI::PDE_Terms::MAGNETIC OFELI</field>
+    <field name="text">Magnetic term</field>
   </doc>
   <doc>
     <field name="type">enumvalue</field>
@@ -24904,7 +24770,7 @@
     <field name="name">OFELI::Point::x</field>
     <field name="url">structOFELI_1_1Point.html#a4333b1040efe8cd32f7c76bfc2269e0d</field>
     <field name="keywords">x OFELI::Point::x Point&lt; T_ &gt; x OFELI::Point&lt; real_t &gt;::x Point&lt; real_t &gt; x OFELI::Point&lt; size_t &gt;::x Point&lt; size_t &gt; x OFELI::Point&lt; int &gt;::x Point&lt; int &gt;</field>
-    <field name="text">First coordinate</field>
+    <field name="text">Point coordinates</field>
   </doc>
   <doc>
     <field name="type">function</field>

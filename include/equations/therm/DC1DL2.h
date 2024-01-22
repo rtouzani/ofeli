@@ -164,7 +164,7 @@ class DC1DL2 : public Equa_Therm<2,2,1,1>
  *  </ul>
  *  @param [in] u Vector containing input data
  */
-    void setInput(EqDataType    opt,
+    void setInput(EType         opt,
                   Vect<real_t>& u);
 
  private:

@@ -234,7 +234,7 @@ void TimeStepping::setLinearSolver(Iteration      s,
 void TimeStepping::setInitial(Vect<real_t>& u)
 {
    DE &de = _de[_nb_des-1];
-   de.eq->setInput(INITIAL_FIELD,u);
+   de.eq->setInitial(u);
    de.v.setSize(u.getNx(),u.getNy(),u.getNz());
    de.u.setSize(u.getNx(),u.getNy(),u.getNz());
    de.w = &u;
@@ -341,18 +341,18 @@ real_t TimeStepping::runOneTimeStep()
       DE &de = _de[e];
       if (_sc==int(BUILTIN)) {
          if (de.bc != nullptr)
-            de.eq->setInput(BOUNDARY_CONDITION,*de.bc);
+            de.eq->setDirichlet(*de.bc);
          de.eq->runOneTimeStep();
          break;
       }
       if (de.bc != nullptr)
-         de.eq->setInput(BOUNDARY_CONDITION,*de.bc);
+         de.eq->setDirichlet(*de.bc);
       if (de.nl) {
          for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
             int it=1;
             real_t err=1;
             while (it<=_max_nl_it && err>_nl_toler) {
-               de.eq->setInput(SOURCE,(this->*_set_rhs)());
+               de.eq->setBodyForce((this->*_set_rhs)());
                if (de.expl)
                   de.D = 0;
                else
@@ -369,7 +369,7 @@ real_t TimeStepping::runOneTimeStep()
       }
       else {
          for (_sstep=1; _sstep<=_nb_ssteps; _sstep++) {
-            de.eq->setInput(SOURCE,(this->*_set_rhs)());
+            de.eq->setBodyForce((this->*_set_rhs)());
             if (de.expl)
                de.D = 0;
             else

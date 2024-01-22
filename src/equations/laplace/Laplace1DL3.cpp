@@ -90,8 +90,8 @@ void Laplace1DL3::set(const Element* el)
 }
 
 
-void Laplace1DL3::setTraction(real_t f,
-                              int    lr)
+void Laplace1DL3::setNeumann1D(real_t f,
+                               int    lr)
 {
    if (lr==-1)
       _lsf = f;

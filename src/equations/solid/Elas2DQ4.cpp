@@ -31,7 +31,6 @@
 
   ==============================================================================*/
 
-
 #include "equations/solid/Elas2DQ4.h"
 #include "util/Gauss.h"
 #include "linear_algebra/Vect_impl.h"
@@ -43,9 +42,12 @@ Elas2DQ4::Elas2DQ4(Mesh& ms)
 {
    _equation_name = "Linearized elasticity";
    _finite_element = "2-D, 4-Node quadrilaterals (Q1)";
-   setMatrixType(SPARSE|SYMMETRIC);
-   setSolver(CG_SOLVER,DIAG_PREC);
-   _terms = DEVIATORIC|DILATATION|BODY_FORCE|TRACTION;
+//   setMatrixType(SPARSE|SYMMETRIC);
+//   setSolver(CG_SOLVER,DIAG_PREC);
+   setMatrixType(SKYLINE|SYMMETRIC);
+   setSolver(DIRECT_SOLVER);
+   _terms = int(PDE_Terms::DEVIATORIC)|int(PDE_Terms::DILATATION)|int(PDE_Terms::BODY_RHS)|
+            int(PDE_Terms::BOUNDARY_RHS);
 }
 
 
@@ -56,8 +58,9 @@ Elas2DQ4::Elas2DQ4(Mesh&         ms,
    _equation_name = "Linearized elasticity";
    _finite_element = "2-D, 4-Node quadrilaterals (Q1)";
    setMatrixType(SPARSE|SYMMETRIC);
-   setSolver(CG_SOLVER,DIAG_PREC);
-   _terms = DEVIATORIC|DILATATION|BODY_FORCE|TRACTION;
+   setSolver(CG_SOLVER,DILU_PREC);
+   _terms = int(PDE_Terms::DEVIATORIC)|int(PDE_Terms::DILATATION)|int(PDE_Terms::BODY_RHS)|
+            int(PDE_Terms::BOUNDARY_RHS);
 }
 
 
@@ -171,11 +174,11 @@ void Elas2DQ4::PlaneStress()
 
 void Elas2DQ4::LMass(real_t coef)
 {
-   for (size_t i=1; i<=4; i++) {
-      _quad->setLocal(Point<real_t>(_xl[i-1],_yl[i-1]));
+   for (size_t i=0; i<4; ++i) {
+      _quad->setLocal(Point<real_t>(_xl[i],_yl[i]));
       real_t c = _rho*coef*_quad->getDet();
-      eA2(2*i-1,2*i-1) += c;
-      eA2(2*i  ,2*i  ) += c;
+      eA2(2*i+1,2*i+1) += c;
+      eA2(2*i+2,2*i+2) += c;
    }
 }
 
@@ -184,9 +187,9 @@ void Elas2DQ4::Deviator(real_t coef)
 {
    for (size_t k=0; k<4; ++k) {
       real_t c = _G*_wg[k]*coef;
-      for (size_t i=0; i<4; i++) {
+      for (size_t i=0; i<4; ++i) {
          Point<real_t> a = c*_dSh[4*i+k];
-         for (size_t j=0; j<4; j++) {
+         for (size_t j=0; j<4; ++j) {
             Point<real_t> b = _dSh[4*j+k];
             eA0(2*i+1,2*j+1) += 2*a.x*b.x + a.y*b.y;
             eA0(2*i+1,2*j+2) += a.y*b.x;
@@ -201,11 +204,11 @@ void Elas2DQ4::Deviator(real_t coef)
 
 void Elas2DQ4::Dilatation(real_t coef)
 {
-   for (size_t k=1; k<=4; ++k) {
+   for (size_t k=0; k<4; ++k) {
       real_t c = _lambda*_wg[k]*coef;
-      for (size_t i=0; i<4; i++) {
+      for (size_t i=0; i<4; ++i) {
          Point<real_t> a = c*_dSh[4*i+k];
-         for (size_t j=0; j<4; j++) {
+         for (size_t j=0; j<4; ++j) {
             Point<real_t> b = _dSh[4*j+k];
             eA0(2*i+1,2*j+1) += a.x*b.x;
             eA0(2*i+1,2*j+2) += a.x*b.y;
@@ -222,7 +225,7 @@ void Elas2DQ4::BodyRHS()
 {
    for (size_t k=0; k<4; ++k) {
       real_t fx=0., fy=0.;
-      for (size_t j=1; j<=4; ++j) {
+      for (size_t j=0; j<4; ++j) {
          fx += _sh[4*j+k]*_ebf(2*j-1);
          fy += _sh[4*j+k]*_ebf(2*j  );
       }
@@ -253,9 +256,9 @@ void Elas2DQ4::BodyRHS(const Vect<real_t>& f)
 void Elas2DQ4::BoundaryRHS()
 {
    real_t c=0.5*_ln->getLength();
-   for (size_t i=1; i<=2; i++) {
-      sRHS(2*i-1) += c*_ssf[0];
-      sRHS(2*i  ) += c*_ssf[1];
+   for (size_t i=0; i<2; ++i) {
+      sRHS(2*i+1) += c*_ssf[0];
+      sRHS(2*i+2) += c*_ssf[1];
    }
 }
 

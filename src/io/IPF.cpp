@@ -59,7 +59,7 @@ IPF::IPF(const string& prog,
    inf >> cc;
    inf.close();
    init();
-   XMLParser p(file,XMLParser::PROJECT);
+   XMLParser p(file,EType::PROJECT);
    p.get(*this);
    if (_restart_file.size()==0)
       _restart_file = _project + ".res";
@@ -82,15 +82,14 @@ IPF::IPF(const string& file)
    string cc;
    inf >> cc;
    inf.close();
-
    init();
-   XMLParser p(file,XMLParser::PROJECT);
+   XMLParser p(file,EType::PROJECT);
    p.get(*this);
    if (_restart_file.size()==0)
       _restart_file = _project + ".res";
    if (_save_file.size()==0)
       _save_file = _project + ".sav";
-   for (size_t i=0; i<MAX_NB_PAR; i++) {
+   for (size_t i=0; i<MAX_NB_PAR; ++i) {
       if (_plot_file[i].size()==0) {
          _plot_file[i] = _project + "-";
          _plot_file[i] += std::to_string(i+1) + ".pl";

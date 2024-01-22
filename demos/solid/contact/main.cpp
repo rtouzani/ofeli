@@ -85,15 +85,13 @@ int main(int argc, char *argv[])
 //    Read boundary conditions, body and boundary forces
       if (Verbosity > 1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
-      Vect<double> u(ms), bc(ms), bf(ms), sf(ms,SIDE_DOF);
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(TRACTION,sf);
-      p.get(BODY_FORCE,bf);
+      Vect<double> u(ms), sf(ms,SIDE_DOF);
+      p.getTraction(sf);
 
       Elas2DT3 eq(ms,u);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(TRACTION,sf);
-      eq.setInput(BODY_FORCE,bf);
+      eq.setBoundaryCondition(p.getBoundaryCondition());
+      eq.setTraction(sf);
+      eq.setBodyForce(p.getBodyForce());
       eq.run();
 
 //    Compute deformed mesh

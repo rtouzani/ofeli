@@ -89,15 +89,15 @@ class TINS2DT3S : virtual public Equa_Fluid<3,6,2,4> {
 /** \brief Set equation input data
  *  @param [in] opt Parameter to select type of input (enumerated values)
  *  <ul>
- *     <li><tt>INITIAL_FIELD</tt>: Initial temperature
+ *     <li><tt>INITIAL</tt>: Initial temperature
  *     <li><tt>BOUNDARY_CONDITION</tt>: Boundary condition (Dirichlet)
  *     <li><tt>SOURCE</tt>: Body force applied to fluid
  *     <li><tt>TRACTION</tt>: Heat flux (Neumann boundary condition)
- *     <li><tt>VELOCITY_FIELD</tt>: Velocity vector (for the convection term)
+ *     <li><tt>VELOCITY</tt>: Velocity vector (for the convection term)
  *  </ul>
  *  @param [in] u Vector containing input data (Vect instance)
  */
-    void setInput(EqDataType    opt,
+    void setInput(EType         opt,
                   Vect<real_t>& u);
 
 /// \brief Run one time step

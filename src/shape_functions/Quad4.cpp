@@ -168,8 +168,8 @@ void Quad4::atGauss(int                          n,
    Gauss g(n);
    for (int k=0; k<4; ++k) {
       size_t ij = 0;
-      for (int i=0; i<n; i++) {
-         for (int j=0; j<n; j++) {
+      for (int i=0; i<n; ++i) {
+         for (int j=0; j<n; ++j) {
             setLocal(Point<real_t>(g.x(i+1),g.x(j+1)));
             sh[n*n*k+ij] = _sh[k];
             dsh[n*n*k+ij] = _dsh[k];

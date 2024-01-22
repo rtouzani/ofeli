@@ -70,7 +70,7 @@ Equa::Equa()
    setTimeIntegrationParam();
    _rho_set = _Cp_set = _kappa_set = _mu_set = _sigma_set = _Mu_set = false;
    _epsilon_set = _omega_set = _beta_set = _v_set = _young_set = _poisson_set = false;
-   _gterms = NOTERM;
+   _terms = int(PDE_Terms::NOTERM);
 }
 
 
@@ -172,16 +172,16 @@ void Equa::setPDECoef(PDECoefType t,
 {
    _coef_value[t] = a;
    _set_coef[t] = 0;
-   if (t==C00)
-      _gterms = (_gterms|L00);
-   else if (t==C10)
-      _gterms = (_gterms|L10);
-   else if (t==C01)
-      _gterms = (_gterms|L01);
-   else if (t==C20)
-      _gterms = (_gterms|L20);
-   else if (t==C02)
-      _gterms = (_gterms|L02);
+   if (t==PDECoefType::C00)
+      _terms = (_terms|int(PDE_Terms::L00));
+   else if (t==PDECoefType::C10)
+      _terms = (_terms|int(PDE_Terms::L10));
+   else if (t==PDECoefType::C01)
+      _terms = (_terms|int(PDE_Terms::L01));
+   else if (t==PDECoefType::C20)
+      _terms = (_terms|int(PDE_Terms::L20));
+   else if (t==PDECoefType::C02)
+      _terms = (_terms|int(PDE_Terms::L02));
 }
 
 
@@ -190,16 +190,16 @@ void Equa::setPDECoef(PDECoefType   t,
 {
    _set_coef[t] = 1;
    _CFct[t].set(s,XYZT);
-   if (t==C00)
-      _gterms = (_gterms|L00);
-   else if (t==C10)
-      _gterms = (_gterms|L10);
-   else if (t==C01)
-      _gterms = (_gterms|L01);
-   else if (t==C20)
-      _gterms = (_gterms|L20);
-   else if (t==C02)
-      _gterms = (_gterms|L02);
+   if (t==PDECoefType::C00)
+      _terms = (_terms|int(PDE_Terms::L00));
+   else if (t==PDECoefType::C10)
+      _terms = (_terms|int(PDE_Terms::L10));
+   else if (t==PDECoefType::C01)
+      _terms = (_terms|int(PDE_Terms::L01));
+   else if (t==PDECoefType::C20)
+      _terms = (_terms|int(PDE_Terms::L20));
+   else if (t==PDECoefType::C02)
+      _terms = (_terms|int(PDE_Terms::L02));
 }
 
 
@@ -208,16 +208,16 @@ void Equa::setPDECoef(PDECoefType t,
 {
    _coef_fct[t] = &f;
    _set_coef[t] = 2;
-   if (t==C00)
-      _gterms = (_gterms|L00);
-   else if (t==C10)
-      _gterms = (_gterms|L10);
-   else if (t==C01)
-      _gterms = (_gterms|L01);
-   else if (t==C20)
-      _gterms = (_gterms|L20);
-   else if (t==C02)
-      _gterms = (_gterms|L02);
+   if (t==PDECoefType::C00)
+      _terms = (_terms|int(PDE_Terms::L00));
+   else if (t==PDECoefType::C10)
+      _terms = (_terms|int(PDE_Terms::L10));
+   else if (t==PDECoefType::C01)
+      _terms = (_terms|int(PDE_Terms::L01));
+   else if (t==PDECoefType::C20)
+      _terms = (_terms|int(PDE_Terms::L20));
+   else if (t==PDECoefType::C02)
+      _terms = (_terms|int(PDE_Terms::L02));
 }
 
 
@@ -239,16 +239,16 @@ real_t Equa::getPDECoef(PDECoefType      c,
          v = (*_coef_fct[c])(p.x,p.y,p.z,p.t);
          break;
    }
-   if (c==C00)
-      _gterms = (_gterms|L00);
-   else if (c==C10)
-      _gterms = (_gterms|L10);
-   else if (c==C01)
-      _gterms = (_gterms|L01);
-   else if (c==C20)
-      _gterms = (_gterms|L20);
-   else if (c==C02)
-      _gterms = (_gterms|L02);
+   if (c==PDECoefType::C00)
+      _terms = (_terms|int(PDE_Terms::L00));
+   else if (c==PDECoefType::C10)
+      _terms = (_terms|int(PDE_Terms::L10));
+   else if (c==PDECoefType::C01)
+      _terms = (_terms|int(PDE_Terms::L01));
+   else if (c==PDECoefType::C20)
+      _terms = (_terms|int(PDE_Terms::L20));
+   else if (c==PDECoefType::C02)
+      _terms = (_terms|int(PDE_Terms::L02));
    return v;
 }
 
@@ -521,7 +521,13 @@ void Equa::setWithConvection(int f)
 
 void Equa::setTerms(PDE_Terms t)
 {
-   _terms = t;
+   _terms = (_terms|int(t));
+}
+
+
+void Equa::setTerms(int t)
+{
+   _terms = (_terms|t);
 }
 
 
@@ -541,7 +547,8 @@ int Equa::solveLinearSystem(Matrix<real_t>* A,
    _ls.setMatrix(A);
    _ls.setRHS(b);
    _ls.setSolution(x);
-   return _ls.solve();
+   int ret = _ls.solve();
+   return ret;
 }
 
 void Equa::LinearSystemInfo()
@@ -670,25 +677,40 @@ string Equa::getFiniteElementType() const
 
 
 #if defined(USE_PETSC)
-void Equa::setInput(EqDataType         opt,
+void Equa::setInput(EType              opt,
                     PETScVect<real_t>& u)
 #else
-void Equa::setInput(EqDataType    opt,
+void Equa::setInput(EType         opt,
                     Vect<real_t>& u)
 #endif
 {
-   if (opt==INITIAL_FIELD || opt==SOLUTION)
-      _u = &u;
-   else if (opt==BOUNDARY_CONDITION)
-      _bc = &u;
-   else if (opt==SOURCE || opt==BODY_FORCE)
-      _bf = &u;
-   else if (opt==FLUX || opt==TRACTION || opt==BOUNDARY_FORCE)
-      _sf = &u;
-   else if (opt==POINT_FORCE)
-      _pf = &u;
-   else
-      ;
+   switch (opt) {
+
+      case EType::INITIAL:
+         _u = &u;
+         break;
+
+      case EType::DIRICHLET:
+         _bc = &u;
+         break;
+
+      case EType::BODY_FORCE:
+         _bf = &u;
+         _terms = (_terms|int(PDE_Terms::BODY_RHS)); 
+         break;
+
+      case EType::NEUMANN:
+         _sf = &u;
+         _terms = (_terms|int(PDE_Terms::BOUNDARY_RHS)); 
+         break;
+
+      case EType::POINT_FORCE:
+         _pf = &u;
+         break;
+
+      default:
+         break;
+   }
 }
 
 
@@ -758,12 +780,6 @@ void Equa::setConstantMatrix()
 void Equa::setConstantMesh()
 {
    _constant_mesh = true;
-}
-
-
-void Equa::setTerms(int opt)
-{
-   _terms = opt;
 }
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

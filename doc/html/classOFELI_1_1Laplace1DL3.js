@@ -7,5 +7,5 @@ var classOFELI_1_1Laplace1DL3 =
     [ "BodyRHS", "classOFELI_1_1Laplace1DL3.html#aa6d7e87afcbeea4276573c9576d8d6ca", null ],
     [ "BoundaryRHS", "classOFELI_1_1Laplace1DL3.html#a735f7f78ccee2864d719a9aba4bea313", null ],
     [ "LHS", "classOFELI_1_1Laplace1DL3.html#a906da27903ef1eb8d13377b70044b2cd", null ],
-    [ "setTraction", "classOFELI_1_1Laplace1DL3.html#a3e1a15dfa223d5f15304da0aba78ee6d", null ]
+    [ "setNeumann1D", "classOFELI_1_1Laplace1DL3.html#a9a2ff293661184b5e8e89c94c37a0d2b", null ]
 ];

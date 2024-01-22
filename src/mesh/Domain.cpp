@@ -1064,10 +1064,8 @@ int Domain::setCode(size_t ne1,
 int Domain::Disk()
 {
    size_t      n, m, nbn, nbe, nbs;
-   int         s;
    vector<int> dcc(MAX_NBDOF_NODE);
    Vertex c;
-
    real_t R = _ff->getI("Disk radius: ");
    c.x = _ff->getD("x-Coordinates of center: ");
    c.y = _ff->getD("y-Coordinates of center: ");
@@ -1099,7 +1097,7 @@ int Domain::Disk()
 
    x[0] = c;
    x[0].code = 0;
-   m = 1; n = 1; s = 0;
+   m = n = 1;
    for (size_t i=0; i<Nc; i++) {
       real_t theta = 2*i*OFELI_PI/real_t(Nc);
       _el[m-1].n1 = 1; _el[m-1].n2 = n+1; _el[m-1].n3 = n+1+Nl;
@@ -1130,7 +1128,7 @@ int Domain::Disk()
       Ln ln;
       ln.n1 = _el[m-2].n1;
       ln.n2 = _el[m-2].n2;
-      ln.Ncode = nc; s++;
+      ln.Ncode = nc;
       _l.push_back(ln);
    }
 
@@ -1282,7 +1280,7 @@ void Domain::deleteVertex()
 
 int Domain::saveAsEasymesh()
 {
-   size_t  i, j, n, i1, nb, nbb, kl, k, kl0=0, label;
+   size_t  i, j, n, i1, nb, nbb, kl, k, kl0=0;
    int     dc, nc, c;
    real_t h;
 
@@ -1301,7 +1299,6 @@ int Domain::saveAsEasymesh()
       for (i=0; i<_h[n].nb; i++)
          nbb += _l[_h[n].line[i]-1].nb - 1;
    _nb_lines += nbb;
-   label = _nb_vertices;
    _nb_vertices += nbb;
    mf << setw(5) << _nb_vertices << "# Nb. of points #" << endl;
 
@@ -1324,7 +1321,6 @@ int Domain::saveAsEasymesh()
       mf << setw(5) << kl << ": " << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << "  "
          << h << "  " << c << endl;
       for (j=1; j<nb; j++) {
-         label++;
          mf << kl+1 << ":  " << _l[n-1].node[j].x << "  " << _l[n-1].node[j].y << "  "
             << h << "  " << dc << endl;
          _ln[kl+1].i = _ln[kl].j = kl + 2;
@@ -1353,7 +1349,6 @@ int Domain::saveAsEasymesh()
          mf << kl << ": " << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << "  "
             << h << "  " << dc << endl;
          for (j=1; j<nb; j++) {
-            label++;
             mf << kl+1 << ": " << _l[n-1].node[j].x << "  " << _l[n-1].node[j].y << h << "  "
                << c << endl;
             _ln[kl+1].i = _ln[kl].j = kl+2;
@@ -1397,7 +1392,6 @@ int Domain::saveAsBamg()
       for (size_t i=0; i<_h[n].nb; i++)
          nbb += _l[_h[n].line[i]-1].nb - 1;
    _nb_lines += nbb;
-   size_t label = _nb_vertices;
    _nb_vertices += nbb;
    mf << "\nVertices  " << setw(6) << _nb_vertices << endl;
 
@@ -1416,7 +1410,6 @@ int Domain::saveAsBamg()
 	  _ln[kl].nc = nc;
       mf << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << setw(5) << c << endl;
       for (size_t j=1; j<nb; j++) {
-         label++;
          mf << _l[n-1].node[j].x << "  " << _l[n-1].node[j].y << setw(5) << dc << endl;
          _ln[kl+1].i = _ln[kl].j = kl + 2;
          _ln[kl+1].dc = dc;
@@ -1442,7 +1435,6 @@ int Domain::saveAsBamg()
          _ln[kl].dc = dc, _ln[kl].nc = nc;
          mf << _l[n-1].node[0].x << "  " << _l[n-1].node[0].y << setw(5) << dc << endl;
          for (size_t j=1; j<nb; j++) {
-            label++;
             mf << _l[n-1].node[j].x << "  " << _l[n-1].node[j].y << setw(5) << c << endl;
             _ln[kl+1].i = _ln[kl].j = kl + 2;
             _ln[kl+1].dc = dc, _ln[kl+1].nc = nc;

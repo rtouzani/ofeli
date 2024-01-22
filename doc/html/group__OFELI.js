@@ -152,7 +152,7 @@ var group__OFELI =
       [ "Grad", "classOFELI_1_1Pres2DT3.html#a190841f9068f20d5cd91c05451f5d06d", null ],
       [ "LMass", "classOFELI_1_1Pres2DT3.html#a8085a436c0055d8554baaa8cb3835922", null ],
       [ "Mass", "classOFELI_1_1Pres2DT3.html#a1b558ae9bc1c76a4344c24bc78f80f44", null ],
-      [ "setInput", "classOFELI_1_1Pres2DT3.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1Pres2DT3.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "LocalVect< T_, N_ >", "classOFELI_1_1LocalVect.html", [
       [ "LocalVect", "classOFELI_1_1LocalVect.html#a7dd7ccf2ccdddd9ed85e375a0df88622", null ],
@@ -648,8 +648,8 @@ var group__OFELI =
       [ "SideAssembly", "classOFELI_1_1Equation.html#af9d06a4645a4d1b67a31c90bd6c3eb01", null ],
       [ "SideNodeCoordinates", "classOFELI_1_1Equation.html#a70aed9ca4f8d4fcca37357cf3a57518c", null ],
       [ "SideNodeVector", "classOFELI_1_1Equation.html#ac9aedef9e0deffefe6ca5e8e31c8673d", null ],
-      [ "SideSideVector", "classOFELI_1_1Equation.html#a8756bcf0d1f7118d2c408b08b6baab76", null ],
-      [ "SideVector", "classOFELI_1_1Equation.html#a5c89b061a87c14143b3e38040a779ccf", null ],
+      [ "SideSideVector", "classOFELI_1_1Equation.html#a4ee6babe8a6192e5c084d67e9222e75c", null ],
+      [ "SideVector", "classOFELI_1_1Equation.html#a6be31ebb6ca711fe8ce0514b0955cc2b", null ],
       [ "updateBC", "classOFELI_1_1Equation.html#a9ece7667be8c650b6e1ee623749ad492", null ]
     ] ],
     [ "Equa_Fluid< NEN_, NEE_, NSN_, NSE_ >", "classOFELI_1_1Equa__Fluid.html", [
@@ -671,7 +671,7 @@ var group__OFELI =
       [ "build", "classOFELI_1_1NSP2DQ41.html#a7740c7ab195c03ac140f1f75f633470f", null ],
       [ "Periodic", "classOFELI_1_1NSP2DQ41.html#af669369716d638f14a268133981dbb17", null ],
       [ "runOneTimeStep", "classOFELI_1_1NSP2DQ41.html#a97ceb92f009f5eee1340388708fd5939", null ],
-      [ "setInput", "classOFELI_1_1NSP2DQ41.html#af84606c2cecfcef03d6820a323ffbdcc", null ],
+      [ "setInput", "classOFELI_1_1NSP2DQ41.html#affbdc0fae478891f2b9f63607004026f", null ],
       [ "setPenalty", "classOFELI_1_1NSP2DQ41.html#aef525ad3a42dedd8346b084b3e303272", null ]
     ] ],
     [ "TINS2DT3S", "classOFELI_1_1TINS2DT3S.html", [
@@ -681,7 +681,7 @@ var group__OFELI =
       [ "~TINS2DT3S", "classOFELI_1_1TINS2DT3S.html#ae48c1d7b75a5711a4ba2f7ab39f7ebcf", null ],
       [ "run", "classOFELI_1_1TINS2DT3S.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
       [ "runOneTimeStep", "classOFELI_1_1TINS2DT3S.html#a97ceb92f009f5eee1340388708fd5939", null ],
-      [ "setInput", "classOFELI_1_1TINS2DT3S.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1TINS2DT3S.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "TINS3DT4S", "classOFELI_1_1TINS3DT4S.html", [
       [ "TINS3DT4S", "classOFELI_1_1TINS3DT4S.html#a6199e16135b509746a6b40773ab8c2e0", null ],
@@ -690,7 +690,7 @@ var group__OFELI =
       [ "~TINS3DT4S", "classOFELI_1_1TINS3DT4S.html#a557a93fc3a7a3e72dc95556446d26913", null ],
       [ "run", "classOFELI_1_1TINS3DT4S.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
       [ "runOneTimeStep", "classOFELI_1_1TINS3DT4S.html#a97ceb92f009f5eee1340388708fd5939", null ],
-      [ "setInput", "classOFELI_1_1TINS3DT4S.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1TINS3DT4S.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "Equa_LinearPDE< NEN_, NSN_ >", "classOFELI_1_1Equa__LinearPDE.html", [
       [ "Equa_LinearPDE", "classOFELI_1_1Equa__LinearPDE.html#ac6be6366c8bcc4bbe08c54d732db2180", null ],
@@ -751,7 +751,7 @@ var group__OFELI =
       [ "Mat_02", "classOFELI_1_1LinearPDE2D.html#a756f5281194ff251a1075dab291d3242", null ],
       [ "Mat_10", "classOFELI_1_1LinearPDE2D.html#af65bbe8759394b7dfef8632497d58cc7", null ],
       [ "Mat_20", "classOFELI_1_1LinearPDE2D.html#ae50d5589e5602e03884550b66e662838", null ],
-      [ "setInput", "classOFELI_1_1LinearPDE2D.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1LinearPDE2D.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "FastMarching", "classOFELI_1_1FastMarching.html", [
       [ "FastMarching", "classOFELI_1_1FastMarching.html#a902fc6fa1e0c8c7ad2ac2887d57ce033", null ],
@@ -812,8 +812,8 @@ var group__OFELI =
       [ "BoundaryRHS", "classOFELI_1_1Laplace1DL2.html#a9f47743e35b40517037f6c007312461c", null ],
       [ "buildEigen", "classOFELI_1_1Laplace1DL2.html#aa29ea1739165c677b1353892bfaff103", null ],
       [ "LHS", "classOFELI_1_1Laplace1DL2.html#a906da27903ef1eb8d13377b70044b2cd", null ],
-      [ "setBoundaryCondition", "classOFELI_1_1Laplace1DL2.html#a7dbff391c42f944084726308b2dfc6c9", null ],
-      [ "setTraction", "classOFELI_1_1Laplace1DL2.html#a3e1a15dfa223d5f15304da0aba78ee6d", null ]
+      [ "setBC1D", "classOFELI_1_1Laplace1DL2.html#a9044d18b5ec1c4aea6a48181bcf5f35a", null ],
+      [ "setNeumann1D", "classOFELI_1_1Laplace1DL2.html#a9a2ff293661184b5e8e89c94c37a0d2b", null ]
     ] ],
     [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html", [
       [ "Laplace1DL3", "classOFELI_1_1Laplace1DL3.html#acb9177af80553f13bad2c704feb6f20f", null ],
@@ -823,7 +823,7 @@ var group__OFELI =
       [ "BodyRHS", "classOFELI_1_1Laplace1DL3.html#aa6d7e87afcbeea4276573c9576d8d6ca", null ],
       [ "BoundaryRHS", "classOFELI_1_1Laplace1DL3.html#a735f7f78ccee2864d719a9aba4bea313", null ],
       [ "LHS", "classOFELI_1_1Laplace1DL3.html#a906da27903ef1eb8d13377b70044b2cd", null ],
-      [ "setTraction", "classOFELI_1_1Laplace1DL3.html#a3e1a15dfa223d5f15304da0aba78ee6d", null ]
+      [ "setNeumann1D", "classOFELI_1_1Laplace1DL3.html#a9a2ff293661184b5e8e89c94c37a0d2b", null ]
     ] ],
     [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html", [
       [ "Laplace2DT3", "classOFELI_1_1Laplace2DT3.html#a2dc758205e620706b545303911a6acf4", null ],
@@ -1006,7 +1006,7 @@ var group__OFELI =
       [ "Mass", "classOFELI_1_1Equa__Solid.html#a6d344362c30ab9e83665623bb793e0d6", null ],
       [ "Poisson", "classOFELI_1_1Equa__Solid.html#ae1595490dd8e700664c95d2bd09818dd", null ],
       [ "Poisson", "classOFELI_1_1Equa__Solid.html#ab0c2201708c8259c23064176e337486d", null ],
-      [ "setInput", "classOFELI_1_1Equa__Solid.html#af84606c2cecfcef03d6820a323ffbdcc", null ],
+      [ "setInput", "classOFELI_1_1Equa__Solid.html#affbdc0fae478891f2b9f63607004026f", null ],
       [ "setMaterial", "classOFELI_1_1Equa__Solid.html#a381ccce0928fbad840a57b054e7eb9b0", null ],
       [ "Stiffness", "classOFELI_1_1Equa__Solid.html#a5b1bb6dc8310a0a1bbeec64bddcae4cd", null ],
       [ "Young", "classOFELI_1_1Equa__Solid.html#a84a80b8d798b3b8a1acef0f2a241782b", null ],
@@ -1025,7 +1025,7 @@ var group__OFELI =
       [ "Diffusion", "classOFELI_1_1DC1DL2.html#ac301bba6a75b942c88f797628c141e2c", null ],
       [ "Flux", "classOFELI_1_1DC1DL2.html#a3a400c339dbb1f35a8179cbc99ed2f29", null ],
       [ "LCapacity", "classOFELI_1_1DC1DL2.html#af02cfd6af8e4585dd9f17f97597136c5", null ],
-      [ "setInput", "classOFELI_1_1DC1DL2.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1DC1DL2.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "DC2DT3", "classOFELI_1_1DC2DT3.html", [
       [ "DC2DT3", "classOFELI_1_1DC2DT3.html#acabdf8aaecac9892a332089d48492921", null ],
@@ -1049,7 +1049,7 @@ var group__OFELI =
       [ "LCapacity", "classOFELI_1_1DC2DT3.html#af02cfd6af8e4585dd9f17f97597136c5", null ],
       [ "LinearExchange", "classOFELI_1_1DC2DT3.html#a8e09c99e4cfc4b0035d9e6b46d19d7ec", null ],
       [ "Periodic", "classOFELI_1_1DC2DT3.html#af669369716d638f14a268133981dbb17", null ],
-      [ "setInput", "classOFELI_1_1DC2DT3.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1DC2DT3.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "DC2DT6", "classOFELI_1_1DC2DT6.html", [
       [ "DC2DT6", "classOFELI_1_1DC2DT6.html#a9a921747bcf0f5b5dac83bdaa65853f5", null ],
@@ -1221,10 +1221,10 @@ var group__OFELI =
     ] ],
     [ "Prescription", "classOFELI_1_1Prescription.html", [
       [ "Prescription", "classOFELI_1_1Prescription.html#a8b0e88c4b2a26e6651cd0a26af580e86", null ],
-      [ "Prescription", "classOFELI_1_1Prescription.html#ad58136c7aa1df4884d968ee61ce49999", null ],
+      [ "Prescription", "classOFELI_1_1Prescription.html#a729b1e5dbc77119240896102a237a1b9", null ],
       [ "~Prescription", "classOFELI_1_1Prescription.html#abc32cb0d2029c7e0ee3eeee426c9b61d", null ],
-      [ "get", "classOFELI_1_1Prescription.html#adf6cf4ca1c2e3e44fad87c02e65bb60d", null ],
-      [ "get", "classOFELI_1_1Prescription.html#a469babb54d7c6a779addd8a46df1b0c3", null ]
+      [ "get", "classOFELI_1_1Prescription.html#abdd520052d2df1b7110b785099533c64", null ],
+      [ "get", "classOFELI_1_1Prescription.html#ac84aa2218cd13af55c4519a43a36809e", null ]
     ] ],
     [ "Tabulation", "classOFELI_1_1Tabulation.html", [
       [ "Tabulation", "group__OFELI.html#gaca17e078142a69b94a36e473bb74e005", null ],
@@ -1761,9 +1761,7 @@ var group__OFELI =
       [ "~Element", "classOFELI_1_1Element.html#a479a4daf1c3e59999be93dfd0353b7b8", null ],
       [ "Add", "classOFELI_1_1Element.html#a09bede292ad1986fef93ecdf07a12389", null ],
       [ "Add", "classOFELI_1_1Element.html#a48bb768563a8b7f456751ec92a901a25", null ],
-      [ "Add", "classOFELI_1_1Element.html#a17bb9ce00e07504878aeea34bfdd494c", null ],
       [ "Add", "classOFELI_1_1Element.html#a45628b3145186a0b7cb844d9d4b9bf4a", null ],
-      [ "Add", "classOFELI_1_1Element.html#a265de652c2de5280416ffd80e1c63af3", null ],
       [ "Contains", "classOFELI_1_1Element.html#a3fcda90942578167b8ec79ac3e8fa5e9", null ],
       [ "Contains", "classOFELI_1_1Element.html#aeedc78ae0ded1aba0e33643f17d82902", null ],
       [ "Contains", "classOFELI_1_1Element.html#a9b5e84ba65ac486ec456efd26bf8fa54", null ],
@@ -2033,28 +2031,18 @@ var group__OFELI =
       [ "ElementsAreDOF", "classOFELI_1_1Mesh.html#aa67233b61e610b8ebc692cbd26c67845", null ],
       [ "get", "classOFELI_1_1Mesh.html#abc36a97ae31b33e95e49aeeb7f3e2f46", null ],
       [ "get", "classOFELI_1_1Mesh.html#a7f2d27326b9d000adcb7ece7869e5dd3", null ],
-      [ "getActiveElement", "classOFELI_1_1Mesh.html#a8ebcb1d01715b48743d9eace20eaa830", null ],
       [ "getAllEdges", "classOFELI_1_1Mesh.html#a71cbe82b9babdbf8ca7acfcd6fe75c0c", null ],
       [ "getAllSides", "classOFELI_1_1Mesh.html#a5055507ee72ea249f3f25e39811e2b47", null ],
-      [ "getBoundaryEdge", "classOFELI_1_1Mesh.html#aff805728aea7d4a633dc14174420838b", null ],
-      [ "getBoundaryNode", "classOFELI_1_1Mesh.html#a669ed953ebf4e38e945865cd99851f21", null ],
       [ "getBoundaryNodes", "classOFELI_1_1Mesh.html#ab9a4bf30d075c6ed5fa9f8287b434f79", null ],
-      [ "getBoundarySide", "classOFELI_1_1Mesh.html#add8b09b6be7a236fe9f77d948a11583f", null ],
       [ "getBoundarySides", "classOFELI_1_1Mesh.html#a880de753ae04fc97344dcd31be1be0bc", null ],
       [ "getDim", "classOFELI_1_1Mesh.html#aa217066db3a717424604bab3fcb6ec4b", null ],
       [ "getDOFSupport", "classOFELI_1_1Mesh.html#a8202c12e59a5dc6262325fc679db4e74", null ],
-      [ "getEdge", "classOFELI_1_1Mesh.html#a2faa548c3422cf881439dbbe65ee3b39", null ],
-      [ "getEdge", "classOFELI_1_1Mesh.html#ac20fbbf09a81a14c6badc76e98fa03b1", null ],
       [ "getEdgeLabel", "classOFELI_1_1Mesh.html#ac129e2eeac817721c013c262d5f4b227", null ],
-      [ "getElement", "classOFELI_1_1Mesh.html#a99e894cefe970ae27984bc2f671b4e31", null ],
-      [ "getElement", "classOFELI_1_1Mesh.html#ac06673a61cfaf595c3ca51f0e2f785c9", null ],
       [ "getElementLabel", "classOFELI_1_1Mesh.html#a51ecc02663c02bd188ddb6af8375de0d", null ],
       [ "getElementNeighborElements", "classOFELI_1_1Mesh.html#a67998519cd2f088f31d6804deae57aa9", null ],
-      [ "getInternalSide", "classOFELI_1_1Mesh.html#a6fb20b4cb6493bfc6c34414da6d812a4", null ],
       [ "getList", "classOFELI_1_1Mesh.html#aecdb3a2ab67a2ad12e2afdf1bffc3023", null ],
       [ "getList", "classOFELI_1_1Mesh.html#a8032c583969f57d9e5819e67514af446", null ],
       [ "getList", "classOFELI_1_1Mesh.html#a792c96b89e8556a6e08b98b5212b1d4f", null ],
-      [ "getMarkedNode", "classOFELI_1_1Mesh.html#a2d18f54fe751e85f57d7ddc034eb6b8d", null ],
       [ "getMaxCoord", "classOFELI_1_1Mesh.html#aa72e2f9e4ced92ebb4633e3dbe46b138", null ],
       [ "getMinCoord", "classOFELI_1_1Mesh.html#a70cb44834a0be1f298a7c85d9d700195", null ],
       [ "getNbBoundarySides", "classOFELI_1_1Mesh.html#a333d4cf5474a767d97d01739b0d4f0dc", null ],
@@ -2071,7 +2059,6 @@ var group__OFELI =
       [ "getNbSideNodes", "classOFELI_1_1Mesh.html#a94d450b2020c2497dec9c8a4a3c1fd8e", null ],
       [ "getNbSides", "classOFELI_1_1Mesh.html#a0252edb7d5457ec0225ffff64dcdccb2", null ],
       [ "getNbVertices", "classOFELI_1_1Mesh.html#a5750242d0acee0978dba9bf1261914cd", null ],
-      [ "getNode", "classOFELI_1_1Mesh.html#af0c9954b4c46448061cbcdbd9253bfb8", null ],
       [ "getNode", "classOFELI_1_1Mesh.html#aed495c058aadff6865b49ec9cf8fef33", null ],
       [ "getNodeLabel", "classOFELI_1_1Mesh.html#a7acd721132e595cb11316c41a77b5bf8", null ],
       [ "getNodeNeighborElements", "classOFELI_1_1Mesh.html#a6a1a80ffe7347b21f014ae07ade0a872", null ],
@@ -2081,7 +2068,6 @@ var group__OFELI =
       [ "getPtrNode", "classOFELI_1_1Mesh.html#ae588acd710c421ee332541c1d469852a", null ],
       [ "getPtrSide", "classOFELI_1_1Mesh.html#a8c9406f07be76c6080928910b2214e53", null ],
       [ "getShape", "classOFELI_1_1Mesh.html#a9e8217afff8e1b47ba6901bfea655a3d", null ],
-      [ "getSide", "classOFELI_1_1Mesh.html#a9ff652eee1b6402315f5c76cb7ff8f35", null ],
       [ "getSide", "classOFELI_1_1Mesh.html#a6eb0cc516b2bbe482a89117f49d8ebef", null ],
       [ "getSideLabel", "classOFELI_1_1Mesh.html#a3c3a15ee6a721d8705b97f3353cb4a8f", null ],
       [ "isStructured", "classOFELI_1_1Mesh.html#a0df96404d3d5b00129803ff563198aa5", null ],
@@ -2107,22 +2093,13 @@ var group__OFELI =
       [ "set", "classOFELI_1_1Mesh.html#aa16086424a48d780e72cacd42c711b8f", null ],
       [ "setDim", "classOFELI_1_1Mesh.html#aaedad696b6f7a9a36676a645564c7461", null ],
       [ "setDOFSupport", "classOFELI_1_1Mesh.html#ac8499a72f727b07e5b3d1b4a05647402", null ],
-      [ "setList", "classOFELI_1_1Mesh.html#a03027ba41beda56941cfcdf87be028dc", null ],
-      [ "setList", "classOFELI_1_1Mesh.html#affa9ff1260d158f3ccf06c3e412e9b99", null ],
-      [ "setList", "classOFELI_1_1Mesh.html#af63b89378377f08e029d36482283d024", null ],
+      [ "setList", "classOFELI_1_1Mesh.html#ab833fd39579edc49e8476cf3093dbaa1", null ],
+      [ "setList", "classOFELI_1_1Mesh.html#a53b21a99ba617b960ff0e2114499d7d4", null ],
+      [ "setList", "classOFELI_1_1Mesh.html#acb87cbf578f1333b21a6920877411e7f", null ],
       [ "setMaterial", "classOFELI_1_1Mesh.html#a94c52f4dc2627f55b25a2b055e646281", null ],
       [ "setNbDOFPerNode", "classOFELI_1_1Mesh.html#ade2f530d54ad850678bdc12891e2a97a", null ],
       [ "setPointInDomain", "classOFELI_1_1Mesh.html#afed7b70c4fdfcb1fe06b0eb3c1ad4c96", null ],
       [ "SidesAreDOF", "classOFELI_1_1Mesh.html#a42f2ea7287439b9314794451f6391b6a", null ],
-      [ "topBoundaryEdge", "classOFELI_1_1Mesh.html#a167cc779bbbf5174789b82bef59134ff", null ],
-      [ "topBoundaryNode", "classOFELI_1_1Mesh.html#a4156380c25827a2484bf5ece13cb7e18", null ],
-      [ "topBoundarySide", "classOFELI_1_1Mesh.html#ab75b12bea27430b70a48dbd47fd5e08d", null ],
-      [ "topEdge", "classOFELI_1_1Mesh.html#a9209fc14f8dec6cc3eb0e56e13fb99aa", null ],
-      [ "topElement", "classOFELI_1_1Mesh.html#af451d563be2435e9f2af83c61e2816ab", null ],
-      [ "topInternalSide", "classOFELI_1_1Mesh.html#ad310368a67e0bcd6e0097c16ff98c410", null ],
-      [ "topMarkedNode", "classOFELI_1_1Mesh.html#aab5d6e5d65e44f21240661e24c0b56a9", null ],
-      [ "topNode", "classOFELI_1_1Mesh.html#af25915c5583515a81f246cec43f77c06", null ],
-      [ "topSide", "classOFELI_1_1Mesh.html#aada7dd443055b62ef97d5f3ecadad353", null ],
       [ "withImposedDOF", "classOFELI_1_1Mesh.html#a77a29848e2a33dcd78696f7ff58cf96c", null ],
       [ "Refine", "classOFELI_1_1Mesh.html#a0365656f8f6a5ce45ee38bfe1e0d0b55", null ]
     ] ],
@@ -2720,7 +2697,6 @@ var group__OFELI =
     [ "PRES1DL2", "classPRES1DL2.html", null ],
     [ "AccessType", "group__OFELI.html#gad8aff9e545a5f496a179a16667431478", null ],
     [ "Analysis", "group__OFELI.html#ga3915e2ca621626d1d2797d8365196f1b", [
-      [ "STATIONARY", "group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1bac84bd0ee013c388bd7cc8139be7206a2", null ],
       [ "STEADY_STATE", "group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1ba69ecc1a10183e7d50f0fc8250fb1ba73", null ],
       [ "TRANSIENT", "group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1ba189628bd9c66ada3fb11593230091ad4", null ],
       [ "TRANSIENT_ONE_STEP", "group__OFELI.html#gga3915e2ca621626d1d2797d8365196f1baf48c46569bd47443a7884f4f929498b6", null ],
@@ -2746,18 +2722,6 @@ var group__OFELI =
       [ "FE_3D_AXI_3N", "group__OFELI.html#gga31f830fd5deccf18a6e312b026bbe13bac9b781d0a757ab56bc6596f80769d877", null ],
       [ "FE_3D_4N", "group__OFELI.html#gga31f830fd5deccf18a6e312b026bbe13ba03b4a1040ddeafcd0d4e0205efa45ac8", null ],
       [ "FE_3D_8N", "group__OFELI.html#gga31f830fd5deccf18a6e312b026bbe13ba57de6aadb8f48f2c4c20861f28f839b5", null ]
-    ] ],
-    [ "GENERIC_PDE_Terms", "group__OFELI.html#ga018f378896bd00774734cea2dd643e53", [
-      [ "NOTERM", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53a4eedd7beaeddf5ef96812fba45619da1", null ],
-      [ "L00", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53aeb55b92810c2af45b5c8dd611b4a95e8", null ],
-      [ "L10", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53ab77a6f0b4a2893981e1155d8278adcb0", null ],
-      [ "L20", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53a35af1f9b1e8c71d6099cd3efe4907750", null ],
-      [ "L01", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53ad4686a237c98434b30b93e366f89b53a", null ],
-      [ "L02", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53a4249de896cbed7202749e79169dd30b7", null ],
-      [ "L11", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53a164ef4d5adf57cfcc7a441ac1ef6f3e2", null ],
-      [ "BODY_RHS", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53a2a6002ae7b00722681e2d27919ca74d1", null ],
-      [ "BOUNDARY_RHS", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53ac8d875c03198d1daa4a10f02ce08f9a1", null ],
-      [ "NEUMANN", "group__OFELI.html#gga018f378896bd00774734cea2dd643e53ae58d114453737f3084aa5c645eba3412", null ]
     ] ],
     [ "IntegrationScheme", "group__OFELI.html#gac6182f91e9b5b2e053c56e00a35de854", [
       [ "LEFT_RECTANGLE", "group__OFELI.html#ggac6182f91e9b5b2e053c56e00a35de854a7ef7eba8bae1abe4bccc081d83c21ec2", null ],
@@ -2786,30 +2750,40 @@ var group__OFELI =
       [ "UNSYMMETRIC", "group__OFELI.html#ggacc6ad8472c2abfd2f63e100474b977f9a33cc63ae02b32064d96dfe7d576a480d", null ],
       [ "IDENTITY", "group__OFELI.html#ggacc6ad8472c2abfd2f63e100474b977f9af235bf7b95ec64961eab8529ec59311d", null ]
     ] ],
-    [ "PDE_Terms", "group__OFELI.html#ga3757febaa4d0638468a11bb96593f8da", [
-      [ "CONSISTENT_MASS", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daabff007b8366c6ab06e1b0c5644455687", null ],
-      [ "LUMPED_MASS", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa7b9aa2a958e5f880122b85b34aaded2c", null ],
-      [ "MASS", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa1c910486b66cf1ccce2ef81d4318227f", null ],
-      [ "CAPACITY", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daab7dda006facfb86f75aa6e0210a77448", null ],
-      [ "CONSISTENT_CAPACITY", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa9adacbe252e3e2a535200ec3146a4dd2", null ],
-      [ "LUMPED_CAPACITY", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daab0cd85fc68e58a11327458019cc6e7f3", null ],
-      [ "VISCOSITY", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daaf5dcdbc91041cc8ab41973956078c70d", null ],
-      [ "STIFFNESS", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa1fa87e583599b3a51cceb6ebcac684c2", null ],
-      [ "DIFFUSION", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa64b145492a27539220bb4a4cb95af90c", null ],
-      [ "MOBILITY", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa8ae33843a530a8915f1852770b05809d", null ],
-      [ "CONVECTION", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa718e0728cf596ce66dfc59137a21a626", null ],
-      [ "DEVIATORIC", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad1a05a357ad745786854148cbe300731", null ],
-      [ "DILATATION", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa50322e2201a5452e2b1b8a3f11b8856b", null ],
-      [ "ELECTRIC", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa904fa7835cb04ae9b123743acb18a38c", null ],
-      [ "MAGNETIC", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad599a8c2a5528be97720bbc9c8888b00", null ],
-      [ "LOAD", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa972dbcdf74cff71e20bdcfb53be9c391", null ],
-      [ "HEAT_SOURCE", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daae1672dcb581fbe92c1fde565d9e7fe3a", null ],
-      [ "BOUNDARY_TRACTION", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daac0bc0fe4f9fa2d1860ff064e6ed558f0", null ],
-      [ "HEAT_FLUX", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa971f1c6045acd204579feb9e41166d44", null ],
-      [ "CONTACT", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa6f7d7c84f5e891c3d7b4b588cd628b7e", null ],
-      [ "BUOYANCY", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daaf866b10be5649b84572070945df67941", null ],
-      [ "LORENTZ_FORCE", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daa71380580d4d097129850744ca55920e4", null ],
-      [ "DAMPING", "group__OFELI.html#gga3757febaa4d0638468a11bb96593f8daad2e95162fef170a20cbd9b1f493bc89e", null ]
+    [ "PDE_Terms", "group__OFELI.html#ga76756c7eef4f22bb13ac06f6c8c197cb", [
+      [ "NOTERM", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaaf8a806916cc39b1a027246e06a64aae", null ],
+      [ "CONSISTENT_MASS", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba25fde2868c4dc4355fb7e9ddfd8122e5", null ],
+      [ "CONSISTENT_CAPACITY", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba8bfd09658c7d48cc60f6840cd439dc30", null ],
+      [ "LUMPED_MASS", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba1b2e5127f418cd952f9fb0fa050b6709", null ],
+      [ "MASS", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbacb6c2c4b3c8f95f9b58ad13f0a97245d", null ],
+      [ "LUMPED_CAPACITY", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbab0f7435a7395b8a2d88240e7d1c5c690", null ],
+      [ "CAPACITY", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba5b3bc952620c21981c4b3b304fbd74f8", null ],
+      [ "VISCOSITY", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba13d621435dde53f9c38dce061f879e4b", null ],
+      [ "STIFFNESS", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaa231c1d74fe18f9e82224588887d1971", null ],
+      [ "DIFFUSION", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac9f4e4b1345e4e958a307bf67ae358a7", null ],
+      [ "MOBILITY", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbadf9db257294a6f11ff6ce0e2d9448616", null ],
+      [ "CONVECTION", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba9a585672110a5dc4cb56372c6639dea1", null ],
+      [ "DEVIATORIC", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba9e13c8a493c18000a283832b179b3dc4", null ],
+      [ "DILATATION", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba57ee47bd02e9623eada587253bc69514", null ],
+      [ "ELECTRIC", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba596b9c4b008256066d216f9eb4426497", null ],
+      [ "MAGNETIC", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaf842701a27bcc1bf7de20c30600718d3", null ],
+      [ "BODY_RHS", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba63e637d5f9aca5de88c627c9c534968e", null ],
+      [ "LOAD", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba615d2885ef7576cedd9aafbb2578f028", null ],
+      [ "SOURCE", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbae60b4854b44ccfb2d92aa6f035171bb4", null ],
+      [ "BOUNDARY_RHS", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba548795c463d0ada94cb952eca426176e", null ],
+      [ "NEUMANN", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba2f2dd8d12511598975b5475371963bd4", null ],
+      [ "FLUX", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbae098247bc6652dd88c76644b275260ed", null ],
+      [ "BOUNDARY_TRACTION", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac10ff580f320cb720c4b30be43df7e82", null ],
+      [ "CONTACT", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbac0241eae411627c19ba9835b6d194b1c", null ],
+      [ "BUOYANCY", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba30a029b093634f0a681bc122f6130eaa", null ],
+      [ "LORENTZ_FORCE", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba7fae9e7bebe4a4c30ae01b7bedcb3928", null ],
+      [ "DAMPING", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaea33eb7e054446cf1e471808d2a46e71", null ],
+      [ "L00", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbaa299c58fcdd0752beab4049168288705", null ],
+      [ "L10", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba90e317300449f3f0b77b5331ec0cf0f7", null ],
+      [ "L20", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba09162d0433d739b5b19e2cc1676f6b90", null ],
+      [ "L01", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba7879f640467664d3c1242457da8cfe75", null ],
+      [ "L02", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cbab480d6f94dc9b3085740406fc26ce917", null ],
+      [ "L11", "group__OFELI.html#gga76756c7eef4f22bb13ac06f6c8c197cba8e7ee9b50b48be2b02231b9bd3509b7c", null ]
     ] ],
     [ "PDECoefType", "group__OFELI.html#ga62536dd8609c49611ad03866df7cde66", null ],
     [ "Preconditioner", "group__OFELI.html#gadac1c2aa74e98e485c02f73279b71a38", [
@@ -2827,9 +2801,7 @@ var group__OFELI =
       [ "HEUN", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40ad1d1dc68298638158aaa1bf28a29c7b9", null ],
       [ "NEWMARK", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a21f27170951fe396ea71ac3c6d63db9b", null ],
       [ "LEAP_FROG", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40ac624788afc3b839c11a13cc4dbbaff57", null ],
-      [ "ADAMS_BASHFORTH", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a88e6af20a0ce84e04718516b7c911ef3", null ],
       [ "AB2", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a91271a0b286e0d50cda54284c7febd2f", null ],
-      [ "RUNGE_KUTTA", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40ae4d8522f5abcb1ebce2c9b3dde324ace", null ],
       [ "RK4", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a5df275d4d2ef6e60437567adc263d488", null ],
       [ "RK3_TVD", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40a17e2f23cb60e09ba554a7681ec8acd3c", null ],
       [ "BDF2", "group__OFELI.html#gga672626c8ddef10da0244c15db4085f40ae7886dfb157f796fc69f25417aa681d2", null ],

@@ -30,7 +30,6 @@
 
   ==============================================================================*/
 
-
 #ifndef __EQUA_SOLID_H
 #define __EQUA_SOLID_H
 
@@ -134,7 +133,7 @@ class Equa_Solid : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
     virtual void Stiffness(real_t coef=1) { coef=1; }
 
 /// \brief Set specific input data to solid mechanics
-    void setInput(EqDataType    opt,
+    void setInput(EType         opt,
                   Vect<real_t>& u)
     {
        Equa::setInput(opt,u);
@@ -151,7 +150,7 @@ class Equa_Solid : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
             TimeScheme s=NONE)
     {
        int ret = Equa::run(a,s);
-       if (_terms&CONTACT && a==STATIONARY)
+       if (_terms&int(PDE_Terms::CONTACT) && a==STATIONARY)
           ret = Equa::run(a,s);
        return ret;
     }
@@ -178,15 +177,14 @@ class Equa_Solid : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
        Equa::_A->clear();
        MESH_EL {
           set(the_element);
-          if (_terms&MASS)
+          if (_terms&int(PDE_Terms::CONSISTENT_MASS))
              Mass();
-          if (_terms&LUMPED_MASS)
+          if (_terms&int(PDE_Terms::LUMPED_MASS))
              LMass();
-          if (_terms&DEVIATORIC)
+          if (_terms&int(PDE_Terms::DEVIATORIC))
              Deviator();
-          if (_terms&DILATATION)
+          if (_terms&int(PDE_Terms::DILATATION))
              Dilatation();
-          eMat = eA0;
           Equa::_A->Assembly(The_element,eMat.get());
           if (Equa::_bf!=nullptr)
              BodyRHS();
@@ -197,7 +195,7 @@ class Equa_Solid : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
        if (Equa::_sf!=nullptr) {
           MESH_SD {
              set(the_side);
-             if (_terms&CONTACT)
+             if (_terms&int(PDE_Terms::CONTACT))
                 Contact(1.e07);
              BoundaryRHS();
              Equa::_A->Assembly(The_side,sA0.get());
@@ -222,23 +220,23 @@ class Equa_Solid : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
     {
        MESH_EL {
           set(the_element);
-          if (_terms&MASS)
+          if (_terms&int(PDE_Terms::CONSISTENT_MASS))
              Mass();
-          if (_terms&LUMPED_MASS)
+          if (_terms&int(PDE_Terms::LUMPED_MASS))
              LMass();
-          if (_terms&DEVIATORIC)
+          if (_terms&int(PDE_Terms::DEVIATORIC))
              Deviator();
-          if (_terms&DILATATION)
+          if (_terms&int(PDE_Terms::DILATATION))
              Dilatation();
-          if (_terms&CONTACT)
+          if (_terms&int(PDE_Terms::CONTACT))
              Contact(1.e07);
-          if ((_terms&LOAD) && (Equa::_bf!=nullptr))
+          if (Equa::_bf!=nullptr)
              BodyRHS();
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
        }
        MESH_SD {
           set(the_side);
-          if (_terms&CONTACT)
+          if (_terms&int(PDE_Terms::CONTACT))
              Contact(1.e07);
           s.SAssembly(The_side,sRHS.get(),sA0.get());
        }
@@ -252,9 +250,9 @@ class Equa_Solid : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
        MESH_EL {
           set(the_element);
           this->ElementVector(*Equa::_u);
-          if (_terms&MASS)
+          if (_terms&int(PDE_Terms::CONSISTENT_MASS))
              Mass();
-          if (_terms&LUMPED_MASS)
+          if (_terms&int(PDE_Terms::LUMPED_MASS))
              LMass();
           Deviator();
           Dilatation();

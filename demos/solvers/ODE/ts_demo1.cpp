@@ -63,7 +63,9 @@ int main(int argc, char *argv[])
 
 // Instantiate equation class and declare used terms
    DC2DT3 eq(ms);
-   eq.setTerms(CAPACITY|DIFFUSION|SOURCE);
+   eq.setTerms(PDE_Terms::CAPACITY);
+   eq.setTerms(PDE_Terms::DIFFUSION);
+   eq.setTerms(PDE_Terms::SOURCE);
 
 // Build the differential system
 // We use for instance the BDF2 scheme. Other choices are: FORWARD_EULER, BACKWARD_EULER,

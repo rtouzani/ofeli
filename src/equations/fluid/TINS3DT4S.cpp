@@ -95,11 +95,11 @@ void TINS3DT4S::init()
 }
 
 
-void TINS3DT4S::setInput(EqDataType    opt,
+void TINS3DT4S::setInput(EType         opt,
                          Vect<real_t>& u)
 {
    Equa::setInput(opt,u);
-   if (opt==PRESSURE_FIELD) {
+   if (opt==EType::PRESSURE) {
       _p = &u;
       getPressure();
       updateVelocity();
@@ -354,15 +354,16 @@ void TINS3DT4S::updateVelocity()
    MESH_EL {
       set(the_element);
       ElementNodeVector(*_u,_eu);
-      LocalVect<real_t,3> qe(the_element,_q,1);
+      LocalVect<real_t,4> qe(the_element,_q,1);
       Point<real_t> dp = _c24*(qe[0]*_dSh[0]+qe[1]*_dSh[1]+qe[2]*_dSh[2]+qe[3]*_dSh[3]);
       for (size_t i=0; i<4; ++i) {
          size_t n = _en[i];
-         if ((*_theMesh)[n]->getCode(1)==0)
+         Node *nd = (*_theMesh)[n];
+         if (nd->getCode(1)==0)
             (*_u)(n,1) -= dp.x/_MM(n);
-         if ((*_theMesh)[n]->getCode(2)==0)
+         if (nd->getCode(2)==0)
             (*_u)(n,2) -= dp.y/_MM(n);
-         if ((*_theMesh)[n]->getCode(3)==0)
+         if (nd->getCode(3)==0)
             (*_u)(n,3) -= dp.z/_MM(n);
       }
    }

@@ -86,11 +86,11 @@ void DC1DL2::set(const Element* el)
 }
 
 
-void DC1DL2::setInput(EqDataType    opt,
+void DC1DL2::setInput(EType         opt,
                       Vect<real_t>& u)
 {
    Equa::setInput(opt,u);
-   if (opt==VELOCITY_FIELD)
+   if (opt==EType::VELOCITY)
       _vel = &u;
 }
 

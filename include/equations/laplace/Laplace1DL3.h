@@ -104,8 +104,8 @@ public :
  *  @param [in] lr Option to choose location of the traction (<tt>-1</tt>: Left end, 
  *  <tt>1</tt>: Right end)
  */
-    void setTraction(real_t f,
-                     int    lr);
+    void setNeumann1D(real_t f,
+                      int    lr);
 
 private:
    LocalVect<Point<real_t>,3> _dSh[3];

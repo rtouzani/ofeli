@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
  
 //    Define the optimization problem and choose the optimization algorithm
       Opt3 opt(ms);
-      opt.getEquation()->setInput(SOURCE,f);
+      opt.getEquation()->setSource(f);
       OptSolver os(opt,u);
       os.setOptMethod(OptSolver::GRADIENT);
 

@@ -69,7 +69,17 @@ message (STATUS "Building release ${PROJECT_NAME}-${OFELI_VERSION}, ${OFELI_VERS
 
 set (CMAKE_BUILD_TYPE "Release")
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set (CMAKE_CXX_STANDARD 11)
+
+# Compiler specific flags
+if (CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstrict-aliasing")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-overflow")
+endif(CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
+
 enable_testing ()
 
 option (BUILD_TESTS "Build test programs" OFF)

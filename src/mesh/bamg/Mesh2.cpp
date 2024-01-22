@@ -185,13 +185,11 @@ TriangleAdjacent CloseBoundaryEdge(I2        A,
                                    double&   b)
 {
    int k=(*t)(0) ? (((*t)(1) ? ((*t)(2) ? -1 : 2) : 1)) : 0;
-   int dir=0, kkk=0;
+   int dir=0;
    assert(k>=0);
    Icoor2 IJ_IA, IJ_AJ;
    TriangleAdjacent edge(t,OppositeEdge[k]);          
    for (;;edge = dir >0 ? Next(Adj(Next(edge))) : Previous(Adj(Previous(edge)))) {
-      assert(kkk<1000);      
-      kkk++;
       Vertex &vI=*edge.EdgeVertex(0);
       Vertex &vJ=*edge.EdgeVertex(1);
       I2 I=vI, J=vJ, IJ= J-I;

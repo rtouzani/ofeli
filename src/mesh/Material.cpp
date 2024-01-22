@@ -80,7 +80,7 @@ void Material::scanXML()
    for (size_t i=0; i<_nb_mat; i++) {
       string file = _path + PATH_SEP;
       file += _mat[i] + MATERIAL_EXT;
-      XMLParser p(file,XMLParser::MATERIAL);
+      XMLParser p(file,EType::MATERIAL);
       p.setMaterialNumber(i);
       p.getMaterial();
    }
@@ -106,7 +106,7 @@ int Material::set(int           m,
          if (ifstream(file.c_str()).fail())
             file = _mat[_nb_mat] + MATERIAL_EXT;
       }
-      XMLParser p(file,XMLParser::MATERIAL);
+      XMLParser p(file,EType::MATERIAL);
       p.setMaterialNumber(_nb_mat);
       p.getMaterial();
    }

@@ -50,7 +50,8 @@ NSP2DQ41::NSP2DQ41(Mesh& ms)
    setSolver(DIRECT_SOLVER);
    _equation_name = "Navier-Stokes";
    _finite_element = "2-D, 4-Node Quadrilaterals (Q1/P0), Penalty";
-   _terms = VISCOSITY|DILATATION|BODY_FORCE|TRACTION;
+   _terms = int(PDE_Terms::VISCOSITY)|int(PDE_Terms::DILATATION)|int(PDE_Terms::BODY_RHS)|
+            int(PDE_Terms::BOUNDARY_RHS);
 }
 
 
@@ -65,8 +66,8 @@ NSP2DQ41::NSP2DQ41(Mesh&         ms,
    setSolver(DIRECT_SOLVER);
    _equation_name = "Navier-Stokes";
    _finite_element = "2-D, 4-Node Quadrilaterals (Q1/P0), Penalty";
-   _terms = VISCOSITY|DILATATION|BODY_FORCE|TRACTION;
-   _terms = MASS|VISCOSITY|DILATATION;
+   _terms = int(PDE_Terms::MASS)|int(PDE_Terms::VISCOSITY)|int(PDE_Terms::DILATATION)|
+            int(PDE_Terms::BODY_RHS)|int(PDE_Terms::BOUNDARY_RHS);
 }
 
 
@@ -122,11 +123,11 @@ void NSP2DQ41::set(const Side *sd)
 }
 
 
-void NSP2DQ41::setInput(EqDataType    opt,
+void NSP2DQ41::setInput(EType         opt,
                         Vect<real_t>& u)
 {
    Equa::setInput(opt,u);
-   if (opt==PRESSURE_FIELD)
+   if (opt==EType::PRESSURE)
       _p = &u;
 }
 
@@ -351,15 +352,15 @@ void NSP2DQ41::build()
    MESH_EL {
       set(the_element);
       ElementNodeVector(*_u,_eu);
-      if (_terms&MASS)
+      if (_terms&int(PDE_Terms::MASS))
          LMass(1./theTimeStep);
-      if (_terms&DILATATION)
+      if (_terms&int(PDE_Terms::DILATATION))
          Penal(1.e04);
-      if (_terms&VISCOSITY)
+      if (_terms&int(PDE_Terms::VISCOSITY))
          Viscous();
-      if (_terms&CONVECTION)
+      if (_terms&int(PDE_Terms::CONVECTION))
          RHS_Convection();
-      if (_terms&BODY_FORCE && Equa::_bf!=nullptr)
+      if (_terms&int(PDE_Terms::BODY_RHS) && Equa::_bf!=nullptr)
          BodyRHS(*Equa::_bf);
       Equation<4,8,2,4>::updateBC(The_element,Equa::_bc);
       Equa::_A->Assembly(The_element,eMat.get());
@@ -368,7 +369,7 @@ void NSP2DQ41::build()
    MESH_SD {
       set(the_side);
       ElementSideVector(*_u,_su);
-      if (_terms&TRACTION && Equa::_sf!=nullptr)
+      if (_terms&int(PDE_Terms::BOUNDARY_RHS) && Equa::_sf!=nullptr)
          BoundaryRHS(*Equa::_sf);
       Equa::_b->Assembly(The_side,sRHS.get());
    }

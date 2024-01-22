@@ -16,5 +16,5 @@ var classOFELI_1_1LinearPDE2D =
     [ "Mat_02", "classOFELI_1_1LinearPDE2D.html#a756f5281194ff251a1075dab291d3242", null ],
     [ "Mat_10", "classOFELI_1_1LinearPDE2D.html#af65bbe8759394b7dfef8632497d58cc7", null ],
     [ "Mat_20", "classOFELI_1_1LinearPDE2D.html#ae50d5589e5602e03884550b66e662838", null ],
-    [ "setInput", "classOFELI_1_1LinearPDE2D.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+    [ "setInput", "classOFELI_1_1LinearPDE2D.html#affbdc0fae478891f2b9f63607004026f", null ]
 ];

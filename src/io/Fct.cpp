@@ -339,6 +339,10 @@ string Fct::getExpression() const
    return _expr;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//                           ASSOCIATED  FUNCTIONS                           //
+///////////////////////////////////////////////////////////////////////////////
+
 
 std::ostream& operator<<(std::ostream& s,
                          const Fct&    f)
@@ -355,6 +359,14 @@ std::ostream& operator<<(std::ostream& s,
    for (size_t i=1; i<f._nb_var; ++i)
       s << "," << f._var[i];
    s << ") = " << f._expr << std::endl;
+   return s;
+}
+
+
+Fct operator+(const Fct& f,
+              const Fct& g)
+{
+   Fct s;
    return s;
 }
 

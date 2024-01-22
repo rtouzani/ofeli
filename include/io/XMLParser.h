@@ -33,11 +33,13 @@
 #ifndef __XML_PARSER_H
 #define __XML_PARSER_H
 
+#include <map>
 #include <fstream>
 #include <string>
 #include <vector>
 using std::string;
 using std::vector;
+using std::map;
 
 #include "OFELI_Config.h"
 #include "io/xmlsp/xmlsp.h"
@@ -47,7 +49,11 @@ using std::vector;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-typedef std::pair<std::string,std::string> SString;
+typedef std::pair<string,string> SString;
+#define  IPF_TOKEN(s)  if (it!=tokens.end()) s = *it; break;
+#define  IPF_TOKENI(s) if (it!=tokens.end()) s = stoi(*it); break;
+#define  IPF_TOKENF(s) if (it!=tokens.end()) s = stof(*it); break;
+
 
 namespace OFELI {
 /*!
@@ -61,44 +67,43 @@ class IPF;
 class Domain;
 class Tabulation;
 
-
 class XMLParser : public Parser
 {
 
  public:
 
- enum {
-    DOMAIN_,
-    MESH_,
-    GRID,
-    VECTOR,
-    MATRIX,
-    PROJECT,
-    INPUT,
-    MATERIAL,
-    PRESCRIBE,
-    FUNCTION
- };
- enum { ASCII, BINARY };
+   enum {ASCII,BINARY};
+
+   enum class Tag {PROJECT, TITLE, AUTHOR, VERBOSE, OUTPUT, SAVE, PLOT, DOMAIN_FILE, MESH_FILE, INIT_FILE,
+                   RESTART_FILE, BC, BC_FILE, BF, BF_FILE, SF, SF_FILE, SAVE_FILE, PLOT_FILE, PRESCRIPTION_FILE, AUX_FILE,
+                   DENSITY, SPECIFIC_HEAT, THERMAL_CONDUCTIVITY, MELTING_TEMPERATURE, EVAPORATION_TEMPERATURE,
+                   THERMAL_EXPANSION, LATENT_HEAT_MELTING, LATENT_HEAT_EVAPORATION, DIELECTRIC_CONSTANT, 
+                   ELECTRIC_CONDUCTIVITY, ELECTRIC_RESISTIVITY, ELECTRIC_PERMITTIVITY, MAGNETIC_PERMEABILITY,
+                   POISSON_RATIO, RHO_CP, VISCOSITY, YOUNG_MODULUS, VECTOR, CODE, NB_DOF, ARRAY, DDOMAIN,
+                   VERTEX, LINE, CIRCLE, CONTOUR, HOLE, REQUIRED_VERTEX, REQUIRED_EDGE, RECTANGLE, SUBDOMAIN,
+                   MESH, NODES, ELEMENTS, SIDES, EDGES, TIME, NB_STEPS, TIME_STEP,
+                   MAX_TIME, NB_ITER, TOLERANCE, PARAMETER, INTEGER, DOUBLE, STRING, COMPLEX, VALUE, DOF,
+                   GRID, CONSTANT, EXPRESSION, MATERIAL, MATERIAL_CODE, DATA, MATRIX, NAME,
+                   PRESCRIPTION, SOLUTION, BOUNDARY_CONDITION, BODY_FORCE, POINT_FORCE, FLUX, INITIAL, FUNCTION, VARIABLE};
 
    XMLParser();
-   XMLParser(string file, int type=MESH_);
-   XMLParser(string file, Mesh& ms, int type=MESH_, int format=ASCII);
+   XMLParser(string file, EType type=EType::MESH);
+   XMLParser(string file, Mesh& ms, EType type=EType::MESH, int format=ASCII);
    XMLParser(string file, Grid& g, int format=ASCII);
    XMLParser(string file, Vect<real_t>& v, int format=ASCII);
    XMLParser(const XMLParser &p);
    ~XMLParser();
    void setMaterialNumber(int m);
-   int scan();
+   int scan(size_t k=1);
    int scan(vector<real_t>& t, int type);
    void setFile(string file);
    void set(Mesh& ms, int format=ASCII);
    void set(Grid& gr);
-   int get(EqDataType type, vector<PrescriptionPar>& p);
+   int get(EType type, vector<Prescription::PPar>& p);
    int get(Mesh& ms, int format=ASCII);
-   int get(Mesh& ms, vector<vector<real_t> >& v, string& name);
+   int get(Mesh& ms, vector<vector<real_t>>& v, string& name);
    int get(Mesh& ms, Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
-   int get(Grid& gr, vector<vector<real_t> >& v, string& name);
+   int get(Grid& gr, vector<vector<real_t>>& v, string& name);
    int get(Grid& gr, Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
    int get(Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
    int get(Vect<real_t>& v, const string& name);
@@ -117,12 +122,12 @@ class XMLParser : public Parser
    bool _is_opened, _is_closed, _set_mesh, _set_grid, _set_vector, _set_file;
    bool _set_prescription, _set_matrix, _set_domain, _prescription_opened, _compact, _value;
    real_t _x, _y, _z, _time, _sought_time, _val;
-   int _access, _type, _cm, _format, _var, _code, _rtype;
-   EqDataType _prescription_type;
+   int _access, _cm, _format, _var, _code, _rtype, _scan;
+   EType _type, _prescription_type, _old_type;
+   Prescription::PPar _par;
    string _file, _mesh_file, _vect_file, _el_shape, _sd_shape, _name, _sought_name, _tag_name, _xml, _mat;
    size_t _dof, _label, _nb_dof, _dim, _nb_nodes, _nb_elements, _nb_sides, _nb_edges, _tab_size, _vect_size;
-   bool _scan;
-   size_t _nb_el_nodes, _nb_sd_nodes, _nb_mat, _all_steps, _nb_funct , _nb_rows, _nb_cols;
+   size_t _nb_el_nodes, _nb_sd_nodes, _nb_mat, _all_steps, _nb_funct, _nb_rows, _nb_cols;
    size_t _ik1, _ik2, _dk1, _dk2, _ck, _mk, _pk, _dk, _nb_var, _nx, _ny, _nz, _nt;
    DOFSupport _dof_support;
    mutable Mesh *_theMesh;
@@ -133,10 +138,9 @@ class XMLParser : public Parser
    Domain *_theDomain;
    Tabulation *_theTabulation;
    Matrix<real_t> *_theMatrix;
-   PrescriptionPar _par;
-   vector<PrescriptionPar> *_vp;
+   vector<Prescription::PPar> *_vp;
    vector<real_t> *_ft;
-   vector<vector<real_t> > *_V;
+   vector<vector<real_t>> *_V;
    Fct _theFct;
 
    virtual bool on_tag_open(string tag_name, StringMap& attributes);
@@ -169,6 +173,95 @@ class XMLParser : public Parser
    void read_tab_data(const vector<string> &tokens, vector<string>::iterator &it);
    void read_matrix(const SString& ai);
    void read_matrix_data(const vector<string> &tokens, vector<string>::iterator &it);
+
+   map<string,Tag> _TS = {{"Project",Tag::PROJECT},
+                          {"title",Tag::TITLE},
+                          {"author",Tag::AUTHOR},
+                          {"verbose",Tag::VERBOSE},
+                          {"output",Tag::OUTPUT},
+                          {"domain_file",Tag::DOMAIN_FILE},
+                          {"mesh_file",Tag::MESH_FILE},
+                          {"init_file",Tag::INIT_FILE},
+                          {"restart_file",Tag::RESTART_FILE},
+                          {"bc",Tag::BC},
+                          {"bc_file",Tag::BC_FILE},
+                          {"bf",Tag::BF},
+                          {"bf_file",Tag::BF_FILE},
+                          {"sf",Tag::SF},
+                          {"sf_file",Tag::SF_FILE},
+                          {"save",Tag::SAVE},
+                          {"save_file",Tag::SAVE_FILE},
+                          {"plot",Tag::PLOT},
+                          {"plot_file",Tag::PLOT_FILE},
+                          {"prescription_file",Tag::PRESCRIPTION_FILE},
+                          {"aux_file",Tag::AUX_FILE},
+                          {"Density",Tag::DENSITY},
+                          {"SpecificHeat",Tag::SPECIFIC_HEAT},
+                          {"ThermalConductivity",Tag::THERMAL_CONDUCTIVITY},
+                          {"MeltingTemperature",Tag::MELTING_TEMPERATURE},
+                          {"EvaporationEemperature",Tag::EVAPORATION_TEMPERATURE},
+                          {"ThermalExpansion",Tag::THERMAL_EXPANSION},
+                          {"LatentHeatMelting",Tag::LATENT_HEAT_MELTING},
+                          {"LatentHeatEvaporation",Tag::LATENT_HEAT_EVAPORATION},
+                          {"DielectricConstant",Tag::DIELECTRIC_CONSTANT},
+                          {"ElectricConductivity",Tag::ELECTRIC_CONDUCTIVITY},
+                          {"ElectricResistivity",Tag::ELECTRIC_RESISTIVITY},
+                          {"ElectricPermittivity",Tag::ELECTRIC_PERMITTIVITY},
+                          {"MagneticPermeability",Tag::MAGNETIC_PERMEABILITY},
+                          {"PoissonRatio",Tag::POISSON_RATIO},
+                          {"RhoCp",Tag::RHO_CP},
+                          {"Viscosity",Tag::VISCOSITY},
+                          {"YoungModulus",Tag::YOUNG_MODULUS},
+                          {"Vector",Tag::VECTOR},
+                          {"code",Tag::CODE},
+                          {"nb_dof",Tag::NB_DOF},
+                          {"array",Tag::ARRAY},
+                          {"Domain",Tag::DDOMAIN},
+                          {"vertex",Tag::VERTEX},
+                          {"line",Tag::LINE},
+                          {"circle",Tag::CIRCLE},
+                          {"contour",Tag::CONTOUR},
+                          {"hole",Tag::HOLE},
+                          {"RequiredVertex",Tag::REQUIRED_VERTEX},
+                          {"RequiredEdge",Tag::REQUIRED_EDGE},
+                          {"rectangle",Tag::RECTANGLE},
+                          {"subdomain",Tag::SUBDOMAIN},
+                          {"Mesh",Tag::MESH},
+                          {"Nodes",Tag::NODES}, {"nodes",Tag::NODES},
+                          {"Elements",Tag::ELEMENTS}, {"elements",Tag::ELEMENTS},
+                          {"Sides",Tag::SIDES}, {"sides",Tag::SIDES},
+                          {"Edges",Tag::EDGES}, {"edges",Tag::EDGES},
+                          {"time",Tag::TIME},
+                          {"nb_steps",Tag::NB_STEPS},
+                          {"time_step",Tag::TIME_STEP},
+                          {"max_time",Tag::MAX_TIME},
+                          {"nb_iter",Tag::NB_ITER},
+                          {"tolerance",Tag::TOLERANCE},
+                          {"parameter",Tag::PARAMETER},
+                          {"int",Tag::INTEGER},
+                          {"double",Tag::DOUBLE},
+                          {"string",Tag::STRING},
+                          {"complex",Tag::COMPLEX},
+                          {"value",Tag::VALUE},
+                          {"dof",Tag::DOF},
+                          {"Grid",Tag::GRID},
+                          {"constant",Tag::CONSTANT},
+                          {"expression",Tag::EXPRESSION},
+                          {"Material",Tag::MATERIAL},
+                          {"material_code",Tag::MATERIAL_CODE},
+                          {"Data",Tag::DATA},
+                          {"Matrix",Tag::MATRIX},
+                          {"name",Tag::NAME},
+                          {"Prescription",Tag::PRESCRIPTION},
+                          {"Solution",Tag::SOLUTION},
+                          {"BoundaryCondition",Tag::BOUNDARY_CONDITION},
+                          {"BodyForce",Tag::BODY_FORCE}, {"Source",Tag::BODY_FORCE},
+                          {"PointForce",Tag::POINT_FORCE},
+                          {"Flux",Tag::FLUX}, {"Traction",Tag::FLUX}, {"BoundaryForce",Tag::FLUX},
+                          {"Initial",Tag::INITIAL},
+                          {"Function",Tag::FUNCTION},
+                          {"variable",Tag::VARIABLE}, {"Variable",Tag::VARIABLE}
+                         };
 };
 
 /*! @} End of Doxygen Groups */

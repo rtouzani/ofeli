@@ -98,67 +98,62 @@ void Elas3DH8::set(const Side* sd)
 
 void Elas3DH8::LMass(real_t coef)
 {
-   for (size_t i=1; i<=8; i++) {
-      _hexa->setLocal(_xl[i-1]);
+   for (size_t i=0; i<8; ++i) {
+      _hexa->setLocal(_xl[i]);
       real_t c = _rho*coef*_quad->getDet();
-      eA2(3*i-2,3*i-2) += c;
-      eA2(3*i-1,3*i-1) += c;
-      eA2(3*i  ,3*i  ) += c;
+      eA2(3*i+1,3*i+1) += c;
+      eA2(3*i+2,3*i+2) += c;
+      eA2(3*i+3,3*i+3) += c;
    }
 }
 
 
 void Elas3DH8::Deviator(real_t coef)
 {
-   real_t db11, db22, db33, db42, db43, db53;
    for (size_t k=0; k<8; ++k) {
       real_t c1 = coef*_wg[k]*_G;
       real_t c2 = 2*c1;
-      for (size_t j=1; j<=8; j++) {
-         db11 = c2*_dSh[8*(j-1)+k].x;
-         db22 = c2*_dSh[8*(j-1)+k].y;
-         db33 = c2*_dSh[8*(j-1)+k].z;
-         db42 = c1*_dSh[8*(j-1)+k].z;
-         db43 = c1*_dSh[8*(j-1)+k].y;
-         db53 = c1*_dSh[8*(j-1)+k].x;
-         for (size_t i=1; i<=8; i++) {
-            eA0(3*i-2,3*j-2) += _dSh[8*(i-1)+k].x*db11 + _dSh[8*(i-1)+k].z*db42 + _dSh[8*(i-1)+k].y*db43;
-            eA0(3*i-2,3*j-1) += _dSh[8*(i-1)+k].y*db53;
-            eA0(3*i-2,3*j  ) += _dSh[8*(i-1)+k].z*db53;
-            eA0(3*i-1,3*j-2) += _dSh[8*(i-1)+k].x*db43;
-            eA0(3*i-1,3*j-1) += _dSh[8*(i-1)+k].y*db22 + _dSh[8*(i-1)+k].z*db42 + _dSh[8*(i-1)+k].x*db53;
-            eA0(3*i-1,3*j  ) += _dSh[8*(i-1)+k].z*db43;
-            eA0(3*i  ,3*j-2) += _dSh[8*(i-1)+k].x*db42;
-            eA0(3*i  ,3*j-1) += _dSh[8*(i-1)+k].y*db42;
-            eA0(3*i  ,3*j  ) += _dSh[8*(i-1)+k].z*db33 + _dSh[8*(i-1)+k].y*db43 + _dSh[8*(i-1)+k].x*db53;
+      for (size_t j=0; j<8; ++j) {
+         real_t db11 = c2*_dSh[8*j+k].x, db22 = c2*_dSh[8*j+k].y;
+         real_t db33 = c2*_dSh[8*j+k].z, db42 = c1*_dSh[8*j+k].z;
+         real_t db43 = c1*_dSh[8*j+k].y, db53 = c1*_dSh[8*j+k].x;
+         for (size_t i=0; i<8; ++i) {
+            eA0(3*i+1,3*j+1) += _dSh[8*i+k].x*db11 + _dSh[8*i+k].z*db42 + _dSh[8*i+k].y*db43;
+            eA0(3*i+1,3*j+2) += _dSh[8*i+k].y*db53;
+            eA0(3*i+1,3*j+3) += _dSh[8*i+k].z*db53;
+            eA0(3*i+2,3*j+1) += _dSh[8*i+k].x*db43;
+            eA0(3*i+2,3*j+2) += _dSh[8*i+k].y*db22 + _dSh[8*i+k].z*db42 + _dSh[8*i+k].x*db53;
+            eA0(3*i+2,3*j+3) += _dSh[8*i+k].z*db43;
+            eA0(3*i+3,3*j+1) += _dSh[8*i+k].x*db42;
+            eA0(3*i+3,3*j+2) += _dSh[8*i+k].y*db42;
+            eA0(3*i+3,3*j+3) += _dSh[8*i+k].z*db33 + _dSh[8*i+k].y*db43 + _dSh[8*i+k].x*db53;
          }
       }
    }
+   eMat += eA0;
 }
 
 
 void Elas3DH8::Dilatation(real_t coef)
 {
-   real_t db11, db12, db13;
    for (size_t k=0; k<8; k++) {
       real_t c = coef*_wg[k]*_lambda;
-      for (size_t j=1; j<=8; j++) {
-         db11 = c*_dSh[8*(j-1)+k].x;
-         db12 = c*_dSh[8*(j-1)+k].y;
-         db13 = c*_dSh[8*(j-1)+k].z;
-         for (size_t i=1; i<=8; i++) {
-            eA0(3*i-2,3*j-2) += _dSh[8*(i-1)+k].x*db11;
-            eA0(3*i-2,3*j-1) += _dSh[8*(i-1)+k].x*db12;
-            eA0(3*i-2,3*j  ) += _dSh[8*(i-1)+k].x*db13;
-            eA0(3*i-1,3*j-2) += _dSh[8*(i-1)+k].y*db11;
-            eA0(3*i-1,3*j-1) += _dSh[8*(i-1)+k].y*db12;
-            eA0(3*i-1,3*j  ) += _dSh[8*(i-1)+k].y*db13;
-            eA0(3*i  ,3*j-2) += _dSh[8*(i-1)+k].z*db11;
-            eA0(3*i  ,3*j-1) += _dSh[8*(i-1)+k].z*db12;
-            eA0(3*i  ,3*j  ) += _dSh[8*(i-1)+k].z*db13;
+      for (size_t j=0; j<8; ++j) {
+         real_t db11 = c*_dSh[8*j+k].x, db12 = c*_dSh[8*j+k].y, db13 = c*_dSh[8*j+k].z;
+         for (size_t i=0; i<8; ++i) {
+            eA0(3*i+1,3*j+1) += _dSh[8*i+k].x*db11;
+            eA0(3*i+1,3*j+2) += _dSh[8*i+k].x*db12;
+            eA0(3*i+1,3*j+3) += _dSh[8*i+k].x*db13;
+            eA0(3*i+2,3*j+1) += _dSh[8*i+k].y*db11;
+            eA0(3*i+2,3*j+2) += _dSh[8*i+k].y*db12;
+            eA0(3*i+2,3*j+3) += _dSh[8*i+k].y*db13;
+            eA0(3*i+3,3*j+1) += _dSh[8*i+k].z*db11;
+            eA0(3*i+3,3*j+2) += _dSh[8*i+k].z*db12;
+            eA0(3*i+3,3*j+3) += _dSh[8*i+k].z*db13;
          }
       }
    }
+   eMat += eA0;
 }
 
 
@@ -166,15 +161,15 @@ void Elas3DH8::BodyRHS(const Vect<real_t>& f)
 {
    for (size_t k=0; k<8; ++k) {
       real_t fx = 0., fy = 0., fz = 0.;
-      for (size_t j=1; j<=8; j++) {
-         fx += _sh[8*(j-1)+k]*f((*_theElement)(j)->n(),1);
-         fy += _sh[8*(j-1)+k]*f((*_theElement)(j)->n(),2);
-         fz += _sh[8*(j-1)+k]*f((*_theElement)(j)->n(),3);
+      for (size_t j=0; j<8; ++j) {
+         fx += _sh[8*j+k]*f((*_theElement)(j+1)->n(),1);
+         fy += _sh[8*j+k]*f((*_theElement)(j+1)->n(),2);
+         fz += _sh[8*j+k]*f((*_theElement)(j+1)->n(),3);
       }
-      for (size_t i=1; i<=8; i++) {
-         eRHS(3*i-2) += _wg[k]*fx*_sh[8*(i-1)+k];
-         eRHS(3*i-1) += _wg[k]*fy*_sh[8*(i-1)+k];
-         eRHS(3*i  ) += _wg[k]*fz*_sh[8*(i-1)+k];
+      for (size_t i=0; i<8; ++i) {
+         eRHS(3*i+1) += _wg[k]*fx*_sh[8*i+k];
+         eRHS(3*i+2) += _wg[k]*fy*_sh[8*i+k];
+         eRHS(3*i+3) += _wg[k]*fz*_sh[8*i+k];
       }
    }
 }
@@ -184,15 +179,15 @@ void Elas3DH8::BodyRHS()
 {
    for (size_t k=0; k<8; ++k) {
       real_t fx = 0., fy = 0., fz = 0.;
-      for (size_t j=1; j<=8; j++) {
-         fx += _sh[8*(j-1)+k]*_ebf(3*j-2);
-         fy += _sh[8*(j-1)+k]*_ebf(3*j-1);
-         fz += _sh[8*(j-1)+k]*_ebf(3*j  );
+      for (size_t j=0; j<8; ++j) {
+         fx += _sh[8*j+k]*_ebf(3*j  );
+         fy += _sh[8*j+k]*_ebf(3*j+1);
+         fz += _sh[8*j+k]*_ebf(3*j+2);
       }
-      for (size_t i=1; i<=8; i++) {
-         eRHS(3*i-2) += _wg[k]*fx*_sh[8*(i-1)+k];
-         eRHS(3*i-1) += _wg[k]*fy*_sh[8*(i-1)+k];
-         eRHS(3*i  ) += _wg[k]*fz*_sh[8*(i-1)+k];
+      for (size_t i=0; i<8; ++i) {
+         eRHS(3*i+1) += _wg[k]*fx*_sh[8*i+k];
+         eRHS(3*i+2) += _wg[k]*fy*_sh[8*i+k];
+         eRHS(3*i+3) += _wg[k]*fz*_sh[8*i+k];
       }
    }
 }
@@ -200,10 +195,10 @@ void Elas3DH8::BodyRHS()
 
 void Elas3DH8::BoundaryRHS(const Vect<real_t>& f)
 {
-   for (size_t i=1; i<=4; i++) {
+   for (size_t i=0; i<4; ++i) {
       for (size_t k=1; k<=3; k++) {
-         if (_theSide->getCode(k) != CONTACT)
-            sRHS(3*(i-1)+k) += _el_geo.area*f(_theSide->n(),k);
+         if (_theSide->getCode(k+1) != CONTACT_BC)
+            sRHS(3*i+k) += _el_geo.area*f(_theSide->n(),k);
       }
    }
 }
@@ -213,7 +208,7 @@ void Elas3DH8::BoundaryRHS()
 {
    for (size_t i=0; i<4; ++i) {
       for (size_t k=1; k<=3; ++k) {
-         if (_theSide->getCode(k) != CONTACT)
+         if (_theSide->getCode(k) != CONTACT_BC)
             sRHS(3*i+k) += _el_geo.area*_ssf[k-1];
       }
    }

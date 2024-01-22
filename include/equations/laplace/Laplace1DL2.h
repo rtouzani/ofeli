@@ -108,16 +108,16 @@ class Laplace1DL2 : public Equa_Laplace<2,2,1,1> {
  *  @param [in] lr Option to choose location of the value (<tt>-1</tt>: Left end,
  *  <tt>1</tt>: Right end)
  */
-    void setBoundaryCondition(real_t f,
-                              int    lr);
+    void setBC1D(real_t f,
+                 int    lr);
 
 /** \brief Set Traction data
  *  @param [in] f Value of traction (Neumann boundary condition)
  *  @param [in] lr Option to choose location of the traction (<tt>-1</tt>: Left end, 
  *  <tt>1</tt>: Right end)
  */
-    void setTraction(real_t f,
-                     int    lr);
+    void setNeumann1D(real_t f,
+                      int    lr);
 
     
  private:

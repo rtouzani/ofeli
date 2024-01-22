@@ -67,7 +67,8 @@ int main(int argc, char *argv[])
 
 //    Read Mesh data
       Mesh ms(data.getMeshFile());
-      if (Verbosity > 5)
+
+//      if (Verbosity > 5)
          cout << ms;
 
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
@@ -81,7 +82,7 @@ int main(int argc, char *argv[])
       setBC(bc);
 
       HelmholtzBT3 eq(ms,u);
-      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setBoundaryCondition(bc);
       eq.set_omega(data.getString("omega"));
       eq.run();
 

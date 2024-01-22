@@ -67,49 +67,42 @@ namespace OFELI {
  */
 
 /*! \enum PDE_Terms
- * Enumerate variable that selects various terms in partial differential equations
+ * Enumerate class to select various terms in partial differential equations
  */
-enum PDE_Terms {
-   CONSISTENT_MASS     =  0x00001000,     /*!< Consistent mass term                    */
-   LUMPED_MASS         =  0x00002000,     /*!< Lumped mass term                        */
-   MASS                =  0x00002000,     /*!< Consistent mass term                    */
-   CAPACITY            =  0x00004000,     /*!< Consistent capacity term                */
-   CONSISTENT_CAPACITY =  0x00004000,     /*!< Consistent capacity term                */
-   LUMPED_CAPACITY     =  0x00008000,     /*!< Lumped capacity term                    */
-   VISCOSITY           =  0x00010000,     /*!< Viscosity term                          */
-   STIFFNESS           =  0x00020000,     /*!< Stiffness term                          */
-   DIFFUSION           =  0x00040000,     /*!< Diffusion term                          */
-   MOBILITY            =  0x00040000,     /*!< Mobility term                           */
-   CONVECTION          =  0x00080000,     /*!< Convection term                         */
-   DEVIATORIC          =  0x00100000,     /*!< Deviatoric term                         */
-   DILATATION          =  0x00200000,     /*!< Dilatational term                       */
-   ELECTRIC            =  0x00400000,     /*!< Electric term                           */
-   MAGNETIC            =  0x00800000,     /*!< Magnetic term                           */
-   LOAD                =  0x01000000,     /*!< Body load term                          */
-   HEAT_SOURCE         =  0x02000000,     /*!< Body heat source term                   */
-   BOUNDARY_TRACTION   =  0x04000000,     /*!< Boundary traction (pressure) term       */
-   HEAT_FLUX           =  0x08000000,     /*!< Boundary heat flux term                 */
-   CONTACT             =  0x10000000,     /*!< Signorini contact                       */
-   BUOYANCY            =  0x20000000,     /*!< Buoyancy force term                     */
-   LORENTZ_FORCE       =  0x40000000,     /*!< Lorentz force term                      */
-   DAMPING             =  0x80000000      /*!< Damping term                            */
-};
-
-
-/*! \enum GENERIC_PDE_Terms
- * Enumerate variable that selects various terms in a generic partial differential equation
- */
-enum GENERIC_PDE_Terms {
-   NOTERM       =  0x00000000,     /*!< No term (empty equation)                      */
-   L00          =  0x00001000,     /*!< 0th order in time and space, to LHS           */
-   L10          =  0x00002000,     /*!< 1st order in time, 0th order in space, to LHS */
-   L20          =  0x00004000,     /*!< 2nd order in time, 0th order in space, to LHS */
-   L01          =  0x00008000,     /*!< 0th order in time, 1st order in space, to LHS */
-   L02          =  0x00010000,     /*!< 0th order in time, 2nd order in space, to LHS */
-   L11          =  0x00020000,     /*!< 1st order in time, 1st order in space, to LHS */
-   BODY_RHS     =  0x00040000,     /*!< Given right-hand side on domain               */
-   BOUNDARY_RHS =  0x00080000,     /*!< Given right-hand side on boundary             */
-   NEUMANN      =  0x00008000,     /*!< Neumann boundary condition                    */
+enum class PDE_Terms : int {
+   NOTERM              = 0x00000000,     /*!< No term (empty equation)                      */
+   CONSISTENT_MASS     = 0x00000010,     /*!< Consistent mass (or capacity) term            */
+   CONSISTENT_CAPACITY = 0x00000010,     /*!< Consistent mass (or capacity) term            */
+   LUMPED_MASS         = 0x00000020,     /*!< Lumped mass (or capacity) term                */
+   MASS                = 0x00000020,     /*!< Lumped mass (or capacity) term                */
+   LUMPED_CAPACITY     = 0x00000020,     /*!< Lumped mass (or capacity) term                */
+   CAPACITY            = 0x00000020,     /*!< Lumped mass (or capacity) term                */
+   VISCOSITY           = 0x00000040,     /*!< Viscosity term                                */
+   STIFFNESS           = 0x00000080,     /*!< Stiffness term                                */
+   DIFFUSION           = 0x00000100,     /*!< Diffusion term                                */
+   MOBILITY            = 0x00000200,     /*!< Mobility term                                 */
+   CONVECTION          = 0x00000400,     /*!< Convection term                               */
+   DEVIATORIC          = 0x00000800,     /*!< Deviatoric term                               */
+   DILATATION          = 0x00001000,     /*!< Dilatational term                             */
+   ELECTRIC            = 0x00002000,     /*!< Electric term                                 */
+   MAGNETIC            = 0x00004000,     /*!< Magnetic term                                 */
+   BODY_RHS            = 0x00008000,     /*!< Body load term                                */
+   LOAD                = 0x00008000,     /*!< Body load term                                */
+   SOURCE              = 0x00008000,     /*!< Body load term                                */
+   BOUNDARY_RHS        = 0x00010000,     /*!< Given right-hand side on boundary             */
+   NEUMANN             = 0x00010000,     /*!< Given right-hand side on boundary             */
+   FLUX                = 0x00010000,     /*!< Given right-hand side on boundary             */
+   BOUNDARY_TRACTION   = 0x00010000,     /*!< Given right-hand side on boundary             */
+   CONTACT             = 0x00020000,     /*!< Signorini contact                             */
+   BUOYANCY            = 0x00040000,     /*!< Buoyancy force term                           */
+   LORENTZ_FORCE       = 0x00080000,     /*!< Lorentz force term                            */
+   DAMPING             = 0x00100000,     /*!< Damping term                                  */
+   L00                 = 0x00200000,     /*!< 0th order in time and space, to LHS           */
+   L10                 = 0x00400000,     /*!< 1st order in time, 0th order in space, to LHS */
+   L20                 = 0x00800000,     /*!< 2nd order in time, 0th order in space, to LHS */
+   L01                 = 0x01000000,     /*!< 0th order in time, 1st order in space, to LHS */
+   L02                 = 0x02000000,     /*!< 0th order in time, 2nd order in space, to LHS */
+   L11                 = 0x04000000      /*!< 1st order in time, 1st order in space, to LHS */
 };
 
 
@@ -117,12 +110,11 @@ enum GENERIC_PDE_Terms {
  * Selects Analysis type
  */
 enum Analysis {
-   STATIONARY         =  0,    /*!< Steady State analysis                         */
-   STEADY_STATE       =  0,    /*!< Steady state analysis                         */
-   TRANSIENT          =  1,    /*!< Transient problem                             */
-   TRANSIENT_ONE_STEP =  2,    /*!< Transient problem, perform only one time step */
-   OPTIMIZATION       =  3,    /*!< Optimization problem                          */
-   EIGEN              =  4     /*!< Eigenvalue problem                            */
+   STATIONARY, STEADY_STATE =  0,    /*!< Steady State analysis                         */
+   TRANSIENT                =  1,    /*!< Transient problem                             */
+   TRANSIENT_ONE_STEP       =  2,    /*!< Transient problem, perform only one time step */
+   OPTIMIZATION             =  3,    /*!< Optimization problem                          */
+   EIGEN                    =  4     /*!< Eigenvalue problem                            */
 };
 
 
@@ -130,20 +122,18 @@ enum Analysis {
  * Selects Time integration scheme
  */
 enum TimeScheme {
-   NONE               =  0,    /*!< No time integration scheme                    */ 
-   FORWARD_EULER      =  1,    /*!< Forward Euler scheme (Explicit)               */
-   BACKWARD_EULER     =  2,    /*!< Backward Euler scheme (Implicit)              */
-   CRANK_NICOLSON     =  3,    /*!< Crank-Nicolson scheme                         */
-   HEUN               =  4,    /*!< Heun scheme                                   */
-   NEWMARK            =  5,    /*!< Newmark scheme                                */
-   LEAP_FROG          =  6,    /*!< Leap Frog scheme                              */
-   ADAMS_BASHFORTH    =  7,    /*!< Adams-Bashforth scheme (2nd Order)            */
-   AB2                =  7,    /*!< Adams-Bashforth scheme (2nd Order)            */
-   RUNGE_KUTTA        =  8,    /*!< 4-th Order Runge-Kutta scheme (4th Order)     */
-   RK4                =  8,    /*!< 4-th Order Runge-Kutta scheme                 */
-   RK3_TVD            =  9,    /*!< 3-rd Order Runge-Kutta TVD scheme             */
-   BDF2               = 10,    /*!< Backward Difference Formula (2nd Order)       */
-   BUILTIN            = 11     /*!< Builtin scheme, implemented in equation class */
+   NONE                 =  0,    /*!< No time integration scheme                    */ 
+   FORWARD_EULER        =  1,    /*!< Forward Euler scheme (Explicit)               */
+   BACKWARD_EULER       =  2,    /*!< Backward Euler scheme (Implicit)              */
+   CRANK_NICOLSON       =  3,    /*!< Crank-Nicolson scheme                         */
+   HEUN                 =  4,    /*!< Heun scheme                                   */
+   NEWMARK              =  5,    /*!< Newmark scheme                                */
+   LEAP_FROG            =  6,    /*!< Leap Frog scheme                              */
+   ADAMS_BASHFORTH, AB2 =  7,    /*!< Adams-Bashforth scheme (2nd Order)            */
+   RUNGE_KUTTA, RK4     =  8,    /*!< 4-th Order Runge-Kutta scheme (4th Order)     */
+   RK3_TVD              =  9,    /*!< 3-rd Order Runge-Kutta TVD scheme             */
+   BDF2                 = 10,    /*!< Backward Difference Formula (2nd Order)       */
+   BUILTIN              = 11     /*!< Builtin scheme, implemented in equation class */
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -176,31 +166,31 @@ enum FEType {
 /*! \enum PDECoefType
  * Choose PDE Coefficient
  */
-enum PDECoefType {
-    C00                    =  0,   /*!    */
-    C10                    =  1,   /*!    */
-    C01                    =  2,   /*!    */
-    C20                    =  3,   /*!    */
-    C02                    =  4,   /*!    */
-    RHO                    =  5,   /*!    */
-    DENSITY                =  5,   /*!    */
-    CP                     =  6,   /*!    */
-    KAPPA                  =  7,   /*!    */
-    THERMAL_CONDUCTIVITY   =  7,   /*!    */
-    MU                     =  8,   /*!    */
-    DYNAMIC_VISCOSITY      =  8,   /*!    */
-    SIGMA                  =  9,   /*!    */
-    ELECTRIC_CONDUCTIVITY  =  9,   /*!    */
-    MMU                    = 10,   /*!    */
-    MAGNETIC_PERMEABILITY  = 10,   /*!    */
-    EPSILON                = 11,   /*!    */
-    ELECTRIC_PERMITTIVITY  = 11,   /*!    */
-    OMEGA                  = 12,   /*!    */
-    ANGULAR_FREQUENCY      = 12,   /*!    */
-    BETA                   = 13,   /*!    */
-    VV                     = 14,   /*!    */
-    YOUNG                  = 15,   /*!    */
-    POISSON                = 16    /*!    */
+enum class PDECoefType {
+    C00                   =  0,   /*!    */
+    C10                   =  1,   /*!    */
+    C01                   =  2,   /*!    */
+    C20                   =  3,   /*!    */
+    C02                   =  4,   /*!    */
+    RHO                   =  5,   /*!    */
+    DENSITY               =  5,   /*!    */
+    CP                    =  6,   /*!    */
+    KAPPA                 =  7,   /*!    */
+    THERMAL_CONDUCTIVITY  =  7,   /*!    */
+    DYNAMIC_VISCOSITY     =  8,   /*!    */
+    VISCOSITY             =  8,   /*!    */
+    SIGMA                 =  9,   /*!    */
+    ELECTRIC_CONDUCTIVITY =  9,   /*!    */
+    MMU                   = 10,   /*!    */
+    MAGNETIC_PERMEABILITY = 10,   /*!    */
+    EPSILON               = 11,   /*!    */
+    ELECTRIC_PERMITTIVITY = 11,   /*!    */
+    OMEGA                 = 12,   /*!    */
+    ANGULAR_FREQUENCY     = 12,   /*!    */
+    BETA                  = 13,   /*!    */
+    VV                    = 14,   /*!    */
+    YOUNG                 = 15,   /*!    */
+    POISSON               = 16    /*!    */
 };
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -338,6 +328,7 @@ class Equa
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     virtual void setWithConvection(int f);
     void setTerms(PDE_Terms t);
+    void setTerms(int t);
     void set_rho(string exp);
     void set_Cp(string exp);
     void set_kappa(string exp);
@@ -415,7 +406,7 @@ class Equa
 
 /// \brief Return time integration scheme
     TimeScheme getTimeIntegration() const;
-    
+
 /// \brief Return equation name
     string getEquationName() const;
 
@@ -424,17 +415,35 @@ class Equa
 
 /** \brief Set equation input data
  *  @param [in] opt Parameter that selects data type for input. This parameter
- *  is to be chosen in the enumerated variable EqDataType
+ *  is to be chosen in the enumerated variable EType
  *  @param [in] u Vect instance that contains input vector data
- *  List of data types contains <tt>INITIAL_FIELD</tt>, <tt>BOUNDARY_CONDITION_DATA</tt>, 
- *  <tt>SOURCE_DATA</tt> or <tt>FLUX</tt> with obvious meaning
+ *  List of data types contains <tt>INITIAL</tt>, <tt>BOUNDARY_CONDITION_DATA</tt>, 
+ *  <tt>BOUNDARY_FORCE</tt> or <tt>BODY_FORCE</tt> with obvious meaning
  */
 #if defined(USE_PETSC)
-    virtual void setInput(EqDataType     opt,
-                          PETScVect<real_t>& u);
+    virtual void setInput(EType opt, PETScVect<real_t>& u);
+    virtual void setBoundaryCondition(PETScVect<real_t>& u) {_bc = &u; }
+    virtual void setSolution(PETScVect<real_t>& u) { _u = &u; }
+    virtual void setInitial(PETScVect<real_t>& u) { _u = &u; }
+    virtual void setBodyForce(PETScVect<real_t>& u) { _bf = &u; _terms = (_terms|int(PDE_Terms::BODY_RHS)); }
+    virtual void setSource(PETScVect<real_t>& u) { _bf = &u; _terms = (_terms|int(PDE_Terms::BODY_RHS)); }
+    virtual void setBoundaryForce(PETScVect<real_t>& u) { _sf = &u; _terms = (_terms|int(PDE_Terms::BOUNDARY_RHS)); }
+    virtual void setFlux(PETScVect<real_t>& u) { _sf = &u; _terms = (_terms|int(PDE_Terms::BOUNDARY_RHS)); }
+    virtual void setTraction(PETScVect<real_t>& u) { _sf = &u; _terms = (_terms|int(PDE_Terms::BOUNDARY_RHS)); }
+    virtual void setPointForce(PETScVect<real_t>& u) { _pf = &u; }
 #else
-    virtual void setInput(EqDataType opt,
-                          Vect<real_t>&  u);
+    virtual void setInput(EType opt, Vect<real_t>& u);
+    virtual void setBoundaryCondition(Vect<real_t>& u) {_bc = &u; }
+    virtual void setDirichlet(Vect<real_t>& u) {_bc = &u; }
+    virtual void setSolution(Vect<real_t>& u) { _u = &u; }
+    virtual void setInitial(Vect<real_t>& u) { _u = &u; }
+    virtual void setBodyForce(Vect<real_t>& u) { _bf = &u; _terms = (_terms|int(PDE_Terms::BODY_RHS)); }
+    virtual void setSource(Vect<real_t>& u) { _bf = &u; _terms = (_terms|int(PDE_Terms::BODY_RHS)); }
+    virtual void setBoundaryForce(Vect<real_t>& u) { _sf = &u; _terms = (_terms|int(PDE_Terms::BOUNDARY_RHS)); }
+    virtual void setTraction(Vect<real_t>& u) { _sf = &u; _terms = (_terms|int(PDE_Terms::BOUNDARY_RHS)); }
+    virtual void setFlux(Vect<real_t>& u) { _sf = &u; _terms = (_terms|int(PDE_Terms::BOUNDARY_RHS)); }
+    virtual void setNeumann(Vect<real_t>& u) { _sf = &u; _terms = (_terms|int(PDE_Terms::BOUNDARY_RHS)); }
+    virtual void setPointForce(Vect<real_t>& u) { _pf = &u; }
 #endif
 
     void set(Prescription& p);
@@ -471,8 +480,8 @@ class Equa
    size_t                 _nb_nodes, _nb_sides, _nb_boundary_sides, _nb_el, _nb_eq, _nb_dof, _nb_dof_total;
    size_t                 _ngx, _ngy, _ngz;
    real_t                 _hx, _hy, _hz;
-   int                    _field_type, _terms;
-   int                    _gterms;
+   int                    _field_type;
+   int                    _terms;
    int                    _matrix_type, _solver, _max_it;
    size_t                 _nb_fields, _nb_eigv;
    EigenProblemSolver     _ev;
@@ -527,7 +536,6 @@ class Equa
    bool isConstantMesh() const;
    void setConstantMatrix();
    void setConstantMesh();
-   virtual void setTerms(int opt);
    void set_exprtk();
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };

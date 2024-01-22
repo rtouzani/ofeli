@@ -138,11 +138,8 @@ void FastMarching1DG::init()
 int FastMarching1DG::run()
 {
    init();
-   int nb = _Narrow.size();
    for (int n=0; n<_Narrow.size(); ++n) {
       _p = _Narrow[n];
-      if (_p->state==Pt::FROZEN)
-         nb--;
       _p->state = Pt::FROZEN;
       int ng = Neigs();
       for (int k=0; k<ng; ++k) {
@@ -151,13 +148,9 @@ int FastMarching1DG::run()
             if (_Narrow.find(_np)<0) {
                _np->state = Pt::ALIVE;
                _Narrow.insert(_np);
-               nb++;
             }
-            else {
-               if (_np->state!=Pt::FROZEN)
-                  nb--;
+            else
                _np->state = Pt::FROZEN;
-            }
          }
       }
    }

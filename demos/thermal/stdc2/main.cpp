@@ -75,9 +75,9 @@ int main(int argc, char *argv[])
          cout << "Reading boundary conditions, body and boundary forces ...\n";
 
       Vect<double> bc(ms), body_f(ms), bound_f(ms);
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(SOURCE,body_f);
-      p.get(FLUX,bound_f);
+      p.get(EType::BOUNDARY_CONDITION,bc);
+      p.get(EType::SOURCE,body_f);
+      p.get(EType::FLUX,bound_f);
 
 //    Read velocity for convection
       Vect<double> v(ms,NODE_DOF,2);
@@ -90,11 +90,12 @@ int main(int argc, char *argv[])
 
 //    Set equation features and choose solver
       DC2DT3 eq(ms,u);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(SOURCE,body_f);
-      eq.setInput(FLUX,bound_f);
-      eq.setInput(VELOCITY_FIELD,v);
-      eq.setTerms(DIFFUSION|CONVECTION);
+      eq.setBoundaryCondition(bc);
+      eq.setBodyForce(body_f);
+      eq.setFlux(bound_f);
+      eq.setInput(EType::VELOCITY,v);
+      eq.setTerms(PDE_Terms::DIFFUSION);
+      eq.setTerms(PDE_Terms::CONVECTION);
       eq.setSolver(GMRES_SOLVER,DILU_PREC);
       eq.run();
 

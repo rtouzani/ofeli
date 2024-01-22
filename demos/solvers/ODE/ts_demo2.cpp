@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
 // Instantiate equation class and declare used terms
    Elas2DT3 eq(ms);
-   eq.setTerms(LUMPED_MASS|DEVIATORIC|DILATATION);
+   eq.setTerms(int(PDE_Terms::LUMPED_MASS)|int(PDE_Terms::DEVIATORIC)|int(PDE_Terms::DILATATION));
 
 // Build the differential system
 // We use the Newmark scheme

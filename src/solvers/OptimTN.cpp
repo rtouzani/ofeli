@@ -122,7 +122,7 @@ int lmqnbc(OptSolver&          opt,
 
 // Initialize variables
    nb_obj_eval = 0;
-   int upd1=1, ireset=0, nmodif=0, nlincg=0, conv=0;
+   int upd1=1, nmodif=0, nlincg=0, conv=0;
    Vect<real_t> w[14];
    size_t n=x.size();
    for (size_t i=0; i<14; i++)
@@ -307,7 +307,6 @@ L40:
 
 //    Reset
 L110:
-      ++ireset;
 
 //    Initialize the sum of all the changes in x
       w[7] = w[4];

@@ -91,7 +91,7 @@ int DG::setGraph()
 {
    Vect<std::pair<size_t,size_t> > ij;
    MESH_EL {
-      _ne = theElementLabel;
+      _ne = element_label;
       for (size_t i=1; i<=_nb_el_dof; i++) {
          for (size_t j=1; j<=_nb_el_dof; j++)
             ij.push_back(RC(II(i),II(j)));
@@ -116,8 +116,8 @@ void DG::setDGLabel()
 {
    _g2l.resize(_theMesh->getNbElements());
    MESH_EL {
-      for (size_t i=1; i<=TheElement.getNbNodes(); i++)
-         _g2l[theElementLabel-1][TheElement(i)->n()-1] = i;
+      for (size_t i=1; i<=the_element->getNbNodes(); i++)
+         _g2l[element_label-1][The_element(i)->n()-1] = i;
    }
 }
 

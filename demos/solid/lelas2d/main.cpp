@@ -63,28 +63,24 @@ int main(int argc, char *argv[])
    try {
       if (Verbosity > 1)
          cout << "Reading mesh data ...\n";
-      Mesh ms(data.getMeshFile(1));
+      Mesh ms(data.getMeshFile(1),true);
       Prescription p(ms,data.getDataFile());
       if (Verbosity > 5)
          cout << ms;
 
 //    Read boundary conditions, body and boundary forces
-      Vect<double> u(ms), bc(ms), body_f(ms), bound_f(ms,2,BOUNDARY_SIDE_DOF);
-      p.get(BOUNDARY_CONDITION,bc,0);
-      if (Verbosity > 1)
-         cout << "Reading body forces ..." << endl;
-      p.get(BODY_FORCE,body_f);
+      Vect<double> u(ms), bound_f(ms,2,BOUNDARY_SIDE_DOF);
       if (Verbosity > 1)
          cout << "Reading Boundary Tractions ..." << endl;
-      p.get(TRACTION,bound_f,0);
+      p.getTraction(bound_f);
 
 //    Declare equation instance and solve
       if (Verbosity > 1)
          cout << "Setting and solving equation ...\n";
       Elas2DQ4 eq(ms,u);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(BODY_FORCE,body_f);
-      eq.setInput(TRACTION,bound_f);
+      eq.setBoundaryCondition(p.getBoundaryCondition());
+      eq.setBodyForce(p.getBodyForce());
+      eq.setTraction(bound_f);
       eq.run();
 
 //    Output and save solution

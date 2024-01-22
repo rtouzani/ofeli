@@ -230,20 +230,22 @@ Macros</h2></td></tr>
 <tr class="separator:gac0d139dec5249a2a733d3d1fd6e2e12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1252f53d07d9cec25e22d9acb3bdd84e" id="r_ga1252f53d07d9cec25e22d9acb3bdd84e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#ga1252f53d07d9cec25e22d9acb3bdd84e">TheEdge</a>&#160;&#160;&#160;(*theEdge)</td></tr>
 <tr class="separator:ga1252f53d07d9cec25e22d9acb3bdd84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19c27797de77ab1720d2f83695c9a7dc" id="r_ga19c27797de77ab1720d2f83695c9a7dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#ga19c27797de77ab1720d2f83695c9a7dc">ElementLoop</a>(m)&#160;&#160;&#160;for ((m).topElement(); (theElement=(m).getElement());)</td></tr>
+<tr class="memitem:ga19c27797de77ab1720d2f83695c9a7dc" id="r_ga19c27797de77ab1720d2f83695c9a7dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#ga19c27797de77ab1720d2f83695c9a7dc">ElementLoop</a>(m)&#160;&#160;&#160;for (auto const&amp; theElement: (m).theElements)</td></tr>
 <tr class="separator:ga19c27797de77ab1720d2f83695c9a7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd7f89be5e3e35cabd6566f3e2e71319" id="r_gadd7f89be5e3e35cabd6566f3e2e71319"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gadd7f89be5e3e35cabd6566f3e2e71319">ActiveElementLoop</a>(m)&#160;&#160;&#160;for ((m).topElement(); (theElement=(m).getActiveElement());)</td></tr>
-<tr class="separator:gadd7f89be5e3e35cabd6566f3e2e71319"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1b3c39568791f5a2b58466faea320c1" id="r_gaa1b3c39568791f5a2b58466faea320c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gaa1b3c39568791f5a2b58466faea320c1">SideLoop</a>(m)&#160;&#160;&#160;for ((m).topSide(); (theSide=(m).getSide());)</td></tr>
+<tr class="memitem:gaa1b3c39568791f5a2b58466faea320c1" id="r_gaa1b3c39568791f5a2b58466faea320c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gaa1b3c39568791f5a2b58466faea320c1">SideLoop</a>(m)&#160;&#160;&#160;for (auto const&amp; theSide: (m).theSides)</td></tr>
 <tr class="separator:gaa1b3c39568791f5a2b58466faea320c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4159792870600ca2a31534d5a19c6d3" id="r_gaf4159792870600ca2a31534d5a19c6d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gaf4159792870600ca2a31534d5a19c6d3">EdgeLoop</a>(m)&#160;&#160;&#160;for ((m).topEdge(); (theEdge=(m).getEdge());)</td></tr>
+<tr class="memitem:gaf4159792870600ca2a31534d5a19c6d3" id="r_gaf4159792870600ca2a31534d5a19c6d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gaf4159792870600ca2a31534d5a19c6d3">EdgeLoop</a>(m)&#160;&#160;&#160;for (auto const&amp; theEdge: (m).theEdges)</td></tr>
 <tr class="separator:gaf4159792870600ca2a31534d5a19c6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa6a948c148b19b713e86836f3b70182b" id="r_gaa6a948c148b19b713e86836f3b70182b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gaa6a948c148b19b713e86836f3b70182b">NodeLoop</a>(m)&#160;&#160;&#160;for ((m).topNode(); (theNode=(m).getNode());)</td></tr>
+<tr class="memitem:gaa6a948c148b19b713e86836f3b70182b" id="r_gaa6a948c148b19b713e86836f3b70182b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gaa6a948c148b19b713e86836f3b70182b">NodeLoop</a>(m)&#160;&#160;&#160;for (auto const&amp; theNode: (m).theNodes)</td></tr>
 <tr class="separator:gaa6a948c148b19b713e86836f3b70182b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad26c3b207bd26b1eb5279785170ccae7" id="r_gad26c3b207bd26b1eb5279785170ccae7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gad26c3b207bd26b1eb5279785170ccae7">BoundaryNodeLoop</a>(m)&#160;&#160;&#160;for ((m).topBoundaryNode(); (theNode=(m).getBoundaryNode());)</td></tr>
+<tr class="memitem:gad26c3b207bd26b1eb5279785170ccae7" id="r_gad26c3b207bd26b1eb5279785170ccae7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gad26c3b207bd26b1eb5279785170ccae7">BoundaryNodeLoop</a>(m)&#160;&#160;&#160;for (auto const&amp; theNode: (m).theBoundaryNodes)</td></tr>
 <tr class="separator:gad26c3b207bd26b1eb5279785170ccae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae880f748f6813a39287d6b5ef1eed813" id="r_gae880f748f6813a39287d6b5ef1eed813"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gae880f748f6813a39287d6b5ef1eed813">BoundarySideLoop</a>(m)&#160;&#160;&#160;for ((m).topBoundarySide(); (theSide=(m).getBoundarySide());)</td></tr>
+<tr class="memitem:gae880f748f6813a39287d6b5ef1eed813" id="r_gae880f748f6813a39287d6b5ef1eed813"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gae880f748f6813a39287d6b5ef1eed813">BoundarySideLoop</a>(m)&#160;&#160;&#160;for (auto const&amp; theSide: (m).theBoundarySides)</td></tr>
 <tr class="separator:gae880f748f6813a39287d6b5ef1eed813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b3d530cadc2ae26340c1176e953f7bd" id="r_ga7b3d530cadc2ae26340c1176e953f7bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#ga7b3d530cadc2ae26340c1176e953f7bd">ElementNodeLoop</a>(el,  nd)&#160;&#160;&#160;for (auto const&amp; nd: (el).theNodes)</td></tr>
+<tr class="separator:ga7b3d530cadc2ae26340c1176e953f7bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9dbbba985121c95914821dc4fc99905" id="r_gaf9dbbba985121c95914821dc4fc99905"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gaf9dbbba985121c95914821dc4fc99905">ElementSideLoop</a>(el,  sd)&#160;&#160;&#160;for (auto const&amp; sd: (el).theSides)</td></tr>
+<tr class="separator:gaf9dbbba985121c95914821dc4fc99905"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac0da7b0e4d7bc50b6715074046b8b14a" id="r_gac0da7b0e4d7bc50b6715074046b8b14a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Mesh.html#gac0da7b0e4d7bc50b6715074046b8b14a">theNodeLabel</a>&#160;&#160;&#160;theNode-&gt;n()</td></tr>
 <tr class="separator:gac0da7b0e4d7bc50b6715074046b8b14a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga96ea7be723f7ae3e2992c967dc5b25c8" id="r_ga96ea7be723f7ae3e2992c967dc5b25c8"><td class="memItemLeft" align="right" valign="top"><a id="ga96ea7be723f7ae3e2992c967dc5b25c8" name="ga96ea7be723f7ae3e2992c967dc5b25c8"></a>
@@ -402,27 +404,6 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Mesh management classes </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="gadd7f89be5e3e35cabd6566f3e2e71319" name="gadd7f89be5e3e35cabd6566f3e2e71319"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadd7f89be5e3e35cabd6566f3e2e71319">&#9670;&#160;</a></span>ActiveElementLoop</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ActiveElementLoop</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">m</td><td>)</td>
-          <td>&#160;&#160;&#160;for ((m).topElement(); (theElement=(m).getActiveElement());)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>A macro to loop on mesh active elements <em>m</em> : Instance of Mesh </p><dl class="section note"><dt>Note</dt><dd>: Each iteration updates the pointer <code>theElement</code> to current Element </dd>
-<dd>
-: This macro is necessary only if adaptive meshing is used </dd></dl>
-
-</div>
-</div>
 <a id="gad26c3b207bd26b1eb5279785170ccae7" name="gad26c3b207bd26b1eb5279785170ccae7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad26c3b207bd26b1eb5279785170ccae7">&#9670;&#160;</a></span>BoundaryNodeLoop</h2>
 
@@ -434,7 +415,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">m</td><td>)</td>
-          <td>&#160;&#160;&#160;for ((m).topBoundaryNode(); (theNode=(m).getBoundaryNode());)</td>
+          <td>&#160;&#160;&#160;for (auto const&amp; theNode: (m).theBoundaryNodes)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -453,7 +434,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">m</td><td>)</td>
-          <td>&#160;&#160;&#160;for ((m).topBoundarySide(); (theSide=(m).getBoundarySide());)</td>
+          <td>&#160;&#160;&#160;for (auto const&amp; theSide: (m).theBoundarySides)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -472,7 +453,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">m</td><td>)</td>
-          <td>&#160;&#160;&#160;for ((m).topEdge(); (theEdge=(m).getEdge());)</td>
+          <td>&#160;&#160;&#160;for (auto const&amp; theEdge: (m).theEdges)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -491,11 +472,81 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">m</td><td>)</td>
-          <td>&#160;&#160;&#160;for ((m).topElement(); (theElement=(m).getElement());)</td>
+          <td>&#160;&#160;&#160;for (auto const&amp; theElement: (m).theElements)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>A macro to loop on mesh elements <em>m</em> : Instance of Mesh </p><dl class="section note"><dt>Note</dt><dd>: Each iteration updates the pointer <code>theElement</code> to current Element </dd></dl>
+
+</div>
+</div>
+<a id="ga7b3d530cadc2ae26340c1176e953f7bd" name="ga7b3d530cadc2ae26340c1176e953f7bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7b3d530cadc2ae26340c1176e953f7bd">&#9670;&#160;</a></span>ElementNodeLoop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ElementNodeLoop</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">el, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">nd&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;for (auto const&amp; nd: (el).theNodes)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A macro to loop on element nodes </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">el</td><td>Instance of Element </td></tr>
+    <tr><td class="paramname">nd</td><td>Pointer to pointed node </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf9dbbba985121c95914821dc4fc99905" name="gaf9dbbba985121c95914821dc4fc99905"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf9dbbba985121c95914821dc4fc99905">&#9670;&#160;</a></span>ElementSideLoop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ElementSideLoop</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">el, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">sd&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;for (auto const&amp; sd: (el).theSides)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A macro to loop on element sides </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">el</td><td>Instance of Element </td></tr>
+    <tr><td class="paramname">nd</td><td>Pointer to pointed side </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -527,7 +578,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">m</td><td>)</td>
-          <td>&#160;&#160;&#160;for ((m).topNode(); (theNode=(m).getNode());)</td>
+          <td>&#160;&#160;&#160;for (auto const&amp; theNode: (m).theNodes)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -546,7 +597,7 @@ ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">m</td><td>)</td>
-          <td>&#160;&#160;&#160;for ((m).topSide(); (theSide=(m).getSide());)</td>
+          <td>&#160;&#160;&#160;for (auto const&amp; theSide: (m).theSides)</td>
         </tr>
       </table>
 </div><div class="memdoc">

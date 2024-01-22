@@ -53,10 +53,10 @@ int main(int argc, char *argv[])
 //    Declare problem data (matrix, rhs, boundary conditions, body forces)
       f.set("(16*pi*pi+x)*sin(4*pi*x)");
       LinearPDE1D eq(ms,u);
-      eq.setPDECoef(C02,1.);
-      eq.setPDECoef(C00,"x");
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(SOURCE,f);
+      eq.setPDECoef(PDECoefType::C02,1.);
+      eq.setPDECoef(PDECoefType::C00,"x");
+      eq.setDirichlet(bc);
+      eq.setBodyForce(f);
 
 //    Solve problem
       eq.run();

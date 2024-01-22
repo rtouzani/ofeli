@@ -55,7 +55,7 @@ Tabulation::~Tabulation() { }
 
 void Tabulation::setFile(string file)
 {
-   XMLParser p(file,XMLParser::FUNCTION);
+   XMLParser p(file,EType::FUNCTION);
    p.get(*this);
 }
 

@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
       SteklovPoincare2DBE eq(ms,u);
 
 //    Prescribe normal derivative on boundary as data
-      eq.setInput(BOUNDARY_CONDITION,g);
+      eq.setBoundaryCondition(g);
 
 //    Solve problem
       eq.run();

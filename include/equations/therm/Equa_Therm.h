@@ -108,7 +108,7 @@ class Equa_Therm : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 /// \details Constructs an empty equation.
     Equa_Therm()
     {
-       _terms = DIFFUSION;
+       _terms = int(PDE_Terms::DIFFUSION);
        _analysis = STEADY_STATE;
        _TimeInt.scheme = NONE;
        _rho_is_set = _cp_is_set = _conductivity_is_set = false;
@@ -165,7 +165,7 @@ class Equa_Therm : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
        real_t dti = 1./Equa::_TimeInt.delta;
        if (Equa::_A==nullptr && !matrix_set) {
           Equa::setMatrixType(SPARSE);
-          if (_terms&CONVECTION)
+          if (_terms&int(PDE_Terms::CONVECTION))
              Equa::setSolver(BICG_STAB_SOLVER,DILU_PREC);
           else
              Equa::setSolver(CG_SOLVER,DILU_PREC);
@@ -180,13 +180,13 @@ class Equa_Therm : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 
        MESH_EL {
           set(the_element);
-          if (_terms&CAPACITY)
+          if (_terms&int(PDE_Terms::CAPACITY))
              Capacity();
-          if (_terms&LUMPED_CAPACITY)
+          if (_terms&int(PDE_Terms::LUMPED_CAPACITY))
              LCapacity();
-          if (_terms&DIFFUSION)
+          if (_terms&int(PDE_Terms::DIFFUSION))
              Diffusion();
-          if (_terms&CONVECTION)
+          if (_terms&int(PDE_Terms::CONVECTION))
              Convection();
           if (_TimeInt.scheme==BACKWARD_EULER)
              eMat = dti*eA1 + eA0;
@@ -233,15 +233,15 @@ class Equa_Therm : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
     {
        MESH_EL {
           set(the_element);
-          if (_terms&CAPACITY)
+          if (_terms&int(PDE_Terms::CAPACITY))
              Capacity();
-          if (_terms&LUMPED_CAPACITY)
+          if (_terms&int(PDE_Terms::LUMPED_CAPACITY))
              LCapacity();
-          if (_terms&DIFFUSION)
+          if (_terms&int(PDE_Terms::DIFFUSION))
              Diffusion();
-          if (_terms&CONVECTION)
+          if (_terms&int(PDE_Terms::CONVECTION))
              Convection();
-          if (_terms&SOURCE && Equa::_bf!=nullptr)
+          if (_terms&int(PDE_Terms::SOURCE) && Equa::_bf!=nullptr)
              BodyRHS(*Equa::_bf);
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get());
        }
@@ -249,7 +249,7 @@ class Equa_Therm : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
           MESH_SD {
              if (The_side.isReferenced()) {
                 set(the_side);
-                if (_terms&FLUX && Equa::_sf!=nullptr)
+                if (_terms&int(PDE_Terms::FLUX) && Equa::_sf!=nullptr)
                    BoundaryRHS(*Equa::_sf);
                 s.SAssembly(The_side,sRHS.get());
              }
@@ -265,12 +265,12 @@ class Equa_Therm : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
        MESH_EL {
           set(the_element);
           this->ElementVector(*Equa::_u);
-          if (_terms&CAPACITY)
+          if (_terms&int(PDE_Terms::CONSISTENT_CAPACITY))
              Capacity(1.);
-          if (_terms&LUMPED_CAPACITY)
+          if (_terms&int(PDE_Terms::LUMPED_CAPACITY))
              LCapacity(1.);
           Diffusion();
-          if (_terms&CONVECTION)
+          if (_terms&int(PDE_Terms::CONVECTION))
              Convection();
           e.Assembly(*_theElement,eA0.get(),eA1.get());
        }

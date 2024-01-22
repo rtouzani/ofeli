@@ -119,28 +119,15 @@ void getBamg(string file,
              Mesh&  mesh,
              size_t nb_dof)
 {
-   size_t  ii, jj, kk, k, nb_nodes, nb_elements, nb_sides, first_dof;
-   int     key;
-   Node    *nd;
-   Element *el;
-   Side    *sd;
+   size_t ii, jj, kk, k, nb_nodes, nb_elements, nb_sides, first_dof;
+   int key;
    Point<real_t> x;
    string ww;
-   static int mark;
    int code[MAX_NBDOF_NODE];
-   vector<string> kw;
-   kw.push_back("End$");
-   kw.push_back("MeshVer$sionFormatted");
-   kw.push_back("Dimension$");
-   kw.push_back("Vertices$");
-   kw.push_back("Edges$");
-   kw.push_back("Triangles$");
-   kw.push_back("SubDomain$FromMesh");
-   kw.push_back("VertexOnGeometricVertex$");
-   kw.push_back("VertexOnGeometricEdge$");
-   kw.push_back("EdgeOnGeometricEdge$");
-   kw.push_back("Identifier$");
-   kw.push_back("Geometry$");
+   static vector<string> kw {"End$","MeshVer$sionFormatted","Dimension$","Vertices$","Edges$",
+                             "Triangles$","SubDomain$FromMesh","VertexOnGeometricVertex$",
+                             "VertexOnGeometricEdge$","EdgeOnGeometricEdge$","Identifier$",
+                             "Geometry$","End$"};
 
    mesh.setDim(2);
    FFI ff(file);
@@ -174,10 +161,10 @@ void getBamg(string file,
                x.x = ff.getD();
                x.y = ff.getD();
                x.z = 0.;
-               mark = ff.getI();
+               int mark = ff.getI();
                if (mark<0)
                   mark = 0;
-               nd = new Node(i+1,x);
+               Node *nd = new Node(i+1,x);
                nd->setNbDOF(nb_dof);
                for (size_t j=0; j<nb_dof; ++j)
                   if (code[j]<0)
@@ -195,13 +182,13 @@ void getBamg(string file,
             for (size_t n=0; n<nb_sides; ++n) {
                ii = ff.getI();
                jj = ff.getI();
-               mark = ff.getI();
-               sd = new Side(n+1,LINE);
+               int mark = ff.getI();
+               Side *sd = new Side(n+1,LINE);
                sd->Add(mesh[ii]);
                sd->Add(mesh[jj]);
                DOFCode(mark,nb_dof,code);
                sd->setNbDOF(nb_dof);
-               for (size_t i=0; i<nb_dof; i++)
+               for (size_t i=0; i<nb_dof; ++i)
                   sd->setCode(i+1,code[i]);
                mesh.Add(sd);
             }
@@ -210,12 +197,12 @@ void getBamg(string file,
 //       Triangles
          case 5:
             nb_elements = ff.getI();
-            for (size_t n=0; n<nb_elements; ++n) {
+            for (size_t n=1; n<=nb_elements; ++n) {
                ii = ff.getI();
                jj = ff.getI();
                kk = ff.getI();
                code[0] = ff.getI();
-               el = new Element(n+1,TRIANGLE,code[0]);
+               Element *el = new Element(n,TRIANGLE,code[0]);
                el->Add(mesh[ii]);
                el->Add(mesh[jj]);
                el->Add(mesh[kk]);
@@ -291,15 +278,14 @@ void getEasymesh(string file,
    Node        *nd;
    Element     *el;
    Side        *sd;
-   ifstream    ef, nf, sf;
 
-   nf.open((file+".n").c_str());
+   ifstream nf((file+".n").c_str());
    if (nf.fail())
       throw OFELIException("getEasyMesh(...): File " + file + ".n not found.");
-   ef.open((file+".e").c_str());
+   ifstream ef((file+".e").c_str());
    if (ef.fail())
       throw OFELIException("getEasyMesh(...): File " + file + ".e not found.");
-   sf.open((file+".s").c_str());
+   ifstream sf((file+".s").c_str());
    if (sf.fail())
       throw OFELIException("getEasyMesh(...): File " + file + ".s not found.");
    i = 0;
@@ -721,7 +707,7 @@ void getGmsh(string file,
       throw OFELIException("getGmsh(...): Keyword Elements not found in file "+file);
    vector<El> elements, sides;
    El ell;
-   size_t nse=0, ne=0, ns=0;
+   size_t ne=0;
    if (format==2) {
       int tag[10];
       pf >> nb_elements;
@@ -749,7 +735,6 @@ void getGmsh(string file,
             if (tag[0]>10000) {
                int cd = tag[0] - 10000;
                if (cd>0) {
-                  ++ns;
                   ell.region = cd;
                   sides.push_back(ell);
                }
@@ -768,7 +753,6 @@ void getGmsh(string file,
          ell.dim = n[3];
          for (int k=0; k<n[6]; ++k) {
             pf >> n[7];
-            nse++;
             ell.shape = sh[n[5]-1];
             ell.nb_nodes = nb_en[n[5]-1];
             for (size_t i=0; i<ell.nb_nodes; ++i) {
@@ -787,7 +771,6 @@ void getGmsh(string file,
                elements.push_back(ell);
             }
             if (ell.dim==dim-1) {
-               ++ns;
                ell.region = 0;
                if (dim==1)
                   ell.region = Pcode[n[4]];

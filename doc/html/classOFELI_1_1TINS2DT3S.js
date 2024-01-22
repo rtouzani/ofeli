@@ -6,5 +6,5 @@ var classOFELI_1_1TINS2DT3S =
     [ "~TINS2DT3S", "classOFELI_1_1TINS2DT3S.html#ae48c1d7b75a5711a4ba2f7ab39f7ebcf", null ],
     [ "run", "classOFELI_1_1TINS2DT3S.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
     [ "runOneTimeStep", "classOFELI_1_1TINS2DT3S.html#a97ceb92f009f5eee1340388708fd5939", null ],
-    [ "setInput", "classOFELI_1_1TINS2DT3S.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+    [ "setInput", "classOFELI_1_1TINS2DT3S.html#affbdc0fae478891f2b9f63607004026f", null ]
 ];

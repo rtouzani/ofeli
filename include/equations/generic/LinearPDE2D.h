@@ -165,7 +165,7 @@ class LinearPDE2D : public Equa_LinearPDE<3,2>
  *  </ul>
  *  @param [in] u Vector containing input data
  */
-    void setInput(EqDataType    opt,
+    void setInput(EType         opt,
                   Vect<real_t>& u);
 
  private:

@@ -149,13 +149,13 @@ class Pres2DT3 : public Equa_Acoustics<3,3,2,2>
  *  <ul>
  *     <li><tt>INITIAL_FIELD</tt>: Initial temperature
  *     <li><tt>BOUNDARY_CONDITION_DATA</tt>: Boundary condition (Dirichlet)
- *     <li><tt>SOURCE_DATA</tt>: Heat source
- *     <li><tt>FLUX_DATA</tt>: Heat flux (Neumann boundary condition)
+ *     <li><tt>SOURCE</tt>: Heat source
+ *     <li><tt>FLUX</tt>: Heat flux (Neumann boundary condition)
  *     <li><tt>SPEED</tt>: Speed vector (for the convection term)
  *  </ul>
  *  @param [in] u Vector containing input data
  */
-    void setInput(EqDataType    opt,
+    void setInput(EType         opt,
                   Vect<real_t>& u);
 
  private:

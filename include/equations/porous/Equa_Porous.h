@@ -105,7 +105,7 @@ class Equa_Porous : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 /// \details Constructs an empty equation.
     Equa_Porous()
     {
-       _terms = MASS|MOBILITY;
+       _terms = int(PDE_Terms::MASS)|int(PDE_Terms::MOBILITY);
        _analysis = STEADY_STATE;
        _TimeInt.scheme = NONE;
        _phi_is_set = _permeability_is_set = false;
@@ -160,18 +160,18 @@ class Equa_Porous : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
     {
        MESH_EL {
           set(the_element);
-          if (_terms&MASS)
+          if (_terms&int(PDE_Terms::MASS))
              Mass();
-          if (_terms&MOBILITY)
+          if (_terms&int(PDE_Terms::MOBILITY))
              Mobility();
-          if (_terms&SOURCE && _bf)
+          if (_terms&int(PDE_Terms::SOURCE) && _bf!=nullptr)
              BodyRHS(*_bf);
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get());
        }
        MESH_SD {
           if (The_side.isReferenced()) {
              set(the_side);
-             if (_terms&FLUX && _bf)
+             if (_terms&int(PDE_Terms::FLUX) && _bf!=nullptr)
                 BoundaryRHS(*_bf);
              s.SAssembly(The_side,sRHS.get());
           }
@@ -186,7 +186,7 @@ class Equa_Porous : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
     {
        MESH_EL {
           set(the_element);
-          if (_terms&MASS)
+          if (_terms&int(PDE_Terms::MASS))
              Mass();
           Mobility();
           e.Assembly(The_element,eA0.get(),eA1.get());

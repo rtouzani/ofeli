@@ -46,7 +46,8 @@ Elas3DT4::Elas3DT4(Mesh& ms)
    _finite_element = "3-D, 4-Node tetrahedrals (P1)";
    setMatrixType(SPARSE|SYMMETRIC);
    setSolver(CG_SOLVER,DIAG_PREC);
-   _terms = DEVIATORIC|DILATATION|BODY_FORCE|TRACTION;
+   _terms = int(PDE_Terms::DEVIATORIC)|int(PDE_Terms::DILATATION)|int(PDE_Terms::BODY_RHS)|
+            int(PDE_Terms::BOUNDARY_RHS);
 }
 
 
@@ -58,7 +59,8 @@ Elas3DT4::Elas3DT4(Mesh&         ms,
    _finite_element = "3-D, 4-Node tetrahedrals (P1)";
    setMatrixType(SPARSE|SYMMETRIC);
    setSolver(CG_SOLVER,DIAG_PREC);
-   _terms = DEVIATORIC|DILATATION|BODY_FORCE|TRACTION;
+   _terms = int(PDE_Terms::DEVIATORIC)|int(PDE_Terms::DILATATION)|int(PDE_Terms::BODY_RHS)|
+            int(PDE_Terms::BOUNDARY_RHS);
 }
 
 
@@ -87,6 +89,7 @@ void Elas3DT4::set(const Element* el)
    _lambda = _poisson*_young/((1+_poisson)*(1-2*_poisson));
    _G = 0.5*_young/(1+_poisson);
    eA0 = 0, eA1 = 0, eA2 = 0;
+   eMat = 0;
    eRHS = 0;
 }
 
@@ -119,10 +122,10 @@ void Elas3DT4::Media(real_t E,
 void Elas3DT4::LMass(real_t coef)
 {
    real_t c = 0.5*coef*OFELI_TWELVETH*_el_geo.det*_rho;
-   for (size_t i=1; i<=4; i++) {
-      eA2(3*i-2,3*i-2) += c;
-      eA2(3*i-1,3*i-1) += c;
-      eA2(3*i  ,3*i  ) += c;
+   for (size_t i=0; i<4; ++i) {
+      eA2(3*i+1,3*i+1) += c;
+      eA2(3*i+2,3*i+2) += c;
+      eA2(3*i+3,3*i+3) += c;
    }
 }
 
@@ -130,49 +133,51 @@ void Elas3DT4::LMass(real_t coef)
 void Elas3DT4::Deviator(real_t coef)
 {
    real_t c=_G*_el_geo.det*coef;
-   for (size_t j=1; j<=4; j++) {
-      Point<real_t> db=c*_dSh[j-1];
-      for (size_t i=1; i<=4; i++) {
-         eA0(3*i-2,3*j-2) += 2*_dSh[i-1].x*db.x + _dSh[i-1].z*db.z + _dSh[i-1].y*db.y;
-         eA0(3*i-2,3*j-1) += _dSh[i-1].y*db.x;
-         eA0(3*i-2,3*j  ) += _dSh[i-1].z*db.x;
-         eA0(3*i-1,3*j-2) += _dSh[i-1].x*db.y;
-         eA0(3*i-1,3*j-1) += 2*_dSh[i-1].y*db.y + _dSh[i-1].z*db.z + _dSh[i-1].x*db.x;
-         eA0(3*i-1,3*j  ) += _dSh[i-1].z*db.y;
-         eA0(3*i  ,3*j-2) += _dSh[i-1].x*db.z;
-         eA0(3*i  ,3*j-1) += _dSh[i-1].y*db.z;
-         eA0(3*i  ,3*j  ) += 2*_dSh[i-1].z*db.z + _dSh[i-1].y*db.y + _dSh[i-1].x*db.x;
+   for (size_t j=0; j<4; ++j) {
+      Point<real_t> db=c*_dSh[j];
+      for (size_t i=0; i<4; ++i) {
+         eA0(3*i+1,3*j+1) += 2*_dSh[i].x*db.x + _dSh[i].z*db.z + _dSh[i].y*db.y;
+         eA0(3*i+1,3*j+2) += _dSh[i].y*db.x;
+         eA0(3*i+1,3*j+3) += _dSh[i].z*db.x;
+         eA0(3*i+2,3*j+1) += _dSh[i].x*db.y;
+         eA0(3*i+2,3*j+2) += 2*_dSh[i].y*db.y + _dSh[i].z*db.z + _dSh[i].x*db.x;
+         eA0(3*i+2,3*j+3) += _dSh[i].z*db.y;
+         eA0(3*i+3,3*j+1) += _dSh[i].x*db.z;
+         eA0(3*i+3,3*j+2) += _dSh[i].y*db.z;
+         eA0(3*i+3,3*j+3) += 2*_dSh[i].z*db.z + _dSh[i].y*db.y + _dSh[i].x*db.x;
       }
    }
+   eMat += eA0;
 }
 
 
 void Elas3DT4::Dilatation(real_t coef)
 {
    real_t c = _lambda*_el_geo.det*coef;
-   for (size_t j=1; j<=4; j++) {
-      for (size_t i=1; i<=4; i++) {
-         eA0(3*i-2,3*j-2) += c*_dSh[i-1].x*_dSh[j-1].x;
-         eA0(3*i-2,3*j-1) += c*_dSh[i-1].x*_dSh[j-1].y;
-         eA0(3*i-2,3*j  ) += c*_dSh[i-1].x*_dSh[j-1].z;
-         eA0(3*i-1,3*j-2) += c*_dSh[i-1].y*_dSh[j-1].x;
-         eA0(3*i-1,3*j-1) += c*_dSh[i-1].y*_dSh[j-1].y;
-         eA0(3*i-1,3*j  ) += c*_dSh[i-1].y*_dSh[j-1].z;
-         eA0(3*i  ,3*j-2) += c*_dSh[i-1].z*_dSh[j-1].x;
-         eA0(3*i  ,3*j-1) += c*_dSh[i-1].z*_dSh[j-1].y;
-         eA0(3*i  ,3*j  ) += c*_dSh[i-1].z*_dSh[j-1].z;
+   for (size_t j=0; j<4; ++j) {
+      for (size_t i=0; i<4; ++i) {
+         eA0(3*i+1,3*j+1) += c*_dSh[i].x*_dSh[j].x;
+         eA0(3*i+1,3*j+2) += c*_dSh[i].x*_dSh[j].y;
+         eA0(3*i+1,3*j+3) += c*_dSh[i].x*_dSh[j].z;
+         eA0(3*i+2,3*j+1) += c*_dSh[i].y*_dSh[j].x;
+         eA0(3*i+3,3*j+2) += c*_dSh[i].y*_dSh[j].y;
+         eA0(3*i+3,3*j+3) += c*_dSh[i].y*_dSh[j].z;
+         eA0(3*i+3,3*j+1) += c*_dSh[i].z*_dSh[j].x;
+         eA0(3*i+3,3*j+2) += c*_dSh[i].z*_dSh[j].y;
+         eA0(3*i+3,3*j+3) += c*_dSh[i].z*_dSh[j].z;
       }
    }
+   eMat += eA0;
 }
 
 
 void Elas3DT4::BodyRHS(const Vect<real_t>& f)
 {
    real_t c = 0.5*OFELI_TWELVETH*_el_geo.det;
-   for (size_t i=1; i<=4; ++i) {
-      eRHS(3*i-2) += c*f((*_theElement)(i)->n(),1);
-      eRHS(3*i-1) += c*f((*_theElement)(i)->n(),2);
-      eRHS(3*i  ) += c*f((*_theElement)(i)->n(),3);
+   for (size_t i=0; i<4; ++i) {
+      eRHS(3*i+1) += c*f((*_theElement)(i+1)->n(),1);
+      eRHS(3*i+2) += c*f((*_theElement)(i+1)->n(),2);
+      eRHS(3*i+3) += c*f((*_theElement)(i+1)->n(),3);
    }
 }
 
@@ -180,36 +185,36 @@ void Elas3DT4::BodyRHS(const Vect<real_t>& f)
 void Elas3DT4::BodyRHS()
 {
    real_t c = _el_geo.det/24.0;
-   for (size_t i=1; i<=4; ++i) {
-      eRHS(3*i-2) += c*_ebf(3*i-2);
-      eRHS(3*i-1) += c*_ebf(3*i-1);
-      eRHS(3*i  ) += c*_ebf(3*i  );
+   for (size_t i=0; i<4; ++i) {
+      eRHS(3*i+1) += c*_ebf(3*i  );
+      eRHS(3*i+2) += c*_ebf(3*i+1);
+      eRHS(3*i+3) += c*_ebf(3*i+2);
    }
 }
 
 
 void Elas3DT4::BoundaryRHS(const Vect<real_t>& f)
 {
-   for (size_t i=1; i<=3; ++i) {
-      if (_theSide->getCode(1) != CONTACT)
-         sRHS(3*i-2) += _el_geo.area*f(_theSide->n(),1);
-      if (_theSide->getCode(2) != CONTACT)
-         sRHS(3*i-1) += _el_geo.area*f(_theSide->n(),2);
-      if (_theSide->getCode(3) != CONTACT)
-         sRHS(3*i  ) += _el_geo.area*f(_theSide->n(),3);
+   for (size_t i=0; i<3; ++i) {
+      if (_theSide->getCode(1) != CONTACT_BC)
+         sRHS(3*i+1  ) += _el_geo.area*f(_theSide->n(),1);
+      if (_theSide->getCode(2) != CONTACT_BC)
+         sRHS(3*i+2) += _el_geo.area*f(_theSide->n(),2);
+      if (_theSide->getCode(3) != CONTACT_BC)
+         sRHS(3*i+3) += _el_geo.area*f(_theSide->n(),3);
    }
 }
 
 
 void Elas3DT4::BoundaryRHS()
 {
-   for (size_t i=1; i<=3; ++i) {
-      if (_theSide->getCode(1) != CONTACT)
-         sRHS(3*i-2) += _el_geo.area*_ssf[0];
-      if (_theSide->getCode(2) != CONTACT)
-         sRHS(3*i-1) += _el_geo.area*_ssf[1];
-      if (_theSide->getCode(3) != CONTACT)
-         sRHS(3*i  ) += _el_geo.area*_ssf[2];
+   for (size_t i=0; i<3; ++i) {
+      if (_theSide->getCode(1) != CONTACT_BC)
+         sRHS(3*i+1) += _el_geo.area*_ssf[0];
+      if (_theSide->getCode(2) != CONTACT_BC)
+         sRHS(3*i+2) += _el_geo.area*_ssf[1];
+      if (_theSide->getCode(3) != CONTACT_BC)
+         sRHS(3*i+3) += _el_geo.area*_ssf[2];
    }
 }
 

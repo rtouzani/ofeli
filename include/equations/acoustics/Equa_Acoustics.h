@@ -77,11 +77,11 @@ class Equa_Acoustics : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
    using Equa::setInput;
    using Equa::setTerms;
    using Equa::_u;
+   using Equa::_terms;
    using Equation<NEN_,NEE_,NSN_,NSE_>::setMaterialProperty;
    using Equation<NEN_,NEE_,NSN_,NSE_>::_theMesh;
    using Equation<NEN_,NEE_,NSN_,NSE_>::_theElement;
    using Equation<NEN_,NEE_,NSN_,NSE_>::_theSide;
-   using Equation<NEN_,NEE_,NSN_,NSE_>::_terms;
    using Equation<NEN_,NEE_,NSN_,NSE_>::_analysis;
    using Equation<NEN_,NEE_,NSN_,NSE_>::_TimeInt;
    using Equation<NEN_,NEE_,NSN_,NSE_>::_eu;
@@ -104,7 +104,7 @@ class Equa_Acoustics : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 /// \details Constructs an empty equation.
     Equa_Acoustics()
     {
-       _terms = DIFFUSION;
+       _terms = int(PDE_Terms::DIFFUSION);
        _analysis = TRANSIENT;
        _TimeInt.scheme = NONE;
     }
@@ -162,11 +162,11 @@ class Equa_Acoustics : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 
        MESH_EL {
           set(the_element);
-          if (_terms&MASS)
+          if (_terms&int(PDE_Terms::MASS))
              Mass();
-          if (_terms&LUMPED_MASS)
+          if (_terms&int(PDE_Terms::LUMPED_MASS))
              LMass();
-          if (_terms&DIFFUSION)
+          if (_terms&int(PDE_Terms::DIFFUSION))
              Diffusion();
           if (_TimeInt.scheme==BACKWARD_EULER)
              eMat = dti*eA1 + eA0;
@@ -213,13 +213,13 @@ class Equa_Acoustics : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
     {
        MESH_EL {
           set(the_element);
-          if (_terms&MASS)
+          if (_terms&int(PDE_Terms::MASS))
              Mass();
-          if (_terms&LUMPED_MASS)
+          if (_terms&int(PDE_Terms::LUMPED_MASS))
              LMass();
-          if (_terms&DIFFUSION)
+          if (_terms&int(PDE_Terms::DIFFUSION))
              Diffusion();
-          if (_terms&SOURCE && Equa::_bf!=nullptr)
+          if (_terms&int(PDE_Terms::SOURCE) && Equa::_bf!=nullptr)
              BodyRHS(*Equa::_bf);
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get());
        }
@@ -227,7 +227,7 @@ class Equa_Acoustics : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
           MESH_SD {
              if (The_side.isReferenced()) {
                 set(the_side);
-                if (_terms&FLUX && Equa::_sf!=nullptr)
+                if (_terms&int(PDE_Terms::FLUX) && Equa::_sf!=nullptr)
                    BoundaryRHS(*Equa::_sf);
                 s.SAssembly(The_side,sRHS.get());
              }
@@ -243,9 +243,9 @@ class Equa_Acoustics : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
        MESH_EL {
           set(the_element);
           this->ElementVector(*Equa::_u);
-          if (_terms&MASS)
+          if (_terms&int(PDE_Terms::MASS))
              Mass(1.);
-          if (_terms&LUMPED_MASS)
+          if (_terms&int(PDE_Terms::CONSISTENT_MASS))
              Mass(1.);
           Diffusion();
           e.Assembly(*_theElement,eA0.get(),eA1.get());
@@ -263,7 +263,7 @@ class Equa_Acoustics : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    real_t  _speed, _coef;
+   real_t _speed, _coef;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
 

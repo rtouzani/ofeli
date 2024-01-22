@@ -12,5 +12,5 @@ var classOFELI_1_1DC1DL2 =
     [ "Diffusion", "classOFELI_1_1DC1DL2.html#ac301bba6a75b942c88f797628c141e2c", null ],
     [ "Flux", "classOFELI_1_1DC1DL2.html#a3a400c339dbb1f35a8179cbc99ed2f29", null ],
     [ "LCapacity", "classOFELI_1_1DC1DL2.html#af02cfd6af8e4585dd9f17f97597136c5", null ],
-    [ "setInput", "classOFELI_1_1DC1DL2.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+    [ "setInput", "classOFELI_1_1DC1DL2.html#affbdc0fae478891f2b9f63607004026f", null ]
 ];

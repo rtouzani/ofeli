@@ -52,19 +52,18 @@ int main(int argc, char *argv[])
       Mesh ms(data.getMeshFile());
       Vect<double> bc(ms), bf(ms), u(ms);
       Prescription p(ms,data.getPrescriptionFile());
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(SOURCE,bf);
+      p.get(EType::BOUNDARY_CONDITION,bc);
 
 //    Instantiate equation, set terms, data and then solve equation
       LinearPDE2D eq(ms,u);
-      eq.setPDECoef(C02);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(SOURCE,bf);
+      eq.setPDECoef(PDECoefType::C02);
+      eq.setBoundaryCondition(bc);
+      eq.setBodyForce(bf);
       eq.run();
 
 //    Get analytical solution and compute error
       Vect<double> sol(ms);
-      p.get(SOLUTION,sol);
+      p.get(EType::SOLUTION,sol);
       cout << "L2-Error: " << (u-sol).Norm(WNORM2) << endl;
    } CATCH_EXCEPTION
    return EXIT_SUCCESS;

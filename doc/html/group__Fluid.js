@@ -19,7 +19,7 @@ var group__Fluid =
       [ "build", "classOFELI_1_1NSP2DQ41.html#a7740c7ab195c03ac140f1f75f633470f", null ],
       [ "Periodic", "classOFELI_1_1NSP2DQ41.html#af669369716d638f14a268133981dbb17", null ],
       [ "runOneTimeStep", "classOFELI_1_1NSP2DQ41.html#a97ceb92f009f5eee1340388708fd5939", null ],
-      [ "setInput", "classOFELI_1_1NSP2DQ41.html#af84606c2cecfcef03d6820a323ffbdcc", null ],
+      [ "setInput", "classOFELI_1_1NSP2DQ41.html#affbdc0fae478891f2b9f63607004026f", null ],
       [ "setPenalty", "classOFELI_1_1NSP2DQ41.html#aef525ad3a42dedd8346b084b3e303272", null ]
     ] ],
     [ "TINS2DT3S", "classOFELI_1_1TINS2DT3S.html", [
@@ -29,7 +29,7 @@ var group__Fluid =
       [ "~TINS2DT3S", "classOFELI_1_1TINS2DT3S.html#ae48c1d7b75a5711a4ba2f7ab39f7ebcf", null ],
       [ "run", "classOFELI_1_1TINS2DT3S.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
       [ "runOneTimeStep", "classOFELI_1_1TINS2DT3S.html#a97ceb92f009f5eee1340388708fd5939", null ],
-      [ "setInput", "classOFELI_1_1TINS2DT3S.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1TINS2DT3S.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ],
     [ "TINS3DT4S", "classOFELI_1_1TINS3DT4S.html", [
       [ "TINS3DT4S", "classOFELI_1_1TINS3DT4S.html#a6199e16135b509746a6b40773ab8c2e0", null ],
@@ -38,6 +38,6 @@ var group__Fluid =
       [ "~TINS3DT4S", "classOFELI_1_1TINS3DT4S.html#a557a93fc3a7a3e72dc95556446d26913", null ],
       [ "run", "classOFELI_1_1TINS3DT4S.html#a58e8be2db2660128e4e6456a9c981fb5", null ],
       [ "runOneTimeStep", "classOFELI_1_1TINS3DT4S.html#a97ceb92f009f5eee1340388708fd5939", null ],
-      [ "setInput", "classOFELI_1_1TINS3DT4S.html#af84606c2cecfcef03d6820a323ffbdcc", null ]
+      [ "setInput", "classOFELI_1_1TINS3DT4S.html#affbdc0fae478891f2b9f63607004026f", null ]
     ] ]
 ];

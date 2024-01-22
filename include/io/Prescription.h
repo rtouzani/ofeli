@@ -38,6 +38,8 @@
 #include "OFELI_Config.h"
 #include "io/Fct.h"
 
+using std::string;
+
 namespace OFELI {
 /*!
  *  \addtogroup OFELI
@@ -50,18 +52,6 @@ namespace OFELI {
 
 template <class T_> class Vect;
 class Mesh;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-struct PrescriptionPar {
-   size_t dof;
-   EqDataType type;
-   int code;
-   real_t x, y, z, t;
-   std::string fct;
-   bool bx, by, bz, bt;
-};
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
 
 /** \class Prescription
  *  \ingroup IO
@@ -78,6 +68,17 @@ class Prescription
 
  public:
 
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+   struct PPar {
+      EType type;
+      int code;
+      size_t dof;
+      real_t x, y, z, t;
+      string fct;
+      bool bx, by, bz, bt;
+   };
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
 /// Default constructor
     Prescription();
 
@@ -86,8 +87,8 @@ class Prescription
  *  @param [in] mesh Mesh instance
  *  @param [in] file Name of Prescription file
  */
-    Prescription(Mesh&              mesh,
-                 const std::string& file);
+    Prescription(Mesh&         mesh,
+                 const string& file);
 
 /// Destructor
     ~Prescription();
@@ -103,13 +104,13 @@ class Prescription
  *       The value <tt>SOURCE</tt> has the same effect.
  *    <li><tt>POINT_FORCE</tt>: Read values for pointwise forces
  *    <li><tt>CONTACT_DISTANCE</tt>: Read values for contact distance (for contact mechanics)
- *    <li><tt>INITIAL_FIELD</tt>: Read values for initial solution
+ *    <li><tt>INITIAL</tt>: Read values for initial solution
  *    <li><tt>SOLUTION</tt>: Read values for a solution vector
  *  @param [in,out] v Vect instance that is instantiated on input and filled on output
  *  @param [in] time Value of time for which data is read [Default: <tt>0</tt>].
  *  @param [in] dof DOF to store (Default is <tt>0</tt>: All DOFs are chosen).
  */
-    int get(EqDataType    type,
+    int get(EType         type,
             Vect<real_t>& v,
             real_t        time=0,
             size_t        dof=0);
@@ -130,9 +131,79 @@ class Prescription
  *  @param [in] time Value of time for which data is read [Default: <tt>0</tt>].
  *  @param [in] dof DOF to store (Default is <tt>0</tt>: All DOFs are chosen).
  */
-    Vect<real_t> &get(EqDataType type,
-                      real_t     time=0,
-                      size_t     dof=0);
+    Vect<real_t> &get(EType  type,
+                      real_t time=0,
+                      size_t dof=0);
+
+    Vect<real_t> &getBoundaryCondition(real_t time=0,
+                                       size_t dof=0);
+ 
+    void getBoundaryCondition(Vect<real_t>& v,
+                              real_t        time=0,
+                              size_t        dof=0);
+ 
+    Vect<real_t> &getDirichlet(real_t time=0,
+                               size_t dof=0);
+
+    void getDirichlet(Vect<real_t>& v,
+                      real_t        time=0,
+                      size_t        dof=0);
+
+     Vect<real_t> &getInitial(real_t time=0,
+                              size_t dof=0);
+ 
+     void getInitial(Vect<real_t>& v,
+                     real_t        time=0,
+                     size_t        dof=0);
+
+     Vect<real_t> &getSolution(real_t time=0,
+                               size_t dof=0);
+ 
+     void getSolution(Vect<real_t>& v,
+                      real_t        time=0,
+                      size_t        dof=0);
+ 
+    Vect<real_t> &getBodyForce(real_t time=0,
+                               size_t dof=0);
+ 
+    void getBodyForce(Vect<real_t>& v,
+                     real_t         time=0,
+                     size_t         dof=0);
+ 
+    Vect<real_t> &getBoundaryForce(real_t time=0,
+                                   size_t dof=0);
+ 
+    void getBoundaryForce(Vect<real_t>& v,
+                          real_t        time=0,
+                          size_t        dof=0);
+
+    Vect<real_t> &getTraction(real_t time=0,
+                              size_t dof=0);
+
+    void getTraction(Vect<real_t>& v,
+                     real_t        time=0,
+                     size_t        dof=0);
+
+    Vect<real_t> &getNeumann(real_t time=0,
+                             size_t dof=0);
+
+    void getNeumann(Vect<real_t>& v,
+                    real_t        time=0,
+                    size_t        dof=0);
+ 
+    Vect<real_t> &getFlux(real_t time=0,
+                          size_t dof=0);
+ 
+    void getFlux(Vect<real_t>& v,
+                 real_t        time=0,
+                 size_t        dof=0);
+
+    Vect<real_t> &getPointForce(real_t time=0,
+                                size_t dof=0);
+
+    void getPointForce(Vect<real_t>& v,
+                       real_t        time=0,
+                       size_t        dof=0);
 
  private:
 
@@ -142,17 +213,13 @@ class Prescription
    real_t _time;
    bool pforce, initial, bc, force, flux;
    std::string _file;
-   std::vector<PrescriptionPar> _p;
+   std::vector<PPar> _p;
    std::vector<Fct> _theFct;
    int Type(int type);
-   void get_point_force(size_t k);
    void get_point_force(size_t k, size_t dof);
    void get_boundary_condition(size_t k, size_t dof);
-   void get_boundary_condition(size_t k);
    void get_vector(size_t k, size_t dof);
-   void get_vector(size_t k);
    void get_boundary_force(size_t k, size_t dof);
-   void get_boundary_force(size_t k);
 };
 
 /*! @} End of Doxygen Groups */

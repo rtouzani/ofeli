@@ -808,9 +808,6 @@ class Mesh
 /// \brief Return pointer to element with label <tt>i</tt>
     Element *getPtrElement(size_t i) const { return theElements[i-1]; }
 
-/// \brief Return reference to element with label <tt>i</tt>
-    Element &getElement(size_t i) const { return *(theElements[i-1]); }
-
 /// \brief Return pointer to side with label <tt>i</tt>
     Side *getPtrSide(size_t i) const { return theSides[i-1]; }
 
@@ -819,9 +816,6 @@ class Mesh
 
 /// \brief Return pointer to edge with label <tt>i</tt>
     Edge *getPtrEdge(size_t i) const { return theEdges[i-1]; }
-
-/// \brief Return reference to edge with label <tt>i</tt>
-    Edge &getEdge(size_t i) const { return *(theEdges[i-1]); }
 
 /// \brief Return label of <tt>i</tt>-th node
 /// @param [in] i Node index
@@ -838,129 +832,6 @@ class Mesh
 /// \brief Return label of <tt>i</tt>-th edge
 /// @param [in] i Edge index
     size_t getEdgeLabel(size_t i) const { return theEdges[i-1]->n(); }
-
-/// \brief Reset list of nodes at its top position (Non constant version)
-    void topNode() const { _node_it = 0; }
-
-/// \brief Reset list of boundary nodes at its top position (Non constant version)
-    void topBoundaryNode() const { _node_it = 0; }
-
-/// \brief Reset list of marked nodes at its top position (Non constant version)
-    void topMarkedNode() const { _node_it = 0; }
-
-/// \brief Reset list of elements at its top position (Non constant version)
-    void topElement() const { _element_it = 0; }
-
-/// \brief Reset list of sides at its top position (Non constant version)
-    void topSide() const { _side_it = 0; }
-
-/// \brief Reset list of boundary sides at its top position (Non constant version)
-    void topBoundarySide() const { _side_it = 0; }
-
-/// \brief Reset list of intrenal sides at its top position (Non constant version)
-    void topInternalSide() const { _side_it = 0; }
-
-/// \brief Reset list of edges at its top position (Non constant version)
-    void topEdge() const { _edge_it = 0; }
-
-/// \brief Reset list of boundary edges at its top position (Non constant version)
-    void topBoundaryEdge() const { _edge_it = 0; }
-
-/// \brief Return pointer to current node and move to next one (Non constant version)
-    Node *getNode() const
-    {
-       if (_node_it==_nb_nodes)
-          return nullptr;
-       else
-          return theNodes[_node_it++];
-    }
-
-/// \brief Return pointer to current boundary node and move to next one (Non constant version)
-    Node* getBoundaryNode() const
-    {
-       if (_node_it==_nb_boundary_nodes)
-          return nullptr;
-       else
-          return theBoundaryNodes[_node_it++];
-    }
-
-/// \brief Return pointer to current marked node and move to next one (Non constant version)
-    Node* getMarkedNode() const
-    {
-       if (_node_it==_nb_marked_nodes)
-          return nullptr;
-       else
-          return theMarkedNodes[_node_it++];
-    }
-
-/// \brief Return pointer to current element and move to next one (Non constant version)
-    Element* getElement() const
-    {
-       if (_element_it==_nb_elements)
-          return nullptr;
-       else
-          return theElements[_element_it++];
-    }
-
-/** \brief Return pointer to current element and move to next one (Non constant version)
- * \details This function returns pointer to the current element only is this one is
- * active. Otherwise it goes to the next active element (To be used when adaptive meshing is involved)
- */
-    Element* getActiveElement() const
-    {
-       if (_element_it==_nb_elements)
-          return nullptr;
-       else {
-          while (theElements[_element_it]->isActive()==false)
-             _element_it++;
-          return theElements[_element_it++];
-       }
-    }
-
-/// \brief Return pointer to current side and move to next one (Non constant version)
-    Side* getSide() const
-    { 
-       if (_side_it==_nb_sides)
-          return nullptr;
-       else
-          return theSides[_side_it++];
-    }
-
-/// \brief Return pointer to current boundary side and move to next one (Non constant version)
-    Side* getBoundarySide() const
-    {
-       if (_side_it==_nb_boundary_sides)
-          return nullptr;
-       else
-          return theBoundarySides[_side_it++];
-    }
-
-/// \brief Return pointer to current internal side and move to next one (Non constant version)
-    Side* getInternalSide() const
-    {
-       if (_side_it==_nb_internal_sides)
-          return nullptr;
-       else
-          return theInternalSides[_side_it++];
-    }
-
-/// \brief Return pointer to current edge and move to next one (Non constant version)
-    Edge* getEdge() const
-    {
-       if (_edge_it==_nb_edges)
-          return nullptr;
-       else
-          return theEdges[_edge_it++];
-    }
-
-/// \brief Return pointer to current boundary edge and move to next one (Non constant version)
-    Edge* getBoundaryEdge() const
-    {
-       if (_edge_it==_nb_boundary_edges)
-          return nullptr;
-       else
-          return theBoundaryEdges[_edge_it++];
-    }
 
 /// \brief Determine shape of elements
 /// Return Shape index (see enum ElementShape) if all elements have the same shape, 0 if not.

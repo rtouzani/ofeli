@@ -82,14 +82,14 @@ int main(int argc, char *argv[])
       Vect<double> b(ms), u(ms);
       u.setName("Temperature");
       Prescription pr(ms,data.getDataFile());
-      pr.get(INITIAL_FIELD,u);
+      pr.get(EType::INITIAL,u);
       Vect<double> bc(ms), body_f(ms), bound_f(ms);
 
 //    Instantiating equation
       if (Verbosity>0)
          cout << "Setting equation" << endl;
       DC2DT3 eq(ms);
-      eq.setInput(INITIAL,u);
+      eq.setInitial(u);
 
 //    Loop over time steps
 //    --------------------
@@ -99,15 +99,16 @@ int main(int argc, char *argv[])
             cout << "Performing time step " << theStep << endl;
 
 //       Read boundary temperature and sources
-         pr.get(BOUNDARY_CONDITION,bc,theTime);
-         pr.get(SOURCE,body_f,theTime);
-         pr.get(FLUX,bound_f,theTime);
+         pr.get(EType::BOUNDARY_CONDITION,bc,theTime);
+         pr.get(EType::SOURCE,body_f,theTime);
+         pr.get(EType::FLUX,bound_f,theTime);
 
 //       Prescribe boundary conditions, sources, fluxes
-         eq.setInput(BOUNDARY_CONDITION,bc);
-         eq.setInput(SOURCE,body_f);
-         eq.setInput(FLUX,bound_f);
-         eq.setTerms(LUMPED_CAPACITY|DIFFUSION);
+         eq.setBoundaryCondition(bc);
+         eq.setBodyForce(body_f);
+         eq.setFlux(bound_f);
+         eq.setTerms(PDE_Terms::LUMPED_CAPACITY);
+         eq.setTerms(PDE_Terms::DIFFUSION);
 
 //       Run one time step
          eq.run(TRANSIENT_ONE_STEP);

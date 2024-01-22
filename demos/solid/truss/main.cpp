@@ -71,8 +71,8 @@ int main(int argc, char *argv[])
       if (Verbosity > 1)
          cout << "Reading boundary conditions and loads ...\n";
       Vect<double> u(ms), bc(ms), f(ms);
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(POINT_FORCE,f);
+      p.getBoundaryCondition(bc);
+      p.getPointForce(f);
       double section = data.getDouble("section");
 
 //    Solve problem
@@ -80,8 +80,8 @@ int main(int argc, char *argv[])
          cout << "Calculating and assembling element arrays ..." << endl;
       Bar2DL2 eq(ms,u);
       eq.setSection(section);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(POINT_FORCE,f);
+      eq.setBoundaryCondition(bc);
+      eq.setPointForce(f);
       eq.run(); 
 
 //    Output solution

@@ -87,8 +87,8 @@ void Laplace1DL2::set(const Element* el)
 }
 
 
-void Laplace1DL2::setBoundaryCondition(real_t f,
-                                       int    lr)
+void Laplace1DL2::setBC1D(real_t f,
+                          int    lr)
 {
    if (lr==-1) {
       _is_lbc = true;
@@ -101,8 +101,8 @@ void Laplace1DL2::setBoundaryCondition(real_t f,
 }
 
 
-void Laplace1DL2::setTraction(real_t f,
-                              int    lr)
+void Laplace1DL2::setNeumann1D(real_t f,
+                               int    lr)
 {
    if (lr==-1)
       _lsf = f;

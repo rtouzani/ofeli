@@ -131,9 +131,9 @@ void Bar2DL2::build()
    MESH_EL {
       set(the_element);
       if (_analysis==TRANSIENT) {
-         if (_terms&LUMPED_MASS)
+         if (_terms&int(PDE_Terms::LUMPED_MASS))
             LMass();
-         if (_terms&MASS)
+         if (_terms&int(PDE_Terms::MASS))
             Mass();
       }
       Stiffness();

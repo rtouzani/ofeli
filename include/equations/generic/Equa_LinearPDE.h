@@ -72,7 +72,7 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
    using Equa::setInput;
    using Equa::setTerms;
    using Equa::_u;
-   using Equa::_gterms;
+   using Equa::_terms;
    using Equation<NEN_,NEN_,NSN_,NSN_>::_theMesh;
    using Equation<NEN_,NEN_,NSN_,NSN_>::_theElement;
    using Equation<NEN_,NEN_,NSN_,NSN_>::_theSide;
@@ -102,7 +102,7 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
        _TimeInt.scheme = NONE;
        _type00 = _type10 = _type01 = _type20 = _type02 = 1;
        _c00 = _c10 = _c01 = _c20 = _c02 = 1.0;
-       _gterms = NOTERM;
+       _terms = int(PDE_Terms::NOTERM);
     }
 
 /// \brief Destructor
@@ -118,55 +118,55 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
 
 /// \brief Set coefficient for term (0,0): 0th order in time and space
 /// @param [in] a Constant coefficient to multiply by 0-th order term [Default: <tt>1.</tt>]
-    void set_00(real_t a=1.0) { _c00 = a; _type00 = 1; _gterms = (_gterms|L00); }
+    void set_00(real_t a=1.0) { _c00 = a; _type00 = 1; _terms = (_terms|int(PDE_Terms::L00)); }
 
 /// \brief Set coefficient for term (0,0): 0th order in time and space
 /// @param [in] f Function to multiply by 0-th order term (Function of \c x and \c t )
-    void set_00(Fct& f) { _f00 = f; _type00 = 3; _gterms = (_gterms|L00); }
+    void set_00(Fct& f) { _f00 = f; _type00 = 3; _terms = (_terms|int(PDE_Terms::L00)); }
 
 /// \brief Set coefficient for term (0,0): 0th order in time and space
 /// @param [in] f Function to multiply by 0-th order term (Function of \c x and \c t)
-    void set_00(const string& f) { _f00.set(f,_var); _type00 = 3; _gterms = (_gterms|L00); }
+    void set_00(const string& f) { _f00.set(f,_var); _type00 = 3; _terms = (_terms|int(PDE_Terms::L00)); }
 
 /// \brief Set coefficient for term (1,0): 1st order in time, 0th order in space
 /// @param [in] a Constant coefficient to multiply by (1,0)-order term [Default: <tt>1.</tt>]
-    void set_10(real_t a=1.0) { _c10 = a; _type10 = 1; _gterms = (_gterms|L10); }
+    void set_10(real_t a=1.0) { _c10 = a; _type10 = 1; _terms = (_terms|int(PDE_Terms::L10)); }
 
 /// \brief Set coefficient for term (1,0): 1st order in time, 0th order in space
 /// @param [in] f Function to multiply by (1,0)-order term (Function of \c x and \c t )
-    void set_10(Fct& f) { _f10 = f; _type10 = 3; _gterms = (_gterms|L10); }
+    void set_10(Fct& f) { _f10 = f; _type10 = 3; _terms = (_terms|int(PDE_Terms::L10)); }
 
 /// \brief Set coefficient for term (2,0): 2nd order in time, 0th order in space
 /// @param [in] a Constant coefficient to multiply by (2,0)-order term [Default: <tt>1.</tt>]
-    void set_20(real_t a=1.0) { _c20 = a; _type20 = 1; _gterms = (_gterms|L20); }
+    void set_20(real_t a=1.0) { _c20 = a; _type20 = 1; _terms = (_terms|int(PDE_Terms::L20)); }
 
 /// \brief Set coefficient for term (2,0): 2nd order in time, 0th order in space
 /// @param [in] f Function to multiply by (2,0)-order term (Function of \c x and \c t)
-    void set_20(Fct& f) { _f20 = f; _type20 = 3; _gterms = (_gterms|L20); }
+    void set_20(Fct& f) { _f20 = f; _type20 = 3; _terms = (_terms|int(PDE_Terms::L20)); }
 
 /// \brief Set coefficient for term (0,1): 0th order in time, 1st order in space
 /// @param [in] a Constant coefficient to multiply by (0,1)-order term [Default: <tt>1.</tt>]
-    void set_01(real_t a=1.0) { _c01 = a; _type01 = 1; _gterms = (_gterms|L01); }
+    void set_01(real_t a=1.0) { _c01 = a; _type01 = 1; _terms = (_terms|int(PDE_Terms::L01)); }
 
 /// \brief Set coefficient for term (0,1): 0th order in time, 1st order in space
 /// @param [in] a Constant coefficient to multiply by (0,1)-order term [Default: <tt>1.</tt>]
-    void set_01(Point<real_t> &a) { _d01 = a; _type01 = 2; _gterms = (_gterms|L01); }
+    void set_01(Point<real_t> &a) { _d01 = a; _type01 = 2; _terms = (_terms|int(PDE_Terms::L01)); }
 
 /// \brief Set coefficient for term (0,1): 0th order in time, 1st order in time and space
 /// @param [in] f Function to multiply by (0,1)-order term (Function of \c x and \c t)
-    void set_01(Fct& f) { _f01 = f; _type01 = 3; _gterms = (_gterms|L01); }
+    void set_01(Fct& f) { _f01 = f; _type01 = 3; _terms = (_terms|int(PDE_Terms::L01)); }
 
 /// \brief Set coefficient for term (0,1): 0th order in time, 1st order in space
 /// @param [in] a Constant coefficient to multiply by (0,1)-order term [Default: <tt>1.</tt>]
-    void set_01(Vect<real_t> &a) { _e01 = a; _type01 = 4; _gterms = (_gterms|L01); }
+    void set_01(Vect<real_t> &a) { _e01 = a; _type01 = 4; _terms = (_terms|int(PDE_Terms::L01)); }
 
 /// \brief Set coefficient for term (0,2): 0th order in time, 2nd order in space
 /// @param [in] a Constant coefficient to multiply by (0,2)-order term [Default: <tt>1.</tt>]
-    void set_02(real_t a=1.0) { _c02 = a; _type02 = 1; _gterms = (_gterms|L02); }
+    void set_02(real_t a=1.0) { _c02 = a; _type02 = 1; _terms = (_terms|int(PDE_Terms::L02)); }
 
 /// \brief Set coefficient for term (0,2): 0th order in time, 2nd order in time and space
 /// @param [in] f Function to multiply by (0,2)-order term (Function of \c x and \c t)
-    void set_02(Fct& f) { _f02 = f; _type02 = 3; _gterms = (_gterms|L02); }
+    void set_02(Fct& f) { _f02 = f; _type02 = 3; _terms = (_terms|int(PDE_Terms::L02)); }
 
 /// \brief Add 0th order term, in time and space, to left-hand side
 /// @param [in] coef coefficient to multiply by the matrix before adding [Default: <tt>1</tt>]
@@ -202,7 +202,7 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
        static bool matrix_set = false;
        if (Equa::_A==nullptr && !matrix_set) {
           Equa::setMatrixType(SPARSE);
-          if (_gterms&L01)
+          if (_terms&int(PDE_Terms::L01))
              Equa::setSolver(BICG_STAB_SOLVER,DILU_PREC);
           else
              Equa::setSolver(CG_SOLVER,DILU_PREC);
@@ -211,11 +211,11 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
        Equa::_A->clear();
        MESH_EL {
           set(the_element);
-          if (_gterms&L00)
+          if (_terms&int(PDE_Terms::L00))
              Mat_00();
-          if (_gterms&L01)
+          if (_terms&int(PDE_Terms::L01))
              Mat_01();
-          if (_gterms&L02)
+          if (_terms&int(PDE_Terms::L02))
              Mat_02();
           Equa::_A->Assembly(The_element,eA0.get());
           if (Equa::_bf!=nullptr)
@@ -250,17 +250,17 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
     {
        MESH_EL {
           set(the_element);
-          if (_gterms&L10)
+          if (_terms&int(PDE_Terms::L10))
              Mat_10();
-          if (_gterms&L20)
+          if (_terms&int(PDE_Terms::L20))
              Mat_20();
-          if (_gterms&L00)
+          if (_terms&int(PDE_Terms::L00))
              Mat_00();
-          if (_gterms&L01)
+          if (_terms&int(PDE_Terms::L01))
              Mat_01();
-          if (_gterms&L02)
+          if (_terms&int(PDE_Terms::L02))
              Mat_02();
-          if (_gterms&SOURCE && Equa::_bf!=nullptr)
+          if (_terms&int(PDE_Terms::BODY_RHS))
              BodyRHS(*Equa::_bf);
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
        }
@@ -268,7 +268,7 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
           MESH_SD {
              if (The_side.isReferenced()) {
                 set(the_side);
-                if (Equa::_sf!=nullptr)
+                if (_terms&int(PDE_Terms::BOUNDARY_RHS))
                    BoundaryRHS(*Equa::_sf);
                 s.SAssembly(The_side,sRHS.get());
              }
@@ -284,13 +284,13 @@ class Equa_LinearPDE : virtual public Equation<NEN_,NEN_,NSN_,NSN_>
        MESH_EL {
           set(the_element);
           this->ElementVector(*Equa::_u);
-          if (_gterms&L10)
+          if (_terms&int(PDE_Terms::L10))
              Mat_10();
-          if (_gterms&L20)
+          if (_terms&int(PDE_Terms::L20))
              Mat_20();
-          if (_gterms&L02)
+          if (_terms&int(PDE_Terms::L02))
              Mat_02();
-          if (_gterms&L01)
+          if (_terms&int(PDE_Terms::L01))
              Mat_01();
           e.Assembly(*_theElement,eA0.get(),eA1.get());
        }

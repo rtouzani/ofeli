@@ -103,7 +103,7 @@ void LinearPDE2D::set(const Side* sd)
 }
 
 
-void LinearPDE2D::setInput(EqDataType    opt,
+void LinearPDE2D::setInput(EType         opt,
                            Vect<real_t>& u)
 {
    Equa::setInput(opt,u);
@@ -113,7 +113,7 @@ void LinearPDE2D::setInput(EqDataType    opt,
 void LinearPDE2D::Mat_00(real_t coef)
 {
    real_t c = OFELI_SIXTH*_el_geo.area*coef;
-   c *= getPDECoef(C00,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+   c *= getPDECoef(PDECoefType::C00,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
    eA0(1,1) = 2*c; eA0(2,2) = 2*c; eA0(3,3) = 2*c;
    eA0(1,2) =   c; eA0(1,3) =   c; eA0(2,3) =   c;
    eA0(2,1) =   c; eA0(3,1) =   c; eA0(3,2) =   c;
@@ -124,14 +124,14 @@ void LinearPDE2D::Mat_10(real_t coef)
 {
    if (_lump) {
       real_t c = OFELI_THIRD*_el_geo.area*coef;
-      c *= getPDECoef(C10,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+      c *= getPDECoef(PDECoefType::C10,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
       eA1(1,1) += c;
       eA1(2,2) += c;
       eA1(3,3) += c;
    }
    else {
       real_t c = OFELI_SIXTH*_el_geo.area*coef;
-      c *= getPDECoef(C10,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+      c *= getPDECoef(PDECoefType::C10,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
       real_t d=0.5*c;
       eA1(1,1) += c; eA1(2,2) += c; eA1(3,3) += c;
       eA1(1,2) += d; eA1(2,1) += d; eA1(1,3) += d;
@@ -144,14 +144,14 @@ void LinearPDE2D::Mat_20(real_t coef)
 {
    if (_lump) {
       real_t c = OFELI_THIRD*_el_geo.area*coef;
-      c *= getPDECoef(C20,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+      c *= getPDECoef(PDECoefType::C20,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
       eA2(1,1) += c;
       eA2(2,2) += c;
       eA2(3,3) += c;
    }
    else {
       real_t c = OFELI_SIXTH*_el_geo.area*coef;
-      c *= getPDECoef(C20,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
+      c *= getPDECoef(PDECoefType::C20,SpaceTime(_el_geo.center.x,0.,0.,_TimeInt.time));
       real_t d=0.5*c;
       eA2(1,1) += c; eA2(2,2) += c; eA2(3,3) += c;
       eA2(1,2) += d; eA2(2,1) += d; eA2(1,3) += d;

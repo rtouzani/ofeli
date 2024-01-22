@@ -68,7 +68,6 @@ int main(int argc, char *argv[])
       if (Verbosity > 5)
          cout << ms;
       Prescription p(ms,data.getDataFile());
-
 #if defined(USE_PETSC)
       PETScWrapper<double> w(argc-1,argv);
       PETScMatrix<double> A(ms);
@@ -77,18 +76,16 @@ int main(int argc, char *argv[])
 
       if (Verbosity > 1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
-      Vect<double> u(ms), bc(ms), body_f(ms), bound_f(ms,3,BOUNDARY_SIDE_DOF);
-      p.get(BOUNDARY_CONDITION,bc);
-      p.get(BODY_FORCE,body_f,0);
-      p.get(TRACTION,bound_f,0);
+      Vect<double> u(ms), sf(ms,3,BOUNDARY_SIDE_DOF);
+      p.getTraction(sf);
 
 //    Solve equation
       if (Verbosity > 1)
          cout << "Setting and solving equation ...\n";
       Elas3DT4 eq(ms,u);
-      eq.setInput(BOUNDARY_CONDITION,bc);
-      eq.setInput(BODY_FORCE,body_f);
-      eq.setInput(TRACTION,bound_f);
+      eq.setBoundaryCondition(p.getBoundaryCondition());
+      eq.setBodyForce(p.getBodyForce());
+      eq.setTraction(sf);
       eq.setSolver(CG_SOLVER,DILU_PREC);
       eq.run();
 

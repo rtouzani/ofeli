@@ -81,7 +81,7 @@ Equation<NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&         mesh,
                            "element and side nodes are inconsistent");
    _nb_dof = NEE_/NEN_;
    initEquation(mesh,0.,1.,0.1);
-   this->setInput(SOLUTION,u);
+   this->setInput(EType::SOLUTION,u);
 }
 
 
@@ -98,7 +98,7 @@ Equation<NEN_,NEE_,NSN_,NSE_>::Equation(Mesh&         mesh,
                            "element and side nodes are inconsistent");
    _nb_dof = NEE_/NEN_;
    initEquation(mesh,init_time,final_time,time_step);
-   this->setInput(INITIAL_FIELD,u);
+   this->setInput(EType::INITIAL,u);
 }
 
 
@@ -284,13 +284,6 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::DiagBC(DOFSupport dof_type,
 
 
 template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<NEN_,NEE_,NSN_,NSE_>::setBodyForce(const Vect<real_t>& f)
-{
-   Equa::_bf = &f;
-}
-
-
-template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<NEN_,NEE_,NSN_,NSE_>::setResidue()
 {
    eMat.Mult(_eu,eRes);
@@ -438,8 +431,8 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<real_t>& b,
 
 
 template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<real_t>&    b,
-                                               std::valarray<real_t>& sb)
+void Equation<NEN_,NEE_,NSN_,NSE_>::SideVector(const Vect<real_t>& b,
+                                               vector<real_t>&     sb)
 {
    sb.resize(NSE_/NSN_);
    for (size_t i=0; i<_theSide->getNbDOF(); ++i)

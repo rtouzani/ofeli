@@ -98,7 +98,7 @@ void Pres2DT3::set(const Side* sd)
 }
 
 
-void Pres2DT3::setInput(EqDataType    opt,
+void Pres2DT3::setInput(EType         opt,
                         Vect<real_t>& u)
 {
    Equa::setInput(opt,u);

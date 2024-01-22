@@ -55,9 +55,9 @@ int main(int argc, char *argv[])
       bc = 0;
 
       Laplace2DT3 eq(ms);
-      eq.setInput(SOLUTION,u);
-      eq.setInput(SOURCE,f);
-      eq.setInput(BOUNDARY_CONDITION,bc);
+      eq.setSolution(u);
+      eq.setSource(f);
+      eq.setBoundaryCondition(bc);
       eq.setSolver(CG_SOLVER,DILU_PREC);
       eq.run();
       cout<<u;

@@ -34,7 +34,6 @@
 #ifndef __EQUATION_H
 #define __EQUATION_H
 
-#include <valarray>
 #include "equations/Equa.h"
 #include "linear_algebra/LocalMatrix.h"
 #include "linear_algebra/LocalVect.h"
@@ -174,9 +173,6 @@ class Equation : virtual public Equa
                 int        dof=0);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-/// \brief Set Body Force
-    void setBodyForce(const Vect<real_t>& f);
-
 /// \brief Calculate residue in element
     void setResidue();
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
@@ -209,8 +205,8 @@ class Equation : virtual public Equa
  *  @param [out] bs Local constant value of vector at given side. 
  *  @remark All degrees of freedom are transferred to the local vector
  */
-    void SideSideVector(const Vect<real_t>&    b,
-                        std::valarray<real_t>& bs);
+    void SideSideVector(const Vect<real_t>& b,
+                        vector<real_t>&     bs);
 
 /** \brief Localize Element Vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
@@ -271,8 +267,8 @@ class Equation : virtual public Equa
  *  @remark This member function is to be used if a constructor with Side was invoked.
  *  It uses the Side pointer <tt>_theSide</tt>
  */
-    void SideVector(const Vect<real_t>&     b,
-                    std::valarray<real_t>& sb);
+    void SideVector(const Vect<real_t>& b,
+                    vector<real_t>&     sb);
 
 /** \brief Localize coordinates of element nodes
  *  \details Coordinates are stored in array <tt>_x[0], _x[1], ...</tt> which
@@ -497,14 +493,14 @@ class Equation : virtual public Equa
  protected:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    size_t                               _label;
-    const Element*                       _theElement;
-    const Side*                          _theSide;
-    ElementGeom                          _el_geo;
-    LocalVect<Point<real_t>,NEN_>        _x;
-    LocalVect<real_t,NEE_>               _eu, _ebf;
-    LocalVect<real_t,NSE_>               _su;
-    std::valarray<real_t>                _ssf;
+    size_t                       _label;
+    const Element*                _theElement;
+    const Side*                   _theSide;
+    ElementGeom                   _el_geo;
+    LocalVect<Point<real_t>,NEN_> _x;
+    LocalVect<real_t,NEE_>        _eu, _ebf;
+    LocalVect<real_t,NSE_>        _su;
+    vector<real_t>                _ssf;
     void updateBC(const Element& el,
                   Vect<real_t>*  bc=nullptr);
     void updateBC(const Element& el,

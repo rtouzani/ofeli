@@ -146,12 +146,6 @@ class Element
 /// @param [in] node Pointer to Node instance.
     void Add(Node* node);
 
-/// \brief Insert a node and set its local node number.
-/// @param node [in] Pointer to Node instance
-/// @param [in] n Element node number to assign
-    void Add(Node* node,
-             int   n);
-
 /// \brief Replace a node at a given local label.
 /// @param [in] label Node to replace.
 /// @param [in] node Pointer to Node instance to copy to current instance.
@@ -167,12 +161,6 @@ class Element
 /// \brief Assign Side to Element.
 /// @param [in] sd Pointer to Side instance.
     void Add(Side* sd);
-
-/// \brief Assign Side to Element with assigned local label.
-/// @param [in] sd Pointer to Side instance.
-/// @param [in] k Local label.
-    void Add(Side* sd,
-             int   k);
 
 /// \brief Add a neighbor element.
 /// @param [in] el Pointer to Element instance
@@ -198,7 +186,7 @@ class Element
 
 /// \brief Assign a node given by its pointer as the i-th node of element
     void setNode(size_t i,
-                 Node*  node) { _node[i-1] = node; }
+                 Node*  node) { theNodes[i-1] = node; }
 
 /// \brief Set number of degrees of freedom of element
     void setNbDOF(size_t i) { _nb_dof = i; }
@@ -227,7 +215,7 @@ class Element
     size_t getNbVertices() const;
 
 /// \brief Return number of element sides (Constant version)
-    size_t getNbSides() const { return _nbs; }
+    size_t getNbSides() const { return _nb_sides; }
 
 /// \brief Return number of element equations
     size_t getNbEq() const { return _nb_eq; }
@@ -248,14 +236,14 @@ class Element
     size_t getSideLabel(size_t n) const;
 
 /// \brief Return pointer to node of label <tt>i</tt> (Local labelling).
-    Node *getPtrNode(size_t i) const { return _node[i-1]; }
+    Node *getPtrNode(size_t i) const { return theNodes[i-1]; }
    
 /// \brief Operator ().
 /// \details Return pointer to node of local label <tt>i</tt>.
     Node *operator()(size_t i) const { return getPtrNode(i); }
    
 /// \brief Return pointer to side of label <tt>i</tt> (Local labelling).
-    Side *getPtrSide(size_t i) const { return _side[i-1]; }
+    Side *getPtrSide(size_t i) const { return theSides[i-1]; }
 
 /** \brief Say if element contains given node
  *  \details This function tests if the element contains a node with the same pointer at the sought one
@@ -365,6 +353,8 @@ class Element
     size_t IsIn(const Node* nd);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
+    vector<Node *> theNodes;
+    vector<Side *> theSides;
     void setGlobalToLocal();
     size_t getLocal(size_t i) { return _g2l[i]; }
 
@@ -376,13 +366,11 @@ class Element
  private :
 
    bool _active;
-   size_t _nb_nodes, _nb_eq, _nb_sides, _label, _nbs, _nb_neig_el, _nb_childs;
+   size_t _nb_nodes, _nb_eq, _nb_sides, _label, _nb_neig_el, _nb_childs;
    size_t _nb_dof, _first_dof;
    int _level, _code, _shape, _dof_code[MAX_NBDOF_SIDE];
    size_t _dof[MAX_NBDOF_SIDE];
-   Node *_node[MAX_NB_ELEMENT_NODES];
-   Side *_side[MAX_NB_ELEMENT_SIDES];
-   Element *_neig_el[MAX_NB_ELEMENT_SIDES];
+   vector<Element *> _neig_el;
    Element *_child[4], *_parent;
    map<size_t,size_t> _g2l;
 

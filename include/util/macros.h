@@ -95,12 +95,12 @@ namespace OFELI {
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-#define node_loop(m) for ((m)->topNode(); (the_node=(m)->getNode());)
-#define boundary_node_loop(m) for ((m)->topBoundaryNode(); (the_node=(m)->getBoundaryNode());)
-#define element_loop(m) for ((m)->topElement(); (the_element=(m)->getElement());)
-#define side_loop(m) for ((m)->topSide(); (the_side=(m)->getSide());)
-#define boundary_side_loop(m) for ((m)->topBoundarySide(); (the_side=(m)->getBoundarySide());)
-#define edge_loop(m) for ((m)->topEdge(); (the_edge=(m)->getEdge());)
+#define node_loop(m) for (auto const& the_node: (m)->theNodes)
+#define boundary_node_loop(m) for (auto const& the_node: (m)->theBoundaryNodes)
+#define element_loop(m) for (auto const& the_element: (m)->theElements)
+#define side_loop(m) for (auto const& the_side: (m)->theSides)
+#define boundary_side_loop(m) for (auto const& the_side: (m)->theBoundarySides)
+#define edge_loop(m) for (auto const& the_edge: (m)->theEdges)
 
 #define MESH_EL element_loop(_theMesh)
 #define MESH_ND node_loop(_theMesh)
@@ -129,16 +129,7 @@ namespace OFELI {
  * \a m : Instance of Mesh
  * @note: Each iteration updates the pointer <tt>theElement</tt> to current Element
  */
-#define ElementLoop(m) for ((m).topElement(); (theElement=(m).getElement());)
-
-/*! \def ActiveElementLoop(m)
- *  \ingroup Mesh
- * A macro to loop on mesh active elements
- * \a m : Instance of Mesh
- * @note: Each iteration updates the pointer <tt>theElement</tt> to current Element
- * @note: This macro is necessary only if adaptive meshing is used
- */
-#define ActiveElementLoop(m) for ((m).topElement(); (theElement=(m).getActiveElement());)
+#define ElementLoop(m) for (auto const& theElement: (m).theElements)
 
 /*! \def SideLoop(m)
  *  \ingroup Mesh
@@ -146,7 +137,7 @@ namespace OFELI {
  * \a m : Instance of Mesh
  * @note: Each iteration updates the pointer <tt>theSide</tt> to current Element
  */
-#define SideLoop(m) for ((m).topSide(); (theSide=(m).getSide());)
+#define SideLoop(m) for (auto const& theSide: (m).theSides)
 
 /*! \def EdgeLoop(m)
  *  \ingroup Mesh
@@ -154,7 +145,7 @@ namespace OFELI {
  * \a m : Instance of Mesh
  * @note: Each iteration updates the pointer <tt>theEdge</tt> to current Edge
  */
-#define EdgeLoop(m) for ((m).topEdge(); (theEdge=(m).getEdge());)
+#define EdgeLoop(m) for (auto const& theEdge: (m).theEdges)
 
 /*! \def NodeLoop(m)
  *  \ingroup Mesh
@@ -162,7 +153,7 @@ namespace OFELI {
  * \a m : Instance of Mesh
  * @note: Each iteration updates the pointer \a theNode to current Node
  */
-#define NodeLoop(m) for ((m).topNode(); (theNode=(m).getNode());)
+#define NodeLoop(m) for (auto const& theNode: (m).theNodes)
 
 /*! \def BoundaryNodeLoop(m)
  *  \ingroup Mesh
@@ -170,7 +161,7 @@ namespace OFELI {
  * <tt>m</tt>: Instance of Mesh
  * @note: Each iteration updates the pointer <tt>theNode</tt> to current Node
  */
-#define BoundaryNodeLoop(m) for ((m).topBoundaryNode(); (theNode=(m).getBoundaryNode());)
+#define BoundaryNodeLoop(m) for (auto const& theNode: (m).theBoundaryNodes)
 
 /*! \def BoundarySideLoop(m)
  *  \ingroup Mesh
@@ -178,18 +169,23 @@ namespace OFELI {
  * <tt>m</tt>: Instance of Mesh
  * @note: Each iteration updates the pointer <tt>theSide</tt> to current Node
  */
-#define BoundarySideLoop(m) for ((m).topBoundarySide(); (theSide=(m).getBoundarySide());)
+#define BoundarySideLoop(m) for (auto const& theSide: (m).theBoundarySides)
 
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 /*! \def ElementNodeLoop
  *  \ingroup Mesh
  * A macro to loop on element nodes
  * @param el Instance of Element
  * @param nd Pointer to pointed node
  */
-#define ElementNodeLoop(el,nd) for (el.topNode(); ((nd)=el.getNode()); )
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
+#define ElementNodeLoop(el,nd) for (auto const& nd: (el).theNodes)
+
+/*! \def ElementSideLoop
+ *  \ingroup Mesh
+ * A macro to loop on element sides
+ * @param el Instance of Element
+ * @param nd Pointer to pointed side
+ */
+#define ElementSideLoop(el,sd) for (auto const& sd: (el).theSides)
 
 /*! \def theNodeLabel
  *  \ingroup Mesh
