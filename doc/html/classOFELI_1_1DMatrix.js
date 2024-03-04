@@ -9,6 +9,7 @@ var classOFELI_1_1DMatrix =
     [ "~DMatrix", "classOFELI_1_1DMatrix.html#a8d58c077392c7226d414c1391d70a6d5", null ],
     [ "add", "classOFELI_1_1DMatrix.html#a3c7b029cbe1aca9bea7623ae99274795", null ],
     [ "add", "classOFELI_1_1DMatrix.html#a17592a65d5fb95d42c07f724dabad759", null ],
+    [ "at", "classOFELI_1_1DMatrix.html#a276ea1877b89d46c32e207248a4573d7", null ],
     [ "Axpy", "classOFELI_1_1DMatrix.html#a7dc985b7750f99e19eb4afff8554ffee", null ],
     [ "Axpy", "classOFELI_1_1DMatrix.html#ac7ecd57722b088d883cdb26ac2887270", null ],
     [ "get", "classOFELI_1_1DMatrix.html#a173c0f972c4eeca07b426587bc2108e5", null ],

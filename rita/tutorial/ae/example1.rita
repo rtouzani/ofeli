@@ -1,0 +1,12 @@
+# rita Script file to solve an algebraic equation
+# We numerically solve the equation x^2-2=0
+# to find the square root of 2
+# We declare the unknown x as a variable
+# The default iterative method is the Newton's method
+#
+algebraic var=y def=y^2-2
+solve
+#
+# We output the solution
+ = y
+exit

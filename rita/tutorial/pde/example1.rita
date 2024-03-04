@@ -1,0 +1,50 @@
+# rita Script file to solve a 1-D problem by P1 finite elements
+#
+# Generate a uniform 1-D mesh of 10 elements
+# The default domain is the interval (0,1)
+# Associate code 1 to end nodes enforce Dirichlet bc later
+#
+# First we define as parameter the number of elements
+n=10
+#
+# We enter module 'mesh'
+# End nodes are assigned code 1 to enforce boundary conditions
+mesh
+  1d ne=n codes=1
+  end
+
+# Define equation: PDE and discretization method
+# Default is stationary analysis
+# We define the equation to solve and prescribe boundary condition and source
+# We also define space discretization method: P1 finite element method
+# We enter module 'pde'
+pde laplace
+
+# We first define the unknown (mandatory)
+  variable u
+
+# Nodes with code 1 are imposed the value 0
+  bc code=1 val=0.
+
+# We prescribe the RHS of the PDE
+  source value=pi*pi*sin(pi*x)
+
+# Discretization uses the P1 FE method
+  space feP1
+
+# We give analytic solution to compute approximation error
+# Solution is given of function of space-time (t,x,y,z) coordinates
+# L2 and Infinity norm errors are stored in parameters e2 and eI respectively
+  analytic sin(pi*x)
+  err e2 eI
+  end
+
+# Solve problem, output solution
+# We enter module 'solve'
+solve
+= u
+
+# We save in gnuplot format solution to plot
+save file=ex1.dat name=u format=gnuplot
+
+exit

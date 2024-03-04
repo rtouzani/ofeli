@@ -43,7 +43,6 @@ namespace OFELI {
 template<class T_>
 DMatrix<T_>::DMatrix() : _qr_set(0)
 {
-   _length = _size = _nb_rows = _nb_cols = 0;
    _is_diagonal = false;
 }
 
@@ -70,8 +69,8 @@ template<class T_>
 DMatrix<T_>::DMatrix(Vect<T_>& v) : _qr_set(0)
 {
    _is_diagonal = true;
-   _length = v.size();
-   _nb_rows = _nb_cols = _size = sqrt(real_t(_length));
+   _msize.length = v.size();
+   _msize.nb_rows = _msize.nb_cols = _msize.size = sqrt(real_t(_msize.length));
    _a = v;
 }
 
@@ -79,7 +78,8 @@ DMatrix<T_>::DMatrix(Vect<T_>& v) : _qr_set(0)
 template<class T_>
 DMatrix<T_>::DMatrix(const DMatrix<T_>& m)
 {
-   setSize(m._nb_rows,m._nb_cols);
+   _msize = m._msize;
+   setSize(m._msize.nb_rows,m._msize.nb_cols);
    _a = m._a;
    _diag = m._diag;
    _is_diagonal = m._is_diagonal;
@@ -107,10 +107,9 @@ void DMatrix<T_>::setMesh(Mesh&  mesh,
                           size_t dof)
 {
    Matrix<T_>::init_set_mesh(mesh,dof);
-   _length = _size*_size;
-   _diag.resize(_size);
-   _a.resize(_length);
-   _zero = static_cast<T_>(0);
+   _msize.length = _msize.size*_msize.size;
+   _diag.resize(_msize.size);
+   _a.resize(_msize.length);
 }
 
 
@@ -143,8 +142,8 @@ void DMatrix<T_>::setMesh(size_t dof,
 template<class T_>
 void DMatrix<T_>::setDiag()
 {
-   for (size_t i=0; i<_size; i++)
-      _diag[i] = _a[_nb_cols*i+i];
+   for (size_t i=0; i<_msize.size; i++)
+      _diag[i] = _a[_msize.nb_cols*i+i];
 }
 
 
@@ -152,10 +151,10 @@ template<class T_>
 void DMatrix<T_>::setDiag(const T_& a)
 {
    _is_diagonal = true;
-   for (size_t i=0; i<_size; i++)
+   for (size_t i=0; i<_msize.size; i++)
       _diag[i] = a;
-   for (size_t i=0; i<_nb_rows; i++)
-      _a[_nb_cols*i+i] = a;
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      _a[_msize.nb_cols*i+i] = a;
 }
 
 
@@ -163,20 +162,20 @@ template<class T_>
 void DMatrix<T_>::setDiag(const vector<T_>& d)
 {
    _is_diagonal = true;
-   for (size_t i=0; i<_size; i++)
+   for (size_t i=0; i<_msize.size; i++)
       _diag[i] = d[i];
-   for (size_t i=0; i<_nb_rows; i++)
-      _a[_nb_cols*i+i] = d[i];
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      _a[_msize.nb_cols*i+i] = d[i];
 }
 
 
 template<class T_>
 void DMatrix<T_>::setSize(size_t size)
 {
-   _nb_rows = _nb_cols = _size = size;
-   _length = _nb_rows*_nb_cols;
-   _a.resize(_length);
-   _diag.resize(_size);
+   _msize.nb_rows = _msize.nb_cols = _msize.size = size;
+   _msize.length = _msize.nb_rows*_msize.nb_cols;
+   _a.resize(_msize.length);
+   _diag.resize(_msize.size);
 }
 
 
@@ -184,13 +183,13 @@ template<class T_>
 void DMatrix<T_>::setSize(size_t nr,
                           size_t nc)
 {
-   _nb_rows = nr;
-   _nb_cols = nc;
-   _size = 0;
-   if (_nb_rows==_nb_cols)
-      _size = _nb_rows;
-   _length = lsize_t(_nb_rows*_nb_cols);
-   _a.resize(_length);
+   _msize.nb_rows = nr;
+   _msize.nb_cols = nc;
+   _msize.size = 0;
+   if (_msize.nb_rows==_msize.nb_cols)
+      _msize.size = _msize.nb_rows;
+   _msize.length = lsize_t(_msize.nb_rows*_msize.nb_cols);
+   _a.resize(_msize.length);
 }
 
 
@@ -198,18 +197,18 @@ template<class T_>
 void DMatrix<T_>::getColumn(size_t    j,
                             Vect<T_>& v) const
 {
-   v.resize(_nb_rows);
-   for (size_t i=0; i<_nb_rows; i++)
-      v[i] = _a[_nb_cols*i+j-1];
+   v.resize(_msize.nb_rows);
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      v[i] = _a[_msize.nb_cols*i+j-1];
 }
 
 
 template<class T_>
 Vect<T_> DMatrix<T_>::getColumn(size_t j) const
 {
-   Vect<T_> v(_nb_rows);
-   for (size_t i=0; i<_nb_rows; i++)
-      v[i] = _a[_nb_cols*i+j-1];
+   Vect<T_> v(_msize.nb_rows);
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      v[i] = _a[_msize.nb_cols*i+j-1];
    return v;
 }
 
@@ -218,18 +217,18 @@ template<class T_>
 void DMatrix<T_>::getRow(size_t    i,
                          Vect<T_>& v) const
 {
-   v.resize(_nb_cols);
-   for (size_t j=0; j<_nb_cols; j++)
-      v[j] = _a[_nb_cols*(i-1)+j];
+   v.resize(_msize.nb_cols);
+   for (size_t j=0; j<_msize.nb_cols; j++)
+      v[j] = _a[_msize.nb_cols*(i-1)+j];
 }
 
 
 template<class T_>
 Vect<T_> DMatrix<T_>::getRow(size_t i) const
 {
-   Vect<T_> v(_nb_cols);
-   for (size_t j=0; j<_nb_cols; j++)
-      v[j] = _a[_nb_cols*(i-1)+j];
+   Vect<T_> v(_msize.nb_cols);
+   for (size_t j=0; j<_msize.nb_cols; j++)
+      v[j] = _a[_msize.nb_cols*(i-1)+j];
    return v;
 }
 
@@ -239,7 +238,7 @@ void DMatrix<T_>::set(size_t    i,
                       size_t    j,
                       const T_& val)
 {
-   _a[_nb_cols*(i-1)+j-1] = val;
+   _a[_msize.nb_cols*(i-1)+j-1] = val;
 }
 
 
@@ -254,8 +253,8 @@ template<class T_>
 void DMatrix<T_>::setRow(size_t          i,
                          const Vect<T_>& v)
 {
-   for (size_t j=0; j<_nb_cols; j++)
-      _a[_nb_cols*(i-1)+j] = v[j];
+   for (size_t j=0; j<_msize.nb_cols; j++)
+      _a[_msize.nb_cols*(i-1)+j] = v[j];
 }
 
 
@@ -263,8 +262,8 @@ template<class T_>
 void DMatrix<T_>::setColumn(size_t          j,
                             const Vect<T_>& v)
 {
-   for (size_t i=0; i<_nb_rows; i++)
-      _a[_nb_cols*i+j-1] = v[i];
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      _a[_msize.nb_cols*i+j-1] = v[i];
 }
 
 
@@ -273,9 +272,9 @@ void DMatrix<T_>::MultAdd(T_              a,
                           const Vect<T_>& x,
                           Vect<T_>&       y) const
 {
-   for (size_t i=0; i<_nb_rows; i++)
-      for (size_t j=0; j<_nb_cols; j++)
-         y.add(i+1,a*_a[_nb_cols*i+j]*x[j]);
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      for (size_t j=0; j<_msize.nb_cols; j++)
+         y.add(i+1,a*_a[_msize.nb_cols*i+j]*x[j]);
 }
 
 
@@ -284,10 +283,10 @@ void DMatrix<T_>::MultAdd(const Vect<T_>& x,
                            Vect<T_>&       y) const
 {
    T_ s;
-   for (size_t i=0; i<_nb_rows; i++) {
+   for (size_t i=0; i<_msize.nb_rows; i++) {
       s = 0;
-      for (size_t j=0; j<_nb_cols; j++)
-         s += _a[_nb_cols*i+j] * x[j];
+      for (size_t j=0; j<_msize.nb_cols; j++)
+         s += _a[_msize.nb_cols*i+j] * x[j];
       y.set(i+1,s);
    }
 }
@@ -306,9 +305,9 @@ template<class T_>
 void DMatrix<T_>::TMult(const Vect<T_>& x,
                         Vect<T_>&       y) const
 {
-   for (size_t i=0; i<_nb_rows; i++)
-      for (size_t j=0; j<_nb_cols; j++)
-         y.add(i+1,_a[_nb_cols*(j-1)+i-1]*x[j]);
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      for (size_t j=0; j<_msize.nb_cols; j++)
+         y.add(i+1,_a[_msize.nb_cols*(j-1)+i-1]*x[j]);
 }
 
 
@@ -317,7 +316,7 @@ void DMatrix<T_>::add(size_t    i,
                       size_t    j,
                       const T_& val)
 {
-   _a[_nb_cols*(i-1)+j-1] += val;
+   _a[_msize.nb_cols*(i-1)+j-1] += val;
 }
 
 
@@ -325,7 +324,7 @@ template<class T_>
 void DMatrix<T_>::Axpy(T_                 a,
                        const DMatrix<T_>& m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += a*m._a[i];
 }
 
@@ -334,7 +333,7 @@ template<class T_>
 void DMatrix<T_>::Axpy(T_                a,
                        const Matrix<T_>* m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += a * m->_a[i];
 }
 
@@ -363,16 +362,30 @@ int DMatrix<T_>::solveTransQR(const Vect<T_>& b,
 
 
 template<class T_>
+T_ DMatrix<T_>::at(size_t i,
+                   size_t j)
+{
+#ifdef _BOUNDS
+   assert(i>0);
+   assert(i<=_msize.nb_rows);
+   assert(j>0);
+   assert(j<=_msize.nb_cols);
+#endif
+   return _a[_msize.nb_cols*(i-1)+j-1];
+}
+
+
+template<class T_>
 T_ DMatrix<T_>::operator()(size_t i,
                            size_t j) const
 {
 #ifdef _BOUNDS
    assert(i>0);
-   assert(i<=_nb_rows);
+   assert(i<=_msize.nb_rows);
    assert(j>0);
-   assert(j<=_nb_cols);
+   assert(j<=_msize.nb_cols);
 #endif
-   return _a[_nb_cols*(i-1)+j-1];
+   return _a[_msize.nb_cols*(i-1)+j-1];
 }
 
 
@@ -382,17 +395,17 @@ T_& DMatrix<T_>::operator()(size_t i,
 {
 #ifdef _BOUNDS
    assert(i>0);
-   assert(i<=_nb_rows);
+   assert(i<=_msize.nb_rows);
    assert(j>0);
-   assert(j<=_nb_cols);
+   assert(j<=_msize.nb_cols);
 #endif
-   return _a[_nb_cols*(i-1)+j-1];
+   return _a[_msize.nb_cols*(i-1)+j-1];
 }
 
 
 template<class T_>
-void DMatrix<T_>::setGraph(const Vect<RC>& I,
-                           int             opt)
+void DMatrix<T_>::setGraph(const vector<RC>& I,
+                           int               opt)
 { }
 
 
@@ -406,17 +419,17 @@ int DMatrix<T_>::Factor()
 template<class T_>
 int DMatrix<T_>::setLU()
 {
-   for (size_t i=1; i<_size; i++) {
+   for (size_t i=1; i<_msize.size; i++) {
       for (size_t j=1; j<=i; j++) {
-         if (Abs(_a[_nb_rows*(j-1)+j-1]) < OFELI_EPSMCH)
+         if (Abs(_a[_msize.nb_rows*(j-1)+j-1]) < OFELI_EPSMCH)
             throw OFELIException("In DMatrix::setLU(): " + to_string(int(i)) + "-th pivot is null.");
-         _a[_nb_rows*i+j-1] /= _a[_nb_rows*(j-1)+j-1];
+         _a[_msize.nb_rows*i+j-1] /= _a[_msize.nb_rows*(j-1)+j-1];
          for (size_t k=0; k<j; k++)
-            _a[_nb_rows*i+j] -= _a[_nb_rows*i+k]*_a[_nb_rows*k+j];
+            _a[_msize.nb_rows*i+j] -= _a[_msize.nb_rows*i+k]*_a[_msize.nb_rows*k+j];
       }
-      for (size_t j=i+1; j<_size; j++)
+      for (size_t j=i+1; j<_msize.size; j++)
          for (size_t k=0; k<i; k++)
-            _a[_nb_rows*i+j] -= _a[_nb_rows*i+k]*_a[_nb_rows*k+j];
+            _a[_msize.nb_rows*i+j] -= _a[_msize.nb_rows*i+k]*_a[_msize.nb_rows*k+j];
    }
    return 0;
 }
@@ -425,17 +438,17 @@ int DMatrix<T_>::setLU()
 template<class T_>
 int DMatrix<T_>::setTransLU()
 {
-   for (size_t i=1; i<_size; i++) {
+   for (size_t i=1; i<_msize.size; i++) {
       for (size_t j=1; j<=i; j++) {
-         if (Abs(_a[_nb_rows*(i-1)+i-1]) < OFELI_EPSMCH)
+         if (Abs(_a[_msize.nb_rows*(i-1)+i-1]) < OFELI_EPSMCH)
             throw OFELIException("In DMatrix::setTLU(): " + to_string(i) + "-th pivot is null.");
-         _a[_nb_rows*j+i-1] /= _a[_nb_rows*(i-1)+i-1];
+         _a[_msize.nb_rows*j+i-1] /= _a[_msize.nb_rows*(i-1)+i-1];
          for (size_t k=0; k<j; k++)
-            _a[_nb_rows*j+i] -= _a[_nb_rows*k+i]*_a[_nb_rows*j+k];
+            _a[_msize.nb_rows*j+i] -= _a[_msize.nb_rows*k+i]*_a[_msize.nb_rows*j+k];
       }
-      for (size_t j=i+1; j<_size; j++)
+      for (size_t j=i+1; j<_msize.size; j++)
          for (size_t k=0; k<i; k++)
-            _a[_nb_rows*j+i] -= _a[_nb_rows*k+i]*_a[_nb_rows*j+k];
+            _a[_msize.nb_rows*j+i] -= _a[_msize.nb_rows*k+i]*_a[_msize.nb_rows*j+k];
    }
    return 0;
 }
@@ -471,7 +484,7 @@ int DMatrix<T_>::solve(const Vect<T_>& b,
                        bool            fact)
 {
    int ret = 0;
-   if (_nb_rows != _nb_cols) {
+   if (_msize.nb_rows != _msize.nb_cols) {
       setQR();
       ret = solveQR(b,x);
    }
@@ -487,7 +500,7 @@ int DMatrix<T_>::solveTrans(const Vect<T_>& b,
                             bool            fact)
 {
    int ret = 0;
-   if (_nb_rows != _nb_cols)
+   if (_msize.nb_rows != _msize.nb_cols)
       ret = solveTransQR(b,x);
    else
      ret = solveTransLU(b,x,fact);
@@ -512,18 +525,18 @@ int DMatrix<T_>::solveLU(Vect<T_>& b,
    int ret = 0;
    if (fact)
       ret = setLU();
-   for (size_t i=0; i<_size; i++) {
+   for (size_t i=0; i<_msize.size; i++) {
       T_ s = 0;
       for (size_t j=0; j<i; j++)
-         s += _a[_nb_cols*i+j] * b[j];
+         s += _a[_msize.nb_cols*i+j] * b[j];
       b[i] -= s;
    }
-   for (int ii=int(_size)-1; ii>-1; ii--) {
-      if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
+   for (int ii=int(_msize.size)-1; ii>-1; ii--) {
+      if (Abs(_a[_msize.nb_cols*ii+ii])<OFELI_EPSMCH)
          throw OFELIException("In DMatrix::solveLU(Vect<T_>): " + to_string(ii+1) + "-th pivot is null.");
-      b[ii] /= _a[_nb_cols*ii+ii];
+      b[ii] /= _a[_msize.nb_cols*ii+ii];
       for (size_t j=0; j<size_t(ii); j++)
-         b[j] -= b[ii] * _a[_nb_cols*j+ii];
+         b[j] -= b[ii] * _a[_msize.nb_cols*j+ii];
    }
    return ret;
 }
@@ -546,19 +559,19 @@ int DMatrix<T_>::solveTransLU(Vect<T_>& b,
    int ret = 0;
    if (fact)
       ret = setTransLU();
-   for (size_t i=0; i<_size; i++) {
+   for (size_t i=0; i<_msize.size; i++) {
       T_ s=0;
       for (size_t j=0; j<i; j++)
-         s += _a[_nb_cols*j+i] * b[j];
+         s += _a[_msize.nb_cols*j+i] * b[j];
       b[i] -= s;
    }
-   for (int ii=int(_size)-1; ii>-1; ii--) {
-      if (Abs(_a[_nb_cols*ii+ii])<OFELI_EPSMCH)
+   for (int ii=int(_msize.size)-1; ii>-1; ii--) {
+      if (Abs(_a[_msize.nb_cols*ii+ii])<OFELI_EPSMCH)
          throw OFELIException("In DMatrix::solveTransLU(Vect<real_t>): " + to_string(ii+1)
                               + "-th pivot is null.");
-      b[ii] /= _a[_nb_cols*ii+ii];
+      b[ii] /= _a[_msize.nb_cols*ii+ii];
       for (size_t j=0; j<size_t(ii); j++)
-         b[j] -= b[ii] * _a[_nb_cols*ii+j];
+         b[j] -= b[ii] * _a[_msize.nb_cols*ii+j];
    }
    return ret;
 }
@@ -575,7 +588,7 @@ DMatrix<T_>& DMatrix<T_>::operator=(DMatrix<T_>& m)
 template<class T_>
 DMatrix<T_>& DMatrix<T_>::operator+=(const DMatrix<T_>& m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += m._a[i];
    return *this;
 }
@@ -584,7 +597,7 @@ DMatrix<T_>& DMatrix<T_>::operator+=(const DMatrix<T_>& m)
 template<class T_>
 DMatrix<T_>& DMatrix<T_>::operator-=(const DMatrix<T_>& m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] -= -m._a[i];
    return *this;
 }
@@ -593,11 +606,11 @@ DMatrix<T_>& DMatrix<T_>::operator-=(const DMatrix<T_>& m)
 template<class T_>
 DMatrix<T_>& DMatrix<T_>::operator=(const T_& x)
 {
-   if (_nb_rows!=_nb_cols)
+   if (_msize.nb_rows!=_msize.nb_cols)
       throw OFELIException("In DMatrix::operator=(T_): Operator is valid "
                            "for square matrices only.");
    clear(_a);
-   for (size_t i=1; i<=_size; i++) {
+   for (size_t i=1; i<=_msize.size; i++) {
       set(i,i,x);
       _diag[i-1] = x;
    }
@@ -608,7 +621,7 @@ DMatrix<T_>& DMatrix<T_>::operator=(const T_& x)
 template<class T_>
 DMatrix<T_>& DMatrix<T_>::operator*=(const T_& x)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] *= x;
    return *this;
 }
@@ -617,7 +630,7 @@ DMatrix<T_>& DMatrix<T_>::operator*=(const T_& x)
 template<class T_>
 DMatrix<T_>& DMatrix<T_>::operator+=(const T_& x)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += x;
    return *this;
 }
@@ -626,7 +639,7 @@ DMatrix<T_>& DMatrix<T_>::operator+=(const T_& x)
 template<class T_>
 DMatrix<T_>& DMatrix<T_>::operator-=(const T_& x)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] -= x;
    return *this;
 }
@@ -651,41 +664,41 @@ template<class T_>
 T_ DMatrix<T_>::get(size_t i,
                     size_t j) const
 {
-   return _a[_nb_cols*(i-1)+j-1];
+   return _a[_msize.nb_cols*(i-1)+j-1];
 }
 
 
 template<>
 inline int DMatrix<real_t>::setQR()
 {
-   size_t n = std::min(_nb_rows,_nb_cols);
+   size_t n = std::min(_msize.nb_rows,_msize.nb_cols);
    _qr_c.resize(n); OFELI::clear(_qr_c);
    _qr_d.resize(n); OFELI::clear(_qr_d);
    real_t scale = 0;
    for (size_t k=0; k<n; k++) {
-      for (size_t i=k; i<_nb_rows; i++)
-         scale = fmax(scale,fabs(_a[_nb_cols*i+k]));
+      for (size_t i=k; i<_msize.nb_rows; i++)
+         scale = fmax(scale,fabs(_a[_msize.nb_cols*i+k]));
       if (scale==0.0) {
          _qr_c[k] = _qr_d[k] = 0;
          return int(k)+1;
       }
       else {
-         for (size_t i=k; i<_nb_rows; i++)
-            _a[_nb_cols*i+k] /= scale;
+         for (size_t i=k; i<_msize.nb_rows; i++)
+            _a[_msize.nb_cols*i+k] /= scale;
          real_t s = 0;
-         for (size_t i=k; i<_nb_rows; i++)
-            s += _a[_nb_cols*i+k]*_a[_nb_cols*i+k];
-         real_t sigma = sqrt(s)*Sgn(_a[_nb_cols*k+k]);
-         _a[_nb_cols*k+k] += sigma;
-         _qr_c[k] = sigma*_a[_nb_cols*k+k];
+         for (size_t i=k; i<_msize.nb_rows; i++)
+            s += _a[_msize.nb_cols*i+k]*_a[_msize.nb_cols*i+k];
+         real_t sigma = sqrt(s)*Sgn(_a[_msize.nb_cols*k+k]);
+         _a[_msize.nb_cols*k+k] += sigma;
+         _qr_c[k] = sigma*_a[_msize.nb_cols*k+k];
          _qr_d[k] = -scale*sigma;
-         for (size_t j=k+1; j<_nb_cols; j++) {
+         for (size_t j=k+1; j<_msize.nb_cols; j++) {
             real_t s = 0;
-            for (size_t i=k; i<_nb_rows; i++)
-               s += _a[_nb_cols*i+k]*_a[_nb_cols*i+j];
+            for (size_t i=k; i<_msize.nb_rows; i++)
+               s += _a[_msize.nb_cols*i+k]*_a[_msize.nb_cols*i+j];
             real_t tau = s/_qr_c[k];
-            for (size_t i=k; i<_nb_rows; i++)
-               _a[_nb_cols*i+j] -= tau*_a[_nb_cols*i+k];
+            for (size_t i=k; i<_msize.nb_rows; i++)
+               _a[_msize.nb_cols*i+j] -= tau*_a[_msize.nb_cols*i+k];
          }
       }
    }
@@ -699,34 +712,34 @@ inline int DMatrix<real_t>::setQR()
 template<>
 inline int DMatrix<real_t>::setTransQR()
 {
-   size_t n=std::min(_nb_rows,_nb_cols);
+   size_t n=std::min(_msize.nb_rows,_msize.nb_cols);
    _qr_c.resize(n); OFELI::clear(_qr_c);
    _qr_d.resize(n); OFELI::clear(_qr_d);
    real_t scale = 0;
    for (size_t k=0; k<n; k++) {
-      for (size_t i=k; i<_nb_rows; i++)
-         scale = fmax(scale,fabs(_a[_nb_cols*k+i]));
+      for (size_t i=k; i<_msize.nb_rows; i++)
+         scale = fmax(scale,fabs(_a[_msize.nb_cols*k+i]));
       if (scale==0.0) {
          _qr_c[k] = _qr_d[k] = 0;
          return int(k)+1;
       }
       else {
-         for (size_t i=k; i<_nb_rows; i++)
-            _a[_nb_cols*k+i] /= scale;
+         for (size_t i=k; i<_msize.nb_rows; i++)
+            _a[_msize.nb_cols*k+i] /= scale;
          real_t s = 0;
-         for (size_t i=k; i<_nb_rows; i++)
-            s += _a[_nb_cols*k+i]*_a[_nb_cols*k+i];
-         real_t sigma = sqrt(s)*Sgn(_a[_nb_cols*k+k]);
-         _a[_nb_cols*k+k] += sigma;
-         _qr_c[k] = sigma*_a[_nb_cols*k+k];
+         for (size_t i=k; i<_msize.nb_rows; i++)
+            s += _a[_msize.nb_cols*k+i]*_a[_msize.nb_cols*k+i];
+         real_t sigma = sqrt(s)*Sgn(_a[_msize.nb_cols*k+k]);
+         _a[_msize.nb_cols*k+k] += sigma;
+         _qr_c[k] = sigma*_a[_msize.nb_cols*k+k];
          _qr_d[k] = -scale*sigma;
-         for (size_t j=k+1; j<_nb_cols; j++) {
+         for (size_t j=k+1; j<_msize.nb_cols; j++) {
             real_t s = 0;
-            for (size_t i=k; i<_nb_rows; i++)
-               s += _a[_nb_cols*k+i]*_a[_nb_cols*j+i];
+            for (size_t i=k; i<_msize.nb_rows; i++)
+               s += _a[_msize.nb_cols*k+i]*_a[_msize.nb_cols*j+i];
             real_t tau = s/_qr_c[k];
-            for (size_t i=k; i<_nb_rows; i++)
-               _a[_nb_cols*j+i] -= tau*_a[_nb_cols*k+i];
+            for (size_t i=k; i<_msize.nb_rows; i++)
+               _a[_msize.nb_cols*j+i] -= tau*_a[_msize.nb_cols*k+i];
          }
       }
    }
@@ -745,21 +758,21 @@ inline int DMatrix<real_t>::solveQR(const Vect<real_t>& b,
    Vect<real_t> c(b);
    if (_qr_set==0)
       ret = setQR();
-   size_t n=std::min(_nb_rows,_nb_cols);
+   size_t n=std::min(_msize.nb_rows,_msize.nb_cols);
    for (size_t j=0; j<n; j++) {
       real_t s=0;
-      for (size_t i=j; i<_nb_rows; i++)
-         s += _a[_nb_cols*i+j] * c[i];
+      for (size_t i=j; i<_msize.nb_rows; i++)
+         s += _a[_msize.nb_cols*i+j] * c[i];
       real_t t=s/_qr_c[j];
-      for (size_t i=j; i<_nb_rows; i++)
-         c[i] -= t * _a[_nb_cols*i+j];
+      for (size_t i=j; i<_msize.nb_rows; i++)
+         c[i] -= t * _a[_msize.nb_cols*i+j];
    }
 
    x[n-1] = c[n-1]/_qr_d[n-1];
    for (int i=int(n)-2; i>=0; i--) {
       real_t s=0;
       for (size_t j=i; j<n; j++)
-         s += _a[_nb_cols*i+j]*x[j];
+         s += _a[_msize.nb_cols*i+j]*x[j];
       x[i] = (c[i]-s)/_qr_d[i];
    }
    return ret;
@@ -774,21 +787,21 @@ inline int DMatrix<real_t>::solveTransQR(const Vect<real_t>& b,
    Vect<real_t> c(b);
    if (_qr_set==0)
       ret = setQR();
-   size_t n=std::min(_nb_rows,_nb_cols);
+   size_t n=std::min(_msize.nb_rows,_msize.nb_cols);
    for (size_t j=0; j<n; j++) {
       real_t s=0;
-      for (size_t i=j; i<_nb_rows; i++)
-         s += _a[_nb_cols*j+i] * c[i];
+      for (size_t i=j; i<_msize.nb_rows; i++)
+         s += _a[_msize.nb_cols*j+i] * c[i];
       real_t t=s/_qr_c[j];
-      for (size_t i=j; i<_nb_rows; i++)
-         c[i] -= t * _a[_nb_cols*j+i];
+      for (size_t i=j; i<_msize.nb_rows; i++)
+         c[i] -= t * _a[_msize.nb_cols*j+i];
    }
 
    x[n-1] = c[n-1]/_qr_d[n-1];
    for (int i=int(n)-2; i>=0; i--) {
       real_t s=0;
       for (size_t j=i; j<n; j++)
-         s += _a[_nb_cols*j+i]*x[j];
+         s += _a[_msize.nb_cols*j+i]*x[j];
       x[i] = (c[i]-s)/_qr_d[i];
    }
    return ret;

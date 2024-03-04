@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date></date>
+   <author></author>
+</info>
+<Matrix name="B" nb_rows="6" storage="skyline">
+  1     2.0
+  2   -1.0    2.0   1.0
+  3     1.0    0.0   4.0    0.0   3.0
+  2   -1.0    1.0   2.0
+  4   -1.0    5.0   1.0    2.0   2.0   1.0   3.0
+  4     1.0    0.0  -1.0   4.0   1.0   0.0  -1.0
+</Matrix>  
+</OFELI_File>

@@ -1,0 +1,62 @@
+# rita Script file to solve the 2-D incompressible Navier-Stokes equations
+# Time discretization: Second-order projection method
+# Space discretization: Stabilized P1/P1 finite element
+#
+# Generate mesh of a domain with a step
+mesh
+  h1=0.1
+  h2=0.5*h1
+  point  label=1  coord=3.0,0.0   size=h1
+  point  label=2  coord=10.0,0.0  size=h1
+  point  label=3  coord=10.0,3.0  size=h1
+  point  label=4  coord=0.0,3.0   size=h1
+  point  label=5  coord=0.0,1.0   size=h1
+  point  label=6  coord=3.0,1.0   size=h2
+  curve  label=1  line=1,2
+  curve  label=2  line=2,3
+  curve  label=3  line=3,4
+  curve  label=4  line=4,5
+  curve  label=5  line=5,6
+  curve  label=6  line=6,1
+  contour  label=1  curves=1,2,3,4,5,6
+  surface  label=1  contours=1
+  code  value=11  points=1,2,3,4,5,6
+  code  value=11  curves=1,3,5,6
+  code  value=21  curves=4
+  code  value=01  curves=2
+  code  value=01  surfaces=1
+  nbdof 2
+  generate 
+  end
+
+# Save generated mesh in ofeli file
+# The name of the mesh can be retrieved by typing command "data"
+  save name=M-1 file=ex5.m
+#
+# Define model: PDE and discretization method
+pde incompressible-navier-stokes
+  vector v
+  vector p
+  init  value=0.
+  bc  code=1  value=0.
+  bc  code=2  value=(y-1)*(3-y)
+  space feP1
+  scheme builtin
+  time-step 0.02
+  final-time 2.0
+  end
+
+# Save history of results
+  history v V
+  history p P
+  
+# Solve problem
+# Define analysis as transient. Default is stationary or defined by problem definition
+solve analysis=transient
+
+# Save velocity history in gmsh file every 2 time steps
+save name=V file=v.pos format=gmsh every=2
+
+# Save pressure history in vtk files every 3 time steps
+save name=P file=p.pos format=gmsh every=3
+exit

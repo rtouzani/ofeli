@@ -1,0 +1,10 @@
+# rita Script file to practice data approximation
+# We use Lagrange interpolation with 3 points
+# rita creates a Lagrange polynomial
+#
+approximation
+  lagrange file=ex1.dat
+
+# We list data to show the created function
+data
+exit

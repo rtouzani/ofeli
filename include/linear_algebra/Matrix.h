@@ -25,7 +25,6 @@
 
   ==============================================================================*/
 
-
 #ifndef __MATRIX_H
 #define __MATRIX_H
 
@@ -93,6 +92,14 @@ enum Preconditioner {
    SSOR_PREC        = 5    /*!< SSOR preconditioner                                     */
 };
 
+struct MatrixSize {
+   string name;
+   MatrixType mt;
+   size_t size, nb_rows, nb_cols, ld, ud, length;
+   vector<std::pair<size_t,size_t>> IJ;
+   vector<size_t> ch;
+   MatrixSize() { size = nb_rows = nb_cols = length = ld = ud = 0; name = "M"; mt = DENSE; }
+};
  
 /*! \class Matrix
  *  \brief Virtual class to handle matrices for all storage formats.
@@ -140,6 +147,9 @@ class Matrix
 /// \brief Return name of matrix.
     string getName() const;
 
+/// \brief Return storage type
+   MatrixSize getMatrixSize() const { return _msize; }
+
 /// \brief Set Penalty Parameter (For boundary condition prescription).
     void setPenal(real_t p);
 
@@ -185,8 +195,8 @@ class Matrix
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void setName(const string& name);
 
-    virtual void setGraph(const Vect<RC>& I,
-                          int             opt=1) = 0;
+    virtual void setGraph(const vector<RC>& I,
+                          int               opt=1) = 0;
 
     virtual void setMesh(Mesh&  mesh,
                          size_t dof=0) = 0;
@@ -494,6 +504,13 @@ class Matrix
                      size_t    j,
                      const T_& val) = 0;
 
+/** \brief Return a value of a matrix entry
+ *  @param [in] i Row index (starts at 1)
+ *  @param [in] j Column index (starts at 1)
+ */
+    virtual T_ at(size_t i,
+                  size_t j) = 0;
+
 /** \brief Operator () (Non constant version).
  *  \details Returns the <tt>(i,j)</tt> entry of the matrix.
  *  @param [in] i Row index
@@ -576,15 +593,19 @@ class Matrix
 
  protected:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   size_t              _dof_type, _nb_rows, _nb_cols, _size, _dof, _length;
+   size_t              _dof_type, _dof;
    T_                  _zero, _temp;
-   std::vector<size_t> _row_ptr, _col_ind, _ch;
+   std::vector<size_t> _row_ptr, _col_ind;
    real_t              _penal;
    int                 _set_nodes, _set_elements, _set_sides, _is_diagonal;
    Mesh                *_theMesh;
-   string              _name;
+   MatrixSize          _msize;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 };
+
+template<class T_>
+ostream& operator<<(ostream&          s,
+                    const Matrix<T_>* A);
 
 /*! @} End of Doxygen Groups */
 } /* namespace OFELI */

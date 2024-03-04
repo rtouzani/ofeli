@@ -2,7 +2,7 @@
 #
 #                                    O  F  E  L  I
 #
-#                           Object  Finite  Element  Library
+#                          Object  Finite  Element  Library
 #
 # ==============================================================================
 #
@@ -25,7 +25,8 @@
 #
 # ==============================================================================
 #
-#                         cmake for the ofeli project
+#                       cmake for the ofeli project
+#                     including the rita application
 #
 # ==============================================================================
 
@@ -33,6 +34,10 @@
 cmake_minimum_required (VERSION 3.16.0)
 message (STATUS "This is CMake ${CMAKE_VERSION}")
 message (STATUS "")
+message (STATUS "")
+message (STATUS "-----------------------------------------------")
+message (STATUS "Compiling and installing OFELI ...")
+message (STATUS "-----------------------------------------------")
 
 # General information
 
@@ -74,7 +79,7 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if (CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstrict-aliasing")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-overflow")
@@ -97,6 +102,7 @@ set (INSTALL_DOCDIR ${INSTALL_OFELIDIR}/doc)
 set (INSTALL_MATDIR ${INSTALL_OFELIDIR}/material)
 set (INSTALL_DEMODIR ${INSTALL_OFELIDIR}/demos)
 set (INSTALL_UTILDIR ${INSTALL_OFELIDIR}/util)
+set (INSTALL_RITADIR ${CMAKE_INSTALL_PREFIX}/share/rita)
 
 # Define path for material data
 #
@@ -113,6 +119,7 @@ add_subdirectory (src)
 add_subdirectory (include)
 add_subdirectory (demos)
 add_subdirectory (util)
+add_subdirectory (rita)
 include_directories ([${WorkspaceFolder}/include)
 
 # Directories to install
@@ -122,6 +129,7 @@ install (DIRECTORY doc/ DESTINATION ${INSTALL_DOCDIR})
 install (DIRECTORY material/ DESTINATION ${INSTALL_MATDIR})
 install (DIRECTORY demos/ DESTINATION ${INSTALL_DEMODIR})
 install (DIRECTORY util/ DESTINATION ${INSTALL_UTILDIR})
+install (DIRECTORY rita/ DESTINATION ${INSTALL_RITADIR})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h DESTINATION ${INSTALL_INCLUDEDIR})
 
 # uninstall target
@@ -132,5 +140,5 @@ if (NOT TARGET uninstall)
                    IMMEDIATE @ONLY
                   )
 
-  add_custom_target (uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake/uninstall.cmake)
+   add_custom_target (uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake/uninstall.cmake)
 endif ()

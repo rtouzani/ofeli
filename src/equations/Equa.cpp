@@ -695,6 +695,7 @@ void Equa::setInput(EType         opt,
          break;
 
       case EType::BODY_FORCE:
+cout<<"$1"<<endl;
          _bf = &u;
          _terms = (_terms|int(PDE_Terms::BODY_RHS)); 
          break;

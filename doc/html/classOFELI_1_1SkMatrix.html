@@ -114,9 +114,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a333e0e98535bd193df5a7d90af1950de" id="r_a333e0e98535bd193df5a7d90af1950de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkMatrix.html#a333e0e98535bd193df5a7d90af1950de">SkMatrix</a> (<a class="el" href="classOFELI_1_1Mesh.html">Mesh</a> &amp;mesh, size_t dof=0, int is_diagonal=false)</td></tr>
 <tr class="memdesc:a333e0e98535bd193df5a7d90af1950de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor using mesh to initialize skyline structure of matrix.  <br /></td></tr>
 <tr class="separator:a333e0e98535bd193df5a7d90af1950de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a121935e79901139daf7a4576b4f3a2b8" id="r_a121935e79901139daf7a4576b4f3a2b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkMatrix.html#a121935e79901139daf7a4576b4f3a2b8">SkMatrix</a> (const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; size_t &gt; &amp;ColHt)</td></tr>
-<tr class="memdesc:a121935e79901139daf7a4576b4f3a2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes skyline structure of matrix using vector of column heights.  <br /></td></tr>
-<tr class="separator:a121935e79901139daf7a4576b4f3a2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93d87a9e770211f72722752a61c47c51" id="r_a93d87a9e770211f72722752a61c47c51"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkMatrix.html#a93d87a9e770211f72722752a61c47c51">SkMatrix</a> (const vector&lt; size_t &gt; &amp;ColHt)</td></tr>
+<tr class="memdesc:a93d87a9e770211f72722752a61c47c51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes skyline structure of matrix using vector of column heights.  <br /></td></tr>
+<tr class="separator:a93d87a9e770211f72722752a61c47c51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a520953c4bb457c42e419412d8e8e713d" id="r_a520953c4bb457c42e419412d8e8e713d"><td class="memItemLeft" align="right" valign="top"><a id="a520953c4bb457c42e419412d8e8e713d" name="a520953c4bb457c42e419412d8e8e713d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>SkMatrix</b> (const <a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a>&lt; T_ &gt; &amp;m)</td></tr>
 <tr class="memdesc:a520953c4bb457c42e419412d8e8e713d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy Constructor. <br /></td></tr>
@@ -168,6 +168,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setDiag</b> ()</td></
 <tr class="memitem:a35b05dbc139a5adf5a8311aa159a86ca" id="r_a35b05dbc139a5adf5a8311aa159a86ca"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkMatrix.html#a35b05dbc139a5adf5a8311aa159a86ca">getColHeight</a> (size_t i) const</td></tr>
 <tr class="memdesc:a35b05dbc139a5adf5a8311aa159a86ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return column height.  <br /></td></tr>
 <tr class="separator:a35b05dbc139a5adf5a8311aa159a86ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a276ea1877b89d46c32e207248a4573d7" id="r_a276ea1877b89d46c32e207248a4573d7"><td class="memItemLeft" align="right" valign="top">T_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkMatrix.html#a276ea1877b89d46c32e207248a4573d7">at</a> (size_t i, size_t j)</td></tr>
+<tr class="memdesc:a276ea1877b89d46c32e207248a4573d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a value of a matrix entry.  <br /></td></tr>
+<tr class="separator:a276ea1877b89d46c32e207248a4573d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78adc6c13ad0f1d1dedacffe0e80ce63" id="r_a78adc6c13ad0f1d1dedacffe0e80ce63"><td class="memItemLeft" align="right" valign="top">T_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1SkMatrix.html#a78adc6c13ad0f1d1dedacffe0e80ce63">operator()</a> (size_t i, size_t j) const</td></tr>
 <tr class="memdesc:a78adc6c13ad0f1d1dedacffe0e80ce63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator () (Constant version).  <br /></td></tr>
 <tr class="separator:a78adc6c13ad0f1d1dedacffe0e80ce63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,6 +245,10 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNbColumns</b> ()
 string&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const</td></tr>
 <tr class="memdesc:a134d85a189d667e7a481614c1aa67860 inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of matrix. <br /></td></tr>
 <tr class="separator:a134d85a189d667e7a481614c1aa67860 inherit pub_methods_classOFELI_1_1Matrix"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5884b405cb5be2e811eda5c3038b0c8 inherit pub_methods_classOFELI_1_1Matrix" id="r_ac5884b405cb5be2e811eda5c3038b0c8"><td class="memItemLeft" align="right" valign="top">
+MatrixSize&#160;</td><td class="memItemRight" valign="bottom"><b>getMatrixSize</b> () const</td></tr>
+<tr class="memdesc:ac5884b405cb5be2e811eda5c3038b0c8 inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return storage type. <br /></td></tr>
+<tr class="separator:ac5884b405cb5be2e811eda5c3038b0c8 inherit pub_methods_classOFELI_1_1Matrix"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72077468b17118c44394d286f7737bd4 inherit pub_methods_classOFELI_1_1Matrix" id="r_a72077468b17118c44394d286f7737bd4"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setPenal</b> (real_t p)</td></tr>
 <tr class="memdesc:a72077468b17118c44394d286f7737bd4 inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Penalty Parameter (For boundary condition prescription). <br /></td></tr>
@@ -477,8 +484,8 @@ template&lt;class T_ &gt; </div>
 
 </div>
 </div>
-<a id="a121935e79901139daf7a4576b4f3a2b8" name="a121935e79901139daf7a4576b4f3a2b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a121935e79901139daf7a4576b4f3a2b8">&#9670;&#160;</a></span>SkMatrix() <span class="overload">[4/4]</span></h2>
+<a id="a93d87a9e770211f72722752a61c47c51" name="a93d87a9e770211f72722752a61c47c51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93d87a9e770211f72722752a61c47c51">&#9670;&#160;</a></span>SkMatrix() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -488,7 +495,7 @@ template&lt;class T_ &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classOFELI_1_1SkMatrix.html">SkMatrix</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; size_t &gt; &amp;&#160;</td>
+          <td class="paramtype">const vector&lt; size_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>ColHt</em></td><td>)</td>
           <td></td>
         </tr>
@@ -559,6 +566,55 @@ template&lt;class T_ &gt; </div>
 </dl>
 
 <p>Implements <a class="el" href="classOFELI_1_1Matrix.html#a8afb24c3d7982f994ea2c4a50444ed86">Matrix&lt; T_ &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a276ea1877b89d46c32e207248a4573d7" name="a276ea1877b89d46c32e207248a4573d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a276ea1877b89d46c32e207248a4573d7">&#9670;&#160;</a></span>at()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T_ &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T_ at </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return a value of a matrix entry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Row index (starts at 1) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">j</td><td>Column index (starts at 1) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classOFELI_1_1Matrix.html#aceb1c3981384a95d694c5d5d837a693f">Matrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>

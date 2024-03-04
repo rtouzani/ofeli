@@ -97,7 +97,7 @@ void Elas2DT3::set(const Element* el)
    _dSh = tr.DSh();
    ElementNodeCoordinates();
    ElementNodeVector(*_u,_eu);
-   if (Equa::_bf!=nullptr)
+   if (_terms&int(PDE_Terms::SOURCE) && Equa::_bf!=nullptr)
       ElementNodeVector(*_bf,_ebf);
    if (_rho_set)
       _rho = _rho_fct(_el_geo.center,_TimeInt.time);

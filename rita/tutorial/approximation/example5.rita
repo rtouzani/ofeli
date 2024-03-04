@@ -1,0 +1,7 @@
+# rita Script file to practice data approximation
+# We use bezier approximation where polygon vertices are stored in file
+#
+approximation
+  bezier file=ex4.dat np=21
+data
+exit

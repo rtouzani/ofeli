@@ -55,6 +55,7 @@ template<class T_>
 SpMatrix<T_>::SpMatrix()
              : _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _max_it = 1000;
    _toler = 1.e-8;
    _is_diagonal = 0;
@@ -66,26 +67,27 @@ SpMatrix<T_>::SpMatrix(size_t nr,
                        size_t nc)
              : _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = 0;
-   _nb_rows = nr;
-   _nb_cols = nc;
-   _size = 0;
-   if (_nb_rows==_nb_cols)
-      _size = _nb_rows;
-   _length = _nb_rows*_nb_cols;
+   _msize.nb_rows = nr;
+   _msize.nb_cols = nc;
+   _msize.size = 0;
+   if (_msize.nb_rows==_msize.nb_cols)
+      _msize.size = _msize.nb_rows;
+   _msize.length = _msize.nb_rows*_msize.nb_cols;
 #ifdef USE_EIGEN
-   _A.resize(_nb_rows,_nb_cols);
+   _A.resize(_msize.nb_rows,_msize.nb_cols);
 #else
-   _row_ptr.resize(_nb_rows+1);
-   _col_ind.resize(_length);
+   _row_ptr.resize(_msize.nb_rows+1);
+   _col_ind.resize(_msize.length);
    _row_ptr[0] = 0;
-   for (size_t i=0; i<_nb_rows; i++)
-      _row_ptr[i+1] = _row_ptr[i] + _nb_cols;
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      _row_ptr[i+1] = _row_ptr[i] + _msize.nb_cols;
    size_t l=0;
-   for (size_t i=0; i<_nb_rows; i++)
-      for (size_t j=0; j<_nb_cols; j++)
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      for (size_t j=0; j<_msize.nb_cols; j++)
          _col_ind[l++] = j+1;
-   _a.resize(_length,T_(0.));
+   _a.resize(_msize.length,T_(0.));
 #endif
    _max_it = 1000;
    _toler = 1.e-8;
@@ -97,22 +99,23 @@ SpMatrix<T_>::SpMatrix(size_t size,
                        int    is_diagonal)
              : _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = is_diagonal;
-   _size = _nb_rows = _nb_cols = size;
+   _msize.nb_rows = _msize.nb_cols = _msize.size = size;
 #ifdef USE_EIGEN
-   _A.resize(_nb_rows,_nb_cols);
+   _A.resize(_msize.nb_rows,_msize.nb_cols);
 #else
-   _length = _size*_size;
-   _row_ptr.resize(_nb_rows+1);
-   _col_ind.resize(_length);
+   _msize.length = _msize.size*_msize.size;
+   _row_ptr.resize(_msize.nb_rows+1);
+   _col_ind.resize(_msize.length);
    _row_ptr[0] = 0;
-   for (size_t i=0; i<_nb_rows; i++)
-      _row_ptr[i+1] = _row_ptr[i] + _nb_cols;
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      _row_ptr[i+1] = _row_ptr[i] + _msize.nb_cols;
    size_t l = 0;
-   for (size_t i=0; i<_nb_rows; i++)
-      for (size_t j=0; j<_nb_cols; j++)
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      for (size_t j=0; j<_msize.nb_cols; j++)
          _col_ind[l++] = j+1;
-   _a.resize(_length,T_(0.));
+   _a.resize(_msize.length,T_(0.));
 #endif
    _max_it = 1000;
    _toler = 1.e-8;
@@ -125,6 +128,7 @@ SpMatrix<T_>::SpMatrix(Mesh&  mesh,
                        int    is_diagonal)
              : _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = is_diagonal;
    setMesh(mesh,dof);
    _max_it = 1000;
@@ -138,6 +142,7 @@ SpMatrix<T_>::SpMatrix(size_t dof,
                        int    code)
              : _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = false;
    setMesh(dof,mesh,mesh.getDOFSupport());
    _max_it = 1000;
@@ -151,6 +156,7 @@ SpMatrix<T_>::SpMatrix(size_t dof,
                        Mesh&  mesh)
              : _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = false;
    setMesh(dof,nb_eq,mesh);
    _max_it = 1000;
@@ -160,10 +166,11 @@ SpMatrix<T_>::SpMatrix(size_t dof,
 
 #ifndef USE_EIGEN
 template<class T_>
-SpMatrix<T_>::SpMatrix(const Vect<RC>& I,
-                       int             opt)
+SpMatrix<T_>::SpMatrix(const vector<RC>& I,
+                       int               opt)
              : _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = false;
    setGraph(I,opt);
    _max_it = 1000;
@@ -173,31 +180,31 @@ SpMatrix<T_>::SpMatrix(const Vect<RC>& I,
 
 #ifndef USE_EIGEN
 template<class T_>
-SpMatrix<T_>::SpMatrix(const Vect<RC>& I,
-                       const Vect<T_>& a,
-                       int             opt)
+SpMatrix<T_>::SpMatrix(const vector<RC>& I,
+                       const Vect<T_>&   a,
+                       int               opt)
              : _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = false;
    size_t n=I.size();
-   _nb_rows = _nb_cols = 0;
    for (size_t i=0; i<n; i++) {
-      _nb_rows = std::max(_nb_rows,I[i].first);
-      _nb_cols = std::max(_nb_cols,I[i].second);
-      _IJ.push_back(RC(I[i].first-1,I[i].second-1));
+      _msize.nb_rows = std::max(_msize.nb_rows,I[i].first);
+      _msize.nb_cols = std::max(_msize.nb_cols,I[i].second);
+      _msize.IJ.push_back(RC(I[i].first-1,I[i].second-1));
    }
-   if (_nb_rows==_nb_cols)
-      _size = _nb_rows;
+   if (_msize.nb_rows==_msize.nb_cols)
+      _msize.size = _msize.nb_rows;
    if (opt==0) {
-      sort(_IJ.begin(),_IJ.end());
-      vector<RC>::iterator new_end=unique(_IJ.begin(),_IJ.end());
-      _IJ.erase(new_end,_IJ.end());
+      sort(_msize.IJ.begin(),_msize.IJ.end());
+      vector<RC>::iterator new_end=unique(_msize.IJ.begin(),_msize.IJ.end());
+      _msize.IJ.erase(new_end,_msize.IJ.end());
    }
-   _row_ptr.resize(_size+1);
+   _row_ptr.resize(_msize.size+1);
    _col_ind.resize(n);
-   StoreGraph(_size,_IJ,_row_ptr,_col_ind);
-   _length = _IJ.size();
-   _a.resize(_length);
+   StoreGraph(_msize.size,_msize.IJ,_row_ptr,_col_ind);
+   _msize.length = _msize.IJ.size();
+   _a.resize(_msize.length);
    for (size_t j=0; j<n; j++)
       _a[_row_ptr[I[j].first-1]+_col_index(I[j].first,I[j].second)] = a[j];
    _max_it = 1000;
@@ -213,17 +220,18 @@ SpMatrix<T_>::SpMatrix(size_t                nr,
                        const vector<size_t>& col_ind)
              : _type(0), _dof(0), _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = false;
-   _nb_rows = nr;
-   _nb_cols = nc;
-   _size = 0;
-   _length = col_ind.size();
-   _row_ptr.resize(_nb_rows+1);
+   _msize.nb_rows = nr;
+   _msize.nb_cols = nc;
+   _msize.size = 0;
+   _msize.length = col_ind.size();
+   _row_ptr.resize(_msize.nb_rows+1);
    _row_ptr = row_ptr;
-   _col_ind.resize(_length);
+   _col_ind.resize(_msize.length);
    _col_ind = col_ind;
-   _a.resize(_length,T_(0.));
-   _diag.resize(_size);
+   _a.resize(_msize.length,T_(0.));
+   _diag.resize(_msize.size);
    _max_it = 1000;
    _toler = 1.e-8;
 }
@@ -238,17 +246,19 @@ SpMatrix<T_>::SpMatrix(size_t                nr,
                        const vector<T_>&     a)
              : _type(0), _dof(0), _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = false;
-   _size = 0;
-   _nb_rows = nr; _nb_cols = nc;
-   _length = col_ind.size();
-   _row_ptr.resize(_nb_rows+1);
+   _msize.size = 0;
+   _msize.nb_rows = nr;
+   _msize.nb_cols = nc;
+   _msize.length = col_ind.size();
+   _row_ptr.resize(_msize.nb_rows+1);
    _row_ptr = row_ptr;
-   _col_ind.resize(_length);
+   _col_ind.resize(_msize.length);
    _col_ind = col_ind;
-   _a.resize(_length);
+   _a.resize(_msize.length);
    _a = a;
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
    _max_it = 1000;
    _toler = 1.e-8;
 }
@@ -260,15 +270,16 @@ SpMatrix<T_>::SpMatrix(const vector<size_t>& row_ptr,
                        const vector<size_t>& col_ind)
              : _type(0), _dof(0), _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = false;
-   _size = _nb_rows = _nb_cols = row_ptr.size()-1;
-   _length = col_ind.size();
-   _row_ptr.resize(_size+1);
+   _msize.nb_rows = _msize.nb_cols = _msize.size = row_ptr.size()-1;
+   _msize.length = col_ind.size();
+   _row_ptr.resize(_msize.size+1);
    _row_ptr = row_ptr;
-   _col_ind.resize(_length);
+   _col_ind.resize(_msize.length);
    _col_ind = col_ind;
-   _a.resize(_length,T_(0.));
-   _diag.resize(_size);
+   _a.resize(_msize.length,T_(0.));
+   _diag.resize(_msize.size);
    _max_it = 1000;
    _toler = 1.e-8;
 }
@@ -281,16 +292,17 @@ SpMatrix<T_>::SpMatrix(const vector<size_t>& row_ptr,
                        const vector<T_>&     a)
              : _type(0), _dof(0), _is_dense(0), _extended(0), _solver(DIRECT_SOLVER), _prec(IDENT_PREC)
 {
+   _msize.mt = SPARSE;
    _is_diagonal = false;
-   _size = _nb_rows = _nb_cols = row_ptr.size()-1;
-   _length = col_ind.size();
-   _row_ptr.resize(_size+1);
+   _msize.nb_rows = _msize.nb_cols = _msize.size = row_ptr.size()-1;
+   _msize.length = col_ind.size();
+   _row_ptr.resize(_msize.size+1);
    _row_ptr = row_ptr;
-   _col_ind.resize(_length);
+   _col_ind.resize(_msize.length);
    _col_ind = col_ind;
-   _a.resize(_length);
+   _a.resize(_msize.length);
    _a = a;
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
    _max_it = 1000;
    _toler = 1.e-8;
 }
@@ -300,24 +312,23 @@ SpMatrix<T_>::SpMatrix(const vector<size_t>& row_ptr,
 template<class T_>
 SpMatrix<T_>::SpMatrix(const SpMatrix& m)
 {
+   _msize = m._msize;
    _is_diagonal = m._is_diagonal;
    _dof = m._dof;
-   _size = m._size;
    _is_dense = m._is_dense;
    _extended = m._extended;
 #ifdef USE_EIGEN
-   if (_nb_rows)
-      _A.resize(_nb_rows,_nb_cols);
+   if (_msize.nb_rows)
+      _A.resize(_msize.nb_rows,_msize.nb_cols);
 #else
-   _length = m._length;
-   _row_ptr.resize(_size+1);
-   _col_ind.resize(_length);
+   _row_ptr.resize(_msize.size+1);
+   _col_ind.resize(_msize.length);
    _col_ind = m._col_ind;
    _row_ptr = m._row_ptr;
-   _a.resize(_length);
+   _a.resize(_msize.length);
    _a = m._a;
 #endif
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
    _diag = m._diag;
    _solver = -1;
    _prec = -1;
@@ -340,8 +351,8 @@ void SpMatrix<T_>::Dense()
 {
    _is_dense = 1;
 #ifdef USE_EIGEN
-   _length = _nb_rows*_nb_cols;
-   _A.reserve(_length);
+   _msize.length = _msize.nb_rows*_msize.nb_cols;
+   _A.reserve(_msize.length);
    clear();
 #endif
 }
@@ -351,11 +362,11 @@ template<class T_>
 void SpMatrix<T_>::Identity()
 {
 #ifdef USE_EIGEN
-   _A.reserve(_length);
-   for (size_t i=0; i<_nb_rows; i++)
+   _A.reserve(_msize.length);
+   for (size_t i=0; i<_msize.nb_rows; i++)
       _A.coeffRef(i,i) = static_cast<T_>(1.);
 #else
-   for (size_t i=0; i<_nb_rows; ++i) {
+   for (size_t i=0; i<_msize.nb_rows; ++i) {
       for (size_t j=0; j<_row_ptr[i+1]-_row_ptr[i]; ++j)
          _a[_row_ptr[i]+j-1] = static_cast<T_>(0.);
       _a[_row_ptr[i]+i-1] = static_cast<T_>(1.);
@@ -370,12 +381,12 @@ void SpMatrix<T_>::Diagonal()
    _is_dense = 0;
    _is_diagonal = 1;
 #ifdef USE_EIGEN
-   _length = _nb_rows;
-   _A.reserve(_length);
-   for (size_t i=0; i<_nb_rows; i++)
+   _msize.length = _msize.nb_rows;
+   _A.reserve(_msize.length);
+   for (size_t i=0; i<_msize.nb_rows; i++)
       _A.insert(i,i) = 0;
 #else
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] = static_cast<T_>(0);
 #endif
 }
@@ -385,11 +396,11 @@ template<class T_>
 void SpMatrix<T_>::Diagonal(const T_& a)
 {
 #ifdef USE_EIGEN
-   _A.reserve(_length);
-   for (size_t i=0; i<_nb_rows; i++)
+   _A.reserve(_msize.length);
+   for (size_t i=0; i<_msize.nb_rows; i++)
       _A.coeffRef(i,i) = a;
 #else
-   for (size_t i=0; i<_nb_rows; ++i) {
+   for (size_t i=0; i<_msize.nb_rows; ++i) {
       for (size_t j=0; j<_row_ptr[i+1]-_row_ptr[i]; ++j)
          _a[_row_ptr[i]+j-1] = 0;
       _a[_row_ptr[i]+i-1] = a;
@@ -404,11 +415,11 @@ inline void SpMatrix<real_t>::Laplace2D(size_t nx,
 {
    _is_dense = 0;
    _is_diagonal = 0;
-   _size = _nb_rows = _nb_cols = nx*ny;
+   _msize.size = _msize.nb_rows = _msize.nb_cols = nx*ny;
 #ifdef USE_EIGEN
-   _length = 5*_size;
-   _A.reserve(_length);
-   for (size_t ii=0; ii<_size; ii++) {
+   _msize.length = 5*_msize.size;
+   _A.reserve(_msize.length);
+   for (size_t ii=0; ii<_msize.size; ii++) {
       _A.insert(ii,ii) =  4.;
       size_t i=ii/ny, j=ii-i*ny;
       if (i>0)
@@ -422,33 +433,33 @@ inline void SpMatrix<real_t>::Laplace2D(size_t nx,
    }
 #else
    _row_ptr.push_back(0);
-   _length = 0;
-   for (size_t ii=0; ii<_size; ii++) {
+   _msize.length = 0;
+   for (size_t ii=0; ii<_msize.size; ii++) {
       size_t i=ii/ny, j=ii-i*ny;
       if (i>0) {
          _a.push_back(-1.);
          _col_ind.push_back(ii-ny+1);
-         _length++;
+         _msize.length++;
       }
       if (j>0) {
          _a.push_back(-1.);
          _col_ind.push_back(ii);
-         _length++;
+         _msize.length++;
       }
       _a.push_back(4.);
       _col_ind.push_back(ii+1);
-      _length++;
+      _msize.length++;
       if (j<ny-1) {
          _a.push_back(-1.);
          _col_ind.push_back(ii+2);
-         _length++;
+         _msize.length++;
       }
       if (i<nx-1) {
          _a.push_back(-1.);
          _col_ind.push_back(ii+ny+1);
-         _length++;
+         _msize.length++;
       }
-      _row_ptr.push_back(_length);
+      _row_ptr.push_back(_msize.length);
    }
 #endif
 }
@@ -462,48 +473,49 @@ void SpMatrix<T_>::setMesh(Mesh&  mesh,
    Matrix<T_>::init_set_mesh(mesh,dof);
    if (_dof_type==NODE_DOF) {
       if (_extended)
-         _length = XGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+         _msize.length = XGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
       else if (dof)
-         _length = NodeGraphScal(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+         _msize.length = NodeGraphScal(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
       else
-         _length = NodeGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+         _msize.length = NodeGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
    }
    else if (_dof_type==SIDE_DOF)
-      _length = SideGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+      _msize.length = SideGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
    else if (_dof_type==ELEMENT_DOF)
-      _length = ElementGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+      _msize.length = ElementGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
    else
       ;
 #ifdef USE_EIGEN
-   _A.resize(_size,_size);
+   _A.resize(_msize.size,_msize.size);
    _A.reserve(_nbc);
    clear();
 #else
-   _a.resize(_length,static_cast<T_>(0));
+   _a.resize(_msize.length,static_cast<T_>(0));
 #endif
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
 }
+
 
 template<class T_>
 void SpMatrix<T_>::setMesh(size_t dof,
                            Mesh&  mesh,
                            int    code)
 {
-   _size = _nb_rows = _nb_cols = mesh.getNbEq();
+   _msize.nb_rows = _msize.nb_cols = _msize.size = mesh.getNbEq();
    if (dof)
-      _size = _nb_rows = _nb_cols = mesh.getNbNodes();
+      _msize.nb_rows = _msize.nb_cols = _msize.size = mesh.getNbNodes();
    if (code!=0)
-      _length = XGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+      _msize.length = XGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
    else
-      _length = NodeGraphScal(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+      _msize.length = NodeGraphScal(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
 #ifdef USE_EIGEN
-   _A.resize(_size,_size);
+   _A.resize(_msize.size,_msize.size);
    _A.reserve(_nbc);
    clear();
 #else
-   _a.resize(_length,T_(0.));
+   _a.resize(_msize.length,T_(0.));
 #endif
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
 }
 
 
@@ -514,16 +526,16 @@ void SpMatrix<T_>::setMesh(size_t dof,
 {
    _type = 0;
    _dof = 0;
-   _size = _nb_rows = _nb_cols = nb_eq;
-   _length = NodeGraphScal(mesh,dof,nb_eq,_row_ptr,_col_ind,_IJ,_nbc);
+   _msize.nb_rows = _msize.nb_cols = _msize.size = nb_eq;
+   _msize.length = NodeGraphScal(mesh,dof,nb_eq,_row_ptr,_col_ind,_msize.IJ,_nbc);
 #ifdef USE_EIGEN
-   _A.resize(_size,_size);
+   _A.resize(_msize.size,_msize.size);
    _A.reserve(_nbc);
    clear();
 #else
-   _a.resize(_length,T_(0.));
+   _a.resize(_msize.length,T_(0.));
 #endif
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
 }
 
 
@@ -536,26 +548,26 @@ void SpMatrix<T_>::setMesh(Mesh&  mesh,
    Matrix<T_>::init_set_mesh(mesh,dof);
    if (_dof_type==NODE_DOF) {
       if (type && dof)
-         _length = XGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+         _msize.length = XGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
       else if (dof)
-         _length = NodeGraphScal(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+         _msize.length = NodeGraphScal(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
       else if (type==0 && dof==0)
-         _length = NodeGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+         _msize.length = NodeGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
    }
    else if (_dof_type==SIDE_DOF)
-      _length = SideGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+      _msize.length = SideGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
    else if (_dof_type==ELEMENT_DOF)
-      _length = ElementGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+      _msize.length = ElementGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
    else
       ;
 #ifdef USE_EIGEN
-   _A.resize(_size,_size);
+   _A.resize(_msize.size,_msize.size);
    _A.reserve(_nbc);
    clear();
 #else
-   _a.resize(_length,T_(0.));
+   _a.resize(_msize.length,T_(0.));
 #endif
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
 }
 
 
@@ -584,10 +596,10 @@ template<class T_>
 void SpMatrix<T_>::setDiag()
 {
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_nb_rows; i++)
+   for (size_t i=0; i<_msize.nb_rows; i++)
       _diag[i] = _A.coeff(i,i);
 #else
-   for (size_t i=0; i<_size; i++) {
+   for (size_t i=0; i<_msize.size; i++) {
       for (size_t j=0; j<_row_ptr[i+1]-_row_ptr[i]; j++) {
          if (i==j) {
             _diag[i] = _a[_row_ptr[i]+i-1];
@@ -604,8 +616,8 @@ void SpMatrix<T_>::DiagPrescribe(Mesh&           mesh,
                                  Vect<T_>&       b,
                                  const Vect<T_>& u)
 {
-   real_t p = _zero;
-   for (size_t j=1; j<=_nb_rows; j++)
+   real_t p = 0.;
+   for (size_t j=1; j<=_msize.nb_rows; j++)
       p = std::max(p,Abs(get(j,j)));
 #if !defined(USE_EIGEN)
    size_t k=0;
@@ -631,7 +643,7 @@ void SpMatrix<T_>::DiagPrescribe(Vect<T_>&       b,
 {
 #if !defined(USE_EIGEN)
    real_t p = 0;
-   for (size_t j=1; j<=_nb_rows; j++)
+   for (size_t j=1; j<=_msize.nb_rows; j++)
       p = std::max(p,Abs(get(j,j)));
    size_t k=0;
    MESH_ND {
@@ -653,21 +665,21 @@ void SpMatrix<T_>::DiagPrescribe(Vect<T_>&       b,
 template<class T_>
 void SpMatrix<T_>::setSize(size_t size)
 {
-   _nb_rows = _nb_cols = _size = size;
+   _msize.nb_rows = _msize.nb_cols = _msize.size = size;
 #ifdef USE_EIGEN
    _A.resize(size,size);
 #else
-   _length = lsize_t(_nb_rows*_nb_cols);
-   _row_ptr.resize(_nb_rows+1);
-   _col_ind.resize(_length);
+   _msize.length = lsize_t(_msize.nb_rows*_msize.nb_cols);
+   _row_ptr.resize(_msize.nb_rows+1);
+   _col_ind.resize(_msize.length);
    _row_ptr[0] = 0;
-   for (size_t i=1; i<=_nb_rows; i++)
-      _row_ptr[i] = _row_ptr[i-1] + _nb_cols;
+   for (size_t i=1; i<=_msize.nb_rows; i++)
+      _row_ptr[i] = _row_ptr[i-1] + _msize.nb_cols;
    size_t l = 0;
-   for (size_t i=0; i<_nb_rows; i++)
-      for (size_t j=0; j<_nb_cols; j++)
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      for (size_t j=0; j<_msize.nb_cols; j++)
          _col_ind[l++] = j+1;
-   _a.resize(_length,T_(0.));
+   _a.resize(_msize.length,T_(0.));
 #endif
 }
 
@@ -676,58 +688,58 @@ template<class T_>
 void SpMatrix<T_>::setSize(size_t nr,
                            size_t nc)
 {
-   _nb_rows = nr;
-   _nb_cols = nc;
-   _size = 0;
-   if (_nb_rows==_nb_cols)
-      _size = _nb_rows;
-   _length = lsize_t(_nb_rows*_nb_cols);
+   _msize.nb_rows = nr;
+   _msize.nb_cols = nc;
+   _msize.size = 0;
+   if (_msize.nb_rows==_msize.nb_cols)
+      _msize.size = _msize.nb_rows;
+   _msize.length = lsize_t(_msize.nb_rows*_msize.nb_cols);
 #ifdef USE_EIGEN
    _A.resize(nr,nc);
 #else
-   _row_ptr.resize(_nb_rows+1);
-   _col_ind.resize(_length);
+   _row_ptr.resize(_msize.nb_rows+1);
+   _col_ind.resize(_msize.length);
    _row_ptr[0] = 1;
-   for (size_t i=1; i<=_nb_rows; i++)
-      _row_ptr[i] = _row_ptr[i-1] + _nb_cols;
+   for (size_t i=1; i<=_msize.nb_rows; i++)
+      _row_ptr[i] = _row_ptr[i-1] + _msize.nb_cols;
    size_t l = 0;
-   for (size_t i=0; i<_nb_rows; i++)
-      for (size_t j=0; j<_nb_cols; j++)
+   for (size_t i=0; i<_msize.nb_rows; i++)
+      for (size_t j=0; j<_msize.nb_cols; j++)
          _col_ind[l++] = j + 1;
-   _a.resize(_length,T_(0.));
+   _a.resize(_msize.length,T_(0.));
 #endif
 }
 
 
 template<class T_>
-void SpMatrix<T_>::setGraph(const Vect<RC>& I,
-                            int             opt)
+void SpMatrix<T_>::setGraph(const vector<RC>& I,
+                            int               opt)
 {
-   _length = I.size();
-   _nb_rows = _nb_cols = 0;
-   _IJ.resize(_length);
-   for (size_t i=0; i<_length; i++) {
-      _nb_rows = std::max(_nb_rows,I[i].first);
-      _nb_cols = std::max(_nb_cols,I[i].second);
-      _IJ[i] = RC(I[i].first-1,I[i].second-1);
+   _msize.length = I.size();
+   _msize.nb_rows = _msize.nb_cols = 0;
+   _msize.IJ.resize(_msize.length);
+   for (size_t i=0; i<_msize.length; i++) {
+      _msize.nb_rows = std::max(_msize.nb_rows,I[i].first);
+      _msize.nb_cols = std::max(_msize.nb_cols,I[i].second);
+      _msize.IJ[i] = RC(I[i].first-1,I[i].second-1);
    }
-   _size = _nb_rows;
+   _msize.size = _msize.nb_rows;
    if (opt==0) {
-      sort(_IJ.begin(),_IJ.end());
-      vector<RC>::iterator new_end = unique(_IJ.begin(),_IJ.end());
-      _IJ.erase(new_end,_IJ.end());
+      sort(_msize.IJ.begin(),_msize.IJ.end());
+      vector<RC>::iterator new_end = unique(_msize.IJ.begin(),_msize.IJ.end());
+      _msize.IJ.erase(new_end,_msize.IJ.end());
    }
-   _length = _IJ.size();
-   _row_ptr.resize(_size+1);
-   _col_ind.resize(_length);
-   StoreGraph(_IJ,_row_ptr,_col_ind);
+   _msize.length = _msize.IJ.size();
+   _row_ptr.resize(_msize.size+1);
+   _col_ind.resize(_msize.length);
+   StoreGraph(_msize.IJ,_row_ptr,_col_ind);
 #ifdef USE_EIGEN
    for (size_t i=0; i<_row_ptr.size()-1; i++)
       _nbc.push_back(_row_ptr[i+1]-_row_ptr[i]);
    _A.reserve(_nbc);
    clear();
 #else
-   _a.resize(_length,0);
+   _a.resize(_msize.length,0);
 #endif
 }
 
@@ -735,15 +747,15 @@ void SpMatrix<T_>::setGraph(const Vect<RC>& I,
 template<class T_>
 Vect<T_> SpMatrix<T_>::getRow(size_t i) const
 {
-   Vect<T_> v(_nb_cols);
+   Vect<T_> v(_msize.nb_cols);
 #ifdef USE_EIGEN
    size_t j=0;
-   for (size_t k=0; k<_length; k++) {
-      if (_IJ[k].first==i-1)
-         v[j++] = _A.coeff(_IJ[k].first,_IJ[k].second);
+   for (size_t k=0; k<_msize.length; k++) {
+      if (_msize.IJ[k].first==i-1)
+         v[j++] = _A.coeff(_msize.IJ[k].first,_msize.IJ[k].second);
    }
 #else
-   for (size_t j=1; j<=_nb_cols; j++)
+   for (size_t j=1; j<=_msize.nb_cols; j++)
       v(j) = get(i,j);
 #endif
    return v;
@@ -753,18 +765,34 @@ Vect<T_> SpMatrix<T_>::getRow(size_t i) const
 template<class T_>
 Vect<T_> SpMatrix<T_>::getColumn(size_t j) const
 {
-   Vect<T_> v(_nb_rows);
+   Vect<T_> v(_msize.nb_rows);
 #ifdef USE_EIGEN
    size_t i=0;
-   for (size_t k=0; k<_length; k++) {
-      if (_IJ[k].second==j-1)
-         v[i++] = _A.coeff(_IJ[k].first,_IJ[k].second);
+   for (size_t k=0; k<_msize.length; k++) {
+      if (_msize.IJ[k].second==j-1)
+         v[i++] = _A.coeff(_msize.IJ[k].first,_msize.IJ[k].second);
    }
 #else
-   for (size_t i=1; i<=_nb_rows; i++)
+   for (size_t i=1; i<=_msize.nb_rows; i++)
       v(i) = get(i,j);
 #endif
    return v;
+}
+
+
+template<class T_>
+T_ SpMatrix<T_>::at(size_t i,
+                    size_t j)
+{
+#ifdef USE_EIGEN
+   return _A.coeffRef(i-1,j-1);
+#else
+   int k=_col_index(i,j);
+   if (k<0)
+      return static_cast<T_>(0);
+   else
+      return _a[_row_ptr[i-1]+k];
+#endif
 }
 
 
@@ -795,7 +823,7 @@ T_ SpMatrix<T_>::operator()(size_t i,
 #else
    int k=_col_index(i,j);
    if (k<0)
-      return _zero;
+      return static_cast<T_>(0);
    else
       return _a[_row_ptr[i-1]+k];
 #endif
@@ -813,11 +841,11 @@ T_ SpMatrix<T_>::operator[](size_t i) const { return _a[i]; }
 template<class T_>
 Vect<T_> SpMatrix<T_>::operator*(const Vect<T_>& x) const
 {
-   Vect<T_> y(_nb_rows);
+   Vect<T_> y(_msize.nb_rows);
    y.clear();
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_length; i++)
-      y[_IJ[i].first] += _A.coeff(_IJ[i].first,_IJ[i].second)*x[_IJ[i].second];
+   for (size_t i=0; i<_msize.length; i++)
+      y[_msize.IJ[i].first] += _A.coeff(_msize.IJ[i].first,_msize.IJ[i].second)*x[_msize.IJ[i].second];
 #else
    Mult(x,y);
 #endif
@@ -829,10 +857,10 @@ template<class T_>
 SpMatrix<T_>& SpMatrix<T_>::operator*=(const T_& a)
 {
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_length; i++)
-      _A.coeffRef(_IJ[i].first,_IJ[i].second) *= a;
+   for (size_t i=0; i<_msize.length; i++)
+      _A.coeffRef(_msize.IJ[i].first,_msize.IJ[i].second) *= a;
 #else
-   for (size_t k=0; k<_length; ++k)
+   for (size_t k=0; k<_msize.length; ++k)
       _a[k] *= a;
 #endif
    return *this;
@@ -847,18 +875,18 @@ void SpMatrix<T_>::getMesh(Mesh& mesh)
        SideGraph(mesh,_row_ptr,_col_ind);
    else {
        if (_dof)
-          _size = _nb_rows = _nb_cols = mesh.getNbNodes();
+          _msize.size = _msize.nb_rows = _msize.nb_cols = mesh.getNbNodes();
        else
-          _size = _nb_rows = _nb_cols = mesh.getNbEq();
+          _msize.size = _msize.nb_rows = _msize.nb_cols = mesh.getNbEq();
        if (_type)
-          XGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+          XGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
 //             XGraphScal(mesh,_row_ptr,_col_ind);
        else
-          NodeGraph(mesh,_row_ptr,_col_ind,_IJ,_nbc);
+          NodeGraph(mesh,_row_ptr,_col_ind,_msize.IJ,_nbc);
    }
-   _a.resize(_length,T_(0.));
+   _a.resize(_msize.length,T_(0.));
 #endif
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
 }
 
 
@@ -867,8 +895,8 @@ void SpMatrix<T_>::Mult(const Vect<T_>& x,
                         Vect<T_>&       y) const
 {
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_length; i++)
-      y[_IJ[i].first] = _A.coeff(_IJ[i].first,_IJ[i].second)*x[_IJ[i].second];
+   for (size_t i=0; i<_msize.length; i++)
+      y[_msize.IJ[i].first] = _A.coeff(_msize.IJ[i].first,_msize.IJ[i].second)*x[_msize.IJ[i].second];
 #else
    y = static_cast<T_>(0);
    MultAdd(x,y);
@@ -881,11 +909,11 @@ void SpMatrix<T_>::MultAdd(const Vect<T_>& x,
                            Vect<T_>&       y) const
 {
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_length; i++)
-      y[_IJ[i].first] += _A.coeff(_IJ[i].first,_IJ[i].second)*x[_IJ[i].second];
+   for (size_t i=0; i<_msize.length; i++)
+      y[_msize.IJ[i].first] += _A.coeff(_msize.IJ[i].first,_msize.IJ[i].second)*x[_msize.IJ[i].second];
 #else
    size_t l=0;
-   for (size_t i=0; i<_nb_rows; ++i)
+   for (size_t i=0; i<_msize.nb_rows; ++i)
       for (size_t j=0; j<_row_ptr[i+1]-_row_ptr[i]; ++j)
          y[i] += _a[_row_ptr[i]+j] * x[_col_ind[l++]-1];
 #endif
@@ -898,11 +926,11 @@ void SpMatrix<T_>::MultAdd(T_              a,
                            Vect<T_>&       y) const
 {
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_length; i++)
-      y[_IJ[i].first] += a*_A.coeff(_IJ[i].first,_IJ[i].second)*x[_IJ[i].second];
+   for (size_t i=0; i<_msize.length; i++)
+      y[_msize.IJ[i].first] += a*_A.coeff(_msize.IJ[i].first,_msize.IJ[i].second)*x[_msize.IJ[i].second];
 #else
    size_t l=0;
-   for (size_t i=0; i<_nb_rows; i++)
+   for (size_t i=0; i<_msize.nb_rows; i++)
       for (size_t j=0; j<_row_ptr[i+1]-_row_ptr[i]; j++)
          y[i] += a * _a[_row_ptr[i]+j] * x[_col_ind[l++]-1];
 #endif
@@ -914,10 +942,10 @@ void SpMatrix<T_>::TMult(const Vect<T_>& x,
                          Vect<T_>&       y) const
 {
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_length; i++)
-      y[_IJ[i].first] += _A.coeff(_IJ[i].second,_IJ[i].first)*x[_IJ[i].second];
+   for (size_t i=0; i<_msize.length; i++)
+      y[_msize.IJ[i].first] += _A.coeff(_msize.IJ[i].second,_msize.IJ[i].first)*x[_msize.IJ[i].second];
 #else
-   for (size_t i=0; i<_nb_rows; i++)
+   for (size_t i=0; i<_msize.nb_rows; i++)
       for (size_t j=0; j<_row_ptr[i+1]-_row_ptr[i]; j++)
          y[_col_ind[j+_row_ptr[i]-1]] += _a[_row_ptr[i]+j] * x[i];
 #endif
@@ -977,13 +1005,13 @@ template<class T_>
 void SpMatrix<T_>::operator=(const T_& x)
 {
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_length; i++) {
-      _A.coeffRef(_IJ[i].first,_IJ[i].second) = static_cast<T_>(0);
-      if (_IJ[i].first==_IJ[i].second)
-         _A.coeffRef(_IJ[i].first,_IJ[i].first) = x;	
+   for (size_t i=0; i<_msize.length; i++) {
+      _A.coeffRef(_msize.IJ[i].first,_msize.IJ[i].second) = static_cast<T_>(0);
+      if (_msize.IJ[i].first==_msize.IJ[i].second)
+         _A.coeffRef(_msize.IJ[i].first,_msize.IJ[i].first) = x;	
 }
 #else
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] = x;
 #endif
 }
@@ -1019,10 +1047,10 @@ template<class T_>
 int SpMatrix<T_>::DILUFactorize(vector<size_t>& id,
                                 vector<T_>&     pivot) const
 {
-   id.resize(_size);
-   pivot.resize(_size);
+   id.resize(_msize.size);
+   pivot.resize(_msize.size);
    size_t k=0;
-   for (size_t i=0; i<_size; i++) {
+   for (size_t i=0; i<_msize.size; i++) {
       for (size_t j=_row_ptr[i]; j<_row_ptr[i+1]; j++, k++) {
          if (_col_ind[j]==i+1) {
             id[i] = k + 1;
@@ -1035,7 +1063,7 @@ int SpMatrix<T_>::DILUFactorize(vector<size_t>& id,
    }
    int found=0;
    T_ c=static_cast<T_>(0);
-   for (size_t i=0; i<_size; ++i) {
+   for (size_t i=0; i<_msize.size; ++i) {
       pivot[i] = static_cast<T_>(1)/pivot[i];
       for (size_t j=id[i]; j<_row_ptr[i+1]; ++j) {
          found = 0;
@@ -1077,18 +1105,18 @@ void SpMatrix<T_>::DILUSolve(const vector<size_t>& id,
                              const Vect<T_>&       b,
                              Vect<T_>&             x) const
 {
-   vector<T_> z(_size);
-   for (size_t i=0; i<_size; i++) {
+   vector<T_> z(_msize.size);
+   for (size_t i=0; i<_msize.size; i++) {
       T_ s = 0;
       for (size_t j=_row_ptr[i]; j<id[i]; ++j)
          s += _a[j] * z[_col_ind[j]-1];
       z[i] = pivot[i] * (b[i]-s);
    }
-   for (size_t i=0; i<_size; ++i) {
+   for (size_t i=0; i<_msize.size; ++i) {
       T_ s = 0;
-      for (size_t j=id[_size-i-1]; j<_row_ptr[_size-i]; ++j)
+      for (size_t j=id[_msize.size-i-1]; j<_row_ptr[_msize.size-i]; ++j)
          s += _a[j] * x(_col_ind[j]);
-      x[_size-i-1] = z[_size-i-1] - pivot[_size-i-1] * s;
+      x[_msize.size-i-1] = z[_msize.size-i-1] - pivot[_msize.size-i-1] * s;
    }
 }
 #endif
@@ -1112,8 +1140,8 @@ void SpMatrix<T_>::SSORSolve(const Vect<T_>& b,
                              Vect<T_>&       x) const
 {
    size_t k=0;
-   vector<size_t> id(_size);
-   for (size_t i=0; i<_size; i++) {
+   vector<size_t> id(_msize.size);
+   for (size_t i=0; i<_msize.size; i++) {
       for (size_t j=_row_ptr[i]; j<_row_ptr[i+1]; j++, k++) {
          if (_col_ind[j]==i+1) {
             id[i] = k + 1;
@@ -1123,14 +1151,14 @@ void SpMatrix<T_>::SSORSolve(const Vect<T_>& b,
          }
       }
    }
-   Vect<T_> z(_size);
-   for (size_t i=0; i<_size; i++) {
+   Vect<T_> z(_msize.size);
+   for (size_t i=0; i<_msize.size; i++) {
       T_ s = 0;
       for (size_t j=_row_ptr[i]; j<id[i]-1; j++)
          s += _a[j] * z(_col_ind[j]);
       z[i] = (b[i]-s)/_a[id[i]-1];
    }
-   for (int i=int(_size)-1; i>=0; i--) {
+   for (int i=int(_msize.size)-1; i>=0; i--) {
       T_ s = 0;
       for (size_t j=id[i]; j<_row_ptr[i+1]; j++)
          s += _a[j] * x(_col_ind[j]);
@@ -1180,10 +1208,10 @@ template<class T_>
 void SpMatrix<T_>::clear()
 {
 #ifdef USE_EIGEN
-   for (size_t i=0; i<_length; i++)
-      _A.coeffRef(_IJ[i].first,_IJ[i].second) = static_cast<T_>(0);
+   for (size_t i=0; i<_msize.length; i++)
+      _A.coeffRef(_msize.IJ[i].first,_msize.IJ[i].second) = static_cast<T_>(0);
 #else
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] = static_cast<T_>(0);
 #endif
 }
@@ -1205,7 +1233,7 @@ T_ SpMatrix<T_>::get(size_t i,
 #else
    int k=_col_index(i,j);
    if (k<0)
-      return _zero;
+      return static_cast<T_>(0);
    else
       return _a[_row_ptr[i-1]+k-1];
 #endif
@@ -1245,19 +1273,19 @@ inline void SpMatrix<real_t>::Laplace1D(size_t n,
 {
    _is_dense = 0;
    _is_diagonal = 0;
-   _size = _nb_rows = _nb_cols = n;
+   _msize.size = _msize.nb_rows = _msize.nb_cols = n;
 #ifdef USE_EIGEN
-   _length = 3*_size - 2;
-   _A.reserve(_length);
+   _msize.length = 3*_msize.size - 2;
+   _A.reserve(_msize.length);
    _A.insert(0,0) =  2./h;
    _A.insert(0,1) = -1./h;
-   for (size_t i=1; i<_nb_rows-1; i++) {
+   for (size_t i=1; i<_msize.nb_rows-1; i++) {
       _A.insert(i,i-1) = -1./h;
       _A.insert(i,i  ) =  2./h;
       _A.insert(i,i+1) = -1./h;
    }
-   _A.insert(_nb_rows-1,_nb_rows-2) = -1./h;
-   _A.insert(_nb_rows-1,_nb_rows-1) =  2./h;
+   _A.insert(_msize.nb_rows-1,_msize.nb_rows-2) = -1./h;
+   _A.insert(_msize.nb_rows-1,_msize.nb_rows-1) =  2./h;
 #else
    _row_ptr.push_back(0);
    _row_ptr.push_back(2);
@@ -1265,7 +1293,7 @@ inline void SpMatrix<real_t>::Laplace1D(size_t n,
    _col_ind.push_back(2);
    _a.push_back( 2./h);
    _a.push_back(-1./h);
-   for (size_t i=1; i<_size-1; i++) {
+   for (size_t i=1; i<_msize.size-1; i++) {
       _row_ptr.push_back(_row_ptr[i]+3);
       _col_ind.push_back(i);
       _col_ind.push_back(i+1);
@@ -1274,12 +1302,12 @@ inline void SpMatrix<real_t>::Laplace1D(size_t n,
       _a.push_back( 2./h);
       _a.push_back(-1./h);
    }
-   _col_ind.push_back(_size-1);
-   _col_ind.push_back(_size);
-   _row_ptr.push_back(_row_ptr[_size-1]+2);
+   _col_ind.push_back(_msize.size-1);
+   _col_ind.push_back(_msize.size);
+   _row_ptr.push_back(_row_ptr[_msize.size-1]+2);
    _a.push_back(-1./h);
    _a.push_back( 2./h);
-   _length = _row_ptr[_size];
+   _msize.length = _row_ptr[_msize.size];
 #endif
 }
 
@@ -1317,4 +1345,3 @@ ostream& operator<<(ostream&            s,
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #endif
-

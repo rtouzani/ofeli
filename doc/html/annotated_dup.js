@@ -119,8 +119,8 @@ var annotated_dup =
       [ "TINS3DT4S", "classOFELI_1_1TINS3DT4S.html", "classOFELI_1_1TINS3DT4S" ],
       [ "Triang3", "classOFELI_1_1Triang3.html", "classOFELI_1_1Triang3" ],
       [ "Triang6S", "classOFELI_1_1Triang6S.html", "classOFELI_1_1Triang6S" ],
-      [ "Triangle", "classOFELI_1_1Triangle.html", "classOFELI_1_1Triangle" ],
       [ "triangle", "classOFELI_1_1triangle.html", "classOFELI_1_1triangle" ],
+      [ "Triangle", "classOFELI_1_1Triangle.html", "classOFELI_1_1Triangle" ],
       [ "TrMatrix", "classOFELI_1_1TrMatrix.html", "classOFELI_1_1TrMatrix" ],
       [ "Vect", "classOFELI_1_1Vect.html", "classOFELI_1_1Vect" ],
       [ "WaterPorous2D", "classOFELI_1_1WaterPorous2D.html", "classOFELI_1_1WaterPorous2D" ]

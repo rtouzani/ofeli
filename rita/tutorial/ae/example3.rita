@@ -1,0 +1,19 @@
+# rita Script file to solve a nonlinear system of algebraic equations
+# We numerically solve the system
+#    x1*x1-2*x1*x2 = 2,    x1 + x2^2 = -1
+# This system has 2 solutions:
+#    x1 = -1.11509, x2 =  0.339246 and
+#    x1 = -3.93432, x2 = -1.71298
+# The code gives solution when an appropriate initial guess is given
+# Note that we define the algebraic system by using the extended version
+# of the keyword 'algebraic'
+algebraic
+  size 2
+  variable x
+  definition "x1^2 - 2*x1*x2 - 2"
+  definition "x1 + x2^2 + 1"
+  init -3. -1.
+  end
+solve
+= x
+exit

@@ -1,0 +1,7 @@
+# rita Script file to plot a given function
+# First, we define the function
+function name=f var=x definition=exp(-x)*sin(x)
+
+# Second, we plot the function 'f'
+plot function=f x=-10,-5 title=f
+exit

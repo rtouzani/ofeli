@@ -1,0 +1,22 @@
+# Iris Script file to practice eigenproblem solver
+# The matrix is read from a file
+#
+matrix file=m.dat
+
+# List data and print matrix contents
+  data
+  = M
+
+# Define eigenvalue problem, eigenvectors are not computed
+eigen matrix=M eigv
+
+# Solve the defined problem
+solve
+
+# List vectors
+  list vect
+
+# Print real and imaginary parts of eigenvalues
+ = Mev_R
+ = Mev_I
+exit

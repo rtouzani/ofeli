@@ -6,9 +6,9 @@
    <author></author>
 </info>
 <Field name="u" type="Node" nb_dof="2">
-   <Step time="0.000000e+000">
+   <step time="0.000000e+000">
       <constant dof="1"> 1.0</constant>
       <constant dof="2">-1.0</constant>
-   </Step>
+   </step>
 </Field>
 </OFELI_File>

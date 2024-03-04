@@ -1,0 +1,10 @@
+# rita Script file to solve a one-variable optimization problem
+# We numerically solve the problem:
+#     Min (x^2-x+1)
+# whose solution is given by x = 0.5
+# We use for this the Gradient method
+#
+optim vector=x obj=x^2-x+1 init=1.
+solve
+= x
+exit

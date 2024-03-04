@@ -1,0 +1,10 @@
+# rita Script file to test numerical integration
+# We integrate the function f(x)=exp(x) on (0,2) using
+# the trapezoidal rule and a subdivision into 40 sub-intervals
+# Here the function is defined in the 'data' section
+# Note that since the trapezoidal rule is the default method it doesn't need to be mentioned
+#
+N=40
+function name=g variable=y def=exp(y)
+integration function=g x=0,2 ne=N
+exit

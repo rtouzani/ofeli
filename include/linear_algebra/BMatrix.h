@@ -76,8 +76,9 @@ class BMatrix : public Matrix<T_>
 /** \brief Constructor that for a band matrix with given size and bandwidth.
  *  \details Assign 0 to all matrix entries.
  *  @param [in] size Number of rows and columns
- *  @param [in] ld Number of lower co-diagonals (must be > 0)
- *  @param [in] ud Number of upper co-diagonals (must be > 0)
+ *  @param [in] ld Number of lower co-diagonals (must be >= 0)
+ *  @param [in] ud Number of upper co-diagonals (must be >= 0)
+ *  @remark Works only if ud+ld+1 <= size
  */
     BMatrix(size_t size,
             int    ld,
@@ -90,8 +91,8 @@ class BMatrix : public Matrix<T_>
     ~BMatrix();
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void setGraph(const Vect<RC>& I,
-                  int             opt=1);
+    void setGraph(const vector<RC>& I,
+                  int               opt=1);
 
     void setMesh(Mesh&  mesh,
                  size_t dof=0);
@@ -164,6 +165,13 @@ class BMatrix : public Matrix<T_>
     void add(size_t    i,
              size_t    j,
              const T_& val);
+
+/** \brief Return a value of a matrix entry
+ *  @param [in] i Row index (starts at 1)
+ *  @param [in] j Column index (starts at 1)
+ */
+    T_ at(size_t i,
+          size_t j);
 
 /** \brief Operator () (Constant version).
  *  @param [in] i Row index
@@ -260,17 +268,11 @@ class BMatrix : public Matrix<T_>
              const T_& val);
 
  private:
-   int                 _ld, _ud;
    vector<vector<T_> > _a;
 
-   using Matrix<T_>::_size;
-   using Matrix<T_>::_nb_cols;
-   using Matrix<T_>::_nb_rows;
-   using Matrix<T_>::_length;
+   using Matrix<T_>::_msize;
    using Matrix<T_>::_diag;
-   using Matrix<T_>::_zero;
    using Matrix<T_>::_temp;
-   using Matrix<T_>::_ch;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,28 @@
+# rita Script file to solve a 1-D problem by P1 finite elements
+#
+# Generate a uniform 1-D mesh of 10 elements
+# The default domain is the interval (0,1)
+# Associate code 1 to end nodes enforce Dirichlet bc later
+#
+# We define some mesh parameters
+n = 10
+xm = 0
+xM = 2
+#
+# We enter module 'mesh'
+mesh
+  1d domain=xm,xM ne=n codes=1
+# We leave the 'mesh' module
+  end
+
+# Define equation: (see pde section)
+pde laplace
+  variable u
+  bc code=1 val=0.
+  source value=pi*pi*sin(pi*x)
+  space feP1
+  end
+#
+# Solve problem
+solve
+exit

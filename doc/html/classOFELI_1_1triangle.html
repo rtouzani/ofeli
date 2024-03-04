@@ -75,172 +75,370 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classOFELI_1_1triangle.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('classOFELI_1_1Triangle.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classOFELI_1_1triangle-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">triangle Class Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a> &#124; <a class="el" href="group__OFELI.html">OFELI</a> &raquo; <a class="el" href="group__Shape.html">Shape Function</a></div></div></div>
+<a href="classOFELI_1_1Triangle-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Triangle Class Reference<div class="ingroups"><a class="el" href="group__OFELI.html">OFELI</a> &#124; <a class="el" href="group__OFELI.html">OFELI</a> &raquo; <a class="el" href="group__Mesh.html">Finite Element Mesh</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Defines a triangle. The reference element is the rectangle triangle with two unit edges.  
- <a href="classOFELI_1_1triangle.html#details">More...</a></p>
+<p>To store and treat a triangle.  
+ <a href="classOFELI_1_1Triangle.html#details">More...</a></p>
 
-<p><code>#include &lt;FEShape.h&gt;</code></p>
+<p><code>#include &lt;Figure.h&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for triangle:</div>
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for Triangle:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
  <div class="center">
-  <img src="classOFELI_1_1triangle.png" usemap="#triangle_map" alt=""/>
-  <map id="triangle_map" name="triangle_map">
-<area href="classOFELI_1_1FEShape.html" title="Parent class from which inherit all finite element shape classes." alt="FEShape" shape="rect" coords="37,0,101,24"/>
-<area href="classOFELI_1_1Triang3.html" title="Defines a 3-Node (P1) triangle." alt="Triang3" shape="rect" coords="0,112,64,136"/>
-<area href="classOFELI_1_1Triang6S.html" title="Defines a 6-Node straight triangular finite element using P2 interpolation." alt="Triang6S" shape="rect" coords="74,112,138,136"/>
+  <img src="classOFELI_1_1Triangle.png" usemap="#Triangle_map" alt=""/>
+  <map id="Triangle_map" name="Triangle_map">
+<area href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information." alt="Figure" shape="rect" coords="0,0,58,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aee18579fe54e859a60b719481c024adb" id="r_aee18579fe54e859a60b719481c024adb"><td class="memItemLeft" align="right" valign="top"><a id="aee18579fe54e859a60b719481c024adb" name="aee18579fe54e859a60b719481c024adb"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>triangle</b> ()</td></tr>
-<tr class="memdesc:aee18579fe54e859a60b719481c024adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
-<tr class="separator:aee18579fe54e859a60b719481c024adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b9973d57f98cf47364d3831b011b610" id="r_a1b9973d57f98cf47364d3831b011b610"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1triangle.html#a1b9973d57f98cf47364d3831b011b610">triangle</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> *el)</td></tr>
-<tr class="memdesc:a1b9973d57f98cf47364d3831b011b610"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an element.  <br /></td></tr>
-<tr class="separator:a1b9973d57f98cf47364d3831b011b610"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2a357d65aef4a524ae63a11801f9b12" id="r_ad2a357d65aef4a524ae63a11801f9b12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1triangle.html#ad2a357d65aef4a524ae63a11801f9b12">triangle</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> *sd)</td></tr>
-<tr class="memdesc:ad2a357d65aef4a524ae63a11801f9b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a side.  <br /></td></tr>
-<tr class="separator:ad2a357d65aef4a524ae63a11801f9b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa90c33c4ab76e39be4b39f3eaaa232ef" id="r_aa90c33c4ab76e39be4b39f3eaaa232ef"><td class="memItemLeft" align="right" valign="top"><a id="aa90c33c4ab76e39be4b39f3eaaa232ef" name="aa90c33c4ab76e39be4b39f3eaaa232ef"></a>
-virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~triangle</b> ()</td></tr>
-<tr class="memdesc:aa90c33c4ab76e39be4b39f3eaaa232ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:aa90c33c4ab76e39be4b39f3eaaa232ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c6c22a4828902098b5e2d99309f74e9" id="r_a6c6c22a4828902098b5e2d99309f74e9"><td class="memItemLeft" align="right" valign="top"><a id="a6c6c22a4828902098b5e2d99309f74e9" name="a6c6c22a4828902098b5e2d99309f74e9"></a>
-real_t&#160;</td><td class="memItemRight" valign="bottom"><b>getArea</b> ()</td></tr>
-<tr class="memdesc:a6c6c22a4828902098b5e2d99309f74e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return element area. <br /></td></tr>
-<tr class="separator:a6c6c22a4828902098b5e2d99309f74e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29518c54ba3a66576ee2859724fc88cd" id="r_a29518c54ba3a66576ee2859724fc88cd"><td class="memItemLeft" align="right" valign="top"><a id="a29518c54ba3a66576ee2859724fc88cd" name="a29518c54ba3a66576ee2859724fc88cd"></a>
-<a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCenter</b> () const</td></tr>
-<tr class="memdesc:a29518c54ba3a66576ee2859724fc88cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of element. <br /></td></tr>
-<tr class="separator:a29518c54ba3a66576ee2859724fc88cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a308c380e011cbe1ad5b93d351b41ffdf" id="r_a308c380e011cbe1ad5b93d351b41ffdf"><td class="memItemLeft" align="right" valign="top"><a id="a308c380e011cbe1ad5b93d351b41ffdf" name="a308c380e011cbe1ad5b93d351b41ffdf"></a>
-<a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCircumcenter</b> () const</td></tr>
-<tr class="memdesc:a308c380e011cbe1ad5b93d351b41ffdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of circumcenter of element. <br /></td></tr>
-<tr class="separator:a308c380e011cbe1ad5b93d351b41ffdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a785f6dd02cd055fd0198900b139cb711" id="r_a785f6dd02cd055fd0198900b139cb711"><td class="memItemLeft" align="right" valign="top"><a id="a785f6dd02cd055fd0198900b139cb711" name="a785f6dd02cd055fd0198900b139cb711"></a>
-real_t&#160;</td><td class="memItemRight" valign="bottom"><b>getCircumRadius</b> () const</td></tr>
-<tr class="memdesc:a785f6dd02cd055fd0198900b139cb711"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return radius of circumscribed circle of triangle. <br /></td></tr>
-<tr class="separator:a785f6dd02cd055fd0198900b139cb711"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdd44adb228f1ffb8c6d270576cd4f79" id="r_afdd44adb228f1ffb8c6d270576cd4f79"><td class="memItemLeft" align="right" valign="top"><a id="afdd44adb228f1ffb8c6d270576cd4f79" name="afdd44adb228f1ffb8c6d270576cd4f79"></a>
-real_t&#160;</td><td class="memItemRight" valign="bottom"><b>getInRadius</b> () const</td></tr>
-<tr class="memdesc:afdd44adb228f1ffb8c6d270576cd4f79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return radius of inscribed circle of triangle. <br /></td></tr>
-<tr class="separator:afdd44adb228f1ffb8c6d270576cd4f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abff50ca550f56e9a0468549a7081df4c" id="r_abff50ca550f56e9a0468549a7081df4c"><td class="memItemLeft" align="right" valign="top"><a id="abff50ca550f56e9a0468549a7081df4c" name="abff50ca550f56e9a0468549a7081df4c"></a>
-<a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getRefCoord</b> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;x) const</td></tr>
-<tr class="memdesc:abff50ca550f56e9a0468549a7081df4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference coordinates of a point <code>x</code> in element. <br /></td></tr>
-<tr class="separator:abff50ca550f56e9a0468549a7081df4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25ca31b393289f740e8ed58b06a30cd3" id="r_a25ca31b393289f740e8ed58b06a30cd3"><td class="memItemLeft" align="right" valign="top"><a id="a25ca31b393289f740e8ed58b06a30cd3" name="a25ca31b393289f740e8ed58b06a30cd3"></a>
-real_t&#160;</td><td class="memItemRight" valign="bottom"><b>getMaxEdgeLength</b> () const</td></tr>
-<tr class="memdesc:a25ca31b393289f740e8ed58b06a30cd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximal edge length of triangle. <br /></td></tr>
-<tr class="separator:a25ca31b393289f740e8ed58b06a30cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b36d8923b27960cb53038075675ebaf" id="r_a3b36d8923b27960cb53038075675ebaf"><td class="memItemLeft" align="right" valign="top"><a id="a3b36d8923b27960cb53038075675ebaf" name="a3b36d8923b27960cb53038075675ebaf"></a>
-real_t&#160;</td><td class="memItemRight" valign="bottom"><b>getMinEdgeLength</b> () const</td></tr>
-<tr class="memdesc:a3b36d8923b27960cb53038075675ebaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return minimal edge length of triangle. <br /></td></tr>
-<tr class="separator:a3b36d8923b27960cb53038075675ebaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97ecf0b3b6b8ff4a52dc88effc6e6067" id="r_a97ecf0b3b6b8ff4a52dc88effc6e6067"><td class="memItemLeft" align="right" valign="top"><a id="a97ecf0b3b6b8ff4a52dc88effc6e6067" name="a97ecf0b3b6b8ff4a52dc88effc6e6067"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isIn</b> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;x) const</td></tr>
-<tr class="memdesc:a97ecf0b3b6b8ff4a52dc88effc6e6067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether point <code>x</code> is in current triangle or not. <br /></td></tr>
-<tr class="separator:a97ecf0b3b6b8ff4a52dc88effc6e6067"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af751dd4345c2727431fce3e2d2d20c24" id="r_af751dd4345c2727431fce3e2d2d20c24"><td class="memItemLeft" align="right" valign="top"><a id="af751dd4345c2727431fce3e2d2d20c24" name="af751dd4345c2727431fce3e2d2d20c24"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isStrictlyIn</b> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;x) const</td></tr>
-<tr class="memdesc:af751dd4345c2727431fce3e2d2d20c24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether point <code>x</code> is strictly in current triangle (not on the boundary) or not. <br /></td></tr>
-<tr class="separator:af751dd4345c2727431fce3e2d2d20c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classOFELI_1_1FEShape"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOFELI_1_1FEShape')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOFELI_1_1FEShape.html">FEShape</a></td></tr>
-<tr class="memitem:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_classOFELI_1_1FEShape" id="r_af1a6254740b6e11468dee2abfccc051a"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>FEShape</b> ()</td></tr>
-<tr class="memdesc:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
-<tr class="separator:af1a6254740b6e11468dee2abfccc051a inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_classOFELI_1_1FEShape" id="r_afcb4644a9ace5adbdc1c05efcc72da1f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#afcb4644a9ace5adbdc1c05efcc72da1f">FEShape</a> (const <a class="el" href="classOFELI_1_1Element.html">Element</a> *el)</td></tr>
-<tr class="memdesc:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for an element.  <br /></td></tr>
-<tr class="separator:afcb4644a9ace5adbdc1c05efcc72da1f inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_classOFELI_1_1FEShape" id="r_ad662c28c63e9e8c72fddb76f5028ed61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#ad662c28c63e9e8c72fddb76f5028ed61">FEShape</a> (const <a class="el" href="classOFELI_1_1Side.html">Side</a> *sd)</td></tr>
-<tr class="memdesc:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for a side.  <br /></td></tr>
-<tr class="separator:ad662c28c63e9e8c72fddb76f5028ed61 inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_classOFELI_1_1FEShape" id="r_a3ba928b2c14260b47beab071c1e347bd"><td class="memItemLeft" align="right" valign="top">
-virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~FEShape</b> ()</td></tr>
-<tr class="memdesc:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
-<tr class="separator:a3ba928b2c14260b47beab071c1e347bd inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18a01dd48ca9496814635d2e842c1aea inherit pub_methods_classOFELI_1_1FEShape" id="r_a18a01dd48ca9496814635d2e842c1aea"><td class="memItemLeft" align="right" valign="top">
-real_t&#160;</td><td class="memItemRight" valign="bottom"><b>Sh</b> (size_t i) const</td></tr>
-<tr class="memdesc:a18a01dd48ca9496814635d2e842c1aea inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return shape function of node <code>i</code> at given point. <br /></td></tr>
-<tr class="separator:a18a01dd48ca9496814635d2e842c1aea inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af47800ddf6fa7dab39666cb7ce85d7ba inherit pub_methods_classOFELI_1_1FEShape" id="r_af47800ddf6fa7dab39666cb7ce85d7ba"><td class="memItemLeft" align="right" valign="top">real_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#af47800ddf6fa7dab39666cb7ce85d7ba">Sh</a> (size_t i, <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; s) const</td></tr>
-<tr class="memdesc:af47800ddf6fa7dab39666cb7ce85d7ba inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate shape function of node <code>i</code> at a given point <code>s</code>.  <br /></td></tr>
-<tr class="separator:af47800ddf6fa7dab39666cb7ce85d7ba inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafc63832854e9022dd47991b51ed07b7 inherit pub_methods_classOFELI_1_1FEShape" id="r_aafc63832854e9022dd47991b51ed07b7"><td class="memItemLeft" align="right" valign="top">real_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#aafc63832854e9022dd47991b51ed07b7">getDet</a> () const</td></tr>
-<tr class="memdesc:aafc63832854e9022dd47991b51ed07b7 inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return determinant of jacobian.  <br /></td></tr>
-<tr class="separator:aafc63832854e9022dd47991b51ed07b7 inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29518c54ba3a66576ee2859724fc88cd inherit pub_methods_classOFELI_1_1FEShape" id="r_a29518c54ba3a66576ee2859724fc88cd"><td class="memItemLeft" align="right" valign="top">
-<a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCenter</b> () const</td></tr>
-<tr class="memdesc:a29518c54ba3a66576ee2859724fc88cd inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return coordinates of center of element. <br /></td></tr>
-<tr class="separator:a29518c54ba3a66576ee2859724fc88cd inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ab78ad967840f6af5e0c4d47d30f5ef inherit pub_methods_classOFELI_1_1FEShape" id="r_a6ab78ad967840f6af5e0c4d47d30f5ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#a6ab78ad967840f6af5e0c4d47d30f5ef">getLocalPoint</a> () const</td></tr>
-<tr class="memdesc:a6ab78ad967840f6af5e0c4d47d30f5ef inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize a point in the element.  <br /></td></tr>
-<tr class="separator:a6ab78ad967840f6af5e0c4d47d30f5ef inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb515e3222b1113e2558e03aa577d6ad inherit pub_methods_classOFELI_1_1FEShape" id="r_acb515e3222b1113e2558e03aa577d6ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1FEShape.html#acb515e3222b1113e2558e03aa577d6ad">getLocalPoint</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;s) const</td></tr>
-<tr class="memdesc:acb515e3222b1113e2558e03aa577d6ad inherit pub_methods_classOFELI_1_1FEShape"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localize a point in the element.  <br /></td></tr>
-<tr class="separator:acb515e3222b1113e2558e03aa577d6ad inherit pub_methods_classOFELI_1_1FEShape"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56e2160d21ceb4ff81a0c7dee1335dc7" id="r_a56e2160d21ceb4ff81a0c7dee1335dc7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html#a56e2160d21ceb4ff81a0c7dee1335dc7">Triangle</a> ()</td></tr>
+<tr class="memdesc:a56e2160d21ceb4ff81a0c7dee1335dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
+<tr class="separator:a56e2160d21ceb4ff81a0c7dee1335dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecc1f3751955b2ab6b9b4fe942969727" id="r_aecc1f3751955b2ab6b9b4fe942969727"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html#aecc1f3751955b2ab6b9b4fe942969727">Triangle</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;v1, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;v2, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;v3, int code=1)</td></tr>
+<tr class="memdesc:aecc1f3751955b2ab6b9b4fe942969727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with vertices and code.  <br /></td></tr>
+<tr class="separator:aecc1f3751955b2ab6b9b4fe942969727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba1f49fcf3885160bfc0f96a76c8c74" id="r_a0ba1f49fcf3885160bfc0f96a76c8c74"><td class="memItemLeft" align="right" valign="top"><a id="a0ba1f49fcf3885160bfc0f96a76c8c74" name="a0ba1f49fcf3885160bfc0f96a76c8c74"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVertex1</b> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;v)</td></tr>
+<tr class="memdesc:a0ba1f49fcf3885160bfc0f96a76c8c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign first vertex of triangle. <br /></td></tr>
+<tr class="separator:a0ba1f49fcf3885160bfc0f96a76c8c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47212dd56493513e1b90d5d7f1478905" id="r_a47212dd56493513e1b90d5d7f1478905"><td class="memItemLeft" align="right" valign="top"><a id="a47212dd56493513e1b90d5d7f1478905" name="a47212dd56493513e1b90d5d7f1478905"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVertex2</b> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;v)</td></tr>
+<tr class="memdesc:a47212dd56493513e1b90d5d7f1478905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign second vertex of triangle. <br /></td></tr>
+<tr class="separator:a47212dd56493513e1b90d5d7f1478905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4f5e68d497201d1e12f30030a2efc00" id="r_aa4f5e68d497201d1e12f30030a2efc00"><td class="memItemLeft" align="right" valign="top"><a id="aa4f5e68d497201d1e12f30030a2efc00" name="aa4f5e68d497201d1e12f30030a2efc00"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVertex3</b> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;v)</td></tr>
+<tr class="memdesc:aa4f5e68d497201d1e12f30030a2efc00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign third vertex of triangle. <br /></td></tr>
+<tr class="separator:aa4f5e68d497201d1e12f30030a2efc00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c92f703c9cacfbfc0158713655d844a" id="r_a6c92f703c9cacfbfc0158713655d844a"><td class="memItemLeft" align="right" valign="top">real_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html#a6c92f703c9cacfbfc0158713655d844a">getSignedDistance</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;p) const</td></tr>
+<tr class="memdesc:a6c92f703c9cacfbfc0158713655d844a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return signed distance of a given point from the current triangle.  <br /></td></tr>
+<tr class="separator:a6c92f703c9cacfbfc0158713655d844a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40712cc582cf94c03cc1e30e8ab717fc" id="r_a40712cc582cf94c03cc1e30e8ab717fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1Triangle.html">Triangle</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html#a40712cc582cf94c03cc1e30e8ab717fc">operator+=</a> (<a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; a)</td></tr>
+<tr class="memdesc:a40712cc582cf94c03cc1e30e8ab717fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator +=.  <br /></td></tr>
+<tr class="separator:a40712cc582cf94c03cc1e30e8ab717fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac06304fc37e96f1dd95a4724b6437be" id="r_aac06304fc37e96f1dd95a4724b6437be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOFELI_1_1Triangle.html">Triangle</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html#aac06304fc37e96f1dd95a4724b6437be">operator+=</a> (real_t a)</td></tr>
+<tr class="memdesc:aac06304fc37e96f1dd95a4724b6437be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator *=.  <br /></td></tr>
+<tr class="separator:aac06304fc37e96f1dd95a4724b6437be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bcb59a9fd6e717fa480630c7d3b57a" id="r_a59bcb59a9fd6e717fa480630c7d3b57a"><td class="memItemLeft" align="right" valign="top">virtual real_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html#a59bcb59a9fd6e717fa480630c7d3b57a">getSignedDistance</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;p) const</td></tr>
+<tr class="memdesc:a59bcb59a9fd6e717fa480630c7d3b57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return signed distance from a given point to current figure.  <br /></td></tr>
+<tr class="separator:a59bcb59a9fd6e717fa480630c7d3b57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2252be7c4949c4a2bd3ee24a4fdfd722" id="r_a2252be7c4949c4a2bd3ee24a4fdfd722"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html#a2252be7c4949c4a2bd3ee24a4fdfd722">getSignedDistance</a> (const <a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;g, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; real_t &gt; &amp;d) const</td></tr>
+<tr class="memdesc:a2252be7c4949c4a2bd3ee24a4fdfd722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate signed distance to current figure with respect to grid points.  <br /></td></tr>
+<tr class="separator:a2252be7c4949c4a2bd3ee24a4fdfd722"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a740ca39646f05723f2f96ab62a232b36" id="r_a740ca39646f05723f2f96ab62a232b36"><td class="memItemLeft" align="right" valign="top">real_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Triangle.html#a740ca39646f05723f2f96ab62a232b36">dLine</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;p, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;a, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;<a class="el" href="group__OFELI.html#ga83908271a0678c49cbf9df0cfae052eb">b</a>) const</td></tr>
+<tr class="memdesc:a740ca39646f05723f2f96ab62a232b36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute signed distance from a line.  <br /></td></tr>
+<tr class="separator:a740ca39646f05723f2f96ab62a232b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classOFELI_1_1Figure"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOFELI_1_1Figure')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOFELI_1_1Figure.html">Figure</a></td></tr>
+<tr class="memitem:ae49c513c5bcadb29c0764c1746bfd924 inherit pub_methods_classOFELI_1_1Figure" id="r_ae49c513c5bcadb29c0764c1746bfd924"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>Figure</b> ()</td></tr>
+<tr class="memdesc:ae49c513c5bcadb29c0764c1746bfd924 inherit pub_methods_classOFELI_1_1Figure"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:ae49c513c5bcadb29c0764c1746bfd924 inherit pub_methods_classOFELI_1_1Figure"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b3ecf250250edd504dd29bf970a7bc inherit pub_methods_classOFELI_1_1Figure" id="r_ae0b3ecf250250edd504dd29bf970a7bc"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>Figure</b> (const <a class="el" href="classOFELI_1_1Figure.html">Figure</a> &amp;f)</td></tr>
+<tr class="memdesc:ae0b3ecf250250edd504dd29bf970a7bc inherit pub_methods_classOFELI_1_1Figure"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor. <br /></td></tr>
+<tr class="separator:ae0b3ecf250250edd504dd29bf970a7bc inherit pub_methods_classOFELI_1_1Figure"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2356b66e5c02f39b568f4c8a7651e36 inherit pub_methods_classOFELI_1_1Figure" id="r_ac2356b66e5c02f39b568f4c8a7651e36"><td class="memItemLeft" align="right" valign="top">
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Figure</b> ()</td></tr>
+<tr class="memdesc:ac2356b66e5c02f39b568f4c8a7651e36 inherit pub_methods_classOFELI_1_1Figure"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br /></td></tr>
+<tr class="separator:ac2356b66e5c02f39b568f4c8a7651e36 inherit pub_methods_classOFELI_1_1Figure"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2520b3fc10894bb8fc4a96014dfb0d08 inherit pub_methods_classOFELI_1_1Figure" id="r_a2520b3fc10894bb8fc4a96014dfb0d08"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCode</b> (int code)</td></tr>
+<tr class="memdesc:a2520b3fc10894bb8fc4a96014dfb0d08 inherit pub_methods_classOFELI_1_1Figure"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose a code for the domain defined by the figure. <br /></td></tr>
+<tr class="separator:a2520b3fc10894bb8fc4a96014dfb0d08 inherit pub_methods_classOFELI_1_1Figure"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42041bd53cf657f479fe30a8763f4116 inherit pub_methods_classOFELI_1_1Figure" id="r_a42041bd53cf657f479fe30a8763f4116"><td class="memItemLeft" align="right" valign="top">
+<a class="el" href="classOFELI_1_1Figure.html">Figure</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classOFELI_1_1Figure.html">Figure</a> &amp;f)</td></tr>
+<tr class="memdesc:a42041bd53cf657f479fe30a8763f4116 inherit pub_methods_classOFELI_1_1Figure"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator =. <br /></td></tr>
+<tr class="separator:a42041bd53cf657f479fe30a8763f4116 inherit pub_methods_classOFELI_1_1Figure"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2252be7c4949c4a2bd3ee24a4fdfd722 inherit pub_methods_classOFELI_1_1Figure" id="r_a2252be7c4949c4a2bd3ee24a4fdfd722"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Figure.html#a2252be7c4949c4a2bd3ee24a4fdfd722">getSignedDistance</a> (const <a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;g, <a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; real_t &gt; &amp;d) const</td></tr>
+<tr class="memdesc:a2252be7c4949c4a2bd3ee24a4fdfd722 inherit pub_methods_classOFELI_1_1Figure"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate signed distance to current figure with respect to grid points.  <br /></td></tr>
+<tr class="separator:a2252be7c4949c4a2bd3ee24a4fdfd722 inherit pub_methods_classOFELI_1_1Figure"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a740ca39646f05723f2f96ab62a232b36 inherit pub_methods_classOFELI_1_1Figure" id="r_a740ca39646f05723f2f96ab62a232b36"><td class="memItemLeft" align="right" valign="top">real_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1Figure.html#a740ca39646f05723f2f96ab62a232b36">dLine</a> (const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;p, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;a, const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;<a class="el" href="group__OFELI.html#ga83908271a0678c49cbf9df0cfae052eb">b</a>) const</td></tr>
+<tr class="memdesc:a740ca39646f05723f2f96ab62a232b36 inherit pub_methods_classOFELI_1_1Figure"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute signed distance from a line.  <br /></td></tr>
+<tr class="separator:a740ca39646f05723f2f96ab62a232b36 inherit pub_methods_classOFELI_1_1Figure"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defines a triangle. The reference element is the rectangle triangle with two unit edges. </p>
-<dl class="section author"><dt>Author</dt><dd>Rachid Touzani </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>GNU Lesser Public License </dd></dl>
+<div class="textblock"><p>To store and treat a triangle. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1b9973d57f98cf47364d3831b011b610" name="a1b9973d57f98cf47364d3831b011b610"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b9973d57f98cf47364d3831b011b610">&#9670;&#160;</a></span>triangle() <span class="overload">[1/2]</span></h2>
+<a id="a56e2160d21ceb4ff81a0c7dee1335dc7" name="a56e2160d21ceb4ff81a0c7dee1335dc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56e2160d21ceb4ff81a0c7dee1335dc7">&#9670;&#160;</a></span>Triangle() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classOFELI_1_1triangle.html">triangle</a> </td>
+          <td class="memname"><a class="el" href="classOFELI_1_1Triangle.html">Triangle</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Element.html">Element</a> *&#160;</td>
-          <td class="paramname"><em>el</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor for an element. </p>
-<p>The constructed triangle is an element in a 2-D mesh. </p>
+<p>Default constructor. </p>
+<p>Constructs a unit triangle with vertices <code>(0,0)</code>, <code>(1,0)</code> and <code>(0,1)</code> </p>
 
 </div>
 </div>
-<a id="ad2a357d65aef4a524ae63a11801f9b12" name="ad2a357d65aef4a524ae63a11801f9b12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2a357d65aef4a524ae63a11801f9b12">&#9670;&#160;</a></span>triangle() <span class="overload">[2/2]</span></h2>
+<a id="aecc1f3751955b2ab6b9b4fe942969727" name="aecc1f3751955b2ab6b9b4fe942969727"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecc1f3751955b2ab6b9b4fe942969727">&#9670;&#160;</a></span>Triangle() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classOFELI_1_1triangle.html">triangle</a> </td>
+          <td class="memname"><a class="el" href="classOFELI_1_1Triangle.html">Triangle</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOFELI_1_1Side.html">Side</a> *&#160;</td>
-          <td class="paramname"><em>sd</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>code</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor with vertices and code. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">v1</td><td>Coordinates of first vertex of triangle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v2</td><td>Coordinates of second vertex of triangle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v3</td><td>Coordinates of third vertex of triangle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>Code to assign to the generated figure [Default: 1] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Vertices must be given in couterclockwise order </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a740ca39646f05723f2f96ab62a232b36" name="a740ca39646f05723f2f96ab62a232b36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a740ca39646f05723f2f96ab62a232b36">&#9670;&#160;</a></span>dLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">real_t dLine </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute signed distance from a line. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td><a class="el" href="structOFELI_1_1Point.html" title="Defines a point with arbitrary type coordinates.">Point</a> for which distance is computed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>First vertex of line </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Second vertex of line </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Signed distance </dd></dl>
+
+</div>
+</div>
+<a id="a2252be7c4949c4a2bd3ee24a4fdfd722" name="a2252be7c4949c4a2bd3ee24a4fdfd722"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2252be7c4949c4a2bd3ee24a4fdfd722">&#9670;&#160;</a></span>getSignedDistance() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void getSignedDistance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOFELI_1_1Grid.html">Grid</a> &amp;&#160;</td>
+          <td class="paramname"><em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOFELI_1_1Vect.html">Vect</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate signed distance to current figure with respect to grid points. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">g</td><td><a class="el" href="classOFELI_1_1Grid.html" title="To manipulate structured grids.">Grid</a> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">d</td><td><a class="el" href="classOFELI_1_1Vect.html" title="To handle general purpose vectors.">Vect</a> instance containing calculated distance from each grid index to <a class="el" href="classOFELI_1_1Figure.html" title="To store and treat a figure (or shape) information.">Figure</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Vector <code>d</code> doesn't need to be sized before invoking this function </dd></dl>
+
+</div>
+</div>
+<a id="a59bcb59a9fd6e717fa480630c7d3b57a" name="a59bcb59a9fd6e717fa480630c7d3b57a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59bcb59a9fd6e717fa480630c7d3b57a">&#9670;&#160;</a></span>getSignedDistance() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual real_t getSignedDistance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return signed distance from a given point to current figure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td><a class="el" href="structOFELI_1_1Point.html" title="Defines a point with arbitrary type coordinates.">Point</a> instance from which distance is computed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classOFELI_1_1Figure.html#a59bcb59a9fd6e717fa480630c7d3b57a">Figure</a>.</p>
+
+</div>
+</div>
+<a id="a6c92f703c9cacfbfc0158713655d844a" name="a6c92f703c9cacfbfc0158713655d844a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c92f703c9cacfbfc0158713655d844a">&#9670;&#160;</a></span>getSignedDistance() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">real_t getSignedDistance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return signed distance of a given point from the current triangle. </p>
+<p>The computed distance is negative if <code>p</code> lies in the triangle, positive if it is outside, and 0 on its boundary </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Point&lt;double&gt; instance </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classOFELI_1_1Figure.html#a59bcb59a9fd6e717fa480630c7d3b57a">Figure</a>.</p>
+
+</div>
+</div>
+<a id="a40712cc582cf94c03cc1e30e8ab717fc" name="a40712cc582cf94c03cc1e30e8ab717fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40712cc582cf94c03cc1e30e8ab717fc">&#9670;&#160;</a></span>operator+=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1Triangle.html">Triangle</a> &amp; operator+= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structOFELI_1_1Point.html">Point</a>&lt; real_t &gt;&#160;</td>
+          <td class="paramname"><em>a</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor for a side. </p>
-<p>The constructed triangle is a side in a 3-D mesh. </p>
+<p>Operator +=. </p>
+<p>Translate triangle by a vector <code>a</code> </p>
+
+</div>
+</div>
+<a id="aac06304fc37e96f1dd95a4724b6437be" name="aac06304fc37e96f1dd95a4724b6437be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac06304fc37e96f1dd95a4724b6437be">&#9670;&#160;</a></span>operator+=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOFELI_1_1Triangle.html">Triangle</a> &amp; operator+= </td>
+          <td>(</td>
+          <td class="paramtype">real_t&#160;</td>
+          <td class="paramname"><em>a</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Operator *=. </p>
+<p>Scale triangle by a factor <code>a</code> </p>
 
 </div>
 </div>

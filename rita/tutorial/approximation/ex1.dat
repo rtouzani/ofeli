@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date></date>
+   <author></author>
+</info>
+<Function name="f">
+   <Variable label="x" nb_points="3" min="0" max="1.0"/>
+   <Data>
+       1.0   1.25   2.0
+   </Data>
+</Function>  
+</OFELI_File>

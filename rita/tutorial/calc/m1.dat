@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date></date>
+   <author></author>
+</info>
+<Matrix name="A" nb_rows="5" storage="tridiagonal">
+  2.0  -1.0 
+ -1.0   2.0 -1.0 
+ -1.0   2.0 -1.0 
+ -1.0   2.0 -1.0 
+ -1.0   2.0
+</Matrix>  
+</OFELI_File>

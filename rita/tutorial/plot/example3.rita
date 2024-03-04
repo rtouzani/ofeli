@@ -1,0 +1,31 @@
+# rita Script file to solve an ordinary differential system
+# We numerically solve the Lorentz system using the Runge-Kutta scheme
+# Since we deal with a system with numerous data, we use a detailed description of the ode system
+# Note that the analysis is by default transient since we have an ode
+#
+ode
+  size 3
+# The variable is named y, so actual unknowns here are y1, y2, y3
+  variable y
+  definition 10*(y2-y1)
+  definition "y1*(27-y3) - y2"
+  definition "y1*y2 - 8/3*y3"
+  init 1. 0. 0.
+  scheme RK4
+  time-step 0.01
+  final-time 50.
+  end
+#
+# Store solution history in vector sequence Y
+  history y Y
+#
+# To solve the system, we first describe how the results are to be saved.
+# in particular the phase portrait will be saved in an appropriate file
+solve
+  run
+# output solution at final time
+  = y
+#
+# Save solution history in gnuplot file
+  save  format=gnuplot file=sol.dat name=Y
+exit

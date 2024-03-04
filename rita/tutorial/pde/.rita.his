@@ -1,0 +1,44 @@
+# rita history file
+# 2022-04-25  17:32:20
+#
+mesh
+parameter h1=0.1
+parameter h2=0.5*h1
+  point  label=1  x=3  y=0  z=0  size=0.1
+  point  label=2  x=10  y=0  z=0  size=0.1
+  point  label=3  x=10  y=3  z=0  size=0.1
+  point  label=4  x=0  y=3  z=0  size=0.1
+  point  label=5  x=0  y=1  z=0  size=0.1
+  point  label=6  x=3  y=1  z=0  size=0.05
+  curve label=1  line=1,2
+  curve label=2  line=2,3
+  curve label=3  line=3,4
+  curve label=4  line=4,5
+  curve label=5  line=5,6
+  curve label=6  line=6,1
+  contour  label=1  curves=1,2,3,4,5,6
+  surface  label=1  contours=1
+  code  value=11  points=1,2,3,4,5,6
+  code  value=11  curves=1,3,5,6
+  code  value=21  curves=4
+  code  value=1  curves=2
+  code  value=1  surfaces=1
+  save  geo=example5.geo
+    nbdof 2
+  generate
+  save  mesh=example5.m
+  end
+transient  initial-time=0  final-time=1  time-step=0.01  adapted=0  scheme=builtin
+pde incompressible-navier-stokes
+  field v
+  field p
+  in  value=0.
+  bc  code=1  value=0.
+  bc  code=2  value=(y-1)*(3-y)
+  space feP1
+  end
+solve
+  save field=v file=v.pos format=gmsh frequency=2
+  save field=p file=p.vtk format=vtk frequency=4
+  run
+exit

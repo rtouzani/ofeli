@@ -75,13 +75,13 @@ class XMLParser : public Parser
    enum {ASCII,BINARY};
 
    enum class Tag {PROJECT, TITLE, AUTHOR, VERBOSE, OUTPUT, SAVE, PLOT, DOMAIN_FILE, MESH_FILE, INIT_FILE,
-                   RESTART_FILE, BC, BC_FILE, BF, BF_FILE, SF, SF_FILE, SAVE_FILE, PLOT_FILE, PRESCRIPTION_FILE, AUX_FILE,
-                   DENSITY, SPECIFIC_HEAT, THERMAL_CONDUCTIVITY, MELTING_TEMPERATURE, EVAPORATION_TEMPERATURE,
+                   RESTART_FILE, BC, BC_FILE, BF, BF_FILE, SF, SF_FILE, SAVE_FILE, PLOT_FILE, PRESCRIPTION_FILE,
+                   AUX_FILE, DENSITY, SPECIFIC_HEAT, THERMAL_CONDUCTIVITY, MELTING_TEMPERATURE, EVAPORATION_TEMPERATURE,
                    THERMAL_EXPANSION, LATENT_HEAT_MELTING, LATENT_HEAT_EVAPORATION, DIELECTRIC_CONSTANT, 
                    ELECTRIC_CONDUCTIVITY, ELECTRIC_RESISTIVITY, ELECTRIC_PERMITTIVITY, MAGNETIC_PERMEABILITY,
                    POISSON_RATIO, RHO_CP, VISCOSITY, YOUNG_MODULUS, VECTOR, CODE, NB_DOF, ARRAY, DDOMAIN,
                    VERTEX, LINE, CIRCLE, CONTOUR, HOLE, REQUIRED_VERTEX, REQUIRED_EDGE, RECTANGLE, SUBDOMAIN,
-                   MESH, NODES, ELEMENTS, SIDES, EDGES, TIME, NB_STEPS, TIME_STEP,
+                   MESH, NODES, ELEMENTS, SIDES, EDGES, TIME, STEP, NB_STEPS, TIME_STEP,
                    MAX_TIME, NB_ITER, TOLERANCE, PARAMETER, INTEGER, DOUBLE, STRING, COMPLEX, VALUE, DOF,
                    GRID, CONSTANT, EXPRESSION, MATERIAL, MATERIAL_CODE, DATA, MATRIX, NAME,
                    PRESCRIPTION, SOLUTION, BOUNDARY_CONDITION, BODY_FORCE, POINT_FORCE, FLUX, INITIAL, FUNCTION, VARIABLE};
@@ -110,12 +110,13 @@ class XMLParser : public Parser
    int get(IPF& ipf);
    int get(Domain& dm);
    int get(Tabulation& t);
-   int get(DMatrix<real_t>& A);
    int get(Matrix<real_t>* A);
+   int get(DMatrix<real_t>& A);
    int getArray(Vect<real_t>& A);
    int getMaterial();
    int get(int type, Vect<real_t>& v, real_t time=0);
    size_t getNbDOF() const { return _nb_dof; }
+   MatrixSize MSize() const;
 
  protected:
    std::ifstream _is;
@@ -126,9 +127,11 @@ class XMLParser : public Parser
    EType _type, _prescription_type, _old_type;
    Prescription::PPar _par;
    string _file, _mesh_file, _vect_file, _el_shape, _sd_shape, _name, _sought_name, _tag_name, _xml, _mat;
-   size_t _dof, _label, _nb_dof, _dim, _nb_nodes, _nb_elements, _nb_sides, _nb_edges, _tab_size, _vect_size;
-   size_t _nb_el_nodes, _nb_sd_nodes, _nb_mat, _all_steps, _nb_funct, _nb_rows, _nb_cols;
+   size_t _iter, _dof, _label, _nb_dof, _dim, _nb_nodes, _nb_elements, _nb_sides, _nb_edges, _tab_size, _vect_size;
+   size_t _nb_el_nodes, _nb_sd_nodes, _nb_mat, _all_steps, _nb_funct;
    size_t _ik1, _ik2, _dk1, _dk2, _ck, _mk, _pk, _dk, _nb_var, _nx, _ny, _nz, _nt;
+   MatrixType _storage;
+   MatrixSize _msize;
    DOFSupport _dof_support;
    mutable Mesh *_theMesh;
    Grid *_theGrid;
@@ -171,8 +174,20 @@ class XMLParser : public Parser
    void read_prescribe_data(const vector<string> &tokens, vector<string>::iterator &it);
    void read_tab(const SString& a);
    void read_tab_data(const vector<string> &tokens, vector<string>::iterator &it);
-   void read_matrix(const SString& ai);
-   void read_matrix_data(const vector<string> &tokens, vector<string>::iterator &it);
+   int read_matrix(const SString& ai);
+   int read_matrix_data(const vector<string> &tokens, vector<string>::iterator &it);
+   MatrixSize getMatrixData();
+
+   map<string,MatrixType> _STORAGE = {{"dense",DENSE},
+                                      {"skyline",SKYLINE},
+                                      {"sparse",SPARSE},
+                                      {"diagonal",DIAGONAL},
+                                      {"tridiagonal",TRIDIAGONAL},
+                                      {"band",BAND},
+                                      {"symmetric",SYMMETRIC},
+                                      {"unsymmetric",UNSYMMETRIC},
+                                      {"identity",IDENTITY}
+                                     };
 
    map<string,Tag> _TS = {{"Project",Tag::PROJECT},
                           {"title",Tag::TITLE},
@@ -232,6 +247,7 @@ class XMLParser : public Parser
                           {"Sides",Tag::SIDES}, {"sides",Tag::SIDES},
                           {"Edges",Tag::EDGES}, {"edges",Tag::EDGES},
                           {"time",Tag::TIME},
+                          {"step",Tag::STEP},
                           {"nb_steps",Tag::NB_STEPS},
                           {"time_step",Tag::TIME_STEP},
                           {"max_time",Tag::MAX_TIME},

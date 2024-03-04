@@ -73,7 +73,6 @@ int main(int argc, char *argv[])
       u.setName("Temperature");
       if (Verbosity>1)
          cout << "Reading boundary conditions, body and boundary forces ...\n";
-
       Vect<double> bc(ms), body_f(ms), bound_f(ms);
       p.get(EType::BOUNDARY_CONDITION,bc);
       p.get(EType::SOURCE,body_f);

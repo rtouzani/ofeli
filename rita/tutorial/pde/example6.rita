@@ -1,0 +1,48 @@
+# rita Script file to solve the 2-D heat equation
+# Time discretization: Implicit Euler method
+# Space discretization: P1 finite elements
+#
+n=10
+L=2*pi
+#
+# We enter module 'mesh'
+# End nodes are assigned code 1 to enforce boundary conditions
+mesh
+  1d domain=0,L ne=n codes=1,2
+  end
+#
+# Define PDE and discretization method
+# We want to solve the linear parabolic equation:
+#
+#      du/dt - d2u/dx2 + x.du/dx = f    in (0,pi)
+#      u(0,t) = u(1,t) = 0,
+#      u(x,0) = sin(x)
+#
+# whose solution is u(x,t) = exp(-t)*sin(x)
+#
+# We use the P1 finite element method for space discretization
+# Time discretization uses, by default, the backward Euler scheme
+
+# We define the analytical solution of the pde to solve
+function name=ue var=t,x def=exp(-t)*sin(x)
+
+pde linear
+  variable u
+ coef c10=1. c02=1. c01=0
+  bc code=1 value=0.
+  bc code=2 value=0.
+  in value=sin(x)
+  bf value=exp(-t)*x*cos(x)
+  space feP1
+  time-step 0.1
+  final-time 1.
+  analytic-function ue
+  err e2 eI
+  end
+
+# Solve problem, output solution and save it in file
+# Note that we define saving parameters before running. This is necessary for transient problems
+# to make it possible to save while computing
+solve
+
+exit

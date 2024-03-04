@@ -159,6 +159,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setDiag</b> ()</td></
 <tr class="memitem:a17592a65d5fb95d42c07f724dabad759" id="r_a17592a65d5fb95d42c07f724dabad759"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DSMatrix.html#a17592a65d5fb95d42c07f724dabad759">add</a> (size_t i, size_t j, const T_ &amp;val)</td></tr>
 <tr class="memdesc:a17592a65d5fb95d42c07f724dabad759"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add constant to an entry ofthe matrix.  <br /></td></tr>
 <tr class="separator:a17592a65d5fb95d42c07f724dabad759"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a276ea1877b89d46c32e207248a4573d7" id="r_a276ea1877b89d46c32e207248a4573d7"><td class="memItemLeft" align="right" valign="top">T_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DSMatrix.html#a276ea1877b89d46c32e207248a4573d7">at</a> (size_t i, size_t j)</td></tr>
+<tr class="memdesc:a276ea1877b89d46c32e207248a4573d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a value of a matrix entry.  <br /></td></tr>
+<tr class="separator:a276ea1877b89d46c32e207248a4573d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78adc6c13ad0f1d1dedacffe0e80ce63" id="r_a78adc6c13ad0f1d1dedacffe0e80ce63"><td class="memItemLeft" align="right" valign="top">T_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOFELI_1_1DSMatrix.html#a78adc6c13ad0f1d1dedacffe0e80ce63">operator()</a> (size_t i, size_t j) const</td></tr>
 <tr class="memdesc:a78adc6c13ad0f1d1dedacffe0e80ce63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operator <code>()</code> (Constant version).  <br /></td></tr>
 <tr class="separator:a78adc6c13ad0f1d1dedacffe0e80ce63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -247,6 +250,10 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNbColumns</b> ()
 string&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const</td></tr>
 <tr class="memdesc:a134d85a189d667e7a481614c1aa67860 inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of matrix. <br /></td></tr>
 <tr class="separator:a134d85a189d667e7a481614c1aa67860 inherit pub_methods_classOFELI_1_1Matrix"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5884b405cb5be2e811eda5c3038b0c8 inherit pub_methods_classOFELI_1_1Matrix" id="r_ac5884b405cb5be2e811eda5c3038b0c8"><td class="memItemLeft" align="right" valign="top">
+MatrixSize&#160;</td><td class="memItemRight" valign="bottom"><b>getMatrixSize</b> () const</td></tr>
+<tr class="memdesc:ac5884b405cb5be2e811eda5c3038b0c8 inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return storage type. <br /></td></tr>
+<tr class="separator:ac5884b405cb5be2e811eda5c3038b0c8 inherit pub_methods_classOFELI_1_1Matrix"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72077468b17118c44394d286f7737bd4 inherit pub_methods_classOFELI_1_1Matrix" id="r_a72077468b17118c44394d286f7737bd4"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setPenal</b> (real_t p)</td></tr>
 <tr class="memdesc:a72077468b17118c44394d286f7737bd4 inherit pub_methods_classOFELI_1_1Matrix"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Penalty Parameter (For boundary condition prescription). <br /></td></tr>
@@ -523,6 +530,55 @@ template&lt;class T_ &gt; </div>
 </dl>
 
 <p>Implements <a class="el" href="classOFELI_1_1Matrix.html#a8afb24c3d7982f994ea2c4a50444ed86">Matrix&lt; T_ &gt;</a>.</p>
+
+</div>
+</div>
+<a id="a276ea1877b89d46c32e207248a4573d7" name="a276ea1877b89d46c32e207248a4573d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a276ea1877b89d46c32e207248a4573d7">&#9670;&#160;</a></span>at()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T_ &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T_ at </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return a value of a matrix entry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>Row index (starts at 1) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">j</td><td>Column index (starts at 1) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classOFELI_1_1Matrix.html#aceb1c3981384a95d694c5d5d837a693f">Matrix&lt; T_ &gt;</a>.</p>
 
 </div>
 </div>

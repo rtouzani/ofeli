@@ -7,6 +7,7 @@ var classOFELI_1_1DSMatrix =
     [ "~DSMatrix", "classOFELI_1_1DSMatrix.html#acf6975daaae7752bf91aaa02626da792", null ],
     [ "add", "classOFELI_1_1DSMatrix.html#a3c7b029cbe1aca9bea7623ae99274795", null ],
     [ "add", "classOFELI_1_1DSMatrix.html#a17592a65d5fb95d42c07f724dabad759", null ],
+    [ "at", "classOFELI_1_1DSMatrix.html#a276ea1877b89d46c32e207248a4573d7", null ],
     [ "Axpy", "classOFELI_1_1DSMatrix.html#a71951ea22c5e9d656c2ff6bcabd0850b", null ],
     [ "Axpy", "classOFELI_1_1DSMatrix.html#ac7ecd57722b088d883cdb26ac2887270", null ],
     [ "get", "classOFELI_1_1DSMatrix.html#a173c0f972c4eeca07b426587bc2108e5", null ],

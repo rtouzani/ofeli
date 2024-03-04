@@ -1,0 +1,23 @@
+# rita Script file to solve a 2-D elasticity problem
+# Space discretization: Q1 finite elements
+#
+# Mesh of a rectangle
+# Here the mesh is already given in file
+mesh
+  read mesh=ex4.m
+  end
+#
+# Define model: PDE and discretization method
+pde linear-elasticity
+  vector u
+  bc code=1 value=0.
+  sf code=1 value=-1000.
+  space feQ1
+  end
+#
+# Solve problem and save solution in file
+solve
+#
+# Save result in gmsh file
+save name=u file=example4.pos format=gmsh
+exit

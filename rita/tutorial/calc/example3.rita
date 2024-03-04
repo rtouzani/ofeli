@@ -1,0 +1,35 @@
+# rita Script file to illustrate the use of the calculator
+#
+# We define some scalars (parameters)
+x = 2.0
+z = log(x+1)
+
+# Now we define a (column) vector and compute some norms of it
+v = vector(4)
+v[2] = -2.0
+v[3] =  1.0
+a1 = norm1(v)
+a2 = norm2(v)
+aI = normI(v)
+
+# Here is a row vector
+# We also compute the scalar product of v and w
+w = {1.0, 2.0, 0.0, 1.0}
+z = w*v
+
+# We define a matrix
+M = matrix(2,3)
+M[0,0]=2
+M[1,0]=-1
+M[0,1]=1
+M[0,2]=-1
+M[1,2]=3
+
+# We define a row vector and then the product of the matrix
+# by the transpose of y
+y = {1,2,-1}
+u = M*y'
+= u
+data
+exit
+

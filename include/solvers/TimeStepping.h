@@ -314,10 +314,12 @@ class TimeStepping
        int  nb_eq, nb_dof;
        Iteration itsolver;
        Preconditioner prec;
-       Vect<real_t> u, v, *w, f0, f1, *f2, b, *f01, f, *bc, bb, vv;
+       Vect<real_t> u, v, *w, f0, f1, *f2, *b, *f01, f, *bc, bb, vv;
        Vect<real_t> *du, ddu, dv, ddv, D, k1, k2, k3, k4;
        Matrix<real_t> *A;
        bool constant_matrix, expl, set_bc, nl;
+       DE() { w = f2 = b = f01 = bc = du = nullptr; }
+       ~DE() { delete b; }
     };
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -325,7 +327,7 @@ class TimeStepping
 
    vector<DE> _de;
    size_t _order, _nb_ssteps, _step, _sstep;
-   int _nb_des, _ind, _sc, _non_linear, _max_it;
+   int _rhs_ok, _nb_des, _ind, _sc, _non_linear, _max_it;
    bool _regex;
    Vect<real_t> *_a0, *_a1, *_a2, _ff, _fbc, _fsf;
    real_t _time_step0, _time_step, _time, _final_time, _c0, _c1, _c2, _toler;

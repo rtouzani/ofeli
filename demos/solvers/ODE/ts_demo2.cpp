@@ -43,54 +43,55 @@ using namespace OFELI;
 
 int main(int argc, char *argv[])
 {
-// Read and set problem data
-   theFinalTime = 1.;
-   if (argc<2) {
-      cout << "Usage: " << argv[0] << " <mesh_file> [time step]" << endl;
-      return EXIT_FAILURE;
-   }
-   Mesh ms(argv[1],true);
-   theTimeStep = 0.1;
-   if (argc>2)
-      theTimeStep = atof(argv[2]);
+   try {
 
-// Declare and initialize used vector
-// u: initial solution and solution at each time step
-   Vect<double> u(ms), v(ms), bc(ms);
-   u.set("-0.1",2);
+//    Read and set problem data
+      theFinalTime = 1.;
+      if (argc<2) {
+         cout << "Usage: " << argv[0] << " <mesh_file> [time step]" << endl;
+         return EXIT_FAILURE;
+      }
+      Mesh ms(argv[1],true);
+      theTimeStep = 0.1;
+      if (argc>2)
+         theTimeStep = atof(argv[2]);
 
-// Instantiate equation class and declare used terms
-   Elas2DT3 eq(ms);
-   eq.setTerms(int(PDE_Terms::LUMPED_MASS)|int(PDE_Terms::DEVIATORIC)|int(PDE_Terms::DILATATION));
+//    Declare and initialize used vector
+//    u: initial solution and solution at each time step
+      Vect<double> u(ms), v(ms), bc(ms);
+      u.set("-0.1",2);
 
-// Build the differential system
-// We use the Newmark scheme
-   TimeStepping ts(NEWMARK,theTimeStep,theFinalTime);
-   ts.setPDE(eq);
-   ts.setInitial(u,v);
+//    Instantiate equation class and declare used terms
+      Elas2DT3 eq(ms);
+      eq.setTerms(int(PDE_Terms::LUMPED_MASS)|int(PDE_Terms::DEVIATORIC)|int(PDE_Terms::DILATATION));
 
-// Set solver of the linear system (See class LinearSolver for other choices)
-   ts.setLinearSolver(CG_SOLVER,DILU_PREC);
+//    Build the differential system
+//    We use the Newmark scheme
+      TimeStepping ts(NEWMARK,theTimeStep,theFinalTime);
+      ts.setPDE(eq);
+      ts.setInitial(u,v);
 
-// Time loop
-   saveField(u,ms,"u-0.vtk",VTK);
-   TimeLoop {
+//    Set solver of the linear system (See class LinearSolver for other choices)
+      ts.setLinearSolver(CG_SOLVER,DILU_PREC);
 
-//    Set Dirichlet boundary condition
-      bc.setTime(theTime);
-      ts.setBC(bc);
+//    Time loop
+      saveField(u,ms,"u-0.vtk",VTK);
+      TimeLoop {
 
-//    Run the time step: The solution is stored in vector u
-      ts.runOneTimeStep();
+//       Set Dirichlet boundary condition
+         bc.setTime(theTime);
+         ts.setBC(bc);
 
-//    Save solution for post processing
-      saveField(u,ms,"u-"+to_string(theStep)+".vtk",VTK);
-      Mesh dm(ms);
-      DeformMesh(dm,u,1.);
-      dm.save("mm-"+to_string(theStep)+".m");
-   }
+//       Run the time step: The solution is stored in vector u
+         ts.runOneTimeStep();
 
-// Display TimeStepping class information
-   cout << ts << "Solution L2-Norm: " << u.getWNorm2() << endl;
+//       Save solution for post processing
+         saveField(u,ms,"u-"+to_string(theStep)+".vtk",VTK);
+      }
+
+//    Display TimeStepping class information
+      cout << ts << "Solution L2-Norm: " << u.getWNorm2() << endl;
+
+   } CATCH_EXCEPTION
    return EXIT_SUCCESS;
 }

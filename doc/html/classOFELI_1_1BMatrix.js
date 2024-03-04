@@ -6,6 +6,7 @@ var classOFELI_1_1BMatrix =
     [ "~BMatrix", "classOFELI_1_1BMatrix.html#a70546d5bdbc7c8c4e814580bec939a60", null ],
     [ "add", "classOFELI_1_1BMatrix.html#a3c7b029cbe1aca9bea7623ae99274795", null ],
     [ "add", "classOFELI_1_1BMatrix.html#a17592a65d5fb95d42c07f724dabad759", null ],
+    [ "at", "classOFELI_1_1BMatrix.html#a276ea1877b89d46c32e207248a4573d7", null ],
     [ "Axpy", "classOFELI_1_1BMatrix.html#a16fc87ee384a1c0a8f82befbb8c182a4", null ],
     [ "Axpy", "classOFELI_1_1BMatrix.html#a8c474f5353d595009b1f4328cebaaebe", null ],
     [ "get", "classOFELI_1_1BMatrix.html#a9b901ab6d955335f6b9edcabbc59d1d1", null ],

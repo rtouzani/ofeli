@@ -1,0 +1,16 @@
+# rita Script file to solve a constrained optimization problem
+# We numerically solve an optimal design of a four bar truss:
+#
+optim
+  size 2
+  variable x
+  obj "3*x1 + sqrt(3)*x2"
+  le-constraint "6*sqrt(3)/x2 + 18/x1 - 3"
+  penal 1.e02
+  low  1 5.73
+  low  2 7.17
+  init 6. 8.
+  end
+solve
+= x
+exit

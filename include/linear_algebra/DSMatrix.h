@@ -64,14 +64,9 @@ class Mesh;
 template<class T_>
 class DSMatrix : public Matrix<T_>
 {
-   using Matrix<T_>::_nb_rows;
-   using Matrix<T_>::_nb_cols;
-   using Matrix<T_>::_size;
-   using Matrix<T_>::_length;
+   using Matrix<T_>::_msize;
    using Matrix<T_>::_a;
    using Matrix<T_>::_diag;
-   using Matrix<T_>::_zero;
-   using Matrix<T_>::_ch;
    using Matrix<T_>::_theMesh;
    using Matrix<T_>::_is_diagonal;
 
@@ -123,8 +118,8 @@ class DSMatrix : public Matrix<T_>
              const T_& val);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void setGraph(const Vect<RC>& I,
-                  int             opt=1);
+    void setGraph(const vector<RC>& I,
+                  int               opt=1);
 
     void setMesh(Mesh&  mesh,
                  size_t dof=0);
@@ -198,6 +193,13 @@ class DSMatrix : public Matrix<T_>
     void add(size_t    i,
              size_t    j,
              const T_& val);
+
+/** \brief Return a value of a matrix entry
+ *  @param [in] i Row index (starts at 1)
+ *  @param [in] j Column index (starts at 1)
+ */
+    T_ at(size_t i,
+          size_t j);
 
 /** \brief Operator <tt>()</tt> (Constant version).
  *  @param [in] i Row index

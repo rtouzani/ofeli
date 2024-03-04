@@ -48,6 +48,7 @@ namespace OFELI {
 template<class T_>
 SkSMatrix<T_>::SkSMatrix() : _dof(0)
 {
+   _msize.mt = SKYLINE;
    _is_diagonal = false;
    _dof_type = NODE_DOF;
 }
@@ -57,23 +58,23 @@ template<class T_>
 SkSMatrix<T_>::SkSMatrix(size_t size,
                          int    is_diagonal) : _dof(0)
 {
-   _zero = 0;
+   _msize.mt = SKYLINE;
    _is_diagonal = is_diagonal;
    _dof_type = NODE_DOF;
-   _nb_rows = _nb_cols = _size = size;
-   _ch.resize(size);
-   _diag.resize(_size);
-   _ch[0] = 0;
+   _msize.nb_rows = _msize.nb_cols = _msize.size = size;
+   _msize.ch.resize(size);
+   _diag.resize(_msize.size);
+   _msize.ch[0] = 0;
    if (_is_diagonal) {
-      for (size_t i=1; i<_size; i++)
-         _ch[i] = _ch[i-1] + 1;
+      for (size_t i=1; i<_msize.size; i++)
+         _msize.ch[i] = _msize.ch[i-1] + 1;
    }
    else {
-      for (size_t i=1; i<_size; i++)
-         _ch[i] = _ch[i-1] + i + 1;
+      for (size_t i=1; i<_msize.size; i++)
+         _msize.ch[i] = _msize.ch[i-1] + i + 1;
    }
-   _length = _ch[_size-1] + 1;
-   _a.resize(_length);
+   _msize.length = _msize.ch[_msize.size-1] + 1;
+   _a.resize(_msize.length);
 }
 
 
@@ -82,6 +83,7 @@ SkSMatrix<T_>::SkSMatrix(Mesh&  mesh,
                          size_t dof,
                          int    is_diagonal)
 {
+   _msize.mt = SKYLINE;
    _is_diagonal = is_diagonal;
    setMesh(mesh,dof);
 }
@@ -90,17 +92,17 @@ SkSMatrix<T_>::SkSMatrix(Mesh&  mesh,
 template<class T_>
 SkSMatrix<T_>::SkSMatrix(const Vect<size_t>& ColHt) : _dof(0)
 {
+   _msize.mt = SKYLINE;
    _is_diagonal = false;
    _dof_type = NODE_DOF;
-   _size = ColHt.size();
-   _zero = 0;
-   _ch.resize(_size);
-   _ch[0] = 0;
-   for (size_t i=1; i<_size; ++i)
-      _ch[i] = _ch[i-1] + ColHt[i];
-   _length = _ch[_size-1] + 1;
-   _a.resize(_length);
-   _diag.resize(_size);
+   _msize.size = ColHt.size();
+   _msize.ch.resize(_msize.size);
+   _msize.ch[0] = 0;
+   for (size_t i=1; i<_msize.size; ++i)
+      _msize.ch[i] = _msize.ch[i-1] + ColHt[i];
+   _msize.length = _msize.ch[_msize.size-1] + 1;
+   _a.resize(_msize.length);
+   _diag.resize(_msize.size);
 }
 
 
@@ -109,17 +111,18 @@ SkSMatrix<T_>::SkSMatrix(const Vect<size_t>& I,
                          const Vect<size_t>& J,
                          int                 opt) : _dof(0)
 {
+   _msize.mt = SKYLINE;
    _is_diagonal = false;
-   _size = 0;
+   _msize.size = 0;
    _dof_type = NODE_DOF;
    size_t n = I.size();
    std::vector<RC> pp(n);
    for (size_t i=0; i<n; i++) {
-      _size = std::max(_size,I[i]);
+      _msize.size = std::max(_msize.size,I[i]);
       pp[i] = RC(I[i]-1,J[i]-1);
    }
-   _ch.resize(_size);
-   _nb_rows = _nb_cols = _size;
+   _msize.ch.resize(_msize.size);
+   _msize.nb_rows = _msize.nb_cols = _msize.size;
    if (opt==0) {
       sort(pp.begin(),pp.end());
       vector<RC>::iterator new_end = std::unique(pp.begin(),pp.end());
@@ -127,14 +130,14 @@ SkSMatrix<T_>::SkSMatrix(const Vect<size_t>& I,
    }
    for (size_t i=0; i<n; i++) {
       if (I[i]>J[i])
-         _ch[I[i]-1] = Max<unsigned>(static_cast<unsigned>(std::abs(int(I[i])-int(J[i]))),_ch[I[i]-1]);
+         _msize.ch[I[i]-1] = Max<unsigned>(static_cast<unsigned>(std::abs(int(I[i])-int(J[i]))),_msize.ch[I[i]-1]);
    }
-   _ch[0] = 0;
-   for (size_t i=1; i<_size; ++i)
-      _ch[i] += _ch[i-1] + 1;
-   _length = _ch[_size-1]+1;
-   _a.resize(_length);
-   _diag.resize(_size);
+   _msize.ch[0] = 0;
+   for (size_t i=1; i<_msize.size; ++i)
+      _msize.ch[i] += _msize.ch[i-1] + 1;
+   _msize.length = _msize.ch[_msize.size-1]+1;
+   _a.resize(_msize.length);
+   _diag.resize(_msize.size);
 }
 
 
@@ -144,17 +147,18 @@ SkSMatrix<T_>::SkSMatrix(const Vect<size_t>& I,
                          const Vect<T_>&     a,
                          int                 opt) : _dof(0)
 {
+   _msize.mt = SKYLINE;
    _is_diagonal = false;
    _dof_type = NODE_DOF;
    size_t i,  n=I.size();
    std::vector<RC> pp(n);
-   _size = 0;
+   _msize.size = 0;
    for (i=0; i<n; i++) {
-      _size = Max(_size,I[i]);
+      _msize.size = Max(_msize.size,I[i]);
       pp[i] = RC(I[i]-1,J[i]-1);
    }
-   _ch.resize(_size,0);
-   _nb_rows = _nb_cols = _size;
+   _msize.ch.resize(_msize.size,0);
+   _msize.nb_rows = _msize.nb_cols = _msize.size;
    if (opt==0) {
       sort(pp.begin(),pp.end());
       vector<RC>::iterator new_end = std::unique(pp.begin(),pp.end());
@@ -162,31 +166,27 @@ SkSMatrix<T_>::SkSMatrix(const Vect<size_t>& I,
    }
    for (i=0; i<n; i++)
       if (I[i]>J[i])
-         _ch[I[i]-1] = Max<unsigned>(static_cast<unsigned>(abs(int(I[i])-int(J[i]))),_ch[I[i]-1]);
-   _ch[0] = 0;
-   for (i=1; i<_size; ++i)
-      _ch[i] += _ch[i-1] + 1;
-   _length = _ch[_size-1]+1;
-   _a.resize(_length);
+         _msize.ch[I[i]-1] = Max<unsigned>(static_cast<unsigned>(abs(int(I[i])-int(J[i]))),_msize.ch[I[i]-1]);
+   _msize.ch[0] = 0;
+   for (i=1; i<_msize.size; ++i)
+      _msize.ch[i] += _msize.ch[i-1] + 1;
+   _msize.length = _msize.ch[_msize.size-1]+1;
+   _a.resize(_msize.length);
    size_t k=0;
    for (i=0; i<n; i++)
       set(I[i],J[i],a[k++]);
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
 }
 
 
 template<class T_>
 SkSMatrix<T_>::SkSMatrix(const SkSMatrix<T_>& m) : _dof(m._dof)
 {
-   _length = m._length;
-   _size = m._size;
-   _ch.resize(_size);
-   _ch = m._ch;
-   _a.resize(_length);
+   _msize = m._msize;
+   _a.resize(_msize.length);
    _a = m._a;
-   _diag.resize(_size);
+   _diag.resize(_msize.size);
    _diag = m._diag;
-   _zero = T_(0);
    _theMesh = m._theMesh;
    _is_diagonal = m._is_diagonal;
 }
@@ -206,37 +206,37 @@ void SkSMatrix<T_>::setMesh(Mesh&  mesh,
    Matrix<T_>::init_set_mesh(mesh,dof);
    if (_dof_type==NODE_DOF) {
       if (dof)
-         _length = NodeSkyline(*_theMesh,_ch,dof);
+         _msize.length = NodeSkyline(*_theMesh,_msize.ch,dof);
       else
-         _length = NodeSkyline(*_theMesh,_ch);
+         _msize.length = NodeSkyline(*_theMesh,_msize.ch);
    }
    else if (_dof_type==SIDE_DOF) {
       if (dof)
-         _length = SideSkyline(*_theMesh,_ch,dof);
+         _msize.length = SideSkyline(*_theMesh,_msize.ch,dof);
       else
-         _length = SideSkyline(*_theMesh,_ch);
+         _msize.length = SideSkyline(*_theMesh,_msize.ch);
    }
    else if (_dof_type==ELEMENT_DOF) {
       if (dof)
-         _length = ElementSkyline(*_theMesh,_ch,dof);
+         _msize.length = ElementSkyline(*_theMesh,_msize.ch,dof);
       else
-         _length = ElementSkyline(*_theMesh,_ch);
+         _msize.length = ElementSkyline(*_theMesh,_msize.ch);
    }
    else
       ;
-   _diag.resize(_size);
-   _a.resize(_length);
-   _ch[0] = 0;
-   for (size_t i=1; i<_size; i++)
-      _ch[i] += _ch[i-1];
+   _diag.resize(_msize.size);
+   _a.resize(_msize.length);
+   _msize.ch[0] = 0;
+   for (size_t i=1; i<_msize.size; i++)
+      _msize.ch[i] += _msize.ch[i-1];
    _dof = 0;
-   _nb_rows = _nb_cols = _size;
+   _msize.nb_rows = _msize.nb_cols = _msize.size;
 }
 
 
 template<class T_>
-void SkSMatrix<T_>::setGraph(const Vect<RC>& I,
-                             int             opt)
+void SkSMatrix<T_>::setGraph(const vector<RC>& I,
+                             int               opt)
 { }
 
 
@@ -249,22 +249,22 @@ void SkSMatrix<T_>::setGraph(Mesh&  mesh,
    _theMesh = &mesh;
    _theMesh->selectDOF(dof_type,dof1,dof2);
    if (dof_type==NODE_DOF)
-      _length = NodeSkyline(mesh,_ch,dof1,dof2);
+      _msize.length = NodeSkyline(mesh,_msize.ch,dof1,dof2);
    else if (dof_type==SIDE_DOF) {
       mesh.getAllSides();
-      _length = SideSkyline(mesh,_ch,dof1,dof2);
+      _msize.length = SideSkyline(mesh,_msize.ch,dof1,dof2);
    }
    else if (dof_type==ELEMENT_DOF)
-      _length = ElementSkyline(mesh,_ch);
+      _msize.length = ElementSkyline(mesh,_msize.ch);
    else;
-   _size = _ch.size();
-   _diag.resize(_size);
-   _a.resize(_length);
-   _ch[0] = 0;
-   for (size_t i=1; i<_size; i++)
-      _ch[i] += _ch[i-1];
+   _msize.size = _msize.ch.size();
+   _diag.resize(_msize.size);
+   _a.resize(_msize.length);
+   _msize.ch[0] = 0;
+   for (size_t i=1; i<_msize.size; i++)
+      _msize.ch[i] += _msize.ch[i-1];
    _dof = 0;
-   _nb_rows = _nb_cols = _size;
+   _msize.nb_rows = _msize.nb_cols = _msize.size;
 }
 
 
@@ -295,30 +295,29 @@ void SkSMatrix<T_>::setMesh(size_t dof,
 template<class T_>
 void SkSMatrix<T_>::setSkyline(Mesh& mesh)
 {
-   _zero = 0;
    int set_sides = mesh.SidesAreDOF();
-   _size = mesh.getNbEq();
+   _msize.size = mesh.getNbEq();
    if (_dof)
-      _size = mesh.getNbNodes();
+      _msize.size = mesh.getNbNodes();
    if (set_sides) {
       if (_dof) {
-         _size = mesh.getNbSides();
-         _length = SideSkyline(mesh,_ch,_dof);
+         _msize.size = mesh.getNbSides();
+         _msize.length = SideSkyline(mesh,_msize.ch,_dof);
       }
-      _length = SideSkyline(mesh,_ch);
+      _msize.length = SideSkyline(mesh,_msize.ch);
    }
    else {
       if (_dof) {
-         _size = mesh.getNbNodes();
-         _length = NodeSkyline(mesh,_ch,_dof);
+         _msize.size = mesh.getNbNodes();
+         _msize.length = NodeSkyline(mesh,_msize.ch,_dof);
       }
-      _length = NodeSkyline(mesh,_ch);
+      _msize.length = NodeSkyline(mesh,_msize.ch);
    }
-   _diag.resize(_size);
-   _ch[0] = 0;
-   for (size_t i=1; i<_size; i++)
-      _ch[i] += _ch[i-1];
-   _a.resize(_length);
+   _diag.resize(_msize.size);
+   _msize.ch[0] = 0;
+   for (size_t i=1; i<_msize.size; i++)
+      _msize.ch[i] += _msize.ch[i-1];
+   _a.resize(_msize.length);
    _theMesh = &mesh;
 }
 
@@ -326,8 +325,8 @@ void SkSMatrix<T_>::setSkyline(Mesh& mesh)
 template<class T_>
 void SkSMatrix<T_>::setDiag()
 {
-   for (size_t i=0; i<_size; i++)
-      _diag[i] = _a[_ch[i]];
+   for (size_t i=0; i<_msize.size; i++)
+      _diag[i] = _a[_msize.ch[i]];
 }
 
 
@@ -337,7 +336,7 @@ void SkSMatrix<T_>::set(size_t    i,
                         const T_& val)
 {
    if (i>=j)
-      _a[_ch[i-1]+j-i] = val;
+      _a[_msize.ch[i-1]+j-i] = val;
    else
       throw OFELIException("In SkSMatrix::set(i,j,x): Index pair (" + to_string(i) +
                            "," + to_string(j) + ") not compatible with skyline symmeric storage.");
@@ -349,7 +348,7 @@ void SkSMatrix<T_>::SSet(size_t    i,
                          size_t    j,
                          const T_& val)
 {
-   _a[_ch[i-1]+j-i] = val;
+   _a[_msize.ch[i-1]+j-i] = val;
 }
 
 
@@ -357,7 +356,7 @@ template<class T_>
 void SkSMatrix<T_>::Axpy(T_                   a,
                          const SkSMatrix<T_>& m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += a * m._a[i];
 }
 
@@ -366,7 +365,7 @@ template<class T_>
 void SkSMatrix<T_>::Axpy(T_                a,
                          const Matrix<T_>* m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += a * m->_a[i];
 }
 
@@ -375,8 +374,8 @@ template<class T_>
 void SkSMatrix<T_>::MultAdd(const Vect<T_>& x,
                             Vect<T_>&       y) const
 {
-   for (size_t i=0; i<_size; i++) {
-      for (size_t j=0; j<_size; j++)
+   for (size_t i=0; i<_msize.size; i++) {
+      for (size_t j=0; j<_msize.size; j++)
          y[i] += operator()(i+1,j+1)*x[j];
    }
 }
@@ -387,8 +386,8 @@ void SkSMatrix<T_>::MultAdd(T_              a,
                             const Vect<T_>& x,
                             Vect<T_>&       y) const
 {
-   for (size_t i=0; i<_size; i++)
-      for (size_t j=0; j<_size; j++)
+   for (size_t i=0; i<_msize.size; i++)
+      for (size_t j=0; j<_msize.size; j++)
          y[i] += a * operator()(i+1,j+1)*x[j];
 }
 
@@ -416,7 +415,7 @@ void SkSMatrix<T_>::add(size_t    i,
                         const T_& val)
 {
    if (i>=j)
-      _a[_ch[i-1]+j-i] += val;
+      _a[_msize.ch[i-1]+j-i] += val;
 }
 
 
@@ -426,15 +425,15 @@ size_t SkSMatrix<T_>::getColHeight(size_t i) const
    if (i==1)
       return 1;
    else
-      return _ch[i-1]-_ch[i-2];
+      return _msize.ch[i-1]-_msize.ch[i-2];
 }
 
 
 template<class T_>
 Vect<T_> SkSMatrix<T_>::getColumn(size_t j) const
 {
-   Vect<T_> v(_nb_rows);
-   for (size_t i=1; i<=_nb_rows; i++)
+   Vect<T_> v(_msize.nb_rows);
+   for (size_t i=1; i<=_msize.nb_rows; i++)
       v(i) = (*this)(i,j);
    return v;
 }
@@ -448,20 +447,20 @@ Vect<T_> SkSMatrix<T_>::getRow(size_t i) const
 
 
 template<class T_>
-T_& SkSMatrix<T_>::operator()(size_t i,
-                              size_t j)
+T_ SkSMatrix<T_>::at(size_t i,
+                     size_t j)
 {
    int k=0, l=0;
    if (i>1)
-      k = int(j-i+_ch[i-1]-_ch[i-2]-1);
+      k = int(j-i+_msize.ch[i-1]-_msize.ch[i-2]-1);
    if (j>1)
-      l = int(i-j+_ch[j-1]-_ch[j-2]-1);
+      l = int(i-j+_msize.ch[j-1]-_msize.ch[j-2]-1);
    if (k>=0 && i>=j)
-      return _a[_ch[i-1]+j-i];
+      return _a[_msize.ch[i-1]+j-i];
    else if (l>=0 && i<j)
-      return _a[_ch[j-1]+i-j];
+      return _a[_msize.ch[j-1]+i-j];
    else
-      return _zero;
+      return static_cast<T_>(0);
 }
 
 
@@ -471,15 +470,33 @@ T_ SkSMatrix<T_>::operator()(size_t i,
 {
    int k=0, l=0;
    if (i>1)
-      k = int(j-i+_ch[i-1]-_ch[i-2]-1);
+      k = int(j-i+_msize.ch[i-1]-_msize.ch[i-2]-1);
    if (j>1)
-      l = int(i-j+_ch[j-1]-_ch[j-2]-1);
+      l = int(i-j+_msize.ch[j-1]-_msize.ch[j-2]-1);
    if (k>=0 && i>=j)
-      return _a[_ch[i-1]+j-i];
+      return _a[_msize.ch[i-1]+j-i];
    else if (l>=0 && i<j)
-      return _a[_ch[j-1]+i-j];
+      return _a[_msize.ch[j-1]+i-j];
    else
-      return _zero;
+      return _temp;
+}
+
+
+template<class T_>
+T_ & SkSMatrix<T_>::operator()(size_t i,
+                               size_t j)
+{
+   int k=0, l=0;
+   if (i>1)
+      k = int(j-i+_msize.ch[i-1]-_msize.ch[i-2]-1);
+   if (j>1)
+      l = int(i-j+_msize.ch[j-1]-_msize.ch[j-2]-1);
+   if (k>=0 && i>=j)
+      return _a[_msize.ch[i-1]+j-i];
+   else if (l>=0 && i<j)
+      return _a[_msize.ch[j-1]+i-j];
+   else
+      return _temp;
 }
 
 
@@ -494,9 +511,9 @@ SkSMatrix<T_>& SkSMatrix<T_>::operator=(const SkSMatrix<T_>& m)
 template<class T_>
 SkSMatrix<T_>& SkSMatrix<T_>::operator=(const T_& x)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] = 0;
-   for (size_t i=0; i<_nb_rows; i++) {
+   for (size_t i=0; i<_msize.nb_rows; i++) {
       _diag[i] = x;
       set(i+1,i+1,x);
    }
@@ -507,7 +524,7 @@ SkSMatrix<T_>& SkSMatrix<T_>::operator=(const T_& x)
 template<class T_>
 SkSMatrix<T_>& SkSMatrix<T_>::operator+=(const SkSMatrix<T_>& m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += m._a[i];
    return *this;
 }
@@ -516,7 +533,7 @@ SkSMatrix<T_>& SkSMatrix<T_>::operator+=(const SkSMatrix<T_>& m)
 template<class T_>
 SkSMatrix<T_>& SkSMatrix<T_>::operator*=(const T_& x)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] *= x;
    return *this;
 }
@@ -535,30 +552,30 @@ int SkSMatrix<T_>::setLDLt()
    if (_is_diagonal)
       return 0;
    size_t di=0, dij;
-   T_ s, pivot=_a[_ch[0]];
+   T_ s, pivot=_a[_msize.ch[0]];
    if (Abs(pivot) < OFELI_EPSMCH)
       throw OFELIException("In SkSMatrix::setLDLt(): The first pivot is null.");
    else
-      _a[_ch[0]] = T_(1.)/pivot;
-   for (size_t i=1; i<_size; i++) {
+      _a[_msize.ch[0]] = T_(1.)/pivot;
+   for (size_t i=1; i<_msize.size; i++) {
       size_t dj = 0;
-      for (size_t j=di=i+1+_ch[i-1]-_ch[i]; j<i; j++) {
+      for (size_t j=di=i+1+_msize.ch[i-1]-_msize.ch[i]; j<i; j++) {
          if (j>0)
-            dj = j+1+_ch[j-1]-_ch[j];
+            dj = j+1+_msize.ch[j-1]-_msize.ch[j];
          dij = std::max(di,dj);
          for (size_t k=0; k<j-dij; k++)
-            _a[_ch[i]+j-i] -= _a[_ch[i]+dij+k-i]*_a[_ch[j]+dij+k-j];
+            _a[_msize.ch[i]+j-i] -= _a[_msize.ch[i]+dij+k-i]*_a[_msize.ch[j]+dij+k-j];
       }
-      pivot = _a[_ch[i]];
+      pivot = _a[_msize.ch[i]];
       for (size_t k=di; k<i; k++) {
-         s = _a[_ch[i]+k-i]*_a[_ch[k]];
-         pivot -= s*_a[_ch[i]+k-i];
-         _a[_ch[i]+k-i] = s;
+         s = _a[_msize.ch[i]+k-i]*_a[_msize.ch[k]];
+         pivot -= s*_a[_msize.ch[i]+k-i];
+         _a[_msize.ch[i]+k-i] = s;
       }
       if (Abs(pivot) < OFELI_EPSMCH)
          throw OFELIException("In SkSMatrix::setLDLt(): " + to_string(i+1) + "-th pivot is null.");
       else
-         _a[_ch[i]] = T_(1.)/pivot;
+         _a[_msize.ch[i]] = T_(1.)/pivot;
    }
    return 0;
 }
@@ -571,23 +588,23 @@ int SkSMatrix<T_>::solveLDLt(const Vect<T_>& b,
    int ret = setLDLt();
    x = b;
    if (_is_diagonal) {
-      for (size_t i=0; i<_size; i++)
+      for (size_t i=0; i<_msize.size; i++)
          x[i] /= _a[i];
       return 0;
    }
-   for (size_t i=1; i<_size; i++) {
-      size_t di = i+1+_ch[i-1]-_ch[i];
+   for (size_t i=1; i<_msize.size; i++) {
+      size_t di = i+1+_msize.ch[i-1]-_msize.ch[i];
       T_ s = 0;
       for (size_t j=0; j<i-di; j++)
-         s += _a[_ch[i]+di+j-i] * x[di+j];
+         s += _a[_msize.ch[i]+di+j-i] * x[di+j];
       x[i] -= s;
    }
-   for (size_t i=0; i<_size; i++)
-      x[i] *= _a[_ch[i]];
-   for (int k=int(_size-1); k>0; k--) {
-      size_t di = k+1+_ch[k-1]-_ch[k];
+   for (size_t i=0; i<_msize.size; i++)
+      x[i] *= _a[_msize.ch[i]];
+   for (int k=int(_msize.size-1); k>0; k--) {
+      size_t di = k+1+_msize.ch[k-1]-_msize.ch[k];
       for (size_t j=0; j<k-di; j++)
-         x[j+di] -= x[k] * _a[_ch[k]+di+j-k];
+         x[j+di] -= x[k] * _a[_msize.ch[k]+di+j-k];
    }
    return ret;
 }
@@ -599,7 +616,7 @@ int SkSMatrix<T_>::solve(Vect<T_>& b,
 {
   int ret = 0;
    if (_is_diagonal) {
-      for (size_t i=0; i<_size; i++) {
+      for (size_t i=0; i<_msize.size; i++) {
          if (Abs(_a[i]) < OFELI_EPSMCH)
             throw OFELIException("In SkSMatrix::solve(b): " + to_string(i+1) + "-th diagonal is null.");
          b[i] /= _a[i];
@@ -608,19 +625,19 @@ int SkSMatrix<T_>::solve(Vect<T_>& b,
    }
    if (fact)
       ret = setLDLt();
-   for (size_t i=1; i<_size; i++) {
-      size_t di = i+1+_ch[i-1]-_ch[i];
+   for (size_t i=1; i<_msize.size; i++) {
+      size_t di = i+1+_msize.ch[i-1]-_msize.ch[i];
       T_ s = 0;
       for (size_t j=0; j<i-di; j++)
-         s += _a[_ch[i]+di+j-i] * b[di+j];
+         s += _a[_msize.ch[i]+di+j-i] * b[di+j];
       b[i] -= s;
    }
-   for (size_t i=0; i<_size; i++)
-      b[i] *= _a[_ch[i]];
-   for (int k=int(_size-1); k>0; k--) {
-      size_t di = k+1+_ch[k-1]-_ch[k];
+   for (size_t i=0; i<_msize.size; i++)
+      b[i] *= _a[_msize.ch[i]];
+   for (int k=int(_msize.size-1); k>0; k--) {
+      size_t di = k+1+_msize.ch[k-1]-_msize.ch[k];
       for (size_t j=0; j<k-di; j++)
-         b[j+di] -= b[k] * _a[_ch[k]+di+j-k];
+         b[j+di] -= b[k] * _a[_msize.ch[k]+di+j-k];
    }
    return ret;
 }
@@ -656,9 +673,9 @@ T_ SkSMatrix<T_>::get(size_t i,
                       size_t j) const
 {
    if (i>=j)
-      return _a[_ch[i-1]+j-i];
+      return _a[_msize.ch[i-1]+j-i];
    else
-      return _a[_ch[j-1]+i-j];
+      return _a[_msize.ch[j-1]+i-j];
 }
 
 

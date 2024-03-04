@@ -44,7 +44,6 @@ namespace OFELI {
 template<class T_>
 DSMatrix<T_>::DSMatrix()
 {
-   _nb_rows = _length = _size = 0;
    _is_diagonal = false;
 }
 
@@ -60,10 +59,9 @@ DSMatrix<T_>::DSMatrix(size_t dim)
 template<class T_>
 DSMatrix<T_>::DSMatrix(const DSMatrix<T_>& m)
 {
-   _size = _nb_rows = _nb_cols = m._size;
-   _length = m._length;
+   _msize = m._msize;
    _is_diagonal = false;
-   _a.resize(_length);
+   _a.resize(_msize.length);
    _a = m._a;
 }
 
@@ -86,18 +84,18 @@ DSMatrix<T_>::~DSMatrix()
 template<class T_>
 void DSMatrix<T_>::setDiag()
 {
-   for (size_t i=0; i<_size; i++)
-      _diag[i] = _a[_nb_cols*i+i];
+   for (size_t i=0; i<_msize.size; i++)
+      _diag[i] = _a[_msize.nb_cols*i+i];
 }
 
 
 template<class T_>
 void DSMatrix<T_>::setSize(size_t dim)
 {
-   _size = _nb_rows = _nb_cols = dim;
-   _length = _size*(_size+1)/2;
-   _a.resize(_length);
-   _diag.resize(_size);
+   _msize.size = _msize.nb_rows = _msize.nb_cols = dim;
+   _msize.length = _msize.size*(_msize.size+1)/2;
+   _a.resize(_msize.length);
+   _diag.resize(_msize.size);
 }
 
 
@@ -112,8 +110,8 @@ void DSMatrix<T_>::set(size_t    i,
 
 
 template<class T_>
-void DSMatrix<T_>::setGraph(const Vect<RC>& I,
-                            int             opt)
+void DSMatrix<T_>::setGraph(const vector<RC>& I,
+                            int               opt)
 { }
 
 
@@ -122,10 +120,9 @@ void DSMatrix<T_>::setMesh(Mesh&  mesh,
                            size_t dof)
 {
    Matrix<T_>::init_set_mesh(mesh,dof);
-   _length = _size*_size;
-   _diag.resize(_size);
-   _a.resize(_length);
-   _zero = static_cast<T_>(0);
+   _msize.length = _msize.size*_msize.size;
+   _diag.resize(_msize.size);
+   _a.resize(_msize.length);
 }
 
 
@@ -158,22 +155,22 @@ template<class T_>
 void DSMatrix<T_>::getColumn(size_t    j,
                              Vect<T_>& v) const
 {
-   v.setSize(_size);
+   v.setSize(_msize.size);
    for (size_t i=0; i<j-1; i++)
-      v[i] = _a[_size*(j-1)/2+i];
-   for (size_t i=j-1; i<_size; i++)
-      v[i] = _a[_size*i/2+j-1];
+      v[i] = _a[_msize.size*(j-1)/2+i];
+   for (size_t i=j-1; i<_msize.size; i++)
+      v[i] = _a[_msize.size*i/2+j-1];
 }
 
 
 template<class T_>
 Vect<T_> DSMatrix<T_>::getColumn(size_t j) const
 {
-   Vect<T_> v(_size);
+   Vect<T_> v(_msize.size);
    for (size_t i=0; i<j-1; i++)
-      v[i] = _a[_size*(j-1)/2+i];
-   for (size_t i=j-1; i<_size; i++)
-      v[i] = _a[_size*i/2+j-1];
+      v[i] = _a[_msize.size*(j-1)/2+i];
+   for (size_t i=j-1; i<_msize.size; i++)
+      v[i] = _a[_msize.size*i/2+j-1];
    return v;
 }
 
@@ -182,22 +179,22 @@ template<class T_>
 void DSMatrix<T_>::getRow(size_t    i,
                           Vect<T_>& v) const
 {
-   v.resize(_size);
+   v.resize(_msize.size);
    for (size_t j=0; j<i; j++)
-      v[j] = _a[_size*(i-1)/2+j];
-   for (size_t j=i; j<_nb_cols; j++)
-      v[j] = _a[_size*j/2+i-1];
+      v[j] = _a[_msize.size*(i-1)/2+j];
+   for (size_t j=i; j<_msize.nb_cols; j++)
+      v[j] = _a[_msize.size*j/2+i-1];
 }
 
 
 template<class T_>
 Vect<T_> DSMatrix<T_>::getRow(size_t i) const
 {
-   Vect<T_> v(_size);
+   Vect<T_> v(_msize.size);
    for (size_t j=0; j<i; j++)
-      v[j] = _a[_size*(i-1)/2+j];
-   for (size_t j=i; j<_size; j++)
-      v[j] = _a[_size*j/2+i-1];
+      v[j] = _a[_msize.size*(i-1)/2+j];
+   for (size_t j=i; j<_msize.size; j++)
+      v[j] = _a[_msize.size*j/2+i-1];
    return v;
 }
 
@@ -207,9 +204,9 @@ void DSMatrix<T_>::setRow(size_t          i,
                           const Vect<T_>& v)
 {
    for (size_t j=0; j<i; j++)
-      _a[_size*(i-1)/2+j] = v[j];
-   for (size_t j=i; j<_size; j++)
-      _a[_size*j/2+i-1] = v[j];
+      _a[_msize.size*(i-1)/2+j] = v[j];
+   for (size_t j=i; j<_msize.size; j++)
+      _a[_msize.size*j/2+i-1] = v[j];
 }
 
 
@@ -218,9 +215,9 @@ void DSMatrix<T_>::setColumn(size_t          j,
                              const Vect<T_>& v)
 {
    for (size_t i=0; i<j-1; i++)
-      _a[_size*(j-1)/2+i] = v[i];
-   for (size_t i=j-1; i<_size; i++)
-      _a[_size*i/2+j-1] = v[i];
+      _a[_msize.size*(j-1)/2+i] = v[i];
+   for (size_t i=j-1; i<_msize.size; i++)
+      _a[_msize.size*i/2+j-1] = v[i];
 }
 
 
@@ -228,9 +225,9 @@ template<class T_>
 void DSMatrix<T_>::setDiag(const T_& a)
 {
    _is_diagonal = true;
-   for (size_t i=0; i<_size; i++)
+   for (size_t i=0; i<_msize.size; i++)
       _diag[i] = a;
-   for (size_t i=0; i<_nb_rows; i++)
+   for (size_t i=0; i<_msize.size; i++)
       _a[i*(i-1)/2+i-1] = a;
 }
 
@@ -239,9 +236,9 @@ template<class T_>
 void DSMatrix<T_>::setDiag(const vector<T_>& d)
 {
    _is_diagonal = true;
-   for (size_t i=0; i<_size; i++)
+   for (size_t i=0; i<_msize.size; i++)
       _diag[i] = d[i];
-   for (size_t i=0; i<_nb_rows; i++)
+   for (size_t i=0; i<_msize.size; i++)
       _a[i*(i-1)/2+i-1] = d[i];
 }
 
@@ -253,6 +250,17 @@ void DSMatrix<T_>::add(size_t    i,
 {
    if (i>=j)
       _a[i*(i-1)/2+j-1] += val;
+}
+
+
+template<class T_>
+T_ DSMatrix<T_>::at(size_t i,
+                    size_t j)
+{
+   if (i<j)
+      return _a[j*(j-1)/2+i-1];
+   else
+      return _a[i*(i-1)/2+j-1];
 }
 
 
@@ -290,7 +298,7 @@ template<class T_>
 DSMatrix<T_>& DSMatrix<T_>::operator=(const T_& x)
 {
    clear(_a);
-   for (size_t i=1; i<=_size; i++) {
+   for (size_t i=1; i<=_msize.size; i++) {
       _diag[i-1] = x;
       set(i,i,x);
    }
@@ -301,7 +309,7 @@ DSMatrix<T_>& DSMatrix<T_>::operator=(const T_& x)
 template<class T_>
 DSMatrix<T_>& DSMatrix<T_>::operator+=(const T_& x)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] += x;
    return *this;
 }
@@ -310,7 +318,7 @@ DSMatrix<T_>& DSMatrix<T_>::operator+=(const T_& x)
 template<class T_>
 DSMatrix<T_>& DSMatrix<T_>::operator-=(const T_& x)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] -= x;
    return *this;
 }
@@ -321,7 +329,7 @@ int DSMatrix<T_>::setLDLt()
 {
    int err = 0;
    T_ s, pivot;
-   for (size_t i=0; i<_size; i++) {
+   for (size_t i=0; i<_msize.size; i++) {
       for (size_t j=0; j<i; j++)
          for (size_t k=0; k<j; k++)
             _a[(i+1)*i/2+j] -= _a[(i+1)*i/2+k]*_a[(j+1)*j/2+k];
@@ -343,10 +351,10 @@ template<class T_>
 void DSMatrix<T_>::MultAdd(const Vect<T_>& x,
                            Vect<T_>&       y) const
 {
-   for (size_t i=1; i<=_nb_rows; i++) {
+   for (size_t i=1; i<=_msize.size; i++) {
       for (size_t j=1; j<=i; j++)
          y.add(i,_a[(i-1)*i/2+j-1]*x(j));
-      for (size_t k=i+1; k<=_nb_rows; k++)
+      for (size_t k=i+1; k<=_msize.size; k++)
          y.add(i,_a[(k-1)*k/2+i-1]*x(k));
    }
 }
@@ -357,10 +365,10 @@ void DSMatrix<T_>::MultAdd(T_              a,
                            const Vect<T_>& x,
                            Vect<T_>&       y) const
 {
-   for (size_t i=1; i<=_nb_rows; i++) {
+   for (size_t i=1; i<=_msize.nb_rows; i++) {
       for (size_t j=1; j<=i; j++)
          y.add(i,a*_a[(i-1)*i/2+j-1]*x(j));
-      for (size_t k=i+1; k<=_nb_rows; k++)
+      for (size_t k=i+1; k<=_msize.size; k++)
          y.add(i,a*_a[(k-1)*k/2+i-1]*x(k));
    }
 }
@@ -370,7 +378,7 @@ template<class T_>
 void DSMatrix<T_>::Mult(const Vect<T_>& x,
                         Vect<T_>&       y) const
 {
-   y = _zero;
+   y = static_cast<T_>(0);
    MultAdd(x,y);
 }
 
@@ -379,8 +387,8 @@ template<class T_>
 void DSMatrix<T_>::TMult(const Vect<T_>& x,
                          Vect<T_>&       y) const
 {
-   for (size_t i=1; i<=_nb_rows; i++)
-      for (size_t j=1; j<=_nb_cols; j++)
+   for (size_t i=1; i<=_msize.size; i++)
+      for (size_t j=1; j<=_msize.size; j++)
          y.add(i,(*this)(i,j)*x(j));
 }
 
@@ -389,7 +397,7 @@ template<class T_>
 void DSMatrix<T_>::Axpy(T_                  a,
                         const DSMatrix<T_>& m)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] += a * m._a[i];
 }
 
@@ -398,7 +406,7 @@ template<class T_>
 void DSMatrix<T_>::Axpy(T_                a,
                         const Matrix<T_>* m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += a * m->_a[i];
 }
 
@@ -411,15 +419,15 @@ int DSMatrix<T_>::solve(Vect<T_>& b,
    if (fact)
       ret = setLDLt();
    int i, j;
-   for (i=0; i<int(_size); i++) {
+   for (i=0; i<int(_msize.size); i++) {
       T_ s = 0;
       for (j=0; j<i; j++)
          s += _a[(i+1)*i/2+j] * b[j];
       b.add(i+1,-s);
    }
-   for (i=0; i<int(_size); i++)
+   for (i=0; i<int(_msize.size); i++)
       b.set(i+1,b[i]*_a[(i+1)*i/2+i]);
-   for (i=int(_size)-1; i>-1; i--)
+   for (i=int(_msize.size)-1; i>-1; i--)
       for (j=0; j<i; j++)
          b.add(j+1,-b[i]*_a[(i+1)*i/2+j]);
    return ret;

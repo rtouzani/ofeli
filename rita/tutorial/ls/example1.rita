@@ -1,0 +1,23 @@
+# Iris Script file to practice linear system solver
+# The matrix is defined entry by entry
+#
+  A = matrix(2,2)
+  A[0,0]=2
+  A[0,1]=-1
+  A[1,0]=-1
+  A[1,1]=2
+
+#The right-hand side vector is also defined entry by entry
+  b = vector(2)
+  b[0]=0
+  b[1]=3
+  
+# Define the linear system
+ls matrix=A rhs=b solution=x
+
+# Solve the defined problem
+solve
+
+# Print solution
+= x
+exit

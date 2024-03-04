@@ -67,6 +67,19 @@ size_t FinalizeGraph(vector<size_t>& row_ptr,
 }
 
 
+void FinalizeGraph(vector<RC>&     IJ,
+                   vector<size_t>& col_ht)
+{
+   sort(IJ.begin(),IJ.end());
+   vector<RC>::iterator new_end=unique(IJ.begin(),IJ.end());
+   IJ.erase(new_end,IJ.end());
+   for (const auto &a: IJ) {
+      size_t i=a.first;
+      col_ht[i-1] = std::max(col_ht[i-1],i-a.second+1);
+   }
+}
+
+
 size_t SimpleSkyline(const Mesh&     m,
                      vector<size_t>& ch)
 {

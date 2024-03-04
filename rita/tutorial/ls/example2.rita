@@ -1,0 +1,17 @@
+# Iris Script file to practice linear system solver
+# The matrix is read from an external file
+#
+matrix file=m2.dat
+
+# The right-hand side vector is also defined entry by entry
+b = {0.,0.,0.,22.}
+  
+# Define the linear system
+ls matrix=A rhs=b solution=x
+
+# Solve the defined problem
+solve
+
+# Print solution
+= x
+exit

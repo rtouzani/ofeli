@@ -1,0 +1,82 @@
+# rita Script file to solve the 2-D heat equation
+# Time discretization: Implicit Euler method
+# Space discretization: P1 finite elements
+#
+# Generate mesh of a domain with circular hole
+mesh
+
+# First define some mesh parameters
+  h1=0.2
+  h2=0.25*h1
+  h3=0.2*h2
+
+# Define points (vertices) of domain
+  point  label=1  coord=-1.,-1. size=h1
+  point  label=2  coord=1.,-1. size=h1
+  point  label=3  coord=1.,1.   size=h1
+  point  label=4  coord=-1.,1.  size=h1
+  point  label=5  coord=-0.2,0. size=h2
+  point  label=6  coord=0.2,0.  size=h3
+  point  label=7  coord=0.,0.   size=h3
+
+# Define lines or curves delimited by points
+  curve  label=1  line=1,2
+  curve  label=2  line=2,3
+  curve  label=3  line=3,4
+  curve  label=4  line=4,1
+  curve  label=5  circle=5,6,7
+  curve  label=6  circle=6,5,7
+
+# Set contours defined by curves 
+  contour  label=1  curves=1,2,3,4
+  contour  label=2  curves=5,6
+
+# Define surface (the domain) by its contours
+  surface  label=1  contours=1,2
+
+# Set codes to impose various data
+# Codes are assigned to points and curves
+  code  value=1  points=1,2,3,4
+  code  value=2  points=5,6
+  code  value=1  curves=1,2,3,4
+  code  value=2  curves=5,6
+
+# Code assigned to surface are spread to generated elements
+  code  value=10 surfaces=1
+
+# Save geometry, generate mesh and save it in file
+  save  geo
+  generate
+  save  mesh=example3.m
+  end
+#
+# Define PDE and discretization method
+# We want to solve the heat equation, using u as unknown we impose
+# appropriate Dirichlet boundary conditions: 0 on the external boundary and
+# 1 on the inner one (the circle)
+# We use the P1 finite element method for space discretization
+# Time discretization uses, by default, the backward Euler scheme
+# Solution of the linear system is made by using the Conjugate Gradient method
+# coupled to the DILU preconditioner
+pde heat
+  variable u
+  bc code=1 value=0.
+  bc code=2 value=1.
+  in value=0.
+  space feP1
+  time-step 0.02
+  final-time 2.
+  ls cg dilu
+  end
+
+# Set history in sequence vector U
+history u U
+
+# Solve problem, output solution and save it in file
+# Note that we define saving parameters before running. This is necessary for transient problems
+# to make it possible to save while computing
+solve
+
+# Save solution history in gmsh file
+save name=U file=example3.pos format=gmsh
+exit

@@ -1470,6 +1470,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::BMatrix::at</field>
+    <field name="args">(size_t i, size_t j)</field>
+    <field name="url">classOFELI_1_1BMatrix.html#a276ea1877b89d46c32e207248a4573d7</field>
+    <field name="keywords">at OFELI::BMatrix::at BMatrix&lt; T_ &gt; at OFELI::BMatrix&lt; real_t &gt;::at BMatrix&lt; real_t &gt;</field>
+    <field name="text">Return a value of a matrix entry i Row index starts at 1 j Column index starts at 1</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::BMatrix::add</field>
     <field name="args">(size_t i, const T_ &amp;val)</field>
     <field name="url">classOFELI_1_1BMatrix.html#a3c7b029cbe1aca9bea7623ae99274795</field>
@@ -1490,7 +1498,7 @@
     <field name="args">(size_t size, int ld, int ud)</field>
     <field name="url">classOFELI_1_1BMatrix.html#a5ca2e039cf9e7ee37f210599244d8e2c</field>
     <field name="keywords">BMatrix OFELI::BMatrix::BMatrix BMatrix&lt; T_ &gt; BMatrix OFELI::BMatrix&lt; real_t &gt;::BMatrix BMatrix&lt; real_t &gt;</field>
-    <field name="text">Constructor that for a band matrix with given size and bandwidth Assign 0 to all matrix entries size Number of rows and columns ld Number of lower co-diagonals must be 0 ud Number of upper co-diagonals must be 0</field>
+    <field name="text">Constructor that for a band matrix with given size and bandwidth Assign 0 to all matrix entries size Number of rows and columns ld Number of lower co-diagonals must be 0 ud Number of upper co-diagonals must be 0 Works only if ud+ld+1 size</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -3042,6 +3050,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::DMatrix::at</field>
+    <field name="args">(size_t i, size_t j)</field>
+    <field name="url">classOFELI_1_1DMatrix.html#a276ea1877b89d46c32e207248a4573d7</field>
+    <field name="keywords">at OFELI::DMatrix::at DMatrix&lt; T_ &gt; at OFELI::DMatrix&lt; real_t &gt;::at DMatrix&lt; real_t &gt;</field>
+    <field name="text">Return a value of a matrix entry i Row index starts at 1 j Column index starts at 1</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::DMatrix::solve</field>
     <field name="args">(const Vect&lt; T_ &gt; &amp;b, Vect&lt; T_ &gt; &amp;x, bool fact=true)</field>
     <field name="url">classOFELI_1_1DMatrix.html#a27c662f32ce66be2efa47871358fcf10</field>
@@ -3398,6 +3414,14 @@
     <field name="url">classOFELI_1_1DSMatrix.html#a17592a65d5fb95d42c07f724dabad759</field>
     <field name="keywords">add OFELI::DSMatrix::add DSMatrix&lt; T_ &gt; add OFELI::DSMatrix&lt; real_t &gt;::add DSMatrix&lt; real_t &gt;</field>
     <field name="text">Add constant to an entry ofthe matrix i row index j column index val value to add to a(i,j)</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::DSMatrix::at</field>
+    <field name="args">(size_t i, size_t j)</field>
+    <field name="url">classOFELI_1_1DSMatrix.html#a276ea1877b89d46c32e207248a4573d7</field>
+    <field name="keywords">at OFELI::DSMatrix::at DSMatrix&lt; T_ &gt; at OFELI::DSMatrix&lt; real_t &gt;::at DSMatrix&lt; real_t &gt;</field>
+    <field name="text">Return a value of a matrix entry i Row index starts at 1 j Column index starts at 1</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -11995,11 +12019,27 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::Matrix::getMatrixSize</field>
+    <field name="args">() const</field>
+    <field name="url">classOFELI_1_1Matrix.html#ac5884b405cb5be2e811eda5c3038b0c8</field>
+    <field name="keywords">getMatrixSize OFELI::Matrix::getMatrixSize Matrix&lt; T_ &gt; getMatrixSize OFELI::Matrix&lt; real_t &gt;::getMatrixSize Matrix&lt; real_t &gt;</field>
+    <field name="text">Return storage type Return storage type Return storage type Return storage type Return storage type Return storage type Return storage type Return storage type</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::Matrix::operator-=</field>
     <field name="args">(const T_ &amp;x)</field>
     <field name="url">classOFELI_1_1Matrix.html#ac6ff3519680115e5c3fcdab05aa96154</field>
     <field name="keywords">operator-= OFELI::Matrix::operator-= Matrix&lt; T_ &gt; operator-= OFELI::Matrix&lt; real_t &gt;::operator-= Matrix&lt; real_t &gt;</field>
     <field name="text">Operator Operator Operator Operator Subtract constant value x from all matrix entries Operator Operator Operator Operator</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::Matrix::at</field>
+    <field name="args">(size_t i, size_t j)=0</field>
+    <field name="url">classOFELI_1_1Matrix.html#aceb1c3981384a95d694c5d5d837a693f</field>
+    <field name="keywords">at OFELI::Matrix::at Matrix&lt; T_ &gt; at OFELI::Matrix&lt; real_t &gt;::at Matrix&lt; real_t &gt;</field>
+    <field name="text">Return a value of a matrix entry i Row index starts at 1 j Column index starts at 1</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -16644,14 +16684,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::SkMatrix::SkMatrix</field>
-    <field name="args">(const Vect&lt; size_t &gt; &amp;ColHt)</field>
-    <field name="url">classOFELI_1_1SkMatrix.html#a121935e79901139daf7a4576b4f3a2b8</field>
-    <field name="keywords">SkMatrix OFELI::SkMatrix::SkMatrix SkMatrix&lt; T_ &gt;</field>
-    <field name="text">Constructor that initializes skyline structure of matrix using vector of column heights ColHt Vect instance that contains rows lengths of matrix</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::SkMatrix::setSkyline</field>
     <field name="args">(Mesh &amp;mesh)</field>
     <field name="url">classOFELI_1_1SkMatrix.html#a14401de6789a804fcdd361a71e475b22</field>
@@ -16697,6 +16729,14 @@
     <field name="url">classOFELI_1_1SkMatrix.html#a254526dadd3fc5f1ffa120bfb2357f23</field>
     <field name="keywords">setLU OFELI::SkMatrix::setLU SkMatrix&lt; T_ &gt;</field>
     <field name="text">Factorize the matrix LU factorization LU factorization of the matrix is realized Note that since this is an in place factorization the contents of the matrix are modified 0 if factorization was normally performed n if the n th pivot is null A flag in this class indicates after factorization that this one has been realized so that if the member function solve is called after this no further factorization is done</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::SkMatrix::at</field>
+    <field name="args">(size_t i, size_t j)</field>
+    <field name="url">classOFELI_1_1SkMatrix.html#a276ea1877b89d46c32e207248a4573d7</field>
+    <field name="keywords">at OFELI::SkMatrix::at SkMatrix&lt; T_ &gt;</field>
+    <field name="text">Return a value of a matrix entry i Row index starts at 1 j Column index starts at 1</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -16825,6 +16865,14 @@
     <field name="url">classOFELI_1_1SkMatrix.html#a8e773e1fe3dd5e4166bc9d9d38951f98</field>
     <field name="keywords">operator+= OFELI::SkMatrix::operator+= SkMatrix&lt; T_ &gt;</field>
     <field name="text">Operator Add constant value x to matrix entries</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::SkMatrix::SkMatrix</field>
+    <field name="args">(const vector&lt; size_t &gt; &amp;ColHt)</field>
+    <field name="url">classOFELI_1_1SkMatrix.html#a93d87a9e770211f72722752a61c47c51</field>
+    <field name="keywords">SkMatrix OFELI::SkMatrix::SkMatrix SkMatrix&lt; T_ &gt;</field>
+    <field name="text">Constructor that initializes skyline structure of matrix using vector of column heights ColHt Vect instance that contains rows lengths of matrix</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -16976,6 +17024,14 @@
     <field name="url">classOFELI_1_1SkSMatrix.html#a1b81e0076b8bd7858a43ce7c2e03d358</field>
     <field name="keywords">SkSMatrix OFELI::SkSMatrix::SkSMatrix SkSMatrix&lt; T_ &gt;</field>
     <field name="text">Default constructor Initializes a zero-dimension matrix</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::SkSMatrix::at</field>
+    <field name="args">(size_t i, size_t j)</field>
+    <field name="url">classOFELI_1_1SkSMatrix.html#a276ea1877b89d46c32e207248a4573d7</field>
+    <field name="keywords">at OFELI::SkSMatrix::at SkSMatrix&lt; T_ &gt;</field>
+    <field name="text">Return a value of a matrix entry i Row index starts at 1 j Column index starts at 1</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -20576,6 +20632,14 @@
   </doc>
   <doc>
     <field name="type">function</field>
+    <field name="name">OFELI::SpMatrix::at</field>
+    <field name="args">(size_t i, size_t j)</field>
+    <field name="url">group__OFELI.html#ga276ea1877b89d46c32e207248a4573d7</field>
+    <field name="keywords">at OFELI::SpMatrix::at SpMatrix&lt; T_ &gt; at OFELI::TrMatrix::at TrMatrix&lt; T_ &gt; at OFELI::SpMatrix&lt; real_t &gt;::at SpMatrix&lt; real_t &gt;</field>
+    <field name="text">Return a value of a matrix entry Return a value of a matrix entry i Row index starts at 1 j Column index starts at 1 i Row index starts at 1 j Column index starts at 1 Return a value of a matrix entry Return a value of a matrix entry</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
     <field name="name">OFELI::Tabulation::getNbVar</field>
     <field name="args">(size_t n) const</field>
     <field name="url">group__OFELI.html#ga2a0368c292caac9d4ebe94f1b770868b</field>
@@ -20702,14 +20766,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::SpMatrix::SpMatrix</field>
-    <field name="args">(const Vect&lt; RC &gt; &amp;I, int opt=1)</field>
-    <field name="url">group__OFELI.html#ga3d295a9f131b8224c1bbf0736cd17b71</field>
-    <field name="keywords">SpMatrix OFELI::SpMatrix::SpMatrix SpMatrix&lt; T_ &gt; SpMatrix OFELI::SpMatrix&lt; real_t &gt;::SpMatrix SpMatrix&lt; real_t &gt;</field>
-    <field name="text">Constructor for a square matrix using non zero row and column indices I Vector containing pairs of row and column indices opt Flag indicating if vectors I is cleaned and ordered opt 1 or not opt 0 In the latter case this vector can have the same contents more than once and are not necessarily ordered Constructor for a square matrix using non zero row and column indices</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::LeastSquare::set</field>
     <field name="args">(vector&lt; Fct * &gt; &amp;f, const Vect&lt; real_t &gt; &amp;x, const Vect&lt; real_t &gt; &amp;y, Vect&lt; real_t &gt; &amp;a)</field>
     <field name="url">group__OFELI.html#ga3ed7a8095fe2dc7e0c8de24f1c6dcc78</field>
@@ -20787,6 +20843,14 @@
     <field name="url">group__OFELI.html#ga4ad6b660f95a1f0709a1b11d655eaaa5</field>
     <field name="keywords">LeastSquare OFELI::LeastSquare::LeastSquare LeastSquare</field>
     <field name="text">Constructor for polynomial regression Define N-degree polynomial to approximate in the sense of least squares of a given set of points in the plane The resulting line has the equation y a 0 a 1 a N x Vector defining x-coordinates of points y Vector defining y-coordinates of points N Degree of approximation polynomial a Vector of coefficients of polynomial as defined here above Constructor for polynomial regression</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::SpMatrix::SpMatrix</field>
+    <field name="args">(const vector&lt; RC &gt; &amp;I, const Vect&lt; T_ &gt; &amp;a, int opt=1)</field>
+    <field name="url">group__OFELI.html#ga4d0304a20c37b4edf58fb8deced283ed</field>
+    <field name="keywords">SpMatrix OFELI::SpMatrix::SpMatrix SpMatrix&lt; T_ &gt; SpMatrix OFELI::SpMatrix&lt; real_t &gt;::SpMatrix SpMatrix&lt; real_t &gt;</field>
+    <field name="text">Constructor for a square matrix using non zero row and column indices I Vector containing pairs of row and column indices a Vector containing matrix entries in the same order than the one given by I opt Flag indicating if vector I is cleaned and ordered opt 1 default or not opt 0 In the latter case this vector can have the same contents more than once and are not necessarily ordered Constructor for a square matrix using non zero row and column indices</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -21223,6 +21287,14 @@
     <field name="url">group__OFELI.html#ga908ba56330052baa8b0a5507e1e1ab54</field>
     <field name="keywords">setDomain OFELI::Grid::setDomain Grid</field>
     <field name="text">Set Dimensions of the domain 1 D case xmin Minimal value of x coordinate xmax Maximal value of x coordinate Set Dimensions of the domain 1 D case</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::SpMatrix::SpMatrix</field>
+    <field name="args">(const vector&lt; RC &gt; &amp;I, int opt=1)</field>
+    <field name="url">group__OFELI.html#ga92a04a7a27dcb3bfe6d5bbec0412d0aa</field>
+    <field name="keywords">SpMatrix OFELI::SpMatrix::SpMatrix SpMatrix&lt; T_ &gt; SpMatrix OFELI::SpMatrix&lt; real_t &gt;::SpMatrix SpMatrix&lt; real_t &gt;</field>
+    <field name="text">Constructor for a square matrix using non zero row and column indices I Vector containing pairs of row and column indices opt Flag indicating if vectors I is cleaned and ordered opt 1 or not opt 0 In the latter case this vector can have the same contents more than once and are not necessarily ordered Constructor for a square matrix using non zero row and column indices</field>
   </doc>
   <doc>
     <field name="type">function</field>
@@ -21765,14 +21837,6 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::SpMatrix::setGraph</field>
-    <field name="args">(const Vect&lt; RC &gt; &amp;I, int opt=1)</field>
-    <field name="url">group__OFELI.html#gadca22436d448fc219f940996ff43735a</field>
-    <field name="keywords">setGraph OFELI::SpMatrix::setGraph SpMatrix&lt; T_ &gt; setGraph OFELI::SpMatrix&lt; real_t &gt;::setGraph SpMatrix&lt; real_t &gt;</field>
-    <field name="text">Set graph of matrix by giving a vector of its nonzero entries I Vector containing pairs of row and column indices opt Flag indicating if vector I is cleaned and ordered opt 1 default or not opt 0 In the latter case this vector can have the same contents more than once and are not necessarily ordered Set graph of matrix by giving a vector of its nonzero entries</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::SpMatrix::operator*=</field>
     <field name="args">(const T_ &amp;a)</field>
     <field name="url">group__OFELI.html#gadd453c88b293e77171f9fc6993c28f1f</field>
@@ -21821,19 +21885,19 @@
   </doc>
   <doc>
     <field name="type">function</field>
-    <field name="name">OFELI::SpMatrix::SpMatrix</field>
-    <field name="args">(const Vect&lt; RC &gt; &amp;I, const Vect&lt; T_ &gt; &amp;a, int opt=1)</field>
-    <field name="url">group__OFELI.html#gae811b1272524a8e43f5eca4c8322d327</field>
-    <field name="keywords">SpMatrix OFELI::SpMatrix::SpMatrix SpMatrix&lt; T_ &gt; SpMatrix OFELI::SpMatrix&lt; real_t &gt;::SpMatrix SpMatrix&lt; real_t &gt;</field>
-    <field name="text">Constructor for a square matrix using non zero row and column indices I Vector containing pairs of row and column indices a Vector containing matrix entries in the same order than the one given by I opt Flag indicating if vector I is cleaned and ordered opt 1 default or not opt 0 In the latter case this vector can have the same contents more than once and are not necessarily ordered Constructor for a square matrix using non zero row and column indices</field>
-  </doc>
-  <doc>
-    <field name="type">function</field>
     <field name="name">OFELI::SpMatrix::Laplace2D</field>
     <field name="args">(size_t nx, size_t ny)</field>
     <field name="url">group__OFELI.html#gae84a5130be2183f9dacaf41bcbf85820</field>
     <field name="keywords">Laplace2D OFELI::SpMatrix::Laplace2D SpMatrix&lt; T_ &gt; Laplace2D OFELI::SpMatrix&lt; real_t &gt;::Laplace2D SpMatrix&lt; real_t &gt;</field>
     <field name="text">Sets the matrix as the one for the Laplace equation in 2 D The matrix is initialized as the one resulting from P 1 finite element discretization of the classical elliptic operator Delta u f with homogeneous Dirichlet boundary conditions This function is available for real valued matrices only nx Number of unknowns in the x direction ny Number of unknowns in the y direction The number of rows is equal to nx*ny Sets the matrix as the one for the Laplace equation in 2 D</field>
+  </doc>
+  <doc>
+    <field name="type">function</field>
+    <field name="name">OFELI::SpMatrix::setGraph</field>
+    <field name="args">(const vector&lt; RC &gt; &amp;I, int opt=1)</field>
+    <field name="url">group__OFELI.html#gae854deae85a59963c3e2bc45f7ea7cbd</field>
+    <field name="keywords">setGraph OFELI::SpMatrix::setGraph SpMatrix&lt; T_ &gt; setGraph OFELI::SpMatrix&lt; real_t &gt;::setGraph SpMatrix&lt; real_t &gt;</field>
+    <field name="text">Set graph of matrix by giving a vector of its nonzero entries I Vector containing pairs of row and column indices opt Flag indicating if vector I is cleaned and ordered opt 1 default or not opt 0 In the latter case this vector can have the same contents more than once and are not necessarily ordered Set graph of matrix by giving a vector of its nonzero entries</field>
   </doc>
   <doc>
     <field name="type">function</field>

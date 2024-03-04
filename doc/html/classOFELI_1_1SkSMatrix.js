@@ -10,6 +10,7 @@ var classOFELI_1_1SkSMatrix =
     [ "~SkSMatrix", "classOFELI_1_1SkSMatrix.html#af800dc68435bdd29c56403ee03a5e2f1", null ],
     [ "add", "classOFELI_1_1SkSMatrix.html#a3c7b029cbe1aca9bea7623ae99274795", null ],
     [ "add", "classOFELI_1_1SkSMatrix.html#a17592a65d5fb95d42c07f724dabad759", null ],
+    [ "at", "classOFELI_1_1SkSMatrix.html#a276ea1877b89d46c32e207248a4573d7", null ],
     [ "Axpy", "classOFELI_1_1SkSMatrix.html#ac7ecd57722b088d883cdb26ac2887270", null ],
     [ "Axpy", "classOFELI_1_1SkSMatrix.html#ad89d396e1c670020c251bdb836299de2", null ],
     [ "get", "classOFELI_1_1SkSMatrix.html#a5aeba722bfc5e1d62b0e76fa41cfd15c", null ],

@@ -80,16 +80,11 @@ class SkMatrix : public Matrix<T_>
 
  public:
 
-   using Matrix<T_>::_size;
-   using Matrix<T_>::_length;
-   using Matrix<T_>::_nb_rows;
-   using Matrix<T_>::_nb_cols;
-   using Matrix<T_>::_zero;
+   using Matrix<T_>::_msize;
    using Matrix<T_>::_temp;
    using Matrix<T_>::_a;
    using Matrix<T_>::_aU;
    using Matrix<T_>::_diag;
-   using Matrix<T_>::_ch;
    using Matrix<T_>::_dof_type;
    using Matrix<T_>::_is_diagonal;
    using Matrix<T_>::_theMesh;
@@ -122,7 +117,7 @@ class SkMatrix : public Matrix<T_>
 /** \brief Constructor that initializes skyline structure of matrix using vector of column heights.
  *  @param [in] ColHt Vect instance that contains rows lengths of matrix.
  */
-    SkMatrix(const Vect<size_t> &ColHt);
+    SkMatrix(const vector<size_t> &ColHt);
 
 /// \brief Copy Constructor
     SkMatrix(const SkMatrix<T_>& m);
@@ -142,8 +137,8 @@ class SkMatrix : public Matrix<T_>
                  size_t dof=0);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void setGraph(const Vect<RC>& I,
-                  int             opt=1);
+    void setGraph(const vector<RC>& I,
+                  int               opt=1);
 
     void setMesh(size_t dof,
                  Mesh&  mesh,
@@ -249,6 +244,13 @@ class SkMatrix : public Matrix<T_>
 /// \brief Return column height.
 /// \details Column height at entry <tt>i</tt> is returned.
     size_t getColHeight(size_t i) const;
+
+/** \brief Return a value of a matrix entry
+ *  @param [in] i Row index (starts at 1)
+ *  @param [in] j Column index (starts at 1)
+ */
+    T_ at(size_t i,
+          size_t j);
 
 /** \brief Operator () (Constant version).
  *  @param [in] i Row index

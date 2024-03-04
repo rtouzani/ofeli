@@ -44,25 +44,25 @@ namespace OFELI {
 template<class T_>
 TrMatrix<T_>::TrMatrix()
 {
-   _size = 0;
+   _msize.mt = TRIDIAGONAL;
 }
 
 
 template<class T_>
 TrMatrix<T_>::TrMatrix(size_t size)
 {
-   _size = _nb_rows = _nb_cols = size;
-   _length = 3*_size;
-   _a.resize(_length,static_cast<T_>(0));
+   _msize.mt = TRIDIAGONAL;
+   _msize.size = _msize.nb_rows = _msize.nb_cols = size;
+   _msize.length = 3*_msize.size;
+   _a.resize(_msize.length,static_cast<T_>(0));
 }
 
 
 template<class T_>
 TrMatrix<T_>::TrMatrix(const TrMatrix& m)
 {
-   _size = m._size;
-   _length = m._length;
-   _a.resize(_length);
+   _msize = m._msize;
+   _a.resize(_msize.length);
    _a = m._a;
 }
 
@@ -82,7 +82,7 @@ void TrMatrix<T_>::Identity()
 template<class T_>
 void TrMatrix<T_>::Diagonal()
 {
-   for (size_t i=1; i<=_size; i++)
+   for (size_t i=1; i<=_msize.size; i++)
       _a[3*i-2] = static_cast<T_>(0);
 }
 
@@ -90,8 +90,8 @@ void TrMatrix<T_>::Diagonal()
 template<class T_>
 void TrMatrix<T_>::Diagonal(const T_& a)
 {
-   _length = _nb_rows;
-   for (size_t i=1; i<=_nb_rows; ++i) {
+   _msize.length = _msize.nb_rows;
+   for (size_t i=1; i<=_msize.nb_rows; ++i) {
       _a[3*i-3] = static_cast<T_>(0);
       _a[3*i-2] = a;
       _a[3*i-1] = static_cast<T_>(0);
@@ -100,8 +100,8 @@ void TrMatrix<T_>::Diagonal(const T_& a)
 
 
 template<class T_>
-void TrMatrix<T_>::setGraph(const Vect<RC>& I,
-                            int             opt)
+void TrMatrix<T_>::setGraph(const vector<RC>& I,
+                            int               opt)
 { }
 
 
@@ -148,9 +148,9 @@ void TrMatrix<T_>::setMesh(size_t dof,
 template<class T_>
 void TrMatrix<T_>::setSize(size_t size)
 {
-   _nb_rows = _nb_cols = _size = size;
-   _length = 3*_nb_rows;
-   _a.resize(_length);
+   _msize.nb_rows = _msize.nb_cols = _msize.size = size;
+   _msize.length = 3*_msize.nb_rows;
+   _a.resize(_msize.length);
 }
 
 
@@ -158,9 +158,9 @@ template<class T_>
 void TrMatrix<T_>::MultAdd(const Vect<T_>& x, Vect<T_>& y) const
 {
    y(1) += _a[1]*x(1) + _a[2]*x(2);
-   for (size_t i=2; i<_size; ++i)
+   for (size_t i=2; i<_msize.size; ++i)
       y(i) += _a[3*i-3]*x(i-1) + _a[3*i-2]*x(i) + _a[3*i-1]*x(i+1);
-   y(_size) += _a[3*_size-3]*x(_size-1) + _a[3*_size-2]*x(_size);
+   y(_msize.size) += _a[3*_msize.size-3]*x(_msize.size-1) + _a[3*_msize.size-2]*x(_msize.size);
 }
 
 
@@ -170,9 +170,9 @@ void TrMatrix<T_>::MultAdd(T_              a,
                            Vect<T_>&       y) const
 {
    y(1) += a*(_a[1]*x(1) + _a[2]*x(2));
-   for (size_t i=2; i<_size; ++i)
+   for (size_t i=2; i<_msize.size; ++i)
       y(i) += a * (_a[3*i-3]*x(i-1) + _a[3*i-2]*x(i) + _a[3*i-1]*x(i+1));
-   y(_size) += a * (_a[3*_size-3]*x(_size-1) + _a[3*_size-2]*x(_size));
+   y(_msize.size) += a * (_a[3*_msize.size-3]*x(_msize.size-1) + _a[3*_msize.size-2]*x(_msize.size));
 }
 
 
@@ -190,9 +190,9 @@ void TrMatrix<T_>::TMult(const Vect<T_>& x,
                          Vect<T_>&       y) const
 {
    y(1) = _a[1]*x(1) + _a[3]*x(2);
-   for (size_t i=2; i<_size; ++i)
+   for (size_t i=2; i<_msize.size; ++i)
       y(i) = _a[3*i-4]*x(i-1) + _a[3*i-2]*x(i) + _a[3*i]*x(i+1);
-   y(_size) = _a[3*_size-4]*x(_size-1) + _a[3*_size-2]*x(_size);
+   y(_msize.size) = _a[3*_msize.size-4]*x(_msize.size-1) + _a[3*_msize.size-2]*x(_msize.size);
 }
 
 
@@ -208,7 +208,7 @@ template<class T_>
 void TrMatrix<T_>::Axpy(T_                a,
                         const Matrix<T_>* m)
 {
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] += a * m->_a[i];
 }
 
@@ -250,6 +250,21 @@ void TrMatrix<T_>::add(size_t    i,
 
 
 template<class T_>
+T_ TrMatrix<T_>::at(size_t i,
+                    size_t j)
+{
+   if (i==j)
+      return _a[3*i-2];
+   else if (i==j+1)
+      return _a[3*i-3];
+   else if (i==j-1)
+      return _a[3*i-1];
+   else
+      return static_cast<T_>(0);
+}
+
+
+template<class T_>
 T_ TrMatrix<T_>::operator()(size_t i,
                             size_t j) const
 {
@@ -260,7 +275,7 @@ T_ TrMatrix<T_>::operator()(size_t i,
    else if (i==j-1)
       return _a[3*i-1];
    else
-      return _zero;
+     return _zero;
 }
 
 
@@ -277,7 +292,7 @@ T_& TrMatrix<T_>::operator()(size_t i,
    else {
       throw OFELIException("In TrMatrix::Operator(): Index pair (" +
                             to_string(i) + "," + to_string(j) +
-                           ") not compatible with tridiagonal structure.");
+                           ") not compatible with tridiagonal storage.");
    }
    return _zero;
 }
@@ -295,7 +310,7 @@ template<class T_>
 TrMatrix<T_>& TrMatrix<T_>::operator=(const T_& x)
 {
    clear(_a);
-   for (size_t i=1; i<=_size; ++i)
+   for (size_t i=1; i<=_msize.size; ++i)
       _a[3*i-2] = x;
    return *this;
 }
@@ -304,7 +319,7 @@ TrMatrix<T_>& TrMatrix<T_>::operator=(const T_& x)
 template<class T_>
 TrMatrix<T_>& TrMatrix<T_>::operator*=(const T_& x)
 {
-   for (size_t i=1; i<=_length; i++)
+   for (size_t i=1; i<=_msize.length; i++)
       _a[i-1] *= x;
    return *this;
 }
@@ -325,7 +340,7 @@ int TrMatrix<T_>::solve(Vect<T_>& b,
 {
    int ret = 0;
    T_ p = 0;
-   for (size_t i=1; i<_size; ++i) {
+   for (size_t i=1; i<_msize.size; ++i) {
       ret = int(i);
       if (Abs(_a[3*i-2]) < OFELI_EPSMCH)
          throw OFELIException("In TrMatrix::solve(Vect<T_>): " + to_string(int(i))
@@ -335,12 +350,12 @@ int TrMatrix<T_>::solve(Vect<T_>& b,
       _a[3*i+1] -= p*_a[3*i-1];
       b.add(i+1,-p*b(i));
    }
-   if (Abs(_a[3*_size-2]) < OFELI_EPSMCH)
-      throw OFELIException("In TrMatrix::solve(Vect<T_>): " + to_string(_size)
+   if (Abs(_a[3*_msize.size-2]) < OFELI_EPSMCH)
+      throw OFELIException("In TrMatrix::solve(Vect<T_>): " + to_string(_msize.size)
                            + "-th pivot is null.");
    else
-      b(_size) /= _a[3*_size-2];
-   for (int j=int(_size)-1; j>0; j--)
+      b(_msize.size) /= _a[3*_msize.size-2];
+   for (int j=int(_msize.size)-1; j>0; j--)
       b(j) = (b(j)-_a[3*j-1]*b(j+1))/_a[3*j-2];
    return ret;
 }
@@ -372,14 +387,14 @@ T_ TrMatrix<T_>::get(size_t i, size_t j) const
    else if (i==j-1)
       return _a[3*i-1];
    else
-      return _zero;
+      return static_cast<T_>(0);
 }
 
 
 template<>
 inline void TrMatrix<real_t>::Laplace1D(real_t h)
 {
-   for (size_t i=1; i<=_nb_rows; ++i) {
+   for (size_t i=1; i<=_msize.size; ++i) {
       _a[3*i-3] = -1.0/h;
       _a[3*i-2] =  2.0/h;
       _a[3*i-1] = -1.0/h;
@@ -425,9 +440,9 @@ ostream& operator<<(ostream&            s,
 {
    s.setf(ios::right|ios::scientific);
    s << endl;
-   for (size_t i=1; i<=A.getNbRows(); i++) {
+   for (size_t i=1; i<=A.getNbRows(); ++i) {
       s << "\nRow  " << setw(6) << i << endl;
-      for (size_t j=1; j<=A.getNbRows(); j++)
+      for (size_t j=1; j<=A.getNbRows(); ++j)
          s << "  " << setprecision(8) << std::setfill(' ') << setw(18) << A(i,j);
       s << endl;
    }

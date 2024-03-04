@@ -75,12 +75,9 @@ class TrMatrix : public Matrix<T_>
  public:
 
    using Matrix<T_>::operator();
-   using Matrix<T_>::_size;
-   using Matrix<T_>::_nb_cols;
-   using Matrix<T_>::_nb_rows;
-   using Matrix<T_>::_length;
-   using Matrix<T_>::_a;
    using Matrix<T_>::_zero;
+   using Matrix<T_>::_msize;
+   using Matrix<T_>::_a;
    using Matrix<T_>::_temp;
 
 /// \brief Default constructor.
@@ -113,8 +110,8 @@ class TrMatrix : public Matrix<T_>
     void Laplace1D(real_t h);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void setGraph(const Vect<RC>& I,
-                  int             opt=1);
+    void setGraph(const vector<RC>& I,
+                  int               opt=1);
 
     void setMesh(Mesh&  mesh,
                  size_t dof=0);
@@ -181,6 +178,13 @@ class TrMatrix : public Matrix<T_>
 /// \brief Add <tt>val</tt> to entry <tt>i</tt>.
     void add(size_t    i,
              const T_& val);
+
+/** \brief Return a value of a matrix entry
+ *  @param [in] i Row index (starts at 1)
+ *  @param [in] j Column index (starts at 1)
+ */
+    T_ at(size_t i,
+          size_t j);
 
 /** \brief Operator () (Constant version).
  *  @param [in] i Row index

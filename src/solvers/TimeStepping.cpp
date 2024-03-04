@@ -113,7 +113,7 @@ TimeStepping::PreSolvePtr TimeStepping::PS [] = {
 
 
 TimeStepping::TimeStepping() :
-              _order(0), _step(0), _nb_des(0), _ind(0), _regex(false), _time_step(0.1),
+              _order(0), _step(0), _rhs_ok(0), _nb_des(0), _ind(0), _regex(false), _time_step(0.1),
               _time(0.), _final_time(1.), _beta(0.25), _gamma(0.5), _nl_toler(1.e-6),
               _max_nl_it(100)
 {
@@ -123,7 +123,7 @@ TimeStepping::TimeStepping() :
 TimeStepping::TimeStepping(TimeScheme s,
                            real_t     time_step,
                            real_t     final_time) :
-              _order(0), _step(0), _nb_des(0), _ind(0), _time_step(0.1), _time(0.),
+              _order(0), _step(0), _rhs_ok(0), _nb_des(0), _ind(0), _time_step(0.1), _time(0.),
               _final_time(1.), _beta(0.25), _gamma(0.5), _nl_toler(1.e-6), _max_nl_it(100)
 {
    set(s,time_step,final_time);
@@ -135,51 +135,6 @@ TimeStepping::~TimeStepping()
    for (int e=0; e<_nb_des; ++e)
       if (_de[e].A != nullptr)
          delete _de[e].A;
-}
-
-
-void TimeStepping::setPDE(Equa& eq,
-                          bool  nl)
-{
-   DE de;
-   de.constant_matrix = false;
-   de.expl = false;
-   de.set_bc = false;
-   de.eq = &eq;
-   _ls = &(de.eq->getLinearSolver());
-   de.itsolver = _ls->getSolver();
-   de.prec = _ls->getPreconditioner();
-   de.mesh = &(eq.getMesh());
-   int nb_dof=de.mesh->getNbDOF();
-   de.nb_eq = de.mesh->getNbEq();
-   de.nl = nl;
-   de.A = nullptr;
-   if (de.expl)
-      de.D.setSize(de.nb_eq);
-   else if (de.itsolver==DIRECT_SOLVER)
-      de.A = new SkMatrix<real_t>(*de.mesh);
-   else
-      de.A = new SpMatrix<real_t>(*de.mesh);
-   if (_sc==int(NEWMARK))
-      de.D.setSize(de.nb_eq);
-   if (_sc==int(RK4)) {
-      de.k1.setSize(nb_dof);
-      de.k2.setSize(nb_dof);
-      de.k3.setSize(nb_dof);
-   }
-   de.b.setSize(de.nb_eq);
-   de.vv.setSize(de.nb_eq);
-   de.f.setSize(nb_dof);
-   if (!de.nl)
-      _max_nl_it = 1;
-   _nb_des++, _ind++;
-   _de.push_back(de);
-}
-
-
-void TimeStepping::setRK4RHS(Vect<real_t>& f)
-{
-   _de[_nb_des-1].f01 = &f;
 }
 
 
@@ -216,6 +171,54 @@ void TimeStepping::set(TimeScheme s,
 }
 
 
+void TimeStepping::setPDE(Equa& eq,
+                          bool  nl)
+{
+   DE de;
+   de.constant_matrix = false;
+   de.expl = false;
+   de.set_bc = false;
+   de.eq = &eq;
+   _ls = &(de.eq->getLinearSolver());
+   de.itsolver = _ls->getSolver();
+   de.prec = _ls->getPreconditioner();
+   de.mesh = &(eq.getMesh());
+   int nb_dof=de.mesh->getNbDOF();
+   de.nb_eq = de.mesh->getNbEq();
+   de.nl = nl;
+   de.A = nullptr;
+   if (_sc==int(FORWARD_EULER) || _sc==int(HEUN) || _sc==int(RK4) || _sc==int(RK3_TVD) || _sc==int(LEAP_FROG) || _sc==int(AB2)) {
+      de.expl = true;
+      de.D.setSize(de.nb_eq);
+   }
+   if (_sc==int(NEWMARK))
+      de.D.setSize(de.nb_eq);
+   de.constant_matrix = false;
+   if (de.itsolver==DIRECT_SOLVER)
+      de.A = new SkMatrix<real_t>(*de.mesh);
+   else
+      de.A = new SpMatrix<real_t>(*de.mesh);
+   if (_sc==int(RK4)) {
+      de.k1.setSize(nb_dof);
+      de.k2.setSize(nb_dof);
+      de.k3.setSize(nb_dof);
+   }
+   de.b = new Vect<real_t>(de.nb_eq);
+   de.vv.setSize(de.nb_eq);
+   de.f.setSize(nb_dof);
+   if (!de.nl)
+      _max_nl_it = 1;
+   _nb_des++, _ind++;
+   _de.push_back(de);
+}
+
+
+void TimeStepping::setRK4RHS(Vect<real_t>& f)
+{
+   _de[_nb_des-1].f01 = &f;
+}
+
+
 void TimeStepping::setLinearSolver(Iteration      s,
                                    Preconditioner p)
 {
@@ -239,7 +242,7 @@ void TimeStepping::setInitial(Vect<real_t>& u)
    de.u.setSize(u.getNx(),u.getNy(),u.getNz());
    de.w = &u;
    de.u = *de.w;
-   de.b.setSize(de.nb_eq);
+   de.b = new Vect<real_t>(de.nb_eq);
    if (de.f0.size()==0)
       de.f0.setSize(u.getNx(),u.getNy(),u.getNz());
    de.f1.setSize(u.getNx(),u.getNy(),u.getNz());
@@ -269,6 +272,7 @@ void TimeStepping::setInitialRHS(Vect<real_t>& f)
 
 void TimeStepping::setRHS(Vect<real_t>& f)
 {
+   _rhs_ok++;
    DE &de = _de[_nb_des-1];
    de.f2 = &f;
    if (de.f0.size()==0)
@@ -332,6 +336,7 @@ void TimeStepping::Assembly(const Element& el,
 
 real_t TimeStepping::runOneTimeStep()
 {
+   Vect<real_t> f;
    _step++;
    _time = theTime;
    if (Verbosity>1)
@@ -339,6 +344,11 @@ real_t TimeStepping::runOneTimeStep()
 
    for (int e=0; e<_nb_des; ++e) {
       DE &de = _de[e];
+      if (_rhs_ok==0) {
+         f.resize(de.mesh->getNbDOF());
+         f = 0.;
+         de.f2 = &f;
+      }
       if (_sc==int(BUILTIN)) {
          if (de.bc != nullptr)
             de.eq->setDirichlet(*de.bc);
@@ -357,7 +367,7 @@ real_t TimeStepping::runOneTimeStep()
                   de.D = 0;
                else
                   *de.A = 0;
-               de.b = 0;
+               *de.b = 0;
                if (_sc==int(RK4))
                   de.k1 = 0, de.k2 = 0, de.k3 = 0;
                (this->*_presolve)();
@@ -374,7 +384,7 @@ real_t TimeStepping::runOneTimeStep()
                de.D = 0;
             else
                *de.A = 0;
-            de.b = 0;
+            *de.b = 0;
             if (_sc==int(RK4))
                de.k1 = 0, de.k2 = 0, de.k3 = 0;
             (this->*_presolve)();
@@ -406,7 +416,7 @@ void TimeStepping::solveStationary()
    for (int e=0; e<_nb_des; ++e) {
       DE &de = _de[e];
       _ls->setMatrix(de.A);
-      _ls->setRHS(de.b);
+      _ls->setRHS(*de.b);
       _ls->setSolution(de.vv);
       _ls->solve(de.itsolver,de.prec);
       insertBC(de.vv,de.v);
@@ -423,8 +433,8 @@ void TimeStepping::solveForwardEuler()
    for (int e=0; e<_nb_des; ++e) {
       DE &de = _de[e];
       for (int i=1; i<=de.nb_eq; ++i)
-         de.b(i) /= de.D(i);
-      insertBC(de.b,de.v);
+         (*de.b)(i) /= de.D(i);
+      insertBC(*de.b,de.v);
       *de.w = de.u = de.v;
       de.f1 = *de.f2;
    }
@@ -438,7 +448,7 @@ void TimeStepping::solveBackwardEuler()
                            "scheme is implemented for first order equations only.");
    DE &de = _de[_ind-1];
    _ls->setMatrix(de.A);
-   _ls->setRHS(de.b);
+   _ls->setRHS(*de.b);
    _ls->setSolution(de.vv);
    _ls->solve(de.itsolver,de.prec);
    insertBC(_de[_ind-1].vv,de.v);
@@ -453,7 +463,7 @@ void TimeStepping::solveCrankNicolson()
                            "Crank-Nicolson scheme is implemented for first order equations only.");
    DE &de = _de[_ind-1];
    _ls->setMatrix(de.A);
-   _ls->setRHS(de.b);
+   _ls->setRHS(*de.b);
    _ls->setSolution(de.vv);
    _ls->solve(de.itsolver,de.prec);
    insertBC(de.vv,de.v);
@@ -469,11 +479,11 @@ void TimeStepping::solveHeun()
                            "implemented for first order equations only.");
    DE &de = _de[_ind-1];
    for (int i=1; i<=de.nb_eq; i++)
-      de.b(i) /= de.D(i);
+      (*de.b)(i) /= de.D(i);
    if (_sstep==1)
-      insertBC(de.b,de.v);
+      insertBC(*de.b,de.v);
    if (_sstep==2) {
-      insertBC(de.b,*de.w);
+      insertBC(*de.b,*de.w);
       de.u = *de.w;
    }
    *de.w = de.v = de.u;
@@ -488,13 +498,13 @@ void TimeStepping::solveLeapFrog()
                            "scheme is implemented for first order equations only.");
    DE &de = _de[_ind-1];
    for (int i=1; i<=de.nb_eq; i++)
-      de.b(i) /= de.D(i);
+      (*de.b)(i) /= de.D(i);
    if (_step==1) {
-      insertBC(de.b,de.v);
+      insertBC(*de.b,de.v);
       de.f1 = *de.f2;
    }
    else {
-      insertBC(de.b,*de.w);
+      insertBC(*de.b,*de.w);
       de.u = de.v;
       de.v = *de.w;
       de.f0 = de.f1;
@@ -510,13 +520,13 @@ void TimeStepping::solveAB2()
                            "scheme is implemented for first order equations only.");
    DE &de = _de[_ind-1];
    for (int i=1; i<=de.nb_eq; i++)
-      de.b(i) /= de.D(i);
+      (*de.b)(i) /= de.D(i);
    if (_step==1) {
-      insertBC(de.b,de.v);
+      insertBC(*de.b,de.v);
       de.f1 = *de.f2;
    }
    else {
-      insertBC(de.b,*de.w);
+      insertBC(*de.b,*de.w);
       de.u = de.v; de.v = *de.w;
       de.f0 = de.f1;
       de.f1 = *de.f2;
@@ -532,8 +542,8 @@ void TimeStepping::solveRK4()
    DE &de = _de[_ind-1];
    if (_sstep==4) {
       for (int i=1; i<=de.nb_eq; i++)
-         de.b(i) /= de.D(i);
-      insertBC(de.b,de.v);
+         (*de.b)(i) /= de.D(i);
+      insertBC(*de.b,de.v);
       *de.w = de.u = de.v;
       de.f0 = de.f1;
       de.f1 = *de.f2;
@@ -557,13 +567,13 @@ void TimeStepping::solveNewmark()
    DE &de = _de[_ind-1];
    if (_step==1 && _sstep==1) {
       for (int i=1; i<=de.nb_eq; ++i)
-         de.b(i) /= de.D(i);
-      insertBC0(de.b,de.ddu);
+         (*de.b)(i) /= de.D(i);
+      insertBC0(*de.b,de.ddu);
       return;
    }
    if (_sstep>1) {
       _ls->setMatrix(de.A);
-      _ls->setRHS(de.b);
+      _ls->setRHS(*de.b);
       _ls->setSolution(de.vv);
       _ls->solve(de.itsolver,de.prec);
       insertBC(de.vv,*de.w);
@@ -581,7 +591,7 @@ void TimeStepping::solveBDF2()
                            "implemented for first order equations only.");
    DE &de = _de[_ind-1];
    _ls->setMatrix(de.A);
-   _ls->setRHS(de.b);
+   _ls->setRHS(*de.b);
    _ls->setSolution(de.vv);
    _ls->solve(de.itsolver,de.prec);
    if (_step==1) {
@@ -610,7 +620,7 @@ void TimeStepping::AssembleStationary(const Element& el,
    DE &de = _de[_ind-1];
    if (de.set_bc)
       update_bc(el,Vect<real_t>(&el,*de.bc),eA0,eb);
-   element_assembly(el,eA0,eb,de.A,de.b);
+   element_assembly(el,eA0,eb,de.A,*de.b);
 }
 
 
@@ -618,7 +628,7 @@ void TimeStepping::SAssembleStationary(const Side& sd,
                                        real_t*     sb,
                                        real_t*     sA)
 {
-   element_assembly(sd,sA,sb,_de[_ind-1].A,_de[_ind-1].b);
+   element_assembly(sd,sA,sb,_de[_ind-1].A,*_de[_ind-1].b);
 }
 
 
@@ -640,7 +650,7 @@ void TimeStepping::AssembleForwardEuler(const Element& el,
    }
    if (de.set_bc)
       update_bc_diag(el,Vect<real_t>(&el,*de.bc),eA1,eb);
-   element_assembly(el,eA1,eb,de.D,de.b);
+   element_assembly(el,eA1,eb,de.D,*de.b);
 }
 
 
@@ -676,7 +686,7 @@ void TimeStepping::AssembleBackwardEuler(const Element& el,
    }
    if (de.set_bc)
       update_bc(el,Vect<real_t>(&el,*de.bc),eA0,eb);
-   element_assembly(el,eA0,eb,de.A,de.b);
+   element_assembly(el,eA0,eb,de.A,*de.b);
 }
 
 
@@ -692,7 +702,7 @@ void TimeStepping::SAssembleBackwardEuler(const Side& sd,
       for (size_t j=0; j<n; j++, k++)
          sb[i] += d*sA[k]*su[j];
    }
-   element_assembly(sd,sA,sb,de.A,de.b);
+   element_assembly(sd,sA,sb,de.A,*de.b);
 }
 
 
@@ -715,7 +725,7 @@ void TimeStepping::AssembleCrankNicolson(const Element& el,
    }
    if (de.set_bc)
       update_bc(el,Vect<real_t>(&el,*de.bc),eA0,eb);
-   element_assembly(el,eA0,eb,de.A,de.b);
+   element_assembly(el,eA0,eb,de.A,*de.b);
 }
 
 
@@ -732,7 +742,7 @@ void TimeStepping::SAssembleCrankNicolson(const Side& sd,
          sb[i] -= sA[k]*su[j];
       }
    }
-   element_assembly(sd,sA,sb,de.A,de.b);
+   element_assembly(sd,sA,sb,de.A,*de.b);
 }
 
 
@@ -765,7 +775,7 @@ void TimeStepping::AssembleHeun(const Element& el,
    }
    if (de.set_bc)
       update_bc_diag(el,Vect<real_t>(&el,*de.bc),eA1,eb);
-   element_assembly(el,eA1,eb,de.D,de.b);
+   element_assembly(el,eA1,eb,de.D,*de.b);
 }
 
 
@@ -789,7 +799,7 @@ void TimeStepping::SAssembleHeun(const Side& sd,
             sb[i] -=  0.5*sA[k]*(su[j] + sv[j]);
       }
    }
-   Element_Assembly(sd,sb,de.b);
+   Element_Assembly(sd,sb,*de.b);
 }
 
 
@@ -822,7 +832,7 @@ void TimeStepping::AssembleAB2(const Element& el,
    }
    if (de.set_bc)
       update_bc_diag(el,Vect<real_t>(&el,*de.bc),eA1,eb);
-   element_assembly(el,eA1,eb,de.D,de.b);
+   element_assembly(el,eA1,eb,de.D,*de.b);
 }
 
 
@@ -846,7 +856,7 @@ void TimeStepping::SAssembleAB2(const Side& sd,
             sb[i] -= 1.5*sA[k]*(1.5*sv[j] - 0.5*su[j]);
       }
    }
-   Element_Assembly(sd,sb,de.b);
+   Element_Assembly(sd,sb,*de.b);
 }
 
 
@@ -879,7 +889,7 @@ void TimeStepping::AssembleLeapFrog(const Element& el,
    }
    if (de.set_bc)
       update_bc_diag(el,Vect<real_t>(&el,*de.bc),eA1,eb);
-   element_assembly(el,eA1,eb,de.D,de.b);
+   element_assembly(el,eA1,eb,de.D,*de.b);
 }
 
 
@@ -903,7 +913,7 @@ void TimeStepping::SAssembleLeapFrog(const Side& sd,
             sb[i] -= sA[k]*sv[j];
       }
    }
-   Element_Assembly(sd,sb,de.b);
+   Element_Assembly(sd,sb,*de.b);
 }
 
 
@@ -967,7 +977,7 @@ void TimeStepping::AssembleRK4(const Element& el,
             }
             if (de.set_bc)
                update_bc_diag(el,Vect<real_t>(&el,*de.bc),eA1,eb);
-            element_assembly(el,eA1,eb,de.D,de.b);
+            element_assembly(el,eA1,eb,de.D,*de.b);
          }
          break;
    }
@@ -1031,7 +1041,7 @@ void TimeStepping::SAssembleRK4(const Side& sd,
                for (size_t j=0; j<n; j++, m++)
                   sb[i] -= sA[m]*(su[j] + _time_step*sk3[j]);
             }
-            Element_Assembly(sd,sb,de.b);
+            Element_Assembly(sd,sb,*de.b);
          }
          break;
    }
@@ -1065,7 +1075,7 @@ void TimeStepping::AssembleNewmark(const Element& el,
          for (size_t j=0; j<n; j++, k++)
             eb[i] -= eA1[k]*edu[j];
       }
-      element_assembly(el,eA2,eb,de.D,de.b);
+      element_assembly(el,eA2,eb,de.D,*de.b);
    }
    if (_sstep>1) {
       Vect<real_t> ev(&el,de.v);
@@ -1080,7 +1090,7 @@ void TimeStepping::AssembleNewmark(const Element& el,
       }
       if (de.set_bc)
          update_bc(el,Vect<real_t>(&el,*de.bc),eA0,eb);
-      element_assembly(el,eA0,eb,de.A,de.b);
+      element_assembly(el,eA0,eb,de.A,*de.b);
    }
 }
 
@@ -1099,10 +1109,10 @@ void TimeStepping::SAssembleNewmark(const Side& sd,
          for (size_t j=0; j<n; j++, k++)
             sb[i] -= sA[k]*su[j];
       }
-      Element_Assembly(sd,sb,de.b);
+      Element_Assembly(sd,sb,*de.b);
    }
    if (_sstep>1)
-      element_assembly(sd,sA,sb,de.A,de.b);
+      element_assembly(sd,sA,sb,de.A,*de.b);
 }
 
 
@@ -1135,7 +1145,7 @@ void TimeStepping::AssembleBDF2(const Element& el,
    }
    if (de.set_bc)
       update_bc(el,Vect<real_t>(&el,*de.bc),eA0,eb);
-   element_assembly(el,eA0,eb,de.A,de.b);
+   element_assembly(el,eA0,eb,de.A,*de.b);
 }
 
 
@@ -1143,7 +1153,7 @@ void TimeStepping::SAssembleBDF2(const Side& sd,
                                  real_t*     sb,
                                  real_t*     sA)
 {
-   element_assembly(sd,sA,sb,_de[_ind-1].A,_de[_ind-1].b);
+   element_assembly(sd,sA,sb,_de[_ind-1].A,*_de[_ind-1].b);
 }
 
 

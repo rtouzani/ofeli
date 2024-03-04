@@ -1,0 +1,45 @@
+# rita Script file to solve the 2-D Laplace equation
+# Space discretization: P1 finite elements
+#
+# Generate mesh of the rectangle (0,3)x(0,1)
+# We generate a uniform 40x20 mesh using native tools
+# All boundary nodes have code 1
+H=1.
+L=3*H
+mesh
+  nx=40
+  ny=20
+  rectangle min=0.,0. max=L,H codes=1  ne=nx,ny
+  end
+#
+
+# We define the analytical solution of the pde to solve
+function name=ue var=x,y def=sin(pi*x)*exp(y)
+
+# We now declare the pde to solve: The Laplace equation,
+# The unknown is u
+# We next impose Dirichlet boundary conditions and a source term
+pde laplace
+  var u
+
+# Dirichlet boundary condition
+  bc code=1 value=sin(pi*x)*exp(y)
+
+# Source term, ie, right-hand side of the equation
+  source value=(pi*pi-1)*sin(pi*x)*exp(y)
+
+# Space discretization uses the P1 finite element method
+  space feP1
+
+# We give analytic solution to compute approximation error
+# Solution is given of function of space-time (t,x,y,z) coordinates
+# L2 and Infinity norm errors are stored in parameters e2 and eI respectively
+  analytic-function ue
+  err e2 eI
+  end
+#
+# Solve problem, and save solution in file for gmsh plotting
+solve
+save name=u format=gmsh file=u.pos
+
+exit

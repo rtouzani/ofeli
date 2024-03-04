@@ -1,0 +1,19 @@
+# rita Script file to solve an ordinary differential equation
+# We numerically solve the ode:
+#     y'(t) = y(t)+exp(t),  y(0) = 0
+# whose solution is given by y(t) = t*exp(t)
+# We use for this the Heun scheme
+# Solution is compared to the analytical one
+#
+ode variable=y def=y+exp(t) scheme=heun init=0. time-step=0.025 final-time=3 analytic=t*exp(t)
+
+# Define a history vector to store solution sequence
+history y Y
+
+# Solve problem
+solve
+#
+# Save history vector in file
+save name=Y every=2 format=gnuplot file=example1.dat
+
+exit

@@ -36,15 +36,16 @@
 #include "linear_algebra/BMatrix.h"
 #include "mesh/Mesh.h"
 #include "linear_algebra/Vect_impl.h"
+#include "util/util.h"
 
 namespace OFELI {
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef DOXYGEN_SHOULD_SKIP_THI
 
 template<class T_>
 BMatrix<T_>::BMatrix()
 {
-   _size = _ld = _ud = 0;
+   _msize.mt = BAND;
 }
 
 
@@ -55,6 +56,7 @@ BMatrix<T_>::BMatrix(size_t size,
 {
    if (size<3 || ld<0 || ud<0 || ud+ld+1>int(size))
       throw OFELIException("In BMatrix::BMatrix(size_t,int,int): Illegal arguments.");
+   _msize.mt = BAND;
    setSize(size,ld,ud);
 }
 
@@ -62,10 +64,7 @@ BMatrix<T_>::BMatrix(size_t size,
 template<class T_>
 BMatrix<T_>::BMatrix(const BMatrix& m)
 {
-   _size = m._size;
-   _ld = m._ld;
-   _ud = m._ud;
-   _length = m._length;
+   _msize = m._msize;
    _a = m._a;
 }
 
@@ -76,8 +75,8 @@ BMatrix<T_>::~BMatrix()
 
 
 template<class T_>
-void BMatrix<T_>::setGraph(const Vect<RC>& I,
-                           int             opt)
+void BMatrix<T_>::setGraph(const vector<RC>& I,
+                           int               opt)
 { }
 
 
@@ -137,16 +136,16 @@ void BMatrix<T_>::setSize(size_t size,
                           int    ld,
                           int    ud)
 {
-   _nb_rows = _nb_cols = _size = size;
-   _length = (ld+ud+1) * _nb_rows;
-   _ld = ld; _ud = ud;
-   _a.resize(_size);
-   for (int i=0; i<int(_size); i++)
-      _a[i].resize(_ld+_ud+1,static_cast<T_>(0));
-   _ch.resize(_size);
-   _ch[0] = 0;
-   for (int i=1; i<int(_size); i++)
-      _ch[i] = i+1;
+   _msize.nb_rows = _msize.nb_cols = _msize.size = size;
+   _msize.length = (ld+ud+1) * _msize.nb_rows;
+   _msize.ld = ld; _msize.ud = ud;
+   _a.resize(_msize.size);
+   for (int i=0; i<int(_msize.size); i++)
+      _a[i].resize(_msize.ld+_msize.ud+1,static_cast<T_>(0));
+   _msize.ch.resize(_msize.size);
+   _msize.ch[0] = 0;
+   for (int i=1; i<int(_msize.size); i++)
+      _msize.ch[i] = i+1;
 }
 
 
@@ -154,9 +153,11 @@ template<class T_>
 void BMatrix<T_>::MultAdd(const Vect<T_>& x,
                           Vect<T_>&       y) const
 {
-   for (int i=0; i<int(_size); ++i)
-      for (int j=std::max(i-_ld,0); j<std::min(i+_ud+_ld,int(_size)); ++j)
-         y[i] += _a[i][j+_ld-i]*x[j];
+   for (int i=0; i<int(_msize.size); ++i) {
+      int ld=_msize.ld, ud=_msize.ud;
+      for (int j=std::max(i-ld,0); j<std::min(i+ud+ld,int(_msize.size)); ++j)
+         y[i] += _a[i][j+ld-i]*x[j];
+   }
 }
 
 
@@ -165,9 +166,11 @@ void BMatrix<T_>:: MultAdd(T_              a,
                            const Vect<T_>& x,
                            Vect<T_>&       y) const
 {
-   for (int i=0; i<int(_size); ++i)
-      for (int j=std::max(i-_ld,0); j<std::min(i+_ud+_ld,int(_size)); ++j)
-         y[i] += a*_a[i][j+_ld-i]*x[j];
+   for (int i=0; i<int(_msize.size); ++i) {
+      int ld=_msize.ld, ud=_msize.ud;
+      for (int j=std::max(i-ld,0); j<std::min(i+ud+ld,int(_msize.size)); ++j)
+         y[i] += a*_a[i][j+ld-i]*x[j];
+   }
 }
 
 
@@ -203,8 +206,8 @@ void BMatrix<T_>:: set(size_t    i,
                        size_t    j,
                        const T_& val)
 {
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j-i)<=_ud+_ld)
-      _a[i-1][_ld+j-i] = val;
+   if (_msize.ld+int(j)-int(i)>=0 && _msize.ld+int(j-i)<=_msize.ud+_msize.ld)
+      _a[i-1][_msize.ld+j-i] = val;
 }
 
 
@@ -213,8 +216,19 @@ void BMatrix<T_>::add(size_t    i,
                       size_t    j,
                       const T_& val)
 {
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
-      _a[i-1][_ld+j-i] += val;
+   if (_msize.ld+int(j)-int(i)>=0 && _msize.ld+int(j)-int(i)<=_msize.ud+_msize.ld)
+      _a[i-1][_msize.ld+j-i] += val;
+}
+
+
+template<class T_>
+T_ BMatrix<T_>::at(size_t i,
+                   size_t j)
+{
+   if (_msize.ld+int(j)-int(i)>=0 && _msize.ld+int(j)-int(i)<=_msize.ud+_msize.ld)
+      return _a[i-1][_msize.ld+j-i];
+   else
+      return static_cast<T_>(0);
 }
 
 
@@ -222,23 +236,23 @@ template<class T_>
 T_ BMatrix<T_>::operator()(size_t i,
                            size_t j) const
 {
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
-      return _a[i-1][_ld+j-i];
+   if (_msize.ld+int(j)-int(i)>=0 && _msize.ld+int(j)-int(i)<=_msize.ud+_msize.ld)
+      return _a[i-1][_msize.ld+j-i];
    else
-      return _zero;
+      return static_cast<T_>(0);
 }
 
 
 template<class T_>
-T_& BMatrix<T_>::operator()(size_t i,
-                                 size_t j)
+T_ & BMatrix<T_>::operator()(size_t i,
+                             size_t j)
 {
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ud+_ld)
-      return _a[i-1][_ld+j-i];
+   if (_msize.ld+int(j)-int(i)>=0 && _msize.ld+int(j)-int(i)<=_msize.ud+_msize.ld)
+      return _a[i-1][_msize.ld+j-i];
    else
       throw OFELIException("In BMatrix::operator(): Illegal pair of indices " +
                            to_string(i)+","+to_string(j)+").");
-   return _zero;
+   return _temp;
 }
 
 
@@ -253,10 +267,10 @@ BMatrix<T_>& BMatrix<T_>::operator=(const BMatrix<T_>& m)
 template<class T_>
 BMatrix<T_>& BMatrix<T_>::operator=(const T_& x)
 {
-   for (size_t i=0; i<_size; ++i)
-      for (int j=0; j<_ld+_ud+1; ++j)
+   for (size_t i=0; i<_msize.size; ++i)
+      for (int j=0; j<_msize.ld+_msize.ud+1; ++j)
          _a[i][j] = 0;
-   for (size_t i=1; i<=_size; ++i)
+   for (size_t i=1; i<=_msize.size; ++i)
       (*this)(i,i) = x;
    return *this;
 }
@@ -265,8 +279,8 @@ BMatrix<T_>& BMatrix<T_>::operator=(const T_& x)
 template<class T_>
 BMatrix<T_>& BMatrix<T_>::operator*=(const T_& x)
 {
-   for (size_t i=0; i<_size; ++i)
-      for (int j=0; j<_ld+_ud+1; ++j)
+   for (size_t i=0; i<_msize.size; ++i)
+      for (int j=0; j<_msize.ld+_msize.ud+1; ++j)
          _a[i][j] *= x;
    return *this;
 }
@@ -275,8 +289,8 @@ BMatrix<T_>& BMatrix<T_>::operator*=(const T_& x)
 template<class T_>
 BMatrix<T_>& BMatrix<T_>::operator+=(const T_& x)
 {
-   for (size_t i=0; i<_size; ++i)
-      for (int j=0; j<_ld+_ud+1; ++j)
+   for (size_t i=0; i<_msize.size; ++i)
+      for (int j=0; j<_msize.ld+_msize.ud+1; ++j)
          _a[i][j] += x;
    return *this;
 }
@@ -293,14 +307,15 @@ void BMatrix<T_>::add(size_t    i,
 template<class T_>
 int BMatrix<T_>::setLU()
 {
-   for (int i=0; i<int(_size)-1; i++) {
-      int kend=std::min(_ld+1,int(_size)-i), kjend=std::min(_ud+1,int(_size)-i);
-      if (Abs(_a[i][_ld]) < OFELI_EPSMCH)
+   for (int i=0; i<int(_msize.size)-1; i++) {
+      int ld=_msize.ld, ud=_msize.ud;
+      int kend=std::min(ld+1,int(_msize.size)-i), kjend=std::min(ud+1,int(_msize.size)-i);
+      if (Abs(_a[i][_msize.ld]) < OFELI_EPSMCH)
          throw OFELIException("In BMatrix::Factor(): " + to_string(i+1) + "-th pivot is null.");
       for (int k=1; k!=kend; k++) {
-         _a[k+i][_ld-k] /= _a[i][_ld];
+         _a[k+i][_msize.ld-k] /= _a[i][_msize.ld];
          for (int j=1; j!=kjend; j++)
-            _a[k+i][j+_ld-k] -= _a[k+i][_ld-k] * _a[i][j+_ld];
+            _a[k+i][j+ld-k] -= _a[k+i][ld-k] * _a[i][j+ld];
       }
    }
    return 0;
@@ -311,19 +326,21 @@ template<class T_>
 int BMatrix<T_>::solve(Vect<T_>& b,
                        bool      fact)
 {
-   if (_size<3 || _ld<0 || _ud<0 || _ud+_ld+1>int(_size))
+   if (_msize.size<3 || _msize.ud+_msize.ld+1>_msize.size)
       throw OFELIException("In BMatrix::solve(Vect<double>): Illegal arguments.");
    int ret = setLU();
-   for (int i=0; i<int(_size)-1; i++) {
-      int kend = std::min(_ld+1,int(_size)-i);
+   for (int i=0; i<int(_msize.size)-1; i++) {
+      int ld=_msize.ld;
+      int kend = std::min(ld+1,int(_msize.size)-i);
       for (int k=1; k!=kend; k++)
-         b[k+i] -= _a[k+i][_ld-k] * b[i];
+         b[k+i] -= _a[k+i][ld-k] * b[i];
    }
-   for (int i=int(_size)-1; i>=0; i--) {
-      int kend = std::min(_ud+1,int(_size)-i);
+   for (int i=int(_msize.size)-1; i>=0; i--) {
+      int ld=_msize.ld, ud=_msize.ud;
+      int kend = std::min(ud+1,int(_msize.size)-i);
       for (int k=1; k<kend; k++)
-         b[i] -= _a[i][k+_ld] * b[i+k];
-      b[i] /= _a[i][_ld];
+         b[i] -= _a[i][k+ld] * b[i+k];
+      b[i] /= _a[i][_msize.ld];
    }
    return ret;
 }
@@ -349,10 +366,10 @@ T_* BMatrix<T_>::get() const
 template<class T_>
 T_ BMatrix<T_>::get(size_t i, size_t j) const
 {
-   if (_ld+int(j)-int(i)>=0 && _ld+int(j)-int(i)<=_ld+_ud)
-      return _a[i-1][_ld+j-i];
+   if (_msize.ld+int(j)-int(i)>=0 && _msize.ld+int(j)-int(i)<=_msize.ld+_msize.ud)
+      return _a[i-1][_msize.ld+j-i];
    else
-      return _zero;
+      return static_cast<T_>(0);
 }
 
 

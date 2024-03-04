@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title></title>
+   <date></date>
+   <author></author>
+</info>
+<Function name="f">
+   <Variable label="x" nb_points="21" min="0" max="1.0"/>
+   <Data>
+      -0.0999984   0.161821   0.362317   0.446881   0.595247   0.749072
+       0.801824    0.864075   0.988854   0.985477   0.900119   0.944495
+       0.990304    0.896714   0.812443   0.748493   0.564934   0.384047
+       0.330533    0.142809   0.233147
+   </Data>
+</Function>  
+</OFELI_File>

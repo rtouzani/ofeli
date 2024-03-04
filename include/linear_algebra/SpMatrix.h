@@ -81,15 +81,10 @@ using std::unique;
 
 template<class T_> class SpMatrix : public Matrix<T_>
 {
-    using Matrix<T_>::_nb_rows;
-    using Matrix<T_>::_nb_cols;
-    using Matrix<T_>::_size;
-    using Matrix<T_>::_length;
-    using Matrix<T_>::_zero;
+    using Matrix<T_>::_msize;
     using Matrix<T_>::_temp;
     using Matrix<T_>::_a;
     using Matrix<T_>::_diag;
-    using Matrix<T_>::_ch;
     using Matrix<T_>::_dof_type;
     using Matrix<T_>::_is_diagonal;
     using Matrix<T_>::_theMesh;
@@ -165,8 +160,8 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  (opt=1) or not (opt=0). In the latter case, this vector can have
  *  the same contents more than once and are not necessarily ordered
  */
-    SpMatrix(const Vect<RC>& I,
-             int             opt=1);
+    SpMatrix(const vector<RC>& I,
+             int               opt=1);
 #endif
 
 #ifndef USE_EIGEN
@@ -178,9 +173,9 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  (<tt>opt=1</tt>: default) or not (<tt>opt=0</tt>). In the latter case, this vector can have
  *  the same contents more than once and are not necessarily ordered
  */
-    SpMatrix(const Vect<RC>& I,
-             const Vect<T_>& a,
-             int             opt=1);
+    SpMatrix(const vector<RC>& I,
+             const Vect<T_>&   a,
+             int               opt=1);
 #endif
 
 #ifndef USE_EIGEN
@@ -360,14 +355,21 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  (<tt>opt=1</tt>: default) or not (<tt>opt=0</tt>). In the latter case, this vector can have
  *  the same contents more than once and are not necessarily ordered
  */
-    void setGraph(const Vect<RC>& I,
-                  int             opt=1);
+    void setGraph(const vector<RC>& I,
+                  int               opt=1);
 
 /// \brief Get <tt>i</tt>-th row vector.
     Vect<T_> getRow(size_t i) const;
 
 /// \brief Get <tt>j</tt>-th column vector.
     Vect<T_> getColumn(size_t j) const;
+
+/** \brief Return a value of a matrix entry
+ *  @param [in] i Row index (starts at 1)
+ *  @param [in] j Column index (starts at 1)
+ */
+    T_ at(size_t i,
+          size_t j);
 
 /** \brief Operator () (Non constant version)
  *  @param [in] i Row index
@@ -644,7 +646,6 @@ template<class T_> class SpMatrix : public Matrix<T_>
    int _is_dense, _type, _max_it;
    int _one_dof, _sides, _extended;
    real_t _toler;
-   vector<RC> _IJ;
    vector<size_t> _nbc;
    Iteration _solver;
    Preconditioner _prec;
@@ -687,4 +688,3 @@ ostream& operator<<(ostream&            s,
 } /* namespace OFELI */
 
 #endif
-

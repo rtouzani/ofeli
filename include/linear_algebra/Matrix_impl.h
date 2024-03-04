@@ -45,19 +45,18 @@ namespace OFELI {
 
 template<class T_>
 Matrix<T_>::Matrix()
-           : _nb_rows(0), _nb_cols(0), _size(0), _length(0), _zero(T_(0)),
-             _penal(1.e20), _is_diagonal(false), _name("M")
-{ }
+           : _zero(static_cast<T_>(0)), _penal(1.e20), _is_diagonal(false)
+{
+}
 
 
 template<class T_>
 Matrix<T_>::Matrix(const Matrix<T_> &m)
-           : _nb_rows(m._nb_rows), _nb_cols(m._nb_cols), _size(m._size), _length(m._length),
-             _zero(T_(0)), _penal(m._penal), _is_diagonal(m._is_diagonal), _name(m._name)
+           : _zero(static_cast<T_>(0)), _penal(m._penal), _is_diagonal(m._is_diagonal)
 {
-   _ch.resize(_size);
-   _diag.resize(_size);
-   _ch = m._ch;
+   _msize = m._msize;
+   _msize.ch.resize(_msize.size);
+   _diag.resize(_msize.size);
    _diag = m._diag;
    _theMesh = m._theMesh;
 }
@@ -72,19 +71,19 @@ void Matrix<T_>::reset() { }
 
 
 template<class T_>
-size_t Matrix<T_>::getNbRows() const { return _nb_rows; }
+size_t Matrix<T_>::getNbRows() const { return _msize.nb_rows; }
 
 
 template<class T_>
-size_t Matrix<T_>::getNbColumns() const { return _nb_cols; }
+size_t Matrix<T_>::getNbColumns() const { return _msize.nb_cols; }
 
 
 template<class T_>
-void Matrix<T_>::setName(const string& name) { _name = name; }
+void Matrix<T_>::setName(const string& name) { _msize.name = name; }
 
 
 template<class T_>
-string Matrix<T_>::getName() const { return _name; }
+string Matrix<T_>::getName() const { return _msize.name; }
 
 
 template<class T_>
@@ -94,15 +93,15 @@ void Matrix<T_>::setPenal(real_t p) { _penal = p; }
 template<class T_>
 void Matrix<T_>::setDiagonal()
 {
-   _size = _theMesh->getNbEq();
-   _ch.resize(_size);
-   _ch[0] = 0;
-   for (size_t i=1; i<_size; i++)
-      _ch[i] = i+1;
-   _a.resize(_size);
+   _msize.nb_rows = _msize.nb_cols = _msize.size = _theMesh->getNbEq();
+   _msize.ch.resize(_msize.size);
+   _msize.ch[0] = 0;
+   for (size_t i=1; i<_msize.size; i++)
+      _msize.ch[i] = i+1;
+   _a.resize(_msize.size);
    _a.clear();
    _dof = 0;
-   _length = _nb_rows = _nb_cols = _size;
+   _msize.length = _msize.nb_rows = _msize.nb_cols = _msize.size;
    _is_diagonal = true;
 }
 
@@ -112,22 +111,22 @@ T_ Matrix<T_>::getDiag(size_t k) const { return _diag[k-1]; }
 
 
 template<class T_>
-size_t Matrix<T_>::size() const { return _size; }
+size_t Matrix<T_>::size() const { return _msize.size; }
 
 
 template<class T_>
 void Matrix<T_>::setDiagonal(Mesh& mesh)
 {
    init_set_mesh(mesh);
-   _size = _theMesh->getNbEq();
-   _ch.resize(_size);
-   _ch[0] = 0;
-   for (size_t i=1; i<_size; i++)
-      _ch[i] = i+1;
-   _a.resize(_size);
+   _msize.nb_rows = _msize.nb_cols = _msize.size = _theMesh->getNbEq();
+   _msize.ch.resize(_msize.size);
+   _msize.ch[0] = 0;
+   for (size_t i=1; i<_msize.size; i++)
+      _msize.ch[i] = i+1;
+   _a.resize(_msize.size);
    _a.clear();
    _dof = 0;
-   _length = _nb_rows = _nb_cols = _size;
+   _msize.length = _msize.nb_rows = _msize.nb_cols = _msize.size;
    _is_diagonal = true;
 }
 
@@ -137,7 +136,6 @@ void Matrix<T_>::init_set_mesh(Mesh&  mesh,
                                size_t dof)
 {
    _theMesh = &mesh;
-   _zero = T_(0);
    _dof_type = 0;
    if (_theMesh->NodesAreDOF())
       _dof_type = NODE_DOF;
@@ -146,19 +144,19 @@ void Matrix<T_>::init_set_mesh(Mesh&  mesh,
    else if (_theMesh->ElementsAreDOF())
       _dof_type = ELEMENT_DOF;
    _dof = dof;
-   _size = _nb_rows = _nb_cols = _theMesh->getNbEq();
+   _msize.nb_rows = _msize.nb_cols = _msize.size = _theMesh->getNbEq();
    if (_dof_type==NODE_DOF)
       if (_dof)
-         _size = _nb_rows = _nb_cols = _theMesh->getNbNodes();
+         _msize.nb_rows = _msize.nb_cols = _msize.size = _theMesh->getNbNodes();
       else
-         _size = _nb_rows = _nb_cols = _theMesh->getNbEq();
+         _msize.nb_rows = _msize.nb_cols = _msize.size = _theMesh->getNbEq();
    else if (_dof_type==SIDE_DOF)
       if (_dof)
-         _size = _nb_rows = _nb_cols = _theMesh->getNbSides();
+         _msize.nb_rows = _msize.nb_cols = _msize.size = _theMesh->getNbSides();
       else
-         _size = _nb_rows = _nb_cols = _theMesh->getNbEq();
+         _msize.nb_rows = _msize.nb_cols = _msize.size = _theMesh->getNbEq();
    else if (_dof_type==ELEMENT_DOF)
-      _size = _nb_rows = _nb_cols = _theMesh->getNbElements();
+      _msize.nb_rows = _msize.nb_cols = _msize.size = _theMesh->getNbElements();
    else;
 }
 
@@ -167,7 +165,7 @@ template<class T_>
 void Matrix<T_>::clear()
 {
 #ifndef USE_EIGEN
-   for (size_t i=0; i<_length; i++)
+   for (size_t i=0; i<_msize.length; i++)
       _a[i] = static_cast<T_>(0);
 #endif
 }
@@ -539,7 +537,7 @@ int Matrix<T_>::FactorAndSolve(const Vect<T_>& b,
 template<class T_>
 size_t Matrix<T_>::getLength() const
 {
-   return _length;
+   return _msize.length;
 }
 
 
@@ -604,7 +602,7 @@ Matrix<T_>& Matrix<T_>::operator=(Matrix<T_>& m)
 template<class T_>
 Matrix<T_>& Matrix<T_>::operator+=(const Matrix<T_>& m)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] += m._a[i];
    return *this;
 }
@@ -613,7 +611,7 @@ Matrix<T_>& Matrix<T_>::operator+=(const Matrix<T_>& m)
 template<class T_>
 Matrix<T_>& Matrix<T_>::operator-=(const Matrix<T_>& m)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] -= m._a[i];
    return *this;
 }
@@ -622,7 +620,7 @@ Matrix<T_>& Matrix<T_>::operator-=(const Matrix<T_>& m)
 template<class T_>
 Matrix<T_>& Matrix<T_>::operator=(const T_ &x)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] = x;
    return *this;
 }
@@ -631,7 +629,7 @@ Matrix<T_>& Matrix<T_>::operator=(const T_ &x)
 template<class T_>
 Matrix<T_>& Matrix<T_>::operator*=(const T_& x)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] *= x;
    return *this;
 }
@@ -640,7 +638,7 @@ Matrix<T_>& Matrix<T_>::operator*=(const T_& x)
 template<class T_>
 Matrix<T_>& Matrix<T_>::operator+=(const T_& x)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] += x;
    return *this;
 }
@@ -649,12 +647,27 @@ Matrix<T_>& Matrix<T_>::operator+=(const T_& x)
 template<class T_>
 Matrix<T_>& Matrix<T_>::operator-=(const T_& x)
 {
-   for (size_t i=0; i<_length; ++i)
+   for (size_t i=0; i<_msize.length; ++i)
       _a[i] = -x;
    return *this;
 }
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
+
+template<class T_>
+ostream& operator<<(ostream&          s,
+                    const Matrix<T_>* A)
+{
+   s.setf(ios::right|ios::scientific);
+   s << endl;
+   for (size_t i=1; i<=A->getNbRows(); i++) {
+      s << "\nRow  " << setw(6) << i << endl;
+      for (size_t j=1; j<=A->getNbColumns(); j++)
+         s << "  " << setprecision(8) << std::setfill(' ') << setw(18) << A->at(i,j);
+      s << endl;
+   }
+   return s;
+}
 
 } /* namespace OFELI */
 

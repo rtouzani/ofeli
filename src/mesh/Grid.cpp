@@ -602,12 +602,12 @@ ostream& operator<<(ostream&    s,
       dim = 1;
    s << "\n\nS T R U C T U R E D    G R I D    D A T A\n";
    s << "=========================================\n\n";
-   s << "Space Dimension        : " << setw(6) << dim << endl;
-   s << "x-domain               : [" << g.getXMin().x << "," << g.getXMax().x << "]" << endl;
+   s << "Space Dimension:       " << setw(6) << dim << endl;
+   s << "x-domain:              [" << g.getXMin().x << "," << g.getXMax().x << "]" << endl;
    if (dim > 1)
-      s << "y-domain               : [" << g.getXMin().y << "," << g.getXMax().y << "]" << endl;
+      s << "y-domain:              [" << g.getXMin().y << "," << g.getXMax().y << "]" << endl;
    if (dim > 2)
-      s << "z-domain               : [" << g.getXMin().z << "," << g.getXMax().z << "]" << endl;
+      s << "z-domain:              [" << g.getXMin().z << "," << g.getXMax().z << "]" << endl;
    s << "Number of x-intervals: " << setw(6) << g.getNx() << endl;
    if (dim > 1)
       s << "Number of y-intervals: " << setw(6) << g.getNy() << endl;

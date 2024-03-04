@@ -37,7 +37,6 @@
 #include "mesh/Material.h"
 #include "equations/Equation_impl.h"
 
-
 namespace OFELI {
 /*!
  *  \addtogroup OFELI
@@ -230,7 +229,7 @@ class Equa_Solid : virtual public Equation<NEN_,NEE_,NSN_,NSE_>
              Dilatation();
           if (_terms&int(PDE_Terms::CONTACT))
              Contact(1.e07);
-          if (Equa::_bf!=nullptr)
+          if (_terms&int(PDE_Terms::SOURCE) && Equa::_bf!=nullptr)
              BodyRHS();
           s.Assembly(The_element,eRHS.get(),eA0.get(),eA1.get(),eA2.get());
        }

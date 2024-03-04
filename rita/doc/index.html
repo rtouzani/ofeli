@@ -1,0 +1,1616 @@
+<!DOCTYPE HTML>
+<html>
+    <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="rita Application" />
+        <meta name="keywords" content="rita, modelling, numerical simulation, scientific computing, ofeli" />
+        <title>rita application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="" />
+        <link rel="icon" type="image/png" sizes="10x10" href="images/r.jpg" />
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-59742926-2', 'auto');
+          ga('send', 'pageview');
+        </script>
+
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="shortcut icon" href="images/rita.ico">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/icomoon.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/flexslider.css">
+        <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+        <link rel="stylesheet" href="css/owl.carousel.min.css">
+        <link rel="stylesheet" href="css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/doc.css">
+
+<!-- Modernizr JS -->
+        <script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+        <div id="Rita-page">
+            <div class="container-wrap">
+                <a href="#" class="js-rita-nav-toggle rita-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+                <aside id="rita-aside" role="complementary" class="border js-fullheight">
+                    <div class="text-center">
+                        <div class="author-img" style="background-image: url(images/rita.jpg);">
+                        </div>
+                        <span class="position"><b>Interactive Modelling and Simulation</b></span>
+                    </div>
+                    <nav id="rita-main-menu" role="navigation" class="navbar">
+                        <div id="navbar" class="collapse">
+                            <ul>
+                                <li class="active"><a href="#" data-nav-section="home"><b>Home</b></a></li>
+                                <li><a href="#" data-nav-section="commands"><b>rita Commands</b></a>
+                                    <div id="navbar" class="collapse">
+                                        <ul>
+                                            <li class="active"><a href="#" data-nav-section="guide">Documentation Guide</a></li>
+                                            <li class="active"><a href="#" data-nav-section="syntax">Syntax rules</a></li>
+                                            <li class="active"><a href="#" data-nav-section="setting">Settings</a>
+                                                <ul>
+                                                    <li class="active"><a href="#" data-nav-section="help">help or ?</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="license">license</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="setting">set</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="load">load</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="active"><a href="#" data-nav-section="data">Data</a>
+                                                <ul>
+                                                    <li class="active"><a href="#" data-nav-section="vector">vector</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="matrix">matrix</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="tabulation">tabulation</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="mesh">mesh</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="grid">grid</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="function">function</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="sample">sample</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="plot">plot</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="hist">history</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="dat">data</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="list">list</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="remove">remove</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="rename">rename</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="description">description</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="print">=</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="save">save</a></li>
+                                                </ul></li>
+                                            <li class="active"><a href="#" data-nav-section="solver">Solvers</a>
+                                                <ul>
+                                                    <li class="active"><a href="#" data-nav-section="approximation">approximation</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="integration">integration</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="ls">ls</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="algebraic">algebraic</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="ode">ode</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="pde">pde</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="optimization">optimization</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="eigen">eigen</a></li>
+                                                    <li class="active"><a href="#" data-nav-section="solve">solve</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="active"><a href="#" data-nav-section="calculator">Calculator</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#" data-nav-section="license"><b>License</b></a></li>
+                                <li><a href="#" data-nav-section="download"><b>Download and install</b></a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="rita-footer">
+                        <p><small>&copy; Copyright <script>document.write(new Date().getFullYear());</script> All rights reserved
+                        </span>
+                        </small></p>
+                    </div>
+                </aside>
+
+                <div id="rita-main">
+                    <section class="rita-start" data-section="home">
+                        <div class="rita-narrow-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                                        <div class="col-md-12">
+                                            <div class="start-desc">
+                                                <h1 class="first-rita-heading"> </h1>
+                                                <p><span class=logo>rita</span> is an open-source interactive software for numerical 
+                                                    analysis and simulation.<br>
+                                                    <span class=logo>rita</span> enables solving numerical analysis problems using scientific 
+                                                    computing tools.
+                                                    It handles:
+                                                    <ul>
+                                                        <li>Interpolation (Lagrange, Spline)</li>
+                                                        <li>Approximation (Least squares, Nurbs, B&eacute;zier)</li>
+                                                        <li>Algebraic Equations</li>
+                                                        <li>Ordinary Differential Equations</li>
+                                                        <li>Partial Differential Equations</li>
+                                                        <li>Optimization problems</li>
+                                                        <li>Eigenvalue problems</li>
+                                                    </ul>
+                                                    The problems to solve in <span class=logo>rita</span> are defined by data and numerical tools to treat them.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ************************************************************************************************************ -->
+
+                    <section class="rita-text" data-section="commands">
+                        <div class="rita-narrow-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                                        <div class="col-md-12">
+                                            <div class="start-desc">
+                                                <h2 class="rita-heading">rita commands</h2></b>
+                                                <p>Running <span class=logo>rita</span> creates a command line environment that enables
+                                                defining problems to solve and data for these problems.<br>
+                                                Here is a list of available commands in the <span class=logo>rita</span> console application.
+                                                These commands can be classified in categories:</p>
+                                                <ul>
+                                                    <li><b>Setting commands:</b> They can be invoked for specific utility to set up some global properties.</li>
+                                                    <li><b>Data commands:</b> Commands that define data entities, modify or explore them.</li>
+                                                    <li><b>Solver commands:</b> Commands to define problems to solve and solve them.</li>
+                                                    <li><b>Calculator:</b> Commands to perform some simple calculus.</li>
+                                                </ul>
+                                                <ul>
+
+                                                    <!-- ******************************************************************** -->
+
+                                                    <li><section class="rita-text" data-section="guide"><h3>Documentation Guide</h3>
+                                                       <p>In the present documentation, <span class=logo>rita</span> commands are presented according to the 
+                                                          following rules:<br>
+                                                          <span class=cmd>command&ensp;arg1|arg2=&lt;v&gt;&ensp;[arg3|arg4=&lt;v1&gt;,&lt;v2&gt;]</span><br>
+                                                          This means that the arguments <span class=var>arg1</span> and <span class=var>arg2</span>
+                                                          are mandatory but exclusive. Argument <span class=var>arg1</span> needs a value <span class=var>v</span>.
+                                                          The arguments <span class=var>arg3</span> and
+                                                          <span class=var>arg4</span> are optional but exclusive. In addition, <span class=var>arg4</span>
+                                                          needs two values: <span class=var>v1</span> and <span class=var>v2</span>.<br>
+                                                          Examples of possible combinations:
+                                                          <ul style="list-style-type:none">
+                                                            <li><span class=cmd>command&ensp;arg1</span></li>
+                                                            <li><span class=cmd>command&ensp;arg2=v2&ensp;arg3</span></li>
+                                                            <li><span class=cmd>command&ensp;arg1=v1&ensp;arg4=x,y</span></li>
+                                                        </ul>
+                                                        </p>
+                                                    </section></li>
+
+                                                        <!-- ******************************************************************** -->
+
+                                                    <li><section class="rita-text" data-section="syntax"><h3>Syntax Rules</h3>
+                                                        <ul>
+                                                            <li>Running <span class=logo>rita</span> consists in typing <span class=var>commands</span> 
+                                                                that may need specific <span class=var>arguments</span></li>
+                                                            <li>Some commands have a submenu to specify more data. In addition some commands
+                                                                can be invoked either in short or extended versions.</li>
+                                                            <li>For a friendly use of <span class=logo>rita</span>, this one can use
+                                                                an input script file. The name of this file can be given as an argument of the command <span class=logo>rita</span>.</li>
+                                                            <li>A line starting with the character <span class=var>#</span> is a comment line that is ignored by the application.</li>
+                                                            <li>A line starting with the character <span class=var>!</span> defines a system shell command.</li>
+                                                            <li>The command <span class=var>exit</span> (or <span class=var>quit</span>) causes
+                                                                quitting the application, while pressing the <span class=var>Ctrl-D</span> sequence
+                                                                interrupts the execution.</li>
+                                                            <li>In the case where the user is in a submenu, the command <span class=var>end</span> or <span class=var>&lt;</span> 
+                                                                enables going to command level.</li>
+                                                            <li>Some commands have a short version to simplify their usage in interactive mode. This one is 
+                                                                shown in parenthesis in the present guide.</li>
+                                                        </ul>
+                                                        </section></li>
+
+                                                    <!-- ******************************************************************** -->
+
+                                                    <li><section class="rita-text" data-section="setting"><h3>Setting Commands</h3>
+                                                        Here is the list of setting commands:
+                                                        <ul>
+                                                            <!-- ++++++ -->
+                                                            <li><a name="help"></a><span class=cmd data-section="help">help</span></a> (or <span class=var>?</span>): displays the list of 
+                                                                available commands with a brief description.</li>
+                                                            <li><span class=cmd data-section="load">load&ensp;&lt;file&gt;</span><br>
+                                                                Read commands in a given script <span class=var>file</span>.</li>
+                                                            <li><span class=cmd>license</span> (or <span class=cmd>lic</span>): displays the
+                                                                License agreement of the application.</li>
+                                                            <li><span class=cmd>set&ensp;&lt;argument&gt&ensp;&lt;value&gt</span></span><br>
+                                                                Enables modifying default configuration parameters.
+                                                                <ul>
+                                                                    <li>The argument <span class=var>verbosity</span> (or <span class=var>verb</span>) sets a value for verbosity parameter. 
+                                                                        Its default value is 1. The value can be chosen between 0 and 10, from a silent execution to extensive messaging.</li>
+                                                                    <li><span class=var>history</span> enables choosing a history file name rather than default name
+                                                                        (<span class=var>.rita.his</span>). The value is the file name. The history file echoes all typed commands in 
+                                                                        <span class=logo>rita</span>. It can be used, after possibly changing its name for a new execution. </li>
+                                                                    <li><span class=var>log</span> enables choosing a log file name rather than default name (<span class=var>.rita.log</span>).
+                                                                        The value is the file name. The log file contains all found errors while running <span class=logo>rita</span>.</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                        </section></li>
+
+                                                    <!-- ******************************************************************** -->
+
+                                                    <li><section class="rita-text" data-section="data"><h3>Data commands</h3>
+                                                        <ul>
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="vector">
+                                                                Command <span class=vvar>vector</span> enables defining a vector. A vector in <span class=logo>rita</span>
+                                                                can be used as datum for a system of equations, a solution of a PDE defined at nodes, etc.<br>
+                                                                A vector can be defined by one of the three methods:
+                                                                <ul>
+                                                                    <li>By calculator. For instance, the command<br>
+                                                                        <span class=var>v = {1.0,-1.2,2.3}</span><br>
+                                                                        defines a <i>row</i> vector with dimension 3, with given components.</li>
+                                                                    <li>From a solver. For instance when defining a partial differential equation,
+                                                                        declaring a variable name defines it as a vector in <span class="logo">rita</span>
+                                                                        and size it.</li>
+                                                                    <li>By using the present command which defined a <i>column</i> vector.</li>
+                                                                </ul>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>vector&ensp;[name=&lt;nm&gt;]&ensp;[size=&lt;n&gt; | grid=&lt;g&gt; | mesh=&lt;m&gt;]&ensp;[file=&lt;f&gt;]&ensp;</span><br>
+                                                                We note that all arguments are optional but at least one argument is mandatory.
+                                                                <table border="0">
+                                                                    <tr>
+                                                                        <td valign="top" width="6%"><span class=var>nm</span></td>
+                                                                        <td valign="top">Name of (column) vector. This argument is optional.</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td valign="top"><span class=var>n</span></td>
+                                                                        <td valign="top">Size of vector when this one is defined by its size.</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td valign="top"><span class=var>g</span></td>
+                                                                        <td valign="top">A vector can be associated to a grid. In this case, its size is the total
+                                                                            number Size of vector when this one is defined by its size. For this purpose,
+                                                                            <span class=var>g</span> is the grid name, assumed to be defined already.</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td valign="top"><span class=var>m</span></td>
+                                                                        <td valign="top">A vector can be associated to a mesh.
+                                                                            In this case <span class=var>m</span> is the mesh name, assumed to be defined already.</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td valign="top"><span class=var>f</span></td>
+                                                                        <td valign="top">Name of a file from which vector contents are read. The vector
+                                                                            must have the <span class=logo>ofeli</span> format</span>.</td>
+                                                                     </tr>
+                                                                </table>
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="matrix">
+                                                                Command <span class=vvar>matrix</span> enables defining a matrix.<br>
+                                                                A matrix can be defined by one of the three methods:
+                                                                <ul>
+                                                                    <li>By calculator. For instance, the command<br>
+                                                                        <span class=var>M = matrix(2,3)</span><br>
+                                                                        defines a 2x3-matrix initialized by <span class=var>0</span>. Once declared, an entry of the matrix
+                                                                        can be given for instance by<br>
+                                                                        <span class=var>M[0,2]=5</span><br>
+                                                                        Note that the first row, first column entry is <span class=var>M[0,0]</span>,
+                                                                        and generally the <span class=var>n</span>-th row, <span class=var>m</span> -th column entry
+                                                                        is <span class=var>M[n-1,m-1]</span>.</li>
+                                                                    <li>By using the present command.</li>
+                                                                </ul>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>matrix&ensp;[name=&lt;nm&gt;]&ensp;[file=&lt;f&gt;]&ensp;[nr=&lt;n1&gt;]&ensp;[nc=&lt;n2&gt;]</span><br>
+                                                                We note that all arguments are optional but at least one argument is mandatory.
+                                                                <table border="0">
+                                                                    <tr>
+                                                                        <td valign="top" width="6%"><span class=var>nm</span></td>
+                                                                        <td valign="top">Name of matrix. This argument is optional.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>f</span></td>
+                                                                        <td valign="top">Name of a file containing the matrix. This file must and XML file
+                                                                            as defined in <span class=logo>ofeli</span>.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>n1</span></td>
+                                                                        <td valign="top">Number of rows of matrix.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>n2</span></td>
+                                                                        <td valign="top">Number of columns of matrix. If only the number of rows is given, the
+                                                                            matrix is a square one.</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="tabulation">
+                                                                Command <span class=vvar>tabulation</span> enables reading a tabulated function from a file.<br>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>tabulation&ensp;&lt;f&gt</span><br>
+                                                                where <span class=var>f</span> is the file name, in <span class=logo>ofeli</span> format.
+                                                            </section></li>
+
+                                                            <!-- ++++++ -->
+                                                            <li><section class="rita-text" data-section="mesh">
+                                                                Command <span class=vvar>mesh</span> builds a finite element mesh.<br>
+                                                                A finite element mesh is the discretization of the
+                                                                physical domain where the process to study takes place. This means partitioning the domain (1-D, 2-D or 3-D) into specific
+                                                                subdomains. More commonly, intervals in 1-D, triangles or quadrilaterals in 2-D, 
+                                                                and tetrahedra, hexahedra or pentahedra in 3-D.<br>
+                                                                <span class=logo>rita</span> does not contain a powerful mesh generator. We use a simple 2-D generator issued from the 
+                                                                <a href="http://ofeli.org">ofeli</a> library. For unstructuerd 2-D and 3-D meshes 
+                                                                <span class=logo>rita</span> uses the open source mesh generator <a href="http://gmsh.info">Gmsh</a>.
+                                                                For this, it is highly recommended to install <span class=logo>rita</span> and <span class=var>Gmsh</span>. 
+                                                                The purpose of command <span class=var>mesh</span> is to prepare data for 
+                                                                <span class=var>Gmsh</span> and generate the mesh. Once the command <span class=var>mesh</span>
+                                                                is entered, the following subcommands are available:<br>
+                                                                <span class=var><a href="#help-mesh">help or ?</a>,
+                                                                <a href="#1d">1d</a>,
+                                                                <a href="#rectangle">rectangle</a>,
+                                                                <a href="#cube">cube</a>,
+                                                                <a href="#point">point</a>,
+                                                                <a href="#curve">curve</a>,
+                                                                <a href="#surface">surface</a>,
+                                                                <a href="#volume">volume</a>,
+                                                                <a href="#contour">contour</a>,
+                                                                <a href="#code">code</a>,
+                                                                <a href="#generate">generate</a>,
+                                                                <a href="#nbdof">nbdof</a>,
+                                                                <a href="#list">list</a>,
+                                                                <a href="#plot">plot</a>,
+                                                                <a href="#clear">clear</a>,
+                                                                <a href="#save">save</a>,
+                                                                <a href="#read-mesh">read</a></span>
+                                                                <ul>
+                                                                    <li><a name="1d"></a>Keyword <span class=var>1d</span> constructs a 1-D mesh of an interval:<br>
+                                                                        <span class=cmd>1d&ensp;[domain=&lt;m&gt;,&lt;M&gt;]&ensp;[ne=&lt;n&gt;]&ensp;[codes=&lt;c1&gt;,&lt;c2&gt;]
+                                                                        &ensp;[nbdof=&lt;d&gt;]</span>
+                                                                        <table border="0">
+                                                                            <tr>
+                                                                               <td valign="top" width="8%"><span class=var>m, M</span></td>
+                                                                               <td valign="top">Extremal coordinates of interval ends.
+                                                                                The default values are <span class=var>0., 1.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>n</span></td>
+                                                                                <td valign="top">Number of elements in the interval. Its default value is
+                                                                                    <span class=var>10</span>.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>c1, c2</span></td>
+                                                                                <td valign="top">Codes associated to the first and the last node. These integer
+                                                                                    values are necessary to enforce boundary conditions. A code <span class=var>0</span> (Default value)
+                                                                                    means no condition to prescribe.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>d</span></td>
+                                                                                <td valign="top">Number of degrees of freedom associated to any generated node.
+                                                                                    Default value is <span class=var>1</span>.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </li>
+                                                                    <li><a name="rectangle"></a>Keyword <span class=var>rectangle</span> constructs a 2-D mesh of a rectangle:<br>
+                                                                        <span class=cmd>rectangle&ensp;[min=&lt;mx&gt;,&lt;my&gt;]&ensp;[max=&lt;Mx&gt;,&lt;My&gt;]&ensp;[ne=&lt;nx&gt;,&lt;ny&gt;]
+                                                                        &ensp;[codes=&lt;c1&gt;&lt;c2&gt;&lt;c3&gt;&lt;c4&gt;]&ensp;[nbdof=&lt;d&gt;]</span>
+                                                                        <table border="0">
+                                                                            <tr>
+                                                                               <td valign="top" width="14%"><span class=var>mx, my</span></td>
+                                                                               <td valign="top">Coordinates of the lower left corner of the rectangle.
+                                                                                The default values are <span class=var>0., 0.</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>Mx, My</span></td>
+                                                                                <td valign="top">Coordinates of the upper right corner of the rectangle.
+                                                                                    The default values are <span class=var>1., 1.</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>nx, ny</span></td>
+                                                                                <td valign="top">is the number of elements in x and y direction respectively. Their
+                                                                                    default value is <span class=var>10</span>.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>c1, c2, c3, c4</span></td>
+                                                                                <td valign="top">Codes associated to the nodes generated on the lines
+                                                                                    <span class=var>y=my</span>, <span class=var>x=Mx</span>, <span class=var>y=My</span>, 
+                                                                                    <span class=var>x=mx</span> respectively. These integer
+                                                                                    values are necessary to enforce boundary conditions. A code <span class=var>0</span> (Default value)
+                                                                                    means no condition to prescribe.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>d</span></td>
+                                                                                <td valign="top">Number of degrees of freedom associated to any generated node.
+                                                                                    Default value is <span class=var>1</span>.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </li>
+                                                                    <li><a name="cube"></a>Keyword <span class=var>cube</span> constructs a 3-D mesh of a
+                                                                        cube-like domain:<br>
+                                                                        <span class=cmd>cube&ensp;[min=&lt;mx&gt;&lt;my&gt;&lt;mz&gt;]&ensp;[max=&lt;Mx&gt;&lt;My&gt;&lt;Mz&gt;]
+                                                                        &ensp;[ne=&lt;nx&gt;&lt;ny&gt;&lt;nz&gt;]<br>
+                                                                        &ensp;&ensp;&ensp;&ensp;[codes=&lt;cxm&gt;,&lt;cxM&gt;,&lt;cym&gt;,&lt;cyM&gt;,&lt;czm&gt;,&lt;czM&gt;]&ensp;[nbdof=&lt;d&gt;]</span>
+                                                                        <table border="0">
+                                                                            <tr>
+                                                                               <td valign="top" width="32%"><span class=var>mx, my, mz</span></td>
+                                                                               <td valign="top">Minimal coordinates in each direction.
+                                                                                The default values are <span class=var>0., 0., 0.</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>Mx, My, Mz</span></td>
+                                                                                <td valign="top">Maximal coordinates in each direction.
+                                                                                    The default values are <span class=var>1., 1., 1.</span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>nx, ny, nz</span></td>
+                                                                                <td valign="top">Number of elements in x, y and z direction respectively. Their
+                                                                                    default values are <span class=var>10</span>.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>cxm, cxM, cym, cyM, czm, czM</span></td>
+                                                                                <td valign="top">Codes associated to the nodes generated on 
+                                                                                    the face <span class=var>x=mx</span>, <span class=var>x=Mx</span>, 
+                                                                                    <span class=var>y=my</span>, <span class=var>y=My</span>, <span class=var>z=mz</span>, 
+                                                                                    <span class=var>z=Mz</span> respectively. These integer values are necessary to enforce boundary 
+                                                                                    conditions. A code <span class=var>0</span> (Default value) means no condition to prescribe.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>d</span></td>
+                                                                                <td valign="top">Number of degrees of freedom associated to any generated node.
+                                                                                    Default value is <span class=var>1</span></td>
+                                                                            </tr>
+                                                                         </table>
+                                                                        </li>
+                                                                    <li><a name="point"></a>Keyword <span class=var>point</span> defines a point (vertex) in a polygonal 
+                                                                        or polyhedral domain:<br>
+                                                                        <span class=cmd>point&ensp;label=&lt;n&gt;&ensp;coord=&lt;x&gt;[,&lt;y&gt;,&lt;z&gt;]&ensp;size=&lt;h&gt;</span>
+                                                                        <table border="0">
+                                                                            <tr>
+                                                                               <td valign="top" width="8%"><span class=var>n</span></td>
+                                                                               <td valign="top">Point's label.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>x, y, z</span></td>
+                                                                                <td valign="top">Point coordinates. If <span class=var>y</span> and/or 
+                                                                                    <span class=var>z</span> are not given, their value is set to <span class=var>0</span>. This can be
+                                                                                    the case for 1-D and 2-D.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>h</span></td>
+                                                                                <td valign="top">Mesh size around the point.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </li>
+                                                                    <li><a name="curve"></a>Keyword <span class=var>curve</span> defines a curve (or line):<br>
+                                                                        <span class=cmd>curve&ensp;label=&lt;n&gt;&ensp;[line=&lt;n1&gt;,&lt;n2&gt;]&ensp;[circle=&lt;n1&gt;,&lt;n2&gt;,&lt;n3&gt;]</span><br>
+                                                                        Here the second and the third argument are exclusive.
+                                                                        <table border="0">
+                                                                            <tr>
+                                                                               <td valign="top" width="12%"><span class=var>n</span></td>
+                                                                               <td valign="top">Label of curve.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>n1, n2</span></td>
+                                                                                <td valign="top">Labels of points defining a line.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>n1, n2, n3</span></td>
+                                                                                <td valign="top">Labels of points defining a circular arc, 
+                                                                                    <span class=var>n1</span> and <span class=var>n2</span> are the two points defining the 
+                                                                                    extremities of the arc and <span class=var>n3</span> is the point defining the center 
+                                                                                    of the circular arc.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </li>
+                                                                    <li><a name="contour"></a>Keyword <span class=var>contour</span> defines a contour as an assembly of curves:<br>
+                                                                        <span class=cmd>contour&ensp;label=&lt;n&gt;&ensp;curve=&lt;c1&gt;,&lt;c2&gt;,...</span>
+                                                                        <table border="0">
+                                                                            <tr>
+                                                                                <td valign="top" width="22%"><span class=var>n</span></td>
+                                                                                <td valign="top">Label of contour.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                               <td valign="top"><span class=var>c1, c2, ...</span></td>
+                                                                               <td valign="top">Labels of curves defining the contour.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </li>
+                                                                    <li><a name="surface"></a>Keyword <span class=var>surface</span> defines a surface as delimited by curves:<br>
+                                                                        <span class=cmd>surface&ensp;label=&lt;n&gt;&ensp;contours=&lt;c1&gt;,&lt;c2&gt;,...</span>
+                                                                        <table border="0">
+                                                                            <tr>
+                                                                                <td valign="top" width="22%"><span class=var>n</span></td>
+                                                                                <td valign="top">Label of surface.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                               <td valign="top"><span class=var>c1, c2, ...</span></td>
+                                                                               <td valign="top">Labels of contours defining the surface.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </li>
+                                                                    <li><a name="volume"></a>Keyword <span class=var>volume</span> is under development.</li>
+                                                                    <li><a name="code"></a>Keyword <span class=var>code</span> enables assigning codes to various entities 
+                                                                        of the geometry, and then of the generated mesh:<br>
+                                                                        <span class=cmd>code&ensp;value=&lt;v&gt;&ensp;[points=&lt;p1&gt;,&lt;p2&gt;,... | curves=&lt;c1&gt;,&lt;c2&gt;,... | 
+                                                                        surfaces=&lt;s1&gt;,&lt;s2&gt;,... | volumes=&lt;v1&gt;,&lt;v2&gt;,...]&ensp;</span><br>
+                                                                        Here above, exactly one list must be given: points, curves, surfaces or volumes.
+                                                                        <table border="0">
+                                                                            <tr>
+                                                                                <td valign="top" width="22%"><span class=var>v</span></td>
+                                                                                <td valign="top">Code value (integer) to assign to an entity.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>p1, p2, ...</span></td>
+                                                                                <td valign="top">Points to which the code <span class=var>v</span> is assigned.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>c1, c2, ...</span></td>
+                                                                                <td valign="top">Curves to which the code <span class=var>v</span> is assigned.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>s1, s2, ...</span></td>
+                                                                                <td valign="top">surfaces to which the code <span class=var>v</span> is assigned.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td valign="top"><span class=var>v1, v2, ...</span></td>
+                                                                                <td valign="top">Volumes to which the code <span class=var>v</span> is assigned.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </li>
+                                                                    <li><a name="nbdof"></a>Keyword <span class=var>nbdof</span> enables generating a finite element mesh 
+                                                                        using the constructed geometry:<br>
+                                                                        <span class=var>nbdof&ensp;n</span><br>
+                                                                        <span class=var>n</span> is the number of degrees for freedom for each support of degrees of
+                                                                        freedom (<it>e.g.</it> nodes). The default value is <span class=var>1</span>.</li>
+                                                                    <li><a name="list"></a>Keyword <span class=var>list</span> outputs a list of all generated entities in mesh.</li>
+                                                                    <li><a name="generate"></a>Keyword <span class=var>generate</span> enables generating a finite element mesh 
+                                                                        using the constructed geometry.</li>
+                                                                    <li><a name="clear"></a>Keyword <span class=var>clear</span> erases all constructed material since the 
+                                                                        beginning of geometry description.</li>
+                                                                    <li><a name="save"></a>Keyword <span class=var>save</span> saves the generated mesh in a file:<br>
+                                                                        <span class=var>save&ensp;file</span><br>
+                                                                        <span class=var>file</span> is the name of the file in which the mesh is stored.</li>
+                                                                    <li><a name="read-mesh"></a>Keyword <span class=var>read</span> reads an already existing mesh from a file:<br>
+                                                                        <span class=var>read&ensp;file</span><br>
+                                                                        <span class=var>file</span> is the name of the file in which the mesh is read.</li>
+                                                                </ul>
+                                                            </section></li>
+
+                                                            <!-- ++++++ -->
+                                                            <li><section class="rita-text" data-section="grid">
+                                                                <span class=vvar>grid</span>: Constructs a uniform grid of an interval (in 1-D),
+                                                                a rectangle (in 2-D) or a cube (in 3-D):<br>
+                                                                <span class=cmd>grid&ensp;[name=&lt;nm&gt;]&ensp;x=&lt;mx&gt;,&lt;Mx&gt;&ensp;[y=&lt;my&gt;,&lt;My&gt;[z=&lt;mz&gt;,&lt;Mz&gt;]]&ensp;
+                                                                    [ne=&lt;nx&gt;[,&lt;ny&gt;,&lt;nz&gt;]]</span>
+                                                                <table border="0">
+                                                                    <tr>
+                                                                       <td valign="top" width="12%"><span class=var>nm</span></td>
+                                                                       <td valign="top">Name of grid. This argument is optional.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>mx, my, mz</span></td>
+                                                                        <td valign="top">Minimal value of the intervals: The gridded domain is 
+                                                                            defined by <span class=var>(mx,Mx)*(my,My)*(mz,Mz)</span>. If the parameters 
+                                                                            <span class=var>my</span> and <span class=var>mz</span> are absent, the domain is the 
+                                                                            interval <span class=var>(mx,Mx)</span> and if only <span class=var>mz</span> is absent, 
+                                                                            the domain is the rectangle <span class=var>(mx,Mx)*(my,My)</span>.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>Mx, My, Mz</span></td>
+                                                                        <td valign="top">Maximal value of the intervals: The gridded domain is 
+                                                                            defined by <span class=var>(mx,Mx)*(my,My)*(mz,Mz)</span>. If the parameters 
+                                                                            <span class=var>My</span> and <span class=var>Mz</span> are absent, the domain is the 
+                                                                            interval <span class=var>(m1,M1)</span> and if only <span class=var>Mz</span> is absent, 
+                                                                            the domain is the rectangle <span class=var>(mx,Mx)*(my,My)</span>.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>nx, ny, nz</span></td>
+                                                                        <td valign="top">Subdivision of the grid, <span class=var>nx</span> 
+                                                                            (resp. <span class=var>ny</span>, <span class=var>nz</span>) is the
+                                                                            number of intervals in the x (resp. y, z) direction. The default value of these parameters
+                                                                            is <span class=var>10</span>.</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="function">
+                                                                Command <span class=vvar>function</span> enables defining a function by its analytical expression.<br>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>function&ensp;[name=&lt;nm&gt;]&ensp;var=&lt;v&gt;&ensp;[nb=&lt;n&gt;]&ensp;
+                                                                definition=&lt;d&gt;</span><br>
+                                                                <table border="0">
+                                                                    <tr>
+                                                                        <td valign="top" width="6%"><span class=var>nm</span></td>
+                                                                        <td valign="top">Name of function. This argument is optional, but a name of a function is the only way to retrieve it.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>v</span></td>
+                                                                        <td valign="top">Name of variable. In the case of a multivariable function, the name of variables is defined by <span class=var>v1, v2, ...</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>n</span></td>
+                                                                        <td valign="top">Number of variables. By default this value is <span class=var>1</span>.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>d</span></td>
+                                                                        <td valign="top">String defining an expression of the function definition. If the string must contain
+                                                                            blank spaces, it must enclosed in <span class=var>"</span>. This argument is mandatory.</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="sample">
+                                                                Command <span class=vvar>sample</span> enables sampling a function <i>i.e.</i> defining its value on a given grid
+                                                                or mesh. The user must provide each a number of sampling points, a grid or a mesh. In the first cas, a grid is 
+                                                                automatically created.<br> Synopsis:<br>
+                                                                <span class=cmd>sample&ensp;function=&lt;f&gt;&ensp;[nb=&lt;nx&gt;[,&lt;ny&gt;,&lt;nz&gt;]]&ensp;[x=&lt;mx&gt;,&lt;Mx&gt;]&ensp;
+                                                                [y=&lt;my&gt;,&lt;My&gt;]&ensp;[z=&lt;mz&gt;,&lt;Mz&gt;]&ensp;[grid=&lt;g&gt;]&ensp;|&ensp;[mesh=&lt;ms&gt;]&ensp;[vector=&lt;v&gt;]</span><br>
+                                                                <div class="args">
+                                                                <table border="0">
+                                                                    <tr>
+                                                                       <td valign="top" width="10%"><span class=var>f</span></td>
+                                                                       <td valign="top">Name of a defined function. This argument is mandatory.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>nx</span></td>
+                                                                        <td valign="top">Number of sampling points in the x-direction</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>ny</span></td>
+                                                                        <td valign="top">Number of sampling points in the y-direction if this is a 2-D or 3-D case</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>nz</span></td>
+                                                                        <td valign="top">Number of sampling points in the z-direction if this is a 3-D case</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                       <td valign="top"><span class=var>mx, Mx</span></td>
+                                                                       <td valign="top">Minimum and maximum coordinates in the x-direction</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>my, My</span></td>
+                                                                        <td valign="top">Minimum and maximum coordinates in the y-direction if this is a 2-D or 3-D case</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>mz, Mz</span></td>
+                                                                        <td valign="top">Minimum and maximum coordinates in the z-direction if this is a 3-D case</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                       <td valign="top"><span class=var>g</span></td>
+                                                                       <td valign="top">Name of a defined grid on which the function <span class=var>f</span>
+                                                                       is evaluated. The number of variables must be at least equal to the space dimension.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                       <td valign="top"><span class=var>ms</span></td>
+                                                                       <td valign="top">Name of a defined mesh on which the function <span class=var>f</span>
+                                                                       is evaluated. The number of variables must be at least equal to the space dimension.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                       <td valign="top"><span class=var>v</span></td>
+                                                                       <td valign="top">Name of the vector to create that contains the sampling. This argument is mandatory.</td>
+                                                                    </tr>
+                                                                </table>
+                                                                </div>
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="plot">
+                                                                Command <span class=vvar>plot</span> enables plotting various types of data.<br>Synopsis:<br>
+                                                                <span class=cmd>plot&ensp;[function=&lt;f&gt; | tabulation=&lt;t&gt; | vector=&lt;v&gt; | 
+                                                                history=&lt;h&gt; | mesh=&lt;ms&gt;]&ensp;[x=&lt;m&gt;,&lt;Mx&gt;]&ensp;[y=&lt;my&gt;,&lt;My&gt;]<br>
+                                                                &ensp;&ensp;&ensp;&ensp;[log=&lt;lx&gt;,&lt;ly&gt;]&ensp; 
+                                                                [titre=&lt;ti&gt;]&ensp;[label=&lt;l&gt;]&ensp;[use=&lt;u&gt;]&ensp;[component=&lt;c&gt;]
+                                                                </span>
+                                                                <div class="args">
+                                                                    <table border="0">
+                                                                    <tr>
+                                                                       <td valign="top" width="10%"><span class=var>f</span></td>
+                                                                       <td valign="top">Function name to plot. Note that only one-variable functions can be
+                                                                        plotted with this argument.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>t</span></td>
+                                                                        <td valign="top">Name of tabulation to plot.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>v</span></td>
+                                                                        <td valign="top">Vector name to plot. Only vectors associated to a mesh can be plotted.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>h</span></td>
+                                                                        <td valign="top">Name of history vector to plot. If vector contains more than one value 
+                                                                            per time step to plot, the first component is plotted. Otherwise, a value of the argument
+                                                                            <span class=var>component</span> must be specified.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>ms</span></td>
+                                                                        <td valign="top">Mesh to plot.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>mx, Mx</span></td>
+                                                                        <td valign="top">Minimum and maximum value for the x-axis. This argument is useful for 
+                                                                        the case of graph of a function only.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>my, My</span></td>
+                                                                        <td valign="top">Minimum and maximum value for the y-axis. This argument is useful for 
+                                                                        the case of graph of a function only.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>lx, ly</span></td>
+                                                                        <td valign="top">Switches (0 or 1) to choose a logarithmic scale for the x and axes respectively.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>ti</span></td>
+                                                                        <td valign="top">Title of plot.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>l</span></td>
+                                                                        <td valign="top">Label of curve.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>u</span></td>
+                                                                        <td valign="top">Software for plotting. Must be <span class=var>gnuplot</span>
+                                                                        (Default), or <span class=var>gmsh</span> if available.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>c</span></td>
+                                                                        <td valign="top">Component label to plot for a vector with multiple components at each 
+                                                                        abcissa value (Default: 1).</td>
+                                                                    </tr>
+                                                                </table>
+                                                                </div>
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="hist">
+                                                                Command <span class=vvar>history</span> enables choosing a vector to store in a history vector.<br>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>history&ensp;&lt;v&gt;&ensp;&lt;h&gt;</span><br>
+                                                                It means that each time step (according to a frequency setting) is performed in a calculation, the vector
+                                                                with name <span class=var>v</span> will be added to the history vector <span class=var>h</span>.
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="data">
+                                                                Command <span class=vvar>data</span> has no argument. It displays
+                                                                all defined data and entities.
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="list">
+                                                                Command <span class=vvar>list</span> is useful to output a chosen type or entity.<br>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>list&ensp;&lt;s&gt;</span><br>
+                                                                where <span class=var>s</span> must be one of the values:<br>
+                                                                <span class=var>param</span>, <span class=var>grid</span>, <span class=var>mesh</span>,
+                                                                <span class=var>vect</span>, <span class=var>hvect</span>, <span class=var>funct</span>,
+                                                                <span class=var>tab</span>, <span class=var>matrices</span>, <span class=var>ls</span>,
+                                                                <span class=var>algebraic</span>,
+                                                                <span class=var>ode</span>, <span class=var>pde</span>, <span class=var>optimization</span>,
+                                                                <span class=var>eigen</span>.
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="remove">
+                                                                Command <span class=vvar>remove</span> enables removing a given data or entity. Note that
+                                                                no memory is released when removing but the entity cannot be used any more after removing,
+                                                                and its name can be used for another datum.<br>Synopsis:<br>
+                                                                <span class=cmd>remove&ensp;&lt;name&gt;</span><br>
+                                                                where the argument is the name of the entity to remove.
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="rename">
+                                                                Command <span class=vvar>rename</span> enables changing a data or an entity name.<br>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>rename&ensp;&lt;n1&gt;&ensp;&lt;n2&gt;</span><br>
+                                                                where <span class=var>n1</span> is the old name and <span class=var>n2</span>
+                                                                is the new one.
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="description">
+                                                                Command <span class=vvar>description</span> enables defining a string as a description of any given data or entity.<br>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>description &ensp;&lt;s&gt;</span><br>
+                                                                where <span class=var>s</span> is the string defining the description.
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="=">
+                                                                Command <span class=vvar>=</span> or <span class=vvar>print</span> is useful to output a chosen data or 
+                                                                entity. The command<br>
+                                                                <span class=cmd>=&ensp;&lt;s&gt;</span><br>
+                                                                outputs the entity <span class=var>s</span>.
+                                                            </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="save">
+                                                                Command <span class=vvar>save</span> enables saving a datum or entity in a specified file.<br>
+                                                                Synopsis:<br>
+                                                                <span class=cmd>save&ensp;name=&lt;nm&gt;&nbsp;file=&lt;f&gt;&nbsp;[format=&lt;fo&gt;]&ensp;[every=&lt;e&gt;]</span><br>
+                                                                <table border="0">
+                                                                    <tr>
+                                                                        <td valign="top" width="6%"><span class=var>nm</span></td>
+                                                                        <td valign="top">Name of data. Note that only vectors, matrices, history vectors, meshes or grids can be
+                                                                            saved in files.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>f</span></td>
+                                                                        <td valign="top">File name where data are to ne saved..</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>fo</span></td>
+                                                                        <td valign="top">Format of file. This format is to be chosen among the values: <span class=logo>ofeli</span>,
+                                                                            <span class=var>gnuplot</span>, <span class=var>vtk</span>, <span class=var>tecplot</span>,
+                                                                            <span class=var>matlab</span>. Note that all formats are not available for all data. The default is 
+                                                                            the <span class=logo>ofeli</span> format.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>e</span></td>
+                                                                        <td valign="top">Frequency of saving data for the case of history
+                                                                            vector saving. The default value is <span class=var>1</span>.</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </section></li>
+                                                        </ul>
+                                                    </section></li>
+
+                                                    <!-- ******************************************************************** -->
+                                                    <p></p>
+                                                    <li><section class="rita-text" data-section="solver"><h3>Solver commands</h3>
+                                                        Here is the list of available solver commands:<br>
+                                                        <span class=var><a href="#algebraic">algebraic</a>,
+                                                        <a href="#ode">ode</a>,
+                                                        <a href="#pde">pde</a>,
+                                                        <a href="#optimization">optim</a>,
+                                                        <a href="#eigen">eigen</a>,
+                                                        <a href="#integration">integration</a>,
+                                                        <a href="#approximation">approximation</a></span>,
+                                                        <a href="#solve">solve</a></span>,
+                                                        <ul>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="algebraic">
+                                                                <a name="algebraic"></a>
+                                                                Command <span class=vvar>algebraic</span> defines an algebraic equation (or system of equations) to solve
+                                                                by a numerical method. It can be given either by a short or an extended form.<br>
+                                                                In its short version the command synopsis is:<br>
+                                                                <span class=cmd>algebraic&ensp;[size=&lt;n&gt;]&ensp;[function=&lt;f&gt; | definition=&lt;d&gt;]&ensp;[var=&lt;x&gt;]&ensp;
+                                                                [nls=&lt;m&gt;]</span>
+                                                                <table border="0">
+                                                                    <tr>
+                                                                        <td valign="top" width="5%"><span class=var>n</span></td>
+                                                                        <td valign="top">Size of the system of algebraic equations. Default size is 
+                                                                            <span class=var>1</span>.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>f</span></td>
+                                                                        <td valign="top">Name of an already defined function (Functions can be defined in <a href="#data">data</a>).
+                                                                            For a system, this argument must be repeated as many 
+                                                                            times as the number of equations.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>d</span></td>
+                                                                        <td valign="top">Expression defining a function. For a system, this argument must be repeated as many times 
+                                                                            as the number of equations.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>x</span></td>
+                                                                        <td valign="top">Name of the variable. If the size is greater than 1 (a system),
+                                                                            the unknowns are <span class=var>x1, x2, ...</span><br>
+                                                                            This argument is unnecessary in the case where a defined function is used (The variable name is the one of that function),
+                                                                            but mandatory otherwise.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>m</span></td>
+                                                                        <td valign="top">Iterative method to solve the system. This is a string to choose 
+                                                                            among the values <span class=var>bisection, regula-falsi, secant, newton</span>. Note that
+                                                                            the methods <span class=var>bisection</span> and <span class=var>regula-falsi</span> are
+                                                                            to be used for the case of a unique equation. The default method is 
+                                                                            <span class=var>newton</span>.</td>
+                                                                    </tr>
+                                                                </table>
+                                                                <p>In its extended version, the command <span class=var>algebraic</span> has no arguments, but rather 
+                                                                initiates a submenu with the available keywords:<br>
+                                                                <span class=var>size, function, definition, jacobian, init, variable, nls</span>
+                                                                <ul>
+                                                                    <li><span class=cmd>size&ensp;&lt;n&gt;</span><br>
+                                                                        <span class=var>n</span> is the algebraic system's size. The default value is
+                                                                        <span class=var>n=1</span>.</li>
+                                                                    <li><span class=cmd>function&ensp;&lt;s&gt;</span><br>
+                                                                        <span class=var>s</span> is a string giving the name of an existing function
+                                                                        (Functions can be defined in <a href="#data">data</a>).
+                                                                        For a system, this argument must be repeated as many times as the number of equations.</li>
+                                                                    <li><span class=cmd>definition&ensp;&lt;s&gt;</span><br>
+                                                                        <span class=var>s</span> is a string defining analytically a function.
+                                                                        Note that if the string contains blank spaces it must be surrounded by
+                                                                        <span class=var>"</span>. For a system, this argument must be repeated as many times 
+                                                                        as the number of equations.</li>
+                                                                    <li><span class=cmd>jacobian&ensp;&lt;y1&gt;&ensp;&lt;y2&gt;&ensp;&lt;y3&gt;&ensp;...</span><br>
+                                                                        <span class=var>y1, y2, ...</span> are the partial derivatives of a function of the system.
+                                                                        The keyword <span class=var>jacobian</span> must be called for each function of the system in
+                                                                        their natural order. By default the values of the jacobian are computed analytically from the
+                                                                        expression of the functions.</li>
+                                                                    <li><span class=cmd>init&ensp;&lt;y1&gt;&ensp;&lt;y2&gt;&ensp;&lt;y3&gt;&ensp;...</span><br>
+                                                                        <span class=var>y1, y2, ...</span> are initial guesses of the solution components.</li>
+                                                                    <li><span class=cmd>variable&ensp;&lt;x&gt;</span><br>
+                                                                        <span class=var>x</span> is the name of the variable (or vector).
+                                                                        This keyword is mandatory if the keyword 
+                                                                        <span class=var>definition</span> is used. If the size of the system is greater than 
+                                                                        <span class=var>1</span>, the unknowns are necessarily <span class=var>x1, x2, ...</span></li>
+                                                                    <li><span class=cmd>nls&ensp;&lt;s&gt;</span><br>
+                                                                        <span class=var>s</span> is a string defining an iterative method to solve
+                                                                        the nonlinear system. The default value is <span class=var>newton</span>. 
+                                                                        The string <span class=var>s</span> is to be chosen 
+                                                                        among the values <span class=var>bisection, regula-falsi, secant, newton</span>. Note that
+                                                                        the methods <span class=var>bisection</span> and <span class=var>regula-falsi</span> are
+                                                                        to be used for the case of a unique equation.</li>
+                                                                </ul></p>
+                                                                </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="ode">
+                                                                <a name="ode"></a>
+                                                                Command <span class=vvar>ode</span> defines an ordinary differential equation (or system of ordinary 
+                                                                differential equations) to solve by a numerical method. It can be given either by a short or
+                                                                an extended form.
+                                                                <p>In its short version the command synopsis is:<br>
+                                                                <span class=cmd>ode&ensp;[size=&lt;n&gt;]&ensp;[function=&lt;f&gt; | definition=&lt;d&gt;]&ensp;[var=&lt;x&gt;]&ensp;
+                                                                [initial=&lt;v1&gt;,&lt;v2&gt;,...]&ensp;[final-time=&lt;ft&gt;]&ensp;[time-step=&lt;ts&gt;]<br>
+                                                                &ensp;&ensp;&ensp;&ensp;[scheme=&lt;s&gt;]</span></p>
+                                                                <table border="0">
+                                                                    <tr>
+                                                                        <td valign="top" width="10%"><span class=var>n</span></td>
+                                                                        <td valign="top">Size of the system of ode's. Default size is 
+                                                                            <span class=var>1</span>.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>f</span></td>
+                                                                        <td valign="top">Name of an already defined function (Functions can be defined in <a href="#data">data</a>).
+                                                                            For a system, this argument must be repeated as many 
+                                                                            times as the number of differential equations.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>d</span></td>
+                                                                        <td valign="top">Expression defining a function. For a system, this argument must be repeated as many times 
+                                                                            as the number of differential equations.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>y</span></td>
+                                                                        <td valign="top">Name of the variable, other than the time variable, which is
+                                                                            necessarily <span class=var>t</span>. If the size is greater than <span class=var>1</span> (a system),
+                                                                            the unknowns are <span class=var>y1, y2, ...</span><br>
+                                                                            This argument is unnecessary in the case where a defined function is used (The variable name is the one of that function),
+                                                                            but mandatory otherwise</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>v1, v2, ...</span></td>
+                                                                        <td valign="top">Initial condition values.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>ft</span></td>
+                                                                        <td valign="top">Final (or maximal) time value. The default value of this parameter is 1.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>ts</span></td>
+                                                                        <td valign="top">Time step value. The default value of this parameter is 0.1.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td valign="top"><span class=var>s</span></td>
+                                                                        <td valign="top">Time integration scheme. This is a string to choose among the values: 
+                                                                            <span class=var>forward-euler</span>,
+                                                                            <span class=var>backward-euler</span>,
+                                                                            <span class=var>crank-nicolson</span>,
+                                                                            <span class=var>heun</span>,
+                                                                            <span class=var>newmark</span>,
+                                                                            <span class=var>leap-frog</span>,
+                                                                            <span class=var>AB2</span> (Adams-Bashforth, 2nd Order),
+                                                                            <span class=var>RK4</span> (Runge-Kutta, 4th Order),
+                                                                            <span class=var>RK3-TVD</span> (Runge-Kutta, 3rd order, TVD),
+                                                                            <span class=var>BDF2</span> (Backward Difference Formula, 2nd Order).
+                                                                            The default value for this argument is <span class=var>backward-euler</span>.</td>
+                                                                    </tr>
+                                                                </table>
+                                                                <p>In its extended version, the command <span class=var>ode</span> has no arguments, but rather, it 
+                                                                   initiates a submenu with the available keywords:<br>
+                                                                   <span class=var>size, function, definition, variable, jacobian, initial, final-time, time-step, 
+                                                                   scheme</span></p>
+                                                                <ul>
+                                                                    <li><span class=cmd>size&ensp;&lt;n&gt;</span><br>
+                                                                        <span class=var>n</span> is the ode system's size. The default value is
+                                                                        <span class=var>n=1</span>.</li>
+                                                                    <li><span class=cmd>function&ensp;&lt;s&gt;</span><br>
+                                                                        <span class=var>s</span> is a string giving the name of an existing function.
+                                                                        For a system, this argument must be repeated as many times as the number of equations.</li>
+                                                                    <li><span class=cmd>definition&ensp;&lt;s&gt;</span><br>
+                                                                        <span class=var>s</span> is a string defining analytically a function.
+                                                                        Note that if the string contains blank spaces it must be surrounded by
+                                                                        <span class=var>"</span>. For a system, this argument must be repeated as many times 
+                                                                        as the number of equations.</li>
+                                                                    <li><span class=cmd>jacobian&ensp;&lt;y1&gt;&ensp;&lt;y2&gt;&ensp;&lt;y3&gt;&ensp;...</span><br>
+                                                                        <span class=var>y1, y2, ...</span> are the partial derivatives of a function of the system.
+                                                                        The keyword <span class=var>jacobian</span> must be invoked for each function of the system in
+                                                                        their natural order. By default the values of the jacobian are computed analytically from the
+                                                                        expression of the functions.</li>
+                                                                    <li><span class=cmd>initial&ensp;&lt;y1&gt;&ensp;&lt;y2&gt;&ensp;&lt;y3&gt;&ensp;...</span><br>
+                                                                        <span class=var>y1, y2, ...</span> are initial guesses of the solution components.</li>
+                                                                    <li><span class=cmd>variable&ensp;&lt;y&gt;</span><br>
+                                                                        <span class=var>y</span> is the name of the variable (or vector) other than the time variable, which is
+                                                                        necessarily <span class=var>t</span>.
+                                                                        This keyword is mandatory if the keyword 
+                                                                        <span class=var>definition</span> is used. If the size of the system is greater than 
+                                                                        <span class=var>1</span>, the unknowns are necessarily <span class=var>y1, y2, ...</span></li>
+                                                                    <li><span class=cmd>scheme&ensp;&lt;s&gt;</span><br>
+                                                                        <span class=var>s</span> is a string defining Time integration scheme. This is a string to choose among the values: 
+                                                                        <span class=var>forward-euler</span>,
+                                                                        <span class=var>backward-euler</span>,
+                                                                        <span class=var>crank-nicolson</span>,
+                                                                        <span class=var>heun</span>,
+                                                                        <span class=var>newmark</span>,
+                                                                        <span class=var>leap-frog</span>,
+                                                                        <span class=var>AB2</span> (Adams-Bashforth, 2nd Order),
+                                                                        <span class=var>RK4</span> (Runge-Kutta, 4th Order),
+                                                                        <span class=var>RK3-TVD</span> (Runge-Kutta, 3rd order, TVD),
+                                                                        <span class=var>BDF2</span> (Backward Difference Formula, 2nd Order).
+                                                                        The default value for this argument is <span class=var>backward-euler</span>.</li>
+                                                                </ul>
+                                                                </section></li>
+
+                                                            <!-- ++++++ --><p></p>
+                                                            <li><section class="rita-text" data-section="pde">
+                                                                    <a name="pde"></a>
+                                                                    Command <span class=vvar>pde</span> defines a partial differential equation (or system of partial differential 
+                                                                    equations) to solve by a numerical method. Due to its long list of arguments, this command is available in extended
+                                                                    version only.<br>   
+                                                                    The command <span class=vvar>pde</span> has one argument:<br>
+                                                                    <span class=cmd>pde&ensp;&lt;eq&gt;</span><br>
+                                                                    <span class=var>eq</span> is a string defining the pde to solve. In the current release, the following pde's are
+                                                                    available:
+                                                                    <ul>
+                                                                        <li><span class=var>linear</span>: For the Laplace equation, with a right-hand side, in 1-D, 2-D and 3-D.</li>
+                                                                        <li><span class=var>laplace</span>: For the Laplace equation, with a right-hand side, in 1-D, 2-D and 3-D.</li>
+                                                                        <li><span class=var>heat</span>: For the heat equation, in 1-D, 2-D and 3-D.</li>
+                                                                        <li><span class=var>wave</span>: For the wave equation, in 1-D, 2-D and 3-D.</li>
+                                                                        <li><span class=var>linear-elasticity</span>: For linearized elasticity equations, in 2-D and 3-D.</li>
+                                                                        <li><span class=var>truss</span>: For the planar truss problem in structural mechanics.</li>
+                                                                        <li><span class=var>beam</span>: For the 3-D beam problem in structural mechanics.</li>
+                                                                        <li><span class=var>incompressible-navier-stokes</span>: For 2-D and 3-D transient incompressible Navier-Stokes equations.</li>
+                                                                    </ul>
+                                                                    Other equations are available but not sufficiently tested.<br>
+                                                                    Then a submenu is initialized with the available keywords:<br>
+                                                                    <span class=var>vector, coef, init, bc, bf, sf, space, ls</span>
+                                                                    <ul>
+                                                                        <li><span class=cmd>variable&ensp;&lt;u&gt;</span><br>
+                                                                            <span class=var>u</span> is a string defining a vector (vector of unknowns) for the equation. If the vector
+                                                                            has been defined already, this one will be used. If not, the new vector will be added to the list of vectors. This 
+                                                                            argument has to be given as many times as the equation requires it (<i>e.g.</i> Incompressible Navier-Stokes equations
+                                                                            need 2 vectors: velocity and pressure).</li>
+                                                                        <li><span class=cmd>coef&ensp;&lt;c&gt;&ensp;&lt;v&gt;</span><br>
+                                                                            To define various coefficients of the pde. These coefficients can be functions of position and time. Here
+                                                                            <span class=var>c</span> is the name of the coefficient and <span class=var>v</span> is a regular expression
+                                                                            defining a function of position <span class=var>x, y, z</span> and time <span class=var>t</span>. The 
+                                                                            coefficient are the physical properties involved in partial differential equations. These coefficients has
+                                                                            to be chosen among the values:<br>
+                                                                            <ul>
+                                                                                <li><span class=var>density</span> or <span class=var>rho</span>:
+                                                                                    This is involved in various pde's like the heat equation, fluid dynamics, ...</li>
+                                                                                <li><span class=var>Cp</span> or <span class=var>specific-heat</span>: Involved in thermal equations.</li>
+                                                                                <li><span class=var>kappa</span> or <span class=var>thermal-conductivity</span>: Involved in thermal equations.</li>
+                                                                                <li><span class=var>Mu</span> or <span class=var>magnetic-permeability</span>: Involved in electromagnetics.</li>
+                                                                                <li><span class=var>sigma</span> or <span class=var>electric-conductivity</span>: Involved in electromagnetics.</li>
+                                                                                <li><span class=var>mu</span> or <span class=var>viscosity</span>: Involved in fluid dynamics.</li>
+                                                                                <li><span class=var>epsilon</span> or <span class=var>electric-permittivity</span>: Involved in electromagnetics.</li>
+                                                                                <li><span class=var>omega</span> or <span class=var>angular-frequency</span>: Involved in time harmonic formulations.</li>
+                                                                                <li><span class=var>beta</span> or <span class=var>thermal-dilatation</span>: Involved in fluid dynamics.</li>
+                                                                                <li><span class=var>v</span> or <span class=var>velocity</span>: Involved in transport equations.</li>
+                                                                                <li><span class=var>young</span>: Involved in solid and structural mechanics.</li>
+                                                                                <li><span class=var>poisson</span>: Involved in solid and structural mechanics.</li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li><span class=cmd>init&ensp;value=&lt;v&gt;</span><br>
+                                                                            to prescribe an initial condition. Here <span class=var>v</span> is either a constant real number to assign to 
+                                                                            initial solution or a string defining a regular expression as function of <span class=var>x, y, z, t</span>, 
+                                                                            space and time coordinates.</li>
+                                                                        <li><span class=cmd>bc&ensp;code=&lt;c&gt;&ensp;value=&lt;v&gt;</span><br>
+                                                                            to prescribe a (Dirichlet) boundary condition. Here <span class=var>c</span> is the code for which the condition
+                                                                            is prescribed, <span class=var>v</span> is either a constant real number to prescribe or a string defining
+                                                                            a regular expression as function of <span class=var>x, y, z, t</span>, space and time coordinates.</li>
+                                                                        <li><span class=cmd>bf&ensp;value=&lt;v&gt;</span><br>
+                                                                            to define a source or body force term. Here <span class=var>v</span> is either a constant real number to assign to 
+                                                                            the right-hand side of the pde or a string defining a regular expression as function of 
+                                                                            <span class=var>x, y, z, t</span>, space and time coordinates.</li>
+                                                                        <li><span class=cmd>sf&ensp;code=&lt;c&gt;&ensp;value=&lt;v&gt;</span><br>
+                                                                            to prescribe a surface force (or a traction or a flux) term. Here <span class=var>c</span> is the code for which the 
+                                                                            condition on sides (edges or faces) is prescribed, <span class=var>v</span> is either a constant real number 
+                                                                            to prescribe or a string defining a regular expression as function of <span class=var>x, y, z, t</span>, space 
+                                                                            and time coordinates.</li>
+                                                                        <li><span class=cmd>space&ensp;&lt;m&gt;</span><br>
+                                                                            <span class=var>m</span> is the chosen space discretization method. This string is to be chosen among the
+                                                                            values: <span class=var>fd</span> (Finite Differences), <span class=var>feP1</span> (P<sub>1</sub> Finite Elements), 
+                                                                            <span class=var>feP2</span> (P<sub>2</sub> Finite Elements), <span class=var>feQ1</span> (Q<sub>1</sub> Finite
+                                                                            Elements), <span class=var>fv</span> (Finite Volumes). An error will be issued if the chosen method is not 
+                                                                            implemented in <span class=logo>ofeli</span>.</li>
+                                                                        <li><span class=cmd>ls&ensp;&lt;s&gt;&ensp;&lt;p&gt;</span><br>
+                                                                            <span class=var>s</span> is the solver of the resulting linear system. This string is to choose among the
+                                                                            values <span class=var>direct, cg, cgs, bicg, bicg-stab, gmres</span>. Moreover, <span class=var>p</span> is the
+                                                                            preconditioner if an iterative solver is chosen. This string is to pick among the values: 
+                                                                            <span class=var>ident, diag, dilu, ilu, ssor</span>.</li>
+                                                                        <li><span class=cmd>phase&ensp;&lt;p&gt;&ensp;[c]</span><br>
+                                                                                This sub-command enables computing phase of a particular component of solution and store it
+                                                                                in a history vector with name <span class=var>p</span>. The solution component is 
+                                                                                <span class=var>c</span>. It default value is <span class=var>1</span>.</li>
+                                                                        </ul>
+                                                                </section></li>
+
+                                                                <!-- ++++++ --><p></p>
+                                                                <li><section class="rita-text" data-section="optimization">
+                                                                    <a name="optimization"></a>
+                                                                    Command <span class=vvar>optim</span> defines and solves an optimization problem.<br>
+                                                                    It can be given by a short or an extended form.
+                                                                    <p>In its short version the command synopsis is:<br>
+                                                                    <span class=cmd>optim&ensp;[size=&lt;n&gt;]&ensp;[function=&lt;f&gt;]&ensp;[objective=&lt;d&gt;]&ensp;[lp]&ensp;
+                                                                        [gradient=&lt;g1&gt;,&lt;g2&gt;,...]
+                                                                    &ensp;[low-bound=&lt;i&gt;,&lt;lb&gt;]<br>
+                                                                    &ensp;&ensp;&ensp;&ensp;&ensp;[up-bound=&lt;j&gt;,&lt;ub&gt;]&ensp;[variable=&lt;x&gt;]&ensp;[algorithm=&lt;a&gt;]</span></p>
+                                                                    <table border="0">
+                                                                        <tr>
+                                                                            <td valign="top" width="10%"><span class=var>n</span></td>
+                                                                            <td valign="top">Number of optimization variables. Default value is <span class=var>1</span>.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>f</span></td>
+                                                                            <td valign="top">Name of an already defined function as the objective function to mimimize 
+                                                                                (Functions can be defined in <a href="#data">data</a>).</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>d</span></td>
+                                                                            <td valign="top">Expression defining the objective function to minimize.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>lp</span></td>
+                                                                            <td valign="top">Toggle to say if we are dealing with the linear programming problem.
+                                                                                By default, we are considering a nonlinear objective function.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>g1, g2, ...</span></td>
+                                                                            <td valign="top">Partial derivatives of the objective function defined analytically. By 
+                                                                                default the partial derivatives are computed analytically from the expression of the objective function.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>i, lb</span></td>
+                                                                            <td valign="top">Enables prescribing a  lower bound constraint, <i>i.e.</i>, here we can impose
+                                                                                <span class=var>x(i)&geq;lb</span>. It must be used once for each bound constraint.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>j, ub</span></td>
+                                                                            <td valign="top">Enables prescribing an upper bound constraint, <i>i.e.</i>, here we can impose
+                                                                                <span class=var>x(j)&leq;ub</span>. It must be used once for each bound constraint.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>x</span></td>
+                                                                            <td valign="top">Name of the variable (or vector). This keyword is mandatory if the keyword 
+                                                                                <span class=var>definition</span> is used. If the size of the system is greater than <span class=var>1</span>, 
+                                                                                the unknowns are necessarily <span class=var>x1, x2, ...</span></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>a</span></td>
+                                                                            <td valign="top">String defining the used optimization method. This string is to pick in the following values:
+                                                                                <span class=var>gradient, truncated-newton, simulated annealing, nelder-mead, newton</span>. The default
+                                                                                value of this parameter is <span class=var>gradient</span>.</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    It can be noticed that there is no way to impose other constraints than bound constraints in the short menu version. For this
+                                                                    one must resort to the extended version. 
+                                                                    <p>In its extended version, the command <span class=var>optim</span> has no arguments, but rather, it initiates a 
+                                                                    submenu with the available keywords:</p>
+                                                                    <ul>
+                                                                        <li><span class=cmd>size&ensp;&lt;n&gt;</span><br>
+                                                                            Number of optimization variables. Default value is <span class=var>1</span>.</li>
+                                                                        <li><span class=cmd>function&ensp;&lt;f&gt;</span><br>
+                                                                            <span class=var>f</span> is the name of an already defined function as the objective function to mimimize 
+                                                                            (Functions can be defined in <a href="#data">data</a>).</li>
+                                                                        <li><span class=cmd>objective&ensp;&lt;f&gt;</span><br>
+                                                                            <span class=car>f</span> is an expression defining the objective function to minimize.</li>
+                                                                        <li><span class=cmd>lp</span><br>
+                                                                            This keyword is a toggle to say if we are dealing with a linear programming problem.
+                                                                            By default, we are considering a nonlinear objective function</li>
+                                                                        <li><span class=cmd>gradient&ensp;&lt;g1&gt;&ensp;&lt;g2&gt;&ensp;...</span><br>
+                                                                            <span class=var>g1, g2, ...</span> are the partial derivatives of the objective function defined analytically. By 
+                                                                            default the partial derivatives are computed analytically from the expression of the objective function.</li>
+                                                                        <li><span class=cmd>hessian&ensp;&lt;h1&gt;&ensp;&lt;h2&gt;&ensp;...</span><br>
+                                                                            <span class=var>h1, h2, ...</span> are the partial derivatives of the gradient defined analytically. 
+                                                                            This keyword must be called once for each optimization variable. By default the hessian is computed analytically, 
+                                                                            if the optimization algorithm needs it, from the expression of the objective function.</li>
+                                                                        <li><span class=cmd>low-bound&ensp;&lt;i&gt;&ensp;&lt;lb&gt;</span><br>
+                                                                            To prescribe a lower bound constraint, <i>i.e.</i>, we can impose <span class=var>x(j)&geq;lb</span>. 
+                                                                            It must be used once for each bound constraint.</li>
+                                                                        <li><span class=cmd>up-bound&ensp;&lt;j&gt;&ensp;&lt;ub&gt;</span><br>
+                                                                            To prescribe an upper bound constraint, <i>i.e.</i>, we can impose <span class=var>x(j)&leq;ub</span>. 
+                                                                            It must be used once for each bound constraint.</li>
+                                                                        <li><span class=cmd>ge-constraint&ensp;&lt;arg&gt;</span><br>
+                                                                            This keyword is available in the linear programming case only. For this, <span class=var>arg</span>
+                                                                            is a list:<br>
+                                                                            <span class=var>v(1)&ensp;v(2)&ensp;...&ensp;v(n)&ensp;v(n+1)</span><br>
+                                                                            to impose <span class=var>v(1)*x(1) + v(2)*x(2) + ... + v(n)*x(n) &geq; v(n+1)</span></li>
+                                                                        <li><span class=cmd>le-constraint&ensp;&lt;arg&gt;</span><br>
+                                                                            The arguments of this keyword depend on the case whether we have a linear programming problem or not.
+                                                                            <ul>
+                                                                                <li>In the linear programming case <span class=var>arg</span> is a list:<br>
+                                                                                    <span class=var>v(1)&ensp;v(2)&ensp;...&ensp;v(n)&ensp;v(n+1)</span><br>
+                                                                                    to impose <span class=var>v(1)*x(1) + v(2)*x(2) + ... + v(n)*x(n) &leq; v(n+1)</span></li>
+                                                                                <li>In other cases, the keyword has only one argument: the analytical expression of the function we want
+                                                                                    to impose to be nonpositive.</li>
+                                                                            </ul></li>
+                                                                        <li><span class=cmd>eq-constraint&ensp;&lt;arg&gt;</span><br>
+                                                                            The arguments of this keyword depend on the case wether we have a linear programming problem or not.
+                                                                            <ul>
+                                                                                <li>In the linear programming case <span class=var>arg</span> is a list:<br>
+                                                                                    <span class=var>v(1)&ensp;v(2)&ensp;...&ensp;v(n)&ensp;v(n+1)</span><br>
+                                                                                    to impose <span class=var>v(1)*x(1) + v(2)*x(2) + ... + v(n)*x(n) = v(n+1)</span></li>
+                                                                                <li>In other cases, the keyword has only one argument: the analytical expression of the function we want
+                                                                                    to impose to be zero.</li>
+                                                                            </ul></li>
+                                                                        <li><span class=cmd>penalty&ensp;&lt;p&gt;</span><br>
+                                                                            <span class=var>p</span> is the value of the penalty parameter. Constraints are enforced by a penalty formulation 
+                                                                            except for linear programming problems.</li>
+                                                                        <li><span class=cmd>variable&ensp;&lt;x&gt;</span><br>
+                                                                            Name of the variable (or vector). This keyword is mandatory if the keyword 
+                                                                            <span class=var>definition</span> is used. If the size of the system is greater than <span class=var>1</span>, 
+                                                                            the unknowns are necessarily <span class=var>x1, x2, ...</span></li>
+                                                                        <li><span class=cmd>initial&ensp;&lt;x1&gt;&ensp;&lt;x2&gt;&ensp;...</span><br>
+                                                                            <span class=var>x1, x2, ...</span> are prescribed initial values of optimization variables.</li>
+                                                                        <li><span class=cmd>algorithm&ensp;&lt;a&gt;</span><br>
+                                                                            <span class=var>a</span> is a string defining the used optimization method. This string is to pick in the 
+                                                                            following values:
+                                                                            <span class=cmd>gradient, truncated-newton, simulated annealing, nelder-mead, newton</span>. The default
+                                                                            value of this parameter is <span class=var>gradient</span>.</li>
+                                                                    </ul>
+                                                                </section></li>
+
+                                                                <!-- ++++++ --><p></p>
+                                                                <li><section class="rita-text" data-section="eigen">
+                                                                    Command <span class=vvar><a name="eigen"></a>eigen</span> 
+                                                                    enables solving an eigenvalue problem. <br>
+                                                                    Synopsis:<br>
+                                                                    <span class=cmd>eigen&ensp;matrix=&lt;M&gt;&ensp;[symmetric]&ensp;[method=&lt;a&gt;]&ensp;
+                                                                    [nb=&lt;n&gt;]&ensp;[eigv]&nbsp;[evec=&lt;p&gt;]</span>
+                                                                    <table border="0">
+                                                                        <tr>
+                                                                            <td valign="top" width="10%"><span class=var>M</span></td>
+                                                                            <td valign="top">Name of an already defined matrix.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>symmetric</span></td>
+                                                                            <td valign="top">Switch to say that matrix is symmetric. By
+                                                                                default, the matrix is assumed unsymmetric.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>a</span></td>
+                                                                            <td valign="top">Method for extraction of eigenvalues. It must take one
+                                                                                of the values <span class=var>subspace</span> or <span class=var>qr</span>.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>n</span></td>
+                                                                            <td valign="top">Number of eigenvalues to extract. By default, all
+                                                                                eigenvalues are extracted.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>eigv</span></td>
+                                                                            <td valign="top">Switch to compute eigenvectors as well. By default,
+                                                                                eigenvectors are not computed. Except for some methods where this is done automatically.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>p</span></td>
+                                                                            <td valign="top">Prefix of names of eigenvectors.</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </section></li>
+
+                                                                <!-- ++++++ --><p></p>
+                                                                <li><section class="rita-text" data-section="integration">
+                                                                    Command <span class=vvar>integration</span> performs numerical integration of a given function over a given domain.<br>
+                                                                    In the present release, only integrals over an interval are handled.<br>
+                                                                    Synopsis:<br>
+                                                                    <span class=cmd>integration&ensp;function=&lt;f&gt;&ensp;[definition=&lt;d&gt;]&ensp;
+                                                                    [var=&lt;v&gt;]&ensp;[interval=&lt;mx&gt;,&lt;Mx&gt;]&ensp;[ne=&lt;n&gt;]&ensp;[formula=&lt;m&gt;]</span>
+                                                                    <table border="0">
+                                                                        <tr>
+                                                                            <td valign="top" width="10%"><span class=var>f</span></td>
+                                                                            <td valign="top">Name of an already defined function.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>d</span></td>
+                                                                            <td valign="top">Expression defining a function.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>v</span></td>
+                                                                            <td valign="top">Name of the variable.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>mx, Mx</span></td>
+                                                                            <td valign="top">Values of extremities of the integration interval.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>n</span></td>
+                                                                            <td valign="top">Number of subdivisions of the integration interval. 
+                                                                                Default value is <span class=var>10</span>.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>m</span></td>
+                                                                            <td valign="top">Numerical integration formula. The possible choices 
+                                                                                are <span class=var>left-rectangle, right-rectangle, mid-point, trapezoidal, 
+                                                                                simpson, gauss-legendre, gauss-lobatto</span>. For the Gauss formulae, the number of points can be specified by 
+                                                                                typing <span class=var>gauss-legendre,2</span> for instance.</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </section></li>
+
+                                                                <!-- ++++++ --><p></p>
+                                                                <li><section class="rita-text" data-section="approximation">
+                                                                    Command <span class=vvar>approximation</span>
+                                                                    enables solving data approximation problems.<br> The command has an extended form only,
+                                                                    with the following submenu:
+                                                                    <ul>
+                                                                        <li><span class=cmd>lagrange&ensp;tabulation=&lt;t&gt;|file=&lt;f&gt;&ensp;[function=&lt;fct&gt;]</span><br>
+                                                                            For Lagrange interpolation. Here <span class=var>t</span> is the name of a defined tabulation, <span class=var>f</span>
+                                                                            is the name of a file from which the tabulated points are to be read, <span class=var>fct</span>
+                                                                            is the (optional) name to give to the resulted polynomial Lagrange function. Note that the 
+                                                                            degree of the resulting polynomial is deduced from the tabulation size.</li>
+                                                                        <li><span class=cmd>fitting&ensp;tabulation=&lt;t&gt;|file=&lt;f&gt;
+                                                                            &ensp;degree=&lt;d&gt;|basis=&lt;b<sub>1</sub>,b<sub>2</sub>...&gt;&ensp;
+                                                                            [function=&lt;fct&gt;]</span><br>
+                                                                            For least-square fitting. Here <span class=var>t</span> is the name of a defined tabulation, 
+                                                                            <span class=var>f</span> is the name of a file from which the tabulated points are to be read, 
+                                                                            <span class="var">d</span> is the degree of the fitting polynomial if such an approximation is chosen. Otherwise
+                                                                            one can provide a basis of spanning functions of the fitting function. 
+                                                                            <span class=var>fct</span> is the (optional) name to give to the resulted fitting function.
+                                                                        <li><span class=cmd>bezier&ensp;file=&lt;f&gt;|vertices=&lt;v&gt;
+                                                                            &ensp;[nc=&lt;ncu&gt;[,&lt;ncv&gt;]]&ensp;np=&lt;npu&gt;[,&lt;npv&gt;]&ensp;
+                                                                            [vector=&lt;ve&gt;]</span><br>
+                                                                            For B&eacute;zier approximation. Here one can choose either a list of given vertices 
+                                                                            of control polygon <span class=var>v</span> (3 components for each point) 
+                                                                            or the same list to be read from a file <span class=var>f</span>. <span class=var>ncu</span> 
+                                                                            (<i>resp.</i> <span class=var>ncv</span> for the case of a surface approximation) is 
+                                                                            the number of control vertices in the 
+                                                                            u-direction (<i>resp.</i> v-direction). <span class=var>ve</span> is the resulting vector of
+                                                                            B&eacute;zier approximation. If this vector name is not provided, the application attributes a name 
+                                                                            that is communicated.</li>
+                                                                        <li><span class=cmd>bspline&ensp;file=&lt;f&gt;|vertices=&lt;v&gt;&ensp;[order=&lt;o&gt;]
+                                                                            &ensp;[nc=&lt;ncu&gt;[,&lt;ncv&gt;]]&ensp;np=&lt;npu&gt;[,&lt;npv&gt;]&ensp;
+                                                                            [vector=&lt;ve&gt;]</span><br>
+                                                                            For Bspline (Basis Spline) interpolation. Here one can choose either a list of given vertices 
+                                                                            of control polygon <span class=var>v</span> (3 components for each point) 
+                                                                            or the same list to be read from a file <span class=var>f</span>. <span class=var>o</span> is the 
+                                                                            order of the Bspline interpolation (By default: 2). <span class=var>ncu</span> 
+                                                                            (<i>resp.</i> <span class=var>ncv</span> for the case of a surface approximation) is 
+                                                                            the number of control vertices in the 
+                                                                            u-direction (<i>resp.</i> v-direction). <span class=var>ve</span> is the resulting vector of
+                                                                            Bspline interpolation. If this vector name is not provided, the application attributes a name 
+                                                                            that is communicated.</li>
+                                                                        <li><span class=cmd>nurbs&ensp;file=&lt;f&gt;|vertices=&lt;v&gt;&ensp;[order=&lt;o&gt;]
+                                                                            &ensp;[nc=&lt;ncu&gt;[,&lt;ncv&gt;]]&ensp;np=&lt;npu&gt;[,&lt;npv&gt;]&ensp;
+                                                                            [vector=&lt;ve&gt;]</span><br>
+                                                                            For NURBS (Non Uniform Rational Basis Spline) approximation. Here one can choose either a list of given vertices
+                                                                            of control polygon <span class=var>v</span> (3 components for each point) 
+                                                                            or the same list to be read from a file <span class=var>f</span>. <span class=var>o</span> is the 
+                                                                            order of the Bspline interpolation (By default: 2). <span class=var>ncu</span> 
+                                                                            (<i>resp.</i> <span class=var>ncv</span> for the case of a surface approximation) is 
+                                                                            the number of control vertices in the 
+                                                                            u-direction (<i>resp.</i> v-direction). <span class=var>ve</span> is the resulting vector of
+                                                                            NURBS approximation. If this vector name is not provided, the application attributes a name 
+                                                                            that is communicated.</li>
+                                                                    </ul>
+                                                                    </section></li>
+
+                                                                <!-- ++++++ --><p></p>
+                                                                <li><section class="rita-text" data-section="solve">
+                                                                    Command <span class=vvar>solve</span> enables solving one or more defined problems.
+                                                                    Note that commands <span class=var>integration</span> and <span class=var>approximation</span>
+                                                                    do not need the command <span class=var>solve</span> to be solved. They solve directly 
+                                                                    the invoked command.<br>
+                                                                    The command <span class=var>solve</span> can be used either in short or extended version. For the
+                                                                    short form, the synopsis is:<br>
+                                                                    <span class=cmd>solve&ensp;[problem=&lt;p1&gt;,&lt;p2&gt;,...]&ensp;[analysis=&lt;a&gt;]</span><br>
+                                                                    <table border="0">
+                                                                        <tr>
+                                                                            <td valign="top" width="10%"><span class=var>p1, p2, ...</span></td>
+                                                                            <td valign="top">List of names of problems to solve</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td valign="top"><span class=var>a</span></td>
+                                                                            <td valign="top">Analysis type. This string is to choose among the values:
+                                                                                <span class=var>stationary</span>, <span class=var>transient</span>, 
+                                                                                <span class=var>eigen</span>, <span class=var>optimization</span>. Note that in 
+                                                                                most cases, this value is automatically assigned in function of the defined problem(s).</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    For the extended version, the command <span class=var>solve</span> has the following submenu:
+                                                                    <ul>
+                                                                        <li><span class=cmd>problem&ensp;&lt;p&gt;</span>: Add problem with name <span class=var>p</span>
+                                                                            to the list of problems to solve.</span></li>
+                                                                        <li><span class=cmd>analysis&ensp;&lt;a&gt;</span>: Analysis type. This string is to choose 
+                                                                            among the values: <span class=var>stationary</span>, <span class=var>transient</span>, 
+                                                                            <span class=var>eigen</span>, <span class=var>optimization</span>. Note that in 
+                                                                            most cases, this value is automatically assigned in function of the defined problem(s)</li>
+                                                                    </ul>
+                                                                </section></li>
+                                                            </ul>
+
+                                                        <!-- ******************************************************************** -->
+
+                                                        <li><section class="rita-text" data-section="calculator"><h3>Calculator</h3>
+                                                            <span class=logo>rita</span> can be used as a simple calculator to manipulate various data. For this,
+                                                            calculator instructions can be introduced just like any other command.<br>
+                                                            Let us illustrate this through some examples:<br>
+                                                            <ul style="list-style-type:none">
+                                                                <li><span class=cmd>x = 10</span></li>
+                                                                <li><span class=cmd>y = 2*x - exp(x)</span></li>
+                                                                <li><span class=cmd>z = y^2 - sin(pi*x)</span></li>
+                                                            </ul>
+                                                            In these examples we have defined 3 variables <span class=var>x</span>,
+                                                            <span class=var>y</span> and <span class=var>z</span>. They are stored in <span class=logo>rita</span> as parameters.<br>
+                                                            Here is another series of examples:<br>
+                                                            <ul style="list-style-type:none">
+                                                                <li><span class=cmd>v = { 1.0, -2.0, 6.0 }</span></li>
+                                                                <li><span class=cmd>u = vector(3)</span></li>
+                                                                <li><span class=cmd>u[2] = -5</span></li>
+                                                                <li><span class=cmd>z = v*u</span></li>
+                                                                <li><span class=cmd>B = u*v</span></li>
+                                                                <li><span class=cmd>A = matrix(2,3)</span></li>
+                                                                <li><span class=cmd>A[0,1] = -2.0</span></li>
+                                                                <li><span class=cmd>A[1,2] =  5.0</span></li>
+                                                                <li><span class=cmd>= A</span></li>
+                                                                <li><span class=cmd>w = A*v'</span></li>
+                                                                <li><span class=cmd>=w</span></li>
+                                                            </ul>
+                                                            Here above, <span class=var>v</span> is a row vector as defined, <span class=var>u</span> is a column vector. So that 
+                                                            <span class=var>z</span> is a scalar while <span class=var>B</span> is a 3x3-matrix.<br> <span class=var>A</span> is a 2x3-matrix
+                                                            initialized by <span class=var>0</span>. We also modify some entries of the matrix. Note that the indices
+                                                            here start with <span class=var>0</span>. We can check the contents of <span class=var>A</span> by ouputting it
+                                                            (we can use either <span class=var>=</span> or <span class=var>print</span> for this end). Next, a vector
+                                                            <span class=var>w</span> is defined as the product of <span class=var>A</span> by the transpose of 
+                                                            <span class=var>v</span> (which is a column vector). We finally output <span class=var>w</span>.
+                                                        </section></li>
+                                                    </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ************************************************************************************************************ -->
+                    <section class="rita-text" data-section="license">
+                        <div class="rita-narrow-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                                        <div class="col-md-12">
+                                            <div class="start-desc">
+                                                <h2 class="rita-heading">RITA License</h2>
+                                                <p><span class=logo>rita</span> is freely available under the GPL (Gnu Public License).<br>
+                                                Copyright &copy; 2021-2024 Rachid Touzani</p>
+                                                <p><span class=TEXT><span class=logo>rita</span> is free software: you can redistribute it and/or modify
+                                                it under the terms of the GNU General Public License as published by
+                                                the Free Software Foundation, either version 3 of the License, or
+                                                (at your option) any later version.<br>
+                                                <span class=logo>rita</span> is distributed in the hope that it will be useful
+                                                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.<br> See the
+                                                <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License</a> for more details.</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ************************************************************************************************************ -->
+
+                    <section class="rita-text" data-section="download">
+                        <div class="rita-narrow-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                                        <div class="col-md-12">
+                                            <div class="start-desc">
+                                                <h2 class="rita-heading">Downloading</h2>
+                                                <p>The latest stable release of <span class=logo>rita</span> <span class=var>(2.1.0)</span> is available for download:</p>
+                                                <ul>
+                                                    <li>Download compiled version for <a href="http://ofeli.org/rita/releases/rita-2.1.0-MacOSX.tar.gz">Mac OS</a>,
+                                                        <a href="http://ofeli.org/rita/releases/rita-2.1.0-Linux64.tar.gz">Linux 64-bit</a></li>
+                                                    <li>Download source code <a href="http://ofeli.org/rita/releases/rita-2.1.0-src.tar.gz">rita-2.1.0-src.tar.gz</a></li>
+                                                    <li>Old releases are available for download <a href="http://ofeli.org/rita/releases">HERE</a></li>
+                                                </ul>
+                                                <h2 class="rita-heading">Installation Procedure</h2>
+                                                <p><span class=logo>rita</span> can be installed using its compiled version. For this, once the downloaded file
+                                                is unpacked, you can follow the intallation script or copy manually the files.<br>
+                                                Let us describe the installation procedure using the source files.</p>
+                                                <p><b>WARNING:</b>
+                                                <ul>
+                                                    <li> Before installing check that the libraries <a href="http://ofeli.org">
+                                                         ofeli</a> and <a href="http://gmsh.info">gmsh</a> (The Software Development Kit) are installed correctly.</li>
+                                                    <li> The installation procedure uses <span class=var>cmake</span>.
+                                                         If you don't have <span class=var>cmake</span> or don't want to
+                                                         install it, you can download the compiled version according to you operating system.</li>
+                                                </ul>
+                                                </p>
+                                                <p>After unpacking the <span class=logo>rita</span> package file, let's go to the created
+                                                directory (where the file <span class=var>INSTALL</span> is).
+                                                You now have to create a directory, which we will call <span class=var>build</span> for instance.<br>
+                                                Type:
+                                                </p>
+                                                <ul style="list-style-type:none">
+                                                    <li><span class=var>cd build</span></li>
+                                                    <li><span class=var>cmake ..</span></li>
+                                                    <li><span class=var>cmake --build .</span></li>
+                                                </ul>
+
+                                                <p>This creates the executable file <span class=var>rita</span> in the subdirectory 
+                                                <span class=var>src</span>.<br>
+                                                You can now run the tests by typing</p>
+                                                <ul style="list-style-type:none">
+                                                    <li><span class=var>ctest</span></li>
+                                                </ul>
+                                                <p>All tests are run. If you prefer to display test outputs, type</p>
+                                                <ul style="list-style-type:none">
+                                                    <li><span class=var>ctest --verbose</span></li>
+                                                </ul>
+                                                <p>Now, everything is ready (if tests are run successfully). You can install the application on your
+                                                computer by typing</p>
+                                                <ul style="list-style-type:none">
+                                                    <li><span class=var>make install</span></li>
+                                                </ul> 
+                                                <p>This command may require administrator privileges.<br>
+                                                You can adjust the installation destination (the "prefix")
+                                                by passing the <span class=var>-DCMAKE_INSTALL_PREFIX=myprefix</span> option to
+                                                <span class=var>cmake</span>, as is explained in the message that <span class=var>cmake</span> prints at the end.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                <!-- ************************************************************************************************************ -->
+                </div>
+            </div>
+        </div>
+
+<!-- jQuery -->
+      <script src="js/jquery.min.js"></script>
+      <!-- jQuery Easing -->
+      <script src="js/jquery.easing.1.3.js"></script>
+      <!-- Bootstrap -->
+      <script src="js/bootstrap.min.js"></script>
+      <!-- Waypoints -->
+      <script src="js/jquery.waypoints.min.js"></script>
+      <!-- Flexslider -->
+      <script src="js/jquery.flexslider-min.js"></script>
+      <!-- Owl carousel -->
+      <script src="js/owl.carousel.min.js"></script>
+      <!-- Counters -->
+      <script src="js/jquery.countTo.js"></script>
+
+      <!-- MAIN JS -->
+      <script src="js/main.js"></script>
+
+   </body>
+</html>

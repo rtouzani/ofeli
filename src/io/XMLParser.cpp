@@ -46,6 +46,12 @@
 #include "io/Tabulation.h"
 #include "linear_algebra/Vect_impl.h"
 #include "linear_algebra/DMatrix_impl.h"
+#include "linear_algebra/DSMatrix_impl.h"
+#include "linear_algebra/SpMatrix_impl.h"
+#include "linear_algebra/SkMatrix_impl.h"
+#include "linear_algebra/SkSMatrix_impl.h"
+#include "linear_algebra/TrMatrix_impl.h"
+#include "linear_algebra/BMatrix_impl.h"
 #include "OFELIException.h"
 
 namespace OFELI {
@@ -55,7 +61,7 @@ extern Material theMaterial;
 XMLParser::XMLParser()
           : _is_opened(false), _set_mesh(false), _set_grid(false), _set_vector(false),
             _set_file(false), _set_prescription(false), _set_matrix(false), _set_domain(false),
-            _prescription_opened(false), _scan(0), _nb_dof(1), _dim(2), _nb_nodes(0),
+            _prescription_opened(false), _scan(0), _iter(0), _nb_dof(1), _dim(2), _nb_nodes(0),
             _nb_elements(0), _nb_sides(0), _nb_edges(0), _nb_mat(0),
             _dof_support(NODE_DOF), _theMesh(nullptr), _theGrid(nullptr), _v(nullptr),
             _parser(nullptr), _ipf(nullptr)
@@ -66,7 +72,7 @@ XMLParser::XMLParser(string file,
                      EType  type)
           : _is_opened(false), _set_mesh(true), _set_grid(false), _set_vector(false), _set_file(true),
             _set_prescription(false), _set_matrix(false), _set_domain(false), _prescription_opened(false),
-            _scan(0), _file(file), _nb_dof(1), _dim(2), _nb_nodes(0), _nb_elements(0), _nb_sides(0),
+            _scan(0), _file(file), _iter(0), _nb_dof(1), _dim(2), _nb_nodes(0), _nb_elements(0), _nb_sides(0),
             _nb_edges(0), _nb_mat(0), _dof_support(NODE_DOF), _theMesh(nullptr), _theGrid(nullptr),
             _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
@@ -82,7 +88,7 @@ XMLParser::XMLParser(string file,
                      int    format)
           : _is_opened(false), _set_mesh(true), _set_grid(false), _set_vector(false), _set_file(true),
             _set_prescription(false), _set_matrix(false), _set_domain(false), _prescription_opened(false),
-            _format(format), _file(file), _nb_dof(1), _nb_mat(0), _dof_support(NODE_DOF),
+            _format(format), _file(file), _iter(0), _nb_dof(1), _nb_mat(0), _dof_support(NODE_DOF),
             _theMesh(&ms), _theGrid(nullptr), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    _type = _old_type = type;
@@ -103,7 +109,7 @@ XMLParser::XMLParser(string file,
                      int    format)
           : _is_opened(false), _set_mesh(false), _set_grid(true), _set_vector(false), _set_file(true),
             _set_prescription(false), _set_matrix(false), _set_domain(false), _prescription_opened(false),
-            _format(format), _file(file), _nb_dof(1), _nb_mat(0), _dof_support(NODE_DOF),
+            _format(format), _file(file), _iter(0), _nb_dof(1), _nb_mat(0), _dof_support(NODE_DOF),
             _theMesh(nullptr), _theGrid(&g), _v(nullptr), _parser(nullptr), _ipf(nullptr)
 {
    _scan = 0;
@@ -120,10 +126,9 @@ XMLParser::XMLParser(string file,
 XMLParser::XMLParser(const XMLParser& p)
           : _is_opened(p._is_opened), _is_closed(p._is_closed), _set_mesh(p._set_mesh), _set_grid(p._set_grid), 
             _set_vector(p._set_vector), _set_file(p._set_file), _set_prescription(p._set_prescription),
-            _set_matrix(p._set_matrix), _set_domain(p._set_domain),
-            _time(p._time), _sought_time(p._sought_time),
+            _set_matrix(p._set_matrix), _set_domain(p._set_domain), _time(p._time), _sought_time(p._sought_time),
             _format(p._format), _file(p._file), _mesh_file(p._mesh_file),
-            _sought_name(p._sought_name), _tag_name(p._tag_name), _xml(p._xml), _mat(p._mat),
+            _sought_name(p._sought_name), _tag_name(p._tag_name), _xml(p._xml), _mat(p._mat), _iter(p._iter),
             _nb_dof(p._nb_dof), _dim(p._dim), _nb_nodes(p._nb_nodes), _nb_elements(p._nb_elements),
             _nb_sides(p._nb_sides), _nb_edges(p._nb_edges), _nb_el_nodes(p._nb_el_nodes),
             _nb_sd_nodes(p._nb_sd_nodes), _dof_support(p._dof_support),_theMesh(p._theMesh), _theGrid(nullptr),
@@ -161,7 +166,7 @@ void XMLParser::setMaterialNumber(int m)
 void XMLParser::open()
 {
    if (_is_opened)
-      return;
+      _is.close();
 
 // read chunks, parse them, and save for one chunk parse
    set_skip_whitespaces(true);
@@ -302,6 +307,7 @@ int XMLParser::get(DMatrix<real_t>& A)
 
 int XMLParser::get(Matrix<real_t>* A)
 {
+   _iter++;
    _old_type = _type;
    _type = EType::MATRIX;
    _theMatrix = A;
@@ -311,6 +317,7 @@ int XMLParser::get(Matrix<real_t>* A)
    if (parse(_xml)) {
       if (Verbosity>10)
          cout << "Parse done." << endl;
+      A = _theMatrix;
       return 0;
    }
    else
@@ -503,7 +510,8 @@ int XMLParser::get(Mesh&         ms,
    _all_steps = 0;
    _nb_dof = v.getNbDOF();
    _name = v.getName();
-   _v->setMesh(*_theMesh,_dof_support,_nb_dof);
+   if (!_v->WithMesh())
+      _v->setMesh(*_theMesh,_dof_support,_nb_dof);
    _v->setName(_name);
    if (parse(_xml)) {
       if (Verbosity>10)
@@ -612,6 +620,7 @@ bool XMLParser::on_tag_open(string     tag_name,
                             StringMap& attributes)
 {
    _nb_el_nodes = 0;
+   _msize.nb_rows = _msize.nb_cols = 0;
    _tag_name = tag_name;
    switch (_TS[_tag_name]) {
 
@@ -706,7 +715,10 @@ bool XMLParser::on_tag_open(string     tag_name,
          read_vect(a);
 
       if (_set_matrix)
-         read_matrix(a);
+         if (read_matrix(a)) {
+            _is.close();
+            return false;
+         }
 
       //      if (_material)
       //         read_mat(a);
@@ -724,10 +736,8 @@ bool XMLParser::on_tag_open(string     tag_name,
 void XMLParser::read_project(const SString& a)
 {
    string mat;
-   if (_tag_name=="Project") {
-      if (a.first=="name")
-         _ipf->_project = a.second;
-   }
+   if (_TS[_tag_name]==Tag::PROJECT && a.first=="name")
+      _ipf->_project = a.second;
    if (a.first=="value") {
 
       switch (_TS[_tag_name]) {
@@ -1150,19 +1160,31 @@ void XMLParser::read_tab(const SString& a)
 }
 
 
-void XMLParser::read_matrix(const SString& a)
+int XMLParser::read_matrix(const SString& a)
 {
-   _type = EType::MATRIX;
+   _msize.ld = _msize.ud = 0;
+   _msize.mt = DENSE;
    if (_TS[_tag_name]==Tag::MATRIX) {
+      if (a.first=="storage")
+         _msize.mt = _STORAGE[a.second];
       if (a.first=="nb_rows")
-         _nb_rows = stoi(a.second);
+         _msize.nb_rows = stoi(a.second);
       if (a.first=="nb_cols" || a.first=="nb_columns")
-         _nb_cols = stoi(a.second);
-      if (a.first=="name") {
-         _name = a.second;
-         _theMatrix->setName(_name);
-      }
+         _msize.nb_cols = stoi(a.second);
+      if (a.first=="ud")
+         _msize.ud = stoi(a.second);
+      if (a.first=="ld")
+         _msize.ld = stoi(a.second);
+      if (a.first=="name")
+         _msize.name = a.second;
    }
+   if (_msize.nb_cols==0)
+      _msize.nb_cols = _msize.nb_rows;
+   if (_msize.nb_rows==0)
+      _msize.nb_rows = _msize.nb_cols;
+   if (_msize.nb_rows==_msize.nb_cols)
+      _msize.size = _msize.nb_rows;
+   return 0;
 }
 
 
@@ -1442,8 +1464,8 @@ void XMLParser::read_prescription(const pair<string,string>& a)
 void XMLParser::read_vect(const SString& a)
 {
    _vect_size = 0;
-   if ((_tag_name=="Vector"||_tag_name=="Field") && 
-       (_type==EType::MESH||_type==EType::GRID||_type==EType::VECTOR)) {
+   Tag tn = _TS[_tag_name];
+   if (tn==Tag::VECTOR && (_type==EType::MESH||_type==EType::GRID||_type==EType::VECTOR)) {
       if (a.first=="file" && _scan==0) {
          _parser = new XMLParser(a.second);
          _parser->set(*_theMesh);
@@ -1476,19 +1498,19 @@ void XMLParser::read_vect(const SString& a)
       else if (a.first=="size")
          _vect_size = stoi(a.second);
    }
-   if (_tag_name=="Step") {
+   if (tn==Tag::STEP) {
       _compact = false;
       if (a.first=="time")
          _time = stof(a.second);
    }
-   else if (_tag_name=="constant" || _tag_name=="const") {
+   else if (tn==Tag::CONSTANT) {
       _dof = 0;
       if (a.first=="value")
          _val = stof(a.second);
       else if (a.first=="dof")
          _dof = stoi(a.second);
    }
-   else if (_tag_name=="expression" || _tag_name=="expr") {
+   else if (tn==Tag::EXPRESSION) {
       _dof = 0;
       if (a.first=="dof")
          _dof = stoi(a.second);
@@ -1499,6 +1521,7 @@ void XMLParser::read_vect(const SString& a)
 bool XMLParser::on_cdata(string cdata)
 {
    _name = "";
+   Tag tn = _TS[_tag_name];
    vector<string> tokens;
    {
       string buf;
@@ -1517,7 +1540,7 @@ bool XMLParser::on_cdata(string cdata)
       read_domain_data(tokens,it);
 
 // Material in mesh data
-   else if (_tag_name=="Material" && _set_mesh) {
+   else if (tn==Tag::MATERIAL && _set_mesh) {
       while (it!=tokens.end()) {
          _cm = stoi(*it++);
          _mat = *it++;
@@ -1531,26 +1554,28 @@ bool XMLParser::on_cdata(string cdata)
 
 // Prescribe
    else if (_set_prescription && _type==EType::PRESCRIBE && _prescription_type==_par.type)
-//   else if (_set_prescription && _prescription_type==_par.type)
       read_prescribe_data(tokens,it);
 
 // Vector
-   else if ((_tag_name=="Step"||(_tag_name=="Field"&&_compact)||(_tag_name=="Vector"&&_compact)) && _set_vector)
+   else if ((tn==Tag::STEP||(tn==Tag::VECTOR&&_compact)||(tn==Tag::VECTOR&&_compact)) && _set_vector)
       read_vect_data(tokens,it);
-   else if ((_tag_name=="constant"||_tag_name=="const") && _set_vector)
+   else if (tn==Tag::CONSTANT && _set_vector)
       read_const_vect_data(tokens,it);
-   else if ((_tag_name=="expression"||_tag_name=="expr") && _set_vector)
+   else if (tn==Tag::EXPRESSION && _set_vector)
       read_exp_vect_data(tokens,it);
 
 // Tabulated function
    else if (_type==EType::FUNCTION) {
-      if (_tag_name=="Data")
+      if (tn==Tag::DATA)
          read_tab_data(tokens,it);
    }
 
 // Matrix
-   else if (_type==EType::MATRIX)
-      read_matrix_data(tokens,it);
+   else if (_type==EType::MATRIX) {
+      int ret = read_matrix_data(tokens,it);
+      if (ret==0)
+         return false;
+   }
 
    else
       ;
@@ -1708,12 +1733,11 @@ void XMLParser::read_const_vect_data(const vector<string>&     tokens,
           (_time==_sought_time || _sought_time==-1.0) && _set_vector) {
          _v->setTime(_time);
          _val = stof(*it++);
-         for (size_t k=1; k<=_v->getNb(); k++) {
-            if (_dof==0)
-               for (size_t l=1; l<=_v->getNbDOF(); l++)
-                  (*_v)(k,l) = _val;
-            else
-               (*_v)(k,_dof) = _val;
+         if (_dof==0)
+            *_v = _val;
+         else {
+            for (size_t i=1; i<=_v->getNb(); ++i)
+               (*_v)(i,_dof) = _val;
          }
       }
    }
@@ -1748,13 +1772,11 @@ void XMLParser::read_const_vect_data()
        (_time==_sought_time || _sought_time==-1.0) && _set_vector) {
       _v->setTime(_time);
       _val = stof(*it++);
-      for (size_t k=1; k<=_v->getNb(); k++) {
-         if (_dof==0) {
-            for (size_t l=1; l<=_v->getNbDOF(); l++)
-               (*_v)(k,l) = _val;
-         }
-         else
-            (*_v)(k,_dof) = _val;
+      if (_dof==0)
+         *_v = _val;
+      else {
+         for (size_t i=1; i<=_v->getNb(); ++i)
+            (*_v)(i,_dof) = _val;
       }
    }
 }
@@ -1809,18 +1831,144 @@ void XMLParser::read_tab_data(const vector<string>&     tokens,
 }
 
 
-void XMLParser::read_matrix_data(const vector<string>&     tokens,
-                                 vector<string>::iterator& it)
+MatrixSize XMLParser::MSize() const
 {
-   _theMatrix->setSize(_nb_rows,_nb_cols);
-   size_t i=1, j=0;
-   while (it!=tokens.end()) {
-      if (++j>_nb_cols && i<_nb_rows)
-         i++, j = 1;
-      if (i>_nb_rows)
-         throw OFELIException("In XMLParser::read_matrix_data(..): Insufficient number of matrix entries.");
-      (*_theMatrix)(i,j) = stof(*it++);
-   }
+   return _msize;
+}
+
+
+int XMLParser::read_matrix_data(const vector<string>&     tokens,
+                                vector<string>::iterator& it)
+{
+   vector<real_t> a;
+   _msize.ch.clear();
+   _msize.IJ.clear();
+   switch (_msize.mt) {
+
+      case DENSE:
+         {
+            if (_iter==1)
+               return 1;
+            size_t i=1, j=0;
+            while (it!=tokens.end()) {
+               if (++j>_msize.nb_cols && i<_msize.nb_rows)
+                  i++, j = 1;
+               if (i>_msize.nb_rows)
+                  throw OFELIException("In XMLParser::read_matrix_data(..): Too many matrix entries.");
+               (*_theMatrix)(i,j) = stof(*it++);
+            }
+         }
+         break;
+
+      case SYMMETRIC:
+         {
+            if (_iter==1)
+               return 1;
+            size_t i=1, j=0;
+            while (it!=tokens.end()) {
+               if (++j>i && i<_msize.nb_rows)
+                  i++, j = 1;
+               if (i>_msize.nb_rows)
+                  throw OFELIException("In XMLParser::read_matrix_data(..): Too many matrix entries.");
+               (*_theMatrix)(i,j) = stof(*it++);
+            }
+         }
+         break;
+
+      case DIAGONAL:
+         break;
+
+      case TRIDIAGONAL:
+         {
+            if (_iter==1)
+               return 1;
+            size_t i=1;
+            while (it!=tokens.end()) {
+               if (i>_msize.size)
+                  throw OFELIException("In XMLParser::read_matrix_data(..): Too many matrix entries.");
+               else if (i==1) {
+                  (*_theMatrix)(i,i  ) = stof(*it++);
+                  (*_theMatrix)(i,i+1) = stof(*it++);
+               }
+               else if (i==_msize.size) {
+                  (*_theMatrix)(i,i-1) = stof(*it++);
+                  (*_theMatrix)(i,i  ) = stof(*it++);
+               }
+               else {
+                  (*_theMatrix)(i,i-1) = stof(*it++);
+                  (*_theMatrix)(i,i  ) = stof(*it++);
+                  (*_theMatrix)(i,i+1) = stof(*it++);
+               }
+               i++;
+            }
+            if (i-1<_msize.size)
+               throw OFELIException("In XMLParser::read_matrix_data(..): Incomplete list of matrix entries.");
+         }
+         break;
+
+      case SPARSE:
+         {
+            while (it!=tokens.end()) {
+               int i = stoi(*it++), j = stoi(*it++);
+               if (i<=0 || i>int(_msize.size) || j<=0 || j>int(_msize.size))
+                  throw OFELIException("In XMLParser::read_matrix_data(..): Illegal value of index.");
+               _msize.IJ.push_back(pair<size_t,size_t>(i,j));
+               a.push_back(stof(*it++));
+            }
+            if (_iter==1)
+               return 1;
+            for (size_t k=0; k<a.size(); ++k)
+               (*_theMatrix)(_msize.IJ[k].first,_msize.IJ[k].second) = a[k];
+         }
+         break;
+
+      case SKYLINE:
+         {
+            while (it!=tokens.end()) {
+               int h = stoi(*it++);
+               if (h<1 || h>int(_msize.size))
+                  throw OFELIException("In XMLParser::read_matrix_data(..): Illegal value of column height.");
+               _msize.ch.push_back(size_t(h));
+               for (int i=0; i<2*h-1; ++i)
+                  a.push_back(stof(*it++));
+            }
+            if (_iter==1)
+               return 1;
+            int size=_msize.ch.size(), k=0;
+            for (int i=1; i<=size; ++i) {
+               int h = _msize.ch[i-1];
+               for (int j=i-h+1; j<=i; ++j)
+                  (*_theMatrix)(i,j) = a[k++];
+               for (int j=i-1; j>=i-h+1; --j)
+                  (*_theMatrix)(j,i) = a[k++];
+            }
+         }
+         break;
+
+      case BAND:
+         {
+            size_t i=1;
+            while (it!=tokens.end()) {
+               if (i>_msize.nb_rows)
+                  throw OFELIException("In XMLParser::read_matrix_data(..): Insufficient number of matrix entries.");
+               for (int j=_msize.ld; j>0; --j) {
+                  if (j<int(i))
+                     (*_theMatrix)(i,i-j) = stof(*it++);
+               }
+               (*_theMatrix)(i,i) = stof(*it++);
+               for (int j=1; j<=int(_msize.ud); ++j) {
+                  if (i+j<=_msize.nb_rows)
+                     (*_theMatrix)(i,i+j) = stof(*it++);
+               }
+               i++;
+            }
+         }
+         break;
+
+      default:
+         break;
+   };
+   return 0;
 }
 
 
@@ -2313,8 +2461,6 @@ bool XMLParser::on_tag_close(string tag_name)
 {
    if (Verbosity>10)
       cout << "CLOSING TAG: " << tag_name << endl;
-   if (tag_name=="Constant" || tag_name=="Const")
-      read_const_vect_data();
    switch (_TS[tag_name]) {
 
       case Tag::DDOMAIN:

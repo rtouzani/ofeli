@@ -199,6 +199,9 @@ using std::unique;
                          vector<size_t>& col_ind,
                          vector<RC>&     IJ,
                          vector<size_t>& nbc);
+    
+    void FinalizeGraph(vector<RC>&     IJ,
+                       vector<size_t>& col_ht);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */

@@ -1,0 +1,7 @@
+# rita Script file to plot a given tabulated function
+# First, we define the tabulation from file
+tabulation name=T file=ex1.dat
+
+# Second, we plot the tabulation
+plot tabulation=T
+exit

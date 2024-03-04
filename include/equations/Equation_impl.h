@@ -367,19 +367,6 @@ void Equation<NEN_,NEE_,NSN_,NSE_>::ElementSideVector(const Vect<real_t>&     b,
    }
 }
 
-/*
-template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
-void Equation<NEN_,NEE_,NSN_,NSE_>::SideNodeVector(const Vect<real_t>& b,
-                                                   real_t*             sb)
-{
-   size_t k = 0;
-   for (size_t n=1; n<=NSN_; ++n) {
-      size_t nd = (*_theSide)(n)->n();
-      for (size_t i=0; i<_nb_dof; ++i)
-         sb[k++] = b[_nb_dof*(nd-1)+i];
-   }
-   }*/
-
 
 template<size_t NEN_, size_t NEE_, size_t NSN_, size_t NSE_>
 void Equation<NEN_,NEE_,NSN_,NSE_>::ElementVector(const Vect<real_t>& b,

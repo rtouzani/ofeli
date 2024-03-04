@@ -1,0 +1,10 @@
+This directory contains examples of script files to run rita
+
+ae:          For algebraic equations
+ode:         For Ordinary Differential Equations
+pde:         For Partial Differential Equations
+optim:       For optimization problems
+eigen:       For eigenvalue problems
+integration: For numerical integration
+calc:        For the use of the calculator
+

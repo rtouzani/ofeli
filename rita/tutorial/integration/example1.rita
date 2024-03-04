@@ -1,0 +1,6 @@
+# rita Script file to practice numerical integration
+# We integrate the function f(x)=exp(x) on (0,1) using
+# the trapezoidal rule on a subdivision into 10 sub-intervals
+#
+integration var=x definition=exp(x) result=I
+exit
