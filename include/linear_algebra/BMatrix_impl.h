@@ -40,7 +40,7 @@
 
 namespace OFELI {
 
-#ifndef DOXYGEN_SHOULD_SKIP_THI
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 template<class T_>
 BMatrix<T_>::BMatrix()

@@ -1,302 +1,270 @@
-<!-- XHTML 1.0 Strict -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<meta name="author" content="Rachid Touzani" />
-<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
-<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
-<link href="../css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="../css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+<!DOCTYPE HTML>
+<html>
+  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="ofeli package" />
+    <meta name="keywords" content="Modelling, numerical simulation, scientific computing, ofeli" />
+    <title>ofeli library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/png" sizes="10x10" href="../im/r.jpg" />
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>Solid and Structural Mechanics Demo 3</title>
-<link rel="stylesheet" type="text/css" href="../doxygen.css" />
-<link rel="stylesheet" type="text/css" href="../tabs.css"  />
-</head>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-59742926-2', 'auto');
+        ga('send', 'pageview');
+    </script>
 
-<body bgcolor="#FFFFFF" link="#FF0000" vlink="#FF00FF" alink="#FF00FF">
-<p align="center"><a href="../index.html"><img src="../im/ofeli.gif" width="150" border="0"></a></p>
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="../im/ofeli.png">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
 
-<center>
-  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-  <script type="text/javascript"> 
-     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
-     google.setOnLoadCallback(function() {
-        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
-        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
-        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-        customSearchControl.draw('cse');
-     }, true);
-   </script>
-   <style type="text/css">
-     .gsc-control-cse {
-     font-family: Verdana, sans-serif;
-     border-color: #DAE0E5;
-     background-color: #DAE0E5;
-   }
-   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
-   input.gsc-input { border-color: #B6BEC5; }
-   input.gsc-search-button {
-     border-color: #B6BEC5;
-     background-color: #D0D1D4;
-   }
-   .gsc-tabHeader.gsc-tabhInactive {
-     border-color: #999999;
-     background-color: #EEEEEE;
-   }
-   .gsc-tabHeader.gsc-tabhActive {
-     border-color: #999999;
-     background-color: #999999;
-   }
-   .gsc-tabsArea { border-color: #999999; }
-   .gsc-webResult.gsc-result,
-   .gsc-results .gsc-imageResult {
-     border-color: #FFFFFF;
-     background-color: #FFFFFF;
-   }
-   .gsc-webResult.gsc-result:hover,
-   .gsc-imageResult:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gs-webResult.gs-result a.gs-title:link,
-   .gs-webResult.gs-result a.gs-title:link b,
-   .gs-imageResult a.gs-title:link,
-   .gs-imageResult a.gs-title:link b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:visited,
-   .gs-webResult.gs-result a.gs-title:visited b,
-   .gs-imageResult a.gs-title:visited,
-   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:hover,
-   .gs-webResult.gs-result a.gs-title:hover b,
-   .gs-imageResult a.gs-title:hover,
-   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:active,
-   .gs-webResult.gs-result a.gs-title:active b,
-   .gs-imageResult a.gs-title:active,
-   .gs-imageResult a.gs-title:active b { color: #0568CD; }
-   .gsc-cursor-page { color: #0568CD; }
-   a.gsc-trailing-more-results:link { color: #0568CD; }
-   .gs-webResult .gs-snippet,
-   .gs-imageResult .gs-snippet,
-   .gs-fileFormatType { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl,
-   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { display: none; }
-   .gs-webResult div.gs-visibleUrl-long { display: block; }
-   .gs-promotion div.gs-visibleUrl-short { display: none; }
-   .gs-promotion div.gs-visibleUrl-long { display: block; }
-   .gsc-cursor-box { border-color: #FFFFFF; }
-   .gsc-results .gsc-cursor-box .gsc-cursor-page {
-      border-color: #999999;
-      background-color: #FFFFFF;
-      color: #0568CD;
-   }
-   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
-      border-color: #999999;
-      background-color: #999999;
-      color: #0568CD;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion {
-      border-color: #D2D6DC;
-      background-color: #D0D1D4;
-   }
-   .gsc-completion-title { color: #0568CD; }
-   .gsc-completion-snippet { color: #5F6A73; }
-   .gs-promotion a.gs-title:link,
-   .gs-promotion a.gs-title:link *,
-   .gs-promotion .gs-snippet a:link { color: #0066CC; }
-   .gs-promotion a.gs-title:visited,
-   .gs-promotion a.gs-title:visited *,
-   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
-   .gs-promotion a.gs-title:hover,
-   .gs-promotion a.gs-title:hover *,
-   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
-   .gs-promotion a.gs-title:active,
-   .gs-promotion a.gs-title:active *,
-   .gs-promotion .gs-snippet a:active { color: #0066CC; }
-   .gs-promotion .gs-snippet,
-   .gs-promotion .gs-title .gs-promotion-title-right,
-   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
-   .gs-promotion .gs-visibleUrl,
-   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
-   </style>
-</center>
-</p>
-&nbsp;
+    <link rel="stylesheet" href="../doxygen.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/icomoon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/flexslider.css">
+    <link rel="stylesheet" href="../fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../css/ofeli-style.css">
+    <link rel="stylesheet" href="../css/doc.css">
 
-<div id="mainmenu">
-   <div class="text">
-     <div class="tabs">
-         <ul class="tablist">
-           <li><a href="../index.html"><span>Home</span></a></li>
-           <li><a href="../installation.html"><span>Installation</span></a></li>
-           <li><a href="../html/index.html"><span>Class Documentation</span></a></li>
-           <li><a href="../citing.html"><span>Citing OFELI</span></a></li>
-           <li><a href="../fformats.html"><span>File Formats</span></a></li>
-           <li class="current"><a href="../demos.html"><span>Demo Codes</span></a></li>
-           <li><a href="../extlib.html"><span>External Libraries</span></a></li>
-         </ul>
+<!--    Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
+  </head>
+
+  <body>
+    <div id="ofeli-page">
+      <div class="container-wrap">
+        <aside id="ofeli-aside" role="complementary" class="border js-fullheight">
+          <div class="text-center">
+            <a href="../index.html">
+              <div class="logo-img" style="background-image: url(../im/ofeli.png); background-size: 110%;"></div>
+            </a>
+            <span class="position"><b>Mathematical Modelling<br> and Numerical Simulation</b></span>
+          </div>
+          <div>
+            <ul>
+                <li class="active"><a href="../index.html">OFELI Documentation</a></li>
+                <li class="active"><a href="../html/classes.html">Classes in OFELI</a></li>
+                <li class="active"><a href="../fformats.html">File Formats</span></a></li>
+                <li class="active"><a href="../extlib.html">External Libraries</span></a></li>
+                <li class="active"><a href="../citing.html">Citing OFELI</span></a></li>
+                <li class="active"><a href="../download.html">Download and Installation</a></li>
+                <li class="active"><a href="../presentations.html">Presentations</a></li>
+                <li class="active"><a href="../copyright.html">License</a></li>
+                <li class="active"><a href="mailto:rachid.touzani@uca.fr">Contact</a></li>
+            </ul>
+        </div>
+
+        <a href="rita.html"><center><img src="../im/rita.png" width="90"></center></a>
+
+<!--      Search Google -->
+          <center>
+            <form method=GET action="http://www.google.com/search">
+              <table bgcolor="#FFFFFF">
+                <tr>
+                  <td><a href=" http://www.google.com/">
+                    <img src="http://www.google.com/logos/Logo_40wht.gif" border="0" alt="Google" align="absmiddle"></a> 
+                    <input TYPE=TEXT name=q size=31 maxlength=255 value="">
+                    <input type=hidden name=hl value="en">
+                    <input type=submit name=btnG value="Search">
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </center>
+ <!--     Search Google -->
+ 
+          <div class="ofeli-footer">
+            <p><small>&copy; Copyright <script>document.write(new Date().getFullYear());</script> All rights reserved</small>
+            </p>
+          </div>
+        </aside>
+        <div id="ofeli-main">
+          <section class="ofeli-start" data-section="home">
+            <div class="ofeli-narrow-content">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                    <div class="col-md-12">
+                      <div class="start-desc">
+                        <h1 class="first-ofeli-heading"></h1>
+                        <div id="cc">
+                           &nbsp;
+                           <p><table border="2" cellpadding="2" cellspacing="0" >
+                           <tr>
+                           <td align="center" width="35"><a href="lelas3d.html"><img src="../im/backward.gif" border="0"></a></td>
+                           <td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
+                           <td align="center" width="35"><a href="beam.html"><img src="../im/forward.gif" border="0"></a></td>
+                           </tr>
+                           </table><br>
+                           <font color="#203F5B" size="4" face="verdana,Helvetica">
+                           <p><b>Demo: A unilateral contact problem in elastostatics</b></font></p>
+                           <p>
+                              <SPAN class=TEXT>
+                              This code solves an elastostatic problem involving unilateral contact.
+                              The contact is taken into account using a penalty method.
+                              </SPAN>
+                              
+                              <ul type=square>
+                              <li><SPAN class=TEXT>The code essentially looks like <a href="lelas2d.html">lelas2d</a>. The only difference
+                              is that since the problem is nonlinear, due to the contact condition, an iterative procedure must be supplied.
+                              We describe here the part of the code that performs iterations:
+                              
+                              <ul>
+                              <li>We make use in this code of some global variables of <span class=LOGO>OFELI</span> to monitor
+                              iterations. These variables are <span class=TT>MaxNbIterations</span>,
+                              <span class=TT>theIteration</span>, <span class=TT>MaxNbIterations</span>,
+                              <span class=TT>theTolerance</span> and <span class=TT>theDiscrepancy</span>
+                              with obvious meaning. Note that all these variables have default values.
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>   MaxNbIterations = data.getNbIter();
+   theTolerance = data.getTolerance();</font></pre>
+                              </td></tr></table></p>
+                              
+                              <li>The iteration loop can be drived by the macro <span class=TT>IterationLoop</span>
+                              which acts like a loop and which updates iteration index and stops
+                              iterations when the value of <span class=TT>theDiscrepancy</span> is under
+                              <span class=TT>theTolerance</span> or when <span class=TT>theIteration</span> reaches
+                              the value of <span class=TT>MaxNbIterations</span>.
+                              
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>   IterationLoop {
+      v = 0.; A = 0.;
+      MeshElements(ms) {
+         Elas2DT3 eq(theElement);
+         eq.Deviator();
+         eq.Dilatation();
+         eq.BodyRHS(body_f);
+         eq.ElementAssembly(A);
+         eq.ElementAssembly(v);
+      }
+      MeshSides(ms) {
+         Elas2DT3 eq(theSide,u);
+         eq.BoundaryRHS(bound_f);
+         eq.SignoriniContact(bound_f,penal);
+         eq.SideAssembly(A);
+         eq.SideAssembly(v);
+       }
+                              
+      A.Prescribe(v,bc);
+      A.solve(v);
+                              
+      theDiscrepancy = Discrepancy(u,v,2,1);
+      if (verbose > 0)
+         cout &lt;&lt; "Iteration: " &lt;&lt; it &lt;&lt; ". Discrepancy: " &lt;&lt; theDiscrepancy &lt;&lt; endl;
+   }</font></pre>
+                              </td></tr></table></p>
+                              </ul>
+                              
+                              <p>Let us give some comments on the source code here above:
+                              <ul>
+                              <li>The contact condition is implemented via a penalty formulation as a boundary traction. For this,
+                              we make a loop over sides. The vector <span class=TT>bound_f</span> contains the gap at nodes (the distance
+                              between boundary nodes and the obstacle. Note that the only concerned sides are those who have a code
+                              equal to <span class=TT>CONTACT_A</span> or <span class=TT>CONTACT_B</span>
+                              <li>We have used global variables of <span class=LOGO>OFELI</span> to monitor iterations.
+                              These variables are  <span class=TT>theIteration</span>
+                              </ul>
+                              </SPAN>
+                              
+                              &nbsp;&nbsp;
+                              <h2>An example</h2>
+                              
+                              <SPAN class=TEXT>
+                              Let us run this program with the data presented in the following project file:
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;OFELI_File&gt;
+   &lt;info&gt;
+      &lt;title&gt;&lt;/title&gt;
+      &lt;date&gt;&lt;/date&gt;
+      &lt;author&gt;&lt;/author&gt;
+   &lt;/info&gt;
+   &lt;Project name="beam"&gt;
+      &lt;verbose&gt;1&lt;/verbose&gt;
+      &lt;output&gt;1&lt;/output&gt;
+      &lt;save&gt;1&lt;/save&gt;
+      &lt;plot&gt;1&lt;/plot&gt;
+      &lt;init&gt;1&lt;/init&gt;
+      &lt;mesh_file&gt;beam.m&lt;/mesh_file&gt;
+      &lt;plot_file&gt;beam.d&lt;/plot_file&gt;
+      &lt;prescription_file&gt;beam.pr&lt;/prescription_file&gt;
+   &lt;/Project&gt;
+&lt;/OFELI_File&gt;</font></pre>
+                              </td></tr></table></p>
+                              
+                              <p>The only thing that may differ from other seen project files is that
+                              prescription data is given in a separate file: <span class=VAR>beam.pr</span>.
+                              Let us give this one:
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;OFELI_File&gt;
+   &lt;info&gt;
+      &lt;title&gt;&lt;/title&gt;
+      &lt;date&gt;&lt;/date&gt;
+      &lt;author&gt;&lt;/author&gt;
+   &lt;/info&gt;
+   &lt;Prescription&gt;
+      &lt;BoundaryCondition code="1"&gt;0.0&lt;/BoundaryCondition&gt;
+      &lt;Traction code="1" dof="2"&gt;-1000.0&lt;/Traction&gt;
+   &lt;/Prescription&gt;
+&lt;/OFELI_File&gt;</font></pre>
+                              </td></tr></table></p>
+                              
+                              <p>
+                              Clearly, we have prescribed by this file a (Dirichlet) boundary condition that
+                              enforces a value of <span class=VAR>0.0</span> for degrees of freedom with code 
+                              <span class=VAR>1</span>. In addition, we have prescribed a traction of value
+                              <span class=VAR>-1000</span> for the second degrees of freedom (y-traction)
+                              having code <span class=VAR>1</span>.
+                              </span>
+                              
+                              <p><table align="center" border="2" cellpadding="2" cellspacing="0" >
+                              <tr>
+                              <td align="center" width="35"><a href="lelas3d.html"><img src="../im/backward.gif" border="0"></a></td>
+                              <td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
+                              <td align="center" width="35"><a href="beam.html"><img src="../im/forward.gif" border="0"></a></td>
+                              </tr>
+                              </table>
+                        </div>
+                     </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-   </div>
-</div>
+    </div>
 
-&nbsp;
-<p>
-<h2>Solid and Structural Mechanics Demo 3: A unilateral contact problem</h2>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.countTo.js"></script>
+    <script src="js/ofeli-main.js"></script>
 
-<p><table border="2" cellpadding="2" cellspacing="0" >
-<tr>
-<td align="center" width="35"><a href="lelas3d.html"><img src="../im/backward.gif" border="0"></a></td>
-<td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
-<td align="center" width="35"><a href="beam.html"><img src="../im/forward.gif" border="0"></a></td>
-</tr>
-</table>
-
-<p>
-<SPAN class=TEXT>
-This code solves an elastostatic problem involving unilateral contact.
-The contact is taken into account using a penalty method.
-</SPAN>
-
-<ul type=square>
-<li><SPAN class=TEXT>The code essentially looks like <a href="lelas2d.html">lelas2d</a>. The only difference
-is that since the problem is nonlinear, due to the contact condition, an iterative procedure must be supplied.
-We describe here the part of the code that performs iterations:
-
-<ul>
-<li>We make use in this code of some global variables of <span class=LOGO>OFELI</span> to monitor
-iterations. These variables are <span class=TT>MaxNbIterations</span>,
-<span class=TT>theIteration</span>, <span class=TT>MaxNbIterations</span>,
-<span class=TT>theTolerance</span> and <span class=TT>theDiscrepancy</span>
-with obvious meaning. Note that all these variables have default values.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   MaxNbIterations = data.getNbIter();
-   theTolerance = data.getTolerance();
-</font></pre>
-</td></tr></table></p>
-
-<li>The iteration loop can be drived by the macro <span class=TT>IterationLoop</span>
-which acts like a loop and which updates iteration index and stops
-iterations when the value of <span class=TT>theDiscrepancy</span> is under
-<span class=TT>theTolerance</span> or when <span class=TT>theIteration</span> reaches
-the value of <span class=TT>MaxNbIterations</span>.
-
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   IterationLoop {
-        v = 0.; A = 0.;
-        MeshElements(ms) {
-           Elas2DT3 eq(theElement);
-           eq.Deviator();
-           eq.Dilatation();
-           eq.BodyRHS(body_f);
-           eq.ElementAssembly(A);
-           eq.ElementAssembly(v);
-        }
-        MeshSides(ms) {
-           Elas2DT3 eq(theSide,u);
-           eq.BoundaryRHS(bound_f);
-           eq.SignoriniContact(bound_f,penal);
-           eq.SideAssembly(A);
-           eq.SideAssembly(v);
-        }
-
-        A.Prescribe(v,bc);
-        A.solve(v);
-
-        theDiscrepancy = Discrepancy(u,v,2,1);
-        if (verbose > 0)
-           cout &lt;&lt; "Iteration: " &lt;&lt; it &lt;&lt; ". Discrepancy: " &lt;&lt; theDiscrepancy &lt;&lt; endl;
-   }
-</font></pre>
-</td></tr></table></p>
-</ul>
-
-<p>Let us give some comments on the source code here above:
-<ul>
-<li>The contact condition is implemented via a penalty formulation as a boundary traction. For this,
-we make a loop over sides. The vector <span class=TT>bound_f</span> contains the gap at nodes (the distance
-between boundary nodes and the obstacle. Note that the only concerned sides are those who have a code
-equal to <span class=TT>CONTACT_A</span> or <span
-  class=TT>CONTACT_B</span>
-<li>We have used global variables of <span class=LOGO>OFELI</span> to monitor iterations.
-These variables are  <span class=TT>theIteration</span>
-</ul>
-</SPAN>
-
-&nbsp;&nbsp;
-<h2>An example</h2>
-
-<SPAN class=TEXT>
-Let us run this program with the data presented in the following project file:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
-&lt;OFELI_File&gt;
-&lt;info&gt;
-   &lt;title&gt;&lt;/title&gt;
-   &lt;date&gt;&lt;/date&gt;
-   &lt;author&gt;&lt;/author&gt;
-&lt;/info&gt;
-&lt;Project name="beam"&gt;
-   &lt;verbose&gt;1&lt;/verbose&gt;
-   &lt;output&gt;1&lt;/output&gt;
-   &lt;save&gt;1&lt;/save&gt;
-   &lt;plot&gt;1&lt;/plot&gt;
-   &lt;init&gt;1&lt;/init&gt;
-   &lt;mesh_file&gt;beam.m&lt;/mesh_file&gt;
-   &lt;plot_file&gt;beam.d&lt;/plot_file&gt;
-   &lt;prescription_file&gt;beam.pr&lt;/prescription_file&gt;
-&lt;/Project&gt;
-&lt;/OFELI_File&gt;</font></pre>
-</td></tr></table></p>
-
-<p>The only thing that may differ from other seen project files is that
-prescription data is given in a separate file: <span class=VAR>beam.pr</span>.
-Let us give this one:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
-&lt;OFELI_File&gt;
-&lt;info&gt;
-   &lt;title&gt;&lt;/title&gt;
-   &lt;date&gt;&lt;/date&gt;
-   &lt;author&gt;&lt;/author&gt;
-&lt;/info&gt;
-&lt;Prescription&gt;
-   &lt;BoundaryCondition code="1"&gt;0.0&lt;/BoundaryCondition&gt;
-   &lt;Traction code="1" dof="2"&gt;-1000.0&lt;/Traction&gt;
-&lt;/Prescription&gt;
-&lt;/OFELI_File&gt;</font></pre>
-</td></tr></table></p>
-
-<p>
-Clearly, we have prescribed by this file a (Dirichlet) boundary condition that
-enforces a value of <span class=VAR>0.0</span> for degrees of freedom with code 
-<span class=VAR>1</span>. In addition, we have prescribed a traction of value
-<span class=VAR>-1000</span> for the second degrees of freedom (y-traction)
-having code <span class=VAR>1</span>.
-</span>
-
-<p><table align="center" border="2" cellpadding="2" cellspacing="0" >
-<tr>
-<td align="center" width="35"><a href="lelas3d.html"><img src="../im/backward.gif" border="0"></a></td>
-<td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
-<td align="center" width="35"><a href="beam.html"><img src="../im/forward.gif" border="0"></a></td>
-</tr>
-</table>
-
-&nbsp;
-<div id="foot_bar">
-        Copyright &copy; 1998-2022 Rachid Touzani&nbsp;
-</div>
-
-</body>
+  </body>
 </html>

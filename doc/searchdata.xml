@@ -20350,7 +20350,7 @@
     <field name="args">(el, sd)</field>
     <field name="url">group__Mesh.html#gaf9dbbba985121c95914821dc4fc99905</field>
     <field name="keywords">ElementSideLoop</field>
-    <field name="text">A macro to loop on element sides el Instance of Element nd Pointer to pointed side</field>
+    <field name="text">A macro to loop on element sides el Instance of Element sd Pointer to pointed side</field>
   </doc>
   <doc>
     <field name="type">group</field>

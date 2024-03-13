@@ -46,7 +46,7 @@ namespace OFELI {
  *  \brief Definition file for class Laplace3DT4.
  */
 
-/*! \class Laplace2DT3
+/*! \class Laplace3DT4
  *  \ingroup Laplace
  *  \brief To build element equation for the Laplace equation
  *  using the 3-D tetrahedral element (<tt>P<sub>1</sub></tt>).
@@ -78,7 +78,6 @@ class Laplace3DT4 : virtual public Equa_Laplace<4,4,3,3> {
     ~Laplace3DT4() { }
 
 /// \brief Add finite element matrix to left-hand side
-/// @param [in] coef Value to multiply by the added matrix
     void LHS();
 
 /// \brief Add body source term to right-hand side

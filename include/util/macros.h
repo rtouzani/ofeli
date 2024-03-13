@@ -183,7 +183,7 @@ namespace OFELI {
  *  \ingroup Mesh
  * A macro to loop on element sides
  * @param el Instance of Element
- * @param nd Pointer to pointed side
+ * @param sd Pointer to pointed side
  */
 #define ElementSideLoop(el,sd) for (auto const& sd: (el).theSides)
 

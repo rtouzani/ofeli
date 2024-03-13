@@ -1,67 +1,196 @@
-<!-- XHTML 1.0 Strict -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<meta name="author" content="Rachid Touzani" />
-<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
-<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
-<link href="css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+<!DOCTYPE HTML>
+<html>
+  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="ofeli package" />
+    <meta name="keywords" content="Modelling, numerical simulation, scientific computing, ofeli" />
+    <title>ofeli library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/png" sizes="10x10" href="im/r.jpg" />
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>OFELI Downloads</title>
-<link rel="stylesheet" type="text/css" href="doxygen.css" />
-<link rel="stylesheet" type="text/css" href="head.css"  />
-</head>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-59742926-2', 'auto');
+        ga('send', 'pageview');
+    </script>
 
-<body bgcolor="#FFFFFF" link="#FF0000" vlink="#FF00FF" alink="#FF00FF">
-<p><center><a href="index.html"><img src="im/ofeli.gif" width="150" border="0"></a></center></p>
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="im/ofeli.png">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
 
-<div class="text">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/flexslider.css">
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/ofeli-style.css">
+    <link rel="stylesheet" href="css/doc.css">
 
-<div>
-<div id="button">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="html/index.html">Online Documentation</a></li>
-      <li><a href="presentations.html">Presentations</a></li>
-      <li><a href="copyright.html">License</a></li>
-      <li><a href="demos.html">Demo Programs</a></li>
-      <li><a href="mailto:rachid.touzani@uca.fr">Contact</a></li>
-    </ul>
-  </div>
+<!--    Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
+  </head>
 
-  <div id="cc">
-  <p><font color="#203F5B" size="4" face="verdana,Helvetica">
-  <h2>Stable Release</h2></font></p>
+  <body>
+    <div id="ofeli-page">
+      <div class="container-wrap">
+        <aside id="ofeli-aside" role="complementary" class="border js-fullheight">
+          <div class="text-center">
+            <a href="index.html">
+              <div class="logo-ofeli-img" style="background-image: url(im/ofeli.png); background-size: 110%;"></div>
+            </a>
+            <span class="position"><b>Mathematical Modelling<br> and Numerical Simulation</b></span>
+          </div>
+          <div>
+            <ul>
+                <li class="active"><a href="html/index.html">OFELI Documentation</a></li>
+                <li class="active"><a href="html/classes.html">Classes in OFELI</a></li>
+                <li class="active"><a href="fformats.html">File Formats</span></a></li>
+                <li class="active"><a href="extlib.html">External Libraries</span></a></li>
+                <li class="active"><a href="citing.html">Citing OFELI</span></a></li>
+                <li class="active"><a href="demos.html">Demo Codes</span></a></li>
+                <li class="active"><a href="presentations.html">Presentations</a></li>
+                <li class="active"><a href="copyright.html">License</a></li>
+                <li class="active"><a href="mailto:rachid.touzani@uca.fr">Contact</a></li>
+            </ul>
+        </div>
 
-  <p>Available downloads:</p>
+        <a href="rita.html"><center><img src="im/rita.png" width="90"></center></a>
 
-  <ul>
-    <li><span class="text">Source code: <a href="http://ofeli.org/releases/ofeli-5.1.1-src.tar.gz">ofeli-5.2.0-src.tar.gz</a></span>
-    <li><span class="text">Demo codes: <a href="http://ofeli.org/releases/ofeli-5.1.1-demos.tar.gz">ofeli-5.1.1-demos.tar.gz</a></span>
-    <li><span class="text"></span>Compiled library with input files for: 
-        <a href="http://ofeli.org/releases/ofeli-5.2.0-Linux64.tar.gz"><span class="text">Linux64</span></a>,
-        <a href="http://ofeli.org/releases/ofeli-5.2.0-MacOSX.tar.gz"><span class="text">MacOSX</span></a>
-</ul>
+<!--      Search Google -->
+          <center>
+            <form method=GET action="http://www.google.com/search">
+              <table bgcolor="#FFFFFF">
+                <tr>
+                  <td><a href=" http://www.google.com/">
+                      <img src="http://www.google.com/logos/Logo_40wht.gif" border="0" alt="Google" align="absmiddle"></a> 
+                      <input TYPE=text name=q size=31 maxlength=255 value="">
+                      <input type=hidden name=hl value="en">
+                      <input type=submit name=btnG value="Search">
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </center>
+<!--      Search Google -->
 
-<!--
-<p><font color="#203F5B" size="4" face="verdana,Helvetica">
-<h2>Development Version</h2></font></p>
-    Nightly built last release can be obtained from <a href="https://github.com/rtouzani/ofeli">Github</a>.-->
+          <div class="ofeli-footer">
+            <p><small>&copy; Copyright <script>document.write(new Date().getFullYear());</script> All rights reserved</small>
+            </p>
+          </div>
+        </aside>
 
-<p><font color="#203F5B" size="4" face="verdana,Helvetica">
-<h2>Old Releases</h2></font></p>
-   <p>
-   <span class="text">Source files of older releases can be found <a href="http://ofeli.org/releases/">HERE</a></span>
-   </p>
- </div>
-</div>
+        <div id="ofeli-main">
+          <section class="ofeli-start" data-section="home">
+            <div class="ofeli-narrow-content">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                    <div class="col-md-12">
+                      <div class="start-desc">
+                        <h1 class="first-ofeli-heading"></h1>
+                        <div id="cc">
+                          <p><font color="#203F5B" size="4" face="verdana,Helvetica">
+                             <h2>Stable Release</h2></font>
+                          </p>
+                                              
+                          <p>Available downloads:</p>
+                          <ul>
+                            <li><span class="text">Source code: <a href="http://ofeli.org/releases/ofeli-5.2.0-src.tar.gz">ofeli-5.2.0-src.tar.gz</a></span>
+                            <li><span class="text">Documentation: <a href="http://ofeli.org/releases/ofeli-5.2.0-doc.tar.gz">ofeli-5.2.0-doc.tar.gz</a></span>
+                            <li><span class="text">Compiled library with input files for: 
+                            <a href="http://ofeli.org/releases/ofeli-5.2.0-Linux64.tar.gz">Linux64</a>,
+                            <a href="http://ofeli.org/releases/ofeli-5.2.0-MacOSX.tar.gz">MacOSX</a> systems.</li>
+                          </ul>              
+                                                <!--
+                                                <p><font color="#203F5B" size="4" face="verdana,Helvetica">
+                                                <h2>Development Version</h2></font></p>
+                                                    Nightly built last release can be obtained from <a href="https://github.com/rtouzani/ofeli">Github</a>.-->
 
-<br><br><br><br><br><br><br><br><br>
-<div id="foot_bar">
-        Copyright &copy; 1998-2024 Rachid Touzani&nbsp;
-</div>
-</div>
-</body>
+                          <p><font color="#203F5B" size="4" face="verdana,Helvetica">
+                            <h2>Old Releases</h2></font>
+                          </p>
+                          <p>
+                            <span class="text">Source files of older releases can be found <a href="http://ofeli.org/releases/">HERE</a></span>
+                          </p>
+
+                          <p><font color="#203F5B" size="4" face="verdana,Helvetica">
+                            <h2>OFELI installation</h2></font>
+                          </p>
+
+                          <p><span class=text>The <span class=logo>OFELI</span> library is available in source form. It can then be installed on 
+                            any platform where the C++ language is available. Note that a recent version of the compiler using the C++17-Norm is necessary
+                            to compile the library.</span>
+                          </p>
+                          <p><span class=TEXT>Compiled versions of the library are also available for download.</span>
+                          </p>
+
+                          <h2>Installation of the library source</h2>
+                        
+                          <p><span class=text>The source package to download is generally named</span></p>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;<span class=var>ofeli-x.y.z-src.tar.gz<br></span></p>
+                          <p><span CLASS=text>where <span class=var>x.y.z</span> is the release tag.</span></p>
+                          <p><span class=text>The <span class=logo>OFELI</span> library can be constructed by the <a href="https://cmake.org/">cmake</a> application.
+                             For this end, once the downloaded package is unpacked, let's go to the created directory.
+                             You now have to create a directory, which we will call <span class=var>build</span> for instance.<br>
+                             Type: </span>
+                          </p>
+                          <p>&nbsp;&nbsp;&nbsp;&nbsp;<span class=var>cd build<br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;cmake ..<br>
+                             &nbsp;&nbsp;&nbsp;&nbsp;cmake --build .</span>
+                          </p>
+                          <p><span CLASS=text>You can now run the tests by typing</span></p>
+                          <p><span class=var>&nbsp;&nbsp;&nbsp;&nbsp;ctest</span></p>
+                          <p><span class=text>All tests are run. If you prefer to display test outputs, type</span></p>
+                          <p><span class=var>&nbsp;&nbsp;&nbsp;&nbsp;ctest --verbose</span></p>
+                          <p><span class=text>Now, everything is ready (if tests are run successfully). 
+                             You can install the application on your computer by typing</span></p>
+                          <p><span class=var>&nbsp;&nbsp;&nbsp;&nbsp;make install</span></p>
+                          <p><span class=text>This command may require administrator privileges.<br>
+                             You can adjust the installation destination (the "prefix") by passing the 
+                             <span class=var>-DCMAKE_INSTALL_PREFIX=myprefix</span> option to cmake, as is explained in the message that cmake 
+                             prints at the end. 
+                             </span>
+                          </p>
+
+                          <h2>Installation of the compiled library</h2>
+
+                          <p><span class=text>The main directory contains a script file called <span class=var>install.sh</span>. To install
+                             <span class=logo>OFELI</span>, execute this script. </span></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.countTo.js"></script>
+    <script src="js/ofeli-main.js"></script>
+
+  </body>
 </html>

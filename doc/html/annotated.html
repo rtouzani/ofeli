@@ -6,79 +6,108 @@
 <meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
 <link href="../css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="../css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
-<head>
-  <title>OFELI - Documentation</title>
-  <link rel="stylesheet" type="text/css" href="../doxygen.css" />
-  <link rel="stylesheet" type="text/css" href="../tabs.css" />
-</head>
-<body>
-  <p align="center">
-    <img src="../im//ofeli.gif" alt="OFELI's Logo" width="300" height="90">
-  </p>
-  <p align="center"><font color="#203F5B" size="4" face="verdana,Helvetica">
-    <b>An Object Oriented Finite Element Library</b></font>
-  </p>
-<!-- Complete Page-->
-  <div id="main">
-    <div id="mainmenu">
-      <div class="text">
-<!-- Menu -->
-        <div class="tabs">
-          <ul class="tablist">
-            <li><a href="../index.html"><span>Home</span></a></li>
-            <li><a href="../installation.html"><span>Installation</span></a></li>
-            <li><a href="index.html"><span>Class Documentation</span></a></li>
-            <li><a href="../citing.html"><span>Citing OFELI</span></a></li>
-            <li><a href="../fformats.html"><span>File Formats</span></a></li>
-            <li><a href="../demos.html"><span>Demo Codes</span></a></li>
-            <li><a href="../extlib.html"><span>External Libraries</span></a></li>
-          </ul>
+<html>
+  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+  <head>
+      <link rel="stylesheet" type="text/css" href="../doxygen.css" />
+      <link rel="stylesheet" type="text/css" href="../tabs.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="ofeli package" />
+    <meta name="keywords" content="Modelling, numerical simulation, scientific computing, ofeli" />
+    <title>ofeli library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/png" sizes="10x10" href="../im/r.jpg" />
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-59742926-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="../im/ofeli.png">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="../doxygen.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/icomoon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/flexslider.css">
+    <link rel="stylesheet" href="../fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../css/ofeli-style.css">
+    <link rel="stylesheet" href="../css/doc.css">
+<!--    Modernizr JS -->
+    <script src="../js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
+  </head>
+  <body>
+    <div id="ofeli-page">
+      <div class="container-wrap">
+        <aside id="ofeli-aside" role="complementary" class="border js-fullheight">
+          <div class="text-center">
+            <a href="../index.html">
+              <div class="logo-ofeli-img" style="background-image: url(../im/ofeli.png); background-size: 110%;"></div>
+            </a>
+            <span class="position"><b>Mathematical Modelling<br> and Numerical Simulation</b></span>
+          </div>
+          <div>
+            <ul>
+                <li class="active"><a href="index.html">OFELI Documentation</a></li>
+                <li class="active"><a href="classes.html">Classes in OFELI</a></li>
+                <li class="active"><a href="../fformats.html">File Formats</span></a></li>
+                <li class="active"><a href="../extlib.html">External Libraries</span></a></li>
+                <li class="active"><a href="../citing.html">Citing OFELI</span></a></li>
+                <li class="active"><a href="../download.html">Download and Installation</a></li>
+                <li class="active"><a href="../demos.html">Demo Codes</span></a></li>
+                <li class="active"><a href="../presentations.html">Presentations</a></li>
+                <li class="active"><a href="../copyright.html">License</a></li>
+                <li class="active"><a href="mailto:rachid.touzani@uca.fr">Contact</a></li>
+            </ul>
         </div>
-        <div id="navrow1" class="tabs">
-          <ul class="tablist">
-            <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
-            <li><a href="modules.html"><span>Modules</span></a></li>
-<!--            <li><a href="namespaces.html"><span>Namespaces</span></a></li>-->
-            <li><a href="classes.html"><span>Classes</span></a></li>
-          </ul>
-        </div>
-      </div>
+        <a href="rita.html"><center><img src="../im/rita.png" width="90"></center></a>
+<!--      Search Google -->
+          <center>
+            <form method=GET action="http://www.google.com/search">
+              <table bgcolor="#FFFFFF">
+                <tr>
+                  <td><a href=" http://www.google.com/">
+                    <img src="http://www.google.com/logos/Logo_40wht.gif" border="0" alt="Google" align="absmiddle"></a> 
+                    <input TYPE=TEXT name=q size=31 maxlength=255 value="">
+                    <input type=hidden name=hl value="en">
+                    <input type=submit name=btnG value="Search">
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </center>
+ <!--     Search Google -->
+          <div class="ofeli-footer">
+            <p><small>&copy; Copyright <script>document.write(new Date().getFullYear());</script> All rights reserved</small>
+            </p>
+          </div>
+        </aside>
+        <div id="ofeli-main">
+          <section class="ofeli-start" data-section="home">
+            <div class="ofeli-narrow-content">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                    <div class="col-md-12">
+                      <div class="start-desc">
+                        <h1 class="first-ofeli-heading"></h1>
+                        <div id="cc">
 <!-- Generated by Doxygen 1.9.8 -->
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
-</script>
-<script type="text/javascript" src="menudata.js"></script>
-<script type="text/javascript" src="menu.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() {
-  initMenu('',true,true,'search.html','Search');
-  $(document).ready(function() {
-    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
-  });
-});
-/* @license-end */
-</script>
-<div id="main-nav"></div>
 </div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('annotated.html',''); initResizable(); });
-/* @license-end */
-</script>
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">Class List</div></div>
 </div><!--header-->
@@ -114,227 +143,119 @@ $(document).ready(function(){initNavTree('annotated.html',''); initResizable(); 
 <tr id="row_0_25_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ElementList.html" target="_self">ElementList</a></td><td class="desc">Class to construct a list of elements having some common properties </td></tr>
 <tr id="row_0_26_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Ellipse.html" target="_self">Ellipse</a></td><td class="desc">To store and treat an ellipsoidal figure </td></tr>
 <tr id="row_0_27_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa.html" target="_self">Equa</a></td><td class="desc">Mother abstract class to describe equation </td></tr>
-<tr id="row_0_28_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Electromagnetics.html" target="_self">Equa_Electromagnetics</a></td><td class="desc">Abstract class for Electromagnetics <a class="el" href="classOFELI_1_1Equation.html" title="Abstract class for all equation classes.">Equation</a> classes </td></tr>
-<tr id="row_0_29_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Fluid.html" target="_self">Equa_Fluid</a></td><td class="desc">Abstract class for Fluid Dynamics <a class="el" href="classOFELI_1_1Equation.html" title="Abstract class for all equation classes.">Equation</a> classes </td></tr>
-<tr id="row_0_30_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Laplace.html" target="_self">Equa_Laplace</a></td><td class="desc">Abstract class for classes about the Laplace equation </td></tr>
-<tr id="row_0_31_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__LinearPDE.html" target="_self">Equa_LinearPDE</a></td><td class="desc">Abstract class for Finite Element classes for lienar PDEs' </td></tr>
-<tr id="row_0_32_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Porous.html" target="_self">Equa_Porous</a></td><td class="desc">Abstract class for Porous Media Finite Element classes </td></tr>
-<tr id="row_0_33_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Solid.html" target="_self">Equa_Solid</a></td><td class="desc">Abstract class for Solid Mechanics Finite Element classes </td></tr>
-<tr id="row_0_34_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Therm.html" target="_self">Equa_Therm</a></td><td class="desc">Abstract class for Heat transfer Finite Element classes </td></tr>
-<tr id="row_0_35_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equation.html" target="_self">Equation</a></td><td class="desc">Abstract class for all equation classes </td></tr>
-<tr id="row_0_36_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Estimator.html" target="_self">Estimator</a></td><td class="desc">To calculate an a posteriori estimator of the solution </td></tr>
-<tr id="row_0_37_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FastMarching.html" target="_self">FastMarching</a></td><td class="desc">Class for the fast marching algorithm on uniform grids </td></tr>
-<tr id="row_0_38_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FastMarching1DG.html" target="_self">FastMarching1DG</a></td><td class="desc">Class for the fast marching algorithm on 1-D uniform grids </td></tr>
-<tr id="row_0_39_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FastMarching2DG.html" target="_self">FastMarching2DG</a></td><td class="desc">Class for the fast marching algorithm on 2-D uniform grids </td></tr>
-<tr id="row_0_40_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FastMarching3DG.html" target="_self">FastMarching3DG</a></td><td class="desc">Class for the fast marching algorithm on 3-D uniform grids </td></tr>
-<tr id="row_0_41_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FEShape.html" target="_self">FEShape</a></td><td class="desc">Parent class from which inherit all finite element shape classes </td></tr>
-<tr id="row_0_42_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Figure.html" target="_self">Figure</a></td><td class="desc">To store and treat a figure (or shape) information </td></tr>
-<tr id="row_0_43_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FuncApprox.html" target="_self">FuncApprox</a></td><td class="desc">To set function approximation methods </td></tr>
-<tr id="row_0_44_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Funct.html" target="_self">Funct</a></td><td class="desc">A simple class to parse real valued functions </td></tr>
-<tr id="row_0_45_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Gauss.html" target="_self">Gauss</a></td><td class="desc">Calculate data for Gauss integration </td></tr>
-<tr id="row_0_46_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1GeoModel.html" target="_self">GeoModel</a></td><td class="desc">To set geometry modelling </td></tr>
-<tr id="row_0_47_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Grid.html" target="_self">Grid</a></td><td class="desc">To manipulate structured grids </td></tr>
-<tr id="row_0_48_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1HelmholtzBT3.html" target="_self">HelmholtzBT3</a></td><td class="desc">Builds finite element arrays for Helmholtz equations in a bounded media using 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> triangles </td></tr>
-<tr id="row_0_49_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Hexa8.html" target="_self">Hexa8</a></td><td class="desc">Defines a three-dimensional 8-node hexahedral finite element using Q1-isoparametric interpolation </td></tr>
-<tr id="row_0_50_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ICPG1D.html" target="_self">ICPG1D</a></td><td class="desc">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 1-D </td></tr>
-<tr id="row_0_51_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ICPG2DT.html" target="_self">ICPG2DT</a></td><td class="desc">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 2-D </td></tr>
-<tr id="row_0_52_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ICPG3DT.html" target="_self">ICPG3DT</a></td><td class="desc">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 3-D </td></tr>
-<tr id="row_0_53_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Integration.html" target="_self">Integration</a></td><td class="desc">Class for numerical integration methods </td></tr>
-<tr id="row_0_54_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1IOField.html" target="_self">IOField</a></td><td class="desc">Enables working with files in the XML Format </td></tr>
-<tr id="row_0_55_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1IPF.html" target="_self">IPF</a></td><td class="desc">To read project parameters from a file in <a class="el" href="classOFELI_1_1IPF.html" title="To read project parameters from a file in IPF format.">IPF</a> format </td></tr>
-<tr id="row_0_56_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Iter.html" target="_self">Iter</a></td><td class="desc">Class to drive an iterative process </td></tr>
-<tr id="row_0_57_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace1DL2.html" target="_self">Laplace1DL2</a></td><td class="desc">To build element equation for a 1-D elliptic equation using the 2-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> line element (<code>P<sub>1</sub></code>) </td></tr>
-<tr id="row_0_58_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace1DL3.html" target="_self">Laplace1DL3</a></td><td class="desc">To build element equation for the 1-D elliptic equation using the 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> line (<code>P<sub>2</sub></code>) </td></tr>
-<tr id="row_0_59_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace2DT3.html" target="_self">Laplace2DT3</a></td><td class="desc">To build element equation for the Laplace equation using the 2-D triangle element (<code>P<sub>1</sub></code>) </td></tr>
-<tr id="row_0_60_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace2DT6.html" target="_self">Laplace2DT6</a></td><td class="desc">To build element equation for the Laplace equation using the 2-D triangle element (<code>P<sub>2</sub></code>) </td></tr>
-<tr id="row_0_61_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LaplaceDG2DP1.html" target="_self">LaplaceDG2DP1</a></td><td class="desc">To build and solve the linear system for the Poisson problem using the <a class="el" href="classOFELI_1_1DG.html" title="Enables preliminary operations and utilities for the Discontinous Galerkin method.">DG</a> P<sub>1</sub> 2-D triangle element </td></tr>
-<tr id="row_0_62_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LCL1D.html" target="_self">LCL1D</a></td><td class="desc">Class to solve the linear conservation law (Hyperbolic equation) in 1-D by a MUSCL Finite Volume scheme </td></tr>
-<tr id="row_0_63_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LCL2DT.html" target="_self">LCL2DT</a></td><td class="desc">Class to solve the linear hyperbolic equation in 2-D by a MUSCL Finite Volume scheme on triangles </td></tr>
-<tr id="row_0_64_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LCL3DT.html" target="_self">LCL3DT</a></td><td class="desc">Class to solve the linear conservation law equation in 3-D by a MUSCL Finite Volume scheme on tetrahedra </td></tr>
-<tr id="row_0_65_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LeastSquare.html" target="_self">LeastSquare</a></td><td class="desc">To compute a least square approximation </td></tr>
-<tr id="row_0_66_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Line2.html" target="_self">Line2</a></td><td class="desc">To describe a 2-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> planar line finite element </td></tr>
-<tr id="row_0_67_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Line3.html" target="_self">Line3</a></td><td class="desc">To describe a 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> quadratic planar line finite element </td></tr>
-<tr id="row_0_68_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LinearPDE1D.html" target="_self">LinearPDE1D</a></td><td class="desc">Solves a generic linear PDE in 1-D using 2-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> line finite elements </td></tr>
-<tr id="row_0_69_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LinearPDE2D.html" target="_self">LinearPDE2D</a></td><td class="desc">Solves a generic linear PDE in 2-D using 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> triangular finite elements </td></tr>
-<tr id="row_0_70_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LinearSolver.html" target="_self">LinearSolver</a></td><td class="desc">Class to solve systems of linear equations by direct or iterative methods </td></tr>
-<tr id="row_0_71_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LocalMatrix.html" target="_self">LocalMatrix</a></td><td class="desc">Handles small size matrices like element matrices, with a priori known size </td></tr>
-<tr id="row_0_72_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LocalVect.html" target="_self">LocalVect</a></td><td class="desc">Handles small size vectors like element vectors </td></tr>
-<tr id="row_0_73_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LPSolver.html" target="_self">LPSolver</a></td><td class="desc">To solve a linear programming problem </td></tr>
-<tr id="row_0_74_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Material.html" target="_self">Material</a></td><td class="desc">To treat material data. This class enables reading material data in material data files. It also returns these informations by means of its members </td></tr>
-<tr id="row_0_75_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Matrix.html" target="_self">Matrix</a></td><td class="desc">Virtual class to handle matrices for all storage formats </td></tr>
-<tr id="row_0_76_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Mesh.html" target="_self">Mesh</a></td><td class="desc">To store and manipulate finite element meshes </td></tr>
-<tr id="row_0_77_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1MeshAdapt.html" target="_self">MeshAdapt</a></td><td class="desc">To adapt mesh in function of given solution </td></tr>
-<tr id="row_0_78_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Muscl.html" target="_self">Muscl</a></td><td class="desc">Parent class for hyperbolic solvers with Muscl scheme </td></tr>
-<tr id="row_0_79_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Muscl1D.html" target="_self">Muscl1D</a></td><td class="desc">Class for 1-D hyperbolic solvers with <a class="el" href="classOFELI_1_1Muscl.html" title="Parent class for hyperbolic solvers with Muscl scheme.">Muscl</a> scheme </td></tr>
-<tr id="row_0_80_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Muscl2DT.html" target="_self">Muscl2DT</a></td><td class="desc">Class for 2-D hyperbolic solvers with <a class="el" href="classOFELI_1_1Muscl.html" title="Parent class for hyperbolic solvers with Muscl scheme.">Muscl</a> scheme </td></tr>
-<tr id="row_0_81_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Muscl3DT.html" target="_self">Muscl3DT</a></td><td class="desc">Class for 3-D hyperbolic solvers with <a class="el" href="classOFELI_1_1Muscl.html" title="Parent class for hyperbolic solvers with Muscl scheme.">Muscl</a> scheme using tetrahedra </td></tr>
-<tr id="row_0_82_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1MyNLAS.html" target="_self">MyNLAS</a></td><td class="desc">Abstract class to define by user specified function </td></tr>
-<tr id="row_0_83_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1MyOpt.html" target="_self">MyOpt</a></td><td class="desc">Abstract class to define by user specified optimization function </td></tr>
-<tr id="row_0_84_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1NLASSolver.html" target="_self">NLASSolver</a></td><td class="desc">To solve a system of nonlinear algebraic equations of the form f(u) = 0 </td></tr>
-<tr id="row_0_85_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Node.html" target="_self">Node</a></td><td class="desc">To describe a node </td></tr>
-<tr id="row_0_86_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1NodeList.html" target="_self">NodeList</a></td><td class="desc">Class to construct a list of nodes having some common properties </td></tr>
-<tr id="row_0_87_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1NSP2DQ41.html" target="_self">NSP2DQ41</a></td><td class="desc">Builds finite element arrays for incompressible Navier-Stokes equations in 2-D domains using Q<sub>1</sub>/P<sub>0</sub> element and a penaly formulation for the incompressibility condition </td></tr>
-<tr id="row_0_88_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ODESolver.html" target="_self">ODESolver</a></td><td class="desc">To solve a system of ordinary differential equations </td></tr>
-<tr id="row_0_89_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1OptSolver.html" target="_self">OptSolver</a></td><td class="desc">To solve an optimization problem with bound constraints </td></tr>
-<tr id="row_0_90_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Partition.html" target="_self">Partition</a></td><td class="desc">To partition a finite element mesh into balanced submeshes </td></tr>
-<tr id="row_0_91_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Penta6.html" target="_self">Penta6</a></td><td class="desc">Defines a 6-node pentahedral finite element using <code>P<sub>1</sub></code> interpolation in local coordinates <code>(s.x,s.y)</code> and <code>Q<sub>1</sub></code> isoparametric interpolation in local coordinates <code>(s.x,s.z)</code> and <code>(s.y,s.z)</code> </td></tr>
-<tr id="row_0_92_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1PhaseChange.html" target="_self">PhaseChange</a></td><td class="desc">This class enables defining phase change laws for a given material </td></tr>
-<tr id="row_0_93_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structOFELI_1_1Point.html" target="_self">Point</a></td><td class="desc">Defines a point with arbitrary type coordinates </td></tr>
-<tr id="row_0_94_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structOFELI_1_1Point2D.html" target="_self">Point2D</a></td><td class="desc">Defines a 2-D point with arbitrary type coordinates </td></tr>
-<tr id="row_0_95_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Polygon.html" target="_self">Polygon</a></td><td class="desc">To store and treat a polygonal figure </td></tr>
-<tr id="row_0_96_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Prec.html" target="_self">Prec</a></td><td class="desc">To set a preconditioner </td></tr>
-<tr id="row_0_97_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Pres2DT3.html" target="_self">Pres2DT3</a></td><td class="desc">Builds finite element arrays for wave propagation in 2-D using 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> elements </td></tr>
-<tr id="row_0_98_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Prescription.html" target="_self">Prescription</a></td><td class="desc">To prescribe various types of data by an algebraic expression. Data may consist in boundary conditions, forces, tractions, fluxes, initial condition. All these data types can be defined through an enumerated variable </td></tr>
-<tr id="row_0_99_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Quad4.html" target="_self">Quad4</a></td><td class="desc">Defines a 4-node quadrilateral finite element using <code>Q<sub>1</sub></code> isoparametric interpolation </td></tr>
-<tr id="row_0_100_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Reconstruction.html" target="_self">Reconstruction</a></td><td class="desc">To perform various reconstruction operations </td></tr>
-<tr id="row_0_101_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Rectangle.html" target="_self">Rectangle</a></td><td class="desc">To store and treat a rectangular figure </td></tr>
-<tr id="row_0_102_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Side.html" target="_self">Side</a></td><td class="desc">To store and treat finite element sides (edges in 2-D or faces in 3-D) </td></tr>
-<tr id="row_0_103_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SideList.html" target="_self">SideList</a></td><td class="desc">Class to construct a list of sides having some common properties </td></tr>
-<tr id="row_0_104_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SkMatrix.html" target="_self">SkMatrix</a></td><td class="desc">To handle square matrices in skyline storage format </td></tr>
-<tr id="row_0_105_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SkSMatrix.html" target="_self">SkSMatrix</a></td><td class="desc">To handle symmetric matrices in skyline storage format </td></tr>
-<tr id="row_0_106_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structOFELI_1_1SpaceTime.html" target="_self">SpaceTime</a></td><td class="desc">Defines a space-time point </td></tr>
-<tr id="row_0_107_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Sphere.html" target="_self">Sphere</a></td><td class="desc">To store and treat a sphere </td></tr>
-<tr id="row_0_108_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SpMatrix.html" target="_self">SpMatrix</a></td><td class="desc">To handle matrices in sparse storage format </td></tr>
-<tr id="row_0_109_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SteklovPoincare2DBE.html" target="_self">SteklovPoincare2DBE</a></td><td class="desc">Solver of the Steklov Poincare problem in 2-D geometries using piecewie constant boundary elemen </td></tr>
-<tr id="row_0_110_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Tabulation.html" target="_self">Tabulation</a></td><td class="desc">To read and manipulate tabulated functions </td></tr>
-<tr id="row_0_111_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Tetra4.html" target="_self">Tetra4</a></td><td class="desc">Defines a three-dimensional 4-node tetrahedral finite element using <code>P<sub>1</sub></code> interpolation </td></tr>
-<tr id="row_0_112_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Timer.html" target="_self">Timer</a></td><td class="desc">To handle elapsed time counting </td></tr>
-<tr id="row_0_113_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1TimeStepping.html" target="_self">TimeStepping</a></td><td class="desc">To solve time stepping problems, i.e. systems of linear ordinary differential equations of the form [A2]{y"} + [A1]{y'} + [A0]{y} = {b} </td></tr>
-<tr id="row_0_114_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1TINS2DT3S.html" target="_self">TINS2DT3S</a></td><td class="desc">Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 2-D domains. Numerical approximation uses stabilized 3-node triangle finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration </td></tr>
-<tr id="row_0_115_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1TINS3DT4S.html" target="_self">TINS3DT4S</a></td><td class="desc">Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 3-D domains. Numerical approximation uses stabilized 4-node tatrahedral finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration </td></tr>
-<tr id="row_0_116_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Triang3.html" target="_self">Triang3</a></td><td class="desc">Defines a 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> (<code>P<sub>1</sub></code>) triangle </td></tr>
-<tr id="row_0_117_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Triang6S.html" target="_self">Triang6S</a></td><td class="desc">Defines a 6-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> straight triangular finite element using <code>P<sub>2</sub></code> interpolation </td></tr>
-<tr id="row_0_118_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1triangle.html" target="_self">triangle</a></td><td class="desc">Defines a triangle. The reference element is the rectangle triangle with two unit edges </td></tr>
-<tr id="row_0_119_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Triangle.html" target="_self">Triangle</a></td><td class="desc">To store and treat a triangle </td></tr>
-<tr id="row_0_120_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1TrMatrix.html" target="_self">TrMatrix</a></td><td class="desc">To handle tridiagonal matrices </td></tr>
-<tr id="row_0_121_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Vect.html" target="_self">Vect</a></td><td class="desc">To handle general purpose vectors </td></tr>
-<tr id="row_0_122_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1WaterPorous2D.html" target="_self">WaterPorous2D</a></td><td class="desc">To solve water flow equations in porous media (1-D) </td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classEqua__Wave.html" target="_self">Equa_Wave</a></td><td class="desc">Abstract class for Wave Finite Element classes </td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classPRES1DL2.html" target="_self">PRES1DL2</a></td><td class="desc">Builds finite element arrays for acoustic propagation in 1-D using 2-Node elements </td></tr>
+<tr id="row_0_28_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Acoustics.html" target="_self">Equa_Acoustics</a></td><td class="desc">Abstract class for Wave Finite Element classes </td></tr>
+<tr id="row_0_29_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Electromagnetics.html" target="_self">Equa_Electromagnetics</a></td><td class="desc">Abstract class for Electromagnetics <a class="el" href="classOFELI_1_1Equation.html" title="Abstract class for all equation classes.">Equation</a> classes </td></tr>
+<tr id="row_0_30_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Fluid.html" target="_self">Equa_Fluid</a></td><td class="desc">Abstract class for Fluid Dynamics <a class="el" href="classOFELI_1_1Equation.html" title="Abstract class for all equation classes.">Equation</a> classes </td></tr>
+<tr id="row_0_31_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Laplace.html" target="_self">Equa_Laplace</a></td><td class="desc">Abstract class for classes about the Laplace equation </td></tr>
+<tr id="row_0_32_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__LinearPDE.html" target="_self">Equa_LinearPDE</a></td><td class="desc">Abstract class for Finite Element classes for lienar PDEs' </td></tr>
+<tr id="row_0_33_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Porous.html" target="_self">Equa_Porous</a></td><td class="desc">Abstract class for Porous Media Finite Element classes </td></tr>
+<tr id="row_0_34_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Solid.html" target="_self">Equa_Solid</a></td><td class="desc">Abstract class for Solid Mechanics Finite Element classes </td></tr>
+<tr id="row_0_35_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equa__Therm.html" target="_self">Equa_Therm</a></td><td class="desc">Abstract class for Heat transfer Finite Element classes </td></tr>
+<tr id="row_0_36_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Equation.html" target="_self">Equation</a></td><td class="desc">Abstract class for all equation classes </td></tr>
+<tr id="row_0_37_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Estimator.html" target="_self">Estimator</a></td><td class="desc">To calculate an a posteriori estimator of the solution </td></tr>
+<tr id="row_0_38_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FastMarching.html" target="_self">FastMarching</a></td><td class="desc">Class for the fast marching algorithm on uniform grids </td></tr>
+<tr id="row_0_39_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FastMarching1DG.html" target="_self">FastMarching1DG</a></td><td class="desc">Class for the fast marching algorithm on 1-D uniform grids </td></tr>
+<tr id="row_0_40_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FastMarching2DG.html" target="_self">FastMarching2DG</a></td><td class="desc">Class for the fast marching algorithm on 2-D uniform grids </td></tr>
+<tr id="row_0_41_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FastMarching3DG.html" target="_self">FastMarching3DG</a></td><td class="desc">Class for the fast marching algorithm on 3-D uniform grids </td></tr>
+<tr id="row_0_42_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FEShape.html" target="_self">FEShape</a></td><td class="desc">Parent class from which inherit all finite element shape classes </td></tr>
+<tr id="row_0_43_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Figure.html" target="_self">Figure</a></td><td class="desc">To store and treat a figure (or shape) information </td></tr>
+<tr id="row_0_44_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1FuncApprox.html" target="_self">FuncApprox</a></td><td class="desc">To set function approximation methods </td></tr>
+<tr id="row_0_45_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Funct.html" target="_self">Funct</a></td><td class="desc">A simple class to parse real valued functions </td></tr>
+<tr id="row_0_46_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Gauss.html" target="_self">Gauss</a></td><td class="desc">Calculate data for Gauss integration </td></tr>
+<tr id="row_0_47_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1GeoModel.html" target="_self">GeoModel</a></td><td class="desc">To set geometry modelling </td></tr>
+<tr id="row_0_48_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Grid.html" target="_self">Grid</a></td><td class="desc">To manipulate structured grids </td></tr>
+<tr id="row_0_49_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1HelmholtzBT3.html" target="_self">HelmholtzBT3</a></td><td class="desc">Builds finite element arrays for Helmholtz equations in a bounded media using 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> triangles </td></tr>
+<tr id="row_0_50_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Hexa8.html" target="_self">Hexa8</a></td><td class="desc">Defines a three-dimensional 8-node hexahedral finite element using Q1-isoparametric interpolation </td></tr>
+<tr id="row_0_51_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ICPG1D.html" target="_self">ICPG1D</a></td><td class="desc">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 1-D </td></tr>
+<tr id="row_0_52_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ICPG2DT.html" target="_self">ICPG2DT</a></td><td class="desc">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 2-D </td></tr>
+<tr id="row_0_53_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ICPG3DT.html" target="_self">ICPG3DT</a></td><td class="desc">Class to solve the Inviscid compressible fluid flows (Euler equations) for perfect gas in 3-D </td></tr>
+<tr id="row_0_54_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Integration.html" target="_self">Integration</a></td><td class="desc">Class for numerical integration methods </td></tr>
+<tr id="row_0_55_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1IOField.html" target="_self">IOField</a></td><td class="desc">Enables working with files in the XML Format </td></tr>
+<tr id="row_0_56_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1IPF.html" target="_self">IPF</a></td><td class="desc">To read project parameters from a file in <a class="el" href="classOFELI_1_1IPF.html" title="To read project parameters from a file in IPF format.">IPF</a> format </td></tr>
+<tr id="row_0_57_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Iter.html" target="_self">Iter</a></td><td class="desc">Class to drive an iterative process </td></tr>
+<tr id="row_0_58_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace1DL2.html" target="_self">Laplace1DL2</a></td><td class="desc">To build element equation for a 1-D elliptic equation using the 2-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> line element (<code>P<sub>1</sub></code>) </td></tr>
+<tr id="row_0_59_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace1DL3.html" target="_self">Laplace1DL3</a></td><td class="desc">To build element equation for the 1-D elliptic equation using the 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> line (<code>P<sub>2</sub></code>) </td></tr>
+<tr id="row_0_60_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace2DT3.html" target="_self">Laplace2DT3</a></td><td class="desc">To build element equation for the Laplace equation using the 2-D triangle element (<code>P<sub>1</sub></code>) </td></tr>
+<tr id="row_0_61_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace2DT6.html" target="_self">Laplace2DT6</a></td><td class="desc">To build element equation for the Laplace equation using the 2-D triangle element (<code>P<sub>2</sub></code>) </td></tr>
+<tr id="row_0_62_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Laplace3DT4.html" target="_self">Laplace3DT4</a></td><td class="desc">To build element equation for the Laplace equation using the 3-D tetrahedral element (<code>P<sub>1</sub></code>) </td></tr>
+<tr id="row_0_63_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LaplaceDG2DP1.html" target="_self">LaplaceDG2DP1</a></td><td class="desc">To build and solve the linear system for the Poisson problem using the <a class="el" href="classOFELI_1_1DG.html" title="Enables preliminary operations and utilities for the Discontinous Galerkin method.">DG</a> P<sub>1</sub> 2-D triangle element </td></tr>
+<tr id="row_0_64_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LCL1D.html" target="_self">LCL1D</a></td><td class="desc">Class to solve the linear conservation law (Hyperbolic equation) in 1-D by a MUSCL Finite Volume scheme </td></tr>
+<tr id="row_0_65_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LCL2DT.html" target="_self">LCL2DT</a></td><td class="desc">Class to solve the linear hyperbolic equation in 2-D by a MUSCL Finite Volume scheme on triangles </td></tr>
+<tr id="row_0_66_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LCL3DT.html" target="_self">LCL3DT</a></td><td class="desc">Class to solve the linear conservation law equation in 3-D by a MUSCL Finite Volume scheme on tetrahedra </td></tr>
+<tr id="row_0_67_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LeastSquare.html" target="_self">LeastSquare</a></td><td class="desc">To compute a least square approximation </td></tr>
+<tr id="row_0_68_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Line2.html" target="_self">Line2</a></td><td class="desc">To describe a 2-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> planar line finite element </td></tr>
+<tr id="row_0_69_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Line3.html" target="_self">Line3</a></td><td class="desc">To describe a 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> quadratic planar line finite element </td></tr>
+<tr id="row_0_70_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LinearPDE1D.html" target="_self">LinearPDE1D</a></td><td class="desc">Solves a generic linear PDE in 1-D using 2-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> line finite elements </td></tr>
+<tr id="row_0_71_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LinearPDE2D.html" target="_self">LinearPDE2D</a></td><td class="desc">Solves a generic linear PDE in 2-D using 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> triangular finite elements </td></tr>
+<tr id="row_0_72_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LinearSolver.html" target="_self">LinearSolver</a></td><td class="desc">Class to solve systems of linear equations by direct or iterative methods </td></tr>
+<tr id="row_0_73_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LocalMatrix.html" target="_self">LocalMatrix</a></td><td class="desc">Handles small size matrices like element matrices, with a priori known size </td></tr>
+<tr id="row_0_74_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LocalVect.html" target="_self">LocalVect</a></td><td class="desc">Handles small size vectors like element vectors </td></tr>
+<tr id="row_0_75_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1LPSolver.html" target="_self">LPSolver</a></td><td class="desc">To solve a linear programming problem </td></tr>
+<tr id="row_0_76_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Material.html" target="_self">Material</a></td><td class="desc">To treat material data. This class enables reading material data in material data files. It also returns these informations by means of its members </td></tr>
+<tr id="row_0_77_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Matrix.html" target="_self">Matrix</a></td><td class="desc">Virtual class to handle matrices for all storage formats </td></tr>
+<tr id="row_0_78_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Mesh.html" target="_self">Mesh</a></td><td class="desc">To store and manipulate finite element meshes </td></tr>
+<tr id="row_0_79_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1MeshAdapt.html" target="_self">MeshAdapt</a></td><td class="desc">To adapt mesh in function of given solution </td></tr>
+<tr id="row_0_80_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Muscl.html" target="_self">Muscl</a></td><td class="desc">Parent class for hyperbolic solvers with Muscl scheme </td></tr>
+<tr id="row_0_81_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Muscl1D.html" target="_self">Muscl1D</a></td><td class="desc">Class for 1-D hyperbolic solvers with <a class="el" href="classOFELI_1_1Muscl.html" title="Parent class for hyperbolic solvers with Muscl scheme.">Muscl</a> scheme </td></tr>
+<tr id="row_0_82_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Muscl2DT.html" target="_self">Muscl2DT</a></td><td class="desc">Class for 2-D hyperbolic solvers with <a class="el" href="classOFELI_1_1Muscl.html" title="Parent class for hyperbolic solvers with Muscl scheme.">Muscl</a> scheme </td></tr>
+<tr id="row_0_83_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Muscl3DT.html" target="_self">Muscl3DT</a></td><td class="desc">Class for 3-D hyperbolic solvers with <a class="el" href="classOFELI_1_1Muscl.html" title="Parent class for hyperbolic solvers with Muscl scheme.">Muscl</a> scheme using tetrahedra </td></tr>
+<tr id="row_0_84_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1MyNLAS.html" target="_self">MyNLAS</a></td><td class="desc">Abstract class to define by user specified function </td></tr>
+<tr id="row_0_85_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1MyOpt.html" target="_self">MyOpt</a></td><td class="desc">Abstract class to define by user specified optimization function </td></tr>
+<tr id="row_0_86_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1NLASSolver.html" target="_self">NLASSolver</a></td><td class="desc">To solve a system of nonlinear algebraic equations of the form f(u) = 0 </td></tr>
+<tr id="row_0_87_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Node.html" target="_self">Node</a></td><td class="desc">To describe a node </td></tr>
+<tr id="row_0_88_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1NodeList.html" target="_self">NodeList</a></td><td class="desc">Class to construct a list of nodes having some common properties </td></tr>
+<tr id="row_0_89_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1NSP2DQ41.html" target="_self">NSP2DQ41</a></td><td class="desc">Builds finite element arrays for incompressible Navier-Stokes equations in 2-D domains using Q<sub>1</sub>/P<sub>0</sub> element and a penaly formulation for the incompressibility condition </td></tr>
+<tr id="row_0_90_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1ODESolver.html" target="_self">ODESolver</a></td><td class="desc">To solve a system of ordinary differential equations </td></tr>
+<tr id="row_0_91_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1OptSolver.html" target="_self">OptSolver</a></td><td class="desc">To solve an optimization problem with bound constraints </td></tr>
+<tr id="row_0_92_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Partition.html" target="_self">Partition</a></td><td class="desc">To partition a finite element mesh into balanced submeshes </td></tr>
+<tr id="row_0_93_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Penta6.html" target="_self">Penta6</a></td><td class="desc">Defines a 6-node pentahedral finite element using <code>P<sub>1</sub></code> interpolation in local coordinates <code>(s.x,s.y)</code> and <code>Q<sub>1</sub></code> isoparametric interpolation in local coordinates <code>(s.x,s.z)</code> and <code>(s.y,s.z)</code> </td></tr>
+<tr id="row_0_94_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1PhaseChange.html" target="_self">PhaseChange</a></td><td class="desc">This class enables defining phase change laws for a given material </td></tr>
+<tr id="row_0_95_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structOFELI_1_1Point.html" target="_self">Point</a></td><td class="desc">Defines a point with arbitrary type coordinates </td></tr>
+<tr id="row_0_96_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structOFELI_1_1Point2D.html" target="_self">Point2D</a></td><td class="desc">Defines a 2-D point with arbitrary type coordinates </td></tr>
+<tr id="row_0_97_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Polygon.html" target="_self">Polygon</a></td><td class="desc">To store and treat a polygonal figure </td></tr>
+<tr id="row_0_98_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Prec.html" target="_self">Prec</a></td><td class="desc">To set a preconditioner </td></tr>
+<tr id="row_0_99_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Pres1DL2.html" target="_self">Pres1DL2</a></td><td class="desc">Builds finite element arrays for acoustic propagation in 1-D using 2-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> elements </td></tr>
+<tr id="row_0_100_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Pres2DT3.html" target="_self">Pres2DT3</a></td><td class="desc">Builds finite element arrays for wave propagation in 2-D using 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> elements </td></tr>
+<tr id="row_0_101_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Prescription.html" target="_self">Prescription</a></td><td class="desc">To prescribe various types of data by an algebraic expression. Data may consist in boundary conditions, forces, tractions, fluxes, initial condition. All these data types can be defined through an enumerated variable </td></tr>
+<tr id="row_0_102_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Quad4.html" target="_self">Quad4</a></td><td class="desc">Defines a 4-node quadrilateral finite element using <code>Q<sub>1</sub></code> isoparametric interpolation </td></tr>
+<tr id="row_0_103_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Reconstruction.html" target="_self">Reconstruction</a></td><td class="desc">To perform various reconstruction operations </td></tr>
+<tr id="row_0_104_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Rectangle.html" target="_self">Rectangle</a></td><td class="desc">To store and treat a rectangular figure </td></tr>
+<tr id="row_0_105_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Side.html" target="_self">Side</a></td><td class="desc">To store and treat finite element sides (edges in 2-D or faces in 3-D) </td></tr>
+<tr id="row_0_106_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SideList.html" target="_self">SideList</a></td><td class="desc">Class to construct a list of sides having some common properties </td></tr>
+<tr id="row_0_107_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SkMatrix.html" target="_self">SkMatrix</a></td><td class="desc">To handle square matrices in skyline storage format </td></tr>
+<tr id="row_0_108_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SkSMatrix.html" target="_self">SkSMatrix</a></td><td class="desc">To handle symmetric matrices in skyline storage format </td></tr>
+<tr id="row_0_109_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structOFELI_1_1SpaceTime.html" target="_self">SpaceTime</a></td><td class="desc">Defines a space-time point </td></tr>
+<tr id="row_0_110_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Sphere.html" target="_self">Sphere</a></td><td class="desc">To store and treat a sphere </td></tr>
+<tr id="row_0_111_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SpMatrix.html" target="_self">SpMatrix</a></td><td class="desc">To handle matrices in sparse storage format </td></tr>
+<tr id="row_0_112_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1SteklovPoincare2DBE.html" target="_self">SteklovPoincare2DBE</a></td><td class="desc">Solver of the Steklov Poincare problem in 2-D geometries using piecewie constant boundary elemen </td></tr>
+<tr id="row_0_113_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Tabulation.html" target="_self">Tabulation</a></td><td class="desc">To read and manipulate tabulated functions </td></tr>
+<tr id="row_0_114_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Tetra4.html" target="_self">Tetra4</a></td><td class="desc">Defines a three-dimensional 4-node tetrahedral finite element using <code>P<sub>1</sub></code> interpolation </td></tr>
+<tr id="row_0_115_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Timer.html" target="_self">Timer</a></td><td class="desc">To handle elapsed time counting </td></tr>
+<tr id="row_0_116_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1TimeStepping.html" target="_self">TimeStepping</a></td><td class="desc">To solve time stepping problems, i.e. systems of linear ordinary differential equations of the form [A2]{y"} + [A1]{y'} + [A0]{y} = {b} </td></tr>
+<tr id="row_0_117_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1TINS2DT3S.html" target="_self">TINS2DT3S</a></td><td class="desc">Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 2-D domains. Numerical approximation uses stabilized 3-node triangle finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration </td></tr>
+<tr id="row_0_118_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1TINS3DT4S.html" target="_self">TINS3DT4S</a></td><td class="desc">Builds finite element arrays for transient incompressible fluid flow using Navier-Stokes equations in 3-D domains. Numerical approximation uses stabilized 4-node tatrahedral finite elements for velocity and pressure. 2nd-order projection scheme is used for time integration </td></tr>
+<tr id="row_0_119_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Triang3.html" target="_self">Triang3</a></td><td class="desc">Defines a 3-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> (<code>P<sub>1</sub></code>) triangle </td></tr>
+<tr id="row_0_120_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Triang6S.html" target="_self">Triang6S</a></td><td class="desc">Defines a 6-<a class="el" href="classOFELI_1_1Node.html" title="To describe a node.">Node</a> straight triangular finite element using <code>P<sub>2</sub></code> interpolation </td></tr>
+<tr id="row_0_121_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1triangle.html" target="_self">triangle</a></td><td class="desc">Defines a triangle. The reference element is the rectangle triangle with two unit edges </td></tr>
+<tr id="row_0_122_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Triangle.html" target="_self">Triangle</a></td><td class="desc">To store and treat a triangle </td></tr>
+<tr id="row_0_123_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1TrMatrix.html" target="_self">TrMatrix</a></td><td class="desc">To handle tridiagonal matrices </td></tr>
+<tr id="row_0_124_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1Vect.html" target="_self">Vect</a></td><td class="desc">To handle general purpose vectors </td></tr>
+<tr id="row_0_125_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classOFELI_1_1WaterPorous2D.html" target="_self">WaterPorous2D</a></td><td class="desc">To solve water flow equations in porous media (1-D) </td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->
-</div><!-- doc-content -->
 
-  </div> <!-- class text -->
-</div> <!-- main menu -->
-<!-- Google Search -->
-<br><br>
-<center>
-  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-  <script type="text/javascript"> 
-     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
-     google.setOnLoadCallback(function() {
-        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
-        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
-        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-        customSearchControl.draw('cse');
-     }, true);
-   </script>
-   <style type="text/css">
-     .gsc-control-cse {
-     font-family: Verdana, sans-serif;
-     border-color: #DAE0E5;
-     background-color: #DAE0E5;
-   }
-   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
-   input.gsc-input { border-color: #B6BEC5; }
-   input.gsc-search-button {
-     border-color: #B6BEC5;
-     background-color: #D0D1D4;
-   }
-   .gsc-tabHeader.gsc-tabhInactive {
-     border-color: #999999;
-     background-color: #EEEEEE;
-   }
-   .gsc-tabHeader.gsc-tabhActive {
-     border-color: #999999;
-     background-color: #999999;
-   }
-   .gsc-tabsArea { border-color: #999999; }
-   .gsc-webResult.gsc-result,
-   .gsc-results .gsc-imageResult {
-     border-color: #FFFFFF;
-     background-color: #FFFFFF;
-   }
-   .gsc-webResult.gsc-result:hover,
-   .gsc-imageResult:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gs-webResult.gs-result a.gs-title:link,
-   .gs-webResult.gs-result a.gs-title:link b,
-   .gs-imageResult a.gs-title:link,
-   .gs-imageResult a.gs-title:link b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:visited,
-   .gs-webResult.gs-result a.gs-title:visited b,
-   .gs-imageResult a.gs-title:visited,
-   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:hover,
-   .gs-webResult.gs-result a.gs-title:hover b,
-   .gs-imageResult a.gs-title:hover,
-   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:active,
-   .gs-webResult.gs-result a.gs-title:active b,
-   .gs-imageResult a.gs-title:active,
-   .gs-imageResult a.gs-title:active b { color: #0568CD; }
-   .gsc-cursor-page { color: #0568CD; }
-   a.gsc-trailing-more-results:link { color: #0568CD; }
-   .gs-webResult .gs-snippet,
-   .gs-imageResult .gs-snippet,
-   .gs-fileFormatType { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl,
-   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { display: none; }
-   .gs-webResult div.gs-visibleUrl-long { display: block; }
-   .gs-promotion div.gs-visibleUrl-short { display: none; }
-   .gs-promotion div.gs-visibleUrl-long { display: block; }
-   .gsc-cursor-box { border-color: #FFFFFF; }
-   .gsc-results .gsc-cursor-box .gsc-cursor-page {
-      border-color: #999999;
-      background-color: #FFFFFF;
-      color: #0568CD;
-   }
-   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
-      border-color: #999999;
-      background-color: #999999;
-      color: #0568CD;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion {
-      border-color: #D2D6DC;
-      background-color: #D0D1D4;
-   }
-   .gsc-completion-title { color: #0568CD; }
-   .gsc-completion-snippet { color: #5F6A73; }
-   .gs-promotion a.gs-title:link,
-   .gs-promotion a.gs-title:link *,
-   .gs-promotion .gs-snippet a:link { color: #0066CC; }
-   .gs-promotion a.gs-title:visited,
-   .gs-promotion a.gs-title:visited *,
-   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
-   .gs-promotion a.gs-title:hover,
-   .gs-promotion a.gs-title:hover *,
-   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
-   .gs-promotion a.gs-title:active,
-   .gs-promotion a.gs-title:active *,
-   .gs-promotion .gs-snippet a:active { color: #0066CC; }
-   .gs-promotion .gs-snippet,
-   .gs-promotion .gs-title .gs-promotion-title-right,
-   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
-   .gs-promotion .gs-visibleUrl,
-   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
-   </style>
-</center>
+</div></div></div></div></div></div></div>
+</section>
+</div></div></div>
 <!-- End of Google Search Box -->
-<br><br><br></p>
-<div id="foot_bar">
-  Copyright &copy; 1998-2024 Rachid Touzani&nbsp;
-</div>
-</div> <!-- main -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.easing.1.3.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.waypoints.min.js"></script>
+<script src="../js/jquery.flexslider-min.js"></script>
+<script src="../js/owl.carousel.min.js"></script>
+<script src="../js/jquery.countTo.js"></script>
+<script src="../js/ofeli-main.js"></script>
 </body>
-</HTML>
+</html>

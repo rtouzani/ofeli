@@ -177,14 +177,14 @@ class Equation : virtual public Equa
     void setResidue();
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/** \brief Localize Element Vector from a Vect instance.
+/** \brief Localize element vector from a Vect instance.
  *  @param [in] b Reference to global vector to be localized.
  *  The resulting local vector can be accessed by attribute ePrev.
  *  This member function is to be used if a constructor with Element was invoked.
  */
     void LocalNodeVector(Vect<real_t>& b);
 
-/** \brief Localize Element Vector from a Vect instance.
+/** \brief Localize element vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
  *  @param [out] be Local vector, the length of which is the total number of element equations. 
  *  @remark All degrees of freedom are transferred to the local vector
@@ -192,7 +192,7 @@ class Equation : virtual public Equa
     void ElementNodeVector(const Vect<real_t>&     b,
                            LocalVect<real_t,NEE_>& be);
 
-/** \brief Localize Side Vector from a Vect instance.
+/** \brief Localize side vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
  *  @param [out] bs Local vector, the length of which is the total number of side equations. 
  *  @remark All degrees of freedom are transferred to the local vector
@@ -200,7 +200,7 @@ class Equation : virtual public Equa
     void SideNodeVector(const Vect<real_t>&     b,
                         LocalVect<real_t,NSE_>& bs);
 
-/** \brief Localize Side Vector from a Vect instance.
+/** \brief Localize side vector from a Vect instance.
  *  @param [in] b Global vector to be localized.
  *  @param [out] bs Local constant value of vector at given side. 
  *  @remark All degrees of freedom are transferred to the local vector
@@ -233,7 +233,7 @@ class Equation : virtual public Equa
     void ElementSideVector(const Vect<real_t>&     b,
                            LocalVect<real_t,NSE_>& be);
 
-/** \brief Localize Element Vector.
+/** \brief Localize element vector.
  *  @param [in] b Global vector to be localized
  *  @param [in] dof_type DOF type option. To choose among the enumerated values:
  *  <ul>
@@ -254,7 +254,7 @@ class Equation : virtual public Equa
                        DOFSupport          dof_type=NODE_DOF,
                        int                 flag=0);
 
-/** \brief Localize Side Vector.
+/** \brief Localize side vector.
  *  @param [in] b Global vector to be localized
  *  <ul>
  *     <li><tt>NODE_DOF</tt>, DOFs are supported by nodes [ default ]

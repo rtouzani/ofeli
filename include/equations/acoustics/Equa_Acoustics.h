@@ -58,11 +58,11 @@ class Side;
 extern Material theMaterial;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/*! \class Equa_Wave
+/*! \class Equa_Acoustics
  *  \ingroup Wave
  * \brief Abstract class for Wave Finite %Element classes.
  *
- * \tparam <NEN> Number of element nodes
+ * \tparam <NEN_> Number of element nodes
  * \tparam <NEE_> Number of element equations
  * \tparam <NSN_> Number of side nodes
  * \tparam <NSE_> Number of side equations

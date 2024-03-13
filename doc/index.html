@@ -1,121 +1,150 @@
-<!-- XHTML 1.0 Strict -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<meta name="author" content="Rachid Touzani" />
-<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
-<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
-<link href="css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+<!DOCTYPE HTML>
+<html>
+    <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="ofeli package" />
+        <meta name="keywords" content="Modelling, numerical simulation, scientific computing, ofeli" />
+        <title>ofeli library</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <meta name="author" content="" />
+        <link rel="icon" type="image/png" sizes="10x10" href="im/r.jpg" />
 
-<head>
-<title>OFELI Library - An Object Oriented Finite Element Library</title>
-<link rel="stylesheet" type="text/css" href="doxygen.css" />
-<link rel="stylesheet" type="text/css" href="head.css"  />
-</head>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-<body bgcolor="#ffffff" text="#000000">
+          ga('create', 'UA-59742926-2', 'auto');
+          ga('send', 'pageview');
+        </script>
 
-<div class="text">
-   <p><center><img src="im/ofeli.gif" alt="OFELI's Logo" width="300"
-   height="90"></center></p>
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="shortcut icon" href="im/ofeli.png">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
 
-   <p><center><font color="#203F5B" size="4" face="verdana,Helvetica">
-   <b>An Object Oriented Finite Element Library</b></font></center></p>
-   <br><br><br>
+        <link rel="stylesheet" href="doxygen.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/icomoon.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/flexslider.css">
+        <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+        <link rel="stylesheet" href="css/owl.carousel.min.css">
+        <link rel="stylesheet" href="css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="css/ofeli-style.css">
+        <link rel="stylesheet" href="css/doc.css">
 
-   <div>
-      <div id="button">
-         <ul>
-            <li><a href="html/index.html">Online Documentation</a></li>
-            <li><a href="download.html">Downloads</a></li>
-            <li><a href="presentations.html">Presentations</a></li>
-            <li><a href="copyright.html">License</a></li>
-            <li><a href="demos.html">Demo Programs</a></li>
-            <li><a href="mailto:rachid.touzani@uca.fr">Contact</a></li>
-         </ul>
-      </div>
+<!-- Modernizr JS -->
+        <script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
+    </head>
 
-      <div id="cc">
-         <p>Based on a long experience in the development of finite element software, OFELI
-         (Object Finite Element LIbrary) is a framework of C++ classes for the development of
-         finite element programs. Its main features are:
-         <table border="0">
-         <tr>
-            <td valign=top><img src="im/plus.gif"></td>
-            <td>Various storage schemes of matrices (dense, sparse, skyline).</td>
-         </tr>
-         <tr>
-            <td valign=top><img src="im/plus.gif"></td>
-            <td>Direct methods of solution of linear systems of equations as well as
-            various combinations of iterative solvers and preconditioners.</td>
-         </tr>
-         <tr>
-            <td valign=top><img src="im/plus.gif"></td>
-            <td>Solvers for ordinary differential equations, optimization problems, eigenvalue problems, ...</td>
-         </tr>
-         <tr>
-            <td valign=top><img src="im/plus.gif"></td>
-            <td>Numerical solution of eigenvalue problems</td>
-         </tr>
-         <tr>
-            <td valign=top><img src="im/plus.gif"></font></td>
-            <td>Classes for the solution of most popular problems (<font color="#800080">Heat Transfer</FONT>,
-            <font color="#800080">Fluid Flow</FONT>, <font color="#800080">Solid Mechanics</FONT>, <font color="#800080">Electromagnetics</FONT>, ...).</td>
-         </tr>
-         </table>
+    <body>
+        <div id="ofeli-page">
+            <div class="container-wrap">
+                <aside id="ofeli-aside" role="complementary" class="border js-fullheight">
+                    <div class="text-center">
+                        <a href="index.html">
+                            <div class="logo-ofeli-img" style="background-image: url(im/ofeli.png); background-size: 100%;"></div>
+                        </a>
+                        <span class="position"><b>Mathematical Modelling<br> and Numerical Simulation</b></span>
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="active"><a href="html/index.html">OFELI Documentation</a></li>
+                            <li class="active"><a href="html/classes.html">Classes in OFELI</a></li>
+                            <li class="active"><a href="fformats.html">File Formats</span></a></li>
+                            <li class="active"><a href="extlib.html">External Libraries</span></a></li>
+                            <li class="active"><a href="citing.html">Citing OFELI</span></a></li>
+                            <li class="active"><a href="download.html">Download and Installation</a></li>
+                            <li class="active"><a href="demos.html">Demo Codes</span></a></li>
+                            <li class="active"><a href="presentations.html">Presentations</a></li>
+                            <li class="active"><a href="copyright.html">License</a></li>
+                            <li class="active"><a href="mailto:rachid.touzani@uca.fr">Contact</a></li>
+                        </ul>
+                    </div>
 
-         <p>The <SPAN CLASS=LOGO>OFELI</SPAN> package is not only a library
-         of classes for Finite Element developments. The package contains in addition :
+                    <a href="rita.html"><center><img src="im/rita.png" width="90"></center></a>
 
-         <table border="0">
-         <tr>
-            <td><img src="im/plus.gif"></td>
-            <td><SPAN CLASS=TEXT>Very simple examples for "academic" finite element codes</SPAN></td>
-         </tr>
-         <tr>
-            <td><img src="im/plus.gif"></td>
-            <td>A large set of demos</td>
-         </tr>
-         <tr>
-            <td><img src="im/plus.gif"></td>
-            <td>An extensive documentation in PDF and HTML formats</td>
-         </tr>
-         <tr>
-            <td><img src="im/plus.gif"></td>
-            <td>Utility programs to convert mesh and output files and to generate simple meshes</td>
-         </tr>
-         </table>
-         <br>
-
-         <div><font color="#800080">
-            <span class="LOGO">OFELI</span> is free but Copyrighted software. It is distributed under the
-            terms of the <b>GNU Lesser General Public License (LGPL)</b>. Details of the <b>LGPL</b> are <a href="copyright.html"><b>Here</b></a>.
-            </font>
-         </div>
-         <br>
-      </div>
-   </div>
-
-<!-- Search Google -->
-<center> 
-   <FORM method=GET action="http://www.google.com/search">
-   <TABLE bgcolor="#FFFFFF"><tr><td>
-   <A HREF=" http://www.google.com/">
-   <IMG SRC="http://www.google.com/logos/Logo_40wht.gif" border="0" ALT="Google" align="absmiddle"></A> 
-   <INPUT TYPE=text name=q size=31 maxlength=255 value="">
-   <INPUT TYPE=hidden name=hl value="en">
-   <INPUT type=submit name=btnG VALUE="Search">
-   </td></tr></TABLE> 
-   </FORM>
- </center>
-<!-- Search Google -->
+<!--                Search Google -->
+                    <center>
+                        <form method=GET action="http://www.google.com/search">
+                            <table bgcolor="#FFFFFF">
+                                <tr>
+                                <td><a href=" http://www.google.com/">
+                                   <img src="http://www.google.com/logos/Logo_40wht.gif" border="0" alt="Google" align="absmiddle"></a> 
+                                   <input TYPE=TEXT name=q size=31 maxlength=255 value="">
+                                   <input type=hidden name=hl value="en">
+                                   <input type=submit name=btnG value="Search">
+                                </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </center>
+ <!--               Search Google -->
  
-   <br><br>
-   <div id="foot_bar">
-      Copyright &copy; 1998-2024 Rachid Touzani&nbsp;
-   </div>
+                    <div class="ofeli-footer">
+                        <p><small>&copy; Copyright <script>document.write(new Date().getFullYear());</script> All rights reserved
+                        </span>
+                        </small></p>
+                    </div>
+                </aside>
 
-</div>
+                <div id="ofeli-main">
+                    <section class="ofeli-start" data-section="home">
+                        <div class="ofeli-narrow-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                                        <div class="col-md-12">
+                                            <div class="start-desc">
+                                                <h1 class="first-ofeli-heading"></h1>
+                                                <p><span class=logo>ofeli</span> is an open-source software package containing:
+                                                    <ul>
+                                                        <li>A library of c++ classes (<span class=logo>ofeli</span>, as Object Finite Element Library)
+                                                            to solve partial differential equations by finite element methods. It also
+                                                            contains numerous classes and functions to solve various numerical analysis problems.
+                                                        </li>
+                                                        <li>A line command application (<span class=logo>rita</span>) to solve various numerical simulation problems.<br>
+                                                            It handles:
+                                                            <ul>
+                                                               <li>Interpolation and function approximation (Lagrange, Spline, Least squares, Nurbs, B&eacute;zier)</li>
+                                                               <li>Algebraic Equations</li>
+                                                               <li>Ordinary and Partial Differential Equations</li>
+                                                               <li>Optimization problems</li>
+                                                               <li>Eigenvalue problems</li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
 
-</body>
+<!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.easing.1.3.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.waypoints.min.js"></script>
+        <script src="js/jquery.flexslider-min.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/jquery.countTo.js"></script>
+        <script src="js/ofeli-main.js"></script>
+
+    </body>
 </html>

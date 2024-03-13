@@ -1,348 +1,317 @@
-<!-- XHTML 1.0 Strict -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<meta name="author" content="Rachid Touzani" />
-<meta name="keywords" content=" css, dropdowns, dropdown menu, drop-down, menu, navigation, nav, horizontal, vertical left-to-right, vertical right-to-left, horizontal linear, horizontal upwards, cross browser, internet explorer, ie, firefox, safari, opera, browser, lwis" />
-<meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
-<link href="../css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="../css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
+<!DOCTYPE HTML>
+<html>
+  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="ofeli package" />
+    <meta name="keywords" content="Modelling, numerical simulation, scientific computing, ofeli" />
+    <title>ofeli library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/png" sizes="10x10" href="../im/r.jpg" />
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>Heat Transfer Demo 2</title>
-<link rel="stylesheet" type="text/css" href="../doxygen.css" />
-<link rel="stylesheet" type="text/css" href="../tabs.css"  />
-</head>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-59742926-2', 'auto');
+        ga('send', 'pageview');
+    </script>
 
-<body bgcolor="#FFFFFF" link="#FF0000" vlink="#FF00FF" alink="#FF00FF">
-<p align="center"><a href="../index.html"><img src="../im/ofeli.gif" width="150" border="0"></a></p>
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="../im/ofeli.png">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
 
-<center>
-  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-  <script type="text/javascript"> 
-     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
-     google.setOnLoadCallback(function() {
-        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
-        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
-        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-        customSearchControl.draw('cse');
-     }, true);
-   </script>
-   <style type="text/css">
-     .gsc-control-cse {
-     font-family: Verdana, sans-serif;
-     border-color: #DAE0E5;
-     background-color: #DAE0E5;
-   }
-   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
-   input.gsc-input { border-color: #B6BEC5; }
-   input.gsc-search-button {
-     border-color: #B6BEC5;
-     background-color: #D0D1D4;
-   }
-   .gsc-tabHeader.gsc-tabhInactive {
-     border-color: #999999;
-     background-color: #EEEEEE;
-   }
-   .gsc-tabHeader.gsc-tabhActive {
-     border-color: #999999;
-     background-color: #999999;
-   }
-   .gsc-tabsArea { border-color: #999999; }
-   .gsc-webResult.gsc-result,
-   .gsc-results .gsc-imageResult {
-     border-color: #FFFFFF;
-     background-color: #FFFFFF;
-   }
-   .gsc-webResult.gsc-result:hover,
-   .gsc-imageResult:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gs-webResult.gs-result a.gs-title:link,
-   .gs-webResult.gs-result a.gs-title:link b,
-   .gs-imageResult a.gs-title:link,
-   .gs-imageResult a.gs-title:link b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:visited,
-   .gs-webResult.gs-result a.gs-title:visited b,
-   .gs-imageResult a.gs-title:visited,
-   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:hover,
-   .gs-webResult.gs-result a.gs-title:hover b,
-   .gs-imageResult a.gs-title:hover,
-   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:active,
-   .gs-webResult.gs-result a.gs-title:active b,
-   .gs-imageResult a.gs-title:active,
-   .gs-imageResult a.gs-title:active b { color: #0568CD; }
-   .gsc-cursor-page { color: #0568CD; }
-   a.gsc-trailing-more-results:link { color: #0568CD; }
-   .gs-webResult .gs-snippet,
-   .gs-imageResult .gs-snippet,
-   .gs-fileFormatType { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl,
-   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { display: none; }
-   .gs-webResult div.gs-visibleUrl-long { display: block; }
-   .gs-promotion div.gs-visibleUrl-short { display: none; }
-   .gs-promotion div.gs-visibleUrl-long { display: block; }
-   .gsc-cursor-box { border-color: #FFFFFF; }
-   .gsc-results .gsc-cursor-box .gsc-cursor-page {
-      border-color: #999999;
-      background-color: #FFFFFF;
-      color: #0568CD;
-   }
-   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
-      border-color: #999999;
-      background-color: #999999;
-      color: #0568CD;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion {
-      border-color: #D2D6DC;
-      background-color: #D0D1D4;
-   }
-   .gsc-completion-title { color: #0568CD; }
-   .gsc-completion-snippet { color: #5F6A73; }
-   .gs-promotion a.gs-title:link,
-   .gs-promotion a.gs-title:link *,
-   .gs-promotion .gs-snippet a:link { color: #0066CC; }
-   .gs-promotion a.gs-title:visited,
-   .gs-promotion a.gs-title:visited *,
-   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
-   .gs-promotion a.gs-title:hover,
-   .gs-promotion a.gs-title:hover *,
-   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
-   .gs-promotion a.gs-title:active,
-   .gs-promotion a.gs-title:active *,
-   .gs-promotion .gs-snippet a:active { color: #0066CC; }
-   .gs-promotion .gs-snippet,
-   .gs-promotion .gs-title .gs-promotion-title-right,
-   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
-   .gs-promotion .gs-visibleUrl,
-   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
-   </style>
-</center>
-</p>
-&nbsp;
+    <link rel="stylesheet" href="../doxygen.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/icomoon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/flexslider.css">
+    <link rel="stylesheet" href="../fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../css/ofeli-style.css">
+    <link rel="stylesheet" href="../css/doc.css">
 
-<div id="mainmenu">
-   <div class="text">
-     <div class="tabs">
-         <ul class="tablist">
-           <li><a href="../index.html"><span>Home</span></a></li>
-           <li><a href="../installation.html"><span>Installation</span></a></li>
-           <li><a href="../html/index.html"><span>Class Documentation</span></a></li>
-           <li><a href="../citing.html"><span>Citing OFELI</span></a></li>
-           <li><a href="../fformats.html"><span>File Formats</span></a></li>
-           <li class="current"><a href="../demos.html"><span>Demo Codes</span></a></li>
-           <li><a href="../extlib.html"><span>External Libraries</span></a></li>
-         </ul>
-      </div>
-   </div>
-</div>
+<!--    Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
+  </head>
 
-&nbsp;
-<p>
-<h2>Heat Transfer Demo 2: A 2-D transient diffusion code</h2>
+  <body>
+    <div id="ofeli-page">
+      <div class="container-wrap">
+        <aside id="ofeli-aside" role="complementary" class="border js-fullheight">
+          <div class="text-center">
+            <a href="../index.html">
+              <div class="logo-ofeli-img" style="background-image: url(../im/ofeli.png); background-size: 110%;"></div>
+            </a>
+            <span class="position"><b>Mathematical Modelling<br> and Numerical Simulation</b></span>
+          </div>
+          <div>
+            <ul>
+                <li class="active"><a href="../index.html">OFELI Documentation</a></li>
+                <li class="active"><a href="../html/classes.html">Classes in OFELI</a></li>
+                <li class="active"><a href="../fformats.html">File Formats</span></a></li>
+                <li class="active"><a href="../extlib.html">External Libraries</span></a></li>
+                <li class="active"><a href="../citing.html">Citing OFELI</span></a></li>
+                <li class="active"><a href="../download.html">Download and Installation</a></li>
+                <li class="active"><a href="../presentations.html">Presentations</a></li>
+                <li class="active"><a href="../copyright.html">License</a></li>
+                <li class="active"><a href="mailto:rachid.touzani@uca.fr">Contact</a></li>
+            </ul>
+        </div>
 
-<p><table border="2" cellpadding="2" cellspacing="0" >
-<tr>
-<td align="center" width="35"><a href="stdc2.html"><img src="../im/backward.gif" border="0"></a></td>
-<td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
-<td align="center" width="35"><a href="std3.html"><img src="../im/forward.gif" border="0"></a></td>
-</tr>
-</table></p>
+        <a href="rita.html"><center><img src="../im/rita.png" width="90"></center></a>
 
-<p>
-<SPAN class=TEXT>
-This code is developed to solve 2-D transient (time dependent) heat transfer problems.
-We use here an alternative to the presentation of the previous demo code. More specifically,
-we show how to perform all important phases of a time dependent finite element code.
-</SPAN>
-
-<ul type="square">
-<li><SPAN class=TEXT>As usual, the program starts by including the header file <span class=VAR>OFELI.h</span> that itself includes all kernel
-class definitions, then we include thermal dedicated classes described in <span class=VAR>Therm.h</span>.
-We also declare the namespace to simplify the code writing:</span><br>
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>#include "OFELI.h"
+<!--      Search Google -->
+          <center>
+            <form method=GET action="http://www.google.com/search">
+              <table bgcolor="#FFFFFF">
+                <tr>
+                  <td><a href=" http://www.google.com/">
+                    <img src="http://www.google.com/logos/Logo_40wht.gif" border="0" alt="Google" align="absmiddle"></a> 
+                    <input TYPE=TEXT name=q size=31 maxlength=255 value="">
+                    <input type=hidden name=hl value="en">
+                    <input type=submit name=btnG value="Search">
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </center>
+ <!--     Search Google -->
+ 
+          <div class="ofeli-footer">
+            <p><small>&copy; Copyright <script>document.write(new Date().getFullYear());</script> All rights reserved</small>
+            </p>
+          </div>
+        </aside>
+        <div id="ofeli-main">
+          <section class="ofeli-start" data-section="home">
+            <div class="ofeli-narrow-content">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                    <div class="col-md-12">
+                      <div class="start-desc">
+                        <h1 class="first-ofeli-heading"></h1>
+                        <div id="cc">
+                           &nbsp;
+                           <p><table border="2" cellpadding="2" cellspacing="0" >
+                           <tr>
+                           <td align="center" width="35"><a href="stdc2.html"><img src="../im/backward.gif" border="0"></a></td>
+                           <td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
+                           <td align="center" width="35"><a href="std3.html"><img src="../im/forward.gif" border="0"></a></td>
+                           </tr>
+                           </table><br>
+                           <font color="#203F5B" size="4" face="verdana,Helvetica">
+                           <p><b>Demo: A 2-D transient diffusion code</b></font></p>
+                           <p>
+                              <SPAN class=TEXT>
+                              This code is developed to solve 2-D transient (time dependent) heat transfer problems.
+                              We use here an alternative to the presentation of the previous demo code. More specifically,
+                              we show how to perform all important phases of a time dependent finite element code.
+                              </SPAN>
+                              
+                              <ul type="square">
+                              <li><SPAN class=TEXT>As usual, the program starts by including the header file <span class=VAR>OFELI.h</span> that itself includes all kernel
+                              class definitions, then we include thermal dedicated classes described in <span class=VAR>Therm.h</span>.
+                              We also declare the namespace to simplify the code writing:</span><br>
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>#include "OFELI.h"
 #include "Therm.h"
-using namespace OFELI;
-</font></pre>
-</td></tr></table></p>
-
-<li><SPAN class=TEXT>We construct an instance of class <span class=VAR><a href="../html/classOFELI_1_1IPF.html">IPF</a></span> to manage project data.
-We extract useful information from this instance: The maximal time, the time step, a flag for saving results and
-another for controlling output.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   IPF data("ttd2 - 1.1",argv[1]);
+using namespace OFELI;</font></pre>
+                              </td></tr></table></p>
+                              
+                              <li><SPAN class=TEXT>We construct an instance of class <span class=VAR><a href="../html/classOFELI_1_1IPF.html">IPF</a></span> to manage project data.
+                              We extract useful information from this instance: The maximal time, the time step, a flag for saving results and
+                              another for controlling output.
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>   IPF data("ttd2 - 1.1",argv[1]);
    theFinalTime = data.getMaxTime();
    theTimeStep = data.getTimeStep();
    int save_flag = data.getSave();
    int verbose = data.getVerbose();</font></pre>
-</td></tr></table>
-</SPAN></p>
-
-<li><SPAN class=TEXT>
-We instantiate class <span class=VAR><a href="../html/classOFELI_1_1IOField.html">IOField</a></span> to store the solution for plotting:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   IOField pf(data.getPlotFile(),IOField::OUT);</font></pre>
-</td></tr></table>
-</SPAN></p>
-
-<li><SPAN class=TEXT>
-We now define the <span class=VAR><a href="../html/classOFELI_1_1Mesh.html">Mesh</a></span> instance.
-We next instantiate vectors <span class=VAR>b</span> and <span class=VAR>u</span>
-that will contain respectively the right-hand side and the solution. For commodity we give a name to the solution vector:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   Mesh ms(data.getMeshFile());
+                              </td></tr></table>
+                              </SPAN></p>
+                              
+                              <li><SPAN class=TEXT>
+                              We instantiate class <span class=VAR><a href="../html/classOFELI_1_1IOField.html">IOField</a></span> to store the solution for plotting:
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>   IOField pf(data.getPlotFile(),IOField::OUT);</font></pre>
+                              </td></tr></table>
+                              </SPAN></p>
+                              
+                              <li><SPAN class=TEXT>
+                              We now define the <span class=VAR><a href="../html/classOFELI_1_1Mesh.html">Mesh</a></span> instance.
+                              We next instantiate vectors <span class=VAR>b</span> and <span class=VAR>u</span>
+                              that will contain respectively the right-hand side and the solution. For commodity we give a name to the solution vector:
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>   Mesh ms(data.getMeshFile());
    Vect&lt;double&gt; b(ms), u(ms);
-   u.setName("Temperature");
-</td></tr></table>
-</SPAN></p>
-
-<li><SPAN class=TEXT>
-The initial solution is given through the class <span class=VAR><a href="../html/classOFELI_1_1Prescription.html">Prescription</a></span>.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   Prescription pr(ms,data.getDataFile());
+   u.setName("Temperature");</font></pre>
+                              </td></tr></table>
+                              </SPAN></p>
+                              
+                              <li><SPAN class=TEXT>
+                              The initial solution is given through the class <span class=VAR><a href="../html/classOFELI_1_1Prescription.html">Prescription</a></span>.
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>   Prescription pr(ms,data.getDataFile());
    pr.get(INITIAL_FIELD,u);</font></pre>
-</td></tr></table>
-</SPAN></p>
-
-<li><SPAN class=TEXT>
-   We define vectors that contain boundary conditions, body and boundary forces. These are only intantiated here but will be
-   assigned at each time step in the time loop:
-   <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-   <tr><td>
-   <pre><font color="blue" size=3>   Vect&lt;double&gt; bc(ms), body_f(ms), bound_f(ms);</font></pre>
-   </td></tr></table>
-   </SPAN></p>
-   
-<li><SPAN class=TEXT>
-   We can now define the equation to solve: We choose the diffusion-convection equation in 2-D, solved by triangular
-   finite elements and (class <span class=VAR><a href="../html/classOFELI_1_1DC2DT3.html">DC2DT3</a></span>) and transmit initial
-   condition to the equation instance.
-   <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-   <tr><td>
-   <pre><font color="blue" size=3>   DC2DT3 eq(ms);
+                              </td></tr></table>
+                              </SPAN></p>
+                              
+                              <li><SPAN class=TEXT>
+                                 We define vectors that contain boundary conditions, body and boundary forces. These are only intantiated here but will be
+                                 assigned at each time step in the time loop:
+                                 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                                 <tr><td>
+                                 <pre><font color="blue" size=2>   Vect&lt;double&gt; bc(ms), body_f(ms), bound_f(ms);</font></pre>
+                                 </td></tr></table>
+                                 </SPAN></p>
+                                 
+                              <li><SPAN class=TEXT>
+                                 We can now define the equation to solve: We choose the diffusion-convection equation in 2-D, solved by triangular
+                                 finite elements and (class <span class=VAR><a href="../html/classOFELI_1_1DC2DT3.html">DC2DT3</a></span>) and transmit initial
+                                 condition to the equation instance.
+                                 <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                                 <tr><td>
+                                 <pre><font color="blue" size=2>   DC2DT3 eq(ms);
    eq.setInput(INITIAL,u);</font></pre>
-   </td></tr></table>
-   </SPAN></p>
-   
-<li><SPAN class=TEXT>
-We start the time step loop using the macro <span class=tt>TimeLoop</span>:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>   TimeLoop {</font></pre>
-</td></tr></table>
-</SPAN></p>
-
-<li><SPAN class=TEXT>
-For the current time step, we get (Dirichlet) boundary conditions, sources and fluxes (Neumann boundary conditions):
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>      pr.get(BOUNDARY_CONDITION,bc,theTime);
+                                 </td></tr></table>
+                                 </SPAN></p>
+                                 
+                              <li><SPAN class=TEXT>
+                              We start the time step loop using the macro <span class=tt>TimeLoop</span>:
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>   TimeLoop {</font></pre>
+                              </td></tr></table>
+                              </SPAN></p>
+                              
+                              <li><SPAN class=TEXT>
+                              For the current time step, we get (Dirichlet) boundary conditions, sources and fluxes (Neumann boundary conditions):
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>      pr.get(BOUNDARY_CONDITION,bc,theTime);
       pr.get(SOURCE,body_f,theTime);
       pr.get(FLUX,bound_f,theTime);</font></pre>
-</td></tr></table>
-Note the use of the global variable <span class=TT>theTime</span> which is automatically updated each time step.
-</SPAN></p>
-
-<li><SPAN class=TEXT>
-We next trasmit these data to the equation by using the member function <span class=TT>setInput</span>:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>      eq.setInput(BOUNDARY_CONDITION,bc);
+                              </td></tr></table>
+                              Note the use of the global variable <span class=TT>theTime</span> which is automatically updated each time step.
+                              </SPAN></p>
+                              
+                              <li><SPAN class=TEXT>
+                              We next trasmit these data to the equation by using the member function <span class=TT>setInput</span>:
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>      eq.setInput(BOUNDARY_CONDITION,bc);
       eq.setInput(SOURCE,body_f);
       eq.setInput(FLUX,bound_f);</font></pre>
-</td></tr></table>
-</SPAN></p>
-   
-<li><SPAN class=TEXT>
-We can now run the time step by using the member function <span class=TT>run</span> with the appropriate parameter
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>      eq.run(TRANSIENT_ONE_STEP);</font></pre>
-</td></tr></table>
-Note that we didn't define a time integration scheme. This means that the Backward Euler scheme (Default value) is used.
-</SPAN></p>
-
-<li><SPAN class=TEXT>
-It remains now to store the solution in a file if the parameter <span class=VAR>save_flag</span>
-enables it. The procedure it to store the solution each multiple of <span class=VAR>save_flag</span>
-step.
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>      u.setTime(theTime);
+                              </td></tr></table>
+                              </SPAN></p>
+                                 
+                              <li><SPAN class=TEXT>
+                              We can now run the time step by using the member function <span class=TT>run</span> with the appropriate parameter
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>      eq.run(TRANSIENT_ONE_STEP);</font></pre>
+                              </td></tr></table>
+                              Note that we didn't define a time integration scheme. This means that the Backward Euler scheme (Default value) is used.
+                              </SPAN></p>
+                              
+                              <li><SPAN class=TEXT>
+                              It remains now to store the solution in a file if the parameter <span class=VAR>save_flag</span>
+                              enables it. The procedure it to store the solution each multiple of <span class=VAR>save_flag</span>
+                              step.
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>      u.setTime(theTime);
       if (theStep%save_flag == 0)
          pf.put(u);
    }</font></pre>
-</td></tr></table></P>
-Note that we have stored in the solution vector the time value, so
-that this one can be retrieved for plotting.
-
-</SPAN></p>
-
-&nbsp;&nbsp;
-<h2>An example</h2>
-
-<SPAN class=TEXT>
-Let us run this program with the data presented in the following project file:
-<p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
-<tr><td>
-<pre><font color="blue" size=3>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+                              </td></tr></table></P>
+                              Note that we have stored in the solution vector the time value, so
+                              that this one can be retrieved for plotting.
+                              </SPAN></p>
+                              
+                              &nbsp;&nbsp;
+                              <h2>An example</h2>
+                              
+                              <SPAN class=TEXT>
+                              Let us run this program with the data presented in the following project file:
+                              <p><table bgcolor="#e0f8f7" border="1" frame=box rules=none width=700>
+                              <tr><td>
+                              <pre><font color="blue" size=2>&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
 &lt;OFELI_File&gt;
-&lt;info&gt;
-    &lt;title&gt;Finite Element Mesh of a beam&lt;/title&gt;
-    &lt;date&gt;January 1, 2010&lt;/date&gt;
-    &lt;author&gt;R. Touzani&lt;/author&gt;
-&lt;/info&gt;
-&lt;Project name="proj"&gt;
-   &lt;mesh_file&gt;proj-5x10.m&lt;/mesh_file&gt;
-   &lt;plot_file&gt;proj.pl&lt;/plot_file&gt;
-   &lt;time_step&gt;0.01&lt;/time_step&gt;
-   &lt;max_time&gt;1.0&lt;/max_time&gt;
-   &lt;verbose&gt;0&lt;/verbose&gt;
-   &lt;output&gt;0&lt;/output&gt;
-   &lt;save&gt;1&lt;/save&gt;
-&lt;/Project&gt;
-&lt;Prescription&gt;
-   &lt;BoundaryCondition code="1"&gt;-tanh(10)*(exp(t)-1)&lt;/BoundaryCondition&gt;
-   &lt;BoundaryCondition code="2"&gt; tanh(10)*(exp(t)-1)&lt;/BoundaryCondition&gt;
-   &lt;Source&gt;tanh(10*y)*(exp(t)+200*(exp(t)-1)/(cosh(10*y)*cosh(10*y)))&lt;/Source&gt;
-&lt;/Prescription&gt;
+   &lt;info&gt;
+      &lt;title&gt;Finite Element Mesh of a beam&lt;/title&gt;
+      &lt;date&gt;January 1, 2010&lt;/date&gt;
+      &lt;author&gt;R. Touzani&lt;/author&gt;
+   &lt;/info&gt;
+   &lt;Project name="proj"&gt;
+      &lt;mesh_file&gt;proj-5x10.m&lt;/mesh_file&gt;
+      &lt;plot_file&gt;proj.pl&lt;/plot_file&gt;
+      &lt;time_step&gt;0.01&lt;/time_step&gt;
+      &lt;max_time&gt;1.0&lt;/max_time&gt;
+      &lt;verbose&gt;0&lt;/verbose&gt;
+      &lt;output&gt;0&lt;/output&gt;
+      &lt;save&gt;1&lt;/save&gt;
+   &lt;/Project&gt;
+   &lt;Prescription&gt;
+      &lt;BoundaryCondition code="1"&gt;-tanh(10)*(exp(t)-1)&lt;/BoundaryCondition&gt;
+      &lt;BoundaryCondition code="2"&gt; tanh(10)*(exp(t)-1)&lt;/BoundaryCondition&gt;
+      &lt;Source&gt;tanh(10*y)*(exp(t)+200*(exp(t)-1)/(cosh(10*y)*cosh(10*y)))&lt;/Source&gt;
+   &lt;/Prescription&gt;
 &lt;/OFELI_File&gt;</font></pre>
-</td></tr></table></p>
+                              </td></tr></table></p>
+                              
+                              <p>In summary, this file looks mainly like the one in the previous example. We show here
+                              in addition how to prescribe a boundary condition by an algebraic expression. The 
+                              <span class=logo>OFELI</span> library is equipped with the expression parser <span class=VAR>fparser</span>.
+                              We use here the variables <span class=VAR>x</span>, <span class=VAR>y</span>, <span class=VAR>z</span>, 
+                              and <span class=VAR>t</span> for space and time variables.
+                              </span>
+                                                            
+                              <p><table align="center" border="2" cellpadding="2" cellspacing="0" >
+                              <tr>
+                              <td align="center" width="35"><a href="stdc2.html"><img src="../im/backward.gif" border="0"></a></td>
+                              <td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
+                              <td align="center" width="35"><a href="std3.html"><img src="../im/forward.gif" border="0"></a></td>
+                              </tr>
+                              </table>
+                          </div>
+                     </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
 
-<p>In summary, this file looks mainly like the one in the previous example. We show here
-in addition how to prescribe a boundary condition by an algebraic expression. The 
-<span class=LOGO>OFELI</span> library is equipped with the expression parser <span class=VAR>fparser</span>.
-We use here the variables <span class=VAR>x</span>, <span class=VAR>y</span>, <span class=VAR>z</span>, 
-and <span class=VAR>t</span> for space and time variables.
-</span>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.countTo.js"></script>
+    <script src="js/main.js"></script>
 
-<p><table align="center" border="2" cellpadding="2" cellspacing="0" >
-<tr>
-<td align="center" width="35"><a href="stdc2.html"><img src="../im/backward.gif" border="0"></a></td>
-<td align="center" width="35"><a href="../demos.html"><img src="../im/top.gif" border="0"></a></td>
-<td align="center" width="35"><a href="std3.html"><img src="../im/forward.gif" border="0"></a></td>
-</tr>
-</table>
-
-&nbsp;
-<div id="foot_bar">
-        Copyright &copy; 1998-2022 Rachid Touzani&nbsp;
-</div>
-
-</body>
+  </body>
 </html>

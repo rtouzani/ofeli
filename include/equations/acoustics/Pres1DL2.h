@@ -47,7 +47,7 @@ namespace OFELI {
  *  \brief Definition file for class PRES1DL2.
  */
 
-/*! \class PRES1DL2
+/*! \class Pres1DL2
  *  \ingroup Acoustics
  *  \brief Builds finite element arrays for acoustic propagation in 1-D 
  *  using 2-Node elements.

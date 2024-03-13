@@ -6,79 +6,108 @@
 <meta name="description" content="Clean, standards-friendly, modular framework for dropdown menus" />
 <link href="../css/dropdown.vertical.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="../css/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
-<head>
-  <title>OFELI - Documentation</title>
-  <link rel="stylesheet" type="text/css" href="../doxygen.css" />
-  <link rel="stylesheet" type="text/css" href="../tabs.css" />
-</head>
-<body>
-  <p align="center">
-    <img src="../im//ofeli.gif" alt="OFELI's Logo" width="300" height="90">
-  </p>
-  <p align="center"><font color="#203F5B" size="4" face="verdana,Helvetica">
-    <b>An Object Oriented Finite Element Library</b></font>
-  </p>
-<!-- Complete Page-->
-  <div id="main">
-    <div id="mainmenu">
-      <div class="text">
-<!-- Menu -->
-        <div class="tabs">
-          <ul class="tablist">
-            <li><a href="../index.html"><span>Home</span></a></li>
-            <li><a href="../installation.html"><span>Installation</span></a></li>
-            <li><a href="index.html"><span>Class Documentation</span></a></li>
-            <li><a href="../citing.html"><span>Citing OFELI</span></a></li>
-            <li><a href="../fformats.html"><span>File Formats</span></a></li>
-            <li><a href="../demos.html"><span>Demo Codes</span></a></li>
-            <li><a href="../extlib.html"><span>External Libraries</span></a></li>
-          </ul>
+<html>
+  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+  <head>
+      <link rel="stylesheet" type="text/css" href="../doxygen.css" />
+      <link rel="stylesheet" type="text/css" href="../tabs.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="ofeli package" />
+    <meta name="keywords" content="Modelling, numerical simulation, scientific computing, ofeli" />
+    <title>ofeli library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/png" sizes="10x10" href="../im/r.jpg" />
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-59742926-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="../im/ofeli.png">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="../doxygen.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/icomoon.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/flexslider.css">
+    <link rel="stylesheet" href="../fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../css/ofeli-style.css">
+    <link rel="stylesheet" href="../css/doc.css">
+<!--    Modernizr JS -->
+    <script src="../js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
+  </head>
+  <body>
+    <div id="ofeli-page">
+      <div class="container-wrap">
+        <aside id="ofeli-aside" role="complementary" class="border js-fullheight">
+          <div class="text-center">
+            <a href="../index.html">
+              <div class="logo-ofeli-img" style="background-image: url(../im/ofeli.png); background-size: 110%;"></div>
+            </a>
+            <span class="position"><b>Mathematical Modelling<br> and Numerical Simulation</b></span>
+          </div>
+          <div>
+            <ul>
+                <li class="active"><a href="index.html">OFELI Documentation</a></li>
+                <li class="active"><a href="classes.html">Classes in OFELI</a></li>
+                <li class="active"><a href="../fformats.html">File Formats</span></a></li>
+                <li class="active"><a href="../extlib.html">External Libraries</span></a></li>
+                <li class="active"><a href="../citing.html">Citing OFELI</span></a></li>
+                <li class="active"><a href="../download.html">Download and Installation</a></li>
+                <li class="active"><a href="../demos.html">Demo Codes</span></a></li>
+                <li class="active"><a href="../presentations.html">Presentations</a></li>
+                <li class="active"><a href="../copyright.html">License</a></li>
+                <li class="active"><a href="mailto:rachid.touzani@uca.fr">Contact</a></li>
+            </ul>
         </div>
-        <div id="navrow1" class="tabs">
-          <ul class="tablist">
-            <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
-            <li><a href="modules.html"><span>Modules</span></a></li>
-<!--            <li><a href="namespaces.html"><span>Namespaces</span></a></li>-->
-            <li><a href="classes.html"><span>Classes</span></a></li>
-          </ul>
-        </div>
-      </div>
+        <a href="rita.html"><center><img src="../im/rita.png" width="90"></center></a>
+<!--      Search Google -->
+          <center>
+            <form method=GET action="http://www.google.com/search">
+              <table bgcolor="#FFFFFF">
+                <tr>
+                  <td><a href=" http://www.google.com/">
+                    <img src="http://www.google.com/logos/Logo_40wht.gif" border="0" alt="Google" align="absmiddle"></a> 
+                    <input TYPE=TEXT name=q size=31 maxlength=255 value="">
+                    <input type=hidden name=hl value="en">
+                    <input type=submit name=btnG value="Search">
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </center>
+ <!--     Search Google -->
+          <div class="ofeli-footer">
+            <p><small>&copy; Copyright <script>document.write(new Date().getFullYear());</script> All rights reserved</small>
+            </p>
+          </div>
+        </aside>
+        <div id="ofeli-main">
+          <section class="ofeli-start" data-section="home">
+            <div class="ofeli-narrow-content">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row row-bottom-padded-sm animate-box" data-animate-effect="fadeInLeft">
+                    <div class="col-md-12">
+                      <div class="start-desc">
+                        <h1 class="first-ofeli-heading"></h1>
+                        <div id="cc">
 <!-- Generated by Doxygen 1.9.8 -->
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
-</script>
-<script type="text/javascript" src="menudata.js"></script>
-<script type="text/javascript" src="menu.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() {
-  initMenu('',true,true,'search.html','Search');
-  $(document).ready(function() {
-    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
-  });
-});
-/* @license-end */
-</script>
-<div id="main-nav"></div>
 </div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('functions_b.html',''); initResizable(); });
-/* @license-end */
-</script>
-<div id="doc-content">
 <div class="contents">
 <div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
 
@@ -91,136 +120,27 @@ $(document).ready(function(){initNavTree('functions_b.html',''); initResizable()
 <li>BezierSurface()&#160;:&#160;<a class="el" href="group__OFELI.html#ga417ee6ae3a4e5a6748df5c796a562f5c">GeoModel</a></li>
 <li>BiotSavart()&#160;:&#160;<a class="el" href="classOFELI_1_1BiotSavart.html#ac0e498a96327647f20c907e098bfa335">BiotSavart</a></li>
 <li>BMatrix()&#160;:&#160;<a class="el" href="classOFELI_1_1BMatrix.html#a01c006d7468dd53986b09e00517bbc8e">BMatrix&lt; T_ &gt;</a></li>
-<li>BodyRHS()&#160;:&#160;<a class="el" href="classOFELI_1_1DC1DL2.html#aa6d7e87afcbeea4276573c9576d8d6ca">DC1DL2</a>, <a class="el" href="classOFELI_1_1DC2DT3.html#af3452fd9f607e1efb0b915e90faea46f">DC2DT3</a>, <a class="el" href="classOFELI_1_1DC2DT6.html#aa6d7e87afcbeea4276573c9576d8d6ca">DC2DT6</a>, <a class="el" href="classOFELI_1_1DC3DAT3.html#aa6d7e87afcbeea4276573c9576d8d6ca">DC3DAT3</a>, <a class="el" href="classOFELI_1_1DC3DT4.html#aa6d7e87afcbeea4276573c9576d8d6ca">DC3DT4</a>, <a class="el" href="classOFELI_1_1Elas2DQ4.html#a02b9344d3bbc428a4b8cc5671a559e41">Elas2DQ4</a>, <a class="el" href="classOFELI_1_1Elas2DT3.html#a02b9344d3bbc428a4b8cc5671a559e41">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Elas3DH8.html#aa6d7e87afcbeea4276573c9576d8d6ca">Elas3DH8</a>, <a class="el" href="classOFELI_1_1Elas3DT4.html#aa6d7e87afcbeea4276573c9576d8d6ca">Elas3DT4</a>, <a class="el" href="classOFELI_1_1Equa__Laplace.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__LinearPDE.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_LinearPDE&lt; NEN_, NSN_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Porous.html#a4a93a6ae518606a36e7a099ac170483c">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Therm.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1HelmholtzBT3.html#aac55e919159ab10e1684465f60673c39">HelmholtzBT3</a>, <a class="el" href="classOFELI_1_1Laplace1DL2.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace1DL2</a>, <a class="el" href="classOFELI_1_1Laplace1DL3.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace1DL3</a>, <a class="el" href="classOFELI_1_1Laplace2DT3.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace2DT3</a>, <a class="el" href="classOFELI_1_1Laplace2DT6.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace2DT6</a>, <a class="el" href="classOFELI_1_1LinearPDE1D.html#aa6d7e87afcbeea4276573c9576d8d6ca">LinearPDE1D</a>, <a class="el" href="classOFELI_1_1LinearPDE2D.html#af3452fd9f607e1efb0b915e90faea46f">LinearPDE2D</a>, <a class="el" href="classOFELI_1_1Pres2DT3.html#af3452fd9f607e1efb0b915e90faea46f">Pres2DT3</a>, <a class="el" href="classOFELI_1_1WaterPorous2D.html#a35b782d3e1af2065e372c2d932615ff4">WaterPorous2D</a></li>
-<li>BoundaryRHS()&#160;:&#160;<a class="el" href="classOFELI_1_1DC2DT3.html#a9f47743e35b40517037f6c007312461c">DC2DT3</a>, <a class="el" href="classOFELI_1_1DC2DT6.html#a9f47743e35b40517037f6c007312461c">DC2DT6</a>, <a class="el" href="classOFELI_1_1DC3DAT3.html#a9f47743e35b40517037f6c007312461c">DC3DAT3</a>, <a class="el" href="classOFELI_1_1DC3DT4.html#a9f47743e35b40517037f6c007312461c">DC3DT4</a>, <a class="el" href="classOFELI_1_1Elas2DQ4.html#a9f47743e35b40517037f6c007312461c">Elas2DQ4</a>, <a class="el" href="classOFELI_1_1Elas2DT3.html#a9f47743e35b40517037f6c007312461c">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Elas3DH8.html#a9f47743e35b40517037f6c007312461c">Elas3DH8</a>, <a class="el" href="classOFELI_1_1Elas3DT4.html#a9f47743e35b40517037f6c007312461c">Elas3DT4</a>, <a class="el" href="classOFELI_1_1Equa__Laplace.html#a4898e17d7619a02fda1a011da624b3af">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__LinearPDE.html#ab08651853053c5bff38e8fe3737fdc4c">Equa_LinearPDE&lt; NEN_, NSN_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Porous.html#a0c6ef2f4383b0dbf335c197f290f508f">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Therm.html#ab08651853053c5bff38e8fe3737fdc4c">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1HelmholtzBT3.html#a2f3d840f010177c6e08e0e4d1f8b0a08">HelmholtzBT3</a>, <a class="el" href="classOFELI_1_1Laplace1DL2.html#a9f47743e35b40517037f6c007312461c">Laplace1DL2</a>, <a class="el" href="classOFELI_1_1Laplace1DL3.html#a735f7f78ccee2864d719a9aba4bea313">Laplace1DL3</a>, <a class="el" href="classOFELI_1_1Laplace2DT3.html#a735f7f78ccee2864d719a9aba4bea313">Laplace2DT3</a>, <a class="el" href="classOFELI_1_1Laplace2DT6.html#a735f7f78ccee2864d719a9aba4bea313">Laplace2DT6</a>, <a class="el" href="classOFELI_1_1LinearPDE2D.html#afc20edadf93d2135ee9873e1bd7deb4c">LinearPDE2D</a>, <a class="el" href="classOFELI_1_1Pres2DT3.html#a9f47743e35b40517037f6c007312461c">Pres2DT3</a>, <a class="el" href="classOFELI_1_1WaterPorous2D.html#a5bd66e267fd02585d4001d88b39750a7">WaterPorous2D</a></li>
+<li>BodyRHS()&#160;:&#160;<a class="el" href="classOFELI_1_1DC1DL2.html#aa6d7e87afcbeea4276573c9576d8d6ca">DC1DL2</a>, <a class="el" href="classOFELI_1_1DC2DT3.html#af3452fd9f607e1efb0b915e90faea46f">DC2DT3</a>, <a class="el" href="classOFELI_1_1DC2DT6.html#aa6d7e87afcbeea4276573c9576d8d6ca">DC2DT6</a>, <a class="el" href="classOFELI_1_1DC3DAT3.html#aa6d7e87afcbeea4276573c9576d8d6ca">DC3DAT3</a>, <a class="el" href="classOFELI_1_1DC3DT4.html#aa6d7e87afcbeea4276573c9576d8d6ca">DC3DT4</a>, <a class="el" href="classOFELI_1_1Elas2DQ4.html#a02b9344d3bbc428a4b8cc5671a559e41">Elas2DQ4</a>, <a class="el" href="classOFELI_1_1Elas2DT3.html#a02b9344d3bbc428a4b8cc5671a559e41">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Elas3DH8.html#aa6d7e87afcbeea4276573c9576d8d6ca">Elas3DH8</a>, <a class="el" href="classOFELI_1_1Elas3DT4.html#aa6d7e87afcbeea4276573c9576d8d6ca">Elas3DT4</a>, <a class="el" href="classOFELI_1_1Equa__Acoustics.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Acoustics&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Laplace.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__LinearPDE.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_LinearPDE&lt; NEN_, NSN_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Porous.html#a4a93a6ae518606a36e7a099ac170483c">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Therm.html#ac78bfd5e2f3f8dea4715b2e84653acec">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1HelmholtzBT3.html#aac55e919159ab10e1684465f60673c39">HelmholtzBT3</a>, <a class="el" href="classOFELI_1_1Laplace1DL2.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace1DL2</a>, <a class="el" href="classOFELI_1_1Laplace1DL3.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace1DL3</a>, <a class="el" href="classOFELI_1_1Laplace2DT3.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace2DT3</a>, <a class="el" href="classOFELI_1_1Laplace2DT6.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace2DT6</a>, <a class="el" href="classOFELI_1_1Laplace3DT4.html#aa6d7e87afcbeea4276573c9576d8d6ca">Laplace3DT4</a>, <a class="el" href="classOFELI_1_1LinearPDE1D.html#aa6d7e87afcbeea4276573c9576d8d6ca">LinearPDE1D</a>, <a class="el" href="classOFELI_1_1LinearPDE2D.html#aa6d7e87afcbeea4276573c9576d8d6ca">LinearPDE2D</a>, <a class="el" href="classOFELI_1_1Pres1DL2.html#aa6d7e87afcbeea4276573c9576d8d6ca">Pres1DL2</a>, <a class="el" href="classOFELI_1_1Pres2DT3.html#af3452fd9f607e1efb0b915e90faea46f">Pres2DT3</a>, <a class="el" href="classOFELI_1_1WaterPorous2D.html#a35b782d3e1af2065e372c2d932615ff4">WaterPorous2D</a></li>
+<li>BoundaryRHS()&#160;:&#160;<a class="el" href="classOFELI_1_1DC2DT3.html#a9f47743e35b40517037f6c007312461c">DC2DT3</a>, <a class="el" href="classOFELI_1_1DC2DT6.html#a9f47743e35b40517037f6c007312461c">DC2DT6</a>, <a class="el" href="classOFELI_1_1DC3DAT3.html#a9f47743e35b40517037f6c007312461c">DC3DAT3</a>, <a class="el" href="classOFELI_1_1DC3DT4.html#a9f47743e35b40517037f6c007312461c">DC3DT4</a>, <a class="el" href="classOFELI_1_1Elas2DQ4.html#a9f47743e35b40517037f6c007312461c">Elas2DQ4</a>, <a class="el" href="classOFELI_1_1Elas2DT3.html#a9f47743e35b40517037f6c007312461c">Elas2DT3</a>, <a class="el" href="classOFELI_1_1Elas3DH8.html#a9f47743e35b40517037f6c007312461c">Elas3DH8</a>, <a class="el" href="classOFELI_1_1Elas3DT4.html#a9f47743e35b40517037f6c007312461c">Elas3DT4</a>, <a class="el" href="classOFELI_1_1Equa__Acoustics.html#ab08651853053c5bff38e8fe3737fdc4c">Equa_Acoustics&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Laplace.html#a4898e17d7619a02fda1a011da624b3af">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__LinearPDE.html#ab08651853053c5bff38e8fe3737fdc4c">Equa_LinearPDE&lt; NEN_, NSN_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Porous.html#a0c6ef2f4383b0dbf335c197f290f508f">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Therm.html#ab08651853053c5bff38e8fe3737fdc4c">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1HelmholtzBT3.html#a2f3d840f010177c6e08e0e4d1f8b0a08">HelmholtzBT3</a>, <a class="el" href="classOFELI_1_1Laplace1DL2.html#a9f47743e35b40517037f6c007312461c">Laplace1DL2</a>, <a class="el" href="classOFELI_1_1Laplace1DL3.html#a735f7f78ccee2864d719a9aba4bea313">Laplace1DL3</a>, <a class="el" href="classOFELI_1_1Laplace2DT3.html#a735f7f78ccee2864d719a9aba4bea313">Laplace2DT3</a>, <a class="el" href="classOFELI_1_1Laplace2DT6.html#a735f7f78ccee2864d719a9aba4bea313">Laplace2DT6</a>, <a class="el" href="classOFELI_1_1Laplace3DT4.html#a735f7f78ccee2864d719a9aba4bea313">Laplace3DT4</a>, <a class="el" href="classOFELI_1_1LinearPDE2D.html#afc20edadf93d2135ee9873e1bd7deb4c">LinearPDE2D</a>, <a class="el" href="classOFELI_1_1Pres2DT3.html#a9f47743e35b40517037f6c007312461c">Pres2DT3</a>, <a class="el" href="classOFELI_1_1WaterPorous2D.html#a5bd66e267fd02585d4001d88b39750a7">WaterPorous2D</a></li>
 <li>Brick()&#160;:&#160;<a class="el" href="classOFELI_1_1Brick.html#a5be15bb90ef7387068a50bbae347441d">Brick</a></li>
 <li>BSpline()&#160;:&#160;<a class="el" href="group__OFELI.html#ga0c8eb9746a6bd03bc77f81d4e211d2c4">GeoModel</a></li>
 <li>BSplineSurface()&#160;:&#160;<a class="el" href="group__OFELI.html#ga1a483b982f0098d857419d459bc114f8">GeoModel</a></li>
-<li>build()&#160;:&#160;<a class="el" href="classOFELI_1_1Bar2DL2.html#a7740c7ab195c03ac140f1f75f633470f">Bar2DL2</a>, <a class="el" href="classOFELI_1_1Beam3DL2.html#a7740c7ab195c03ac140f1f75f633470f">Beam3DL2</a>, <a class="el" href="classOFELI_1_1EC2D1T3.html#a7740c7ab195c03ac140f1f75f633470f">EC2D1T3</a>, <a class="el" href="classOFELI_1_1Equa__Laplace.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__LinearPDE.html#a7740c7ab195c03ac140f1f75f633470f">Equa_LinearPDE&lt; NEN_, NSN_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Porous.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Therm.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1HelmholtzBT3.html#a7740c7ab195c03ac140f1f75f633470f">HelmholtzBT3</a>, <a class="el" href="classOFELI_1_1LaplaceDG2DP1.html#a7740c7ab195c03ac140f1f75f633470f">LaplaceDG2DP1</a>, <a class="el" href="classOFELI_1_1NSP2DQ41.html#a7740c7ab195c03ac140f1f75f633470f">NSP2DQ41</a></li>
-<li>buildEigen()&#160;:&#160;<a class="el" href="classOFELI_1_1Beam3DL2.html#aaf07a32713fc7f788131f6eef3b5e0db">Beam3DL2</a>, <a class="el" href="classOFELI_1_1Equa__Laplace.html#a4d5573c96d55640c2dbd525966a0cf8d">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Laplace1DL2.html#aa29ea1739165c677b1353892bfaff103">Laplace1DL2</a>, <a class="el" href="classOFELI_1_1Laplace2DT3.html#aa29ea1739165c677b1353892bfaff103">Laplace2DT3</a>, <a class="el" href="classOFELI_1_1Laplace2DT6.html#aa29ea1739165c677b1353892bfaff103">Laplace2DT6</a></li>
+<li>build()&#160;:&#160;<a class="el" href="classOFELI_1_1Bar2DL2.html#a7740c7ab195c03ac140f1f75f633470f">Bar2DL2</a>, <a class="el" href="classOFELI_1_1Beam3DL2.html#a7740c7ab195c03ac140f1f75f633470f">Beam3DL2</a>, <a class="el" href="classOFELI_1_1EC2D1T3.html#a7740c7ab195c03ac140f1f75f633470f">EC2D1T3</a>, <a class="el" href="classOFELI_1_1Equa__Acoustics.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Acoustics&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Laplace.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__LinearPDE.html#a3d205a8b8188a1e0d1e07091b775bbe7">Equa_LinearPDE&lt; NEN_, NSN_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Porous.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Porous&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Equa__Therm.html#a7740c7ab195c03ac140f1f75f633470f">Equa_Therm&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1HelmholtzBT3.html#a7740c7ab195c03ac140f1f75f633470f">HelmholtzBT3</a>, <a class="el" href="classOFELI_1_1LaplaceDG2DP1.html#a7740c7ab195c03ac140f1f75f633470f">LaplaceDG2DP1</a>, <a class="el" href="classOFELI_1_1NSP2DQ41.html#a7740c7ab195c03ac140f1f75f633470f">NSP2DQ41</a></li>
+<li>buildEigen()&#160;:&#160;<a class="el" href="classOFELI_1_1Beam3DL2.html#aaf07a32713fc7f788131f6eef3b5e0db">Beam3DL2</a>, <a class="el" href="classOFELI_1_1Equa__Laplace.html#a4d5573c96d55640c2dbd525966a0cf8d">Equa_Laplace&lt; NEN_, NEE_, NSN_, NSE_ &gt;</a>, <a class="el" href="classOFELI_1_1Laplace1DL2.html#aa29ea1739165c677b1353892bfaff103">Laplace1DL2</a>, <a class="el" href="classOFELI_1_1Laplace2DT3.html#aa29ea1739165c677b1353892bfaff103">Laplace2DT3</a>, <a class="el" href="classOFELI_1_1Laplace2DT6.html#aa29ea1739165c677b1353892bfaff103">Laplace2DT6</a>, <a class="el" href="classOFELI_1_1Laplace3DT4.html#aa29ea1739165c677b1353892bfaff103">Laplace3DT4</a></li>
 </ul>
 </div><!-- contents -->
-</div><!-- doc-content -->
 
-  </div> <!-- class text -->
-</div> <!-- main menu -->
-<!-- Google Search -->
-<br><br>
-<center>
-  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-  <script type="text/javascript"> 
-     google.load('search', '1', {language : 'en', style : google.loader.themes.SHINY});
-     google.setOnLoadCallback(function() {
-        var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
-        '012396140824982761142:-qrywxcfi_o', customSearchOptions);
-        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-        customSearchControl.draw('cse');
-     }, true);
-   </script>
-   <style type="text/css">
-     .gsc-control-cse {
-     font-family: Verdana, sans-serif;
-     border-color: #DAE0E5;
-     background-color: #DAE0E5;
-   }
-   .gsc-control-cse .gsc-table-result { font-family: Verdana, sans-serif; }
-   input.gsc-input { border-color: #B6BEC5; }
-   input.gsc-search-button {
-     border-color: #B6BEC5;
-     background-color: #D0D1D4;
-   }
-   .gsc-tabHeader.gsc-tabhInactive {
-     border-color: #999999;
-     background-color: #EEEEEE;
-   }
-   .gsc-tabHeader.gsc-tabhActive {
-     border-color: #999999;
-     background-color: #999999;
-   }
-   .gsc-tabsArea { border-color: #999999; }
-   .gsc-webResult.gsc-result,
-   .gsc-results .gsc-imageResult {
-     border-color: #FFFFFF;
-     background-color: #FFFFFF;
-   }
-   .gsc-webResult.gsc-result:hover,
-   .gsc-imageResult:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion:hover {
-     border-color: #D2D6DC;
-     background-color: #EDEDED;
-   }
-   .gs-webResult.gs-result a.gs-title:link,
-   .gs-webResult.gs-result a.gs-title:link b,
-   .gs-imageResult a.gs-title:link,
-   .gs-imageResult a.gs-title:link b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:visited,
-   .gs-webResult.gs-result a.gs-title:visited b,
-   .gs-imageResult a.gs-title:visited,
-   .gs-imageResult a.gs-title:visited b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:hover,
-   .gs-webResult.gs-result a.gs-title:hover b,
-   .gs-imageResult a.gs-title:hover,
-   .gs-imageResult a.gs-title:hover b { color: #0568CD; }
-   .gs-webResult.gs-result a.gs-title:active,
-   .gs-webResult.gs-result a.gs-title:active b,
-   .gs-imageResult a.gs-title:active,
-   .gs-imageResult a.gs-title:active b { color: #0568CD; }
-   .gsc-cursor-page { color: #0568CD; }
-   a.gsc-trailing-more-results:link { color: #0568CD; }
-   .gs-webResult .gs-snippet,
-   .gs-imageResult .gs-snippet,
-   .gs-fileFormatType { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl,
-   .gs-imageResult div.gs-visibleUrl { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { color: #5F6A73; }
-   .gs-webResult div.gs-visibleUrl-short { display: none; }
-   .gs-webResult div.gs-visibleUrl-long { display: block; }
-   .gs-promotion div.gs-visibleUrl-short { display: none; }
-   .gs-promotion div.gs-visibleUrl-long { display: block; }
-   .gsc-cursor-box { border-color: #FFFFFF; }
-   .gsc-results .gsc-cursor-box .gsc-cursor-page {
-      border-color: #999999;
-      background-color: #FFFFFF;
-      color: #0568CD;
-   }
-   .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
-      border-color: #999999;
-      background-color: #999999;
-      color: #0568CD;
-   }
-   .gsc-webResult.gsc-result.gsc-promotion {
-      border-color: #D2D6DC;
-      background-color: #D0D1D4;
-   }
-   .gsc-completion-title { color: #0568CD; }
-   .gsc-completion-snippet { color: #5F6A73; }
-   .gs-promotion a.gs-title:link,
-   .gs-promotion a.gs-title:link *,
-   .gs-promotion .gs-snippet a:link { color: #0066CC; }
-   .gs-promotion a.gs-title:visited,
-   .gs-promotion a.gs-title:visited *,
-   .gs-promotion .gs-snippet a:visited { color: #0066CC; }
-   .gs-promotion a.gs-title:hover,
-   .gs-promotion a.gs-title:hover *,
-   .gs-promotion .gs-snippet a:hover { color: #0066CC; }
-   .gs-promotion a.gs-title:active,
-   .gs-promotion a.gs-title:active *,
-   .gs-promotion .gs-snippet a:active { color: #0066CC; }
-   .gs-promotion .gs-snippet,
-   .gs-promotion .gs-title .gs-promotion-title-right,
-   .gs-promotion .gs-title .gs-promotion-title-right *  { color: #333333; }
-   .gs-promotion .gs-visibleUrl,
-   .gs-promotion .gs-visibleUrl-short { color: #5F6A73; }
-   </style>
-</center>
+</div></div></div></div></div></div></div>
+</section>
+</div></div></div>
 <!-- End of Google Search Box -->
-<br><br><br></p>
-<div id="foot_bar">
-  Copyright &copy; 1998-2024 Rachid Touzani&nbsp;
-</div>
-</div> <!-- main -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.easing.1.3.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.waypoints.min.js"></script>
+<script src="../js/jquery.flexslider-min.js"></script>
+<script src="../js/owl.carousel.min.js"></script>
+<script src="../js/jquery.countTo.js"></script>
+<script src="../js/ofeli-main.js"></script>
 </body>
-</HTML>
+</html>
