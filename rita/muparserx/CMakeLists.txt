@@ -6,7 +6,7 @@
 #
 # ==============================================================================
 #
-#   Copyright (C) 2021 - 2022  Rachid Touzani
+#   Copyright (C) 2021 - 2024  Rachid Touzani
 #
 #   This file is part of rita.
 #
@@ -24,24 +24,24 @@
 
 target_sources (${PROJECT_NAME} PRIVATE
                 mpError.cpp
-                mpFuncCmplx.cpp			
-                mpFuncCommon.cpp		
-                mpFuncMatrix.cpp		
-                mpFuncNonCmplx.cpp		
-                mpFuncStr.cpp			
-                mpICallback.cpp			
-                mpIOprt.cpp			
-                mpIOprtBinShortcut.cpp		
-                mpIPackage.cpp			
-                mpIToken.cpp			
-                mpIValReader.cpp		
-                mpIValue.cpp			
-                mpIfThenElse.cpp		
-                mpOprtBinAssign.cpp		
-                mpOprtBinCommon.cpp		
-                mpOprtBinShortcut.cpp		
-                mpOprtCmplx.cpp			
-                mpOprtIndex.cpp			
+                mpFuncCmplx.cpp
+                mpFuncCommon.cpp
+                mpFuncMatrix.cpp
+                mpFuncNonCmplx.cpp
+                mpFuncStr.cpp
+                mpICallback.cpp
+                mpIOprt.cpp
+                mpIOprtBinShortcut.cpp
+                mpIPackage.cpp
+                mpIToken.cpp
+                mpIValReader.cpp
+                mpIValue.cpp
+                mpIfThenElse.cpp
+                mpOprtBinAssign.cpp
+                mpOprtBinCommon.cpp
+                mpOprtBinShortcut.cpp
+                mpOprtCmplx.cpp
+                mpOprtIndex.cpp
                 mpOprtMatrix.cpp
                 mpOprtNonCmplx.cpp
                 mpOprtPostfixCommon.cpp

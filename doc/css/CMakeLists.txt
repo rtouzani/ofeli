@@ -25,15 +25,20 @@
 #
 # ==============================================================================
 
-
-file (COPY  animate.css
-                 bootstrap.css
-                 doc.css
-                 flexslider.css
-                 icomoon.css
-                 owl.carousel.min.css
-                 owl.theme.default.min.css
-                 style.css
-                 bootstrap.css.map
-                 style.css.map
-       DESTINATION . )
+file (COPY animate.css
+           bootstrap.css
+           bootstrap.css.map
+           default.css
+           doc.css
+           dropdown.css
+           dropdown.vertical.css
+           flexslider.css
+           helper.css
+           icomoon.css
+           ofeli-style.css
+           owl.carousel.min.css
+           owl.theme.default.min.css
+           rita-style.css
+           style.css.map
+      DESTINATION .
+     )

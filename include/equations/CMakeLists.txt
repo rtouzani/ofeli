@@ -25,6 +25,21 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY DG.h
+           Equa.h
+           EquaUtil.h
+           Equation.h
+           Equation_impl.h
+      DESTINATION .
+     )
+
+add_subdirectory (acoustics)
+add_subdirectory (cl)
+add_subdirectory (electromagnetics)
+add_subdirectory (fluid)
+add_subdirectory (generic)
+add_subdirectory (interface)
+add_subdirectory (laplace)
+add_subdirectory (porous)
+add_subdirectory (solid)
+add_subdirectory (therm)

@@ -35,13 +35,10 @@ cmake_minimum_required (VERSION 3.16.0)
 message (STATUS "This is CMake ${CMAKE_VERSION}")
 message (STATUS "")
 message (STATUS "")
-message (STATUS "-----------------------------------------------")
-message (STATUS "Compiling and installing OFELI ...")
-message (STATUS "-----------------------------------------------")
 
 # General information
 
-set (OFELI_PACKAGE_VENDOR
+set (OFELI_PACKAGE_VR
      "The ofeli authors <http://ofeli.org/>"
     )
 set (OFELI_PACKAGE_DESCRIPTION
@@ -77,7 +74,7 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Compiler specific flags
 if (CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
@@ -88,8 +85,6 @@ endif(CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
 enable_testing ()
 
 option (BUILD_TESTS "Build test programs" OFF)
-
-add_definitions (-Wall -fPIE -Ofast -mtune=native -D_REENTRANT -DNDEBUG -fstrict-aliasing -fno-strict-overflow)
 
 # Define installation directories
 #
@@ -102,34 +97,39 @@ set (INSTALL_DOCDIR ${INSTALL_OFELIDIR}/doc)
 set (INSTALL_MATDIR ${INSTALL_OFELIDIR}/material)
 set (INSTALL_DEMODIR ${INSTALL_OFELIDIR}/demos)
 set (INSTALL_UTILDIR ${INSTALL_OFELIDIR}/util)
-set (INSTALL_RITADIR ${CMAKE_INSTALL_PREFIX}/share/rita)
+set (INSTALL_RITADIR ${INSTALL_OFELIDIR}/rita)
+
+set (GMSH_INCDIR ${CMAKE_INSTALL_PREFIX}/include)
+set (INSTALL_BINDIR ${CMAKE_INSTALL_PREFIX}/bin)
+set (INSTALL_TUTORIALDIR ${CMAKE_INSTALL_PREFIX}/share/ofeli/rita/tutorial)
+
 
 # Define path for material data
 #
 option (MATERIAL_ENABLE "Enable Material Path" ON)
 if (MATERIAL_ENABLE)
-  set (PATH_MATERIAL "${INSTALL_MATDIR}")
+   set (PATH_MATERIAL "${INSTALL_MATDIR}")
 endif ()
 configure_file (${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 file (APPEND ${CMAKE_CURRENT_BINARY_DIR}/config.h "\n\n#define OFELI_VERSION \"${OFELI_VERSION}\"\n")
 file (APPEND ${CMAKE_CURRENT_BINARY_DIR}/config.h "#define OFELI_DATE \"${OFELI_VERSION_DATE}\"")
 
 include_directories (include ${CMAKE_CURRENT_BINARY_DIR})
+include_directories (${WorkspaceFolder}/include)
 add_subdirectory (src)
 add_subdirectory (include)
 add_subdirectory (demos)
 add_subdirectory (util)
 add_subdirectory (rita)
-include_directories ([${WorkspaceFolder}/include)
+add_subdirectory (doc)
 
 # Directories to install
 install (TARGETS ofeli LIBRARY DESTINATION ${INSTALL_LIBDIR})
 install (DIRECTORY include/ DESTINATION ${INSTALL_INCLUDEDIR})
-install (DIRECTORY doc/ DESTINATION ${INSTALL_DOCDIR})
+install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/ DESTINATION ${INSTALL_DOCDIR})
 install (DIRECTORY material/ DESTINATION ${INSTALL_MATDIR})
 install (DIRECTORY demos/ DESTINATION ${INSTALL_DEMODIR})
 install (DIRECTORY util/ DESTINATION ${INSTALL_UTILDIR})
-install (DIRECTORY rita/ DESTINATION ${INSTALL_RITADIR})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h DESTINATION ${INSTALL_INCLUDEDIR})
 
 # uninstall target

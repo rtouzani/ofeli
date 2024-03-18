@@ -25,6 +25,13 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY Equa_Laplace.h
+           Laplace1DL2.h
+           Laplace1DL3.h
+           Laplace2DT3.h
+           Laplace2DT6.h
+           Laplace3DT4.h
+           LaplaceDG2DP1.h
+           SteklovPoincare2DBE.h
+      DESTINATION .
+     )

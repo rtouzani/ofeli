@@ -24,17 +24,20 @@
 
 project (plot)
 
-file (COPY example1.rita example2.rita example3.rita ex1.dat DESTINATION .)
+file (COPY example1.rita
+           example2.rita
+           ex1.dat
+           README.md
+      DESTINATION .
+     )
 
 add_test (plot-1 ${CMAKE_RITA_EXEC} example1.rita)
 add_test (plot-2 ${CMAKE_RITA_EXEC} example2.rita)
-add_test (plot-3 ${CMAKE_RITA_EXEC} example3.rita)
 
 install (FILES
          README.md
          example1.rita
          example2.rita
-         example3.rita
          ex1.dat
          DESTINATION ${INSTALL_TUTORIALDIR}/${PROJECT_NAME}
         )

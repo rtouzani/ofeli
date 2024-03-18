@@ -25,6 +25,14 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY FEShape.h
+           Hexa8.h
+           Line2.h
+           Line3.h
+           Penta6.h
+           Quad4.h
+           Tetra4.h
+           Triang3.h
+           Triang6S.h
+      DESTINATION .
+     )

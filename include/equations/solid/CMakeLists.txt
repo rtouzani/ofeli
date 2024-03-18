@@ -25,6 +25,12 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY Bar2DL2.h
+           Beam3DL2.h
+           Elas2DQ4.h
+           Elas2DT3.h
+           Elas3DH8.h
+           Elas3DT4.h
+           Equa_Solid.h
+      DESTINATION .
+     )

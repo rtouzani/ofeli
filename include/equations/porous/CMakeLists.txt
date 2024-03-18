@@ -25,6 +25,8 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY Equa_Porous.h
+           WaterPorous1D.h
+           WaterPorous2D.h
+      DESTINATION .
+     )

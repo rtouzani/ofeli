@@ -25,15 +25,16 @@
 #
 # ==============================================================================
 
-
 file (COPY bootstrap.min.js
-                jquery.countTo.js
-                jquery.easing.1.3.js
-                jquery.flexslider-min.js
-                jquery.min.js
-                jquery.waypoints.min.js
-                main.js
-                modernizr-2.6.2.min.js
-                owl.carousel.min.js
-                respond.min.js
-       DESTINATION . )
+           jquery.countTo.js
+           jquery.easing.1.3.js
+           jquery.flexslider-min.js
+           jquery.min.js
+           jquery.waypoints.min.js
+           modernizr-2.6.2.min.js
+           ofeli-main.js
+           owl.carousel.min.js
+           respond.min.js
+           rita-main.js
+      DESTINATION .
+     )

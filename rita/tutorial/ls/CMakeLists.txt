@@ -24,18 +24,30 @@
 
 project (ls)
 
-file (COPY example1.rita example2.rita example3.rita m2.dat m3.dat DESTINATION .)
+file (COPY example1.rita
+           example2.rita
+           example3.rita
+           example4.rita
+           m.dat
+           m2.dat
+           m3.dat
+           README.md
+      DESTINATION .
+     )
 
 add_test (ls-1 ${CMAKE_RITA_EXEC} example1.rita)
 add_test (ls-2 ${CMAKE_RITA_EXEC} example2.rita)
 add_test (ls-3 ${CMAKE_RITA_EXEC} example3.rita)
+add_test (ls-4 ${CMAKE_RITA_EXEC} example4.rita)
 
 install (FILES
-              README.md
-              example1.rita
-              example2.rita
-              example3.rita
-              m2.dat
-              m3.dat
+         README.md
+         example1.rita
+         example2.rita
+         example3.rita
+         example4.rita
+         m.dat
+         m2.dat
+         m3.dat
          DESTINATION ${INSTALL_TUTORIALDIR}/${PROJECT_NAME}
         )

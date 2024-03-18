@@ -25,6 +25,8 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY PETScMatrix.h
+           PETScVect.h
+           PETScWrapper.h
+      DESTINATION .
+     )

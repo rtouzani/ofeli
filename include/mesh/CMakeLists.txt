@@ -25,6 +25,21 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY Domain.h
+           Edge.h
+           Element.h
+           Figure.h
+           Grid.h
+           Material.h
+           Mesh.h
+           MeshAdapt.h
+           MeshExtract.h
+           MeshUtil.h
+           Node.h
+           Partition.h
+           Side.h
+           getMesh.h
+           saveMesh.h
+      DESTINATION .
+     )
+     

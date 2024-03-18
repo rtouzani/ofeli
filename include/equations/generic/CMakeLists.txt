@@ -25,6 +25,9 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY Equa_LinearPDE.h
+           LinearPDE1D.h
+           LinearPDE2D.h
+           LinearPDE3D.h
+      DESTINATION .
+     )

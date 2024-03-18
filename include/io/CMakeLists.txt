@@ -25,6 +25,16 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY FFI.h
+           Fct.h
+           Funct.h
+           IOField.h
+           IPF.h
+           Prescription.h
+           Tabulation.h
+           XMLParser.h
+           exprtk.hpp
+           output.h
+           saveField.h
+      DESTINATION .
+     )

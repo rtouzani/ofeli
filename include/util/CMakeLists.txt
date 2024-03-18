@@ -25,6 +25,13 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY banner.h
+           constants.h
+           Gauss.h
+           Heap.h
+           macros.h
+           qksort.h
+           Timer.h
+           util.h
+      DESTINATION .
+     )

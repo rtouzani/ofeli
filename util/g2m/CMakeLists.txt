@@ -32,8 +32,8 @@ target_link_libraries (g2m ofeli)
 
 file (COPY test.dom
            README.md
-       DESTINATION .
-      )
+      DESTINATION .
+     )
 
 add_test (g2m g2m -d test.dom -o test.m)
 

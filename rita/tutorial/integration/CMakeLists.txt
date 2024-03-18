@@ -24,7 +24,7 @@
 
 project (integration)
 
-file (COPY example1.rita example2.rita DESTINATION .)
+file (COPY example1.rita example2.rita README.md DESTINATION .)
 
 add_test (integration-1 ${CMAKE_RITA_EXEC} example1.rita)
 add_test (integration-2 ${CMAKE_RITA_EXEC} example2.rita)

@@ -25,6 +25,8 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY Equa_Acoustics.h
+           Pres1DL2.h
+           Pres2DT3.h
+      DESTINATION .
+     )

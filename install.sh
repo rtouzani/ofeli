@@ -11,7 +11,9 @@ mkdir -p ${PREFIX}/bin
 cp bin/rita ${PREFIX}/bin/.
 cp bin/gmsh ${PREFIX}/bin/.
 mkdir -p ${PREFIX}/share/ofeli/material
+mkdir -p ${PREFIX}/share/ofeli/doc
 cp material/* ${PREFIX}/share/ofeli/material/.
+cp -rf doc/* ${PREFIX}/share/ofeli/doc/.
 mkdir -p ${PREFIX}/lib
 cp -a lib/libofeli.a ${PREFIX}/lib/.
 cp -a lib/libgmsh.* ${PREFIX}/lib/

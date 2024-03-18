@@ -25,6 +25,35 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY Assembly.h
+           Assembly_impl.h
+           BMatrix.h
+           BMatrix_impl.h
+           DMatrix.h
+           DMatrix_impl.h
+           DSMatrix.h
+           DSMatrix_impl.h
+           GraphOfMatrix.h
+           LocalMatrix.h
+           LocalMatrix_impl.h
+           LocalVect.h
+           LocalVect_impl.h
+           Matrix.h
+           Matrix_impl.h
+           Point.h
+           Point2D.h
+           SkMatrix.h
+           SkMatrix_impl.h
+           SkSMatrix.h
+           SkSMatrix_impl.h
+           SpMatrix.h
+           SpMatrix_impl.h
+           SpaceTime.h
+           TrMatrix.h
+           TrMatrix_impl.h
+           Vect.h
+           Vect_impl.h
+      DESTINATION .
+     )
+
+add_subdirectory (petsc)

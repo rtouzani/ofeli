@@ -25,6 +25,10 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY Equa_Fluid.h
+           NS2DT3BT3.h
+           NSP2DQ41.h
+           TINS2DT3S.h
+           TINS3DT4S.h
+      DESTINATION .
+     )

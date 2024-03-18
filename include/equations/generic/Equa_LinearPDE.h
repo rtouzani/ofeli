@@ -59,7 +59,7 @@ class Side;
  *  \ingroup Generic
  * \brief Abstract class for Finite %Element classes for lienar PDEs'.
  *
- * \tparam <NEN> Number of element nodes
+ * \tparam <NEN_> Number of element nodes
  * \tparam <NSN_> Number of side nodes
  */
 

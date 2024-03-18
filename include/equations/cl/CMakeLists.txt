@@ -25,6 +25,15 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY ICPG1D.h
+           ICPG2DT.h
+           ICPG3DT.h
+           LCL1D.h
+           LCL2DT.h
+           LCL3DT.h
+           Muscl.h
+           Muscl1D.h
+           Muscl2DT.h
+           Muscl3DT.h
+      DESTINATION .
+     )

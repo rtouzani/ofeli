@@ -25,6 +25,10 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY FMHeap.h
+           FastMarching.h
+           FastMarching1DG.h
+           FastMarching2DG.h
+           FastMarching3DG.h
+      DESTINATION .
+     )

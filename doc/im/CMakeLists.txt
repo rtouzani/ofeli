@@ -25,6 +25,30 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY backward.gif
+           bottom.gif
+           download.gif
+           encours.gif
+           forward.gif
+           line.gif
+           o_arr.gif
+           ofeli.gif
+           ofeli.icns
+           ofeli.png
+           pattern3.png
+           pdf.gif
+           plus.gif
+           r.jpg
+           rita.icns
+           rita.jpg
+           rita.png
+           sf.gif
+           sflogo.png
+           tab_b.gif
+           tab_b.png
+           tab_l.gif
+           tab_r.gif
+           tab_s.png
+           top.gif
+      DESTINATION .
+     )

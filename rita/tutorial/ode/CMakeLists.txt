@@ -24,7 +24,7 @@
 
 project (ode)
 
-file (COPY example1.rita example2.rita example3.rita DESTINATION .)
+file (COPY example1.rita example2.rita example3.rita README.md DESTINATION .)
 
 add_test (ode-1 ${CMAKE_RITA_EXEC} example1.rita)
 add_test (ode-2 ${CMAKE_RITA_EXEC} example2.rita)

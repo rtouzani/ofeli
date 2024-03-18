@@ -24,7 +24,17 @@
 
 project (approximation)
 
-file (COPY example1.rita example2.rita example3.rita example4.rita example5.rita ex1.dat ex2.dat ex4.dat DESTINATION .)
+file (COPY example1.rita
+           example2.rita
+           example3.rita
+           example4.rita
+           example5.rita
+           ex1.dat
+           ex2.dat
+           ex4.dat
+           README.md
+      DESTINATION .
+     )
 
 add_test (approx1 ${CMAKE_RITA_EXEC} example1.rita)
 add_test (approx2 ${CMAKE_RITA_EXEC} example2.rita)

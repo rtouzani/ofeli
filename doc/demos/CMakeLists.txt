@@ -25,6 +25,33 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY beam.html
+           contact.html
+           eigen_demo1.html
+           eigen_demo2.html
+           elliptic.html
+           heat.html
+           laplace_demo1.html
+           laplace_demo2.html
+           laplace_demo3.html
+           laplace_demo4.html
+           lelas2d.html
+           lelas3d.html
+           ls_demo1.html
+           ls_demo2.html
+           ode_demo1.html
+           ode_demo2.html
+           ode_demo3.html
+           ode_demo4.html
+           opt_demo1.html
+           std3.html
+           stdc2.html
+           tiff2.html
+           tins2.html
+           transport.html
+           truss.html
+           ts_demo1.html
+           ts_demo2.html
+           ttd2.html
+      DESTINATION .
+     )

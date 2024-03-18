@@ -24,7 +24,16 @@
 
 project (pde)
 
-file (COPY example1.rita example2.rita example3.rita example4.rita example5.rita example6.rita ex4.m DESTINATION .)
+file (COPY example1.rita
+           example2.rita
+           example3.rita
+           example4.rita
+           example5.rita
+           example6.rita
+           ex4.m
+           README.md
+      DESTINATION .
+     )
 
 add_test (pde-1 ${CMAKE_RITA_EXEC} example1.rita)
 add_test (pde-2 ${CMAKE_RITA_EXEC} example2.rita)

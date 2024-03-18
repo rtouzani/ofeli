@@ -969,7 +969,7 @@ int data::addMesh(OFELI::Mesh* ms,
 {
    iMesh = theMesh.size();
    DEFAULT_MESH_NAME(name);
-   if (checkAlreadyUsed(name,DataType::GRID))
+   if (checkAlreadyUsed(name,DataType::MESH))
       return 0;
    Desc[name] = "";
    if (MeshLabel[name]) {

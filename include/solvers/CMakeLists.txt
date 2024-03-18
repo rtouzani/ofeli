@@ -25,6 +25,34 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY BSpline.h
+           BiCG.h
+           BiCGStab.h
+           CG.h
+           CGS.h
+           EigenProblemSolver.h
+           FuncApprox.h
+           GMRes.h
+           GS.h
+           GeoModel.h
+           Integration.h
+           Iter.h
+           Jacobi.h
+           LPSolver.h
+           LeastSquare.h
+           LinearSolver.h
+           MyNLAS.h
+           MyOpt.h
+           NLASSolver.h
+           ODESolver.h
+           OptSolver.h
+           Optim.h
+           Prec.h
+           Prec_impl.h
+           Richardson.h
+           SSOR.h
+           Schur.h
+           TimeStepping.h
+           simplex.h
+      DESTINATION .
+     )

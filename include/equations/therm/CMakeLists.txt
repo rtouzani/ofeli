@@ -25,6 +25,12 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY DC1DL2.h
+           DC2DT3.h
+           DC2DT6.h
+           DC3DAT3.h
+           DC3DT4.h
+           Equa_Therm.h
+           PhaseChange.h
+      DESTINATION .
+     )

@@ -25,6 +25,11 @@
 #
 # ==============================================================================
 
-add_subdirectory(std3)
-add_subdirectory(stdc2)
-add_subdirectory(ttd2)
+file (COPY BiotSavart.h
+           EC2D1T3.h
+           EC2D2T3.h
+           EC2DB2T3.h
+           Equa_Electromagnetics.h
+           HelmholtzBT3.h
+      DESTINATION .
+     )

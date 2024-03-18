@@ -24,7 +24,7 @@
 
 project (eigen)
 
-file (COPY example1.rita example2.rita m.dat DESTINATION .)
+file (COPY example1.rita example2.rita m.dat README.md DESTINATION .)
 
 add_test (eigen-1 ${CMAKE_RITA_EXEC} example1.rita)
 add_test (eigen-2 ${CMAKE_RITA_EXEC} example2.rita)

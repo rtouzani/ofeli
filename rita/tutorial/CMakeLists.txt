@@ -26,16 +26,17 @@ include (CTest)
 
 set (CMAKE_RITA_EXEC ${CMAKE_BINARY_DIR}/rita/src/rita)
 
-add_subdirectory (calc)
 add_subdirectory (ae)
-add_subdirectory (ode)
-add_subdirectory (pde)
-add_subdirectory (ls)
-add_subdirectory (optim)
+add_subdirectory (approximation)
+add_subdirectory (calc)
 add_subdirectory (eigen)
 add_subdirectory (integration)
-add_subdirectory (approximation)
+add_subdirectory (ls)
+add_subdirectory (ode)
+add_subdirectory (optim)
+add_subdirectory (pde)
 add_subdirectory (plot)
+
 
 add_custom_target (tutorial
                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
