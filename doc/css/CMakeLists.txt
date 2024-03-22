@@ -30,9 +30,11 @@ file (COPY animate.css
            bootstrap.css.map
            default.css
            doc.css
+           doxygen.css
            dropdown.css
            dropdown.vertical.css
            flexslider.css
+           head.css
            helper.css
            icomoon.css
            ofeli-style.css
@@ -40,5 +42,6 @@ file (COPY animate.css
            owl.theme.default.min.css
            rita-style.css
            style.css.map
+           tabs.css
       DESTINATION .
      )

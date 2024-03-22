@@ -37,6 +37,8 @@ set (RITA_PACKAGE_DESCRIPTION
 
 # Set up rita Version
 
+project (rita)
+
 file (STRINGS "${CMAKE_SOURCE_DIR}/rita/src/VERSION" _version LIMIT_COUNT 2)
 set (RITA_VERSION "${_version}")
 string (REGEX REPLACE "^([0-9]+)\\..*" "\\1"
@@ -55,7 +57,6 @@ string (REPLACE "^" "" "${RITA_VERSION_DATE}" RITA_VERSION_DATE)
 set (INSTALL_TUTORIALDIR ${INSTALL_RITADIR}/tutorial)
 
 message (STATUS "Building release ${PROJECT_NAME}-${RITA_VERSION}, ${RITA_VERSION_DATE}")
-project (rita)
 
 # Configuration
 

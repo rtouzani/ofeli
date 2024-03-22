@@ -132,6 +132,8 @@ install (DIRECTORY demos/ DESTINATION ${INSTALL_DEMODIR})
 install (DIRECTORY util/ DESTINATION ${INSTALL_UTILDIR})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h DESTINATION ${INSTALL_INCLUDEDIR})
 
+option(USE_PETSC "petsc" OFF)
+
 # uninstall target
 if (NOT TARGET uninstall)
    configure_file (

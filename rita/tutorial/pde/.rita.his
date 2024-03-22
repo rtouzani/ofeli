@@ -1,0 +1,24 @@
+# rita history file
+# 2024-03-22  08:20:02
+#
+n=10
+L=2*pi
+mesh
+  1d domain=0,6.28319 codes=1,2 ne=10 nbdof=1
+  end
+function name=ue variable=t definition=exp(-t)*sin(x)
+pde linear
+  vector u
+  bc  code=1  value=0.
+  bc  code=2  value=0.
+  in  value=sin(x)
+  source value=exp(-t)*x*cos(x)
+  space feP1
+  time-step 0.1
+  final-time 1
+  analytic-function ue
+  err e2 eI
+  space feP1
+  end
+solve
+exit

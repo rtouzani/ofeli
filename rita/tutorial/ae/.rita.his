@@ -1,0 +1,13 @@
+# rita history file
+# 2024-03-22  08:14:54
+#
+algebraic
+  size 2
+  variable x
+  definition x1^2 - 2*x1*x2 - 2
+  definition x1 + x2^2 + 1
+  initial  -3  -1  
+  end
+solve
+print x
+exit

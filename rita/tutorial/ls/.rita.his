@@ -1,0 +1,8 @@
+# rita history file
+# 2024-03-22  08:17:01
+#
+matrix file=m3.dat
+b = {0.,0.,0.,0.,6.}
+ls matrix=A rhs=b sol=xsolve
+print x
+exit

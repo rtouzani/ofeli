@@ -1,0 +1,7 @@
+# rita history file
+# 2024-03-22  08:15:22
+#
+approximation
+  bezier file=ex4.dat np=21
+data
+exit

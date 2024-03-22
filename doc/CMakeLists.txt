@@ -38,12 +38,7 @@ if (DOXYGEN_FOUND)
     add_subdirectory (js)
     add_subdirectory (presentations)
 
-    file (COPY doxygen.css
-               extra.css
-               head.css
-               tabs.css
-               ofeli.pdf
-               ofeli.cfg
+    file (COPY ofeli.cfg
                citing.html
                copyright.html
                demos.html
