@@ -7,9 +7,9 @@
 </info>
 <Matrix name="A" nb_rows="5" storage="tridiagonal">
   2.0  -1.0 
- -1.0   2.0 -1.0 
- -1.0   2.0 -1.0 
- -1.0   2.0 -1.0 
+ -1.0   2.0  -1.0 
+ -1.0   2.0  -1.0 
+ -1.0   2.0  -1.0 
  -1.0   2.0
 </Matrix>  
 </OFELI_File>

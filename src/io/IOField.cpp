@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -434,9 +434,9 @@ int IOField::get(DSMatrix<real_t>& A,
 }
 
 
-int IOField::get(Mesh&                    ms,
-                 vector<vector<real_t> >& v,
-                 string&                  name)
+int IOField::get(Mesh&           ms,
+                 vector<real_t>& v,
+                 string&         name)
 {
    int ret = XMLParser::get(ms,v,name);
    _field_name = name;

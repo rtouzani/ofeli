@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -32,8 +32,6 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <string>
-using std::string;
 
 #include "io/XMLParser.h"
 #include "util/banner.h"
@@ -65,12 +63,8 @@ IPF::IPF(const string& prog,
       _restart_file = _project + ".res";
    if (_save_file.size()==0)
       _save_file = _project + ".sav";
-   for (size_t i=0; i<MAX_NB_PAR; i++) {
-      if (_plot_file[i].size()==0) {
-         _plot_file[i] = _project;
-         _plot_file[i] += std::to_string(i+1) + ".pl";
-      }
-   }
+//   if (_plot_file.size()==0)
+//      _plot_file.push_back(_project+"-1.pl");
    Verbosity = getVerbose();
 }
 
@@ -89,12 +83,8 @@ IPF::IPF(const string& file)
       _restart_file = _project + ".res";
    if (_save_file.size()==0)
       _save_file = _project + ".sav";
-   for (size_t i=0; i<MAX_NB_PAR; ++i) {
-      if (_plot_file[i].size()==0) {
-         _plot_file[i] = _project + "-";
-         _plot_file[i] += std::to_string(i+1) + ".pl";
-      }
-   }
+//   if (_plot_file.size()==0)
+//      _plot_file.push_back(_project+"-1.pl");
    Verbosity = getVerbose();
 }
 
@@ -115,165 +105,144 @@ void IPF::init()
    _nb_mat = _nb_int_par = _nb_real_par = _nb_complex_par = 0;
    _nb_aux_files = _nb_data_files = _nb_mesh_files = _nb_plot_files = _nb_point_double_par = 0;
    _bc = _bf = _sf = _ini = _data = 0;
-   for (size_t i=0; i<MAX_NB_PAR; i++) {
-      _real_par[i] = 0;
-      _int_par[i] = 0;
-      _complex_par[i] = 0;
-   }
    _init_file = _file;
    _restart_file = _file;
    _domain_file = _file;
-   for (size_t i=0; i<MAX_NB_PAR; i++) {
-      _mesh_file[i] = _file;
-      _data_file[i] = _file;
-   }
-   for (size_t j=0; j<MAX_NB_MATERIALS; j++)
-      _nmat[j] = 0;
+   if (_mesh_file.size()==0)
+      _mesh_file.push_back(_file);
+   if (_data_file.size()==0)
+      _data_file.push_back(_file);
 }
 
 
-int IPF::contains(const string& label) const
+string IPF::getString(const string& label)
 {
-   for (size_t i=0; i<_param_label.size(); i++) {
-      if (_param_label[i]==label)
-         return int(i+1);
-   }
-   return 0;
-}
-
-
-string IPF::getString(const string& label) const
-{
-   int i=contains(label);
-   if (i>0)
-      return _param_value[i-1];
+   if (_param.find(label)!=_param.end())
+      return _param[label];
    throw OFELIException("In IPF::getString(string): Parameter " + label + " unfound in project file.");
-   return " ";
+   return "";
 }
 
 
 string IPF::getString(const string& label,
-                      string        def) const
+                      string        def)
 {
-   int i=contains(label);
-   if (i>0)
-      return _param_value[i-1];
+   if (_param.find(label)!=_param.end())
+      return _param[label];
    return def;
 }
-   
-    
-int IPF::getInteger(const string& label) const
+
+
+int IPF::getInteger(const string& label)
 {
-   int i=contains(label);
-   if (i>0)
-      return atoi(_param_value[i-1].c_str());
+   if (_param.find(label)!=_param.end())
+      return stoi(_param[label]);
    throw OFELIException("In IPF::getInteger(string): Parameter " + label + " unfound in project file.");
    return 0;
 }
-   
-   
+
+
 int IPF::getInteger(const string& label,
-                    int           def) const
+                    int           def)
 {
-   int i=contains(label);
-   if (i>0)
-      return atoi(_param_value[i-1].c_str());
+   if (_param.find(label)!=_param.end())
+      return stoi(_param[label]);
    return def;
 }
 
 
-real_t IPF::getDouble(const string& label) const
+real_t IPF::getDouble(const string& label)
 {
-   int i=contains(label);
-   if (i>0)
-      return atof(_param_value[i-1].c_str());
+   if (_param.find(label)!=_param.end())
+      return stod(_param[label]);
    throw OFELIException("In IPF::getDouble(string): Parameter " + label + " unfound in project file.");
    return 0;
 }
-   
-   
+
+
 real_t IPF::getDouble(const string& label,
-                      real_t        def) const
+                      real_t        def)
 {
-   int i=contains(label);
-   if (i>0)
-      return atof(_param_value[i-1].c_str());
+   if (_param.find(label)!=_param.end())
+      return stod(_param[label]);
    return def;
 }
 
 
-complex_t IPF::getComplex(const string& label) const
+complex_t IPF::getComplex(const string& label)
 {
-   real_t ar, ai;
-   complex_t a;
-   int i=contains(label);
-   if (i>0) {
-      ar = atof(_param_value[i-1].c_str());
-      ai = atof(_param_value[i-1].c_str());
-      a = complex_t(ar,ai);
-      return a;
-   }
+   if (_cparam.find(label)!=_cparam.end())
+      return complex_t(stod(_cparam[label].first),stod(_cparam[label].second));
    throw OFELIException("In IPF::getComplex(string): Parameter " + label + " unfound in project file.");
    return 0;
 }
    
    
 complex_t IPF::getComplex(const string& label,
-                          complex_t     def) const
+                          complex_t     def)
 {
-   real_t ar, ai;
-   complex_t a;
-   int i=contains(label);
-   if (i>0) {
-      ar = atof(_param_value[i-1].c_str());
-      ai = atof(_param_value[i-1].c_str());
-      a = complex_t(ar,ai);
-      return a;
-   }
+   if (_cparam.find(label)!=_cparam.end())
+      return complex_t(stod(_cparam[label].first),stod(_cparam[label].second));
    return def;
 }
 
 
 void IPF::get(const string& label,
-              Vect<real_t>& a) const
+              Vect<real_t>& a)
 {
-   for (size_t i=0; i<_array_label.size(); i++) {
-      if (_array_label[i]==label) {
-         a.setSize(_array_size[i]);
-         for (size_t j=0; j<_array_size[i]; j++)
-            a[j] = (_array_value[j])[i];
-         return;
-      }
+   if (_vparam.find(label)!=_vparam.end()) {
+      a.setSize(_vparam[label].size());
+      for (size_t i=0; i<a.size(); ++i)
+         a[i] = stod(_vparam[label][i]);
+      return;
    }
    throw OFELIException("In IPF::get(string,Vect<real_t>): Parameter " + label + " unfound in project file.");
 }
 
 
 void IPF::get(const string& label,
-              int&          a) const
+              int&          a)
 {
    a = getInteger(label);
 }
 
 
 void IPF::get(const string& label,
-              real_t&       a) const
+              real_t&       a)
 {
    a = getDouble(label);
 }
 
 
 void IPF::get(const string& label,
-              complex_t&    a) const
+              complex_t&    a)
 {
    a = getComplex(label);
 }
 
 
 void IPF::get(const string& label,
-              string&       a) const
+              string&       a)
 {
    a = getString(label);
+}
+
+
+void IPF::set_data_file(const string& s)
+{
+   if (_data_file.size()==1)
+      _data_file[0] = s;
+   else
+      _data_file.push_back(s);
+}
+
+
+void IPF::set_mesh_file(const string& s)
+{
+   if (_mesh_file.size()==1)
+      _mesh_file[0] = s;
+   else
+      _mesh_file.push_back(s);
 }
 
 } /* namespace OFELI */

@@ -8,7 +8,7 @@
 <Project name="proj">
    <mesh_file>proj.m</mesh_file>
    <parameter label="v_flag" value="1"/>
-   <parameter label="v_file">proj.v</parameter>
+   <parameter label="v_file" value="proj.v"/>
    <plot_file>proj.pos</plot_file>
    <verbose>3</verbose>
    <output>1</output>

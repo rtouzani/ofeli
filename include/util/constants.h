@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -140,6 +140,12 @@ namespace OFELI {
 #ifndef VLG
 #define VLG  1.e10
 #endif
+
+/*! \def OFELI_INFINITY
+ *  \ingroup Util
+ * = Very large number: Infinity
+ */
+#define OFELI_INFINITY std::numeric_limits<real_t>::infinity();
 
 /*! \def OFELI_IMAG
  *  \ingroup Util

@@ -6,7 +6,7 @@
 #
 # ==============================================================================
 #
-#   Copyright (C) 2021 - 2024  Rachid Touzani
+#   Copyright (C) 2021 - 2025  Rachid Touzani
 #
 #   This file is part of rita.
 #
@@ -24,16 +24,18 @@
 
 project (ode)
 
-file (COPY example1.rita example2.rita example3.rita README.md DESTINATION .)
+file (COPY example1.rita example2.rita example3.rita 2-body.rita README.md DESTINATION .)
 
 add_test (ode-1 ${CMAKE_RITA_EXEC} example1.rita)
 add_test (ode-2 ${CMAKE_RITA_EXEC} example2.rita)
 add_test (ode-3 ${CMAKE_RITA_EXEC} example3.rita)
+add_test (ode-3 ${CMAKE_RITA_EXEC} 2-body.rita)
 
 install (FILES
          README.md
          example1.rita
          example2.rita
          example3.rita
+         2-body.rita
          DESTINATION ${INSTALL_TUTORIALDIR}/${PROJECT_NAME}
         )

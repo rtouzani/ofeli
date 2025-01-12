@@ -1,6 +1,0 @@
-# rita history file
-# 2024-03-22  08:19:05
-#
-tabulation name=T file=ex1.dat
-plot
- tabulation=Texit

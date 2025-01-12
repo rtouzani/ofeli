@@ -50,5 +50,6 @@ file (COPY backward.gif
            tab_r.gif
            tab_s.png
            top.gif
+           doxygen.svg
       DESTINATION .
      )

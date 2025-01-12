@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -46,15 +46,17 @@ class funct
  public:
 
     bool _alloc;
-    size_t nb_var;
-    int opt;
+    size_t nb_var, nb_par;
     string name;
-    vector<string> var;
+    vector<string> var, par;
     funct(rita *r, const string& s);
     ~funct();
     void set(OFELI::Fct& f);
+    void set(const vector<string>& pn, const vector<double>& pv);
+    void setNoPar();
     int set(const string& v, const string& s);
     int setExpr(const string& s);
+    int setExpr(const string& s, const vector<string>& pn, const vector<double>& pv);
     void setVar(const string& v, int n=1);
     string getExpression() const { return _theFct->getExpression(); }
     double operator()(double x) { return (*_theFct)(x); }
@@ -73,10 +75,10 @@ class funct
  private:
 
     rita *_rita;
-    vector<string> _exvar;
-    vector<size_t> _N;
+    size_t _iv;
+    vector<string> _exvar, _expar;
     OFELI::Fct *_theFct;
-    void setVar();
+    void setVar(size_t n);
 };
 
 ostream& operator<<(ostream& s, const funct& f);

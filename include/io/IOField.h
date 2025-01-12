@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -242,9 +242,9 @@ class IOField : public XMLParser
                   string mesh_file);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    int get(Mesh&                    ms,
-            vector<vector<real_t> >& v,
-            string&                  name);
+    int get(Mesh&           ms,
+            vector<real_t>& v,
+            string&         name);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
  private:

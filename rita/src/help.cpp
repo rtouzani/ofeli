@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -156,7 +156,7 @@ int help::run(int opt)
 
       case  18:
          cout << "Command 'description' enables associating a description of a given datum or entity. Synopsis:\n\n";
-         cout << "description <text>" << endl;
+         cout << "description <name> <text>" << endl;
          break;
 
       case  19:

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -51,6 +51,7 @@ using std::string;
 #include "solvers/LinearSolver.h"
 #include "solvers/Iter.h"
 #include "equations/Equa.h"
+#include "solvers/MyODE.h"
 #include "io/Fct.h"
 
 
@@ -124,6 +125,31 @@ class ODESolver
  *  [Default: <tt>1</tt>]
  */
     ODESolver(TimeScheme s,
+              real_t     time_step=theTimeStep,
+              real_t     final_time=theFinalTime,
+              size_t     nb_eq=1);
+
+/** \brief Constructor using time discretization data and a user defined class to define the ODE
+ *  @param [in] my_ode Reference to instance of user defined class.
+ *  This class inherits from abstract class MyODE. It must contain the member function
+ *      \c double Function(double t, const double& y)
+ *  which returns the value of the nonlinear function, as a vector, for a given solution vector 
+ * \c x. The user defined class must contain, if the iterative scheme requires it the member function
+ *      \c Vect<double> Gradient(const Vect<real_t>& x)
+ *  which returns the gradient as a \c n*n vector, each index \c (i,j) containing the j-th partial 
+ * derivative of the i-th function.
+ *  @param [in] s Choice of the scheme: To be chosen in the enumerated variable
+ *  \a Scheme (see the presentation of the class)
+ *  @param [in] time_step Value of the time step. This value will be modified
+ *  if an adaptive method is used. The default value for this parameter
+ *  if the value given by the global variable \c theTimeStep
+ *  @param [in] final_time Value of the final time (time starts at 0). The default
+ *  value for this parameter is the value given by the global variable \c theFinalTime
+ *  @param [in] nb_eq Number of differential equations (size of the system)
+ *  [Default: <tt>1</tt>]
+ */
+    ODESolver(MyODE&     my_ode,
+              TimeScheme s,
               real_t     time_step=theTimeStep,
               real_t     final_time=theFinalTime,
               size_t     nb_eq=1);
@@ -464,6 +490,7 @@ class ODESolver
    int _sc;
    Iteration _s;
    Preconditioner _p;
+   MyODE *_my_ode;
    bool _fct_allocated, _dF_computed, _setF_called, _RK4_rhs;
    bool _linear, _a0, _a1, _a2, _constant_matrix, _regex, _explicit, _init, _lhs, _rhs, _rhsF;
    Vect<real_t> _x, _u, _v, *_w, _f0, _f1, _f2, _b, _f01, _f, *_bc, _bb, _vv, _dudt;
@@ -521,8 +548,10 @@ class ODESolver
    Vect<real_t>& setF_Newmark();
    Vect<real_t>& setF_BDF2();
 
-   real_t eval(real_t t, real_t y, Fct* f);
-   real_t eval(real_t t, const Vect<real_t>& y, Fct* f);
+   real_t evalF(real_t t, real_t y);
+   real_t evalDF(real_t t, real_t y);
+   real_t evalF(real_t t, const Vect<real_t>& y, size_t i);
+   real_t evalDF(real_t t, const Vect<real_t>& y, size_t i, size_t j);
 
 };
 

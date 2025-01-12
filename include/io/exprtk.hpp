@@ -55,7 +55,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-
+#define exprtk_disable_caseinsensitivity
 
 namespace exprtk
 {

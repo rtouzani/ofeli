@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -65,6 +65,7 @@ int ae::run()
    size = 1;
    vector<string> def, fname, var;
    vector<double> init;
+   vector<size_t> nbv;
    isSet = false;
    J.setSize(1,1);
    isFct = 0;
@@ -158,7 +159,9 @@ int ae::run()
          fn = var_name[0];
          var.clear();
          var.push_back(var_name[0]);
-         k = _data->addFunction(fct_name,var,def[0],size);
+         nbv.resize(1);
+         nbv[0] = size;
+         k = _data->addFunction(fct_name,var,def[0],nbv);
          FCT_NOT_DEFINED("",fct_name);
          FCT_ALREADY_DEFINED("",fct_name);
          _data->theFct[k]->setExpr(def[0]);
@@ -328,7 +331,9 @@ int ae::run()
                      fct_name = "";
                      var.clear();
                      var.push_back(var_name[0]);
-                     int k = _data->addFunction(fct_name,var,def[j],size);
+                     nbv.resize(1);
+                     nbv[0] = size;
+                     int k = _data->addFunction(fct_name,var,def[j],nbv);
                      FCT_NOT_DEFINED("end>",fct_name);
                      FCT_ALREADY_DEFINED("end>",fct_name);
                      _data->theFct[k]->setVar(var_name[0],size);

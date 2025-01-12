@@ -6,7 +6,7 @@
 #
 # ==============================================================================
 #
-#   Copyright (C) 1998 - 2024 Rachid Touzani
+#   Copyright (C) 1998 - 2025 Rachid Touzani
 #
 #   This file is part of OFELI.
 #
@@ -38,7 +38,7 @@ if (DOXYGEN_FOUND)
     add_subdirectory (js)
     add_subdirectory (presentations)
 
-    file (COPY ofeli.cfg
+    file (COPY doxyfile.ini
                citing.html
                copyright.html
                demos.html
@@ -65,13 +65,16 @@ if (DOXYGEN_FOUND)
                      )
 
     add_custom_target (doc_doxygen ALL
-                       COMMAND ${DOXYGEN_EXECUTABLE} ofeli.cfg
+                       COMMAND ${DOXYGEN_EXECUTABLE} doxyfile.ini
                        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                        COMMENT "Generating API documentation with Doxygen"
                        VERBATIM 
                       )
 
-#    install (DIRECTORY html/ DESTINATION ${INSTALL_DOCDIR}/html)
 else (DOXYGEN_FOUND)
-     message (FATAL_ERROR "Could not find doxygen to build documentation")
-endif (DOXYGEN_FOUND)#
+     message (WARNING "   ------------------------------------------------------------\n"
+                      "   Could not find doxygen to build documentation\n"
+                      "   The package will be installed without complete documentation\n"
+                      "   For this, visit site: ofeli.org\n"
+                      "   ------------------------------------------------------------")
+endif (DOXYGEN_FOUND)

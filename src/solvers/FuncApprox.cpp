@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -63,6 +63,7 @@ void FuncApprox::setLagrange(int                 n,
    _x = &x;
    _y = &y;
    _ffct = &f;
+   _ffct->setVar("x");
    _degree = n;
 }
 
@@ -71,12 +72,12 @@ void FuncApprox::getLeastSquare(Fct& f)
 {
    if (_ls_opt<0)
       throw OFELIException("FuncApprox::getLeastSquare(Fct&): No least square approximation defined.");
-   if (f.getNbVar()==0)
-      f.setVar("x");
-   string p = "", v=f.getVar(1);
+   string p = "", v="x";
+   f.setVar("x");
    if (_ls_opt==0) {
       for (size_t i=0; i<_n2; ++i) {
          Fct &ff = *(*_fct)[i];
+         ff.setVar("x");
          if (ff.getVar(1) != v)
             throw OFELIException("FuncApprox::getLeastSquare(Fct&): Inconsistency in variable name.");
          p = p + MonomialExpression((*_p)[i],(*_fct)[i]->getExpression(),i);
@@ -115,6 +116,7 @@ void FuncApprox::setLeastSquare(const vector<Fct *>& f,
    _alloc = 1;
    for (size_t i=0; i<_n2; ++i) {
       Fct &ff = *(*_fct)[i];
+      ff.setVar("x");
       if (ff.getNbVar()>1)
          throw OFELIException("FuncApprox::setLeastSquare(..): Functions must have one variable only.");
       string x = ff.getVar(1);
@@ -845,10 +847,7 @@ int FuncApprox::rbsurf(size_t          ibnum,
 
 int FuncApprox::runLagrange()
 {
-   string p="";
-   if (_ffct->getNbVar()==0)
-      _ffct->setVar(_vvar[0]);
-   string v=_ffct->getVar(1);
+   string p="", v=_ffct->getVar(1);
    for (int i=0; i<=_degree; ++i) {
       string q = "";
       real_t d = 1.;
@@ -898,7 +897,7 @@ int FuncApprox::runLeastSquare()
       _A.solveQR(_b,*_p);
    }
    else {
-         s1 = 0., s2 = 0.;
+         s1 = s2 = 0.;
          for (size_t i=0; i<_n1; ++i) {
             s1 += (*_x)[i];
             s2 += (*_x)[i]*(*_x)[i];

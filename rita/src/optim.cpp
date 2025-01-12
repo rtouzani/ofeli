@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -69,6 +69,7 @@ int optim::run()
    int count_lec=0, count_gec=0, count_eqc=0, count_vector=0, penal_ok=0, nb=0, key=0;
    double in=0., xx=0.;
    vector<string> grad, hess, var, le_cons, eq_cons;
+   vector<size_t> nbv;
    OFELI::Vect<double> *A_le, *A_ge, *A_eq;
    string str, J, name="", constr="";
    string fn="";

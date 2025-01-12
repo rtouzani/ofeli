@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -59,7 +59,7 @@ extern Material theMaterial;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! \class Equa_Acoustics
- *  \ingroup Wave
+ *  \ingroup Acoustics
  * \brief Abstract class for Wave Finite %Element classes.
  *
  * \tparam <NEN_> Number of element nodes

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -50,9 +50,12 @@ using std::map;
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 typedef std::pair<string,string> SString;
-#define  IPF_TOKEN(s)  if (it!=tokens.end()) s = *it; break;
-#define  IPF_TOKENI(s) if (it!=tokens.end()) s = stoi(*it); break;
-#define  IPF_TOKENF(s) if (it!=tokens.end()) s = stof(*it); break;
+#define IPF_TOKEN(s)  if (it!=tokens.end()) s = *it; break;
+#define IPF_TOKENI(s) if (it!=tokens.end()) s = stoi(*it); break;
+#define IPF_TOKENF(s) if (it!=tokens.end()) s = stof(*it); break;
+#define IPF_ISET(s)   if (!_scan) { if (a.first=="value") s = stoi(a.second); } break;
+#define IPF_DSET(s)   if (!_scan) { if (a.first=="value") s = stof(a.second); } break;
+#define IPF_SSET(s)   if (!_scan) { if (a.first=="value") s = a.second; } break;
 
 
 namespace OFELI {
@@ -82,7 +85,7 @@ class XMLParser : public Parser
                    POISSON_RATIO, RHO_CP, VISCOSITY, YOUNG_MODULUS, VECTOR, CODE, NB_DOF, ARRAY, DDOMAIN,
                    VERTEX, LINE, CIRCLE, CONTOUR, HOLE, REQUIRED_VERTEX, REQUIRED_EDGE, RECTANGLE, SUBDOMAIN,
                    MESH, NODES, ELEMENTS, SIDES, EDGES, TIME, STEP, NB_STEPS, TIME_STEP,
-                   MAX_TIME, NB_ITER, TOLERANCE, PARAMETER, INTEGER, DOUBLE, STRING, COMPLEX, VALUE, DOF,
+                   MAX_TIME, NB_ITER, TOLERANCE, LABEL, PARAMETER, INTEGER, DOUBLE, STRING, COMPLEX, VALUE, DOF,
                    GRID, CONSTANT, EXPRESSION, MATERIAL, MATERIAL_CODE, DATA, MATRIX, NAME,
                    PRESCRIPTION, SOLUTION, BOUNDARY_CONDITION, BODY_FORCE, POINT_FORCE, FLUX, INITIAL, FUNCTION, VARIABLE};
 
@@ -101,9 +104,9 @@ class XMLParser : public Parser
    void set(Grid& gr);
    int get(EType type, vector<Prescription::PPar>& p);
    int get(Mesh& ms, int format=ASCII);
-   int get(Mesh& ms, vector<vector<real_t>>& v, string& name);
+   int get(Mesh& ms, vector<real_t>& v, string& name);
    int get(Mesh& ms, Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
-   int get(Grid& gr, vector<vector<real_t>>& v, string& name);
+   int get(Grid& gr, vector<real_t>& v, string& name);
    int get(Grid& gr, Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
    int get(Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
    int get(Vect<real_t>& v, const string& name);
@@ -126,10 +129,10 @@ class XMLParser : public Parser
    int _access, _cm, _format, _var, _code, _rtype, _scan;
    EType _type, _prescription_type, _old_type;
    Prescription::PPar _par;
-   string _file, _mesh_file, _vect_file, _el_shape, _sd_shape, _name, _sought_name, _tag_name, _xml, _mat;
+   string _file, _mesh_file, _vect_file, _el_shape, _sd_shape, _name, _sought_name, _tag_name, _xml, _mat, _slabel, _svalue;
    size_t _iter, _dof, _label, _nb_dof, _dim, _nb_nodes, _nb_elements, _nb_sides, _nb_edges, _tab_size, _vect_size;
    size_t _nb_el_nodes, _nb_sd_nodes, _nb_mat, _all_steps, _nb_funct;
-   size_t _ik1, _ik2, _dk1, _dk2, _ck, _mk, _pk, _dk, _nb_var, _nx, _ny, _nz, _nt;
+   size_t _nb_var, _nx, _ny, _nz, _nt;
    MatrixType _storage;
    MatrixSize _msize;
    DOFSupport _dof_support;
@@ -142,8 +145,7 @@ class XMLParser : public Parser
    Tabulation *_theTabulation;
    Matrix<real_t> *_theMatrix;
    vector<Prescription::PPar> *_vp;
-   vector<real_t> *_ft;
-   vector<vector<real_t>> *_V;
+   vector<real_t> *_ft, *_V;
    Fct _theFct;
 
    virtual bool on_tag_open(string tag_name, StringMap& attributes);
@@ -158,6 +160,7 @@ class XMLParser : public Parser
    void open();
    void read_project(const SString& a);
    void read_project_data(const vector<string> &tokens, std::vector<string>::iterator &it);
+   void read_parameter_data(const vector<string> &tokens, std::vector<string>::iterator &it);
    void read_domain(const SString& a);
    void read_domain_data(const vector<string> &tokens, std::vector<string>::iterator &it);
    void read_mat(const SString& a);
@@ -174,7 +177,7 @@ class XMLParser : public Parser
    void read_prescribe_data(const vector<string> &tokens, vector<string>::iterator &it);
    void read_tab(const SString& a);
    void read_tab_data(const vector<string> &tokens, vector<string>::iterator &it);
-   int read_matrix(const SString& ai);
+   int read_matrix(const SString& a);
    int read_matrix_data(const vector<string> &tokens, vector<string>::iterator &it);
    MatrixSize getMatrixData();
 
@@ -228,6 +231,7 @@ class XMLParser : public Parser
                           {"Viscosity",Tag::VISCOSITY},
                           {"YoungModulus",Tag::YOUNG_MODULUS},
                           {"Vector",Tag::VECTOR},
+                          {"Field",Tag::VECTOR},
                           {"code",Tag::CODE},
                           {"nb_dof",Tag::NB_DOF},
                           {"array",Tag::ARRAY},

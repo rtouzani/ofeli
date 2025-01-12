@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,8 +34,8 @@
 
 #include "OFELI_Config.h"
 #include "linear_algebra/Point.h"
-#include <complex>
-using std::complex;
+#include <map>
+using std::map;
 
 namespace OFELI {
 /*!
@@ -51,6 +51,7 @@ namespace OFELI {
  *  \brief Utility functions and classes
  */
 
+typedef std::pair<string,string> string_pair;
 
 /** \class IPF
  * \ingroup IO
@@ -182,7 +183,7 @@ class IPF {
 /// \brief Return parameter corresponding to a given label, when its value is a string
 /// @param [in] label Label that identifies the string (read from input file)
 /// If this label is not found an error message is displayed and program stops
-    string getString(const string& label) const;
+    string getString(const string& label);
 
 /** \brief Return parameter corresponding to a given label, when its value is a string
  *  \details Case where a default value is provided
@@ -190,12 +191,12 @@ class IPF {
  *  @param [in] def Default value: Value to assign if the sought parameter is not found
  */
     string getString(const string& label,
-                           string  def) const;
+                     string        def);
 
 /// \brief Return parameter corresponding to a given label, when its value is an integer
 /// @param [in] label Label that identifies the integer number (read from input file)
 /// If this label is not found an error message is displayed and program stops
-    int getInteger(const string& label) const;
+    int getInteger(const string& label);
 
 /** \brief Return parameter corresponding to a given label, when its value is an integer.
  *  \details Case where a default value is provided
@@ -203,12 +204,12 @@ class IPF {
  *  @param [in] def Default value: Value to assign if the sought parameter is not found
  */
     int getInteger(const string& label,
-                         int     def) const;
+                   int           def);
 
 /// \brief Return parameter corresponding to a given label, when its value is a real_t
 /// @param [in] label Label that identifies the real number (read from input file).
 /// If this label is not found an error message is displayed and program stops.
-    real_t getDouble(const string& label) const;
+    real_t getDouble(const string& label);
    
 /** \brief Return parameter corresponding to a given label, when its value is a real_t
  *  \details Case where a default value is provided
@@ -216,12 +217,12 @@ class IPF {
  *  @param [in] def Default value: Value to assign if the sought parameter is not found
  */
     real_t getDouble(const string& label,
-                     real_t        def) const;
+                     real_t        def);
 
 /// \brief Return parameter corresponding to a given label, when its value is a complex number
 /// @param [in] label Label that identifies the complex number (read from input file)
 /// If this label is not found an error message is displayed and program stops
-    complex_t getComplex(const string& label) const;
+    complex_t getComplex(const string& label);
    
 /** \brief Return parameter corresponding to a given label, when its value is a complex number
  *  \details Case where a default value is provided
@@ -229,15 +230,7 @@ class IPF {
  *  @param [in] def Default value: Value to assign if the sought parameter is not found
  */
     complex_t getComplex(const string&   label,
-                         complex_t       def) const;
-
-/** \brief check if the project file contains a given parameter
- *  @param [in] label Label that identifies the label to seek in file
- *  @return <tt>0</tt> if the parameter is not found,
- *          <tt>n</tt> if the parameter is found, where <tt>n</tt> is the parameter index
- *          in the parameter list
- */
-    int contains(const string& label) const;
+                         complex_t       def);
 
 /** \brief Read an array of real values, corresponding to a given label
  *  @param [in] label Label that identifies the array (read from input file).
@@ -245,15 +238,7 @@ class IPF {
  *  @remark If this label is not found an error message is displayed.
  */
     void get(const string& label,
-             Vect<real_t>& a) const;
-
-/** \brief Return an array entry for a given label
- *  @param [in] label Label that identifies the array (read from input file).
- *  @param [in] j Index of entry in the array (Starting from 1)
- *  @remark If this label is not found an error message is displayed and program stops.
- */
-    real_t getArraySize(const string& label,
-                        size_t        j) const;
+             Vect<real_t>& a);
 
 /** \brief Return integer parameter corresponding to a given label
  *  @param [in] label Label that identifies the integer number (read from input file).
@@ -262,7 +247,7 @@ class IPF {
  *  Note: This member function can be used instead of getInteger
  */
     void get(const string& label,
-             int&          a)    const;
+             int&          a);
 
 /** \brief Return real parameter corresponding to a given label
  *  @param [in] label Label that identifies the real (real_t) number (read from input file).
@@ -271,7 +256,7 @@ class IPF {
  *  Note: This member function can be used instead of getReal_T
  */
     void get(const string& label,
-             real_t&       a) const;
+             real_t&       a);
 
 /** \brief Return complex parameter corresponding to a given label
  *  @param [in] label Label that identifies the complex number (read from input file).
@@ -279,7 +264,7 @@ class IPF {
  *  If this label is not found an error message is displayed and program stops.
  */
     void get(const string& label,
-             complex_t&    a) const;
+             complex_t&    a);
 
 /** \brief Return string parameter corresponding to a given label
  *  @param [in] label Label that identifies the atring (read from input file).
@@ -289,7 +274,7 @@ class IPF {
  *  Note: This member function can be used instead of getString
  */
     void get(const string& label,
-             string&       a) const;
+             string&       a);
 
 /// \brief Return parameter read using keyword \b Project.
 /// \details This parameter can be used to read a project's name.
@@ -392,19 +377,17 @@ private:
    string _file, _project, _domain_file, _init_file, _restart_file;
    string _bc_file, _bf_file, _sf_file, _save_file;
    size_t _nb_mat, _nb_int_par, _nb_real_par, _nb_point_double_par;
-   size_t _nmat[MAX_NB_MATERIALS];
-   int _int_par[MAX_NB_PAR];
-   real_t _real_array[MAX_NB_PAR][MAX_ARRAY_SIZE];
-   real_t _real_par[MAX_NB_PAR];
-   Point<real_t> _point_double_par[MAX_NB_PAR];
-   complex<real_t> _complex_par[MAX_NB_PAR];
-   string _mat[MAX_NB_MATERIALS], _mesh_file[MAX_NB_PAR], _aux_file[MAX_NB_PAR];
-   string _data_file[MAX_NB_PAR], _plot_file[MAX_NB_PAR], _string_par[MAX_NB_PAR];
-   vector<string> _param_label, _param_value, _param_ext;
-   vector<string> _array_label, _array_ext;
-   vector<size_t> _array_size;
-   vector<real_t> _array_value[MAX_ARRAY_SIZE];
+   vector<int> _int_par;
+   vector<real_t> _real_par;
+   vector<Point<real_t>> _point_double_par;
+   vector<complex_t> _complex_par;
+   vector<string> _mat, _mesh_file, _aux_file, _data_file, _plot_file, _string_par;
+   map<string,string> _param;
+   map<string,string_pair> _cparam;
+   map<string,vector<string>> _vparam;
    mat_prop _mp;
+   void set_data_file(const string& s);
+   void set_mesh_file(const string& s);
    void init();
 };
 

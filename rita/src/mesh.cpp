@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -35,9 +35,9 @@
 #include "defs.h"
 #include "helps.h"
 
-//#ifdef USE_GMSH
+#ifdef USE_GMSH
 #include <gmsh.h>
-//#endif
+#endif
 
 namespace RITA {
 
@@ -47,9 +47,9 @@ mesh::mesh(rita*      r,
            cmd*       command,
            configure* config)
      : _rita(r), _saved(false), _generated(false), _geo(false), _generator(0),
-       _theMesh(nullptr), _theDomain(nullptr), _nb_Ccontour(0), _nb_Scontour(0), _nb_Vcontour(0),
-       _nb_sub_domain(0), _nb_point(0), _nb_curve(0), _nb_surface(0), _nb_volume(0), 
-       _configure(config), _cmd(command)
+       _theMesh(nullptr), _theDomain(nullptr), _nb_Ccontour(0), _nb_Scontour(0),
+       _nb_Vcontour(0), _nb_sub_domain(0), _nb_point(0), _nb_curve(0), _nb_surface(0),
+       _nb_volume(0), _configure(config), _cmd(command)
 {
    mesh_name = "";
 }
@@ -71,8 +71,8 @@ int mesh::run()
    _pr = _PR;
    _nb_dof = 1;
    _data = _rita->_data;
-   static const vector<string> kw {"1d","rect$angle","cube","point","curve","surface","volume","contour",
-                                   "code","gen$erate","nbdof","list","plot","save","read"};
+   static const vector<string> kw {"1d","rect$angle","cube","point","curve","surface","volume",
+                                   "contour","code","gen$erate","nbdof","list","plot","save","read"};
 #ifndef USE_GMSH
    _theDomain = new OFELI::Domain;
 #endif

@@ -1,26 +1,24 @@
 ;(function () {
-	
+
 	'use strict';
-
-
 
 	var isMobile = {
 		Android: function() {
 			return navigator.userAgent.match(/Android/i);
 		},
-			BlackBerry: function() {
+		BlackBerry: function() {
 			return navigator.userAgent.match(/BlackBerry/i);
 		},
-			iOS: function() {
+		iOS: function() {
 			return navigator.userAgent.match(/iPhone|iPad|iPod/i);
 		},
-			Opera: function() {
+		Opera: function() {
 			return navigator.userAgent.match(/Opera Mini/i);
 		},
-			Windows: function() {
+		Windows: function() {
 			return navigator.userAgent.match(/IEMobile/i);
 		},
-			any: function() {
+		any: function() {
 			return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
 		}
 	};
@@ -50,7 +48,7 @@
 		if ($('#ofeli-counter').length > 0 ) {
 			$('#ofeli-counter').waypoint( function( direction ) {
 										
-				if( direction === 'down' && !$(this.element).hasClass('animated') ) {
+				if ( direction === 'down' && !$(this.element).hasClass('animated') ) {
 					setTimeout( counter , 400);					
 					$(this.element).addClass('animated');
 				}
@@ -58,7 +56,7 @@
 		}
 	};
 
-	// Animations
+// Animations
 	var contentWayPoint = function() {
 		var i = 0;
 		$('.animate-box').waypoint( function( direction ) {
@@ -66,7 +64,6 @@
 			if( direction === 'down' && !$(this.element).hasClass('animated') ) {
 				
 				i++;
-
 				$(this.element).addClass('item-animate');
 				setTimeout(function(){
 
@@ -112,10 +109,9 @@
 		});
 
 
-
 	};
 
-	// Click outside of offcanvass
+// Click outside of offcanvass
 	var mobileMenuOutsideClick = function() {
 
 		$(document).click(function (e) {
@@ -202,11 +198,6 @@
 
 	};
 
-
-
-
-
-
 	var sliderMain = function() {
 		
 	  	$('#ofeli-hero .flexslider').flexslider({
@@ -256,9 +247,6 @@
 
 				$("#sticky_item").stick_in_parent();
 			}
-			
-
-			
 
 		});
 
@@ -286,7 +274,7 @@
 		})
 	};
 
-	// Document on load.
+// Document on load.
 	$(function(){
 		fullHeight();
 		counter();
@@ -299,12 +287,10 @@
 		navigationSection();
 		// windowScroll();
 
-
 		mobileMenuOutsideClick();
 		sliderMain();
 		stickyFunction();
 		owlCrouselFeatureSlide();
 	});
-
 
 }());

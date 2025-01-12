@@ -6,7 +6,7 @@
 #
 #  ==============================================================================
 #
-#   Copyright (C) 1998 - 2024 Rachid Touzani
+#   Copyright (C) 1998 - 2025 Rachid Touzani
 #
 #   This file is part of OFELI.
 #
@@ -26,19 +26,19 @@
 #  ==============================================================================
 
 target_sources (${PROJECT_NAME} PRIVATE
-                         BSpline.cpp
-                         EigenProblemSolver.cpp
-                         FuncApprox.cpp
-                         LinearSolver.cpp
-                         LPSolver.cpp
-                         NLASSolver.cpp
-                         ODESolver.cpp
-                         OptimNM.cpp
-                         OptimPG.cpp
-                         OptimSA.cpp
-                         OptimTN.cpp
-                         OptSolver.cpp
-                         simplex.cpp
-                         Solver.cpp
-                         TimeStepping.cpp
-                        )
+                BSpline.cpp
+                EigenProblemSolver.cpp
+                FuncApprox.cpp
+                LinearSolver.cpp
+                LPSolver.cpp
+                NLASSolver.cpp
+                ODESolver.cpp
+                OptimNM.cpp
+                OptimPG.cpp
+                OptimSA.cpp
+                OptimTN.cpp
+                OptSolver.cpp
+                simplex.cpp
+                Solver.cpp
+                TimeStepping.cpp
+               )

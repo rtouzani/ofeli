@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -117,7 +117,7 @@ class FMHeap
     {
        if (_heap.size()==0)
           return -1;
-       _heap.front();
+//       _heap.front();
        _heap[0] = _heap.at(_heap.size()-1);
        _heap.pop_back();
        down(0);

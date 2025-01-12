@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -47,6 +47,10 @@ namespace OFELI {
 /*!
  *  \addtogroup OFELI
  *  @{
+ */
+
+/*! \defgroup Interface Interface problems
+ *  \brief Classes for solving interface problems
  */
 
 /*!

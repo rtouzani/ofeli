@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -43,7 +43,7 @@ namespace OFELI {
  *  @{
  */
 
-/*! \defgroup Generic
+/*! \defgroup GenericPDE Generic Linear PDE's
  *  \brief Generic partial differential equation
  */
 
@@ -56,7 +56,7 @@ class Element;
 class Side;
 
 /*! \class Equa_LinearPDE
- *  \ingroup Generic
+ *  \ingroup GenericPDE
  * \brief Abstract class for Finite %Element classes for lienar PDEs'.
  *
  * \tparam <NEN_> Number of element nodes

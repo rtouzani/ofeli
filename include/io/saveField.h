@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -157,12 +157,12 @@ template<class T_> class Vect;
                     int    format,
                     int    f=1);
 
-    void getfields(string                   file,
-                   Mesh&                    ms,
-                   size_t&                  nb_dof,
-                   vector<real_t>&          t,
-                   vector<vector<real_t> >& u,
-                   string&                  name
+    void getfields(string          file,
+                   Mesh&           ms,
+                   size_t&         nb_dof,
+                   vector<real_t>& t,
+                   vector<real_t>& u,
+                   string&         name
                   );
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

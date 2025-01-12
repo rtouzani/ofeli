@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -36,6 +36,7 @@
 #include "util/constants.h"
 #include "util/macros.h"
 #include <complex>
+#include <vector>
 
 /*! \file OFELI_Config.h
  *  \ingroup Util
@@ -46,26 +47,12 @@
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define MY_RANDOM             55085111
+typedef  unsigned long                     lsize_t;
+typedef  double                            real_t;
+typedef  std::vector<real_t>               Vector;
+typedef  std::complex<real_t>              complex_t;
+typedef  std::vector<std::complex<real_t>> CVector;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
-
-/*! \typedef lsize_t
- *  \ingroup Util
- * \brief This type stands for type \p unsigned \p long
- */
-typedef  unsigned long         lsize_t;
-
-/*! \typedef real_t
- *  \ingroup Util
- * \brief This type stands for \p double
- */
-typedef  double                real_t;
-
-/*! \typedef complex_t
- *  \ingroup Util
- * \brief This type stands for type \p std::complex<double>
- */
-typedef  std::complex<double>  complex_t;
-
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define XGRAPH_                0
@@ -183,20 +170,6 @@ typedef  std::complex<double>  complex_t;
  */
 #define MAX_NB_MATERIALS                  10
 
-/*! \def MAX_NB_PAR
- *  \ingroup IO
- *  \brief Maximum number of parameters
- *  \details Used in class IPF
- */
-#define MAX_NB_PAR                        50
-
-/*! \def MAX_ARRAY_SIZE
- *  \ingroup IO
- *  \brief Maximum array size
- *  \details Used in class IPF
- */
-#define MAX_ARRAY_SIZE                   100
-
 /*! \def MAX_INPUT_STRING_LENGTH
  *  \ingroup IO
  *  \brief Maximum string length
@@ -266,17 +239,17 @@ enum class EType {
       SOURCE             = 13,    /*!< Body force data                             */
       BOUNDARY_FORCE     = 14,    /*!< Body force data                             */
       FLUX               = 14,    /*!< Body force data                             */
-      TRACTION           = 14,    /*!< Body force data                             */
-      NEUMANN            = 14,    /*!< Body force data                             */
-      POINT_FORCE        = 15,    /*!< Localized (at point) force                  */
-      AUX_INPUT_FIELD_1  = 16,    /*!< Auxiliary input field 1                     */
-      AUX_INPUT_FIELD_2  = 17,    /*!< Auxiliary input field 2                     */
-      AUX_INPUT_FIELD_3  = 18,    /*!< Auxiliary input field 3                     */
-      AUX_INPUT_FIELD_4  = 19,    /*!< Auxiliary input field 4                     */
-      DISPLACEMENT       = 20,    /*!< A displacement field                        */
-      VELOCITY           = 21,    /*!< A velocity field                            */
-      PRESSURE           = 22,    /*!< A pressure field                            */
-      TEMPERATURE        = 23     /*!< A temperature field                         */
+      TRACTION           = 15,    /*!< Body force data                             */
+      NEUMANN            = 15,    /*!< Body force data                             */
+      POINT_FORCE        = 16,    /*!< Localized (at point) force                  */
+      AUX_INPUT_FIELD_1  = 17,    /*!< Auxiliary input field 1                     */
+      AUX_INPUT_FIELD_2  = 18,    /*!< Auxiliary input field 2                     */
+      AUX_INPUT_FIELD_3  = 19,    /*!< Auxiliary input field 3                     */
+      AUX_INPUT_FIELD_4  = 20,    /*!< Auxiliary input field 4                     */
+      DISPLACEMENT       = 21,    /*!< A displacement field                        */
+      VELOCITY           = 22,    /*!< A velocity field                            */
+      PRESSURE           = 23,    /*!< A pressure field                            */
+      TEMPERATURE        = 24     /*!< A temperature field                         */
 };
 
 
@@ -380,8 +353,8 @@ enum NonLinearIter {
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /**
- * @namespace OFELI
- * \brief Namespace OFELI groups all %OFELI library classes, functions and global variables
+ * \namespace OFELI
+ * \brief Namespace OFELI groups all %OFELI library classes, functions, macros and global variables
  */
 
 namespace OFELI {

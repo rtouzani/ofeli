@@ -165,7 +165,6 @@ GeometricalEdge* Triangles::ProjectOnCurve(Edge&         BhAB,
 
 // find the direction of walking with sens of edge and pA,PB;
    R2 AB=B-A;
-   int kkk=0;
    double cosE01AB = (((R2)(*e)[1] - (R2)(*e)[0]),AB);
    int sens = (cosE01AB>0) ? 1 : 0;
    double abscisse = -1;
@@ -177,8 +176,6 @@ GeometricalEdge* Triangles::ProjectOnCurve(Edge&         BhAB,
       for (eee=e, iii=sens, te0=tA;
            eee && (((void*) eee) != pB) && (( void*) (v1=&((*eee)[iii]))) != pB ;
            neee = eee->adj[iii],iii = 1-neee->Intersection(*eee), eee=neee, v0=v1, te0=1-iii) { 
-         assert(kkk<100);
-         kkk++;
          assert(eee);
          double lg0 = lg;
          double dp = LengthInterpole(v0->m,v1->m,(R2) *v1 - (R2) *v0);

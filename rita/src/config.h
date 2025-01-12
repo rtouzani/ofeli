@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -93,5 +93,5 @@
 #undef size_t
 
 
-#define RITA_VERSION "2.1.1"
-#define RITA_DATE "2024"
+#define RITA_VERSION "2.1.2"
+#define RITA_DATE "2025"

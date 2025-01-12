@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -261,7 +261,6 @@ enum Approx {
    int rbsurf(size_t ibnum, vector<real_t>& bold, vector<real_t>& ni, vector<real_t>& mj,
               vector<real_t>& rsumij, vector<real_t>& savrsumij);
 
-   vector<string> _vvar {"x"};
 };
 
 } /* namespace OFELI */

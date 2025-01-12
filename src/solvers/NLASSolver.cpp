@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -97,7 +97,7 @@ NLASSolver::NLASSolver(MyNLAS&       my_nlas,
              _ab_given(false), _theEqua(nullptr), _nl(int(nl)), _max_it(100), _fct_type(FUNCTION),
              _toler(1.e-8), _Df(nullptr), _theMesh(nullptr), _nb_eq(0), _nb_fct_def(0)
 {
-   _my_nlas = nullptr;
+   _my_nlas = &my_nlas;
    set(nl);
 }
 

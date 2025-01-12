@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -153,7 +153,7 @@ int transient::run(const vector<string>& pb)
                      _data->theVector[f]->at(0) = _ode_eq[e].get();
                   _data->setVectorValue(f,_data->theVector[f]);
                   string fh = _data->vect_hist[_ode->var_name[0]];
-                  if (fh!="")
+                  if (fh!="%$§&")
                      _data->theHVector[_data->HVectorLabel[fh]]->set(*_data->theVector[f],theTime);
                   if (_ode->phase.size()) {
                      Vect<double> dydt(_ode->size), dy(1);

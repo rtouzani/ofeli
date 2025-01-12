@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
     This file is part of OFELI.
 
@@ -640,7 +640,7 @@ void saveField(const Vect<real_t>& v,
          }
          element_loop(&mesh) {
             m = sh[The_element.getShape()];
-            for (n=1; n<=m; n++) {
+            for (n=1; n<=m; ++n) {
                Node *nd = The_element(n);
                fp << setprecision(4) << setw(18) << nd->getX() << " "
                   << setprecision(4) << setw(18) << nd->getY()
@@ -668,7 +668,7 @@ void saveField(const Vect<real_t>& v,
          element_loop(&mesh) {
             m = sh[The_element.getShape()];
             fp << setw(9) << m;
-            for (i=0; i<m; i++)
+            for (i=0; i<m; ++i)
                fp << setw(9) << The_element(i+1)->n()-1;
             fp << endl;
          }
@@ -1009,8 +1009,7 @@ void saveGnuplot(Mesh&  mesh,
 {
    size_t nb_dof=0;
    cout << "Converting file: " << input_file << " to Gnuplot format." << endl;
-   vector<vector<real_t> > field;
-   vector<real_t> tm;
+   vector<real_t> field, tm;
    string name;
    getfields(input_file,mesh,nb_dof,tm,field,name);
 
@@ -1065,10 +1064,9 @@ void saveTecplot(Mesh&  mesh,
                  string output_file,
                  int    f)
 {
-   size_t nb_dof=0;
+   size_t nb_dof=0, nb_nodes=mesh.getNbNodes();
    cout << "Converting file: " << input_file << " to Tecplot format." << endl;
-   vector<vector<real_t> > v;
-   vector<real_t> tm;
+   vector<real_t> v, tm;
    string name;
    getfields(input_file,mesh,nb_dof,tm,v,name);
    map<int,string> sh = {{LINE,"LINESEG"},{TRIANGLE,"TRIANGLE"},{QUADRILATERAL,"QUADRILATERAL"},
@@ -1109,10 +1107,10 @@ void saveTecplot(Mesh&  mesh,
 
          node_loop(&mesh) {
             if (count==0)
-               for (size_t i=1; i<=mesh.getDim(); i++)
+               for (size_t i=1; i<=mesh.getDim(); ++i)
                   fp << "  " << The_node.getCoord(i);
-            for (size_t j=0; j<nb_dof; j++)
-               fp << "  " << v[n][nb_dof*(node_label-1)+j];
+            for (size_t j=0; j<nb_dof; ++j)
+               fp << "  " << v[nb_nodes*nb_dof*n+nb_dof*(node_label-1)+j];
             fp << endl;
          }
          if (count==0) {
@@ -1153,12 +1151,11 @@ void saveVTK(Mesh&  mesh,
 
    cout << "Converting file: " << input_file << " to VTK format." << endl;
    string proj=output_file.substr(0,output_file.rfind("."));
-   vector<vector<real_t> > field;
-   vector<real_t> tm;
+   vector<real_t> field, tm;
    string name;
    getfields(input_file,mesh,nb_dof,tm,field,name);
 
-   size_t nb_st=0;
+   size_t nb_st=0, nb_nodes=mesh.getNbNodes();
    bool scalar = true;
    if (nb_dof>1)
       scalar = false;
@@ -1205,11 +1202,11 @@ void saveVTK(Mesh&  mesh,
          *pf << "VECTORS  u  double" << endl;
 
       node_loop(&mesh) {
-         *pf << field[n][nb_dof*(node_label-1)] << " ";
+         *pf << "  " << field[nb_nodes*nb_dof*n+nb_dof*(node_label-1)] << " ";
          if (!scalar) {
-            *pf << field[n][nb_dof*(node_label-1)+1] << " ";
+            *pf << field[nb_nodes*nb_dof*n+nb_dof*(node_label-1)+1] << " ";
             if (nb_dof > 2)
-               *pf << field[n][nb_dof*(node_label-1)+2] << " ";
+               *pf << field[nb_nodes*nb_dof*n+nb_dof*(node_label-1)+2] << " ";
             else
                *pf << 0. << " ";
          }
@@ -1237,13 +1234,12 @@ void saveGmsh(Mesh&  mesh,
               string output_file,
               int    f)
 {
-   size_t nb_dof=0, nb_en=0;
+   size_t nb_dof=0, nb_en=0, nb_nodes=mesh.getNbNodes();
    ofstream pf(output_file.c_str());
    pf << setprecision(16);
 
    cout << "Converting file: " << input_file << " to Gmsh format." << endl;
-   vector<vector<real_t> > v;
-   vector<real_t> tm;
+   vector<real_t> v, tm;
    string name;
    getfields(input_file,mesh,nb_dof,tm,v,name);
    char tt = 'S';
@@ -1261,7 +1257,8 @@ void saveGmsh(Mesh&  mesh,
             pf << The_element(1)->getX() <<  ", 0., 0., "
                << The_element(2)->getX() <<  ", 0., 0. ) {" << endl;
             for (size_t n=0; n<nb_time; n+=f) {
-               pf << v[n][The_element(1)->n()-1] << "," << v[n][The_element(2)->n()-1];
+               pf << v[nb_nodes*nb_dof*n+nb_dof*(The_element(1)->n()-1)] << "," 
+                  << v[nb_nodes*nb_dof*n+nb_dof*(The_element(2)->n()-1)];
                if (n<nb_time-1)
                   pf << ",";
                pf << endl;
@@ -1283,14 +1280,14 @@ void saveGmsh(Mesh&  mesh,
             pf << The_element(nb_en)->getX() << "," << The_element(nb_en)->getY() << ",0.) {" << endl;
             for (size_t n=0; n<nb_time; n+=f) {
                for (size_t k=1; k<nb_en; ++k) {
-                  pf << v[n][nb_dof*(The_element(k)->n()-1)];
+                  pf << v[nb_nodes*nb_dof*n+nb_dof*(The_element(k)->n()-1)];
                   if (nb_dof > 1)
-                     pf << "," << v[n][nb_dof*(The_element(k)->n()-1)+1] << ",0.0";
+                     pf << "," << v[nb_nodes*nb_dof*n+nb_dof*(The_element(k)->n()-1)+1] << ",0.0";
                   pf << ",";
                }
-               pf << v[n][nb_dof*(The_element(nb_en)->n()-1)];
+               pf << v[nb_nodes*nb_dof*n+nb_dof*(The_element(nb_en)->n()-1)];
                if (nb_dof > 1)
-                  pf << "," << v[n][nb_dof*(The_element(nb_en)->n()-1)+1] << ",0.0";
+                  pf << "," << v[nb_nodes*nb_dof*n+nb_dof*(The_element(nb_en)->n()-1)+1] << ",0.0";
                if (n<nb_time-1 && n+f<nb_time)
                   pf << ",";
                pf << endl;
@@ -1321,16 +1318,16 @@ void saveGmsh(Mesh&  mesh,
                << The_element(nb_en)->getZ() << ") {" << endl;
             for (size_t n=0; n<nb_time; n+=f) {
                for (size_t k=1; k<nb_en; ++k) {
-                  pf << v[n][nb_dof*(The_element(k)->n()-1)];
+                  pf << "," << v[nb_nodes*nb_dof*n+nb_dof*(The_element(k)->n()-1)];
                   if (nb_dof > 1)
-                     pf << "," << v[n][nb_dof*(The_element(k)->n()-1)+1] << ","
-                        << v[n][nb_dof*(The_element(k)->n()-1)+2] << endl;
+                     pf << "," << v[nb_nodes*nb_dof*n+nb_dof*(The_element(k)->n()-1)+1] << ","
+                        << v[nb_nodes*nb_dof*n+nb_dof*(The_element(k)->n()-1)+2] << endl;
                   pf << ",";
                }
-               pf << v[n][nb_dof*(The_element(nb_en)->n()-1)];
+               pf << v[nb_nodes*nb_dof*n+nb_dof*(The_element(nb_en)->n()-1)];
                if (nb_dof > 1)
-                  pf << "," << v[n][nb_dof*(The_element(nb_en)->n()-1)+1] << ","
-                     << v[n][nb_dof*(The_element(nb_en)->n()-1)+2] << endl;
+                  pf << "," << v[nb_nodes*nb_dof*n+nb_dof*(The_element(nb_en)->n()-1)+1] << ","
+                     << v[nb_nodes*nb_dof*n+nb_dof*(The_element(nb_en)->n()-1)+2] << endl;
                if (n<nb_time-1 && n+f<nb_time)
                   pf << ",";
             }
@@ -1342,12 +1339,12 @@ void saveGmsh(Mesh&  mesh,
 }
 
 
-void getfields(string                   file,
-               Mesh&                    ms,
-               size_t&                  nb_dof,
-               vector<real_t>&          t,
-               vector<vector<real_t> >& u,
-               string&                  name
+void getfields(string         file,
+               Mesh&           ms,
+               size_t&         nb_dof,
+               vector<real_t>& t,
+               vector<real_t>& u,
+               string&         name
               )
 {
    {

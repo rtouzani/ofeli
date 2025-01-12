@@ -1,4 +1,4 @@
-# Iris Script file to practice data approximation
+# rita Script file to practice data approximation
 # We use polynomial fitting (least square method)
 # The result is the fitting function f
 #

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -81,6 +81,7 @@ void pde::set(string e)
 int pde::run()
 {
    string pde_id, name="", fn="", lin_solv="", an="";
+   bool space_d=false;
    e2 = eI = "";
    int ret=0, every=0, size=0;
    CHK_MSG1R(_cmd->setNbArg(1,"Give PDE name."),_pr,"Missing pde name.","",1)
@@ -102,13 +103,11 @@ int pde::run()
    scheme = "backward-euler";
    set(_cmd);
    log.vect = true;
-   log.mesh = true;
    CHK_MSGR(_data->nb_meshes==0&&_data->nb_grids==0,_pr,"No available mesh or grid")
    CHK_MSGR(_data->theMesh[_data->iMesh]->getNbNodes()==0,_pr,"Empty mesh")
    log.mesh = false;
    ls = OFELI::CG_SOLVER;
-   lsolv = "cg";
-   lprec = "dilu";
+   lsolv = "cg", lprec = "dilu";
    prec = OFELI::DILU_PREC;
    string spd = "feP1";
    static const vector<string> kw {"var$iable","vect$or","coef","axi","in$it","bc","bf","source","sf",
@@ -178,6 +177,7 @@ int pde::run()
                      "Unknown or unimplemented space discretization method: "+spd)
             ret = 0;
             *_rita->ofh << "  space " << spd << endl;
+            space_d = true;
             break;
 
          case  11:
@@ -305,7 +305,12 @@ int pde::run()
          case 104:
          case 105:
             _cmd->setNbArg(0);
-            if (ret) {
+            if (!space_d) {
+               _rita->msg(_pr+"end>","No space discretization method given. No PDE data created.");
+               *_rita->ofh << "end" << endl;
+               return ret;
+            }
+            if (ret<0) {
                _rita->msg(_pr+"end>","No PDE data created.");
                *_rita->ofh << "end" << endl;
                return ret;
@@ -573,7 +578,6 @@ int pde::getIn()
    in_data.ft_name = "";
    k = _data->addFunction(in_data.ft_name,_var,in_data.exp);
    FCT_NOT_DEFINED("initial>",in_data.ft_name)
-//   FCT_ALREADY_DEFINED("initial>",in_data.ft_name)
    if (file_ok)
       *_rita->ofh << "  file=" << in_data.in_file;
    if (save_ok) {

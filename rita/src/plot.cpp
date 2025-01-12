@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -537,6 +537,8 @@ int data::plot_fct()
 #ifdef USE_GMSH
    CHK_MSGR(_pl.soft=="gmsh","plot>","Function plotting is not available with gmsh.")
 #endif
+   if (_theFct->nb_par)
+      MSGR("plot>","No plotting available for functions with parameters.")
    string plt1 = _theFct->getExpression(), plt2="";
    if (_theFct->nb_var==1) {
       string v1 = _theFct->var[0];

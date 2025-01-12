@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -3079,9 +3079,11 @@ ostream& operator<<(ostream&    s,
 
    ms.outputNodes(s);
    ms.outputElements(s);
-   ms.outputSides(s);
-   ms.outputBoundarySides(s);
-   ms.outputEdges(s);
+   if (ms.getDim()>1) {
+      ms.outputSides(s);
+      ms.outputBoundarySides(s);
+      ms.outputEdges(s);
+   }
    s << endl;
    return s;
 }

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -52,6 +52,7 @@ namespace OFELI {
 
 /*! 
  * \class FastMarching3DG
+ * \ingroup Interface
  * \brief class for the fast marching algorithm on 3-D uniform grids
  *
  * \details This class implements the Fast Marching method to solve

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -139,7 +139,8 @@ class data
     int setDataExt(int key);
     int addFunction(string& name);
     int addFunction(string& name, const string& var, const string& exp);
-    int addFunction(string& name, const vector<string>& var, const string& exp, int n=1);
+    int addFunction(string& name, const vector<string>& var, const string& exp, const vector<size_t>& n);
+    int addFunction(string& name, const vector<string>& var, const string& exp);
     int addFunction(OFELI::Fct& f);
     int addMatrix(string name, int nr, int nc, string file="", string s="dense", bool opt=true);
     int addGrid(OFELI::Grid* g, string& name);
@@ -175,9 +176,8 @@ class data
     int iParam, iVector, iHVector, iMatrix, iGrid, iMesh, iTab, iFct, iLS, iAE, iODE, iPDE, iOpt, iEig;
     vector<OFELI::Vect<double> *> theVector;
     vector<HVect *> theHVector;
-    vector<double> theParam;
     map<string,string> vect_hist;
-    vector<double> VectorTime;
+    vector<double> theParam, VectorTime;
     map<string,int> VectorLabel, HVectorLabel, ParamLabel, MatrixLabel, TabLabel, GridLabel, MeshLabel;
     map<string,int> FctLabel, LSLabel, AELabel, ODELabel, PDELabel, OptLabel, EigLabel;
     map<string,string> Desc;
@@ -196,8 +196,7 @@ class data
     vector<optim *> theOpt;
     vector<eigen *> theEig;
     vector<string> LSName, AEName, ODEName, PDEName, GridName, TabName, MeshName, FctName, VectorName;
-    vector<string> HVectorName, ParamName, MatrixName, OptName, EigName, Names;
-    vector<string> temp_file;
+    vector<string> HVectorName, ParamName, MatrixName, OptName, EigName, Names, temp_file;
     double obj, integral;
     bool ok;
     vector<eqType> eq_type;

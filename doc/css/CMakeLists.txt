@@ -37,11 +37,10 @@ file (COPY animate.css
            head.css
            helper.css
            icomoon.css
-           ofeli-style.css
+           ofeli.css
            owl.carousel.min.css
            owl.theme.default.min.css
-           rita-style.css
+           rita.css
            style.css.map
-           tabs.css
       DESTINATION .
      )

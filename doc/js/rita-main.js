@@ -2,8 +2,6 @@
 	
 	'use strict';
 
-
-
 	var isMobile = {
 		Android: function() {
 			return navigator.userAgent.match(/Android/i);
@@ -36,7 +34,6 @@
 
 	};
 
-
 	var counter = function() {
 		$('.js-counter').countTo({
 			 formatter: function (value, options) {
@@ -44,7 +41,6 @@
 	    },
 		});
 	};
-
 
 	var counterWayPoint = function() {
 		if ($('#rita-counter').length > 0 ) {
@@ -66,7 +62,6 @@
 			if( direction === 'down' && !$(this.element).hasClass('animated') ) {
 				
 				i++;
-
 				$(this.element).addClass('item-animate');
 				setTimeout(function(){
 
@@ -95,7 +90,6 @@
 		} , { offset: '85%' } );
 	};
 
-
 	var burgerMenu = function() {
 
 		$('.js-rita-nav-toggle').on('click', function(event){
@@ -115,7 +109,7 @@
 
 	};
 
-	// Click outside of offcanvass
+// Click outside of offcanvass
 	var mobileMenuOutsideClick = function() {
 
 		$(document).click(function (e) {
@@ -155,20 +149,19 @@
 			    	}, 500);
 			   }
 
-		    if ( navbar.is(':visible')) {
-		    	navbar.removeClass('in');
-		    	navbar.attr('aria-expanded', 'false');
-		    	$('.js-rita-nav-toggle').removeClass('active');
-		    }
+		      if ( navbar.is(':visible')) {
+		    	   navbar.removeClass('in');
+		    	   navbar.attr('aria-expanded', 'false');
+		    	   $('.js-rita-nav-toggle').removeClass('active');
+		      }
 
 		    event.preventDefault();
 		    return false;
 		});
 
-
 	};
 
-	// Reflect scrolling in navigation
+// Reflect scrolling in navigation
 	var navActive = function(section) {
 
 		var $el = $('#navbar > ul');
@@ -201,11 +194,6 @@
 		});
 
 	};
-
-
-
-
-
 
 	var sliderMain = function() {
 		
@@ -286,7 +274,7 @@
 		})
 	};
 
-	// Document on load.
+// Document on load.
 	$(function(){
 		fullHeight();
 		counter();
@@ -305,6 +293,5 @@
 		stickyFunction();
 		owlCrouselFeatureSlide();
 	});
-
 
 }());

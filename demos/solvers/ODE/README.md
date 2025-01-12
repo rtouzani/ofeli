@@ -9,6 +9,7 @@ ode_demo4: To solve a system of second-order linear differential equations by th
 ode_demo5: A demo solving the harmonic oscillator problem
 ode_demo6: A demo solving the pendulum problem
 ode_demo7: A demo solving the Lorenz dynamical system showing strange attractors
+ode_demo8: A demo solving the n-body Newton problem
 ts_demo1: To solve a parabolic partial differential equation (the heat equation): First-order in time
 ts_demo2: To solve a hyperbolic partial differential equation (Elastodynamics): Second-order in time
 

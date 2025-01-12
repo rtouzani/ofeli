@@ -229,10 +229,9 @@ TriangleAdjacent CloseBoundaryEdge(I2        A,
 TriangleAdjacent Triangle::FindBoundaryEdge(int i) const
 {
    Triangle *t=(Triangle *)this, *ttc;
-   int k=0, j=EdgesVertexTriangle[i][0], jc, ext=!link;
+   int j=EdgesVertexTriangle[i][0], jc, ext=!link;
    do {
       int exterieurp=ext;
-      k++; 
       ttc = t->at[j];
       ext = !ttc->link;
       if (ext+exterieurp==1) 
@@ -240,7 +239,6 @@ TriangleAdjacent Triangle::FindBoundaryEdge(int i) const
       jc = NextEdge[t->aa[j]&3];
       t = ttc;
       j = NextEdge[jc];
-      assert(k<2000);
    } while ((this!=t)); 
    return TriangleAdjacent(0,0);
 }
@@ -303,12 +301,9 @@ TriangleAdjacent CloseBoundaryEdgeV2(I2        C,
    if (s) {
       t = er;
       TriangleAdjacent edge(er);
-      int kkk=0;
       int linkp = t->link == 0;
       Triangle *tt=t=edge=Adj(Previous(edge));
       do {
-         assert(edge.EdgeVertex(0)==s && kkk<10000);
-         kkk++;
          int link = tt->link == 0;
          if ((link + linkp) == 1) {
             Vertex *st = edge.EdgeVertex(1);
@@ -808,7 +803,6 @@ int ForceEdge(Vertex&           a,
 {
    int NbSwap=0;
    assert(a.t && b.t);
-   int k=0;
    taret = TriangleAdjacent(0,0);
    TriangleAdjacent tta(a.t,EdgesVertexTriangle[a.vint][0]);
    Vertex *v2=tta.EdgeVertex(0), *vbegin =v2;
@@ -854,8 +848,6 @@ int ForceEdge(Vertex&           a,
          }
       }
       tta = tc;
-      assert(k<2000);
-      k++;
       if (vbegin==v2)
          return -1;
    }
@@ -983,10 +975,9 @@ double Vertex::Smoothing(Triangles&       Th,
    Vertex *s=this;
    Vertex &vP=*s, vPsave=vP;
    Triangle *tbegin=t, *tria=t, *ttc;
-   int k=0, kk=0, j=EdgesVertexTriangle[vint][0], jc;
+   int kk=0, j=EdgesVertexTriangle[vint][0], jc;
    R2 P(s->r), PNew(0,0);
    do {
-      k++;
       if (!tria->Hidden(j)) {
          Vertex &vQ=(*tria)[VerticesOfTriangularEdge[j][0]];
          R2 Q=vQ, QP(P-Q);
@@ -998,7 +989,6 @@ double Vertex::Smoothing(Triangles&       Th,
       jc = NextEdge[tria->NuEdgeTriangleAdj(j)];
       tria = ttc;
       j = NextEdge[jc];
-      assert(k<2000);
    } while (tbegin!=tria); 
    if (kk<4)
       return 0;
@@ -1029,11 +1019,9 @@ double Vertex::Smoothing(Triangles&       Th,
    vP.i = Th.toI2(PNew);
    Vertex vPnew=vP;
    int ok=1, loop=1;
-   k = 0;
    while (ok) {
       ok = 0;
       do {
-         k++;
          double detold=tria->det;
          tria->det = bamg::det((*tria)[0],(*tria)[1],(*tria)[2]);
          if (loop) {
@@ -2436,7 +2424,6 @@ void Triangles::GeomToTriangles1(long inbvx,
 
    {
       Gh.UnMarkEdges();	
-      int bfind=0;
       for (int i=0; i<Gh.NbOfCurves; i++)
          bcurve[i] = -1;
       for (int iedge=0; iedge<BTh.nbe; iedge++) {
@@ -2447,12 +2434,10 @@ void Triangles::GeomToTriangles1(long inbvx,
                if (ei.on==Gh.curves[nc].be && 
                    (GeometricalVertex *) *ei[je].on == &(*Gh.curves[nc].be)[Gh.curves[nc].kb]) { 
                   bcurve[nc] = iedge*2 + je;
-                  bfind++;
                }
             }
          }
       }
-      assert(bfind==Gh.NbOfCurves);
    }
 
 // Method in 2 + 1 step 
@@ -2623,7 +2608,7 @@ void Triangles::GeomToTriangles1(long inbvx,
 void Triangles::GeomToTriangles0(long inbvx) 
 {
    Gh.NbRef++;
-   long i, NbOfCurves=0, NbNewPoints, NbEdgeCurve=0;
+   long i, NbNewPoints, NbEdgeCurve=0;
    double lcurve, lstep, s;
    R2 AB;
    GeometricalVertex *a, *b;
@@ -2662,8 +2647,7 @@ void Triangles::GeomToTriangles0(long inbvx)
       long nbex=0;
       nbe = 0;
       long NbVerticesOnGeomEdge0=NbVerticesOnGeomEdge;
-      Gh.UnMarkEdges();	
-      NbOfCurves = 0;
+      Gh.UnMarkEdges();
       for (i=0; i<Gh.nbe; i++) {
          GeometricalEdge &ei = Gh.edges[i];
          if (!ei.Dup()) {
@@ -2779,10 +2763,8 @@ void Triangles::GeomToTriangles0(long inbvx)
                         vb = b->to;
                         NbEdgeCurve = Max((long)(lcurve +0.5),(long)1);
                         NbNewPoints = NbEdgeCurve - 1;
-                        if (!kstep) {
+                        if (!kstep)
                            NbVerticesOnGeomEdge0 += NbNewPoints;
-                           NbOfCurves++;
-                        } 
                         nbvend = nbv + NbNewPoints;  
                         lstep = lcurve / NbEdgeCurve;
                      }
@@ -3134,10 +3116,8 @@ void Triangles::FillHoleInMesh()
 
 //    Remove all the hole 
 //    remove all the good sub domain
-      long krm=0;
       for (i=0; i<nbt; i++) {
          if (triangles[i].link) {
-            krm++;
             for (int j=0; j<3; j++) {
                TriangleAdjacent ta =  triangles[i].Adj(j);
                Triangle &tta = *(Triangle *) ta;
@@ -3307,14 +3287,12 @@ long Triangle::Optim(short i,
 {
    long NbSwap=0;
    Triangle *t=this;
-   int k=0, j=OppositeEdge[i], jp=PreviousEdge[j];
+   int j=OppositeEdge[i], jp=PreviousEdge[j];
    Triangle *tp=at[jp];
    jp = aa[jp]&3;
    do {
       while (t->swap(j,koption)) {
          NbSwap++;
-         assert(k<20000);
-         k++;
          t = tp->at[jp];
          j = NextEdge[tp->aa[jp]&3];
       }
@@ -3502,10 +3480,8 @@ int Triangles::CrackMesh()
       int i=v.vint;       
       assert(tbegin && (i>=0) && (i<3));
       TriangleAdjacent ta(tbegin,EdgesVertexTriangle[i][0]);
-      int k=0;
       do {
          int kv = VerticesOfTriangularEdge[ta][1];
-         k++; 
          Triangle *tt(ta);
          if (ta.Cracked()) {   
             if (kk== 0)
@@ -3704,7 +3680,6 @@ Triangle* Triangles::FindTriangleContaining(const I2& B,
       assert(t>=triangles && t<triangles+nbt);
    }
    Icoor2 detop;
-   int kk=0;            // number of test triangles
    while (t->det<0) {   // the initial triangle is outside
       int k0=(*t)(0) ? (((*t)(1) ? ((*t)(2) ? -1 : 2) : 1)) : 0;
       assert(k0>=0);    // k0 the NULL vertex
@@ -3714,14 +3689,11 @@ Triangle* Triangles::FindTriangleContaining(const I2& B,
       if (dete[k0]>0)   // outside B
          return t;
       t = t->TriangleAdj(OppositeEdge[k0]);
-      assert(kk<2);
-      kk++;
    }
    int jj = 0;
    detop = det(*(*t)(VerticesOfTriangularEdge[jj][0]),
                *(*t)(VerticesOfTriangularEdge[jj][1]),B); 
    while (t->det>0) {
-      assert(kk++<2000);
       int j = OppositeVertex[jj];
       dete[j] = detop;  // det(*b,*s1,*s2);
       int jn=NextVertex[j], jp=PreviousVertex[j];

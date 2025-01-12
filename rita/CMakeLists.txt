@@ -6,7 +6,7 @@
 #
 # ==============================================================================
 #
-#   Copyright (C) 2021 - 2024 Rachid Touzani
+#   Copyright (C) 2021 - 2025 Rachid Touzani
 #
 #   This file is part of rita.
 #
@@ -32,7 +32,7 @@ set (RITA_PACKAGE_VENDOR
      "The rita authors <http://ofeli.org/rita.html>"
     )
 set (RITA_PACKAGE_DESCRIPTION 
-     "A console application for modelling and simulation"
+     "A console application for modelling and numerical simulation"
     )
 
 # Set up rita Version
@@ -55,16 +55,29 @@ string (SUBSTRING "${RITA_VERSION}" 6 -1 RITA_VERSION_DATE)
 set (RITA_VERSION ${RITA_VERSION_MAJOR}.${RITA_VERSION_MINOR}.${RITA_VERSION_SUBMINOR})
 string (REPLACE "^" "" "${RITA_VERSION_DATE}" RITA_VERSION_DATE)
 set (INSTALL_TUTORIALDIR ${INSTALL_RITADIR}/tutorial)
+set (INSTALL_APPDIR ${INSTALL_RITADIR}/applications)
 
 message (STATUS "Building release ${PROJECT_NAME}-${RITA_VERSION}, ${RITA_VERSION_DATE}")
 
-# Configuration
+# Check gmsh
+include(FindPackageHandleStandardArgs)
+find_library(GMSH_LIBRARY gmsh)
+find_package_handle_standard_args(GMSH REQUIRED_VARS GMSH_LIBRARY)
 
+if (GMSH_FOUND)
+   message (STATUS "gmsh package found")  
+   add_definitions (-DUSE_GMSH)
+else (GMSH_FOUND)
+   message (FATAL_ERROR "Could not find package gmsh\n")
+endif (GMSH_FOUND)
+
+
+# Configuration
 set (CMAKE_BUILD_TYPE "Release")
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Compiler specific flags
-add_definitions (-DUSE_GMSH -DNDEBUG)
+add_definitions (-DNDEBUG)
 
 enable_testing ()
 option (BUILD_TESTS "Build test programs" OFF)

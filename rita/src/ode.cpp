@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -62,6 +62,7 @@ int ode::run()
    int ret=0, nb=0, count_fct=0, count_vector=0, count_def=0, count_init=0, ind=-1, an_count=0, an_ret=0;
    int key=0, IPhase=1;
    vector<string> Var;
+   vector<size_t> nbv;
    init_time=0., time_step=0.1, final_time=1., adapted_time_step = 0;
    scheme = "forward-euler";
    analytic.clear();
@@ -202,7 +203,9 @@ int ode::run()
          Var.clear();
          Var.push_back("t");
          Var.push_back(var_name[0]);
-         int k = _data->addFunction(fct_name[0],Var,def[0]);
+         nbv.clear();
+         nbv.push_back(1), nbv.push_back(1);
+         int k = _data->addFunction(fct_name[0],Var,def[0],nbv);
          FCT_NOT_DEFINED("",fct_name[0])
          FCT_ALREADY_DEFINED("",fct_name[0])
          iFct.push_back(k);
@@ -219,7 +222,9 @@ int ode::run()
          string na="";
          Var.clear();
          Var.push_back("t");
-         int k = _data->addFunction(na,Var,analytic[0]);
+         nbv.clear();
+         nbv.push_back(1);
+         int k = _data->addFunction(na,Var,analytic[0],nbv);
          FCT_NOT_DEFINED("",fct_name[0])
          FCT_ALREADY_DEFINED("",fct_name[0])
          SolFct.push_back(_data->theFct[k]);
@@ -237,7 +242,7 @@ int ode::run()
       type = DataType::ODE;
       _data->addODE(this,name);
       if (_verb)
-         cout << "Ordinay Differential Equation " << name << " created." << endl;
+         cout << "Ordinary Differential Equation " << name << " created." << endl;
    }
 
    else {
@@ -413,25 +418,30 @@ int ode::run()
 
             case 104:
             case 105:
+cout<<"**1**"<<endl;
                if (ret) {
                   NO_ODE
                   *_rita->ofh << "  end" << endl;
                   return 1;
                }
+cout<<"**2**"<<endl;
                if (count_fct==0 && count_def==0) {
                   NO_ODE
                   *_rita->ofh << "  end" << endl;
                   return 0;
                }
+cout<<"**3**"<<endl;
                if ((count_fct>0 && count_fct<size) || (count_fct==0 && count_def<size)) {
                   *_rita->ofh << "  end" << endl;
                   MSGB(_pr+"end>","Insufficient number of functions defining system.")
                }
+cout<<"**4**"<<endl;
                if (!vector_ok) {
                   _rita->msg(_pr+"end>","No variable defined for ode system.");
                   *_rita->ofh << "  end" << endl;
                   break;
                }
+cout<<"**5**"<<endl;
                if (count_fct && count_vector)
                   MSGR("ode>","Function already defined.")
                CHK_MSGR(an_count>1,_pr,"Commands analytic and analytic-function cannot be given simultaneously.")
@@ -453,7 +463,10 @@ int ode::run()
                      Var.push_back("t");
                      for (size_t j=0; j<nb_vars; ++j)
                         Var.push_back(var_name[j]);
-                     int k = _data->addFunction(fct_name[i],Var,def[i],size);
+                     nbv.clear();
+                     nbv.push_back(1);
+                     nbv.push_back(size);
+                     int k = _data->addFunction(fct_name[i],Var,def[i],nbv);
                      FCT_NOT_DEFINED("end>",fct_name[i])
                      FCT_ALREADY_DEFINED("end>",fct_name[i])
                      iFct.push_back(k);
@@ -463,7 +476,7 @@ int ode::run()
                if (!count_init) {
                   init.resize(size);
                   for (int i=0; i<size; ++i)
-                     init[i] = 0.;
+                     init.push_back(0.);
                }
                ind_fct = ind;
                isFct = count_fct;
@@ -489,7 +502,9 @@ int ode::run()
                      Var.push_back("t");
                      for (size_t j=1; j<nb_vars; ++j)
                         Var.push_back(var_name[j]);
-                     int k = _data->addFunction(nm,Var,analytic[i],size);
+                     nbv.clear();
+                     nbv.push_back(size);
+                     int k = _data->addFunction(nm,Var,analytic[i],nbv);
                      FCT_NOT_DEFINED("end>",nm)
                      FCT_ALREADY_DEFINED("end>",nm)
                      SolFct.push_back(_data->theFct[k]);
@@ -504,7 +519,7 @@ int ode::run()
                }
                _data->addODE(this,name);
                if (_verb)
-                  cout << "Ordinay Differential Equation " << name << " created." << endl;
+                  cout << "Ordinary Differential Equation " << name << " created." << endl;
                return 0;
 
             case 106:

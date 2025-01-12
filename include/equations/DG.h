@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2024 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -45,10 +45,14 @@ namespace OFELI {
  *  \brief Definition file for class DG.
  */
 
+/*! \defgroup DG Discontinuous Galerkin Method
+ *  \brief Classes for the DG Method
+ */
+
 /*! \class DG
  *  \ingroup DG
  *  \brief Enables preliminary operations and utilities for the 
- *  Discontinous Galerkin method
+ *  Discontinuous Galerkin method
  *
  * \author Rachid Touzani
  * \copyright GNU Lesser Public License
@@ -56,7 +60,7 @@ namespace OFELI {
 
   class DG : public Equation<3,3,2,2> {
 
- public:
+  public:
 
    using Equation<3,3,2,2>::setMaterialProperty;
    using Equation<3,3,2,2>::_theMesh;
@@ -94,11 +98,11 @@ namespace OFELI {
  protected:
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-   size_t                            _nb_sdof, _ne, _nf;
-   size_t                            _degree, _nb_el_dof, _nb_sd_dof, _neq;
-   Vect<real_t>                      _x;
-   Vect<Point<real_t> >              _N;
-   vector<std::map<size_t,size_t> >  _g2l;
+   size_t                           _nb_sdof, _ne, _nf;
+   size_t                           _degree, _nb_el_dof, _nb_sd_dof, _neq;
+   Vect<real_t>                     _x;
+   Vect<Point<real_t>>              _N;
+   vector<std::map<size_t,size_t>>  _g2l;
    size_t II(size_t i) const { return _nb_el_dof*(_ne-1)+i; }
    size_t IJ(size_t i) const { return _nb_el_dof*(_nf-1)+i; }
 

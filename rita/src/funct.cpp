@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -34,13 +34,12 @@
 namespace RITA {
 
 funct::funct(rita *r, const string& s)
+      : _rita(r), _iv(0)
 {
-   _rita = r;
    name = s;
    _theFct = new OFELI::Fct;
    _theFct->setName(s);
-   nb_var = 0;
-   opt = 0;
+   nb_var = nb_par = 0;
    _alloc = true;
 }
 
@@ -61,6 +60,21 @@ void funct::set(OFELI::Fct& f)
    nb_var = _theFct->getNbVar();
    for (size_t i=1; i<=nb_var; ++i)
       var.push_back(_theFct->getVar(i));
+}
+
+
+void funct::set(const vector<string>& pn, const vector<double>& pv)
+{
+   for (size_t i=1; i<pv.size(); ++i)
+      _theFct->setPar(pn[i],pv[i]);
+   nb_par = _theFct->getNbPar();
+   setExpr(_theFct->getExpression());
+}
+
+
+void funct::setNoPar()
+{
+   nb_par = 0;
    setExpr(_theFct->getExpression());
 }
 
@@ -69,8 +83,26 @@ int funct::setExpr(const string& s)
 {
    if (nb_var==0)
       return 1;
-   setVar();
-   int ret = _theFct->set(name,s,_exvar,1);
+   _theFct->setVar(_exvar);
+   int ret = _theFct->set(name,s,1);
+   if (ret)
+      _rita->msg("","Error in function definition");
+   return ret;
+}
+
+
+int funct::setExpr(const string& s, const vector<string>& pn, const vector<double>& pv)
+{
+   if (nb_var==0)
+      return 1;
+   _theFct->setVar(_exvar);
+   for (size_t i=1; i<pv.size(); ++i) {
+      var.push_back(pn[i]);
+      par.push_back(pn[i]);
+      _theFct->setPar(pn[i],pv[i]);
+      nb_par++;
+   }
+   int ret = _theFct->set(s);
    if (ret)
       _rita->msg("","Error in function definition");
    return ret;
@@ -79,11 +111,8 @@ int funct::setExpr(const string& s)
 
 void funct::setVar(const string& v, int n)
 {
-   if (v=="t" && n==1)
-      opt = 1;
-   _N.push_back(n);
    var.push_back(v);
-   nb_var++;
+   setVar(n);
 }
 
 
@@ -95,27 +124,24 @@ int funct::set(const string& v, const string& s)
 }
 
 
-void funct::setVar()
+void funct::setVar(size_t n)
 {
-   size_t k=0;
-   for (size_t i=0; i<_N.size(); ++i) {
-      if (_N[i]==1)
-         _exvar.push_back(var[k++]);
-      else {
-         for (size_t j=0; j<_N[i]; ++j)
-            _exvar.push_back(var[k]+to_string(j+1));
-         k++;
-      }
+   if (n==1) {
+      _exvar.push_back(var[_iv++]);
+      nb_var++;
+   }
+   else {
+      for (size_t j=1; j<=n; ++j)
+         _exvar.push_back(var[_iv]+to_string(j));
+      nb_var += n;
+      _iv++;
    }
 }
 
 
 ostream& operator<<(ostream& s, const funct& f)
 {
-   s << f.name << "(" << f.var[0];
-   for (size_t i=1; i<f.nb_var; ++i)
-      s << "," << f.var[i];
-   s << ") = " << f.getExpression() << endl;
+   s << f.fct();
    return s;
 }
 

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -128,6 +128,7 @@ int data::setDataExt(int key)
          break;
 
       case 210:
+         CHK_MSG1B(_cmd->setNbArg(2,"Data name and/or description."),"","Data name and/or description.","",1)
          _cmd->get(name);
          _cmd->get(td);
          *_rita->ofh << "desc " << name << " " << td << endl;
@@ -556,35 +557,25 @@ int data::setSample()
 int data::setTab2GridVector(OFELI::Tabulation* tab,
                             string&            name)
 {
-   double xmin=0, xmax=0, ymin=0, ymax=0, zmin=0, zmax=0;
-   int nb = tab->getNbVar(1);
    OFELI::fct &f = tab->Funct[0];
-   int nx = f.Np[0], ny = f.Np[1], nz = f.Np[2];
-   switch (nb)
+   switch (tab->getNbVar(1))
    {
       case 1:
-         xmin = tab->getMinVar(1,1);
-         xmax = tab->getMaxVar(1,1);
-         _theGrid = new OFELI::Grid(xmin,xmax,nx);
-         break;   
+         _theGrid = new OFELI::Grid(tab->getMinVar(1,1),tab->getMaxVar(1,1),f.Np[0]);
+         break;
 
       case 2:
-         xmin = tab->getMinVar(1,1);
-         xmax = tab->getMaxVar(1,1);
-         ymin = tab->getMinVar(1,2);
-         ymax = tab->getMaxVar(1,2);
-         _theGrid = new OFELI::Grid(xmin,xmax,ymin,ymax,nx,ny);
-         break;   
+         _theGrid = new OFELI::Grid(tab->getMinVar(1,1),tab->getMaxVar(1,1),
+                                    tab->getMinVar(1,2),tab->getMaxVar(1,2),
+                                    f.Np[0],f.Np[1]);
+         break;
 
       case 3:
-         xmin = tab->getMinVar(1,1);
-         xmax = tab->getMaxVar(1,1);
-         ymin = tab->getMinVar(1,2);
-         ymax = tab->getMaxVar(1,2);
-         zmin = tab->getMinVar(1,3);
-         zmax = tab->getMaxVar(1,3);
-         _theGrid = new OFELI::Grid(xmin,xmax,ymin,ymax,zmin,zmax,nx,ny,nz);
-         break;   
+         _theGrid = new OFELI::Grid(tab->getMinVar(1,1),tab->getMaxVar(1,1),
+                                    tab->getMinVar(1,2),tab->getMaxVar(1,2),
+                                    tab->getMinVar(1,3),tab->getMaxVar(1,3),
+                                    f.Np[0],f.Np[1],f.Np[2]);
+         break;
    }
    string gname = "";
    int k = addGrid(_theGrid,gname);
@@ -841,6 +832,7 @@ int data::addFunction(OFELI::Fct& f)
       return 0;
    _theFct = new funct(_rita,name);
    _theFct->set(f);
+   _theFct->set(ParamName,theParam);
    Desc[name] = "";
    if (FctLabel[name]) {
       REDEFINED("Function ")
@@ -866,6 +858,7 @@ int data::addFunction(string& name)
    if (checkAlreadyUsed(name,DataType::FCT))
       return 0;
    _theFct = new funct(_rita,name);
+   _theFct->set(ParamName,theParam);
    Desc[name] = "";
    if (FctLabel[name]) {
       REDEFINED("Function ")
@@ -890,34 +883,70 @@ int data::addFunction(string&       name,
 {
    vector<string> v;
    v.push_back(var);
-   return addFunction(name,v,exp);
+   vector<size_t> nbv {1};
+ cout<<"-- 0.1 -- "<<nbv[0]<<endl;
+   return addFunction(name,v,exp,nbv);
 }
 
 
 int data::addFunction(string&               name,
                       const vector<string>& var,
                       const string&         exp,
-                      int                   n)
+                      const vector<size_t>& n)
 {
    iFct = theFct.size();
    DEFAULT_FCT_NAME(name);
    if (checkAlreadyUsed(name,DataType::FCT))
       return 0;
    _theFct = new funct(_rita,name);
+   size_t vs = var.size();
+   for (size_t i=0; i<vs; ++i)
+      _theFct->setVar(var[i],n[i]);
+   int ret = _theFct->setExpr(exp,ParamName,theParam);
+   if (ret) {
+      delete _theFct;
+      return -1;
+   }
+   Desc[name] = "";
+   if (FctLabel[name]) {
+      REDEFINED("Function ")
+      iFct = FctLabel[name];
+      dn[name].active  = true;
+      theFct[iFct] = _theFct;
+      return iFct;
+   }
+   FctName.push_back(name);
+   theFct.push_back(_theFct);
+   dn[name].active = true;
+   FctName[iFct] = name;
+   FctLabel[name] = dn[name].i = ++nb_fcts;
+   dn[name].dt = DataType::FCT;
+   return iFct;
+}
+
+
+int data::addFunction(string&               name,
+                      const vector<string>& var,
+                      const string&         exp)
+{
+   iFct = theFct.size();
+   DEFAULT_FCT_NAME(name);
+   if (checkAlreadyUsed(name,DataType::FCT))
+      return 0;
+   _theFct = new funct(_rita,name);
+   size_t vs = var.size();
    if (var[0]=="t") {
-      _theFct->setVar(var[0]);
-      if (var.size()>1) {
-         _theFct->setVar(var[1],n);
-         for (size_t i=2; i<var.size(); ++i)
-            _theFct->setVar(var[i],n);
+      _theFct->setVar(var[0],1);
+      if (vs>1) {
+         for (size_t i=1; i<vs; ++i)
+            _theFct->setVar(var[i],1);
       }
    }
    else {
-      _theFct->setVar(var[0],n);
-      for (size_t i=1; i<var.size(); ++i)
-         _theFct->setVar(var[i],n);
+      for (size_t i=0; i<vs; ++i)
+         _theFct->setVar(var[i],1);
    }
-   int ret = _theFct->setExpr(exp);
+   int ret = _theFct->setExpr(exp,ParamName,theParam);
    if (ret) {
       delete _theFct;
       return -1;
@@ -1480,7 +1509,12 @@ int data::print(const string& s)
          break;
 
       case DataType::MESH:
-         cout << *theMesh[MeshLabel[s]];
+         {
+            int verb = OFELI::Verbosity;
+            OFELI::Verbosity = 2;
+            cout << *theMesh[MeshLabel[s]];
+            OFELI::Verbosity = verb;
+         }
          break;
 
       case DataType::GRID:
@@ -1767,11 +1801,12 @@ int data::setFunction()
 {
    _ret = 0;
    _pr = "function>";
-   bool var_ok=false, def_ok=false;
+   bool var_ok=false, def_ok=false, nb_ok=false;
    string vv="", def="", name="";
-   int nb=0, nbv=1;
+   int nb=0, nbv0=0, nv=0;
    vector<string> var;
-   static const vector<string> kw {"name","var$iable","vec$tor","nb","def$inition"};
+   vector<size_t> nbv;
+   static const vector<string> kw {"name","var$iable","nb","def$inition"};
 
    _cmd->set(kw,_rita->_gkw);
    size_t nb_args = _cmd->getNbArgs();
@@ -1792,7 +1827,6 @@ int data::setFunction()
             break;
 
          case 1:
-         case 2:
             for (int i=0; i<nb; ++i) {
                vv = _cmd->string_token(i);
                var.push_back(vv);
@@ -1800,11 +1834,17 @@ int data::setFunction()
             var_ok = true;
             break;
 
-         case 3:
-            DDEF_PAR_R(0,"",nbv)
+         case 2:
+            nbv0 = nb;
+            for (int i=0; i<nb; ++i) {
+               nv = _cmd->int_token(i);
+               DDEF_PAR_R(0,"",nv)
+               nbv.push_back(nv);
+            }
+            nb_ok = true;
             break;
 
-         case 4:
+         case 3:
             def = _cmd->string_token(0);
             def_ok = true;
             break;
@@ -1816,14 +1856,23 @@ int data::setFunction()
    CHK_MSGR(nb_args==0,"function>","No command argument given.")
    CHK_MSGR(!var_ok,"function>","No variable defined.")
    CHK_MSGR(!def_ok,"function>","No function definition given.")
-   int k = addFunction(name,var,def);
+   if (nb_ok==false) {
+      for (size_t i=0; i<var.size(); ++i)
+         nbv.push_back(1);
+   }
+   int k = addFunction(name,var,def,nbv);
    FCT_NOT_DEFINED("",name)
    FCT_ALREADY_DEFINED("",name)
    if (k>0) {
       *_rita->ofh << "function name=" << name;
-      if (nbv>1)
-         *_rita->ofh << " nb=" << nbv;
       *_rita->ofh << " variable=" << var[0];
+      for (size_t i=1; i<var.size(); ++i)
+         *_rita->ofh << "," << var[i];
+      if (nbv0) {
+         *_rita->ofh << " nb=" << nbv[0];
+         for (size_t i=1; i<nbv.size(); ++i)
+            *_rita->ofh << "," << nbv[i];
+      }
       *_rita->ofh << " definition=" << def << endl;
    }
    return 0;
@@ -2160,7 +2209,7 @@ void data::ListParams(int opt)
       if (dn[s].active) {
          cout << s << " = " << theParam[i] << endl;
          if (Desc[s]!="")
-            cout << "Description: " << Desc[ParamName[i]] << endl;
+            cout << "Description: " << Desc[s] << endl;
       }
    }
 }
@@ -2180,6 +2229,8 @@ void data::ListVectors(int opt)
             cout << "Vector: " << s << ", Size: " << theVector[i]->size() << endl;
          else
             cout << "Vector: " << s << ", Number of degrees of freedom: " << nb_dof[i] << endl;
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
       }
    }
 }
@@ -2194,8 +2245,11 @@ void data::ListHVectors(int opt)
    cout << "Number of history vectors: " << nb_hvectors << endl;
    for (size_t i=1; i<theHVector.size(); ++i) {
       string s = HVectorName[i];
-      if (dn[s].active)
+      if (dn[s].active) {
          cout << "History Vector: " << s << ", Size: " << theHVector[i]->nt << endl;
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
+      }
    }
 }
 
@@ -2209,8 +2263,11 @@ void data::ListFunctions(int opt)
    cout << "Number of functions: " << nb_fcts << endl;
    for (size_t i=1; i<theFct.size(); ++i) {
       string s = FctName[i];
-      if (dn[s].active)
+      if (dn[s].active) {
          cout << *theFct[i];
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
+      }
    }
 }
 
@@ -2224,9 +2281,12 @@ void data::ListTabs(int opt)
    cout << "Number of tabulations: " << nb_tabs << endl;
    for (size_t i=1; i<theTab.size(); ++i) {
       string s = TabName[i];
-      if (dn[s].active)
+      if (dn[s].active) {
          cout << "Tabulation: " << s << ", Nb. of variables: " 
               << theTab[i]->getNbVar(1) << ", Size: " << theTab[i]->getSize(1,1) << endl;
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
+      }
    }
 }
 
@@ -2240,9 +2300,12 @@ void data::ListMatrices(int opt)
    cout << "Number of matrices: " << nb_matrices << endl;
    for (size_t i=1; i<theMatrix.size(); ++i) {
       string s = MatrixName[i];
-      if (dn[s].active)
+      if (dn[s].active) {
          cout << "Matrix: " << s << ", Size: " << theMatrix[i]->getNbRows()
               << " x " << theMatrix[i]->getNbColumns() << endl;
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
+      }
    }
 }
 
@@ -2278,6 +2341,8 @@ void data::ListGrids(int opt)
                  << g->getZ(g->getNz()+1) << ")" << endl;
             cout << "Number of intervals:    " << g->getNx() << " x " << g->getNy() << " x " << g->getNz() << endl;
          }
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
       }
    }
 }
@@ -2298,6 +2363,8 @@ void data::ListMeshes(int opt)
          cout << "Number of nodes:    " << m->getNbNodes() << endl;
          cout << "Number of elements: " << m->getNbElements() << endl;
          cout << "Number of sides:    " << m->getNbSides() << endl;
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
       }
    }
 }
@@ -2311,8 +2378,11 @@ void data::ListODE(int opt)
    }
    cout << "Number of ordinary differential equations: " << nb_ode << endl;
    for (size_t i=1; i<theODE.size(); ++i) {
-      if (dn[ODEName[i]].active)
+      string s = ODEName[i];
+      if (dn[s].active)
          cout << *theODE[i];
+      if (Desc[s]!="")
+         cout << "Description: " << Desc[s] << endl;
    }
 }
 
@@ -2328,12 +2398,14 @@ void data::ListPDE(int opt)
       string s = PDEName[i];
       if (dn[s].active) {
          pde *e = thePDE[i];
-         cout << "PDE name: " << PDEName[i] << endl;
+         cout << "PDE name: " << s << endl;
          cout << "PDE id: " << e->eq << endl;
          cout << "PDE unknown vector(s): ";
          for (int j=0; j<e->nb_vectors-1; ++j)
             cout << e->fd[j].fn << ", ";
          cout << e->fd[e->nb_vectors-1].fn << endl;
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
       }
    }
 }
@@ -2354,6 +2426,8 @@ void data::ListLS(int opt)
          cout << "Matrix:                 " << MatrixName[e->iMat] << endl;
          cout << "Right-hand side vector: " << VectorName[e->iRHS] << endl;
          cout << "Solution vector:        " << VectorName[e->iSol] << endl;
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
       }
    }
 }
@@ -2381,8 +2455,11 @@ void data::ListOpt(int opt)
    cout << "Number of optimization problems:  " << nb_opt << endl;
    for (size_t i=1; i<theOpt.size(); ++i) {
       string s = OptName[i];
-      if (dn[s].active)
+      if (dn[s].active) {
          cout << *theOpt[i];
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
+      }
    }
 }
 
@@ -2406,6 +2483,8 @@ void data::ListEig(int opt)
             cout << "Vectors of eigenvectors (real and imag): " << e->evectR[0] << ", "
                  << e->evectI[0] << " .. " << e->evectR[e->nb_eigv-1] << ", "
                  << e->evectI[e->nb_eigv-1] << endl;
+         if (Desc[s]!="")
+            cout << "Description: " << Desc[s] << endl;
       }
    }
 }

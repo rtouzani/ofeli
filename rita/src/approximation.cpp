@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2024 Rachid Touzani
+    Copyright (C) 2021 - 2025 Rachid Touzani
 
     This file is part of rita.
 
@@ -227,11 +227,13 @@ int approximation::setLagrange()
    _degree = _x.size() - 1;
    k = _data->addFunction(_fft);
    CHK_MSGR(k<=0,pr,".")
+   _data->theFct[k]->setVar("x",1);
+   _data->theFct[k]->setNoPar();
    _ff = _data->theFct[k]->getFct();
-   _data->theFct[k]->setVar("x");
    OFELI::FuncApprox fa;
    fa.setLagrange(_degree,_x,*_y,*_data->theFct[k]->getFct());
    fa.run();
+cout<<*_data->theFct[k]->getFct()<<endl;
    if (_verb)
       cout << "Lagrange interpolation created. Lagrange polynomial is: " << _ff->getName() 
            << "(" << _ff->getVar(1) << ")" << endl;
@@ -355,7 +357,6 @@ int approximation::setFitting()
    k = _data->addFunction(_fft);
    CHK_MSGR(k<=0,pr,".")
    _ff = _data->theFct[k]->getFct();
-   _data->theFct[k]->setVar("x");
    fa.getLeastSquare(*_data->theFct[k]->getFct());
    if (_verb)
       cout << "Curve fitting created.\nFitting function: " << _fft << endl;
