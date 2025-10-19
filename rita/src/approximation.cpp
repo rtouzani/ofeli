@@ -138,7 +138,7 @@ int approximation::run()
             break;
 
          default:
-            DEFAULT_KW
+            DEFAULT_KW(_rita)
       }
    }
    return 0;
@@ -231,9 +231,9 @@ int approximation::setLagrange()
    _data->theFct[k]->setNoPar();
    _ff = _data->theFct[k]->getFct();
    OFELI::FuncApprox fa;
-   fa.setLagrange(_degree,_x,*_y,*_data->theFct[k]->getFct());
+   fa.setLagrange(_degree,_x,*_y,*_ff);
    fa.run();
-cout<<*_data->theFct[k]->getFct()<<endl;
+   _rita->_calc->setFun(_data->theFct[k]);
    if (_verb)
       cout << "Lagrange interpolation created. Lagrange polynomial is: " << _ff->getName() 
            << "(" << _ff->getVar(1) << ")" << endl;
@@ -344,7 +344,7 @@ int approximation::setFitting()
       fa.run();
    }
 
-// Case of an arbitrary basis fitting
+// Case of arbitrary basis fitting
    if (_nb_fit) {
       a.resize(_nb_fit);
       for (auto const& f: _fct_names) {
@@ -356,8 +356,9 @@ int approximation::setFitting()
    }
    k = _data->addFunction(_fft);
    CHK_MSGR(k<=0,pr,".")
-   _ff = _data->theFct[k]->getFct();
    fa.getLeastSquare(*_data->theFct[k]->getFct());
+   _data->theFct[k]->setFromFct();
+   _rita->_calc->setFun(_data->theFct[k]);
    if (_verb)
       cout << "Curve fitting created.\nFitting function: " << _fft << endl;
    if (_tab_count==0)
@@ -460,7 +461,7 @@ int approximation::setBSpline()
    }
    else {
       XMLParser xml(_file,EType::VECTOR);
-      xml.get(_x,"");
+      xml.get(_x);
       ncu = _x.getNx(), ncv = _x.getNy();
    }
    *_rita->ofh << " np=" << npu;
@@ -476,7 +477,7 @@ int approximation::setBSpline()
    }
    *_rita->ofh << endl;
    _y = new Vect<double>(npu,npv,3);
-   k = _data->addVector(_y,vname);
+   k = _data->addVector(_y,vname,SetCalc::SET);
    FuncApprox fa;
    if (ncv==1)
       fa.setBSpline(ncu,_degree,npu,_x,*_y);
@@ -584,7 +585,7 @@ int approximation::setBezier()
       *_rita->ofh << " vector=" << vname;
    *_rita->ofh << endl;
    _y = new Vect<double>(npu,npv,3);
-   k = _data->addVector(_y,vname);
+   k = _data->addVector(_y,vname,SetCalc::SET);
    FuncApprox fa;
    if (ncv==1)
       fa.setBezier(ncu,npu,_x,*_y);
@@ -698,7 +699,7 @@ int approximation::setNurbs()
       *_rita->ofh << " vector=" << vname;
    *_rita->ofh << endl;
    _y = new Vect<double>(npu,npv,3);
-   k = _data->addVector(_y,vname);
+   k = _data->addVector(_y,vname,SetCalc::SET);
    Vect<double> h(ncu);
    h = 1.;
    FuncApprox fa;

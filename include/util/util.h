@@ -786,7 +786,6 @@ inline std::string MonomialExpression(real_t a, string p, int k=0)
    st = s + toString(a) + "*" + p;
    return st;
 }
-
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /*! @} End of Doxygen Groups */

@@ -118,6 +118,17 @@ void Node::setDOF(size_t& first_dof,
 }
 
 
+int Node::getCode() const
+{
+   int c=0, n=1;
+   for (int i=int(_nb_dof); i>0; --i) {
+      c += _code[i-1]*n;
+      n *= 10;
+   }
+   return c;
+}
+
+
 ostream& operator<<(ostream&    s,
                     const Node& nd)
 {

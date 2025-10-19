@@ -33,42 +33,36 @@
 
 namespace RITA {
 
-funct::funct(rita *r, const string& s)
-      : _rita(r), _iv(0)
+funct::funct()
+      : _iv(0)
+{
+}
+
+
+funct::funct(const string& s)
+      : _iv(0)
 {
    name = s;
    _theFct = new OFELI::Fct;
    _theFct->setName(s);
    nb_var = nb_par = 0;
-   _alloc = true;
-}
-
-
-funct::~funct()
-{
-//   if (_alloc)
-//      delete _theFct;
 }
 
 
 void funct::set(OFELI::Fct& f)
 {
-    delete _theFct;
-   _alloc = false;
+   delete _theFct;
    _theFct = &f;
+   setFromFct();
+}
+
+
+void funct::setFromFct()
+{
    name = _theFct->getName();
    nb_var = _theFct->getNbVar();
    for (size_t i=1; i<=nb_var; ++i)
       var.push_back(_theFct->getVar(i));
-}
-
-
-void funct::set(const vector<string>& pn, const vector<double>& pv)
-{
-   for (size_t i=1; i<pv.size(); ++i)
-      _theFct->setPar(pn[i],pv[i]);
-   nb_par = _theFct->getNbPar();
-   setExpr(_theFct->getExpression());
 }
 
 
@@ -83,29 +77,29 @@ int funct::setExpr(const string& s)
 {
    if (nb_var==0)
       return 1;
-   _theFct->setVar(_exvar);
-   int ret = _theFct->set(name,s,1);
+   _theFct->setVar(_Var);
+   for (const auto& p: par)
+      _theFct->setVar(p);
+   int ret = _theFct->set(s);
    if (ret)
-      _rita->msg("","Error in function definition");
+      cout << "Error in function definition" << endl;
    return ret;
 }
 
 
-int funct::setExpr(const string& s, const vector<string>& pn, const vector<double>& pv)
+void funct::setVar(const vector<string>& v)
 {
-   if (nb_var==0)
-      return 1;
-   _theFct->setVar(_exvar);
-   for (size_t i=1; i<pv.size(); ++i) {
-      var.push_back(pn[i]);
-      par.push_back(pn[i]);
-      _theFct->setPar(pn[i],pv[i]);
-      nb_par++;
+   for (size_t i=0; i<v.size(); ++i)
+      var.push_back(v[i]);
+}
+
+
+void funct::setVar(const vector<string>& v, const vector<size_t>& n)
+{
+   for (size_t i=0; i<v.size(); ++i) {
+      var.push_back(v[i]);
+      setVar(n[i]);
    }
-   int ret = _theFct->set(s);
-   if (ret)
-      _rita->msg("","Error in function definition");
-   return ret;
 }
 
 
@@ -113,6 +107,13 @@ void funct::setVar(const string& v, int n)
 {
    var.push_back(v);
    setVar(n);
+}
+
+
+void funct::setPar(const string& name)
+{
+   par.push_back(name);
+   nb_par = par.size();
 }
 
 
@@ -127,21 +128,100 @@ int funct::set(const string& v, const string& s)
 void funct::setVar(size_t n)
 {
    if (n==1) {
-      _exvar.push_back(var[_iv++]);
+      _Var.push_back(var[_iv++]);
       nb_var++;
    }
    else {
       for (size_t j=1; j<=n; ++j)
-         _exvar.push_back(var[_iv]+to_string(j));
+         _Var.push_back(var[_iv]+to_string(j));
       nb_var += n;
       _iv++;
    }
 }
 
 
+double funct::operator()(double x)
+{
+   _arg.clear();
+   _arg.push_back(x);
+   return getPars();
+}
+
+
+double funct::operator()(double x, double y)
+{
+   _arg.clear();
+   _arg.push_back(x);
+   _arg.push_back(y);
+   return getPars();
+}
+
+
+double funct::operator()(double x, double y, double z)
+{
+   _arg.clear();
+   _arg.push_back(x);
+   _arg.push_back(y);
+   _arg.push_back(z);
+   return getPars();
+}
+
+
+double funct::operator()(double x, double y, double z, double t)
+{
+   _arg.clear();
+   _arg.push_back(x);
+   _arg.push_back(y);
+   _arg.push_back(z);
+   _arg.push_back(t);
+   return getPars();
+}
+
+
+double funct::operator()(const vector<double>& x)
+{
+   _arg.clear();
+   for (size_t i=0; i<x.size(); ++i)
+      _arg.push_back(x[i]);
+   return getPars();
+}
+
+
+double funct::D(real_t x)
+{
+   return _theFct->D(x);
+}
+
+
+double funct::D(const vector<double>& x, size_t i)
+{
+   return _theFct->D(x,i);
+}
+
+
+double funct::getPars()
+{
+   for (size_t i=0; i<nb_par; ++i)
+      _arg.push_back(par_value[i]);
+   return (*_theFct)(_arg);
+}
+
+
 ostream& operator<<(ostream& s, const funct& f)
 {
-   s << f.fct();
+   s << "Function Name: " << f.name << endl;
+   s << "Expression: " << f.getExpression() << endl;
+   if (f.nb_var) {
+      s << "Variable(s): " << f.var[0];
+      for (size_t i=1; i<f.nb_var; ++i)
+         s << "," << f.var[i];
+   }
+   if (f.nb_par) {
+      s << ", Parameter(s): " << f.par[0];
+      for (size_t i=1; i<f.nb_par; ++i)
+         s << "," << f.par[i];
+      s << endl;
+   }
    return s;
 }
 

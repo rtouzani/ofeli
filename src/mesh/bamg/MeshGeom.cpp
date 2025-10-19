@@ -427,11 +427,8 @@ GeometricalEdge* Geometry::Containing(const R2         P,
                                       GeometricalEdge* start) const
 {
    GeometricalEdge *on=start, *pon=0;
-   int k=0;
    while (pon != on) { 
       pon = on;
-      assert(k<100);
-      k++;
       R2 A = (*on)[0], B = (*on)[1];
       R2 AB = B-A, AP = P-A, BP = P-B;
       if ((AB,AP)<0) 

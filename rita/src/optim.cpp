@@ -196,7 +196,7 @@ int optim::run()
          *_rita->ofh << " function=" << name;
       }
       else {
-         ind = _data->addVector(var_name[0],0.,size,"",false);
+         ind = _data->addVector(var_name[0],0.,size,"",SetCalc::SET);
          opt_var = _data->theVector[ind];
          if (size==1)
             var.push_back(var_name[0]);
@@ -476,7 +476,7 @@ int optim::run()
                   CHK_MSGR(!count_lp && lp,_pr+"end>","Missing objective function.")
                   CHK_MSGR(!count_vector,_pr+"end>","Missing a variable name.")
                   *_rita->ofh << "optimization\n  size " << size << endl << "  lp" << endl;
-                  ind = _data->addVector(var_name[0],0.,size,"",false);
+                  ind = _data->addVector(var_name[0],0.,size,"",SetCalc::SET);
                   opt_var = _data->theVector[ind];
                   if (size==1)
                      var.push_back(var_name[0]);
@@ -525,7 +525,7 @@ int optim::run()
                      *_rita->ofh << "  function " << name << endl;
                   }
                   else {
-                     ind = _data->addVector(var_name[0],0.,size,"",false);
+                     ind = _data->addVector(var_name[0],0.,size,"",SetCalc::SET);
                      if (size==1)
                         var.push_back(var_name[0]);
                      else {
@@ -635,7 +635,7 @@ int optim::run()
                break;
 
             default:
-               DEFAULT_KW
+               DEFAULT_KW(_rita)
          }
       }
    }

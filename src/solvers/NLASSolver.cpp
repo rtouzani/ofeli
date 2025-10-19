@@ -200,8 +200,7 @@ void NLASSolver::setDf(Fct&   df,
       throw OFELIException("In NLASSolver::setDf(Fct,i,j):\n"
                            "Index (" + to_string(i) + "," + to_string(j) + ") is out of bounds");
    _theDFct[_nb_eq*(i-1)+j-1] = &df;
-   _df_computed = false;
-   _df_given = true;
+   _df_computed = false, _df_given = true;
 }
 
 
@@ -249,8 +248,7 @@ void NLASSolver::setDf(string exp,
    }
    _theDFct[_nb_eq*(i-1)+j-1] = new Fct(exp,var);
    _fct_allocated = true;
-   _df_computed = false;
-   _df_given = true;
+   _df_computed = false, _df_given = true;
 }
 
 

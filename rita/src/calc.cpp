@@ -45,11 +45,29 @@
 #endif
 
 #include "calc.h"
-#include "rita.h"
 #include "cmd.h"
 #include "data.h"
+#include "helps.h"
 
 namespace RITA {
+
+void FctFun::Eval(ptr_val_type&       ret,
+                  const ptr_val_type* a_pArg,
+                  int                 argc)
+{
+   if (argc==0) {
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+   }
+   _arg.clear();
+   for (int i=0; i<argc; ++i)
+      _arg.push_back(a_pArg[i]->GetFloat());
+   *ret = (*_fun)(_arg);
+}
+
 
 void FctMatrix::Eval(ptr_val_type&       ret,
                      const ptr_val_type* a_pArg,
@@ -94,9 +112,9 @@ void FctMatrixNorm2::Eval(ptr_val_type&       ret,
 }
 
 
-void FctMatrixNormI::Eval(ptr_val_type&       ret,
-                          const ptr_val_type* a_pArg,
-                          int                 argc)
+void FctMatrixNormMax::Eval(ptr_val_type&       ret,
+                            const ptr_val_type* a_pArg,
+                            int                 argc)
 {
    if (argc!=1) {
       ErrorContext err;
@@ -117,47 +135,6 @@ void FctMatrixNormI::Eval(ptr_val_type&       ret,
 }
 
 
-void calc::ListExprVar()
-{
-   cout << "\nVariables found in : \"" << theParser.GetExpr() << "\"\n";
-   cout << "-----------------------------\n";
-   var_maptype vmap = theParser.GetExprVar();
-   if (!vmap.size())
-      cout << "Expression does not contain variables" << endl;
-	else {
-      for (const auto& v: vmap)
-         cout << "  " << v.first << " = " << (Variable&)(*(v.second)) << endl;
-	}
-}
-
-
-void calc::ListVar()
-{
-   var_maptype variables = theParser.GetVar();
-   if (!variables.size())
-      return;
-   cout << "\nParser variables:\n";
-   cout << "-----------------\n";
-   cout << "Number: " << variables.size() << "\n";
-   for (const auto& v: variables)
-      cout << "Name: " << v.first << " = " << *v.second << std::endl;
-}
-
-
-void calc::ListConst()
-{
-   cout << "\nParser constants:\n";
-   cout << "-----------------\n";
-   var_maptype cmap = theParser.GetConst();
-   if (!cmap.size())
-      cout << "Expression does not contain constants\n";
-	else {
-      for (const auto& v: cmap)
-         cout << "  " << v.first << " = " << *v.second << std::endl;
-   }
-}
-
-
 void FctVector::Eval(ptr_val_type&       ret,
                      const ptr_val_type* a_pArg,
                      int                 argc)
@@ -174,6 +151,120 @@ void FctVector::Eval(ptr_val_type&       ret,
       *ret = 0.0;
    else
       *ret = matrix_type(n, 1, 0.0);
+}
+
+
+void FctRowVector::Eval(ptr_val_type&       ret,
+                        const ptr_val_type* a_pArg,
+                        int                 argc)
+{
+   if (argc != 1) {
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+   }
+   int_type n = a_pArg[0]->GetInteger();
+   if (n==1)
+      *ret = 0.0;
+   else
+      *ret = matrix_type(1, n, 0.0);
+}
+
+
+void FctRowVectorNorm1::Eval(ptr_val_type&       ret,
+                             const ptr_val_type* a_pArg,
+                             int                 argc)
+{
+   if (argc!=1) {
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+   }
+   int_type nr = a_pArg[0]->GetRows(), nc = a_pArg[0]->GetCols();
+   float_type x = 0.0, z = 0.0;
+   for (int i=0; i<nr; ++i) {
+      for (int j=0; j<nc; ++j) {
+         z = a_pArg[0]->At(i,j).GetFloat();
+         x += std::abs(z);
+      }
+   }
+   *ret = x;
+}
+
+
+void FctRowVectorNorm2::Eval(ptr_val_type&       ret,
+                             const ptr_val_type* a_pArg,
+                             int                 argc)
+{
+   if (argc!=1) {
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+   }
+   int_type nr = a_pArg[0]->GetRows(), nc = a_pArg[0]->GetCols();
+   float_type x = 0.0, z = 0.0;
+   for (int i=0; i<nr; ++i) {
+      for (int j=0; j<nc; ++j) {
+         z = a_pArg[0]->At(i,j).GetFloat();
+         x += z*z;
+      }
+   }
+   *ret = sqrt(x);
+}
+
+
+void FctRowVectorNormMax::Eval(ptr_val_type&       ret,
+                               const ptr_val_type* a_pArg,
+                               int                 argc)
+{
+   if (argc!=1) {
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+   }
+   int_type nr = a_pArg[0]->GetRows(), nc = a_pArg[0]->GetCols();
+   float_type x = 0.0, z = 0.0;
+   for (int i=0; i<nr; ++i) {
+      for (int j=0; j<nc; ++j) {
+         z = a_pArg[0]->At(i,j).GetFloat();
+         x = std::max(x,std::abs(z));
+      }
+   }
+   *ret = x;
+}
+
+
+void FctRowVectorCanonical::Eval(ptr_val_type&       ret,
+                                 const ptr_val_type* a_pArg,
+                                 int                 argc)
+{
+   if (argc != 2) {
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+   }
+   int_type n = a_pArg[0]->GetInteger(),
+            i = a_pArg[1]->GetInteger();
+   if (i>n) {
+      ErrorContext err;
+      err.Errc = ecARRAY_SIZE_MISMATCH;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+   }
+   matrix_type M(1,int(n),0.0);
+   M.At(i-1) = 1.0;
+   *ret = M;
 }
 
 
@@ -223,9 +314,9 @@ void FctVectorNorm2::Eval(ptr_val_type&       ret,
 }
 
 
-void FctVectorNormI::Eval(ptr_val_type&       ret,
-                          const ptr_val_type* a_pArg,
-                          int                 argc)
+void FctVectorNormMax::Eval(ptr_val_type&       ret,
+                            const ptr_val_type* a_pArg,
+                            int                 argc)
 {
    if (argc!=1) {
       ErrorContext err;
@@ -272,7 +363,9 @@ void FctVectorCanonical::Eval(ptr_val_type&       ret,
 }
 
 
-void FctMatrixLaplace1D::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc)
+void FctMatrixLaplace1D::Eval(ptr_val_type&       ret,
+                              const ptr_val_type* a_pArg,
+                              int                 argc)
 {
    if (argc<1 || argc>2) {
       ErrorContext err;
@@ -296,7 +389,9 @@ void FctMatrixLaplace1D::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int
 }
 
 
-void FctMatrixDiag::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc)
+void FctMatrixDiag::Eval(ptr_val_type&       ret,
+                         const ptr_val_type* a_pArg,
+                         int                 argc)
 {
    if (argc<1 || argc>2) {
       ErrorContext err;
@@ -319,42 +414,201 @@ void FctMatrixDiag::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc
 /*                             Implementation of calc member functions                             */
 /* ----------------------------------------------------------------------------------------------- */
 
-calc::calc(rita* r,
-           cmd*  command)
-     : _rita(r), _cmd(command)
+calc::calc(data*     d,
+           cmd*      command,
+           ofstream* ofh, 
+           ofstream* ofl)
+     : _data(d), _cmd(command), _ofh(ofh), _ofl(ofl), _nb_def_funs(0)
 {
-   theParser.EnableAutoCreateVar(true);
-   theParser.DefineFun(new FctMatrix);
-   theParser.DefineFun(new FctMatrixNorm2);
-   theParser.DefineFun(new FctMatrixNormI);
-   theParser.DefineFun(new FctMatrixLaplace1D);
-   theParser.DefineFun(new FctMatrixDiag);
-   theParser.DefineFun(new FctVector);
-   theParser.DefineFun(new FctVectorCanonical);
-   theParser.DefineFun(new FctVectorNorm1);
-   theParser.DefineFun(new FctVectorNorm2);
-   theParser.DefineFun(new FctVectorNormI);
+   theParser = new ParserX(pckALL_NON_COMPLEX);
+   theParser->EnableAutoCreateVar(true);
+   theParser->DefineFun(new FctMatrix);
+   theParser->DefineFun(new FctMatrixNorm2);
+   theParser->DefineFun(new FctMatrixNormMax);
+   theParser->DefineFun(new FctMatrixLaplace1D);
+   theParser->DefineFun(new FctMatrixDiag);
+   theParser->DefineFun(new FctVector);
+   theParser->DefineFun(new FctVectorCanonical);
+   theParser->DefineFun(new FctVectorNorm1);
+   theParser->DefineFun(new FctVectorNorm2);
+   theParser->DefineFun(new FctVectorNormMax);
+   theParser->DefineFun(new FctRowVector);
+   theParser->DefineFun(new FctRowVectorCanonical);
+   theParser->DefineFun(new FctRowVectorNorm1);
+   theParser->DefineFun(new FctRowVectorNorm2);
+   theParser->DefineFun(new FctRowVectorNormMax);
+}
+
+
+void calc::ListExprVar()
+{
+   cout << "\nVariables found in : \"" << theParser->GetExpr() << "\"\n";
+   cout << "-----------------------------\n";
+   var_maptype vmap = theParser->GetExprVar();
+   if (!vmap.size())
+      cout << "Expression does not contain variables" << endl;
+	else {
+      for (const auto& v: vmap)
+         cout << "  " << v.first << " = " << (Variable&)(*(v.second)) << endl;
+	}
+}
+
+
+void calc::ListFun()
+{
+   if (_nb_def_funs==0) {
+      cout << "No defined functions found.\n";
+      return;
+   }
+   cout << "List of defined functions:" << endl;
+   for (const auto& f: _funs)
+      cout << f << endl;
+}
+
+
+void calc::ListVar()
+{
+   var_maptype var = theParser->GetVar();
+   if (var.size()==0) {
+      cout << "No variables defined.\n";
+      return;
+   }
+   if (var.size()==1)
+      cout << "One defined variable:\n";
+   else
+      cout << "\n" << var.size() << " defined variables:\n";
+   for (const auto& v: var)
+      cout << v.first << " = " << *v.second << std::endl;
+}
+
+
+void calc::ListConst()
+{
+   cout << "Parser constants:\n";
+   var_maptype cmap = theParser->GetConst();
+   if (!cmap.size())
+      cout << "Expression does not contain constants\n";
+	else {
+      for (const auto& v: cmap)
+         cout << "  " << v.first << " = " << *v.second << std::endl;
+   }
 }
 
 
 int calc::setParam(const string& name,
                    double        v)
 {
-   _v = new Value(v);
-   _theV.push_back(_v);
-   theParser.DefineVar(name,Variable(_v));
+   Value *V = new Value(v);
+   theParser->DefineVar(name,Variable(V));
+   return 0;
+}
+
+
+int calc::setFun(funct*                f,
+                 const string&         exp,
+                 const vector<string>& var)
+{
+   theParser->SetExpr(exp);
+   var_maptype vmap = theParser->GetExprVar();
+   if (vmap.size()==0) {
+      cout << "Expression does not contain variables" << endl;
+      return 1;
+   }
+   f->setVar(var);
+   f->par_value.clear();
+   for (const auto& p: vmap) {
+      for (size_t i=1; i<_data->theParam.size(); ++i) {
+         if (p.first==_data->ParamName[i]) {
+            f->setPar(p.first);
+            Variable &w = (Variable&)(*(p.second));
+            f->par_value.push_back(w.GetFloat());
+         }
+      }
+   }
+   f->setExpr(exp);
+   if (std::find(_funs.begin(),_funs.end(),f->name) != _funs.end())
+      ;
+   else {
+      theParser->DefineFun(new FctFun(f));
+      _funs.push_back(f->name);
+      _nb_def_funs++;
+   }
+   return 0;
+}
+
+
+int calc::setFun(funct*                f,
+                 const string&         exp,
+                 const vector<string>& var,
+                 const vector<size_t>& n)
+{
+   theParser->SetExpr(exp);
+   var_maptype vmap = theParser->GetExprVar();
+   if (vmap.size()==0) {
+      cout << "Expression does not contain variables" << endl;
+      return 1;
+   }
+   f->setVar(var,n);
+   f->par_value.clear();
+   for (const auto& p: vmap) {
+      for (size_t i=1; i<_data->theParam.size(); ++i) {
+         if (p.first==_data->ParamName[i]) {
+            f->setPar(p.first);
+            Variable &w = (Variable&)(*(p.second));
+            f->par_value.push_back(w.GetFloat());
+         }
+      }
+   }
+   f->setExpr(exp);
+   if (std::find(_funs.begin(),_funs.end(),f->name) != _funs.end())
+      ;
+   else {
+      theParser->DefineFun(new FctFun(f));
+      _funs.push_back(f->name);
+      _nb_def_funs++;
+   }
+   return 0;
+}
+
+
+int calc::setFun(funct* f)
+{
+   theParser->SetExpr(f->getExpression());
+   var_maptype vmap = theParser->GetExprVar();
+   if (vmap.size()==0) {
+      cout << "Expression does not contain variables" << endl;
+      return 1;
+   }
+	else {
+      size_t np = _data->theParam.size() - 1;
+      for (const auto& p: vmap) {
+         for (size_t i=1; i<np; ++i) {
+            if (p.first==_data->ParamName[i]) {
+               f->nb_par++;
+               f->par.push_back(p.first);
+            }
+         }
+      }
+	}
+
+   if (std::find(_funs.begin(),_funs.end(),f->name) != _funs.end())
+      ;
+   else {
+      theParser->DefineFun(new FctFun(f));
+      _funs.push_back(f->name);
+      _nb_def_funs++;
+   }
    return 0;
 }
 
 
 int calc::setVector(OFELI::Vect<double>* u)
 {
-   int n = u->size();
-   _v = new Value(n,1,0.);
-   _theV.push_back(_v);
-   for (int i=0; i<n; ++i)
-      _v->At(i) = (*u)[i];
-   theParser.DefineVar(u->getName(),Variable(_v));
+   size_t n = u->size();
+   Value *v = new Value(n,1);
+   for (size_t i=0; i<n; ++i)
+      v->At(i,0) = (*u)[i];
+   theParser->DefineVar(u->getName(),Variable(v));
    return 0;
 }
 
@@ -362,7 +616,7 @@ int calc::setVector(OFELI::Vect<double>* u)
 int calc::setVectorValue(const string&              name,
                          const OFELI::Vect<double>* u)
 {
-   var_maptype var = theParser.GetVar();
+   var_maptype var = theParser->GetVar();
    if (var.count(name)==0)
       return 1;
    else {
@@ -377,7 +631,7 @@ int calc::setVectorValue(const string&              name,
 int calc::setMatrixValue(const string&          name,
                          OFELI::Matrix<double>* M)
 {
-   var_maptype var = theParser.GetVar();
+   var_maptype var = theParser->GetVar();
    if (var.count(name)==0)
       return 1;
    else {
@@ -393,49 +647,131 @@ int calc::setMatrixValue(const string&          name,
 int calc::setMatrix(OFELI::Matrix<double>* M)
 {
    int nr=M->getNbRows(), nc=M->getNbColumns();
-   _v = new Value(nr,nc,0.0);
-   _theV.push_back(_v);
-   theParser.DefineVar(M->getName(),Variable(_v));
+   Value *v = new Value(nr,nc,0.);
    for (int i=1; i<=nr; ++i)
       for (int j=1; j<=nc; ++j)
-         _v->At(i-1,j-1) = M->at(i,j);
+         v->At(i-1,j-1) = M->at(i,j);
+   theParser->DefineVar(M->getName(),Variable(v));
    return 0;
 }
 
 
-int calc::CheckKeywords()
+int calc::CheckKeywords(const string& sLine)
 {
-   if (_sLine.substr(0,5)=="print") {
-      _rita->msg("","Command print is not allowed in this mode","");
-      return 0;
-   }
-   else if (_sLine=="list") {
+   int ret = 0;
+   if (sLine=="data") {
       ListConst();
       ListVar();
-      ListExprVar();
-      return 1;
+      ListFun();
+      ret = 1;
    }
-   return 0;
+   else if (sLine=="list_const")
+      ListConst(), ret = 1;
+   else if (sLine=="list_var")
+      ListVar(), ret = 1;
+   else if (sLine=="list_expr_var")
+      ListExprVar(), ret = 1;
+   else if (sLine=="list_func")
+      ListFun(), ret = 1;
+   else if (sLine=="help")
+      cout << Calc_Help << endl, ret = 1;
+   return ret;
 }
 
 
 int calc::run()
 {
-   _data = _rita->_data;
    try {
-      _sLine = _cmd->buffer();
-      *_rita->ofh << _sLine << endl;
-      if (_sLine[0]=='%')
-         _sLine.erase(0,1);
-      if (_sLine[_sLine.size()-1]==';')
-         _sLine.pop_back();
-      switch (CheckKeywords())
+      string sLine = _cmd->buffer();
+      *_ofh << sLine << endl;
+      if (sLine[sLine.size()-1]==';')
+         sLine.pop_back();
+      switch (CheckKeywords(sLine))
       {
          case  0: break;
-         case  1: break;
+         case  1: return 1;
          case -1: return -1;
       }
-      parse();
+      theParser->SetExpr(sLine);
+      Value val = theParser->Eval();
+      const var_maptype& expr_var = theParser->GetExprVar();
+      const var_maptype& var = theParser->GetVar();
+      if (sLine.find('=') == string::npos) {
+         if (val.GetType()=='v') {
+            cout << "Unknown variable !" << endl;
+            return 1;
+         }
+         cout << " = " << val << endl;
+         return 0;
+      }
+
+      for (auto const& v: expr_var) {
+         Variable &w = (Variable&)(*(v.second));
+         string name = v.first;
+         var_maptype::const_iterator it = var.find(name);
+         switch (w.GetType()) {
+
+            case 'i':
+            case 'f':
+               if (it==var.end())
+                  _data->setParam(name,w.GetFloat());
+               else
+                  _data->addParam(name,w.GetFloat());
+//               cout << name << " = " << val << endl;
+               break;
+
+            case 'm':
+               {
+                  int nr=w.GetRows(), nc=w.GetCols(), n=std::max(nr,nc);
+                  if (nr==1 || nc==1) {
+                     if (it==var.end()) {
+                        OFELI::Vect<double> *v = new OFELI::Vect<double>(n);
+                        for (int i=0; i<n; ++i)
+                           (*v)[i] = w.GetArray().At(0,i).GetFloat();
+                        _data->setVector(name,v);
+                     }
+                     else {
+                        int k = _data->addVector(name,0.,n,"");
+                        if (k==0)
+                           break;
+                        OFELI::Vect<double> *v = _data->theVector[k];
+                        for (int i=0; i<n; ++i)
+                           (*v)[i] = w.GetArray().At(0,i).GetFloat();
+                     }
+                  }
+                  else {
+                     if (it==var.end()) {
+                        OFELI::DMatrix<double> *M = new OFELI::DMatrix<double>(nr,nc);
+                        for (int i=0; i<nr; ++i)
+                           for (int j=0; j<nc; ++j)
+                              (*M)(i+1,j+1) = w.GetArray().At(i,j).GetFloat();
+                        _data->setMatrix(name,M);
+                     }
+                     else {
+                        int k = _data->addMatrix(name,nr,nc,"","dense");
+                        OFELI::Matrix<double> *M = _data->theMatrix[k];
+                        for (int i=0; i<nr; ++i)
+                           for (int j=0; j<nc; ++j)
+                              (*M)(i+1,j+1) = w.GetArray().At(i,j).GetFloat();
+                     }
+                  }
+//                  cout << name << " = " << *it->second.Get() << endl;
+                  break;
+               }
+
+            case 'v':
+               theParser->RemoveVar(name);
+               if (_data->dn[name].active==-1) {
+                  cout << "No data or entity " << name << " found." << endl;
+                  return 1;
+               }
+               cout << name << " = " << val << endl;
+               break;
+
+            default:
+               break;
+         }
+      }
    }
    catch(ParserError &e) {
       if (e.GetPos()!=-1) {
@@ -445,7 +781,7 @@ int calc::run()
          cout << sMarker;
       }
       cout << "Error: " << e.GetMsg() << std::dec << endl;
-      *_rita->ofl << "In " << sPrompt << e.GetMsg() << std::dec << endl;
+      *_ofl << "In calc: " << e.GetMsg() << std::dec << endl;
    }
    return 0;
 }
@@ -453,93 +789,15 @@ int calc::run()
 
 int calc::get_int(const string& s)
 {
-   theParser.SetExpr(s);
-   return theParser.Eval().GetInteger();
+   theParser->SetExpr(s);
+   return theParser->Eval().GetInteger();
 }
 
 
 double calc::get_double(const string& s)
 {
-   theParser.SetExpr(s);
-   return theParser.Eval().GetFloat();
-}
-
-
-int calc::run(const string& buffer)
-{
-   _data = _rita->_data;
-   try {
-      _sLine = buffer;
-      switch (CheckKeywords())
-      {
-         case  0: break;
-         case  1: break;
-         case -1: return -1;
-      }
-      parse();
-   }
-   catch(ParserError &e) {
-      if (e.GetPos()!=-1) {
-         string_type sMarker;
-         sMarker.insert(0,e.GetPos()+10,' ');
-         sMarker += "^\n";
-         cout << sMarker;
-      }
-      cout << "Error: " << e.GetMsg() << std::dec << endl;
-      *_rita->ofl << "In " << sPrompt << e.GetMsg() << std::dec << endl;
-   }
-   return 0;
-}
-
-
-int calc::parse()
-{
-   int ret = 0;
-   theParser.SetExpr(_sLine);
-   cout << "calc> " << _sLine << endl;
-   theParser.Eval();
-   const var_maptype &expr_var = theParser.GetExprVar();
-   for (auto const& v: expr_var) {
-      Variable &w = (Variable&)(*(v.second));
-      switch (w.GetType()) {
-
-         case 'i':
-         case 'f':
-            ret = _data->addParam(v.first,w.GetFloat(),true);
-            if (!ret)
-               return 1;
-         break;
-
-         case 'm':
-            {
-               int nr=w.GetRows(), nc=w.GetCols();
-               if (nr==1 || nc==1) {
-                  int k = _data->addVector(v.first,0.,std::max(nr,nc),"",true);
-                  if (k==0) {
-                     ret = 1;
-                     break;
-                  }
-                  OFELI::Vect<double> *u = _data->theVector[k];
-                  for (int i=0; i<std::max(nr,nc); ++i)
-                     (*u)[i] = w.GetArray().At(0,i).GetFloat();
-               }
-               else {
-                  int k = _data->addMatrix(v.first,nr,nc,"","dense",true);
-                  OFELI::Matrix<double> *M = _data->theMatrix[k];
-                  for (int i=0; i<nr; ++i)
-                     for (int j=0; j<nc; ++j)
-                        (*M)(i+1,j+1) = w.GetArray().At(i,j).GetFloat();
-               }
-               ret = 0;
-               break;
-            }
-
-         default:
-            ret = 1;
-            break;
-      }
-   }
-   return ret;
+   theParser->SetExpr(s);
+   return theParser->Eval().GetFloat();
 }
 
 } /* namespace RITA */

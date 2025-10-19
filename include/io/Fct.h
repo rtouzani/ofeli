@@ -73,8 +73,6 @@ class Fct {
    int set(const string& exp, const string &v, int opt=0);
    int set(const string& n, const string &exp, const vector<string>& v, int opt=0);
    void setVar(const string& v);
-   void setPar(const string& p, real_t v);
-   void getParam(vector<string>& p);
    void setVar(const vector<string>& v);
    void setName(const string& n) { _name = n; }
    real_t operator()(real_t x);
@@ -88,10 +86,7 @@ class Fct {
    string getExpression() const;
    string getName() const { return _name; }
    size_t getNbVar() const { return _nb_var; }
-   size_t getNbActVar() const { return _rv.size(); }
-   size_t getNbPar() const { return _nb_par; }
    string getVar(size_t i) const { return _var[i-1]; }
-   string getPar(size_t i) const { return _par[i-1]; }
    real_t D(real_t x);
    real_t D(const vector<real_t>& x, size_t i);
    int check();
@@ -103,12 +98,11 @@ class Fct {
    exprtk::parser<real_t> *_p;
    exprtk::symbol_table<real_t> *_st;
    exprtk::expression<real_t> *_ex;
-   vector<real_t> _xvar, _xpar;
-   vector<string> _var, _par, _rv;
-   void checkParam();
+   vector<real_t> _xvar;
+   vector<string> _var;
    void add_constants();
    string _name;
-   size_t _nb_var, _nb_par;
+   size_t _nb_var;
    bool _exp_ok, _var_ok;
    int err;
    string _expr, error_message;

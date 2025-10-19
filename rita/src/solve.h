@@ -66,7 +66,7 @@ class solve
     data *_data;
     configure *_configure;
     cmd *_cmd;
-    const string _pr = "solve>";
+    const string _pr = ">solve>";
     int _verb, _nb_pb, _nb_ls, _nb_ae, _nb_pde, _nb_opt, _nb_eigen;
     vector<string> _pb;
     analysis_type _analysis;    

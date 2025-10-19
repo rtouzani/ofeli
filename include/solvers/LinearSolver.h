@@ -25,7 +25,7 @@
 
   ==============================================================================
 
-                       Definition of class LinearSolver
+                          Definition of class LinearSolver
        to select iterative or direct solver for a linear system of equations
 
   ==============================================================================*/
@@ -69,10 +69,6 @@ class LinearSolver
 {
 
  public:
-
-#if defined (USE_EIGEN)
-    typedef Eigen::Matrix<real_t,Eigen::Dynamic,1> VectorX;
-#endif
 
 /// \brief Default Constructor.
 /// \details Initializes default parameters and pointers to 0.
@@ -229,8 +225,6 @@ class LinearSolver
  *  <tt>IDENT_PREC</tt>, <tt>DIAG_PREC</tt>, <tt>SSOR_PREC</tt>, <tt>ILU_PREC</tt>,
  *  <tt>DILU_PREC</tt> [Default: <tt>DIAG_PREC</tt>]
  *  @remark The argument <tt>p</tt> has no effect if the solver is <tt>DIRECT_SOLVER</tt>
- *  @warning If the library <tt>eigen</tt> is used, only the preconditioners
- *  <tt>IDENT_PREC</tt>, <tt>DIAG_PREC</tt> and <tt>ILU_PREC</tt> are available.
  */
     int solve(SpMatrix<real_t>&   A,
               const Vect<real_t>& b,

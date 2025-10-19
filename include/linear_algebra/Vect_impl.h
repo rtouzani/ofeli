@@ -56,19 +56,13 @@ using std::to_string;
  *  \brief Definition file for class Vect.
  */
 
-#if defined (USE_PETSC)
-template<class T_> class PETScVect;
-#endif
-
 namespace OFELI {
 
 template<class T_>
-Vect<T_>::Vect() :
-#if !defined (USE_EIGEN)
-          vector<T_>(),
-#endif
+Vect<T_>::Vect()
+         : vector<T_>(),
           _dof_type(NODE_DOF), _size(0), _nx(0), _ny(1), _nz(1), _nt(1), _nb_dof(1),
-          _nc(1), _dg_degree(-1), _with_grid(false), _with_mesh(false),
+          _dg_degree(-1), _with_grid(false), _with_mesh(false),
           _theMesh(nullptr), _theGrid(nullptr), _name("#"), _time(0)
 {
    for (size_t i=0; i<10; ++i)
@@ -77,21 +71,14 @@ Vect<T_>::Vect() :
 
 
 template<class T_>
-Vect<T_>:: Vect(size_t n) :
-#if !defined (USE_EIGEN)
-           vector<T_>(n),
-#endif
-           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nt(1), _nb_dof(1), _nc(1),
-           _dg_degree(-1), _with_grid(true), _with_mesh(false), _theMesh(nullptr), 
+Vect<T_>:: Vect(size_t n)
+         : vector<T_>(n),
+           _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nt(1), _nb_dof(1),
+           _dg_degree(-1), _with_grid(true), _with_mesh(false), _theMesh(nullptr),
            _theGrid(nullptr), _name("#"), _time(0)
 {
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size);
-   clear();
-#else
    for (size_t i=0; i<_size; i++)
       (*this)[i] = 0;
-#endif
    for (size_t i=0; i<10; ++i)
       _with_regex[i] = false;
 }
@@ -99,20 +86,13 @@ Vect<T_>:: Vect(size_t n) :
 
 template<class T_>
 Vect<T_>::Vect(size_t nx,
-               size_t ny) :
-#if !defined (USE_EIGEN)
-          vector<T_>(nx*ny),
-#endif
+               size_t ny)
+         : vector<T_>(nx*ny),
           _dof_type(NODE_DOF), _size(nx*ny), _nx(nx), _ny(ny), _nz(1), _nt(1), _nb_dof(1),
-          _nc(1), _dg_degree(-1), _with_grid(false), _with_mesh(false), _theMesh(nullptr),
+          _dg_degree(-1), _with_grid(false), _with_mesh(false), _theMesh(nullptr),
           _theGrid(nullptr), _name("#"), _time(0)
 {
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size);
    clear();
-#else
-   clear();
-#endif
    for (size_t i=0; i<10; ++i)
       _with_regex[i] = false;
 }
@@ -121,21 +101,14 @@ Vect<T_>::Vect(size_t nx,
 template<class T_>
 Vect<T_>::Vect(size_t nx,
                size_t ny,
-               size_t nz) :
-#if !defined (USE_EIGEN)
-          vector<T_>(nx*ny*nz),
-#endif
+               size_t nz)
+         : vector<T_>(nx*ny*nz),
           _dof_type(NODE_DOF), _size(nx*ny*nz), _nx(nx), _ny(ny), _nz(nz), _nt(1),
-          _nb_dof(1), _nc(1), _dg_degree(-1), _with_grid(false), _with_mesh(false),
+          _nb_dof(1), _dg_degree(-1), _with_grid(false), _with_mesh(false),
           _theMesh(nullptr), _theGrid(nullptr), _name("#"), _time(0)
 {
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size);
-   clear();
-#else
    for (size_t i=0; i<_size; i++)
       (*this)[i] = 0;
-#endif
    for (size_t i=0; i<10; ++i)
       _with_regex[i] = false;
 }
@@ -143,17 +116,12 @@ Vect<T_>::Vect(size_t nx,
 
 template<class T_>
 Vect<T_>::Vect(size_t n,
-               T_*    x) :
-#if !defined (USE_EIGEN)
-           vector<T_>(n),
-#endif
+               T_*    x)
+         : vector<T_>(n),
            _dof_type(NODE_DOF), _size(n), _nx(n), _ny(1), _nz(1), _nt(1),
-           _nb_dof(1), _nc(1), _dg_degree(-1), _with_grid(false), _with_mesh(false),
+           _nb_dof(1), _dg_degree(-1), _with_grid(false), _with_mesh(false),
            _theMesh(nullptr), _theGrid(nullptr), _name("#"), _time(0)
 {
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size);
-#endif
    for (size_t i=1; i<=n; ++i)
       set(i,x[i-1]);
    for (size_t i=0; i<10; ++i)
@@ -162,10 +130,8 @@ Vect<T_>::Vect(size_t n,
 
 
 template<class T_>
-Vect<T_>::Vect(Grid& g) :
-#if !defined (USE_EIGEN)
-           vector<T_>((g.getNx()+1)*(g.getNy()+1)*(g.getNz()+1)),
-#endif
+Vect<T_>::Vect(Grid& g)
+         : vector<T_>((g.getNx()+1)*(g.getNy()+1)*(g.getNz()+1)),
            _dof_type(NODE_DOF), _nb_dof(1), _dg_degree(-1),
            _with_grid(true), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
 {
@@ -179,7 +145,8 @@ template<class T_>
 Vect<T_>::Vect(Mesh&      m,
                DOFSupport dof_type,
                int        nb_dof)
-         : _dg_degree(-1), _with_grid(false), _with_mesh(true), _theGrid(nullptr), _name("#"), _time(0)
+         : _dg_degree(-1), _with_grid(false), _with_mesh(true), _theGrid(nullptr),
+           _name("#"), _time(0)
 {
    setMesh(m,dof_type,nb_dof);
    for (size_t i=0; i<10; ++i)
@@ -192,10 +159,8 @@ Vect<T_>::Vect(Mesh&      m,
                DOFSupport dof_type,
                string     name,
                int        nb_dof,
-               real_t     t) :
-#if !defined (USE_EIGEN)
-          vector<T_>(),
-#endif
+               real_t     t)
+         : vector<T_>(),
           _dg_degree(-1), _with_grid(false), _with_mesh(true), _theGrid(nullptr), _name(name), _time(t)
 {
    setMesh(m,dof_type,nb_dof);
@@ -206,12 +171,10 @@ Vect<T_>::Vect(Mesh&      m,
 
 template<class T_>
 Vect<T_>::Vect(const Element*  el,
-               const Vect<T_>& v) :
-#if !defined (USE_EIGEN)
-          vector<T_>(),
-#endif
+               const Vect<T_>& v)
+         : vector<T_>(),
           _nx(el->getNbNodes()), _ny(v._ny), _nz(1), _nt(1),
-          _nb(el->getNbNodes()), _nb_dof(v._nb_dof), _nc(2), _dg_degree(-1),
+          _nb(el->getNbNodes()), _nb_dof(v._nb_dof), _dg_degree(-1),
           _with_grid(false), _with_mesh(false), _theMesh(nullptr), _theGrid(nullptr),
           _name(v._name), _time(v._time)
 {
@@ -228,12 +191,10 @@ Vect<T_>::Vect(const Element*  el,
 
 template<class T_>
 Vect<T_>::Vect(const Side*     sd,
-               const Vect<T_>& v) :
-#if !defined (USE_EIGEN)
-           vector<T_>(),
-#endif
+               const Vect<T_>& v)
+         : vector<T_>(),
            _nx(sd->getNbNodes()), _ny(v._nb_dof), _nz(1), _nt(1),
-           _nb(sd->getNbNodes()), _nb_dof(v._nb_dof), _nc(2), _dg_degree(-1),
+           _nb(sd->getNbNodes()), _nb_dof(v._nb_dof), _dg_degree(-1),
            _with_grid(false), _with_mesh(false), _theMesh(nullptr), _theGrid(nullptr),
            _name(v._name), _time(v._time)
 {
@@ -252,19 +213,14 @@ Vect<T_>::Vect(const Side*     sd,
 
 template<class T_>
 Vect<T_>::Vect(const Vect<T_>& v,
-               const Vect<T_>& bc) :
-#if !defined (USE_EIGEN)
-           vector<T_>(bc.size()),
-#endif
+               const Vect<T_>& bc)
+         : vector<T_>(bc.size()),
            _dof_type(v._dof_type), _size(v._nb*v._nb), _nx(v._nb), _ny(v._nb_dof), 
-           _nz(1), _nt(1), _nb(v._nb), _nb_dof(v._nb_dof), _nc(2), 
+           _nz(1), _nt(1), _nb(v._nb), _nb_dof(v._nb_dof), 
            _dg_degree(v._dg_degree), _with_grid(v._with_grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _theGrid(v._theGrid), _name(v._name), _time(v._time)
 {
    size_t i=1, n=0;
-#if defined (USE_EIGEN)
-   resize(bc.size());
-#endif
    MESH_ND {
       for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
          set(i,bc[n++]);
@@ -283,7 +239,7 @@ Vect<T_>::Vect(const Vect<T_>& v,
                size_t          nb_dof,
                size_t          first_dof)
          : _dof_type(v._dof_type), _size(v._size), _nx(v._nx), _ny(v._ny), _nz(v._nz),
-           _nt(1), _nb(v._nb), _nb_dof(v._nb_dof), _nc(2),
+           _nt(1), _nb(v._nb), _nb_dof(v._nb_dof),
            _dg_degree(v._dg_degree), _with_grid(v._with_grid), _with_mesh(v._with_mesh),
            _theMesh(v._theMesh), _theGrid(v._theGrid), _name(v._name), _time(v._time)
 {
@@ -291,9 +247,8 @@ Vect<T_>::Vect(const Vect<T_>& v,
    for (size_t i=1; i<=_nb; i++)
       for (size_t j=1; j<=_nb_dof; j++)
          set(i,j,v(i,j+first_dof-1));
-   for (size_t i=0; i<10; ++i) {
+   for (size_t i=0; i<10; ++i)
       _with_regex[i] = v._with_regex[i];
-   }
 }
 
 
@@ -304,7 +259,6 @@ Vect<T_>::Vect(const Vect<T_>& v)
            _theMesh(v._theMesh), _theGrid(v._theGrid), _name(v._name), _time(v._time)
 {
    setSize(v._nx,v._ny,v._nz,v._nt);
-   _nc = v._nc;
    for (size_t i=1; i<=_size; i++)
       set(i,v[i-1]);
    for (size_t i=0; i<10; ++i)
@@ -350,18 +304,6 @@ Vect<T_>::Vect(size_t          d,
    for (size_t i=0; i<10; ++i)
       _with_regex[i] = false;
 }
-
-
-#if defined (USE_EIGEN)
-template<class T_>
-Vect<T_>::Vect(const VectorX& v)
-         : _size(v.size()), _nx(_size), _ny(1), _nz(1), _nt(1), _dof_type(NONE), _nb_dof(1),
-           _with_grid(true), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
-{
-   for (size_t i=0; i<10; ++i)
-      _with_regex[i] = false;
-}
-#endif
 
 
 template<class T_>
@@ -485,22 +427,23 @@ void Vect<T_>::set(const string& exp,
 {
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::set(string,dof): No mesh defined");
-   _theFct.set(exp,_var);
+   Fct& f = _theFct;
+   f.set(exp,_var);
    if (_dof_type==NODE_DOF) {
       MESH_ND
-         set(The_node.getNbDOF()*(node_label-1)+dof,_theFct(The_node.getCoord(),_time));
+         set(The_node.getNbDOF()*(node_label-1)+dof,f(The_node.getCoord(),_time));
    }
    else if (_dof_type==SIDE_DOF) {
       MESH_SD
-         set(The_side.getNbDOF()*(side_label-1)+dof,_theFct(The_side.getCenter(),_time));
+         set(The_side.getNbDOF()*(side_label-1)+dof,f(The_side.getCenter(),_time));
    }
    else if (_dof_type==BOUNDARY_SIDE_DOF) {
       MESH_BD_SD
-         set(The_side.getNbDOF()*(side_label-1)+dof,_theFct(The_side.getCenter(),_time));
+         set(The_side.getNbDOF()*(side_label-1)+dof,f(The_side.getCenter(),_time));
    }
    else if (_dof_type==ELEMENT_DOF) {
       MESH_EL
-         set(element_label,_theFct(The_element.getCenter(),_time));
+         set(element_label,f(The_element.getCenter(),_time));
    }
    else
       throw OFELIException("In Vect::set(string,size_t): Unknown vector type.");
@@ -511,28 +454,28 @@ template<class T_>
 void Vect<T_>::set(const string&       exp,
                    const Vect<real_t>& x)
 {
-   _theFct.set(exp,_var);
+   Fct& f = _theFct;
+   f.set(exp,_var);
    for (size_t i=0; i<x.size(); ++i)
-      set(i+1,_theFct(x[i],0.,0.,_time));
+      set(i+1,f(x[i],0.,0.,_time));
 }
 
 
 template <class T_>
-void Vect<T_>::set(Mesh&  ms,
-                   const  string& exp,
-                   size_t dof)
+void Vect<T_>::set(Mesh&         ms,
+                   const string& exp,
+                   size_t        dof)
 {
    setMesh(ms);
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::set(ms,string,dof): No mesh defined");
-   _theFct.set(exp,_var);
-   if (_dof_type==NODE_DOF) {
-      MESH_ND
-         set(The_node.getNbDOF()*(node_label-1)+dof,_theFct(The_node.getCoord(),_time));
-   }
-   else
+   if (_dof_type!=NODE_DOF)
       throw OFELIException("In Vect::set(string,size_t): This member function is "
                            "for nodewise vectors only.");
+   Fct &f = _theFct;
+   f.set(exp,_var);
+   MESH_ND
+      set(The_node.getNbDOF()*(node_label-1)+dof,f(The_node.getCoord(),_time));
 }
 
 
@@ -541,11 +484,12 @@ void Vect<T_>::set(const Vect<real_t>& x,
                    const string&       exp)
 {
    setSize(x._nx,x._ny,x._nz,x._nt);
-   _theFct.set(exp,_var_xit);
+   Fct &f = _theFct;
+   f.set(exp,_var_xit);
    vector<real_t> xv(3);
    for (size_t i=0; i<_size; i++) {
       xv[0] = x[i], xv[1] = i+1, xv[2] = _time;
-      set(i+1,_theFct(xv));
+      set(i+1,f(xv));
    }
 }
 
@@ -599,13 +543,8 @@ void Vect<T_>::setSize(size_t nx,
 {
    _nx = nx, _ny = ny, _nz = nz, _nt = nt;
    _size = _nx*_ny*_nz*_nt;
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size,1);
-   clear();
-#else
    vector<T_>::resize(_size);
    clear();
-#endif
 }
 
 
@@ -619,13 +558,7 @@ void Vect<T_>::resize(size_t n,
 {
    _nx = n, _ny = _nz = _nt = 1;
    _size = _nx*_ny*_nz*_nt;
-#if defined (USE_EIGEN)
-   _v.conservativeResize(_size,1);
-   for (size_t i=1; i<=_size; i++)
-      set(i,v);
-#else
    vector<T_>::resize(_size,v);
-#endif
 }
 
 
@@ -782,7 +715,7 @@ inline real_t Vect<real_t>::Norm(NormType t) const
       return getNorm2();
    else if (t==WNORM2)
       return getWNorm2();
-   else if (t==NORM_MAX)
+   else if (t==NormType(NORM_MAX))
       return getNormMax();
    else
       return 0.;
@@ -1671,7 +1604,7 @@ void Vect<T_>::getGradient(Vect<T_>& v)
       }
       else if (The_element.getShape()==TRIANGLE) {
          Triang3 t(the_element);
-         vector<Point<real_t> > dsh = t.DSh();
+         vector<Point<real_t>> dsh = t.DSh();
          aa = (*this)(The_element(1)->n())*dsh[0] + 
               (*this)(The_element(2)->n())*dsh[1] + 
               (*this)(The_element(3)->n())*dsh[2];
@@ -1680,7 +1613,7 @@ void Vect<T_>::getGradient(Vect<T_>& v)
       }
       else if (The_element.getShape()==TETRAHEDRON) {
          Tetra4 t(the_element);
-         vector<Point<real_t> > dsh = t.DSh();
+         vector<Point<real_t>> dsh = t.DSh();
          aa = (*this)(The_element(1)->n())*dsh[0] + 
               (*this)(The_element(2)->n())*dsh[1] + 
               (*this)(The_element(3)->n())*dsh[2] + 
@@ -1696,7 +1629,7 @@ void Vect<T_>::getGradient(Vect<T_>& v)
 
 
 template <class T_>
-void Vect<T_>::getGradient(Vect<Point<T_> >& v)
+void Vect<T_>::getGradient(Vect<Point<T_>>& v)
 {
    if (_theMesh==nullptr)
       throw OFELIException("In Vect::getGradient(Vect<>): No mesh defined for this vector.");
@@ -1956,11 +1889,7 @@ void Vect<T_>::set(size_t i,
 #ifdef _OFELI_RANGE_CHECK
    assert(i>0 && i<=size());
 #endif
-#if defined (USE_EIGEN)
-   _v(i-1) = val;
-#else
    (*this)[i-1] = val;
-#endif
 }
 
 
@@ -1973,11 +1902,7 @@ void Vect<T_>::set(size_t i,
    assert(i>0 && i<=_nx);
    assert(j>0 && j<=_ny);
 #endif
-#if defined (USE_EIGEN)
-   _v(loc(i,j)) = val;
-#else
    (*this)[loc(i,j)] = val;
-#endif
 }
 
 
@@ -1992,11 +1917,7 @@ void Vect<T_>::set(size_t i,
    assert(j>0 && j<=_ny);
    assert(k>0 && k<=_nz);
 #endif
-#if defined (USE_EIGEN)
-   _v(loc(i,j,k)) = val;
-#else
    (*this)[loc(i,j,k)] = val;
-#endif
 }
 
 
@@ -2007,11 +1928,7 @@ void Vect<T_>::add(size_t i,
 #ifdef _OFELI_RANGE_CHECK
    assert(i>0 && i<=size());
 #endif
-#if defined (USE_EIGEN)
-   _v(i-1) += val;
-#else
    (*this)(i) += val;
-#endif
 }
 
 
@@ -2024,11 +1941,7 @@ void Vect<T_>::add(size_t i,
    assert(i>0 && i<=_nx);
    assert(j>0 && j<=_ny);
 #endif
-#if defined (USE_EIGEN)
-   _v(loc(i,j)) += val;
-#else
    (*this)(i,j) += val;
-#endif
 }
 
 
@@ -2043,11 +1956,7 @@ void Vect<T_>::add(size_t i,
    assert(j>0 && j<=_ny);
    assert(k>0 && k<=_nz);
 #endif
-#if defined (USE_EIGEN)
-   _v(loc(i,j)) = val;
-#else
    (*this)[loc(i,j,k)] += val;
-#endif
 }
 
 
@@ -2055,11 +1964,7 @@ template<class T_>
 void Vect<T_>::clear()
 {
    for (size_t i=0; i<_size; i++)
-#if defined (USE_EIGEN)
-      _v[i] = static_cast<T_>(0);
-#else
       (*this)[i] = static_cast<T_>(0);
-#endif
 }
 
 
@@ -2085,41 +1990,13 @@ inline void Vect<string>::clear()
 }
 
 
-#if defined (USE_EIGEN)
-template<class T_>
-T_ &Vect<T_>::operator[](size_t i)
-{
-#ifdef _OFELI_RANGE_CHECK
-   assert(i>0 && i<=size());
-#endif
-   return _v[i];
-}
-#endif
-
-
-#if defined (USE_EIGEN)
-template<class T_>
-T_ Vect<T_>::operator[](size_t i) const
-{
-#ifdef _OFELI_RANGE_CHECK
-   assert(i>0 && i<=size());
-#endif
-   return _v[i];
-}
-#endif
-
-
 template<class T_>
 T_ &Vect<T_>::operator()(size_t i)
 {
 #ifdef _OFELI_RANGE_CHECK
    assert(i>0 && i<=size());
 #endif
-#if defined (USE_EIGEN)
-   return _v(i-1);
-#else
    return (*this)[i-1];
-#endif
 }
 
 
@@ -2129,11 +2006,7 @@ T_ Vect<T_>::operator()(size_t i) const
 #ifdef _OFELI_RANGE_CHECK
    assert(i>0 && i<=size());
 #endif
-#if defined (USE_EIGEN)
-   return _v(i-1);
-#else
    return (*this)[i-1];
-#endif
 }
 
 
@@ -2145,11 +2018,7 @@ T_ &Vect<T_>::operator()(size_t i,
    assert(i>0 && i<=_nx);
    assert(j>0 && j<=_ny);
 #endif
-#if defined (USE_EIGEN)
-   return _v(loc(i,j));
-#else
    return (*this)[loc(i,j)];
-#endif
 }
 
 
@@ -2161,11 +2030,7 @@ T_ Vect<T_>::operator()(size_t i,
    assert(i>0 && i<=_nx);
    assert(j>0 && j<=_ny);
 #endif
-#if defined (USE_EIGEN)
-   return _v(loc(i,j));
-#else
    return (*this)[loc(i,j)];
-#endif
 }
 
 
@@ -2179,11 +2044,7 @@ T_ &Vect<T_>::operator()(size_t i,
    assert(j>0 && j<=_ny);
    assert(k>0 && k<=_nz);
 #endif
-#if defined (USE_EIGEN)
-   return _v(loc(i,j,k));
-#else
    return (*this)[loc(i,j,k)];
-#endif
 }
 
 
@@ -2197,11 +2058,7 @@ T_ Vect<T_>::operator()(size_t i,
    assert(j>0 && j<=_ny);
    assert(k>0 && k<=_nz);
 #endif
-#if defined (USE_EIGEN)
-   return _v(loc(i,j,k));
-#else
    return (*this)[loc(i,j,k)];
-#endif
 }
 
 
@@ -2217,11 +2074,7 @@ T_ &Vect<T_>::operator()(size_t i,
    assert(k>0 && k<=_nz);
    assert(l>0 && l<=_nt);
 #endif
-#if defined (USE_EIGEN)
-   return _v(loc(i,j,k,l));
-#else
    return (*this)[loc(i,j,k,l)];
-#endif
 }
 
 
@@ -2237,23 +2090,8 @@ T_ Vect<T_>::operator()(size_t i,
    assert(k>0 && k<=_nz);
    assert(l>0 && l<=_nt);
 #endif
-#if defined (USE_EIGEN)
-   return _v(loc(i,j,k,l));
-#else
    return (*this)[loc(i,j,k,l)];
-#endif
 }
-
-
-#if defined (USE_EIGEN)
-template<class T_>
-Vect<T_> &Vect<T_>::operator=(const VectorX& v)
-{
-   for (size_t i=0; i<_size; i++)
-      (*this)[i] = v[i];
-   return *this;
-}
-#endif
 
 
 template<class T_>
@@ -2267,14 +2105,8 @@ Vect<T_> &Vect<T_>::operator=(const Vect<T_>& v)
    _with_grid = v._with_grid;
    _nx = v._nx, _ny = v._ny, _nz = v._nz, _nt = v._nt;
    _size = v._size;
-#if defined (USE_EIGEN)
-   setSize(_nx,_ny,_nz,_nt);
    for (size_t i=0; i<_size; i++)
       (*this)[i] = v[i];
-#else
-   for (size_t i=0; i<_size; i++)
-      (*this)[i] = v[i];
-#endif
    return *this;
 }
 
@@ -2291,7 +2123,7 @@ Vect<T_> &Vect<T_>::operator=(const T_& a)
 template<>
 inline void Vect<real_t>::operator=(string s)
 {
-   if (_theMesh==NULL)
+   if (_theMesh==nullptr)
       throw OFELIException("In Vect::operator=(string): No mesh is defined");
    set(s);
 }
@@ -2371,12 +2203,8 @@ Vect<T_> &Vect<T_>::operator/=(const T_& a)
 template<class T_>
 void Vect<T_>::push_back(const T_& v)
 {
-#if defined (USE_EIGEN)
-       (*this)[_nx] = v;
-#else
-       vector<T_>::push_back(v);
-#endif
-       _nx++; _size++;
+   vector<T_>::push_back(v);
+   _nx++; _size++;
 }
 
 
@@ -2474,15 +2302,6 @@ Vect<complex_t> Vect<T_>::getInvFFT()
    return v;
 }
 
-#if defined (USE_EIGEN)
-template<class T_>
-operator Vector<T_>::VectorX() const
-{
-   return _v;
-}
-#endif
-
-
 ///////////////////////////////////////////////////////////////////////////////
 //                           ASSOCIATED  FUNCTIONS                           //
 ///////////////////////////////////////////////////////////////////////////////
@@ -2494,14 +2313,10 @@ Vect<T_> operator+(const Vect<T_>& x,
 #ifdef _OFELI_RANGE_CHECK
    assert(x.size() == y.size());
 #endif
-#if defined (USE_EIGEN)
-   return Vect<T_>(Eigen::Matrix<T_,Eigen::Dynamic,1>(x)+Eigen::Matrix<T_,Eigen::Dynamic,1>(y));
-#else
    Vect<T_> v(x);
    for (size_t i=0; i<x.size(); ++i)
       v.add(i+1,y[i]);
    return v;
-#endif
 }
 
 
@@ -2512,14 +2327,10 @@ Vect<T_> operator-(const Vect<T_>& x,
 #ifdef _OFELI_RANGE_CHECK
    assert(x.size()==y.size());
 #endif
-#if defined (USE_EIGEN)
-   return Vect<T_>(Eigen::Matrix<T_,Eigen::Dynamic,1>(x)-Eigen::Matrix<T_,Eigen::Dynamic,1>(y));
-#else
    Vect<T_> v(x);
    for (size_t i=0; i<x.size(); ++i)
       v.add(i+1,-y[i]);
    return v;
-#endif
 }
 
 
@@ -2527,14 +2338,10 @@ template<class T_>
 Vect<T_> operator*(const T_&       a,
                    const Vect<T_>& x)
 {
-#if defined (USE_EIGEN)
-   return a*x;
-#else
    Vect<T_> v(x.size());
    for (size_t i=1; i<=x.size(); ++i)
       v.set(i,a*x(i));
    return v;
-#endif
 }
 
 
@@ -2542,14 +2349,10 @@ template<class T_>
 Vect<T_> operator*(const Vect<T_>& x,
                    const T_&       a)
 {
-#if defined (USE_EIGEN)
-   return Vect<T_>(VectorX(x)*a);
-#else
    Vect<T_> v(x.size());
    for (size_t i=1; i<=x.size(); ++i)
       v.set(i,a*x(i));
    return v;
-#endif
 }
 
 
@@ -2557,14 +2360,10 @@ template<class T_>
 Vect<T_> operator/(const Vect<T_>& x,
                    const T_&       a)
 {
-#if defined (USE_EIGEN)
-   return Vect<T_>(Matrix<T_,Eigen::Dynamic,1>(x)/a);
-#else
    Vect<T_> v(x);
    for (size_t i=1; i<=x.size(); ++i)
       v.set(i,x(i)/a);
    return v;
-#endif
 }
 
 
@@ -2575,14 +2374,10 @@ T_ Dot(const Vect<T_>& x,
 #ifdef _OFELI_RANGE_CHECK
    assert(x.size() == y.size());
 #endif
-#if defined (USE_EIGEN)
-   return Matrix<T_,Eigen::Dynamic,1>(x).dot(Matrix<T_,Eigen::Dynamic,1>(y));
-#else
    T_ s=0;
    for (size_t i=0; i<x.size(); ++i)
       s += x[i]*y[i];
    return s;
-#endif
 }
 
 

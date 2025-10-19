@@ -468,7 +468,7 @@ int data::plot()
                break;
 
             default:
-               DEFAULT_KW
+               DEFAULT_KW(_rita)
          }
       }
    }

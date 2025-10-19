@@ -133,8 +133,6 @@ int integration::run()
       CHK_MSGR(count_fct>1 || count_def>1,_pr,"Too many functions defined.")
       CHK_MSGR(count_def && !count_vector,_pr,"Missing variable name.")
       CHK_MSGR(ret1||ret2||ret3,_pr,"Error in data.")
-  //    CHK_MSGR(ret2,_pr,"Error in data.")
-  //    CHK_MSGR(ret3,_pr,"Error in data.")
       CHK_MSGR(xmin>=xmax,_pr,"xmin must be smaller than xmax.")
       CHK_MSGR(ret2,_pr,"Error in ne data.")
       *_rita->ofh << "integration";
@@ -153,11 +151,9 @@ int integration::run()
             for (int i=0; i<dim; ++i)
                var.push_back(var_name+to_string(i+1));
          }
-         iFct = _data->addFunction(name);
+         iFct = _data->addFunction(name,var[0],def);
          if (iFct<0)
             return 1;
-         _data->theFct[iFct]->setVar(var[0]);
-         _data->theFct[iFct]->setExpr(def);
       }
       nim = Nint[form];
       *_rita->ofh << " formula=" << form;
@@ -229,7 +225,7 @@ int integration::go()
    cout << "Approximate Integral: " << res << endl;
    if (result=="")
       result = "I" + to_string(_data->iParam+1);
-   _data->addParam(result,res,false);
+   _data->addParam(result,res,SetCalc::SET);
    return 0;
 }
 

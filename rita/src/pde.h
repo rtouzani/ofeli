@@ -196,7 +196,7 @@ class pde
                                {"incompressible-porous-1phase",INCOMPRESSIBLE_POROUS_1PHASE}};
 
     const vector<string> _kw = {"expression","value","file","save"};
-    const string _pr = "pde>";
+    const string _pr = ">pde>";
     data *_data;
     string _c00, _c10, _c01, _c20, _c02;
     string _rho_exp, _Cp_exp, _kappa_exp, _mu_exp,_sigma_exp, _Mu_exp, _epsilon_exp, _omega_exp;

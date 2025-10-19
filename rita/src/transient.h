@@ -56,7 +56,7 @@ class transient
 
     rita *_rita;
     data *_data;
-    const string _pr = "transient>";
+    const string _pr = ">transient>";
     int _nb_ls, _nb_ae, _nb_ode, _nb_pde;
     ae *_ae;
     ode *_ode;

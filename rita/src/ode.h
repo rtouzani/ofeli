@@ -69,7 +69,7 @@ class ode
     string _fn, _alg;
     configure *_configure;
     cmd *_cmd;
-    const string _pr = "ode>";
+    const string _pr = ">ode>";
 
     map<string,OFELI::TimeScheme> _sch = {{"forward-euler",OFELI::FORWARD_EULER},
                                           {"backward-euler",OFELI::BACKWARD_EULER},

@@ -14,5 +14,5 @@ eigen matrix=A eigv
 solve
 
 # Print eigenvalues
-= Aev_R
+Aev_R
 exit

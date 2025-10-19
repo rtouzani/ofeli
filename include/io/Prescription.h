@@ -214,7 +214,7 @@ class Prescription
    bool pforce, initial, bc, force, flux;
    std::string _file;
    std::vector<PPar> _p;
-   std::vector<Fct> _theFct;
+   Fct *_theFct;
    int Type(int type);
    void get_point_force(size_t k, size_t dof);
    void get_boundary_condition(size_t k, size_t dof);

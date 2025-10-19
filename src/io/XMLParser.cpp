@@ -488,7 +488,7 @@ int XMLParser::get(Vect<real_t>& v,
    _v->setName(_name);
    _compact = true;
    _all_steps = 0;
-   _nx = 0, _ny = _nz = 1;
+   _vect_size = _nx = _ny = _nz = 1, _nt = 0;
    if (parse(_xml)) {
       if (Verbosity>10)
          cout << "Parse done" << endl;
@@ -1488,9 +1488,37 @@ void XMLParser::read_vect_data(const vector<string>&     tokens,
             _v->setMesh(*_theMesh,_dof_support,_nb_dof);
             _v->setName(_name);
             _v->setTime(_time);
-            for (size_t n=1; n<=_v->getNb(); ++n)
-               for (size_t k=1; k<=_nb_dof; ++k)
-                  (*_v)(n,k) = stof(*it++);
+            if (_nx>0) {
+               if (_ny==0) {
+                  _vect_size = _nx;
+                  _v->setSize(_nx);
+                  for (size_t i=0; i<_vect_size; ++i)
+                     (*_v)[i] = stof(*it++);
+               }
+               else if (_nz==0) {
+                  _vect_size = _nx*_ny;
+                  _v->setSize(_nx,_ny);
+                  for (size_t i=0; i<_vect_size; ++i)
+                     (*_v)[i] = stof(*it++);
+               }
+               else if (_nt==0) {
+                  _vect_size = _nx*_ny*_nz;
+                  _v->setSize(_nx,_ny,_nz);
+                  for (size_t i=0; i<_vect_size; ++i)
+                     (*_v)[i] = stof(*it++);
+               }
+               else {
+                  _vect_size = _nx*_ny*_nz*_nt;
+                  _v->setSize(_nx,_ny,_nz,_nt);
+                  for (size_t i=0; i<_vect_size; ++i)
+                     (*_v)[i] = stof(*it++);
+               }
+            }
+            else {
+               for (size_t n=1; n<=_v->getNb(); ++n)
+                  for (size_t k=1; k<=_nb_dof; ++k)
+                     (*_v)(n,k) = stof(*it++);
+            }
          }
       }
    }

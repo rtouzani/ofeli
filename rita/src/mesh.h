@@ -67,7 +67,7 @@ class mesh
 
    rita *_rita;
    data *_data;
-   string _pr, _PR="mesh>";
+   string _pr, _PR=">mesh>";
    bool _saved, _generated, _geo;
    int _verb, _dim, _nb_dof, _key, _generator;
    OFELI::Mesh *_theMesh;

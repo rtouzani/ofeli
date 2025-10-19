@@ -62,8 +62,10 @@
 #define MISSING_ARGS(s) { cout << "Missing argument(s): " << s << endl; return 1; }
 #define MISSING_FUNCT_NAME(s) { _rita->msg(s,"Missing function name.","",1); break; }
 #define REDEFINED(s) { _rita->msg("",s+name+" redefined"); }
-#define ALREADY_USED(c,d) if (c.count(s) && dn[s].active) { \
-                             _rita->msg("","Name "+s+" already used for "+d); return 1; }
+#define ALREADY_USED(c) if (c.count(name) && dn[name].active) { \
+                           _rita->msg("","Name "+name+" already used for "+Type_st[d]); return 1; }
+#define REPLACED(c) if (c.count(name) && dn[name].active) { \
+                       _rita->msg("","\'"+name+"\' as "+Type_st[d]+" now used as "+Type_st[dt]); }
 
 #define READLINE if (_cmd->readline(_pr+" ")<0) continue; \
                  key = _cmd->getKW(kw,_rita->_gkw,_rita->_data_kw); \
@@ -71,6 +73,19 @@
 
 #define CHK_PB(s) _data->dn[s].dt!=DataType::LS && _data->dn[s].dt!=DataType::AE && _data->dn[s].dt!=DataType::ODE && \
                   _data->dn[s].dt!=DataType::PDE && _data->dn[s].dt!=DataType::OPTIM && _data->dn[s].dt!=DataType::EIGEN
+
+#define DEF_LS_NAME     "sys"
+#define DEF_AE_NAME     "alg"
+#define DEF_ODE_NAME    "ode"
+#define DEF_PDE_NAME    "pde"
+#define DEF_OPT_NAME    "opt"
+#define DEF_EIG_NAME    "eig"
+#define DEF_FCT_NAME    "fun"
+#define DEF_GRID_NAME   "grd"
+#define DEF_MESH_NAME   "msh"
+#define DEF_VECTOR_NAME "v"
+#define DEF_MATRIX_NAME "M"
+#define DEF_TAB_NAME    "tab"
 
 #define DEF_PAR_R(n,p,x) CHK_MSGR(_data->getPar(n,p,x),p,"Illegal parameter value")
 #define DEF_PAR_B(n,p,x) CHK_MSGB(_data->getPar(n,p,x),p,"Illegal parameter value")
@@ -83,7 +98,24 @@
 #define HELP_ARG3(s) if (_nb_args>2) _rita->msg(_pr,"Help topic "+string(s)+" needs only one argument.");
 #define FCT_NOT_DEFINED(p,f) CHK_MSGR(k==-1,_pr+p,"Function "+f+" not defined.")
 #define FCT_ALREADY_DEFINED(p,f) CHK_MSGR(k==0,_pr+p,"Function "+f+" already defined.")
-#define DEFAULT_KW  { if (_cmd->getChScript()==-1) break;                \
-                      if (_cmd->checkEq()==string::npos) { _rita->msg("","Unrecognized command: "+_cmd->getToken()); break;  } \
-                      ret = _rita->_calc->run(); break; }
+#define DEFAULT_KW(r)  { if (_cmd->getChScript()==-1) break; ret = r->_data->print(); if (ret) ret = r->_calc->run(); break; }
 
+#define CHECK_VECT(s)          if (VectorLabel.count(s)==0) { _rita->msg("","Vector "+s+" undefined."); return 1; }
+#define CHECK_ACTIVE(s)        if (dn[s].active==0) { _rita->msg("","Reference to non-active data "+s); return 2; }
+#define CHECK_HVECT(s)         if (HVectorLabel.count(s)==0) { _rita->msg("","History vector "+s+" undefined."); return 1; }
+#define CHECK_MATRIX(s)        if (MatrixLabel.count(s)==0) { _rita->msg("","Matrix "+s+" undefined."); return 1; }
+#define CHECK_TAB(s)           if (TabLabel.count(s)==0) { _rita->msg("","Tabulation "+s+" undefined."); return 1; }
+#define ILLEGAL_PREFIX         { _rita->msg("","Illegal name prefix for entity "+name); return 1; }
+
+#define DEFAULT_LS_NAME(s)     if (s=="") s = DEF_LS_NAME+to_string(iLS)
+#define DEFAULT_AE_NAME(s)     if (s=="") s = DEF_AE_NAME+to_string(iAE)
+#define DEFAULT_ODE_NAME(s)    if (s=="") s = DEF_ODE_NAME+to_string(iODE)
+#define DEFAULT_PDE_NAME(s)    if (s=="") s = DEF_PDE_NAME+to_string(iPDE)
+#define DEFAULT_OPT_NAME(s)    if (s=="") s = DEF_OPT_NAME+to_string(iOpt)
+#define DEFAULT_EIG_NAME(s)    if (s=="") s = DEF_EIG_NAME+to_string(iEig)
+#define DEFAULT_FCT_NAME(s)    if (s=="") s = DEF_FCT_NAME+to_string(iFct)
+#define DEFAULT_GRID_NAME(s)   if (s=="") s = DEF_GRID_NAME+to_string(iGrid)
+#define DEFAULT_MESH_NAME(s)   if (s=="") s = DEF_MESH_NAME+to_string(iMesh)
+#define DEFAULT_VECTOR_NAME(s) if (s=="") s = DEF_VECTOR_NAME+to_string(iVector)
+#define DEFAULT_MATRIX_NAME(s) if (s=="") s = DEF_MATRIX_NAME+to_string(iMatrix)
+#define DEFAULT_TAB_NAME(s)    if (s=="") s = DEF_TAB_NAME+to_string(iTab)

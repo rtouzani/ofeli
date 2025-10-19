@@ -29,7 +29,7 @@ M[1,2]=3
 # by the transpose of y
 y = {1,2,-1}
 u = M*y'
-= u
+u
 data
 exit
 

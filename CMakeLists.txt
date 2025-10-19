@@ -26,7 +26,7 @@
 # ==============================================================================
 #
 #                       cmake for the ofeli project
-#                     including the rita application
+#                      including the rita application
 #
 # ==============================================================================
 
@@ -73,13 +73,22 @@ set (CMAKE_BUILD_TYPE "Release")
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Compiler specific flags
+option(USE_PETSC "Use PETSc library" OFF)
 if (CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstrict-aliasing")
-  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-overflow")
+   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
+   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
+   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstrict-aliasing")
+   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-strict-overflow")
+   if (USE_PETSC)
+      message (STATUS "Using PETSc library")
+      add_definitions(${GCC_COVERAGE_LINK_FLAGS})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_PETSC")
+      set(PETSC_INC ${CMAKE_INSTALL_PREFIX}/include/petsc)
+      set(MPI_INC ${CMAKE_INSTALL_PREFIX}/include)
+      set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I$(MPI_INC) -I${PETSC_INC}")
+   endif (USE_PETSC)
 endif(CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
 
 enable_testing ()
@@ -131,8 +140,6 @@ install (DIRECTORY material/ DESTINATION ${INSTALL_MATDIR})
 install (DIRECTORY demos/ DESTINATION ${INSTALL_DEMODIR})
 install (DIRECTORY util/ DESTINATION ${INSTALL_UTILDIR})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h DESTINATION ${INSTALL_INCLUDEDIR})
-
-option(USE_PETSC "petsc" OFF)
 
 # uninstall target
 if (NOT TARGET uninstall)

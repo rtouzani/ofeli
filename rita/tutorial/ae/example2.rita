@@ -3,13 +3,13 @@
 # The difference here is that we first declare the function defining the
 # equation 
 #
-function name=f var=z def=z^2-2
+function name=f var=y def=y^2-2
 algebraic function=f init=1. nls=newton
 solve
-= z
+y
 #
 # We transfer solution (which is a vector) to a parameter
-a = z[0]
+a = y[0]
 #
 # We list all data
 data

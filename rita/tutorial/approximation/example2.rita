@@ -4,5 +4,5 @@
 #
 approximation 
   fitting file=ex2.dat degree=2 function=f
-= f
+f
 exit

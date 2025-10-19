@@ -32,10 +32,8 @@
 #ifndef __VECT_H
 #define __VECT_H
 
-#if !defined (USE_EIGEN)
 #include <vector>
 using std::vector;
-#endif
 
 #include <assert.h>
 #include <math.h>
@@ -58,11 +56,6 @@ using std::setprecision;
 #include "OFELI_Config.h"
 #include "io/Fct.h"
 
-#if defined (USE_EIGEN)
-#include <Eigen/Dense>
-using Eigen::Matrix;
-#endif
-
 /** \defgroup VectMat Vector and Matrix
  *  \brief Vector and matrix classes
  */
@@ -76,7 +69,7 @@ using Eigen::Matrix;
 namespace OFELI {
 
 /*! \enum NormType
- * Choose type of vector norm to compute
+ * Choice of vector norm to compute
  */
 enum NormType {
    NORM1,     /*!< 1-norm                              */
@@ -142,27 +135,10 @@ template<class T_> class PETScVect;
 #endif
 
 template<class T_>
-class Vect
-#if !defined (USE_EIGEN)
-          : public vector<T_>
-#endif
+class Vect : public vector<T_>
 {
-
  public:
-
-#if defined (USE_EIGEN)
-/*! \typedef VectorX
- *  \ingroup VectMat
- *  \brief This type is the vector type in the %Eigen library
- *  @remark: This type is available only if the %Eigen library was installed in conjunction
- *  with OFELI
- */
-    typedef Eigen::Matrix<T_,Eigen::Dynamic,1> VectorX;
-#endif
-
-#if !defined (USE_EIGEN)
     using vector<T_>::size;
-#endif
 
 /// \brief Default Constructor.
 /// Initialize a zero-length vector
@@ -311,17 +287,6 @@ class Vect
     Vect(size_t          d,
          const Vect<T_>& v,
          const string&   name=" ");
-
-#if defined (USE_EIGEN)
-/** \brief Constructor that copies the vector from a Eigen Vector instance
- *  @param [in] v VectorX instance from which extraction is performed
- *  @warning This constructor is available only if the library <tt>eigen</tt> is used in 
- *  conjunction with OFELI
- *  @remark: This constructor is available only if the %Eigen library was installed in conjunction
- *  with OFELI
- */
-    Vect(const VectorX& v);
-#endif
 
 /// \brief Destructor
     ~Vect();
@@ -1036,7 +1001,7 @@ class Vect
  *  @param [in] i First index in vector (starts at <tt>1</tt>)
  *  @param [in] j Second index in vector (starts at <tt>1</tt>)
  *  @param [in] k Third index in vector (starts at <tt>1</tt>)
- * @param [in] val Value to assign
+ *  @param [in] val Value to assign
  */
     void add(size_t i,
              size_t j,
@@ -1045,18 +1010,6 @@ class Vect
 
 /// \brief Clear vector: Set all its elements to zero
     void clear();
-
-#if defined (USE_EIGEN)
-/** \brief Operator <tt>[]</tt> (Non constant version)
- *  @param [in] i Rank index in vector (starts at <tt>0</tt>)
- */
-    T_ &operator[](size_t i);
-
-/** \brief Operator <tt>[]</tt> (Constant version)
- *  @param [in] i Rank index in vector (starts at <tt>0</tt>)
- */
-    T_ operator[](size_t i) const;
-#endif
 
 /** \brief Operator <tt>()</tt> (Non constant version)
  *  @param [in] i Rank index in vector (starts at <tt>1</tt>)
@@ -1138,16 +1091,6 @@ class Vect
 
 /// \brief Operator <tt>=</tt> between vectors
     Vect<T_> & operator=(const Vect<T_>& v);
-
-#if defined (USE_EIGEN)
-/** \brief Operator <tt>=</tt> for an instance of <tt>VectorX</tt>
- *  @param [in] v Instance of vector class in library <tt>Eigen</tt>
- *  @remark The Vect instance must have been sized before
- *  @remark This operator is available only if the %Eigen library was installed in conjunction
- *  with OFELI
- */
-    Vect<T_> &operator=(const VectorX& v);
-#endif
 
 /** \brief Operator <tt>=</tt>
  * \details Assign an algebraic expression to vector entries. This operator
@@ -1232,7 +1175,6 @@ class Vect
  */
     Vect<complex_t> getFFT();
 
-
 /** \brief Compute Inverse FFT transform of vector
  *  \details This member function computes the inverse FFT (Fast Fourier Transform) of the vector
  *  contained in the instance and returns it
@@ -1243,19 +1185,10 @@ class Vect
  */
     Vect<complex_t> getInvFFT();
 
-#if defined (USE_EIGEN)
-/** \brief Casting operator
- *  @warning This constructor is available only if the library <tt>eigen</tt> is used in 
- *  conjunction with OFELI
- */
-    operator VectorX() const;
-#endif
-
-
  private:
 
     DOFSupport _dof_type;
-    size_t _size, _nx, _ny, _nz, _nt, _nb, _nb_dof, _nc;
+    size_t _size, _nx, _ny, _nz, _nt, _nb, _nb_dof;
     int    _dg_degree;
     bool   _with_grid, _with_mesh, _with_regex[10];
     Mesh   *_theMesh;
@@ -1268,12 +1201,7 @@ class Vect
     Fct _theFct;
     void dof_select(size_t d, vector<size_t> &dof_list);
     size_t loc(size_t i, size_t j=1, size_t k=1, size_t l=1) const { return _ny*_nz*_nt*(i-1)+_nz*_nt*(j-1)+_nt*(k-1)+l-1; }
-#if defined (USE_EIGEN)
-    VectorX _v;
-#endif
-
 };
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //                           ASSOCIATED  FUNCTIONS                           //
@@ -1449,7 +1377,6 @@ template<class T_>
 void OddEven(Vect<T_>&   x,
              vector<T_>& odd,
              vector<T_>& even);
-
 
 void fft(vector<complex_t>& x);
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

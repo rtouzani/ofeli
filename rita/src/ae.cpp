@@ -54,7 +54,7 @@ ae::ae(rita*      r,
 
 int ae::run()
 {
-   _pr = _PR + "algebraic>";
+   _pr = _PR + ">algebraic>";
    name = "";
    string str="", fct_name="";
    double xx=0.;
@@ -135,7 +135,7 @@ int ae::run()
       CHK_MSGR(!isFct && !count_def,_pr,"No algebraic function defined.")
       CHK_MSGR(isFct && count_def,_pr,"Function already defined.")
       CHK_MSGR(isFct>size || count_def>size,_pr,"Number of function names is larger than system size.")
-      CHK_MSGR(!var_ok && !isFct,_pr,"Missing a variable name")
+      CHK_MSGR(!var_ok && !isFct,_pr,"Missing variable name")
       CHK_MSGR(count_init>size,_pr,"Number of initial guesses is larger than system size.")
       CHK_MSGR(isFct>0 && count_def<size-1,_pr,"Number of function definitions is larger than system size.")
       if (count_init<1) {
@@ -170,7 +170,7 @@ int ae::run()
          *_rita->ofh << " definition=" << def[0];
       }
       for (size_t i=0; i<nb_vars; ++i)
-         ivect.push_back(_data->addVector(var_name[i],0.,size,"",0));
+         ivect.push_back(_data->addVector(var_name[i],0.,size,""));
       J.setSize(1,1);
       isSet = true;
       log = false;
@@ -317,7 +317,7 @@ int ae::run()
                      J(i,i) = 1.;
                }
                ind_fct = ind;
-               ivect.push_back(_data->addVector(var_name[0],0.,size,"",2));
+               ivect.push_back(_data->addVector(var_name[0],0.,size,"",SetCalc::SET));
                for (size_t i=1; i<nb_vars; ++i) {
                   int k = _data->VectorLabel[var_name[i]];
                   CHK_MSGR(k==0,_pr+"end>","Variable "+var_name[i]+" undefined")
@@ -357,7 +357,7 @@ int ae::run()
                break;
 
             default:
-               DEFAULT_KW
+               DEFAULT_KW(_rita)
          }
       }
    }
@@ -377,8 +377,9 @@ void ae::print(ostream& s) const
          cout << "Equation defined by function: " << _data->theFct[iFct[0]]->name << endl;
       else {
          for (int j=0; j<size; ++j)
-            s << "Equation: " << j+1 << ", defined by function: " << _data->theFct[iFct[j]]->name << endl;
+            s << "Equation: " << j+1 << ", defined by function: " << _data->theFct[iFct[j]]->name;
       }
+      cout << "\nUnknown variable: " << var_name[0] << endl;
    }
    else {
       if (size==1) {

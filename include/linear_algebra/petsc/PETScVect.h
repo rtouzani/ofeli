@@ -5,7 +5,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -34,20 +34,23 @@
 #define __PETSC_VECT_H
 
 #ifdef USE_PETSC
-#include "petsc.h"
-#include "petscvec.h"
+#include <petsc.h>
+#include <petscvec.h>
 
 #include "OFELI_Config.h"
 #include "util/macros.h"
 #include "mesh/Mesh.h"
+#include "mesh/MeshUtil.h"
+#include "mesh/Grid.h"
 #include "linear_algebra/Point.h"
-#include "io/fparser/fparser.h"
+#include "linear_algebra/LocalVect.h"
+#include "linear_algebra/LocalMatrix.h"
+#include "io/Fct.h"
 #include "shape_functions/Triang3.h"
 #include "shape_functions/Tetra4.h"
 #include "util/util.h"
 #include "linear_algebra/Vect.h"
 
-extern FunctionParser theParser;
 
 /*! \file PETScVect.h
  *  \brief Definition file for class PETScVect.
@@ -89,10 +92,8 @@ namespace OFELI {
  * \tparam T_ Data type (double, int, complex<double>, ...)
  */
 
-string itos(int i);
-string dtos(real_t d);
-class Element;
-class Side;
+template<class T_> class Vect;
+using std::to_string;
 
 
 template<class T_>
@@ -129,12 +130,31 @@ class PETScVect
               size_t ny,
               size_t nz);
 
+/** \brief Constructor of a 4-D index vector.
+ *  \details This constructor can be used for instance for a 4-D grid vector
+ *  @param [in] nx Size for the first index
+ *  @param [in] ny Size for the second index
+ *  @param [in] nz Size for the third index
+ *  @param [in] nt Size for the fourth index
+ *  @remark The size of resulting vector is nx*ny*nz*nt
+ */
+    PETScVect(size_t nx,
+              size_t ny,
+              size_t nz,
+              size_t nt);
+
 /** \brief Create an instance of class PETScVect as an image of a C/C++ array.
  *  @param [in] n Dimension of vector to construct
  *  @param [in] x C-array to copy
  */
     PETScVect(size_t n,
               T_*    x);
+
+/** \brief Constructor with a Grid instance
+ *  \details The constructed vector has as size the total number of grid nodes
+ *  @param [in] g Grid instance
+ */
+    PETScVect(Grid& g);
 
 /** \brief Constructor of a MPI vector using its global size.
  *  @param [in] comm Communicator which represents all the processs that PETSc knows about
@@ -149,12 +169,12 @@ class PETScVect
  *  If <tt>nb_dof</tt> is set to <tt>0</tt> (default value) the constructor picks this number from
  *  the Mesh instance
  *  @param [in] dof_type Type of degrees of freedom. To be given among the enumerated
- *  values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>, <tt>SIDE_FIELD</tt> or <tt>EDGE_FIELD</tt>
- *  [Default: <tt>NODE_FIELD</tt>]
+ *  values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>, <tt>SIDE_DOF</tt> or <tt>EDGE_DOF</tt>
+ *  [Default: <tt>NODE_DOF</tt>]
  */
     PETScVect(Mesh& m,
               int   nb_dof=0,
-              int   dof_type=NODE_FIELD);
+              int   dof_type=NODE_DOF);
 
 /** \brief Constructor with a mesh instance giving name and time for vector
  *  @param [in] m Mesh instance
@@ -163,14 +183,14 @@ class PETScVect
  *  @param [in] nb_dof Number of degrees of freedom per node, element or side
  *  If <tt>nb_dof</tt> is set to <tt>0</tt> the constructor picks this number from the Mesh instance
  *  @param [in] dof_type Type of degrees of freedom. To be given among the enumerated
- *  values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>, <tt>SIDE_FIELD</tt> or <tt>EDGE_FIELD</tt>
- *  [Default: <tt>NODE_FIELD</tt>]
+ *  values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>, <tt>SIDE_DOF</tt> or <tt>EDGE_DOF</tt>
+ *  [Default: <tt>NODE_DOF</tt>]
  */
     PETScVect(Mesh&  m,
               string name,
               real_t t=0.0,
               int    nb_dof=0,
-              int    dof_type=NODE_FIELD);
+              int    dof_type=NODE_DOF);
 
 /** \brief Constructor using boundary conditions.
  *  \details Boundary condition values contained in <tt>bc</tt> are reported to vector <tt>v</tt>
@@ -188,8 +208,8 @@ class PETScVect
  *  the second DOF of each node is copied in the vector
  */
     PETScVect(const PETScVect<T_>& v,
-                    size_t         nb_dof,
-                    size_t         first_dof);
+              size_t               nb_dof,
+              size_t               first_dof);
 
 /// \brief Copy constructor
     PETScVect(const PETScVect<T_>& v);
@@ -199,7 +219,7 @@ class PETScVect
  *  @param [in] n Component to extract (must be > 1 and < 4 or).
  */
     PETScVect(const PETScVect<T_>& v,
-                    size_t         n);
+              size_t               n);
 
 /** \brief Constructor that extracts some degrees of freedom (components) from given instance of PETScVect
  *  \details This constructor enables constructing a subvector of a given
@@ -218,7 +238,7 @@ class PETScVect
  *  \warning Don't give zeros as first digits for the argument <tt>d</tt>. The number is
  *  in this case interpreted as octal !!
 */
-    PETScVect(      size_t         d,
+    PETScVect(size_t               d,
               const PETScVect<T_>& v,
               const string&        name=" ");
 
@@ -229,8 +249,8 @@ class PETScVect
  *  @param [in] v c-array (pointer) to initialize PETScVect
  *  @param [in] n size of array
  */
-    void set(const T_*    v,
-                   size_t n);
+    void set(const T_* v,
+             size_t    n);
 
 /** \brief Initialize a local vector using MPI
  *  @param [in] comm
@@ -250,8 +270,8 @@ class PETScVect
  *  the second DOF of each node is copied in the vector
  */
     void select(const PETScVect<T_>& v,
-                      size_t         nb_dof=0,
-                      size_t         first_dof=1);
+                size_t               nb_dof=0,
+                size_t               first_dof=1);
 
 /** \brief Initialize vector with an algebraic expression
  *  @param [in] exp Regular algebraic expression that defines a function of x, y and z
@@ -259,7 +279,7 @@ class PETScVect
  *  @param [in] dof Degree of freedom to which the value is assigned [Default: <tt>1</tt>]
  */
     void set(const string& exp,
-                   size_t  dof=1);
+             size_t        dof=1);
 
 /** \brief Initialize vector with an algebraic expression with providing mesh data
  *  @param [in] ms Mesh instance
@@ -267,9 +287,9 @@ class PETScVect
  *  which are coordinates of nodes.
  *  @param [in] dof Degree of freedom to which the value is assigned [Default: <tt>1</tt>]
  */
-    void set(const Mesh&   ms,
+    void set(Mesh&         ms,
              const string& exp,
-                   size_t  dof=1);
+             size_t        dof=1);
 
 /** \brief Initialize vector with an algebraic expression 
  *  @param [in] x PETScVect instance that contains coordinates of points
@@ -284,12 +304,17 @@ class PETScVect
  *  @param [in] nb_dof Number of degrees of freedom per node, element or side
  *  If <tt>nb_dof</tt> is set to <tt>0</tt> the constructor picks this number from the Mesh instance
  *  @param [in] dof_type Parameter to precise the type of degrees of freedom. To be chosen
- *  among the enumerated values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>,
- *  <tt>SIDE_FIELD</tt>, <tt>EDGE_FIELD</tt> [Default: <tt>NODE_FIELD</tt>]
+ *  among the enumerated values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>,
+ *  <tt>SIDE_DOF</tt>, <tt>EDGE_DOF</tt> [Default: <tt>NODE_DOF</tt>]
  */
     void setMesh(Mesh& m,
                  int   nb_dof=0,
-                 int   dof_type=NODE_FIELD);
+                 int   dof_type=NODE_DOF);
+
+/** \brief Define grid class to size vector
+ *  @param [in] g Grid instance
+ */
+    void setGrid(Grid& g);
 
 /// \brief Return vector (global) size
     size_t size() const { return _size; }
@@ -308,18 +333,28 @@ class PETScVect
                  size_t ny=1,
                  size_t nz=1);
 
+/** \brief Set vector size
+ *  \details This function allocates memory for the vector but does not initialize its components
+ *  @param [in] n Size of vector
+ */
+    void resize(size_t n);
+
+/** \brief Set vector size and initialize to a constant value
+ *  \details This function allocates memory for the vector
+ *  @param [in] n Size of vector
+ *  @param [in] v Value to assign to vector entries
+ */
+    void resize(size_t n,
+                T_     v);
+
 /** \brief Set DOF type of vector
  *  \details The DOF type combined with number of DOF per component enable
  *  determining the size of vector
  *  @param [in] dof_type Type of degrees of freedom. Value to be chosen among 
- *  the enumerated values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>, <tt>SIDE_FIELD</tt> 
- *  or <tt>EDGE_FIELD</tt>
+ *  the enumerated values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>, <tt>SIDE_DOF</tt> 
+ *  or <tt>EDGE_DOF</tt>
  */
     void setDOFType(int dof_type) { _dof_type = dof_type; }
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    bool getGrid() const { return _grid; }
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /// \brief Return vector number of degrees of freedom
     size_t getNbDOF() const { return _nb_dof; }
@@ -332,11 +367,15 @@ class PETScVect
 
 /// \brief Return <tt>true</tt> if vector contains a Mesh pointer, <tt>false</tt> if not
 /// \details A PETScVect instance can be constructed using mesh information 
-    bool isWithMesh() const { return _with_mesh; }
+    bool WithMesh() const { return _with_mesh; }
+
+/// \brief Return <tt>true</tt> if vector contains a Grid pointer, <tt>false</tt> if not
+/// \details A PETScVect instance can be constructed using grid information 
+    bool WithGrid() const { return _with_grid; }
 
 /** Return DOF type of vector
  *  @return dof_type Type of degrees of freedom. Value among the enumerated
- *  values: <tt>NODE_FIELD</tt>, <tt>ELEMENT_FIELD</tt>, <tt>SIDE_FIELD</tt> or <tt>EDGE_FIELD</tt>
+ *  values: <tt>NODE_DOF</tt>, <tt>ELEMENT_DOF</tt>, <tt>SIDE_DOF</tt> or <tt>EDGE_DOF</tt>
  */
     int getDOFType() const { return _dof_type; }
 
@@ -354,6 +393,18 @@ class PETScVect
 
 /// \brief Calculate 1-norm of vector
     PetscScalar getNorm1() const;
+
+/** \brief Compute a norm of vector
+ *  @param [in] t Norm type to compute: To choose among enumerate values:
+ *                NORM1: 1-norm
+ *                WNORM1: Weighted 1-norm (Discrete L1-norm)
+ *                NORM2: 2-norm
+ *                WNORM2: Weighted 2-norm (Discrete L2-norm)
+ *                NORM_MAX: max norm (Infinity norm)
+ *  @return Value of norm
+ *  @warning This function is available for real valued vectors only
+ */
+    real_t Norm(NormType t) const;
 
 /// \brief Calculate 2-norm (Euclidean norm) of vector
     PetscScalar getNorm2() const;
@@ -386,6 +437,25 @@ class PETScVect
 /// \brief Return number of grid points in the <tt>z</tt>-direction if grid indexing is set
     size_t getNz() const { return _nz; }
 
+/// \brief Return number of grid points in the <tt>t</tt>-direction if grid indexing is set
+    size_t getNt() const;
+
+/** \brief Assign a given function (given by an interpretable algebraic expression) of indices 
+ *  components of vector.
+ *  \details This function enable assigning a value to vector entries as function of indices 
+ *  @param [in] exp  Regular algebraic expression to assign. It must involve the variables <tt>i</tt>,
+ *  <tt>j</tt> and/or <tt>k</tt>.
+ */
+    void setIJK(const string& exp);
+
+/** \brief Assign a given function (given by an interpretable algebraic expression) of indices 
+ *  components of vector.
+ *  \details This function enable assigning a value to vector entries as function of indices 
+ *  @param [in] exp  Regular algebraic expression to assign. It must involve the variables <tt>i</tt>,
+ *  <tt>j</tt>, <tt>k</tt> and/or <tt>l</tt>.
+ */
+    void setIJKL(const string& exp);
+
 /** \brief Assign a given value to components of vector with given code
  *  \details Vector components are assumed nodewise
  *  @param [in] m Instance of mesh
@@ -406,10 +476,10 @@ class PETScVect
  *  @param [in] exp  Regular algebraic expression to prescribe
  *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
  */
-    void setNodeBC(      Mesh&   m,
-                         int     code,
+    void setNodeBC(Mesh&         m,
+                   int           code,
                    const string& exp,
-                         size_t  dof=1);
+                   size_t        dof=1);
 
 /** \brief Assign a given value to components of vector with given code
  *  \details Vector components are assumed nodewise
@@ -428,9 +498,26 @@ class PETScVect
  *  @param [in] exp  Regular algebraic expression to prescribe
  *  @param [in] dof  Degree of Freedom for which the value is assigned [Default: <tt>1</tt>]
  */
-    void setNodeBC(      int     code,
+    void setNodeBC(int           code,
                    const string& exp,
-                         size_t  dof=1);
+                   size_t        dof=1);
+
+/** \brief Assign a given value to components of vector corresponding to sides with given code
+ *  \details Vector components are assumed nodewise
+ *  @param [in] m Instance of mesh
+ *  @param [in] code Code for which nodes will be assigned prescribed value
+ *  @param [in] val Value to prescribe
+ *  @param [in] dof  Degree of Freedom for which the value is assigned [default: <tt>1</tt>]
+ */
+    void setSideBC(Mesh&  m,
+                   int    code,
+                   T_     val,
+                   size_t dof);
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+    void setSideBC(Mesh& m,
+                   int   code,
+                   T_    val);
+#endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** \brief Remove boundary conditions.
  *  \details This member function copies to current vector a vector
@@ -443,7 +530,7 @@ class PETScVect
  */
     void removeBC(const Mesh&          ms,
                   const PETScVect<T_>& v,
-                        int            dof=0);
+                  int                  dof=0);
 
 /** \brief Remove boundary conditions.
  *  \details This member function copies to current vector a vector
@@ -456,7 +543,7 @@ class PETScVect
  */
     void removeBC(const Mesh&     ms,
                   const Vect<T_>& v,
-                        int       dof=0);
+                  int             dof=0);
 
 /** \brief Remove boundary conditions.
  *  \details This member function copies to current vector a vector
@@ -468,7 +555,7 @@ class PETScVect
  *  @remark This function is to be used only when the PETScVect instance was constructed by using the Mesh instance
  */
     void removeBC(const PETScVect<T_>& v,
-                        int            dof=0);
+                  int                  dof=0);
 
 /** \brief Remove boundary conditions.
  *  \details This member function copies to current vector a vector
@@ -480,7 +567,7 @@ class PETScVect
  *  @remark This function is to be used only when the PETScVect instance was constructed by using the Mesh instance
  */
     void removeBC(const Vect<T_>& v,
-                        int       dof=0);
+                  int             dof=0);
 
 /** \brief Transfer boundary conditions to the vector
  *  @param [in] bc PETScVect instance from which imposed degrees of freedom are copied to current instance
@@ -489,7 +576,7 @@ class PETScVect
  *  degree of freedom.
  */
     void transferBC(const PETScVect<T_>& bc,
-                          int            dof=0);
+                    int                  dof=0);
 
 /** \brief Insert boundary conditions
  *  @param [in] m Mesh instance.
@@ -499,15 +586,15 @@ class PETScVect
  *  if only one degree of freedom (<tt>dof</tt>) is inserted into vector <tt>v</tt> which has only 
  *  one degree of freedom by node or side
  */
-    void insertBC(      Mesh&          m, 
+    void insertBC(Mesh&                m, 
                   const PETScVect<T_>& v,
                   const PETScVect<T_>& bc,
-                        int            dof=0);
+                  int                  dof=0);
 
-    void insertBC(      Mesh&          m, 
+    void insertBC(Mesh&                m, 
                   const PETScVect<T_>& v,
                   const Vect<T_>&      bc,
-                        int            dof=0);
+                  int                  dof=0);
 
 /** \brief Insert boundary conditions
  *  \details DOF with imposed boundary conditions are set to zero.
@@ -517,9 +604,9 @@ class PETScVect
  *  if only one degree of freedom (<tt>dof</tt>) is inserted into vector <tt>v</tt> which has only 
  *  one degree of freedom by node or side
  */
-    void insertBC(      Mesh&          m,
+    void insertBC(Mesh&                m,
                   const PETScVect<T_>& v,
-                        int            dof=0);
+                  int                  dof=0);
 
 /** \brief Insert boundary conditions
  *  @param [in] v PETScVect instance from which free degrees of freedom are copied to current instance.
@@ -530,11 +617,11 @@ class PETScVect
  */
     void insertBC(const PETScVect<T_>& v,
                   const PETScVect<T_>& bc,
-                        int            dof=0);
+                  int                  dof=0);
 
     void insertBC(const PETScVect<T_>& v,
                   const Vect<T_>&      bc,
-                        int            dof=0);
+                  int                  dof=0);
 
 /** \brief Insert boundary conditions
  *  \details DOF with imposed boundary conditions are set to zero.
@@ -544,7 +631,7 @@ class PETScVect
  *  one degree of freedom by node or side
  */
     void insertBC(const PETScVect<T_>& v, 
-                        int            dof=0);
+                  int                  dof=0);
 
 /** \brief Assembly of element vector (as C-array) into Vect instance.
  *  @param [in] el Reference to element instance
@@ -558,10 +645,10 @@ class PETScVect
  *  @param [in] b Local vector to assemble (C-Array)
  */
     void Assembly(const Side& sd,
-                        T_*   b);
+                  T_*         b);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    void DGAssembly(const Element& el,
+    void DGAssembly(const Element&                          el,
                     const LocalVect<T_,MAX_NB_ELEMENT_DOF>& b);
     void DGAssembly(const Side&                          sd,
                     const LocalVect<T_,MAX_NB_SIDE_DOF>& b);
@@ -654,7 +741,7 @@ class PETScVect
  *  @param [in] x Vect instance by which <tt>a</tt> is multiplied. The result is added
  *  to current instance
  */
-    void Axpy(      T_             a,
+    void Axpy(T_                   a,
               const PETScVect<T_>& x);
 
 /// \brief Assign a value to an entry for a 1-D vector
@@ -827,14 +914,20 @@ class PETScVect
  private:
     vector<int>    _ix;
     vector<T_>     _w;
-    size_t         _nx, _ny, _nz, _size, _nb, _dof_type, _nb_dof;
-    bool           _grid, _with_mesh, _created;
+    const vector<string> _var {"x","y","z","t"};
+    const vector<string> _var_xit {"x","i","t"};
+    const vector<string> _var_ijkt {"i","j","k","t"};
+    size_t         _nx, _ny, _nz, _nt, _size, _nb, _dof_type, _nb_dof;
+    int            _dg_degree;
+    bool           _with_mesh, _with_grid, _with_regex[10], _created;
     Mesh           *_theMesh;
-    string         _name;
+    Grid           *_theGrid;
+    string         _name, _regex[10];
     real_t         _time;
     PetscInt       _low, _high;
     Vec            _v;
     T_             _val;
+    Fct            _theFct;
     PetscErrorCode _err;
 
     static Vec Create(size_t   n,
@@ -860,8 +953,8 @@ class PETScVect
 
 template<class T_>
 PETScVect<T_>::PETScVect()
-              : _nx(0), _ny(0), _nz(0), _size(0), _dof_type(NONE),
-                _nb_dof(1), _grid(true), _with_mesh(false),
+              : _nx(0), _ny(1), _nz(1), _nt(1), _size(0), _dof_type(NODE_DOF),
+                _nb_dof(1), _with_grid(false), _with_mesh(false),
                 _created(false), _theMesh(NULL), _name("u"), _time(0.),
                 _low(0), _high(0)
 {
@@ -871,7 +964,7 @@ PETScVect<T_>::PETScVect()
 template<class T_>
 PETScVect<T_>::PETScVect(size_t n)
               : _nx(n), _ny(1), _nz(1), _size(n), _dof_type(NONE),
-                _nb_dof(1), _grid(true), _with_mesh(false),
+                _nb_dof(1), _with_grid(true), _with_mesh(false),
                 _created(true), _theMesh(NULL), _name("u"), _time(0.)
 {
    _v = Create(_size,PETSC_COMM_WORLD);
@@ -883,7 +976,7 @@ template <class T_>
 PETScVect<T_>::PETScVect(MPI_Comm comm,
                          size_t   n)
               : _nx(n), _ny(1), _nz(1), _size(n), _dof_type(NONE),
-                _nb_dof(1), _grid(true), _with_mesh(false),
+                _nb_dof(1), _with_grid(true), _with_mesh(false),
                 _created(true), _theMesh(NULL), _name("u"), _time(0.)
 {
    VecCreateMPI(comm,PETSC_DECIDE,_size);
@@ -894,7 +987,7 @@ template<class T_>
 PETScVect<T_>::PETScVect(size_t nx,
                          size_t ny)
               : _nx(nx), _ny(ny), _nz(1), _size(nx*ny), _dof_type(NONE),
-                _nb_dof(1), _grid(true), _with_mesh(false),
+                _nb_dof(1), _with_grid(true), _with_mesh(false),
                 _created(true), _theMesh(NULL), _name("u"), _time(0.)
 {
    _v = Create(_size,PETSC_COMM_WORLD);
@@ -907,7 +1000,21 @@ PETScVect<T_>::PETScVect(size_t nx,
                          size_t ny,
                          size_t nz)
               : _nx(nx), _ny(ny), _nz(nz), _size(nx*ny*nz), _dof_type(NONE),
-                _nb_dof(1), _grid(true), _with_mesh(false),
+                _nb_dof(1), _with_grid(true), _with_mesh(false),
+                _created(true), _theMesh(NULL), _name("u"), _time(0.)
+{
+   _v = Create(_size,PETSC_COMM_WORLD);
+   _err = VecGetOwnershipRange(_v,&_low,&_high);
+}
+
+
+template<class T_>
+PETScVect<T_>::PETScVect(size_t nx,
+                         size_t ny,
+                         size_t nz,
+                         size_t nt)
+              : _nx(nx), _ny(ny), _nz(nz), _nt(nt), _size(nx*ny*nz*nt), _dof_type(NONE),
+                _nb_dof(1), _with_grid(true), _with_mesh(false),
                 _created(true), _theMesh(NULL), _name("u"), _time(0.)
 {
    _v = Create(_size,PETSC_COMM_WORLD);
@@ -919,7 +1026,7 @@ template<class T_>
 PETScVect<T_>::PETScVect(size_t n,
                          T_*    x)
               : _nx(n), _ny(1), _nz(1), _size(n), _dof_type(NONE),
-                _nb_dof(1), _grid(true), _with_mesh(false),
+                _nb_dof(1), _with_grid(true), _with_mesh(false),
                 _created(true), _theMesh(NULL), _name("u"), _time(0.)
 {
    _v = Create(_size,PETSC_COMM_WORLD);
@@ -935,22 +1042,34 @@ PETScVect<T_>::PETScVect(size_t n,
 
 
 template<class T_>
+PETScVect<T_>::PETScVect(Grid& g)
+              : vector<T_>((g.getNx()+1)*(g.getNy()+1)*(g.getNz()+1)),
+                _dof_type(NODE_DOF), _nb_dof(1), _dg_degree(-1),
+                _with_grid(true), _with_mesh(false), _theMesh(nullptr), _name("#"), _time(0)
+{
+   setGrid(g);
+   for (size_t i=0; i<10; ++i)
+      _with_regex[i] = false;
+}
+
+
+template<class T_>
 PETScVect<T_>::PETScVect(class Mesh& m,
-                               int   nb_dof,
-                               int   dof_type)
-              : _grid(false), _name("u"), _time(0.)
+                         int         nb_dof,
+                         int         dof_type)
+              : _with_grid(false), _name("u"), _time(0.)
 {
    setMesh(m,nb_dof,dof_type);
 }
 
 
 template<class T_>
-PETScVect<T_>::PETScVect(class Mesh&  m,
-                               string name,
-                               real_t t,
-                               int    nb_dof,
-                               int    dof_type)
-              : _grid(false), _name(name), _time(t)
+PETScVect<T_>::PETScVect(class Mesh& m,
+                         string      name,
+                         real_t      t,
+                         int         nb_dof,
+                         int         dof_type)
+              : _with_grid(false), _name(name), _time(t)
 {
    setMesh(m,nb_dof,dof_type);
 }
@@ -972,7 +1091,7 @@ PETScVect<T_>::PETScVect(const PETScVect<T_>& v,
    size_t i=1, n=0;
    _created = false;
    setSize(_nx,_ny);
-   mesh_nodes(*_theMesh) {
+   MESH_ND {
       for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
          set(i,bc[n++]);
          if (The_node.getCode(k) == 0)
@@ -980,14 +1099,14 @@ PETScVect<T_>::PETScVect(const PETScVect<T_>& v,
          i++;
       }
    }
-   _grid = v._grid;
+   _with_grid = v._with_grid;
 }
 
 
 template<class T_>
 PETScVect<T_>::PETScVect(const PETScVect<T_>& v,
-                               size_t         nb_dof,
-                               size_t         first_dof)
+                         size_t               nb_dof,
+                         size_t               first_dof)
 {
    _time = v._time;
    _name = v._name;
@@ -1002,7 +1121,7 @@ PETScVect<T_>::PETScVect(const PETScVect<T_>& v,
    for (size_t i=1; i<=_nb; i++)
       for (size_t j=1; j<=_nb_dof; j++)
          set(i,j,v(i,j+first_dof-1));
-   _grid = v._grid;
+   _with_grid = v._with_grid;
 }
 
 
@@ -1017,7 +1136,7 @@ PETScVect<T_>::PETScVect(const PETScVect<T_>& v)
    _nb_dof = v._nb_dof;
    _dof_type = v._dof_type;
    _nb = v._nb;
-   _grid = v._grid;
+   _with_grid = v._with_grid;
    _created = false;
    setSize(_nx,_ny,_nz);
    _err = VecCopy(v._v,_v);
@@ -1026,7 +1145,7 @@ PETScVect<T_>::PETScVect(const PETScVect<T_>& v)
 
 template<class T_>
 PETScVect<T_>::PETScVect(const PETScVect<T_>& v,
-                               size_t         n)
+                         size_t               n)
               : _nx(v._nx), _ny(v._ny), _nz(v._nz)
 {
    _theMesh = v._theMesh;
@@ -1034,7 +1153,7 @@ PETScVect<T_>::PETScVect(const PETScVect<T_>& v,
    _time = v._time;
    _name = v._name;
    _nb_dof = v._nb_dof;
-   _grid = v._grid;
+   _with_grid = v._with_grid;
    if (n==1) {
       _ny = _nz = 1;
       _created = false;
@@ -1060,23 +1179,17 @@ PETScVect<T_>::PETScVect(const PETScVect<T_>& v,
 
 
 template <class T_>
-PETScVect<T_>::PETScVect(      size_t         d,
+PETScVect<T_>::PETScVect(size_t               d,
                          const PETScVect<T_>& v,
                          const string&        name)
 {
-   try {
-     if (d<=0)
-        THROW_RT("PETScVect(size_t,PETScVect<T_>,string): Illegal value of nb_dof = "+itos(d));
-   }
-   CATCH("PETScVect");
+  if (d<=0)
+     throw OFELIException("PETScVect::PETScVect(size_t,PETScVect<T_>,string): Illegal value of nb_dof = "+to_string(d));
    size_t nd=v.getNbDOF();
    vector<size_t> dof_list(nd);
    dof_select(d,dof_list);
-   try {
-      if (_nb_dof>nd)
-         THROW_RT("PETScVect(size_t,PETScVect<T_>,string): Illegal value of dof = "+itos(nd));
-   }
-   CATCH("PETScVect");
+   if (_nb_dof>nd)
+      throw OFELIException("PETScVect::PETScVect(size_t,PETScVect<T_>,string): Illegal value of dof = "+to_string(nd));
    _time = v._time;
    _theMesh = v._theMesh;
    _with_mesh = v._with_mesh;
@@ -1106,19 +1219,19 @@ PETScVect<T_>::~PETScVect()
 
 template<class T_>
 void PETScVect<T_>::setMesh(class Mesh& m,
-                                  int   nb_dof,
-                                  int   dof_type)
+                            int         nb_dof,
+                            int         dof_type)
 {
    _theMesh = &m;
    _with_mesh = true;
    size_t n = _theMesh->getNbDOF();
    _nb_dof = nb_dof;
    _dof_type = dof_type;
-   if (dof_type==NODE_FIELD || dof_type==NODE_DOF)
+   if (dof_type==NODE_DOF || dof_type==NODE_DOF)
       _nb = _theMesh->getNbNodes();
-   else if (dof_type==SIDE_FIELD || dof_type==SIDE_DOF)
+   else if (dof_type==SIDE_DOF || dof_type==SIDE_DOF)
       _nb = _theMesh->getNbSides();
-   else if (dof_type==ELEMENT_FIELD || dof_type==ELEMENT_DOF)
+   else if (dof_type==ELEMENT_DOF || dof_type==ELEMENT_DOF)
       _nb = _theMesh->getNbElements();
    if (nb_dof==0)
       _nb_dof = n/_nb;
@@ -1130,8 +1243,17 @@ void PETScVect<T_>::setMesh(class Mesh& m,
 
 
 template<class T_>
-void PETScVect<T_>::set(const T_*    v,
-                              size_t n)
+void PETScVect<T_>::setGrid(Grid& g)
+{
+   _theGrid = &g;
+   setSize(g.getNx()+1,g.getNy()+1,g.getNz()+1);
+   clear();
+}
+
+ 
+template<class T_>
+void PETScVect<T_>::set(const T_* v,
+                        size_t    n)
 {
    setSize(n);
    PetscInt i=1;
@@ -1141,8 +1263,8 @@ void PETScVect<T_>::set(const T_*    v,
 
 template<class T_>
 void PETScVect<T_>::select(const PETScVect<T_>& v,
-                                 size_t         nb_dof,
-                                 size_t         first_dof)
+                           size_t               nb_dof,
+                           size_t               first_dof)
 {
    _size = nb_dof*v._nb;
    setSize(_size);
@@ -1162,77 +1284,53 @@ void PETScVect<T_>::select(const PETScVect<T_>& v,
 
 template <class T_>
 void PETScVect<T_>::set(const string& exp,
-                              size_t  dof)
+                        size_t        dof)
 {
-   try {
-      if (_theMesh==NULL)
-         THROW_RT("set(string,dof): No mesh is defined");
-   }
-   CATCH("PETScVect");
+   if (_theMesh==nullptr)
+      throw OFELIException("In PETScVect::set(string,dof): No mesh defined");
+   Fct& f = _theFct;
+   f.set(exp,_var);
    int err;
-   real_t d[4];
+   vector<real_t> xv = {0.,0.,0.,_time};
    _ix.clear();
    _w.clear();
-   PARSE(exp.c_str(),"x,y,z,t");
-   try {
-      if (_dof_type==NODE_FIELD) {
-         mesh_nodes(*_theMesh) {
-            d[0] = The_node.getCoord(1);
-            d[1] = The_node.getCoord(2);
-            d[2] = The_node.getCoord(3);
-            _ix.push_back(The_node.getNbDOF()*(node_label-1)+dof-1);
-            _w.push_back(theParser.Eval(d));
-            try {
-               if ((err=theParser.EvalError()))
-                  THROW_RT("set(string,dof): Illegal regular expression. Error code: " + itos(err));
-            }
-            CATCH("PETScVect");
-         }
-      }
-      else
-         THROW_RT("set(string,size_t): This member function is for nodewise vectors only.");
+   if (_dof_type==NODE_DOF)
+      throw OFELIException("In PETScVect::set(string,size_t): This member function is for nodewise vectors only.");
+   set(The_node.getNbDOF()*(node_label-1)+dof,f(The_node.getCoord(),_time));
+   MESH_ND {
+      xv[0] = The_node.getCoord(1);
+      xv[1] = The_node.getCoord(2);
+      xv[2] = The_node.getCoord(3);
+      _ix.push_back(The_node.getNbDOF()*(node_label-1)+dof-1);
+      _w.push_back(f(xv));
    }
-   CATCH("PETScVect");
    VecSetValues(_v,_ix.size(),&_ix[0],&_w[0],INSERT_VALUES);
    setAssembly();
 }
 
 
 template <class T_>
-void PETScVect<T_>::set(const class Mesh&   ms,
-                        const       string& exp,
-                                    size_t  dof)
+void PETScVect<T_>::set(Mesh&         ms,
+                        const string& exp,
+                        size_t        dof)
 {
    setMesh(ms);
-   try {
-      if (_theMesh==NULL)
-         THROW_RT("set(ms,string,dof): No mesh is defined");
-   }
-   CATCH("PETScVect");
-   int err;
-   real_t d[4];
+   if (_theMesh==nullptr)
+      throw OFELIException("In PETScVect::set(ms,string,dof): No mesh is defined");
+   if (_dof_type!=NODE_DOF)
+      throw OFELIException("In PETScVect::set(string,size_t): This member function is for nodewise vectors only.");
+   vector<real_t> xv = {0.,0.,0.,_time};
    _ix.clear();
    _w.clear();
-   PARSE(exp.c_str(),"x,y,z,t");
-   try {
-      if (_dof_type==NODE_FIELD) {
-         mesh_nodes(*_theMesh) {
-            d[0] = The_node.getCoord(1);
-            d[1] = The_node.getCoord(2);
-            d[2] = The_node.getCoord(3);
-            _ix.push_back(The_node.getNbDOF()*(node_label-1)+dof-1);
-            _w.push_back(EVAL(d));
-            try {
-               if ((err=theParser.EvalError()))
-                  THROW_RT("set(string,dof): Illegal regular expression. Error code: " + itos(err));
-            }
-            CATCH("PETScVect");
-         }
-      }
-      else
-         THROW_RT("set(string,size_t): This member function is for nodewise vectors only.");
+   Fct &f = _theFct[0];
+   f.set(exp,_var_xit);
+   MESH_ND {
+      xv[0] = The_node.getCoord(1);
+      xv[1] = The_node.getCoord(2);
+      xv[2] = The_node.getCoord(3);
+      _ix.push_back(The_node.getNbDOF()*(node_label-1)+dof-1);
+      _w.push_back(f(xv));
    }
-   CATCH("PETScVect");
    VecSetValues(_v,_ix.size(),&_ix[0],&_w[0],INSERT_VALUES);
    setAssembly();
 }
@@ -1242,23 +1340,16 @@ template <class T_>
 void PETScVect<T_>::set(const PETScVect<real_t>& x,
                         const string&            exp)
 {
-   int err;
-   setSize(x._nx,x._ny,x._nz);
-
+   setSize(x._nx,x._ny,x._nz,x._nt);
    _ix.clear();
    _w.clear();
-   real_t d[2];
-   theParser.Parse(exp.c_str(),"x,i");
+   Fct &f = _theFct[0];
+   f.set(exp,_var_xit);
+   vector<real_t> xv = {0.,0.,_time};
    for (size_t i=0; i<_size; i++) {
-      d[0] = x[i];
-      d[1] = i + 1;
       _ix.push_back(i);
-      _w.push_back(theParser.Eval(d));
-      try {
-         if ((err=theParser.EvalError()))
-            THROW_RT("set(Vect,string): Illegal regular expression. Error code: " + itos(err));
-      }
-      CATCH("PETScVect");
+      xv[0] = x[i], xv[1] = i+1;
+      _w.push_back(f(xv));
    }
    VecSetValues(_v,_ix.size(),&_ix[0],&_w[0],INSERT_VALUES);
    setAssembly();
@@ -1329,6 +1420,24 @@ PetscScalar PETScVect<T_>::getNormMax() const
 }
 
 
+template<>
+inline real_t PETScVect<real_t>::Norm(NormType t) const
+{
+   if (t==NORM1)
+      return getNorm1();
+   else if (t==WNORM1)
+      return getWNorm1();
+   else if (t==NORM2)
+      return getNorm2();
+   else if (t==WNORM2)
+      return getWNorm2();
+   else if (t==NormType(NORM_MAX))
+      return getNormMax();
+   else
+      return 0.;
+}
+
+
 template<class T_>
 T_ PETScVect<T_>::getMin() const
 {
@@ -1350,15 +1459,15 @@ T_ PETScVect<T_>::getMax() const
 
 
 template<class T_>
-void PETScVect<T_>::removeBC(const class Mesh&          ms,
-                             const       PETScVect<T_>& v,
-                                         int            dof)
+void PETScVect<T_>::removeBC(const class Mesh&    ms,
+                             const PETScVect<T_>& v,
+                             int                  dof)
 {
    _ix.clear();
    _w.clear();
    if (dof==0) {
       size_t n=0;
-      mesh_nodes(ms) {
+      node_loop(&ms) {
          for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
             _ix.push_back(The_node.getDOF(k)-1);
             if (The_node.getCode(k) == 0)
@@ -1368,7 +1477,7 @@ void PETScVect<T_>::removeBC(const class Mesh&          ms,
       }
    }
    else {
-      mesh_nodes(ms) {
+      node_loop(&ms) {
          _ix.push_back(The_node.getDOF(dof)-1);
          if (The_node.getCode(dof) == 0)
             _w.push_back(v(node_label));
@@ -1380,15 +1489,15 @@ void PETScVect<T_>::removeBC(const class Mesh&          ms,
 
 
 template<class T_>
-void PETScVect<T_>::removeBC(const class Mesh&     ms,
-                             const       Vect<T_>& v,
-                                         int       dof)
+void PETScVect<T_>::removeBC(const class Mesh& ms,
+                             const Vect<T_>&   v,
+                             int               dof)
 {
    _ix.clear();
    _w.clear();
    if (dof==0) {
       size_t n=0;
-      mesh_nodes(ms) {
+      node_loop(&ms) {
          for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
             _ix.push_back(The_node.getDOF(k)-1);
             if (The_node.getCode(k) == 0)
@@ -1398,7 +1507,7 @@ void PETScVect<T_>::removeBC(const class Mesh&     ms,
       }
    }
    else {
-      mesh_nodes(ms) {
+      node_loop(&ms) {
          _ix.push_back(The_node.getDOF(dof)-1);
          if (The_node.getCode(dof) == 0)
             _w.push_back(v(node_label));
@@ -1411,13 +1520,13 @@ void PETScVect<T_>::removeBC(const class Mesh&     ms,
 
 template<class T_>
 void PETScVect<T_>::removeBC(const PETScVect<T_>& v,
-                                   int            dof)
+                             int                  dof)
 {
    _ix.clear();
    _w.clear();
    if (dof==0) {
       size_t n=0;
-      mesh_nodes(*_theMesh) {
+      MESH_ND {
          for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
            _ix.push_back(The_node.getDOF(k)-1);
            if (The_node.getCode(k)==0)
@@ -1427,7 +1536,7 @@ void PETScVect<T_>::removeBC(const PETScVect<T_>& v,
       }
    }
    else {
-      mesh_nodes(*_theMesh) {
+      MESH_ND {
          _ix.push_back(The_node.getDOF(dof)-1);
          if (The_node.getCode(dof)==0)
             _w.push_back(v(node_label));
@@ -1440,13 +1549,13 @@ void PETScVect<T_>::removeBC(const PETScVect<T_>& v,
 
 template<class T_>
 void PETScVect<T_>::removeBC(const Vect<T_>& v,
-                                   int       dof)
+                             int             dof)
 {
    _ix.clear();
    _w.clear();
    if (dof==0) {
       size_t n=0;
-      mesh_nodes(*_theMesh) {
+      MESH_ND {
          for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
             _ix.push_back(The_node.getDOF(k)-1);
             if (The_node.getCode(k)==0)
@@ -1456,7 +1565,7 @@ void PETScVect<T_>::removeBC(const Vect<T_>& v,
       }
    }
    else {
-      mesh_nodes(*_theMesh) {
+      MESH_ND {
          _ix.push_back(The_node.getDOF(dof)-1);
          if (The_node.getCode(dof)==0)
             _w.push_back(v(node_label));
@@ -1469,14 +1578,14 @@ void PETScVect<T_>::removeBC(const Vect<T_>& v,
 
 template<class T_>
 void PETScVect<T_>::transferBC(const PETScVect<T_>& bc,
-                                     int            dof)
+                               int                  dof)
 {
    _ix.clear();
    _w.clear();
    size_t i=0;
    if (dof==0) {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_node.getCode(k)>0)
@@ -1486,7 +1595,7 @@ void PETScVect<T_>::transferBC(const PETScVect<T_>& bc,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             for (size_t k=1; k<=TheSide.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (TheSide.getCode(k)>0)
@@ -1501,7 +1610,7 @@ void PETScVect<T_>::transferBC(const PETScVect<T_>& bc,
    else {
       if (_theMesh->NodesAreDOF()) {
          size_t k=0;
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             _ix.push_back(i);
             if (The_node.getCode(dof)>0)
                _w.push_back(bc[k]);
@@ -1511,7 +1620,7 @@ void PETScVect<T_>::transferBC(const PETScVect<T_>& bc,
       }
       else if (_theMesh->SidesAreDOF()) {
          size_t k=0;
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             _ix.push_back(i);
             if (TheSide.getCode(dof)>0)
                _w.push_back(bc[k]);
@@ -1527,17 +1636,17 @@ void PETScVect<T_>::transferBC(const PETScVect<T_>& bc,
 
 
 template<class T_>
-void PETScVect<T_>::insertBC(      class Mesh&          m,
-                             const       PETScVect<T_>& v,
-                             const       PETScVect<T_>& bc,
-                                         int            dof)
+void PETScVect<T_>::insertBC(class Mesh&          m,
+                             const PETScVect<T_>& v,
+                             const PETScVect<T_>& bc,
+                             int                  dof)
 {
    _ix.clear();
    _w.clear();
    size_t i=0;
    if (dof==0) {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_node.getCode(k)==0)
@@ -1549,7 +1658,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_side.getCode(k)>=0)
@@ -1566,7 +1675,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
    else {
       if (m.NodesAreDOF()) {
          size_t k=dof;
-         mesh_nodes(m) {
+         node_loop(&m) {
             _ix.push_back(i);
             if (The_node.getCode(dof)==0)
                _w.push_back(v(The_node.getDOF(dof)));
@@ -1577,7 +1686,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
       }
       else if (m.SidesAreDOF()) {
          size_t k=dof;
-         mesh_sides(m) {
+         side_loop(&m) {
             _ix.push_back(i);
             if (The_side.getCode(dof) >= 0)
                _w.push_back(v(The_side.getDOF(dof)));
@@ -1595,17 +1704,17 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
 
 
 template<class T_>
-void PETScVect<T_>::insertBC(      class Mesh&          m,
-                             const       PETScVect<T_>& v,
-                             const       Vect<T_>&      bc,
-                                         int            dof)
+void PETScVect<T_>::insertBC(class Mesh&          m,
+                             const PETScVect<T_>& v,
+                             const Vect<T_>&      bc,
+                             int                  dof)
 {
    _ix.clear();
    _w.clear();
    size_t i=0;
    if (dof==0) {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_node.getCode(k)==0)
@@ -1617,7 +1726,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_side.getCode(k) >= 0)
@@ -1634,7 +1743,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
    else {
       if (m.NodesAreDOF()) {
          size_t k=dof;
-         mesh_nodes(m) {
+         node_loop(&m) {
             _ix.push_back(i);
             if (The_node.getCode(dof)==0)
                _w.push_back(v(The_node.getDOF(dof)));
@@ -1645,7 +1754,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
       }
       else if (m.SidesAreDOF()) {
          size_t k=dof;
-         mesh_sides(m) {
+         side_loop(&m) {
             _ix.push_back(i);
             if (The_side.getCode(dof)>=0)
                _w.push_back(v(The_side.getDOF(dof)));
@@ -1663,16 +1772,16 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
 
 
 template<class T_>
-void PETScVect<T_>::insertBC(      class Mesh&          m,
-                             const       PETScVect<T_>& v,
-                                         int            dof)
+void PETScVect<T_>::insertBC(class Mesh&          m,
+                             const PETScVect<T_>& v,
+                             int                  dof)
 {
    _ix.clear();
    _w.clear();
    size_t i=0;
    if (dof==0) {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_node.getCode(k)==0)
@@ -1684,7 +1793,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_side.getCode(k)==0)
@@ -1700,7 +1809,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
    }
    else {
       if (m.NodesAreDOF()) {
-         mesh_nodes(m) {
+         node_loop(&m) {
             _ix.push_back(i);
             if (The_node.getCode(dof)==0)
                _w.push_back(v(The_node.getDOF(dof)));
@@ -1708,7 +1817,7 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
          }
       }
       else if (m.SidesAreDOF()) {
-         mesh_sides(m) {
+         side_loop(&m) {
             _ix.push_back(i);
             set(i,0);
             if (The_side.getCode(dof)==0)
@@ -1729,14 +1838,14 @@ void PETScVect<T_>::insertBC(      class Mesh&          m,
 template<class T_>
 void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
                              const PETScVect<T_>& bc,
-                                   int            dof)
+                              int                 dof)
 {
    _ix.clear();
    _w.clear();
    size_t i=0;
    if (dof==0) {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_node.getCode(k)==0)
@@ -1748,7 +1857,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_side.getCode(k) >= 0)
@@ -1765,7 +1874,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
    else {
       if (_theMesh->NodesAreDOF()) {
          size_t k=dof;
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             _ix.push_back(i);
             if (The_node.getCode(dof) == 0)
                _w.push_back(v(The_node.getDOF(dof)));
@@ -1776,7 +1885,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
       }
       else if (_theMesh->SidesAreDOF()) {
          size_t k=dof;
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             _ix.push_back(i);
             if (The_side.getCode(dof) >= 0)
                _w.push_back(v(The_side.getDOF(dof)));
@@ -1796,14 +1905,14 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
 template<class T_>
 void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
                              const Vect<T_>&      bc,
-                                   int            dof)
+                             int                  dof)
 {
    _ix.clear();
    _w.clear();
    size_t i=0;
    if (dof==0) {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_node.getCode(k) == 0)
@@ -1815,7 +1924,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_side.getCode(k) >= 0)
@@ -1832,7 +1941,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
    else {
       if (_theMesh->NodesAreDOF()) {
          size_t k=dof;
-         mesh_nodes(*_theMesh) {
+         MESH_SD {
             _ix.push_back(i);
             if (The_node.getCode(dof) == 0)
                _w.push_back(v(The_node.getDOF(k)));
@@ -1843,7 +1952,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
       }
       else if (_theMesh->SidesAreDOF()) {
          size_t k=dof;
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             _ix.push_back(i);
             if (The_side.getCode(dof) >= 0)
                _w.push_back(v(The_side.getDOF(dof)));
@@ -1861,30 +1970,26 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
 
 
 template<class T_>
-void PETScVect<T_>::setNodeBC(      class Mesh&   m,
-                                          int     code,
-                              const       string& exp,
-                                          size_t  dof)
+void PETScVect<T_>::setNodeBC(class Mesh&   m,
+                              int           code,
+                              const string& exp,
+                              size_t        dof)
 {
    _ix.clear();
    _w.clear();
    int err;
-   real_t d[4];
-   theParser.Parse(exp.c_str(),"x,y,z,t");
+   vector<real_t> xv = {0.,0.,0.,_time};
+   Fct &f = _theFct[0];
+   f.set(exp,_var_xit);
    size_t k=0;
-   mesh_nodes(m) {
-      d[0] = The_node.getCoord(1);
-      d[1] = The_node.getCoord(2);
-      d[2] = The_node.getCoord(3);
+   node_loop(&m) {
+      xv[0] = The_node.getCoord(1);
+      xv[1] = The_node.getCoord(2);
+      xv[2] = The_node.getCoord(3);
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          if (The_node.getCode(dof)==code) {
             _ix.push_back(k);
-            _w.push_back(theParser.Eval(d));
-            try {
-               if ((err=theParser.EvalError()))
-                  THROW_RT("setNodeBC(Mesh,int,string,size_t): Illegal regular expression. Error code: " + itos(err));
-            }
-            CATCH("PETScVect");
+            _w.push_back(f(xv));
          }
          k++;
       }
@@ -1895,16 +2000,16 @@ void PETScVect<T_>::setNodeBC(      class Mesh&   m,
 
 
 template<class T_>
-void PETScVect<T_>::setNodeBC(class Mesh&  m,
-                                    int    code,
-                                    T_     val,
-                                    size_t dof)
+void PETScVect<T_>::setNodeBC(class Mesh& m,
+                              int         code,
+                              T_          val,
+                              size_t      dof)
 {
    _ix.clear();
    _w.clear();
    size_t k=0;
-   if (m.getDOFSupport()==NODE_FIELD) {
-      mesh_nodes(m) {
+   if (m.getDOFSupport()==NODE_DOF) {
+      node_loop(&m) {
          for (size_t i=1; i<=the_node->getNbDOF(); i++) {
             if (The_node.getCode(dof)==code) {
                _ix.push_back(k);
@@ -1914,8 +2019,8 @@ void PETScVect<T_>::setNodeBC(class Mesh&  m,
          }
       }
    }
-   if (m.getDOFSupport()==SIDE_FIELD) {
-      MeshBoundarySides(m) {
+   if (m.getDOFSupport()==SIDE_DOF) {
+      boundary_side_loop(&m) {
          for (size_t i=1; i<=theSide->getNbDOF(); i++) {
             if (theSide->getCode(dof)==code) {
                _ix.push_back(k);
@@ -1931,29 +2036,24 @@ void PETScVect<T_>::setNodeBC(class Mesh&  m,
 
 
 template<class T_>
-void PETScVect<T_>::setNodeBC(      int     code,
+void PETScVect<T_>::setNodeBC(int           code,
                               const string& exp,
-                                    size_t  dof)
+                              size_t        dof)
 {
    _ix.clear();
    _w.clear();
-   int err;
-   real_t d[4];
-   theParser.Parse(exp.c_str(),"x,y,z,t");
+   vector<real_t> xv = {0.,0.,0.,_time};
+   Fct &f = _theFct[0];
+   f.set(exp,_var_xit);
    size_t k=0;
-   mesh_nodes(*_theMesh) {
-      d[0] = The_node.getCoord(1);
-      d[1] = The_node.getCoord(2);
-      d[2] = The_node.getCoord(3);
+   MESH_ND {
+      xv[0] = The_node.getCoord(1);
+      xv[1] = The_node.getCoord(2);
+      xv[2] = The_node.getCoord(3);
       for (size_t i=1; i<=The_node.getNbDOF(); i++) {
          if (The_node.getCode(dof)==code) {
             _ix.push_back(k);
-            _w.push_back(theParser.Eval(d));
-            try {
-               if ((err=theParser.EvalError()))
-                  THROW_RT("code,string,size_t): Illegal regular expression. Error code: " + itos(err));
-            }
-            CATCH("PETScVect");
+            _w.push_back(f(xv));
          }
          k++;
       }
@@ -1971,8 +2071,8 @@ void PETScVect<T_>::setNodeBC(int    code,
    _ix.clear();
    _w.clear();
    size_t k=0;
-   if (_theMesh->getDOFSupport()==NODE_FIELD) {
-      mesh_nodes(*_theMesh) {
+   if (_theMesh->getDOFSupport()==NODE_DOF) {
+      MESH_ND {
          for (size_t i=1; i<=The_node.getNbDOF(); i++) {
             if (The_node.getCode(dof)==code) {
                _ix.push_back(k);
@@ -1982,8 +2082,8 @@ void PETScVect<T_>::setNodeBC(int    code,
          }
       }
    }
-   if (_theMesh->getDOFSupport()==SIDE_FIELD) {
-      MeshBoundarySides(*_theMesh) {
+   if (_theMesh->getDOFSupport()==SIDE_DOF) {
+      MESH_BD_SD {
          for (size_t i=1; i<=TheSide.getNbDOF(); i++) {
             if (TheSide.getCode(dof)==code) {
                _ix.push_back(k);
@@ -2000,14 +2100,14 @@ void PETScVect<T_>::setNodeBC(int    code,
 
 template<class T_>
 void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
-                                   int            dof)
+                             int                  dof)
 {
    _ix.clear();
    _w.clear();
    size_t i=0;
    if (dof==0) {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             for (size_t k=1; k<=The_node.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_node.getCode(k)==0)
@@ -2019,7 +2119,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             for (size_t k=1; k<=The_side.getNbDOF(); ++k) {
                _ix.push_back(i);
                if (The_side.getCode(k) == 0)
@@ -2035,7 +2135,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
    }
    else {
       if (_theMesh->NodesAreDOF()) {
-         mesh_nodes(*_theMesh) {
+         MESH_ND {
             _ix.push_back(i);
             if (The_node.getCode(dof) == 0)
                _w.push_back(v(The_node.getDOF(dof)));
@@ -2045,7 +2145,7 @@ void PETScVect<T_>::insertBC(const PETScVect<T_>& v,
          }
       }
       else if (_theMesh->SidesAreDOF()) {
-         mesh_sides(*_theMesh) {
+         MESH_SD {
             _ix.push_back(i);
             if (The_side.getCode(dof) == 0)
                _w.push_back(v(The_side.getDOF(dof)));
@@ -2114,7 +2214,7 @@ void PETScVect<T_>::Assembly(const Element& el,
 
 template<class T_>
 void PETScVect<T_>::Assembly(const Side& sd,
-                                   T_*   b)
+                             T_*         b)
 {
    _ix.clear();
    _w.clear();
@@ -2136,49 +2236,42 @@ void PETScVect<T_>::getGradient(class PETScVect<T_>& v)
    T_ a;
    real_t b;
    Point<T_> aa;
-   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
+   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_DOF);
    v.setTime(_time);
    _ix.clear();
    _w.clear();
    size_t k=0;
-   mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==LINE) {
-            a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
-            b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
-            _ix.push_back(element_label-1);
-            _w.push_back(a/b);
-         }
-         else if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            aa = (*this)(The_element(1)->n())*t.DSh(1) + 
-                 (*this)(The_element(2)->n())*t.DSh(2) + 
-                 (*this)(The_element(3)->n())*t.DSh(3);
-            _ix.push_back(k++);
-            _ix.push_back(k++);
-            _w.push_back(aa.x);
-            _w.push_back(aa.y);
-         }
-         else if (The_element.getShape()==TETRAHEDRON) {
-            Tetra4 t(the_element);
-            aa = (*this)(The_element(1)->n())*t.DSh(1) + 
-                 (*this)(The_element(2)->n())*t.DSh(2) + 
-	         (*this)(The_element(3)->n())*t.DSh(3) + 
-	         (*this)(The_element(4)->n())*t.DSh(4);
-            v.set(element_label,1,aa.x);
-            v.set(element_label,2,aa.y);
-            v.set(element_label,3,aa.z);
-            _ix.push_back(k++);
-            _ix.push_back(k++);
-            _ix.push_back(k++);
-            _w.push_back(aa.x);
-            _w.push_back(aa.y);
-            _w.push_back(aa.z);
-         }
-         else
-            THROW_RT("getGradient(): This function doesn't work for this element.");
+   MESH_EL {
+      if (The_element.getShape()==LINE) {
+         a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
+         b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
+         _ix.push_back(element_label-1);
+         _w.push_back(a/b);
       }
-      CATCH("PETScVect");
+      else if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         vector<Point<real_t> > dsh = t.DSh();
+         aa = (*this)(The_element(1)->n())*dsh[0] + 
+              (*this)(The_element(2)->n())*dsh[1] + 
+              (*this)(The_element(3)->n())*dsh[2];
+         _ix.push_back(k++); _ix.push_back(k++);
+         _w.push_back(aa.x); _w.push_back(aa.y);
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Tetra4 t(the_element);
+         vector<Point<real_t> > dsh = t.DSh();
+         aa = (*this)(The_element(1)->n())*dsh[0] + 
+              (*this)(The_element(2)->n())*dsh[1] + 
+              (*this)(The_element(3)->n())*dsh[2] + 
+              (*this)(The_element(4)->n())*dsh[3];
+         v.set(element_label,1,aa.x);
+         v.set(element_label,2,aa.y);
+         v.set(element_label,3,aa.z);
+         _ix.push_back(k++); _ix.push_back(k++); _ix.push_back(k++);
+         _w.push_back(aa.x); _w.push_back(aa.y); _w.push_back(aa.z);
+      }
+      else
+         throw OFELIException("PETScVect::getGradient(): This function doesn't work for this element.");
    }
    VecSetValues(_v,_ix.size(),&_ix[0],&_w[0],INSERT_VALUES);
    setAssembly();
@@ -2186,7 +2279,7 @@ void PETScVect<T_>::getGradient(class PETScVect<T_>& v)
 
 
 template <class T_>
-void PETScVect<T_>::getGradient(PETScVect<Point<T_> >& v)
+void PETScVect<T_>::getGradient(PETScVect<Point<T_>>& v)
 {
    T_ a;
    real_t b;
@@ -2195,8 +2288,7 @@ void PETScVect<T_>::getGradient(PETScVect<Point<T_> >& v)
    Point<T_> aa;
    v.setMesh(*_theMesh,_theMesh->getDim());
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
-      try {
+   MESH_EL {
       if (The_element.getShape()==LINE) {
          a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
          b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
@@ -2205,25 +2297,25 @@ void PETScVect<T_>::getGradient(PETScVect<Point<T_> >& v)
       }
       else if (the_element->getShape()==TRIANGLE) {
          Triang3 t(the_element);
-         aa = (*this)(The_element(1)->n())*t.DSh(1) + 
-              (*this)(The_element(2)->n())*t.DSh(2) + 
-              (*this)(The_element(3)->n())*t.DSh(3);
+         vector<Point<real_t>> dsh = t.DSh();
+         aa = (*this)(The_element(1)->n())*dsh[0] + 
+              (*this)(The_element(2)->n())*dsh[1] + 
+              (*this)(The_element(3)->n())*dsh[2];
          _ix.push_back(element_label-1);
          w.push_back(aa);
       }
       else if (_theMesh->getShape()==TETRAHEDRON) {
          Tetra4 t(the_element);
-         aa = (*this)(The_element(1)->n())*t.DSh(1) +
-              (*this)(The_element(2)->n())*t.DSh(2) +
-              (*this)(The_element(3)->n())*t.DSh(3) +
-              (*this)(The_element(4)->n())*t.DSh(4);
+         vector<Point<real_t> > dsh = t.DSh();
+         aa = (*this)(The_element(1)->n())*dsh[0] +
+              (*this)(The_element(2)->n())*dsh[1] +
+              (*this)(The_element(3)->n())*dsh[2] +
+              (*this)(The_element(4)->n())*dsh[3];
          _ix.push_back(element_label-1);
          w.push_back(aa);
       }
       else
-         THROW_RT("getGradient(): This function doesn't work for this element.");
-      }
-      CATCH("PETScVect");
+         throw OFELIException("PETScVect::getGradient(): This function doesn't work for this element.");
    }
    Insert(_ix,w);
 }
@@ -2235,45 +2327,44 @@ void PETScVect<T_>::getCurl(PETScVect<T_>& v)
    T_ a;
    real_t b;
    Point<T_> du, dv, dw;
-   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
+   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_DOF);
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==LINE) {
-            a = (*this)(The_element(2)) - (*this)(The_element(1));
-            b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
-            v.set(element_label,a/b);
-         }
-         else if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            du = (*this)(The_element(1)->n())*t.DSh(1) + 
-                 (*this)(The_element(2)->n())*t.DSh(2) + 
-                 (*this)(The_element(3)->n())*t.DSh(3);
-            v.set(element_label,1, du.y);
-            v.set(element_label,2,-du.x);
-         }
-         else if (The_element.getShape()==TETRAHEDRON) {
-            Tetra4 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),1)*t.DSh(4);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),2)*t.DSh(4);
-            dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),3)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),3)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),3)*t.DSh(4);
-            v.set(element_label,1,dw.y - dv.z);
-            v.set(element_label,2,du.z - dw.x);
-            v.set(element_label,3,dv.x - du.y);
-         }
-         else
-            THROW_RT("getCurl(): This function doesn't work for this element.");
+   MESH_EL {
+      if (The_element.getShape()==LINE) {
+         a = (*this)(The_element(2)) - (*this)(The_element(1));
+         b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
+         v.set(element_label,a/b);
       }
-      CATCH("Vect");
+      else if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         vector<Point<real_t>> dsh = t.DSh();
+         du = (*this)(The_element(1)->n())*dsh[0] + 
+              (*this)(The_element(2)->n())*dsh[1] + 
+              (*this)(The_element(3)->n())*dsh[2];
+         v.set(element_label,1, du.y);
+         v.set(element_label,2,-du.x);
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Tetra4 t(the_element);
+         vector<Point<real_t>> dsh = t.DSh();
+         du = (*this)(The_element(1)->n(),1)*dsh[0] + 
+              (*this)(The_element(2)->n(),1)*dsh[1] + 
+              (*this)(The_element(3)->n(),1)*dsh[2] + 
+              (*this)(The_element(4)->n(),1)*dsh[3];
+         dv = (*this)(The_element(1)->n(),2)*dsh[0] + 
+              (*this)(The_element(2)->n(),2)*dsh[1] + 
+              (*this)(The_element(3)->n(),2)*dsh[2] + 
+              (*this)(The_element(4)->n(),2)*dsh[3];
+         dw = (*this)(The_element(1)->n(),3)*dsh[0] + 
+              (*this)(The_element(2)->n(),3)*dsh[1] + 
+              (*this)(The_element(3)->n(),3)*dsh[2] + 
+              (*this)(The_element(4)->n(),3)*dsh[3];
+         v.set(element_label,1,dw.y - dv.z);
+         v.set(element_label,2,du.z - dw.x);
+         v.set(element_label,3,dv.x - du.y);
+      }
+      else
+         throw OFELIException("PETScVect::getCurl(): This function doesn't work for this element.");
    }
 }
 
@@ -2284,43 +2375,42 @@ void PETScVect<T_>::getCurl(PETScVect<Point<T_> >& v)
    T_ a;
    real_t b;
    Point<T_> du, dv, dw;
-   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_FIELD);
+   v.setMesh(*_theMesh,_theMesh->getDim(),ELEMENT_DOF);
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==LINE) {
-            a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
-            b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
-            v.set(element_label,a/b);
-         }
-         else if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            du = (*this)(The_element(1)->n())*t.DSh(1) + 
-                 (*this)(The_element(2)->n())*t.DSh(2) + 
-                 (*this)(The_element(3)->n())*t.DSh(3);
-            v.set(element_label,1, du.y);
-            v.set(element_label,2,-du.x);
-         }
-         else if (The_element.getShape()==TETRAHEDRON) {
-            Tetra4 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),1)*t.DSh(4);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),2)*t.DSh(4);
-            dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),3)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),3)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),3)*t.DSh(4);
-            v.set(element_label,Point<T_>(dw.y-dv.z,du.z-dw.x,dv.x-du.y));
-         }
-         else
-            THROW_RT("getCurl(): This function doesn't work for this element.");
+   MESH_EL {
+      if (The_element.getShape()==LINE) {
+         a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
+         b = The_element(2)->getCoord(1) - The_element(1)->getCoord(1);
+         v.set(element_label,a/b);
       }
-      CATCH("PETScVect");
+      else if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         vector<Point<real_t>> dsh = t.DSh();
+         du = (*this)(The_element(1)->n())*dsh[0] + 
+              (*this)(The_element(2)->n())*dsh[1] + 
+              (*this)(The_element(3)->n())*dsh[2];
+         v.set(element_label,1, du.y);
+         v.set(element_label,2,-du.x);
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Tetra4 t(the_element);
+         vector<Point<real_t>> dsh = t.DSh();
+         du = (*this)(The_element(1)->n(),1)*dsh[0] + 
+              (*this)(The_element(2)->n(),1)*dsh[1] + 
+              (*this)(The_element(3)->n(),1)*dsh[2] + 
+              (*this)(The_element(4)->n(),1)*dsh[3];
+         dv = (*this)(The_element(1)->n(),2)*dsh[0] + 
+              (*this)(The_element(2)->n(),2)*dsh[1] + 
+              (*this)(The_element(3)->n(),2)*dsh[2] + 
+              (*this)(The_element(4)->n(),2)*dsh[3];
+         dw = (*this)(The_element(1)->n(),3)*dsh[0] + 
+              (*this)(The_element(2)->n(),3)*dsh[1] + 
+              (*this)(The_element(3)->n(),3)*dsh[2] + 
+              (*this)(The_element(4)->n(),3)*dsh[3];
+         v.set(element_label,Point<T_>(dw.y-dv.z,du.z-dw.x,dv.x-du.y));
+      }
+      else
+         throw OFELIException("PETScVect::getCurl(): This function doesn't work for this element.");
    }
 }
 
@@ -2328,30 +2418,25 @@ void PETScVect<T_>::getCurl(PETScVect<Point<T_> >& v)
 template <class T_>
 void PETScVect<T_>::getSCurl(PETScVect<T_>& v)
 {
-   try {
-      if (_theMesh->getDim()==1 || _theMesh->getDim()==3)
-         THROW_RT("getSCurl(): This function is valid for 2-D only.");
-   }
-   CATCH("PETScVect");
+   if (_theMesh->getDim()==1 || _theMesh->getDim()==3)
+      throw OFELIException("PETScVect::getSCurl(): This function is valid for 2-D only.");
    Point<T_> du, dv;
    v.setMesh(*_theMesh,1);
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3);
-            v.set(element_label,dv.x - du.y);
-         }
-         else
-            THROW_RT("getSCurl(): This function doesn't work for this element");
+   MESH_EL {
+      if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         vector<Point<real_t>> dsh = t.DSh();
+         du = (*this)(The_element(1)->n(),1)*dsh[0] + 
+              (*this)(The_element(2)->n(),1)*dsh[1] + 
+              (*this)(The_element(3)->n(),1)*dsh[2];
+         dv = (*this)(The_element(1)->n(),2)*dsh[0] + 
+              (*this)(The_element(2)->n(),2)*dsh[1] + 
+              (*this)(The_element(3)->n(),2)*dsh[2];
+         v.set(element_label,dv.x - du.y);
       }
-      CATCH("PETScVect");
+      else
+         throw OFELIException("PETScVect::getSCurl(): This function doesn't work for this element");
    }
 }
 
@@ -2364,50 +2449,49 @@ void PETScVect<T_>::getDivergence(PETScVect<T_>& v)
    Point<T_> du, dv, dw;
    v.setMesh(*_theMesh,1);
    v.setTime(_time);
-   mesh_elements(*_theMesh) {
-      try {
-         if (The_element.getShape()==LINE) {
-            a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
-            b = The_element(2)->getX() - The_element(1)->getX();
-            v.set(element_label,a/b);
-         }
-         else if (The_element.getShape()==TRIANGLE) {
-            Triang3 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3);
-            v.set(element_label,du.x+dv.y);
-         }
-         else if (The_element.getShape()==TETRAHEDRON) {
-            Tetra4 t(the_element);
-            du = (*this)(The_element(1)->n(),1)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),1)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),1)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),1)*t.DSh(4);
-            dv = (*this)(The_element(1)->n(),2)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),2)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),2)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),2)*t.DSh(4);
-            dw = (*this)(The_element(1)->n(),3)*t.DSh(1) + 
-                 (*this)(The_element(2)->n(),3)*t.DSh(2) + 
-                 (*this)(The_element(3)->n(),3)*t.DSh(3) + 
-                 (*this)(The_element(4)->n(),3)*t.DSh(4);
-            v.set(element_label,du.x+dv.y+dw.z);
-         }
-         else
-            THROW_RT("getDivergence(): This function doesn't work for this element.");
+   MESH_EL {
+      if (The_element.getShape()==LINE) {
+         a = (*this)(The_element(2)->n()) - (*this)(The_element(1)->n());
+         b = The_element(2)->getX() - The_element(1)->getX();
+         v.set(element_label,a/b);
       }
-      CATCH("PETScVect");
+      else if (The_element.getShape()==TRIANGLE) {
+         Triang3 t(the_element);
+         vector<Point<real_t>> dsh = t.DSh();
+         du = (*this)(The_element(1)->n(),1)*dsh[0] + 
+              (*this)(The_element(2)->n(),1)*dsh[1]+ 
+              (*this)(The_element(3)->n(),1)*dsh[2];
+         dv = (*this)(The_element(1)->n(),2)*dsh[0] + 
+              (*this)(The_element(2)->n(),2)*dsh[1] + 
+              (*this)(The_element(3)->n(),2)*dsh[2];
+         v.set(element_label,du.x+dv.y);
+      }
+      else if (The_element.getShape()==TETRAHEDRON) {
+         Tetra4 t(the_element);
+         vector<Point<real_t>> dsh = t.DSh();
+         du = (*this)(The_element(1)->n(),1)*dsh[0] + 
+              (*this)(The_element(2)->n(),1)*dsh[1] + 
+              (*this)(The_element(3)->n(),1)*dsh[2] + 
+              (*this)(The_element(4)->n(),1)*dsh[3];
+         dv = (*this)(The_element(1)->n(),2)*dsh[0] + 
+              (*this)(The_element(2)->n(),2)*dsh[1] + 
+              (*this)(The_element(3)->n(),2)*dsh[2] + 
+              (*this)(The_element(4)->n(),2)*dsh[3];
+         dw = (*this)(The_element(1)->n(),3)*dsh[0] + 
+              (*this)(The_element(2)->n(),3)*dsh[1] + 
+              (*this)(The_element(3)->n(),3)*dsh[2] + 
+              (*this)(The_element(4)->n(),3)*dsh[3];
+         v.set(element_label,du.x+dv.y+dw.z);
+      }
+      else
+         throw OFELIException("PETScVect::getDivergence(): This function doesn't work for this element.");
    }
 }
 
 
 template<class T_>
 real_t PETScVect<T_>::getAverage(const Element& el,
-                                       int      type) const
+                                 int            type) const
 {
    switch (type) {
 
@@ -2465,7 +2549,7 @@ PETScVect<T_> &PETScVect<T_>::MultAdd(const PETScVect<T_>& x,
 
 
 template<class T_>
-void PETScVect<T_>::Axpy(      T_             a,
+void PETScVect<T_>::Axpy(T_                   a,
                          const PETScVect<T_>& x)
 {
    for (size_t i=1; i<=_size; i++)
@@ -2574,7 +2658,7 @@ PETScVect<T_> &PETScVect<T_>::operator=(const PETScVect<T_>& v)
    _nb_dof = v._nb_dof;
    _dof_type = v._dof_type;
    _nb = v._nb;
-   _grid = v._grid;
+   _with_grid = v._with_grid;
    _created = false;
    setSize(v._nx,v._ny,v._nz);
    _err = VecCopy(v._v,_v);

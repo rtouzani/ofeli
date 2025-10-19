@@ -158,8 +158,8 @@ enum ECmdCode
     cmBC                =  1,  ///< Operator item:  closing bracket
     cmIO                =  2,  ///< Operator item:  index operator opening
     cmIC                =  3,  ///< Operator item:  index operator closing
-	cmCBO               =  4,  ///< Operator item:  curly bracket (opening)
-	cmCBC               =  5,  ///< Operator item:  curly bracket (closing)
+    cmCBO               =  4,  ///< Operator item:  curly bracket (opening)
+    cmCBC               =  5,  ///< Operator item:  curly bracket (closing)
     cmARG_SEP           =  6,  ///< Operator item:  comma
     cmIF                =  7,  ///< Ternary if then else operator
     cmELSE              =  8,  ///< Ternary if then else operator

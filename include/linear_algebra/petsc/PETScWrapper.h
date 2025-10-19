@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzaniset
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -40,10 +40,10 @@
 #include "mesh/Mesh.h"
 #include "mesh/Partition.h"
 
-#include "petscksp.h"
-#include "petscsnes.h"
-#include "petscts.h"
-#include "petsctao.h"
+#include <petscksp.h>
+#include <petscsnes.h>
+#include <petscts.h>
+#include <petsctao.h>
 
 namespace OFELI {
 /*!
@@ -179,7 +179,7 @@ class PETScWrapper
        PetscInitialize(&argc,&args,(char *)0,help.c_str());
        MPI_Comm_size(PETSC_COMM_WORLD,&_size);
        MPI_Comm_rank(PETSC_COMM_WORLD,&_rank);
-       PetscOptionsGetInt(PETSC_NULL,"-np",&np,PETSC_NULL);
+       PetscOptionsGetInt(PETSC_NULLPTR,"-np",&np,PETSC_NULLPTR);
     }
 
 /// \brief Destructor

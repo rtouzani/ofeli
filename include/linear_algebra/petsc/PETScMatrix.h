@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2016 Rachid Touzani
+   Copyright (C) 1998 - 2025 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -36,8 +36,8 @@
 
 #if defined(USE_PETSC)
 
-#include "petscmat.h"
-#include "petsc.h"
+#include <petscmat.h>
+#include <petsc.h>
 
 #include <vector>
 using std::vector;
@@ -223,7 +223,7 @@ template<class T_> class PETScMatrix
  *  @param [in,out] b PETScVect instance that contains right-hand side.
  *  @param [in] u PETScVect instance that conatins imposed valued at DOFs where they are to be imposed.
  */
-    void DiagPrescribe(      PETScVect<T_>& b,
+    void DiagPrescribe(PETScVect<T_>&       b,
                        const PETScVect<T_>& u);
 
 /// \brief Set size of matrix (case where it's a square matrix).
@@ -297,27 +297,27 @@ template<class T_> class PETScMatrix
  *  @param [in] x Vector to multiply by matrix
  *  @param [out] y Vector to add to the result. <tt>y</tt> contains on output the result.
  */
-    void MultAdd(      T_             a,
+    void MultAdd(T_                   a,
                  const PETScVect<T_>& x,
-                       PETScVect<T_>& y) const;
+                 PETScVect<T_>&       y) const;
 
 /** \brief Assign a value to an entry of the matrix
  *  @param [in] i Row index
  *  @param [in] j Column index
  *  @param [in] a Value to assign to <tt>a(i,j)</tt>
  */
-    void set(      size_t i,
-                   size_t j,
-             const T_&    a);
+    void set(size_t    i,
+             size_t    j,
+             const T_& a);
 
 /** \brief Add a value to an entry of the matrix
  *  @param [in] i Row index
  *  @param [in] j Column index
  *  @param [in] a Constant value to add to <tt>a(i,j)</tt>
  */
-    void add(      size_t i,
-                   size_t j,
-             const T_&    a);
+    void add(size_t    i,
+             size_t    j,
+             const T_& a);
 
 /** \brief Assign values to a portion of the matrix
  *  @param [in] ir Vector of row indexes to assign (instance of class <tt>vector</tt>)
@@ -387,7 +387,7 @@ template<class T_> class PETScMatrix
  *  @return Number of actual performed iterations 
  */
     int solve(const PETScVect<T_>& b,
-                    PETScVect<T_>& x);
+              PETScVect<T_>&       x);
 
 /** \brief Choose solver and preconditioner for an iterative procedure
  *  @param [in] solver Option to choose iterative solver among the macros (see PETSc documentation for
@@ -478,14 +478,14 @@ template<class T_> class PETScMatrix
  *  @param [in] a Element matrix as a C-array
  */
     void Assembly(const Element& el,
-                        T_*      a);
+                  T_*            a);
 
 /** \brief Assembly of side matrix into global matrix.
  *  @param [in] sd Reference to side instance
  *  @param [in] a Side matrix as a C-array
  */
     void Assembly(const Side& sd,
-                        T_*   a);
+                  T_*         a);
 
 /// \brief Matrix assembly.
 /// \details This function assembles matrix (begins and ends)
@@ -711,7 +711,7 @@ void PETScMatrix<T_>::setSize(size_t nr,
       MatCreateSeqAIJ(PETSC_COMM_SELF,_nb_rows,_nb_cols,0,&n,&_A);
    else
       MatCreateMPIAIJ(PETSC_COMM_WORLD,PETSC_DECIDE,PETSC_DECIDE,_nb_rows,_nb_cols,
-                      0,PETSC_NULL,0,PETSC_NULL,&_A);
+                      0,PETSC_NULLPTR,0,PETSC_NULLPTR,&_A);
    MatSetFromOptions(_A);
 }
 
@@ -1174,14 +1174,14 @@ template<class T_>
 PetscReal PETScMatrix<T_>::getNormMax() const
 {
    PetscReal n;
-   MatNorm(_A,NORM_INFINITY,&n);
+   MatNorm(_A,NORM_MAX,&n);
    return n;
 }
 
 
 template<class T_>
 void PETScMatrix<T_>::Assembly(const Element& el,
-                                     T_*      a)
+                               T_*            a)
 {
    _ir.clear();
    _v.clear();
@@ -1201,7 +1201,7 @@ void PETScMatrix<T_>::Assembly(const Element& el,
 
 template<class T_>
 void PETScMatrix<T_>::Assembly(const Side& sd,
-                                     T_*   a)
+                               T_*         a)
 {
    _ir.clear();
    _v.clear();
@@ -1253,7 +1253,7 @@ ostream& operator<<(ostream&         s,
 {
    A.setAssembly();
    PetscViewer viewer;
-   PetscViewerASCIIOpen(PETSC_COMM_WORLD,PETSC_NULL,&viewer);
+   PetscViewerASCIIOpen(PETSC_COMM_WORLD,PETSC_NULLPTR,&viewer);
    MatView(A,viewer);
    PetscViewerDestroy(&viewer);
    return s;

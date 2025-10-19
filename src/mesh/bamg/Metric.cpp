@@ -483,7 +483,6 @@ void Triangles::IntersectConsMetric(const double* s,
             }
          }
 
-         long kk=0;
          for (iv=0, k=0; iv<nbv; iv++, k+=n) {
             if (Mmassxx[iv]>0) {
                dxdx[iv] /= 2*Mmassxx[iv];
@@ -499,8 +498,6 @@ void Triangles::IntersectConsMetric(const double* s,
                dxdy[iv] = M.a21;
                dydy[iv] = M.a22;
             }
-            else
-               kk++;
          }
 
 //       Correction of second-order derivative by a laplacian

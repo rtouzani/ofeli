@@ -331,9 +331,9 @@ int pde::run()
                cout << "Partial Differential Equation " << name << " created." << endl;
             for (int i=0; i<nb_vectors; ++i) {
                if (ff=="fd")
-                  fd[i].vect = _data->addGridVector(_data->GridName[_data->iGrid],_vect[i],fd[i].nb_dof,false);
+                  fd[i].vect = _data->addGridVector(_data->GridName[_data->iGrid],_vect[i],fd[i].nb_dof,SetCalc::SET);
                else if (ff=="fe" || ff=="fv" || ff=="dg")
-                  fd[i].vect = _data->addMeshVector(_data->MeshName[_data->iMesh],_vect[i],data::DataSize::NODES,fd[i].nb_dof,false);
+                  fd[i].vect = _data->addMeshVector(_data->MeshName[_data->iMesh],_vect[i],data::DataSize::NODES,fd[i].nb_dof,SetCalc::SET);
             }
             log.vect = false;
             b.setSize(_data->theMesh[_data->iMesh]->getNbEq());
@@ -372,7 +372,7 @@ int pde::run()
             break;
 
          default:
-            DEFAULT_KW
+            DEFAULT_KW(_rita)
       }
    }
    return 0;

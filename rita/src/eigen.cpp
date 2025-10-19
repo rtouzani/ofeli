@@ -141,14 +141,14 @@ int eigen::run()
          for (int i=0; i<nb_eigv; ++i) {
             evectR.push_back(evect+"R"+to_string(i+1));
             evectI.push_back(evect+"I"+to_string(i+1));
-            _data->addVector(evectR[i],0.,size,"",false);
-            _data->addVector(evectI[i],0.,size,"",false);
+            _data->addVector(evectR[i],0.,size,"",SetCalc::SET);
+            _data->addVector(evectI[i],0.,size,"",SetCalc::SET);
          }
          *_rita->ofh << " eigv";
       }
       evR = mat_name + "ev_R", evI = mat_name + "ev_I";
-      _data->addVector(evR,0.,nb_eigv,"",false);
-      _data->addVector(evI,0.,nb_eigv,"",false);
+      _data->addVector(evR,0.,nb_eigv,"",SetCalc::SET);
+      _data->addVector(evI,0.,nb_eigv,"",SetCalc::SET);
       *_rita->ofh << endl;
       _data->addEig(this,name);
       if (_verb)

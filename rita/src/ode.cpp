@@ -212,7 +212,7 @@ int ode::run()
          *_rita->ofh << " definition=" << def[0];
       }
       isSet = true;
-      ivect.push_back(_data->addVector(var_name[0],0.,1,"",0));
+      ivect.push_back(_data->addVector(var_name[0],0.,1,""));
       *_rita->ofh << " init=" << init[0];
       Scheme = _sch[scheme];
       *_rita->ofh << " scheme=" << scheme;
@@ -481,12 +481,12 @@ cout<<"**5**"<<endl;
                ind_fct = ind;
                isFct = count_fct;
                for (size_t i=0; i<nb_vars; ++i)
-                  ivect.push_back(_data->addVector(var_name[i],0.,size,"",false));
+                  ivect.push_back(_data->addVector(var_name[i],0.,size,""));
                _data->theVector[ivect[0]]->resize(size);
                Scheme = _sch[scheme];
                for (size_t i=0; i<phase.size(); ++i) {
                   if (phase[i]!="")
-                     _data->addVector(phase[i],0,size,"",false);
+                     _data->addVector(phase[i],0,size,"");
                }
                for (int j=0; j<size; ++j)
                   _data->theVector[ivect[0]]->at(j) = init[j];
@@ -532,7 +532,7 @@ cout<<"**5**"<<endl;
                break;
 
             default:
-               DEFAULT_KW
+               DEFAULT_KW(_rita)
          }
       }
    }

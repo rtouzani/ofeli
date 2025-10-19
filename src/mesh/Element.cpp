@@ -40,6 +40,31 @@ using std::to_string;
 
 namespace OFELI {
 
+static std::map<string,int> ElStSh = {{"point",POINT},
+                                      {"line",LINE},
+                                      {"triangle",TRIANGLE},
+                                      {"tria",TRIANGLE},
+                                      {"quadrilateral",QUADRILATERAL},
+                                      {"quad",QUADRILATERAL},
+                                      {"tetrahedron",TETRAHEDRON},
+                                      {"tetra",TETRAHEDRON},
+                                      {"hexahedron",HEXAHEDRON},
+                                      {"hexa",HEXAHEDRON},
+                                      {"pentahedron",PENTAHEDRON},
+                                      {"penta",PENTAHEDRON},
+                                      {"prism",PRISM},
+                                      {"pyramid",PYRAMID}};
+
+static std::map<int,string> ElShSt = {{POINT,"point"},
+                                      {LINE,"line"},
+                                      {TRIANGLE,"triangle"},
+                                      {QUADRILATERAL,"quadrilateral"},
+                                      {TETRAHEDRON,"tetrahedron"},
+                                      {HEXAHEDRON,"hexahedron"},
+                                      {PENTAHEDRON,"pentahedron"},
+                                      {PRISM,"prism"},
+                                      {PYRAMID,"pyramid"}};
+
 Element::Element()
         : _active(true), _nb_nodes(0), _nb_eq(0), _nb_sides(0), _label(0),
           _nb_neig_el(0), _nb_childs(0), _nb_dof(1), _level(0),
@@ -55,7 +80,7 @@ Element::Element(size_t        label,
 {
    if (label<1)
       throw OFELIException("Element::Element(size_t,string): Illegal element label "+to_string(label));
-   shape_index(shape);
+   _shape = ElStSh[shape];
    calculate_nb_sides();
    for (size_t i=0; i<_nb_sides; ++i)
       _neig_el.push_back(nullptr);
@@ -84,7 +109,7 @@ Element::Element(size_t        label,
 {
    if (label<1)
       throw OFELIException("Element::Element(size_t,string,int): Illegal element label "+to_string(label));
-   shape_index(shape);
+   _shape = ElStSh[shape];
    calculate_nb_sides();
    for (size_t i=0; i<_nb_sides; ++i)
       _neig_el.push_back(nullptr);
@@ -550,23 +575,6 @@ Point<real_t> Element::getUnitNormal(size_t i) const
       throw OFELIException("Element::getUnitNormal(size_t): Calculation of outward normal "
                            "is not available for element shape " + to_string(_shape));
    return N*(1./s);
-}
-
-
-void Element::shape_index(const string& shape)
-{
-   if (shape=="line")
-      _shape = LINE;
-   else if (shape=="tria" || shape=="triangle")
-      _shape = TRIANGLE;
-   else if (shape=="quad" || shape=="quadrilateral")
-      _shape = QUADRILATERAL;
-   else if (shape=="tetra" || shape=="tetrahedron")
-      _shape = TETRAHEDRON;
-   else if (shape=="hexa" || shape=="hexahedron")
-      _shape = HEXAHEDRON;
-   else if (shape=="penta" || shape=="pentahedron")
-      _shape = PENTAHEDRON;
 }
 
 

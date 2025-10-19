@@ -139,12 +139,12 @@ int ls::run()
       *_rita->ofh << "ls matrix=" << matrix_name << " rhs=" << rhs_name;
       iSol = iRHS;
       if (sol_name!="") {
-         iSol = _data->addVector(sol_name,0.,nr,"",0);
+         iSol = _data->addVector(sol_name,0.,nr,"",SetCalc::SET);
          *_rita->ofh << " sol=" << sol_name;
       }
       iInit = iSol;
       if (init_name!="") {
-         iInit = _data->addVector(init_name,0.,nr,"",0);
+         iInit = _data->addVector(init_name,0.,nr,"",SetCalc::SET);
          *_rita->ofh << " initial=" << init_name;
       }
       name = "";

@@ -574,13 +574,12 @@ void getGmsh(string file,
 // Entities
    map<int,int> Pcode, Ccode, Scode, Vcode;
    if (kw=="$Entities") {
+      dim = 1;
       pf >> n[0] >> n[1] >> n[2] >> n[3];
       if (n[3]>0)
          dim = 3;
-      else if (n[2]>0)
+      if (n[2]>0)
          dim = 2;
-      else if (n[1]>0)
-         dim = 1;
 
 //    Points
       for (int i=0; i<n[0]; ++i) {
@@ -660,14 +659,13 @@ void getGmsh(string file,
    int m = 0;
    if (format==2) {
       pf >> nb_nodes;
+      dim = 1;
       for (int i=0; i<nb_nodes; ++i) {
-         dim = 3;
          pf >> n[0] >> nn.x[0] >> nn.x[1] >> nn.x[2];
-         if (nn.x[2]==0.) {
+         if (nn.x[2]>0.)
+            dim = 3;
+         if (nn.x[1]>0.)
             dim = 2;
-            if (nn.x[1]==0.)
-               dim = 1;
-         }
          nn.n = n[0];
          nod.push_back(nn);
       }

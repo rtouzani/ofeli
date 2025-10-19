@@ -4,17 +4,17 @@
 
 # We read matrix contents from a file: The matrix A has tridiagonal storage
 matrix file=m1.dat
-=A
+A
 
 # We read another matrix, stored in skyline format
 matrix file=m2.dat
-= B
+B
 
 # We read the same matrix but stored in sparse format
 matrix file=m3.dat
-= C
+C
 
 # Compute a linear combination of matrices B and C
 D = B + 2*C
-= D
+D
 exit

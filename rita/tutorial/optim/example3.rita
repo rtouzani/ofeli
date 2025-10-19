@@ -12,5 +12,5 @@ optim
   init 6. 8.
   end
 solve
-= x
+x
 exit

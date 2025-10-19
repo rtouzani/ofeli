@@ -8,5 +8,5 @@ algebraic var=y def=y^2-2
 solve
 #
 # We output the solution
- = y
+y
 exit

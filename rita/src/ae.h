@@ -56,7 +56,7 @@ class ae
     NonLinearIter nnls;
 
  private:
-    
+
     rita *_rita;
     data *_data;
     int _verb;

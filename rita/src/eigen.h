@@ -58,7 +58,7 @@ class eigen
     rita *_rita;
     int _ret, _verb;
     string _alg;
-    const string _pr = "eigen>";
+    const string _pr = ">eigen>";
     configure *_configure;
     cmd *_cmd;
     data *_data;

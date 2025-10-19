@@ -69,10 +69,6 @@ using std::unique;
  * The vectors <tt>row_ptr</tt> and <tt>col_ind</tt> are respectively:
  * <tt>{0,2,4,5}</tt>, <tt>{1,2,1,2,2}</tt>
  *
- * When the library <tt>eigen</tt> is used in conjunction with <tt>OFELI</tt>,
- * the class uses the sparse matrix class of <tt>eigen</tt> and enables then 
- * access to specific solvers (see class LinearSolver)
- *
  * \tparam T_ Data type (double, float, complex<double>, ...)
  *
  *  \author Rachid Touzani
@@ -126,8 +122,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
              int    is_diagonal=false);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#ifndef USE_EIGEN
- /** \brief Constructor using a Mesh instance and selecting a DOF (For use with Eigen Library).
+ /** \brief Constructor using a Mesh instance and selecting a DOF.
  *  @param [in] dof Option parameter.\n
  *  <tt>dof=1</tt> means that only one degree of freedom for each node (or element or side)
  *  is taken to determine matrix structure. The value <tt>dof=0</tt> means that matrix 
@@ -136,8 +131,8 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  @param [in] code.
  */
    SpMatrix(size_t dof,
-             Mesh&  mesh,
-             int    code=0);
+             Mesh& mesh,
+             int   code=0);
 
 /** \brief Constructor using a Mesh instance.
  *  @param [in] mesh Mesh instance from which matrix graph is extracted.
@@ -150,10 +145,8 @@ template<class T_> class SpMatrix : public Matrix<T_>
     SpMatrix(size_t dof,
              size_t nb_eq,
              Mesh&  mesh);
-#endif
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-#ifndef USE_EIGEN
 /** \brief Constructor for a square matrix using non zero row and column indices
  *  @param [in] I Vector containing pairs of row and column indices
  *  @param [in] opt Flag indicating if vectors I is cleaned and ordered
@@ -162,9 +155,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
  */
     SpMatrix(const vector<RC>& I,
              int               opt=1);
-#endif
 
-#ifndef USE_EIGEN
 /** \brief Constructor for a square matrix using non zero row and column indices
  *  @param [in] I Vector containing pairs of row and column indices
  *  @param [in] a Vector containing matrix entries in the same order than
@@ -176,9 +167,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
     SpMatrix(const vector<RC>& I,
              const Vect<T_>&   a,
              int               opt=1);
-#endif
 
-#ifndef USE_EIGEN
 /** \brief Constructor for a rectangle matrix.
  *  @param [in] nr Number of rows
  *  @param [in] nc Number of columns
@@ -189,9 +178,7 @@ template<class T_> class SpMatrix : public Matrix<T_>
              size_t                nc,
              const vector<size_t>& row_ptr,
              const vector<size_t>& col_ind);
-#endif
 
-#ifndef USE_EIGEN
 /** \brief Constructor for a rectangle matrix
  *  @param [in] nr Number of rows
  *  @param [in] nc Number of columns
@@ -204,18 +191,14 @@ template<class T_> class SpMatrix : public Matrix<T_>
              const vector<size_t>& row_ptr,
              const vector<size_t>& col_ind,
              const vector<T_>&     a);
-#endif
 
-#ifndef USE_EIGEN
 /** \brief Constructor for a rectangle matrix
  *  @param [in] row_ptr Vector of row pointers (See the above description of this class).
  *  @param [in] col_ind Vector of column indices (See the above description of this class).
  */
     SpMatrix(const vector<size_t>& row_ptr,
              const vector<size_t>& col_ind);
-#endif
 
-#ifndef USE_EIGEN
 /** \brief Constructor for a rectangle matrix
  *  @param [in] row_ptr Vector of row pointers (See the above description of this class).
  *  @param [in] col_ind Vector of column indices (See the above description of this class).
@@ -225,7 +208,6 @@ template<class T_> class SpMatrix : public Matrix<T_>
     SpMatrix(const vector<size_t>& row_ptr,
              const vector<size_t>& col_ind,
              const vector<T_>&     a);
-#endif
 
 /// \brief Copy constructor.
     SpMatrix(const SpMatrix& m);
@@ -501,56 +483,40 @@ template<class T_> class SpMatrix : public Matrix<T_>
  *  \return Return <tt>0</tt> if the factorization was normally achieved,
  *  <tt>n</tt> if the <tt>n</tt>-th pivot is null.
  */
-#ifdef USE_EIGEN
     int DILUFactorize(vector<size_t>& id,
                       vector<T_>&     pivot) const;
-#else
-    int DILUFactorize(vector<size_t>& id,
-                      vector<T_>&     pivot) const;
-#endif
 
 /** \brief Perform an Incomplete LU factorization of matrix
  *  \return Return <tt>0</tt> if the factorization was normally achieved,
  *  <tt>n</tt> if the <tt>n</tt>-th pivot is null.
  */
-#ifdef USE_EIGEN
     int ILUFactorize(vector<size_t>& id,
                      vector<T_>&     pivot) const;
-#else
-    int ILUFactorize(vector<size_t>& id,
-                     vector<T_>&     pivot) const;
-#endif
 
 /** \brief Solve a linear system with an diagonal incompletely factorized matrix
  *  @param [in] b Vect instance containing the right-hand side
  *  @param [out] x Vect instance containing on output the solution
  */
-#ifndef USE_EIGEN
     void DILUSolve(const vector<size_t>& id,
                    const vector<T_>&     pivot,
                    const Vect<T_>&       b,
                    Vect<T_>&             x) const;
-#endif
 
 /** \brief Solve a linear system with an incompletely factorized matrix
  *  @param [in] b Vect instance containing the right-hand side
  *  @param [out] x Vect instance containing on output the solution
  */
-#ifndef USE_EIGEN
     void ILUSolve(const vector<size_t>& id,
                   const vector<T_>&     pivot,
                   const Vect<T_>&       b,
                   Vect<T_>&             x) const;
-#endif
 
 /** \brief Solve a linear system with an incompletely factorized matrix
  *  @param [in] b Vect instance containing the right-hand side
  *  @param [out] x Vect instance containing on output the solution
  */
-#ifndef USE_EIGEN
     void SSORSolve(const Vect<T_>& b,
                    Vect<T_>&       x) const;
-#endif
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -622,17 +588,6 @@ template<class T_> class SpMatrix : public Matrix<T_>
     void add(size_t    i,
              const T_& val);
 
-#ifdef USE_EIGEN
-/// \brief Return reference to the matrix instance in Eigen library
-    SpMat& getEigenMatrix();
-#endif
-
-#ifdef USE_EIGEN
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-#endif /* DOXYGEN_SHOULD_SKIP_THIS */
-#endif
-
 /** \fn ostream & operator<<(ostream& s, const SpMatrix<T_> &A)
  *  \ingroup VectMat
  *  Output matrix in output stream
@@ -649,14 +604,10 @@ template<class T_> class SpMatrix : public Matrix<T_>
    vector<size_t> _nbc;
    Iteration _solver;
    Preconditioner _prec;
-#ifdef USE_EIGEN
-   SpMat _A;
-#else
    vector<T_> _pivot, _aL, _aU;
    vector<size_t> _id, _l_row_ptr, _u_row_ptr, _l_col_ind, _u_col_ind;
    size_t _lnnz, _unnz;
    int _col_index(size_t i, size_t j) const;
-#endif
 };
 
 /** \fn Vect<T_> operator*(const SpMatrix<T_> &A, const Vect<T_> &b)

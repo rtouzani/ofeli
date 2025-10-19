@@ -23,6 +23,7 @@
   ==============================================================================
 
                             Definition of class 'calc'
+                            and other related classes
 
   ==============================================================================*/
 
@@ -32,6 +33,7 @@
 #include "../muparserx/mpDefines.h"
 #include "linear_algebra/Vect.h"
 #include "linear_algebra/Matrix.h"
+#include "funct.h"
 
 namespace RITA {
 
@@ -40,6 +42,21 @@ using namespace mup;
 class rita;
 class cmd;
 class data;
+
+class FctFun : public ICallback
+{
+ public:
+
+    FctFun(funct *f) : ICallback(cmFUNC, _T(f->name.c_str()),-1), _fun(f) { }
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type* a_pArg, int argc) override;
+    virtual const char_type* GetDesc() const override { return "Returns value of function at given point"; }
+    virtual IToken* Clone() const override { return new FctFun(*this); }
+
+ private:
+    funct *_fun;
+    vector<double> _arg;
+};
+
 
 class FctMatrix : public ICallback
 {
@@ -63,14 +80,69 @@ class FctMatrixNorm2 : public ICallback
 };
 
 
-class FctMatrixNormI : public ICallback
+class FctMatrixNormMax : public ICallback
 {
  public:
-    FctMatrixNormI() : ICallback(cmFUNC, _T("NormI"), 1) {}
-    ~FctMatrixNormI() {}
+    FctMatrixNormMax() : ICallback(cmFUNC, _T("NormMax"), 1) {}
+    ~FctMatrixNormMax() {}
     virtual void Eval(ptr_val_type& ret, const ptr_val_type* a_pArg, int /*a_iArgc*/);
-    virtual const char_type* GetDesc() const { return _T("normI(M) - Returns infinity-norm of matrix."); }
-    virtual IToken* Clone() const { return new FctMatrixNormI(*this); }
+    virtual const char_type* GetDesc() const { return _T("normMax(M) - Returns infinity-norm of matrix."); }
+    virtual IToken* Clone() const { return new FctMatrixNormMax(*this); }
+};
+
+
+class FctRowVector : public ICallback
+{
+ public:
+    FctRowVector() : ICallback(cmFUNC, _T("rvector"), -1) {}
+    virtual ~FctRowVector() {}
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc) override;
+    virtual const char_type* GetDesc() const override { return _T("rvector(x) - Returns a row vector whose elements are all 0."); }
+    virtual IToken* Clone() const override { return new FctRowVector(*this); }
+};
+
+
+class FctRowVectorNorm1 : public ICallback
+{
+ public:
+    FctRowVectorNorm1() : ICallback(cmFUNC, _T("rnorm1"), 1) {}
+    ~FctRowVectorNorm1() {}
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type* a_pArg, int /*a_iArgc*/);
+    virtual const char_type* GetDesc() const { return _T("rnorm1(v) - Returns 1-norm of row vector."); }
+    virtual IToken* Clone() const { return new FctRowVectorNorm1(*this); }
+};
+
+
+class FctRowVectorNorm2 : public ICallback
+{
+ public:
+    FctRowVectorNorm2() : ICallback(cmFUNC, _T("rnorm2"), 1) {}
+    ~FctRowVectorNorm2() {}
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type* a_pArg, int /*a_iArgc*/);
+    virtual const char_type* GetDesc() const { return _T("rnorm2(v) - Returns 2-norm (euclidean) of row vector."); }
+    virtual IToken* Clone() const { return new FctRowVectorNorm2(*this); }
+};
+
+
+class FctRowVectorNormMax : public ICallback
+{
+ public:
+    FctRowVectorNormMax() : ICallback(cmFUNC, _T("rnormMax"), 1) {}
+    ~FctRowVectorNormMax() {}
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type* a_pArg, int /*a_iArgc*/);
+    virtual const char_type* GetDesc() const { return _T("rnormMax(v) - Returns infinity-norm of row vector."); }
+    virtual IToken* Clone() const { return new FctRowVectorNormMax(*this); }
+};
+
+
+class FctRowVectorCanonical : public ICallback
+{
+ public:
+    FctRowVectorCanonical() : ICallback(cmFUNC, _T("rcanonical"), -1) {}
+    ~FctRowVectorCanonical() {}
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type* a_pArg, int /*a_iArgc*/);
+    virtual const char_type* GetDesc() const { return _T("rcanonical(n,i) - Returns i-th vector of canonical basis of Rn."); }
+    virtual IToken* Clone() const { return new FctRowVectorCanonical(*this); }
 };
 
 
@@ -107,14 +179,14 @@ class FctVectorNorm2 : public ICallback
 };
 
 
-class FctVectorNormI : public ICallback
+class FctVectorNormMax : public ICallback
 {
  public:
-    FctVectorNormI() : ICallback(cmFUNC, _T("normI"), 1) {}
-    ~FctVectorNormI() {}
+    FctVectorNormMax() : ICallback(cmFUNC, _T("normMax"), 1) {}
+    ~FctVectorNormMax() {}
     virtual void Eval(ptr_val_type& ret, const ptr_val_type* a_pArg, int /*a_iArgc*/);
-    virtual const char_type* GetDesc() const { return _T("normI(v) - Returns infinity-norm of vector."); }
-    virtual IToken* Clone() const { return new FctVectorNormI(*this); }
+    virtual const char_type* GetDesc() const { return _T("normMax(v) - Returns infinity-norm of vector."); }
+    virtual IToken* Clone() const { return new FctVectorNormMax(*this); }
 };
 
 
@@ -155,37 +227,32 @@ class FctMatrixLaplace1D : public ICallback
 class calc {
 
  public:
-    calc(rita* r, cmd* command);
-    ~calc() { }
+    calc(data* d, cmd* command, ofstream *ofh, ofstream *ofl);
+    ~calc() { delete theParser; }
     int run();
-    int run(const string& buffer);
-    int CheckKeywords();
-    int getVar(string_type& s);
     int setParam(const string& name, double v);
+    int setFun(funct *f);
+    int setFun(funct *f, const string& exp, const vector<string>& var);
+    int setFun(funct *f, const string& exp, const vector<string>& var, const vector<size_t>& n);
     int setVector(OFELI::Vect<double> *u);
     int setMatrix(OFELI::Matrix<double> *M);
     int setVectorValue(const string& name, const OFELI::Vect<double>* u);
     int setMatrixValue(const string& name, OFELI::Matrix<double>* M);
-    int get_int(const string& s);
-    double get_double(const string& s);
-    ParserX theParser;
-
- private:
-    rita *_rita;
-    data *_data;
-    string _sLine;
-    cmd *_cmd;
-    var_maptype _vmap;
-    vector<Value *> _theV;
-    Value *_v;
-
+    void ListFun();
     void ListVar();
     void ListConst();
     void ListExprVar();
-    void setData();
-    int parse();
-    void addVar();
+    int get_int(const string& s);
+    double get_double(const string& s);
+    ParserX *theParser;
 
+ private:
+    data *_data;
+    cmd *_cmd;
+    ofstream *_ofh, *_ofl;
+    int _nb_def_funs;
+    vector<string> _funs, _params, _vects, _matrices;
+    int CheckKeywords(const string& sLine);
 };
 
 } /* namespace RITA */

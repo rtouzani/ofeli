@@ -164,10 +164,8 @@ void Matrix<T_>::init_set_mesh(Mesh&  mesh,
 template<class T_>
 void Matrix<T_>::clear()
 {
-#ifndef USE_EIGEN
    for (size_t i=0; i<_msize.length; i++)
       _a[i] = static_cast<T_>(0);
-#endif
 }
 
 

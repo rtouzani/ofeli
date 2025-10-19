@@ -37,7 +37,7 @@
 namespace OFELI {
 
 Fct::Fct()
-    : _p(nullptr), _st(nullptr), _ex(nullptr), _name("f"), _nb_var(0), _nb_par(0),
+    : _p(nullptr), _st(nullptr), _ex(nullptr), _name("f"), _nb_var(0),
       _exp_ok(false), _var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -45,7 +45,7 @@ Fct::Fct()
 
 
 Fct::Fct(const string& exp)
-    : _p(nullptr), _st(nullptr), _ex(nullptr), _name("f"), _nb_var(0), _nb_par(0),
+    : _p(nullptr), _st(nullptr), _ex(nullptr), _name("f"), _nb_var(0),
       _exp_ok(false), _var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -55,7 +55,7 @@ Fct::Fct(const string& exp)
 
 Fct::Fct(const string&         exp,
          const vector<string>& v)
-    : _p(nullptr), _st(nullptr), _ex(nullptr), _name("f"),  _nb_var(0), _nb_par(0),
+    : _p(nullptr), _st(nullptr), _ex(nullptr), _name("f"),  _nb_var(0),
       _exp_ok(false), _var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -65,7 +65,7 @@ Fct::Fct(const string&         exp,
 
 Fct::Fct(const string& exp,
          const string& v)
-    : _p(nullptr),  _st(nullptr), _ex(nullptr), _name("f"), _nb_var(0), _nb_par(0),
+    : _p(nullptr),  _st(nullptr), _ex(nullptr), _name("f"), _nb_var(0),
       _exp_ok(false), _var_ok(false), err(1)
 {
    _name = "f";
@@ -77,7 +77,7 @@ Fct::Fct(const string& exp,
 Fct::Fct(const string&         n,
          const string&         exp,
          const vector<string>& v)
-    : _p(nullptr),  _st(nullptr), _ex(nullptr), _name(n), _nb_var(0), _nb_par(0),
+    : _p(nullptr),  _st(nullptr), _ex(nullptr), _name(n), _nb_var(0),
       _exp_ok(false), _var_ok(false), err(1)
 {
    error_message = "No error in function evaluation.";
@@ -156,7 +156,6 @@ int Fct::set(const string& exp,
       if (opt==0)
          std::cout << "Error: " << error_message << ", Expression: " << _expr << std::endl;
    }
-   checkParam();
    _exp_ok = err;
    return 1-err;
 }
@@ -194,7 +193,6 @@ int Fct::set(const string& exp,
       if (opt==0)
          std::cout << "Error: " << error_message << ", Expression: " << _expr << std::endl;
    }
-   checkParam();
    _exp_ok = err;
    return 1-err;
 }
@@ -205,23 +203,6 @@ void Fct::setVar(const string& v)
    _var.push_back(v);
    _nb_var++;
    _var_ok = true;
-}
-
-
-void Fct::setPar(const string& p,
-                 real_t        x)
-{
-   for (size_t i=0; i<_nb_par; ++i) {
-      if (_par[i]==p) {
-         _xvar[i] = x;
-         return;
-      }
-   }
-   _nb_par++, _nb_var++;
-   _par.push_back(p);
-   _var.push_back(p);
-   _xpar.push_back(x);
-   _xvar.push_back(x);
 }
 
 
@@ -262,7 +243,6 @@ int Fct::set(const string&         exp,
    _exp_ok = err;
    if (err==0 && opt==0)
       std::cout << "Error: " << _p->error() << ", Expression: " << _expr << std::endl;
-   checkParam();
    return 1-err;
 }
 
@@ -296,53 +276,6 @@ int Fct::check()
    if (exprtk::collect_variables(_expr,v))
       return 0;
    return 1;
-}
-
-
-void Fct::checkParam()
-{
-   bool ok=true;
-   vector<string> par;
-   exprtk::collect_variables(_expr,par);
-   for (auto it=std::begin(_par); it!=std::end(_par); ++it) {
-      ok = false;
-      for (const auto& v : par) {
-         if (v==*it)
-            ok = true;
-      }
-      if (!ok)
-         _par.erase(it,it+1), it--;
-   }
-   _nb_par = _par.size();
-   for (auto it=std::begin(_var); it!=std::end(_var); ++it) {
-      ok = false;
-      for (const auto& v : par) {
-         if (v==*it) {
-            ok = true;
-            continue;
-         }
-      }
-      if (!ok)
-         _var.erase(it,it+1), it--;
-   }
-   _rv = _var;
-   for (auto it=std::begin(_rv); it!=std::end(_rv); ++it) {
-      ok = false;
-      for (const auto& v : _par) {
-         if (v==*it) {
-            ok = true;
-            continue;
-         }
-      }
-      if (ok)
-         _rv.erase(it,it+1), it--;
-   }
-}
-
-
-void Fct::getParam(vector<string>& p)
-{
-   p = _par;
 }
 
 
@@ -430,16 +363,11 @@ std::ostream& operator<<(std::ostream& s,
       s << f._name << ": Function undefined." << std::endl;
       return s;
    }
-   s << f._name << "(" << f._rv[0];
+   s << "Function Name: " << f._name << std::endl;
+/*   s << f._name << "(" << f._rv[0];
    for (size_t i=1; i<f._rv.size(); ++i)
       s << "," << f._rv[i];
-   s << ") = " << f._expr << std::endl;
-   if (f._nb_par) {
-      s << "Parameter(s): " << f._par[0];
-      for (size_t i=1; i<f._nb_par; ++i)
-         s << ", " << f._par[i];
-      s << std::endl;
-   }
+      s << ") = " << f._expr << std::endl;*/
    return s;
 }
 

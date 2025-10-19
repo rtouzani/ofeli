@@ -389,7 +389,6 @@ inline Arg::Arg(const std::string& flag,
 							Arg::nameStartString() + "' or a space.",
 							toString() ) );
 
-    _name.find("--");
 	if ( ( _name.find( Arg::flagStartString(), 0 ) != std::string::npos ) || 
 		 ( _name.find( Arg::nameStartString(), 0 ) != std::string::npos ) ||
 	     ( _name.find( " ", 0 ) != std::string::npos ) )

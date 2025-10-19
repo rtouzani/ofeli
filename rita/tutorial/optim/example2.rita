@@ -13,5 +13,5 @@ optim
   algorithm truncated-newton
   end
 solve
-= x
+x
 exit

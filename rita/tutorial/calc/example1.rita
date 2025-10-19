@@ -4,7 +4,6 @@ xmin = 1
 xmax = 2
 h=0.1
 n=(xmax-xmin)/h
-=xmin
 list param
 integration var=x x=xmin,xmax definition=exp(-x) ne=n
 exit

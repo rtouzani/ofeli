@@ -186,7 +186,10 @@ class Mesh;
 
 /// \brief Return code for a given DOF of node.
 /// @param [in] dof label of degree of freedom for which code is to be returned. Default value is 1.
-    int getCode(size_t dof=1) const { return _code[dof-1]; }
+    int getCode(size_t dof) const { return _code[dof-1]; }
+
+/// \brief Return global code of node.
+    int getCode() const;
 
 /// \brief Return i-th coordinate of node.
 /// i = 1..3

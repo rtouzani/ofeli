@@ -4,8 +4,8 @@
 matrix file=m.dat
 
 # List data and print matrix contents
-  data
-  = M
+data
+M
 
 # Define eigenvalue problem, eigenvectors are not computed
 eigen matrix=M eigv
@@ -14,9 +14,9 @@ eigen matrix=M eigv
 solve
 
 # List vectors
-  list vect
+list vect
 
 # Print real and imaginary parts of eigenvalues
- = Mev_R
- = Mev_I
+Mev_R
+Mev_I
 exit

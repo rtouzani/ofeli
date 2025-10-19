@@ -186,7 +186,7 @@ int solve::run()
                break;
 
             default:
-               DEFAULT_KW
+               DEFAULT_KW(_rita)
          }
       }
    }
@@ -307,6 +307,7 @@ int solve::run_steady()
                lsolv.setRHS(*_data->theVector[_ls->iRHS]);
                lsolv.setSolution(*_data->theVector[_ls->iSol]);
                ret = lsolv.solve(_ls->lls,_ls->pprec);
+               _data->setVectorValue(_ls->iSol,_data->theVector[_ls->iSol]);
                _ls->solved = 1 - ret;
             }
 
@@ -369,6 +370,8 @@ int solve::run_steady()
 
 //             Solve problem
                _pde->solved = 1 - _pde->theEquation->run();
+               for (int i=0; i<_pde->nb_vectors; ++i)
+                  _data->setVectorValue(_pde->fd[i].vect,_data->theVector[_pde->fd[i].vect]);
 
 //             Compute error if analytical solution is given
                if (_pde->get_err>0) {
@@ -379,8 +382,8 @@ int solve::run_steady()
                      _pde->e2 = "e2_" + to_string(_data->iParam+1);
                      _pde->eI = "eI_" + to_string(_data->iParam+1);
                   }
-                  _data->addParam(_pde->e2,err2,false);
-                  _data->addParam(_pde->eI,errI,false);
+                  _data->addParam(_pde->e2,err2,SetCalc::SET);
+                  _data->addParam(_pde->eI,errI,SetCalc::SET);
                }
             }
          }
@@ -496,7 +499,7 @@ void solve::getPDEError(double &e2, double &eI)
             Point<double> x=ms[i]->getCoord();
             for (int j=0; j<nb_dof; ++j) {
                funct &f = *_pde->SolFct[j];
-               double ui=u[k++], vi=f(x,0.);
+               double ui=u[k++], vi=f(x.x,x.y,x.z,0.);
                e2 += (ui-vi)*(ui-vi);
                eI = fmax(eI,fabs(ui-vi));
             }
@@ -513,7 +516,11 @@ void solve::getPDEError(double &e2, double &eI)
       for (size_t i=1; i<=gr.getNx(); ++i) {
          for (size_t j=1; j<=gr.getNy(); ++j) {
             for (size_t k=1; k<=gr.getNz(); ++k) {
-               double ui=u(i,j,k), vi=(*_pde->SolFct[0])(gr.getXYZ(i,j,k),_pde->final_time);
+               double ui=u(i,j,k);
+               double vi=(*_pde->SolFct[0])(gr.getXYZ(i,j,k).x,
+                                            gr.getXYZ(i,j,k).y,
+                                            gr.getXYZ(i,j,k).z,
+                                            _pde->final_time);
                e2 += (ui-vi)*(ui-vi);
                eI = fmax(eI,fabs(ui-vi));
             }

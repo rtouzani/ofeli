@@ -41,10 +41,6 @@ using std::setw;
 
 #if defined (USE_PETSC)
 #include "linear_algebra/petsc/PETScMatrix.h"
-#elif defined (USE_EIGEN)
-#include "linear_algebra/Matrix.h"
-#include <Eigen/IterativeLinearSolvers>
-using namespace Eigen;
 #else
 #include "util/util.h"
 #include "io/output.h"
@@ -213,80 +209,6 @@ int LinearSolver::solve()
       return ret;
    }
 
-#if defined (USE_EIGEN)
-   SpMatrix<real_t> &A = MAT(SpMatrix<real_t>,_A);
-   VectorX x;
-   if (_s==CG_SOLVER) {
-      switch (_p) {
-
-         case IDENT_PREC:
-            {
-               ConjugateGradient<SparseMatrix<real_t>,Lower,IdentityPreconditioner> im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-               break;
-            }
-
-         case DIAG_PREC:
-            {
-               ConjugateGradient<SparseMatrix<real_t>,Lower,DiagonalPreconditioner<real_t> > im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-               break;
-            }
-
-         case ILU_PREC:
-            {
-               ConjugateGradient<SparseMatrix<real_t>,Lower,IncompleteLUT<real_t> > im;
-               im.setTolerance(_toler);
-               im.compute(A.getEigenMatrix());
-               x = im.solve(VectorX(*_b));
-               ret = im.iterations();
-               break;
-            }
-
-         default:
-            throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
-                                 "This preconditioner is not available in the eigen library.");
-            break;
-      }
-   }
-   else if (_s==BICG_STAB_SOLVER) {
-      if (_p==IDENT_PREC) {
-         Eigen::BiCGSTAB<SparseMatrix<real_t>,IdentityPreconditioner> im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else if (_p==DIAG_PREC) {
-         Eigen::BiCGSTAB<SparseMatrix<real_t>,DiagonalPreconditioner<real_t> > im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else if (_p==ILU_PREC) {
-         Eigen::BiCGSTAB<SparseMatrix<real_t>,IncompleteLUT<real_t> > im;
-         im.setTolerance(_toler);
-         im.compute(A.getEigenMatrix());
-         x = im.solve(VectorX(*_b));
-         ret = im.iterations();
-      }
-      else
-         throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
-                              "This preconditioner is not available in the eigen library.");
-   }
-   else
-      throw OFELIException("In LinearSolver::solve(Iteration,Preconditioner): "
-                           "This iterative solver is not available in the eigen library.");
-   _x->setSize(x.size(),1,1);
-   *_x = x;
-#else
    switch (_s) {
 
       case DIRECT_SOLVER:
@@ -316,7 +238,6 @@ int LinearSolver::solve()
          _nb_it = GMRes(_A,_p,*_b,*_x,_b->size()/5,_max_it,_toler);
          break;
    }
-#endif
    if (_nb_it<0)
       ret = -_nb_it;
    return ret;

@@ -54,42 +54,10 @@ class pde;
 class optim;
 class eigen;
 
-
-#define DEF_LS_NAME     "sys"
-#define DEF_AE_NAME     "alg"
-#define DEF_ODE_NAME    "ode"
-#define DEF_PDE_NAME    "pde"
-#define DEF_OPT_NAME    "opt"
-#define DEF_EIG_NAME    "eig"
-#define DEF_FCT_NAME    "fun"
-#define DEF_GRID_NAME   "grd"
-#define DEF_MESH_NAME   "msh"
-#define DEF_VECTOR_NAME "v"
-#define DEF_MATRIX_NAME "M"
-#define DEF_TAB_NAME    "t"
-
-#define DEFAULT_LS_NAME(s)     if (s=="") s = DEF_LS_NAME+to_string(iLS)
-#define DEFAULT_AE_NAME(s)     if (s=="") s = DEF_AE_NAME+to_string(iAE)
-#define DEFAULT_ODE_NAME(s)    if (s=="") s = DEF_ODE_NAME+to_string(iODE)
-#define DEFAULT_PDE_NAME(s)    if (s=="") s = DEF_PDE_NAME+to_string(iPDE)
-#define DEFAULT_OPT_NAME(s)    if (s=="") s = DEF_OPT_NAME+to_string(iOpt)
-#define DEFAULT_EIG_NAME(s)    if (s=="") s = DEF_EIG_NAME+to_string(iEig)
-#define DEFAULT_FCT_NAME(s)    if (s=="") s = DEF_FCT_NAME+to_string(iFct)
-#define DEFAULT_GRID_NAME(s)   if (s=="") s = DEF_GRID_NAME+to_string(iGrid)
-#define DEFAULT_MESH_NAME(s)   if (s=="") s = DEF_MESH_NAME+to_string(iMesh)
-#define DEFAULT_VECTOR_NAME(s) if (s=="") s = DEF_VECTOR_NAME+to_string(iVector)
-#define DEFAULT_MATRIX_NAME(s) if (s=="") s = DEF_MATRIX_NAME+to_string(iMatrix)
-#define DEFAULT_TAB_NAME(s)    if (s=="") s = DEF_TAB_NAME+to_string(iTab)
-
-#define CHECK_VECT(s)          if (VectorLabel.count(s)==0) { _rita->msg("","Vector "+s+" undefined."); return 1; }
-#define CHECK_ACTIVE(s)        if (!dn[s].active) { _rita->msg("","Reference to non-active data "+s); return 2; }
-#define CHECK_HVECT(s)         if (HVectorLabel.count(s)==0) { _rita->msg("","History vector "+s+" undefined."); return 1; }
-#define CHECK_MATRIX(s)        if (MatrixLabel.count(s)==0) { _rita->msg("","Matrix "+s+" undefined."); return 1; }
-#define CHECK_TAB(s)           if (TabLabel.count(s)==0) { _rita->msg("","Tabulation "+s+" undefined."); return 1; }
-#define ILLEGAL_PREFIX         { _rita->msg("","Illegal name prefix for entity "+s); return 1; }
-
 enum class DataType { NOTHING, PARAM, VECTOR, HVECTOR, MATRIX, GRID, MESH, TAB, FCT,
                       LS, AE, ODE, PDE, OPTIM, EIGEN };
+
+enum class SetCalc { NO, UPDATE, SET };
 
 struct pls {
    double mx, Mx, my, My;
@@ -105,19 +73,20 @@ class data
     enum class eqType { LS, AE, ODE, PDE, OPT, EIGEN, INTEGR };
     enum class DataSize { GIVEN_SIZE, GRID, NODES, ELEMENTS, SIDES, EDGES };
     enum class Storage { DENSE, SPARSE, SKYLINE, BAND, TRIDIAGONAL, DIAGONAL };
-    struct Dat { int i; DataType dt; bool active;
-                 Dat() { dt=DataType::NOTHING; active=false; }
+    struct Dat { int i; DataType dt; int active;
+                 Dat() { dt=DataType::NOTHING; active=-1; }
                };
 
     data(rita *r, cmd *command, configure *config);
     ~data() { }
     int remove(const string& name);
     int rename(const string& data1, const string& data2);
-    int addVector(string name, double t=0., int n=1, string file="", int opt=1);
-    int addVector(OFELI::Vect<double>* v, string& name, bool opt=true);
-    int addMeshVector(const string& nm1, string& nm2, DataSize s, int ndof=1, bool opt=true);
-    int addGridVector(const string& nm1, string& nm2, int ndof=1, bool opt=true);
-    int addParam(string name, double value, bool opt=true);
+    int addVector(string name, double t=0., int n=1, string file="", SetCalc opt=SetCalc::NO);
+    int addVector(OFELI::Vect<double>* v, string& name, SetCalc opt=SetCalc::NO);
+    int addMeshVector(const string& nm1, string& nm2, DataSize s, int ndof=1, SetCalc opt=SetCalc::NO);
+    int addGridVector(const string& nm1, string& nm2, int ndof=1, SetCalc opt=SetCalc::NO);
+    void setParam(string name, double value);
+    int addParam(string name, double value, SetCalc opt=SetCalc::NO);
     int addLS(ls *ls, string& name);
     int addAE(ae *e, string& name);
     int addODE(ode *e, string& name);
@@ -142,7 +111,8 @@ class data
     int addFunction(string& name, const vector<string>& var, const string& exp, const vector<size_t>& n);
     int addFunction(string& name, const vector<string>& var, const string& exp);
     int addFunction(OFELI::Fct& f);
-    int addMatrix(string name, int nr, int nc, string file="", string s="dense", bool opt=true);
+    int addMatrix(string name, int nr, int nc, string file="", string s="dense", SetCalc opt=SetCalc::NO);
+    int addMatrix(OFELI::DMatrix<double>* M, string& name, SetCalc opt=SetCalc::NO);
     int addGrid(OFELI::Grid* g, string& name);
     int addMesh(OFELI::Mesh* ms, string& name);
     int getPar(int n, const string& msg, double& v);
@@ -154,7 +124,8 @@ class data
     int add2History(const string& s, OFELI::Vect<double>& v, double t=0.0);
     int setHistory(const string& s, size_t n);
     int setPhaseHistory(const string& name);
-    int checkAlreadyUsed(const string& s, const DataType& dt);
+    int checkAlreadyUsed(const string& name, const DataType& dt);
+    int print();
     void Summary();
 
   
@@ -219,7 +190,9 @@ class data
     int setDesc(const string& name, const string& desc);
 //    void setVar(const string& v, vector<string>& w, int n, int opt=0);
 //    void setVar(const vector<string>& v, vector<string>& w, int n, int opt=0);
+    void setVector(string name, OFELI::Vect<double> *u);
     int setVector();
+    void setMatrix(string name, OFELI::Matrix<double> *M);
     int setMatrix();
     int setGrid();
     int setTab();
@@ -257,11 +230,27 @@ class data
                                     {DataType::TAB,"tabulation"},
                                     {DataType::FCT,"function"},
                                     {DataType::LS,"linear system"},
-                                    {DataType::AE,"algrbraic equation"},
+                                    {DataType::AE,"algebraic equation"},
                                     {DataType::ODE,"ode"},
                                     {DataType::PDE,"pde"},
                                     {DataType::OPTIM,"optimization problem"},
                                     {DataType::EIGEN,"eigenvalue problem"}};
+
+    map<DataType,string> Type_st = {{DataType::NOTHING,""},
+                                    {DataType::PARAM,"a parameter"},
+                                    {DataType::VECTOR,"a vector"},
+                                    {DataType::HVECTOR,"a history vector"},
+                                    {DataType::MATRIX,"a matrix"},
+                                    {DataType::GRID,"a grid"},
+                                    {DataType::MESH,"a mesh"},
+                                    {DataType::TAB,"a tabulation"},
+                                    {DataType::FCT,"a function"},
+                                    {DataType::LS,"a linear system"},
+                                    {DataType::AE,"an algebraic equation"},
+                                    {DataType::ODE,"an ordinary differential equation"},
+                                    {DataType::PDE,"a partial differential equation"},
+                                    {DataType::OPTIM,"an optimization problem"},
+                                    {DataType::EIGEN,"an eigenvalue problem"}};
 
     map<string,OFELI::MatrixType> st_map = {{"dense",OFELI::DENSE},
                                             {"band",OFELI::BAND},
@@ -311,7 +300,6 @@ bool contains(const map<T1_,T2_>& m, const T1_& key)
    }
    return false;
 }
-
 
  private:
 

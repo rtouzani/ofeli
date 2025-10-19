@@ -69,7 +69,6 @@
 #include "io/IOField.h"
 #include "io/IPF.h"
 
-#ifndef USE_EIGEN
 #include "solvers/GMRes.h"
 #include "solvers/CG.h"
 #include "solvers/CGS.h"
@@ -77,7 +76,6 @@
 #include "solvers/BiCGStab.h"
 #include "solvers/Jacobi.h"
 #include "solvers/SSOR.h"
-#endif
 
 #include "solvers/ODESolver.h"
 #include "solvers/OptSolver.h"
@@ -92,14 +90,14 @@
 #include "equations/interface/FastMarching1DG.h"
 #include "equations/interface/FastMarching2DG.h"
 #include "equations/interface/FastMarching3DG.h"
-/*
-#include "io/Tabulation.h"
-#include "io/Funct.h"
+
+//#include "io/Tabulation.h"
+//#include "io/Funct.h"
 
 #ifdef USE_PETSC
 #include "linear_algebra/petsc/PETScWrapper.h"
 #include "linear_algebra/petsc/PETScMatrix.h"
 #include "linear_algebra/petsc/PETScVect.h"
 #endif
-*/
+
 #endif

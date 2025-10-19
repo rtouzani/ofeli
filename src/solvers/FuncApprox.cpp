@@ -482,9 +482,9 @@ void FuncApprox::SRationalBasis(size_t             c,
 int FuncApprox::runBSpline()
 {
    vector<real_t> N(20);
-   clear(N);
    vector<int> x(30);  // allows for 20 data points with basis function of order 5
-   clear(x);
+   clear(N), clear(x);
+cout<<"#1 "<<_n1<<endl;
 
 // Generate the uniform open knot vector
    knot(_n1,_c1,x);
@@ -497,7 +497,7 @@ int FuncApprox::runBSpline()
    for (size_t k=0; k<_np1; ++k) {
       if (real_t(x[_n1+_c1-1])-t < FUNC_APPROX_THRESHOLD)
          t = x[_n1+_c1-1];
- //   Generate the basis function for this value of t
+//    Generate the basis function for this value of t
       BSplineBasis(_n1,_c1,t,x,N);
       for (size_t j=0; j<3; ++j) {    // Generate a point on the curve
          size_t jcount = j;
@@ -537,11 +537,9 @@ int FuncApprox::runBezier()
 int FuncApprox::runBSplineSurface()
 {
    vector<int> x(30), y(30);
-   clear(x);
-   clear(y);
+   clear(x), clear(y);
    vector<real_t> N(30), M(30);
-   clear(N);
-   clear(M);
+   clear(N), clear(M);
    clear(*_p);
 
 // Generate the open uniform knot vectors

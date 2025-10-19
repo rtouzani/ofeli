@@ -62,7 +62,7 @@ class optim
     rita *_rita;
     int _verb;
     string _fn, _alg;
-    const string _pr = "optimization>";
+    const string _pr = ">optimization>";
     configure *_configure;
     cmd *_cmd;
     data *_data;

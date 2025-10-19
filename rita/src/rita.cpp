@@ -54,14 +54,13 @@ rita::rita()
        _ae(nullptr), _ode(nullptr), _ls(nullptr), _pde(nullptr), _solve(nullptr),
        _optim(nullptr), _eigen(nullptr), _approx(nullptr), _integration(nullptr)
 {
-   _rita = this;
    _cmd = new cmd(this);
    _configure = new configure(this,_cmd);
-   _data = new data(this,_cmd,_configure);
-   _calc = new calc(this,_cmd);
-   hh = new help(this,_cmd);
    ofl = _configure->getOStreamLog();
    ofh = _configure->getOStreamHistory();
+   _data = new data(this,_cmd,_configure);
+   _calc = new calc(_data,_cmd,ofh,ofl);
+   hh = new help(this,_cmd);
 }
 
 
@@ -133,16 +132,6 @@ int rita::run()
 
          case   0:
             Load();
-            break;
-
-         case 201:
-            _mesh = new mesh(this,_cmd,_configure);
-            _mesh->setVerbose(_verb);
-            ret = _mesh->run();
-            if (ret) {
-               delete _mesh;
-               _mesh = nullptr;
-            }
             break;
 
          case   1:
@@ -222,10 +211,10 @@ int rita::run()
             break;
 
          default:
-            DEFAULT_KW
+            DEFAULT_KW(this)
       }
    }
-   return 0;
+   return ret;
 }
 
 
@@ -239,7 +228,7 @@ void rita::finish()
 void rita::getLicense()
 {
    _cmd->setNbArg(0);
-   cout << "Copyright (C) 2024\n";
+   cout << "Copyright (C) 2025\n";
    cout << "rita is free software: you can redistribute it and/or modify\n";
    cout << "it under the terms of the GNU General Public License as published by\n";
    cout << "the Free Software Foundation, either version 3 of the License, or\n";
@@ -309,7 +298,7 @@ void rita::msg(const string& loc,
       if (m2!="")
          cout << m2 << endl;
    }
-   *ofl << "In " + sPrompt+loc + ": " << m1 << endl;
+   *ofl << "In " << sPrompt << loc << ": " << m1 << endl;
 }
 
 } /* namespace RITA */

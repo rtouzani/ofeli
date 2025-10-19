@@ -18,5 +18,5 @@ optim
   ge-constraint   0.  0.  1.  0.    400.
   end
 solve
-= x
+x
 exit

@@ -21,7 +21,7 @@ data
 solve
 #
 # Output solution at final time
-= y
+y
 
 # Save solution history in gnuplot file
 save format=gnuplot file=sol.dat name=Y

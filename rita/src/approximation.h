@@ -69,7 +69,7 @@ class approximation
     configure *_configure;
     cmd *_cmd;
     data *_data;
-    string _PR = "approximation>", _pr;
+    string _PR = ">approximation>", _pr;
     OFELI::Tabulation *_theTab;
     ApproxType _method;
     FitType ft;

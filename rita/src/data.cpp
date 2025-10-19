@@ -77,7 +77,7 @@ data::data(rita*      r,
 int data::setDataExt(int key)
 {
    int ret = 0;
-   string td = "", fn="", name="", str1="", str2="", old_name="", new_name="";
+   string td="", fn="", name="", str1="", str2="", old_name="", new_name="";
    static const string H = "parameters, grids, meshes, vectors, hvectors, functions, tabulations, matrices";
    switch (key) {
 
@@ -218,15 +218,6 @@ int data::setDataExt(int key)
          break;
 
       case 214:
-      case 215:
-         CHK_MSG1B(_cmd->setNbArg(1,"Data name to be given.",1),"","Missing data to display.","",1)
-         if (!_cmd->get(fn)) {
-            print(fn);
-            *_rita->ofh << "print " << fn << endl;
-         }
-         break;
-
-      case 216:
          _cmd->get(old_name);
          _cmd->get(new_name);
          ret = rename(old_name,new_name);
@@ -234,31 +225,208 @@ int data::setDataExt(int key)
             *_rita->ofh << "rename " << old_name << " " << new_name << endl;
          break;
 
-      case 217:
+      case 215:
          plot();
          break;
 
-      case 218:
-         _rita->_calc->run();
+      case 216:
+      case 217:
+//         _rita->_calc->run();
          break;
    }
    return ret;
 }
 
 
+int data::print(const string& s)
+{
+/*   if (dn[s].i==0) {
+      if (_rita->_calc->print(s))
+         cout << "Entity " << s << " not found." << endl;
+      return 1;
+   }*/
+   if (dn[s].active==0) {
+      cout << "Entity " << s << " has been removed." << endl;
+      return 1;
+   }
+   DataType d = getType(s);
+   switch (d) {
+
+      case DataType::PARAM:
+         cout << s << " = " << theParam[ParamLabel[s]] << endl;
+         break;
+
+      case DataType::VECTOR:
+         cout << s << " =\n" << *theVector[VectorLabel[s]] << endl;
+         break;
+
+      case DataType::HVECTOR:
+         cout << s << " = " << *theHVector[HVectorLabel[s]] << endl;
+         break;
+
+      case DataType::MATRIX:
+         {
+            cout << "Matrix " << s << endl;
+            int k = MatrixLabel[s];
+            for (size_t i=1; i<=theMatrix[k]->getNbRows(); ++i) {
+               cout << "Row " << i << ": ";
+               for (size_t j=1; j<=theMatrix[k]->getNbColumns(); ++j)
+                  cout << theMatrix[k]->at(i,j) << "  ";
+               cout << endl;
+            }
+         }
+         break;
+
+      case DataType::MESH:
+         {
+            int verb = OFELI::Verbosity;
+            OFELI::Verbosity = 2;
+            cout << *theMesh[MeshLabel[s]];
+            OFELI::Verbosity = verb;
+         }
+         break;
+
+      case DataType::GRID:
+         cout << *theGrid[GridLabel[s]];
+         break;
+
+      case DataType::FCT:
+         cout << *theFct[FctLabel[s]];
+         break;
+
+      case DataType::TAB:
+         cout << *theTab[TabLabel[s]];
+         break;
+
+      case DataType::LS:
+         cout << *theLS[LSLabel[s]];
+         break;
+
+      case DataType::AE:
+         cout << *theAE[AELabel[s]];
+         break;
+
+      case DataType::ODE:
+         cout << *theODE[ODELabel[s]];
+         break;
+
+      case DataType::PDE:
+         cout << *thePDE[PDELabel[s]];
+         break;
+
+      case DataType::OPTIM:
+         cout << *theOpt[OptLabel[s]];
+         break;
+
+      case DataType::EIGEN:
+         cout << *theEig[EigLabel[s]];
+         break;
+
+      default:
+         MSGR("","No entity "+s+" found")
+   }
+   return 0;
+}
+
+
+int data::print()
+{
+   string s = _cmd->buffer();
+   if (dn[s].active==0) {
+      cout << "Entity " << s << " has been removed." << endl;
+      return 1;
+   }
+   DataType d = getType(s);
+   switch (d) {
+
+      case DataType::PARAM:
+         return 1;
+
+      case DataType::VECTOR:
+         return 1;
+
+      case DataType::HVECTOR:
+         cout << s << " = " << *theHVector[HVectorLabel[s]] << endl;
+         break;
+
+      case DataType::MATRIX:
+         return 1;
+
+      case DataType::MESH:
+         {
+            int verb = OFELI::Verbosity;
+            OFELI::Verbosity = 2;
+            cout << *theMesh[MeshLabel[s]];
+            OFELI::Verbosity = verb;
+         }
+         break;
+
+      case DataType::GRID:
+         cout << *theGrid[GridLabel[s]];
+         break;
+
+      case DataType::FCT:
+         {
+            funct& f = *theFct[FctLabel[s]];
+            cout << "Function " << f.name << ", variable(s): " << f.var[0];
+            for (size_t i=1; i<f.nb_var; ++i)
+               cout << ", " << f.var[i];
+            if (f.nb_par) {
+               cout << ", parameter(s): " << f.par[0];
+               for (size_t i=1; i<f.nb_par; ++i)
+                  cout << ", " << f.par[i];
+            }
+            cout << ", expression: " << f.getExpression() << endl;
+         }
+         break;
+
+      case DataType::TAB:
+         cout << *theTab[TabLabel[s]];
+         break;
+
+      case DataType::LS:
+         cout << *theLS[LSLabel[s]];
+         break;
+
+      case DataType::AE:
+         cout << *theAE[AELabel[s]];
+         break;
+
+      case DataType::ODE:
+         cout << *theODE[ODELabel[s]];
+         break;
+
+      case DataType::PDE:
+         cout << *thePDE[PDELabel[s]];
+         break;
+
+      case DataType::OPTIM:
+         cout << *theOpt[OptLabel[s]];
+         break;
+
+      case DataType::EIGEN:
+         cout << *theEig[EigLabel[s]];
+         break;
+
+      default:
+         return 1;
+   }
+   return 0;
+}
+
+
 int data::rename(const string& old_name,
                  const string& new_name)
 {
-   if (dn[new_name].active) {
+   if (dn[new_name].active==1) {
       cout << "Entity " << new_name << " is already used." << endl;
       return 1;
    }
-   if (!dn[old_name].active) {
+   if (dn[old_name].active==0) {
       cout << "Entity " << old_name << " has been removed." << endl;
       return 1;
    }
-   dn[old_name].active = false;
-   dn[new_name].active = true;
+   dn[old_name].active = 0, dn[new_name].active = 1;
    DataType d = getType(old_name);
    dn[new_name].dt = d;
    switch (d) {
@@ -376,7 +544,7 @@ int data::setHistory(const string& s, size_t n)
       HVectorName.push_back(s);
       nb_hvectors++;
       theHVector.push_back(_hu);
-      dn[s].active = true;
+      dn[s].active = 1;
       Desc[s] = "History vector containing vectors with size "+to_string(n);
    }
    else
@@ -542,7 +710,7 @@ int data::setSample()
          CHK_MSGR(k==0,"sample>","Reference to undefined mesh.")
          _theMesh = theMesh[k];
          for (size_t n=1; n<=_theMesh->getNbNodes(); ++n)
-            (*_theVector)(n) = (*_theFct)((*_theMesh)[n]->getCoord());
+            (*_theVector)(n) = (*_theFct)((*_theMesh)[n]->getX(),(*_theMesh)[n]->getY(),(*_theMesh)[n]->getZ());
          _theVector->setMesh(*_theMesh);
       }
       _theVector->setName(vec);
@@ -674,7 +842,7 @@ int data::addLS(ls*     e,
    p2s = name, pt2s = DataType::LS;
    LSLabel[name] = dn[name].i = ++nb_ls;
    dn[name].dt = DataType::LS;
-   dn[name].active = true;
+   dn[name].active = 1;
    if (opt==0) {
       theLS.push_back(e);
       LSName.push_back(name);
@@ -702,7 +870,7 @@ int data::addAE(ae*     e,
    p2s = name, pt2s = DataType::AE;
    AELabel[name] = dn[name].i = ++nb_ae;
    dn[name].dt = DataType::AE;
-   dn[name].active = true;
+   dn[name].active = 1;
    if (opt==0) {
       theAE.push_back(e);
       AEName.push_back(name);
@@ -730,7 +898,7 @@ int data::addODE(ode*    e,
    p2s = name, pt2s = DataType::ODE;
    ODELabel[name] = dn[name].i = ++nb_ode;
    dn[name].dt = DataType::ODE;
-   dn[name].active = true;
+   dn[name].active = 1;
    if (opt==0) {
       theODE.push_back(e);
       ODEName.push_back(name);
@@ -758,7 +926,7 @@ int data::addPDE(pde*    e,
    p2s = name, pt2s = DataType::PDE;
    PDELabel[name] = dn[name].i = ++nb_pde;
    dn[name].dt = DataType::PDE;
-   dn[name].active = true;
+   dn[name].active = 1;
    if (opt==0) {
       thePDE.push_back(e);
       PDEName.push_back(name);
@@ -786,7 +954,7 @@ int data::addOpt(optim*  o,
    p2s = name, pt2s = DataType::OPTIM;
    OptLabel[name] = dn[name].i = ++nb_opt;
    dn[name].dt = DataType::OPTIM;
-   dn[name].active = true;
+   dn[name].active = 1;
    if (opt==0) {
       theOpt.push_back(o);
       OptName.push_back(name);
@@ -814,7 +982,7 @@ int data::addEig(eigen*  e,
    p2s = name, pt2s = DataType::EIGEN;
    EigLabel[name] = dn[name].i = ++nb_eig;
    dn[name].dt = DataType::EIGEN;
-   dn[name].active = true;
+   dn[name].active = 1;
    if (opt==0) {
       theEig.push_back(e);
       EigName.push_back(name);
@@ -830,20 +998,21 @@ int data::addFunction(OFELI::Fct& f)
    DEFAULT_FCT_NAME(name);
    if (checkAlreadyUsed(name,DataType::FCT))
       return 0;
-   _theFct = new funct(_rita,name);
+   _theFct = new funct(name);
    _theFct->set(f);
-   _theFct->set(ParamName,theParam);
+//   _theFct->set(ParamName,theParam);
+   _rita->_calc->setFun(_theFct);
    Desc[name] = "";
    if (FctLabel[name]) {
       REDEFINED("Function ")
       iFct = FctLabel[name];
-      dn[name].active  = true;
+      dn[name].active  = 1;
       theFct[iFct] = _theFct;
       return iFct;
    }
    FctName.push_back(name);
    theFct.push_back(_theFct);
-   dn[name].active = true;
+   dn[name].active = 1;
    FctName[iFct] = name;
    FctLabel[name] = dn[name].i = ++nb_fcts;
    dn[name].dt = DataType::FCT;
@@ -857,19 +1026,18 @@ int data::addFunction(string& name)
    DEFAULT_FCT_NAME(name);
    if (checkAlreadyUsed(name,DataType::FCT))
       return 0;
-   _theFct = new funct(_rita,name);
-   _theFct->set(ParamName,theParam);
+   _theFct = new funct(name);
    Desc[name] = "";
    if (FctLabel[name]) {
       REDEFINED("Function ")
       iFct = FctLabel[name];
-      dn[name].active  = true;
+      dn[name].active  = 1;
       theFct[iFct] = _theFct;
       return iFct;
    }
    FctName.push_back(name);
    theFct.push_back(_theFct);
-   dn[name].active = true;
+   dn[name].active = 1;
    FctName[iFct] = name;
    FctLabel[name] = dn[name].i = ++nb_fcts;
    dn[name].dt = DataType::FCT;
@@ -884,7 +1052,6 @@ int data::addFunction(string&       name,
    vector<string> v;
    v.push_back(var);
    vector<size_t> nbv {1};
- cout<<"-- 0.1 -- "<<nbv[0]<<endl;
    return addFunction(name,v,exp,nbv);
 }
 
@@ -898,11 +1065,8 @@ int data::addFunction(string&               name,
    DEFAULT_FCT_NAME(name);
    if (checkAlreadyUsed(name,DataType::FCT))
       return 0;
-   _theFct = new funct(_rita,name);
-   size_t vs = var.size();
-   for (size_t i=0; i<vs; ++i)
-      _theFct->setVar(var[i],n[i]);
-   int ret = _theFct->setExpr(exp,ParamName,theParam);
+   _theFct = new funct(name);
+   int ret = _rita->_calc->setFun(_theFct,exp,var,n);
    if (ret) {
       delete _theFct;
       return -1;
@@ -911,13 +1075,13 @@ int data::addFunction(string&               name,
    if (FctLabel[name]) {
       REDEFINED("Function ")
       iFct = FctLabel[name];
-      dn[name].active  = true;
+      dn[name].active  = 1;
       theFct[iFct] = _theFct;
       return iFct;
    }
    FctName.push_back(name);
    theFct.push_back(_theFct);
-   dn[name].active = true;
+   dn[name].active = 1;
    FctName[iFct] = name;
    FctLabel[name] = dn[name].i = ++nb_fcts;
    dn[name].dt = DataType::FCT;
@@ -933,7 +1097,7 @@ int data::addFunction(string&               name,
    DEFAULT_FCT_NAME(name);
    if (checkAlreadyUsed(name,DataType::FCT))
       return 0;
-   _theFct = new funct(_rita,name);
+   _theFct = new funct(name);
    size_t vs = var.size();
    if (var[0]=="t") {
       _theFct->setVar(var[0],1);
@@ -946,7 +1110,7 @@ int data::addFunction(string&               name,
       for (size_t i=0; i<vs; ++i)
          _theFct->setVar(var[i],1);
    }
-   int ret = _theFct->setExpr(exp,ParamName,theParam);
+   int ret = _rita->_calc->setFun(_theFct,exp,var);
    if (ret) {
       delete _theFct;
       return -1;
@@ -955,13 +1119,13 @@ int data::addFunction(string&               name,
    if (FctLabel[name]) {
       REDEFINED("Function ")
       iFct = FctLabel[name];
-      dn[name].active  = true;
+      dn[name].active = 1;
       theFct[iFct] = _theFct;
       return iFct;
    }
    FctName.push_back(name);
    theFct.push_back(_theFct);
-   dn[name].active = true;
+   dn[name].active = 1;
    FctName[iFct] = name;
    FctLabel[name] = dn[name].i = ++nb_fcts;
    dn[name].dt = DataType::FCT;
@@ -980,13 +1144,13 @@ int data::addGrid(OFELI::Grid* g,
    if (GridLabel[name]) {
       REDEFINED("Grid ")
       iGrid = GridLabel[name];
-      dn[name].active = true;
+      dn[name].active = 1;
       theGrid[iGrid] = g;
       return iGrid;
    }
    theGrid.push_back(g);
    GridName.push_back(name);
-   dn[name].active = true;
+   dn[name].active = 1;
    GridLabel[name] = dn[name].i = ++nb_grids;
    dn[name].dt = DataType::GRID;
    return iGrid;
@@ -1004,57 +1168,79 @@ int data::addMesh(OFELI::Mesh* ms,
    if (MeshLabel[name]) {
       REDEFINED("Mesh ")
       iMesh = MeshLabel[name];
-      dn[name].active = true;
+      dn[name].active = 1;
       theMesh[iMesh] = ms;
       return iMesh;
    }
    theMesh.push_back(ms);
    MeshName.push_back(name);
-   dn[name].active = true;
+   dn[name].active = 1;
    MeshLabel[name] = dn[name].i = ++nb_meshes;
    dn[name].dt = DataType::MESH;
    return iMesh;
 }
 
 
-int data::addParam(string name,
-                   double value,
-                   bool   opt)
+void data::setParam(string name,
+                    double value)
 {
-   if (checkAlreadyUsed(name,DataType::PARAM))
-      return 0;
+   iParam = ParamLabel[name];
+   theParam[iParam] = value;
+}
+
+
+void data::setVector(string               name,
+                     OFELI::Vect<double>* u)
+{
+   iVector = VectorLabel[name];
+   theVector[iVector] = u;
+}
+
+
+void data::setMatrix(string                 name,
+                     OFELI::Matrix<double>* M)
+{
+   iMatrix = MatrixLabel[name];
+   theMatrix[iMatrix] = M;
+}
+
+
+int data::addParam(string  name,
+                   double  value,
+                   SetCalc opt)
+{
+   checkAlreadyUsed(name,DataType::PARAM);
    Desc[name] = "";
-   if (!opt)
+   if (opt==SetCalc::SET)
       _rita->_calc->setParam(name,value);
    if (ParamLabel[name]) {
       iParam = ParamLabel[name];
-      dn[name].active = true;
       theParam[iParam] = value;
       ParamLabel[name] = dn[name].i = iParam;
       dn[name].dt = DataType::PARAM;
+      dn[name].active = 1;
       return iParam;
    }
    iParam = theParam.size();
    theParam.push_back(value);
    ParamName.push_back(name);
-   dn[name].active = true;
+   dn[name].active = 1;
    ParamLabel[name] = dn[name].i = ++nb_params;
    dn[name].dt = DataType::PARAM;
    return iParam;
 }
 
 
-int data::addVector(string name,
-                    double t,
-                    int    n,
-                    string file,
-                    int    opt)
+int data::addVector(string  name,
+                    double  t,
+                    int     n,
+                    string  file,
+                    SetCalc opt)
 {
+   checkAlreadyUsed(name,DataType::VECTOR);
    int nbd = 1;
    iVector = theVector.size();
    DEFAULT_VECTOR_NAME(name);
-   if (checkAlreadyUsed(name,DataType::VECTOR))
-      return 0;
    Desc[name] = "";
    if (file!="")
       n = 1;
@@ -1068,10 +1254,10 @@ int data::addVector(string name,
    vect_hist[name] = "%$§&";
    dn[name].dt = DataType::VECTOR;
    if (VectorLabel[name]) {
-      if (!opt)
+      if (opt==SetCalc::UPDATE)
          _rita->_calc->setVectorValue(name,_u);
       iVector = VectorLabel[name];
-      if (dn[name].active==false)
+      if (dn[name].active<1)
          nb_vectors++;
       if (file!="") {
          OFELI::XMLParser xml(file,EType::VECTOR);
@@ -1081,15 +1267,17 @@ int data::addVector(string name,
       VectorTime[iVector] = t;
       VectorName[iVector] = name;
       nb_dof[iVector] = nbd;
-      dn[name].active = true;
+      dn[name].active = 1;
       return iVector;
    }
-   if (!opt)
-      _rita->_calc->setVector(_u);
+   else {
+      if (opt==SetCalc::SET)
+         _rita->_calc->setVector(_u);
+   }
    VectorName.push_back(name);
    theVector.push_back(_u);
    VectorTime.push_back(t);
-   dn[name].active = true;
+   dn[name].active = 1;
    VectorSizeType.push_back(DataSize::GIVEN_SIZE);
    VectorLabel[name] = dn[name].i = ++nb_vectors;
    nb_dof.push_back(nbd);
@@ -1123,23 +1311,23 @@ int data::remove(const string& name)
 
       case DataType::PARAM:
          if (ParamLabel[name]) {
-            dn[name].active = false;
-            _rita->_calc->theParser.RemoveVar(name);
+            dn[name].active = 0;
+//            _rita->_calc->theParser->RemoveVar(name);
             nb_params--;
          }
          break;
 
       case DataType::VECTOR:
          if (VectorLabel[name]) {
-            dn[name].active = false;
-            _rita->_calc->theParser.RemoveVar(name);
+            dn[name].active = 0;
+//            _rita->_calc->theParser->RemoveVar(name);
             nb_vectors--;
          }
          break;
 
       case DataType::HVECTOR:
          if (HVectorLabel[name]) {
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_hvectors--;
          }
          break;
@@ -1147,8 +1335,8 @@ int data::remove(const string& name)
       case DataType::MATRIX:
          if (MatrixLabel[name]) {
             theMatrix[MatrixLabel[name]]->setSize(0);
-            dn[name].active = false;
-            _rita->_calc->theParser.RemoveVar(name);
+            dn[name].active = 0;
+//            _rita->_calc->theParser->RemoveVar(name);
             nb_matrices--;
          }
          break;
@@ -1157,7 +1345,7 @@ int data::remove(const string& name)
          if (GridLabel[name]) {
             delete theGrid[GridLabel[name]];
             theGrid[GridLabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_grids--;
          }
          break;
@@ -1166,7 +1354,7 @@ int data::remove(const string& name)
          if (MeshLabel[name]) {
             delete theMesh[MeshLabel[name]];
             theMesh[MeshLabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_meshes--;
          }
          break;
@@ -1175,7 +1363,7 @@ int data::remove(const string& name)
          if (TabLabel[name]) {
             delete theTab[TabLabel[name]];
             theTab[TabLabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_tabs--;
          }
          break;
@@ -1184,7 +1372,7 @@ int data::remove(const string& name)
          if (FctLabel[name]) {
             delete theFct[FctLabel[name]];
             theFct[FctLabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_fcts--;
          }
          break;
@@ -1193,7 +1381,7 @@ int data::remove(const string& name)
          if (LSLabel[name]) {
             delete theLS[LSLabel[name]];
             theLS[LSLabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_ls--;
          }
          break;
@@ -1202,7 +1390,7 @@ int data::remove(const string& name)
          if (AELabel[name]) {
             delete theAE[AELabel[name]];
             theAE[AELabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_ae--;
          }
          break;
@@ -1211,7 +1399,7 @@ int data::remove(const string& name)
          if (ODELabel[name]) {
             delete theODE[ODELabel[name]];
             theODE[ODELabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_ode--;
          }
          break;
@@ -1220,7 +1408,7 @@ int data::remove(const string& name)
          if (PDELabel[name]) {
             delete thePDE[PDELabel[name]];
             thePDE[PDELabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_pde--;
          }
          break;
@@ -1229,7 +1417,7 @@ int data::remove(const string& name)
          if (OptLabel[name]) {
             delete theOpt[OptLabel[name]];
             theOpt[OptLabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_opt--;
          }
          break;
@@ -1238,7 +1426,7 @@ int data::remove(const string& name)
          if (EigLabel[name]) {
             delete theEig[EigLabel[name]];
             theEig[EigLabel[name]] = nullptr;
-            dn[name].active = false;
+            dn[name].active = 0;
             nb_eig--;
          }
          break;
@@ -1250,17 +1438,18 @@ int data::remove(const string& name)
 }
 
 
-int data::addMatrix(string name,
-                    int    nr,
-                    int    nc,
-                    string file,
-                    string s,
-                    bool   opt)
+int data::addMatrix(string  name,
+                    int     nr,
+                    int     nc,
+                    string  file,
+                    string  s,
+                    SetCalc opt)
 {
-   iMatrix = theMatrix.size();
-   string nm = name;
    if (checkAlreadyUsed(name,DataType::MATRIX))
       return 0;
+   iMatrix = theMatrix.size();
+   string nm = name;
+   DEFAULT_MATRIX_NAME(name);
    Desc[name] = "";
    if (file=="") {
       if (s=="dense")
@@ -1293,24 +1482,23 @@ int data::addMatrix(string name,
       _theMatrix->setName(name);
       xml.get(_theMatrix);
    }
-   DEFAULT_MATRIX_NAME(name);
    dn[name].dt = DataType::MATRIX;
    if (MatrixLabel[name]) {
       iMatrix = MatrixLabel[name];
-      if (dn[name].active==false)
+      if (dn[name].active<1)
          nb_matrices++;
-      dn[name].active = true;
+      dn[name].active = 1;
       theMatrix[iMatrix] = _theMatrix;
       MatrixLabel[name] = dn[name].i = nb_matrices;
-      if (!opt)
+      if (opt==SetCalc::UPDATE)
          _rita->_calc->setMatrixValue(name,_theMatrix);
       return iMatrix;
    }
    MatrixName.push_back(name);
    theMatrix.push_back(_theMatrix);
-   dn[name].active = true;
+   dn[name].active = 1;
    MatrixLabel[name] = dn[name].i = ++nb_matrices;
-   if (!opt)
+   if (opt==SetCalc::SET)
       _rita->_calc->setMatrix(_theMatrix);
    return iMatrix;
 }
@@ -1319,21 +1507,21 @@ int data::addMatrix(string name,
 int data::addTab(OFELI::Tabulation* tab,
                  string&            name)
 {
-   iTab = theTab.size();
-   DEFAULT_TAB_NAME(name);
    if (checkAlreadyUsed(name,DataType::TAB))
       return 0;
+   iTab = theTab.size();
+   DEFAULT_TAB_NAME(name);
    Desc[name] = "";
    if (TabLabel[name]) {
       REDEFINED("Tabulation ")
       iTab = TabLabel[name];
-      dn[name].active = true;
+      dn[name].active = 1;
       theTab[iTab] = tab;
       return iTab;
    }
    theTab.push_back(tab);
    TabName.push_back(name);
-   dn[name].active = true;
+   dn[name].active = 1;
    TabLabel[name] = dn[name].i = ++nb_tabs;
    dn[name].dt = DataType::TAB;
    return iTab;
@@ -1344,12 +1532,12 @@ int data::addMeshVector(const string& nm1,
                         string&       nm2,
                         DataSize      s,
                         int           ndof,
-                        bool          opt)
+                        SetCalc       opt)
 {
-   iVector = theVector.size();
-   DEFAULT_VECTOR_NAME(nm2);
    if (checkAlreadyUsed(nm2,DataType::VECTOR))
       return 0;
+   iVector = theVector.size();
+   DEFAULT_VECTOR_NAME(nm2);
    CHK_MSGR0(MeshLabel[nm1]==0,"","Mesh "+nm1+" not found")
    _theMesh = theMesh[MeshLabel[nm1]];
    CHK_MSGR(s==DataSize::NODES&&_theMesh->getNbNodes()==0,"","Mesh has no nodes")
@@ -1378,19 +1566,19 @@ int data::addMeshVector(const string& nm1,
    dn[nm2].dt = DataType::VECTOR;
    if (VectorLabel[nm2]) {
       iVector = VectorLabel[nm2];
-      dn[nm2].active = true;
+      dn[nm2].active = 1;
       theVector[iVector] = _u;
       VectorLabel[nm2] = dn[nm2].i = ++nb_vectors;
-      if (!opt)
+      if (opt==SetCalc::UPDATE)
          _rita->_calc->setVectorValue(nm2,_u);
       return iVector;
    }
    VectorName.push_back(nm2);
    theVector.push_back(_u);
    nb_dof.push_back(ndof);
-   dn[nm2].active = true;
+   dn[nm2].active = 1;
    VectorLabel[nm2] = dn[nm2].i = ++nb_vectors;
-   if (!opt)
+   if (opt==SetCalc::SET)
       _rita->_calc->setVector(_u);
    return iVector;
 }
@@ -1399,12 +1587,12 @@ int data::addMeshVector(const string& nm1,
 int data::addGridVector(const string& nm1,
                         string&       nm2,
                         int           ndof,
-                        bool          opt)
+                        SetCalc       opt)
 {
-   iVector = theVector.size();
-   DEFAULT_VECTOR_NAME(nm2);
    if (checkAlreadyUsed(nm2,DataType::VECTOR))
       return 0;
+   iVector = theVector.size();
+   DEFAULT_VECTOR_NAME(nm2);
    CHK_MSGR0(GridLabel[nm1]==0,"","Grid "+nm1+" not found")
    _theGrid = theGrid[GridLabel[nm1]];
    _u = new OFELI::Vect<double>(*_theGrid);
@@ -1414,18 +1602,19 @@ int data::addGridVector(const string& nm1,
    Desc[nm2] = "Vector associated to grid " + nm1;
    if (VectorLabel[nm2]) {
       iVector = VectorLabel[nm2];
-      dn[nm2].active = true;
+      dn[nm2].active = 1;
       theVector[iVector] = _u;
-      _rita->_calc->setVectorValue(nm2,_u);
+      if (opt==SetCalc::UPDATE)
+         _rita->_calc->setVectorValue(nm2,_u);
       return iVector;
    }
    VectorName.push_back(nm2);
    theVector.push_back(_u);
-   dn[nm2].active = true;
+   dn[nm2].active = 1;
    nb_dof.push_back(ndof);
    VectorLabel[nm2] = dn[nm2].i = ++nb_vectors;
    VectorSizeType.push_back(DataSize::GRID);
-   if (!opt)
+   if (opt==SetCalc::SET)
       _rita->_calc->setVector(_u);
    return iVector;
 }
@@ -1443,25 +1632,24 @@ int data::setVectorValue(int                        k,
 
 int data::addVector(OFELI::Vect<double>* v,
                     string&              name,
-                    bool                 opt)
+                    SetCalc              opt)
 {
    iVector = theVector.size();
    DEFAULT_VECTOR_NAME(name);
    v->setName(name);
    Desc[name] = "";
-   if (!opt)
+   if (opt==SetCalc::SET)
       _rita->_calc->setVector(v);
    if (VectorLabel[name]) {
-      REDEFINED("Vector ")
       iVector = VectorLabel[name];
-      dn[name].active = true;
+      dn[name].active = 1;
       theVector[iVector] = _u;
       return iVector;
    }
    iVector = theVector.size();
    theVector.push_back(v);
    VectorName.push_back(name);
-   dn[name].active = true;
+   dn[name].active = 1;
    VectorLabel[name] = dn[name].i = ++nb_vectors;
    VectorSizeType.push_back(DataSize::GIVEN_SIZE);
    nb_dof.push_back(1);
@@ -1470,93 +1658,30 @@ int data::addVector(OFELI::Vect<double>* v,
 }
 
 
-int data::print(const string& s)
+int data::addMatrix(OFELI::DMatrix<double>* M,
+                    string&                 name,
+                    SetCalc                 opt)
 {
-   if (dn[s].i==0) {
-      cout << "Entity " << s << " not found." << endl;
-      return 1;
+   checkAlreadyUsed(name,DataType::MATRIX);
+   iMatrix = theMatrix.size();
+   DEFAULT_MATRIX_NAME(name);
+   M->setName(name);
+   Desc[name] = "";
+   if (opt==SetCalc::SET)
+      _rita->_calc->setMatrix(M);
+   if (MatrixLabel[name]) {
+      iMatrix = MatrixLabel[name];
+      dn[name].active = 1;
+      theMatrix[iMatrix] = M;
+      return iMatrix;
    }
-   if (!dn[s].active) {
-      cout << "Entity " << s << " has been removed." << endl;
-      return 1;
-   }
-   DataType d = getType(s);
-   switch (d) {
-
-      case DataType::PARAM:
-         cout << s << " = " << theParam[ParamLabel[s]] << endl;
-         break;
-
-      case DataType::VECTOR:
-         cout << s << " =\n" << *theVector[VectorLabel[s]] << endl;
-         break;
-
-      case DataType::HVECTOR:
-         cout << s << " = " << *theHVector[HVectorLabel[s]] << endl;
-         break;
-
-      case DataType::MATRIX:
-         {
-            cout << "Matrix " << s << endl;
-            int k = MatrixLabel[s];
-            for (size_t i=1; i<=theMatrix[k]->getNbRows(); ++i) {
-               cout << "Row " << i << ": ";
-               for (size_t j=1; j<=theMatrix[k]->getNbColumns(); ++j)
-                  cout << theMatrix[k]->at(i,j) << "  ";
-               cout << endl;
-            }
-         }
-         break;
-
-      case DataType::MESH:
-         {
-            int verb = OFELI::Verbosity;
-            OFELI::Verbosity = 2;
-            cout << *theMesh[MeshLabel[s]];
-            OFELI::Verbosity = verb;
-         }
-         break;
-
-      case DataType::GRID:
-         cout << *theGrid[GridLabel[s]];
-         break;
-
-      case DataType::FCT:
-         cout << *theFct[FctLabel[s]];
-         break;
-
-      case DataType::TAB:
-         cout << *theTab[TabLabel[s]];
-         break;
-
-      case DataType::LS:
-         cout << *theLS[LSLabel[s]];
-         break;
-
-      case DataType::AE:
-         cout << *theAE[AELabel[s]];
-         break;
-
-      case DataType::ODE:
-         cout << *theODE[ODELabel[s]];
-         break;
-
-      case DataType::PDE:
-         cout << *thePDE[PDELabel[s]];
-         break;
-
-      case DataType::OPTIM:
-         cout << *theOpt[OptLabel[s]];
-         break;
-
-      case DataType::EIGEN:
-         cout << *theEig[EigLabel[s]];
-         break;
-
-      default:
-         MSGR("","No entity named "+s+" found")
-   }
-   return 0;
+   iMatrix = theMatrix.size();
+   theMatrix.push_back(M);
+   MatrixName.push_back(name);
+   dn[name].active = 1;
+   MatrixLabel[name] = dn[name].i = ++nb_matrices;
+   dn[name].dt = DataType::MATRIX;
+   return iMatrix;
 }
 
 
@@ -1730,7 +1855,7 @@ int data::setVector()
          *_rita->ofh << " mesh=" << name_mesh;
       }
       if (size>0) {
-         addVector(name,0.,size,"",false);
+         addVector(name,0.,size,"",SetCalc::SET);
          *_rita->ofh << " size=" << size;
       }
       *_rita->ofh << endl;
@@ -1792,7 +1917,7 @@ int data::setMatrix()
    if (nr)
       *_rita->ofh << " size=" << nr;
    *_rita->ofh << endl;
-   addMatrix(name,nr,nc,file,storage,false);
+   addMatrix(name,nr,nc,file,storage,SetCalc::SET);
    return 0;
 }
 
@@ -2083,7 +2208,7 @@ int data::save()
    CHK_MSGR(dn[name].dt==DataType::PARAM,"save>","Parameters cannot be saved.")
 
 // Save a vector
-   if (dn[name].dt==DataType::VECTOR && dn[name].active) {
+   if (dn[name].dt==DataType::VECTOR && dn[name].active==1) {
       int k=VectorLabel[name];
       if (format=="ofeli") {
          *_rita->ofh << " format=ofeli file=" << file;
@@ -2120,7 +2245,7 @@ int data::save()
    }
 
 // Save a history vector
-   else if (dn[name].dt==DataType::HVECTOR && dn[name].active) {
+   else if (dn[name].dt==DataType::HVECTOR && dn[name].active==1) {
       CHK_MSGR(theHVector[HVectorLabel[name]]->nt==0,"save>","History vector "+name+" empty.")
       if (format=="ofeli") {
          int ret = theHVector[HVectorLabel[name]]->saveOFELI(file,every);
@@ -2152,14 +2277,14 @@ int data::save()
    }
 
 // Save a matrix
-   else if (dn[name].dt==DataType::MATRIX && dn[name].active) {
+   else if (dn[name].dt==DataType::MATRIX && dn[name].active==1) {
       OFELI::saveMatrix(theMatrix[MatrixLabel[name]],file);
       *_rita->ofh << " file=" << file;
       return 0;
    }
 
 // Save a mesh
-   else if (dn[name].dt==DataType::MESH && dn[name].active) {
+   else if (dn[name].dt==DataType::MESH && dn[name].active==1) {
       if (format=="ofeli") {
          saveMesh(file,*theMesh[MeshLabel[name]],OFELI_FF);
          *_rita->ofh << " file=" << file << " format=ofeli";
@@ -2185,13 +2310,13 @@ int data::save()
    }
 
 // Save a grid
-   CHK_MSGR(dn[name].dt==DataType::GRID && dn[name].active,"save>","This option is not yet implemented.")
+   CHK_MSGR(dn[name].dt==DataType::GRID && dn[name].active==1,"save>","This option is not yet implemented.")
 
 // Case of a function
-   CHK_MSGR(dn[name].dt==DataType::FCT && dn[name].active,"save>","Functions cannot be saved.")
+   CHK_MSGR(dn[name].dt==DataType::FCT && dn[name].active==1,"save>","Functions cannot be saved.")
 
 // Save a tabulation
-   CHK_MSGR(dn[name].dt==DataType::TAB && dn[name].active,"save>","This type of data cannot be saved in file.")
+   CHK_MSGR(dn[name].dt==DataType::TAB && dn[name].active==1,"save>","This type of data cannot be saved in file.")
    *_rita->ofh << endl;
    return ret;
 }
@@ -2206,7 +2331,7 @@ void data::ListParams(int opt)
    cout << "Number of parameters: " << nb_params << endl;
    for (size_t i=1; i<theParam.size(); ++i) {
       string s = ParamName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          cout << s << " = " << theParam[i] << endl;
          if (Desc[s]!="")
             cout << "Description: " << Desc[s] << endl;
@@ -2224,7 +2349,7 @@ void data::ListVectors(int opt)
    cout << "Number of vectors: " << nb_vectors << endl;
    for (size_t i=1; i<theVector.size(); ++i) {
       string s = VectorName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          if (VectorSizeType[i]==DataSize::GIVEN_SIZE)
             cout << "Vector: " << s << ", Size: " << theVector[i]->size() << endl;
          else
@@ -2245,7 +2370,7 @@ void data::ListHVectors(int opt)
    cout << "Number of history vectors: " << nb_hvectors << endl;
    for (size_t i=1; i<theHVector.size(); ++i) {
       string s = HVectorName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          cout << "History Vector: " << s << ", Size: " << theHVector[i]->nt << endl;
          if (Desc[s]!="")
             cout << "Description: " << Desc[s] << endl;
@@ -2263,8 +2388,8 @@ void data::ListFunctions(int opt)
    cout << "Number of functions: " << nb_fcts << endl;
    for (size_t i=1; i<theFct.size(); ++i) {
       string s = FctName[i];
-      if (dn[s].active) {
-         cout << *theFct[i];
+      if (dn[s].active==1) {
+         cout << "Function : " << s << ", Definition: " << theFct[i]->getExpression() << endl;
          if (Desc[s]!="")
             cout << "Description: " << Desc[s] << endl;
       }
@@ -2281,7 +2406,7 @@ void data::ListTabs(int opt)
    cout << "Number of tabulations: " << nb_tabs << endl;
    for (size_t i=1; i<theTab.size(); ++i) {
       string s = TabName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          cout << "Tabulation: " << s << ", Nb. of variables: " 
               << theTab[i]->getNbVar(1) << ", Size: " << theTab[i]->getSize(1,1) << endl;
          if (Desc[s]!="")
@@ -2300,7 +2425,7 @@ void data::ListMatrices(int opt)
    cout << "Number of matrices: " << nb_matrices << endl;
    for (size_t i=1; i<theMatrix.size(); ++i) {
       string s = MatrixName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          cout << "Matrix: " << s << ", Size: " << theMatrix[i]->getNbRows()
               << " x " << theMatrix[i]->getNbColumns() << endl;
          if (Desc[s]!="")
@@ -2319,7 +2444,7 @@ void data::ListGrids(int opt)
    cout << "Number of grids: " << nb_grids << endl;
    for (size_t i=1; i<theGrid.size(); ++i) {
       string s = GridName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          OFELI::Grid *g = theGrid[i];
          cout << "Grid name:           " << s << endl;
          cout << "Space dimension:     " << g->getDim() << endl;
@@ -2357,7 +2482,7 @@ void data::ListMeshes(int opt)
    cout << "Number of meshes: " << nb_meshes << endl;
    for (size_t i=1; i<theMesh.size(); ++i) {
       string s = MeshName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          OFELI::Mesh *m = theMesh[i];
          cout << "Mesh name:          " << s << endl;
          cout << "Number of nodes:    " << m->getNbNodes() << endl;
@@ -2379,7 +2504,7 @@ void data::ListODE(int opt)
    cout << "Number of ordinary differential equations: " << nb_ode << endl;
    for (size_t i=1; i<theODE.size(); ++i) {
       string s = ODEName[i];
-      if (dn[s].active)
+      if (dn[s].active==1)
          cout << *theODE[i];
       if (Desc[s]!="")
          cout << "Description: " << Desc[s] << endl;
@@ -2396,7 +2521,7 @@ void data::ListPDE(int opt)
    cout << "Number of partial differential equations: " << nb_pde << endl;
    for (size_t i=1; i<thePDE.size(); ++i) {
       string s = PDEName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          pde *e = thePDE[i];
          cout << "PDE name: " << s << endl;
          cout << "PDE id: " << e->eq << endl;
@@ -2420,7 +2545,7 @@ void data::ListLS(int opt)
    cout << "Number of linear systems: " << nb_ls << endl;
    for (size_t i=1; i<theLS.size(); ++i) {
       string s = LSName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          ls *e = theLS[i];
          cout << "Linear System name:     " << s << endl;
          cout << "Matrix:                 " << MatrixName[e->iMat] << endl;
@@ -2441,7 +2566,7 @@ void data::ListAE(int opt)
    }
    cout << "Number of algebraic equations: " << nb_ae << endl;
    for (size_t i=1; i<theAE.size(); ++i)
-      if (dn[AEName[i]].active)
+      if (dn[AEName[i]].active==1)
          cout << *theAE[i];
 }
 
@@ -2455,7 +2580,7 @@ void data::ListOpt(int opt)
    cout << "Number of optimization problems:  " << nb_opt << endl;
    for (size_t i=1; i<theOpt.size(); ++i) {
       string s = OptName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          cout << *theOpt[i];
          if (Desc[s]!="")
             cout << "Description: " << Desc[s] << endl;
@@ -2473,7 +2598,7 @@ void data::ListEig(int opt)
    cout << "Number of eigen problems: " << nb_eig << endl;
    for (size_t i=1; i<theEig.size(); ++i) {
       string s = EigName[i];
-      if (dn[s].active) {
+      if (dn[s].active==1) {
          eigen *e = theEig[i];
          cout << "Eigen problem name:                         " << e->name << endl;
          cout << "Matrix size:                                " << e->M->getNbRows() << "x"
@@ -2800,20 +2925,20 @@ int data::check_variable_name(const string& n)
 }
 
 
-int data::checkAlreadyUsed(const string& s, const DataType& dt)
+int data::checkAlreadyUsed(const string& name, const DataType& dt)
 {
-   if (dn[s].i==0)
+   if (dn[name].i==0)
       return 0;
-   DataType d = dn[s].dt;
-   if ((dt!=DataType::MESH  && s.substr(0,3)==DEF_MESH_NAME) ||
-       (dt!=DataType::GRID  && s.substr(0,3)==DEF_GRID_NAME) ||
-       (dt!=DataType::LS    && s.substr(0,3)==DEF_LS_NAME)   ||
-       (dt!=DataType::AE    && s.substr(0,3)==DEF_AE_NAME)   ||
-       (dt!=DataType::ODE   && s.substr(0,3)==DEF_ODE_NAME)  ||
-       (dt!=DataType::PDE   && s.substr(0,3)==DEF_PDE_NAME)  ||
-       (dt!=DataType::OPTIM && s.substr(0,3)==DEF_OPT_NAME)  || 
-       (dt!=DataType::EIGEN && s.substr(0,3)==DEF_EIG_NAME)  ||
-       (dt!=DataType::FCT   && s.substr(0,3)==DEF_FCT_NAME))
+   DataType d = dn[name].dt;
+   if ((dt!=DataType::MESH  && name.substr(0,3)==DEF_MESH_NAME) ||
+       (dt!=DataType::GRID  && name.substr(0,3)==DEF_GRID_NAME) ||
+       (dt!=DataType::LS    && name.substr(0,3)==DEF_LS_NAME)   ||
+       (dt!=DataType::AE    && name.substr(0,3)==DEF_AE_NAME)   ||
+       (dt!=DataType::ODE   && name.substr(0,3)==DEF_ODE_NAME)  ||
+       (dt!=DataType::PDE   && name.substr(0,3)==DEF_PDE_NAME)  ||
+       (dt!=DataType::OPTIM && name.substr(0,3)==DEF_OPT_NAME)  || 
+       (dt!=DataType::EIGEN && name.substr(0,3)==DEF_EIG_NAME)  ||
+       (dt!=DataType::FCT   && name.substr(0,3)==DEF_FCT_NAME))
       ILLEGAL_PREFIX
 
    if (d!=dt) {
@@ -2821,59 +2946,61 @@ int data::checkAlreadyUsed(const string& s, const DataType& dt)
       switch (d) {
 
          case DataType::PARAM:
-            ALREADY_USED(ParamLabel,"a parameter")
+            REPLACED(ParamLabel)
+            remove(name);
             break;
 
          case DataType::VECTOR:
-            ALREADY_USED(VectorLabel,"a vector")
+            REPLACED(VectorLabel)
+            remove(name);
             break;
 
          case DataType::HVECTOR:
-            ALREADY_USED(HVectorLabel,"a history vector")
+            ALREADY_USED(HVectorLabel)
             break;
 
          case DataType::MATRIX:
-            ALREADY_USED(MatrixLabel,"a matrix")
+            REPLACED(MatrixLabel)
             break;
 
          case DataType::GRID:
-            ALREADY_USED(GridLabel,"a grid")
+            ALREADY_USED(GridLabel)
             break;
 
          case DataType::MESH:
-            ALREADY_USED(MeshLabel,"a mesh")
+            ALREADY_USED(MeshLabel)
             break;
 
          case DataType::TAB:
-            ALREADY_USED(TabLabel,"a tabulation")
+            ALREADY_USED(TabLabel)
             break;
 
          case DataType::FCT:
-            ALREADY_USED(FctLabel,"a function")
+            REPLACED(FctLabel)
             break;
 
          case DataType::LS:
-            ALREADY_USED(LSLabel,"a linear system")
+            ALREADY_USED(LSLabel)
             break;
 
          case DataType::AE:
-            ALREADY_USED(AELabel,"a parameter")
+            ALREADY_USED(AELabel)
             break;
 
          case DataType::ODE:
-            ALREADY_USED(ODELabel,"an ordinary differential equation")
+            ALREADY_USED(ODELabel)
             break;
 
          case DataType::PDE:
-            ALREADY_USED(PDELabel,"a partial differential equation")
+            ALREADY_USED(PDELabel)
             break;
 
          case DataType::EIGEN:
-            ALREADY_USED(EigLabel,"an eigenvalue problem")
+            ALREADY_USED(EigLabel)
             break;
 
          case DataType::OPTIM:
-            ALREADY_USED(OptLabel,"an optimization problem")
+            ALREADY_USED(OptLabel)
             break;
 
          default:

@@ -15,5 +15,5 @@ algebraic
   init -3. -1.
   end
 solve
-= x
+x
 exit

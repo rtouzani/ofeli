@@ -45,40 +45,42 @@ class funct
 
  public:
 
-    bool _alloc;
     size_t nb_var, nb_par;
     string name;
     vector<string> var, par;
-    funct(rita *r, const string& s);
-    ~funct();
+    vector<double> par_value;
+    funct();
+    funct(const string& s);
+    ~funct() { }
     void set(OFELI::Fct& f);
-    void set(const vector<string>& pn, const vector<double>& pv);
     void setNoPar();
     int set(const string& v, const string& s);
     int setExpr(const string& s);
-    int setExpr(const string& s, const vector<string>& pn, const vector<double>& pv);
     void setVar(const string& v, int n=1);
+    void setVar(const vector<string>& v);
+    void setVar(const vector<string>& v, const vector<size_t>& n);
+    void setPar(const string& name);
+    void setParValue(const double& v);
+    void setFromFct();
     string getExpression() const { return _theFct->getExpression(); }
-    double operator()(double x) { return (*_theFct)(x); }
-    double operator()(double x, double y) { return (*_theFct)(x,y); }
-    double operator()(double x, double y, double z) { return (*_theFct)(x,y,z); }
-    double operator()(double x, double y, double z, double t) { return (*_theFct)(x,y,z,t); }
-    double operator()(const OFELI::Point<double>& x) { return (*_theFct)(x); }
-    double operator()(const OFELI::Point<double>& x, double t) { return (*_theFct)(x,t); }
-    double operator()(const vector<double>& x) { return (*_theFct)(x); }
-    double D(real_t x) { return _theFct->D(x); }
-    double D(const vector<double>& x, size_t i) { return _theFct->D(x,i); }
+    double operator()(double x);
+    double operator()(double x, double y);
+    double operator()(double x, double y, double z);
+    double operator()(double x, double y, double z, double t);
+    double operator()(const vector<double>& x);
+    double D(real_t x);
+    double D(const vector<double>& x, size_t i);
     string getErrorMessage() const { return _theFct->getErrorMessage(); }
     OFELI::Fct *getFct() const { return _theFct; }
-    OFELI::Fct& fct() const { return *_theFct; }
 
  private:
 
-    rita *_rita;
     size_t _iv;
-    vector<string> _exvar, _expar;
+    vector<string> _Var;
+    vector<double> _arg;
     OFELI::Fct *_theFct;
     void setVar(size_t n);
+    double getPars();
 };
 
 ostream& operator<<(ostream& s, const funct& f);

@@ -108,8 +108,8 @@ class XMLParser : public Parser
    int get(Mesh& ms, Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
    int get(Grid& gr, vector<real_t>& v, string& name);
    int get(Grid& gr, Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
-   int get(Vect<real_t>& v, real_t time=-1, string name="ANYTHING", int format=ASCII);
-   int get(Vect<real_t>& v, const string& name);
+   int get(Vect<real_t>& v, real_t time, string name="ANYTHING", int format=ASCII);
+   int get(Vect<real_t>& v, const string& name="ANYTHING");
    int get(IPF& ipf);
    int get(Domain& dm);
    int get(Tabulation& t);

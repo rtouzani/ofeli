@@ -375,7 +375,6 @@ class Element
    map<size_t,size_t> _g2l;
 
    void calculate_nb_sides();
-   void shape_index(const string &shape);
 };
 
 ///////////////////////////////////////////////////////////////////////////////

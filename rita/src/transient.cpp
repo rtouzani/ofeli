@@ -131,7 +131,7 @@ int transient::run(const vector<string>& pb)
       TimeLoop {
 
          if (_rita->_verb)
-            cout << "Performing time step " << theStep <<", Time = " << theTime << endl;
+            cout << "Performing time step " << theStep << ", Time = " << theTime << endl;
 
          for (auto const& p: pb) {
             if (_data->dn.count(p)) {
@@ -237,7 +237,7 @@ int transient::run(const vector<string>& pb)
                   }
                   cout << "Error: " << err << endl;
                   if (_ode->err!="")
-                     _data->addParam(_ode->err,err,false);
+                     _data->addParam(_ode->err,err,SetCalc::SET);
                }
             }
             if (_data->dn[p].dt==DataType::PDE) {
@@ -248,8 +248,8 @@ int transient::run(const vector<string>& pb)
                   getPDEError(err2,errI);
                   cout << "L2 and Max Errors: " << err2 << "  " << errI << endl;
                   if (_pde->e2!="") {
-                     _data->addParam(_pde->e2,err2,false);
-                     _data->addParam(_pde->eI,errI,false);
+                     _data->addParam(_pde->e2,err2,SetCalc::SET);
+                     _data->addParam(_pde->eI,errI,SetCalc::SET);
                   }
                }
             }
@@ -275,7 +275,7 @@ void transient::getPDEError(double &e2, double &eI)
          for (int i=1; i<=nb; ++i) {
             OFELI::Point<double> x = (*ms)[i]->getCoord();
             for (int j=0; j<nb_dof; ++j) {
-               double ui=(*u)[k++], vi=(*_pde->SolFct[j])(x,_pde->final_time);
+               double ui=(*u)[k++], vi=(*_pde->SolFct[j])(x.x,x.y,x.z,_pde->final_time);
                e2 += (ui-vi)*(ui-vi);
                eI = fmax(eI,fabs(ui-vi));
             }
@@ -298,7 +298,7 @@ void transient::getPDEError(double &e2, double &eI)
          for (size_t j=1; j<=gr->getNy(); ++j) {
             for (size_t k=1; k<=gr->getNz(); ++k) {
                OFELI::Point<double> p = gr->getXYZ(i,j,k);
-               double ui=(*u)(i,j,k), vi=(*_pde->SolFct[0])(p,_pde->final_time);
+               double ui=(*u)(i,j,k), vi=(*_pde->SolFct[0])(p.x,p.y,p.z,_pde->final_time);
                e2 += (ui-vi)*(ui-vi);
                eI = fmax(eI,fabs(ui-vi));
             }

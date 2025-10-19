@@ -127,7 +127,6 @@ class rita
 
  private:
 
-   rita *_rita;
    bool _echo, _load, _obj_analytic;
    string _script_file, _scheme, _sLine;
    ifstream _icf, *_in;
@@ -170,12 +169,12 @@ class rita
    void ListExprVar();
    void msg(const string& loc, const string& m1, const string& m2="", int c=0);
 
-   const vector<string> _rita_kw {"load","eigen","optim","approx$imation","integ$ration","alg$ebraic","ae",
+   const vector<string> _rita_kw {"load","eigen","optim","approx$imation","integ$ration","algebraic","ae",
                                   "ode","pde","ls","solve"};
    const vector<string> _gkw {"?","help","lic$ense","set","end","<","echo"};
    const vector<string> _data_kw {"grid","mesh","vect$or","tab$ulation","func$tion","matr$ix","sample",
                                   "save","del$ete","rem$ove","desc$ription","hist$ory","data","list",
-                                  "print","=","ren$ame","plot","%"};
+                                  "ren$ame","plot","calc","%"};
 
    map<string,analysis_type> _ant = {{"",analysis_type::NONE},
                                      {"approximation",analysis_type::APPROXIMATION},

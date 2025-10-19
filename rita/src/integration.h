@@ -68,7 +68,7 @@ class integration
     configure *_configure;
     data *_data;
     cmd *_cmd;
-    const string _pr = "integration>";
+    const string _pr = ">integration>";
     vector<double> _x, _y, _z;
     int iFct;
     map<string,integration_formula> Nint = {{"left-rectangle",LRECTANGLE},
