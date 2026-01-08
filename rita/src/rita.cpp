@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-    Copyright (C) 2021 - 2025 Rachid Touzani
+    Copyright (C) 2021 - 2026 Rachid Touzani
 
     This file is part of rita.
 
@@ -228,7 +228,7 @@ void rita::finish()
 void rita::getLicense()
 {
    _cmd->setNbArg(0);
-   cout << "Copyright (C) 2025\n";
+   cout << "Copyright (C) 2026\n";
    cout << "rita is free software: you can redistribute it and/or modify\n";
    cout << "it under the terms of the GNU General Public License as published by\n";
    cout << "the Free Software Foundation, either version 3 of the License, or\n";

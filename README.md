@@ -1,7 +1,7 @@
 OFELI
 An Object Finite Element Library
 
-Copyright (c) 1998-2025 Rachid Touzani
+Copyright (c) 1998-2026 Rachid Touzani
 
 
 1. Introduction

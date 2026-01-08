@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2025 Rachid Touzani
+   Copyright (C) 1998 - 2026 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -837,10 +837,10 @@ void XMLParser::read_project(const SString& a)
       case Tag::ARRAY:
       case Tag::VECTOR:
          if (!_scan) {
-            if (a.first=="label")
+            if (a.first=="label") {
                _slabel = a.second;
-            if (a.first=="size")
-               _ipf->_vparam[_slabel].resize(stoi(a.second));
+               _ipf->_aparam[_slabel].clear();
+            }
          }
          break;
 
@@ -2095,9 +2095,10 @@ void XMLParser::read_project_data(const vector<string>&     tokens,
       case Tag::ARRAY:
       case Tag::VECTOR:
          {
-            if (!_scan)
+            if (!_scan) {
                while (it!=tokens.end())
-                  _ipf->_vparam[_slabel].push_back(*it++);
+                  _ipf->_aparam[_slabel].push_back(*it++);
+            }
             break;
          }
 

@@ -10,14 +10,14 @@ ode
   definition "u6"
   definition "u7"
   definition "u8"
-  definition "10*(u3-u1)/sqrt(((u1-u3)^2+(u2-u4)^2)^3)"
-  definition "10*(u4-u2)/sqrt(((u1-u3)^2+(u2-u4)^2)^3)"
+  definition "100*(u3-u1)/sqrt(((u1-u3)^2+(u2-u4)^2)^3)"
+  definition "100*(u4-u2)/sqrt(((u1-u3)^2+(u2-u4)^2)^3)"
   definition "10*(u1-u3)/sqrt(((u1-u3)^2+(u2-u4)^2)^3)"
   definition "10*(u2-u4)/sqrt(((u1-u3)^2+(u2-u4)^2)^3)"
-  init 1. 1. 0. 0. 0. 0. 0. 0.
+  init 1. 0. 0. 1. 0. 0. 0. 0.
   scheme RK4
   time-step 0.001
-  final-time 1.
+  final-time 0.1
   phase p1 1
   phase p2 2
   end
@@ -26,7 +26,7 @@ ode
 history u U
 #
 # To solve the system, we first describe how the results are to be saved.
-# in particular the phase portrait will be saved in an appropriate file
+# In particular the phase portrait will be saved in an appropriate file
 solve
 #
 # Plot the second component of solution history

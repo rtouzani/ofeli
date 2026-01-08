@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2025 Rachid Touzani
+   Copyright (C) 1998 - 2026 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -35,7 +35,6 @@
 #include "OFELI_Config.h"
 #include "linear_algebra/Point.h"
 #include <map>
-using std::map;
 
 namespace OFELI {
 /*!
@@ -180,6 +179,11 @@ class IPF {
 /// Default value for <tt>n</tt> is <tt>1</tt>
     complex_t getComplexPar(size_t n=1) const { return _complex_par[n-1]; }
 
+/// \brief Return <tt>n</tt>-th parameter read using keyword \b DoublePar.
+/// \details Here we have at most 20 integer extra parameters that can be used for any purpose.
+/// Default value for <tt>n</tt> is <tt>1</tt>
+    Vect<real_t> getArrayDoublePar(size_t n=1) const { return _array_double_par[n-1]; }
+
 /// \brief Return parameter corresponding to a given label, when its value is a string
 /// @param [in] label Label that identifies the string (read from input file)
 /// If this label is not found an error message is displayed and program stops
@@ -210,7 +214,7 @@ class IPF {
 /// @param [in] label Label that identifies the real number (read from input file).
 /// If this label is not found an error message is displayed and program stops.
     real_t getDouble(const string& label);
-   
+
 /** \brief Return parameter corresponding to a given label, when its value is a real_t
  *  \details Case where a default value is provided
  *  @param [in] label Label that identifies the real number (read from input file)
@@ -218,6 +222,24 @@ class IPF {
  */
     real_t getDouble(const string& label,
                      real_t        def);
+
+/** \brief Return double valued array corresponding to a given label
+ *  @param [in] label Label that identifies the real number (read from input file)
+ */
+    Vect<real_t> getArrayDouble(const string& label);
+
+/** \brief Return integer valued array corresponding to a given label
+ *  @param [in] label Label that identifies the real number (read from input file)
+ */
+    Vect<int> getArrayInt(const string& label);
+
+/** \brief Return parameter corresponding to a given label, when its value is a Point<real_t>
+ *  \details Case where a default value is provided
+ *  @param [in] label Label that identifies the real number (read from input file)
+ *  @param [in] def Default value: Value to assign if the sought parameter is not found
+ */
+    real_t getPointDouble(const string& label,
+                          real_t        def);
 
 /// \brief Return parameter corresponding to a given label, when its value is a complex number
 /// @param [in] label Label that identifies the complex number (read from input file)
@@ -380,11 +402,12 @@ private:
    vector<int> _int_par;
    vector<real_t> _real_par;
    vector<Point<real_t>> _point_double_par;
+   vector<Vect<real_t>> _array_double_par;
    vector<complex_t> _complex_par;
    vector<string> _mat, _mesh_file, _aux_file, _data_file, _plot_file, _string_par;
-   map<string,string> _param;
-   map<string,string_pair> _cparam;
-   map<string,vector<string>> _vparam;
+   std::map<string,string> _param;
+   std::map<string,string_pair> _cparam;
+   std::map<string,vector<string>> _aparam;
    mat_prop _mp;
    void set_data_file(const string& s);
    void set_mesh_file(const string& s);

@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-  Copyright (C) 1998 - 2025 Rachid Touzani
+  Copyright (C) 1998 - 2026 Rachid Touzani
 
   This file is part of OFELI.
 
@@ -29,10 +29,15 @@
 
        The n body problem can be written as a first order system of ODE:
        
-           y'(i) = 1/m_i p(i)
-           p'(i) = G (m_i m_1 )
+           r'(i) = p(i)
+           p'(i) = sum_{j!=i} G m_j (r(i)-r(j))/|r(i)-r(j)|^3
 
        with appropriate initial conditions
+
+       The unknowns are stored in vector y with dimension 2*m, m = nb*dim
+           y(dim*(i-1)+j) = r(i,j)
+           y(m+dim*(i-1)+j) = p(i,j) 
+           for 1 <= i <= nb, 1 <= j <= dim
 
   ==============================================================================*/
 
@@ -53,10 +58,12 @@ int main(int argc, char *argv[])
    size_t dim = data.getInteger("dim");
    size_t nb = data.getInteger("nb");
    double G = data.getDouble("G");
-   Vect<double> m(nb);
-   for (size_t i=1; i<=nb; ++i)
-      m(i) = data.getInteger("m"+toString(i));
-   ofstream outf(data.getPlotFile(1));
+   Vect<double> m(nb), y(2*dim*nb);
+   m = data.getArrayDouble("m");
+   y = data.getArrayDouble("init");
+
+// Files to store trajectories and phases
+   ofstream tf(data.getPlotFile(1)), pf(data.getPlotFile(2));
 
 // Solution as a system of first-order ODEs
    try {
@@ -64,8 +71,6 @@ int main(int argc, char *argv[])
       ODESolver ode(nbody,RK4,theTimeStep,theFinalTime,2*dim*nb);
 
 //    Set differential equation system
-      Vect<double> y(2*dim*nb);
-      y(1) = 0.; y(2) = 0., y(3) = 1., y(4) = 0.;
       ode.setInitial(y);
 
 //    Loop on time steps to run the time integration scheme
@@ -73,13 +78,15 @@ int main(int argc, char *argv[])
 
 //       Run one time step
          ode.runOneTimeStep();
-         outf << theTime << "    ";
+         tf << theTime << "    ";
          for (size_t i=1; i<=nb; ++i) {
-            for (size_t j=1; j<=dim; ++j)
-               outf << y(dim*(i-1)+j) << "  ";
-            outf << "  ";
+            for (size_t j=1; j<=dim; ++j) {
+               tf << y(dim*(i-1)+j) << "  ";
+               pf << y(dim*(i-1)+j) << "  " << y(dim*(i-1)+j+dim*nb) << "  ";
+            }
+            tf << "  "; pf << " ";
          }
-         outf << endl;
+         tf << endl; pf << endl;
       }
 
    } CATCH_EXCEPTION

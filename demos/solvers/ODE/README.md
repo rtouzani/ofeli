@@ -16,3 +16,6 @@ ts_demo2: To solve a hyperbolic partial differential equation (Elastodynamics): 
 Meshes:
 mesh1.m: Mesh file for the heat equation
 mesh2.m: Mesh file for the elastodynamics equations
+
+data:
+ode_demo8.dat Project file for the N-body problem

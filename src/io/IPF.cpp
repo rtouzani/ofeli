@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2025 Rachid Touzani
+   Copyright (C) 1998 - 2026 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -63,8 +63,6 @@ IPF::IPF(const string& prog,
       _restart_file = _project + ".res";
    if (_save_file.size()==0)
       _save_file = _project + ".sav";
-//   if (_plot_file.size()==0)
-//      _plot_file.push_back(_project+"-1.pl");
    Verbosity = getVerbose();
 }
 
@@ -169,6 +167,28 @@ real_t IPF::getDouble(const string& label,
 }
 
 
+Vect<real_t> IPF::getArrayDouble(const string& label)
+{
+   Vect<real_t> a;
+   if (_aparam.find(label)!=_aparam.end()) {
+      for (size_t i=0; i<_aparam[label].size(); ++i)
+         a.push_back(stod(_aparam[label][i]));
+      return a;
+   }
+   throw OFELIException("In IPF::getArrayDouble(string): Parameter " + label + " unfound in project file.");
+   return a;
+}
+
+
+real_t IPF::getPointDouble(const string& label,
+                           real_t        def)
+{
+   if (_param.find(label)!=_param.end())
+      return stod(_param[label]);
+   return def;
+}
+
+
 complex_t IPF::getComplex(const string& label)
 {
    if (_cparam.find(label)!=_cparam.end())
@@ -190,10 +210,10 @@ complex_t IPF::getComplex(const string& label,
 void IPF::get(const string& label,
               Vect<real_t>& a)
 {
-   if (_vparam.find(label)!=_vparam.end()) {
-      a.setSize(_vparam[label].size());
+   if (_aparam.find(label)!=_aparam.end()) {
+      a.setSize(_aparam[label].size());
       for (size_t i=0; i<a.size(); ++i)
-         a[i] = stod(_vparam[label][i]);
+         a[i] = stod(_aparam[label][i]);
       return;
    }
    throw OFELIException("In IPF::get(string,Vect<real_t>): Parameter " + label + " unfound in project file.");

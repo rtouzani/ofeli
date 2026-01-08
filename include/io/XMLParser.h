@@ -6,7 +6,7 @@
 
   ==============================================================================
 
-   Copyright (C) 1998 - 2025 Rachid Touzani
+   Copyright (C) 1998 - 2026 Rachid Touzani
 
    This file is part of OFELI.
 
@@ -217,7 +217,7 @@ class XMLParser : public Parser
                           {"SpecificHeat",Tag::SPECIFIC_HEAT},
                           {"ThermalConductivity",Tag::THERMAL_CONDUCTIVITY},
                           {"MeltingTemperature",Tag::MELTING_TEMPERATURE},
-                          {"EvaporationEemperature",Tag::EVAPORATION_TEMPERATURE},
+                          {"EvaporationTemperature",Tag::EVAPORATION_TEMPERATURE},
                           {"ThermalExpansion",Tag::THERMAL_EXPANSION},
                           {"LatentHeatMelting",Tag::LATENT_HEAT_MELTING},
                           {"LatentHeatEvaporation",Tag::LATENT_HEAT_EVAPORATION},

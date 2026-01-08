@@ -6,7 +6,7 @@
 #
 # ==============================================================================
 #
-#   Copyright (C) 1998 - 2025 Rachid Touzani
+#   Copyright (C) 1998 - 2026 Rachid Touzani
 #
 #   This file is part of OFELI.
 #
@@ -48,13 +48,16 @@ target_link_libraries (ode_demo6 ofeli)
 add_executable (ode_demo7 ode_demo7.cpp)
 target_link_libraries (ode_demo7 ofeli)
 
+add_executable (ode_demo8 ode_demo8.cpp)
+target_link_libraries (ode_demo8 ofeli)
+
 add_executable (ts_demo1 ts_demo1.cpp)
 target_link_libraries (ts_demo1 ofeli)
 
 add_executable (ts_demo2 ts_demo2.cpp)
 target_link_libraries (ts_demo2 ofeli)
 
-file (COPY mesh1.m mesh2.m DESTINATION .)
+file (COPY mesh1.m mesh2.m ode_demo8.dat DESTINATION .)
 
 add_test (ode1 ode_demo1 0.1)
 add_test (ode2 ode_demo2 0.1)
@@ -63,6 +66,7 @@ add_test (ode4 ode_demo4 0.1)
 add_test (ode5 ode_demo5 0.1)
 add_test (ode6 ode_demo6 0.1 1.0)
 add_test (ode7 ode_demo7 0.1 1.0 output.dat)
+add_test (ode8 ode_demo8 ode_demo8.dat)
 add_test (ts1 ts_demo1 mesh1.m 0.1)
 add_test (ts2 ts_demo2 mesh2.m 0.1)
 
@@ -74,8 +78,10 @@ install (FILES README.md
                ode_demo5.cpp
                ode_demo6.cpp
                ode_demo7.cpp
+               ode_demo8.cpp
                ts_demo1.cpp
                ts_demo2.cpp
+               ode_demo8.dat
                mesh1.m
                mesh2.m
          DESTINATION ${INSTALL_DEMODIR}/solvers/${PROJECT_NAME}

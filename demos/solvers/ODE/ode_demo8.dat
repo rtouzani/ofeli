@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<OFELI_File>
+<info>
+   <title>Project file for the n-body problem</title>
+   <date>December, 14, 2025</date>
+   <author>R. Touzani</author>
+</info>
+<Project name="ode_demo8">
+   <parameter label="dim" value="2" />
+   <parameter label="nb" value="3" />
+   <parameter label="G" value="1.0" />
+   <array label="m">1.0 1.0 1.0</array>
+   <array label="init">-0.97000436 0.24308753   0.97000436 -0.24308753   0.00000000 0.00000000
+                        0.4662034685 0.432365730   0.466203685 0.432365730  -0.932407370 -0.864731460 
+   </array>
+   <time_step value="0.001" />
+   <max_time value="10." />
+   <plot_file value="traj.dat" />
+   <plot_file value="phase.dat" />
+</Project>
+</OFELI_File>

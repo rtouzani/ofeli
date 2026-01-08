@@ -9,7 +9,7 @@
 
   ------------------------------------------------------------------------------
 
-   Copyright (C) 1998 - 2025 Rachid Touzani
+   Copyright (C) 1998 - 2026 Rachid Touzani
 
    This file is part of OFELI.
 
